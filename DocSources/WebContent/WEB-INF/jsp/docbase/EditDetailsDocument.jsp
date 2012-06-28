@@ -28,12 +28,26 @@
 						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.insert"></fmt:message>">?</a>
 						<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert</form:label>
 					</div>
-					<div class="col_l"><form:input id="insertNum" path="insertNum" class="input_5c" /></div>
+					<div class="col_l">
+						<c:if test="${fromTranscribe == null || !fromTranscribe}">
+							<form:input id="insertNum" path="insertNum" class="input_5c" />
+						</c:if>
+						<c:if test="${fromTranscribe != null && fromTranscribe}">
+							<form:input id="insertNum" path="insertNum" class="input_4c_disabled" disabled="true" />
+						</c:if>
+					</div>
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.part"></fmt:message>">?</a>
 						<form:label id="insertLetLabel" for="insertLet" path="insertLet" cssErrorClass="error">Part</form:label>
 					</div>
-					<div class="col_r"><form:input id="insertLet" path="insertLet" class="input_5c" /></div>
+					<div class="col_r">
+						<c:if test="${fromTranscribe == null || !fromTranscribe}">
+							<form:input id="insertLet" path="insertLet" class="input_5c" />
+						</c:if>
+						<c:if test="${fromTranscribe != null && fromTranscribe}">
+							<form:input id="insertLet" path="insertLet" class="input_4c_disabled" disabled="true" />
+						</c:if>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col_r">
@@ -51,7 +65,12 @@
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.unpaginated"></fmt:message>">?</a>
 						<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error">Unpaginated</form:label>
-						<form:checkbox id="unpaged" path="unpaged"/>
+						<c:if test="${fromTranscribe == null || !fromTranscribe}">
+							<form:checkbox id="unpaged" path="unpaged"/>
+						</c:if>
+						<c:if test="${fromTranscribe != null && fromTranscribe}">
+							<form:checkbox id="unpaged" path="unpaged" disabled="true"/>
+						</c:if>
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.nonconsecutive"></fmt:message>">?</a>

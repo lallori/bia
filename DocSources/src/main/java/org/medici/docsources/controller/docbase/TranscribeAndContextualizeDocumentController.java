@@ -114,6 +114,7 @@ public class TranscribeAndContextualizeDocumentController {
 			command.setDateNotes(document.getDateNotes());
 
 			model.put("document", document);
+			model.put("fromTranscribe", Boolean.TRUE);
 
 			return new ModelAndView("docbase/TranscribeAndContextualizeDocument", model);
 		} catch (ApplicationThrowable ath) {
