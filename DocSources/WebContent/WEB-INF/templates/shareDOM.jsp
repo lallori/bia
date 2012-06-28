@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-    	<title>the MEDICI ARCHIVE PROJECT - Print Document Report</title>
+    	<title>the MEDICI ARCHIVE PROJECT - Document Report</title>
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>

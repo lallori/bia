@@ -53,7 +53,7 @@ input[type=radio] {
 
 h1 {
 	font-size: 12px;
-	width: 979px;
+	width: 998px;
 	border-bottom: 1px solid #DCC0BA;
 	margin-left: 2px;
 	font-weight: normal;
@@ -344,8 +344,9 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 .list a  { /* First column forum title */
 	text-decoration: none;
 	color: #6F6B69;
-	margin: 8px 0 0 30px;
+	margin: 0 0 0 30px;
 	font-size: 13px;
+	display: block;
 }
 
 .list .row .one a:hover, .list .rowLast .one a:hover  { /* First column forum title */
@@ -398,9 +399,6 @@ a.returnTo {
 
 .list .rowLast .one p {
 	margin: 0 0 0 31px;
-}
-
-.forumHref {
 }
 
 
@@ -473,8 +471,8 @@ a.returnTo {
 }
 
 #jumpToDiv {
-	margin-left: 785px;
-	width: 220px;
+	margin-left: 794px;
+	width: 210px;
 	font-size:11px;
 }
 

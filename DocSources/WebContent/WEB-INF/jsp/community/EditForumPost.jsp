@@ -15,7 +15,7 @@
 	<form:form id="EditForumPost" method="POST" class="edit" action="${EditForumPostURL}">
 		<div>
 			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Subject</form:label>
-	        <form:input id="subject" path="subject" cssClass="input_4c"></form:input>
+	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
 	    <div>
 			<textarea id="htmlbox" name="text" style="width:970px; height:300px"></textarea>

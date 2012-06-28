@@ -10,13 +10,13 @@
 			}
      </style>
 	
-	<a href="#" class="moreInfo" title="Browse The Medici Archive Project Database"></a><!-- Questo pulsante chiude la finestra "pop up" e a lo stesso tempo riporta questo documento nell body_left del main  -->
-
-	<ul id="network">
-		<li><a href="#"></a></li>
-		<li><a href="#"></a></li>
-           <li><a href="#"></a></li>
-	</ul>
+	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
+		<ul id="network">
+			<li><a id="googlePlus" href="#" title="Share it on Google+"></a></li>
+			<li><a id="twitter" href="#" title="Share it on Twitter"></a></li>
+            <li><a id="facebook" href="#" title="Share it on Facebook"></a></li>
+		</ul>
+	
 	
 	<div id="documentTitle">
 		<c:if test="${not empty image}">

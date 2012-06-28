@@ -6,7 +6,7 @@
 	<head>
 		<!-- <base href="/DocSources"></base> -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>the MEDICI ARCHIVE PROJECT - Forums</title>
+        <title>Bia - Forums</title>
         
         <link rel="shortcut icon" type="image/x-icon" href="/DocSources/images/favicon_medici.png" />
         <link rel="stylesheet" type="text/css" href="/DocSources/styles/forum/forum.css" />

@@ -71,7 +71,7 @@ h5{ /* Data Entry main fields Title */
 }
 
 #text h5 {
-	color:#900;
+	color: #6F6B69;
 	font-size: 12px;
 	display: block;
 	margin: 10px 0 0 10px;
@@ -176,8 +176,8 @@ span.h7 {
 	right: 17px;
 }
 
-#buttonPDF {  /* Print this Document Button */
-	background-image:url(/DocSources/images/1024/button_pdf.png);
+#buttonMarkedList {  /* Print this Document Button */
+	background-image:url(/DocSources/images/1024/button_markedList.png);
 	background-repeat:no-repeat;
 	width: 20px;
 	height: 20px;
@@ -524,6 +524,13 @@ item a{
 	min-height: 160px;
 }
 
+.extractText {
+    width: 385px;
+}
+
+
+
+
 
 /* ----------------------------------------------------- */ 
 /*
@@ -709,7 +716,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	filter:alpha(opacity=50); /* IE */
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLinkg4 { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLink { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -835,7 +842,7 @@ img.transparent {
 	font-size: 11px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
-	margin: -21px 9px 0 0;
+	margin: -21px 0 0 0;
 	width:auto;
 	border:1px solid #900;
 	float: right;
@@ -2024,9 +2031,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 .iframeFlipVolume { /* used in Add New Volume - #body_right */
 	z-index:-1;
-	width:460px;
-	margin-left:15px;
-	height:300px;
+	width:475px;
+	margin-left:10px;
+	height:320px;
 	margin-top:10px;
 	z-index:-1;
 	border: 1px solid;
@@ -4040,6 +4047,30 @@ table#savedSearchFiltersForm.display {
 	filter:alpha(opacity=50); /* IE */
 }
 
+#ConfirmCreateForum h1 {
+	font-size: 12px;
+	text-align: center;
+}
+
+#ConfirmCreateForum #yes {
+	position: absolute;
+	margin-left: 125px;
+}
+
+#ConfirmCreateForum #no {
+	position: absolute;
+	margin-left: 245px;
+}
+
+#ConfirmCreateForum #close {
+	margin: 34px 0 0 185px;
+}
+
+#ConfirmCreateForum #open {
+	position: absolute;
+	margin-left: 145px;
+}
+
 /* -------------------------------------------------------------------------- */
 /*
 /*
@@ -4162,14 +4193,23 @@ a.showDigitizedDocument:hover {
 /*
 /* -------------------------- VETTING HISTORY MODAL ----------------------------- */
 
+#vettingHistoryTableDiv {
+	height:320px !important;
+	height /**/: 330px;
+	overflow:auto !important;
+	width: 750px;
+	margin-bottom:15px;
+}
+
 #vettingHistoryTable {
 	margin-left:10px;
 	width:710px;
+	margin-top:0;
 }
 
 #vettingHistoryButtons {
 	width:52px;
-	margin:60px 0 0 360px;
+	margin:0 0 0 360px;
 }
 
 #vettingHistoryButtons #close {
@@ -4181,6 +4221,7 @@ a.showDigitizedDocument:hover {
 	padding:4px 0 0 12px;
 	width:52px;
 	height:22px;
+	margin:0;
 }
 
 #close:hover {
@@ -4205,29 +4246,29 @@ ul#network {
 }
 
 ul#network a {
-	width: 22px;
-	height: 22px;
+	width: 24px;
+	height: 24px;
 	display: block;
 	float:right;
 	margin-right: 10px;
 	margin-left: 10px;
-	background-color: #B7958F;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
 }
 
-.moreInfo {
-	height:23px;
-	width:109px;
-	position:absolute;
-	margin:-2px 0 0 243px;
-	background:url(/DocSources/images/1024/button_moreinfo.png) no-repeat;
+#moreInfoButton {
+	position: absolute;
+	margin-left: 5px;
 }
 
-.moreInfo:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
+#facebook {
+	background-image: url(/DocSources/images/1024/facebook.png);
+}
+
+#twitter {
+	background-image: url(/DocSources/images/1024/twitter.png);
+}
+
+#googlePlus {
+	background-image: url(/DocSources/images/1024/google-plus.png);
 }
 
 /* -------------------------------------------------------------------------- */

@@ -10,21 +10,15 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1>Forum has been created. Please wait to redirect...</h1>
-		<a id="open" href="${ShowForumURL}">OPEN FORUM</a>
-	
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<h1>Forum has been created.</hz
+		<a id="open" href="${ShowForumURL}" target="_blank">OPEN FORUM</a></li>	
+		<input id="close" type="submit" title="Close" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
 			$j("#close").click(function(){
 				Modalbox.hide();
-				return false;
-			});
-
-			$j("#open").click(function() {
-				$j(this).open({scrollbars: "yes"});
 				return false;
 			});
 		});
