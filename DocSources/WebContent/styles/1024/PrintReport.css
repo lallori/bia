@@ -37,10 +37,13 @@ body {
 #top {
 	height:65px;
 	display: none;
+	width:630px;
 }
+
 
 #notes {
 	display: none;
+	float:right;
 }
 
 #logoMap {
@@ -49,11 +52,6 @@ body {
 	margin:0;
 	float:left;
 	margin-left:30px;
-}
-
-#notes {
-	float:right;
-	margin-right:35px;
 }
 
 #notes p{
@@ -78,8 +76,7 @@ h4 {
 	font-size:12px;
 	text-align:center;
 	font-weight:normal;
-	margin-top:40px;
-	margin-bottom:40px;
+	margin:40px 0 40px 125px;
 	display: none;
 }
 
@@ -148,6 +145,7 @@ hr {
 	color:#999;
 	font-size:9px;
 	display: none;
+	margin-left:130px;
 }
 
 #yourSearchDiv p {

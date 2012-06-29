@@ -4365,12 +4365,19 @@ ul#network a {
 /* Activate */
 
 #activate, #deactivate {
-	position: absolute;
 	margin: 10px 0 0 50px;
+	background-color: transparent;
+	border: none;
+	padding: 0;
 }
 
 #activateDiv #close, #deactivateDiv #close {
-	margin: 45px 0 0 110px;
+	margin: 10px 0 0 110px;
+}
+
+#activateDiv h1 {
+	font-size: 12px;
+	text-align: center;
 }
 
 /* ------------------------------------ CREATE NEW CATALOG DESCRIPTION ------------------------------------ */

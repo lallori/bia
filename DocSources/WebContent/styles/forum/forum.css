@@ -434,12 +434,41 @@ a.returnTo {
 	color:#B7958F;
 }
 
+/* ---------- Forum Paginate ---------- */
+
+#forumPaginate {
+    text-align: right;
+    font-size: 10px;
+}
+
+#firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
+    border: 1px solid #DCC0BA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+    *cursor: hand;
+    background-color: #EAD9D6;
+}
+
+#firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton {
+    margin: 0 3px;
+}
+
+#lastPaginateButton {
+    margin: 0;
+}
+
+.paginateActive, #firstPaginateButton:hover, #previousPaginateButton:hover, .paginateActive:hover, .paginateButton:hover, #nextPaginateButton:hover, #lastPaginateButton:hover {
+    background-color: #DCC0BA;
+}
+
 /* ---------- Topic Actions ---------- */
 
 #topicActions {
 	width: 350px;
 	height: 20px;
-	margin: 5px 0 20px 0;
+	margin: 15px 0 20px 0;
 }
 
 #newTopic, #postReply {
@@ -1007,6 +1036,24 @@ input[type="checkbox"] {
 	float: right;
 	font-size: 12px;
 	padding-top: 3px;
+}
+
+
+/* ---------- Simple Search ---------- */ 
+
+#searchResults {
+    margin-bottom: 55px;
+}
+
+span.hilight, #postTable span.hilight{
+    background-color: #F3BFCC;
+    color: #BC2A4D;
+    margin-left: 0;
+}
+
+span.search {
+    font-weight: bold;
+    color: #BC2A4D;
 }
 
 
