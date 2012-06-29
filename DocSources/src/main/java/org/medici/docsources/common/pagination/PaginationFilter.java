@@ -21,8 +21,21 @@ public class PaginationFilter {
 	private List<SortingCriteria> sortingCriterias;
  	private String sortingDirection;
  	private Long total;
+ 	private Integer thisPage;
+ 	private Integer pageTotal;
+ 	private Integer elementsForPage;
 
-     /**
+ 	/**
+ 	 * 
+ 	 */
+ 	public PaginationFilter() {
+ 		super();
+        this.sortingColumn = -1;
+        this.sortingDirection="";
+        this.sortingCriterias = new ArrayList<SortingCriteria>();
+	}
+
+ 	/**
       * 
       * @param firstRecord
       * @param length
@@ -196,6 +209,48 @@ public class PaginationFilter {
  	public void setTotal(Long total) {
  		this.total = total;
  	}
+
+	/**
+	 * @param thisPage the thisPage to set
+	 */
+	public void setThisPage(Integer thisPage) {
+		this.thisPage = thisPage;
+	}
+
+	/**
+	 * @return the thisPage
+	 */
+	public Integer getThisPage() {
+		return thisPage;
+	}
+
+	/**
+	 * @param pageTotal the pageTotal to set
+	 */
+	public void setPageTotal(Integer pageTotal) {
+		this.pageTotal = pageTotal;
+	}
+
+	/**
+	 * @return the pageTotal
+	 */
+	public Integer getPageTotal() {
+		return pageTotal;
+	}
+
+	/**
+	 * @param elementsForPage the elementsForPage to set
+	 */
+	public void setElementsForPage(Integer elementsForPage) {
+		this.elementsForPage = elementsForPage;
+	}
+
+	/**
+	 * @return the elementsForPage
+	 */
+	public Integer getElementsForPage() {
+		return elementsForPage;
+	}
 
 	/**
  	 * 

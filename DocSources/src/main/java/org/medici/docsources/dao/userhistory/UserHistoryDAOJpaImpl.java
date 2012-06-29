@@ -199,7 +199,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		}
 		
 		String jpql = objectsQuery + orderBySQL.toString();
-		logger.info("JPQL Query : " + jpql);
+		logger.debug("JPQL Query : " + jpql);
 
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
@@ -294,7 +294,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		}
 		
 		String jpql = objectsQuery + orderBySQL.toString();
-		logger.info("JPQL Query : " + jpql);
+		logger.debug("JPQL Query : " + jpql);
 
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());

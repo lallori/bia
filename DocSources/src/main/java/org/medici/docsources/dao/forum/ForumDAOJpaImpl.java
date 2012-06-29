@@ -42,6 +42,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.util.ForumUtils;
+import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
@@ -183,7 +184,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException {
 		Forum forum = new Forum();
 		forum.setDateCreated(new Date());
-		forum.setDescription(volume.getSerieList().toString());
+		forum.setDescription(volume.toString() + " - " + volume.getSerieList().toString());
 		forum.setTitle(volume.getSerieList().toString());
 
 		forum.setForumParent(forumParent);
@@ -304,6 +305,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
@@ -315,7 +317,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		
 		Query query = null;
 		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
+		if (paginationFilter.getPageTotal() == null) {
 			String countQuery = "SELECT COUNT(*) " + queryString;
 	        
 			query = getEntityManager().createQuery(countQuery);
@@ -324,6 +326,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	        query.setParameter("forumParentTypeForum", Type.FORUM);
 
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -347,15 +350,14 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         query.setParameter("forumParentTypeForum", Type.FORUM);
 
         // We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord()-1);
-		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
 		List<Forum> list = (List<Forum>) query.getResultList();
 
 		// We set search result on return method
 		page.setList(list);
-		page.setPageSize(page.getList().size());
 		
 		return page;
 	}
@@ -407,6 +409,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getForumDocument(Integer entryId) throws PersistenceException {
 		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and document.entryId=:entryId ";
@@ -430,6 +433,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getForumPerson(Integer personId) throws PersistenceException {
 		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and person.personId=:personId ";
@@ -453,6 +457,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getForumPlace(Integer placeAllId) throws PersistenceException {
 		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and place.placeAllId=:placeAllId ";
@@ -490,6 +495,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getForumVolume(Integer summaryId) throws PersistenceException {
 		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and volume.summaryId=:summaryId ";

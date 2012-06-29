@@ -38,23 +38,11 @@ import java.util.List;
 public class Page {
 	private Integer firstRecordNumber;
 	private Integer lastRecordNumber;
-	private Integer pageSize;
+	private Integer elementsForPage;
 	private List<?> results;
-	private Long total;	
-	
-	/**
-	 * @return the pageSize
-	 */
-	public Integer getPageSize() {
-		return pageSize;
-	}
-
-	/**
-	 * @param pageSize the pageSize to set
-	 */
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+	private Integer thisPage;
+	private Long total;
+	private Integer totalPages;
 	
 	/**
 	 * 
@@ -78,7 +66,7 @@ public class Page {
 		this.firstRecordNumber = firstRecordNumber;
 		this.lastRecordNumber = lastRecordNumber;
 	}
-
+	
 	/**
 	 * 
 	 * @param paginationFilter
@@ -90,11 +78,15 @@ public class Page {
 			results = new ArrayList(0);
 			firstRecordNumber = null;
 			lastRecordNumber = null;
+			elementsForPage = new Integer(10);
+			thisPage = new Integer(1);
 		} else {
 			setTotal(paginationFilter.getTotal());
 			results = new ArrayList(0);
 			firstRecordNumber = paginationFilter.getFirstRecord();
 			lastRecordNumber = paginationFilter.getLength();
+			elementsForPage = paginationFilter.getElementsForPage();
+			thisPage = paginationFilter.getThisPage();
 		}
 	}
 
@@ -104,7 +96,7 @@ public class Page {
 	public Integer getFirstRecordNumber() {
 		return firstRecordNumber;
 	}
-
+	
 	/**
 	 * @return the lastRecordNumber
 	 */
@@ -115,7 +107,21 @@ public class Page {
 	public List<?> getList() {
 		return results;
 	}
-	
+
+	/**
+	 * @return the pageSize
+	 */
+	public Integer getElementsForPage() {
+		return elementsForPage;
+	}
+
+	/**
+	 * @return the thisPage
+	 */
+	public Integer getThisPage() {
+		return thisPage;
+	}
+
 	/**
 	 * @return the total
 	 */
@@ -123,13 +129,6 @@ public class Page {
 		return total;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isNextPage() {
-		return results.size() > pageSize;
-	}
 
 	/**
 	 * @param firstRecordNumber the firstRecordNumber to set
@@ -145,8 +144,26 @@ public class Page {
 		this.lastRecordNumber = lastRecordNumber;
 	}
 
+	/**
+	 * 
+	 * @param list
+	 */
 	public void setList(List<?> list) {
 		this.results = list;
+	}
+
+	/**
+	 * @param elementsForPage the elementsForPage to set
+	 */
+	public void setElementsForPage(Integer elementsForPage) {
+		this.elementsForPage = elementsForPage;
+	}
+
+	/**
+	 * @param thisPage the thisPage to set
+	 */
+	public void setThisPage(Integer thisPage) {
+		this.thisPage = thisPage;
 	}
 
 	/**
@@ -154,5 +171,19 @@ public class Page {
 	 */
 	public void setTotal(Long total) {
 		this.total = total;
+	}
+
+	/**
+	 * @param totalPages the totalPages to set
+	 */
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
+	}
+
+	/**
+	 * @return the totalPages
+	 */
+	public Integer getTotalPages() {
+		return totalPages;
 	}
 }

@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;
@@ -53,7 +54,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements ForumPostDAO {
-	
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -79,6 +79,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
@@ -93,13 +94,14 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		
 		Query query = null;
 		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
+		if (paginationFilter.getPageTotal() == null) {
 			String countQuery = "SELECT COUNT(*) " + queryString;
 	        
 			query = getEntityManager().createQuery(countQuery);
 	        query.setParameter("topicId", forumTopic.getTopicId());
 
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -116,21 +118,50 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		}
 		
 		String jpql = queryString + orderBySQL.toString();
-		logger.info("JPQL Query : " + jpql);
+		logger.debug("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
         query.setParameter("topicId", forumTopic.getTopicId());
 
         // We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord()-1);
-		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
 		List<ForumPost> list = (List<ForumPost>) query.getResultList();
 
 		// We set search result on return method
 		page.setList(list);
-		page.setPageSize(page.getList().size());
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {
+		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId order by dateCreated asc";
+
+		if (topicId == null) {
+			return null;
+		}
+		
+		Query query = null;
+		logger.debug("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("topicId", topicId);
+
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
 	}
 }

@@ -34,12 +34,40 @@ package org.medici.docsources.command.community;
  */
 public class ReplyForumPostCommand {
 	private Integer postId;
-	private Integer parentPostId;
 	private Integer topicId;
+	private Integer parentPostId;
 	private Integer forumId;
 	private String subject;
 	private String text;
 	
+	/**
+	 * @param postId the postId to set
+	 */
+	public void setPostId(Integer postId) {
+		this.postId = postId;
+	}
+
+	/**
+	 * @return the postId
+	 */
+	public Integer getPostId() {
+		return postId;
+	}
+
+	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
+	}
+
+	/**
+	 * @return the topicId
+	 */
+	public Integer getTopicId() {
+		return topicId;
+	}
+
 	/**
 	 * @return the parentPostId
 	 */

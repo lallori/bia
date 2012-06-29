@@ -97,12 +97,20 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param topicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumPost findFirstPostTopic(Integer topicId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param id
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost findPost(Integer postId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param forum
@@ -205,7 +213,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserInformation joinUserOnForum()throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param userComment
@@ -213,7 +221,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param forumPost

@@ -1,6 +1,8 @@
 <%@page import="org.medici.docsources.common.util.ForumUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="bia" uri="http://docsources.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -16,7 +18,7 @@
 								<div class="list">
 									<div class="rowFirst">
 										<div class="one">${currentCategory.title}</div>
-										<div class="two">TOPICS</div>
+										<div class="two">FORUMS</div>
 										<div class="three">POSTS</div>
 										<div class="four">LAST POST</div>
 									</div>
@@ -93,11 +95,18 @@
 						                <a href="${ShowForumURL}" class="forumHref">${currentForum.title}</a>
 						                <span>${currentForum.description}</span>
 						            </div>
-						            <div class="two">${currentForum.topicsNumber}</div>
+						            <div class="two">${fn:length(currentForum.forumTopics)}</div>
 						            <div class="three">0</div>
 						            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 						        </div>
 						    </c:forEach>
+						    <td class="nav" nowrap="nowrap" align="right">
+								<c:set var="paginationData">
+									<bia:pagination page="${subForumsPage}"/>
+								</c:set>
+								
+								${paginationData}
+							</td>
 						</c:if>
 						
 							<c:if test="${empty subForumsPage.list}">

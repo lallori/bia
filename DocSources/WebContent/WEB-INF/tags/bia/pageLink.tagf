@@ -1,0 +1,24 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:remove var="extraArgs"/>
+
+<c:choose>
+	<c:when test="${currentPage != page.thisPage}">
+		<c:if test="${not empty subForumsPage}">
+			<c:url var="baseUrl" value="/community/ShowForum.do"/>
+			<c:set var="extraArgs">forumId=${forum.forumId}&forumPageNumber=${currentPage}&forumPageTotal=${command.forumPageTotal}&forumsForPage=${command.forumsForPage}</c:set>
+
+			<a href="${baseUrl}${extraArgs}" class="forumHref">${currentPage}</a>
+		</c:if>
+		<c:if test="${not empty topicsPage}">
+			<c:url var="baseUrl" value="/community/ShowForum.do"/>
+			<c:set var="extraArgs">forumId=${forum.forumId}&topicPageNumber=${currentPage}&topicPageTotal=${command.topicPageTotal}&topicsForPage=${command.topicsForPage}</c:set>
+
+			<a href="${baseUrl}${extraArgs}" class="topicHref">${currentPage}</a>	
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<span class="current">${currentPage}</span>
+	</c:otherwise>
+</c:choose>
+

@@ -27,44 +27,36 @@
  */
 package org.medici.docsources.command.community;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class ShowForumCommand {
-	private Integer forumId;
 	private Boolean completeDOM;
+	private Integer forumId;
 
-	private Integer forumFirstRecord;
-	private Integer forumLength;
-	private Long forumTotal;
-
-	private Integer postFirstRecord;
-	private Integer postLength;
-	private Long postTotal;
-
-	/**
-	 * @return the forumId
-	 */
-	public Integer getForumId() {
-		return forumId;
-	}
+	private Integer forumPageNumber;
+	private Integer forumPageTotal;
+	private Integer forumsForPage;
 	
-	/**
-	 * @param forumId the forumId to set
-	 */
-	public void setForumId(Integer forumId) {
-		this.forumId = forumId;
-	}
+	private Integer topicPageNumber;
+	private Integer topicPageTotal;
+	private Integer topicsForPage;
 	
+
 	/**
 	 * @return the completeDOM
 	 */
 	public Boolean getCompleteDOM() {
 		return completeDOM;
+	}
+	
+	/**
+	 * @return the forumId
+	 */
+	public Integer getForumId() {
+		return forumId;
 	}
 	
 	/**
@@ -75,86 +67,94 @@ public class ShowForumCommand {
 	}
 	
 	/**
-	 * @return the forumFirstRecord
+	 * @param forumId the forumId to set
 	 */
-	public Integer getForumFirstRecord() {
-		return forumFirstRecord;
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
+	}
+
+	/**
+	 * @return the forumPageNumber
+	 */
+	public Integer getForumPageNumber() {
+		return forumPageNumber;
+	}
+
+	/**
+	 * @param forumPageNumber the forumPageNumber to set
+	 */
+	public void setForumPageNumber(Integer forumPageNumber) {
+		this.forumPageNumber = forumPageNumber;
+	}
+
+	/**
+	 * @return the forumPageTotal
+	 */
+	public Integer getForumPageTotal() {
+		return forumPageTotal;
+	}
+
+	/**
+	 * @param forumPageTotal the forumPageTotal to set
+	 */
+	public void setForumPageTotal(Integer forumPageTotal) {
+		this.forumPageTotal = forumPageTotal;
+	}
+
+	/**
+	 * @return the forumsForPage
+	 */
+	public Integer getForumsForPage() {
+		return forumsForPage;
+	}
+
+	/**
+	 * @param forumsForPage the forumsForPage to set
+	 */
+	public void setForumsForPage(Integer forumsForPage) {
+		this.forumsForPage = forumsForPage;
+	}
+
+	/**
+	 * @return the topicPageNumber
+	 */
+	public Integer getTopicPageNumber() {
+		return topicPageNumber;
+	}
+
+	/**
+	 * @param topicPageNumber the topicPageNumber to set
+	 */
+	public void setTopicPageNumber(Integer topicPageNumber) {
+		this.topicPageNumber = topicPageNumber;
+	}
+
+	/**
+	 * @return the topicPageTotal
+	 */
+	public Integer getTopicPageTotal() {
+		return topicPageTotal;
+	}
+
+	/**
+	 * @param topicPageTotal the topicPageTotal to set
+	 */
+	public void setTopicPageTotal(Integer topicPageTotal) {
+		this.topicPageTotal = topicPageTotal;
+	}
+
+	/**
+	 * @return the topicsForPage
+	 */
+	public Integer getTopicsForPage() {
+		return topicsForPage;
+	}
+
+	/**
+	 * @param topicsForPage the topicsForPage to set
+	 */
+	public void setTopicsForPage(Integer topicsForPage) {
+		this.topicsForPage = topicsForPage;
 	}
 	
-	/**
-	 * @param forumFirstRecord the forumFirstRecord to set
-	 */
-	public void setForumFirstRecord(Integer forumFirstRecord) {
-		this.forumFirstRecord = forumFirstRecord;
-	}
-	
-	/**
-	 * @return the forumLength
-	 */
-	public Integer getForumLength() {
-		return forumLength;
-	}
-	
-	/**
-	 * @param forumLength the forumLength to set
-	 */
-	public void setForumLength(Integer forumLength) {
-		this.forumLength = forumLength;
-	}
-	
-	/**
-	 * @return the forumTotal
-	 */
-	public Long getForumTotal() {
-		return forumTotal;
-	}
-	
-	/**
-	 * @param forumTotal the forumTotal to set
-	 */
-	public void setForumTotal(Long forumTotal) {
-		this.forumTotal = forumTotal;
-	}
-	
-	/**
-	 * @return the postFirstRecord
-	 */
-	public Integer getPostFirstRecord() {
-		return postFirstRecord;
-	}
-	
-	/**
-	 * @param postFirstRecord the postFirstRecord to set
-	 */
-	public void setPostFirstRecord(Integer postFirstRecord) {
-		this.postFirstRecord = postFirstRecord;
-	}
-	
-	/**
-	 * @return the postLength
-	 */
-	public Integer getPostLength() {
-		return postLength;
-	}
-	
-	/**
-	 * @param postLength the postLength to set
-	 */
-	public void setPostLength(Integer postLength) {
-		this.postLength = postLength;
-	}
-	
-	/**
-	 * @return the postTotal
-	 */
-	public Long getPostTotal() {
-		return postTotal;
-	}
-	
-	/**
-	 * @param postTotal the postTotal to set
-	 */
-	public void setPostTotal(Long postTotal) {
-		this.postTotal = postTotal;
-	}
 }

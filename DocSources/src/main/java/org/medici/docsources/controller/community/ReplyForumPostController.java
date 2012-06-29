@@ -104,18 +104,17 @@ public class ReplyForumPostController {
 	public ModelAndView setupForm(@ModelAttribute("command") ReplyForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		ForumPost postToReply = new ForumPost();
+		ForumPost firstPostTopicToReply = new ForumPost();
 
 		try {
-			postToReply = getCommunityService().findPost(command.getParentPostId());
+			firstPostTopicToReply = getCommunityService().findFirstPostTopic(command.getTopicId());
 		} catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/EditPostForum", model);
 			
 		}
-		command.setForumId(postToReply.getForum().getForumId());
 		//command.setParentPostId(postToReply.getParentPost().getId());
-		command.setSubject(postToReply.getSubject());
-		command.setText(postToReply.getText());
+		command.setSubject(firstPostTopicToReply.getSubject());
+		command.setText(firstPostTopicToReply.getText());
 
 		return new ModelAndView("community/EditForumPost", model);
 	}

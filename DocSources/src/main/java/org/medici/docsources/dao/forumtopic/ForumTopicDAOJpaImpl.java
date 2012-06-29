@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumTopic;
@@ -79,6 +80,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
@@ -90,7 +92,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		
 		Query query = null;
 		String jpql = queryString;
-		logger.info("JPQL Query : " + jpql);
+		logger.debug("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
         query.setParameter("topicId", forumTopic.getTopicId());
 
@@ -107,13 +109,13 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException {
-		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+	public Page findForumTopics(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
 		String queryString = "FROM ForumTopic WHERE forum.forumId = :forumId ";
 
 		// We prepare object of return method.
-		Page page = new Page(paginationFilterPost);
+		Page page = new Page(paginationFilter);
 		
 		if (forum == null) {
 			return page;
@@ -121,16 +123,17 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		
 		Query query = null;
 		// We set size of result.
-		if (paginationFilterPost.getTotal() == null) {
+		if (paginationFilter.getPageTotal() == null) {
 			String countQuery = "SELECT COUNT(*) " + queryString;
 	        
 			query = getEntityManager().createQuery(countQuery);
 	        query.setParameter("forumId", forum.getForumId());
 
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
-		List<SortingCriteria> sortingCriterias = paginationFilterPost.getSortingCriterias();
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
@@ -144,20 +147,19 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		}
 		
 		String jpql = queryString + orderBySQL.toString();
-		logger.info("JPQL Query : " + jpql);
+		logger.debug("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
         query.setParameter("forumId", forum.getForumId());
 
         // We set pagination  
-		query.setFirstResult(paginationFilterPost.getFirstRecord()-1);
-		query.setMaxResults(paginationFilterPost.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
 		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
 
 		// We set search result on return method
 		page.setList(list);
-		page.setPageSize(page.getList().size());
 		
 		return page;
 	}

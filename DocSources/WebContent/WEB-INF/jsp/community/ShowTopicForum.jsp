@@ -108,8 +108,8 @@
 								return false;
 							});
 							
-							$j('#newTopic').click(function (){
 								$j("#mainContent").load($j(this).attr("href"));
+							$j('.quotePost').click(function (){
 								$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 								return false;
 							});

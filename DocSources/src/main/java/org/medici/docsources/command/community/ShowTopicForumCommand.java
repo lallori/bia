@@ -36,94 +36,93 @@ public class ShowTopicForumCommand {
 	private Boolean completeDOM;
 	private Integer topicId;
 	private Integer forumId;
-	private Integer postId;
 
-	private Integer postsFirstRecord;
-	private Integer postsLength;
-	private Long postsTotal;
+	private Integer topicPageNumber;
+	private Integer topicPageTotal;
+	private Integer topicsForPage;
+	
 	/**
 	 * @return the completeDOM
 	 */
 	public Boolean getCompleteDOM() {
 		return completeDOM;
 	}
+	
 	/**
 	 * @param completeDOM the completeDOM to set
 	 */
 	public void setCompleteDOM(Boolean completeDOM) {
 		this.completeDOM = completeDOM;
 	}
+	
 	/**
 	 * @return the topicId
 	 */
 	public Integer getTopicId() {
 		return topicId;
 	}
+	
 	/**
 	 * @param topicId the topicId to set
 	 */
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
 	}
+	
 	/**
 	 * @return the forumId
 	 */
 	public Integer getForumId() {
 		return forumId;
 	}
+	
 	/**
 	 * @param forumId the forumId to set
 	 */
 	public void setForumId(Integer forumId) {
 		this.forumId = forumId;
 	}
+	
 	/**
-	 * @return the postId
+	 * @return the topicPageNumber
 	 */
-	public Integer getPostId() {
-		return postId;
+	public Integer getTopicPageNumber() {
+		return topicPageNumber;
 	}
+	
 	/**
-	 * @param postId the postId to set
+	 * @param topicPageNumber the topicPageNumber to set
 	 */
-	public void setPostId(Integer postId) {
-		this.postId = postId;
+	public void setTopicPageNumber(Integer topicPageNumber) {
+		this.topicPageNumber = topicPageNumber;
 	}
+	
 	/**
-	 * @return the postsFirstRecord
+	 * @return the topicPageTotal
 	 */
-	public Integer getPostsFirstRecord() {
-		return postsFirstRecord;
+	public Integer getTopicPageTotal() {
+		return topicPageTotal;
 	}
+	
 	/**
-	 * @param postsFirstRecord the postsFirstRecord to set
+	 * @param topicPageTotal the topicPageTotal to set
 	 */
-	public void setPostsFirstRecord(Integer postsFirstRecord) {
-		this.postsFirstRecord = postsFirstRecord;
+	public void setTopicPageTotal(Integer topicPageTotal) {
+		this.topicPageTotal = topicPageTotal;
 	}
+	
 	/**
-	 * @return the postsLength
+	 * @return the topicsForPage
 	 */
-	public Integer getPostsLength() {
-		return postsLength;
+	public Integer getTopicsForPage() {
+		return topicsForPage;
 	}
+	
 	/**
-	 * @param postsLength the postsLength to set
+	 * @param topicsForPage the topicsForPage to set
 	 */
-	public void setPostsLength(Integer postsLength) {
-		this.postsLength = postsLength;
-	}
-	/**
-	 * @return the postsTotal
-	 */
-	public Long getPostsTotal() {
-		return postsTotal;
-	}
-	/**
-	 * @param postsTotal the postsTotal to set
-	 */
-	public void setPostsTotal(Long postsTotal) {
-		this.postsTotal = postsTotal;
+	public void setTopicsForPage(Integer topicsForPage) {
+		this.topicsForPage = topicsForPage;
 	}
 
 }

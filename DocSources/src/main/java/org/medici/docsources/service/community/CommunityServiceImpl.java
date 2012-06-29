@@ -217,6 +217,20 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public ForumPost findFirstPostTopic(Integer topicId) throws ApplicationThrowable {
+		try {
+			ForumPost forumPost = getForumPostDAO().findFirstPostByTopicId(topicId);
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ForumPost findPost(Integer id) throws ApplicationThrowable {
 		try {
 			ForumPost forumPost = getForumPostDAO().find(id);

@@ -5,9 +5,14 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
     version="2.1">
 
-    <display-name>DocSources Custom Functions</display-name>    
+    <display-name>Bia Custom Functions</display-name>    
     <tlib-version>1.0</tlib-version>
     <uri>http://docsources.medici.org/jsp:jstl</uri>
+
+	<tag-file>
+		<name>pagination</name>
+		<path>/WEB-INF/tags/bia/pagination.tag</path>
+	</tag-file>
 
     <function>
         <name>encode</name>

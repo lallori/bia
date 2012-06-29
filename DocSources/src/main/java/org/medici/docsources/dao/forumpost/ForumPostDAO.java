@@ -51,4 +51,12 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param topicId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
 }
