@@ -80,6 +80,11 @@
 			$j("#body_left").load($j(this).attr("href"));
 			return false;
 		});
+		
+		$j("#vettingHistory").click(function() {	
+			Modalbox.show($j(this).attr("href"), {title: "VETTING HISTORY", width: 760, height: 415});
+			return false;
+		});
 	});
 	</script>
 		

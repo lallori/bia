@@ -39,7 +39,7 @@
         </tr>
     </table> 
     
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+    <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
     
     <h5>Name or Name Variants</h5>
     <table>
@@ -59,7 +59,7 @@
 			</c:if>							
 		</c:forEach> 		 
     </table>
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+    <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
     
     <h5>Senders and Recipients</h5>
     <table>
@@ -88,7 +88,7 @@
         </tr>
     </table>
     
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+   <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
     
     <h5>Topics List</h5>
     <table>
@@ -108,7 +108,7 @@
         </tr>
     </table> 
     
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+    <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
     
     <h5>Birth and Death Place</h5>
     <table>
@@ -134,7 +134,7 @@
         </tr>
     </table> 
     
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+    <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
     
     
     <h5>Geographic Coordinates</h5>
@@ -151,10 +151,52 @@
     </table> 
 	</c:if>
 	<%-- Variant no geographic coordinates--%>
-	<c:forEach items="${placeNames}" var="currentName">
-		<c:if test="${currentName.prefFlag == 'P'}">
-			<p style="margin:0 0 5px 10px"><font color="red">This place is a Variant Name for '${currentName.placeName}'. Find the 'Principal' name to visualize ${currentName.placeName} geographic coordinates</font></p>
-		</c:if>
+<%-- 	<c:forEach items="${placeNames}" var="currentName"> --%>
+<%-- 		<c:if test="${currentName.prefFlag == 'P'}"> --%>
+<%-- 			<p style="margin:0 0 5px 10px"><font color="red">This place is a Variant Name for '${currentName.placeName}'. Find the 'Principal' name to visualize ${currentName.placeName} geographic coordinates</font></p> --%>
+<%-- 		</c:if> --%>
+<%-- 	</c:forEach> --%>
+
+	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
+	
+	<h5>External Links</h5>
+	<table>
+	<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">
+		<tr>
+			<td width="20%">Name Link</td>
+			<td width="80%">${currentExternalLink.description}</td>
+		</tr>
 	</c:forEach>
-	   
-    <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
+	</table>
+	
+	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
+	 
+	<h5>Hierarchy</h5>
+	<table>
+		<tr>
+	 		<td width="20%">Parent</td>
+	 		<td width="80%">${place.parentPlace.placeAllId}</td>
+	 	</tr>
+	 	<tr>
+	 		<td width="20%">GParent</td>
+	 		<td width="80%">${place.gParent}</td>
+	 	</tr>
+	 	<tr>
+	 		<td width="20%">GGParent</td>
+	 		<td width="80%">${place.ggp}</td>
+	 	</tr>
+	 	<tr>
+	 		<td width="20%">GP2</td>
+	 		<td width="80%">${place.gp2}</td>
+	 	</tr>
+	 	<tr>
+	 		<td width="20%">Parent_TGN_id</td>
+	 		<td width="80%">${place.plParentTermId}</td>
+	 	</tr>
+	 	<tr>
+	 		<td width="20%">Parent_GEOKEY</td>
+	 		<td width="80%">${place.plParentSubjectId}</td>
+	 	</tr>
+	</table>
+	
+	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>

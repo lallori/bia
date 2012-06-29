@@ -11,9 +11,9 @@
 	<div id="ConfirmCreateForum">
 		<h1>This person has not forum linked. Do you want to create a forum record?</h1>
 		
-		<a id="yes" href="${ShowConfirmCreatePersonForumURL}">YES</a>
+		<a id="yes" href="${ShowConfirmCreatePersonForumURL}" class="button_small">YES</a>
 	
-		<a id="no" href="#">NO</a>
+		<a id="no" href="#" class="button_small">NO</a>
 			
 		<input id="close" type="submit" title="Close Comments Menu window" value="Close"/>
 	</div>
