@@ -27,9 +27,12 @@
  */
 package org.medici.docsources.command.digitization;
 
+import org.medici.docsources.domain.Schedone.Formato;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class EditPdfImagesSchedoneCommand {
@@ -37,6 +40,10 @@ public class EditPdfImagesSchedoneCommand {
 	private Integer numeroTotaleImmaginiPdf;
 	private Long dimMediaImmaginiPdf;
 	private Long dimTotaleImmaginiPdf;
+	private String compressionePdf;
+	private Formato formatoMediaImmaginiPdf;
+	private Formato formatoTotaleImmaginiPdf;
+	
 	/**
 	 * @return the schedoneId
 	 */
@@ -84,6 +91,42 @@ public class EditPdfImagesSchedoneCommand {
 	 */
 	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
 		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
+	}
+	/**
+	 * @return the compressionePdf
+	 */
+	public String getCompressionePdf() {
+		return compressionePdf;
+	}
+	/**
+	 * @param compressionePdf the compressionePdf to set
+	 */
+	public void setCompressionePdf(String compressionePdf) {
+		this.compressionePdf = compressionePdf;
+	}
+	/**
+	 * @return the formatoMediaImmaginiPdf
+	 */
+	public Formato getFormatoMediaImmaginiPdf() {
+		return formatoMediaImmaginiPdf;
+	}
+	/**
+	 * @param formatoMediaImmaginiPdf the formatoMediaImmaginiPdf to set
+	 */
+	public void setFormatoMediaImmaginiPdf(Formato formatoMediaImmaginiPdf) {
+		this.formatoMediaImmaginiPdf = formatoMediaImmaginiPdf;
+	}
+	/**
+	 * @return the formatoTotaleImmaginiPdf
+	 */
+	public Formato getFormatoTotaleImmaginiPdf() {
+		return formatoTotaleImmaginiPdf;
+	}
+	/**
+	 * @param formatoTotaleImmaginiPdf the formatoTotaleImmaginiPdf to set
+	 */
+	public void setFormatoTotaleImmaginiPdf(Formato formatoTotaleImmaginiPdf) {
+		this.formatoTotaleImmaginiPdf = formatoTotaleImmaginiPdf;
 	}
 
 }

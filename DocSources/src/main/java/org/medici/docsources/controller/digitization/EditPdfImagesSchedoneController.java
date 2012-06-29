@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Details Schedone".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/digitization/EditPdfImagesSchedone")
@@ -91,9 +92,12 @@ public class EditPdfImagesSchedoneController {
 			schedone.setDimMediaImmaginiPdf(command.getDimMediaImmaginiPdf());
 			schedone.setDimTotaleImmaginiPdf(command.getDimTotaleImmaginiPdf());
 			schedone.setNumeroTotaleImmaginiPdf(command.getNumeroTotaleImmaginiPdf());
+			schedone.setCompressionePdf(command.getCompressionePdf());
+			schedone.setFormatoMediaImmaginiPdf(command.getFormatoMediaImmaginiPdf());
+			schedone.setFormatoTotaleImmaginiPDF(command.getFormatoTotaleImmaginiPdf());
 
 			try {
-				schedone = getDigitizationService().editJpegImagesSchedone(schedone);
+				schedone = getDigitizationService().editPdfImagesSchedone(schedone);
 				model.put("schedone", schedone);
 
 				return new ModelAndView("digitization/ShowSchedone", model);
@@ -117,6 +121,8 @@ public class EditPdfImagesSchedoneController {
 
 			try {
 				schedone = getDigitizationService().findSchedone(command.getSchedoneId());
+				
+				model.put("formato", Schedone.Formato.values());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditPdfImagesSchedone", model);
 			} finally {
@@ -127,11 +133,17 @@ public class EditPdfImagesSchedoneController {
 			command.setNumeroTotaleImmaginiPdf(schedone.getNumeroTotaleImmaginiPdf());
 			command.setDimMediaImmaginiPdf(schedone.getDimMediaImmaginiPdf());
 			command.setDimTotaleImmaginiPdf(schedone.getDimTotaleImmaginiPdf());
+			if(schedone.getCompressionePdf() != null){
+				command.setCompressionePdf(schedone.getCompressionePdf());
+			}else{
+				command.setCompressionePdf("1:1");
+			}
 		} else {
 			command.setSchedoneId(0);
 			command.setNumeroTotaleImmaginiPdf(null);
 			command.setDimMediaImmaginiPdf(null);
 			command.setDimTotaleImmaginiPdf(null);
+			command.setCompressionePdf("1:1");
 		}
 
 		return new ModelAndView("digitization/EditPdfImagesSchedone", model);

@@ -7,7 +7,7 @@
 	<div id="deactivateVolume">
 		<h1>Volume deactivated.</h1>
 		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:60px 0 0 90px;"/>
+		<input id="close" type="submit" title="Close Actions Menu window" value="Close" />
 	</div>
 
 	<script>

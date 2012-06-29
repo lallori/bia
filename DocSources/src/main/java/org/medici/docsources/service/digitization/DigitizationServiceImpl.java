@@ -160,6 +160,12 @@ public class DigitizationServiceImpl implements DigitizationService {
 		try {
 			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
 			// we update only jpeg images fields
+			schedoneToUpdate.setDimMediaImmaginiJpeg(schedone.getDimMediaImmaginiJpeg());
+			schedoneToUpdate.setDimTotaleImmaginiJpeg(schedone.getDimTotaleImmaginiJpeg());
+			schedoneToUpdate.setNumeroTotaleImmaginiJpeg(schedone.getNumeroTotaleImmaginiJpeg());
+			schedoneToUpdate.setCompressioneJpeg(schedone.getCompressioneJpeg());
+			schedoneToUpdate.setFormatoMediaImmaginiJpeg(schedone.getFormatoMediaImmaginiJpeg());
+			schedoneToUpdate.setFormatoTotaleImmaginiJpeg(schedone.getFormatoTotaleImmaginiJpeg());
 			
 			getSchedoneDAO().merge(schedoneToUpdate);
 			
@@ -178,6 +184,12 @@ public class DigitizationServiceImpl implements DigitizationService {
 		try {
 			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
 			// we update only pdf images fields
+			schedoneToUpdate.setDimMediaImmaginiPdf(schedone.getDimMediaImmaginiPdf());
+			schedoneToUpdate.setDimTotaleImmaginiPdf(schedone.getDimTotaleImmaginiPdf());
+			schedoneToUpdate.setNumeroTotaleImmaginiPdf(schedone.getNumeroTotaleImmaginiPdf());
+			schedoneToUpdate.setCompressionePdf(schedone.getCompressionePdf());
+			schedoneToUpdate.setFormatoMediaImmaginiPdf(schedone.getFormatoMediaImmaginiPdf());
+			schedoneToUpdate.setFormatoTotaleImmaginiPDF(schedone.getFormatoTotaleImmaginiPDF());
 			
 			getSchedoneDAO().merge(schedoneToUpdate);
 			
@@ -195,7 +207,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 	public Schedone editTiffImagesSchedone(Schedone schedone) throws ApplicationThrowable {
 		try {
 			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
-			// we update only jpeg images fields
+			// we update only tiff images fields
+			schedoneToUpdate.setDimMediaImmaginiTiff(schedone.getDimMediaImmaginiTiff());
+			schedoneToUpdate.setDimTotaleImmaginiTiff(schedone.getDimTotaleImmaginiTiff());
+			schedoneToUpdate.setNumeroTotaleImmaginiTiff(schedone.getNumeroTotaleImmaginiTiff());
+			schedoneToUpdate.setCompressioneTiff(schedone.getCompressioneTiff());
+			schedoneToUpdate.setFormatoMediaImmaginiTiff(schedone.getFormatoMediaImmaginiTiff());
+			schedoneToUpdate.setFormatoTotaleImmaginiTiff(schedone.getFormatoTotaleImmaginiTiff());
 			
 			getSchedoneDAO().merge(schedoneToUpdate);
 			

@@ -27,9 +27,12 @@
  */
 package org.medici.docsources.command.digitization;
 
+import org.medici.docsources.domain.Schedone.Formato;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class EditJpegImagesSchedoneCommand {
@@ -37,6 +40,11 @@ public class EditJpegImagesSchedoneCommand {
 	private Integer numeroTotaleImmaginiJpeg;
 	private Long dimMediaImmaginiJpeg;
 	private Long dimTotaleImmaginiJpeg;
+	private String compressioneJpeg;
+	private Formato formatoMediaImmaginiJpeg;
+	private Formato formatoTotaleImmaginiJpeg;
+	
+	
 	/**
 	 * @return the schedoneId
 	 */
@@ -84,6 +92,42 @@ public class EditJpegImagesSchedoneCommand {
 	 */
 	public void setDimTotaleImmaginiJpeg(Long dimTotaleImmaginiJpeg) {
 		this.dimTotaleImmaginiJpeg = dimTotaleImmaginiJpeg;
+	}
+	/**
+	 * @return the compressioneJpeg
+	 */
+	public String getCompressioneJpeg() {
+		return compressioneJpeg;
+	}
+	/**
+	 * @param compressioneJpeg the compressioneJpeg to set
+	 */
+	public void setCompressioneJpeg(String compressioneJpeg) {
+		this.compressioneJpeg = compressioneJpeg;
+	}
+	/**
+	 * @return the formatoMediaImmaginiJpeg
+	 */
+	public Formato getFormatoMediaImmaginiJpeg() {
+		return formatoMediaImmaginiJpeg;
+	}
+	/**
+	 * @param formatoMediaImmaginiJpeg the formatoMediaImmaginiJpeg to set
+	 */
+	public void setFormatoMediaImmaginiJpeg(Formato formatoMediaImmaginiJpeg) {
+		this.formatoMediaImmaginiJpeg = formatoMediaImmaginiJpeg;
+	}
+	/**
+	 * @return the formatoTotaleImmaginiJpeg
+	 */
+	public Formato getFormatoTotaleImmaginiJpeg() {
+		return formatoTotaleImmaginiJpeg;
+	}
+	/**
+	 * @param formatoTotaleImmaginiJpeg the formatoTotaleImmaginiJpeg to set
+	 */
+	public void setFormatoTotaleImmaginiJpeg(Formato formatoTotaleImmaginiJpeg) {
+		this.formatoTotaleImmaginiJpeg = formatoTotaleImmaginiJpeg;
 	}
 	
 }

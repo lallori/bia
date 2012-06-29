@@ -11,7 +11,7 @@
 <div id="EditJpegImagesSchedoneDiv" class="background">
 	<div class="title">
 		<h5>JPEG IMAGES</h5>
-		<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${schedone.schedoneId > 0}">
 			<a id="EditJpegImagesSchedone" href="${EditJpegImagesSchedoneURL}" class="editButton" title="Edit Jpeg Images"></a><span id="loading"/>
 			</c:if>

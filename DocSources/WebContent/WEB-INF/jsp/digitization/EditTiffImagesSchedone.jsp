@@ -8,14 +8,14 @@
 		<c:url var="EditTiffImagesSchedoneURL" value="/digitization/EditTiffImagesSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
-		<c:url var="ShowSchedoneURL" value="/src/docbase/ShowSchedone.do">
+		<c:url var="ShowSchedoneURL" value="/digitization/ShowSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
 	</security:authorize>
 	
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
-	<form:form id="EditEditTiffImagesForm" action="${editTiffImagesSchedoneURL}" method="post" cssClass="edit">
+	<form:form id="EditTiffImagesForm" action="${EditTiffImagesSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
 	    <legend><b>TIFF IMAGES</b></legend>
 	    <div class="listForm">
@@ -91,7 +91,7 @@
 			$j("#EditDetailsSchedone").css('visibility', 'hidden');
 			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
-	        $j("#EditPDFImagesSchedone").css('visibility', 'hidden'); 
+	        $j("#EditPdfImagesSchedone").css('visibility', 'hidden'); 
 			
 	        $j("#formatoMediaImmagini option:eq(0)").attr('selected', 'selected');
 	        
@@ -109,7 +109,7 @@
 						$j('#EditDetailsSchedoneForm').block({ message: $j('#question') }); 
 						return false;
 		        	}else{
-		        		$j.ajax({ url: '${ShowCatalogURL}', cache: false, success:function(html) { 
+		        		$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 		    				$j("#body_left").html(html);
 		    			}});
 		    				
@@ -153,7 +153,7 @@
 			}); 
 	        
 			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowCatalog}', cache: false, success:function(html) { 
+				$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
 					

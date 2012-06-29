@@ -91,6 +91,9 @@ public class EditJpegImagesSchedoneController {
 			schedone.setDimMediaImmaginiJpeg(command.getDimMediaImmaginiJpeg());
 			schedone.setDimTotaleImmaginiJpeg(command.getDimTotaleImmaginiJpeg());
 			schedone.setNumeroTotaleImmaginiJpeg(command.getNumeroTotaleImmaginiJpeg());
+			schedone.setCompressioneJpeg(command.getCompressioneJpeg());
+			schedone.setFormatoMediaImmaginiJpeg(command.getFormatoMediaImmaginiJpeg());
+			schedone.setFormatoTotaleImmaginiJpeg(command.getFormatoTotaleImmaginiJpeg());
 
 			try {
 				schedone = getDigitizationService().editJpegImagesSchedone(schedone);
@@ -117,6 +120,8 @@ public class EditJpegImagesSchedoneController {
 
 			try {
 				schedone = getDigitizationService().findSchedone(command.getSchedoneId());
+				
+				model.put("formato", Schedone.Formato.values());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditJpegImagesSchedone", model);
 			} finally {
@@ -127,11 +132,17 @@ public class EditJpegImagesSchedoneController {
 			command.setNumeroTotaleImmaginiJpeg(schedone.getNumeroTotaleImmaginiJpeg());
 			command.setDimMediaImmaginiJpeg(schedone.getDimMediaImmaginiJpeg());
 			command.setDimTotaleImmaginiJpeg(schedone.getDimTotaleImmaginiJpeg());
+			if(schedone.getCompressioneJpeg() != null){
+				command.setCompressioneJpeg(schedone.getCompressioneJpeg());
+			}else{
+				command.setCompressioneJpeg("1:1");
+			}
 		} else {
 			command.setSchedoneId(0);
 			command.setNumeroTotaleImmaginiJpeg(null);
 			command.setDimMediaImmaginiJpeg(null);
 			command.setDimTotaleImmaginiJpeg(null);
+			command.setCompressioneJpeg("1:1");
 		}
 
 		return new ModelAndView("digitization/EditJpegImagesSchedone", model);

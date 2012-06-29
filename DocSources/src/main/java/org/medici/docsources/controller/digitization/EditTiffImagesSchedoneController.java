@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Details Schedone".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/digitization/EditTiffImagesSchedone")
@@ -91,6 +92,9 @@ public class EditTiffImagesSchedoneController {
 			schedone.setDimMediaImmaginiTiff(command.getDimMediaImmaginiTiff());
 			schedone.setDimTotaleImmaginiTiff(command.getDimTotaleImmaginiTiff());
 			schedone.setNumeroTotaleImmaginiTiff(command.getNumeroTotaleImmaginiTiff());
+			schedone.setCompressioneTiff(command.getCompressioneTiff());
+			schedone.setFormatoMediaImmaginiTiff(command.getFormatoMediaImmaginiTiff());
+			schedone.setFormatoTotaleImmaginiTiff(command.getFormatoTotaleImmaginiTiff());
 
 			try {
 				schedone = getDigitizationService().editTiffImagesSchedone(schedone);
@@ -129,11 +133,17 @@ public class EditTiffImagesSchedoneController {
 			command.setNumeroTotaleImmaginiTiff(schedone.getNumeroTotaleImmaginiTiff());
 			command.setDimMediaImmaginiTiff(schedone.getDimMediaImmaginiTiff());
 			command.setDimTotaleImmaginiTiff(schedone.getDimTotaleImmaginiTiff());
+			if(schedone.getCompressioneTiff() != null){
+				command.setCompressioneTiff(schedone.getCompressioneTiff());
+			}else{
+				command.setCompressioneTiff("1:1");
+			}
 		} else {
 			command.setSchedoneId(0);
 			command.setNumeroTotaleImmaginiTiff(null);
 			command.setDimMediaImmaginiTiff(null);
 			command.setDimTotaleImmaginiTiff(null);
+			command.setCompressioneTiff("1:1");
 		}
 
 		return new ModelAndView("digitization/EditTiffImagesSchedone", model);

@@ -8,54 +8,77 @@
 		<c:url var="EditJpegImagesSchedoneURL" value="/digitization/EditJpegImagesSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
-		<c:url var="ShowSchedoneURL" value="/src/docbase/ShowSchedone.do">
+		<c:url var="ShowSchedoneURL" value="/digitization/ShowSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
 	</security:authorize>
 	
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
-	<form:form id="EditJpegImagesForm" action="${editJpegImagesSchedoneURL}" method="post" cssClass="edit">
+	<form:form id="EditJpegImagesForm" action="${EditJpegImagesSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
-	    <legend><b>COMPRESSED IMAGES (JPEGS)</b></legend>
-	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="In che formato sono le immagini compresse (default is JPEG)">?</a>
-	            <form:label for="formato" path="formato" id ="formatoLabel" cssErrorClass="error" title="Formato">Formato</form:label>
-				<form:input path="formato" id="formato" cssClass="input_4c_disabled" />
+	    <legend><b>JPEG IMAGES</b></legend>
+	    <div class="listForm">
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="In che formato sono le immagini ad alta risoluzione (default is JPEG)">?</a>
+	            	<label for="formato" id ="formatoLabel" title="Formato">Formato</label>
+	            </div>
+	            <div class="col_r">
+					<input id="formato" class="input_4c_disabled" value="JPEG" disabled="disabled"/>
+				</div>
 	        </div>
-	        <div>
-	            <a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:60)">?</a>
-	            <form:label for="compressioneJpeg" path="compressioneJpeg" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
-				<form:input path="compressioneJpeg" id="compressione" cssClass="input_4c_disabled" />
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:1)">?</a>
+	            	<form:label for="compressioneJpeg" path="compressioneJpeg" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
+	            </div>
+	            <div class="col_r">
+					<form:input path="compressioneJpeg" id="compressione" cssClass="input_4c_disabled" />
+				</div>
 	        </div>
+	    </div> 
 	        
-	        <hr />
+	    <hr />
+	
+	    <div class="listForm">
+	    	<div class="row"> 
+	        	<div class="col_l">
+	        		<a class="helpIcon" title="Numero esatto di immagini in alta risoluzione prodotte per questa filza (compresi i test)">?</a>
+	        		<form:label for="numeroTotaleImmaginiJpeg" path="numeroTotaleImmaginiJpeg" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
+	        	</div>
+	        	<div class="col_r">
+					<form:input path="numeroTotaleImmaginiJpeg" id="numeroImmagini" cssClass="input_10c" />
+				</div>
+			</div>
+			<div class="row">
+	            <div class="col_l">
+	            	<a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
+	           		<form:label for="dimMediaImmaginiJpeg" path="dimMediaImmaginiJpeg" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
+	           	</div>
+	           	<div class="col_r">
+					<form:input path="dimMediaImmaginiJpeg" id="dimensioneMediaImmagini" cssClass="input_10c" />
+	            	<form:select id="formatoMediaImmagini" path="formatoMediaImmaginiJpeg" cssClass="selectform_short" items="${formato}"/>
+	            	<%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Mb--%>
+	            </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
+	            	<form:label for="dimTotaleImmaginiJpeg" path="dimTotaleImmaginiJpeg" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
+	            </div>
+	            <div class="col_r">
+					<form:input path="dimTotaleImmaginiJpeg" id="dimTotaleImmaginiJpeg" cssClass="input_10c" />
+					<form:select id="formatoTotaleImmagini" path="formatoTotaleImmaginiJpeg" cssClass="selectform_short" items="${formato}"/>
+	            	<%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Gb--%>
+	            </div>
+	        </div>
+	    </div>   
 	        
-	        <div>
-	        	<a class="helpIcon" title="Numero esatto di immagini compresse prodotte per questo PDF (i test in questo caso sono esclusi)">?</a>
-	        	<form:label for="numeroTotaleImmaginiJpeg" path="numeroTotaleImmaginiJpeg" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
-				<form:input path="numeroTotaleImmaginiJpeg" id="numeroImmagini" cssClass="input_4c_disabled" />
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimMediaImmaginiJpeg" path="dimMediaImmaginiJpeg" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
-				<form:input path="dimMediaImmaginiJpeg" id="dimensioneMediaImmagini" cssClass="input_10c" />
-	            <form:select id="formatoMediaImmagini" path="formatoMediaImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
-	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Kb--%>
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimTotaleImmaginiJpeg" path="dimTotaleImmaginiJpeg" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
-				<form:input path="dimMediaImmaginiJpeg" id="dimMediaImmaginiJpeg" cssClass="input_10c" />
-				<form:select id="formatoTotaleImmagini" path="formatoTotaleImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
-	        	<select id="formatoTotaleImmagini" name="formatoTotaleImmagini" class="selectform_short">
-	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Mb--%>
-	        </div>
-	        
-	        <div>
-	            <input id="close" type="submit" value="Close" title="Do not save changes" />
-	            <input id="save" class="save" type="submit" value="Save" />
-	        </div>
+	    <div>
+	    	<input id="close" type="submit" value="Close" title="Do not save changes" />
+	        <input id="save" class="save" type="submit" value="Save" />
+	    </div>
 	
 	    </fieldset>
 	</form:form>
@@ -64,13 +87,15 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			<%-- Initialize input type dates default values --%>
-			<%-- TO BE DONE--%>
-			
-			
+			<%-- TO BE DONE--%>			
 			$j("#EditDetailsSchedone").css('visibility', 'hidden');
 			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
-	        $j("#EditPDFImagesSchedone").css('visibility', 'hidden'); 
+	        $j("#EditPdfImagesSchedone").css('visibility', 'hidden');
+	        
+			$j("#formatoMediaImmagini option:eq(0)").attr('selected', 'selected');
+	        
+	        $j("#formatoTotaleImmagini option:eq(2)").attr('selected', 'selected');
 			
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -83,7 +108,7 @@
 						$j('#EditDetailsSchedoneForm').block({ message: $j('#question') }); 
 						return false;
 		        	}else{
-		        		$j.ajax({ url: '${ShowCatalogURL}', cache: false, success:function(html) { 
+		        		$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 		    				$j("#body_left").html(html);
 		    			}});
 		    				
@@ -127,7 +152,7 @@
 			}); 
 	        
 			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowCatalog}', cache: false, success:function(html) { 
+				$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
 					
