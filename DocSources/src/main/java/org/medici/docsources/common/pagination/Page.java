@@ -187,6 +187,9 @@ public class Page {
 		return totalPages;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
@@ -203,6 +206,6 @@ public class Page {
 		stringBuffer.append(",totalPages=");
 		stringBuffer.append(getTotalPages());
 		stringBuffer.append("]");
-		return super.toString();
+		return stringBuffer.toString();
 	}
 }
