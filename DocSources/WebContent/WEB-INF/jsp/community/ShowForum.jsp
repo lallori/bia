@@ -97,19 +97,24 @@
 						            </div>
 						            <div class="two">${fn:length(currentForum.forumTopics)}</div>
 						            <div class="three">0</div>
+								<c:if test="${not empty currentForum.lastPost}">
 						            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentForum.lastPost}">
+						            <div class="four"></div>
+						        </c:if>
 						        </div>
 						    </c:forEach>
-						    <td class="nav" nowrap="nowrap" align="right">
-								<c:set var="paginationData">
-									<bia:pagination page="${subForumsPage}"/>
-								</c:set>
-								
-								${paginationData}
-							</td>
+						    </div>
+					    </div>
+						<c:set var="paginationData">
+							<bia:paginationForum page="${subForumsPage}"/>
+						</c:set>
+							
+						${paginationData}
 						</c:if>
 						
-							<c:if test="${empty subForumsPage.list}">
+						<c:if test="${empty subForumsPage.list}">
 								<div class="rowLast">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
@@ -120,8 +125,8 @@
 						            <div class="three">0</div>
 						            <div class="four">empty forum</div>
 						        </div>
-							</c:if>    
 						    </div>
+						</c:if>    
 						</div>
 					</c:if>	
 
@@ -149,7 +154,12 @@
 						            </div>
 						            <div class="two">${currentTopic.totalReplies}</div>
 						            <div class="three">-</div>
+								<c:if test="${not empty currentTopic.lastPost}">
 						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.userInformation.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentTopic.lastPost}">
+						            <div class="four"></div>
+						        </c:if>
 						        </div>
 						    </c:forEach>
 						</c:if>
@@ -166,7 +176,6 @@
 						            <div class="four">empty forum</div>
 						        </div>
 						    </c:if>
-						    </div>
 						</div>
 					</c:if>
 				</c:if>
@@ -196,19 +205,23 @@
 			    			}});
 
 							$j('.forumHref').die();
-							// Result links have a specific class style on which we attach click live. 
 							$j('.forumHref').live('click', function() {
 								$j("#mainContent").load($j(this).attr("href"));
 								return false;
 							});
 
 							$j('.boardIndex').die();
-							// Result links have a specific class style on which we attach click live. 
 							$j('.boardIndex').live('click', function() {
 								$j("#mainContent").load($j(this).attr("href"));
 								return false;
 							});
 							
+							$j('.forum').die();
+							$j('.forum').live('click', function() {
+								$j("#mainContent").load($j(this).attr("href"));
+								return false;
+							});
+
 							$j('#newTopic').click(function (){
 								$j("#mainContent").load($j(this).attr("href"));
 								$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
