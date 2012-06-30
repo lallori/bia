@@ -31,4 +31,12 @@ timeToLiveSeconds="600"
 overflowToDisk="true"
 />
 
+<cache name="org.medici.docsources.domain.TopicList" 
+maxElementsInMemory="10000"
+eternal="true"
+timeToIdleSeconds="300"
+timeToLiveSeconds="600"
+overflowToDisk="true"
+/>
+
 </ehcache>

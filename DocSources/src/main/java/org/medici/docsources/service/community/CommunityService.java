@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
@@ -229,6 +230,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param simpleSearchForumPost
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

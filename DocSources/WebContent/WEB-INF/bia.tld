@@ -10,8 +10,8 @@
     <uri>http://docsources.medici.org/jsp:jstl</uri>
 
 	<tag-file>
-		<name>pagination</name>
-		<path>/WEB-INF/tags/bia/pagination.tag</path>
+		<name>paginationForum</name>
+		<path>/WEB-INF/tags/bia/paginationForum.tag</path>
 	</tag-file>
 
     <function>

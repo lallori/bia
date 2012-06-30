@@ -240,7 +240,7 @@ public class HtmlUtils {
 			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 			stringBuffer.append("/community/ShowForum.do?forumId=");
 			stringBuffer.append(forum.getForumId());
-			stringBuffer.append("&\" class=\"forum\" />");
+			stringBuffer.append("&\" class=\"forum\">");
 			stringBuffer.append(forum.getTitle());
 			stringBuffer.append("</a>");
 		} else {

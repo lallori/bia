@@ -1,5 +1,5 @@
 /*
- * SimpleSearchController.java
+ * SimpleSearchForumController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 

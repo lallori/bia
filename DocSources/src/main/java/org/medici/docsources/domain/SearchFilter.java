@@ -255,7 +255,7 @@ public class SearchFilter implements Serializable {
 	 *
 	 */
 	public static enum SearchType implements Serializable {
-		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE");
+		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE"), FORUM("FORUM");
 		
 		private final String searchType;
 

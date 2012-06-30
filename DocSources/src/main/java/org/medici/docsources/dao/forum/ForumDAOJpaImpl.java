@@ -327,6 +327,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
 			page.setTotal(new Long((Long) query.getSingleResult()));
 			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(paginationFilter.getPageTotal());
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();

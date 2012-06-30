@@ -1,0 +1,129 @@
+/*
+ * SimpleSearchForumController.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
+ * 
+ * This file is part of DocSources.
+ * 
+ * DocSources is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * DocSources is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * As a special exception, if you link this library with other files to
+ * produce an executable, this library does not by itself cause the
+ * resulting executable to be covered by the GNU General Public License.
+ * This exception does not however invalidate any other reasons why the
+ * executable file might be covered by the GNU General Public License.
+ */
+package org.medici.docsources.controller.community;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
+import org.medici.docsources.command.community.SimpleSearchForumPostCommand;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SimpleSearchForumPost;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.community.CommunityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ *
+ */
+@Controller
+@RequestMapping("/community/SimpleSearchForumPost")
+public class SimpleSearchForumPostController {
+	@Autowired
+	private CommunityService communityService;
+
+	/**
+	 * This controller act as a dispatcher for result view.
+	 *  
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchForumPostCommand command) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		 
+		try {
+			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
+		} catch (URIException e) {
+		}
+		model.put("yourSearch", command.getText());
+		
+		if(command.getText().contains("\"")){
+			command.setText(command.getText().replace("\"", "\\\""));
+		}
+		// This number is used to generate an unique id for new search
+		UUID uuid = UUID.randomUUID();
+		command.setSearchUUID(uuid.toString());
+		model.put("searchUUID", uuid.toString());
+
+		PaginationFilter paginationFilter = new PaginationFilter();
+		if (command.getResultsForPage() != null) {
+			paginationFilter.setElementsForPage(command.getResultsForPage());
+		} else {
+			paginationFilter.setElementsForPage(new Integer(10));
+		}
+		if (command.getResultPageNumber() != null) {
+			paginationFilter.setThisPage(command.getResultPageNumber());
+		} else {
+			paginationFilter.setThisPage(new Integer(1));
+		}
+		if (command.getResultPageTotal() != null) {
+			paginationFilter.setPageTotal(command.getResultPageTotal());
+		} else {
+			paginationFilter.setPageTotal(null);
+		}
+		paginationFilter.addSortingCriteria("dispositionOrder", "asc");
+		
+		Page page = new Page(paginationFilter);
+
+		try {
+			page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getText()), paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		model.put("searchResultPage", page);
+		return new ModelAndView("community/SimpleSearchForumResult",model);
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+}

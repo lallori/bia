@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
@@ -492,6 +493,18 @@ public class CommunityServiceImpl implements CommunityService {
 			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
 			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getForumPostDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

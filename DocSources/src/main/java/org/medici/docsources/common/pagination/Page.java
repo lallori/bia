@@ -186,4 +186,23 @@ public class Page {
 	public Integer getTotalPages() {
 		return totalPages;
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[");
+		stringBuffer.append("elementsForPage=");
+		stringBuffer.append(getElementsForPage());
+		stringBuffer.append(",firstRecordNumber=");
+		stringBuffer.append(getFirstRecordNumber());
+		stringBuffer.append(",lastRecordNumber=");
+		stringBuffer.append(getLastRecordNumber());
+		stringBuffer.append(",thisPage=");
+		stringBuffer.append(getThisPage());
+		stringBuffer.append(",total=");
+		stringBuffer.append(getTotal());
+		stringBuffer.append(",totalPages=");
+		stringBuffer.append(getTotalPages());
+		stringBuffer.append("]");
+		return super.toString();
+	}
 }

@@ -118,11 +118,13 @@ public class ShowForumController {
 					paginationFilterForum.setElementsForPage(command.getForumsForPage());
 				} else {
 					paginationFilterForum.setElementsForPage(new Integer(10));
+					command.setForumsForPage(paginationFilterForum.getElementsForPage());
 				}
 				if (command.getForumPageNumber() != null) {
 					paginationFilterForum.setThisPage(command.getForumPageNumber());
 				} else {
 					paginationFilterForum.setThisPage(new Integer(1));
+					command.setForumPageNumber(paginationFilterForum.getThisPage());
 				}
 				if (command.getForumPageTotal() != null) {
 					paginationFilterForum.setPageTotal(command.getForumPageTotal());
@@ -142,11 +144,13 @@ public class ShowForumController {
 					paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
 				} else {
 					paginationFilterTopic.setElementsForPage(new Integer(10));
+					command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
 				}
 				if (command.getTopicPageNumber() != null) {
 					paginationFilterTopic.setThisPage(command.getTopicPageNumber());
 				} else {
 					paginationFilterTopic.setThisPage(new Integer(1));
+					command.setTopicPageNumber(paginationFilterTopic.getThisPage());
 				}
 				if (command.getTopicPageTotal() != null) {
 					paginationFilterTopic.setPageTotal(command.getTopicPageTotal());

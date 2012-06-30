@@ -1,5 +1,5 @@
 /*
- * SimpleSearchForum.java
+ * SimpleSearchForumPost.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -37,7 +37,7 @@ import org.medici.docsources.common.util.RegExUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchForum extends SimpleSearch {
+public class SimpleSearchForumPost extends SimpleSearch {
 	/**
 	 * 
 	 */
@@ -48,7 +48,7 @@ public class SimpleSearchForum extends SimpleSearch {
 	/**
 	 * 
 	 */
-	public SimpleSearchForum() {
+	public SimpleSearchForumPost() {
 		super();
 	}
 
@@ -56,7 +56,7 @@ public class SimpleSearchForum extends SimpleSearch {
 	 * 
 	 * @param text
 	 */
-	public SimpleSearchForum(SimpleSearchPerimeter simpleSearchPerimeter, String text) {
+	public SimpleSearchForumPost(String text) {
 		super();
 
 		if (!StringUtils.isEmpty(text)) {
@@ -75,7 +75,7 @@ public class SimpleSearchForum extends SimpleSearch {
 	 * 
 	 * @param command
 	 */
-	public void initFromText(SimpleSearchPerimeter simpleSearchPerimeter, String text) {
+	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
 			setAlias(text.toLowerCase());
 		}
