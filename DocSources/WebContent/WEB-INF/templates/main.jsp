@@ -52,7 +52,6 @@
 		<script src="/DocSources/scripts/mview/mootools-more-1.3.2.1.js" type="text/javascript"></script>
 -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
-<!-- <script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.general.js"/>"></script>
@@ -66,10 +65,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-<%-- 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.16.custom.min.js"/>"></script> --%>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
@@ -77,8 +74,6 @@
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>
-		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
 		<script type="text/javascript" src="/DocSources/scripts/jquery.expander.js"></script>
 		
 		<script type="text/javascript">
