@@ -52,6 +52,8 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
 @Controller
 @RequestMapping("/community/ShowTopicForum")
@@ -85,11 +87,13 @@ public class ShowTopicForumController {
 				paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
 			} else {
 				paginationFilterTopic.setElementsForPage(new Integer(10));
+				command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
 			}
 			if (command.getTopicPageNumber() != null) {
 				paginationFilterTopic.setThisPage(command.getTopicPageNumber());
 			} else {
 				paginationFilterTopic.setThisPage(new Integer(1));
+				command.setTopicPageNumber(paginationFilterTopic.getThisPage());
 			}
 			if (command.getTopicPageTotal() != null) {
 				paginationFilterTopic.setPageTotal(command.getTopicPageTotal());

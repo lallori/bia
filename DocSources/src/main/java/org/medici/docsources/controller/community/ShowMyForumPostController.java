@@ -1,5 +1,5 @@
 /*
- * ShowMembersForumController.java
+ * ShowMyForumPostController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,12 +30,22 @@ package org.medici.docsources.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.community.ShowMembersForumCommand;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.command.community.ShowMyForumPostCommand;
+import org.medici.docsources.command.community.ShowTopicForumCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearchFactory;
+import org.medici.docsources.common.search.AdvancedSearchForum;
+import org.medici.docsources.domain.ForumTopic;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,14 +53,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view a categort forum page.
+ * Controller to view a specific topic on a forum.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
 @Controller
-@RequestMapping(value={"/community/ShowMembersForum"})
-public class ShowMembersForumController {
+@RequestMapping("/community/ShowMyForumPost")
+public class ShowMyForumPostController {
 	@Autowired
 	private CommunityService communityService;
 	
@@ -61,38 +73,54 @@ public class ShowMembersForumController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowMembersForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowMyForumPostCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
+			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+
+			if (userInformation != null) {
+				if (userInformation.getForumJoinedDate() == null) {
+					userInformation = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("userInformation", userInformation);
+				}
+			}
+	
+			// secondo paginationFilter to manage topics results..
 			PaginationFilter paginationFilter = new PaginationFilter();
-			if (command.getMembersForPage() != null) {
-				paginationFilter.setElementsForPage(command.getMembersForPage());
+			if (command.getPostsForPage() != null) {
+				paginationFilter.setElementsForPage(command.getPostsForPage());
 			} else {
 				paginationFilter.setElementsForPage(new Integer(10));
-				command.setMembersForPage(paginationFilter.getElementsForPage());
+				command.setPostsForPage(paginationFilter.getElementsForPage());
 			}
-			if (command.getMemberPageNumber() != null) {
-				paginationFilter.setThisPage(command.getMemberPageNumber());
+			if (command.getPostPageNumber() != null) {
+				paginationFilter.setThisPage(command.getPostPageNumber());
 			} else {
 				paginationFilter.setThisPage(new Integer(1));
-				command.setMemberPageNumber(paginationFilter.getThisPage());
+				command.setPostPageNumber(paginationFilter.getThisPage());
 			}
-			if (command.getMemberPageTotal() != null) {
-				paginationFilter.setPageTotal(command.getMemberPageTotal());
+			if (command.getPostPageTotal() != null) {
+				paginationFilter.setPageTotal(command.getPostPageTotal());
 			} else {
 				paginationFilter.setPageTotal(null);
 			}
-			paginationFilter.addSortingCriteria("username", "asc");
+			paginationFilter.addSortingCriteria("postId", "asc");
 
-			Page membersPage = getCommunityService().getForumMembers(command.getLetter(), paginationFilter);
-			model.put("membersPage", membersPage);
+			AdvancedSearchForum advancedSearchForum = new AdvancedSearchForum();
+			advancedSearchForum.setAuthor(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
+			Page postsPage  = getCommunityService().searchForumPosts(advancedSearchForum, paginationFilter);
+			model.put("postsPage", postsPage);
 		} catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("error/ShowIndexForum", model);
+			return new ModelAndView("error/ShowTopicForum", model);
 		}
 
-		return new ModelAndView("community/ShowMembersForum", model);
+		if (ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())) {
+			return new ModelAndView("community/ShowTopicForumCompleteDOM", model);
+		} else {
+			return new ModelAndView("community/ShowTopicForum", model);
+		}
 	}
 
 	/**

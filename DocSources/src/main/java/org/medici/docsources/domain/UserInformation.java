@@ -39,6 +39,8 @@ import javax.persistence.Table;
  * UserInformation.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
 @Entity
 @Table ( name = "\"tblUserInformation\"" ) 
@@ -78,6 +80,10 @@ public class UserInformation implements Serializable {
 	private Long forumNumberOfPost;
 	@Column (name="\"forumJoinedDate\"", nullable=true)
 	private Date forumJoinedDate;
+	@Column (name="\"lastForumPostDate\"", nullable=true)
+	private Date lastForumPostDate;
+	@Column (name="\"lastActiveForumDate\"", nullable=true)
+	private Date lastActiveForumDate;
 
 	/**
 	 * 
@@ -301,5 +307,33 @@ public class UserInformation implements Serializable {
 	 */
 	public Long getForumNumberOfPost() {
 		return forumNumberOfPost;
+	}
+
+	/**
+	 * @param lastForumPostDate the lastForumPostDate to set
+	 */
+	public void setLastForumPostDate(Date lastForumPostDate) {
+		this.lastForumPostDate = lastForumPostDate;
+	}
+
+	/**
+	 * @return the lastForumPostDate
+	 */
+	public Date getLastForumPostDate() {
+		return lastForumPostDate;
+	}
+
+	/**
+	 * @param lastActiveForumDate the lastActiveForumDate to set
+	 */
+	public void setLastActiveForumDate(Date lastActiveForumDate) {
+		this.lastActiveForumDate = lastActiveForumDate;
+	}
+
+	/**
+	 * @return the lastActiveForumDate
+	 */
+	public Date getLastActiveForumDate() {
+		return lastActiveForumDate;
 	}
 }

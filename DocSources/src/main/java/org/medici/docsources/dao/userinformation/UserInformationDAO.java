@@ -29,6 +29,8 @@ package org.medici.docsources.dao.userinformation;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.UserInformation;
 
@@ -44,13 +46,22 @@ public interface UserInformationDAO extends Dao<String, UserInformation> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserInformation getNewestMember() throws PersistenceException;
+	public Long countMembersForum() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param letter
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findForumMembers(String letter, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countMembersForum() throws PersistenceException;
+	public UserInformation getNewestMember() throws PersistenceException;
 
 }

@@ -288,6 +288,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserInformationDAO().findForumMembers(letter, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * @return the forumPostDAO
 	 */
 	public ForumPostDAO getForumPostDAO() {

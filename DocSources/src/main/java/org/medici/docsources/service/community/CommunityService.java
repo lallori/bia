@@ -45,6 +45,8 @@ import org.medici.docsources.exception.ApplicationThrowable;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
 public interface CommunityService {
 
@@ -138,6 +140,15 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param letter
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param forumTopic
 	 * @param paginationFilterPost
 	 * @return
@@ -200,7 +211,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param integer
@@ -214,7 +225,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserInformation joinUserOnForum()throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param userComment

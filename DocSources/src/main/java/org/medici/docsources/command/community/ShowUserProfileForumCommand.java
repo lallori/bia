@@ -1,5 +1,5 @@
 /*
- * ShowMembersForumCommand.java
+ * ShowUserProfileForumCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,66 +32,5 @@ package org.medici.docsources.command.community;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowMembersForumCommand {
-	private String letter;
-
-	private Integer memberPageNumber;
-	private Integer memberPageTotal;
-	private Integer membersForPage;
-	
-	/**
-	 * @return the letter
-	 */
-	public String getLetter() {
-		return letter;
-	}
-	
-	/**
-	 * @param letter the letter to set
-	 */
-	public void setLetter(String letter) {
-		this.letter = letter;
-	}
-	
-	/**
-	 * @return the memberPageNumber
-	 */
-	public Integer getMemberPageNumber() {
-		return memberPageNumber;
-	}
-	
-	/**
-	 * @param memberPageNumber the memberPageNumber to set
-	 */
-	public void setMemberPageNumber(Integer memberPageNumber) {
-		this.memberPageNumber = memberPageNumber;
-	}
-	
-	/**
-	 * @return the memberPageTotal
-	 */
-	public Integer getMemberPageTotal() {
-		return memberPageTotal;
-	}
-	
-	/**
-	 * @param memberPageTotal the memberPageTotal to set
-	 */
-	public void setMemberPageTotal(Integer memberPageTotal) {
-		this.memberPageTotal = memberPageTotal;
-	}
-	
-	/**
-	 * @return the membersForPage
-	 */
-	public Integer getMembersForPage() {
-		return membersForPage;
-	}
-
-	/**
-	 * @param membersForPage the membersForPage to set
-	 */
-	public void setMembersForPage(Integer membersForPage) {
-		this.membersForPage = membersForPage;
-	}
+public class ShowUserProfileForumCommand {
 }

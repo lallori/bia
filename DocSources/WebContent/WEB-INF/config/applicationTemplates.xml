@@ -290,8 +290,20 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
 	</definition>
 
+	<definition name="community/ShowMembersForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMembersForum.jsp"/>
+	</definition>
+
 	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
+	</definition>
+
+	<definition name="community/AdvancedSearchForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchForumPost.jsp"/>
+	</definition>
+
+	<definition name="community/SearchResultForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/SearchResultForumPost.jsp"/>
 	</definition>
 
 	<definition name="community/ShowForum" extends="template.partialDOM">
@@ -313,7 +325,11 @@
 	<definition name="community/ShowTopicForumCompleteDOM" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
 	</definition>
-	
+
+	<definition name="community/ShowUserProfileForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
+	</definition>
+
 	<!-- Community Module END -->
 
     <!-- Digitization Module BEGIN -->

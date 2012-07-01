@@ -6,7 +6,7 @@
 
 
 				<div id="membersDiv">
-					<img src="/DocSources/images/forum/img_members.png" alt="members" />
-					<a href="/DocSources/forum/members.html" id="members">Members</a>
+					<img src="<c:url value="/images/forum/img_members.png"/>" alt="members" />
+					<a href="<c:url value="/community/ShowMembersForum.do"/>" id="members">Members</a>
 				</div>
 				

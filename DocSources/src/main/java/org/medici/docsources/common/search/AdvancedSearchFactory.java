@@ -30,6 +30,7 @@ package org.medici.docsources.common.search;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.medici.docsources.command.community.ShowMyForumPostCommand;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;

@@ -1,5 +1,5 @@
 /*
- * ShowMembersForumCommand.java
+ * ShowMyForumPostCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,66 +32,59 @@ package org.medici.docsources.command.community;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowMembersForumCommand {
-	private String letter;
+public class ShowMyForumPostCommand {
+	private Boolean completeDOM;
 
-	private Integer memberPageNumber;
-	private Integer memberPageTotal;
-	private Integer membersForPage;
-	
+	private Integer postPageNumber;
+	private Integer postPageTotal;
+	private Integer postsForPage;
 	/**
-	 * @return the letter
+	 * @return the completeDOM
 	 */
-	public String getLetter() {
-		return letter;
+	public Boolean getCompleteDOM() {
+		return completeDOM;
+	}
+	/**
+	 * @param completeDOM the completeDOM to set
+	 */
+	public void setCompleteDOM(Boolean completeDOM) {
+		this.completeDOM = completeDOM;
+	}
+	/**
+	 * @return the postPageNumber
+	 */
+	public Integer getPostPageNumber() {
+		return postPageNumber;
+	}
+	/**
+	 * @param postPageNumber the postPageNumber to set
+	 */
+	public void setPostPageNumber(Integer postPageNumber) {
+		this.postPageNumber = postPageNumber;
+	}
+	/**
+	 * @return the postPageTotal
+	 */
+	public Integer getPostPageTotal() {
+		return postPageTotal;
+	}
+	/**
+	 * @param postPageTotal the postPageTotal to set
+	 */
+	public void setPostPageTotal(Integer postPageTotal) {
+		this.postPageTotal = postPageTotal;
+	}
+	/**
+	 * @return the postsForPage
+	 */
+	public Integer getPostsForPage() {
+		return postsForPage;
+	}
+	/**
+	 * @param postsForPage the postsForPage to set
+	 */
+	public void setPostsForPage(Integer postsForPage) {
+		this.postsForPage = postsForPage;
 	}
 	
-	/**
-	 * @param letter the letter to set
-	 */
-	public void setLetter(String letter) {
-		this.letter = letter;
-	}
-	
-	/**
-	 * @return the memberPageNumber
-	 */
-	public Integer getMemberPageNumber() {
-		return memberPageNumber;
-	}
-	
-	/**
-	 * @param memberPageNumber the memberPageNumber to set
-	 */
-	public void setMemberPageNumber(Integer memberPageNumber) {
-		this.memberPageNumber = memberPageNumber;
-	}
-	
-	/**
-	 * @return the memberPageTotal
-	 */
-	public Integer getMemberPageTotal() {
-		return memberPageTotal;
-	}
-	
-	/**
-	 * @param memberPageTotal the memberPageTotal to set
-	 */
-	public void setMemberPageTotal(Integer memberPageTotal) {
-		this.memberPageTotal = memberPageTotal;
-	}
-	
-	/**
-	 * @return the membersForPage
-	 */
-	public Integer getMembersForPage() {
-		return membersForPage;
-	}
-
-	/**
-	 * @param membersForPage the membersForPage to set
-	 */
-	public void setMembersForPage(Integer membersForPage) {
-		this.membersForPage = membersForPage;
-	}
 }

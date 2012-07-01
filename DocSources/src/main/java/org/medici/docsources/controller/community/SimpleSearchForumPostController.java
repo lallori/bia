@@ -110,7 +110,8 @@ public class SimpleSearchForumPostController {
 		}
 
 		model.put("searchResultPage", page);
-		return new ModelAndView("community/SimpleSearchForumResult",model);
+
+		return new ModelAndView("community/SearchResultForumPost",model);
 	}
 
 	/**

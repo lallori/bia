@@ -5,10 +5,26 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 				<div id="searchForm">
-					<form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
+					<form id="SearchForm" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
                         <input id="searchText" name="searchText" type="text" value="Search...">
                         <input id="search" type="submit" title="Search" value="Search"/>
 					</form>
 				</div>
 
-                <a href="/DocSources/forum/advancedSearch.html" class="buttonMedium" id="advancedSearchButton">Advanced Search</a>
+                <a href="<c:url value="/community/AdvancedSearchForumPost.do"/>" class="buttonMedium" id="advancedSearchButton">Advanced Search</a>
+
+
+				<script>
+					$j(document).ready(function() {
+						$j('#SearchForm').submit(function (){
+							$j("#mainContent").load($j(this).attr("href"));
+							return false;
+						});
+
+						$j('#advancedSearchButton').submit(function (){
+							$j("#mainContent").load($j(this).attr("href"));
+							return false;
+						});
+
+					});
+				</script>

@@ -32,6 +32,12 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserInformation;
 import org.springframework.stereotype.Repository;
@@ -52,6 +58,81 @@ public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> i
 	 */
 	private static final long serialVersionUID = 1193605850422464008L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countMembersForum() throws PersistenceException {
+        String queryString = "select count(account) FROM UserInformation WHERE lastLoginDate is not null";
+    	
+        Query query = getEntityManager().createQuery(queryString);
+    	
+        return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page findForumMembers(String letter, PaginationFilter paginationFilter) throws PersistenceException {
+		String queryString = "FROM UserInformation WHERE username like = :letter ";
+
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		if (letter == null) {
+			return page;
+		}
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getPageTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+	        
+			query = getEntityManager().createQuery(countQuery);
+	        query.setParameter("letter", letter + "%");
+
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(paginationFilter.getPageTotal());
+		}
+
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = queryString + orderBySQL.toString();
+		logger.debug("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("letter", letter + "%");
+
+        // We set pagination  
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<UserInformation> list = (List<UserInformation>) query.getResultList();
+
+		// We set search result on return method
+		page.setList(list);
+		
+		return page;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,18 +150,6 @@ public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> i
 		}
         
 		return new UserInformation();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Long countMembersForum() throws PersistenceException {
-        String queryString = "select count(account) FROM UserInformation WHERE lastLoginDate is not null";
-    	
-        Query query = getEntityManager().createQuery(queryString);
-    	
-        return (Long) query.getSingleResult();
 	}
 
 }

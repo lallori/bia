@@ -1,5 +1,5 @@
 /*
- * ShowMembersForumController.java
+ * ShowUserProfileForumController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,12 +30,17 @@ package org.medici.docsources.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.community.ShowMembersForumCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import javax.servlet.http.HttpSession;
+
+import org.medici.docsources.command.community.ShowUserProfileForumCommand;
+import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
+import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,17 +48,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view a categort forum page.
+ * Controller to view user profile.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/ShowMembersForum"})
-public class ShowMembersForumController {
+@RequestMapping("/community/ShowUserProfileForum")
+public class ShowUserProfileForumController {
 	@Autowired
 	private CommunityService communityService;
-	
+	@Autowired
+	private UserService userService;
+
 	/**
 	 * 
 	 * @param request
@@ -61,38 +68,33 @@ public class ShowMembersForumController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowMembersForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowUserProfileForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			PaginationFilter paginationFilter = new PaginationFilter();
-			if (command.getMembersForPage() != null) {
-				paginationFilter.setElementsForPage(command.getMembersForPage());
-			} else {
-				paginationFilter.setElementsForPage(new Integer(10));
-				command.setMembersForPage(paginationFilter.getElementsForPage());
+			User user = null;
+			try {
+				user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			} catch (ApplicationThrowable ath) {
+				user = new User();
 			}
-			if (command.getMemberPageNumber() != null) {
-				paginationFilter.setThisPage(command.getMemberPageNumber());
-			} else {
-				paginationFilter.setThisPage(new Integer(1));
-				command.setMemberPageNumber(paginationFilter.getThisPage());
-			}
-			if (command.getMemberPageTotal() != null) {
-				paginationFilter.setPageTotal(command.getMemberPageTotal());
-			} else {
-				paginationFilter.setPageTotal(null);
-			}
-			paginationFilter.addSortingCriteria("username", "asc");
+			model.put("userProfile", user);		
+			
+			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
 
-			Page membersPage = getCommunityService().getForumMembers(command.getLetter(), paginationFilter);
-			model.put("membersPage", membersPage);
-
+			if (userInformation != null) {
+				if (userInformation.getForumJoinedDate() == null) {
+					userInformation = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("userInformation", userInformation);
+				}
+			} else {
+				userInformation = getUserService().findUserInformation();
+			}
 		} catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("error/ShowIndexForum", model);
+			return new ModelAndView("error/ShowUserProfileForum", model);
 		}
 
-		return new ModelAndView("community/ShowMembersForum", model);
+		return new ModelAndView("community/ShowUserProfileForum", model);
 	}
 
 	/**
@@ -107,5 +109,19 @@ public class ShowMembersForumController {
 	 */
 	public CommunityService getCommunityService() {
 		return communityService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
 	}
 }
