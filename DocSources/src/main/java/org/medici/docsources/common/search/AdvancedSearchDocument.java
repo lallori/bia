@@ -2254,280 +2254,300 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		String toString = new String();
+		StringBuffer stringBuffer = new StringBuffer();
 		if(!words.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Words: ";
+			stringBuffer.append("Words: ");
 			for(int i = 0; i < words.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += words.get(i) + " ";
+				stringBuffer.append(words.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
 		if(!extract.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Extract: ";
+			stringBuffer.append("Extract: ");
 			for(int i = 0; i < extract.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += extract.get(i) + " ";
+				stringBuffer.append(extract.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
 		if(!synopsis.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Synopsis: ";
+			stringBuffer.append("Synopsis: ");
 			for(int i = 0; i < synopsis.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += synopsis.get(i) + " ";
+				stringBuffer.append(synopsis.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
 		if(!person.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Person: ";
+			stringBuffer.append("Person: ");
 			for(int i = 0; i < person.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += person.get(i) + " ";
+				stringBuffer.append(person.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
 		if(!place.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Place: ";
+			stringBuffer.append("Place: ");
 			for(int i = 0; i < place.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += place.get(i) + " ";
+				stringBuffer.append(place.get(i) + " ");
 			}
 		}
 		
 		if(!sender.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Sender: ";
+			stringBuffer.append("Sender: ");
 			for(int i = 0; i < sender.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += sender.get(i) + " ";
+				stringBuffer.append(sender.get(i) + " ");
 			}
 		}
 		
 		if(!from.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("From: ");
+			stringBuffer.append("From: ");
 			for(int i = 0; i < from.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (from.get(i) + " ");
+				stringBuffer.append(from.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!recipient.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Recipient: ");
+			stringBuffer.append("Recipient: ");
 			for(int i = 0; i < recipient.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (recipient.get(i) + " ");
+				stringBuffer.append(recipient.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!to.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("To: ");
+			stringBuffer.append("To: ");
 			for(int i = 0; i < to.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (to.get(i) + " ");
+				stringBuffer.append(to.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!refersTo.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Refers to: ");
+			stringBuffer.append("Refers to: ");
 			for(int i = 0; i < refersTo.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (refersTo.get(i) + " ");
+				stringBuffer.append(refersTo.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!topics.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Topics: ");
+			stringBuffer.append("Topics: ");
 			for(int i = 0; i < topics.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (topics.get(i) + " ");
+				stringBuffer.append(topics.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesYear.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Date Year: ");
+			stringBuffer.append("Date Year: ");
 			for(int i = 0; i < datesYear.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesYear.get(i) + " ");
+				stringBuffer.append(datesYear.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesMonth.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Date Month: ");
+			stringBuffer.append("Date Month: ");
 			for(int i = 0; i < datesMonth.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesMonth.get(i) + " ");
+				stringBuffer.append(datesMonth.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesDay.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Date Day: ");
+			stringBuffer.append("Date Day: ");
 			for(int i = 0; i < datesDay.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesDay.get(i) + " ");
+				stringBuffer.append(datesDay.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Between Date Year: ");
+			stringBuffer.append("Between Date Year: ");
 			for(int i = 0; i < datesYearBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesYearBetween.get(i) + " ");
+				stringBuffer.append(datesYearBetween.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Between Date Month: ");
+			stringBuffer.append("Between Date Month: ");
 			for(int i = 0; i < datesMonthBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesMonthBetween.get(i) + " ");
+				stringBuffer.append(datesMonthBetween.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Between Date Day: ");
+			stringBuffer.append("Between Date Day: ");
 			for(int i = 0; i < datesDayBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (datesDayBetween.get(i) + " ");
+				stringBuffer.append(datesDayBetween.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!volumes.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Volumes: ");
+			stringBuffer.append("Volumes: ");
 			for(int i = 0; i < volumes.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (volumes.get(i) + " ");
+				stringBuffer.append(volumes.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!volumesBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Between Volumes: ");
+			stringBuffer.append("Between Volumes: ");
 			for(int i = 0; i < volumesBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (volumesBetween.get(i) + " ");
+				stringBuffer.append(volumesBetween.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
 		if(!folios.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Folios: ");
+			stringBuffer.append("Folios: ");
 			for(int i = 0; i < folios.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (folios.get(i) + " ");
+				stringBuffer.append(folios.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!foliosBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += ("Between Folios: ");
+			stringBuffer.append("Between Folios: ");
 			for(int i = 0; i < foliosBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (foliosBetween.get(i) + " ");
+				stringBuffer.append(foliosBetween.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		if(!docIds.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuffer.length()>0){
+				stringBuffer.append("AND ");
 			}
-			toString += "Doc ID: ";
+			stringBuffer.append("Doc ID: ");
 			for(int i = 0; i < docIds.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuffer.append("AND ");
 				}
-				toString += (docIds.get(i) + " ");
+				stringBuffer.append(docIds.get(i));
+				stringBuffer.append(" ");
 			}
 		}
 		
-		return toString;
+		return stringBuffer.toString();
 	}
 }
 
