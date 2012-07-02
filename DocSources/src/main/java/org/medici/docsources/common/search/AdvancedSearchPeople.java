@@ -1224,139 +1224,139 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	public String toString(){
-		String toString = new String();
+		StringBuffer toString = new StringBuffer();
 		if(!names.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += "Names: ";
+			toString.append("Names: ");
 			for(int i = 0; i < names.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += names.get(i) + " ";
+				toString.append(names.get(i) + " ");
 			}
 		}
 		if(!words.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += "Words: ";
+			toString.append("Words: ");
 			for(int i = 0; i < words.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += words.get(i) + " ";
+				toString.append(words.get(i) + " ");
 			}
 		}
 		if(!datesYear.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Date Year: ");
+			toString.append("Date Year: ");
 			for(int i = 0; i < datesYear.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesYear.get(i) + " ");
+				toString.append(datesYear.get(i) + " ");
 			}
 		}
 		if(!datesMonth.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Date Month: ");
+			toString.append("Date Month: ");
 			for(int i = 0; i < datesMonth.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesMonth.get(i) + " ");
+				toString.append(datesMonth.get(i) + " ");
 			}
 		}
 		if(!datesDay.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Date Day: ");
+			toString.append("Date Day: ");
 			for(int i = 0; i < datesDay.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesDay.get(i) + " ");
+				toString.append(datesDay.get(i) + " ");
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Between Date Year: ");
+			toString.append("Between Date Year: ");
 			for(int i = 0; i < datesYearBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesYearBetween.get(i) + " ");
+				toString.append(datesYearBetween.get(i) + " ");
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Between Date Month: ");
+			toString.append("Between Date Month: ");
 			for(int i = 0; i < datesMonthBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesMonthBetween.get(i) + " ");
+				toString.append(datesMonthBetween.get(i) + " ");
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += ("Between Date Day: ");
+			toString.append("Between Date Day: ");
 			for(int i = 0; i < datesDayBetween.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += (datesDayBetween.get(i) + " ");
+				toString.append(datesDayBetween.get(i) + " ");
 			}
 		}
 		if(!roleCategories.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += "Role Categories: ";
+			toString.append("Role Categories: ");
 			for(int i = 0; i < roleCategories.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += roleCategories.get(i) + " ";
+				toString.append(roleCategories.get(i) + " ");
 			}
 		}
 		if(!titlesOcc.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += "Occupations: ";
+			toString.append("Occupations: ");
 			for(int i = 0; i < titlesOcc.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += titlesOcc.get(i) + " ";
+				toString.append(titlesOcc.get(i) + " ");
 			}
 		}
 		if(!place.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(toString.length()>0){
+				toString.append("AND ");
 			}
-			toString += "Places: ";
+			toString.append("Places: ");
 			for(int i = 0; i < place.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					toString.append("AND ");
 				}
-				toString += place.get(i) + " ";
+				toString.append(place.get(i) + " ");
 			}
 		}
-		return toString;
+		return toString.toString();
 	}
 }
