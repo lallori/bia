@@ -24,37 +24,46 @@
 						<a class="helpIcon" title="The instutition this digital collection belongs to">?</a>
 						<form:label for="istituto" path="istituto" id ="istitutoLabel" cssErrorClass="error" title="Istituto">Istituto</form:label>
 					</div>
-					<div class="col_r"><form:input path="istituto" id="istituto" cssClass="input_29c" value="" /></div>
+					<div class="col_r"><form:input path="istituto" id="istituto" cssClass="input_35c" value="" /></div>
 				</div>
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Archival corpus that this Schedone belongs to">?</a>
 	            		<form:label for="fondo" path="fondo" id ="fondoLabel" cssErrorClass="error" title="Fondo">Fondo</form:label>
 					</div>
-					<div class="col_r"><form:input path="fondo" id="fondo" cssClass="input_29c" /></div>
+					<div class="col_r"><form:input path="fondo" id="fondo" cssClass="input_35c" /></div>
 				</div>
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Serie, Carteggio for this digitized volume">?</a>
 	            		<form:label for="serie" path="serie" id ="serieLabel" cssErrorClass="error" title="Serie">Serie</form:label>
 					</div>
-					<div class="col_r"><form:input path="serie" id="serie" cssClass="input_29c" /></div>
+					<div class="col_r"><form:input path="serie" id="serie" cssClass="input_35c" /></div>
 				</div>
+			</div>
+			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Volume number">?</a>
-	            		<form:label for="numeroUnita" path="numeroUnita" id ="numeroUnitaLabel" cssErrorClass="error" title="Unit&agrave;">N. Unit&agrave;</form:label>
+	            		<form:label for="numeroUnita" path="numeroUnita" id ="numeroUnitaLabel" cssErrorClass="error" title="Unit&agrave;">N. Unit&agrave; (Numero volume)</form:label>
 					</div>
-					<div class="col_r"><form:input path="numeroUnita" id="numeroUnita" cssClass="input_4c" /></div>
+					<div class="col_l"><form:input path="numeroUnita" id="numeroUnita" cssClass="input_4c" /></div>
+					<div class="col_r"><form:label for="volLetExt" id="volLetExtLabel" path="volLetExt">Volume extension</form:label></div>
+                	<div class="col_r"><form:input id="volLetExt" name="volLetExt" path="volLetExt" cssClass="input_1c" type="text" value="" maxlength="1" cssErrorClass="error"/></div>
 				</div>
+			</div>
+			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Help to be created">?</a>
 						<label for="dataInizio" id="dataInizioLabel">Data inizio</label>
 					</div>
 					<div class="col_r">
+						<form:label for="dataInizioAnno" id="dataInizioAnnoLabel" path="dataInizioAnno">Anno</form:label>
 						<form:input id="dataInizioAnno" path="dataInizioAnno" class="input_4c" value="" maxlength="4"/>
+						<form:label for="dataInizioMese" id="dataInizioMeseLabel" path="dataInizioMese">Mese</form:label>
 						<form:select id="dataInizioMese" path="dataInizioMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+						<form:label for="dataInizioGiorno" id="dataInizioGiornoLabel" path="dataInizioGiorno">Giorno</form:label>
 						<form:input id="dataInizioGiorno" path="dataInizioGiorno" class="input_2c" maxlength="2"/>
 					</div>
 				</div>
@@ -64,8 +73,11 @@
 						<label for="dataFine" id="dataFineLabel">Data fine</label>
 					</div>
 					<div class="col_r">
+						<form:label for="dataFineAnno" id="dataFineAnnoLabel" path="dataFineAnno">Anno</form:label>
 						<form:input id="dataFineAnno" path="dataFineAnno" class="input_4c" value="" maxlength="4"/>
+						<form:label for="dataFineMese" id="dataFineMeseLabel" path="dataFineMese">Mese</form:label>
 						<form:select id="dataFineMese" path="dataFineMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+						<form:label for="dataFineGiorno" id="dataFineGiornoLabel" path="dataFineGiorno">Giorno</form:label>
 						<form:input id="dataFineGiorno" path="dataFineGiorno" class="input_2c" maxlength="2"/>
 					</div>
 				</div>
@@ -187,14 +199,19 @@
 					</div>
 					<div class="col_r"><form:input path="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_23c" /></div>
 				</div>
+			</div>
+			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Data della Ripresa">?</a>
 	            		<label for="daRipresa" id="daRipresaLabel">Da ripresa</label>
 					</div>
 					<div class="col_r">
+						<form:label for="dataRipresaAnno" id="dataRipresaAnnoLabel" path="dataRipresaAnno">Anno</form:label>
 						<form:input id="dataRipresaAnno" path="dataRipresaAnno" class="input_4c" value="" maxlength="4"/>
+						<form:label for="dataRipresaMese" id="dataRipresaMeseLabel" path="dataRipresaMese">Mese</form:label>
 						<form:select id="dataRipresaMese" path="dataRipresaMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+						<form:label for="dataRipresaGiorno" id="dataRipresaGiornoLabel" path="dataRipresaGiorno">Giorno</form:label>
 						<form:input id="dataRipresaGiorno" path="dataRipresaGiorno" class="input_2c" maxlength="2"/>
 					</div>
 				</div>

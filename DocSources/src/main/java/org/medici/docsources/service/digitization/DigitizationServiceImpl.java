@@ -117,10 +117,23 @@ public class DigitizationServiceImpl implements DigitizationService {
 			schedoneToUpdate.setSerie(schedone.getSerie());
 			schedoneToUpdate.setNumeroUnita(schedone.getNumeroUnita());
 			schedoneToUpdate.setDataInizioAnno(schedone.getDataInizioAnno());
-			schedoneToUpdate.setDataInizioMese((schedone.getDataInizioMese() != null) ? schedone.getDataInizioMese() : null);
+
+			if(schedone.getDataInizioMese() != null){
+				Month month = getMonthDAO().find(schedone.getDataInizioMese().getMonthNum());
+				schedoneToUpdate.setDataInizioMese(month);
+			}else{
+				schedoneToUpdate.setDataInizioMese(null);
+			}
 			schedoneToUpdate.setDataInizioGiorno(schedone.getDataInizioGiorno());
 			schedoneToUpdate.setDataFineAnno(schedone.getDataFineAnno());
-			schedoneToUpdate.setDataFineMese((schedone.getDataFineMese() != null) ? schedone.getDataFineMese() : null);
+
+			if(schedone.getDataFineMese() != null){
+				Month month = getMonthDAO().find(schedone.getDataFineMese().getMonthNum());
+				schedoneToUpdate.setDataFineMese(month);
+			}else{
+				schedoneToUpdate.setDataFineMese(null);
+			}
+			
 			schedoneToUpdate.setDataFineGiorno(schedone.getDataFineGiorno());
 			schedoneToUpdate.setDescrizioneContenuto(schedone.getDescrizioneContenuto());
 			schedoneToUpdate.setDescrizioneContenutoEng(schedone.getDescrizioneContenutoEng());
@@ -139,7 +152,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 			schedoneToUpdate.setNomeFiles(schedone.getNomeFiles());
 			schedoneToUpdate.setResponsabileFotoRiproduzione(schedone.getResponsabileFotoRiproduzione());
 			schedoneToUpdate.setDataRipresaAnno(schedone.getDataRipresaAnno());
-			schedoneToUpdate.setDataRipresaMese((schedone.getDataRipresaMese() != null) ? schedone.getDataRipresaMese() : null);
+
+			if(schedone.getDataRipresaMese() != null){
+				Month month = getMonthDAO().find(schedone.getDataRipresaMese().getMonthNum());
+				schedoneToUpdate.setDataRipresaMese(month);
+			}else{
+				schedoneToUpdate.setDataRipresaMese(null);
+			}
 			schedoneToUpdate.setDataRipresaGiorno(schedone.getDataRipresaGiorno());
 			schedoneToUpdate.setOperatore(schedone.getOperatore());
 			
@@ -254,16 +273,16 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
+	public Map<String, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
 		try{
-			Map<Integer, Schedone> result = new HashMap<Integer, Schedone>();
-			for(int i = volNum; i <= volNumBetween; i++){
-				result.put(i, new Schedone(0));
-			}
+			Map<String, Schedone> result = new HashMap<String, Schedone>();
+//			for(int i = volNum; i <= volNumBetween; i++){
+//				result.put(i, new Schedone(0));
+//			}
 			List<Schedone> resultList = getSchedoneDAO().findByVolumesNumber(volNum, volNumBetween);
 			if(resultList != null){
 				for(Schedone currentSchedone : resultList){
-					result.put(currentSchedone.getVolNum(), currentSchedone);
+					result.put(currentSchedone.getVolNum() + currentSchedone.getVolLetExt(), currentSchedone);
 				}
 			}
 			return result;

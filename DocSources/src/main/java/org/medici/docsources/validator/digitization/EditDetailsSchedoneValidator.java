@@ -86,7 +86,7 @@ public class EditDetailsSchedoneValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsSchedoneCommand editDetailsSchedoneCommand = (EditDetailsSchedoneCommand) object;
-		validateSchedone(editDetailsSchedoneCommand.getSchedoneId(), editDetailsSchedoneCommand.getNumeroUnita(), errors);
+		validateSchedone(editDetailsSchedoneCommand.getSchedoneId(), editDetailsSchedoneCommand.getNumeroUnita(), editDetailsSchedoneCommand.getVolLetExt(), errors);
 		// TODO : implement validation logic
 	}
 	
@@ -95,7 +95,7 @@ public class EditDetailsSchedoneValidator implements Validator {
 	 * @param schedoneId
 	 * @param errors
 	 */
-	public void validateSchedone(Integer schedoneId, Integer volNum, Errors errors){
+	public void validateSchedone(Integer schedoneId, Integer volNum, String volLetExt, Errors errors){
 		if(!errors.hasErrors()){
 			if(schedoneId > 0){
 				try{
@@ -103,9 +103,9 @@ public class EditDetailsSchedoneValidator implements Validator {
 						errors.reject("schedoneId", "error.schedone.notfound");
 					}else{
 						if(volNum != null){
-							Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
+							Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 							ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
-							if(ifSchedone.get(volNum) == null){
+							if(ifSchedone.get(volNum + volLetExt) == null){
 								errors.reject("volNum", "error.volNum.alreadyPresent");
 							}
 						}

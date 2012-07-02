@@ -115,7 +115,7 @@ public interface DigitizationService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Integer, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable;
+	public Map<String, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable;
 	
 	/**
 	 * 

@@ -123,7 +123,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
+		Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 
 		Boolean activated;
 		if(active.equals("Yes"))
@@ -176,8 +176,8 @@ public class AjaxController {
 			}
 			
 			//Schedone
-			Schedone currentSchedone = ifSchedone.get(currentDigitization.getVolNum());
-			if(currentSchedone.getSchedoneId() != 0){
+			Schedone currentSchedone = ifSchedone.get(currentDigitization.getVolNum() + currentDigitization.getVolLetExt());
+			if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
 				singleRow.add("YES");
 			}else{
 				singleRow.add("NO");
@@ -240,7 +240,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
+		Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 		Map<String, Boolean> ifDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>();
@@ -281,8 +281,8 @@ public class AjaxController {
 				//MDP
 				singleRow.add(currentVolume.getMDP());
 				//Schedone
-				Schedone currentSchedone = ifSchedone.get(currentVolume.getVolNum());
-				if(currentSchedone.getSchedoneId() != 0){
+				Schedone currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
+				if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
 					singleRow.add("YES");
 				}else{
 					singleRow.add("NO");

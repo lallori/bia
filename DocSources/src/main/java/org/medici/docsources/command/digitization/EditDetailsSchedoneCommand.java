@@ -30,6 +30,7 @@ package org.medici.docsources.command.digitization;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class EditDetailsSchedoneCommand {
@@ -38,6 +39,7 @@ public class EditDetailsSchedoneCommand {
 	private String fondo;
 	private String serie;
 	private Integer numeroUnita;
+	private String volLetExt;
 	private Integer dataInizioAnno;
 	private Integer dataInizioMese;
 	private Integer dataInizioGiorno;
@@ -617,5 +619,19 @@ public class EditDetailsSchedoneCommand {
 	 */
 	public void setOperatore(String operatore) {
 		this.operatore = operatore;
+	}
+
+	/**
+	 * @param volLetExt the volLetExt to set
+	 */
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
+	}
+
+	/**
+	 * @return the volLetExt
+	 */
+	public String getVolLetExt() {
+		return volLetExt;
 	}
 }

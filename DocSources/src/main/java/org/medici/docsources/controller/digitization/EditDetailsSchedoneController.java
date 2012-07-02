@@ -97,6 +97,7 @@ public class EditDetailsSchedoneController {
 			schedone.setSerie(command.getSerie());
 			schedone.setNumeroUnita(command.getNumeroUnita());
 			schedone.setVolNum(command.getNumeroUnita());
+			schedone.setVolLetExt(command.getVolLetExt());
 			schedone.setDataInizioAnno(command.getDataInizioAnno());
 			schedone.setDataInizioMese((command.getDataInizioMese() != null) ? new Month(command.getDataInizioMese()) : null);
 			schedone.setDataInizioGiorno(command.getDataInizioGiorno());
@@ -174,6 +175,7 @@ public class EditDetailsSchedoneController {
 			command.setFondo(schedone.getFondo());
 			command.setSerie(schedone.getSerie());
 			command.setNumeroUnita(schedone.getNumeroUnita());
+			command.setVolLetExt(schedone.getVolLetExt());
 			command.setDataInizioAnno(schedone.getDataInizioAnno());
 			command.setDataInizioMese((schedone.getDataInizioMese() != null) ? schedone.getDataInizioMese().getMonthNum() : null);
 			command.setDataInizioGiorno(schedone.getDataInizioGiorno());

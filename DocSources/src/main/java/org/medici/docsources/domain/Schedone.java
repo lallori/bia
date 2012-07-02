@@ -50,6 +50,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  * which has fields defined in italian language. 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Entity
@@ -68,7 +69,7 @@ public class Schedone {
 	private String volLetExt;
 	@Column (name="\"FONDO\"", length=50)
 	private String fondo;
-	@Column (name="\"SERIE\"", length=50)
+	@Column (name="\"SERIE\"", length=255)
 	private String serie;
 	@Column (name="\"N_UNITA\"")
 	private Integer numeroUnita;
@@ -98,7 +99,7 @@ public class Schedone {
 	private String legatura;
 	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
-	@Column (name="\"CARTULAZIONE\"", length=50)
+	@Column (name="\"CARTULAZIONE\"", length=1000)
 	private String cartulazione;
 	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=1000)
 	private String noteCartulazione;
