@@ -980,7 +980,7 @@ input[type="checkbox"] {
 }
 
 .input_40c { /* input for 40 characters approx. */ 
-	width: 330px;
+	width: 328px;
 }
 
 .input_43c { /* input for 40 characters approx. */ 
@@ -2985,7 +2985,7 @@ form#EditUserProfileForm span{
 	float: left;
 	width: 470px;
 	line-height: 20px;
-	margin: 15px 0 0 63px;
+	margin: 0 0 0 63px;
 }
 
 #EditUserProfileDiv .list .row {
@@ -4357,8 +4357,17 @@ ul#network a {
 #browseContent .listAdvSearch {
 	display: table;
 	margin: 5px 0 0 3px;
-	width: 285px;
+	width: 340px;
 	margin: 30px auto 0 auto;
+}
+
+#volumeSearch {
+	margin-right: 5px;
+}
+
+#betweenSearchLabel {
+	width: 50px;
+	text-align: center;
 }
 
 

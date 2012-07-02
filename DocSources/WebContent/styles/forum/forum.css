@@ -439,6 +439,7 @@ a.returnTo {
 #forumPaginate {
     text-align: right;
     font-size: 10px;
+    height: 50px;
 }
 
 #firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
@@ -500,13 +501,17 @@ a.returnTo {
 }
 
 #jumpToDiv {
-	margin-left: 794px;
-	width: 210px;
+	width: 265px;
 	font-size:11px;
+	float: left;
 }
 
 #jumpToForm {
 	display:inline;
+}
+
+.selectform_long {
+	width: 170px;
 }
 
 #printButton {
@@ -849,6 +854,7 @@ ul.abc li {
 	text-align: left;
 	padding: 3px 0 3px 0;
 	color:#8C92AD;
+	font-weight: normal;
 }
 
 #profileTable .row:hover, #profileTable .rowLast:hover {
@@ -881,6 +887,7 @@ ul.abc li {
 	text-align: left;
 	padding: 3px 9px 3px 0;
 	color: #8C92AD;
+	font-weight: normal;
 }
 
 #statistics .list a { /* Profile Statistics list ancor */
@@ -1045,7 +1052,7 @@ input[type="checkbox"] {
     margin-bottom: 55px;
 }
 
-span.hilight, #postTable span.hilight{
+span.highlighted, #postTable span.highlighted{
     background-color: #F3BFCC;
     color: #BC2A4D;
     margin-left: 0;

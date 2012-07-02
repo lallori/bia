@@ -507,7 +507,6 @@ $('.searchResult').live('click', function() {
 	position: relative;
 	display: inline;
 	float: left;
-	width:100px;
 }
 
 /*Top level menu link items style*/
@@ -519,28 +518,11 @@ $('.searchResult').live('click', function() {
 	font-size:11px;
 }
 
-
-#entryMenu{
-	background-image:url(/DocSources/images/1024/button_entrymenu.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:99px;
-	height:64px;
-}
-
-.entryMenu {
-	margin-left: 3px;
-}
-
-#entryMenu:hover{
-	background-image:url(/DocSources/images/1024/button_entrymenuRollover.png);
-}
-
 #advsearchMenu{
 	background-image:url(/DocSources/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
-	width: 99px;
+	width: 150px;
 	height:64px;
 }
 	
@@ -548,52 +530,40 @@ $('.searchResult').live('click', function() {
 	background-image:url(/DocSources/images/1024/button_advsearchRollover.png);
 }
 
-#myHistoryMenu{
-	background-image:url(/DocSources/images/1024/button_chronology.png);
+#entryMenu{
+	background-image:url(/DocSources/images/1024/button_entrymenu.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
+	width:128px;
 	height:64px;
 }
 
-.myHistoryMenu{
-	margin-left: 19px;
-}
-
-#myHistoryMenu:hover{
-	background-image:url(/DocSources/images/1024/button_chronologyRollover.png);
+#entryMenu:hover{
+	background-image:url(/DocSources/images/1024/button_entrymenuRollover.png);
 }
 
 #forumsMenu{
 	background-image:url(/DocSources/images/1024/button_forums.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
+	width:178px;
 	height:64px;
-}
-
-.forumsMenu{
-	margin-left: 13px;
 }
 
 #forumsMenu:hover{
 	background-image:url(/DocSources/images/1024/button_forumsRollover.png);
 }
 
-#myprofileMenu{
-	background-image:url(/DocSources/images/1024/button_myprofile.png);
+#myHistoryMenu{
+	background-image:url(/DocSources/images/1024/button_myHistory.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
+	width:120px;
 	height:64px;
 }
 
-#myprofileMenu:hover{
-	background-image:url(/DocSources/images/1024/button_myprofileRollover.png);
-}
-
-#messagesMenu:hover{
-	background-image:url(/DocSources/images/1024/button_messagesRollover.png);
+#myHistoryMenu:hover{
+	background-image:url(/DocSources/images/1024/button_myHistoryRollover.png);
 }
 
 .messagesMenu span {
@@ -609,14 +579,9 @@ $('.searchResult').live('click', function() {
 	background-image:url(/DocSources/images/1024/button_help.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
+	width:75px;
 	height:64px;
 }
-
-.helpMenu{
-	margin-left:0px;
-}
-
 
 #helpMenu:hover{
 	background-image:url(/DocSources/images/1024/button_helpRollover.png);
@@ -626,18 +591,15 @@ $('.searchResult').live('click', function() {
 	background-image:url(/DocSources/images/1024/button_logout.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
+	width:86px;
 	height:64px;
 }
-
-.logoutMenu{
-	margin-left:0px;
-}
-
 
 #logoutMenu:hover{
 	background-image:url(/DocSources/images/1024/button_logoutRollover.png);
 }
+
+
 
 
 /*1st sub level menu*/

@@ -132,7 +132,6 @@
 <tiles:insertAttribute name="dataEntryMenu" />
 <tiles:insertAttribute name="communityForumsMenu" />
 <tiles:insertAttribute name="historyMenu" />
-<tiles:insertAttribute name="profileMenu" />
 <tiles:insertAttribute name="helpMenu" />
 <tiles:insertAttribute name="logoutMenu" />
 					</ul>
