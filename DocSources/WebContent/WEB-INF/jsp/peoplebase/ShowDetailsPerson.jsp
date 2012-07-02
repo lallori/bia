@@ -120,7 +120,11 @@
 				</security:authorize>
 			</div>
 			
-			<div class="listDetails">
+			<div class="listDetails">			
+				<div class="row">
+					<div class="item">Name</div> <div class="value">${person.mapNameLf}</div>
+				</div>
+				<br>
 				<div class="row">
 					<div class="item">Gender</div> <div class="value">${person.gender}</div>
 				</div>
