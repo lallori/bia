@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -53,6 +54,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public interface VolBaseService {
@@ -221,6 +223,15 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Volume findVolumeFromHistory(Integer idUserHistory) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeSummary findVolumeSummary(Volume volume) throws ApplicationThrowable;
 
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.

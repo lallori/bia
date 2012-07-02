@@ -44,6 +44,8 @@ import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.common.volume.FoliosInformations;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumoption.ForumOptionDAO;
@@ -80,6 +82,7 @@ import org.springframework.transaction.annotation.Transactional;
  * - execute advanced search 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
@@ -548,6 +551,48 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VolumeSummary findVolumeSummary(Volume volume) throws ApplicationThrowable {
+		try{
+			VolumeSummary volumeSummary = new VolumeSummary();
+			if (volume != null) {
+				volumeSummary.setSummaryId(volume.getSummaryId());
+				volumeSummary.setVolNum(volume.getVolNum());
+				volumeSummary.setVolLetExt(volume.getVolLetExt());
+				if(volume.getSerieList() != null){
+					volumeSummary.setCarteggio(volume.getSerieList().toString());
+				}
+				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
+				if (foliosInformations != null) {
+					volumeSummary.setTotal(foliosInformations.getTotal());
+					volumeSummary.setTotalRubricario(foliosInformations.getTotalRubricario());
+					volumeSummary.setTotalCarta(foliosInformations.getTotalCarta());
+					volumeSummary.setTotalGuardia(foliosInformations.getTotalGuardia());
+					volumeSummary.setTotalAppendix(foliosInformations.getTotalAppendix());
+					volumeSummary.setTotalOther(foliosInformations.getTotalOther());
+					volumeSummary.setTotalMissingFolios(foliosInformations.getTotalMissingFolios());
+					volumeSummary.setMissingFolios(foliosInformations.getMissingNumberingFolios());
+					volumeSummary.setMisnumberedFolios(foliosInformations.getMisnumberedFolios());
+				}
+				
+//				Schedone catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
+//				if (catalog != null) {
+//					volumeSummary.setCartulazione(catalog.getCartulazione());
+//					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
+//					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
+//					//volumeSummary.setWidth(catalog.getNumeroTotaleImmagini());
+//				}
+			}
+			
+			return volumeSummary;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 	
 	/**

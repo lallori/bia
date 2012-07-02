@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -51,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/volbase/ShowVolume")
@@ -84,6 +86,9 @@ public class ShowVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
+				
+				VolumeSummary volumeSummary = getVolBaseService().findVolumeSummary(volume);
+				model.put("volumeSummary", volumeSummary);
 
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
