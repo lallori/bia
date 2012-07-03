@@ -49,7 +49,14 @@
                         </form:select>
                     </div>
                     <div class="col_l"><form:input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5" path="volNum"/></div>
-                    <div class="col_l"><form:input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden" path="volNumBetween"/></div>
+                    <div class="col_l">
+                    	<form:label for="volLetExt" id="volExtensionLabel" path="volLetExt">Vol. Ext.</form:label>
+                    	<form:label for="volNumBetween" id="betweenSearchlabel" path="volNumBetween" style="display:none;">and</form:label>
+                    </div>
+                    <div class="col_l">
+                    	<form:input id="volExtension" name="volLetExt" class="input_5c" type="text" value="" maxlength="5" path="volLetExt"/>
+                    	<form:input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="display:none" path="volNumBetween"/>
+                    </div>
                     <div class="col_r"><input type="submit" id="search" value="Search" title="Search this 'Schedone'"></div>
                 </div>
             </form:form>
@@ -60,19 +67,30 @@
 <script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#volumeType").change(function(){
-						if(this.options[1].selected) {
-							   $j('#betweenSearch').css('visibility','visible'); 
-							   $j('#volumeSearch').css('visibility','visible'); 
-						}
-						if(this.options[2].selected){
-							   $j('#volumeSearch').css('visibility','hidden'); 
-							   $j('#betweenSearch').css('visibility','hidden');
-						}
-						if(this.options[0].selected) {
-							   $j('#betweenSearch').css('visibility','hidden'); 
-							   $j('#volumeSearch').css('visibility','visible'); 
-						}
-			   });	
+				if(this.options[0].selected) {
+					$j('#volExtensionLabel').css('display','inherit');
+				    $j('#betweenSearchLabel').css('display','none');  
+				    $j('#volExtension').css('display','inherit');
+				    $j('#betweenSearch').css('display','none');
+				    $j('#volumeSearch').css('display','inherit');
+				}
+				if(this.options[1].selected) {
+					$j('#volExtensionLabel').css('display','none');
+					$j('#betweenSearchLabel').css('display','inherit');  
+				    $j('#volExtension').css('display','none');
+				    $j('#betweenSearch').css('display','inherit');
+				    $j('#volumeSearch').css('display','inherit');  
+				}
+				if(this.options[2].selected){
+				    $j('#volumeSearch').css('display','none');
+				    $j('#betweenSearch').css('display','none');
+				    $j('#betweenSearchLabel').css('display','none');
+				    $j('#volExtensionLabel').css('display','none');
+				    $j('#volExtension').css('display','none');
+				}
+			});
+
+	
 			$j("#browseSearchSchedoni").submit(function(){
 				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 				window.opener.$j("#tabs").tabs("add", formSubmitURL, "Schedoni</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");

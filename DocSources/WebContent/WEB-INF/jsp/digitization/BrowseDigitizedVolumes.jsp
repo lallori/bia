@@ -7,6 +7,7 @@
 	<c:url var="BrowseDigitizedVolumesURL" value="/digitization/BrowseDigitizedVolumes.json">
 		<c:param name="searchType" value="${command.searchType}" />
 		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="volNumBetween" value="${command.volNumBetween}" />
 	</c:url>
 
