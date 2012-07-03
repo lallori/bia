@@ -16,10 +16,10 @@
 				<div class="col">CATEGORY</div>
 			</div>
 			<div class="row">
-				<a href="${SimpleSearchURL}" class="documents" id="EXTRACT"><span class="documentsExtractCount"></span>${documentsExtractCount} Documents Extract</a>
+				<a href="${SimpleSearchURL}" class="documents" id="EXTRACT"><span class="documentsExtractCount"></span>${documentsExtractCount} Document Extracts</a>
 			</div>
 			<div class="row">
-				<a href="${SimpleSearchURL}" class="documents" id="SYNOPSIS"><span class="documentsSynopsisCount"></span>${documentsSynopsisCount} Documents Synopsis</a>
+				<a href="${SimpleSearchURL}" class="documents" id="SYNOPSIS"><span class="documentsSynopsisCount"></span>${documentsSynopsisCount} Document Synopses</a>
 			</div>
 			<div class="row">
 				<a href="${SimpleSearchURL}" class="volumes" id="VOLUME"><span class="volumesCount"></span>${volumesCount} Volumes</a>
