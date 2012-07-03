@@ -43,7 +43,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
+					<h1 id="peoplePlaces"><a>People &amp; Places</a></h1>
 				    <div class="documents">
 				    	<div class="listAdvSearch">
 				    		<form id="personSearchForm" method="post" class="edit">
@@ -157,7 +157,7 @@
 				        </div>
 					</div>
 				
-					<h1 id="extractSynopsis"><a><i>in</i> Extract and/or Synopsis</a></h1>
+					<h1 id="extractSynopsis"><a>Extract and/or Synopsis</a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="extractSearchForm" method="post" class="edit">
@@ -194,7 +194,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="topicsSearch"><a><i>with</i> Topics</a></h1>
+					<h1 id="topicsSearch"><a>Topics</a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="topicSearchForm" method="post" class="edit">
@@ -286,7 +286,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="volumeSearch"><a><i>in</i> Volume and/or Folio</a></h1>
+					<h1 id="volumeSearch"><a>Volume and/or Folio</a></h1>
 					<div class="documents">
 						<h3>Volume</h3>
 						<div class="listAdvSearch">
@@ -337,7 +337,7 @@
 							<form id="docIdSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title=<fmt:message key="advsearch.documents.docid"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.docid"></fmt:message>">?</a>
 										<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
 					               	</div>
 					               	<div class="col_r">

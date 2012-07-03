@@ -1,50 +1,5 @@
 CREATE DATABASE `docsources` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-CREATE DATABASE `docsources_audit` ;
-drop table docsources_audit.tblAltNames_AUD;
-drop table docsources_audit.tblBiblioT_AUD;
-drop table docsources_audit.tblBioRefLink_AUD;
-drop table docsources_audit.tblCatalog_AUD;
-drop table docsources_audit.tblCountries_AUD;
-drop table docsources_audit.tblDocuments_AUD;
-drop table docsources_audit.tblEPLTOLink_AUD;
-drop table docsources_audit.tblEPLink_AUD;
-drop table docsources_audit.tblFactChecks_AUD;
-drop table docsources_audit.tblImages_AUD;
-drop table docsources_audit.tblMarriages_AUD;
-drop table docsources_audit.tblPOLink_AUD;
-drop table docsources_audit.tblPeople_AUD;
-drop table docsources_audit.tblPlaces_AUD;
-drop table docsources_audit.tblPrcLink_AUD;
-drop table docsources_audit.tblRoleCats_AUD;
-drop table docsources_audit.tblSeriesList_AUD;
-drop table docsources_audit.tblSynExtracts_AUD;
-drop table docsources_audit.tblTitleOccsList_AUD;
-drop table docsources_audit.tblTopicsList_AUD;
-drop table docsources_audit.tblVolumes_AUD;
-
-create table docsources_audit.tblAltNames_AUD (NAMEID integer not null, REV integer not null, REVTYPE tinyint, ALTNAME varchar(255), NAMEPREFIX varchar(50), NAMETYPE varchar(50), NOTES LONGTEXT, PERSONID integer, primary key (NAMEID, REV));
-create table docsources_audit.tblBiblioT_AUD (BIBLIOID integer not null, REV integer not null, REVTYPE tinyint, AUTHOREDITOR varchar(255), DATES varchar(255), NOTES varchar(255), PERIODICAL varchar(255), PUBLISHER varchar(255), SHELFNUM varchar(255), TITLE varchar(255), TYPE varchar(255), primary key (BIBLIOID, REV));
-create table docsources_audit.tblBioRefLink_AUD (REFID integer not null, REV integer not null, REVTYPE tinyint, NOTES varchar(255), BIBLIOID integer, PERSONID integer, primary key (REFID, REV));
-create table docsources_audit.tblCatalog_AUD (ID integer not null, REV integer not null, REVTYPE tinyint, CARTE_BIANCHE varchar(50), CARTE_MANCANTI varchar(50), CARTULAZIONE varchar(50), COMPRESSIONE varchar(50), DATA_RIPRESA datetime, DATE_ESTREME varchar(50), DESCRIZIONE_CONTENUTO varchar(50), DIM_MEDIA_IMMAGINI bigint, DIM_TOTALE_IMMAGINI bigint, DIMENSIONI_ALTEZZA integer, DIMENSIONI_BASE varchar(50), FONDO varchar(50), FORMATO varchar(50), ISTITUTO varchar(50), LEGATURA varchar(50), N_UNITA integer, NOME_FILES varchar(50), NOTE_ALLA_CARTULAZIONE varchar(50), NUMERO_TOTALE_IMMAGINI integer, OEPRATORE varchar(50), PROFONDITA_COLORE varchar(50), RESPONSABILE_FOTORIPRODUZIONE varchar(50), RISOLUZIONE varchar(50), SERIE varchar(50), SISTEMA_DI_SCANSIONE varchar(50), SUPPORTO varchar(50), TITOLO varchar(50), primary key (ID, REV));
-create table docsources_audit.tblCountries_AUD (CODE varchar(2) not null, REV integer not null, REVTYPE tinyint, NAME varchar(50), primary key (CODE, REV));
-create table docsources_audit.tblDocuments_AUD (ENTRYID integer not null, REV integer not null, REVTYPE tinyint, CONTDISC tinyint, DATEAPPROX varchar(50), DATECREATED datetime, DATENOTES varchar(255), DATEUNS tinyint, DOCDAY integer, DOCMONTHNUM integer, DOCSTATBOX varchar(50), DOCTOBEVETTEDDATE datetime, DOCTOBEVETTED TINYINT default '-1', DOCVETBEGINS datetime, DOCVETID varchar(50), DOCVETTED TINYINT default '-1', DOCVETTEDDATE datetime, DOCYEAR integer, FOLIOMOD varchar(15), FOLIONUM integer, TRANSCRIBEFOLIONUM integer, TRANSCRIBEFOLIOMOD varchar(15), GRAPHIC tinyint, INSERTLET varchar(15), INSERTNUM varchar(50), LASTUPDATE datetime, NEWENTRY tinyint, RECIPNOTES varchar(250), RECIPUNS tinyint, RECIPLOCUNS tinyint, RECKONING tinyint, RESID varchar(50), SENDNOTES varchar(250), SENDUNS tinyint, SENDLOCUNS tinyint, SORTABLEDATE varchar(50), SUBVOL varchar(50), UNDATED tinyint, UNPAGED tinyint, YEARMODERN integer, RECIPID integer, RECIPLOCPLALL integer, SENDID integer, SENDLOCPLALL integer, SUMMARYID integer, primary key (ENTRYID, REV));
-create table docsources_audit.tblEPLTOLink_AUD (EPLTOID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENTRYID integer, PLACESALLID integer, TOPICID integer, primary key (EPLTOID, REV));
-create table docsources_audit.tblEPLink_AUD (EPLINKID integer not null, REV integer not null, REVTYPE tinyint, ASSIGNUNSURE tinyint, DOCROLE varchar(50), DATECREATED datetime, PORTRAIT tinyint, ENTRYID integer, PERSONID integer, primary key (EPLINKID, REV));
-create table docsources_audit.tblFactChecks_AUD (VETID integer not null, REV integer not null, REVTYPE tinyint, ADDLRES LONGTEXT, DATEINFO varchar(50), EDITCOMMENT LONGTEXT, PERSON varchar(50), PLACE varchar(50), ENTRYID integer, primary key (VETID, REV));
-create table docsources_audit.tblImages_AUD (imageId integer not null, REV integer not null, REVTYPE tinyint, dateCreated datetime, imageName varchar(45), imageType varchar(1), storagePath integer, volLetExt varchar(1), volNum integer, primary key (imageId, REV));
-create table docsources_audit.tblMarriages_AUD (MARRIAGEID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENDDAY integer, ENDMONTH varchar(10), ENDMONTHNUM integer, ENDUNS tinyint, ENDYEAR integer, MARTERM varchar(50), NOTES LONGTEXT, REFID integer, STARTDAY integer, STARTMONTH varchar(10), STARTMONTHNUM integer, STARTUNS TINYINT, STARTYEAR integer, HUSBANDID integer, WIFEID integer, primary key (MARRIAGEID, REV));
-create table docsources_audit.tblPOLink_AUD (PRLINKID integer not null, REV integer not null, REVTYPE tinyint, STARTUNS TINYINT, DATECREATED datetime, ENDAPPROX TINYINT, ENDDAY integer, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDUNS TINYINT, ENDYEAR integer, PRLINKNOTES LONGTEXT, PRTAG integer, STARTAPPROX TINYINT, STARTDAY integer, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, PERSONID integer, TITLEOCCID integer, primary key (PRLINKID, REV));
-create table docsources_audit.tblPeople_AUD (PERSONID integer not null, REV integer not null, REVTYPE tinyint, ACTIVEEND varchar(50), ACTIVESTART varchar(50), BAPPROX TINYINT, BDATEBC TINYINT, BDAY TINYINT, BMONTHNUM integer, BPLACE varchar(50), BPLACEID integer, BPLACEUNS TINYINT, BYEAR integer, BIONOTES LONGTEXT, DAPPROX TINYINT, DDAY TINYINT, DMONTHNUM integer, DPLACE varchar(50), DPLACEID integer, DPLACEUNS TINYINT, DYEAR integer, DYEARBC TINYINT, DATECREATED datetime, FIRST varchar(50), GENDER varchar(1), LAST varchar(50), LASTPREFIX varchar(50), LASTUPDATE datetime, MAPNameLF varchar(150), MIDPREFIX varchar(50), MIDDLE varchar(50), PORTRAIT TINYINT, POSTLAST varchar(50), POSTLASTPREFIX varchar(50), RESID varchar(255), STAFFNOTES LONGTEXT, STATUS varchar(15), SUCNUM varchar(6), FATHERID integer, MOTHERID integer, primary key (PERSONID, REV));
-create table docsources_audit.tblPlaces_AUD (PLACEALLID integer not null, REV integer not null, REVTYPE tinyint, ADDLRES TINYINT, DATEENTERED datetime, GPARENT varchar(255), GEOGKEY integer, GEOGKEY_CHILDREN LONGTEXT, GGP varchar(255), GGPTYPE varchar(255), GP2 varchar(255), GP2TYPE varchar(255), GPTYPE varchar(255), LANGUAGE integer, OTHER_FLAGS varchar(50), PARENTTYPE varchar(255), PLNAMEFULL_PLTYPE varchar(255), PLPARENT varchar(255), PLPARENT_SUBJECT_ID integer, PLPARENT_TERM_ID integer, PLSOURCE varchar(50), PLTYPE varchar(255), PLACENAME varchar(255), PLACENAMEFULL varchar(255), PLACENAMEID integer, PLACESMEMO LONGTEXT, PREFFLAG varchar(5), RESID varchar(50), TERM_ACCENT varchar(50), PLPARENT_PLACEALLID integer, primary key (PLACEALLID, REV));
-create table docsources_audit.tblPrcLink_AUD (PRCLINKID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, PERSONID integer, ROLECATID integer, primary key (PRCLINKID, REV));
-create table docsources_audit.tblRoleCats_AUD (ROLECATID integer not null, REV integer not null, REVTYPE tinyint, ROLECATMAJOR varchar(255), ROLECATMAJORID integer, ROLECATMINOR varchar(255), SORTGROUS integer, primary key (ROLECATID, REV));
-create table docsources_audit.tblSeriesList_AUD (SERIESREFNUM integer not null, REV integer not null, REVTYPE tinyint, SUBTITLE1 varchar(100), SUBTITLE2 varchar(100), TITLE varchar(100), primary key (SERIESREFNUM, REV));
-create table docsources_audit.tblSynExtracts_AUD (SynExtrID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, DOCEXTRACT LONGTEXT, LASTUPDATE datetime, SYNOPSIS LONGTEXT, ENTRYID integer, primary key (SynExtrID, REV));
-create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null, REV integer not null, REVTYPE tinyint, TITLEOCC varchar(255), TITLEVARIANTS LONGTEXT, ROLECATMINORID integer, primary key (TITLEOCCID, REV));
-create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
-create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
-
 CREATE TABLE docsources.persistent_logins (
 	`series` VARCHAR(255) NOT NULL,
 	`last_used` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -102,7 +57,7 @@ CREATE TABLE docsources.tblImages (
 	PRIMARY KEY (`imageId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=58033;
 
-CREATE TABLE `tblParents` (
+CREATE TABLE docsources.tblParents (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
 	`parentId` INT(10) NOT NULL,
 	`childId` INT(10) NOT NULL,
@@ -124,7 +79,7 @@ ALTER TABLE `docsources`.`tblAccessLog` ENGINE = InnoDB ;
 ALTER TABLE `docsources`.`tblAccessLog` CHANGE COLUMN `informations` `informations` LONGTEXT NULL DEFAULT NULL AFTER `httpMethod`;
 ALTER TABLE `docsources`.`tblPRCLink`RENAME TO `docsources`.`tblPrcLink`;
 
-ALTER TABLE `tblEPLTOLink` CHANGE COLUMN `EPLTOID#` `EPLTOID` INT(10) NOT NULL AUTO_INCREMENT FIRST;
+ALTER TABLE `docsources`.`tblEPLTOLink` CHANGE COLUMN `EPLTOID#` `EPLTOID` INT(10) NOT NULL AUTO_INCREMENT FIRST;
 -- ALTER TABLE `docsources`.`tblEPLTOLink` DROP COLUMN `EPLTOID`;
 
 -- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
@@ -143,7 +98,7 @@ ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCDATE` INT(11) AFTER `DOCD
 -- Year Modern : type is int (4)
 ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `YEARMODERN` `YEARMODERN` INT(4) NULL DEFAULT NULL  ;
 -- Sortable date : type size decreased from 50 to 10
-ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `SORTABLEDATE` `SORTABLEDATE` VARCHAR(10) NULL DEFAULT NULL  ;
+-- ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `SORTABLEDATE` `SORTABLEDATE` VARCHAR(10) NULL DEFAULT NULL  ;
 -- Logical delete
 ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT NULL DEFAULT '0' AFTER `DOCTYPOLOGY`;
 
@@ -189,13 +144,13 @@ ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT 
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 0;
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 13;
 -- Sender people linked to invalid people (Foreign Keys Checks)
-update docsources.tblDocuments set sendID = null where sendID not in (select personId from tblPeople);
+update docsources.tblDocuments set sendID = null where sendID not in (select personId from docsources.tblPeople);
 -- Recipient people linked to invalid people (Foreign Keys Checks)
-update docsources.tblDocuments set recipID = null where recipID not in (select personId from tblPeople);
+update docsources.tblDocuments set recipID = null where recipID not in (select personId from docsources.tblPeople);
 -- Sender place linked to invalid place (Foreign Keys Checks)
-update docsources.tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from tblPlaces);
+update docsources.tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from docsources.tblPlaces);
 -- Recipient place linked to invalid place (Foreign Keys Checks)
-update docsources.tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
+update docsources.tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from docsources.tblPlaces);
 -- FolioMod must be setted to null instead of empty string
 update docsources.tblDocuments set folioMod=null where folioMod='';
 
@@ -207,9 +162,9 @@ update docsources.tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imag
 
 -- PARENTS
 -- Creating father records
-insert into docsources.tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
+insert into docsources.tblParents select null, fatherId, personId, dateCreated, now() from docsources.tblPeople where fatherId is not null;
 -- Creating mother records
-insert into docsources.tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
+insert into docsources.tblParents select null, motherId, personId, now(), now() from docsources.tblPeople where motherId is not null;
 
 -- PEOPLE
 -- Gender types patch to allow correct use of numeration type Gender
@@ -218,14 +173,14 @@ update docsources.tblPeople set gender = 'F' where gender = 'f';
 update docsources.tblPeople set gender = 'X' where gender = 'x';
 update docsources.tblPeople set gender = null where gender = '';
 -- Born place linked to invalid place
-update docsources.tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from tblPlaces));
+update docsources.tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from docsources.tblPlaces));
 -- Death place linked to invalid place
-update docsources.tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from tblPlaces));
+update docsources.tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from docsources.tblPlaces));
 
 -- Marriages linked to invalid people
-delete from docsources.tblMarriages where (husbandId not in (select personId from tblPeople) ) or ( wifeId not in (select personId from tblPeople));
+delete from docsources.tblMarriages where (husbandId not in (select personId from docsources.tblPeople) ) or ( wifeId not in (select personId from docsources.tblPeople));
 -- PrcLink linked to invalid RoleCat
-delete from docsources.tblPrcLink where RoleCatId not in (select roleCatID from tblRoleCats);
+delete from docsources.tblPrcLink where RoleCatId not in (select roleCatID from docsources.tblRoleCats);
 -- Birth month num 0 or 13 must be setted to null
 update docsources.tblPeople set bMonthNum = null where bMonthNum = 0;
 update docsources.tblPeople set bMonthNum = null where bMonthNum = 13;
@@ -371,8 +326,8 @@ update docsources.tblVolumes set logicalDelete=0;
 -- Set Digitized information on volumes to false
 update docsources.tblVolumes set digitized=0;
 -- These 2 updates will set rights digitized. MySQL does not allow to UPDATE or DELETE a table's data if you're simultaneously reading that same data with a subquery, so we use a temporary c1 view 
-update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
-update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
+update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from docsources.tblImages a, docsources.tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
+update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from docsources.tblImages a, docsources.tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
 
 -- Adjusting missedNumbering in table Images
 update docsources.tblImages set missedNumbering = substr(imageName,12,3) where length(imageName)>16;
@@ -638,6 +593,8 @@ insert into docsources.tblUserHistory select * from docsources_2011.tblUserHisto
 insert into docsources.tblUserMessage select * from docsources_2011.tblUserMessage;
 
 truncate table docsources.tblApplicationProperty 
+TRUNCATE 
+
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.document', 'Forum container for document', '5');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.people', 'Forum container for people', '6');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.place', 'Forum container for place', '7');
@@ -672,28 +629,28 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedon
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.supporto', '', 'Cartaceo');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.tipoRipresa', '', 'Da originale');
 
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (1, 'Board Index forum', 'Board Index', 'CATEGORY', 'GENERIC', 1, '2012-06-02 08:47:00', '2012-03-02 08:46:47', 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (2, 'Scholarly discussion forums', 'Scholarly discussion forums', 'CATEGORY', 'GENERIC', 1, '2011-04-16 08:13:07', '2012-04-16 08:13:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (3, 'Learning Forums', 'Learning Forums', 'CATEGORY', 'GENERIC', 2, '2012-04-16 11:13:07', '2012-04-16 08:12:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (4, 'Technical Forums', 'Technical Forums', 'CATEGORY', 'GENERIC', 3, '2012-04-20 21:13:07', '2012-04-17 08:13:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (5, 'Documents forum', 'Documents', 'FORUM', 'DOCUMENT', 1, '2012-04-22 18:41:29', '2012-04-22 18:41:29', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (6, 'People forum', 'People', 'FORUM', 'PEOPLE', 2, '2012-04-23 08:42:05', '2012-04-23 08:42:05', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (7, 'Places forum', 'Places', 'FORUM', 'PLACE', 3, '2012-04-23 18:27:05', '2012-04-23 18:27:05', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (8, 'Volumes forum', 'Volumes', 'FORUM', 'VOLUME', 4, '2012-05-26 08:44:01', '2012-05-26 08:43:59', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (9, 'General questions forum', 'General Questions', 'FORUM', 'GENERIC', 1, '2012-03-26 14:54:01', '2012-03-26 11:00:01', 0, 1, 0, 3, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (10, 'Paleography forum', 'Paleography', 'FORUM', 'GENERIC', 2, '2012-03-26 13:11:32', '2012-03-26 10:12:01', 0, 1, 0, 3, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (11, 'How to use BIA forum', 'How to use BIA', 'FORUM', 'GENERIC', 3, '2012-05-27 14:44:01', '2012-03-27 14:44:01', 0, 1, 0, 4, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (12, 'Problems with BIA forum', 'Problems with BIA', 'FORUM', 'GENERIC', 1, '2012-05-10 12:44:01', '2012-04-10 22:44:01', 0, 1, 0, 4, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (1, 'Board Index forum', 'Board Index', 'CATEGORY', 'GENERIC', 1, '2012-06-02 08:47:00', '2012-03-02 08:46:47', 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (2, 'Scholarly discussion forums', 'Scholarly discussion forums', 'CATEGORY', 'GENERIC', 1, '2011-04-16 08:13:07', '2012-04-16 08:13:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (3, 'Learning Forums', 'Learning Forums', 'CATEGORY', 'GENERIC', 2, '2012-04-16 11:13:07', '2012-04-16 08:12:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (4, 'Technical Forums', 'Technical Forums', 'CATEGORY', 'GENERIC', 3, '2012-04-20 21:13:07', '2012-04-17 08:13:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (5, 'Documents forum', 'Documents', 'FORUM', 'DOCUMENT', 1, '2012-04-22 18:41:29', '2012-04-22 18:41:29', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (6, 'People forum', 'People', 'FORUM', 'PEOPLE', 2, '2012-04-23 08:42:05', '2012-04-23 08:42:05', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (7, 'Places forum', 'Places', 'FORUM', 'PLACE', 3, '2012-04-23 18:27:05', '2012-04-23 18:27:05', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (8, 'Volumes forum', 'Volumes', 'FORUM', 'VOLUME', 4, '2012-05-26 08:44:01', '2012-05-26 08:43:59', 0, 1, 0, 2, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (9, 'General questions forum', 'General Questions', 'FORUM', 'GENERIC', 1, '2012-03-26 14:54:01', '2012-03-26 11:00:01', 0, 1, 0, 3, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (10, 'Paleography forum', 'Paleography', 'FORUM', 'GENERIC', 2, '2012-03-26 13:11:32', '2012-03-26 10:12:01', 0, 1, 0, 3, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (11, 'How to use BIA forum', 'How to use BIA', 'FORUM', 'GENERIC', 3, '2012-05-27 14:44:01', '2012-03-27 14:44:01', 0, 1, 0, 4, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `docsources`.`tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (12, 'Problems with BIA forum', 'Problems with BIA', 'FORUM', 'GENERIC', 1, '2012-05-10 12:44:01', '2012-04-10 22:44:01', 0, 1, 0, 4, NULL, NULL, NULL, NULL, NULL);
 
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (8, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (9, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (10, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (11, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
-INSERT INTO `tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (12, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (8, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (9, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (10, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (11, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
+INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (12, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
