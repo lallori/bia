@@ -16,11 +16,18 @@ CREATE TABLE docsources.tblAccessLog (
 	`dateAndTime` DATETIME NOT NULL,
 	`executionTime` BIGINT(20) NOT NULL,
 	`httpMethod` VARCHAR(8) NOT NULL,
-	`informations` VARCHAR(3000) NULL DEFAULT NULL,
+	`informations` LONGTEXT NULL,
 	`ipAddress` VARCHAR(50) NOT NULL,
 	`errors` VARCHAR(3000) NULL DEFAULT NULL,
 	PRIMARY KEY (`idAccessLog`)
-) ENGINE=InnoDB AUTO_INCREMENT=59052;
+) ENGINE=InnoDB AUTO_INCREMENT=114041;
+
+CREATE TABLE docsources.tblApplicationProperty (
+	`id` VARCHAR(100) NOT NULL,
+	`help` VARCHAR(1000) NOT NULL,
+	`value` VARCHAR(1000) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 
 CREATE TABLE docsources.tblActivationUser (
 	`Uuid` VARCHAR(50) NOT NULL,
