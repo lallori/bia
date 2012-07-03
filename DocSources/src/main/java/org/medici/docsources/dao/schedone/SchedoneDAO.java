@@ -54,6 +54,15 @@ public interface SchedoneDAO extends Dao<Integer, Schedone> {
 	/**
 	 * 
 	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Schedone findByVolume(Integer volNum, String volLetExt) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param volNum
 	 * @param volNumBetween
 	 * @return
 	 * @throws PersistenceException

@@ -112,6 +112,30 @@ public class SchedoneDAOJpaImpl extends JpaDao<Integer, Schedone> implements Sch
 
 		return paginationFilter;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Schedone findByVolume(Integer volNum, String volLetExt) throws PersistenceException {
+		Query query;
+		if(volLetExt == null || volLetExt.equals("")){
+			query = getEntityManager().createQuery("FROM Schedone WHERE volNum=:volNum AND volLetExt IS NULL");
+			query.setParameter("volNum", volNum);
+		}else{
+			query = getEntityManager().createQuery("FROM Schedone WHERE volNum=:volNum AND volLetExt LIKE ':volLetExt'");
+			query.setParameter("volNum", volNum);
+			query.setParameter("volLetExt", volLetExt);
+		}
+		
+		List<Schedone> result = query.getResultList();
+		if(result.size() == 0){
+			return null;
+		}else{
+			return result.get(0);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

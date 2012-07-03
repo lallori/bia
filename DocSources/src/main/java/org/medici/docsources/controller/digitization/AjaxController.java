@@ -234,6 +234,7 @@ public class AjaxController {
 	@RequestMapping(value = "/digitization/BrowseDigitizedVolumes.json", method = RequestMethod.GET)
 	public ModelAndView browseDigitizedVolumes(@RequestParam(value="searchType", required=false) String searchType,
 											@RequestParam(value="volNum", required=false) Integer volNum,
+											@RequestParam(value="volLetExt", required=false) String volLetExt,
 											@RequestParam(value="volNumBetween", required=false) Integer volNumBetween,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -244,13 +245,22 @@ public class AjaxController {
 		Map<String, Boolean> ifDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>();
+		Volume volumeExactly = null;
 
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
 
 		try {
 			if(searchType.equals("Exactly")){
-				page = getDigitizationService().searchVolumes(volNum, volNum, paginationFilter);
+				if(volLetExt == null || volLetExt.equals("")){
+					volumeExactly = getDigitizationService().searchVolume(volNum, null);
+				}else{
+					volumeExactly = getDigitizationService().searchVolume(volNum, volLetExt);
+				}
+				List<Volume> listForPage = new ArrayList<Volume>();
+				listForPage.add(volumeExactly);
+				page = new Page(paginationFilter);
+				page.setList(listForPage);
 				
 				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
 			}else if(searchType.equals("Between")){
@@ -281,7 +291,11 @@ public class AjaxController {
 				//MDP
 				singleRow.add(currentVolume.getMDP());
 				//Schedone
-				Schedone currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
+				Schedone currentSchedone;
+				if(currentVolume.getVolLetExt() != null)
+					currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
+				else
+					currentSchedone = ifSchedone.get(currentVolume.getVolNum().toString());
 				if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
 					singleRow.add("YES");
 				}else{

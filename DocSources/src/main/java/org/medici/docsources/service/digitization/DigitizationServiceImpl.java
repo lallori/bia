@@ -45,6 +45,7 @@ import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,9 @@ public class DigitizationServiceImpl implements DigitizationService {
 			schedoneToUpdate.setFondo(schedone.getFondo());
 			schedoneToUpdate.setSerie(schedone.getSerie());
 			schedoneToUpdate.setNumeroUnita(schedone.getNumeroUnita());
+			schedoneToUpdate.setVolNum(schedone.getVolNum());
+			schedoneToUpdate.setVolLetExt(schedone.getVolLetExt());
+			
 			schedoneToUpdate.setDataInizioAnno(schedone.getDataInizioAnno());
 
 			if(schedone.getDataInizioMese() != null){
@@ -282,7 +286,10 @@ public class DigitizationServiceImpl implements DigitizationService {
 			List<Schedone> resultList = getSchedoneDAO().findByVolumesNumber(volNum, volNumBetween);
 			if(resultList != null){
 				for(Schedone currentSchedone : resultList){
-					result.put(currentSchedone.getVolNum() + currentSchedone.getVolLetExt(), currentSchedone);
+					if(currentSchedone.getVolLetExt() != null)
+						result.put(currentSchedone.getVolNum() + currentSchedone.getVolLetExt(), currentSchedone);
+					else
+						result.put(currentSchedone.getVolNum().toString(), currentSchedone);
 				}
 			}
 			return result;
@@ -412,6 +419,18 @@ public class DigitizationServiceImpl implements DigitizationService {
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
 		try{
 			return getSeriesListDAO().findSeries(alias);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Volume searchVolume(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try{
+			return getVolumeDAO().findVolume(volNum, volLetExt);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

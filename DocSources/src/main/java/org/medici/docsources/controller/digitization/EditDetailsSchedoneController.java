@@ -97,7 +97,11 @@ public class EditDetailsSchedoneController {
 			schedone.setSerie(command.getSerie());
 			schedone.setNumeroUnita(command.getNumeroUnita());
 			schedone.setVolNum(command.getNumeroUnita());
-			schedone.setVolLetExt(command.getVolLetExt());
+			if(command.getVolLetExt().equals("")){
+				schedone.setVolLetExt(null);
+			}else{
+				schedone.setVolLetExt(command.getVolLetExt());
+			}
 			schedone.setDataInizioAnno(command.getDataInizioAnno());
 			schedone.setDataInizioMese((command.getDataInizioMese() != null) ? new Month(command.getDataInizioMese()) : null);
 			schedone.setDataInizioGiorno(command.getDataInizioGiorno());
@@ -109,12 +113,29 @@ public class EditDetailsSchedoneController {
 			schedone.setLegatura(command.getLegatura());
 			schedone.setSupporto(command.getSupporto());
 			schedone.setCartulazione(command.getCartulazione());
-			schedone.setNoteCartulazione(command.getNoteCartulazione());
-			schedone.setNoteCartulazioneEng(command.getNoteCartulazioneEng());
+			if(command.getNoteCartulazione().equals("")){
+				schedone.setNoteCartulazione(null);
+			}else{
+				schedone.setNoteCartulazione(command.getNoteCartulazione());
+			}
+			if(command.getNoteCartulazioneEng().equals("")){
+				schedone.setNoteCartulazioneEng(null);
+			}else{
+				schedone.setNoteCartulazioneEng(command.getNoteCartulazioneEng());
+			}
+			
 			schedone.setCarteBianche(command.getCarteBianche());
 			schedone.setCarteMancanti(command.getCarteMancanti());
-			schedone.setDimensioniBase(command.getDimensioniBase());
-			schedone.setDimensioniAltezza(command.getDimensioniAltezza());
+			if(command.getDimensioniBase().equals("")){
+				schedone.setDimensioniBase(null);
+			}else{
+				schedone.setDimensioniBase(command.getDimensioniBase());
+			}
+			if(command.getDimensioniAltezza().equals("")){
+				schedone.setDimensioniAltezza(null);
+			}else{
+				schedone.setDimensioniAltezza(command.getDimensioniAltezza());
+			}
 			schedone.setTipoRipresa(command.getTipoRipresa());
 			schedone.setColoreImmagine(command.getColoreImmagine());
 			schedone.setRisoluzione(command.getRisoluzione());
@@ -129,6 +150,8 @@ public class EditDetailsSchedoneController {
 				if (command.getSchedoneId().equals(0)) {
 					schedone = getDigitizationService().addNewSchedone(schedone);
 					model.put("schedone", schedone);
+					
+					//TODO: Create volume record if not entered
 
 					return new ModelAndView("digitization/ShowSchedone", model);
 				} else {

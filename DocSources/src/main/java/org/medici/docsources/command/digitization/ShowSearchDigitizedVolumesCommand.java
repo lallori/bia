@@ -37,6 +37,7 @@ public class ShowSearchDigitizedVolumesCommand {
 	private String searchUUID;
 	private String searchType;
 	private Integer volNum;
+	private String volLetExt;
 	private Integer volNumBetween;
 	/**
 	 * @return the searchType
@@ -61,6 +62,18 @@ public class ShowSearchDigitizedVolumesCommand {
 	 */
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
+	}
+	/**
+	 * @return the volLetExt
+	 */
+	public String getVolLetExt() {
+		return volLetExt;
+	}
+	/**
+	 * @param volLetExt the volLetExt to set
+	 */
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
 	/**
 	 * @return the volNumBetween

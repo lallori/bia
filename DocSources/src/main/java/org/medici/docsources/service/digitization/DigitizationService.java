@@ -37,6 +37,7 @@ import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -168,6 +169,15 @@ public interface DigitizationService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Volume searchVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
 	
 	/**
 	 * 
