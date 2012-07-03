@@ -664,6 +664,14 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('user.ma
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.domain', '', 'bia.medici.org');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.protocol', '', 'http');
 
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.coloreImmagine', '', 'RGB');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.fondo', '', 'Mediceo del Principato');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.istituto', '', 'Archivio di Stato di Firenze');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.legatura', '', 'Filza con coperta attribuita in fase di restauro (1974)');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.responsabileFotoRiproduzione', '', 'dr. Francesca Klein');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.supporto', '', 'Cartaceo');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.tipoRipresa', '', 'Da originale');
+
 INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (1, 'Board Index forum', 'Board Index', 'CATEGORY', 'GENERIC', 1, '2012-06-02 08:47:00', '2012-03-02 08:46:47', 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (2, 'Scholarly discussion forums', 'Scholarly discussion forums', 'CATEGORY', 'GENERIC', 1, '2011-04-16 08:13:07', '2012-04-16 08:13:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tblForum` (`forumId`, `description`, `title`, `type`, `subType`, `dispositionOrder`, `lastUpdate`, `dateCreated`, `postsNumber`, `status`, `topicsNumber`, `forumParent`, `lastPost`, `entryId`, `peopleId`, `placeAllId`, `summaryId`) VALUES (3, 'Learning Forums', 'Learning Forums', 'CATEGORY', 'GENERIC', 2, '2012-04-16 11:13:07', '2012-04-16 08:12:07', 0, 1, 0, 1, NULL, NULL, NULL, NULL, NULL);
