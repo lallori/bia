@@ -93,8 +93,8 @@
 								Modalbox.show('${SimpleSearchModalURL}' + '?text=' + $j("#text").val(), {title: "BASIC SEARCH", width: 500, height: 260});
 								return false;
 							}
-							if(title == 'Document Synopsis'){
-								title = "Document Synopsis"
+							if(title == 'Document Synopses'){
+								title = "Document Synopses"
 							}else{
 								title = title.replace('s','');
 							}
