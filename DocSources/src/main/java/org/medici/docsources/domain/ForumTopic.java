@@ -330,20 +330,20 @@ public class ForumTopic implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append("id=");
-		stringBuffer.append(getTopicId());
-		stringBuffer.append(", subject=");
-		stringBuffer.append(getSubject());
+		StringBuilder stringBuilder = new StringBuilder("[");
+		stringBuilder.append("id=");
+		stringBuilder.append(getTopicId());
+		stringBuilder.append(", subject=");
+		stringBuilder.append(getSubject());
 		if (getForum() == null) {
-			stringBuffer.append(", forum=null,");
+			stringBuilder.append(", forum=null,");
 		} else {
-			stringBuffer.append(", forum=");
-			stringBuffer.append(getForum().getForumId());
+			stringBuilder.append(", forum=");
+			stringBuilder.append(getForum().getForumId());
 		}
-		stringBuffer.append("]");
+		stringBuilder.append("]");
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**

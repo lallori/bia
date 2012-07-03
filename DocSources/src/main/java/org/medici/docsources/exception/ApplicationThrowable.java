@@ -133,14 +133,14 @@ public class ApplicationThrowable extends Throwable {
 
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("Error Code : ");
-		stringBuffer.append(getApplicationError());
-		stringBuffer.append(", Cause Message : ");
+		StringBuilder stringBuilder = new StringBuilder("Error Code : ");
+		stringBuilder.append(getApplicationError());
+		stringBuilder.append(", Cause Message : ");
 		if (getCause() != null)
-			stringBuffer.append(getCause().getMessage());
+			stringBuilder.append(getCause().getMessage());
 		else
-			stringBuffer.append("not available");
+			stringBuilder.append("not available");
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

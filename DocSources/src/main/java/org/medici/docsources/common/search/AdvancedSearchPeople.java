@@ -661,11 +661,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	@Override
 	public String toJPAQuery() {
 		// TODO Auto-generated method stub
-		StringBuffer jpaQuery = new StringBuffer("FROM People WHERE ");
+		StringBuilder jpaQuery = new StringBuilder("FROM People WHERE ");
 		
 		//Names
 		if(names.size() > 0){
-			StringBuffer namesQuery = new StringBuffer("(");
+			StringBuilder namesQuery = new StringBuilder("(");
 			for(int i = 0; i < names.size(); i++){
 				String [] wordsSingleNames = StringUtils.split(names.get(i), " ");
 				if(namesQuery.length() > 1){
@@ -708,7 +708,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Words
 		if(words.size() > 0){
-			StringBuffer wordsQuery = new StringBuffer("(");
+			StringBuilder wordsQuery = new StringBuilder("(");
 			for(int i = 0; i < words.size(); i++){
 				if(wordsQuery.length() > 1){
 					wordsQuery.append(" AND ");
@@ -740,7 +740,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Dates
 		if(datesTypes.size() > 0){
-			StringBuffer datesQuery = new StringBuffer("(");
+			StringBuilder datesQuery = new StringBuilder("(");
 			for(int i = 0; i < datesTypes.size(); i++){
 				if(datesTypes.get(i) == null){
 					continue;
@@ -786,8 +786,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append("))) AND bornDateBc = false AND deathDateBc = false");
 				}else if(datesTypes.get(i).equals("Born/Died on")){
-					StringBuffer bornQuery = new StringBuffer();
-					StringBuffer deathQuery = new StringBuffer();
+					StringBuilder bornQuery = new StringBuilder();
+					StringBuilder deathQuery = new StringBuilder();
 					if(datesYear.get(i) != null){
 						bornQuery.append("(bornYear =");
 						bornQuery.append(datesYear.get(i) + ")");
@@ -834,7 +834,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Role Categories
 		if(roleCategories.size() > 0){
-			StringBuffer roleCatQuery = new StringBuffer("(");
+			StringBuilder roleCatQuery = new StringBuilder("(");
 			for(int i = 0; i < roleCategories.size(); i++){
 				if(roleCatQuery.length() > 1){
 					roleCatQuery.append(" AND ");
@@ -860,7 +860,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//OccupationsWord
 		if(titleOccWord.size() > 0){
-			StringBuffer titleOccWordQuery = new StringBuffer("(");
+			StringBuilder titleOccWordQuery = new StringBuilder("(");
 			for(int i = 0; i < titleOccWord.size(); i++){
 				String[] wordsOccupation = StringUtils.split(titleOccWord.get(i), " ");
 				if(titleOccWordQuery.length() > 1){
@@ -886,7 +886,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Occupations
 		if(titlesOccId.size() > 0){
-			StringBuffer titleOccIdQuery = new StringBuffer("(");
+			StringBuilder titleOccIdQuery = new StringBuilder("(");
 			for(int i = 0; i < titlesOccId.size(); i++){
 				if(titleOccIdQuery.length() > 1){
 					titleOccIdQuery.append(" AND ");
@@ -912,7 +912,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Gender
 		if(gender.size() > 0){
-			StringBuffer genderQuery = new StringBuffer("(");
+			StringBuilder genderQuery = new StringBuilder("(");
 			for(int i = 0; i < gender.size(); i++){
 				if(genderQuery.length() > 1){
 					genderQuery.append(" AND ");
@@ -932,7 +932,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//Places
 		if(placeId.size() > 0){
-			StringBuffer placeIdQuery = new StringBuffer("(");
+			StringBuilder placeIdQuery = new StringBuilder("(");
 			for(int i = 0; i < placeId.size(); i++){
 				if(placeIdQuery.length() > 1){
 					placeIdQuery.append(" AND ");
@@ -984,7 +984,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		//ResearchNotes
 		if(researchNotes.size() > 0){
-			StringBuffer researchNotesQuery = new StringBuffer("(");
+			StringBuilder researchNotesQuery = new StringBuilder("(");
 			for(int i = 0; i < researchNotes.size(); i++){
 				if(researchNotesQuery.length() > 1){
 					researchNotesQuery.append(" AND ");
@@ -1224,7 +1224,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	public String toString(){
-		StringBuffer toString = new StringBuffer();
+		StringBuilder toString = new StringBuilder();
 		if(!names.isEmpty()){
 			if(toString.length()>0){
 				toString.append("AND ");
@@ -1234,7 +1234,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				if(i > 0){
 					toString.append("AND ");
 				}
-				toString.append(names.get(i) + " ");
+				toString.append(names.get(i));
+				toString.append(" ");
 			}
 		}
 		if(!words.isEmpty()){

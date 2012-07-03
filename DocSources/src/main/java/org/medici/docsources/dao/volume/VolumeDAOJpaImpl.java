@@ -153,10 +153,10 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	@Override
 	public List<String> searchOtherLang(String query) throws PersistenceException {
 		// TODO Auto-generated method stub
-		StringBuffer stringBuffer = new StringBuffer("SELECT DISTINCT otherLang FROM Volume WHERE otherLang LIKE'%");
-		stringBuffer.append(query.toLowerCase());
-		stringBuffer.append("%'");
-		Query result = getEntityManager().createQuery(stringBuffer.toString());
+		StringBuilder stringBuilder = new StringBuilder("SELECT DISTINCT otherLang FROM Volume WHERE otherLang LIKE'%");
+		stringBuilder.append(query.toLowerCase());
+		stringBuilder.append("%'");
+		Query result = getEntityManager().createQuery(stringBuilder.toString());
 		if(result.getResultList().size() == 0){
 			return null;
 		}else{
@@ -268,10 +268,10 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	@SuppressWarnings({"unchecked"})
 	@Override
 	public List<Volume> searchVolumes(String query) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("FROM Volume WHERE (CONVERT(volNum, CHAR)) LIKE '");
-		stringBuffer.append(query.toLowerCase());
-		stringBuffer.append("%' ORDER BY volNum");
-		Query result = getEntityManager().createQuery(stringBuffer.toString());
+		StringBuilder stringBuilder = new StringBuilder("FROM Volume WHERE (CONVERT(volNum, CHAR)) LIKE '");
+		stringBuilder.append(query.toLowerCase());
+		stringBuilder.append("%' ORDER BY volNum");
+		Query result = getEntityManager().createQuery(stringBuilder.toString());
 		if(result.getResultList().size() == 0){
 			return null;
 		}else{
@@ -360,7 +360,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

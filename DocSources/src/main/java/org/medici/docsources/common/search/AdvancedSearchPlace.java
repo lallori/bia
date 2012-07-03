@@ -260,11 +260,11 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	@Override
 	public String toJPAQuery() {
 		// TODO Auto-generated method stub
-		StringBuffer jpaQuery = new StringBuffer("FROM Place WHERE ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Place WHERE ");
 		
 		//Place Name
 		if(placesName.size() > 0){
-			StringBuffer placesNameQuery = new StringBuffer("(");
+			StringBuilder placesNameQuery = new StringBuilder("(");
 			for(int i = 0; i < placesName.size(); i++){
 				String wordsSinglePlaceNames[] = StringUtils.split(placesName.get(i), " ");
 				if(placesNameQuery.length() > 1){
@@ -293,7 +293,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		//Place Type
 		if(placeType.size() > 0){
-			StringBuffer placeTypeQuery = new StringBuffer("(");
+			StringBuilder placeTypeQuery = new StringBuilder("(");
 			for(int i = 0; i < placeType.size(); i++){
 				if(placeTypeQuery.length() > 1){
 					placeTypeQuery.append(" AND ");
@@ -314,7 +314,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		//Linked to topics
 		//MD: Section deleted
 //		if(linkedToTopicsId.size() > 0){
-//			StringBuffer linkedToTopicsIdQuery = new StringBuffer("(");
+//			StringBuilder linkedToTopicsIdQuery = new StringBuilder("(");
 //			for(int i = 0; i < linkedToTopicsId.size(); i++){
 //				if(linkedToTopicsIdQuery.length() > 1){
 //					linkedToTopicsIdQuery.append(" AND ");
@@ -334,7 +334,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		//Linked to people
 		if(linkedToPeople.size() > 0){
-			StringBuffer linkedToPeopleQuery = new StringBuffer("(");
+			StringBuilder linkedToPeopleQuery = new StringBuilder("(");
 			for(int i = 0; i < linkedToPeople.size(); i++){
 				if(linkedToPeopleQuery.length() > 1){
 					linkedToPeopleQuery.append(" AND ");

@@ -214,18 +214,18 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Forum> findForumCategories(Forum forum) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer("FROM Forum WHERE type='");
-        stringBuffer.append(forum.getType());
-        stringBuffer.append("' and forumParent ");
+        StringBuilder stringBuilder = new StringBuilder("FROM Forum WHERE type='");
+        stringBuilder.append(forum.getType());
+        stringBuilder.append("' and forumParent ");
 
         if (forum.getForumId() == null)
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
         else {
-        	stringBuffer.append("=");
-        	stringBuffer.append(forum.getForumId());
+        	stringBuilder.append("=");
+        	stringBuilder.append(forum.getForumId());
         }
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         return query.getResultList();
 	}
@@ -333,7 +333,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

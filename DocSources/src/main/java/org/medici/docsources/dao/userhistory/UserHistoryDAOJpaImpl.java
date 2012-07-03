@@ -186,7 +186,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 
         paginationFilter = generatePaginationFilterMYSQL(category, paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -280,7 +280,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -311,34 +311,34 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistory findCategoryHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username=:username AND category=:category ");
+		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE username=:username AND category=:category ");
         
         switch (category) {
 			case DOCUMENT:
-				stringBuffer.append(" AND document.entryId=:primaryKeyId");
+				stringBuilder.append(" AND document.entryId=:primaryKeyId");
 				break;
 			case PEOPLE:
-				stringBuffer.append(" AND person.personId=:primaryKeyId");
+				stringBuilder.append(" AND person.personId=:primaryKeyId");
 				break;
 			case PLACE:
-				stringBuffer.append(" AND place.placeAllId=:primaryKeyId");
+				stringBuilder.append(" AND place.placeAllId=:primaryKeyId");
 				break;
 			case VOLUME:
-				stringBuffer.append(" AND volume.summaryId=:primaryKeyId");
+				stringBuilder.append(" AND volume.summaryId=:primaryKeyId");
 				break;
 			case FORUM:
-				stringBuffer.append(" AND forum.id=:primaryKeyId");
+				stringBuilder.append(" AND forum.id=:primaryKeyId");
 				break;
 			case FORUM_POST:
-				stringBuffer.append(" AND forumPost.id=:primaryKeyId");
+				stringBuilder.append(" AND forumPost.id=:primaryKeyId");
 				break;
 			default:
 				break;
 		}
 
-        stringBuffer.append(" ORDER BY idUserHistory DESC");
+        stringBuilder.append(" ORDER BY idUserHistory DESC");
 
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("category", category);
@@ -359,33 +359,33 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException{
-		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username=:username ");
+		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE username=:username ");
 		
 		switch(category){
 			case DOCUMENT:
-				stringBuffer.append(" AND document.entryId=:primaryKeyId");
+				stringBuilder.append(" AND document.entryId=:primaryKeyId");
 				break;
 			case PEOPLE:
-				stringBuffer.append(" AND person.personId=:primaryKeyId");
+				stringBuilder.append(" AND person.personId=:primaryKeyId");
 				break;
 			case PLACE:
-				stringBuffer.append(" AND place.placeAllId=:primaryKeyId");
+				stringBuilder.append(" AND place.placeAllId=:primaryKeyId");
 				break;
 			case VOLUME:
-				stringBuffer.append(" AND volume.summaryId=:primaryKeyId");
+				stringBuilder.append(" AND volume.summaryId=:primaryKeyId");
 				break;
 			case FORUM:
-				stringBuffer.append(" AND forum.id=:primaryKeyId");
+				stringBuilder.append(" AND forum.id=:primaryKeyId");
 				break;
 			case FORUM_POST:
-				stringBuffer.append(" AND forumPost.id=:primaryKeyId");
+				stringBuilder.append(" AND forumPost.id=:primaryKeyId");
 				break;
 			default:
 				break;
 		}
-		stringBuffer.append(" ORDER BY idUserHistory DESC");
+		stringBuilder.append(" ORDER BY idUserHistory DESC");
 		
-		Query query = getEntityManager().createQuery(stringBuffer.toString());
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		query.setParameter("primaryKeyId", primaryKeyId);
 		
@@ -451,38 +451,38 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findNextCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Next
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
-		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username='");
-		stringBuffer.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		stringBuffer.append("'");
-		stringBuffer.append(" AND idUserHistory > ");
-		stringBuffer.append(idUserHistory);        
+		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE username='");
+		stringBuilder.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		stringBuilder.append("'");
+		stringBuilder.append(" AND idUserHistory > ");
+		stringBuilder.append(idUserHistory);        
 
         switch (category) {
 			case DOCUMENT:
-				stringBuffer.append(" AND document is not null ");
+				stringBuilder.append(" AND document is not null ");
 				break;
 			case PEOPLE:
-				stringBuffer.append(" AND person is not null ");
+				stringBuilder.append(" AND person is not null ");
 				break;
 			case PLACE:
-				stringBuffer.append(" AND place is not null ");
+				stringBuilder.append(" AND place is not null ");
 				break;
 			case VOLUME:
-				stringBuffer.append(" AND volume is not null ");
+				stringBuilder.append(" AND volume is not null ");
 				break;
 			case FORUM:
-				stringBuffer.append(" AND forum is not null ");
+				stringBuilder.append(" AND forum is not null ");
 				break;
 			case FORUM_POST:
-				stringBuffer.append(" AND forumPost is not null ");
+				stringBuilder.append(" AND forumPost is not null ");
 				break;
 			default:
 				break;
 		}
 	
-        stringBuffer.append(" ORDER BY idUserHistory ASC LIMIT 1");
+        stringBuilder.append(" ORDER BY idUserHistory ASC LIMIT 1");
 	
-	    Query query = getEntityManager().createQuery(stringBuffer.toString());	
+	    Query query = getEntityManager().createQuery(stringBuilder.toString());	
         query.setMaxResults(1);
 
         List<UserHistory> result = query.getResultList();
@@ -502,7 +502,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findNextHistoryCursor(Integer idUserHistory) throws PersistenceException {
 		// -- Next
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
-		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE username='");
 		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		queryString.append("'");
 		queryString.append(" AND idUserHistory > ");
@@ -530,39 +530,39 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findPreviousCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Previous
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
-		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username='");
-		stringBuffer.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		stringBuffer.append("'");
-		stringBuffer.append(" AND idUserHistory < ");
-		stringBuffer.append(idUserHistory);
+		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE username='");
+		stringBuilder.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		stringBuilder.append("'");
+		stringBuilder.append(" AND idUserHistory < ");
+		stringBuilder.append(idUserHistory);
         
         switch (category) {
 			case DOCUMENT:
-				stringBuffer.append(" AND document is not null ");
+				stringBuilder.append(" AND document is not null ");
 				break;
 			case PEOPLE:
-				stringBuffer.append(" AND person is not null ");
+				stringBuilder.append(" AND person is not null ");
 				break;
 			case PLACE:
-				stringBuffer.append(" AND place is not null ");
+				stringBuilder.append(" AND place is not null ");
 				break;
 			case VOLUME:
-				stringBuffer.append(" AND volume is not null ");
+				stringBuilder.append(" AND volume is not null ");
 				break;
 			case FORUM:
-				stringBuffer.append(" AND forum is not null ");
+				stringBuilder.append(" AND forum is not null ");
 				break;
 			case FORUM_POST:
-				stringBuffer.append(" AND forumPost is not null ");
+				stringBuilder.append(" AND forumPost is not null ");
 				break;
 
 			default:
 				break;
 		}
 
-        stringBuffer.append(" ORDER BY idUserHistory DESC LIMIT 1");
+        stringBuilder.append(" ORDER BY idUserHistory DESC LIMIT 1");
 
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setMaxResults(1);
         //query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         //query.setParameter("idUserHistory", idUserHistory);
@@ -584,7 +584,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findPreviousHistoryCursor(Integer idUserHistory) throws PersistenceException {
 		// -- Previous
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
-		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE username='");
 		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		queryString.append("'");
 		queryString.append(" AND idUserHistory < ");

@@ -230,23 +230,23 @@ public class EplToLink implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuilder stringBuilder = new StringBuilder("");
 
 		if (!ObjectUtils.toString(getTopic()).equals("")) {
 			if (!ObjectUtils.toString(getTopic().getTopicTitle()).equals("")) {
-				stringBuffer.append(getTopic().getTopicTitle());
+				stringBuilder.append(getTopic().getTopicTitle());
 			}
 		}
 		
 		if (!ObjectUtils.toString(getPlace()).equals("")) {
 			if (!ObjectUtils.toString(getPlace().getPlaceNameFull()).equals("")) {
-				if (stringBuffer.length() > 0) {
-					stringBuffer.append(" - ");
+				if (stringBuilder.length() > 0) {
+					stringBuilder.append(" - ");
 				}
-				stringBuffer.append(getPlace().getPlaceNameFull());
+				stringBuilder.append(getPlace().getPlaceNameFull());
 			}
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

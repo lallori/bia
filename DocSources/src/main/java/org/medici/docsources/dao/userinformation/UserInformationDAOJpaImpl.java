@@ -103,7 +103,7 @@ public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> i
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

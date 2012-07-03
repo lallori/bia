@@ -339,37 +339,37 @@ public class ForumOption implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append("id=");
+		StringBuilder stringBuilder = new StringBuilder("[");
+		stringBuilder.append("id=");
 		if (getForum() ==null)
-		stringBuffer.append((getForum() ==null) ? null : getForum().getForumId());
-		stringBuffer.append(", canHaveSubCategory=");
-		stringBuffer.append(getCanHaveSubCategory());
-		stringBuffer.append(", canHaveSubForum=");
-		stringBuffer.append(getCanHaveSubForum());
-		stringBuffer.append(", canHaveTopics=");
-		stringBuffer.append(getCanHaveTopics());
-		stringBuffer.append(", canView=");
-		stringBuffer.append(getCanView());
-		stringBuffer.append(", canOnlyViewOwnTopics=");
-		stringBuffer.append(getCanOnlyViewOwnTopics());
-		stringBuffer.append(", canDownloadAttachments=");
-		stringBuffer.append(getCanDownloadAttachments());
-		stringBuffer.append(", canPostReplys=");
-		stringBuffer.append(getCanPostReplys());
-		stringBuffer.append(", canPostAttachments=");
-		stringBuffer.append(getCanPostAttachments());
-		stringBuffer.append(", canRateTopics=");
-		stringBuffer.append(getCanRateTopics());
-		stringBuffer.append(", canEditPosts=");
-		stringBuffer.append(getCanEditPosts());
-		stringBuffer.append(", canDeleteTopics=");
-		stringBuffer.append(getCanDeleteTopics());
-		stringBuffer.append(", canDeletePosts=");
-		stringBuffer.append(getCanDeletePosts());
-		stringBuffer.append("]");
+		stringBuilder.append((getForum() ==null) ? null : getForum().getForumId());
+		stringBuilder.append(", canHaveSubCategory=");
+		stringBuilder.append(getCanHaveSubCategory());
+		stringBuilder.append(", canHaveSubForum=");
+		stringBuilder.append(getCanHaveSubForum());
+		stringBuilder.append(", canHaveTopics=");
+		stringBuilder.append(getCanHaveTopics());
+		stringBuilder.append(", canView=");
+		stringBuilder.append(getCanView());
+		stringBuilder.append(", canOnlyViewOwnTopics=");
+		stringBuilder.append(getCanOnlyViewOwnTopics());
+		stringBuilder.append(", canDownloadAttachments=");
+		stringBuilder.append(getCanDownloadAttachments());
+		stringBuilder.append(", canPostReplys=");
+		stringBuilder.append(getCanPostReplys());
+		stringBuilder.append(", canPostAttachments=");
+		stringBuilder.append(getCanPostAttachments());
+		stringBuilder.append(", canRateTopics=");
+		stringBuilder.append(getCanRateTopics());
+		stringBuilder.append(", canEditPosts=");
+		stringBuilder.append(getCanEditPosts());
+		stringBuilder.append(", canDeleteTopics=");
+		stringBuilder.append(getCanDeleteTopics());
+		stringBuilder.append(", canDeletePosts=");
+		stringBuilder.append(getCanDeletePosts());
+		stringBuilder.append("]");
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }
 

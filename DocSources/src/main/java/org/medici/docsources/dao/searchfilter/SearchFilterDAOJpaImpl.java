@@ -73,7 +73,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 */
 	@Override
 	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException {
-		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and id=:id");
+		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username and id=:id");
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("username", username);
@@ -88,7 +88,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException {
-		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
+		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username ");
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("username", username);
@@ -112,7 +112,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 			page.setTotal((Long) query.getSingleResult());
 		}
 
-		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
+		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username ");
 		
 		if (paginationFilter.getSortingCriterias().size() > 0) {
 			jpql.append("order by ");
@@ -149,7 +149,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 			page.setTotal((Long) query.getSingleResult());
 		}
 
-		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and searchType=:searchType ");
+		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username and searchType=:searchType ");
 		
 		if (paginationFilter.getSortingCriterias().size() > 0) {
 			jpql.append("order by ");

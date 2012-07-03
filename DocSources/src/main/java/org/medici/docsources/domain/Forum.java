@@ -342,22 +342,22 @@ public class Forum implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append("id=");
-		stringBuffer.append(getForumId());
-		stringBuffer.append(", name=");
-		stringBuffer.append(getTitle());
+		StringBuilder stringBuilder = new StringBuilder("[");
+		stringBuilder.append("id=");
+		stringBuilder.append(getForumId());
+		stringBuilder.append(", name=");
+		stringBuilder.append(getTitle());
 		if (getForumParent() == null) {
-			stringBuffer.append(", forumId=null,");
+			stringBuilder.append(", forumId=null,");
 		} else {
-			stringBuffer.append(", parentForumId=");
-			stringBuffer.append(getForumParent().getForumId());
+			stringBuilder.append(", parentForumId=");
+			stringBuilder.append(getForumParent().getForumId());
 		}
-		stringBuffer.append(", description=");
-		stringBuffer.append(getDescription());
-		stringBuffer.append("]");
+		stringBuilder.append(", description=");
+		stringBuilder.append(getDescription());
+		stringBuilder.append("]");
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**

@@ -265,26 +265,26 @@ public class PoLink implements Serializable {
 	 */
 	@Transient
 	public String getStartDate() {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (startDay != null) {
-			stringBuffer.append(startDay);
+			stringBuilder.append(startDay);
 		}
 		
 		if (!ObjectUtils.toString(startMonth).equals("")) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
+			if (stringBuilder.length() > 0 ) {
+				stringBuilder.append(" ");
 			}
-			stringBuffer.append(startMonth.toString());
+			stringBuilder.append(startMonth.toString());
 		}
 
 		if (startYear != null) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
+			if (stringBuilder.length() > 0 ) {
+				stringBuilder.append(" ");
 			}
-			stringBuffer.append(startYear);
+			stringBuilder.append(startYear);
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}	
 
 	/**
@@ -338,26 +338,26 @@ public class PoLink implements Serializable {
 	 */
 	@Transient
 	public String getEndDate() {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (endDay != null) {
-			stringBuffer.append(endDay);
+			stringBuilder.append(endDay);
 		}
 		
 		if (!ObjectUtils.toString(endMonth).equals("")) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
+			if (stringBuilder.length() > 0 ) {
+				stringBuilder.append(" ");
 			}
-			stringBuffer.append(endMonth.toString());
+			stringBuilder.append(endMonth.toString());
 		}
 
 		if (endYear != null) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
+			if (stringBuilder.length() > 0 ) {
+				stringBuilder.append(" ");
 			}
-			stringBuffer.append(endYear);
+			stringBuilder.append(endYear);
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}	
 
 	/**

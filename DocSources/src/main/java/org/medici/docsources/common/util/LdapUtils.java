@@ -49,7 +49,7 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (account == null))
 			return new DistinguishedName("");
 
-		StringBuffer fullUserDistinguishedName = new StringBuffer(ldapConfiguration.getUserAttribute());
+		StringBuilder fullUserDistinguishedName = new StringBuilder(ldapConfiguration.getUserAttribute());
 		fullUserDistinguishedName.append("=");
 		fullUserDistinguishedName.append(account);
 		fullUserDistinguishedName.append(",");
@@ -70,7 +70,7 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (role == null))
 			return new DistinguishedName("");
 
-		StringBuffer fullUserRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
+		StringBuilder fullUserRoleDistinguishedName = new StringBuilder(ldapConfiguration.getRoleAttribute());
 		fullUserRoleDistinguishedName.append("=\"");
 		fullUserRoleDistinguishedName.append("cn=");
 		fullUserRoleDistinguishedName.append(role);
@@ -92,7 +92,7 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (account == null))
 			return new DistinguishedName("");
 
-		StringBuffer userDistinguishedName = new StringBuffer(ldapConfiguration.getUserAttribute());
+		StringBuilder userDistinguishedName = new StringBuilder(ldapConfiguration.getUserAttribute());
 		userDistinguishedName.append("=");
 		userDistinguishedName.append(account);
 		userDistinguishedName.append(",");
@@ -111,7 +111,7 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (role == null))
 			return new DistinguishedName("");
 
-		StringBuffer userRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
+		StringBuilder userRoleDistinguishedName = new StringBuilder(ldapConfiguration.getRoleAttribute());
 		userRoleDistinguishedName.append("=\"cn=");
 		userRoleDistinguishedName.append(role);
 		userRoleDistinguishedName.append("\",");

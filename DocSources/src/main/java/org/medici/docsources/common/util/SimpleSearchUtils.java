@@ -226,8 +226,8 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnDayFields(String[] dayFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnDayFields(String[] dayFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -240,15 +240,15 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<dayFields.length; j++) {
-				stringBuffer.append("(");
-				stringBuffer.append(dayFields[j]);
-				stringBuffer.append(": ");
-				stringBuffer.append(words[i]);
-				stringBuffer.append(") ");
+				stringBuilder.append("(");
+				stringBuilder.append(dayFields[j]);
+				stringBuilder.append(": ");
+				stringBuilder.append(words[i]);
+				stringBuilder.append(") ");
 			}
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 	/**
@@ -257,8 +257,8 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnMonthFields(String[] monthFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnMonthFields(String[] monthFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on month fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -271,15 +271,15 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<monthFields.length; j++) {
-				stringBuffer.append("(");
-				stringBuffer.append(monthFields[j]);
-				stringBuffer.append(": ");
-				stringBuffer.append(words[i]);
-				stringBuffer.append(") ");
+				stringBuilder.append("(");
+				stringBuilder.append(monthFields[j]);
+				stringBuilder.append(": ");
+				stringBuilder.append(words[i]);
+				stringBuilder.append(") ");
 			}
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 	/**
@@ -288,8 +288,8 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnNumericFields(String[] numericFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnNumericFields(String[] numericFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -297,15 +297,15 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<numericFields.length; j++) {
-				stringBuffer.append("(");
-				stringBuffer.append(numericFields[j]);
-				stringBuffer.append(": ");
-				stringBuffer.append(words[i]);
-				stringBuffer.append(") ");
+				stringBuilder.append("(");
+				stringBuilder.append(numericFields[j]);
+				stringBuilder.append(": ");
+				stringBuilder.append(words[i]);
+				stringBuilder.append(") ");
 			}
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 	/**
@@ -314,23 +314,23 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnStringFields(String[] stringFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnStringFields(String[] stringFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on string fields
 		for (int i=0; i<stringFields.length; i++) {
 			// volume.serieList.title
-			stringBuffer.append("(");
-			stringBuffer.append(stringFields[i]);
-			stringBuffer.append(": (");
+			stringBuilder.append("(");
+			stringBuilder.append(stringFields[i]);
+			stringBuilder.append(": (");
 			for (int j=0; j<words.length; j++) {
-				stringBuffer.append("+");
-				stringBuffer.append( words[j]);
-				stringBuffer.append(" ");
+				stringBuilder.append("+");
+				stringBuilder.append( words[j]);
+				stringBuilder.append(" ");
 			}
-			stringBuffer.append(")) ");
+			stringBuilder.append(")) ");
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 	/**
@@ -339,8 +339,8 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnVolumeFields(String[] volumeFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnVolumeFields(String[] volumeFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on volume 
 		for (int i=0; i<words.length; i++) {
 			// if word is not in volume format we skip
@@ -349,19 +349,19 @@ public class SimpleSearchUtils {
 			}
 			// if word contains volLetExt we manage with a specific condition
 			if (StringUtils.isAlphanumeric(words[i])) {
-				stringBuffer.append("(+(volume.volNum:");
-				stringBuffer.append(VolumeUtils.extractVolNum(words[i]));
-				stringBuffer.append(") +(volume.volLetExt:");
-				stringBuffer.append(VolumeUtils.extractVolLetExt(words[i]));
-				stringBuffer.append("))");
+				stringBuilder.append("(+(volume.volNum:");
+				stringBuilder.append(VolumeUtils.extractVolNum(words[i]));
+				stringBuilder.append(") +(volume.volLetExt:");
+				stringBuilder.append(VolumeUtils.extractVolLetExt(words[i]));
+				stringBuilder.append("))");
 			} else {
-				stringBuffer.append("(volume.volNum:");
-				stringBuffer.append(VolumeUtils.extractVolNum(words[i]));
-				stringBuffer.append(") ");
+				stringBuilder.append("(volume.volNum:");
+				stringBuilder.append(VolumeUtils.extractVolNum(words[i]));
+				stringBuilder.append(") ");
 			}
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 	/**
@@ -370,8 +370,8 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
-	public static StringBuffer constructConditionOnYearFields(String[] yearFields, String[] words) {
-		StringBuffer stringBuffer = new StringBuffer();
+	public static StringBuilder constructConditionOnYearFields(String[] yearFields, String[] words) {
+		StringBuilder stringBuilder = new StringBuilder();
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -384,14 +384,14 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<yearFields.length; j++) {
-				stringBuffer.append("(");
-				stringBuffer.append(yearFields[j]);
-				stringBuffer.append(": ");
-				stringBuffer.append(words[i]);
-				stringBuffer.append(") ");
+				stringBuilder.append("(");
+				stringBuilder.append(yearFields[j]);
+				stringBuilder.append(": ");
+				stringBuilder.append(words[i]);
+				stringBuilder.append(") ");
 			}
 		}
 		
-		return stringBuffer;
+		return stringBuilder;
 	}
 }

@@ -59,14 +59,14 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * 
 	 */
 	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(target.getClass().getName());
-		stringBuffer.append(":");
-		stringBuffer.append(method.getName());
-		stringBuffer.append(" OK ");
-		appendReturns(stringBuffer, returnValue);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(target.getClass().getName());
+		stringBuilder.append(":");
+		stringBuilder.append(method.getName());
+		stringBuilder.append(" OK ");
+		appendReturns(stringBuilder, returnValue);
 
-		logger.info(stringBuffer.toString());
+		logger.info(stringBuilder.toString());
 	}
 
 	/**
@@ -77,64 +77,64 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * @param throwable
 	 */
 	public void afterThrowing(Method method, Object[] args, Object target, Throwable throwable) {
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(target.getClass().getName());
-		stringBuffer.append(":");
-		stringBuffer.append(method.getName());
-		stringBuffer.append(" KO ");
-		appendThrowable(stringBuffer, throwable);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(target.getClass().getName());
+		stringBuilder.append(":");
+		stringBuilder.append(method.getName());
+		stringBuilder.append(" KO ");
+		appendThrowable(stringBuilder, throwable);
 
-		logger.error(stringBuffer.toString());
+		logger.error(stringBuilder.toString());
 	}
 
 	/**
 	 * 
-	 * @param stringBuffer
+	 * @param stringBuilder
 	 * @param args
 	 */
 	@SuppressWarnings("unused")
-	private void appendParameters(StringBuffer stringBuffer, Object[] args) {
-		stringBuffer.append(" - Parameters : ");
+	private void appendParameters(StringBuilder stringBuilder, Object[] args) {
+		stringBuilder.append(" - Parameters : ");
 		for (int i = 0; i < args.length; i++) {
-			stringBuffer.append(ClassUtils.toString(args[i]));
-			stringBuffer.append(" - ");
+			stringBuilder.append(ClassUtils.toString(args[i]));
+			stringBuilder.append(" - ");
 		}
-		stringBuffer.delete(stringBuffer.length() - 3, stringBuffer.length());
+		stringBuilder.delete(stringBuilder.length() - 3, stringBuilder.length());
 	}
 
 	/**
 	 * 
-	 * @param stringBuffer
+	 * @param stringBuilder
 	 * @param returnValue
 	 */
-	private void appendReturns(StringBuffer stringBuffer, Object returnValue) {
+	private void appendReturns(StringBuilder stringBuilder, Object returnValue) {
 		if (returnValue != null) {
-			stringBuffer.append(" - Return Object");
-			// WE COMMENT THE COMPLETE OBJECT CONVERSION stringBuffer.append(ClassUtils.toString(returnValue));
-			//stringBuffer.append(returnValue.toString());
+			stringBuilder.append(" - Return Object");
+			// WE COMMENT THE COMPLETE OBJECT CONVERSION stringBuilder.append(ClassUtils.toString(returnValue));
+			//stringBuilder.append(returnValue.toString());
 		}
 	}
 
 	/**
 	 * 
-	 * @param stringBuffer
+	 * @param stringBuilder
 	 * @param target
 	 * 
 	 * @depracted
 	 */
 	@SuppressWarnings("unused")
-	private void appendTarget(StringBuffer stringBuffer, Object target) {
-		stringBuffer.append(" - Target : ");
-		stringBuffer.append(target.getClass().getName());
+	private void appendTarget(StringBuilder stringBuilder, Object target) {
+		stringBuilder.append(" - Target : ");
+		stringBuilder.append(target.getClass().getName());
 	}
 
 	/**
 	 * 
-	 * @param stringBuffer
+	 * @param stringBuilder
 	 * @param throwable
 	 */
-	private void appendThrowable(StringBuffer stringBuffer, Throwable throwable) {
-		stringBuffer.append(" - Exception : ");
-		stringBuffer.append(ExceptionUtils.getStackTrace(throwable));
+	private void appendThrowable(StringBuilder stringBuilder, Throwable throwable) {
+		stringBuilder.append(" - Exception : ");
+		stringBuilder.append(ExceptionUtils.getStackTrace(throwable));
 	}
 }

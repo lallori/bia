@@ -93,7 +93,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM ForumPost ");
+		StringBuilder jpaQuery = new StringBuilder("FROM ForumPost ");
 		
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		

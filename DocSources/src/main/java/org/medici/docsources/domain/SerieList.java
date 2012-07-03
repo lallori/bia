@@ -263,26 +263,26 @@ public class SerieList implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (!StringUtils.isEmpty(getTitle())) {
-			stringBuffer.append(getTitle());
+			stringBuilder.append(getTitle());
 		}
 		
 		if (!StringUtils.isEmpty(getSubTitle1())) {
-			if (stringBuffer.length() > 0) {
-				stringBuffer.append(" / ");
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append(" / ");
 			}
-			stringBuffer.append(getSubTitle1());
+			stringBuilder.append(getSubTitle1());
 		}
 
 		if (!StringUtils.isEmpty(getSubTitle2())) {
-			if (stringBuffer.length() > 0) {
-				stringBuffer.append(" / ");
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append(" / ");
 			}
 
-			stringBuffer.append(getSubTitle2());
+			stringBuilder.append(getSubTitle2());
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

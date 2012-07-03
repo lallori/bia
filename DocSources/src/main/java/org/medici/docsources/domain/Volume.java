@@ -1179,14 +1179,14 @@ public class Volume implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (volNum != null) {
-			stringBuffer.append(volNum);
+			stringBuilder.append(volNum);
 			if (volLetExt != null) {
-				stringBuffer.append(volLetExt);
+				stringBuilder.append(volLetExt);
 			}
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

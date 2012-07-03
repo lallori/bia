@@ -79,7 +79,7 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 */
 	public User findUser(User user) throws TooManyUsersException {
 		try {
-			StringBuffer conditionBuffer = new StringBuffer("");
+			StringBuilder conditionBuffer = new StringBuilder("");
 			if (user.getAccount() != null) {
 				conditionBuffer.append("account=:account");
 			}
@@ -163,7 +163,7 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 	@Override
 	public List<User> findUsers(User user) {
 		try {
-			StringBuffer conditionBuffer = new StringBuffer("");
+			StringBuilder conditionBuffer = new StringBuilder("");
 			if (user.getAccount() != null) {
 				conditionBuffer.append("account=:account");
 			}

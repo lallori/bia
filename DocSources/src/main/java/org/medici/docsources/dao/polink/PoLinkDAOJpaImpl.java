@@ -110,7 +110,7 @@ public class PoLinkDAOJpaImpl extends JpaDao<Integer, PoLink> implements PoLinkD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws PersistenceException {
-		StringBuffer query = new StringBuffer("from PoLink WHERE titleOccList.titleOccId=:titleOccId AND (");
+		StringBuilder query = new StringBuilder("from PoLink WHERE titleOccList.titleOccId=:titleOccId AND (");
 		for(int i = 0; i < peopleIds.size(); i++){
 			query.append("person.personId=" + peopleIds.get(i));
 			if(i != peopleIds.size()-1){

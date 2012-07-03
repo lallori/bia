@@ -233,21 +233,21 @@ public class Image implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(getStoragePath());
-		stringBuffer.append("/MDP");
+		StringBuilder stringBuilder = new StringBuilder("");
+		stringBuilder.append(getStoragePath());
+		stringBuilder.append("/MDP");
 		if (!ObjectUtils.toString(getVolNum()).equals("")) {
-			stringBuffer.append(getVolNum());
+			stringBuilder.append(getVolNum());
 		}
 		if (!ObjectUtils.toString(getVolLetExt()).equals("")) {
-			stringBuffer.append(getVolLetExt());
+			stringBuilder.append(getVolLetExt());
 		}
-		stringBuffer.append("/");
+		stringBuilder.append("/");
 		if (!StringUtils.isEmpty(getImageName())) {
-			stringBuffer.append(getImageName());
+			stringBuilder.append(getImageName());
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**

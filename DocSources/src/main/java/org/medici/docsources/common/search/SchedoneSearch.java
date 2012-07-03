@@ -150,7 +150,7 @@ public class SchedoneSearch implements GenericSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Schedone ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Schedone ");
 		
 //		String[] words = RegExUtils.splitPunctuationAndSpaceChars(getAlias());
 //		

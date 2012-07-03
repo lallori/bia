@@ -96,7 +96,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Volume ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Volume ");
 		
 		//MD: We need to re-convert the alias
 		alias = alias.replace("\\\"", "\"");

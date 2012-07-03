@@ -122,10 +122,10 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM ForumPost WHERE ");
+		StringBuilder jpaQuery = new StringBuilder("FROM ForumPost WHERE ");
 
 		if (forumsId.size()>0) {
-			StringBuffer forumsQuery = new StringBuffer("(forum.forumId in (");
+			StringBuilder forumsQuery = new StringBuilder("(forum.forumId in (");
 			for (int i=0; i<forumsId.size(); i++) {
 				forumsQuery.append(forumsId.get(i));
 				forumsQuery.append(",");
@@ -137,7 +137,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 
 		// person;
 		if (author != null) {
-			StringBuffer authorQuery = new StringBuffer("userInformation.account = '");
+			StringBuilder authorQuery = new StringBuilder("userInformation.account = '");
 			authorQuery.append(author);
 			authorQuery.append("')");
 			if(jpaQuery.length() > 21){
@@ -162,9 +162,9 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }
 

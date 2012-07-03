@@ -49,14 +49,14 @@ public class GrantedAuthorityUtils {
 	 * @see org.springframework.security.GrantedAuthority
 	 **/
 	public static String toString(GrantedAuthority[] grantedAuthorities) {
-		StringBuffer stringBuffer = new StringBuffer("[");
+		StringBuilder stringBuilder = new StringBuilder("[");
 		for (int i = 0; i < grantedAuthorities.length; i++) {
-			stringBuffer.append(grantedAuthorities[i].getAuthority());
-			stringBuffer.append(",");
+			stringBuilder.append(grantedAuthorities[i].getAuthority());
+			stringBuilder.append(",");
 		}
-		stringBuffer.replace(stringBuffer.length() - 1, stringBuffer.length(),
+		stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(),
 		"]");
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 	
 	/**
@@ -69,13 +69,13 @@ public class GrantedAuthorityUtils {
 	 * @see org.springframework.security.GrantedAuthority
 	 **/
 	public static String toString(Collection<GrantedAuthority> grantedAuthorities) {
-		StringBuffer stringBuffer = new StringBuffer("[");
+		StringBuilder stringBuilder = new StringBuilder("[");
 		for (GrantedAuthority currentGrantedAutorithy : grantedAuthorities) {
-			stringBuffer.append(currentGrantedAutorithy);
-			stringBuffer.append(",");
+			stringBuilder.append(currentGrantedAutorithy);
+			stringBuilder.append(",");
 		}
-		stringBuffer.replace(stringBuffer.length() - 1, stringBuffer.length(),
+		stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(),
 		"]");
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

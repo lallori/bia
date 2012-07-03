@@ -69,15 +69,15 @@ public final class JSTLFunctions {
     	if (list == null)
     		return "";
     	 
-    	StringBuffer stringBuffer = new StringBuffer("");
+    	StringBuilder stringBuilder = new StringBuilder("");
     	for (int i=0; i<list.size(); i++) {
-    		stringBuffer.append(list.get(i));
+    		stringBuilder.append(list.get(i));
     		if (i<(list.size()-1)) {
-    			stringBuffer.append(", ");
+    			stringBuilder.append(", ");
     		}
     	}
     	
-    	return stringBuffer.toString();
+    	return stringBuilder.toString();
      }
     
     /**

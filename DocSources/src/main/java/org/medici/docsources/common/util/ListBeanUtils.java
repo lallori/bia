@@ -118,10 +118,10 @@ public class ListBeanUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(beansList.size());
 		String[] fields = StringTokenizerUtils.tokenizeToArray(concatenatedFields, fieldsSeparator);
-		StringBuffer stringBuffer = null;  
+		StringBuilder stringBuilder = null;  
 
 		for (int i = 0; i<beansList.size(); i++) {
-			stringBuffer = new StringBuffer();
+			stringBuilder = new StringBuilder();
 			for (int j=0; j<fields.length; j++) {
 				PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(beansList.get(0).getClass(), fields[j]);
 				Method method = pd.getReadMethod();
@@ -137,14 +137,14 @@ public class ListBeanUtils {
 						}
 						if (j>0) {
 							if (addBlankSpace) {
-								stringBuffer.append(" ");
-								stringBuffer.append(outputFieldsSeparator);
-								stringBuffer.append(" ");
+								stringBuilder.append(" ");
+								stringBuilder.append(outputFieldsSeparator);
+								stringBuilder.append(" ");
 							} else {
-								stringBuffer.append(outputFieldsSeparator);
+								stringBuilder.append(outputFieldsSeparator);
 							}
 						}
-						stringBuffer.append(fieldBeanValue.toString());
+						stringBuilder.append(fieldBeanValue.toString());
 					}
 				} catch (IllegalAccessException iaex) {
 					retValue.set(i, null);
@@ -152,7 +152,7 @@ public class ListBeanUtils {
 					retValue.set(i, null);
 				}
 			}
-			retValue.add(i, stringBuffer.toString());
+			retValue.add(i, stringBuilder.toString());
 		}
 
 		return retValue;

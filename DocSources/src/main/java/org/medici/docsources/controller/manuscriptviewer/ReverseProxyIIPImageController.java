@@ -109,18 +109,18 @@ public class ReverseProxyIIPImageController {
 		// "GET http://localhost/fcgi-bin/iipsrv.fcgi?FIF=1/MDP5/0899_C_494_R.tif&CNT=1&SDS=0,90&JTL=3,2
 		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
-		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
-		stringBuffer.append("://");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		stringBuffer.append(":");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		stringBuffer.append("?");
-		stringBuffer.append("FIF=");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
-		stringBuffer.append(httpServletRequest.getParameter("FIF"));
-		stringBuffer.append("&");
+		StringBuilder stringBuilder = new StringBuilder("");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
+		stringBuilder.append("://");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
+		stringBuilder.append(":");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
+		stringBuilder.append("?");
+		stringBuilder.append("FIF=");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
+		stringBuilder.append(httpServletRequest.getParameter("FIF"));
+		stringBuilder.append("&");
 
 		Enumeration<String> enumeration = httpServletRequest.getParameterNames();
 		
@@ -132,15 +132,15 @@ public class ReverseProxyIIPImageController {
 			} else {
 				String[] values = httpServletRequest.getParameterValues(httpParameter);
 				for (int i=0; i<values.length;i++) {
-					stringBuffer.append(httpParameter);
-					stringBuffer.append("=");
-					stringBuffer.append(values[i]);
-					stringBuffer.append("&");
+					stringBuilder.append(httpParameter);
+					stringBuilder.append("=");
+					stringBuilder.append(values[i]);
+					stringBuilder.append("&");
 				}
 			}
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
@@ -153,48 +153,48 @@ public class ReverseProxyIIPImageController {
 		// "GET /fcgi-bin/iipsrv.fcgi?WID=75&FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&CVT=JPEG& HTTP/1.1" 200 1329
 		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
-		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
-		stringBuffer.append("://");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		stringBuffer.append(":");
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
-		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		stringBuffer.append("?");
+		StringBuilder stringBuilder = new StringBuilder("");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
+		stringBuilder.append("://");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
+		stringBuilder.append(":");
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
+		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
+		stringBuilder.append("?");
 
 		if (httpServletRequest.getParameter("obj") != null) {
 			// This get image tile informations
-			stringBuffer.append("FIF=");
-			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
-			stringBuffer.append(httpServletRequest.getParameter("FIF"));
-			stringBuffer.append("&");
+			stringBuilder.append("FIF=");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
+			stringBuilder.append(httpServletRequest.getParameter("FIF"));
+			stringBuilder.append("&");
 			String[] values = httpServletRequest.getParameterValues("obj");
 			for (int i=0; i<values.length;i++) {
-				stringBuffer.append("obj");
-				stringBuffer.append("=");
-				stringBuffer.append(values[i]);
-				stringBuffer.append("&");
+				stringBuilder.append("obj");
+				stringBuilder.append("=");
+				stringBuilder.append(values[i]);
+				stringBuilder.append("&");
 			}
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			// This get image preview
-			stringBuffer.append("WID=");
-			stringBuffer.append(httpServletRequest.getParameter("WID"));
-			stringBuffer.append("&FIF=");
-			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
-			stringBuffer.append(httpServletRequest.getParameter("FIF"));
-			stringBuffer.append("&CVT=");
-			stringBuffer.append(httpServletRequest.getParameter("CVT"));
-			stringBuffer.append("&");
+			stringBuilder.append("WID=");
+			stringBuilder.append(httpServletRequest.getParameter("WID"));
+			stringBuilder.append("&FIF=");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
+			stringBuilder.append(httpServletRequest.getParameter("FIF"));
+			stringBuilder.append("&CVT=");
+			stringBuilder.append(httpServletRequest.getParameter("CVT"));
+			stringBuilder.append("&");
 		} else if (httpServletRequest.getParameter("jtl") != null) {
 			// This get tiff section image.
-			stringBuffer.append("&FIF=");
-			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
-			stringBuffer.append(httpServletRequest.getParameter("FIF"));
-			stringBuffer.append("&jtl=");
-			stringBuffer.append(httpServletRequest.getParameter("jtl"));
-			stringBuffer.append("&");
+			stringBuilder.append("&FIF=");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
+			stringBuilder.append(httpServletRequest.getParameter("FIF"));
+			stringBuilder.append("&jtl=");
+			stringBuilder.append(httpServletRequest.getParameter("jtl"));
+			stringBuilder.append("&");
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

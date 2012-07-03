@@ -130,25 +130,25 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("FROM Document WHERE volume.volNum=" + volNum);
+		StringBuilder stringBuilder = new StringBuilder("FROM Document WHERE volume.volNum=" + volNum);
 		if(ObjectUtils.toString(volLetExt).equals("")){
-			stringBuffer.append(" AND volume.volLetExt is null ");
+			stringBuilder.append(" AND volume.volLetExt is null ");
 		} else {
-			stringBuffer.append(" AND volume.volLetExt = '");
-			stringBuffer.append(volLetExt);
-			stringBuffer.append("' ");
+			stringBuilder.append(" AND volume.volLetExt = '");
+			stringBuilder.append(volLetExt);
+			stringBuilder.append("' ");
 		}
-		stringBuffer.append(" AND folioNum=");
-		stringBuffer.append(folioNum);
+		stringBuilder.append(" AND folioNum=");
+		stringBuilder.append(folioNum);
 		if(ObjectUtils.toString(folioMod).equals("")){
-			stringBuffer.append(" AND folioMod is null");
+			stringBuilder.append(" AND folioMod is null");
 		} else {
-			stringBuffer.append(" AND folioMod = '");
-			stringBuffer.append(folioMod);
-			stringBuffer.append("' ");
+			stringBuilder.append(" AND folioMod = '");
+			stringBuilder.append(folioMod);
+			stringBuilder.append("' ");
 		}
-		stringBuffer.append(" AND logicalDelete=false");
-		Query query = getEntityManager().createQuery(stringBuffer.toString());
+		stringBuilder.append(" AND logicalDelete=false");
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
 
 		if (query.getResultList().size() ==0) { 
 			return null;
@@ -242,27 +242,27 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuffer stringBufferSender = new StringBuffer("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
-		StringBuffer stringBufferRecipient = new StringBuffer("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
+		StringBuilder stringBuilderSender = new StringBuilder("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
+		StringBuilder stringBuilderRecipient = new StringBuilder("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
 		for(int i = 0; i < placeAllIds.size(); i++){
-			if(stringBufferSender.indexOf("=") != -1){
-				stringBufferSender.append(" or ");
+			if(stringBuilderSender.indexOf("=") != -1){
+				stringBuilderSender.append(" or ");
 			}
-			if(stringBufferRecipient.indexOf("=") != -1){
-				stringBufferRecipient.append(" or ");
+			if(stringBuilderRecipient.indexOf("=") != -1){
+				stringBuilderRecipient.append(" or ");
 			}
-			stringBufferSender.append("(senderPlace.placeAllId=");
-			stringBufferSender.append(placeAllIds.get(i) + ")");
-			stringBufferRecipient.append("(recipientPlace.placeAllId=");
-			stringBufferRecipient.append(placeAllIds.get(i) + " AND senderPlace.placeAllId!=" + placeAllIds.get(i) + ")");
+			stringBuilderSender.append("(senderPlace.placeAllId=");
+			stringBuilderSender.append(placeAllIds.get(i) + ")");
+			stringBuilderRecipient.append("(recipientPlace.placeAllId=");
+			stringBuilderRecipient.append(placeAllIds.get(i) + " AND senderPlace.placeAllId!=" + placeAllIds.get(i) + ")");
 		}
-		stringBufferSender.append(" group by senderPlace.placeAllId");
-		stringBufferRecipient.append(" group by recipientPlace.placeAllId");
+		stringBuilderSender.append(" group by senderPlace.placeAllId");
+		stringBuilderRecipient.append(" group by recipientPlace.placeAllId");
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValuesSender;
-		if(stringBufferSender.indexOf("=") != -1){
-			Query query = getEntityManager().createQuery(stringBufferSender.toString());
+		if(stringBuilderSender.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBuilderSender.toString());
 			tempValuesSender = query.getResultList();
 			for(Iterator i = tempValuesSender.iterator(); i.hasNext();){
 				Object [] data = (Object []) i.next();
@@ -270,8 +270,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			}
 		}
 		List tempValuesRecipient;
-		if(stringBufferRecipient.indexOf("=") != -1){
-			Query query = getEntityManager().createQuery(stringBufferRecipient.toString());
+		if(stringBuilderRecipient.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBuilderRecipient.toString());
 			tempValuesRecipient = query.getResultList();
 			for(Iterator i = tempValuesRecipient.iterator(); i.hasNext();){
 				Object [] data = (Object []) i.next();
@@ -425,7 +425,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -465,7 +465,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		}
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -510,7 +510,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -551,7 +551,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -592,7 +592,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -633,7 +633,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -674,7 +674,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -715,7 +715,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

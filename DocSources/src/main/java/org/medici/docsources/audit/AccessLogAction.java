@@ -117,11 +117,11 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 				List errors = ((BeanPropertyBindingResult) modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command")).getAllErrors();
 
 				if (errors.size() > 0) {
-					StringBuffer stringBufferErrors = new StringBuffer(accessLog.getInformations());
+					StringBuilder stringBuilderErrors = new StringBuilder(accessLog.getInformations());
 					for (int i = 0; i < errors.size(); i++) {
-						stringBufferErrors.append(errors.get(i).toString());
+						stringBuilderErrors.append(errors.get(i).toString());
 					}
-					accessLog.setErrors(stringBufferErrors.toString());
+					accessLog.setErrors(stringBuilderErrors.toString());
 				} else {
 				}
 			}
@@ -134,22 +134,22 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		} catch (ApplicationThrowable ex) {
 		}
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(accessLog.getHttpMethod());
-		stringBuffer.append(" ");
-		stringBuffer.append(accessLog.getAction());
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(accessLog.getHttpMethod());
+		stringBuilder.append(" ");
+		stringBuilder.append(accessLog.getAction());
 		if (accessLog.getErrors() != null) {
-			stringBuffer.append("KO ");
-			stringBuffer.append(accessLog.getErrors());
+			stringBuilder.append("KO ");
+			stringBuilder.append(accessLog.getErrors());
 		} else {
-			stringBuffer.append(" OK ");
+			stringBuilder.append(" OK ");
 		}
-		stringBuffer.append(accessLog.getExecutionTime());
-		stringBuffer.append("ms ");
+		stringBuilder.append(accessLog.getExecutionTime());
+		stringBuilder.append("ms ");
 		if (accessLog.getErrors() != null) {
-			logger.error(stringBuffer.toString());
+			logger.error(stringBuilder.toString());
 		} else {
-			logger.info(stringBuffer.toString());
+			logger.info(stringBuilder.toString());
 		}
 		
 		super.postHandle(request, response, handler, modelAndView);
@@ -190,14 +190,14 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		accessLog.setExecutionTime(System.currentTimeMillis());
 		request.setAttribute("accessLog", accessLog);
 
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(accessLog.getHttpMethod());
-		stringBuffer.append(" ");
-		stringBuffer.append(accessLog.getAction());
-		stringBuffer.append(" START (Http Parameters ");
-		stringBuffer.append(accessLog.getInformations());
-		stringBuffer.append(")");
-		logger.info(stringBuffer.toString());
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(accessLog.getHttpMethod());
+		stringBuilder.append(" ");
+		stringBuilder.append(accessLog.getAction());
+		stringBuilder.append(" START (Http Parameters ");
+		stringBuilder.append(accessLog.getInformations());
+		stringBuilder.append(")");
+		logger.info(stringBuilder.toString());
 
 		return true;
 	}

@@ -1229,10 +1229,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Document WHERE ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Document WHERE ");
 
 		if (words.size()>0) {
-			StringBuffer wordsQuery = new StringBuffer("(");
+			StringBuilder wordsQuery = new StringBuilder("(");
 			for (int i=0; i<words.size(); i++) {
 				String[] wordsSingleWordSearch = StringUtils.split(words.get(i), " ");
 				if (wordsQuery.length()>1) {
@@ -1281,8 +1281,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// person;
 		if (personId.size() >0) {
-			StringBuffer personIdQuery = new StringBuffer("(");
-			StringBuffer personQuery = new StringBuffer("(");
+			StringBuilder personIdQuery = new StringBuilder("(");
+			StringBuilder personQuery = new StringBuilder("(");
 			for (int i=0; i<personId.size(); i++) {
 				if (personId.get(i) > 0) {
 					if (personIdQuery.length()>1) {
@@ -1327,8 +1327,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// place;
 		if (placeId.size() >0) {
-			StringBuffer placeIdQuery = new StringBuffer("(");
-			StringBuffer placeQuery = new StringBuffer("(");
+			StringBuilder placeIdQuery = new StringBuilder("(");
+			StringBuilder placeQuery = new StringBuilder("(");
 			for (int i=0; i<placeId.size(); i++) {
 				if (placeId.get(i) > 0) {
 					if (placeIdQuery.length()>1) {
@@ -1374,8 +1374,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		//sender
 		if (senderId.size() >0) {
-			StringBuffer senderIdQuery = new StringBuffer("(");
-			StringBuffer senderQuery = new StringBuffer("(");
+			StringBuilder senderIdQuery = new StringBuilder("(");
+			StringBuilder senderQuery = new StringBuilder("(");
 			for (int i=0; i<senderId.size(); i++) {
 				if (senderId.get(i) > 0) {
 					if (senderIdQuery.length()>1) {
@@ -1413,8 +1413,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// from;
 		if (fromId.size() >0) {
-			StringBuffer fromIdQuery = new StringBuffer("(");
-			StringBuffer fromQuery = new StringBuffer("(");
+			StringBuilder fromIdQuery = new StringBuilder("(");
+			StringBuilder fromQuery = new StringBuilder("(");
 			for (int i=0; i<fromId.size(); i++) {
 				if (fromId.get(i) > 0) {
 					if (fromIdQuery.length()>1) {
@@ -1452,8 +1452,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// recipient;
 		if (recipient.size() >0) {
-			StringBuffer recipientIdQuery = new StringBuffer("(");
-			StringBuffer recipientQuery = new StringBuffer("(");
+			StringBuilder recipientIdQuery = new StringBuilder("(");
+			StringBuilder recipientQuery = new StringBuilder("(");
 			for (int i=0; i<recipientId.size(); i++) {
 				if (recipientId.get(i) > 0) {
 					if (recipientIdQuery.length()>1) {
@@ -1491,8 +1491,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// to;
 		if (to.size() >0) {
-			StringBuffer toIdQuery = new StringBuffer("(");
-			StringBuffer toQuery = new StringBuffer("(");
+			StringBuilder toIdQuery = new StringBuilder("(");
+			StringBuilder toQuery = new StringBuilder("(");
 			for (int i=0; i<toId.size(); i++) {
 				if (toId.get(i) > 0) {
 					if (toIdQuery.length()>1) {
@@ -1530,8 +1530,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		//refersTo
 		if (refersTo.size() >0) {
-			StringBuffer refersToIdQuery = new StringBuffer("(");
-			StringBuffer refersToQuery = new StringBuffer("(");
+			StringBuilder refersToIdQuery = new StringBuilder("(");
+			StringBuilder refersToQuery = new StringBuilder("(");
 			for (int i=0; i<refersToId.size(); i++) {
 				if (refersToId.get(i) > 0) {
 					if (refersToIdQuery.length()>1) {
@@ -1569,7 +1569,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// Extract
 		if (extract.size()>0) {
-			StringBuffer extractQuery = new StringBuffer("(");
+			StringBuilder extractQuery = new StringBuilder("(");
 			for (int i=0; i<extract.size(); i++) {
 				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
 				for (int j=0; j<wordsSingleExtract.length; j++) {
@@ -1592,7 +1592,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		// synopsis;
 		if (synopsis.size() >0) {
-			StringBuffer synopsisQuery = new StringBuffer("(");
+			StringBuilder synopsisQuery = new StringBuilder("(");
 			for (int i=0; i<synopsis.size(); i++) {
 				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
 				for (int j=0; j<wordsSingleSynopsis.length; j++) {
@@ -1615,8 +1615,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// topics;
 		if (topicsId.size() >0) {
-			StringBuffer topicsIdQuery = new StringBuffer("(");
-			StringBuffer topicsQuery = new StringBuffer("(");
+			StringBuilder topicsIdQuery = new StringBuilder("(");
+			StringBuilder topicsQuery = new StringBuilder("(");
 			for (int i=0; i<topicsId.size(); i++) {
 				if (topicsId.get(i) > 0) {
 					if (topicsIdQuery.length()>1) {
@@ -1654,8 +1654,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		//Topic Place
 		if (topicsPlaceId.size() > 0){
-			StringBuffer topicsPlaceIdQuery = new StringBuffer("(");
-			StringBuffer topicsPlaceQuery = new StringBuffer("(");
+			StringBuilder topicsPlaceIdQuery = new StringBuilder("(");
+			StringBuilder topicsPlaceQuery = new StringBuilder("(");
 			for(int i = 0;i < topicsPlaceId.size(); i++){
 				if(topicsPlaceIdQuery.length() > 1){
 					topicsPlaceIdQuery.append(" AND ");
@@ -1688,7 +1688,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// Date
 		if (datesTypes.size()>0) {
-			StringBuffer datesQuery = new StringBuffer("(");
+			StringBuilder datesQuery = new StringBuilder("(");
 			for (int i=0; i<datesTypes.size(); i++) {
 				if (datesTypes.get(i) == null) {
 					continue;
@@ -1767,7 +1767,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		// Volume
 		if (volumes.size()>0) {
-			StringBuffer volumesQuery = new StringBuffer("(");
+			StringBuilder volumesQuery = new StringBuilder("(");
 			for (int i=0; i<volumes.size(); i++) {
 				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
 					if (volumesQuery.length()>1) {
@@ -1809,7 +1809,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		//Folio
 		if(folios.size() > 0){
-			StringBuffer foliosQuery = new StringBuffer("(");
+			StringBuilder foliosQuery = new StringBuilder("(");
 			for(int i = 0; i < folios.size(); i++){
 				if(StringUtils.isNumeric(folios.get(i))){
 					if(foliosQuery.length() > 1){
@@ -1842,7 +1842,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		//EntryId
 		if(docIds.size() > 0){
-			StringBuffer docIdQuery = new StringBuffer("(");
+			StringBuilder docIdQuery = new StringBuilder("(");
 			for(int i = 0; i < docIds.size(); i++){
 				if(StringUtils.isNumeric(docIds.get(i))){
 					if(docIdQuery.length() > 1){
@@ -2254,300 +2254,300 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if(!words.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Words: ");
+			stringBuilder.append("Words: ");
 			for(int i = 0; i < words.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(words.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(words.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!extract.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Extract: ");
+			stringBuilder.append("Extract: ");
 			for(int i = 0; i < extract.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(extract.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(extract.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!synopsis.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Synopsis: ");
+			stringBuilder.append("Synopsis: ");
 			for(int i = 0; i < synopsis.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(synopsis.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(synopsis.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!person.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Person: ");
+			stringBuilder.append("Person: ");
 			for(int i = 0; i < person.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(person.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(person.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!place.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Place: ");
+			stringBuilder.append("Place: ");
 			for(int i = 0; i < place.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(place.get(i) + " ");
+				stringBuilder.append(place.get(i) + " ");
 			}
 		}
 		
 		if(!sender.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Sender: ");
+			stringBuilder.append("Sender: ");
 			for(int i = 0; i < sender.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(sender.get(i) + " ");
+				stringBuilder.append(sender.get(i) + " ");
 			}
 		}
 		
 		if(!from.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("From: ");
+			stringBuilder.append("From: ");
 			for(int i = 0; i < from.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(from.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(from.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!recipient.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Recipient: ");
+			stringBuilder.append("Recipient: ");
 			for(int i = 0; i < recipient.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(recipient.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(recipient.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!to.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("To: ");
+			stringBuilder.append("To: ");
 			for(int i = 0; i < to.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(to.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(to.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!refersTo.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Refers to: ");
+			stringBuilder.append("Refers to: ");
 			for(int i = 0; i < refersTo.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(refersTo.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(refersTo.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!topics.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Topics: ");
+			stringBuilder.append("Topics: ");
 			for(int i = 0; i < topics.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(topics.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(topics.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesYear.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Date Year: ");
+			stringBuilder.append("Date Year: ");
 			for(int i = 0; i < datesYear.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesYear.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesYear.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesMonth.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Date Month: ");
+			stringBuilder.append("Date Month: ");
 			for(int i = 0; i < datesMonth.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesMonth.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesMonth.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesDay.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Date Day: ");
+			stringBuilder.append("Date Day: ");
 			for(int i = 0; i < datesDay.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesDay.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesDay.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Between Date Year: ");
+			stringBuilder.append("Between Date Year: ");
 			for(int i = 0; i < datesYearBetween.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesYearBetween.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesYearBetween.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Between Date Month: ");
+			stringBuilder.append("Between Date Month: ");
 			for(int i = 0; i < datesMonthBetween.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesMonthBetween.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesMonthBetween.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Between Date Day: ");
+			stringBuilder.append("Between Date Day: ");
 			for(int i = 0; i < datesDayBetween.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(datesDayBetween.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(datesDayBetween.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!volumes.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Volumes: ");
+			stringBuilder.append("Volumes: ");
 			for(int i = 0; i < volumes.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(volumes.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(volumes.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!volumesBetween.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Between Volumes: ");
+			stringBuilder.append("Between Volumes: ");
 			for(int i = 0; i < volumesBetween.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(volumesBetween.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(volumesBetween.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!folios.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Folios: ");
+			stringBuilder.append("Folios: ");
 			for(int i = 0; i < folios.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(folios.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(folios.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!foliosBetween.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Between Folios: ");
+			stringBuilder.append("Between Folios: ");
 			for(int i = 0; i < foliosBetween.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(foliosBetween.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(foliosBetween.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		if(!docIds.isEmpty()){
-			if(stringBuffer.length()>0){
-				stringBuffer.append("AND ");
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
 			}
-			stringBuffer.append("Doc ID: ");
+			stringBuilder.append("Doc ID: ");
 			for(int i = 0; i < docIds.size(); i++){
 				if(i > 0){
-					stringBuffer.append("AND ");
+					stringBuilder.append("AND ");
 				}
-				stringBuffer.append(docIds.get(i));
-				stringBuffer.append(" ");
+				stringBuilder.append(docIds.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }
 

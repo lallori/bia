@@ -90,29 +90,29 @@ public class HtmlUtils {
 		if (documentExplorer.getImage().getImageOrder() == documentExplorer.getTotal().intValue())
 			return "";
 
-		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuffer.append("?entryId=");
-		stringBuffer.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
-		stringBuffer.append("&volNum=");
-		stringBuffer.append(documentExplorer.getVolNum());
-		stringBuffer.append("&volLetExt=");
-		stringBuffer.append(documentExplorer.getVolLetExt());
-		stringBuffer.append("&imageOrder=");
-		stringBuffer.append(documentExplorer.getImage().getImageOrder()+1);
-		stringBuffer.append("&total=");
-		stringBuffer.append(documentExplorer.getTotal());
-		stringBuffer.append("&totalRubricario=");
-		stringBuffer.append(documentExplorer.getTotalRubricario());
-		stringBuffer.append("&totalCarta=");
-		stringBuffer.append(documentExplorer.getTotalCarta());
-		stringBuffer.append("&totalAppendix=");
-		stringBuffer.append(documentExplorer.getTotalAppendix());
-		stringBuffer.append("&totalOther=");
-		stringBuffer.append(documentExplorer.getTotalOther());
-		stringBuffer.append("&totalGuardia=");
-		stringBuffer.append(documentExplorer.getTotalGuardia());
+		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+		stringBuilder.append("?entryId=");
+		stringBuilder.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
+		stringBuilder.append("&volNum=");
+		stringBuilder.append(documentExplorer.getVolNum());
+		stringBuilder.append("&volLetExt=");
+		stringBuilder.append(documentExplorer.getVolLetExt());
+		stringBuilder.append("&imageOrder=");
+		stringBuilder.append(documentExplorer.getImage().getImageOrder()+1);
+		stringBuilder.append("&total=");
+		stringBuilder.append(documentExplorer.getTotal());
+		stringBuilder.append("&totalRubricario=");
+		stringBuilder.append(documentExplorer.getTotalRubricario());
+		stringBuilder.append("&totalCarta=");
+		stringBuilder.append(documentExplorer.getTotalCarta());
+		stringBuilder.append("&totalAppendix=");
+		stringBuilder.append(documentExplorer.getTotalAppendix());
+		stringBuilder.append("&totalOther=");
+		stringBuilder.append(documentExplorer.getTotalOther());
+		stringBuilder.append("&totalGuardia=");
+		stringBuilder.append(documentExplorer.getTotalGuardia());
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
@@ -127,29 +127,29 @@ public class HtmlUtils {
 		if (documentExplorer.getImage().getImageOrder() == 1)
 			return "";
 
-		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuffer.append("?entryId=");
-		stringBuffer.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
-		stringBuffer.append("&volNum=");
-		stringBuffer.append(documentExplorer.getVolNum());
-		stringBuffer.append("&volLetExt=");
-		stringBuffer.append(documentExplorer.getVolLetExt());
-		stringBuffer.append("&imageOrder=");
-		stringBuffer.append(documentExplorer.getImage().getImageOrder()-1);
-		stringBuffer.append("&total=");
-		stringBuffer.append(documentExplorer.getTotal());
-		stringBuffer.append("&totalRubricario=");
-		stringBuffer.append(documentExplorer.getTotalRubricario());
-		stringBuffer.append("&totalCarta=");
-		stringBuffer.append(documentExplorer.getTotalCarta());
-		stringBuffer.append("&totalAppendix=");
-		stringBuffer.append(documentExplorer.getTotalAppendix());
-		stringBuffer.append("&totalOther=");
-		stringBuffer.append(documentExplorer.getTotalOther());
-		stringBuffer.append("&totalGuardia=");
-		stringBuffer.append(documentExplorer.getTotalGuardia());
+		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+		stringBuilder.append("?entryId=");
+		stringBuilder.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
+		stringBuilder.append("&volNum=");
+		stringBuilder.append(documentExplorer.getVolNum());
+		stringBuilder.append("&volLetExt=");
+		stringBuilder.append(documentExplorer.getVolLetExt());
+		stringBuilder.append("&imageOrder=");
+		stringBuilder.append(documentExplorer.getImage().getImageOrder()-1);
+		stringBuilder.append("&total=");
+		stringBuilder.append(documentExplorer.getTotal());
+		stringBuilder.append("&totalRubricario=");
+		stringBuilder.append(documentExplorer.getTotalRubricario());
+		stringBuilder.append("&totalCarta=");
+		stringBuilder.append(documentExplorer.getTotalCarta());
+		stringBuilder.append("&totalAppendix=");
+		stringBuilder.append(documentExplorer.getTotalAppendix());
+		stringBuilder.append("&totalOther=");
+		stringBuilder.append(documentExplorer.getTotalOther());
+		stringBuilder.append("&totalGuardia=");
+		stringBuilder.append(documentExplorer.getTotalGuardia());
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
@@ -219,15 +219,15 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static Object getShowForumCompleteDOMUrl(Forum forum) {
-		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuilder stringBuilder = new StringBuilder("");
 		if (forum != null) {
-			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?forumId=");
-			stringBuffer.append(forum.getForumId());
-			stringBuffer.append("&completeDOM=true");
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/community/ShowForum.do?forumId=");
+			stringBuilder.append(forum.getForumId());
+			stringBuilder.append("&completeDOM=true");
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
@@ -235,20 +235,20 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getShowForumHrefUrl(Forum forum) {
-		StringBuffer stringBuffer = new StringBuffer("<a href=\"");
+		StringBuilder stringBuilder = new StringBuilder("<a href=\"");
 		if (forum != null) {
-			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?forumId=");
-			stringBuffer.append(forum.getForumId());
-			stringBuffer.append("&\" class=\"forum\">");
-			stringBuffer.append(forum.getTitle());
-			stringBuffer.append("</a>");
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/community/ShowForum.do?forumId=");
+			stringBuilder.append(forum.getForumId());
+			stringBuilder.append("&\" class=\"forum\">");
+			stringBuilder.append(forum.getTitle());
+			stringBuilder.append("</a>");
 		} else {
-			stringBuffer.append("&\" class=\"forum\" />");
-			stringBuffer.append("</a>");
+			stringBuilder.append("&\" class=\"forum\" />");
+			stringBuilder.append("</a>");
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 	/**
 	 * 
@@ -259,18 +259,18 @@ public class HtmlUtils {
 			return "";
 		}
 
-		StringBuffer stringBuffer = new StringBuffer("<img src=\"");
-		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuffer.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />\n");
-		stringBuffer.append("<a href=\"");
-		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuffer.append("/community/ShowForum.do?forumId=");
-		stringBuffer.append(forum.getForumId());
-		stringBuffer.append("\" class=\"boardIndex\">");
-		stringBuffer.append(forum.getTitle());
-		stringBuffer.append("</a>");
+		StringBuilder stringBuilder = new StringBuilder("<img src=\"");
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />\n");
+		stringBuilder.append("<a href=\"");
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/community/ShowForum.do?forumId=");
+		stringBuilder.append(forum.getForumId());
+		stringBuilder.append("\" class=\"boardIndex\">");
+		stringBuilder.append(forum.getTitle());
+		stringBuilder.append("</a>");
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/**
@@ -279,14 +279,14 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getShowForumTopicHrefUrl(ForumTopic forumTopic) {
-		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuilder stringBuilder = new StringBuilder("");
 		if (forumTopic != null) {
-			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForumTopic.do?topicId=");
-			stringBuffer.append(forumTopic.getTopicId());
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/community/ShowForumTopic.do?topicId=");
+			stringBuilder.append(forumTopic.getTopicId());
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 	
 	/**
@@ -295,14 +295,14 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getShowForumUrl(Forum forum) {
-		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuilder stringBuilder = new StringBuilder("");
 		if (forum != null) {
-			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?forumId=");
-			stringBuffer.append(forum.getForumId());
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/community/ShowForum.do?forumId=");
+			stringBuilder.append(forum.getForumId());
 		}
 
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 	
 	/**
@@ -312,7 +312,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static List<String> showDigitizedVolumeActiveIt(List<String> inputList, Digitization digitization){
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"showActivateModal\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"showActivateModal\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/digitization/ShowActivateVolumeModal.do?id=");
 		anchorBegin.append(digitization.getId());
@@ -322,10 +322,10 @@ public class HtmlUtils {
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;
@@ -338,7 +338,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static List<String> showDigitizedVolumeDeactiveIt(List<String> inputList, Digitization digitization){
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"showDeactivateModal\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"showDeactivateModal\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/digitization/ShowDeactivateVolumeModal.do?id=");
 		anchorBegin.append(digitization.getId());
@@ -348,10 +348,10 @@ public class HtmlUtils {
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;
@@ -412,7 +412,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
@@ -434,7 +434,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showMessage(Integer messageId, String text) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/community/ShowMessage.do?messageId=");
 		anchor.append(messageId);
@@ -454,7 +454,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/peoplebase/ShowPerson.do?personId=");
 		anchorBegin.append(personId);
@@ -462,10 +462,10 @@ public class HtmlUtils {
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;
@@ -477,7 +477,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(0));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
@@ -487,10 +487,10 @@ public class HtmlUtils {
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;
@@ -508,7 +508,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/geobase/ShowPlace.do?placeAllId=");
 		anchorBegin.append(placeAllId);
@@ -517,20 +517,20 @@ public class HtmlUtils {
 		
 		for (int i=0; i<inputList.size(); i++) {
 			if(i != inputList.size() - 1){
-				StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-				stringBuffer.append(inputList.get(i));
-				stringBuffer.append(hrefEnd);
-				retValue.add(stringBuffer.toString());
+				StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+				stringBuilder.append(inputList.get(i));
+				stringBuilder.append(hrefEnd);
+				retValue.add(stringBuilder.toString());
 			}else{
-				StringBuffer topicsRelated = new StringBuffer("<a class=\"tabResult\" href=\"");
+				StringBuilder topicsRelated = new StringBuilder("<a class=\"tabResult\" href=\"");
 				topicsRelated.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 				topicsRelated.append("/de/geobase/ShowTopicsPlace.do?placeAllId=");
 				topicsRelated.append(placeAllId);
 				topicsRelated.append("\">");
-				StringBuffer stringBuffer = new StringBuffer(topicsRelated.toString());
-				stringBuffer.append(inputList.get(i));
-				stringBuffer.append(hrefEnd);
-				retValue.add(stringBuffer.toString());				
+				StringBuilder stringBuilder = new StringBuilder(topicsRelated.toString());
+				stringBuilder.append(inputList.get(i));
+				stringBuilder.append(hrefEnd);
+				retValue.add(stringBuilder.toString());				
 			}
 		}
 		
@@ -549,7 +549,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchorBegin.append(schedone.getSchedoneId());
@@ -557,10 +557,10 @@ public class HtmlUtils {
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;
@@ -572,7 +572,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSchedoneActive(Schedone currentSchedone) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ActivateSchedone.json?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
@@ -587,7 +587,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSchedoneDeactivateIt(Schedone currentSchedone) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/DeactivateSchedone.json?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
@@ -602,7 +602,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSchedoneDescription(Schedone currentSchedone) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
@@ -617,7 +617,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSchedoneEditIt(Schedone currentSchedone) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
@@ -632,7 +632,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSchedoneMDP(Schedone currentSchedone) {
-		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
@@ -657,7 +657,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(0));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
@@ -685,7 +685,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(0));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
@@ -740,7 +740,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/AdvancedSearch.do?idSearchFilter=");
 		anchorBegin.append(idSearchFilter);
@@ -768,7 +768,7 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/volbase/ShowVolume.do?summaryId=");
 		anchorBegin.append(summaryId);
@@ -776,10 +776,10 @@ public class HtmlUtils {
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
 		}
 		
 		return retValue;

@@ -94,7 +94,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM People ");
+		StringBuilder jpaQuery = new StringBuilder("FROM People ");
 		
 		//MD: We need to re-convert the alias
 		alias = alias.replace("\\\"", "\"");

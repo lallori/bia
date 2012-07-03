@@ -272,11 +272,11 @@ public class UserInformation implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[account=");
-		stringBuffer.append(getAccount());
-		stringBuffer.append(", active=");
-		stringBuffer.append(getActive());
-		stringBuffer.append("]");
+		StringBuilder stringBuilder = new StringBuilder("[account=");
+		stringBuilder.append(getAccount());
+		stringBuilder.append(", active=");
+		stringBuilder.append(getActive());
+		stringBuilder.append("]");
 		return super.toString();
 	}
 

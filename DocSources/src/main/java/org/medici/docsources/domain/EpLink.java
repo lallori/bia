@@ -261,19 +261,19 @@ public class EpLink implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuilder stringBuilder = new StringBuilder("");
 
 		if (!ObjectUtils.toString(getPerson()).equals("")) {
-			stringBuffer.append(getPerson());
+			stringBuilder.append(getPerson());
 		}
 
 		if (getAssignUnsure()) {
-			stringBuffer.append(" [unsure]");
+			stringBuilder.append(" [unsure]");
 		}
 		if (getPortrait()) {
-			stringBuffer.append(" [portrait]");
+			stringBuilder.append(" [portrait]");
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

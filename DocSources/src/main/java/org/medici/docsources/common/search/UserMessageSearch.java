@@ -100,7 +100,7 @@ public class UserMessageSearch implements GenericSearch {
 	@Override
 	public String toJPAQuery() {
 		String account = ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-		StringBuffer jpaQuery = new StringBuffer("FROM UserMessage ");
+		StringBuilder jpaQuery = new StringBuilder("FROM UserMessage ");
 		
 		if (getUserMessageCategory() != null) {
 			jpaQuery.append(" WHERE ");

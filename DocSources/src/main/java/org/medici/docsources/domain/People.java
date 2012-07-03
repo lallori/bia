@@ -1163,26 +1163,26 @@ public class People implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (getLast() != null) {
-			stringBuffer.append(getLast());
+			stringBuilder.append(getLast());
 		}
-		if ((stringBuffer.length() > 0) && ((getFirst() != null) || (getSucNum() != null))) {
-			stringBuffer.append(", ");
+		if ((stringBuilder.length() > 0) && ((getFirst() != null) || (getSucNum() != null))) {
+			stringBuilder.append(", ");
 		}
 		if (getFirst() != null) {
-			stringBuffer.append(getFirst());
+			stringBuilder.append(getFirst());
 		}
 
 		if (getSucNum() != null) {
-			if (stringBuffer.length() > 0) {
-				stringBuffer.append(" ");
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append(" ");
 			}
 			
-			stringBuffer.append(getSucNum());
+			stringBuilder.append(getSucNum());
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 
 	/* (non-Javadoc)

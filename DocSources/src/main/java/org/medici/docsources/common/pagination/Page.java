@@ -192,20 +192,20 @@ public class Page {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[");
-		stringBuffer.append("elementsForPage=");
-		stringBuffer.append(getElementsForPage());
-		stringBuffer.append(",firstRecordNumber=");
-		stringBuffer.append(getFirstRecordNumber());
-		stringBuffer.append(",lastRecordNumber=");
-		stringBuffer.append(getLastRecordNumber());
-		stringBuffer.append(",thisPage=");
-		stringBuffer.append(getThisPage());
-		stringBuffer.append(",total=");
-		stringBuffer.append(getTotal());
-		stringBuffer.append(",totalPages=");
-		stringBuffer.append(getTotalPages());
-		stringBuffer.append("]");
-		return stringBuffer.toString();
+		StringBuilder stringBuilder = new StringBuilder("[");
+		stringBuilder.append("elementsForPage=");
+		stringBuilder.append(getElementsForPage());
+		stringBuilder.append(",firstRecordNumber=");
+		stringBuilder.append(getFirstRecordNumber());
+		stringBuilder.append(",lastRecordNumber=");
+		stringBuilder.append(getLastRecordNumber());
+		stringBuilder.append(",thisPage=");
+		stringBuilder.append(getThisPage());
+		stringBuilder.append(",total=");
+		stringBuilder.append(getTotal());
+		stringBuilder.append(",totalPages=");
+		stringBuilder.append(getTotalPages());
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 }

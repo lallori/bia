@@ -166,20 +166,20 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("SELECT person.personId, COUNT(document.entryId) FROM EpLink WHERE");
+		StringBuilder stringBuilder = new StringBuilder("SELECT person.personId, COUNT(document.entryId) FROM EpLink WHERE");
 		for(int i=0; i < personIds.size(); i++){
-			if(stringBuffer.indexOf("=") != -1){
-    			stringBuffer.append(" or ");
+			if(stringBuilder.indexOf("=") != -1){
+    			stringBuilder.append(" or ");
     		}
-			stringBuffer.append("(person.personId=");
-        	stringBuffer.append(personIds.get(i) + ")");
+			stringBuilder.append("(person.personId=");
+        	stringBuilder.append(personIds.get(i) + ")");
 		}
-		stringBuffer.append(" group by person.personId");
+		stringBuilder.append(" group by person.personId");
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValues;
-		if(stringBuffer.indexOf("=") != -1){
-			Query query = getEntityManager().createQuery(stringBuffer.toString());
+		if(stringBuilder.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBuilder.toString());
 			tempValues = query.getResultList();
 			for(Iterator i = tempValues.iterator(); i.hasNext();){
 				Object [] data = (Object []) i.next();

@@ -124,20 +124,21 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE");
+		StringBuilder stringBuilder = new StringBuilder("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE");
 		for(int i = 0; i < placeAllIds.size(); i++){
-			if(stringBuffer.indexOf("=") != -1){
-				stringBuffer.append(" or ");
+			if(stringBuilder.indexOf("=") != -1){
+				stringBuilder.append(" or ");
 			}
-			stringBuffer.append("(place.placeAllId=");
-			stringBuffer.append(placeAllIds.get(i) + ")");
+			stringBuilder.append("(place.placeAllId=");
+			stringBuilder.append(placeAllIds.get(i));
+			stringBuilder.append(")");
 		}
-		stringBuffer.append(" GROUP BY place.placeAllId");
+		stringBuilder.append(" GROUP BY place.placeAllId");
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValues;
-		if(stringBuffer.indexOf("=") != -1){
-			Query query = getEntityManager().createQuery(stringBuffer.toString());
+		if(stringBuilder.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBuilder.toString());
 			tempValues = query.getResultList();
 			for(Iterator i = tempValues.iterator(); i.hasNext();){
 				Object[] data = (Object []) i.next();
@@ -177,7 +178,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		}
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
+		StringBuilder orderBySQL = new StringBuilder();
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

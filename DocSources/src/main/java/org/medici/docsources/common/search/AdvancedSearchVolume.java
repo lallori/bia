@@ -633,11 +633,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Volume WHERE ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Volume WHERE ");
 		
 		// Volume
 		if(volumes.size() > 0){
-			StringBuffer volumesQuery = new StringBuffer("(");
+			StringBuilder volumesQuery = new StringBuilder("(");
 			for(int i = 0; i < volumes.size(); i++){
 				if(VolumeUtils.isVolumeFormat(volumes.get(i))){
 					if(volumesQuery.length() > 1){
@@ -678,7 +678,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// Date
 		if(datesTypes.size() > 0){
-			StringBuffer datesQuery = new StringBuffer("(");
+			StringBuilder datesQuery = new StringBuilder("(");
 			for(int i=0; i < datesTypes.size(); i++){
 				if(datesTypes.get(i) == null){
 					continue;
@@ -714,7 +714,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		//Digitized
 		if(!ObjectUtils.toString(digitized).equals("")){
-			StringBuffer digitizedQuery = new StringBuffer("(");
+			StringBuilder digitizedQuery = new StringBuilder("(");
 			if(digitized.equals(Boolean.TRUE)){
 				digitizedQuery.append("(digitized=true)");
 			}else if(digitized.equals(Boolean.FALSE)){
@@ -731,7 +731,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		//Languages
 		if(languages.size() > 0){
-			StringBuffer languagesQuery = new StringBuffer("(");
+			StringBuilder languagesQuery = new StringBuilder("(");
 			for(int i = 0; i < languages.size(); i++){
 				if(languagesQuery.length() > 1){
 					languagesQuery.append(" AND ");
@@ -772,7 +772,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		//Other Languages
 		if(otherLang.size() > 0){
-			StringBuffer otherLangQuery = new StringBuffer("(");
+			StringBuilder otherLangQuery = new StringBuilder("(");
 			for(int i = 0; i < otherLang.size(); i++){
 				if(otherLangQuery.length() > 1){
 					otherLangQuery.append(" AND ");
@@ -792,7 +792,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// Cipher
 		if(cipher.length() > 0){
-			StringBuffer cipherQuery = new StringBuffer("(");
+			StringBuilder cipherQuery = new StringBuilder("(");
 			if(cipher.equals("Yes")){
 				cipherQuery.append("(cipher!=false)");
 			}else if(cipher.equals("No")){
@@ -809,7 +809,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// Index of Names
 		if(index.length() > 0){
-			StringBuffer indexQuery = new StringBuffer("(");
+			StringBuilder indexQuery = new StringBuilder("(");
 			if(index.equals("Yes")){
 				indexQuery.append("(oldAlphaIndex=true)");
 			}else if(index.equals("No")){
@@ -826,7 +826,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// From
 		if(fromVolume.size() > 0){
-			StringBuffer fromVolumeQuery = new StringBuffer("(");
+			StringBuilder fromVolumeQuery = new StringBuilder("(");
 			for(int i = 0; i < fromVolume.size(); i++){
 				if(fromVolumeQuery.length() > 1){
 					fromVolumeQuery.append(" AND ");
@@ -852,7 +852,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// To
 		if(toVolume.size() > 0){
-			StringBuffer toVolumeQuery = new StringBuffer("(");
+			StringBuilder toVolumeQuery = new StringBuilder("(");
 			for(int i = 0; i < toVolume.size(); i++){
 				if(toVolumeQuery.length() > 1){
 					toVolumeQuery.append(" AND ");
@@ -878,7 +878,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// Context
 		if(context.size() > 0){
-			StringBuffer contextQuery = new StringBuffer("(");
+			StringBuilder contextQuery = new StringBuilder("(");
 			for(int i = 0; i < context.size(); i++){
 				if(contextQuery.length() > 1){
 					contextQuery.append(" AND ");
@@ -904,7 +904,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		// Inventario
 		if(inventario.size() > 0){
-			StringBuffer inventarioQuery = new StringBuffer("(");
+			StringBuilder inventarioQuery = new StringBuilder("(");
 			for(int i = 0; i < inventario.size(); i++){
 				if(inventarioQuery.length() > 1){
 					inventarioQuery.append(" AND ");

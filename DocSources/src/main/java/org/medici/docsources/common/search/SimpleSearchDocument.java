@@ -112,7 +112,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Document ");
+		StringBuilder jpaQuery = new StringBuilder("FROM Document ");
 		
 		//MD: We need to re-convert the alias
 		alias = alias.replace("\\\"", "\"");

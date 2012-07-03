@@ -56,7 +56,7 @@ public class HttpUtils {
 		if (req == null)
 			return "";
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		Cookie[] cookieArray = req.getCookies();
 
 		if (cookieArray == null)
@@ -89,7 +89,7 @@ public class HttpUtils {
 			return "";
 
 		Enumeration<String> enumer = req.getParameterNames();
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.setLength(0);
 		while (enumer.hasMoreElements()) {
 			String paramName = enumer.nextElement();
@@ -119,7 +119,7 @@ public class HttpUtils {
 			return "";
 
 		Enumeration<String> enumer = req.getParameterNames();
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.setLength(0);
 		while (enumer.hasMoreElements()) {
 			String paramName = enumer.nextElement();

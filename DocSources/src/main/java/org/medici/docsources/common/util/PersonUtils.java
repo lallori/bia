@@ -47,40 +47,40 @@ public class PersonUtils {
 			return "";
 		}
 
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (!ObjectUtils.toString(people.getLast()).equals("")) {
-			stringBuffer.append(people.getLast());
-			stringBuffer.append(",");
+			stringBuilder.append(people.getLast());
+			stringBuilder.append(",");
 		}
 		if (!ObjectUtils.toString(people.getFirst()).equals("")) {
-			stringBuffer.append(" ");
-			stringBuffer.append(people.getFirst()); 
+			stringBuilder.append(" ");
+			stringBuilder.append(people.getFirst()); 
 		}
 		if (!ObjectUtils.toString(people.getSucNum()).equals("")) {
-			stringBuffer.append(" ");
-			stringBuffer.append(people.getSucNum()); 
+			stringBuilder.append(" ");
+			stringBuilder.append(people.getSucNum()); 
 		}
 		if (!ObjectUtils.toString(people.getMidPrefix()).equals("")) {
-			stringBuffer.append(" ");
-			stringBuffer.append(people.getMidPrefix()); 
+			stringBuilder.append(" ");
+			stringBuilder.append(people.getMidPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getMiddle()).equals("")) {
-			stringBuffer.append(" ");
-			stringBuffer.append(people.getMiddle()); 
+			stringBuilder.append(" ");
+			stringBuilder.append(people.getMiddle()); 
 		}
 		if (!ObjectUtils.toString(people.getLastPrefix()).equals("")) {
-			stringBuffer.append(" ");
-			stringBuffer.append(people.getLastPrefix()); 
+			stringBuilder.append(" ");
+			stringBuilder.append(people.getLastPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
-			stringBuffer.append(" (");
+			stringBuilder.append(" (");
 			if (!ObjectUtils.toString(people.getPostLastPrefix()).equals("")) {
-				stringBuffer.append(people.getPostLastPrefix() + " ");
+				stringBuilder.append(people.getPostLastPrefix() + " ");
 			}
-			stringBuffer.append(people.getPostLast());
-			stringBuffer.append(")"); 
+			stringBuilder.append(people.getPostLast());
+			stringBuilder.append(")"); 
 		}
 		
-		return stringBuffer.toString();
+		return stringBuilder.toString();
 	}
 }

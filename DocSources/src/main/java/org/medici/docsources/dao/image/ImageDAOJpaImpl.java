@@ -90,17 +90,17 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
         if (StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
         else
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
 
-    	stringBuffer.append(" and imageName like '%_C_");
-    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
-    	stringBuffer.append("_R.tif'");
+    	stringBuilder.append(" and imageName like '%_C_");
+    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+    	stringBuilder.append("_R.tif'");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt))
@@ -121,16 +121,16 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
         if (volLetExt != null)
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" and imageName like '%_C_");
-    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
-    	stringBuffer.append("_%.tif'");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" and imageName like '%_C_");
+    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+    	stringBuilder.append("_%.tif'");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
         if (volLetExt != null)
@@ -147,33 +147,33 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums,	List<String> folioMods) {
-		StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE ");
+		StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE ");
         for(int i=0;i<volNums.size();i++){
         	if(folioNums.get(i)!= null){
-        		if(stringBuffer.indexOf("volNum") != -1){
-        			stringBuffer.append(" or ");
+        		if(stringBuilder.indexOf("volNum") != -1){
+        			stringBuilder.append(" or ");
         		}
-	        	stringBuffer.append("(volNum=");
-	        	stringBuffer.append(volNums.get(i));
-	        	stringBuffer.append(" and volLetExt ");
+	        	stringBuilder.append("(volNum=");
+	        	stringBuilder.append(volNums.get(i));
+	        	stringBuilder.append(" and volLetExt ");
 	        	if (StringUtils.isEmpty(volLetExts.get(i))) {
-		        	stringBuffer.append("is null");
+		        	stringBuilder.append("is null");
 	        	} else {
-		        	stringBuffer.append("='");
-		        	stringBuffer.append(volLetExts.get(i));
-		        	stringBuffer.append("'");
+		        	stringBuilder.append("='");
+		        	stringBuilder.append(volLetExts.get(i));
+		        	stringBuilder.append("'");
 	        	}
 		
-		    	stringBuffer.append(" and imageName like '%_C_");
+		    	stringBuilder.append(" and imageName like '%_C_");
 		    	
-		    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNums.get(i), folioMods.get(i)));
-		    	stringBuffer.append("_%.tif')");
+		    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNums.get(i), folioMods.get(i)));
+		    	stringBuilder.append("_%.tif')");
         	}
         }
     	
         List<String> returnValues = new ArrayList<String>(0);
-        if(stringBuffer.indexOf("volNum") != -1){
-        	Query query = getEntityManager().createQuery(stringBuffer.toString());
+        if(stringBuilder.indexOf("volNum") != -1){
+        	Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         	List<Image> result = (List<Image>) query.getResultList();
 		
@@ -194,16 +194,16 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
 
-        stringBuffer.append(" and imageType=:imageType");
-        stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        stringBuilder.append(" and imageType=:imageType");
+        stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -233,21 +233,21 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			this.updateDocumentExplorerTotals(documentExplorer);
 		} 
 
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuffer.append(" and imageType=:imageType");
-        	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        	stringBuilder.append(" and imageType=:imageType");
+        	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
         } else if (documentExplorer.getImage().getImageOrder() != null) {
-        	stringBuffer.append(" and imageOrder=:imageOrder");
+        	stringBuilder.append(" and imageOrder=:imageOrder");
         } else {
-        	stringBuffer.append(" and imageOrder = 1");
+        	stringBuilder.append(" and imageOrder = 1");
         }
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", documentExplorer.getVolNum());
         if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
         	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
@@ -388,21 +388,21 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			this.updateVolumeExplorerTotals(volumeExplorer);
 		} 
 
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
         if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuffer.append(" and imageType=:imageType");
-        	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        	stringBuilder.append(" and imageType=:imageType");
+        	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
         } else if (volumeExplorer.getImage().getImageOrder() != null) {
-        	stringBuffer.append(" and imageOrder=:imageOrder");
+        	stringBuilder.append(" and imageOrder=:imageOrder");
         } else {
-        	stringBuffer.append(" and imageOrder = 1");
+        	stringBuilder.append(" and imageOrder = 1");
         }
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volumeExplorer.getVolNum());
         if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
         	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
@@ -465,15 +465,15 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
+        	stringBuilder.append(" is null");
 
-        stringBuffer.append(" and imageOrder=:imageOrder");
+        stringBuilder.append(" and imageOrder=:imageOrder");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -523,14 +523,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQueryCount.setParameter("volLetExt", volLetExt);
 		foliosInformations.setTotal((Long)typedQueryCount.getSingleResult());
 
-        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" GROUP BY imageType, imageRectoVerso");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" GROUP BY imageType, imageRectoVerso");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -574,14 +574,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 
 		// Calculating missing folios start
-		stringBuffer = new StringBuffer("SELECT distinct(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+		stringBuilder = new StringBuilder("SELECT distinct(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" order by imageProgTypeNum ASC");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" order by imageProgTypeNum ASC");
     	
-        query = getEntityManager().createQuery(stringBuffer.toString());
+        query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -604,14 +604,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		// Calculating missing folios end
 
 		//Extracting misnumbered Folios...
-		stringBuffer = new StringBuffer("SELECT concat(imageProgTypeNum, missedNumbering) FROM Image WHERE volNum=:volNum and volLetExt ");
+		stringBuilder = new StringBuilder("SELECT concat(imageProgTypeNum, missedNumbering) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" and missedNumbering is not null ORDER BY imageProgTypeNum ASC");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" and missedNumbering is not null ORDER BY imageProgTypeNum ASC");
     	
-        query = getEntityManager().createQuery(stringBuffer.toString());
+        query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -627,14 +627,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@Override
 	public Image findVolumeImage(Integer volNum, String volLetExt, Integer imageOrder) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
 		if (!StringUtils.isEmpty(volLetExt))
-			stringBuffer.append("=:volLetExt");
+			stringBuilder.append("=:volLetExt");
 		else
-			stringBuffer.append(" is null");
-		stringBuffer.append(" and imageOrder=:imageOrder");
+			stringBuilder.append(" is null");
+		stringBuilder.append(" and imageOrder=:imageOrder");
 		
-		Query query = getEntityManager().createQuery(stringBuffer.toString());
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter("volNum", volNum);
 		if (!StringUtils.isEmpty(volLetExt)) {
 			query.setParameter("volLetExt", volLetExt);
@@ -652,13 +652,13 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
 		if (!StringUtils.isEmpty(volLetExt))
-			stringBuffer.append("=:volLetExt");
+			stringBuilder.append("=:volLetExt");
 		else
-			stringBuffer.append(" is null");
+			stringBuilder.append(" is null");
 
-		Query query = getEntityManager().createQuery(stringBuffer.toString());
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter("volNum", volNum);
 		if (!StringUtils.isEmpty(volLetExt)) {
 			query.setParameter("volLetExt", volLetExt);
@@ -673,15 +673,15 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" and imageType=:imageType");
-    	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" and imageType=:imageType");
+    	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -702,14 +702,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, Integer imageOrder) {
-		StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
-        	stringBuffer.append("=:volLetExt");
+        	stringBuilder.append("=:volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" and imageOrder=:imageOrder");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" and imageOrder=:imageOrder");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
@@ -729,29 +729,29 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> findVolumesDigitized(List<Integer> volNums, List<String> volLetExts) {
-        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE ");
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE ");
         for (int i= 0; i<volNums.size(); i++) {
         	if(volNums.get(i) != null){
-	        	if(stringBuffer.indexOf("volNum") != -1){
-	        		stringBuffer.append(" or ");
+	        	if(stringBuilder.indexOf("volNum") != -1){
+	        		stringBuilder.append(" or ");
 	        	}
-	        	stringBuffer.append("(volNum=");
-	        	stringBuffer.append(volNums.get(i));
-	        	stringBuffer.append(" and volLetExt ");
+	        	stringBuilder.append("(volNum=");
+	        	stringBuilder.append(volNums.get(i));
+	        	stringBuilder.append(" and volLetExt ");
 	        	if (StringUtils.isEmpty(volLetExts.get(i))) {
-		        	stringBuffer.append(" is null");
+		        	stringBuilder.append(" is null");
 	        	} else {
-		        	stringBuffer.append("='");
-		        	stringBuffer.append(volLetExts.get(i));
-		        	stringBuffer.append("'");
+		        	stringBuilder.append("='");
+		        	stringBuilder.append(volLetExts.get(i));
+		        	stringBuilder.append("'");
 	        	}
-	        	stringBuffer.append(" and imageOrder=1) ");
+	        	stringBuilder.append(" and imageOrder=1) ");
         	}
         }
         List<String> returnValues = new ArrayList<String>(0);
         
-        if(stringBuffer.indexOf("volNum") != -1){
-	        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        if(stringBuilder.indexOf("volNum") != -1){
+	        Query query = getEntityManager().createQuery(stringBuilder.toString());
 	    	
 			List<Image> result = (List<Image>) query.getResultList();
 	
@@ -769,14 +769,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException {
-        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
         if (volLetExt != null)
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" and imageName like '%SPI.tif'");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" and imageName like '%SPI.tif'");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
         if (volLetExt != null)
@@ -824,14 +824,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
 		documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
-        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" group by imageType, imageRectoVerso");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" group by imageType, imageRectoVerso");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", documentExplorer.getVolNum());
         if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
         	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
@@ -908,14 +908,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
 		volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
-        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-        	stringBuffer.append(" = :volLetExt");
+        	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuffer.append(" is null");
-    	stringBuffer.append(" group by imageType, imageRectoVerso");
+        	stringBuilder.append(" is null");
+    	stringBuilder.append(" group by imageType, imageRectoVerso");
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volumeExplorer.getVolNum());
         if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
         	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());

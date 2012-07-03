@@ -220,23 +220,23 @@ public class AccessLog implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer stringBuffer = new StringBuffer("[ ");
-		stringBuffer.append(getDateAndTime());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getIpAddress());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getUsername());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getAuthorities());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getHttpMethod());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getAction());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getInformations());
-		stringBuffer.append(" - ");
-		stringBuffer.append(getErrors());
-		stringBuffer.append(" ]");
-		return stringBuffer.toString();
+		StringBuilder stringBuilder = new StringBuilder("[ ");
+		stringBuilder.append(getDateAndTime());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getIpAddress());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getUsername());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getAuthorities());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getHttpMethod());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getAction());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getInformations());
+		stringBuilder.append(" - ");
+		stringBuilder.append(getErrors());
+		stringBuilder.append(" ]");
+		return stringBuilder.toString();
 	}
 }

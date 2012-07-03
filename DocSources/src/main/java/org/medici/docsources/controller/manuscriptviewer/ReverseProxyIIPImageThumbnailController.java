@@ -69,29 +69,29 @@ public class ReverseProxyIIPImageThumbnailController {
 		// Create an instance of HttpClient.
 		HttpClient client = new HttpClient(); 	
 		
-		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(properties.getProperty("iipimage.protocol"));
-		stringBuffer.append("://");
-		stringBuffer.append(properties.getProperty("iipimage.host"));
-		stringBuffer.append(":");
-		stringBuffer.append(properties.getProperty("iipimage.port"));
-		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
-		stringBuffer.append("?");
+		StringBuilder stringBuilder = new StringBuilder("");
+		stringBuilder.append(properties.getProperty("iipimage.protocol"));
+		stringBuilder.append("://");
+		stringBuilder.append(properties.getProperty("iipimage.host"));
+		stringBuilder.append(":");
+		stringBuilder.append(properties.getProperty("iipimage.port"));
+		stringBuilder.append(properties.getProperty("iipimage.fcgi.path"));
+		stringBuilder.append("?");
 
-		stringBuffer.append("WID=120&");
-		stringBuffer.append("FIF=");
-		stringBuffer.append(properties.getProperty("iipimage.image.path"));
-		stringBuffer.append(httpServletRequest.getParameter("imageName"));
-		stringBuffer.append("&");
-		stringBuffer.append("CVT=JPEG");
+		stringBuilder.append("WID=120&");
+		stringBuilder.append("FIF=");
+		stringBuilder.append(properties.getProperty("iipimage.image.path"));
+		stringBuilder.append(httpServletRequest.getParameter("imageName"));
+		stringBuilder.append("&");
+		stringBuilder.append("CVT=JPEG");
 
 		// Create a method instance.
-		GetMethod method = new GetMethod(stringBuffer.toString());
+		GetMethod method = new GetMethod(stringBuilder.toString());
 
 		try {
 			// Execute the method.
 			client.executeMethod(method);
-			logger.debug("Reverse Proxying IIPImageThumbnail Url : " + stringBuffer.toString() + " (Status Line" + method.getStatusLine() + ")");
+			logger.debug("Reverse Proxying IIPImageThumbnail Url : " + stringBuilder.toString() + " (Status Line" + method.getStatusLine() + ")");
 
 			// Set content type 
 			response.setContentType(method.getResponseHeader("Content-Type").getValue());
