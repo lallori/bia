@@ -59,6 +59,7 @@ import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
@@ -497,6 +498,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Schedone findSchedone(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try{
+			return getSchedoneDAO().findByVolume(volNum, volLetExt);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
@@ -567,6 +580,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				if(volume.getSerieList() != null){
 					volumeSummary.setCarteggio(volume.getSerieList().toString());
 				}
+				volumeSummary.setCcontext(volume.getCcontext());
+				volumeSummary.setInventarioSommarioDescription(volume.getInventarioSommarioDescription());
+				
 				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
 				if (foliosInformations != null) {
 					volumeSummary.setTotal(foliosInformations.getTotal());

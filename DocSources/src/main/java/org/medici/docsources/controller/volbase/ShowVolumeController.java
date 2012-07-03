@@ -34,6 +34,7 @@ import java.util.Map;
 import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -89,6 +90,9 @@ public class ShowVolumeController {
 				
 				VolumeSummary volumeSummary = getVolBaseService().findVolumeSummary(volume);
 				model.put("volumeSummary", volumeSummary);
+				
+				Schedone schedone = getVolBaseService().findSchedone(volume.getVolNum(), volume.getVolLetExt());
+				model.put("schedone", schedone);
 
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());

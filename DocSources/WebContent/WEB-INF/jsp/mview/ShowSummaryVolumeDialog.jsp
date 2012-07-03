@@ -54,6 +54,14 @@
 				<div class="item">Note alla Cartulazione</div> 
 				<div class="value">${volumeSummary.noteCartulazione}</div> 
 			</div>
+			<div class="row">
+				<div class="item">Context</div>
+				<div class="value">${volumeSummary.ccontext}</div>
+			</div>
+			<div class="row">
+				<div class="item">Inventario Sommario Description</div>
+				<div class="value">${volumeSummary.inventarioSommarioDescription}</div>
+			</div>
 			
 			<div class="row">
 				<div class="item"><u>Volume Size:</u></div> 

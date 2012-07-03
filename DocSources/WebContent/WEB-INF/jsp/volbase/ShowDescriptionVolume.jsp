@@ -26,6 +26,12 @@
 				<div class="item">Organizational Criteria</div>
 				<div class="value">${volume.orgNotes}</div>
 			</div>
+			<c:if test="${schedone != null && schedone.noteCartulazione != null}">
+				<div class="row">
+					<div class="item">Note alla cartulazione</div>
+					<div class="value">${schedone.noteCartulazione}<br />${schedone.noteCartulazioneEng}</div>
+				</div>
+			</c:if>
 			<div class="row">
 				<div class="item">Condition</div>
 				<div class="value">${volume.ccondition}</div>
@@ -50,6 +56,26 @@
 				<div class="item">Index of Names</div>
 				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
 			</div>
+			<c:if test="${schedone != null && (schedone.dimensioniBase != null || schedone.dimensioniAltezza != null)}">
+				<div class="row">
+					<div class="item">Volume height</div>
+					<c:if test="${schedone.dimensioniAltezza == null}">
+						<div class="value">-</div>
+					</c:if>
+					<c:if test="${schedone.dimensioniAltezza != null}">
+						<div class="value">${schedone.dimensioniAltezza} mm</div>
+					</c:if>
+				</div>
+				<div class="row">
+					<div class="item">Volume width</div>
+					<c:if test="${schedone.dimensioniBase == null}">
+						<div class="value">-</div>
+					</c:if>
+					<c:if test="${schedone.dimensioniBase != null}">
+						<div class="value">${schedone.dimensioniBase} mm</div>
+					</c:if>
+				</div>
+			</c:if>
 			<div class="row">
 				<div class="item">Printed material</div>
 				<div class="value">${volume.printedMaterial ? 'Yes' : 'No'}</div>

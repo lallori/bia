@@ -38,6 +38,7 @@ import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -184,6 +185,15 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<Integer> findNewDigitizedVolumes() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Schedone findSchedone(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 

@@ -32,6 +32,7 @@ import java.util.List;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class VolumeSummary {
@@ -71,6 +72,10 @@ public class VolumeSummary {
 	private Integer width;
 	// Height expressed in millimeters
 	private Integer height;
+	
+	private String ccontext;
+	
+	private String inventarioSommarioDescription;
 	
 	/**
 	 * @return the summaryId
@@ -322,5 +327,34 @@ public class VolumeSummary {
 	 */
 	public List<Integer> getMissingFolios() {
 		return missingFolios;
+	}
+
+	/**
+	 * @return the ccontext
+	 */
+	public String getCcontext() {
+		return ccontext;
+	}
+
+	/**
+	 * @param ccontext the ccontext to set
+	 */
+	public void setCcontext(String ccontext) {
+		this.ccontext = ccontext;
+	}
+
+	/**
+	 * @return the inventarioSommarioDescription
+	 */
+	public String getInventarioSommarioDescription() {
+		return inventarioSommarioDescription;
+	}
+
+	/**
+	 * @param inventarioSommarioDescription the inventarioSommarioDescription to set
+	 */
+	public void setInventarioSommarioDescription(
+			String inventarioSommarioDescription) {
+		this.inventarioSommarioDescription = inventarioSommarioDescription;
 	}
 }
