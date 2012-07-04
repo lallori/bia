@@ -92,8 +92,11 @@
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
-				<c:when test="${document.docYear != null || document.docMonthNum != null || document.docDay != null}">
+				<c:when test="${document.yearModern == null && (document.docYear != null || document.docMonthNum != null || document.docDay != null)}">
 					<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
+				</c:when>
+				<c:when test="${document.yearModern != null}">
+					<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay}</h5>
 				</c:when>
 				<c:otherwise>
 					<br />
