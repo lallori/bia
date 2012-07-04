@@ -96,6 +96,7 @@ import org.springframework.transaction.annotation.Transactional;
  * action on people.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
@@ -394,6 +395,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			searchName.setAltName(Normalizer.normalize(person.getMapNameLf(), Normalizer.Form.NFD));
 			searchName.setAltName(searchName.getAltName().replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
 			searchName.setAltName(searchName.getAltName().replace(",", ""));
+			searchName.setAltName(searchName.getAltName().replace("(", ""));
+			searchName.setAltName(searchName.getAltName().replace(")", ""));
 			searchName.setAltName(searchName.getAltName().toUpperCase());
 			searchName.setNameType(NameType.SearchName.toString());
 
@@ -694,6 +697,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
 			
 			Set<AltName> altNames = personToUpdate.getAltName();
+			AltName searchName = null;
 
 			// fill fields to update person details section
 			if(!personToUpdate.getFirst().equals(person.getFirst())){
@@ -732,6 +736,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				toCompare = Normalizer.normalize(toCompare, Normalizer.Form.NFD);
 				toCompare = toCompare.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 				toCompare = toCompare.replace(",", "");
+				toCompare = toCompare.replace("(", "");
+				toCompare = toCompare.replace(")", "");
 				toCompare = toCompare.toUpperCase();
 				while(iterator.hasNext() && !found){
 					current = iterator.next();
@@ -739,10 +745,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 						current.setAltName(Normalizer.normalize(PersonUtils.generateMapNameLf(person), Normalizer.Form.NFD));
 						current.setAltName(current.getAltName().replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
 						current.setAltName(current.getAltName().replace(",", ""));
+						current.setAltName(current.getAltName().replace("(", ""));
+						current.setAltName(current.getAltName().replace(")", ""));
 						current.setAltName(current.getAltName().toUpperCase());
 						found = Boolean.TRUE;
 						getAltNameDAO().merge(current);
 					}					
+				}
+				if(found == Boolean.FALSE){
+					searchName = new AltName();
+					searchName.setAltName(Normalizer.normalize(PersonUtils.generateMapNameLf(person), Normalizer.Form.NFD));
+					searchName.setAltName(searchName.getAltName().replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
+					searchName.setAltName(searchName.getAltName().replace(",", ""));
+					searchName.setAltName(searchName.getAltName().toUpperCase());
+					searchName.setNameType(NameType.SearchName.toString());
 				}
 			}
 			
@@ -814,6 +830,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}
 
 			getPeopleDAO().merge(personToUpdate);
+			
+			if(searchName != null){
+				searchName.setPerson(personToUpdate);
+				getAltNameDAO().persist(searchName);
+			}
 
 			getUserHistoryDAO().persist(new UserHistory("Edit details", Action.MODIFY,Category.PEOPLE, personToUpdate));
 
