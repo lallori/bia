@@ -45,6 +45,7 @@ public class SaveUserSearchFilterCommand {
 	private SaveType saveType;
 	private String saveAs;
 	private Integer idSearchFilterToReplace;
+	private List<String> docId;
 	private List<String> word;
 	private List<String> volume;
 	private List<String> folio;
@@ -850,6 +851,20 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public void setLogicalDelete(Boolean logicalDelete) {
 		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @param docId the docId to set
+	 */
+	public void setDocId(List<String> docId) {
+		this.docId = docId;
+	}
+
+	/**
+	 * @return the docId
+	 */
+	public List<String> getDocId() {
+		return docId;
 	}
 
 	/**
