@@ -641,7 +641,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			for(int i = 0; i < volumes.size(); i++){
 				if(VolumeUtils.isVolumeFormat(volumes.get(i))){
 					if(volumesQuery.length() > 1){
-						volumesQuery.append(" AND ");
+						//MD: I need to append an "OR" clause instead an "AND"
+						volumesQuery.append(" OR ");
 					}
 					
 					if(volumesTypes.get(i).equals(VolumeType.Exactly)){

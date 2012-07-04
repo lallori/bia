@@ -144,9 +144,9 @@
 			if(fieldName == "index" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
 				return false;
 			}
-			if(fieldName == "volume" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
-				return false;
-			}
+//			if(fieldName == "volume" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
+//				return false;
+//			}
 			
 			// We construct new html block with condition and hidden field 
 			var searchFilterDiv = getSearchFilterDiv(formName, fieldName, searchType, searchWord, hiddenValue);
