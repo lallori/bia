@@ -47,6 +47,8 @@
 				</div>
 			</div>
 			
+			<form:errors path="childId" cssClass="inputerrors" htmlEscape="false"/>
+			
 			<div>
 				<input id="closeChild" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
@@ -108,7 +110,11 @@
 
 			$j("#EditChildPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
+					if($j(html).find(".inputerrors").length > 0){
+						$j("#EditChildPersonDiv").html(html);
+					}else{					
+						$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
+					}
 				}})
 				return false;
 			});

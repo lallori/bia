@@ -850,6 +850,10 @@ img.transparent {
 	-moz-border-radius: 4px;
 }
 
+#EditChildrenPersonDiv .inputerrors {
+    float: none;
+}
+
 .inputerrorsForm { /* Error Span messages */
 	color:#900;
 	padding:1px 4px 1px 4px;

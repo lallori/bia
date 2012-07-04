@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -87,6 +88,7 @@ public class EditChildPersonValidator implements Validator {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
 		validatePersonId(editChildPersonCommand.getId(), errors);
 		validateChildId(editChildPersonCommand.getChildId(), errors);
+		validateParentChild(editChildPersonCommand.getChildId(), editChildPersonCommand.getParentId(), errors);
 //		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
 		
 	}
@@ -145,6 +147,24 @@ public class EditChildPersonValidator implements Validator {
 					errors.reject("childId", "error.childId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
+				
+			}
+		}
+	}
+	
+	public void validateParentChild(Integer childId, Integer parentId, Errors errors){
+		if(!errors.hasErrors()){
+			try{
+				if(childId != null && childId > 0){
+					People parent = getPeopleBaseService().findPerson(parentId);
+					People child = getPeopleBaseService().findPerson(childId);
+					for(Parent currentParent : child.getParents()){
+						if(currentParent.getParent().getGender().equals(parent.getGender())){
+							errors.rejectValue("childId", "error.childId.invalid");
+						}
+					}
+				}
+			}catch(ApplicationThrowable ath){
 				
 			}
 		}
