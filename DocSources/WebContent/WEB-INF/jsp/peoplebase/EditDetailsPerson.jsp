@@ -80,7 +80,17 @@
 						<div class="col_l">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.gender"></fmt:message>">?</a>
 							<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
-							<form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
+							<security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
+								<c:if test="${command.personId > 0}">
+									<form:input path="gender" id="gender" cssClass="input_2c_disabled" disabled="true"/>
+								</c:if>
+								<c:if test="${command.personId == 0}">
+									<form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
+								</c:if>
+							</security:authorize>
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+								<form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
+							</security:authorize>
 						</div>
 					</div>
 				</div>
@@ -191,6 +201,7 @@
 				<form:errors path="activeEnd" cssClass="inputerrors" htmlEscape="false"/>
 				<form:errors path="deathMonth" cssClass="inputerrors" htmlEscape="false"/>
 				<form:errors path="deathDay" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="gender" cssClass="inputerrors" htmlEscape="false"/>
 
 				<div>
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
@@ -368,6 +379,18 @@
 			});
 
 			$j("#EditDetailsPersonForm").submit(function (){
+				if($j("#gender").val() == 'NULL'){
+					$j('#EditDetailsPersonDiv').block({ message: $j('.notGender'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }		
+					});
+					return false;
+				}
 				if($j("#bornPlacePrefered").val() == 'V' || $j("#deathPlacePrefered").val() == 'V'){
 					$j('#EditDetailsPersonDiv').block({ message: $j('.notPrincipal'),
 						css: { 
@@ -443,6 +466,11 @@
 	</script>
 
 
+	<div id="questionGender" class="notGender" style="display:none; cursor: default">
+		<h1>Please select a gender</h1>
+		<input type="button" id="okGender" value="Ok" />
+	</div>
+	
 	<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
 		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
 		<input type="button" id="ok" value="Ok" />
@@ -496,6 +524,15 @@
 				}});
 				return false;
 			});
+			
+			$j('#okGender').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionGender").hide();
+				$j("#EditDetailsPersonDiv").append($j("#questionGender"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
 	     
 		});
 	</script>

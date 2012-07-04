@@ -29,6 +29,8 @@ package org.medici.docsources.validator.peoplebase;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +90,7 @@ public class EditDetailsPersonValidator implements Validator {
 		EditDetailsPersonCommand editDetailsPersonCommand = (EditDetailsPersonCommand) object;
 		validatePersonId(editDetailsPersonCommand.getPersonId(), errors);
 		validateDates(editDetailsPersonCommand.getBornYear(), editDetailsPersonCommand.getActiveStart(), editDetailsPersonCommand.getBornMonth(), editDetailsPersonCommand.getBornDay(), editDetailsPersonCommand.getDeathYear(), editDetailsPersonCommand.getActiveEnd(), editDetailsPersonCommand.getDeathMonth(), editDetailsPersonCommand.getDeathDay(), errors);
+		validateGender(editDetailsPersonCommand.getPersonId(), editDetailsPersonCommand.getGender(), errors);
 	}
 
 	/**
@@ -152,6 +155,30 @@ public class EditDetailsPersonValidator implements Validator {
 			if (deathDay != null) {
 				if ((deathDay < 0) || (deathDay > 31)) {
 					errors.rejectValue("deathDay", "error.deathDay.invalid");
+				}
+			}
+		}
+	}
+	
+	public void validateGender(Integer personId, Gender gender, Errors errors){
+		if(!errors.hasErrors()){
+			if(personId > 0){
+				try{
+					People person = getPeopleBaseService().findPerson(personId);
+					if(!person.getGender().equals(gender)){
+						if(person.getGender().equals(Gender.M)){
+							if((person.getParents() != null && person.getParents().size() > 0) || (person.getChildren() != null && person.getChildren().size() > 0) || (person.getMarriagesAsHusband() != null && person.getMarriagesAsHusband().size() > 0)){
+								errors.rejectValue("gender", "error.gender.invalid");
+							}								
+						}
+						if(person.getGender().equals(Gender.F)){
+							if((person.getParents() != null && person.getParents().size() > 0) || (person.getChildren() != null && person.getChildren().size() > 0) || (person.getMarriagesAsWife() != null && person.getMarriagesAsWife().size() > 0)){
+								errors.rejectValue("gender", "error.gender.invalid");
+							}
+						}
+					}
+				}catch(ApplicationThrowable ath){
+					
 				}
 			}
 		}
