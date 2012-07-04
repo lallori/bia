@@ -131,11 +131,8 @@ public class EditDetailsSchedoneController {
 			}else{
 				schedone.setDimensioniBase(command.getDimensioniBase());
 			}
-			if(command.getDimensioniAltezza().equals("")){
-				schedone.setDimensioniAltezza(null);
-			}else{
-				schedone.setDimensioniAltezza(command.getDimensioniAltezza());
-			}
+			
+			schedone.setDimensioniAltezza(command.getDimensioniAltezza());
 			schedone.setTipoRipresa(command.getTipoRipresa());
 			schedone.setColoreImmagine(command.getColoreImmagine());
 			schedone.setRisoluzione(command.getRisoluzione());
