@@ -112,7 +112,7 @@ public class EditGeographicCoordinatesPlaceController {
 				placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
 			else
 				placeGeographicCoordinates.setSecondLatitude(0);
-			if(command.getDirectionLatitude() != null)
+			if(!command.getDirectionLatitude().equals(""))
 				placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude().toUpperCase());
 			else
 				placeGeographicCoordinates.setDirectionLatitude("N");
@@ -128,17 +128,21 @@ public class EditGeographicCoordinatesPlaceController {
 				placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
 			else
 				placeGeographicCoordinates.setSecondLongitude(0);
-			if(command.getDirectionLongitude() != null)
+			if(!command.getDirectionLongitude().equals(""))
 				placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude().toUpperCase());
 			else
 				placeGeographicCoordinates.setDirectionLongitude("E");
 			
 			try{
 				Place place = null;
-				if(placeGeographicCoordinates.getId() == null || placeGeographicCoordinates.getId().equals(0)){
-					place = getGeoBaseService().addNewPlaceGeographicCoordinates(placeGeographicCoordinates);
+				if(command.getDegreeLatitude() != null || command.getMinuteLatitude() != null || command.getSecondLatitude() != null || !command.getDirectionLatitude().equals("") || command.getSecondLongitude() != null || command.getMinuteLongitude() != null || command.getDegreeLongitude() != null || !command.getDirectionLongitude().equals("")){
+					if(placeGeographicCoordinates.getId() == null || placeGeographicCoordinates.getId().equals(0)){
+						place = getGeoBaseService().addNewPlaceGeographicCoordinates(placeGeographicCoordinates);
+					}else{
+						place = getGeoBaseService().editPlaceGeographicCoordinates(placeGeographicCoordinates);
+					}
 				}else{
-					place = getGeoBaseService().editPlaceGeographicCoordinates(placeGeographicCoordinates);
+					place = getGeoBaseService().findPlace(command.getPlaceAllId());
 				}
 				model.put("place", place);
 				

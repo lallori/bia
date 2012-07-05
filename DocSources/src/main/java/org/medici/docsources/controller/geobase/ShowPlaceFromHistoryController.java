@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.ShowPlaceFromHistoryRequestCommand;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -49,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "ShowPlaceFrom History".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/geobase/ShowPlaceFromHistory")
@@ -97,6 +99,12 @@ public class ShowPlaceFromHistoryController {
 				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+				
+				if(place.getPlaceGeographicCoordinates() != null)
+					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+				else
+					model.put("linkGoogleMaps", null);
+				
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(command.getIdUserHistory()));
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPlace", model);
