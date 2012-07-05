@@ -74,7 +74,7 @@
 			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
-				window.open($j(this).attr("href"),"_blank",'width=960, height=350');
+				window.open($j(this).attr("href"),"_blank",'width=960, height=350, scrollbars=yes');
 				Modalbox.hide();
 				return false;
 			});
