@@ -33,10 +33,12 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.digitization.EditDetailsSchedoneCommand;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +96,11 @@ public class EditDetailsSchedoneController {
 			Schedone schedone = new Schedone(command.getSchedoneId());
 			schedone.setIstituto(command.getIstituto());
 			schedone.setFondo(command.getFondo());
-			schedone.setSerie(command.getSerie());
+			
+			if((!ObjectUtils.toString(command.getSeriesRefNum()).equals("")) && (!ObjectUtils.toString(command.getSerie()).equals(""))){
+				schedone.setSerie(new SerieList(command.getSeriesRefNum()));
+			}
+			
 			schedone.setNumeroUnita(command.getNumeroUnita());
 			schedone.setVolNum(command.getNumeroUnita());
 			if(command.getVolLetExt().equals("")){
@@ -193,7 +199,12 @@ public class EditDetailsSchedoneController {
 
 			command.setIstituto(schedone.getIstituto());
 			command.setFondo(schedone.getFondo());
-			command.setSerie(schedone.getSerie());
+			
+			if(schedone.getSerie() != null){
+				command.setSeriesRefNum(schedone.getSerie().getSeriesRefNum());
+				command.setSerie(schedone.getSerie().toString());
+			}
+			
 			command.setNumeroUnita(schedone.getNumeroUnita());
 			command.setVolLetExt(schedone.getVolLetExt());
 			command.setDataInizioAnno(schedone.getDataInizioAnno());
@@ -232,6 +243,7 @@ public class EditDetailsSchedoneController {
 			command.setNomeFiles(ApplicationPropertyManager.getApplicationProperty("schedone.nomeFiles"));
 			command.setResponsabileFotoRiproduzione(ApplicationPropertyManager.getApplicationProperty("schedone.responsabileFotoRiproduzione"));
 			command.setOperatore(ApplicationPropertyManager.getApplicationProperty("schedone.operatore"));
+			command.setSeriesRefNum(null);
 			command.setSerie(null);
 			command.setNumeroUnita(null);
 			command.setDataInizioAnno(null);

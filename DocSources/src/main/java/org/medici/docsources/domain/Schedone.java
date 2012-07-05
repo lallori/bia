@@ -69,8 +69,12 @@ public class Schedone {
 	private String volLetExt;
 	@Column (name="\"FONDO\"", length=50)
 	private String fondo;
-	@Column (name="\"SERIE\"", length=255)
-	private String serie;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"SERIESREFNUM\"")
+	@IndexedEmbedded
+	private SerieList serie;
+	
 	@Column (name="\"N_UNITA\"")
 	private Integer numeroUnita;
 	@Column (name="\"DATA_INIZIO_ANNO\"", length=50)
@@ -279,14 +283,14 @@ public class Schedone {
 	/**
 	 * @return the serie
 	 */
-	public String getSerie() {
+	public SerieList getSerie() {
 		return serie;
 	}
 	
 	/**
 	 * @param serie the serie to set
 	 */
-	public void setSerie(String serie) {
+	public void setSerie(SerieList serie) {
 		this.serie = serie;
 	}
 	

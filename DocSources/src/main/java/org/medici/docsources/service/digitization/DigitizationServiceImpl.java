@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.digitization;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.digitization.DigitizationDAO;
 import org.medici.docsources.dao.image.ImageDAO;
@@ -95,6 +97,70 @@ public class DigitizationServiceImpl implements DigitizationService {
 	public Schedone addNewSchedone(Schedone schedone) throws ApplicationThrowable {
 		try {
 			schedone.setSchedoneId(null);
+			
+			if(schedone.getSerie() != null){
+				schedone.setSerie(getSeriesListDAO().find(schedone.getSerie().getSeriesRefNum()));
+			}
+			
+			//TODO: Create volume record if not entered (BETA)
+			/*
+			Volume volume = getVolumeDAO().findVolume(schedone.getVolNum(), schedone.getVolLetExt());
+			if(volume == null){
+				volume = new Volume();
+				volume.setSummaryId(null);
+				volume.setVolNum(schedone.getVolNum());
+				volume.setVolLetExt(schedone.getVolLetExt());
+				if(schedone.getSerie() != null){
+					volume.setSerieList(getSeriesListDAO().find(schedone.getSerie().getSeriesRefNum()));
+				}
+				//MD: ?
+				//volume.setResearcher(null);
+				volume.setDateCreated(new Date());
+				volume.setVolTobeVetted(true);
+				volume.setVolTobeVettedDate(new Date());
+				volume.setVolVetted(false);
+				volume.setBound(false);
+				volume.setFolsNumbrd(false);
+				volume.setOldAlphaIndex(false);
+				volume.setPrintedDrawings(false);
+				volume.setPrintedMaterial(false);
+				volume.setItalian(false);
+				volume.setSpanish(false);
+				volume.setEnglish(false);
+				volume.setLatin(false);
+				volume.setGerman(false);
+				volume.setFrench(false);
+				volume.setCipher(false);
+				
+				volume.setStartYear(schedone.getDataInizioAnno());
+				if(schedone.getDataInizioMese() != null){
+					Month month = getMonthDAO().find(schedone.getDataInizioMese().getMonthNum());
+					volume.setStartMonth(month.getMonthName());
+					volume.setStartMonthNum(month);
+				}else{
+					volume.setStartMonth(null);
+					volume.setStartMonthNum(null);
+				}
+				volume.setStartDay(schedone.getDataInizioGiorno());
+				volume.setEndYear(schedone.getDataFineAnno());
+				if(schedone.getDataFineMese() != null){
+					Month month = getMonthDAO().find(schedone.getDataFineMese().getMonthNum());
+					volume.setEndMonth(month.getMonthName());
+					volume.setEndMonthNum(month);
+				}else{
+					volume.setEndMonth(null);
+					volume.setEndMonthNum(null);
+				}
+				volume.setEndDay(schedone.getDataFineGiorno());
+				volume.setStartDate(DateUtils.getLuceneDate(volume.getStartYear(), volume.getStartMonthNum(), volume.getStartDay()));
+				volume.setEndDate(DateUtils.getLuceneDate(volume.getEndYear(), volume.getEndMonthNum(), volume.getEndDay()));
+				volume.setLogicalDelete(Boolean.FALSE);
+				volume.setDigitized(Boolean.FALSE);
+				
+				getVolumeDAO().persist(volume);
+				
+			}
+			*/
 			getSchedoneDAO().persist(schedone);
 			
 			return schedone;
@@ -115,7 +181,14 @@ public class DigitizationServiceImpl implements DigitizationService {
 			
 			schedoneToUpdate.setIstituto(schedone.getIstituto());
 			schedoneToUpdate.setFondo(schedone.getFondo());
-			schedoneToUpdate.setSerie(schedone.getSerie());
+			
+			if(schedone.getSerie() != null){
+				schedoneToUpdate.setSerie(getSeriesListDAO().find(schedone.getSerie().getSeriesRefNum()));
+			}else{
+				schedoneToUpdate.setSerie(null);
+			}
+			
+			
 			schedoneToUpdate.setNumeroUnita(schedone.getNumeroUnita());
 			schedoneToUpdate.setVolNum(schedone.getVolNum());
 			schedoneToUpdate.setVolLetExt(schedone.getVolLetExt());

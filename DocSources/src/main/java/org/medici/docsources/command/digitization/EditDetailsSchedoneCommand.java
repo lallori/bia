@@ -37,7 +37,10 @@ public class EditDetailsSchedoneCommand {
 	private Integer schedoneId;
 	private String istituto;
 	private String fondo;
+	
+	private Integer seriesRefNum;
 	private String serie;
+	
 	private Integer numeroUnita;
 	private String volLetExt;
 	private Integer dataInizioAnno;
@@ -117,6 +120,20 @@ public class EditDetailsSchedoneCommand {
 		this.fondo = fondo;
 	}
 	
+	/**
+	 * @param seriesRefNum the seriesRefNum to set
+	 */
+	public void setSeriesRefNum(Integer seriesRefNum) {
+		this.seriesRefNum = seriesRefNum;
+	}
+
+	/**
+	 * @return the seriesRefNum
+	 */
+	public Integer getSeriesRefNum() {
+		return seriesRefNum;
+	}
+
 	/**
 	 * @return the serie
 	 */

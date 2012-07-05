@@ -224,6 +224,8 @@
 				</div>
 			</div>
 			
+			<form:hidden path="seriesRefNum"/>
+			
 			<div>
 	            <input id="close" type="submit" value="Close" title="Do not save changes" />
 	            <input id="save" class="save" type="submit" value="Save" />
@@ -254,7 +256,11 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){  }
+			    onSelect: function(value, data){ 
+			    	if(data == '')
+			    		data = 0;
+			    	$j('#seriesRefNum').val(data);
+			    }
 			});
 			
 			 $j("#save").click(function(){
