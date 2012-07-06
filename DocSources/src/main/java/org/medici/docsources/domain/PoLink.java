@@ -63,7 +63,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  */
 @Entity
 @Audited
-@Table ( name = "\"tblPOLink\"" )
+@Table ( name = "\"tblPoLink\"" )
 public class PoLink implements Serializable {
 	/**
 	 * 

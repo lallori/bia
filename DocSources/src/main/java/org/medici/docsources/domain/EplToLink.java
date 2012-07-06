@@ -62,7 +62,7 @@ import org.hibernate.search.annotations.Store;
  */
 @Entity
 @Audited
-@Table ( name = "\"tblEPLTOLink\"" ) 
+@Table ( name = "\"tblEplToLink\"" ) 
 public class EplToLink implements Serializable{
 	/**
 	 * 
