@@ -152,6 +152,7 @@ public class DocSourcesLdapUserDetailsMapper extends LdapUserDetailsMapper {
 				userInformation.setActivationDate(new Date());
 				userInformation.setLastLoginDate(userInformation.getCurrentLoginDate());
 				userInformation.setCurrentLoginDate(new Date());
+				userInformation.setForumNumberOfPost(new Long(0));
 				getUserInformationDAO().persist(userInformation);
 			}
 		} catch (PersistenceException persistenceException) {
