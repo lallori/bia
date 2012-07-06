@@ -4,9 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-				<div id="searchForm">
-					<form id="SearchForm" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
-                        <input id="searchText" name="searchText" type="text" value="Search...">
+				<div id="searchForumAllDiv">
+					<form id="SearchForumAll" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
+                        <input id="searchForumAllText" name="searchForumAllText" type="text" value="Search all forums...">
                         <input id="search" type="submit" title="Search" value="Search"/>
 					</form>
 				</div>
@@ -16,7 +16,7 @@
 
 				<script>
 					$j(document).ready(function() {
-						$j('#SearchForm').submit(function (){
+						$j('#SearchForumAll').submit(function (){
 							$j("#mainContent").load($j(this).attr("href"));
 							return false;
 						});

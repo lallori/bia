@@ -856,6 +856,7 @@ img.transparent {
     display: block;
     width: 390px;
     border:none;
+	margin:0;
 }
 
 .inputerrorsForm { /* Error Span messages */
@@ -5002,11 +5003,11 @@ h3.systemManagement {
 	margin:0;
 }
 
-#MyHistoryButtons {
+#MyHistoryButtons, #MarketListButtons {
     width: 723px;
 }
 
-#closeMyHistory {
+#closeMyHistory, #closeMarketList {
 	float:left;
 	cursor:pointer;
 	background-color:transparent;
@@ -5028,7 +5029,7 @@ h3.systemManagement {
     width: 127px;
 }
 
-#categoryHistory {
+#categoryHistory, #printAllItems {
     background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:right;
@@ -5039,7 +5040,7 @@ h3.systemManagement {
     width: 127px;
 }
 
-#eraseHistory {
+#eraseHistory, #eraseList {
     background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:left;
@@ -5060,7 +5061,7 @@ h3.systemManagement {
     width: 52px;
 }
 
-a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#categoryHistory:hover, #eraseHistory:hover {
+#MyHistoryButtons a:hover, #MarketListButtons a:hover  {
 	text-decoration:none;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
@@ -5139,12 +5140,3 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
 }
-
-
-
-
-	
-
-
-
-

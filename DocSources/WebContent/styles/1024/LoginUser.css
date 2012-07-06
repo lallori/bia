@@ -496,3 +496,18 @@ a {
 }
 
 
+/* -------------------------- Under Mainteinance ----------------------------- */
+
+#maintenance {
+	position: absolute;
+	margin: 300px 0 0 350px;
+	width: 290px;
+	text-align: center;
+	color:#666EA4;
+}
+
+#maintenance h1{
+	font-size:17px;
+	color:#666EA4;
+}
+

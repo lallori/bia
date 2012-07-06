@@ -66,9 +66,9 @@
 							<c:if test="${forum.option.canHaveTopics}">
 							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 							</c:if>
-						    <div id="searchThisForumFormDiv">
-						        <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
-						            <input id="text" name="text" type="text" value="Search this forum...">
+						    <div id="searchForumThisDiv">
+						        <form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
+						            <input id="searchForumThisText" name="searchForumThisText" type="text" value="Search this forum...">
 						            <input id="search" type="submit" title="Search" value="Search">
 						        </form>
 						    </div>
@@ -179,22 +179,32 @@
 						</div>
 					</c:if>
 				</c:if>
-						<div id="topicActions">
-							<c:if test="${forum.option.canHaveTopics}">
-							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
-							</c:if>
-						    <div id="jumpToDiv">
-						    	Jump to:
-						        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
-						            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
-						                <option value="" selected="selected">Select a Forum</option>
-						            </select>
-						            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
-						        </form>
-						    </div>
-						</div>
+				<div id="forumPaginate">
+				    <div id="jumpToDiv">
+				    	Jump to:
+				        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
+				            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
+				                <option value="" selected="selected">Select a Forum</option>
+				            </select>
+				            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
+				        </form>
+				    </div>
+					<span id="firstPaginateButton">First</span>
+				    <span id="previousPaginateButton">Previous</span>
+				    <span>
+				    	<span class="paginateActive">1</span>
+				        <span class="paginateButton">2</span>
+				        <span class="paginateButton">3</span>
+				        <span class="paginateButton">4</span>
+				        <span class="paginateButton">5</span>
+				    </span>
+				    <span id="nextPaginateButton">Next</span>
+				    <span id="lastPaginateButton">Last</span>
+				</div>
 
-						<a href="/DocSources/forum/index.html" class="returnTo"> Return to <span>Board Index</span></a>
+				<c:if test="${category.forumId != 1}">
+					<a href="/DocSources/forum/index.html" class="returnTo"> Return to <span>Board Index</span></a>
+				</c:if>
 
 					<script>
 						$j(document).ready(function() {
