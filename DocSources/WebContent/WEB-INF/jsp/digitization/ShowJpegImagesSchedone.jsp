@@ -32,11 +32,11 @@
 		</div>
         <div class="row">
 			<div class="item">Dimensione media immagini</div> 
-			<div class="value60">${schedone.dimMediaImmaginiJpeg }</div> 
+			<div class="value60">${schedone.dimMediaImmaginiJpeg} ${schedone.formatoMediaImmaginiJpeg}</div> 
 		</div>
         <div class="row">
 			<div class="item">Dimensione totale immagini</div> 
-			<div class="value60">${schedone.dimTotaleImmaginiJpeg}</div> 
+			<div class="value60">${schedone.dimTotaleImmaginiJpeg} ${schedone.formatoTotaleImmaginiJpeg}</div> 
 		</div>
 	</div>
 </div>

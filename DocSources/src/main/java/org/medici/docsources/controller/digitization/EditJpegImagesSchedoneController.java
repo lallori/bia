@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.digitization.EditJpegImagesSchedoneCommand;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.Schedone.Formato;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Jpeg Images Schedone".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/digitization/EditJpegImagesSchedone")
@@ -132,6 +134,8 @@ public class EditJpegImagesSchedoneController {
 			command.setNumeroTotaleImmaginiJpeg(schedone.getNumeroTotaleImmaginiJpeg());
 			command.setDimMediaImmaginiJpeg(schedone.getDimMediaImmaginiJpeg());
 			command.setDimTotaleImmaginiJpeg(schedone.getDimTotaleImmaginiJpeg());
+			command.setFormatoMediaImmaginiJpeg(schedone.getFormatoMediaImmaginiJpeg());
+			command.setFormatoTotaleImmaginiJpeg(schedone.getFormatoTotaleImmaginiJpeg());
 			if(schedone.getCompressioneJpeg() != null){
 				command.setCompressioneJpeg(schedone.getCompressioneJpeg());
 			}else{
@@ -143,6 +147,8 @@ public class EditJpegImagesSchedoneController {
 			command.setDimMediaImmaginiJpeg(null);
 			command.setDimTotaleImmaginiJpeg(null);
 			command.setCompressioneJpeg("1:1");
+			command.setFormatoMediaImmaginiJpeg(Formato.MB);
+			command.setFormatoTotaleImmaginiJpeg(Formato.GB);
 		}
 
 		return new ModelAndView("digitization/EditJpegImagesSchedone", model);

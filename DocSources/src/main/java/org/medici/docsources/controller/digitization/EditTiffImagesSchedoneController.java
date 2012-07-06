@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.digitization.EditTiffImagesSchedoneCommand;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.Schedone.Formato;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,6 +134,8 @@ public class EditTiffImagesSchedoneController {
 			command.setNumeroTotaleImmaginiTiff(schedone.getNumeroTotaleImmaginiTiff());
 			command.setDimMediaImmaginiTiff(schedone.getDimMediaImmaginiTiff());
 			command.setDimTotaleImmaginiTiff(schedone.getDimTotaleImmaginiTiff());
+			command.setFormatoMediaImmaginiTiff(schedone.getFormatoMediaImmaginiTiff());
+			command.setFormatoTotaleImmaginiTiff(schedone.getFormatoTotaleImmaginiTiff());
 			if(schedone.getCompressioneTiff() != null){
 				command.setCompressioneTiff(schedone.getCompressioneTiff());
 			}else{
@@ -144,6 +147,8 @@ public class EditTiffImagesSchedoneController {
 			command.setDimMediaImmaginiTiff(null);
 			command.setDimTotaleImmaginiTiff(null);
 			command.setCompressioneTiff("1:1");
+			command.setFormatoMediaImmaginiTiff(Formato.MB);
+			command.setFormatoTotaleImmaginiTiff(Formato.GB);
 		}
 
 		return new ModelAndView("digitization/EditTiffImagesSchedone", model);

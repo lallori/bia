@@ -49,7 +49,9 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,7 +105,7 @@ public class DigitizationServiceImpl implements DigitizationService {
 			}
 			
 			//TODO: Create volume record if not entered (BETA)
-			/*
+			
 			Volume volume = getVolumeDAO().findVolume(schedone.getVolNum(), schedone.getVolLetExt());
 			if(volume == null){
 				volume = new Volume();
@@ -113,8 +115,8 @@ public class DigitizationServiceImpl implements DigitizationService {
 				if(schedone.getSerie() != null){
 					volume.setSerieList(getSeriesListDAO().find(schedone.getSerie().getSeriesRefNum()));
 				}
-				//MD: ?
-				//volume.setResearcher(null);
+				
+				volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 				volume.setDateCreated(new Date());
 				volume.setVolTobeVetted(true);
 				volume.setVolTobeVettedDate(new Date());
@@ -160,7 +162,7 @@ public class DigitizationServiceImpl implements DigitizationService {
 				getVolumeDAO().persist(volume);
 				
 			}
-			*/
+			
 			getSchedoneDAO().persist(schedone);
 			
 			return schedone;
@@ -285,7 +287,7 @@ public class DigitizationServiceImpl implements DigitizationService {
 			schedoneToUpdate.setNumeroTotaleImmaginiPdf(schedone.getNumeroTotaleImmaginiPdf());
 			schedoneToUpdate.setCompressionePdf(schedone.getCompressionePdf());
 			schedoneToUpdate.setFormatoMediaImmaginiPdf(schedone.getFormatoMediaImmaginiPdf());
-			schedoneToUpdate.setFormatoTotaleImmaginiPDF(schedone.getFormatoTotaleImmaginiPDF());
+			schedoneToUpdate.setFormatoTotaleImmaginiPdf(schedone.getFormatoTotaleImmaginiPdf());
 			
 			getSchedoneDAO().merge(schedoneToUpdate);
 			

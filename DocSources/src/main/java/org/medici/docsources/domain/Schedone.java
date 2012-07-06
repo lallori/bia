@@ -168,7 +168,7 @@ public class Schedone {
 	private Formato formatoMediaImmaginiPdf;
 	@Column (name="\"FORMATO_TOTALE_IMMAGINI_PDF\"", length=2)
 	@Enumerated(EnumType.STRING)
-	private Formato formatoTotaleImmaginiPDF;
+	private Formato formatoTotaleImmaginiPdf;
 	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
@@ -870,17 +870,17 @@ public class Schedone {
 	}
 
 	/**
-	 * @return the formatoTotaleImmaginiPDF
+	 * @return the formatoTotaleImmaginiPdf
 	 */
-	public Formato getFormatoTotaleImmaginiPDF() {
-		return formatoTotaleImmaginiPDF;
+	public Formato getFormatoTotaleImmaginiPdf() {
+		return formatoTotaleImmaginiPdf;
 	}
 
 	/**
-	 * @param formatoTotaleImmaginiPDF the formatoTotaleImmaginiPDF to set
+	 * @param formatoTotaleImmaginiPdf the formatoTotaleImmaginiPDF to set
 	 */
-	public void setFormatoTotaleImmaginiPDF(Formato formatoTotaleImmaginiPDF) {
-		this.formatoTotaleImmaginiPDF = formatoTotaleImmaginiPDF;
+	public void setFormatoTotaleImmaginiPdf(Formato formatoTotaleImmaginiPdf) {
+		this.formatoTotaleImmaginiPdf = formatoTotaleImmaginiPdf;
 	}
 
 	/**

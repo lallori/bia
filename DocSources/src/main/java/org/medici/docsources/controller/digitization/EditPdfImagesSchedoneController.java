@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.digitization.EditPdfImagesSchedoneCommand;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.Schedone.Formato;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ public class EditPdfImagesSchedoneController {
 			schedone.setNumeroTotaleImmaginiPdf(command.getNumeroTotaleImmaginiPdf());
 			schedone.setCompressionePdf(command.getCompressionePdf());
 			schedone.setFormatoMediaImmaginiPdf(command.getFormatoMediaImmaginiPdf());
-			schedone.setFormatoTotaleImmaginiPDF(command.getFormatoTotaleImmaginiPdf());
+			schedone.setFormatoTotaleImmaginiPdf(command.getFormatoTotaleImmaginiPdf());
 
 			try {
 				schedone = getDigitizationService().editPdfImagesSchedone(schedone);
@@ -133,6 +134,8 @@ public class EditPdfImagesSchedoneController {
 			command.setNumeroTotaleImmaginiPdf(schedone.getNumeroTotaleImmaginiPdf());
 			command.setDimMediaImmaginiPdf(schedone.getDimMediaImmaginiPdf());
 			command.setDimTotaleImmaginiPdf(schedone.getDimTotaleImmaginiPdf());
+			command.setFormatoMediaImmaginiPdf(schedone.getFormatoMediaImmaginiPdf());
+			command.setFormatoTotaleImmaginiPdf(schedone.getFormatoTotaleImmaginiPdf());
 			if(schedone.getCompressionePdf() != null){
 				command.setCompressionePdf(schedone.getCompressionePdf());
 			}else{
@@ -144,6 +147,8 @@ public class EditPdfImagesSchedoneController {
 			command.setDimMediaImmaginiPdf(null);
 			command.setDimTotaleImmaginiPdf(null);
 			command.setCompressionePdf("1:1");
+			command.setFormatoMediaImmaginiPdf(Formato.MB);
+			command.setFormatoTotaleImmaginiPdf(Formato.GB);
 		}
 
 		return new ModelAndView("digitization/EditPdfImagesSchedone", model);

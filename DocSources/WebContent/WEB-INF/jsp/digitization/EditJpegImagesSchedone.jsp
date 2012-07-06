@@ -79,6 +79,8 @@
 	    	<input id="close" type="submit" value="Close" title="Do not save changes" />
 	        <input id="save" class="save" type="submit" value="Save" />
 	    </div>
+	    
+	    <input type="hidden" value="" id="modify" />
 	
 	    </fieldset>
 	</form:form>
@@ -93,9 +95,15 @@
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditPdfImagesSchedone").css('visibility', 'hidden');
 	        
-			$j("#formatoMediaImmagini option:eq(0)").attr('selected', 'selected');
+			$j("#EditJpegImagesForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
+				return false;
+			});
 	        
-	        $j("#formatoTotaleImmagini option:eq(2)").attr('selected', 'selected');
+	        $j('.helpIcon').tooltip({
+				track: true,
+				fade: 350 
+			});
 			
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -105,7 +113,15 @@
 			 $j('#close').click(function() {
 		        	if($j("#modify").val() == 1){
 		        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-						$j('#EditDetailsSchedoneForm').block({ message: $j('#question') }); 
+						$j('#EditJpegImagesForm').block({ message: $j('#question'),
+							css: { 
+								border: 'none', 
+								padding: '5px',
+								boxShadow: '1px 1px 10px #666',
+								'-webkit-box-shadow': '1px 1px 10px #666'
+								} ,
+								overlayCSS: { backgroundColor: '#999' }	
+						}); 
 						return false;
 		        	}else{
 		        		$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
@@ -116,24 +132,15 @@
 		        	}	        		
 			});
 	        
-			$j("#EditDetailsSchedoneForm").submit(function (){
+			$j("#EditJpegImagesForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditDetailsSchedoneDiv").html(html);
+					$j("#body_left").html(html);
 				}});
 				return false;
 			});
 		});
 	</script>
 
-	<script type="text/javascript">
-		$j(function() {
-			$j('.helpIcon').tooltip({
-				track: true,
-				fade: 350 
-			});
-		});
-	</script>
-	
 	<div id="question" style="display:none; cursor: default"> 
 		<h1>discard changes?</h1> 
 		<input type="button" id="yes" value="Yes" /> 
@@ -146,7 +153,7 @@
 				$j.unblockUI();
 				$j(".blockUI").fadeOut("slow");
 				$j("#question").hide();
-				$j("#EditDetailsSchedoneDiv").append($j("#question"));
+				$j("#EditJpegImagesSchedoneDiv").append($j("#question"));
 				$j(".blockUI").remove();
 				return false; 
 			}); 
