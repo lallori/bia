@@ -850,8 +850,12 @@ img.transparent {
 	-moz-border-radius: 4px;
 }
 
-#EditChildrenPersonDiv .inputerrors {
-    float: none;
+#EditChildrenPersonDiv .inputerrors,  #EditDetailsPersonForm span.inputerrors {
+    float:none;
+    text-align: left;
+    display: block;
+    width: 390px;
+    border:none;
 }
 
 .inputerrorsForm { /* Error Span messages */
