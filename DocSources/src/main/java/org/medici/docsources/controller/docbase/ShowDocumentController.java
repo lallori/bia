@@ -29,11 +29,12 @@ package org.medici.docsources.controller.docbase;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -86,6 +87,9 @@ public class ShowDocumentController {
 			try {
 				document = getDocBaseService().findDocument(command.getEntryId());
 				historyNavigator = getDocBaseService().getHistoryNavigator(document);
+				
+				List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
+				model.put("topicsDocument", topicsDocument);
 
 				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 				model.put("image", image);

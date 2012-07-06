@@ -28,10 +28,12 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.EditTopicsDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Topics Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/docbase/EditTopicsDocument")
@@ -79,6 +82,9 @@ public class EditTopicsDocumentController {
 			try {
 				Document document = getDocBaseService().findDocument(command.getEntryId());
 				model.put("document", document);
+				
+				List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
+				model.put("topicsDocument", topicsDocument);
 
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);

@@ -20,7 +20,7 @@
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TOPICS</b></legend>
-		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
+		<c:forEach items="${topicsDocument}" var="currentTopicAndPlace">
 			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
 				<c:param name="entryId" value="${document.entryId}" />
 				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />

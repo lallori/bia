@@ -20,7 +20,7 @@
 		</security:authorize>
 		</div>
 		<div class="list">
-		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
+		<c:forEach items="${topicsDocument}" var="currentTopicAndPlace">
 			<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.do">
 				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
 				<c:param name="topicTitle" value="${currentTopicAndPlace.topic.topicTitle}" />

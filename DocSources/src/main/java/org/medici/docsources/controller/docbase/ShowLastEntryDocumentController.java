@@ -28,10 +28,12 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -46,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show last entry document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/docbase/ShowLastEntryDocument")
@@ -68,6 +71,9 @@ public class ShowLastEntryDocumentController {
 			Document document = getDocBaseService().findLastEntryDocument();
 			if (document != null) {
 				model.put("document", document);
+				
+				List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
+				model.put("topicsDocument", topicsDocument);
 	
 				HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
 				model.put("historyNavigator", historyNavigator);

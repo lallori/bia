@@ -82,7 +82,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from EplToLink where document.entryId=:entryId");
+		Query query = getEntityManager().createQuery("from EplToLink where document.entryId=:entryId ORDER BY topic.topicTitle");
 		query.setParameter("entryId", entryId);
 
 		return query.getResultList();
