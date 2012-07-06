@@ -68,6 +68,12 @@
 		$j("#buttonPrint").click(function() {
 			window.open($j(this).attr("href"),'PRINT VOLUME','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 		});
+		
+		$j("#buttonMarkedList").click(function() {	
+			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
+			return false;
+		});
+		
 		$j("#menuActions").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "VOLUME ACTIONS MENU", width: 750, height: 190});return false;
 		});	

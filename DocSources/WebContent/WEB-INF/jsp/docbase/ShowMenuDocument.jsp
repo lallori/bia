@@ -82,6 +82,12 @@
 			window.open($j(this).attr("href"),'SHARE DOCUMENT','width=510,height=550,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 			return false;
 		});
+		
+		$j("#buttonMarkedList").click(function() {	
+			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
+			return false;
+		});
+		
 		$j("#buttonPrint").click(function() {
 			window.open($j(this).attr("href"),'PRINT DOCUMENT','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 		});
