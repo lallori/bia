@@ -70,8 +70,9 @@ public class ShowConfirmCreateDocumentForumController {
 			Document document = new Document(command.getEntryId());
 			Forum forum = getDocBaseService().addNewDocumentForum(document);
 			model.put("forum", forum);
-		}catch (ApplicationThrowable applicationThrowable) {
-			
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/CreatedDocumentForumModalWindow", model);
 		}
 
 		return new ModelAndView("docbase/CreatedDocumentForumModalWindow", model);

@@ -80,7 +80,8 @@ public class ShareVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShareVolume", model);
 			}
 		} else {

@@ -103,7 +103,8 @@ public class ShowPersonFromHistoryController {
 				model.put("docsRelated", docsRelated);
 				
 				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(command.getIdUserHistory()));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPerson", model);
 			}
 		} else {

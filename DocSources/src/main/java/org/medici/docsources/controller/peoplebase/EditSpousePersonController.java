@@ -114,7 +114,8 @@ public class EditSpousePersonController {
 					getPeopleBaseService().editMarriagePerson(marriage);
 				}
 
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditSpousePerson", model);
 			}
 
@@ -155,6 +156,7 @@ public class EditSpousePersonController {
 					command.setEndYear(null);
 					command.setMarriageTerm(null);
 				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/EditSpousePerson", model);
 				}
 			} else {
@@ -175,6 +177,7 @@ public class EditSpousePersonController {
 						command.setGender("F");
 					}
 				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/EditSpousePerson", model);
 				}
 			}
@@ -183,8 +186,6 @@ public class EditSpousePersonController {
 			model.put("marriageTerms", Marriage.MarriageTerm.values());
 
 			return new ModelAndView("peoplebase/EditSpousePerson", model);
-		} else {
-			// On Name creation, every field is null
 		}
 
 		return new ModelAndView("peoplebase/EditSpousePerson", model);

@@ -108,12 +108,11 @@ public class EditUserProfileController {
 			user.setTitle(command.getTitle());
 			//MD: I don't know if the location is the city
 			user.setCity(command.getLocation());
-			System.out.println(user.getFirstName());
 			
 			try{
 				getUserService().updateUser(user);
-			}catch(ApplicationThrowable ath){
-				
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 			
 			model.put("userProfile", user);
@@ -135,7 +134,8 @@ public class EditUserProfileController {
 		User user = null;
 		try {
 			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			user = new User();
 		}
 		command.setAccount(user.getAccount());

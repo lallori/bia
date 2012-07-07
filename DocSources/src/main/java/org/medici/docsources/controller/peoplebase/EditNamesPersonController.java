@@ -122,7 +122,8 @@ public class EditNamesPersonController {
 	
 			try {
 				people = getPeopleBaseService().findPerson(command.getPersonId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPerson", model);
 			}
 	

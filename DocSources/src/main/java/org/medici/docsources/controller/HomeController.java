@@ -75,7 +75,8 @@ public class HomeController {
 
 			HashMap<String, Long> archiveStatistics = getUserService().getArchiveStatisticsFromLastLogin(userInformation);
 			httpSession.setAttribute("archiveStatistics", archiveStatistics);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/Welcome", model);
 		}
 

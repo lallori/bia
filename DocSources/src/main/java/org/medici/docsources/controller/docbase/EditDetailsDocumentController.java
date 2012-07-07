@@ -157,7 +157,8 @@ public class EditDetailsDocumentController {
 					
 					return new ModelAndView("docbase/ShowDocument", model);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 		}
@@ -183,7 +184,8 @@ public class EditDetailsDocumentController {
 		try {
 			months = getDocBaseService().getMonths();
 			model.put("months", months);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowDocument", model);
 		}
 
@@ -192,7 +194,8 @@ public class EditDetailsDocumentController {
 
 			try {
 				document = getDocBaseService().findDocument(command.getEntryId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsDocument", model);
 			} finally {
 				model.put("document", document);

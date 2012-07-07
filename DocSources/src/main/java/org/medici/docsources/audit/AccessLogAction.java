@@ -122,8 +122,11 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 						stringBuilderErrors.append(errors.get(i).toString());
 					}
 					accessLog.setErrors(stringBuilderErrors.toString());
-				} else {
 				}
+			}
+			if (modelAndView.getModelMap().get("applicationThrowable") != null) {
+				ApplicationThrowable applicationThrowable = (ApplicationThrowable) modelAndView.getModelMap().get("applicationThrowable");
+				accessLog.setErrors(applicationThrowable.getMessage());
 			}
 		}
 

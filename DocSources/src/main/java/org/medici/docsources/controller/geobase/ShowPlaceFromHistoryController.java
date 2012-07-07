@@ -106,7 +106,8 @@ public class ShowPlaceFromHistoryController {
 					model.put("linkGoogleMaps", null);
 				
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(command.getIdUserHistory()));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPlace", model);
 			}
 		}else{
@@ -118,7 +119,8 @@ public class ShowPlaceFromHistoryController {
 		try{
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/ShowPlace", model);
 		}
 

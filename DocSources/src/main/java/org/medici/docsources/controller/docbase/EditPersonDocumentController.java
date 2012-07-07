@@ -110,7 +110,8 @@ public class EditPersonDocumentController {
 					getDocBaseService().editPersonDocument(epLink);
 				}
 
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowDocument", model);
 			}
 
@@ -150,6 +151,7 @@ public class EditPersonDocumentController {
 					command.setAssignUnsure(epLink.getAssignUnsure());
 					command.setPortrait(epLink.getPortrait());
 				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/EditPersonDocument", model);
 				}
 			}

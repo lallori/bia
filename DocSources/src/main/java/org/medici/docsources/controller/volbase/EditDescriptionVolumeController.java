@@ -116,7 +116,8 @@ public class EditDescriptionVolumeController {
 				volume = getVolBaseService().editDescriptionVolume(volume);
 				model.put("volume", volume);
 				return new ModelAndView("volbase/ShowDescriptionVolume", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);
 			}
 			
@@ -139,7 +140,8 @@ public class EditDescriptionVolumeController {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
 				model.put("volume", volume);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
 

@@ -92,14 +92,16 @@ public class ComparePlaceController {
 			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
 			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
 			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/ComparePlace", model);
 		}
 		
 		try{
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/ComparePlace", model);
 		}
 		model.put("place", place);

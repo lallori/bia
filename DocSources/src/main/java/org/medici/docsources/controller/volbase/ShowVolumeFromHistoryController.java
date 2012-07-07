@@ -89,7 +89,8 @@ public class ShowVolumeFromHistoryController {
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(command.getIdUserHistory()));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);
 			}
 		} else {

@@ -164,7 +164,8 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				model.put("document", document);
 				model.put("image", image);
 				model.put("historyNavigator", historyNavigator);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
 			
@@ -234,7 +235,8 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				command.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
 				command.setRecipNotes(document.getRecipNotes());
 
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
 

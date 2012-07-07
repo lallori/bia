@@ -44,14 +44,14 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Controller for action "Place: Edit External Links".
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/geobase/EditExternalLinksPlace")
 public class EditExternalLinksPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-	
 
 	/**
 	 * @return the geoBaseService
@@ -61,7 +61,8 @@ public class EditExternalLinksPlaceController {
 	}
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * @param geoBaseService
+	 *            the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
@@ -75,15 +76,16 @@ public class EditExternalLinksPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditExternalLinksPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		if((command != null) && (command.getPlaceAllId() > 0)){
-			try{
+
+		if ((command != null) && (command.getPlaceAllId() > 0)) {
+			try {
 				Place place = getGeoBaseService().findPlace(command.getPlaceAllId());
 				model.put("place", place);
-			}catch(ApplicationThrowable th){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditExternalLinksPlace", model);
 			}
-		}else{
+		} else {
 			model.put("place", new Place(0));
 		}
 

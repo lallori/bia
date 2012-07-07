@@ -187,7 +187,8 @@ public class EditDetailsPersonController {
 
 					return new ModelAndView("peoplebase/ShowPerson", model);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPerson", model);
 			}
 		}
@@ -217,7 +218,8 @@ public class EditDetailsPersonController {
 
 			// We need genders enumeration to populate relative combo-box
 			model.put("genders", People.Gender.values());
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditDetailsPerson", model);
 		}
 
@@ -227,7 +229,8 @@ public class EditDetailsPersonController {
 	
 			try {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPerson", model);
 			}
 	

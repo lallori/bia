@@ -74,8 +74,8 @@ public class ShowTopicDescriptionController {
 			// Details
 			TopicList topic = getDocBaseService().findTopic(command.getTopicId());
 			model.put("topic", topic);
-	
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowTopicDescription", model);
 		}
 

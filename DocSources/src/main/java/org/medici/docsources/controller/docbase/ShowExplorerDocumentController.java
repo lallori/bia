@@ -99,7 +99,9 @@ public class ShowExplorerDocumentController {
 				documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 	
 				model.put("documentExplorer", documentExplorer);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ShowExplorerDocument", model);
 			}
 	
 			if (BooleanUtils.isTrue(command.getModalWindow())) {

@@ -109,8 +109,8 @@ public class LockUserController {
 
 			try {
 				getUserService().lockUser(user);
-			} catch (ApplicationThrowable aex) {
-
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
 			return new ModelAndView("responseOK", model);

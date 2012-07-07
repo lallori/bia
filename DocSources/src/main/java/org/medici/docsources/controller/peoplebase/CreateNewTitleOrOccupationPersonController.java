@@ -101,7 +101,8 @@ public class CreateNewTitleOrOccupationPersonController {
 			
 			try{
 				getPeopleBaseService().addNewTitleOccupation(newTitleOcc);
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/CreateNewTitleOrOccupationPerson", model);
 			}
 			

@@ -64,7 +64,8 @@ public class ShowMyHistoryReportController {
 		HashMap<String, List<?>> historyReport = null;
 		try {
 			historyReport = getUserService().getMyHistoryReport(5);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			historyReport = new HashMap<String, List<?>>(5);
 		}
 		

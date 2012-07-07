@@ -155,7 +155,8 @@ public class EditDetailsPlaceController {
 					
 					return new ModelAndView("geobase/ShowPlace", model);
 				}
-			}catch(ApplicationThrowable th){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPlace", model);
 			}
 
@@ -183,7 +184,8 @@ public class EditDetailsPlaceController {
 		try {
 			placeTypes = getGeoBaseService().findPlaceTypes();
 			model.put("placeTypes", placeTypes);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditDetailsPlace", model);
 		}
 
@@ -192,7 +194,8 @@ public class EditDetailsPlaceController {
 	
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPlace", model);
 			}
 	
@@ -209,12 +212,13 @@ public class EditDetailsPlaceController {
 			// We need to expose dateCreated field because it must be rendered on view
 			command.setDateEntered(new Date());
 			command.setPlaceAllId(0);
-			try{
+			try {
 				if(!command.getPlSource().equals("TGN")){
 					Integer newGeogKey = getGeoBaseService().findNewGeogKey(command.getPlSource());
 					command.setGeogKey(newGeogKey);
 				}
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsPlace", model);
 			}
 		}

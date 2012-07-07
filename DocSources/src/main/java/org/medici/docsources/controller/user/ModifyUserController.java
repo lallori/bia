@@ -106,6 +106,7 @@ public class ModifyUserController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
 
 			User user = new User();
 			try {
@@ -116,11 +117,11 @@ public class ModifyUserController {
 
 			try {
 				getUserService().updateUser(user);
-			} catch (ApplicationThrowable aex) {
-
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
-			return new ModelAndView("responseOK");
+			return new ModelAndView("responseOK", model);
 		}
 	}
 

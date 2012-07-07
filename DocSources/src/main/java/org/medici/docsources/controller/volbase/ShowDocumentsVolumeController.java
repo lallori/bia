@@ -85,7 +85,8 @@ public class ShowDocumentsVolumeController {
 				model.put("volNum", volume.getVolNum());
 				model.put("summaryId", volume.getSummaryId());
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowDocumentsVolume", model);
 			}
 		}

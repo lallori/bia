@@ -98,7 +98,8 @@ public class ShowTopicsPlaceController {
 				model.put("placeName", place.getPlaceName());
 				model.put("placeAllId", place.getPlaceAllId());
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowTopicsPlace", model);
 			}
 		}

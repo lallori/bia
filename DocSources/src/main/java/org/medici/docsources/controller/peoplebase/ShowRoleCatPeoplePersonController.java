@@ -98,7 +98,8 @@ public class ShowRoleCatPeoplePersonController {
 				
 				model.put("roleCatId", roleCat.getRoleCatId());
 				model.put("roleCat", roleCat.getRoleCatMinor());
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowRoleCatPeoplePerson", model);
 			}
 		}

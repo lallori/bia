@@ -98,7 +98,8 @@ public class EditResearchNotesPersonController {
 			try {
 				person = getPeopleBaseService().editResearchNotesPerson(person);
 				model.put("person", person);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowPerson", model);
 			}
 

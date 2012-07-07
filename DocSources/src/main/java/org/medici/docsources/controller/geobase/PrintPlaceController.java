@@ -49,7 +49,8 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Controller for action "Print place".
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/geobase/PrintPlace")
@@ -85,8 +86,8 @@ public class PrintPlaceController {
 
 		Place place = new Place();
 		List<Place> placeNames;
-		
-		if(command.getPlaceAllId() > 0){
+
+		if (command.getPlaceAllId() > 0) {
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
@@ -97,24 +98,26 @@ public class PrintPlaceController {
 				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
-				
-				if(place.getPlaceGeographicCoordinates() != null)
+
+				if (place.getPlaceGeographicCoordinates() != null)
 					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
 				else
 					model.put("linkGoogleMaps", null);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/PrintPlace", model);
 			}
-		}else{
+		} else {
 			place.setPlaceAllId(0);
 			place.setPlSource(command.getPlSource());
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
-		
-		try{
+
+		try {
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/PrintPlace", model);
 		}
 		model.put("place", place);

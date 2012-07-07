@@ -79,8 +79,8 @@ public class ShowConfirmCreatePersonForumController {
 			People person = new People(command.getPersonId());
 			Forum forum = getPeopleBaseService().addNewPersonForum(person);
 			model.put("forum", forum);
-		}catch (ApplicationThrowable applicationThrowable) {
-			
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
 		return new ModelAndView("peoplebase/CreatedPersonForumModalWindow", model);

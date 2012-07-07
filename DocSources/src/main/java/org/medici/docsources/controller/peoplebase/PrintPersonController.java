@@ -94,7 +94,8 @@ public class PrintPersonController {
 				model.put("marriages", marriages);
 				List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
 				model.put("children", children);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/PrintPerson", model);
 			}
 		} else {

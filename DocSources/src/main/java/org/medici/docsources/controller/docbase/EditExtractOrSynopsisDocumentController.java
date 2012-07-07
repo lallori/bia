@@ -111,7 +111,8 @@ public class EditExtractOrSynopsisDocumentController {
 
 				model.put("document", document);
 				return new ModelAndView("docbase/ShowExtractOrSynopsisDocument", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}
 		}

@@ -98,7 +98,8 @@ public class ShowDeathPeoplePlaceController {
 				model.put("placeNameFull", place.getPlaceNameFull());
 				model.put("placeAllId", place.getPlaceAllId());
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowDeathPeoplePlace", model);
 			}
 		}

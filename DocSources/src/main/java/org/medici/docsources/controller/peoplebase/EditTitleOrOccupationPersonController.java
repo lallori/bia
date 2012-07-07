@@ -117,7 +117,8 @@ public class EditTitleOrOccupationPersonController {
 				} else {
 					getPeopleBaseService().editTitleOrOccupationPerson(poLink);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowPerson", model);
 			}
 
@@ -147,8 +148,9 @@ public class EditTitleOrOccupationPersonController {
 			try {
 				List<Month> months = getPeopleBaseService().getMonths();
 				model.put("months", months);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowDocument", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/EditTopicDocument", model);
 			}
 
 			if (command.getPrfLinkId().equals(0)) {
@@ -191,6 +193,7 @@ public class EditTitleOrOccupationPersonController {
 
 					return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);
 				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/EditTopicDocument", model);
 				}
 			}

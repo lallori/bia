@@ -94,7 +94,9 @@ public class SaveUserSearchFilter {
 				} else {
 					getSearchService().replaceSearchFilter(searchFilter);
 				}
-			} catch(ApplicationThrowable applicationThrowable) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/SaveSearchFilterOK",model);
 			}
 			return new ModelAndView("response/SaveSearchFilterOK",model);
 		}

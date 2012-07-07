@@ -133,7 +133,8 @@ public class ShowRecipientDocumentsPersonController {
 				session.setAttribute("searchFilterMap", searchFilterMap);
 				
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowRecipientDocumentsPerson", model);
 			}
 		}

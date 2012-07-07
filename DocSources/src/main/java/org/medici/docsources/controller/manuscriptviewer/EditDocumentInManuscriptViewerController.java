@@ -86,7 +86,8 @@ public class EditDocumentInManuscriptViewerController {
 			Document document = getDocBaseService().findDocument(command.getEntryId());
 			model.put("document", document);
 			model.put("documentExplorer", documentExplorer);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
 		

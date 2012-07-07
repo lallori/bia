@@ -100,7 +100,8 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 				
 				model.put("titleOccId", titleOcc.getTitleOccId());
 				model.put("titleOcc", titleOcc.getTitleOcc());
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowTitleOrOccupationsPeoplePerson", model);
 			}
 			

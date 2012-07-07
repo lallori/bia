@@ -85,7 +85,8 @@ public class CreateUserController {
 			try {
 				getUserService().registerUser(user);
 				model.put("user", getUserService().findUser(user.getAccount()));
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
 			return new ModelAndView("responseOK",model);

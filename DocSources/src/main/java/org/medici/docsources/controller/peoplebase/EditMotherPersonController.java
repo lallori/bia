@@ -106,7 +106,8 @@ public class EditMotherPersonController {
 					parent = getPeopleBaseService().editMotherPerson(parent);
 				}
 				model.put("person", parent.getChild());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditFatherPerson", model);
 			}
 

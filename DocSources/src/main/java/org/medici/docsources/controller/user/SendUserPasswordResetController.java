@@ -152,7 +152,8 @@ public class SendUserPasswordResetController {
 				user = getUserService().findUser(user);
 				getUserService().addPasswordChangeRequest(user, command.getRemoteAddress());
 				model.put("user", user);
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
 			return new ModelAndView("user/SendUserPasswordResetSuccess", model);

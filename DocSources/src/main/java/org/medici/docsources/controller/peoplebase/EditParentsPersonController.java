@@ -131,7 +131,8 @@ public class EditParentsPersonController {
 				}
 				
 				model.put("person", parentFather.getChild());
-			}catch(ApplicationThrowable th){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditParentsPerson", model);
 			}
 			
@@ -160,7 +161,8 @@ public class EditParentsPersonController {
 		try {
 			months = getPeopleBaseService().getMonths();
 			model.put("months", months);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditParentsPerson", model);
 		}
 		
@@ -221,7 +223,8 @@ public class EditParentsPersonController {
 					command.setMotherRecordId(0);
 				}
 
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditParentsPerson", model);
 			}
 

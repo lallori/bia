@@ -69,7 +69,8 @@ public class ShowSummaryVolumeDialogController {
 			model.put("volumeSummary", volumeSummary);
 			
 			return new ModelAndView("mview/ShowSummaryVolumeDialog", model);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowSummaryVolumeDialog", model);
 		}
 	}

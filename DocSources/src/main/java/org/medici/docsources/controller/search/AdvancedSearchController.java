@@ -98,7 +98,8 @@ public class AdvancedSearchController {
 		try {
 			months = getSearchService().getMonths();
 			model.put("months", months);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/AdvancedSearchDocuments", model);
 		}
 
@@ -130,7 +131,8 @@ public class AdvancedSearchController {
 				searchFilterMap.put(command.getSearchUUID(), searchFilter);
 				// we update information in session
 				session.setAttribute("searchFilterMap", searchFilterMap);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/AdvancedSearch", model);
 			}
 		} else if ((command.getIdSearchFilter()!=null) && (command.getIdSearchFilter()>0)){
@@ -176,7 +178,8 @@ public class AdvancedSearchController {
 			try{
 				topicsList = getSearchService().getTopicsList();
 				model.put("topicsList", topicsList);
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/AdvancedSearchDocuments", model);
 			}			
 			return new ModelAndView("search/AdvancedSearchDocuments", model);
@@ -186,7 +189,8 @@ public class AdvancedSearchController {
 			try{
 				placeTypes = getSearchService().getPlaceTypes();
 				model.put("placeTypes", placeTypes);
-			}catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/AdvancedSearchPlaces", model);
 			}
 			return new ModelAndView("search/AdvancedSearchPlaces", model);

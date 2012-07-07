@@ -28,6 +28,8 @@
 package org.medici.docsources.controller.user;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -102,13 +104,14 @@ public class ShowUserPhotoController {
 			 *
 			 **/
 		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+
 			try {
 				User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
-				ImageIO.write(user.getPhoto(), "PNG",
-						response.getOutputStream());
-			} catch (ApplicationThrowable ath) {
-
+				ImageIO.write(user.getPhoto(), "PNG", response.getOutputStream());
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			} catch (IOException aex) {
 				aex.printStackTrace();
 			}

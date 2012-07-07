@@ -74,7 +74,8 @@ public class ShowUserProfileController {
 		User user = null;
 		try {
 			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			user = new User();
 		}
 		model.put("userProfile", user);		

@@ -124,7 +124,8 @@ public class EditUserController {
 				}
 				command.setNewAccount(user.getAccount());
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditUser", model);
 			}
 		} else {
@@ -178,7 +179,8 @@ public class EditUserController {
 				model.put("userInformation", userInformation);
 				
 				return new ModelAndView("admin/ShowUser", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditUser", model);
 			}
 		}

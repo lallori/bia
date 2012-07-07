@@ -103,7 +103,8 @@ public class ShowManuscriptViewerController {
 			} 
 
 			model.put("image", image);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
 		if (command.getFlashVersion())

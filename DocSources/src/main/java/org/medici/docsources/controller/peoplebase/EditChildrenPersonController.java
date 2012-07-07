@@ -97,7 +97,8 @@ public class EditChildrenPersonController {
 				model.put("person", person);
 				List<People> children = getPeopleBaseService().findChildrenPerson(command.getPersonId());
 				model.put("children", children);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditChildrenPerson", model);
 			}
 

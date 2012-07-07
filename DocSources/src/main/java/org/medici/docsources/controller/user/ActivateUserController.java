@@ -185,7 +185,8 @@ public class ActivateUserController {
 			model.put("command", command);
 			try {
 				getUserService().activateUser(command.getUuid());
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}			
 
 			return new ModelAndView("user/ActivateUserSuccess", model);

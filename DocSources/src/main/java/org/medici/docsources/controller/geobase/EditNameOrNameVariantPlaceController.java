@@ -51,7 +51,8 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Controller for action "Place: Edit Name or Name Variant".
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/geobase/EditNameOrNameVariantPlace")
@@ -82,35 +83,37 @@ public class EditNameOrNameVariantPlaceController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditNameOrNameVariantPlaceCommand command, BindingResult result) {
 		getValidator().validate(command, result);
-		
+
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
+
 			Place place = new Place(command.getCurrentPlaceAllId());
 			place.setResearcher(command.getResearcher());
 			place.setGeogKey(command.getGeogKey());
 			place.setPlaceName(command.getPlName());
 			place.setPrefFlag("V");
-			try{
-				//Copy some propriety from the principal place
+			try {
+				// Copy some propriety from the principal place
 				Place principalPlace = getGeoBaseService().findPlace(command.getPlaceAllId());
 				place.setPlType(principalPlace.getPlType());
 				place.setPlParent(principalPlace.getPlParent());
 				place.setPlSource(principalPlace.getPlSource());
 				place.setParentPlace(principalPlace.getParentPlace());
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
 			}
-			
-			try{
-				if(command.getCurrentPlaceAllId().equals(0)){
+
+			try {
+				if (command.getCurrentPlaceAllId().equals(0)) {
 					place = getGeoBaseService().addNewPlace(place);
-				}else{
+				} else {
 					place = getGeoBaseService().editDetailsPlace(place);
 				}
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
 			}
 
@@ -120,7 +123,8 @@ public class EditNameOrNameVariantPlaceController {
 	}
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * @param geoBaseService
+	 *            the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
@@ -134,28 +138,28 @@ public class EditNameOrNameVariantPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNameOrNameVariantPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		if((command != null) && (command.getPlaceAllId() > 0)){
-			if(command.getCurrentPlaceAllId().equals(0)){
+
+		if ((command != null) && (command.getPlaceAllId() > 0)) {
+			if (command.getCurrentPlaceAllId().equals(0)) {
 				command.setPlName(null);
-			}else{
-				try{
+			} else {
+				try {
 					Place place = getGeoBaseService().findPlace(command.getCurrentPlaceAllId());
-				
+
 					command.setPlName(place.getPlaceName());
-				}catch(ApplicationThrowable ath){
-					return new ModelAndView("error/EditNameOrNameVariantPlace" , model);
+				} catch (ApplicationThrowable ath) {
+					return new ModelAndView("error/EditNameOrNameVariantPlace", model);
 				}
 			}
-			try{
+			try {
 				Place parentPlace = getGeoBaseService().findPlace(command.getPlaceAllId());
 				command.setPlType(parentPlace.getPlType());
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
 			}
-			
+
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			
+
 			return new ModelAndView("geobase/EditNameOrNameVariantPlace", model);
 		}
 		return new ModelAndView("geobase/EditNameOrNameVariantPlace", model);

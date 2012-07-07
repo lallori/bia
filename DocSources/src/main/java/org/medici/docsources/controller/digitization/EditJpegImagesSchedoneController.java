@@ -102,7 +102,8 @@ public class EditJpegImagesSchedoneController {
 				model.put("schedone", schedone);
 
 				return new ModelAndView("digitization/ShowSchedone", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsSchedone", model);
 			}
 		}
@@ -124,7 +125,8 @@ public class EditJpegImagesSchedoneController {
 				schedone = getDigitizationService().findSchedone(command.getSchedoneId());
 				
 				model.put("formato", Schedone.Formato.values());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditJpegImagesSchedone", model);
 			} finally {
 				model.put("schedone", schedone);

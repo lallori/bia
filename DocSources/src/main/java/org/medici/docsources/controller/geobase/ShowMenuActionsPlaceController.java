@@ -78,7 +78,8 @@ public class ShowMenuActionsPlaceController {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 				
 				model.put("place", place);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowMenuActionsPlace", model);
 			}
 		}

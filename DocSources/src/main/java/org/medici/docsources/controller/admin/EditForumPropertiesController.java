@@ -120,7 +120,8 @@ public class EditForumPropertiesController {
 
 				// We need to refresh ApplicationPropertyManager...
 				ApplicationPropertyManager.refreshProperties();
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 

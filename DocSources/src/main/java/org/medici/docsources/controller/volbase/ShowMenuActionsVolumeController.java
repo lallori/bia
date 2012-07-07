@@ -79,7 +79,8 @@ public class ShowMenuActionsVolumeController {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
 				
 				model.put("volume", volume);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowMenuActionsVolume", model);
 			}
 		}

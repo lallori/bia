@@ -132,7 +132,8 @@ public class ShowDocumentsPersonController {
 				searchFilterMap.put(searchUUID, searchFilter);
 				session.setAttribute("searchFilterMap", searchFilterMap);
 				
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowDocumentsPerson", model);
 			}
 		}

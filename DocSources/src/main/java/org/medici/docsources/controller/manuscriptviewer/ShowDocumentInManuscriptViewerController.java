@@ -88,7 +88,8 @@ public class ShowDocumentInManuscriptViewerController {
 			}
 
 			model.put("documentExplorer", documentExplorer);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 		
 		return new ModelAndView("mview/ShowDocumentInManuscriptViewerHtml", model);

@@ -108,7 +108,8 @@ public class EditFactCheckDocumentController {
 
 				model.put("document", document);
 				return new ModelAndView("docbase/ShowFactCheckDocument", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);
 			}
 		}
@@ -134,7 +135,8 @@ public class EditFactCheckDocumentController {
 
 			try {
 				factChecks = getDocBaseService().findFactChecksDocument(command.getEntryId());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 

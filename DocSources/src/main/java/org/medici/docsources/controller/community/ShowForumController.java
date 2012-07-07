@@ -165,7 +165,8 @@ public class ShowForumController {
 				HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 				model.put("statisticsHashMap", statisticsHashMap);
 			}
-		}catch (ApplicationThrowable applicationThrowable) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowForum", model);
 		}
 

@@ -62,8 +62,9 @@ public class EraseMyHistoryController {
 
 		try {
 			getUserService().deleteMyHistory();
-		} catch (ApplicationThrowable ath) {
-			 return new ModelAndView("error/EraseMyHistory", model);
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/EraseMyHistory", model);
 		}
 		
 		return new ModelAndView("user/EraseMyHistory", model);

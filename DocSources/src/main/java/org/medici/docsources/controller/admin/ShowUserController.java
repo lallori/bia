@@ -86,7 +86,8 @@ public class ShowUserController {
 				user = getAdminService().findUser(command.getAccount());
 
 				userInformation = getAdminService().findUserInformation(command.getAccount());
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);
 			}
 		} else {

@@ -88,7 +88,8 @@ public class ReplyForumPostController {
 				forumPost = getCommunityService().replyPost(forumPost);
 				model.put("forumPost", forumPost);
 				return new ModelAndView("response/ForumPostMessageOK", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("response/ForumPostMessageKO", model);
 			}
 		}

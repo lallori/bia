@@ -51,7 +51,8 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Controller for action "Place: Edit External Links".
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/geobase/EditExternalLinkPlace")
@@ -91,22 +92,22 @@ public class EditExternalLinkPlaceController {
 			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId());
 			placeExternalLinks.setPlace(new Place(command.getPlaceAllId()));
 			String link = command.getExternalLink();
-			if(!link.startsWith("http") && !link.startsWith("HTTP")){
+			if (!link.startsWith("http") && !link.startsWith("HTTP")) {
 				link = "http://" + link;
 			}
 			placeExternalLinks.setExternalLink(link);
 			placeExternalLinks.setDescription(command.getDescription());
-			
-			try{
-				if(command.getPlaceExternalLinksId().equals(0)){
+
+			try {
+				if (command.getPlaceExternalLinksId().equals(0)) {
 					getGeoBaseService().addNewPlaceExternalLinks(placeExternalLinks);
-				}else{
+				} else {
 					getGeoBaseService().editPlaceExternalLinks(placeExternalLinks);
 				}
-			}catch(ApplicationThrowable th){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditExternalLinkPlace", model);
 			}
-			
 
 			return new ModelAndView("geobase/ShowPlace", model);
 		}
@@ -114,7 +115,8 @@ public class EditExternalLinkPlaceController {
 	}
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * @param geoBaseService
+	 *            the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
@@ -128,32 +130,31 @@ public class EditExternalLinkPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditExternalLinkPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		if((command != null) && (command.getPlaceAllId() > 0)){
-			if(command.getPlaceExternalLinksId().equals(0)){
+
+		if ((command != null) && (command.getPlaceAllId() > 0)) {
+			if (command.getPlaceExternalLinksId().equals(0)) {
 				command.setExternalLink(null);
-			}else{
-				try{
+			} else {
+				try {
 					PlaceExternalLinks placeExternalLinks = getGeoBaseService().findPlaceExternalLinks(command.getPlaceAllId(), command.getPlaceExternalLinksId());
-					
-					if(placeExternalLinks.getExternalLink() != null){
+
+					if (placeExternalLinks.getExternalLink() != null) {
 						command.setExternalLink(placeExternalLinks.getExternalLink());
-					}
-					else{
+					} else {
 						command.setExternalLink(null);
 					}
-					
-					if(placeExternalLinks.getDescription() != null){
+
+					if (placeExternalLinks.getDescription() != null) {
 						command.setDescription(placeExternalLinks.getDescription());
-					}else{
+					} else {
 						command.setDescription(null);
 					}
-					
-				}catch(ApplicationThrowable th){
+
+				} catch (ApplicationThrowable th) {
 					return new ModelAndView("error/EditExternalLinkPlace", model);
 				}
 			}
-		}else{
+		} else {
 			if (ObjectUtils.toString(command).equals("")) {
 				command = new EditExternalLinkPlaceCommand();
 			}

@@ -96,7 +96,8 @@ public class UpdateUserPasswordController {
 
 			try {
 				getUserService().updateUserPassword(getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()), command.getPassword());
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("responseKO", model);
 			}
 

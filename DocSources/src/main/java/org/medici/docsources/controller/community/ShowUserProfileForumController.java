@@ -91,6 +91,7 @@ public class ShowUserProfileForumController {
 				userInformation = getUserService().findUserInformation();
 			}
 		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowUserProfileForum", model);
 		}
 

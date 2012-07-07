@@ -78,8 +78,9 @@ public class ShowConfirmCreateVolumeForumController {
 			Volume volume = new Volume(command.getSummaryId());
 			Forum forum = getVolBaseService().addNewVolumeForum(volume);
 			model.put("forum", forum);
-		}catch (ApplicationThrowable applicationThrowable) {
-			
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/CreatedVolumeForumModalWindow", model);
 		}
 
 		return new ModelAndView("volbase/CreatedVolumeForumModalWindow", model);

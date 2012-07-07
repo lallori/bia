@@ -93,7 +93,8 @@ public class DeleteExternalLinkPlaceController {
 				getGeoBaseService().deletePlaceExternalLinks(placeExternalLinks);
 
 				return new ModelAndView("response/OK", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("response/KO", model);
 			}
 		}

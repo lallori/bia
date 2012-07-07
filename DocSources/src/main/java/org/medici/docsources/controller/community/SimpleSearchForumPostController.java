@@ -105,7 +105,8 @@ public class SimpleSearchForumPostController {
 
 		try {
 			page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getText()), paginationFilter);
-		} catch (ApplicationThrowable aex) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			page = new Page(paginationFilter);
 		}
 

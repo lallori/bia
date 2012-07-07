@@ -107,7 +107,9 @@ public class ChoiceStartFolioDocumentController {
 
 			model.put("volumeExplorer", volumeExplorer);
 			model.put("imageToCreate", imageToCreate);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/ChoiceStartFolioModalWindow", model);
 		}
 
 		return new ModelAndView("docbase/ChoiceStartFolioModalWindow", model);

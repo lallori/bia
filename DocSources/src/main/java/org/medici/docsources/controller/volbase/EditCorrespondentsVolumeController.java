@@ -101,7 +101,8 @@ public class EditCorrespondentsVolumeController {
 				volume = getVolBaseService().editCorrespondentsVolume(volume);
 				model.put("volume", volume);
 				return new ModelAndView("volbase/ShowCorrespondentsVolume", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditCorrespondentsVolume", model);
 			}
 		}
@@ -122,7 +123,8 @@ public class EditCorrespondentsVolumeController {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
 				model.put("volume", volume);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
 

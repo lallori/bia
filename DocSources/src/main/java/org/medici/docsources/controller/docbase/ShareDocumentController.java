@@ -82,7 +82,8 @@ public class ShareDocumentController {
 	
 			Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 			model.put("image", image);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShareDocument", model);
 		}
 

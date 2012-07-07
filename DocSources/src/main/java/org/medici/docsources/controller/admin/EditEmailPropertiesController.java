@@ -101,7 +101,8 @@ public class EditEmailPropertiesController {
 
 				// We need to refresh ApplicationPropertyManager...
 				ApplicationPropertyManager.refreshProperties();
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditEmailProperties", model);
 			}
 

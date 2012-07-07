@@ -92,7 +92,8 @@ public class ShowNamesPersonController {
 				model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 				model.put("marriages", marriages);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPerson", model);
 			}
 		} else {

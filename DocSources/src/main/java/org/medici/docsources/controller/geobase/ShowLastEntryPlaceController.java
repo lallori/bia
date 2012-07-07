@@ -84,7 +84,8 @@ public class ShowLastEntryPlaceController {
 			} else {
 				return new ModelAndView("empty", model);
 			}
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowLastEntryPlace", model);
 		}
 		

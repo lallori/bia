@@ -76,14 +76,16 @@ public class PageTurnerDialogController {
 			} 
 
 			model.put("image", image);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 		
 		try {
 			// We check if this image has a document linked...
 			Integer entryId = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
 			model.put("entryId", entryId);
-		}catch (ApplicationThrowable applicationThrowable) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			model.put("entryId", null);
 		}
 

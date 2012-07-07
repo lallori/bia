@@ -71,8 +71,8 @@ public class ShowConfirmCreatePlaceForumController {
 			Place place = new Place(command.getPlaceAllId());
 			Forum forum = getGeoBaseService().addNewPlaceForum(place);
 			model.put("forum", forum);
-		}catch (ApplicationThrowable applicationThrowable) {
-			
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
 		return new ModelAndView("geobase/CreatedPlaceForumModalWindow", model);

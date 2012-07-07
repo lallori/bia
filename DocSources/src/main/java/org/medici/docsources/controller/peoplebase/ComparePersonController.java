@@ -98,7 +98,8 @@ public class ComparePersonController {
 			Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
 			model.put("docsRelated", docsRelated);
 			
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/ShowPerson", model);
 		}
 

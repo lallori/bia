@@ -78,7 +78,8 @@ public class ShowMenuActionsPersonController {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
 				
 				model.put("person", person);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowMenuActionsPerson", model);
 			}
 		}

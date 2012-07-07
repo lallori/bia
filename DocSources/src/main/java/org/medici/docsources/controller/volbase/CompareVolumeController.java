@@ -81,7 +81,8 @@ public class CompareVolumeController {
 			try {
 				volume = getVolBaseService().compareVolume(command.getSummaryId());
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/CompareVolume", model);
 			}
 		} else {

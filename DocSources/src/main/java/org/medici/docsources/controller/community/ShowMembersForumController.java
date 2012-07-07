@@ -89,6 +89,7 @@ public class ShowMembersForumController {
 			model.put("membersPage", membersPage);
 
 		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowIndexForum", model);
 		}
 

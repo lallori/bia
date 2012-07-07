@@ -97,7 +97,8 @@ public class UploadPortraitPersonController {
 				String fileName = getPeopleBaseService().saveTemporaryImage(personPortrait);
 				
 				model.put("tempFileName", fileName);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);
 			}
 		}

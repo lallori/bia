@@ -101,15 +101,16 @@ public class UpdateUserController {
 			try {
 				user=getUserService().findUser(command.getAccount());
 				BeanUtils.copyProperties(user, command);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			} catch (IllegalAccessException iaex) {
 			} catch (InvocationTargetException itex) {
 			}
 
 			try {
 				getUserService().updateUser(user);
-			} catch (ApplicationThrowable aex) {
-
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
 			return new ModelAndView("responseOK", model);

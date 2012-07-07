@@ -96,7 +96,7 @@ public class ShowFamilyPersonController {
 				
 			model.put("family", command.getAltName());
 			model.put("nameId", command.getNameId());
-		}else{
+		} else {
 			return new ModelAndView("error/ShowFamilyPerson", model);
 		}
 				

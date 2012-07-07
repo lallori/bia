@@ -104,7 +104,9 @@ public class ShowExplorerVolumeController {
 				volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
 	
 				model.put("volumeExplorer", volumeExplorer);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ShowExplorerVolume", model);
 			}
 	
 			if (BooleanUtils.isTrue(command.getModalWindow())) {

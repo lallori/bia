@@ -96,7 +96,8 @@ public class EditSpousesPersonController {
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(command.getPersonId());
 				model.put("marriages", marriages);
 
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditSpousesPerson", model);
 			}
 

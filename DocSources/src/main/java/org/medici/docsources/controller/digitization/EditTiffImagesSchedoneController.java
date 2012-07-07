@@ -102,7 +102,8 @@ public class EditTiffImagesSchedoneController {
 				model.put("schedone", schedone);
 
 				return new ModelAndView("digitization/ShowSchedone", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditPdfImagesSchedone", model);
 			}
 		}

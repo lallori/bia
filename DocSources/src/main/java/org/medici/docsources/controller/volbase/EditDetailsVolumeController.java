@@ -159,7 +159,8 @@ public class EditDetailsVolumeController {
 
 					return new ModelAndView("volbase/ShowVolume", model);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
 		}

@@ -83,7 +83,8 @@ public class ShowUploadPortraitPersonController {
 				model.put("person", person);
 			
 				return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
-			}catch(ApplicationThrowable ath){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);
 			}
 		}

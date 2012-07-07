@@ -117,7 +117,8 @@ public class AdvancedSearchUserController {
 
 			try {
 				searchResults = userService.findUsers(user);
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 			}
 
 			// Ordering results...

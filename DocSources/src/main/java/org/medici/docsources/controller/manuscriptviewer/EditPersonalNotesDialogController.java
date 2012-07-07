@@ -74,7 +74,8 @@ public class EditPersonalNotesDialogController {
 
 			command.setPersonalNotes(personalNotes.getPersonalNotes());
 			return new ModelAndView("mview/EditPersonalNotesDialog", model);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditPersonalNotesDialog", model);
 		}
 	}
@@ -98,7 +99,8 @@ public class EditPersonalNotesDialogController {
 			} else {
 				command.setPersonalNotes(null);
 			}
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditPersonalNotesDialog", model);
 		}
 

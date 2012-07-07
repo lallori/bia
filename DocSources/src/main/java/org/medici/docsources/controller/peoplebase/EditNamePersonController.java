@@ -104,7 +104,8 @@ public class EditNamePersonController {
 				} else {
 					getPeopleBaseService().editNamePerson(altName);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowPerson", model);
 			}
 

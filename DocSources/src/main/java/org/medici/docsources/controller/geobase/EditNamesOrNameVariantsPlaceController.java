@@ -75,25 +75,26 @@ public class EditNamesOrNameVariantsPlaceController {
 		return validator;
 	}
 
-	/*@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditNamesOrNameVariantsPlaceCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			
-			getGeoBaseService();
-
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
-		}
-
-	}*/
+	/*
+	 * @RequestMapping(method = RequestMethod.POST) public ModelAndView
+	 * processSubmit(@Valid @ModelAttribute("command")
+	 * EditNamesOrNameVariantsPlaceCommand command, BindingResult result) {
+	 * getValidator().validate(command, result);
+	 * 
+	 * if (result.hasErrors()) { return setupForm(command); } else { Map<String,
+	 * Object> model = new HashMap<String, Object>();
+	 * 
+	 * 
+	 * getGeoBaseService();
+	 * 
+	 * return new ModelAndView("geobase/ShowDetailsPlace", model); }
+	 * 
+	 * }
+	 */
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * @param geoBaseService
+	 *            the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
@@ -107,17 +108,18 @@ public class EditNamesOrNameVariantsPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNamesOrNameVariantsPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		if((command != null) && (command.getPlaceAllId() > 0)){
+
+		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			List<Place> placeNames;
-			try{
+			try {
 				placeNames = getGeoBaseService().findPlaceNames(command.getGeogKey());
 				model.put("placeNames", placeNames);
-			}catch(ApplicationThrowable th){
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditNamesOrNameVariantsPlace", model);
 			}
 		}
-		
+
 		return new ModelAndView("geobase/EditNamesOrNameVariantsPlace", model);
 	}
 

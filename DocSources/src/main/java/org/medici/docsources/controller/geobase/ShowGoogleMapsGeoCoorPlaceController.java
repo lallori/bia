@@ -135,7 +135,8 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 			model.put("historyNavigator", historyNavigator);
 
 			return new ModelAndView("geobase/ShowPlace", model);
-		}catch(ApplicationThrowable ath){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowGoogleMapsGeoCoorPlace");
 		}
 		

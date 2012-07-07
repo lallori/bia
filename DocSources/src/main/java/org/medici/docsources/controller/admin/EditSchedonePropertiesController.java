@@ -106,7 +106,8 @@ public class EditSchedonePropertiesController {
 
 				// We need to refresh ApplicationPropertyManager...
 				ApplicationPropertyManager.refreshProperties();
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditSchedoneProperties", model);
 			}
 

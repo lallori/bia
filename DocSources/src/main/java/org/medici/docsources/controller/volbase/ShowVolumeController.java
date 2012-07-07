@@ -99,7 +99,8 @@ public class ShowVolumeController {
 				model.put("image", image);
 
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);
 			}
 		} else {

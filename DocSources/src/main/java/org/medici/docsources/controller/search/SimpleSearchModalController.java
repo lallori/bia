@@ -106,7 +106,8 @@ public class SimpleSearchModalController {
 			SimpleSearchPlace simpleSearchPlace = new SimpleSearchPlace(command.getText());
 			totalResult = getSearchService().searchCount(simpleSearchPlace);
 			model.put("placesCount", totalResult);
-		}catch(ApplicationThrowable ath){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/SimpleSearchModalWindow", model);
 		}
 		

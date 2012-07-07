@@ -109,7 +109,8 @@ public class EditSynopsisDocumentDialogController {
 				command.setSynExtrId(document.getSynExtract().getSynExtrId());
 				command.setSynopsis(document.getSynExtract().getSynopsis());
 				return new ModelAndView("mview/EditSynopsisDocumentDialog", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}
 		}
@@ -144,7 +145,8 @@ public class EditSynopsisDocumentDialogController {
 					command.setSynExtrId(0);
 					command.setSynopsis(null);
 				}
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditSynopsisDocumentDialog", model);
 			}
 		} else {

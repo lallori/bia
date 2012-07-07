@@ -79,7 +79,8 @@ public class ShowMenuActionsDocumentController {
 				document = getDocBaseService().findDocument(command.getEntryId());
 				
 				model.put("document", document);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowMenuActionsDocument", model);
 			}
 		}

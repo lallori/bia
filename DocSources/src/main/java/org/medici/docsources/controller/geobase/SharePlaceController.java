@@ -84,11 +84,11 @@ public class SharePlaceController {
 
 		Place place = new Place();
 		List<Place> placeNames;
-		
+
 		try {
 			place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			model.put("place", place);
-			
+
 			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
 			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(command.getPlaceAllId()));
 			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(command.getPlaceAllId()));
@@ -97,15 +97,16 @@ public class SharePlaceController {
 			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
 			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
 			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
-			
-			if(place.getPlaceGeographicCoordinates() != null)
+
+			if (place.getPlaceGeographicCoordinates() != null)
 				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
 			else
 				model.put("linkGoogleMaps", null);
-			
+
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/SharePlace", model);
 		}
 

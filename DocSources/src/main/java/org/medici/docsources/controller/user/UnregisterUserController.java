@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller to permit user unregister action.
@@ -64,7 +65,7 @@ public class UnregisterUserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("command") BindingResult result, SessionStatus status, ModelMap model) {
+	public ModelAndView processSubmit(@ModelAttribute("command") BindingResult result, SessionStatus status, ModelMap model) {
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		User user = new User();
@@ -72,15 +73,16 @@ public class UnregisterUserController {
 
 		try {
 			userService.deleteUser(user);
-		} catch (ApplicationThrowable aex) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
-		return "user/unregisterOK";
+		return new ModelAndView("user/unregisterOK", model);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(@ModelAttribute("command") UnregisterUserCommand command,HttpServletRequest request, ModelMap model) {
-		return "user/UnregisterUser";
+	public ModelAndView setupForm(@ModelAttribute("command") UnregisterUserCommand command,HttpServletRequest request, ModelMap model) {
+		return new ModelAndView("user/UnregisterUser", model);
 	}
 
 	/**

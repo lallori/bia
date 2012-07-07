@@ -105,7 +105,8 @@ public class ShowPlaceController {
 					model.put("linkGoogleMaps", null);
 
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPlace", model);
 			}
 		}else{
@@ -113,11 +114,12 @@ public class ShowPlaceController {
 			place.setPlSource(command.getPlSource());
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
-		
-		try{
+		 
+		try {
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 			new ModelAndView("error/ShowPlace", model);
 		}
 

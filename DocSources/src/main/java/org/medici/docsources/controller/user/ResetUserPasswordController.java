@@ -182,7 +182,8 @@ public class ResetUserPasswordController {
 
 				PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(command.getUuid());
 				autoLogin(request, response, passwordChangeRequest.getAccount(), command.getPassword());
-			} catch (ApplicationThrowable aex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ResetUserPassword", model);
 			}
 

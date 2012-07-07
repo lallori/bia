@@ -95,7 +95,8 @@ public class DeletePlaceController {
 				getGeoBaseService().deletePlace(command.getPlaceAllId());
 
 				return new ModelAndView("response/DeletePlaceOK", model);
-			} catch (ApplicationThrowable ath) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("response/DeletePlaceKO", model);
 			}
 		}
