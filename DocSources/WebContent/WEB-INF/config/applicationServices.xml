@@ -54,6 +54,10 @@
     <bean id="userService" class="org.medici.docsources.service.user.UserServiceImpl">
         <description>Service that manages user's information.</description>
     </bean>
+    
+    <bean id="userMarkedListService" class="org.medici.docsources.service.usermarkedlist.UserMarkedListServiceImpl">
+        <description>Service that manages user's marked list.</description>
+    </bean>
 
     <bean id="volBaseService" class="org.medici.docsources.service.volbase.VolBaseServiceImpl">
     	<description>Service that manages voBase informations.</description>

@@ -421,6 +421,7 @@ public class UserHistory implements Serializable {
 		FORUM("Forum"),
 		FORUM_TOPIC("ForumTopic"),
 		FORUM_POST("ForumPost"),
+		MARKED_LIST("MarkedList"),
 		SEARCH_DOCUMENT("SearchDocument"),
 		SEARCH_PEOPLE("SearchPeople"),
 		SEARCH_PLACE("SearchPlace"),
