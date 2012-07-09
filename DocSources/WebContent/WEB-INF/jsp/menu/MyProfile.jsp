@@ -7,12 +7,13 @@
 <c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
 
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-				<li class="myprofileMenu"><a id="myprofileMenu" href="${ShowUserProfileURL}" title="MY PROFILE"></a></li>
+<%-- 				<li class="myprofileMenu"><a id="myprofileMenu" href="${ShowUserProfileURL}" title="MY PROFILE"></a></li> --%>
+				<li><a href="${ShowUserProfileURL}" id="myprofileMenu">User Preferences</a></li>
 			</security:authorize>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {
-							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 760, height: 470});return false;}																	
+							Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});return false;}																	
 						);	
 					});
 				</script>						

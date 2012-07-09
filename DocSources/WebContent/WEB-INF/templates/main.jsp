@@ -142,6 +142,7 @@
 <tiles:insertAttribute name="administratorMenu"/>
 <tiles:insertAttribute name="digitizationMenu"/>
 <tiles:insertAttribute name="messagesMenu" />
+<tiles:insertAttribute name="profileMenu" />
 			</ul>
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>

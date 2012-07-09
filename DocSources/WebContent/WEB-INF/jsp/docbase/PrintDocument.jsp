@@ -25,9 +25,9 @@
 	    </tr>
 	    <tr>
 	      <td width="25%">Citation Text</td>
-	      <td width="70%" colspan="3" class="value">Archivio di Stato di Firenze, Mediceo del Principato ${document.volume.MDP} folio ${document.folioNum} / ${document.folioMod}. (Entry ${document.entryId} in the Documentary Sources database)</td>
-	      
-	    </tr>
+	      <td width="70%" colspan="3" class="value">Archivio di Stato di Firenze, Mediceo del Principato ${document.volume.MDP} folio ${document.folioNum} 
+	      <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if>. (Entry ${document.entryId} in the Documentary Sources database)</td>
+	   	</tr>
 	</table> 
  
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>

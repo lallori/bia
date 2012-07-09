@@ -933,8 +933,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			getUserDAO().merge(user);
 
-			getUserDAO().removeAllUserRoles(user.getAccount());
-			getUserDAO().persistUserRoles(user.getAccount(), user.getUserRoles());
+//			getUserDAO().removeAllUserRoles(user.getAccount());
+//			getUserDAO().persistUserRoles(user.getAccount(), userToUpdate.getUserRoles());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
