@@ -20,8 +20,8 @@
 	      <td width="25%">Vol. Number</td>
 	      <td width="30%" class="value">${document.volume.MDP}</td>
 	      <td width="25%">Folio No.</td>
-	      <td width="30%" class="value">${document.folioNum} / ${document.folioMod}</td>
-	
+	      <td width="30%" class="value">${document.folioNum} <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if></td>
+
 	    </tr>
 	    <tr>
 	      <td width="25%">Citation Text</td>
