@@ -501,6 +501,10 @@
 	<definition name="docbase/ShowMenuActionsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuActionsDocument.jsp"/>
 	</definition>
+	
+	<definition name="docbase/ShowSameFolioDocuments" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowSameFolioDocuments.jsp"/>
+	</definition>
 
 	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>

@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.HtmlUtils;
+import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -110,6 +113,7 @@ public class AjaxController {
 
 		try {
 			Integer documentId = null;
+			List<Document> documents = null;
 			Boolean isExtract = false;
 			Image image = new Image();
 //			if (entryId != null) {
@@ -126,7 +130,12 @@ public class AjaxController {
 							model.put("error", "wrongType");
 						} else {
 							// We check if this image has a document linked...
-							documentId = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
+							documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
+							if(documents != null && documents.size() == 1){
+								documentId = documents.get(0).getEntryId();
+							}else if(documents != null && documents.size() > 1){
+								isExtract = Boolean.TRUE;
+							}
 						}
 						model.put("imageName", image.getImageName());
 						model.put("imageId", image.getImageId());
@@ -139,9 +148,19 @@ public class AjaxController {
 				isExtract = getManuscriptViewerService().isDocumentExtract(documentId);
 			}
 			
-			model.put("linkedDocument", (documentId != null) ? "true" : "false");
+			model.put("linkedDocument", (documents != null) ? "true" : "false");
+			model.put("countAlreadyEntered", (documents != null) ? documents.size() : 0);
 			model.put("entryId", documentId );
-			model.put("showLinkedDocument", HtmlUtils.showDocument(documentId));
+			if(documents != null && documents.size() == 1){
+				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
+			}else if(documents != null && documents.size() > 1){
+				Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
+				String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
+				if(folioMod != null)
+					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, folioMod));
+				else
+					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, ""));
+			}
 			model.put("isExtract", (isExtract == true) ? "true" : "false");
 		}catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);

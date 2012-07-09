@@ -539,6 +539,28 @@ public class HtmlUtils {
 	
 	/**
 	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 */
+	public static String showSameFolioDocuments(Integer volNum, String volLetExt, Integer folioNum, String folioMod) {
+		StringBuilder url = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()); 
+		url.append("/src/docbase/ShowSameFolioDocuments.do?volNum=");
+		url.append(volNum);
+		url.append("&volLetExt=");
+		url.append(volLetExt);
+		url.append("&folioNum=");
+		url.append(folioNum);
+		url.append("&folioMod=");
+		url.append(folioMod);
+
+		return url.toString();
+	}
+	
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return

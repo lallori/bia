@@ -28,10 +28,12 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.manuscriptviewer.PageTurnerCommand;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
@@ -47,6 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Page Turner Document Dialog".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/src/mview/PageTurnerDialog", "/de/mview/PageTurnerDialog"})
@@ -82,8 +85,11 @@ public class PageTurnerDialogController {
 		
 		try {
 			// We check if this image has a document linked...
-			Integer entryId = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
-			model.put("entryId", entryId);
+			List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
+			if(documents != null)
+				model.put("entryId", documents.get(0).getEntryId());
+			else
+				model.put("entryId", null);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			model.put("entryId", null);

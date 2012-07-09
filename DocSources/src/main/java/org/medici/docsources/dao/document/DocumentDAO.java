@@ -82,7 +82,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 	
 	/**
 	 * 
@@ -91,7 +91,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+	public List<Document> findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Document} 

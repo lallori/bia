@@ -863,7 +863,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	@Override
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
+	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
 		try{
 			return getDocumentDAO().findDocument(volNum, volLetExt, folioNum, folioMod);
 		}catch(Throwable th){

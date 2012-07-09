@@ -159,7 +159,9 @@
 	
 	<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do" />
 	
-	<c:url var="ShowDocumentAlreadyURL" value="/src/docbase/ShowDocument.do" />
+	<c:url var="ShowDocumentAlreadyURL" value="/src/docbase/CompareDocument.do" />
+	
+	<c:url var="ShowDocumentsAlreadyURL" value="/src/docbase/ShowSameFolioDocuments.do" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -229,11 +231,12 @@
 				}
 				$j.get('<c:url value="/src/docbase/FindDocument.json" />', { volNum: $j("#volume").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val() },
 						function(data){
-							if (data.entryId != "") {
+							//MD: In this case we have a document with the same volume and folio and the link open in a tab its record.
+							if (data.countAlreadyEntered == 1) {
 								if ($j("#alreadyDigitized").length == 0) {
-										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">This document has already been digitized. Click <a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>here</u></a> to view.<br></font></span>");
+										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">A document with this 'start folio' is already present in the database. <br />Are you sure you want to create another document record ? Click <a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>here</u></a> to view the document already indexed.<br></font></span>");
 										$j('.compareDoc').click(function(){
-											var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
+											var tabName = "" + $j("#volume").val() + " / " + $j("#folioNum").val();
 											var numTab = 0;
 											
 											//Check if already exist a tab with this person
@@ -254,19 +257,60 @@
 // 												$j("#tabs").tabs("select", numTab-1);
 // 												return false;
 // 											}
-											$j.ajax({ url: '${ShowDocumentAlreadyURL}?entryId=' + data.entryId, cache: false, success:function(html) { 
-												$j("#body_left").html(html);
-											}});
+											var tabExist = false;
+											$j("#tabs ul li a").each(function(){
+												if(!tabExist)
+													numTab++;
+												if(this.text == tabName){
+													tabExist = true;
+												}
+											});
+												
+											if(!tabExist){
+												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+												return false;
+											}else{
+												$j("#tabs").tabs("select", numTab-1);
+												return false;
+											}
+											});
 											return false;
-										});
+										
 								}
-								$j("#save").attr("disabled","true");
+// 								$j("#save").attr("disabled","true");
 								return data.entryId;
+							} else if (data.countAlreadyEntered > 1){
+								if ($j("#alreadyDigitized").length == 0) {
+									$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">More than 1 document. <br />Are you sure you want to create another document record ? Click <a class=\"compareDocs\" style=\"color:red\" href=\"${ShowDocumentsAlreadyURL}?volNum=" + data.volNum +  "&volLetExt=" + data.volLetExt + "&folioNum=" + data.folioNum + "&folioMod=" + data.folioMod + "\"><u>here</u></a> to view the dataTable.<br></font></span>");
+									$j('.compareDocs').click(function(){
+										var tabName = "" + $j("#volume").val() + " / " + $j("#folioNum").val() + " Documents"
+										var numTab = 0;
+										var tabExist = false;
+										$j("#tabs ul li a").each(function(){
+											if(!tabExist)
+												numTab++;
+											if(this.text == tabName){
+												tabExist = true;
+											}
+										});
+											
+										if(!tabExist){
+											$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+											$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+											return false;
+										}else{
+											$j("#tabs").tabs("select", numTab-1);
+											return false;
+										}
+										});
+									return false;
+								}
 							} else {
 								if ($j("#alreadyDigitized").length > 0) {
 									$j("#alreadyDigitized").remove();
 								}
-								$j("#save").removeAttr("disabled");
+// 								$j("#save").removeAttr("disabled");
 								
 								return data.entryId;
 								

@@ -176,13 +176,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable {
+	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable {
 		try {
 			Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
 			String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
-			Document document = getDocumentDAO().findDocumentByFolioStart(volNum, volLetExt, folioNum, folioMod);
-			if (document != null) {
-				return document.getEntryId();
+			List<Document> documents = getDocumentDAO().findDocumentByFolioStart(volNum, volLetExt, folioNum, folioMod);
+			if (documents != null) {
+				return documents;
 			} else {
 				return null;
 			}

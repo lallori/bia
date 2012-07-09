@@ -306,7 +306,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
+	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
 	/**
 	 * 

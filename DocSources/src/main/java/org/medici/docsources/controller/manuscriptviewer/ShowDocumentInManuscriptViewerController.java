@@ -29,10 +29,12 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.manuscriptviewer.ShowDocumentInManuscriptViewerCommand;
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -49,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Document In Manuscript Viewer".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/mview/ShowDocumentInManuscriptViewer")
@@ -82,9 +85,14 @@ public class ShowDocumentInManuscriptViewerController {
 		try {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 			if(documentExplorer.getEntryId() == null){
-				Integer entryId = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), documentExplorer.getImage());
-				if(entryId != null)
-					documentExplorer.setEntryId(entryId);
+				List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), documentExplorer.getImage());
+				if(documents != null){
+					if(documents.size() == 1){
+						documentExplorer.setEntryId(documents.get(0).getEntryId());
+					}else{
+						documentExplorer.setEntryId(documents.get(0).getEntryId());
+					}
+				}
 			}
 
 			model.put("documentExplorer", documentExplorer);

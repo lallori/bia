@@ -128,8 +128,9 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
 		StringBuilder stringBuilder = new StringBuilder("FROM Document WHERE volume.volNum=" + volNum);
 		if(ObjectUtils.toString(volLetExt).equals("")){
 			stringBuilder.append(" AND volume.volLetExt is null ");
@@ -153,7 +154,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if (query.getResultList().size() ==0) { 
 			return null;
 		} else {
-			return (Document) query.getResultList().get(0);
+			return query.getResultList();
 		}
 	}
 	
@@ -161,7 +162,32 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+	public List<Document> findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+		/*StringBuilder stringBuilder = new StringBuilder("FROM Document WHERE volume.volNum=" + volNum);
+		if(ObjectUtils.toString(volLetExt).equals("")){
+			stringBuilder.append(" AND volume.volLetExt is null ");
+		} else {
+			stringBuilder.append(" AND volume.volLetExt = '");
+			stringBuilder.append(volLetExt);
+			stringBuilder.append("' ");
+		}
+		stringBuilder.append(" AND folioNum=");
+		stringBuilder.append(folioNum);
+		if(ObjectUtils.toString(folioMod).equals("")){
+			stringBuilder.append(" AND folioMod is null");
+		} else {
+			stringBuilder.append(" AND folioMod = '");
+			stringBuilder.append(folioMod);
+			stringBuilder.append("' ");
+		}
+		stringBuilder.append(" AND logicalDelete=false");
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
+
+		if (query.getResultList().size() ==0) { 
+			return null;
+		} else {
+			return (Document) query.getResultList().get(0);
+		}*/
 		return this.findDocument(volNum, volLetExt, folioNum, folioMod);
 	}
 

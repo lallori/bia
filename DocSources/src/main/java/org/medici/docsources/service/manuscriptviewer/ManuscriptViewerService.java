@@ -50,6 +50,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface ManuscriptViewerService {
 
@@ -113,7 +114,7 @@ public interface ManuscriptViewerService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable;
+	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable;
 
 	/**
 	 * 

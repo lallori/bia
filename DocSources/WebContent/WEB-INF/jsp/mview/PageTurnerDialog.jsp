@@ -103,6 +103,8 @@
 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" />
 
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" />
+	
+	<c:url var="ShowDocumentsAlreadyURL" value="/src/docbase/ShowSameFolioDocuments.do" />
 
 
 <div id="PageTurnerVerticalDiv">
@@ -116,6 +118,7 @@
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
 		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
 		
 		<!--  This document has not been transcribed-->
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe </a>
@@ -391,6 +394,7 @@
 					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 					$j("#notExtract").css('visibility', 'hidden');
 					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -402,6 +406,7 @@
 						$j("#unvailableTranscribe").css('visibility', 'visible');
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -413,18 +418,32 @@
 							$j("#currentEntryId").val(data.entryId);
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
 						}else{
-							$j("#alreadyTranscribe").css('visibility', 'visible');
-							$j("#showAlreadyTranscribed").css('visibility', 'visible');
-							$j("#notExtract").css('visibility', 'hidden');
-							$j("#extractTranscribe").css('visibility', 'hidden');
-							$j("#unvailableTranscribe").css('visibility', 'hidden');
-							$j("#readyToTranscribe").css('visibility', 'hidden');
-							$j("#choiceThisFolioStart").css('visibility', 'hidden');
-							$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+							if(data.countAlreadyEntered == 1){
+								$j("#alreadyTranscribe").css('visibility', 'visible');
+								$j("#showAlreadyTranscribed").css('visibility', 'visible');
+								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+								$j("#notExtract").css('visibility', 'hidden');
+								$j("#extractTranscribe").css('visibility', 'hidden');
+								$j("#unvailableTranscribe").css('visibility', 'hidden');
+								$j("#readyToTranscribe").css('visibility', 'hidden');
+								$j("#choiceThisFolioStart").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+							}else if(data.countAlreadyEntered > 1){
+								$j("#alreadyTranscribe").css('visibility', 'visible');
+								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+								$j("#notExtract").css('visibility', 'hidden');
+								$j("#extractTranscribe").css('visibility', 'hidden');
+								$j("#unvailableTranscribe").css('visibility', 'hidden');
+								$j("#readyToTranscribe").css('visibility', 'hidden');
+								$j("#choiceThisFolioStart").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+							}
 						}
 					} else if (data.linkedDocument == 'false') {
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -432,6 +451,7 @@
 						</security:authorize>
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -440,6 +460,7 @@
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -508,6 +529,17 @@
 				window.blur();
 				window.opener.focus();
 				window.close();
+				return false;
+			});
+			
+			$j('#showAlreadyTranscribedDocs').click(function() {
+				tabName = "" + ${command.volNum} + " / " + ${command.imageOrder} + " Documents"
+				window.opener.$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				window.blur();
+				window.opener.focus();
+				window.close();
+				window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+				
 				return false;
 			});
 		});

@@ -167,14 +167,29 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try{
-			Document document = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
-			if(document != null){
-				model.put("entryId", document.getEntryId());
+			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
+			if(documents != null){
+				model.put("entryId", documents.get(0).getEntryId());
+				model.put("countAlreadyEntered", documents.size());
+				model.put("volNum", volNum);
+				if(volLetExt == null || volLetExt.equals("")){
+					model.put("volLetExt", "");
+				}else{
+					model.put("volLetExt", volLetExt);
+				}
+				model.put("folioNum", folioNum);
+				if(folioMod == null || folioMod.equals("")){
+					model.put("folioMod", folioMod);
+				}else{
+					model.put("folioMod", folioMod);
+				}
 			}else{
 				model.put("entryId", "");
+				model.put("countAlreadyEntered", 0);
 			}			
 		}catch(ApplicationThrowable th){
 			model.put("entryId", "");
+			model.put("countAlreadyEntered", "");
 		}
 		return new ModelAndView("responseOK", model);		
 	}
@@ -230,6 +245,89 @@ public class AjaxController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/src/docbase/ShowSameFolioDocuments.json", method = RequestMethod.GET)
+	public ModelAndView ShowSameFolioDocuments(@RequestParam(value="volNum", required=false) Integer volNum,
+										 @RequestParam(value="volLetExt", required=false) String volLetExt,
+										 @RequestParam(value="folioNum", required=false) Integer folioNum,
+										 @RequestParam(value="folioMod", required=false) String folioMod,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Document> documents = null;
+		try{
+			documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
+		}catch(ApplicationThrowable aex){
+			
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : documents) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", documents.size());
+		model.put("iTotalRecords", documents.size());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
 	}
 
 	/**
