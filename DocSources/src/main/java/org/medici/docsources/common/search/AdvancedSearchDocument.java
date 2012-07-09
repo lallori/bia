@@ -1814,7 +1814,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			for(int i = 0; i < folios.size(); i++){
 				if(StringUtils.isNumeric(folios.get(i))){
 					if(foliosQuery.length() > 1){
-						foliosQuery.append(" AND ");
+						//MD: I need to append an "OR" clause instead an "AND"
+						foliosQuery.append(" OR ");
 					}
 					
 					if(foliosTypes.get(i).equals(FolioType.Exactly)){
