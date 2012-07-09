@@ -700,7 +700,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			AltName searchName = null;
 
 			// fill fields to update person details section
-			if(!personToUpdate.getFirst().equals(person.getFirst())){
+			if(personToUpdate.getFirst() != null && !personToUpdate.getFirst().equals(person.getFirst())){
 				AltName current;
 				Boolean found = Boolean.FALSE;
 				Iterator<AltName> iterator = altNames.iterator();
@@ -714,7 +714,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				}
 			}
 			
-			if(!personToUpdate.getLast().equals(person.getLast())){
+			if(personToUpdate.getLast() != null && !personToUpdate.getLast().equals(person.getLast())){
 				AltName current;
 				Boolean found = Boolean.FALSE;
 				Iterator<AltName> iterator = altNames.iterator();

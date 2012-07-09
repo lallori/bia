@@ -118,12 +118,12 @@ public class EditDetailsPersonValidator implements Validator {
 	private void validateDates(Integer bornYear, String activeStart, Integer bornMonthNum, Integer bornDay, Integer deathYear, String activeEnd, Integer deathMonthNum, Integer deathDay,Errors errors) {
 		if (!errors.hasErrors()) {
 			if (bornYear != null) {
-				if ((bornYear < 1200) || (bornYear > 1750)) {
+				if (bornYear > 1750) {
 					errors.rejectValue("bornYear", "error.bornYear.invalid");
 				}
 			}
 			if(activeStart != null && NumberUtils.isNumber(activeStart)){
-				if((NumberUtils.createInteger(activeStart) < 1200) || (NumberUtils.createInteger(activeStart) > 1750)){
+				if(NumberUtils.createInteger(activeStart) > 1750){
 					errors.rejectValue("activeStart", "error.activeStart.invalid");
 				}
 			}
@@ -138,12 +138,12 @@ public class EditDetailsPersonValidator implements Validator {
 				}
 			}
 			if (deathYear != null) {
-				if ((deathYear < 1200) || (deathYear > 1850)) {
+				if (deathYear > 1850) {
 					errors.rejectValue("deathYear", "error.deathYear.invalid");
 				}
 			}
 			if(activeEnd != null && NumberUtils.isNumber(activeEnd)){
-				if((NumberUtils.createInteger(activeEnd) < 1200) || (NumberUtils.createInteger(activeEnd) > 1850)){
+				if(NumberUtils.createInteger(activeEnd) > 1850){
 					errors.rejectValue("activeEnd", "error.activeEnd.invalid");
 				}
 			}
