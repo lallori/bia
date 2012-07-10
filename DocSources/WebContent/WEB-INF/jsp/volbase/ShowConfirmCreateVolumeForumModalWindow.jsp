@@ -13,9 +13,7 @@
 		
 		<a id="yes" href="${ShowConfirmCreateVolumeForumURL}" class="button_small">YES</a>
 	
-		<a id="no" href="#" class="button_small">NO</a>
-			
-		<input id="close" type="submit" title="Close Confirm window" value="Close"/>
+		<a id="no" href="#" class="button_small">NO</a>			
 	</div>
 
 	<script>

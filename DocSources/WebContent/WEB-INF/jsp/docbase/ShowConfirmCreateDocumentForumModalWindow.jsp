@@ -15,7 +15,6 @@
 	
 		<a id="no" href="#" class="button_small">NO</a>
 			
-		<input id="close" type="submit" title="Close Comments Menu window" value="Close"/>
 	</div>
 
 	<script>
