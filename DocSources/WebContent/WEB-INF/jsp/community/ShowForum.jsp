@@ -1,11 +1,11 @@
-<%@page import="org.medici.docsources.common.util.ForumUtils"%>
+<%@ taglib prefix="bia" uri="http://docsources.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="bia" uri="http://docsources.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+	
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${category.forumId}"/>
 	</c:url>
@@ -114,7 +114,7 @@
 				${paginationData}   
 			</div>
 	
-			<c:if test="${category.forumId != 1}">
+			<c:if test="${not empty category.forumParent}">
 				<a href="/DocSources/forum/index.html" class="returnTo">&larr; Return to <span>Board Index</span></a>
 			</c:if>
 	
@@ -170,7 +170,24 @@
 			        </c:if>
 			        </div>
 			    </c:forEach>
+			</div>
 		</div>
+			    <div id="forumPaginate">
+				    <div id="jumpToDiv">
+				    	Jump to:
+				        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
+				            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
+				                <option value="" selected="selected">Select a Forum</option>
+				            </select>
+				            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
+				        </form>
+				    </div>
+					<c:set var="paginationData">
+					<bia:paginationForum page="${topicsPage}"/>
+					</c:set>
+					
+					${paginationData}   
+				</div>
 			</c:if>
 
 <!-- EACH TOPIC PAGE?-->
@@ -186,7 +203,6 @@
 			            <div class="four">empty forum</div>
 			        </div>
 			    </c:if>
-			</div>
 		</div>
 <!-- 		 <div id="forumPaginate"> -->
 <!-- 			    <div id="jumpToDiv"> -->
@@ -220,6 +236,12 @@
 
 				$j('.forumHref').die();
 				$j('.forumHref').live('click', function() {
+					$j("#mainContent").load($j(this).attr("href"));
+					return false;
+				});
+
+				$j('.pageHref').die();
+				$j('.pageHref').live('click', function() {
 					$j("#mainContent").load($j(this).attr("href"));
 					return false;
 				});

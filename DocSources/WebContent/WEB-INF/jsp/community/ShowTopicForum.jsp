@@ -1,5 +1,7 @@
+<%@ taglib prefix="bia" uri="http://docsources.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -58,19 +60,22 @@
 </div>
 </c:forEach>
 
-<div id="topicActions">
-	<a href="/DocSources/forum/newPost.html" class="buttonMedium" id="postReply"><img src="/DocSources/images/forum/img_reply.png" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a>
-    
+<div id="forumPaginate">
     <div id="jumpToDiv">
     	Jump to:
         <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
-            <select id="selectForum" name="selectForum" selected"" class="selectform_long">
+            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
                 <option value="" selected="selected">Select a Forum</option>
             </select>
-            <input id="go" type="submit" title="go" value="Go" class="buttonMini"/>
+            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
         </form>
     </div>
+    <c:set var="paginationData">
+		<bia:paginationForum page="${postsPage}"/>
+	</c:set>
 </div>
+					
+${paginationData}
 
 <c:url var="ShowForumOfTopicURL" value="/community/ShowForum.do">
 	<c:param name="forumId" value="${topic.forum.forumId}"></c:param>
@@ -86,61 +91,32 @@
 </div>
 
 
-					<script>
-						$j(document).ready(function() {
-							$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
-			    				$j("#chronologyDiv").html(json.chronology);
-								$j(".arrowForum").css('visibility','visible');
-								$j(".forum").css('visibility','visible');
-			    			}});
+	<script>
+		$j(document).ready(function() {
+			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
+   				$j("#chronologyDiv").html(json.chronology);
+				$j(".arrowForum").css('visibility','visible');
+				$j(".forum").css('visibility','visible');
+   			}});
 
-							$j('.forumHref').die();
-							// Result links have a specific class style on which we attach click live. 
-							$j('.forumHref').live('click', function() {
-								$j("#mainContent").load($j(this).attr("href"));
-								return false;
-							});
-
-							$j('.boardIndex').die();
-							// Result links have a specific class style on which we attach click live. 
-							$j('.boardIndex').live('click', function() {
-								$j("#mainContent").load($j(this).attr("href"));
-								return false;
-							});
-							
-								$j("#mainContent").load($j(this).attr("href"));
-							$j('.quotePost').click(function (){
-								$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-								return false;
-							});
-						});
-					</script>
-<script>
-	$j(document).ready(function() {
-		$j(".forum").click(
-			function(){
+			$j('.pageHref').die();
+			// Result links have a specific class style on which we attach click live. 
+			$j('.pageHref').live('click', function() {
 				$j("#mainContent").load($j(this).attr("href"));
-				$j(".arrowTopic").css('visibility','hidden');
-				$j(".topic").css('visibility','hidden');
-				return false;});
-		$j("#postReply").click(
-			function(){
+				return false;
+			});
+			
+			$j('.boardIndex').die();
+			// Result links have a specific class style on which we attach click live. 
+			$j('.boardIndex').live('click', function() {
 				$j("#mainContent").load($j(this).attr("href"));
-				$j("#whoIsOnlineDiv").css('display','none');
-				return false;});
-		$j("#editPost").click(
-			function(){
-				$j("#mainContent").load($j(this).attr("href"));
-				$j("#whoIsOnlineDiv").css('display','none');
-				return false;});
-		$j("#reportPost").click(
-			function(){
-				$j("#mainContent").load($j(this).attr("href"));
-				$j("#whoIsOnlineDiv").css('display','none');
-				return false;});
-		$j(".returnTo").click(
-			function(){
-				$j("#mainContent").load($j(this).attr("href"));
-				return false;});
-	});
-</script>
+				return false;
+			});
+			
+			$j("#mainContent").load($j(this).attr("href"));
+			$j('.quotePost').click(function (){
+				$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+				return false;
+			});
+		});
+	</script>
