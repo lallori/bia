@@ -110,6 +110,8 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			forumPost.setPostId(null);
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
+			UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			forumPost.setForum(forum);
 			
 			if (forumPost.getTopic().getTopicId() == 0) {
@@ -119,7 +121,7 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setLastUpdate(forumTopic.getDateCreated());
 				forumTopic.setIpAddress(forumPost.getIpAddress());
 				
-				forumTopic.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+				forumTopic.setUserInformation(userInformation);
 				forumTopic.setSubject(forumPost.getSubject());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
@@ -145,6 +147,10 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.getTopic().setLastPost(forumPost);
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
 			getForumTopicDAO().merge(forumPost.getTopic());
+
+			// Update number of post 
+			userInformation.setForumNumberOfPost(userInformation.getForumNumberOfPost()+1);
+			getUserInformationDAO().merge(userInformation);
 
 			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
@@ -488,19 +494,24 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setPostId(null);
 			
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
-			
 			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getPostId());
+			UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
 			forumPost.setParentPost(parentPost);
-			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPost.setUserInformation(userInformation);
 			getForumPostDAO().persist(forumPost);
 			
 			parentPost.setReplyNumber(parentPost.getReplyNumber()+1);
 			getForumPostDAO().merge(parentPost);
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
+
+			// Update number of post 
+			userInformation.setForumNumberOfPost(userInformation.getForumNumberOfPost()+1);
+			getUserInformationDAO().merge(userInformation);
 
 			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
