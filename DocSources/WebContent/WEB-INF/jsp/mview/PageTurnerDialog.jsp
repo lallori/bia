@@ -119,6 +119,7 @@
 		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
 		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
+		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
 		
 		<!--  This document has not been transcribed-->
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe </a>
@@ -395,6 +396,7 @@
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+					$j("#transcribeAnyway").css('visibility', 'hidden');
 					$j("#notExtract").css('visibility', 'hidden');
 					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -407,6 +409,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -419,6 +422,7 @@
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#transcribeAnyway").css('visibility', 'hidden');
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
@@ -427,6 +431,7 @@
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'visible');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+								$j("#transcribeAnyway").css('visibility', 'hidden');
 								$j("#notExtract").css('visibility', 'hidden');
 								$j("#extractTranscribe").css('visibility', 'hidden');
 								$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -437,6 +442,7 @@
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+								$j("#transcribeAnyway").css('visibility', 'visible');
 								$j("#notExtract").css('visibility', 'hidden');
 								$j("#extractTranscribe").css('visibility', 'hidden');
 								$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -452,6 +458,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -461,6 +468,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -473,6 +481,14 @@
 			$j('#readyToTranscribe').click(function() {
 				$j("#choiceThisFolioStart").css('visibility', 'visible');
 				$j("#readyToTranscribe").css('visibility', 'hidden');
+				transcribing=true;
+				imageDocumentToCreate=currentImage;
+				return false;
+			});
+			
+			$j('#transcribeAnyway').click(function() {
+				$j("#choiceThisFolioStart").css('visibility', 'visible');
+				$j("#transcribeAnyway").css('visibility', 'hidden');
 				transcribing=true;
 				imageDocumentToCreate=currentImage;
 				return false;
@@ -512,7 +528,7 @@
 				
 				if(!tabExist){
 					window.opener.$j( "#tabs" ).tabs( "add" , urlToExplore, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					window.opener.$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 				}else{
 					window.opener.$j("#tabs").tabs("select", numTab-1);
 					window.opener.$j("#tabs").tabs("url", numTab-1, urlToExplore);
@@ -533,7 +549,7 @@
 			});
 			
 			$j('#showAlreadyTranscribedDocs').click(function() {
-				tabName = "" + ${command.volNum} + " / " + ${command.imageOrder} + " Documents"
+				tabName = "" + ${command.volNum} + " / " + ${image.imageProgTypeNum} + " Documents"
 				window.opener.$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				window.blur();
 				window.opener.focus();
