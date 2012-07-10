@@ -140,7 +140,7 @@ h2 {
 	background:url(/DocSources/images/forum/img_map.png) no-repeat;
 }
 
-#searchForm { /* Search Form Container */
+#searchForumAllDiv { /* Search Form Container */
 	margin: 0 0 0 497px;
 	width: 250px;
 	height: 80px;
@@ -149,7 +149,7 @@ h2 {
 	height: 80px;
 }
 
-#searchText { /* Input type text in Search Form */
+#searchForumAllText, #searchForumThisText { /* Input type text in Search Form */
 	width: 177px;
 	margin: 0 4px 0 5px;
 }
@@ -1134,5 +1134,15 @@ span.search {
 }
 
 
+/* ------------------------ Volume Explorer --------------------------------*/
 
-
+.iframeVolumeExplorer { /* used in Add New Volume - #body_right */
+	z-index:-1;
+	width:1000px;
+	height:500px;
+	margin-top:10px;
+	z-index:-1;
+	border: 1px solid;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+}
