@@ -562,6 +562,12 @@ item a{
 	width: 525px;
 }
 
+.listFormPreferences { /* Whole display list */
+	display: table;
+	margin: 5px 0 0 0;
+	width: 360px;
+}
+
 .listSearch { /* Whole display list */
 	display: table;
 	width: 275px;
@@ -573,12 +579,12 @@ item a{
 	width: 440px;
 }
 
-.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r, .listAdvSearch .col_r{ /* Sub-fields title cell */
+.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r, .listAdvSearch .col_r, .listFormPreferences .col_r{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:right;
 }
 
-.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l, .listAdvSearch .col_l { /* Sub-fields title cell */
+.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l, .listAdvSearch .col_l, .listFormPreferences .col_l{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:left;
 }
@@ -1647,14 +1653,13 @@ input.file {
 #DocumentImageDigitDiv span, #DocumentImageNotDigitDiv span {
     color: #C0272D;
     height: 60px;
-    position: absolute;
+    float: right;
     margin-top: 70px;
     width: 70px;
 	text-shadow:1px 1px 1px #999;
 	font-size:11px;
 	text-align:center;
-	moz-margin-left: 25px;
-	margin-left: 25px;
+	margin-right: 20px;
 }
 
 #DocumentImageDigitDiv span.register {
@@ -1682,6 +1687,8 @@ div#text a.linkVolume {
 #DocumentImageDigitDiv img {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
+	position:absolute;
+	margin-right:10px;
 }
 
 div#text div#icons {
@@ -2032,6 +2039,13 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /*
 /* -------------------------- ADD NEW VOLUME -------------------------------- */
+
+#showDocumentsRelated { /* Show documents related button */
+	float: right;
+	margin-top: -3px;
+	margin-right: 10px;
+}
+
 /*
 /*
 /* ---------------- Volume Explorer ---------------- */
@@ -3225,6 +3239,13 @@ form#EditUserProfileForm span{
 }
 
 
+/* ---------------------------- USER PREFERENCES ---------------------------------- */
+
+#userPreferences #save{
+	margin:25px 0 0 148px;
+
+}
+
 
 /* --------------------------------------------------------------------------------- */
 /*
@@ -4064,11 +4085,13 @@ table#savedSearchFiltersForm.display {
 #ConfirmCreateForum #yes {
 	position: absolute;
 	margin-left: 125px;
+	padding: 4px 0 0 0;
 }
 
 #ConfirmCreateForum #no {
 	position: absolute;
 	margin-left: 245px;
+	padding: 4px 0 0 0;
 }
 
 #ConfirmCreateForum #close {
@@ -4876,7 +4899,7 @@ h3.systemManagement {
 	margin-bottom:5px;
 }
 
-#yes, #no, #yesPerson, #noPerson {
+#yes, #no, #yesPerson, #noPerson, #removeTabsYes, #removeTabsNo {
 	margin: 0;
 	width: 52px;
 	height: 22px;
