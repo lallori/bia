@@ -469,7 +469,7 @@
 			});
 
 			$j('.linkPeople').click(function() {
-				var tabName = $j(this).parent();
+				var tabName = $j(this).parent().parent();
 				tabName = $j(tabName).find('.input_35c_disabled').val();
 				
 				if(tabName.length > 20){
