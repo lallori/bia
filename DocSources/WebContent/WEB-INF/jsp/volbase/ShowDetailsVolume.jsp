@@ -34,13 +34,13 @@
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="View all the documents related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="Click here to view all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
-				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 1}">
-				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="View the document related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin:10px 0 0 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="Click here to view all the documents related to this Volume record" id="showDocumentsRelated">Show document</a></p>
 			</c:if>
 		</div>
 		</c:if>
@@ -165,7 +165,7 @@
 				}
 			});
 			
-			$j(".num_docs").click(function(){
+			$j("#showDocumentsRelated").click(function(){
 				//var tabName = "Docs Volume ${volume.summaryId}";
 				var tabName = "Docs Volume ${volume.volNum}${volume.volLetExt}";
 				var numTab = 0;
