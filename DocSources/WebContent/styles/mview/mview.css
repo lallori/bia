@@ -269,6 +269,27 @@ a.transcribe {
 	color: green;
 }
 
+#PageTurnerVerticalDiv #showAlreadyTranscribedDocs {
+	margin: 45px 0 0 0;
+	position:absolute;
+}
+
+#PageTurnerVerticalDiv #transcribeAnyway {
+	margin: 75px 0 0 0;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #showAlreadyTranscribedDocs {
+	margin: 25px 0 0 30px;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #transcribeAnyway {
+	margin: 55px 0 0 30px;
+	position:absolute;
+}
+
+
 .inputerrors { /* Error Span messages */
 	color:#900;
 	font-size: 11px;
