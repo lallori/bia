@@ -186,16 +186,25 @@
 			$j('#titleAutocomplete').keyup(function(){
 				delay(function(){
 					$j(".autocomplete").each(function(){
-					if($j(this).text() == "No Title found."){
-						$j(this).append(" - <a id='createNew' href='#'>Create new Title / Occupation</a>");
-						$j("#createNew").click(function(){
-							titleOrOccupationDescription.killSuggestions();
-							$j("#titleAutocomplete").val("");
-							$dialogNewTitleOccupation.dialog("open");
-							return false;
-						});
-					}
+// 					if($j(this).text() == "No Title found."){
+						$j(this).append("<tr><td><a id='createNew' href='#'><b>Create new Title / Occupation</b></a></td><td></td><td></td></tr>");
+// 						$j("#createNew").click(function(){
+// 							titleOrOccupationDescription.killSuggestions();
+// 							$j("#titleAutocomplete").val("");
+// 							$dialogNewTitleOccupation.dialog("open");
+// 							return false;
+// 						});
+// 					}
 				});}, 1000 );				
+			});
+			
+			$j('#createNew').die();
+			
+			$j("#createNew").live('click',function(){
+				titleOrOccupationDescription.killSuggestions();
+				$j("#titleAutocomplete").val("");
+				$dialogNewTitleOccupation.dialog("open");
+				return false;
 			});
 			
 			
