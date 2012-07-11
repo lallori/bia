@@ -5,7 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
 	
 	<div id="top">
 		<div id="logoMap"><img src="<c:url value="/images/1024/img_map_print.jpg" />" alt="The Medici Archive Project" /></div>

@@ -5,7 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
   
      <h4>Documentary Sources for the Arts and Humanities 1537 - 1743<br />Volume Report</h4>
 
@@ -19,7 +18,7 @@
          <tr>
              <td width="100">Start Date</td>
 
-             <td width="285" class="value">>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</td>
+             <td width="285" class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</td>
          </tr>
          <tr>
              <td width="100">End Date</td>

@@ -280,7 +280,7 @@
     	  message = 'No place found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%"><b>Name</b></td><td><b>Prefered</b></td><td><b>Type</b></td></tr>';
+	      table = '<tr><td width="50%"><b>Name</b></td><td><b>Pref/Var</b></td><td><b>Place Type</b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {

@@ -5,7 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
 
 	<h4>Documentary Sources for the Arts and Humanities 1537 - 1743<br />Person Report</h4>
 	

@@ -5,7 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
 	
 	<div id="top">
 		<div id="logoMap"><img src="<c:url value="/images/1024/img_map_print.jpg" />" alt="The Medici Archive Project" /></div>
@@ -24,9 +23,11 @@
 
 	    </tr>
 	    <tr>
-	      <td width="25%">Citation Text</td>
-	      <td width="70%" colspan="3" class="value">Archivio di Stato di Firenze, Mediceo del Principato ${document.volume.MDP} folio ${document.folioNum} 
-	      <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if>. (Entry ${document.entryId} in the Documentary Sources database)</td>
+	      <td width="25%">Citation Format</td>
+	      <td width="70%" colspan="3" class="value">BIA: The Medici Archive Project, Doc ID# ${document.entryId} (Archivio di Stato di Firenze, Mediceo del Principato ${document.volume.MDP} 
+	      <c:if test="${not empty document.folioNum}">, folio ${document.folioNum}</c:if>
+	      <c:if test="${empty document.folioNum}">, unnumbered folio</c:if>
+	      <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if>)</td>
 	   	</tr>
 	</table> 
  
