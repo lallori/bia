@@ -1003,7 +1003,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Page page = null;
 		List<Integer> peopleIds = new ArrayList<Integer>(); 
-		Map<Integer, PoLink> occupations = new HashMap<Integer, PoLink>();
+		Map<Integer, List<PoLink>> occupations = new HashMap<Integer, List<PoLink>>();
 
 		PaginationFilter paginationFilter = generatePaginationFilterForTitleOcc(sortingColumnNumber, sortingDirection, firstRecord, length);
 		try {
@@ -1026,13 +1026,17 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
-			PoLink currentOccupation = occupations.get(currentPerson.getPersonId());
-			if(currentOccupation != null){
-				singleRow.add(DateUtils.getStringDateHTMLForTable(currentOccupation.getStartYear(), currentOccupation.getStartMonthNum(), currentOccupation.getStartDay()));
-				singleRow.add(DateUtils.getStringDateHTMLForTable(currentOccupation.getEndYear(), currentOccupation.getEndMonthNum(), currentOccupation.getEndDay()));
-			}else{
-				singleRow.add("");
-				singleRow.add("");
+			List<PoLink> occupationsPerson = occupations.get(currentPerson.getPersonId());
+			if(occupationsPerson != null){
+				if(occupationsPerson.get(0) != null){
+					singleRow.add(DateUtils.getStringDateHTMLForTable(occupationsPerson.get(0).getStartYear(), occupationsPerson.get(0).getStartMonthNum(), occupationsPerson.get(0).getStartDay()));
+					singleRow.add(DateUtils.getStringDateHTMLForTable(occupationsPerson.get(0).getEndYear(), occupationsPerson.get(0).getEndMonthNum(), occupationsPerson.get(0).getEndDay()));
+					occupationsPerson.remove(0);
+					occupations.put(currentPerson.getPersonId(), occupationsPerson);
+				}else{
+					singleRow.add("");
+					singleRow.add("");
+				}
 			}
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
 		}

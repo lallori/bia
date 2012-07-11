@@ -30,6 +30,7 @@ package org.medici.docsources.service.peoplebase;
 import java.io.File;
 import java.net.URL;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1612,12 +1613,19 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable {
+	public Map<Integer, List<PoLink>> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable {
 		try{
-			Map<Integer, PoLink> result = new HashMap<Integer, PoLink>();
+			Map<Integer, List<PoLink>> result = new HashMap<Integer, List<PoLink>>();
 			List<PoLink> occupations = getPoLinkDAO().getOccupationsDetails(alias, peopleIds);
 			for(PoLink currentOccupation : occupations){
-				result.put(currentOccupation.getPerson().getPersonId(), currentOccupation);
+				List<PoLink> occupationsPerson;
+				if(result.containsKey(currentOccupation.getPerson().getPersonId())){
+					occupationsPerson = result.get(currentOccupation.getPerson().getPersonId());					
+				}else{
+					occupationsPerson = new ArrayList<PoLink>();					
+				}
+				occupationsPerson.add(currentOccupation);
+				result.put(currentOccupation.getPerson().getPersonId(), occupationsPerson);
 			}
 			return result;
 		}catch(Throwable th){

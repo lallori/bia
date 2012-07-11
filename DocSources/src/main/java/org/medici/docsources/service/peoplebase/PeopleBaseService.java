@@ -59,6 +59,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface PeopleBaseService {
 
@@ -531,7 +532,7 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable;
+	public Map<Integer, List<PoLink>> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable;
 
 	/**
 	 * 
