@@ -13,7 +13,6 @@
 			<div id="tabs">
 				<ul>
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
-<%-- 					<li><a href="#" title="Close all visible tabs" style="cursor:pointer;" id="removeAllTabs"><img src="<c:url value="/images/1024/button_deleteTabs.png"/>" /></a><span class="ui-icon ui-icon-close" title="Close Tab" style="display:none;"></span></li> --%>
 					<li><a href="<c:url value="/Welcome.do"/>">Welcome</a><span class="ui-icon ui-icon-close" title="Close Tab">Remove Tab</span></li>
 					</security:authorize>
 				</ul>
