@@ -1,10 +1,9 @@
 		<div id="footer">
 			<p>
-				The Medici Archive Project<br /> All information cited from the
-				Documentary Sources for the Arts and the Humanities database must be
-				credited to: Documentary Sources for the Arts and Humanities (The
-				Medici Archive Project, Inc.)
+				The Medici Archive Project, Inc. &copy;
+				<br /> 
+				Written content on the Medici Archive Project website and the BIA platform are sole property of the Medici Archive Project, Inc.,a 501(c)(3) Tax Exempt Organization. In any subsequent
+				use the Medici Archive Project must be given appropriate acknowledgment in accordance with U.S. and foreign copyright laws. 
 			</p>
-			<p>This database and its contents are the sole property of The
-				Medici Archive Project, Inc.,a 501(c)(3) Tax Exempt Organization.</p>
+			<p> To cite content from the BIA platform in a publication, use the "citation format" near the top  of the page.</p>
 		</div>
