@@ -85,7 +85,7 @@
 </script>
 
 <div id="removeTabs" style="display:none; cursor: default"> 
-	<h1>Close All Tabs?</h1> 
+	<h1>Are you sure you want to close all tabs?</h1> 
 	<input type="button" id="removeTabsYes" value="Yes" /> 
 	<input type="button" id="removeTabsNo" value="No" /> 
 </div>
