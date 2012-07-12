@@ -179,10 +179,10 @@ span.h7 {
 #buttonMarkedList {  /* Print this Document Button */
 	background-image:url(/DocSources/images/1024/button_markedList.png);
 	background-repeat:no-repeat;
-	width: 20px;
+	width: 25px;
 	height: 20px;
 	position:absolute;
-	right: -9px;
+	right: -17px;
 }
 
 #menuActions { /* Actions Menu Button */
@@ -1638,6 +1638,20 @@ input.file {
     height:160px;
     width:120px;
     text-align:center;
+	background-image:url(/DocSources/images/1024/img_document.png);
+}
+
+#DocumentImageNotDigitDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 25px;
+    width: 70px;
+	text-shadow:1px 1px 1px #999;
+	font-size:11px;
+	text-align:center;
+	margin-right: 25px;
 }
 
 #DocumentImageDigitDiv { /* Document image digitized or to be digitized */ 
@@ -1650,23 +1664,26 @@ input.file {
     margin-left: 345px;
 }
 
-#DocumentImageDigitDiv span, #DocumentImageNotDigitDiv span {
+#DocumentImageDigitDiv span {
     color: #C0272D;
     height: 60px;
-    float: right;
-    margin-top: 70px;
+    position: absolute;
+    margin-top: 50px;
     width: 70px;
 	text-shadow:1px 1px 1px #999;
 	font-size:11px;
 	text-align:center;
-	margin-right: 20px;
+	margin-left: 25px;
+	z-index: 100;
+	
 }
 
-#DocumentImageDigitDiv span.register {
-    margin-top: 55px;
+#DocumentImageDigitDiv img {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
-#DocumentImageDigitDiv span:hover {
+#DocumentImageDigitDiv span:hover,  #DocumentImageNotDigitDiv span:hover{
 	cursor:default;
 }
 
@@ -1684,12 +1701,7 @@ div#text a.linkVolume {
     color: #666EA4;
 }
 
-#DocumentImageDigitDiv img {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	position:absolute;
-	margin-right:10px;
-}
+
 
 div#text div#icons {
     height: 60px;
@@ -2056,7 +2068,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	z-index:-1;
 	width:475px;
 	margin-left:10px;
-	height:320px;
+	height:350px;
 	margin-top:10px;
 	z-index:-1;
 	border: 1px solid;

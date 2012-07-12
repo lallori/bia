@@ -329,8 +329,9 @@ a {
 
 #top_bottom ul {
 	list-style:none;
-	margin: 6px 0 0 0;
+	margin: 6px 0 0 10px;
 	font-size: 11px;
+	padding: 0;
 }
 
 #top_bottom ul li {
@@ -373,7 +374,7 @@ a {
 #top_bottom p{ /* top_bottom (Who am I?) */
 	margin-top: 0;
 	float:right;
-	padding-right:30px;
+	padding-right: 10px;
 	font-size: 11px;
 }
 
