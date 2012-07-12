@@ -12,7 +12,7 @@
 <!--
 The original iipmooviewer script was written by Ruven Pillay <ruven@users.sourceforge.net>.
 
-This version, named 1.2, was updates and modified to suite the Manuscript Viewer DocSourcesV5 Project needs.
+This version, named 2.0, was updates and modified to suite the Manuscript Viewer BIA Project needs.
 
 The Medici Archive Project Inc. IT team: 
 
@@ -34,7 +34,7 @@ Joana Amill <joana.amill@gmail.com>
 		<![endif]-->
  		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                             
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-		<title>DocSourcesV5 Manuscript Viewer</title>
+		<title>BIA Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"></script>
