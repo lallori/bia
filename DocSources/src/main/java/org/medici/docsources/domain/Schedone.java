@@ -109,7 +109,7 @@ public class Schedone {
 	private String noteCartulazione;
 	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", length=1000)
 	private String noteCartulazioneEng;
-	@Column (name="\"CARTE_BIANCHE\"", length=50)
+	@Column (name="\"CARTE_BIANCHE\"", columnDefinition="LONGTEXT")
 	private String carteBianche;
 	@Column (name="\"CARTE_MANCANTI\"", length=50)
 	private String carteMancanti;
