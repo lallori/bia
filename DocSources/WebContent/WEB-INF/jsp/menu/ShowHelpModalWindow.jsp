@@ -35,9 +35,9 @@
     
     <div id="credits">
     	<p class="title">CREDITS</p>
-    	<p><u>Developer team:</u> Lorenzo Allori, Lorenzo Pasquinelli, Matteo Doni and Joana Amill Luzondo.</p>
-        <p><u>Research team:</u> Alessio Assonitis, Maurizio Arfaioli and Roberta Piccinelli.</p>
-        <p><u>Special thanks to:</u> Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    	<p><u>Developer team:</u> Lorenzo Allori (Project Manager),  Lorenzo Pasquinelli (Senior Developer), Matteo Doni (Developer) and Joana Amill Luzondo (Graphic Designer).</p>
+        <p><u>Research and Testing team:</u> Alessio Assonitis, Maurizio Arfaioli, Lisa Kaborycha, Roberta Piccinelli, Julia Vicioso and Sheila Barker.</p>
+        <p><u>Special thanks to:</u>The Mellon Foundation, L'Archivio di Stato di Firenze e la Direzione Generale degli Archivi. </p>
     </div>
     
     <div id="closeHelp" class="button_small">Close</div>
