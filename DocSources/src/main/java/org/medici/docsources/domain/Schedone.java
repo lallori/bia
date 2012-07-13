@@ -95,23 +95,23 @@ public class Schedone {
 	private Integer dataFineGiorno;
 	@Column (name="\"TITOLO\"", length=50)
 	private String titolo;
-	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=1000)
+	@Column (name="\"DESCRIZIONE_CONTENUTO\"", columnDefinition="LONGTEXT")
 	private String descrizioneContenuto;
-	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", length=1000)
+	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", columnDefinition="LONGTEXT")
 	private String descrizioneContenutoEng;
 	@Column (name="\"LEGATURA\"", length=255)
 	private String legatura;
 	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
-	@Column (name="\"CARTULAZIONE\"", length=1000)
+	@Column (name="\"CARTULAZIONE\"", columnDefinition="LONGTEXT")
 	private String cartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=1000)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", columnDefinition="LONGTEXT")
 	private String noteCartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", length=1000)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", columnDefinition="LONGTEXT")
 	private String noteCartulazioneEng;
 	@Column (name="\"CARTE_BIANCHE\"", columnDefinition="LONGTEXT")
 	private String carteBianche;
-	@Column (name="\"CARTE_MANCANTI\"", length=50)
+	@Column (name="\"CARTE_MANCANTI\"", columnDefinition="LONGTEXT")
 	private String carteMancanti;
 	@Column (name="\"DIMENSIONI_BASE\"", length=50)
 	private String dimensioniBase;
