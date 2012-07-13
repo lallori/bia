@@ -51,7 +51,7 @@
 						</security:authorize>
 						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 							<span class="register">To see this Document you must register</span>
-							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);">
 						</security:authorize>
 					</div>
 				</c:if>
@@ -160,8 +160,11 @@
 					//MD: Declare variable toTest for fix problem with IE
 					var toTest = "";
 					toTest += this.text;
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(toTest != ""){
+							numTab++;
+						}
+					}
 					if(toTest == tabName || toTest.indexOf("Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
 						tabExist = true;
 					}
@@ -176,9 +179,9 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					$j("#tabs").tabs("url", numTab-1, $j(this).attr("href"));
-					$j("#tabs").tabs("load", numTab-1);
+					$j("#tabs").tabs("select", numTab);
+					$j("#tabs").tabs("url", numTab, $j(this).attr("href"));
+					$j("#tabs").tabs("load", numTab);
 					return false;
 				}
 			});

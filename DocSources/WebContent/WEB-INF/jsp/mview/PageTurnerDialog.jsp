@@ -430,8 +430,8 @@
 							if(data.countAlreadyEntered == 1){
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'visible');
+								$j("#transcribeAnyway").css('visibility', 'visible');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-								$j("#transcribeAnyway").css('visibility', 'hidden');
 								$j("#notExtract").css('visibility', 'hidden');
 								$j("#extractTranscribe").css('visibility', 'hidden');
 								$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -511,28 +511,38 @@
 				window.opener.$j("#body_left").load(urlToTranscribe);
 				$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				//To open volume explorer in a tab
-				var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Explore Volume ${command.volNum}" + volLetExt + "</span>";
+				var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Volume ${command.volNum}" + volLetExt + "</span>";
 				var numTab = 0;
+				var hrefRemove = "";
 				
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				window.opener.$j("#tabs ul li a").each(function(){
 					var toTest = "";
 					toTest += this.text;
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(toTest != ""){
+							numTab++;
+						}
+					}
+						
 					if(this.text == tabName || toTest.indexOf("Volume ${command.volNum}" + volLetExt) != -1){
 						tabExist = true;
+						hrefRemove = $j(this).attr("href");
 					}
 				});
-				
+// 				if(tabExist){
+// 					alert(hrefRemove);
+// 					window.opener.$j("#tabs").tabs("remove", hrefRemove);
+// 				}
+							
 				if(!tabExist){
 					window.opener.$j( "#tabs" ).tabs( "add" , urlToExplore, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 				}else{
-					window.opener.$j("#tabs").tabs("select", numTab-1);
-					window.opener.$j("#tabs").tabs("url", numTab-1, urlToExplore);
-					window.opener.$j("#tabs").tabs("load", numTab-1);
+					window.opener.$j("#tabs").tabs("select", numTab);
+					window.opener.$j("#tabs").tabs("url", numTab, urlToExplore);
+					window.opener.$j("#tabs").tabs("load", numTab);
 				}
 				window.blur();
 				window.opener.focus();

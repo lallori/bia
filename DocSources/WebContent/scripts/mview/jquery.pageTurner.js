@@ -157,8 +157,8 @@
 	    						if(data.countAlreadyEntered == 1){
 									$j("#alreadyTranscribe").css('visibility', 'visible');
 									$j("#showAlreadyTranscribed").css('visibility', 'visible');
+									$j("#transcribeAnyway").css('visibility', 'visible');
 									$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-									$j("#transcribeAnyway").css('visibility', 'hidden');
 									$j("#notExtract").css('visibility', 'hidden');
 									$j("#extractTranscribe").css('visibility', 'hidden');
 									$j("#unvailableTranscribe").css('visibility', 'hidden');
@@ -342,8 +342,8 @@
 		    						if(data.countAlreadyEntered == 1){
 										$j("#alreadyTranscribe").css('visibility', 'visible');
 										$j("#showAlreadyTranscribed").css('visibility', 'visible');
+										$j("#transcribeAnyway").css('visibility', 'visible');
 										$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-										$j("#transcribeAnyway").css('visibility', 'hidden');
 										$j("#notExtract").css('visibility', 'hidden');
 										$j("#extractTranscribe").css('visibility', 'hidden');
 										$j("#unvailableTranscribe").css('visibility', 'hidden');

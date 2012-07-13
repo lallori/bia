@@ -58,7 +58,9 @@
 								'-webkit-box-shadow': '1px 1px 10px #666'
 								} ,
 								overlayCSS: { backgroundColor: '#999' }	
-				}); 
+				});
+				$j.scrollTo("#removeTabs");
+				$j.scrollTo('-=200px');
 			}
 			return false;
 		});
