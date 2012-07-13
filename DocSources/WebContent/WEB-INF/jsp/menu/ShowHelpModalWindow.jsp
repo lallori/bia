@@ -27,8 +27,7 @@
         <ul>
         	<li><a href="http://www.medici.org/news" target="_blank">News from MAP</a></li>
             <li><a href="http://www.medici.org/" target="_blank">MAP website</a></li>
-            <li><a href="#">MAP online courses</a></li>
-            <li><a href="#">MAP Forum</a></li>
+            <li><a href="http://courses.medici.org">MAP online courses</a></li>
         </ul>
     </div>
 </div>
