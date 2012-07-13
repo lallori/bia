@@ -236,7 +236,7 @@ public class EditDetailsSchedoneController {
 			command.setOperatore(schedone.getOperatore());
 		} else {
 			command.setIstituto(ApplicationPropertyManager.getApplicationProperty("schedone.istituto"));
-			command.setFondo(ApplicationPropertyManager.getApplicationProperty("schedonefondo"));
+			command.setFondo(ApplicationPropertyManager.getApplicationProperty("schedone.fondo"));
 			command.setLegatura(ApplicationPropertyManager.getApplicationProperty("schedone.legatura"));
 			command.setSupporto(ApplicationPropertyManager.getApplicationProperty("schedone.supporto"));
 			command.setTipoRipresa(ApplicationPropertyManager.getApplicationProperty("schedone.tipoRipresa"));

@@ -622,6 +622,7 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.protocol', '', 'http');
 
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.coloreImmagine', '', 'RGB');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.nomeFiles', '', 'Quattro cifre (numero progressivo immagine) _ coperta/C (carta)/G(guardia)/A (allegato)/R(repertorio) _ tre cifre (numero della carta) _ tre lettere (bis ter qua) _ R/V');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.fondo', '', 'Mediceo del Principato');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.istituto', '', 'Archivio di Stato di Firenze');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.legatura', '', 'Esempio (cambiare): Filza con coperta attribuita in fase di restauro (1974)');
