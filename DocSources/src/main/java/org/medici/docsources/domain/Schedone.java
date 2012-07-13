@@ -95,19 +95,19 @@ public class Schedone {
 	private Integer dataFineGiorno;
 	@Column (name="\"TITOLO\"", length=50)
 	private String titolo;
-	@Column (name="\"DESCRIZIONE_CONTENUTO\"", columnDefinition="LONGTEXT")
+	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=1000)
 	private String descrizioneContenuto;
-	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", columnDefinition="LONGTEXT")
+	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", length=1000)
 	private String descrizioneContenutoEng;
 	@Column (name="\"LEGATURA\"", length=255)
 	private String legatura;
 	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
-	@Column (name="\"CARTULAZIONE\"", columnDefinition="LONGTEXT")
+	@Column (name="\"CARTULAZIONE\"", length=1000)
 	private String cartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", columnDefinition="LONGTEXT")
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=1000)
 	private String noteCartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", columnDefinition="LONGTEXT")
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", length=1000)
 	private String noteCartulazioneEng;
 	@Column (name="\"CARTE_BIANCHE\"", columnDefinition="LONGTEXT")
 	private String carteBianche;
@@ -125,7 +125,7 @@ public class Schedone {
 	private String coloreImmagine;
 	@Column (name="\"RISOLUZIONE\"", length=50)
 	private String risoluzione;
-	@Column (name="\"NOME_FILES\"", length=50)
+	@Column (name="\"NOME_FILES\"", length=1000)
 	private String nomeFiles;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_TIFF\"")
 	private Integer numeroTotaleImmaginiTiff;
@@ -169,7 +169,7 @@ public class Schedone {
 	@Column (name="\"FORMATO_TOTALE_IMMAGINI_PDF\"", length=2)
 	@Enumerated(EnumType.STRING)
 	private Formato formatoTotaleImmaginiPdf;
-	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
+	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=500)
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
 	private String tipoRipresa;
