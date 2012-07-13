@@ -52,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Schedone".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/digitization/ShowSchedone")
@@ -104,7 +105,7 @@ public class ShowSchedoneController {
 		}else{
 			schedone.setSchedoneId(0);
 			schedone.setIstituto(ApplicationPropertyManager.getApplicationProperty("schedone.istituto"));
-			schedone.setFondo(ApplicationPropertyManager.getApplicationProperty("schedonefondo"));
+			schedone.setFondo(ApplicationPropertyManager.getApplicationProperty("schedone.fondo"));
 			schedone.setLegatura(ApplicationPropertyManager.getApplicationProperty("schedone.legatura"));
 			schedone.setSupporto(ApplicationPropertyManager.getApplicationProperty("schedone.supporto"));
 			schedone.setTipoRipresa(ApplicationPropertyManager.getApplicationProperty("schedone.tipoRipresa"));
