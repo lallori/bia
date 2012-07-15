@@ -117,7 +117,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 				List errors = ((BeanPropertyBindingResult) modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command")).getAllErrors();
 
 				if (errors.size() > 0) {
-					StringBuilder stringBuilderErrors = new StringBuilder(accessLog.getInformations());
+					StringBuilder stringBuilderErrors = new StringBuilder("");
 					for (int i = 0; i < errors.size(); i++) {
 						stringBuilderErrors.append(errors.get(i).toString());
 					}
@@ -126,7 +126,11 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			}
 			if (modelAndView.getModelMap().get("applicationThrowable") != null) {
 				ApplicationThrowable applicationThrowable = (ApplicationThrowable) modelAndView.getModelMap().get("applicationThrowable");
-				accessLog.setErrors(applicationThrowable.getMessage());
+				if (accessLog.getErrors() != null) {
+					accessLog.setErrors(accessLog.getErrors() + " - " + applicationThrowable.getMessage());
+				} else {
+					accessLog.setErrors(applicationThrowable.getMessage());
+				}
 			}
 		}
 
@@ -134,7 +138,8 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 
 		try {
 			getLogService().traceAccessLog(accessLog);
-		} catch (ApplicationThrowable ex) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			logger.error(applicationThrowable);
 		}
 
 		StringBuilder stringBuilder = new StringBuilder();
