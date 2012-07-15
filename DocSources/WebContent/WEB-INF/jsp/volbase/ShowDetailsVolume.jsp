@@ -14,9 +14,11 @@
 		<c:param name="flashVersion" value="false" />
 	</c:url>
 
-	<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
-	</c:url>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+		<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+	</security:authorize>
 	
 	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
 		<c:param name="summaryId" value="${volume.summaryId}" />
@@ -109,7 +111,68 @@
 			</div>
 		</div>
 	</div>
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+
+	<script type="text/javascript">
+	$j(document).ready(function() {
+		if($j("#ShowVolumeInVolumeExplorer").length != 0){
+			$j("#EditDetailsVolumeDiv").css('min-height', '260px');
+		}
+		//For check if already exsist a tab with volume explorer
+		$j("#ShowVolumeInVolumeExplorer").click(function(){
+			var tabName = "<span id='titleTab${volume.volNum}${volume.volLetExt}'>Explore Volume ${volume.volNum}${volume.volLetExt}</span>";
+			var numTab = 0;
+			
+			//Check if already exist a tab with this person
+			var tabExist = false;
+			$j("#tabs ul li a").each(function(){
+				var toTest = "";
+				toTest += this.text;
+				if(!tabExist)
+					numTab++;
+				if(this.text == tabName || toTest.indexOf("Explore Volume ${volume.volNum}${volume.volLetExt}") != -1){
+					tabExist = true;
+				}
+			});
+			
+			if(!tabExist){
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			}else{
+				$j("#tabs").tabs("select", numTab-1);
+				$j("#tabs").tabs("url", numTab-1, $j(this).attr("href"));
+				$j("#tabs").tabs("load", numTab-1);
+				return false;
+			}
+		});
+		
+		$j("#showDocumentsRelated").click(function(){
+			//var tabName = "Docs Volume ${volume.summaryId}";
+			var tabName = "Docs Volume ${volume.volNum}${volume.volLetExt}";
+			var numTab = 0;
+			
+			//Check if already exist a tab with this person
+			var tabExist = false;
+			$j("#tabs ul li a").each(function(){
+				if(!tabExist)
+					numTab++;
+				if(this.text == tabName){
+					tabExist = true;
+				}
+			});
+			
+			if(!tabExist){
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			}else{
+				$j("#tabs").tabs("select", numTab-1);
+				return false;
+			}
+		});
+	});
+	</script>
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditContextVolume").css('visibility', 'visible');
@@ -117,10 +180,6 @@
 	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
-			if($j("#ShowVolumeInVolumeExplorer").length != 0){
-				$j("#EditDetailsVolumeDiv").css('min-height', '260px');
-			}
-			
 			$j("#EditDetailsVolume").volumeExplorer( {
 				summaryId				: "${volume.summaryId}",
 				volNum					: "${volume.volNum}",
@@ -134,60 +193,6 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
 				return false;
-			});
-			
-			//For check if already exsist a tab with volume explorer
-			$j("#ShowVolumeInVolumeExplorer").click(function(){
-				var tabName = "<span id='titleTab${volume.volNum}${volume.volLetExt}'>Explore Volume ${volume.volNum}${volume.volLetExt}</span>";
-				var numTab = 0;
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					var toTest = "";
-					toTest += this.text;
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName || toTest.indexOf("Explore Volume ${volume.volNum}${volume.volLetExt}") != -1){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					$j("#tabs").tabs("url", numTab-1, $j(this).attr("href"));
-					$j("#tabs").tabs("load", numTab-1);
-					return false;
-				}
-			});
-			
-			$j("#showDocumentsRelated").click(function(){
-				//var tabName = "Docs Volume ${volume.summaryId}";
-				var tabName = "Docs Volume ${volume.volNum}${volume.volLetExt}";
-				var numTab = 0;
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
 			});
 		});
 	</script>

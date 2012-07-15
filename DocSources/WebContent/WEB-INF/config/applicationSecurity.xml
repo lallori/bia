@@ -23,6 +23,7 @@
         <security:intercept-url pattern="/user/ajax/**.do"					access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
         <security:intercept-url pattern="/adm/**"   				access="ROLE_ADMINISTRATORS" />
+        <security:intercept-url pattern="/de/volbase/**" 			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/de/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
         <security:intercept-url pattern="/dev/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
         <security:intercept-url pattern="/devd/**"  				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
