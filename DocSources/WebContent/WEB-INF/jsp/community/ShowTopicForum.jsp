@@ -112,10 +112,15 @@ ${paginationData}
 				$j("#mainContent").load($j(this).attr("href"));
 				return false;
 			});
-			
-			$j("#mainContent").load($j(this).attr("href"));
+
+			$j('.quotePost').die();
 			$j('.quotePost').click(function (){
 				$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+				return false;
+			});
+
+			$j('#postReply').click(function (){
+				$j("#mainContent").load($j(this).attr("href"));
 				return false;
 			});
 		});

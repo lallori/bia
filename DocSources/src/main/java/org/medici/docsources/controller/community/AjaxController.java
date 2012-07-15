@@ -32,14 +32,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.medici.docsources.command.community.EditForumPostCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.UserMessage.UserMessageCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -47,6 +52,8 @@ import org.medici.docsources.service.community.CommunityService;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,7 +122,40 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);		
 	}
-	
+
+	@RequestMapping(value = "/community/EditPost", method = RequestMethod.POST)
+	public ModelAndView editForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
+										@RequestParam(value="forumId", required=false) Integer forumId,
+										@RequestParam(value="topicId", required=false) Integer topicId,
+										@RequestParam(value="subject", required=false) String subject,
+										@RequestParam(value="text", required=false) String text,
+										HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		ForumPost forumPost = new ForumPost(postId);
+		forumPost.setForum(new Forum(forumId));
+		forumPost.setTopic(new ForumTopic(topicId));
+		forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
+		forumPost.setText(text);
+		forumPost.setSubject(subject);
+
+		try {
+			if (postId.equals(0)) {
+				forumPost = getCommunityService().addNewPost(forumPost);
+			} else {
+				forumPost = getCommunityService().editPost(forumPost);
+			}
+			model.put("topicId", forumPost.getTopic().getTopicId());
+			model.put("postId", forumPost.getPostId());
+			model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumPost.getTopic())); 
+			model.put("operation", "OK");
+
+			return new ModelAndView("responseOK", model);		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
 	/**
 	 * 
 	 * @param httpSession

@@ -9,7 +9,7 @@
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${category.forumId}"/>
 	</c:url>
-
+   	
 <!-- Main Forum Page -->
 	<c:if test="${not empty category}">
 		<c:if test="${category.option.canHaveSubCategory}">
@@ -62,7 +62,11 @@
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
-			
+			<div id="topicActions">
+				<c:if test="${forum.option.canHaveTopics}">
+				<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
+				</c:if>
+			</div>
 
 		<c:if test="${forum.option.canHaveSubForum}">
 			<div id="forumTable">
@@ -223,8 +227,6 @@
  		</c:if> 
 		
 	</c:if>
-	
-	
 
 		<script>
 			$j(document).ready(function() {
@@ -260,7 +262,6 @@
 
 				$j('#newTopic').click(function (){
 					$j("#mainContent").load($j(this).attr("href"));
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 			});

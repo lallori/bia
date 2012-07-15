@@ -6,11 +6,17 @@
 
 	<c:url var="ForumCSSURL" value="/styles/forum/forum.css"/>
 	
-	<c:url var="EditForumPostURL" value="/community/EditForumPost.do"/>
+	<c:url var="EditForumPostURL" value="/community/EditPost.json"/>
 	
 	<c:url var="ShowPreviewForumPostURL" value="/community/ShowPreviewForumPost.do"/>
-							
+
+	<c:if test="${command.topicId == '0'}">
 	<h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
+	</c:if>
+
+	<c:if test="${command.topicId != '0'}">
+	<h1 style="margin-bottom:20px;">POST REPLY</h1>
+	</c:if>
 
 	<form:form id="EditForumPost" method="POST" class="edit" action="${EditForumPostURL}">
 		<div>
@@ -28,6 +34,7 @@
 	    <form:hidden path="topicId"/>
 	    <form:hidden path="postId"/>
 
+	</form:form>
 <script type="text/javascript">
 		$j("#htmlbox").htmlbox({
 		    toolbars:[[
@@ -69,11 +76,42 @@
 		$j(document).ready(function() {
 			$j('#submit').click(function(){
 	 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
-					$("#messagePosted").empty().html(response).dialog('open');
+	 				if (json.operation == 'OK') {
+						$j("#messagePosted").css('display','inherit');
+						$j("#messagePosted").dialog({
+							  autoOpen : false,
+							  modal: true,
+							  resizable: false,
+							  width: 300,
+							  height: 130, 
+							  buttons: {
+								  Ok: function() {
+									  $j(this).dialog("close");
+									  $j("#mainContent").load(json.topicUrl);
+								  }
+							  }
+						  });
+						$j("#messagePosted").dialog('open');
+	 				} else {
+						$j("#messageNotPosted").css('display','inherit');
+						$j("#messageNotPosted").dialog({
+							  autoOpen : false,
+							  modal: true,
+							  resizable: false,
+							  width: 300,
+							  height: 130, 
+							  buttons: {
+								  Ok: function() {
+									  $j(this).dialog("close");
+								  }
+							  }
+						  });
+						$j("#messageNotPosted").dialog('open');
+	 				}
 				}});
 
-	 			$j('#postTable').css('display','inherit');
-				$j.scrollTo({top:'300px',left:'0px'}, 800 );
+	 			/*$j('#postTable').css('display','inherit');
+				$j.scrollTo({top:'300px',left:'0px'}, 800 );*/
 				return false;
 			});
 
@@ -89,10 +127,19 @@
 		});
 </script>
 
-	</form:form>
-
 	<div id="postTable" title="Post" style="display:none; margin-top:15px">
 	</div>
 
 	<div id="messagePosted" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			This message has been posted successfully.
+		</p>
+	</div>
+
+	<div id="messageNotPosted" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			This message has not been posted successfully.
+		</p>
 	</div>

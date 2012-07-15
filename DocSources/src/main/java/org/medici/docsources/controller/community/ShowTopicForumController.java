@@ -80,23 +80,22 @@ public class ShowTopicForumController {
 					httpSession.setAttribute("userInformation", userInformation);
 				}
 			}
-	
-			// secondo paginationFilter to manage topics results..
+
 			PaginationFilter paginationFilterTopic = new PaginationFilter();
-			if (command.getTopicsForPage() != null) {
-				paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
+			if (command.getPostsForPage() != null) {
+				paginationFilterTopic.setElementsForPage(command.getPostsForPage());
 			} else {
 				paginationFilterTopic.setElementsForPage(new Integer(10));
-				command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
+				command.setPostsForPage(paginationFilterTopic.getElementsForPage());
 			}
-			if (command.getTopicPageNumber() != null) {
-				paginationFilterTopic.setThisPage(command.getTopicPageNumber());
+			if (command.getPostPageNumber() != null) {
+				paginationFilterTopic.setThisPage(command.getPostPageNumber());
 			} else {
 				paginationFilterTopic.setThisPage(new Integer(1));
-				command.setTopicPageNumber(paginationFilterTopic.getThisPage());
+				command.setPostPageNumber(paginationFilterTopic.getThisPage());
 			}
-			if (command.getTopicPageTotal() != null) {
-				paginationFilterTopic.setPageTotal(command.getTopicPageTotal());
+			if (command.getPostPageTotal() != null) {
+				paginationFilterTopic.setPageTotal(command.getPostPageTotal());
 			} else {
 				paginationFilterTopic.setPageTotal(null);
 			}
@@ -107,9 +106,6 @@ public class ShowTopicForumController {
 			
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
 			model.put("postsPage", postsPage);
-
-			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
-			model.put("statisticsHashMap", statisticsHashMap);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowTopicForum", model);

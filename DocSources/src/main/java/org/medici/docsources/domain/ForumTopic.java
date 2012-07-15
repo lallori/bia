@@ -94,9 +94,27 @@ public class ForumTopic implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lastPost", nullable=true)
 	private ForumPost lastPost;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"entryId\"", nullable=true)
+	private Document document;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"peopleId\"", nullable=true)
+	private People person;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"placeAllId\"", nullable=true)
+	private Place place;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"summaryId\"", nullable=true)
+	private Volume volume;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"imageId\"", nullable=true)
+	private Image image;
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="topic", nullable=true)
 	private List<ForumPost> posts;
+
 
 	/**
 	 * 
@@ -116,139 +134,6 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @return the topicId
-	 */
-	public Integer getTopicId() {
-		return topicId;
-	}
-
-	/**
-	 * @param topicId the topicId to set
-	 */
-	public void setTopicId(Integer topicId) {
-		this.topicId = topicId;
-	}
-
-	/**
-	 * @return the forum
-	 */
-	public Forum getForum() {
-		return forum;
-	}
-
-	/**
-	 * @param forum the forum to set
-	 */
-	public void setForum(Forum forum) {
-		this.forum = forum;
-	}
-
-	/**
-	 * @return the totalViews
-	 */
-	public int getTotalViews() {
-		return totalViews;
-	}
-
-	/**
-	 * @param totalViews the totalViews to set
-	 */
-	public void setTotalViews(int totalViews) {
-		this.totalViews = totalViews;
-	}
-
-	/**
-	 * @return the totalReplies
-	 */
-	public int getTotalReplies() {
-		return totalReplies;
-	}
-
-	/**
-	 * @param totalReplies the totalReplies to set
-	 */
-	public void setTotalReplies(int totalReplies) {
-		this.totalReplies = totalReplies;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public int getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public Type getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the hasAttachment
-	 */
-	public boolean isHasAttachment() {
-		return hasAttachment;
-	}
-
-	/**
-	 * @param hasAttachment the hasAttachment to set
-	 */
-	public void setHasAttachment(boolean hasAttachment) {
-		this.hasAttachment = hasAttachment;
-	}
-
-	/**
-	 * @param userInformation the userInformation to set
-	 */
-	public void setUserInformation(UserInformation userInformation) {
-		this.userInformation = userInformation;
-	}
-
-	/**
-	 * @return the userInformation
-	 */
-	public UserInformation getUserInformation() {
-		return userInformation;
-	}
-
-	/**
-	 * @param ipAddress the ipAddress to set
-	 */
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
-
-	/**
-	 * @return the ipAddress
-	 */
-	public String getIpAddress() {
-		return ipAddress;
-	}
-
-	/**
-	 * @param dateCreated the dateCreated to set
-	 */
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
@@ -256,31 +141,10 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @return the subject
+	 * @return the document
 	 */
-	public String getSubject() {
-		return subject;
-	}
-
-	/**
-	 * @param subject the subject to set
-	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	/**
-	 * @return the lastUpdate
-	 */
-	public Date getLastUpdate() {
-		return lastUpdate;
-	}
-
-	/**
-	 * @param lastUpdate the lastUpdate to set
-	 */
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
+	public Document getDocument() {
+		return document;
 	}
 
 	/**
@@ -291,10 +155,31 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @param firstPost the firstPost to set
+	 * @return the forum
 	 */
-	public void setFirstPost(ForumPost firstPost) {
-		this.firstPost = firstPost;
+	public Forum getForum() {
+		return forum;
+	}
+
+	/**
+	 * @return the hasAttachment
+	 */
+	public Boolean getHasAttachment() {
+		return hasAttachment;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+	/**
+	 * @return the ipAddress
+	 */
+	public String getIpAddress() {
+		return ipAddress;
 	}
 
 	/**
@@ -305,10 +190,24 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @param lastPost the lastPost to set
+	 * @return the lastUpdate
 	 */
-	public void setLastPost(ForumPost lastPost) {
-		this.lastPost = lastPost;
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	/**
+	 * @return the person
+	 */
+	public People getPerson() {
+		return person;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public Place getPlace() {
+		return place;
 	}
 
 	/**
@@ -319,10 +218,234 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
+	 * @return the status
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
+	 * @return the subject
+	 */
+	public String getSubject() {
+		return subject;
+	}
+
+	/**
+	 * @return the topicId
+	 */
+	public Integer getTopicId() {
+		return topicId;
+	}
+
+	/**
+	 * @return the totalReplies
+	 */
+	public int getTotalReplies() {
+		return totalReplies;
+	}
+
+	/**
+	 * @return the totalViews
+	 */
+	public int getTotalViews() {
+		return totalViews;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public Type getType() {
+		return type;
+	}
+
+	/**
+	 * @return the userInformation
+	 */
+	public UserInformation getUserInformation() {
+		return userInformation;
+	}
+
+	/**
+	 * @return the volume
+	 */
+	public Volume getVolume() {
+		return volume;
+	}
+
+	/**
+	 * @return the hasAttachment
+	 */
+	public boolean isHasAttachment() {
+		return hasAttachment;
+	}
+
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @param document the document to set
+	 */
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
+	/**
+	 * @param firstPost the firstPost to set
+	 */
+	public void setFirstPost(ForumPost firstPost) {
+		this.firstPost = firstPost;
+	}
+
+	/**
+	 * @param forum the forum to set
+	 */
+	public void setForum(Forum forum) {
+		this.forum = forum;
+	}
+
+	/**
+	 * @param hasAttachment the hasAttachment to set
+	 */
+	public void setHasAttachment(boolean hasAttachment) {
+		this.hasAttachment = hasAttachment;
+	}
+
+	/**
+	 * @param hasAttachment the hasAttachment to set
+	 */
+	public void setHasAttachment(Boolean hasAttachment) {
+		this.hasAttachment = hasAttachment;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	/**
+	 * @param ipAddress the ipAddress to set
+	 */
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
+	/**
+	 * @param lastPost the lastPost to set
+	 */
+	public void setLastPost(ForumPost lastPost) {
+		this.lastPost = lastPost;
+	}
+
+	/**
+	 * @param lastUpdate the lastUpdate to set
+	 */
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(People person) {
+		this.person = person;
+	}
+
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+
+	/**
 	 * @param posts the posts to set
 	 */
 	public void setPosts(List<ForumPost> posts) {
 		this.posts = posts;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	/**
+	 * @param subject the subject to set
+	 */
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
+	}
+
+	/**
+	 * @param totalReplies the totalReplies to set
+	 */
+	public void setTotalReplies(int totalReplies) {
+		this.totalReplies = totalReplies;
+	}
+
+	/**
+	 * @param totalReplies the totalReplies to set
+	 */
+	public void setTotalReplies(Integer totalReplies) {
+		this.totalReplies = totalReplies;
+	}
+
+	/**
+	 * @param totalViews the totalViews to set
+	 */
+	public void setTotalViews(int totalViews) {
+		this.totalViews = totalViews;
+	}
+
+	/**
+	 * @param totalViews the totalViews to set
+	 */
+	public void setTotalViews(Integer totalViews) {
+		this.totalViews = totalViews;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	/**
+	 * @param userInformation the userInformation to set
+	 */
+	public void setUserInformation(UserInformation userInformation) {
+		this.userInformation = userInformation;
+	}
+
+	/**
+	 * @param volume the volume to set
+	 */
+	public void setVolume(Volume volume) {
+		this.volume = volume;
 	}
 
 	/**
@@ -352,7 +475,7 @@ public class ForumTopic implements Serializable {
 	 *
 	 */
 	public static enum Type {
-		NORMAL("NORMAL"),STICKY("CATEGORY"),ANNOUNCE("LINK");
+		ANNOUNCE("LINK"),NORMAL("NORMAL"),STICKY("CATEGORY");
 		
 		private final String type;
 

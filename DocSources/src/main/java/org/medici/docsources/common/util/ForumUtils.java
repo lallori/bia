@@ -93,6 +93,6 @@ public class ForumUtils {
 	 * @return
 	 */
 	public static String getForumChronology(ForumTopic forumTopic) {
-		return getForumChronology(forumTopic.getForum()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumTopicHrefUrl(forumTopic) + "</span>";
+		return getForumChronology(forumTopic.getForum()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowTopicForumHrefUrl(forumTopic) + "</span>";
 	}
 }

@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.docsources.dao.annotation.AnnotationDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
 import org.medici.docsources.dao.forumtopic.ForumTopicDAO;
@@ -70,6 +71,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
+	private AnnotationDAO annotationDAO;
+	@Autowired
 	private ForumDAO forumDAO;   
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
@@ -83,8 +86,23 @@ public class CommunityServiceImpl implements CommunityService {
 	private UserMessageDAO userMessageDAO;
 
 	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable {
 		try {
@@ -105,6 +123,7 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {

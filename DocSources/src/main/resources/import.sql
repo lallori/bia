@@ -599,6 +599,9 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.i
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.people', 'Forum container for people', '6');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.place', 'Forum container for place', '7');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.volume', 'Forum container for volume', '8');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.general', 'Forum container for general questions', '9');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.identifier.paleography', 'Forum container for paleography', '10');
+
 
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.image.path', 'Remote server image path', '/data/tiled_mdp/');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.fcgi.path', 'IIPImage fcgi-bin path', '/fcgi-bin/iipsrv.fcgi');

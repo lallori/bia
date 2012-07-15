@@ -33,6 +33,7 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -53,6 +54,16 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface ManuscriptViewerService {
+
+	/**
+	 * 
+	 * @param annotation
+	 * @param image
+	 * @param ipAddress
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Annotation createAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -115,7 +126,7 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param summaryId
@@ -140,7 +151,7 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * with specific image type and folio number linked to a 
@@ -171,6 +182,7 @@ public interface ManuscriptViewerService {
 	 */
 	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
@@ -184,7 +196,6 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
 
 	/**
 	 * 
@@ -212,7 +223,7 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param volNum
@@ -222,7 +233,7 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param entryId

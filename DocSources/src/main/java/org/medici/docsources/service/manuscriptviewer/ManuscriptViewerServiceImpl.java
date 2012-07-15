@@ -28,28 +28,44 @@
 package org.medici.docsources.service.manuscriptviewer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.docsources.dao.annotation.AnnotationDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumpost.ForumPostDAO;
+import org.medici.docsources.dao.forumtopic.ForumTopicDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
+import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Annotation;
+import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -63,9 +79,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Autowired
+	private AnnotationDAO annotationDAO;
+	@Autowired
 	private SchedoneDAO catalogDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
+	@Autowired
+	private ForumDAO forumDAO;
+	@Autowired
+	private ForumPostDAO forumPostDAO;
+	@Autowired
+	private ForumTopicDAO forumTopicDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	@Autowired
@@ -74,7 +98,77 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	private PlaceDAO placeDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	@Autowired
+	private UserInformationDAO userInformationDAO;
+
+	/**
+	 * 
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Annotation createAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
+		try {
+			if (annotation.getType().equals(Annotation.Type.GENERAL)) {
+				Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
+				image = getImageDAO().find(image.getImageId());
+				Volume volume = getVolumeDAO().findVolume(image.getVolNum(), image.getVolLetExt()); 
+				UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				if (volume != null) {
+					Forum volumeForum = getForumDAO().findVolumeForumFromParent(generalQuestionsForum, volume.getSummaryId());
+					if (volumeForum == null) {
+						//create volume forum
+					}
+					
+					Forum folioForum  = getForumDAO().findFolioForumFromParent(volumeForum, image.getImageId());
+					if (folioForum == null) {
+						// create folio forum
+					}
 	
+					// create specific topic on annotation...
+					ForumTopic forumTopic = new ForumTopic(null);
+					forumTopic.setForum(folioForum);
+					forumTopic.setDateCreated(new Date());
+					forumTopic.setLastUpdate(forumTopic.getDateCreated());
+					forumTopic.setIpAddress(ipAddress);
+					
+					forumTopic.setUserInformation(userInformation);
+					forumTopic.setSubject(annotation.getText());
+					forumTopic.setTotalReplies(new Integer(0));
+					forumTopic.setTotalViews(new Integer(0));
+					forumTopic.setLastPost(null);
+					forumTopic.setFirstPost(null);
+					
+					getForumTopicDAO().persist(forumTopic);
+					
+					ForumPost forumPost = new ForumPost();
+					forumPost.setTopic(forumTopic);
+					forumPost.setDateCreated(new Date());
+					forumPost.setLastUpdate(new Date());
+					forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+					getForumPostDAO().persist(forumPost);
+
+					getForumDAO().recursiveIncreasePostsNumber(folioForum);
+
+					folioForum.setLastPost(forumPost);
+					getForumDAO().merge(folioForum);
+				} else {
+					return null;
+				}
+			} else if (annotation.getType().equals(Annotation.Type.PALEOGRAPHY)) {
+				
+			} else {
+				
+			}
+
+			getAnnotationDAO().persist(annotation);
+
+			return annotation;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -191,7 +285,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -233,7 +327,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -333,10 +427,41 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	/**
 	 * @return the catalogDAO
 	 */
 	public SchedoneDAO getCatalogDAO() {
 		return catalogDAO;
+	}
+
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
+	}
+
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
 	}
 
 	/**
@@ -397,23 +522,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable {
-		try{
-			Document document = getDocumentDAO().find(entryId);
-			if(document.getSynExtract() != null && (!document.getSynExtract().getDocExtract().isEmpty())){
-				return true;
-			}else{
-				return false;
-			}
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
 	 * @return the peopleDAO
 	 */
 	public PeopleDAO getPeopleDAO() {
@@ -432,6 +540,30 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable {
+		try{
+			Document document = getDocumentDAO().find(entryId);
+			if(document.getSynExtract() != null && (!document.getSynExtract().getDocExtract().isEmpty())){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
 	}
 
 	/**
@@ -476,4 +608,17 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		this.volumeDAO = volumeDAO;
 	}
 
+	/**
+	 * @return the userInformationDAO
+	 */
+	public UserInformationDAO getUserInformationDAO() {
+		return userInformationDAO;
+	}
+
+	/**
+	 * @param userInformationDAO the userInformationDAO to set
+	 */
+	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
+		this.userInformationDAO = userInformationDAO;
+	}
 }

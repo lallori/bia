@@ -278,11 +278,11 @@ public class HtmlUtils {
 	 * @param forumTopic
 	 * @return
 	 */
-	public static String getShowForumTopicHrefUrl(ForumTopic forumTopic) {
+	public static String getShowTopicForumHrefUrl(ForumTopic forumTopic) {
 		StringBuilder stringBuilder = new StringBuilder("");
 		if (forumTopic != null) {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuilder.append("/community/ShowForumTopic.do?topicId=");
+			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
 			stringBuilder.append(forumTopic.getTopicId());
 		}
 

@@ -37,12 +37,11 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Image.ImageRectoVerso;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Forum DAO.
@@ -90,6 +89,16 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 
 	/**
 	 * 
+	 * @param volumeForum
+	 * @param imageProgTypeNum
+	 * @param imageRectoVerso
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 * @throws PersistenceException
@@ -128,6 +137,15 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param generalQuestionsForum
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum findVolumeForumFromParent(Forum generalQuestionsForum, Integer summaryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -190,7 +208,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param parentForum
@@ -203,7 +221,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @param parentForum
 	 */
 	public void recursiveDecreaseTopicsNumber(Forum parentForum) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param parentForum
@@ -216,5 +234,5 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveIncreaseTopicsNumber(Forum parentForum)throws PersistenceException;
+	public void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
 }

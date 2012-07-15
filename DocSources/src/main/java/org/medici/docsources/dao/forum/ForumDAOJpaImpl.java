@@ -49,6 +49,7 @@ import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Status;
 import org.medici.docsources.domain.Forum.SubType;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.Image.ImageRectoVerso;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
@@ -208,6 +209,29 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         return forum;
 	}
 
+	@Override
+	public Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException {
+		if (volumeForum == null){
+			return null;
+		}
+
+		String jpql = "FROM Forum WHERE forumParent.id = (:forumParent) and forumParent.type=:forumParentTypeCategory " +
+        " and type=:typeForum and image.imageId =:imageId";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("forumParent", volumeForum.getForumId());
+        query.setParameter("forumParentTypeCategory", Type.FORUM);
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("imageId", imageId);
+
+        List<Forum> forumResult = (List<Forum>) query.getResultList();
+
+        if (forumResult.size() == 1) {
+        	return forumResult.get(0);
+        }
+        return null;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -279,7 +303,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return (List<Forum>) query.getResultList();
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -301,7 +325,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return (List<Forum>) query.getResultList();
   	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -363,6 +387,33 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		page.setList(list);
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum findVolumeForumFromParent(Forum generalQuestionsForum, Integer summaryId) throws PersistenceException {
+		if (generalQuestionsForum == null){
+			return null;
+		}
+
+		String jpql = "FROM Forum WHERE forumParent.id = (:forumParent) and forumParent.type=:forumParentTypeCategory " +
+        " and type=:typeForum and volume.summaryId =:summaryId";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("forumParent", generalQuestionsForum.getForumId());
+        query.setParameter("forumParentTypeCategory", Type.FORUM);
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("summaryId", summaryId);
+
+        List<Forum> forumResult = (List<Forum>) query.getResultList();
+
+        if (forumResult.size() == 1) {
+        	return forumResult.get(0);
+        }
+
+        return null;
 	}
 
 	/**
@@ -495,6 +546,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         return query.getResultList();
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -538,7 +590,6 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         return retValue;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -558,21 +609,6 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void recursiveIncreasePostsNumber(Forum forum) {
-		if (forum == null) {
-			return;
-		}
-		
-		forum.setPostsNumber(forum.getPostsNumber()+1);
-		merge(forum);
-		
-		recursiveIncreasePostsNumber(forum.getForumParent());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void recursiveDecreaseTopicsNumber(Forum forum) throws PersistenceException {
 		if (forum == null) {
 			return;
@@ -582,6 +618,21 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		merge(forum);
 		
 		recursiveIncreaseTopicsNumber(forum.getForumParent());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveIncreasePostsNumber(Forum forum) {
+		if (forum == null) {
+			return;
+		}
+		
+		forum.setPostsNumber(forum.getPostsNumber()+1);
+		merge(forum);
+		
+		recursiveIncreasePostsNumber(forum.getForumParent());
 	}
 
 	/**

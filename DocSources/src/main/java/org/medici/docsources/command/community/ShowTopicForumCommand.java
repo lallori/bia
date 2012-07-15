@@ -37,9 +37,9 @@ public class ShowTopicForumCommand {
 	private Integer topicId;
 	private Integer forumId;
 
-	private Integer topicPageNumber;
-	private Integer topicPageTotal;
-	private Integer topicsForPage;
+	private Integer postPageNumber;
+	private Integer postPageTotal;
+	private Integer postsForPage;
 	
 	/**
 	 * @return the completeDOM
@@ -82,47 +82,46 @@ public class ShowTopicForumCommand {
 	public void setForumId(Integer forumId) {
 		this.forumId = forumId;
 	}
-	
+
 	/**
-	 * @return the topicPageNumber
+	 * @return the postPageNumber
 	 */
-	public Integer getTopicPageNumber() {
-		return topicPageNumber;
-	}
-	
-	/**
-	 * @param topicPageNumber the topicPageNumber to set
-	 */
-	public void setTopicPageNumber(Integer topicPageNumber) {
-		this.topicPageNumber = topicPageNumber;
-	}
-	
-	/**
-	 * @return the topicPageTotal
-	 */
-	public Integer getTopicPageTotal() {
-		return topicPageTotal;
-	}
-	
-	/**
-	 * @param topicPageTotal the topicPageTotal to set
-	 */
-	public void setTopicPageTotal(Integer topicPageTotal) {
-		this.topicPageTotal = topicPageTotal;
-	}
-	
-	/**
-	 * @return the topicsForPage
-	 */
-	public Integer getTopicsForPage() {
-		return topicsForPage;
-	}
-	
-	/**
-	 * @param topicsForPage the topicsForPage to set
-	 */
-	public void setTopicsForPage(Integer topicsForPage) {
-		this.topicsForPage = topicsForPage;
+	public Integer getPostPageNumber() {
+		return postPageNumber;
 	}
 
+	/**
+	 * @param postPageNumber the postPageNumber to set
+	 */
+	public void setPostPageNumber(Integer postPageNumber) {
+		this.postPageNumber = postPageNumber;
+	}
+
+	/**
+	 * @return the postPageTotal
+	 */
+	public Integer getPostPageTotal() {
+		return postPageTotal;
+	}
+
+	/**
+	 * @param postPageTotal the postPageTotal to set
+	 */
+	public void setPostPageTotal(Integer postPageTotal) {
+		this.postPageTotal = postPageTotal;
+	}
+
+	/**
+	 * @return the postsForPage
+	 */
+	public Integer getPostsForPage() {
+		return postsForPage;
+	}
+
+	/**
+	 * @param postsForPage the postsForPage to set
+	 */
+	public void setPostsForPage(Integer postsForPage) {
+		this.postsForPage = postsForPage;
+	}
 }

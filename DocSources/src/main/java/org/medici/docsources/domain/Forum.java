@@ -108,6 +108,9 @@ public class Forum implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"summaryId\"", nullable=true)
 	private Volume volume;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"imageId\"", nullable=true)
+	private Image image;
 
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"forumId\"", nullable=true)
@@ -411,6 +414,14 @@ public class Forum implements Serializable {
 	 */
 	public Volume getVolume() {
 		return volume;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public Image getImage() {
+		return image;
 	}
 
 	/**

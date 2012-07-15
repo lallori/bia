@@ -1,5 +1,5 @@
 /*
- * AltNameDAOJpaImpl.java
+ * AnnotationDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,25 +25,21 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.altname;
+package org.medici.docsources.dao.annotation;
 
-import java.util.List;
-
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.Annotation;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>AltNameDAOJpaImpl</b> is a default implementation of <b>AltNameDAO</b>.
+ * <b>AnnotationDAOJpaImpl</b> is a default implementation of <b>AnnotationDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.AltName
+ * @see org.medici.docsources.domain.Annotation
  */
 @Repository
-public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNameDAO {
+public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements AnnotationDAO {
 
 	/**
 	 * 
@@ -63,22 +59,5 @@ public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNa
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 617902723399766439L;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from AltName where person.personId=:personId and nameId=:nameId");
-		query.setParameter("personId", personId);
-		query.setParameter("nameId", nameId);
-		
-		List<AltName> result = query.getResultList();
-		
-		if (result.size() == 0) {
-			return null;
-		} else {
-			return result.get(0);
-		}
-	}
-
+	private static final long serialVersionUID = -6882494398469472058L;
 }

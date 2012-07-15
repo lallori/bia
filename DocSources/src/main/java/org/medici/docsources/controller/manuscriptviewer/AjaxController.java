@@ -38,6 +38,7 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -60,6 +61,46 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+
+	@RequestMapping(value = {"/src/mview/CreateAnnotation.json", "/de/mview/CreateAnnotation.json"}, method = RequestMethod.GET)
+	public ModelAndView createAnnotation(	@RequestParam(value="volNum", required=false) Integer volNum,
+											@RequestParam(value="volLetExt", required=false) String volLetExt,
+											@RequestParam(value="imageType", required=false) String imageType,
+											@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
+											@RequestParam(value="imageOrder", required=false) Integer imageOrder,
+											@RequestParam(value="imageName", required=false) String imageName,
+											@RequestParam(value="id", required=false) String id,
+											@RequestParam(value="x", required=false) Double x,
+											@RequestParam(value="y", required=false) Double y,
+											@RequestParam(value="w", required=false) Double w,
+											@RequestParam(value="h", required=false) Double h,
+											@RequestParam(value="title", required=false) String title,
+											@RequestParam(value="category", required=false) String category,
+											@RequestParam(value="text", required=false) String text,
+											HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Annotation annotation = new Annotation();
+			annotation.setX(x);
+			annotation.setY(y);
+			annotation.setWidth(w);
+			annotation.setHeight(h);
+			annotation.setTitle(title);
+			annotation.setCategory(category);
+			annotation.setText(text);
+			Image image = new Image();
+			image.setImageType(Image.ImageType.valueOf(imageType));
+			image.setImageProgTypeNum(imageProgTypeNum);
+			image.setImageOrder(imageOrder);
+			image.setImageName(imageName);
+			annotation = getManuscriptViewerService().createAnnotation(annotation, image, httpServletRequest.getRemoteAddr());			
+			model.put("annotationId", annotation.getAnnotationId());
+		} catch (ApplicationThrowable ath) {
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 
