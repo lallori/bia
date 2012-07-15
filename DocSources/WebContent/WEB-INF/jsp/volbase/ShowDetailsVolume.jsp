@@ -117,6 +117,16 @@
 		if($j("#ShowVolumeInVolumeExplorer").length != 0){
 			$j("#EditDetailsVolumeDiv").css('min-height', '260px');
 		}
+
+		$j("#EditDetailsVolume").volumeExplorer( {
+			summaryId				: "${volume.summaryId}",
+			volNum					: "${volume.volNum}",
+			volLetExt				: "${volume.volLetExt}",
+			checkVolumeDigitizedURL	: "${checkVolumeDigitizedURL}",
+			showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
+			target 					: $j("#body_right") 
+		});  
+
 		//For check if already exsist a tab with volume explorer
 		$j("#ShowVolumeInVolumeExplorer").click(function(){
 			var tabName = "<span id='titleTab${volume.volNum}${volume.volLetExt}'>Explore Volume ${volume.volNum}${volume.volLetExt}</span>";
@@ -179,15 +189,6 @@
 	        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
-
-			$j("#EditDetailsVolume").volumeExplorer( {
-				summaryId				: "${volume.summaryId}",
-				volNum					: "${volume.volNum}",
-				volLetExt				: "${volume.volLetExt}",
-				checkVolumeDigitizedURL	: "${checkVolumeDigitizedURL}",
-				showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
-				target 					: $j("#body_right") 
-			});  
 
 			$j("#EditDetailsVolume").click(function(){
 				$j(this).next().css('visibility', 'visible');
