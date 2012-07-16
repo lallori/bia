@@ -258,7 +258,7 @@ a.transcribe {
 }
 
 #PageTurnerVerticalDiv #choiceThisFolioStart {
-        margin-top: 60px;
+        margin-top: 43px;
 }
 
 #PageTurnerHorizontalDiv #choiceThisFolioStart {
@@ -849,6 +849,7 @@ a:hover#personalNotesButton {
 	font-size: 12px;
 	border:none;
 	cursor:pointer;
+	margin-top: 5px;
 }
 
 

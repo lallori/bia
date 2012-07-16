@@ -218,7 +218,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 }
 
 #chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{
-	visibility:hidden;
+	display:none;
 }
 
 #userDiv { /* User profile Div */
@@ -239,7 +239,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 
 /* ---------- main tables ---------- */
 
-#forumTable, #membersTable, #messagesTable { /* tables */
+#forumTable, #membersTable, #messagesTable, #forumTablePaleography { /* tables */
 	border: 1px solid #DCC0BA;
 	width: 1000px;
 	height: auto;
@@ -300,8 +300,26 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	width: 40%;
 }
 
+#forumTablePaleography .one { /* First column width */
+	 width: 15%;
+}
+
 .two, .three, .four  { /* Other column width */
 	width: 20%;
+}
+
+#forumTablePaleography .two { /* First column width */
+	 width: 25%;
+	text-align:left;
+ }
+
+#forumTablePaleography .three, #forumTablePaleography .four  { /* First column width */
+	 width: 9%;
+ text-align: center;}
+
+#forumTablePaleography .five { /* First column width */
+	 width: 13%;
+	text-align:left;
 }
 
 .rowFirst .two, .rowFirst .three, .row .two, .row .three, .rowLast .two, .rowLast .three {
@@ -349,13 +367,32 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	display: block;
 }
 
+#forumTablePaleography .list a  { /* First column forum title */
+	text-decoration: none;
+	color: #6F6B69;
+	margin: 0;
+	font-size: 13px;
+	display: block;
+}
+
+#forumTablePaleography .list .five a  { /* First column forum title */
+	display: inline;
+}
+
 .list .row .one a:hover, .list .rowLast .one a:hover  { /* First column forum title */
 	color:#000;
 }
 
-.list .row .one span, .list .rowLast .one span {
+.list .row .one span, .list .rowLast .one span, .list .row .two span {
 	display: block;
 	margin-left: 30px;
+	opacity: 0.6;
+	font-size: 11px;
+}
+
+.list .row .two span,  .list .rowLast .two span {
+	display: block;
+	margin-left: 0;
 	opacity: 0.6;
 	font-size: 11px;
 }
@@ -1145,4 +1182,17 @@ span.search {
 	border: 1px solid;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
+}
+
+
+
+/* ------------------------ Paleography --------------------------------*/
+
+.iframePaleography { /* used in Add New Volume - #body_right */
+	width: 140px;
+	height: 30px;
+	border: 1px solid;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	position: absolute;
 }

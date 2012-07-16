@@ -1646,12 +1646,11 @@ input.file {
     height: 60px;
     position: absolute;
     margin-top: 70px;
-    margin-left: 25px;
     width: 70px;
 	text-shadow:1px 1px 1px #999;
 	font-size:11px;
 	text-align:center;
-	margin-right: 25px;
+	margin-left: 25px;
 }
 
 #DocumentImageDigitDiv { /* Document image digitized or to be digitized */ 
