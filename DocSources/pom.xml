@@ -249,6 +249,7 @@
 				<includes>
 					<include>**/ehcache.xml</include>
 					<include>**/import.sql</include>
+					<include>**/c3p0.properties</include>
 				</includes>
 			</resource>
 		</resources>
