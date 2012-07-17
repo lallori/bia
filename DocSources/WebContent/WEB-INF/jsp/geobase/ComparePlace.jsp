@@ -291,8 +291,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -303,7 +306,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -315,8 +318,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -327,7 +333,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -339,8 +345,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -351,7 +360,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -363,8 +372,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -375,7 +387,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -387,8 +399,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -399,7 +414,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -411,8 +426,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -423,7 +441,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});
@@ -435,8 +453,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}
@@ -447,7 +468,7 @@
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});

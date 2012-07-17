@@ -36,7 +36,7 @@
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="#" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record">Show documents</a></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
 				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
@@ -137,8 +137,11 @@
 			$j("#tabs ul li a").each(function(){
 				var toTest = "";
 				toTest += this.text;
-				if(!tabExist)
-					numTab++;
+				if(!tabExist){
+					if(toTest != ""){
+						numTab++;
+					}
+				}
 				if(this.text == tabName || toTest.indexOf("Explore Volume ${volume.volNum}${volume.volLetExt}") != -1){
 					tabExist = true;
 				}
@@ -149,9 +152,9 @@
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			}else{
-				$j("#tabs").tabs("select", numTab-1);
-				$j("#tabs").tabs("url", numTab-1, $j(this).attr("href"));
-				$j("#tabs").tabs("load", numTab-1);
+				$j("#tabs").tabs("select", numTab);
+				$j("#tabs").tabs("url", numTab, $j(this).attr("href"));
+				$j("#tabs").tabs("load", numTab);
 				return false;
 			}
 		});
@@ -164,8 +167,11 @@
 			//Check if already exist a tab with this person
 			var tabExist = false;
 			$j("#tabs ul li a").each(function(){
-				if(!tabExist)
-					numTab++;
+				if(!tabExist){
+					if(this.text != ""){
+						numTab++;
+					}
+				}
 				if(this.text == tabName){
 					tabExist = true;
 				}
@@ -176,7 +182,7 @@
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			}else{
-				$j("#tabs").tabs("select", numTab-1);
+				$j("#tabs").tabs("select", numTab);
 				return false;
 			}
 		});

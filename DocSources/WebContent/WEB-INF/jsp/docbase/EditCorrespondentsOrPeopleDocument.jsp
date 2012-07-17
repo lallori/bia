@@ -138,6 +138,7 @@
 			<form:hidden path="recipientPeopleId"/>
 			<form:hidden path="recipientPlaceId"/>
 			<form:hidden path="recipientPlacePrefered"/>	
+			<input type="hidden" value="0" id="fromPersonForm" />
 
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
@@ -202,7 +203,12 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j.scrollTo("#EditCorrespondentsOrPeopleDocumentForm");
+			if($j("#fromPersonForm").val() == 0){
+				$j.scrollTo("#EditCorrespondentsOrPeopleDocumentForm");
+			}else{
+				$j.scrollTo("#PeopleCorrespondentsDocumentsForm");
+				$j("#fromPersonForm").val(0);
+			}
 			
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden'); 

@@ -113,7 +113,7 @@
 					
 					                                                                                                                                                         
 					//title: 'Page T.',
-					title: 'Page Turner',
+					title: 'Page T.',
 					position: ['left','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					open: function(event, ui) { 

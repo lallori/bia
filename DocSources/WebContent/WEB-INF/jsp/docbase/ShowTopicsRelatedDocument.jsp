@@ -102,8 +102,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
 					if(this.text == tabName){
 						tabExist = true;
 					}

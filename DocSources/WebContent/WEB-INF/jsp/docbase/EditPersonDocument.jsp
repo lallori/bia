@@ -93,6 +93,7 @@
 				$j("#loadingDiv2").css('height', $j("#loadingDiv2").parent().height());
 	        	$j("#loadingDiv2").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#fromPersonForm").val(1);
 					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 				}})
 				return false;
