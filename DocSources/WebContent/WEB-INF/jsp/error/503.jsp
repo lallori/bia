@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="map">
-		<img src="<c:url value="/images/map.png" />" alt="the Medicis Archive Project" />
+		<img src="<c:url value="/images/map.png" />" alt="the Medici Archive Project" />
 	</div>
 			
 	<div id="text_error">
