@@ -86,7 +86,8 @@ h2 { /* Error Text 403, 404, 500, 503*/
 }
 
 h2.addNew {
-	margin-top: 31px;
+	margin-top: 45px;
+	margin-bottom: 20px;
 }
 
 h1 { /* Help Title/About Map Title in My Profile */
@@ -1466,19 +1467,8 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
-/* Edit Details Forms */ 
-#EditDetailsDocumentForm, #EditDetailsPersonForm, #EditDetailsVolumeForm { 
-	width:485px;
-	margin:40px 0 0 0;
-}
-
-#EditDetailsTgnPlaceForm, #EditDetailsMapSitePlaceForm, #EditDetailsMapPlaceForm{ 
-	width:485px;
-	margin: 5px 0 0 0;
-}
-
 /* Edit Forms */
-#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm, #EditExternalLinkForm { 
+#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm, #EditExternalLinkForm, #EditDetailsDocumentForm, #EditDetailsPersonForm, #EditDetailsVolumeForm, #EditDetailsTgnPlaceForm, #EditDetailsMapSitePlaceForm, #EditDetailsMapPlaceForm { 
 	width:485px;
 	margin:5px 0 0 0;
 }
@@ -1644,13 +1634,14 @@ input.file {
 #DocumentImageNotDigitDiv span {
     color: #C0272D;
     height: 60px;
-    position: absolute;
+    float: left;
     margin-top: 70px;
     width: 70px;
 	text-shadow:1px 1px 1px #999;
 	font-size:11px;
 	text-align:center;
-	margin-left: 25px;
+	margin-left:25px;
+	
 }
 
 #DocumentImageDigitDiv { /* Document image digitized or to be digitized */ 
