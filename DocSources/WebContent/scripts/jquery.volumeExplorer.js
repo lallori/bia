@@ -57,8 +57,11 @@
         				$j("#tabs ul li a").each(function(){
         					var toTest = "";
         					toTest += this.text;
-        					if(!tabExist)
-        						numTab++;
+        					if(!tabExist){
+        						if(toTest != ""){
+        							numTab++;
+        						}
+        					}
         					if(this.text == tabName || toTest.indexOf("Explore Volume " + data.volNum + data.volLetExt) != -1){
         						tabExist = true;
         					}
@@ -69,9 +72,9 @@
         					$("#tabs").tabs("add", options["showExplorerVolumeURL"], tabName);
                         	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
         				}else{
-        					$j("#tabs").tabs("select", numTab-1);
-        					$j("#tabs").tabs("url", numTab-1, options["showExplorerVolumeURL"]);
-        					$j("#tabs").tabs("load", numTab-1);
+        					$j("#tabs").tabs("select", numTab);
+        					$j("#tabs").tabs("url", numTab, options["showExplorerVolumeURL"]);
+        					$j("#tabs").tabs("load", numTab);
         				}
                     	return false;
                     	
