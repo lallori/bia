@@ -29,6 +29,7 @@ package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 
@@ -37,6 +38,7 @@ import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentC
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -57,6 +59,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Correspondents Or People Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/docbase/EditCorrespondentsOrPeopleDocument")
@@ -157,6 +160,9 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			try {
 				document = getDocBaseService().editCorrespondentsDocument(document);
+				
+				List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
+				model.put("topicsDocument", topicsDocument);
 				
 				HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
 				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);

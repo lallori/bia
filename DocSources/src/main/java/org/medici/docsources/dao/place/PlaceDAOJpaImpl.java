@@ -58,6 +58,7 @@ import org.springframework.stereotype.Repository;
  * <b>PlaceDAOJpaImpl</b> is a default implementation of <b>PlaceDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Repository
 public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO {
@@ -259,7 +260,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -273,8 +274,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
+			fullTextQuery.setProjection(outputFields);
+			fullTextQueryWithWildCard.setProjection(outputFields);
 			
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));

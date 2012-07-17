@@ -37,6 +37,7 @@ import javax.validation.Valid;
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Volume;
@@ -59,6 +60,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Details Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/docbase/EditDetailsDocument")
@@ -148,6 +150,9 @@ public class EditDetailsDocumentController {
 				} else {
 					document = getDocBaseService().editDetailsDocument(document);
 					model.put("document", document);
+					
+					List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
+					model.put("topicsDocument", topicsDocument);
 
 					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
