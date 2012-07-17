@@ -10,9 +10,7 @@
 		}
     </style>
         
-<!-- 	<a href="javascript:window.print()" class="print" title="Print"></a> -->
-<!-- 	<a href="#" class="pdf" title="Save as PDF"></a> -->
-	
+
 	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
 	
 	<ul id="network">
