@@ -97,6 +97,20 @@ Manuscript Viewer css
 html version
 */
 
+#loadingDiv { /* Animated Gif that shows up when saving each edit section */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40); /* IE */
+    width:485px;
+    position:absolute;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+
 #EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
