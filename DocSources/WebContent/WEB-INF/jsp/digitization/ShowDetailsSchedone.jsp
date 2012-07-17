@@ -30,7 +30,7 @@
 		</div>
 		<div class="row">
 			<div class="item">N. Unità</div>
-			<div class="value60">${schedone.numeroUnita}</div>
+			<div class="value60">${schedone.numeroUnita} ${schedone.volLetExt}</div>
 		</div>
         <div class="row">
 			<div class="item">Date estreme</div> 
