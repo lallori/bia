@@ -59,11 +59,9 @@
 				<div id="DocumentImageNotDigitDiv">
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 						<span>To be digitized</span>
-						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
 					</security:authorize>
 					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 						<span class="register">To be digitized</span>
-						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
 					</security:authorize>
 				</div>
 			</c:if>
