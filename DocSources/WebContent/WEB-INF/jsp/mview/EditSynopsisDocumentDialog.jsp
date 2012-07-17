@@ -11,8 +11,8 @@
 	<div id="EditSynopsisDocumentDiv">
 		<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
 			<form:textarea id="synopsis" path="synopsis" rows="22"/>
-			<input id="saveSynopsis" type="submit" value="Save Synopsis"/>
-			<input id="saveSynopsisExit" type="submit" value="Save Synopsis and Exit"/>
+			<input id="saveSynopsis" type="submit" class="button_small" value="Save"/>
+			<input id="saveSynopsisExit" type="submit" class="button_medium" value="Save and Exit"/>
 			<form:hidden path="entryId"/>
 			<form:hidden path="synExtrId" />
 		</form:form>
@@ -20,7 +20,9 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditSynopsisDocumentDiv").dialog("option" , "position" , [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"]);
+			$j("#EditExtractDocumentDiv").dialog().dialogExtend("minimize" , true);
+			
+			$j("#EditSynopsisDocumentDiv").dialog("option" , "position" , ["center" , "middle"]);
 			
 			$j("#EditSynopsisDocumentForm :input").change(function(){
 				$j("#editModify").val(1);

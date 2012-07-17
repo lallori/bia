@@ -195,7 +195,7 @@
 	
 </div>
 
-<div id="exit" title="Alert" style="display:none">
+	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
 			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
 		</c:if> 
