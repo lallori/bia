@@ -63,19 +63,19 @@ public class AjaxController {
 	private ManuscriptViewerService manuscriptViewerService;
 
 	@RequestMapping(value = {"/src/mview/CreateAnnotation.json", "/de/mview/CreateAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView createAnnotation(	@RequestParam(value="volNum", required=false) Integer volNum,
-											@RequestParam(value="volLetExt", required=false) String volLetExt,
-											@RequestParam(value="imageType", required=false) String imageType,
-											@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
-											@RequestParam(value="imageOrder", required=false) Integer imageOrder,
-											@RequestParam(value="imageName", required=false) String imageName,
+	public ModelAndView createAnnotation(	@RequestParam(value="volNum", required=true) Integer volNum,
+											@RequestParam(value="volLetExt", required=true) String volLetExt,
+											@RequestParam(value="imageType", required=true) String imageType,
+											@RequestParam(value="imageProgTypeNum", required=true) Integer imageProgTypeNum,
+											@RequestParam(value="imageOrder", required=true) Integer imageOrder,
+											@RequestParam(value="imageName", required=true) String imageName,
 											@RequestParam(value="id", required=false) String id,
-											@RequestParam(value="x", required=false) Double x,
-											@RequestParam(value="y", required=false) Double y,
-											@RequestParam(value="w", required=false) Double w,
-											@RequestParam(value="h", required=false) Double h,
-											@RequestParam(value="title", required=false) String title,
-											@RequestParam(value="category", required=false) String category,
+											@RequestParam(value="x", required=true) Double x,
+											@RequestParam(value="y", required=true) Double y,
+											@RequestParam(value="w", required=true) Double w,
+											@RequestParam(value="h", required=true) Double h,
+											@RequestParam(value="title", required=true) String title,
+											@RequestParam(value="category", required=true) String category,
 											@RequestParam(value="text", required=false) String text,
 											HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -86,8 +86,8 @@ public class AjaxController {
 			annotation.setY(y);
 			annotation.setWidth(w);
 			annotation.setHeight(h);
-			annotation.setTitle(title);
-			annotation.setCategory(category);
+			annotation.setType(Annotation.Type.valueOf(category));
+			annotation.setSubject(title);
 			annotation.setText(text);
 			Image image = new Image();
 			image.setImageType(Image.ImageType.valueOf(imageType));

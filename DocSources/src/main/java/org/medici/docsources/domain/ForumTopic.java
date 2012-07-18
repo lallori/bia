@@ -110,11 +110,13 @@ public class ForumTopic implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"imageId\"", nullable=true)
 	private Image image;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"annotationId\"", nullable=true)
+	private Annotation annotation;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="topic", nullable=true)
 	private List<ForumPost> posts;
-
 
 	/**
 	 * 
@@ -131,6 +133,10 @@ public class ForumTopic implements Serializable {
 		super();
 		
 		setTopicId(topicId);
+	}
+
+	public Annotation getAnnotation() {
+		return annotation;
 	}
 
 	/**
@@ -278,6 +284,10 @@ public class ForumTopic implements Serializable {
 	 */
 	public boolean isHasAttachment() {
 		return hasAttachment;
+	}
+
+	public void setAnnotation(Annotation annotation) {
+		this.annotation = annotation;
 	}
 
 	/**
@@ -468,6 +478,7 @@ public class ForumTopic implements Serializable {
 
 		return stringBuilder.toString();
 	}
+
 
 	/**
 	 * 

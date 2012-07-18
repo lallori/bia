@@ -49,7 +49,6 @@ import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Status;
 import org.medici.docsources.domain.Forum.SubType;
 import org.medici.docsources.domain.Forum.Type;
-import org.medici.docsources.domain.Image.ImageRectoVerso;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
@@ -118,6 +117,17 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         return forum;
 	}
 
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewForum(Forum forum) throws PersistenceException {
+		getEntityManager().persist(forum);
+
+        return forum;
+	}
 	/**
 	 * {@inheritDoc}
 	 */

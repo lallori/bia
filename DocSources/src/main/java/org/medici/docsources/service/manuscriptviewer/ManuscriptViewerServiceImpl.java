@@ -42,6 +42,7 @@ import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.annotation.AnnotationDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumoption.ForumOptionDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
 import org.medici.docsources.dao.forumtopic.ForumTopicDAO;
 import org.medici.docsources.dao.image.ImageDAO;
@@ -52,6 +53,7 @@ import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.Schedone;
@@ -59,6 +61,9 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.Volume;
+import org.medici.docsources.domain.Forum.Status;
+import org.medici.docsources.domain.Forum.SubType;
+import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -87,6 +92,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Autowired
 	private ForumDAO forumDAO;
 	@Autowired
+	private ForumOptionDAO forumOptionDAO;
+	@Autowired
 	private ForumPostDAO forumPostDAO;
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;
@@ -108,6 +115,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public Annotation createAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
 		try {
+			// first of all, persisting annotation 
+			getAnnotationDAO().persist(annotation);
+			
 			if (annotation.getType().equals(Annotation.Type.GENERAL)) {
 				Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
 				image = getImageDAO().find(image.getImageId());
@@ -117,12 +127,34 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				if (volume != null) {
 					Forum volumeForum = getForumDAO().findVolumeForumFromParent(generalQuestionsForum, volume.getSummaryId());
 					if (volumeForum == null) {
-						//create volume forum
+						volume = getVolumeDAO().find(volume.getSummaryId());
+						volumeForum = getForumDAO().addNewVolumeForum(generalQuestionsForum, volume);
+						
+						ForumOption forumOption = new ForumOption(volumeForum);
+						forumOption.setCanHaveTopics(Boolean.TRUE);
+						forumOption.setCanDeletePosts(Boolean.TRUE);
+						forumOption.setCanDeleteTopics(Boolean.TRUE);
+						forumOption.setCanEditPosts(Boolean.TRUE);
+						forumOption.setCanEditPosts(Boolean.TRUE);
+						forumOption.setCanPostReplys(Boolean.TRUE);
+						getForumOptionDAO().persist(forumOption);
 					}
 					
 					Forum folioForum  = getForumDAO().findFolioForumFromParent(volumeForum, image.getImageId());
 					if (folioForum == null) {
-						// create folio forum
+						folioForum  = new Forum();
+						folioForum.setDateCreated(new Date());
+						folioForum.setDescription("Folio n. " + image.getImageOrder() + " " + image.getImageRectoVerso());
+						folioForum.setTitle("Folio n. " + image.getImageOrder() + " " + image.getImageRectoVerso());
+						folioForum.setForumParent(volumeForum);
+						folioForum.setImage(image);
+						folioForum.setDispositionOrder(new Integer(0));
+						folioForum.setPostsNumber(new Integer(0));
+						folioForum.setStatus(Status.ONLINE);
+						folioForum.setTopicsNumber(new Integer(0));
+						folioForum.setType(Type.FORUM);
+						folioForum.setSubType(SubType.FOLIO);
+						folioForum = getForumDAO().addNewForum(folioForum);
 					}
 	
 					// create specific topic on annotation...
@@ -131,9 +163,10 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					forumTopic.setDateCreated(new Date());
 					forumTopic.setLastUpdate(forumTopic.getDateCreated());
 					forumTopic.setIpAddress(ipAddress);
+					forumTopic.setAnnotation(annotation);
 					
 					forumTopic.setUserInformation(userInformation);
-					forumTopic.setSubject(annotation.getText());
+					forumTopic.setSubject(annotation.getSubject());
 					forumTopic.setTotalReplies(new Integer(0));
 					forumTopic.setTotalViews(new Integer(0));
 					forumTopic.setLastPost(null);
@@ -142,10 +175,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					getForumTopicDAO().persist(forumTopic);
 					
 					ForumPost forumPost = new ForumPost();
+					forumPost.setSubject(annotation.getSubject());
+					forumPost.setText(annotation.getText());
 					forumPost.setTopic(forumTopic);
 					forumPost.setDateCreated(new Date());
 					forumPost.setLastUpdate(new Date());
 					forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+					forumPost.setAnnotation(annotation);
 					getForumPostDAO().persist(forumPost);
 
 					getForumDAO().recursiveIncreasePostsNumber(folioForum);
@@ -156,12 +192,44 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					return null;
 				}
 			} else if (annotation.getType().equals(Annotation.Type.PALEOGRAPHY)) {
-				
-			} else {
-				
-			}
+				Forum paleographyForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography")));
+				image = getImageDAO().find(image.getImageId());
+				UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			getAnnotationDAO().persist(annotation);
+				// create specific topic on annotation...
+				ForumTopic forumTopic = new ForumTopic(null);
+				forumTopic.setForum(paleographyForum);
+				forumTopic.setDateCreated(new Date());
+				forumTopic.setLastUpdate(forumTopic.getDateCreated());
+				forumTopic.setIpAddress(ipAddress);
+				forumTopic.setAnnotation(annotation);
+				
+				forumTopic.setUserInformation(userInformation);
+				forumTopic.setSubject(annotation.getSubject());
+				forumTopic.setTotalReplies(new Integer(0));
+				forumTopic.setTotalViews(new Integer(0));
+				forumTopic.setLastPost(null);
+				forumTopic.setFirstPost(null);
+				
+				getForumTopicDAO().persist(forumTopic);
+				
+				ForumPost forumPost = new ForumPost();
+				forumPost.setSubject(annotation.getSubject());
+				forumPost.setText(annotation.getText());
+				forumPost.setTopic(forumTopic);
+				forumPost.setDateCreated(new Date());
+				forumPost.setLastUpdate(new Date());
+				forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+				forumPost.setAnnotation(annotation);
+				getForumPostDAO().persist(forumPost);
+
+				getForumDAO().recursiveIncreasePostsNumber(paleographyForum);
+
+				paleographyForum.setLastPost(forumPost);
+				getForumDAO().merge(paleographyForum);
+			} else if (annotation.getType().equals(Annotation.Type.PERSONAL)) {
+				// we do nothing on forums...
+			}
 
 			return annotation;
 		} catch (Throwable th) {
@@ -446,6 +514,14 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 
 	public ForumDAO getForumDAO() {
 		return forumDAO;
+	}
+
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
 	}
 
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {

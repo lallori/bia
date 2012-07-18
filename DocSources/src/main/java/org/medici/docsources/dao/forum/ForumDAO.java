@@ -81,12 +81,20 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	/**
 	 * 
 	 * @param forumParent
-	 * @param person
+	 * @param volume
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewForum(Forum forum) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param volumeForum

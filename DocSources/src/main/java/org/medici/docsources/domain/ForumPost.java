@@ -88,6 +88,10 @@ public class ForumPost implements Serializable {
 	@Column (name="\"replyNumber\"")
 	private Integer replyNumber;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"annotationId\"", nullable=true)
+	private Annotation annotation;
+
 	/**
 	 * Default constructor
 	 */
@@ -245,6 +249,14 @@ public class ForumPost implements Serializable {
 	 */
 	public Integer getReplyNumber() {
 		return replyNumber;
+	}
+
+	public void setAnnotation(Annotation annotation) {
+		this.annotation = annotation;
+	}
+
+	public Annotation getAnnotation() {
+		return annotation;
 	}
 
 }

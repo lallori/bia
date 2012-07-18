@@ -460,6 +460,7 @@ public class Forum implements Serializable {
 	public static enum SubType {
 		GENERIC("GENERIC"),
 		DOCUMENT("DOCUMENT"),
+		FOLIO("FOLIO"),
 		PEOPLE("PEOPLE"),
 		PLACE("PLACE"),
 		VOLUME("VOLUME");

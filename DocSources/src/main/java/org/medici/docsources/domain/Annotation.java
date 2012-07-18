@@ -78,10 +78,8 @@ public class Annotation implements Serializable {
 	private Double width;
 	@Column (name="\"height\"", nullable=false)
 	private Double height;
-	@Column (name="\"title\"", nullable=false) 
-	private String title;
-	@Column (name="\"category\"", nullable=true) 
-	private String category;
+	@Column (name="\"subject\"", nullable=false) 
+	private String subject;
 	@Column (name="\"text\"", nullable=true) 
 	private String text;
 	
@@ -241,31 +239,17 @@ public class Annotation implements Serializable {
 	}
 
 	/**
-	 * @return the title
+	 * @return the subject
 	 */
-	public String getTitle() {
-		return title;
+	public String getSubject() {
+		return subject;
 	}
 
 	/**
-	 * @param title the title to set
+	 * @param subject the subject to set
 	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	/**
