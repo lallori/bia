@@ -379,6 +379,8 @@
 			});
 
 			$j("#EditDetailsPersonForm").submit(function (){
+				//MD: The next instruction is for spring to assign the gender value, else it remains null
+				$j("#gender").removeAttr('disabled');
 				if($j("#gender").val() == 'NULL'){
 					$j('#EditDetailsPersonDiv').block({ message: $j('.notGender'),
 						css: { 
