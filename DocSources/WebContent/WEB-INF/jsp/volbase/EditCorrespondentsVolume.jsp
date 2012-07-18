@@ -18,7 +18,7 @@
 				<br />
 				
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message <fmt:message key="volbase.correspondents.edit.to"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="volbase.correspondents.edit.to"></fmt:message>">?</a>
 					<form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To</form:label>
 				</div>
 				<div class="row"><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>
