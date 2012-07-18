@@ -23,7 +23,7 @@
 
 			<property name="hibernate.search.default.exclusive_index_use" value="true"/> 
 			<property name="hibernate.search.default.directory_provider" value="filesystem"/>
-			<property name="org.hibernate.search.store.LockFactoryFactory" value="single"/> 
+			<property name="hibernate.search.default.locking_strategy" value="single"/> 
 			<property name="hibernate.search.default.indexBase" value="/data/indexes"/> 
 		</properties>
 	</persistence-unit>
