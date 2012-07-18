@@ -36,7 +36,7 @@ body {
 }
 
 .button_medium {
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_medium.png);
 	background-repeat: no-repeat;
@@ -96,20 +96,6 @@ input { /* INPUT text */
 Manuscript Viewer css
 html version
 */
-
-#loadingDiv { /* Animated Gif that shows up when saving each edit section */
-    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
-    visibility: hidden;
-    z-index:999;
-    opacity:0.4;
-	-moz-opacity: 0.4;
-	filter:alpha(opacity=40); /* IE */
-    width:485px;
-    position:absolute;
-	border-radius:4px;
-	-moz-border-radius: 4px;
-}
-
 
 #EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
 	border: 1px solid #e6d0c6;
@@ -350,11 +336,11 @@ a.transcribe {
 
 /* ---- Trascription ----- */
 
-#showTranscription {
+#showTranscription, #showAlreadyTranscribed {
 	margin: 25px 0 0 35px;
 }
 
-#PageTurnerVerticalDiv #showTranscription {
+#PageTurnerVerticalDiv #showTranscription, #PageTurnerVerticalDiv #showAlreadyTranscribed {
 	margin: 45px 0 0 0;
 }
 
@@ -769,32 +755,34 @@ a:hover#personalNotesButton {
 
 #EditExtractDocumentDiv #saveAndExit {
 	float: right;
+	margin-right: 1%;
 }
 
 #EditExtractDocumentDiv #saveExtract {
 	float:left;
-	display:inline;
-	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
+	/*display:inline;*/
+	/*background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
-	width:122px;
-	height:22px;
-	font-size: 12px;
-	border:none;
+	/*width:122px;
+	/*height:22px;
+	/*font-size: 12px;
+	/*border:none;*/
+	margin: 5px 0 0 0;
 }
 
 #EditExtractDocumentDiv #saveAndEditSynopsis {
 	float:right;	
-	display:inline;
-	background:url(/DocSources/images/mview/button_large.png) no-repeat;
+	/*display:inline;
+	/*background:url(/DocSources/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
-	width:182px;
-	height:22px;
-	font-size: 12px;
-	border:none;
+	/*width:182px;
+	/*height:22px;
+	/*font-size: 12px;
+	/*border:none;*/
 }
 
 /* ---------------- */
@@ -807,7 +795,8 @@ a:hover#personalNotesButton {
 
 #EditSynopsisDocumentDiv #saveSynopsis {
 	float:left;
-	display:inline;
+	margin: 5px 0 0 0;
+	/*display:inline;
 	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
@@ -815,12 +804,13 @@ a:hover#personalNotesButton {
 	width:122px;
 	height:22px;
 	font-size: 12px;
-	border:none;
+	border:none;*/
 }
 
 #EditSynopsisDocumentDiv #saveSynopsisExit {
-	float:right;	
-	display:inline;
+	float:right;
+	margin-right: 1%;	
+	/*display:inline;
 	background:url(/DocSources/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
@@ -828,7 +818,7 @@ a:hover#personalNotesButton {
 	width:182px;
 	height:22px;
 	font-size: 12px;
-	border:none;
+	border:none;*/
 }
 
 /* ---------------- */
@@ -866,6 +856,18 @@ a:hover#personalNotesButton {
 	margin-top: 5px;
 }
 
+
+#loadingDiv { /* Animated Gif that shows up when saving each edit section */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+    -moz-opacity: 0.4;
+    filter:alpha(opacity=40); /* IE */
+    position:absolute;
+    border-radius:4px;
+    -moz-border-radius: 4px;
+}
 
 
 
