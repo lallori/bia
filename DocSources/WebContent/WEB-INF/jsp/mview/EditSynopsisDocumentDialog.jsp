@@ -9,6 +9,8 @@
 	</c:url>
 
 	<div id="EditSynopsisDocumentDiv">
+		<%-- Loading div when saving the form --%>
+		<div id="loadingDiv"></div>
 		<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
 			<form:textarea id="synopsis" path="synopsis" rows="22"/>
 			<input id="saveSynopsis" type="submit" class="button_small" value="Save"/>
@@ -16,6 +18,10 @@
 			<form:hidden path="entryId"/>
 			<form:hidden path="synExtrId" />
 		</form:form>
+	</div>
+	
+	<div id="saveSynSuccess" title="Alert" style="display:none">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your synopsis has been saved!</p>
 	</div>
 
 	<script type="text/javascript">
@@ -32,10 +38,14 @@
 			$j("#saveSynopsis").click(function (){
 				if (synopsisChanged) {
 					$j("#editModify").val(0);
+					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+					$j("#loadingDiv").css('width', $j("#loadingDiv").parent().width());
+		        	$j("#loadingDiv").css('visibility', 'visible');
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
 							window.opener.$j("#body_left").load('${ShowDocumentURL}');
+							$j("#saveSynSuccess").dialog("open");
 						} 
 					});
 				}
@@ -60,6 +70,23 @@
 			
 			$j("#synopsis").change(function(){
 				synopsisChanged=true;
+			});
+			
+			$j("#saveSynSuccess").dialog({
+				resizable: false,
+				height:150,
+				modal: true,
+				autoOpen : false,
+				title: 'SYNOPSIS SAVED',
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					OK : function() {
+						$j(this).dialog('close');
+					}
+				}
 			});
 		});
 	</script>

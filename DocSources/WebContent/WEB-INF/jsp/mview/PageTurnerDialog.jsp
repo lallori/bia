@@ -97,8 +97,10 @@
 	</c:url>
 	
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId"   value="${command.entryId}" />
-		</c:url>
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+	
+	<c:url var="ShowExtractDialogURL" value="/de/mview/ShowExtractDocumentDialog.do" />
 
 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" />
 
@@ -307,6 +309,26 @@
 				}
 			});
 			
+			var $dialogShowExtract = $j('<div id="ShowExtractDocumentDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: false,
+				width: 352,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: 'SHOW EXTRACT',
+				position: ['center','middle'],                                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide(); 
+					$(this).load('${ShowExtractDialogURL}' + '?entryId=' + $j('#currentEntryId').val());
+				},
+				//drag: function(event, ui) {$j(this).append(ui.position.left);},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});
+			
 			var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
 			.dialog({                                                                                                                                                                   
 				autoOpen: false,
@@ -314,7 +336,7 @@
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
 				title: 'EDIT EXTRACT',
-				position: ['left','middle'],                                                                                                                                                       
+				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
 				
@@ -354,6 +376,17 @@
 					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer?");
 				}
 				return false;
+			});
+			
+			$j('#showTranscription').click(function() {
+				if ($dialogShowExtract.dialog("isOpen")) {
+					return false;
+				} else {
+					$dialogShowExtract.dialog("open");
+					$j('#showTranscription').css('visibility','hidden');
+					$j("#showAlreadyTranscribed").css('visibility', 'visible');
+					return false;
+				}
 			});
 			
 			$j('#extractTranscribe').click(function() {
@@ -396,6 +429,7 @@
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+					$j("#showTranscription").css('visibility', 'hidden');
 					$j("#transcribeAnyway").css('visibility', 'hidden');
 					$j("#notExtract").css('visibility', 'hidden');
 					$j("#extractTranscribe").css('visibility', 'hidden');
@@ -409,6 +443,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#showTranscription").css('visibility', 'hidden');
 						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
@@ -422,6 +457,7 @@
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#showTranscription").css('visibility', 'hidden');
 							$j("#transcribeAnyway").css('visibility', 'hidden');
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
@@ -429,7 +465,8 @@
 						}else{
 							if(data.countAlreadyEntered == 1){
 								$j("#alreadyTranscribe").css('visibility', 'visible');
-								$j("#showAlreadyTranscribed").css('visibility', 'visible');
+								$j("#showTranscription").css('visibility', 'visible');
+// 								$j("#showAlreadyTranscribed").css('visibility', 'visible');
 								$j("#transcribeAnyway").css('visibility', 'visible');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 								$j("#notExtract").css('visibility', 'hidden');
@@ -442,6 +479,7 @@
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+								$j("#showTranscription").css('visibility', 'hidden');
 								$j("#transcribeAnyway").css('visibility', 'visible');
 								$j("#notExtract").css('visibility', 'hidden');
 								$j("#extractTranscribe").css('visibility', 'hidden');
@@ -458,6 +496,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#showTranscription").css('visibility', 'hidden');
 						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
@@ -468,6 +507,7 @@
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+						$j("#showTranscription").css('visibility', 'hidden');
 						$j("#transcribeAnyway").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');

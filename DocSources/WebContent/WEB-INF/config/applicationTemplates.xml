@@ -687,6 +687,10 @@
 	<definition name="mview/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
+	
+	<definition name="mview/ShowExtractDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowExtractDocumentDialog.jsp"/>
+	</definition>
 
 	<definition name="mview/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerFlash.jsp"/>

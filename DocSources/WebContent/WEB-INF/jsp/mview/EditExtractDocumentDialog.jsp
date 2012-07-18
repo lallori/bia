@@ -99,7 +99,7 @@
 // 				if (extractChanged) {
 // 					$j("#editModify").val(0);
 // 						$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
-							$j("#synopsis").focus();
+// 							$j("#synopsis").focus();
 // 							$j("#EditExtractDocumentDiv").html(html);
 // 							extractChanged=false;
 // 							window.opener.$j("#body_left").load('${ShowDocumentURL}');
@@ -126,6 +126,7 @@
 				height:150,
 				modal: true,
 				autoOpen : false,
+				title: 'EXTRACT SAVED',
 				overlay: {
 					backgroundColor: '#000',
 					opacity: 0.5
