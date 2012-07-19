@@ -402,19 +402,17 @@ a {
 	position:absolute;
 }
 
-#mapcourses { /* Button MAP Courses */
-	background-image:url(/DocSources/images/1024/button_courses.jpg);
-	width:200px;
-	height:65px;
-	position:absolute;
-	margin:40px 0 0 90px;
-}
-
 .welcome_list{
-	margin-left:78px;
-	margin-top:150px;
+	margin-left: 80px;
+	margin-top: 20px;
 	line-height:20px;
 	position:absolute;
+	width: 345px;
+}
+
+.welcome_list h3{
+	padding:0;
+	text-align: center;
 }
 
 .welcome_list ul li{
@@ -424,22 +422,32 @@ a {
 	color:#6F6B69;
 }
 
-#colte_of_arms { /*  Medici symbol */
-	width:180px;
-	height:220px;
-	margin-top:100px;
-	margin-left: 180px;	
-	position:absolute;
-	background-image:url(/DocSources/images/1024/img_coatofarms.png);
+#lastLogOnDiv, #thisWeekDiv, #thisMonthDiv { /* Documents Chronology Div */
+	width: 346px;
+	height: 225px;
+	color:#6F6B69;
+	padding: 0 10px 0 9px;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+	margin: 30px 0 0 0;
 }
 
-#button_courses {
-	width:200px;
-	height:65px;
-	margin-top:20px;
-	margin-left:250px;
-	position:absolute;
+#lastLogOnTable, #thisWeekTable, #thisMonthTable {
+	width:330px;
+	margin: 15px 0 0 0;
 }
+
+#lastLogOnDiv p{
+	padding:20px 0 0 20px;
+	font-weight:bold;
+	color:#666EA4;
+}
+
+#thisWeekDiv p, #thisMonthDiv p{
+	padding:20px 0 0 20px;
+	font-weight:bold;
+}
+
+
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -755,37 +763,12 @@ $('.searchResult').live('click', function() {
 	font-size:12px;
 }
 
-#basicSearchDiv .list {
-	display: table;
-	margin: 20px 0 0 134px;
-	width: 200px;
-	font-size: 12px;
-	line-height: 21px;
-	text-align: center;
-	border: 1px solid #DCC0BA;
-	border-radius: 4px;
-	color:#6F6B69;
-}
-
-#basicSearchDiv .list .col{
-	border-bottom: 1px solid #DCC0BA;
-	display:table-cell;
-}
-
-#basicSearchDiv .list a{
-	text-decoration:none;
-}
-
-#basicSearchDiv .list a:hover{
-	text-decoration:underline;
-}
-
-#basicSearchDiv .list a span{
-	color:#B7958F;
+#basicSearchTable {
+	width:349px;
 }
 
 #basicSearchDiv #close {
-	margin: 20px 0 0 209px;
+	margin: 20px 0 0 140px;
 	position:absolute;
 }
 

@@ -1688,7 +1688,8 @@ p.notDigitized {
 
 div#text a.linkVolume {
     font-size: 16px;
-    color: #666EA4;
+    color: #808000;
+    text-decoration: underline;
 }
 
 
@@ -1865,8 +1866,8 @@ span.docId, span.placeId {
 
 
 #closeSaveButtonsFullscreen { /* Close Save div container */
-	margin:475px 0 0 355px;
-	width:127px;
+	margin: 475px 0 0 345px;
+	width: 140px;
 	height:25px;
 	position:absolute;
 }
@@ -4345,7 +4346,7 @@ ul#network a {
 	background:url(/DocSources/images/1024/button_Xlarge.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
-	position:absolute;
+	float: right;
 	width:255px;
 	height:22px;
 	margin:-5px 0 0 10px;
@@ -4363,17 +4364,17 @@ ul#network a {
 }
 
 #digitizationModalDiv #CreateSchedoneDiv {
-	width:300px;
+	width: 290px;
 	margin:20px 0 0 20px;
 }
 
 #digitizationModalDiv #ActivateFilzaDiv {
-	width:300px;
+	width:290px;
 	margin:20px 0 0 20px;
 }
 
 #digitizationModalDiv #BrowseFilzeDiv {
-	width:300px;
+	width:290px;
 	margin:20px 0 0 20px;
 }
 
