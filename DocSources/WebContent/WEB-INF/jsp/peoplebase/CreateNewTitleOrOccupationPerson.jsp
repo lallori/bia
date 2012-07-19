@@ -7,7 +7,7 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		
 	</security:authorize>
-	<br>
+	
 	<form:form id="CreateNewTitlesOccupationsForm" method="post" cssClass="edit">
 	<!--- Loading div when saving the form -->
 	<div id="loadingDiv"></div>
