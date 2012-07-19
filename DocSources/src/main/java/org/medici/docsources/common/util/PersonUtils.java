@@ -33,6 +33,7 @@ import org.medici.docsources.domain.People;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class PersonUtils {
@@ -50,7 +51,8 @@ public class PersonUtils {
 		StringBuilder stringBuilder = new StringBuilder();
 		if (!ObjectUtils.toString(people.getLast()).equals("")) {
 			stringBuilder.append(people.getLast());
-			stringBuilder.append(",");
+			if(!ObjectUtils.toString(people.getFirst()).equals("") || !ObjectUtils.toString(people.getSucNum()).equals("") || !ObjectUtils.toString(people.getMidPrefix()).equals("") || !ObjectUtils.toString(people.getMiddle()).equals("") || !ObjectUtils.toString(people.getLastPrefix()).equals(""))
+				stringBuilder.append(",");
 		}
 		if (!ObjectUtils.toString(people.getFirst()).equals("")) {
 			stringBuilder.append(" ");
