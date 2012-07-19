@@ -77,7 +77,8 @@
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
 					zoom: 3,
-					credit: credit
+					credit: credit,
+					navWinPos: 'left'
 				});
 
 // 				var $pageTurner = $j('<div>PageTurnerHorizontalDiv</div>')

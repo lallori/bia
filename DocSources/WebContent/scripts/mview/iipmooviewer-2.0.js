@@ -134,6 +134,10 @@ var IIPMooViewer = new Class({
     this.showNavWindow = (options.showNavWindow == false) ? false : true;
     this.showNavButtons = (options.showNavButtons == false) ? false : true;
     this.navWinSize = options.navWinSize || 0.2;
+    
+    //MEDICI ARCHIVE PROJECT START
+    this.navWinPos = options.navWinPos || 'right';
+    //MEDICI ARCHIVE PROJECT END
 
 
     this.winResize = (options.winResize==false)? false : true;
@@ -1339,13 +1343,33 @@ var IIPMooViewer = new Class({
     // If the user does not want a navigation window, do not create one!
     if( (!this.showNavWindow) && (!this.showNavButtons) ) return;
 
-    var navcontainer = new Element( 'div', {
-      'class': 'navcontainer',
-      'styles': {
-	position: 'absolute',
-	width: this.navWin.w
-      }
-    });
+    //MEDICI ARCHIVE PROJECT START
+    if(this.navWinPos == 'left'){
+	    var navcontainer = new Element( 'div', {
+	      'class': 'navcontainer',
+	      'styles': {
+		position: 'absolute',
+		width: this.navWin.w,
+		left: '0px'
+	      }
+	    });
+    }else{
+    	var navcontainer = new Element( 'div', {
+  	      'class': 'navcontainer',
+  	      'styles': {
+  		position: 'absolute',
+  		width: this.navWin.w
+  	      }
+    	});
+    }
+//    var navcontainer = new Element( 'div', {
+//	      'class': 'navcontainer',
+//	      'styles': {
+//		position: 'absolute',
+//		width: this.navWin.w
+//	      }
+//  	});
+    //MEDICI ARCHIVE PROJECT END
 
     // For standalone iphone/ipad the logo gets covered by the status bar 
     if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
@@ -1812,10 +1836,20 @@ var IIPMooViewer = new Class({
     // And reposition the navigation window
     if( this.showNavWindow ){
       var navcontainer = this.container.getElement('div.navcontainer');
-      if( navcontainer ) navcontainer.setStyles({
-	top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-	left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+      //MEDICI ARCHIVE PROJECT START
+      if(navcontainer && this.navWinPos == 'left') navcontainer.setStyles({
+    	  top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+    	  left: '0px'		  
       });
+      else navcontainer.setStyles({
+    		top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+    		left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+      });
+//      if( navcontainer ) navcontainer.setStyles({
+//	top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+//	left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+//      });
+      //MEDICI ARCHIVE PROJECT END
 
       // Resize our navigation window div
       if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h);

@@ -9,10 +9,10 @@
 	<div id="ShowExtractDocumentDiv">
 		<div id="content">${docExtract}</div>
 		
-	<input id="exitExtract" class="button_small" type="submit" value="Close"/>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<input id="editExtract" class="button_medium" type="submit" value="Edit Extract"/>
 	</security:authorize>
+	<input id="exitExtract" class="button_small" type="submit" value="Close"/>
     </div>
 	
 	<script type="text/javascript">

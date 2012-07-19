@@ -76,6 +76,7 @@
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
 				showNavButtons: true,
+				navWinPos: 'left',
 				winResize: true,
 				zoom: 3
 			});
