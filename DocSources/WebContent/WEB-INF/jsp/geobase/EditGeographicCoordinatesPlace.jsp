@@ -62,6 +62,15 @@
 			</div>
 		</div>
 		
+		<form:errors path="degreeLatitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="minuteLatitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="secondLatitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="directionLatitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="degreeLongitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="minuteLongitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="secondLongitude" cssClass="inputerrors" htmlEscape="false"/>
+		<form:errors path="directionLongitude" cssClass="inputerrors" htmlEscape="false"/>
+		
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
 			<input type="submit" value="Save" id="save">

@@ -38,6 +38,7 @@ import org.springframework.validation.Validator;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class EditGeographicCoordinatesPlaceValidator implements Validator {
@@ -85,6 +86,7 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditGeographicCoordinatesPlaceCommand editGeographicCoordinatesPlaceCommand = (EditGeographicCoordinatesPlaceCommand) object;
 		validatePlaceAllId(editGeographicCoordinatesPlaceCommand.getPlaceAllId(), errors);
+		validateGeoCoorPlace(editGeographicCoordinatesPlaceCommand.getDegreeLongitude(), editGeographicCoordinatesPlaceCommand.getMinuteLongitude(), editGeographicCoordinatesPlaceCommand.getSecondLongitude(), editGeographicCoordinatesPlaceCommand.getDirectionLongitude(), editGeographicCoordinatesPlaceCommand.getDegreeLatitude(), editGeographicCoordinatesPlaceCommand.getMinuteLatitude(), editGeographicCoordinatesPlaceCommand.getSecondLatitude(), editGeographicCoordinatesPlaceCommand.getDirectionLatitude(), errors);
 	}
 
 	/**
@@ -103,5 +105,33 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 		}
 	}
 	
+	public void validateGeoCoorPlace(Integer degLong, Integer minLong, Integer secLong, String dirLong, Integer degLat, Integer minLat, Integer secLat, String dirLat, Errors errors){
+		if(!errors.hasErrors()){
+			if(degLong == null || degLong < 0 || degLong > 180){
+				errors.rejectValue("degreeLongitude", "error.degreeLongitude.invalid");
+			}
+			if(degLat == null || degLat < 0 || degLat > 90){
+				errors.rejectValue("degreeLatitude", "error.degreeLatitude.invalid");
+			}
+			if(minLong != null && (minLong < 0 || minLong > 59)){
+				errors.rejectValue("minuteLongitude", "error.minuteLongitude.invalid");
+			}
+			if(secLong != null && (secLong < 0 || secLong > 59)){
+				errors.rejectValue("secondLongitude", "error.secondLongitude.invalid");
+			}
+			if(minLat != null && (minLat < 0 || minLat > 59)){
+				errors.rejectValue("minuteLatitude", "error.minuteLatitude.invalid");
+			}
+			if(secLat != null && (secLat < 0 || secLat > 59)){
+				errors.rejectValue("secondLatitude", "error.secondLatitude.invalid");
+			}
+			if(!dirLong.toLowerCase().equals("w") && !dirLong.toLowerCase().equals("e")){
+				errors.rejectValue("directionLongitude", "error.directionLongitude.invalid");
+			}
+			if(!dirLat.toLowerCase().equals("n") && !dirLat.toLowerCase().equals("s")){
+				errors.rejectValue("directionLatitude", "error.directionLatitude.invalid");
+			}
+		}
+	}
 	
 }
