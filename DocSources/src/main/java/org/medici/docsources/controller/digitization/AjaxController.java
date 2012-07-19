@@ -261,6 +261,7 @@ public class AjaxController {
 				listForPage.add(volumeExactly);
 				page = new Page(paginationFilter);
 				page.setList(listForPage);
+				page.setTotal(new Long(listForPage.size()));
 				
 				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
 			}else if(searchType.equals("Between")){
@@ -286,33 +287,37 @@ public class AjaxController {
 
 		List resultList = new ArrayList();
 		if(searchType.equals("Exactly") || searchType.equals("Between")){
-			for(Volume currentVolume : (List<Volume>)page.getList()){
-				List singleRow = new ArrayList();
-				//MDP
-				singleRow.add(currentVolume.getMDP());
-				//Schedone
-				Schedone currentSchedone;
-				if(currentVolume.getVolLetExt() != null)
-					currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
-				else
-					currentSchedone = ifSchedone.get(currentVolume.getVolNum().toString());
-				if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
-					singleRow.add("YES");
-				}else{
-					singleRow.add("NO");
-				}
-				//Digitized
-				if(currentVolume.getDigitized()){
-					singleRow.add("YES");
-				}else{
-					singleRow.add("NO");
-				}
+			if(page.getList().size() > 0){
+				for(Volume currentVolume : (List<Volume>)page.getList()){
+					List singleRow = new ArrayList();
+					//MDP
+					singleRow.add(currentVolume.getMDP());
+					//Schedone
+					Schedone currentSchedone;
+					if(currentVolume.getVolLetExt() != null)
+						currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
+					else
+						currentSchedone = ifSchedone.get(currentVolume.getVolNum().toString());
+					if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
+						singleRow.add("YES");
+					}else{
+						singleRow.add("NO");
+					}
+					//Digitized
+					if(currentVolume.getDigitized()){
+						singleRow.add("YES");
+					}else{
+						singleRow.add("NO");
+					}
 				
-				if(currentSchedone.getSchedoneId() != 0){
-					resultList.add(HtmlUtils.showSchedone(singleRow, currentSchedone));
-				}else{				
-					resultList.add(singleRow);
+					if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
+						resultList.add(HtmlUtils.showSchedone(singleRow, currentSchedone));
+					}else{				
+						resultList.add(singleRow);
+					}
 				}
+			}else{
+				
 			}
 		}else if(searchType.equals("All")){
 			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {

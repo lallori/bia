@@ -92,10 +92,14 @@
 
 	
 			$j("#browseSearchSchedoni").submit(function(){
-				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-				window.opener.$j("#tabs").tabs("add", formSubmitURL, "Schedoni</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-				window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
-				window.close();
+				if(($j("#volumeType option:selected").val() == 'Exactly' && $j("#volumeSearch").val() == '') || ($j("#volumeType option:selected").val() == 'Between' && ($j("#volumeSearch").val() == '' || $j("#betweenSearch").val() == ''))){
+					return false;
+				}else{
+					var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Schedoni</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+					window.close();
+				}
 				
 				return false;
 			});
