@@ -50,18 +50,18 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
-// 		$j("#comments").click(function() {
-// 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-// 				if (json.isPresent == 'true') {
-// 					$j("#comments").attr('href', json.forumUrlCompleteDOM);
-// 					$j("#comments").open({scrollbars: "yes"});
-// 				} else {
-// 					Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 450, height: 150});
-// 				}
-// 			}});
+		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrlCompleteDOM);
+					$j("#comments").open({scrollbars: "yes"});
+				} else {
+					Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 450, height: 150});
+				}
+			}});
 
-// 			return false;
-// 		});
+			return false;
+		});
 
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		
