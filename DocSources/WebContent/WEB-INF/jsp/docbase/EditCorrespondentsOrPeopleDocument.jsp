@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label></div>
+					<div class="col_l"><form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">Location</form:label></div>
 					<div class="col_l"><form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" /></div>
 					<div class="col_l">
 						<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
@@ -105,7 +105,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">To</form:label></div>
+					<div class="col_l"><form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">Location</form:label></div>
 					<div class="col_l"><form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" /></div>
 					<div class="col_l">
 						<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>

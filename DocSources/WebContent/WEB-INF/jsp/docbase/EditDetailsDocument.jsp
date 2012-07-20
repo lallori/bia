@@ -85,7 +85,7 @@
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.details.edit.documenttypology"></fmt:message>">?</a>
-					<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error">Document Typology (other than letter)</form:label>
+					<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error">Document Typology (if not letter)</form:label>
 					<form:input id="docTypology" path="docTypology" class="input_45c"/>
 				</div>
 			</div>

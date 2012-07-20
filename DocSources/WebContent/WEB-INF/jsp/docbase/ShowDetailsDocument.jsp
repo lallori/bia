@@ -58,13 +58,13 @@
 					<div class="item37">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+					<div class="item37">Document Typology (if not letter)</div> <div class="value">${document.docTypology}</div>
 				</div>
 				<div class="row">
 					<div class="item37">Modern Year</div> <div class="valueHilight">${document.yearModern}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Recorded Date</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+					<div class="item37">Date as written</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 				</div>
 				<div class="row">
 					<div class="item37">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
