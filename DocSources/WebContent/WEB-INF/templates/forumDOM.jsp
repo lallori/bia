@@ -45,9 +45,7 @@
 			</div>
 
 			<div id="main">
-				<div id="mainContent">
 					<tiles:insertAttribute name="main"/>
-				</div>
 
 				<div id="footer">
 					<tiles:insertAttribute name="whoIsOnline"/>
