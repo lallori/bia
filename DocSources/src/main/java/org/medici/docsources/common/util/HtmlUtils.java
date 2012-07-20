@@ -31,6 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.common.search.SimpleSearch;
+import org.medici.docsources.common.search.SimpleSearchDocument;
+import org.medici.docsources.common.search.SimpleSearchPeople;
+import org.medici.docsources.common.search.SimpleSearchPlace;
+import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumTopic;
@@ -275,22 +280,6 @@ public class HtmlUtils {
 
 	/**
 	 * 
-	 * @param forumTopic
-	 * @return
-	 */
-	public static String getShowTopicForumHrefUrl(ForumTopic forumTopic) {
-		StringBuilder stringBuilder = new StringBuilder("");
-		if (forumTopic != null) {
-			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
-			stringBuilder.append(forumTopic.getTopicId());
-		}
-
-		return stringBuilder.toString();
-	}
-	
-	/**
-	 * 
 	 * @param forum
 	 * @return
 	 */
@@ -300,6 +289,22 @@ public class HtmlUtils {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 			stringBuilder.append("/community/ShowForum.do?forumId=");
 			stringBuilder.append(forum.getForumId());
+		}
+
+		return stringBuilder.toString();
+	}
+	
+	/**
+	 * 
+	 * @param forumTopic
+	 * @return
+	 */
+	public static String getShowTopicForumHrefUrl(ForumTopic forumTopic) {
+		StringBuilder stringBuilder = new StringBuilder("");
+		if (forumTopic != null) {
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
+			stringBuilder.append(forumTopic.getTopicId());
 		}
 
 		return stringBuilder.toString();
@@ -670,6 +675,153 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param inputList
+	 * @param simpleSearchDocument
+	 * @return
+	 */
+	public static List<String> showSimpleSearchDocumentExtract(List<String> inputList, SimpleSearchDocument simpleSearchDocumentExtract) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"extractResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/SimpleSearch.do?text=");
+		anchorBegin.append(simpleSearchDocumentExtract.getAlias());
+		anchorBegin.append("&simpleSearchPerimeter=");
+		anchorBegin.append(simpleSearchDocumentExtract.getSimpleSearchPerimeter());
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param simpleSearchDocument
+	 * @return
+	 */
+	public static List<String> showSimpleSearchDocumentSynopsis (List<String> inputList, SimpleSearchDocument simpleSearchDocumentSynopsis) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"synopsisResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/SimpleSearch.do?text=");
+		anchorBegin.append(simpleSearchDocumentSynopsis.getAlias());
+		anchorBegin.append("&simpleSearchPerimeter=");
+		anchorBegin.append(simpleSearchDocumentSynopsis.getSimpleSearchPerimeter());
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param simpleSearchPeople
+	 * @return
+	 */
+	public static List<String> showSimpleSearchPeople(List<String> inputList, SimpleSearchPeople simpleSearchPeople) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"peopleResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/SimpleSearch.do?text=");
+		anchorBegin.append(simpleSearchPeople.getAlias());
+		anchorBegin.append("&simpleSearchPerimeter=PEOPLE");
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param simpleSearchPeople
+	 * @return
+	 */
+	public static List<String> showSimpleSearchPlace(List<String> inputList, SimpleSearchPlace simpleSearchPlace) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"placesResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/SimpleSearch.do?text=");
+		anchorBegin.append(simpleSearchPlace.getAlias());
+		anchorBegin.append("&simpleSearchPerimeter=PLACE");
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param simpleSearchPeople
+	 * @return
+	 */
+	public static List<String> showSimpleSearchVolume(List<String> inputList, SimpleSearchVolume simpleSearchVolume) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"VolumesResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/SimpleSearch.do?text=");
+		anchorBegin.append(simpleSearchVolume.getAlias());
+		anchorBegin.append("&simpleSearchPerimeter=VOLUME");
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+
+	/**
+	 * 
+	 * @param inputList
 	 * @param entryId
 	 * @return
 	 */
@@ -694,7 +846,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -723,7 +875,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList

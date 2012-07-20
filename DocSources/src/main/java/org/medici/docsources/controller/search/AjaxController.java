@@ -836,6 +836,80 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/SimpleSearchModalPagination.json", method = RequestMethod.GET)
+	public ModelAndView simpleSearchModalPagination(@RequestParam(value="sSearch") String alias,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		List<List<String>> resultList = new ArrayList<List<String>>(0);
+		
+		try{
+			SimpleSearchDocument simpleSearchDocumentExtract = new SimpleSearchDocument(SimpleSearchPerimeter.EXTRACT, alias);
+			Long totalResultExtract = getSearchService().searchCount(simpleSearchDocumentExtract);
+			
+			SimpleSearchDocument simpleSearchDocumentSynopsis = new SimpleSearchDocument(SimpleSearchPerimeter.SYNOPSIS, alias);
+			Long totalResultSynopsis = getSearchService().searchCount(simpleSearchDocumentSynopsis);
+			
+			SimpleSearchVolume simpleSearchVolume = new SimpleSearchVolume(alias);
+			Long totalResultVolume = getSearchService().searchCount(simpleSearchVolume);
+			
+			SimpleSearchPeople simpleSearchPeople = new SimpleSearchPeople(alias);
+			Long totalResultPeople = getSearchService().searchCount(simpleSearchPeople);
+			
+			SimpleSearchPlace simpleSearchPlace = new SimpleSearchPlace(alias);
+			Long totalResultPlace = getSearchService().searchCount(simpleSearchPlace);
+			
+			List<String> singleRow = new ArrayList<String>();
+			singleRow.add("Document Extract");
+			singleRow.add(totalResultExtract.toString());
+			resultList.add(HtmlUtils.showSimpleSearchDocumentExtract(singleRow,simpleSearchDocumentExtract));
+			
+			singleRow.clear();
+			singleRow.add("Document Synopsis");
+			singleRow.add(totalResultSynopsis.toString());
+			resultList.add(HtmlUtils.showSimpleSearchDocumentSynopsis(singleRow,simpleSearchDocumentSynopsis));
+			
+			singleRow.clear();
+			singleRow.add("Volumes");
+			singleRow.add(totalResultVolume.toString());
+			resultList.add(HtmlUtils.showSimpleSearchVolume(singleRow,simpleSearchVolume));
+			
+			singleRow.clear();
+			singleRow.add("People");
+			singleRow.add(totalResultPeople.toString());
+			resultList.add(HtmlUtils.showSimpleSearchPeople(singleRow,simpleSearchPeople));
+
+			singleRow.clear();
+			singleRow.add("Place");
+			singleRow.add(totalResultPlace.toString());
+			resultList.add(HtmlUtils.showSimpleSearchPlace(singleRow,simpleSearchPlace));
+			
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/SimpleSearchModalWindow", model);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", new Long(5));
+		model.put("iTotalRecords", new Long(5));
+		model.put("aaData", resultList);
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
