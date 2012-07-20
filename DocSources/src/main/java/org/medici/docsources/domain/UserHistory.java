@@ -72,7 +72,7 @@ public class UserHistory implements Serializable {
 	@Column (name="\"action\"", length=10, nullable=true)
 	@Enumerated(EnumType.STRING)
 	private Action action;
-	@Column (name="\"category\"", length=10, nullable=true)
+	@Column (name="\"category\"", length=20, nullable=true)
 	@Enumerated(EnumType.STRING)
 	private Category category;
 	@Column (name="\"description\"", length=100, nullable=false)

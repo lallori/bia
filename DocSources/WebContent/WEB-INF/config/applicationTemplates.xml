@@ -1071,6 +1071,14 @@
 	<definition name="response/DeleteVolumeKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeKO.jsp"/>
 	</definition>
+	
+	<definition name="response/MarkedListOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListOK.jsp"/>
+	</definition>
+
+	<definition name="response/MarkeListKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListKO.jsp"/>
+	</definition>
 
 	<definition name="response/UndeleteDocumentOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteDocumentOK.jsp"/>

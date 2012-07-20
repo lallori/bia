@@ -28,6 +28,9 @@
 	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
+	<c:url var="AddMarkedListDocumentURL" value="/src/docbase/AddMarkedListDocument.do">
+		<c:param name="entryId"	  value="${document.entryId}" />
+	</c:url>
 
 		
 	<div id="topBodyLeftMenuDiv">
@@ -57,7 +60,7 @@
 			</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="Print this record"></a>
-	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
+		<a id="buttonMarkedList" href="${AddMarkedListDocumentURL}" title="Add this record to Marked List"></a>
 		<a id="buttonShareLink" href="${ShareDocumentURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -82,8 +85,37 @@
 			return false;
 		});
 		
+		var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
+			autoOpen: false,
+			width: 250,
+			height: 180,
+			modal: true,
+			zIndex: 3999,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.5
+			},
+			position: ['center',250],
+			open: function(event, ui) { 
+        		$j.ajax({ type:"GET", url: '${AddMarkedListDocumentURL}', cache:false, success:function(html) { 
+					$j("#DialogMarkedList").focus();
+					$j("#DialogMarkedList").html(html);
+					} 
+				});
+       		},
+			dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+			dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+		});
+		
+		
 		$j("#buttonMarkedList").click(function() {	
-			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
+			if ($dialogMarkedList.dialog("isOpen")) {
+				$dialogMarkedList.dialog("close");
+				return false;
+			} else {
+				$dialogMarkedList.dialog("open");
+				return false;
+			}
 			return false;
 		});
 		
@@ -107,5 +139,6 @@
 			Modalbox.show($j(this).attr("href"), {title: "VETTING HISTORY", width: 760, height: 415});
 			return false;
 		});
+		
 	});
 	</script>

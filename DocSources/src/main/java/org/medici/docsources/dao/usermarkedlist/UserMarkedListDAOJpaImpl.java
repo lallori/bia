@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.usermarkedlist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.dao.document.DocumentDAO;
@@ -35,6 +40,8 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.UserMarkedList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -67,4 +74,24 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 	 */
 	private static final long serialVersionUID = -542856286327766108L;
 	private final Logger logger = Logger.getLogger(this.getClass());
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedList getMyMarkedList() throws PersistenceException {
+		String queryString = "FROM UserMarkedList WHERE username=:username";
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		query.setMaxResults(1);
+		
+		List<UserMarkedList> result = query.getResultList();
+		
+		if(result.size() == 1){
+			return result.get(0);
+		}else
+			return null;
+	}
 }
