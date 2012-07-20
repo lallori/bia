@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.command.search;
 
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -37,7 +35,6 @@ import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
  */
 public class SimpleSearchModalCommand {
 	private String text;
-	private SimpleSearchPerimeter simpleSearchPerimeter;
 
 	/**
 	 * @param text the text to set
@@ -51,19 +48,5 @@ public class SimpleSearchModalCommand {
 	 */
 	public String getText() {
 		return text;
-	}
-
-	/**
-	 * @param simpleSearchPerimeter the simpleSearchPerimeter to set
-	 */
-	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
-		this.simpleSearchPerimeter = simpleSearchPerimeter;
-	}
-
-	/**
-	 * @return the simpleSearchPerimeter
-	 */
-	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
-		return simpleSearchPerimeter;
 	}
 }

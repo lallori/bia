@@ -178,7 +178,7 @@
 
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 			
-			$j(".dataTables_filter").css('visibility', 'hidden');
+			$j(".dataTables_filter").css('display', 'none');
 
 		} );
 	</script>
