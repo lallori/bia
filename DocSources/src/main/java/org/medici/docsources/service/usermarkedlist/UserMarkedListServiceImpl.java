@@ -48,6 +48,8 @@ import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,6 +93,7 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 			UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
 			userMarkedListElement.setDateCreated(creationDate);
 			userMarkedListElement.setDocument(getDocumentDAO().find(document.getEntryId()));
+			userMarkedListElement.setId(null);
 			getUserMarkedListElementDAO().persist(userMarkedListElement);
 			
 			userMarkedList.setDateLastUpdate(creationDate);
@@ -180,6 +183,26 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserMarkedList createMyMarkedList(UserMarkedList userMarkedList) throws ApplicationThrowable {
+		try{
+			userMarkedList.setIdMarkedList(null);
+			userMarkedList.setDateCreated(new Date());
+			userMarkedList.setDateLastUpdate(new Date());
+			userMarkedList.setDescription("");
+			userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			
+			getUserMarkedListDAO().persist(userMarkedList);
+			
+			return userMarkedList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
@@ -201,6 +224,16 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public UserMarkedList getMyMarkedList() throws ApplicationThrowable {
+		try{
+			return getUserMarkedListDAO().getMyMarkedList();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * @return the peopleDAO
 	 */

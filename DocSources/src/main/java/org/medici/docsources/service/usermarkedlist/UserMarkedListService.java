@@ -61,7 +61,22 @@ public interface UserMarkedListService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public UserMarkedList createMyMarkedList(UserMarkedList userMarkedList) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public UserMarkedList getMarkedList(UserMarkedList userMarkedList) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserMarkedList getMyMarkedList() throws ApplicationThrowable;
 
 	/**
 	 * 
