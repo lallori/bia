@@ -1015,7 +1015,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUnDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered volume", Action.MODIFY, Category.VOLUME, volumeToUnDelete));
+			getUserHistoryDAO().persist(new UserHistory("Recovered volume", Action.UNDELETE, Category.VOLUME, volumeToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

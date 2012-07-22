@@ -1530,7 +1530,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			getDocumentDAO().merge(documentToUnDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered document", Action.MODIFY, Category.DOCUMENT, documentToUnDelete));
+			getUserHistoryDAO().persist(new UserHistory("Recovered document", Action.UNDELETE, Category.DOCUMENT, documentToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

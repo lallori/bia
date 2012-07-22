@@ -394,7 +394,8 @@ public class UserHistory implements Serializable {
 		CREATE("Created"),
 		MODIFY("Modified"),
 		VIEW("Viewed"),
-		DELETE("Deleted");
+		DELETE("Deleted"),
+		UNDELETE("Undeleted");
 		
 		private final String action;
 

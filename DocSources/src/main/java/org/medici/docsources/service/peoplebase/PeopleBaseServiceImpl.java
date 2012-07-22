@@ -2047,7 +2047,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			getPeopleDAO().merge(personToUnDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered person", Action.MODIFY, Category.PEOPLE, personToUnDelete));
+			getUserHistoryDAO().persist(new UserHistory("Recovered person", Action.UNDELETE, Category.PEOPLE, personToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -1152,7 +1152,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			getPlaceDAO().merge(placeToUndelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered place", Action.MODIFY, Category.PLACE, placeToUndelete));
+			getUserHistoryDAO().persist(new UserHistory("Recovered place", Action.UNDELETE, Category.PLACE, placeToUndelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
