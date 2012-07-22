@@ -66,14 +66,6 @@ import org.medici.docsources.exception.ApplicationThrowable;
  */
 public interface DocBaseService {
 	/**
-	 * 
-	 * @param document
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable;
-
-	/**
 	 * Adds a new {@link org.medici.docsources.domain.Document} entry.
 	 * 
 	 * @param inputDocument the {@link org.medici.docsources.domain.Document} to be added.
@@ -81,6 +73,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Document addNewDocument(Document inputDocument) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable;
 
 	/**
 	 * Adds a new {@link org.medici.docsources.domain.SynExtract} entry.
@@ -124,14 +124,6 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param entryId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -265,7 +257,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method modify topics of an existing
 	 * {@link org.medici.docsources.domain.Document}.
@@ -275,7 +267,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -284,7 +276,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method searches an existing document by his unique identifiers.
 	 * 
@@ -294,8 +286,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
-
-
+	
 	/**
 	 * This method searches an existing document by the volume and folio numbers.
 	 * 
@@ -307,6 +298,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
+
 
 	/**
 	 * 
@@ -342,6 +334,22 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document findLastEntryDocument() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfTopicsOnDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -429,7 +437,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public void generateIndexTopicList() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param document
@@ -437,6 +445,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable;
 	
 	/**
 	 * This method searches if the documents are digitized
@@ -449,7 +465,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param document
@@ -465,7 +481,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param historyLog
@@ -473,7 +489,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(UserHistory historyLog) throws ApplicationThrowable;
-	
+
 	/**
 	 * Extracts all months available.
 	 *  
@@ -483,14 +499,14 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<TopicList> getTopicsList() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -515,7 +531,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param entryId
@@ -525,7 +541,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(Integer entryId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param entryId

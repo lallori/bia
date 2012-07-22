@@ -932,6 +932,30 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getEpLinkDAO().findNumberOfPeopleLinkedOnDocument(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public Integer findNumberOfTopicsOnDocument(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getEplToLinkDAO().findNumberOfTopicsByDocument(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public EpLink findPersonDocument(Integer entryId, Integer epLinkId) throws ApplicationThrowable {
 		try {
 			return getEpLinkDAO().find(epLinkId, entryId);
@@ -939,7 +963,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -963,7 +987,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1105,7 +1129,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1135,7 +1159,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public EpLinkDAO getEpLinkDAO() {
 		return epLinkDAO;
 	}
-	
+
 	/**
 	 * @return the eplToLinkDAO
 	 */
@@ -1155,13 +1179,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
-	}
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
 	}
 
 	/**
@@ -1249,7 +1266,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1265,7 +1282,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the peopleDAO
 	 */
@@ -1298,14 +1315,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the topicsListDAO
 	 */
 	public TopicsListDAO getTopicsListDAO() {
 		return topicsListDAO;
 	}
-	
+
 	/**
 	 * @return the userHistoryDAO
 	 */
@@ -1331,7 +1348,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1343,7 +1360,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1430,6 +1447,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setForumDAO(ForumDAO forumDAO) {
 		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
 	}
 
 	/**
