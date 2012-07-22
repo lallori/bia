@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowBirthPeoplePlaceURL" value="/src/geobase/ShowBirthPeoplePlace.json"></c:url>
+	<c:url var="ShowBirthPeoplePlaceURL" value="/src/geobase/ShowBirthPeoplePlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Birth in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>

@@ -44,30 +44,217 @@
 
 						if (json.documentsInTopicsPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.documentsInTopicsPlaceURL + ' <span class=\"num_docs\"> ' + json.topicsPlace + '</span><p>');
+							$j(".topics").die();
+							$j(".topics").live('click', function() {
+								var tabName = "Topics " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 						
 						if(json.senderDocumentsPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.senderDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.senderDocumentsPlace + '</span><p>');
+							$j(".sender").click(function(){
+								var tabName = "Senders " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 				
 						if(json.recipientDocumentsPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.recipientDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.recipientDocumentsPlace + '</span><p>');
+
+							$j(".recipient").click(function(){
+								var tabName = "Recipients " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 		
 						if(json.birthPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.birthPlaceURL + ' <span class=\"num_docs\"> ' + json.birthPlace + '</span><p>');
+							$j(".birth").click(function(){
+								var tabName = "Birth " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 
 						if(json.activeStartPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.activeStartPlaceURL + ' <span class=\"num_docs\"> ' + json.activeStartPlace + '</span><p>');
+							
+							$j(".activeStart").click(function(){
+								var tabName = "Active Start " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});							
 						}
 
 						if(json.deathPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.deathPlaceURL + ' <span class=\"num_docs\"> ' + json.deathPlace + '</span><p>');
+							
+							$j(".death").click(function(){
+								var tabName = "Death " + json.placeName;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 
 						if(json.activeEndPlace>0) {
 							$j("#DeleteThisRecordDiv").append(json.activeEndPlaceURL + ' <span class=\"num_docs\"> ' + json.activeEndPlace + '</span><p>');
+							
+							$j(".activeEnd").click(function(){
+								var tabName = "Active End ${place.placeName}";
+								var numTab = 0;
+								
+								//Check if already exist a tab with this person
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
 						}
 				
 					} else {

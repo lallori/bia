@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowTopicsPlaceURL" value="/de/geobase/ShowTopicsPlace.json"></c:url>
+	<c:url var="ShowTopicsPlaceURL" value="/src/geobase/ShowTopicsPlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Document Topics Indexed to <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>

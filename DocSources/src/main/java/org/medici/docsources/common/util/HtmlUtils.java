@@ -313,8 +313,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showActiveEndPeoplePlace(Integer placeAllId, Integer numberOfActiveEndInPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"activeEnd\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowActiveEndPeoplePlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfActiveEndInPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();	
 	}
 	
 	/**
@@ -325,8 +334,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showActiveStartPeoplePlace(Integer placeAllId, Integer numberOfActiveStartInPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"activeStart\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowActiveStartPeoplePlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfActiveStartInPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+		
+		return anchor.toString();
 	}
 
 	/**
@@ -337,8 +355,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showBirthPeoplePlace(Integer placeAllId, Integer numberOfBirthInPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"birth\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowBirthPeoplePlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfBirthInPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+		
+		return anchor.toString();
 	}
 	
 	/**
@@ -349,9 +376,19 @@ public class HtmlUtils {
 	 * @param description
 	 * @return
 	 */
-	public static String showDDocumentsInTopicsPlace(Integer placeAllId, Integer numberOfDocumentsInTopicsPlace, Integer numberOfTopicsPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+	public static String showDocumentsInTopicsPlace(Integer placeAllId, Integer numberOfDocumentsInTopicsPlace, Integer numberOfTopicsPlace) {
+		StringBuilder anchor = new StringBuilder("<a class=\"topics\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowTopicsPlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfDocumentsInTopicsPlace);
+		anchor.append(" Documents on ");
+		anchor.append(numberOfTopicsPlace);
+		anchor.append(" Topics");
+		anchor.append("</a>");
+
+		return anchor.toString();	
 	}
 
 	/**
@@ -362,8 +399,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showDeathPeoplePlace(Integer placeAllId, Integer numberOfDeathInPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"death\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowDeathPeoplePlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfDeathInPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+		
+		return anchor.toString();
 	}
 	
 	/**
@@ -506,7 +552,8 @@ public class HtmlUtils {
 	
 	/**
 	 * 
-	 * @param senderUser
+	 * @param messageId
+	 * @param text
 	 * @return
 	 */
 	public static String showMessage(Integer messageId, String text) {
@@ -621,8 +668,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showRecipientDocumentsPlace(Integer placeAllId, Integer numberOfRecipientDocumentsPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"recipient\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowRecipientDocumentsPlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfRecipientDocumentsPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();	
 	}
 	
 	/**
@@ -795,8 +851,17 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showSenderDocumentsPlace(Integer placeAllId, Integer numberOfSenderDocumentsPlace, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder anchor = new StringBuilder("<a class=\"sender\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowSenderDocumentsPlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfSenderDocumentsPlace);
+		anchor.append(" ");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();	
 	}
 
 	/**

@@ -385,7 +385,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/src/geobase/ShowActiveEndPeoplePlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowActiveEndPeoplePlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowActiveEndPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -429,7 +429,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowActiveStartPeoplePlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowActiveStartPeoplePlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowActiveStartPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -473,7 +473,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowBirthPeoplePlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowBirthPeoplePlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowBirthPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -514,7 +514,7 @@ public class AjaxController {
 	 * @param personId
 	 * @return
 	 */
-	@RequestMapping(value = "/de/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showBirthPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -538,8 +538,8 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowDeathPeoplePlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowDeathPeoplePlace(@RequestParam(value="sSearch") String alias,
+	@RequestMapping(value = "/src/geobase/ShowDeathPeoplePlacePagination.json", method = RequestMethod.GET)
+	public ModelAndView ShowDeathPeoplePlacePagination(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -736,7 +736,7 @@ public class AjaxController {
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/src/geobase/ShowSenderDocumentsPlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowSenderDocumentsPlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowSenderDocumentsPlace(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -828,9 +828,6 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 		
-
-		
-
 		return new ModelAndView("responseOK", model);
 	}
 
@@ -854,9 +851,18 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
+	/**
+	 * 
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/src/geobase/ShowTopicsPlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowTopicsPlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowTopicsPlace(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -893,11 +899,7 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", result.size());
 		model.put("iTotalRecords", result.size());
 		model.put("aaData", resultList);
-		
-
-		
 
 		return new ModelAndView("responseOK", model);
 	}
-
 }

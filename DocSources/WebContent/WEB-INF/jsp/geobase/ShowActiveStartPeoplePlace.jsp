@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowActiveStartPeoplePlaceURL" value="/src/geobase/ShowActiveStartPeoplePlace.json"></c:url>
+	<c:url var="ShowActiveStartPeoplePlaceURL" value="/src/geobase/ShowActiveStartPeoplePlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Active Start in <font color="red" style="margin-left: 5px">"${placeNameFull}"</font></p>
