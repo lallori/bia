@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowTopicsPlaceURL" value="/de/geobase/ShowTopicsPlace.do">
+<c:url var="ShowTopicsPlaceURL" value="/src/geobase/ShowTopicsPlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
