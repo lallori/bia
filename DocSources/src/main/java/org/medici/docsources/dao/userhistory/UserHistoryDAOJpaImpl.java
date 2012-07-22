@@ -814,11 +814,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						if (!lastUserHistory.getDocument().getEntryId().equals(entity.getDocument().getEntryId())) {
 							super.persist(entity);
 						} else {
-							// if document is not the same, we persist action
-							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+							if (((entity.getAction().equals(Action.DELETE)) || (entity.getAction().equals(Action.UNDELETE)))) {
 								super.persist(entity);
-							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
-								super.persist(entity);
+							} else {
+								// if document is not the same, we persist action
+								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+									super.persist(entity);
+								}
 							}
 							//otherwise we dont' persist
 						}				
@@ -827,11 +829,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						if (!lastUserHistory.getPerson().getPersonId().equals(entity.getPerson().getPersonId())) {
 							super.persist(entity);
 						} else {
-							// if person is not the same, we persist action
-							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+							if (((entity.getAction().equals(Action.DELETE)) || (entity.getAction().equals(Action.UNDELETE)))) {
 								super.persist(entity);
-							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
-								super.persist(entity);
+							} else {
+								// if person is not the same, we persist action
+								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+									super.persist(entity);
+								}
 							}
 							//otherwise we dont' persist
 						}				
@@ -840,11 +844,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						if (!lastUserHistory.getPlace().getPlaceAllId().equals(entity.getPlace().getPlaceAllId())) {
 							super.persist(entity);
 						} else {
-							// if place is not the same, we persist action
-							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+							if (((entity.getAction().equals(Action.DELETE)) || (entity.getAction().equals(Action.UNDELETE)))) {
 								super.persist(entity);
-							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
-								super.persist(entity);
+							} else {
+								// if place is not the same, we persist action
+								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+									super.persist(entity);
+								}
 							}
 							//otherwise we dont' persist
 						}				
@@ -853,11 +859,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						if (!lastUserHistory.getVolume().getSummaryId().equals(entity.getVolume().getSummaryId())) {
 							super.persist(entity);
 						} else {
-							// if volume is not the same, we persist action
-							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+							if (((entity.getAction().equals(Action.DELETE)) || (entity.getAction().equals(Action.UNDELETE)))) {
 								super.persist(entity);
-							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
-								super.persist(entity);
+							} else {
+								// if volume is not the same, we persist action
+								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+									super.persist(entity);
+								}
 							}
 							//otherwise we dont' persist
 						}				
