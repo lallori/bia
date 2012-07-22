@@ -16,7 +16,10 @@
 	<c:url var="ShowConfirmCreatePersonForumURL" value="/src/peoplebase/ShowConfirmCreatePersonForum.do">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsPersonURL" value="/de/peoplebase/ShowMenuActionsPerson.do">
+	<c:url var="DeletePersonURL" value="/de/peoplebase/DeletePerson.do">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	<c:url var="UndeletePersonURL" value="/de/peoplebase/UndeletePerson.do">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
 	<c:url var="ShowVettingChronologyPersonURL" value="/de/peoplebase/ShowVettingChronologyPerson.do">
@@ -38,7 +41,12 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="menuActions" href="${ShowMenuActionsPersonURL}">Delete</a>
+		<c:if test="${!person.logicalDelete}">
+			<a id="deleteAction" href="${DeletePersonURL}">Delete</a>
+		</c:if>	
+		<c:if test="${person.logicalDelete}">
+			<a id="undeleteAction" href="${UndeletePersonURL}">Undelete</a>
+		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" title="Print this record" href="${PrintPersonURL}"></a>
 	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
@@ -73,8 +81,12 @@
 			return false;
 		});
 		
-		$j("#menuActions").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "PERSON ACTIONS MENU", width: 750, height: 190});return false;
+		$j("#deleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PERSON MENU", width: 450, height: 190});return false;
+		});	
+		
+		$j("#undeleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PERSON MENU", width: 450, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {
@@ -92,4 +104,3 @@
 		});
 	});
 	</script>
-		

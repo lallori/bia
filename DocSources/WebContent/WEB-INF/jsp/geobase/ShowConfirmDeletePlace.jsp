@@ -29,7 +29,7 @@
 			});
 			
 			$j("#no").click(function() {			
-				Modalbox.show($j(this).attr("href"), {title: "PLACE ACTIONS MENU", width: 750, height: 150});
+				Modalbox.hide();
 				return false;
 			});
 

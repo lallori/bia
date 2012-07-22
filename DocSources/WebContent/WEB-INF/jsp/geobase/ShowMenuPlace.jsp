@@ -16,7 +16,10 @@
 	<c:url var="ShowConfirmCreatePlaceForumURL" value="/src/geobase/ShowConfirmCreatePlaceForum.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsPlaceURL" value="/de/geobase/ShowMenuActionsPlace.do">
+	<c:url var="DeletePlaceURL" value="/de/geobase/DeletePlace.do">
+		<c:param name="placeAllId"   value="${place.placeAllId}" />
+	</c:url>
+	<c:url var="UndeletePlaceURL" value="/de/geobase/UndeletePlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
 	<c:url var="ShowMenuCommentsPlaceURL" value="/src/geobase/ShowMenuCommentsPlace.do">
@@ -41,7 +44,12 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="menuActions" href="${ShowMenuActionsPlaceURL}">Delete</a>
+		<c:if test="${!volume.logicalDelete}">
+			<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>
+		</c:if>	
+		<c:if test="${volume.logicalDelete}">
+			<a id="undeleteAction" href="${UndeletePlaceURL}">Undelete</a>
+		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
 	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
@@ -77,9 +85,13 @@
 			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
 			return false;
 		});
-
-		$j("#menuActions").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "PLACE ACTIONS MENU", width: 750, height: 190});return false;
+		
+		$j("#deleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 750, height: 190});return false;
+		});	
+		
+		$j("#undeleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PLACE", width: 750, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

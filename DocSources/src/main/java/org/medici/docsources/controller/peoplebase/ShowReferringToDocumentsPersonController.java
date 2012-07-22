@@ -88,7 +88,7 @@ public class ShowReferringToDocumentsPersonController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDocumentsPersonCommand command, BindingResult result, HttpSession session) {
 		Map<String, Object> model = new HashMap<String, Object>();
 

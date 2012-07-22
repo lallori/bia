@@ -92,7 +92,7 @@ public class UndeleteVolumeController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			try {
-				getVolBaseService().deleteVolume(command.getSummaryId());
+				getVolBaseService().undeleteVolume(command.getSummaryId());
 
 				return new ModelAndView("response/UndeletePersonOK", model);
 			} catch (ApplicationThrowable applicationThrowable) {

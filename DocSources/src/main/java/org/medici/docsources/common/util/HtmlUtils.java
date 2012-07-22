@@ -402,6 +402,21 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param entryId
+	 * @return
+	 */
+	public static String showDocumentRelated(Integer entryId) {
+		StringBuilder stringBuilder = new StringBuilder("<a class=\"showResult\" href=\"");
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/src/docbase/CompareDocument.do?entryId=");
+		stringBuilder.append(entryId);
+		stringBuilder.append("\">Show Documents Related</a>");
+				
+		return stringBuilder.toString();
+	}
+	
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return
@@ -539,6 +554,38 @@ public class HtmlUtils {
 	
 	/**
 	 * 
+	 * @param personId
+	 */
+	public static String showRecipientDocumentsRelated(Integer personId, String description) {
+		StringBuilder anchor = new StringBuilder("<a class=\"recipient_docs\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()); 
+		anchor.append("/src/peoplebase/ShowRecipientDocumentsPerson.do?personId=");
+		anchor.append(personId);
+		anchor.append("\">");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();
+	}
+	
+	/**
+	 * 
+	 * @param personId
+	 */
+	public static String showReferringToDocumentsRelated(Integer personId, String description) {
+		StringBuilder anchor = new StringBuilder("<a class=\"referred_docs\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()); 
+		anchor.append("/src/peoplebase/ShowReferringToDocumentsPerson.do?personId=");
+		anchor.append(personId);
+		anchor.append("\">");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
 	 * @param volNum
 	 * @param volLetExt
 	 * @param folioNum
@@ -558,7 +605,7 @@ public class HtmlUtils {
 
 		return url.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -617,7 +664,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param currentSchedone
@@ -669,6 +716,22 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param personId
+	 */
+	public static String showSenderDocumentsRelated(Integer personId, String description) {
+		StringBuilder anchor = new StringBuilder("<a class=\"sender_docs\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()); 
+		anchor.append("/src/peoplebase/ShowSenderDocumentsPerson.do?personId=");
+		anchor.append(personId);
+		anchor.append("\">");
+		anchor.append(description);
+		anchor.append("</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return
@@ -694,7 +757,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList

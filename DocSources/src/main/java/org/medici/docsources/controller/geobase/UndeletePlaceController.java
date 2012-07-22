@@ -70,7 +70,7 @@ public class UndeletePlaceController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			getGeoBaseService().deletePlace(command.getPlaceAllId());
+			getGeoBaseService().undeletePlace(command.getPlaceAllId());
 
 			return new ModelAndView("response/UndeletePlaceOK", model);
 		} catch (ApplicationThrowable ath) {

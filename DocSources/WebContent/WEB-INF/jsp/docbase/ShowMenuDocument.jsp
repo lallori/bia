@@ -16,18 +16,16 @@
 	<c:url var="ShowConfirmCreateDocumentForumURL" value="/src/docbase/ShowConfirmCreateDocumentForum.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
+	<c:url var="DeleteDocumentURL" value="/de/docbase/DeleteDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
-	<c:url var="ShowConfirmDeleteDocumentURL" value="/de/docbase/ShowConfirmDeleteDocument.do">
-		<c:param name="entryId"   value="${document.entryId}" />
-	</c:url>
-	<c:url var="ShowConfirmUndeleteDocumentURL" value="/de/docbase/ShowConfirmUndeleteDocument.do">
+	<c:url var="UndeleteDocumentURL" value="/de/docbase/UndeleteDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
+
 	<c:url var="AddMarkedListDocumentURL" value="/src/docbase/AddMarkedListDocument.do">
 		<c:param name="entryId"	  value="${document.entryId}" />
 	</c:url>
@@ -51,12 +49,11 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<%-- <a id="menuActions" href="${ShowMenuActionsDocumentURL}">Delete</a>--%>
 			<c:if test="${!document.logicalDelete}">
-				<a id="menuActions" href="${ShowConfirmDeleteDocumentURL}">Delete</a>
+				<a id="deleteAction" href="${DeleteDocumentURL}">Delete</a>
 			</c:if>	
 			<c:if test="${document.logicalDelete}">
-				<a id="menuActions" href="${ShowConfirmUndeleteDocumentURL}">Undelete</a>
+				<a id="undeleteAction" href="${UndeleteDocumentURL}">Undelete</a>
 			</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="Print this record"></a>
@@ -122,8 +119,13 @@
 		$j("#buttonPrint").click(function() {
 			window.open($j(this).attr("href"),'PRINT DOCUMENT','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 		});
-		$j("#menuActions").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DOCUMENT ACTIONS MENU", width: 750, height: 190});return false;
+		
+		$j("#deleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "DELETE DOCUMENT", width: 750, height: 190});return false;
+		});	
+		
+		$j("#undeleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE DOCUMENT", width: 750, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

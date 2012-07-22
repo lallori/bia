@@ -88,7 +88,7 @@ public class ShowRecipientDocumentsPersonController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDocumentsPersonCommand command, BindingResult result, HttpSession session) {
 		Map<String, Object> model = new HashMap<String, Object>();
 

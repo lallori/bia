@@ -16,7 +16,7 @@
 		
 		<a id="yes" href="${UndeletePersonURL}">YES</a>
 	
-		<a id="no" href="${ShowMenuActionsPersonURL}">NO</a>
+		<a id="no" href="#">NO</a>
 			
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
@@ -29,13 +29,15 @@
 			});
 			
 			$j("#no").click(function() {			
-				Modalbox.show($j(this).attr("href"), {title: "PERSON ACTIONS MENU", width: 750, height: 150});
+				Modalbox.hide();
 				return false;
 			});
 
 			$j("#yes").click(function() {
-				// TO BE IMPLEMENTED...
-				Modalbox.hide();
+				$j.ajax({ type:"POST", url: '${UndeletePersonURL}', async:false, success:function(html) {
+					$j("#DeleteThisRecordDiv").html(html);
+				}});
+				
 				return false;
 			});
 		});

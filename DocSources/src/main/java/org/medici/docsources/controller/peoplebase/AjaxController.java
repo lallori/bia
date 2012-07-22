@@ -94,6 +94,48 @@ public class AjaxController {
 
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/CheckPersonIsDeletable", method = RequestMethod.GET)
+	public ModelAndView checkPersonIsDeletable(@RequestParam(value="personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+
+			if (person != null) {
+				model.put("mapNameLf", person.getMapNameLf());
+
+				Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(personId);
+				model.put("senderDocsRelated", senderDocsRelated);
+				Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(personId);
+				model.put("recipientDocsRelated", recipientDocsRelated);
+				Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(personId);
+				model.put("referringDocsRelated", referringDocsRelated);
+
+				model.put("senderDocsRelatedURL", HtmlUtils.showSenderDocumentsRelated(personId, "Sender"));
+				model.put("recipientDocsRelatedURL", HtmlUtils.showRecipientDocumentsRelated(personId, "Recipient"));
+				model.put("referringDocsRelatedURL", HtmlUtils.showReferringToDocumentsRelated(personId, "Referring To"));
+
+				if ((senderDocsRelated>0) || (recipientDocsRelated>0) || (referringDocsRelated>0)){
+					model.put("isDeletable", Boolean.FALSE.toString());
+				} else {
+					model.put("isDeletable", Boolean.TRUE.toString());
+				}
+			} else {
+				model.put("isDeletable", Boolean.FALSE.toString());
+			}
+			model.put("personId", personId.toString());
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * 
 	 * @param searchType
 	 * @param sortingColumnNumber
 	 * @param sortingDirection

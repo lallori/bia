@@ -35,7 +35,6 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
-import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.common.util.VolumeUtils;
@@ -109,21 +108,30 @@ public class AjaxController {
 	}
 
 	/**
-	 * This method can act  
-	 *  
-	 * @param volNum Volume Id
-	 * @param volLeText Volume Filza
-	 * @return ModelAndView containing input params and summaryId.
+	 * 
+	 * @param personId
+	 * @return
 	 */
-	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
-	public ModelAndView findVolume(	@RequestParam(value="volume", required=false) String volume,
-									@RequestParam(value="volNum", required=false) Integer volNum, 
-									@RequestParam(value="volLetExt", required=false) String volLetExt) {
- 		if (volNum != null) {
-			return findVolume(volNum, volLetExt);
+	@RequestMapping(value = "/de/volbase/CheckVolumeIsDeletable", method = RequestMethod.GET)
+	public ModelAndView checkDocumentIsDeletable(@RequestParam(value="entryId") Integer entryId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Integer numberOfDocumentsRelated = getVolBaseService().findVolumeDocumentsRelated(entryId);
+
+			if (numberOfDocumentsRelated != null) {
+				model.put("isDeletable", Boolean.FALSE.toString());
+				
+				model.put("documentsRelated", HtmlUtils.showDocumentRelated(entryId));
+			} else {
+				model.put("isDeletable", Boolean.TRUE.toString());
+			}
+			model.put("entryId", entryId.toString());
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
 		}
-		
-		return findVolume(volume);
+
+		return new ModelAndView("responseOK", model);
 	}
 	
 	/**
@@ -186,6 +194,24 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * This method can act  
+	 *  
+	 * @param volNum Volume Id
+	 * @param volLeText Volume Filza
+	 * @return ModelAndView containing input params and summaryId.
+	 */
+	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
+	public ModelAndView findVolume(	@RequestParam(value="volume", required=false) String volume,
+									@RequestParam(value="volNum", required=false) Integer volNum, 
+									@RequestParam(value="volLetExt", required=false) String volLetExt) {
+ 		if (volNum != null) {
+			return findVolume(volNum, volLetExt);
+		}
+		
+		return findVolume(volume);
+	}
 
 	/**
 	 * 
@@ -216,6 +242,20 @@ public class AjaxController {
 	}
 
 	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+
+	/**
 	 * This method returns a list of seriesList. 
 	 *  
 	 * @param text Text to search in title, subTitle1 and subTitle2
@@ -237,7 +277,21 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/de/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
 	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
@@ -333,34 +387,6 @@ public class AjaxController {
 		
 
 		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
-
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * @param volBaseService the volBaseService to set
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
 	}
 
 }

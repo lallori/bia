@@ -69,7 +69,7 @@ public class UndeletePersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			getPeopleBaseService().deletePerson(command.getPersonId());
+			getPeopleBaseService().undeletePerson(command.getPersonId());
 
 			return new ModelAndView("response/UndeletePersonOK", model);
 		} catch (ApplicationThrowable applicationThrowable) {

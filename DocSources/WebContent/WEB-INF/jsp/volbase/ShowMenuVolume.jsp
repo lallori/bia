@@ -16,7 +16,10 @@
 	<c:url var="ShowConfirmCreateVolumeForumURL" value="/src/volbase/ShowConfirmCreateVolumeForum.do">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsVolumeURL" value="/src/volbase/ShowMenuActionsVolume.do">
+	<c:url var="DeleteVolumeURL" value="/de/volbase/DeleteVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+	<c:url var="UndeleteVolumeURL" value="/de/volbase/UndeleteVolume.do">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	<c:url var="ShowVettingChronologyVolumeURL" value="/de/volbase/ShowVettingChronologyVolume.do">
@@ -38,7 +41,12 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="menuActions" href="${ShowMenuActionsVolumeURL}">Delete</a>
+		<c:if test="${!volume.logicalDelete}">
+			<a id="deleteAction" href="${DeleteVolumeURL}">Delete</a>
+		</c:if>	
+		<c:if test="${volume.logicalDelete}">
+			<a id="undeleteAction" href="${UndeleteVolumeURL}">Undelete</a>
+		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintVolumeURL}" title="Print this record"></a>
 	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
@@ -74,8 +82,12 @@
 			return false;
 		});
 		
-		$j("#menuActions").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "VOLUME ACTIONS MENU", width: 750, height: 190});return false;
+		$j("#deleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 750, height: 190});return false;
+		});	
+		
+		$j("#undeleteAction").click( function() {															
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE VOLUME", width: 750, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {
