@@ -44,10 +44,10 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:if test="${!volume.logicalDelete}">
+		<c:if test="${!place.logicalDelete}">
 			<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>
 		</c:if>	
-		<c:if test="${volume.logicalDelete}">
+		<c:if test="${place.logicalDelete}">
 			<a id="undeleteAction" href="${UndeletePlaceURL}">Undelete</a>
 		</c:if>	
 		</security:authorize>
@@ -87,11 +87,11 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 450, height: 190});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PLACE", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PLACE", width: 450, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

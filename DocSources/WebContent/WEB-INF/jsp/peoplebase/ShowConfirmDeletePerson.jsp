@@ -7,19 +7,21 @@
 	<c:url var="DeletePersonURL" value="/de/peoplebase/DeletePerson.do">
 		<c:param name="personId"   value="${command.personId}" />
 	</c:url>
-
 	<c:url var="CheckPersonIsDeletableURL" value="/de/peoplebase/CheckPersonIsDeletable.json">
 		<c:param name="personId"   value="${command.personId}" />
 	</c:url>
-	
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId"   value="${command.personId}" />
+	</c:url>
+
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to delete this record?</h1>
 		
-		<a id="yes" href="${UndeletePersonURL}">YES</a>
+		<a id="yes" href="${DeletePersonURL}">YES</a>
 	
 		<a id="no" href="#">NO</a>
 			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close Delete Menu window" value="Close"/>
 	</div>
 
 	<script>
@@ -137,6 +139,7 @@
 					} else {
 						$j.ajax({ type:"POST", url: '${DeletePersonURL}', async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").html(html);
+							$j("#body_left").load('${ShowPersonURL}');
 						}});
 					}
 				}});

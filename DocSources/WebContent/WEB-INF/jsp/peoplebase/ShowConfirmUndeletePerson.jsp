@@ -7,7 +7,7 @@
 	<c:url var="UndeletePersonURL" value="/de/peoplebase/UndeletePerson.do">
 		<c:param name="personId"   value="${command.personId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsPersonURL" value="/de/peoplebase/ShowMenuActionsPerson.do">
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 		<c:param name="personId"   value="${command.personId}" />
 	</c:url>
 	
@@ -36,6 +36,7 @@
 			$j("#yes").click(function() {
 				$j.ajax({ type:"POST", url: '${UndeletePersonURL}', async:false, success:function(html) {
 					$j("#DeleteThisRecordDiv").html(html);
+					$j("#body_left").load('${ShowPersonURL}');
 				}});
 				
 				return false;

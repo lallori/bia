@@ -121,11 +121,11 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE DOCUMENT", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE DOCUMENT", width: 450, height: 190});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "UNDELETE DOCUMENT", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE DOCUMENT", width: 450, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

@@ -10,7 +10,10 @@
 	<c:url var="CheckVolumeIsDeletableURL" value="/de/volbase/CheckVolumeIsDeletable.json">
 		<c:param name="summaryId"   value="${command.summaryId}" />
 	</c:url>
-	
+	<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
+		<c:param name="summaryId"   value="${command.summaryId}" />
+	</c:url>
+
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to delete this record?</h1>
 		
@@ -18,7 +21,7 @@
 	
 		<a id="no" href="#">NO</a>
 			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close Delete Menu window" value="Close"/>
 	</div>
 
 	<script>
@@ -35,10 +38,13 @@
 
 			$j("#yes").click(function() {
 				$j.ajax({ type:"GET", url: '${CheckVolumeIsDeletableURL}', async:false, success:function(json) { 
-					if (json.isDeletable == 'TRUE') {
+					if (json.isDeletable == 'false') {
 						
 					} else {
-						
+						$j.ajax({ type:"POST", url: '${DeleteVolumeURL}', async:false, success:function(html) {
+							$j("#DeleteThisRecordDiv").html(html);
+							$j("#body_left").load('${ShowVolumeURL}');
+						}});
 					}
 				}});
 

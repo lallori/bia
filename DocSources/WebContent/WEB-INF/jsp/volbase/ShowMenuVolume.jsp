@@ -83,11 +83,11 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 450, height: 190});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "UNDELETE VOLUME", width: 750, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE VOLUME", width: 450, height: 190});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

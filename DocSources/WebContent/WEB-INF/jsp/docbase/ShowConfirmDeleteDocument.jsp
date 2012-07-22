@@ -7,7 +7,7 @@
 	<c:url var="DeleteDocumentURL" value="/de/docbase/DeleteDocument.do">
 		<c:param name="entryId"   value="${command.entryId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
+	<c:url var="CheckDocumentIsDeletableURL" value="/de/docbase/CheckDocumentIsDeletable.json">
 		<c:param name="entryId"   value="${command.entryId}" />
 	</c:url>
 
@@ -16,7 +16,7 @@
 		
 		<a id="yes" href="${DeleteDocumentURL}">YES</a>
 	
-		<a id="no" href="${ShowMenuActionsDocumentURL}">NO</a>
+		<a id="no" href="#">NO</a>
 			
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 		
@@ -36,9 +36,16 @@
 			});
 
 			$j("#yes").click(function() {
-				$j.ajax({ type:"POST", url:$j(this).attr("href"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#DeleteThisRecordDiv").html(html);
-				}})
+				$j.ajax({ type:"GET", url: '${CheckDocumentIsDeletableURL}', async:false, success:function(json) { 
+					if (json.isDeletable == 'false') {
+						$j("#DeleteThisRecordDiv").html("");
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove people and topics indexed to this document before deleting it.<p></h1>');
+					} else {
+						$j.ajax({ type:"POST", url: '${DeleteDocumentURL}', async:false, success:function(html) {
+							$j("#DeleteThisRecordDiv").html(html);
+						}});
+					}
+				}});
 				return false;
 			});
 		});

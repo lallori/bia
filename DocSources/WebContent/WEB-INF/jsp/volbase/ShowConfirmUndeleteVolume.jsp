@@ -7,7 +7,7 @@
 	<c:url var="UndeleteVolumeURL" value="/de/volbase/UndeleteVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsVolumeURL" value="/de/volbase/ShowMenuActionsVolume.do">
+	<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />
 	</c:url>
 	
@@ -16,9 +16,9 @@
 		
 		<a id="yes" href="${DeleteVolumeURL}">YES</a>
 	
-		<a id="no" href="${ShowMenuActionsVolumeURL}">NO</a>
+		<a id="no" href="#">NO</a>
 			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close Undelete Menu window" value="Close"/>
 	</div>
 
 	<script>
@@ -34,8 +34,11 @@
 			});
 
 			$j("#yes").click(function() {
-				// TO BE IMPLEMENTED...
-				Modalbox.hide();
+				$j.ajax({ type:"POST", url: '${UndeleteVolumeURL}', async:false, success:function(html) {
+					$j("#DeleteThisRecordDiv").html(html);
+					$j("#body_left").load('${ShowVolumeURL}');
+				}});
+
 				return false;
 			});
 		});
