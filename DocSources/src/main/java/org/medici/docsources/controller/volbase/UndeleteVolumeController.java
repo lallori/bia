@@ -55,7 +55,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/de/volbase/UndeleteVolume")
 public class UndeleteVolumeController {
 	@Autowired(required = false)
-	@Qualifier("deleteVolumeValidator")
+	@Qualifier("undeleteVolumeValidator")
 	private Validator validator;
 	@Autowired
 	private VolBaseService volBaseService;
@@ -87,17 +87,17 @@ public class UndeleteVolumeController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/UndeleteVolume");
+			return new ModelAndView("response/UndeleteVolumeKO");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			try {
 				getVolBaseService().undeleteVolume(command.getSummaryId());
 
-				return new ModelAndView("response/UndeletePersonOK", model);
+				return new ModelAndView("response/UndeleteVolumeOK", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("response/UndeletePersonKO", model);
+				return new ModelAndView("response/UndeleteVolumeKO", model);
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public class UndeleteVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("command") UndeleteVolumeCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("peoplebase/ShowConfirmUndeleteVolume", model);
+		return new ModelAndView("volbase/ShowConfirmUndeleteVolume", model);
 	}
 
 	/**

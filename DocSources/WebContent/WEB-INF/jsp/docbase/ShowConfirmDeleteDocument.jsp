@@ -10,7 +10,10 @@
 	<c:url var="CheckDocumentIsDeletableURL" value="/de/docbase/CheckDocumentIsDeletable.json">
 		<c:param name="entryId"   value="${command.entryId}" />
 	</c:url>
-
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+	
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to delete this record?</h1>
 		
@@ -43,6 +46,7 @@
 					} else {
 						$j.ajax({ type:"POST", url: '${DeleteDocumentURL}', async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").html(html);
+							$j("#body_left").load('${ShowDocumentURL}');
 						}});
 					}
 				}});

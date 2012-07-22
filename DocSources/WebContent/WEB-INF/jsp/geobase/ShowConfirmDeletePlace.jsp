@@ -7,16 +7,19 @@
 	<c:url var="DeletePlaceURL" value="/de/geobase/DeletePlace.do">
 		<c:param name="placeAllId"   value="${command.placeAllId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsDocumentURL" value="/de/geobase/ShowMenuActionsPlace.do">
+	<c:url var="CheckPlaceIsDeletableURL" value="/de/geobase/CheckPlaceIsDeletable.json">
 		<c:param name="placeAllId"   value="${command.placeAllId}" />
 	</c:url>
-	
+	<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+		<c:param name="placeAllId"   value="${command.placeAllId}" />
+	</c:url>
+
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to delete this record?</h1>
 		
 		<a id="yes" href="${DeletePlaceURL}">YES</a>
 	
-		<a id="no" href="${ShowMenuActionsDocumentURL}">NO</a>
+		<a id="no" href="#">NO</a>
 			
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
@@ -34,9 +37,17 @@
 			});
 
 			$j("#yes").click(function() {
-				$j.ajax({ type:"POST", url:$j(this).attr("href"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#DeleteThisRecordDiv").load(html);
-				}})
+				$j.ajax({ type:"GET", url: '${CheckPlaceIsDeletableURL}', async:false, success:function(json) { 
+					if (json.isDeletable == 'false') {
+						$j("#DeleteThisRecordDiv").html("");
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove people and topics indexed to this document before deleting it.<p></h1>');
+					} else {
+						$j.ajax({ type:"POST", url:$j(this).attr("href"), data:$j(this).serialize(), async:false, success:function(html) {
+							$j("#DeleteThisRecordDiv").load(html);
+							$j("#body_left").load('${ShowPlaceURL}');
+						}})
+					}
+				}});
 				return false;
 			});
 		});

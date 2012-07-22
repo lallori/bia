@@ -30,12 +30,16 @@ package org.medici.docsources.controller.docbase;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.medici.docsources.command.docbase.UndeleteDocumentCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +56,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class UndeleteDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired(required = false)
+	@Qualifier("undeleteDocumentValidator")
+	private Validator validator;
 
 
 	/**
@@ -59,6 +66,35 @@ public class UndeleteDocumentController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") UndeleteDocumentCommand command, BindingResult result) {
+		getValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			return new ModelAndView("response/UndeleteDocumentKO");
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+	
+			try {
+				getDocBaseService().undeleteDocument(command.getEntryId());
+	
+				return new ModelAndView("response/UndeleteDocumentOK", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("response/UndeleteDocumentKO", model);
+			}
+		}
 	}
 
 	/**
@@ -82,20 +118,9 @@ public class UndeleteDocumentController {
 
 	/**
 	 * 
-	 * @param command
-	 * @return
+	 * @param validator
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") UndeleteDocumentCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			getDocBaseService().undeleteDocument(command.getEntryId());
-
-			return new ModelAndView("response/UndeleteDocumentOK", model);
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("response/UndeleteDocumentKO", model);
-		}
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 }

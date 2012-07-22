@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
@@ -117,16 +118,24 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Integer numberOfDocumentsRelated = getVolBaseService().findVolumeDocumentsRelated(summaryId);
-
-			if (numberOfDocumentsRelated != null) {
-				model.put("isDeletable", Boolean.FALSE.toString());
-				
-				model.put("documentsRelated", HtmlUtils.showDocumentRelated(summaryId));
+			Volume volume = getVolBaseService().findVolume(summaryId);
+			if (volume != null) {
+				Integer numberOfDocumentsVolume = getVolBaseService().findVolumeDocumentsRelated(summaryId);
+	
+				if (numberOfDocumentsVolume >0) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+					
+					model.put("documentsVolume", numberOfDocumentsVolume);
+					model.put("documentsVolumeURL", HtmlUtils.showDocumentsVolume(summaryId, "Documents"));
+				} else {
+					model.put("isDeletable", Boolean.TRUE.toString());
+				}
+				model.put("summaryId", summaryId.toString());
+				model.put("volNum", volume.getVolNum().toString());
+				model.put("volLetExt", ObjectUtils.toString(volume.getVolLetExt()));
 			} else {
-				model.put("isDeletable", Boolean.TRUE.toString());
+				model.put("isDeletable", Boolean.FALSE.toString());
 			}
-			model.put("summaryId", summaryId.toString());
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

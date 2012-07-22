@@ -30,12 +30,16 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.medici.docsources.command.geobase.UndeletePlaceCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +56,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class UndeletePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
+	@Autowired(required = false)
+	@Qualifier("undeletePlaceValidator")
+	private Validator validator;
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
 
 	/**
 	 * @return the geoBaseService
@@ -66,15 +86,21 @@ public class UndeletePlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") UndeletePlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") UndeletePlaceCommand command, BindingResult result) {
+		getValidator().validate(command, result);
 
-		try {
-			getGeoBaseService().undeletePlace(command.getPlaceAllId());
-
-			return new ModelAndView("response/UndeletePlaceOK", model);
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("response/UneletePlaceKO", model);
+		if (result.hasErrors()) {
+			return new ModelAndView("response/UndeletePlaceKO");
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+	
+			try {
+				getGeoBaseService().undeletePlace(command.getPlaceAllId());
+	
+				return new ModelAndView("response/UndeletePlaceOK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/UneletePlaceKO", model);
+			}
 		}
 	}
 

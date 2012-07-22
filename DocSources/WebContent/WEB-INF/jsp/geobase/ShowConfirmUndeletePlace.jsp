@@ -7,7 +7,7 @@
 	<c:url var="UndeletePlaceURL" value="/de/geobase/UndeletePlace.do">
 		<c:param name="placeAllId"   value="${command.placeAllId}" />
 	</c:url>
-	<c:url var="ShowMenuActionsDocumentURL" value="/de/geobase/ShowMenuActionsPlace.do">
+	<c:url var="ShowPlaceURL" value="/de/geobase/ShowPlace.do">
 		<c:param name="placeAllId"   value="${command.placeAllId}" />
 	</c:url>
 
@@ -16,7 +16,7 @@
 		
 		<a id="yes" href="${UndeletePlaceURL}">YES</a>
 	
-		<a id="no" href="${ShowMenuActionsDocumentURL}">NO</a>
+		<a id="no" href="#">NO</a>
 			
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
@@ -34,8 +34,10 @@
 			});
 
 			$j("#yes").click(function() {
-				// TO BE IMPLEMENTED...
-				Modalbox.hide();
+				$j.ajax({ type:"POST", url: '${UndeletePlaceURL}', async:false, success:function(html) {
+					$j("#DeleteThisRecordDiv").html(html);
+					$j("#body_left").load('${ShowPlaceURL}');
+				}});
 				return false;
 			});
 		});

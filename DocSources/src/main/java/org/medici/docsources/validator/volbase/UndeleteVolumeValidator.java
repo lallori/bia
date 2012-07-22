@@ -1,5 +1,5 @@
 /*
- * DeleteDocumentValidator.java
+ * UndeleteVolumeValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,54 +25,51 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.validator.docbase;
+package org.medici.docsources.validator.volbase;
 
-import org.medici.docsources.command.docbase.DeleteDocumentCommand;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.command.volbase.UndeleteVolumeCommand;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Delete Document".
+ * Validator bean for action "Undelete Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class DeleteDocumentValidator implements Validator {
+public class UndeleteVolumeValidator implements Validator {
 	@Autowired
-	private DocBaseService docBaseService;
+	private VolBaseService volBaseService;
 
 	/**
-	 * x
-	 * 
-	 * @return
+	 * @param volBaseService the volBaseService to set
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
 	}
 
 	/**
-	 * 
-	 * @param docBaseService
+	 * @return the volBaseService
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
 	}
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only DeleteDocumentCommand.
+	 * validator supports only ModifyDocumentCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeleteDocumentCommand.class);
+		return givenClass.equals(UndeleteVolumeCommand.class);
 	}
 
 	/**
@@ -85,30 +82,23 @@ public class DeleteDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeleteDocumentCommand deleteDocumentCommand = (DeleteDocumentCommand) object;
-		validateDeleteOperation(deleteDocumentCommand.getEntryId(), errors);
+		UndeleteVolumeCommand undeleteVolumeCommand = (UndeleteVolumeCommand) object;
+		validateUndeleteOperation(undeleteVolumeCommand.getSummaryId(), errors);
 	}
 
 	/**
 	 * 
-	 * @param documentId
+	 * @param summaryId
 	 * @param errors
 	 */
-	public void validateDeleteOperation(Integer entryId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
+	public void validateUndeleteOperation(Integer summaryId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "summaryId", "error.summaryId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				Document document = getDocBaseService().findDocument(entryId); 
-				if (document == null) {
-					errors.reject("entryId", "error.entryId.notfound");
-				} else {
-					if (document.getEpLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.people.found");
-					}
-					if (document.getEplToLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.topics.found");
-					}
+				Volume volume = getVolBaseService().findVolume(summaryId); 
+				if (volume == null) {
+					errors.reject("summaryId", "error.summaryId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

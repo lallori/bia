@@ -30,12 +30,16 @@ package org.medici.docsources.controller.peoplebase;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.medici.docsources.command.peoplebase.UndeletePersonCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +56,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class UndeletePersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
+	@Autowired(required = false)
+	@Qualifier("undeletePersonValidator")
+	private Validator validator;
 
 	/**
 	 * @return the peopleBaseService
@@ -59,22 +66,37 @@ public class UndeletePersonController {
 	public PeopleBaseService getPeopleBaseService() {
 		return peopleBaseService;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
 	/**
 	 * 
 	 * @param command
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") UndeletePersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") UndeletePersonCommand command, BindingResult result) {
+		getValidator().validate(command, result);
 
-		try {
-			getPeopleBaseService().undeletePerson(command.getPersonId());
-
-			return new ModelAndView("response/UndeletePersonOK", model);
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("response/UndeletePersonKO", model);
+		if (result.hasErrors()) {
+			return new ModelAndView("response/UndeletePersonKO");
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+	
+			try {
+				getPeopleBaseService().undeletePerson(command.getPersonId());
+	
+				return new ModelAndView("response/UndeletePersonOK", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("response/UndeletePersonKO", model);
+			}
 		}
 	}
 
@@ -84,7 +106,6 @@ public class UndeletePersonController {
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
 	}
-
 	/**
 	 * 
 	 * @param command
@@ -95,5 +116,8 @@ public class UndeletePersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		return new ModelAndView("peoplebase/ShowConfirmUndeletePerson", model);
+	}
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 }

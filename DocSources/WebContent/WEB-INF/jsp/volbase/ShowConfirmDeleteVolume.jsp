@@ -39,7 +39,41 @@
 			$j("#yes").click(function() {
 				$j.ajax({ type:"GET", url: '${CheckVolumeIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
-						
+						$j("#DeleteThisRecordDiv").html("");
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove from any documents related to this Volume<p>');
+						if (json.documentsVolume>0) {
+							$j("#DeleteThisRecordDiv").append(json.documentsVolumeURL + ' <span class=\"num_docs\"> ' + json.documentsVolume + '</span><p>');
+
+							$j("#showDocumentsRelated").die();
+							$j("#showDocumentsRelated").live('click', function() {
+								//var tabName = "Docs Volume ${volume.summaryId}";
+								var tabName = "Docs Volume " + json.volNum + json.volLetExt;
+								var numTab = 0;
+								
+								//Check if already exist a tab with this volume
+								var tabExist = false;
+								$j("#tabs ul li a").each(function(){
+									if(!tabExist){
+										if(this.text != ""){
+											numTab++;
+										}
+									}
+									if(this.text == tabName){
+										tabExist = true;
+									}
+								});
+								
+								if(!tabExist){
+									$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+									$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+									return false;
+								}else{
+									$j("#tabs").tabs("select", numTab);
+									return false;
+								}
+							});
+						}
+
 					} else {
 						$j.ajax({ type:"POST", url: '${DeleteVolumeURL}', async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").html(html);

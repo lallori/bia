@@ -1,5 +1,5 @@
 /*
- * DeleteDocumentValidator.java
+ * UndeleteDocumentValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import org.medici.docsources.command.docbase.DeleteDocumentCommand;
+import org.medici.docsources.command.docbase.UndeleteDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -37,12 +37,12 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Delete Document".
+ * Validator bean for action "Undelete Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class DeleteDocumentValidator implements Validator {
+public class UndeleteDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -65,14 +65,14 @@ public class DeleteDocumentValidator implements Validator {
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only DeleteDocumentCommand.
+	 * validator supports only UndeleteDocumentCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeleteDocumentCommand.class);
+		return givenClass.equals(UndeleteDocumentCommand.class);
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class DeleteDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeleteDocumentCommand deleteDocumentCommand = (DeleteDocumentCommand) object;
-		validateDeleteOperation(deleteDocumentCommand.getEntryId(), errors);
+		UndeleteDocumentCommand UndeleteDocumentCommand = (UndeleteDocumentCommand) object;
+		validateUndeleteOperation(UndeleteDocumentCommand.getEntryId(), errors);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class DeleteDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateDeleteOperation(Integer entryId, Errors errors) {
+	public void validateUndeleteOperation(Integer entryId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 
 		if (!errors.hasErrors()) {
@@ -102,13 +102,6 @@ public class DeleteDocumentValidator implements Validator {
 				Document document = getDocBaseService().findDocument(entryId); 
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
-				} else {
-					if (document.getEpLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.people.found");
-					}
-					if (document.getEplToLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.topics.found");
-					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

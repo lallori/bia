@@ -107,6 +107,10 @@
         <description>Show Document Explorer Validator.</description> 
 	</bean>
 	
+	<bean id="undeleteDocumentValidator" class="org.medici.docsources.validator.docbase.UndeleteDocumentValidator">
+        <description>Undelete a Document Validator.</description> 
+	</bean>
+	
 	<!-- Manuscript Viewer Validators -->
 	<bean id="editExtractDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
         <description>Edit Extract Document Dialog Validator.</description>
@@ -143,6 +147,10 @@
 	
 	<bean id="editNameOrNameVariantPlaceValidator" class="org.medici.docsources.validator.geobase.EditNameOrNameVariantPlaceValidator">
 		<description>Edit Name Or Name Variant Place Validator.</description>
+	</bean>
+
+	<bean id="undeletePlaceValidator" class="org.medici.docsources.validator.geobase.UndeletePlaceValidator">
+        <description>Undelete a Place Validator.</description>
 	</bean>
 
 	<!-- People base validator -->
@@ -214,6 +222,10 @@
         <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
+	<bean id="undeletePersonValidator" class="org.medici.docsources.validator.peoplebase.UndeletePersonValidator">
+        <description>Undelete a Person Validator.</description>
+	</bean>
+
 	<bean id="uploadPortraitPersonValidator" class="org.medici.docsources.validator.peoplebase.UploadPortraitPersonValidator">
         <description>Upload Portrait Person Validator.</description>
 	</bean>
@@ -243,6 +255,9 @@
         <description>Show Volume Explorer Validator.</description> 
 	</bean>
 	
+	<bean id="undeleteVolumeValidator" class="org.medici.docsources.validator.volbase.UndeleteVolumeValidator">
+        <description>Undelete a Volume Validator.</description>
+	</bean>
 	<!-- Search Validators -->
 	<bean id="saveUserSearchFilterValidator" class="org.medici.docsources.validator.search.SaveUserSearchFilterValidator">
 	    <description>Save Search Validator.</description>

@@ -108,7 +108,7 @@ public class DeletePlaceValidator implements Validator {
 					}
 				}
 			} catch (ApplicationThrowable ath) {
-				errors.reject("entryId", "error.entryId.notfound");
+				errors.reject("placeAllId", "error.placeAllId.notfound");
 			}
 		}
 	}

@@ -954,4 +954,22 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param description
+	 * @return
+	 */
+	public static String showDocumentsVolume(Integer summaryId, String description) {
+		StringBuilder anchor = new StringBuilder("<a id=\"showDocumentsRelated\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/volbase/ShowDocumentsVolume.do?summaryId=");
+		anchor.append(summaryId);
+		anchor.append("\">");
+		anchor.append(description);
+		anchor.append("</a>");
+		
+		return anchor.toString();
+	}
 }

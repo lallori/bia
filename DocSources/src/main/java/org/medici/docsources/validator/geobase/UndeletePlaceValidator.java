@@ -1,5 +1,5 @@
 /*
- * DeleteDocumentValidator.java
+ * UndeletePersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,54 +25,51 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.validator.docbase;
+package org.medici.docsources.validator.geobase;
 
-import org.medici.docsources.command.docbase.DeleteDocumentCommand;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.command.geobase.UndeletePlaceCommand;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Delete Document".
+ * Validator bean for action "Undelete Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class DeleteDocumentValidator implements Validator {
+public class UndeletePlaceValidator implements Validator {
 	@Autowired
-	private DocBaseService docBaseService;
+	private GeoBaseService geoBaseService;
 
 	/**
-	 * x
-	 * 
-	 * @return
+	 * @param geoBaseService the geoBaseService to set
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
 	}
 
 	/**
-	 * 
-	 * @param docBaseService
+	 * @return the geoBaseService
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only DeleteDocumentCommand.
+	 * validator supports only ModifyDocumentCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeleteDocumentCommand.class);
+		return givenClass.equals(UndeletePlaceCommand.class);
 	}
 
 	/**
@@ -85,8 +82,8 @@ public class DeleteDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeleteDocumentCommand deleteDocumentCommand = (DeleteDocumentCommand) object;
-		validateDeleteOperation(deleteDocumentCommand.getEntryId(), errors);
+		UndeletePlaceCommand UndeletePlaceCommand = (UndeletePlaceCommand) object;
+		validateUndeleteOperation(UndeletePlaceCommand.getPlaceAllId(), errors);
 	}
 
 	/**
@@ -94,24 +91,17 @@ public class DeleteDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateDeleteOperation(Integer entryId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
+	public void validateUndeleteOperation(Integer placeAllId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "placeAllId", "error.placeAllId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				Document document = getDocBaseService().findDocument(entryId); 
-				if (document == null) {
-					errors.reject("entryId", "error.entryId.notfound");
-				} else {
-					if (document.getEpLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.people.found");
-					}
-					if (document.getEplToLink().size()>0) {
-						errors.reject("entryId", "error.deleteDocument.topics.found");
-					}
+				Place place = getGeoBaseService().findPlace(placeAllId); 
+				if (place == null) {
+					errors.reject("placeAllId", "error.placeAllId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
-				errors.reject("entryId", "error.entryId.notfound");
+				errors.reject("placeAllId", "error.placeAllId.notfound");
 			}
 		}
 	}
