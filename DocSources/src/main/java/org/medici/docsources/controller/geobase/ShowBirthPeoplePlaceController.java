@@ -77,7 +77,7 @@ public class ShowBirthPeoplePlaceController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowBirthPeoplePlaceCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
