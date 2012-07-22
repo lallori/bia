@@ -197,6 +197,28 @@ span.h7 {
 	text-align: center;
 }
 
+#deleteAction { /* Delete Menu Button */
+	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
+	font-size: 11px;
+	padding: 2px 0 0;
+	width:65px;
+	height:17px;
+	position:absolute;
+	right: 133px;
+	text-align: center;
+}
+
+#undeleteAction { /* Undelete Menu Button */
+	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
+	font-size: 11px;
+	padding: 2px 0 0;
+	width:65px;
+	height:17px;
+	position:absolute;
+	right: 133px;
+	text-align: center;
+}
+
 #vettingHistory { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size: 11px;
