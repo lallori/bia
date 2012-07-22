@@ -53,7 +53,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/ShowGoogleMapsGeoCoorPlace")
+@RequestMapping("/src/geobase/ShowGoogleMapsGeoCoorPlace")
 public class ShowGoogleMapsGeoCoorPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;

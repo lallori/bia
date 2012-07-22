@@ -51,7 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/ShowTopicsPlace")
+@RequestMapping("/src/geobase/ShowTopicsPlace")
 public class ShowTopicsPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;

@@ -50,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/ShowHierarchyPlace")
+@RequestMapping("/src/geobase/ShowHierarchyPlace")
 public class ShowHierarchyPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;

@@ -50,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/ShowRecipientDocumentsPlace")
+@RequestMapping("/src/geobase/ShowRecipientDocumentsPlace")
 public class ShowRecipientDocumentsPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
