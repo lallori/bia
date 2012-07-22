@@ -64,32 +64,66 @@ public class AjaxController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
+
 	/**
 	 * 
-	 * @param summaryId
+	 * @param personId
 	 * @return
 	 */
-	@RequestMapping(value = "/src/geobase/GetLinkedForum", method = RequestMethod.GET)
-	public ModelAndView getLinkedForum(@RequestParam(value="placeAllId") Integer placeAllId) {
+	@RequestMapping(value = "/de/geobase/CheckPlaceIsDeletable", method = RequestMethod.GET)
+	public ModelAndView checkPlaceIsDeletable(@RequestParam(value="placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
-			if (forum != null) {
-				model.put("isPresent", Boolean.TRUE.toString());
-				model.put("forumId", forum.getForumId().toString());
-				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
-				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
+			Place place = getGeoBaseService().findPlace(placeAllId);
+
+			if (place != null) {
+				model.put("placeName", place.getPlaceName());
+				model.put("placeNameFull", place.getPlaceNameFull());
+
+				Integer numberOfTopicsPlace = getGeoBaseService().findNumberOfTopicsPlace(placeAllId);
+				model.put("topicsPlace", numberOfTopicsPlace);
+				Integer numberOfDocumentsInTopicsPlace = getGeoBaseService().findNumberOfDocumentsInTopicsPlace(placeAllId);
+				model.put("documentsInTopicsPlace", numberOfDocumentsInTopicsPlace);
+				Integer numberOfSenderDocumentsPlace = getGeoBaseService().findNumberOfSenderDocumentsPlace(placeAllId);
+				model.put("senderDocumentsPlace", numberOfSenderDocumentsPlace);
+				Integer numberOfRecipientDocumentsPlace = getGeoBaseService().findNumberOfRecipientDocumentsPlace(placeAllId);
+				model.put("recipientDocumentsPlace", numberOfRecipientDocumentsPlace);
+				Integer numberOfBirthInPlace = getGeoBaseService().findNumberOfBirthInPlace(placeAllId);
+				model.put("birthPlace", numberOfBirthInPlace);
+				Integer numberOfActiveStartInPlace = getGeoBaseService().findNumberOfActiveStartInPlace(placeAllId);
+				model.put("activeStartPlace", numberOfActiveStartInPlace);
+				Integer numberOfDeathInPlace = getGeoBaseService().findNumberOfDeathInPlace(placeAllId);
+				model.put("deathPlace", numberOfDeathInPlace);
+				Integer numberOfActiveEndInPlace = getGeoBaseService().findNumberOfActiveEndInPlace(placeAllId);
+				model.put("activeEndPlace", numberOfActiveEndInPlace);
+				
+				model.put("documentsInTopicsPlaceURL", HtmlUtils.showDDocumentsInTopicsPlace(placeAllId, numberOfDocumentsInTopicsPlace, numberOfTopicsPlace, "Recipient"));
+				model.put("senderDocumentsPlaceURL", HtmlUtils.showSenderDocumentsPlace(placeAllId, numberOfSenderDocumentsPlace, "Sender"));
+				model.put("recipientDocumentsPlaceURL", HtmlUtils.showRecipientDocumentsPlace(placeAllId, numberOfRecipientDocumentsPlace, "Recipient"));
+				model.put("birthPlaceURL", HtmlUtils.showBirthPeoplePlace(placeAllId, numberOfBirthInPlace, "Birth"));
+				model.put("activeStartPlaceURL", HtmlUtils.showActiveStartPeoplePlace(placeAllId, numberOfActiveStartInPlace, "Active Starts"));
+				model.put("deathPlaceURL", HtmlUtils.showDeathPeoplePlace(placeAllId, numberOfDeathInPlace, "Death"));
+				model.put("activeEndPlaceURL", HtmlUtils.showActiveEndPeoplePlace(placeAllId, numberOfActiveEndInPlace, "Active Ends"));
+
+				if ((numberOfTopicsPlace>0) || (numberOfDocumentsInTopicsPlace>0) || (numberOfSenderDocumentsPlace>0) ||
+					(numberOfRecipientDocumentsPlace>0) || (numberOfBirthInPlace>0) || (numberOfActiveStartInPlace>0) ||
+					(numberOfDeathInPlace>0) || (numberOfActiveEndInPlace>0)){
+					model.put("isDeletable", Boolean.FALSE.toString());
+				} else {
+					model.put("isDeletable", Boolean.TRUE.toString());
+				}
 			} else {
-				model.put("isPresent", Boolean.FALSE.toString());
+				model.put("isDeletable", Boolean.FALSE.toString());
 			}
+			model.put("placeAllId", placeAllId.toString());
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * 
 	 * @param searchType
@@ -150,6 +184,32 @@ public class AjaxController {
 	 */
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
+	}
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 */
+	@RequestMapping(value = "/src/geobase/GetLinkedForum", method = RequestMethod.GET)
+	public ModelAndView getLinkedForum(@RequestParam(value="placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
+			if (forum != null) {
+				model.put("isPresent", Boolean.TRUE.toString());
+				model.put("forumId", forum.getForumId().toString());
+				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
+			} else {
+				model.put("isPresent", Boolean.FALSE.toString());
+			}
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
 	}
 	
 	/**

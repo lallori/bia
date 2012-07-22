@@ -77,7 +77,7 @@ public class UndeleteDocumentController {
 	public ModelAndView setupForm(@ModelAttribute("command") UndeleteDocumentCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("docbase/ShowConfirmDeleteDocument", model);
+		return new ModelAndView("docbase/ShowConfirmUndeleteDocument", model);
 	}
 
 	/**

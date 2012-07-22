@@ -113,20 +113,20 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/de/volbase/CheckVolumeIsDeletable", method = RequestMethod.GET)
-	public ModelAndView checkDocumentIsDeletable(@RequestParam(value="entryId") Integer entryId) {
+	public ModelAndView CheckVolumeIsDeletable(@RequestParam(value="summaryId") Integer summaryId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Integer numberOfDocumentsRelated = getVolBaseService().findVolumeDocumentsRelated(entryId);
+			Integer numberOfDocumentsRelated = getVolBaseService().findVolumeDocumentsRelated(summaryId);
 
 			if (numberOfDocumentsRelated != null) {
 				model.put("isDeletable", Boolean.FALSE.toString());
 				
-				model.put("documentsRelated", HtmlUtils.showDocumentRelated(entryId));
+				model.put("documentsRelated", HtmlUtils.showDocumentRelated(summaryId));
 			} else {
 				model.put("isDeletable", Boolean.TRUE.toString());
 			}
-			model.put("entryId", entryId.toString());
+			model.put("summaryId", summaryId.toString());
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

@@ -107,18 +107,18 @@ public class AjaxController {
 			if (person != null) {
 				model.put("mapNameLf", person.getMapNameLf());
 
-				Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(personId);
-				model.put("senderDocsRelated", senderDocsRelated);
-				Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(personId);
-				model.put("recipientDocsRelated", recipientDocsRelated);
-				Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(personId);
-				model.put("referringDocsRelated", referringDocsRelated);
+				Integer numberOfSenderDocumentsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(personId);
+				model.put("senderDocsRelated", numberOfSenderDocumentsRelated);
+				Integer numberOfRecipientDocumentsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(personId);
+				model.put("recipientDocsRelated", numberOfRecipientDocumentsRelated);
+				Integer numberOfReferringDocumentsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(personId);
+				model.put("referringDocsRelated", numberOfReferringDocumentsRelated);
 
 				model.put("senderDocsRelatedURL", HtmlUtils.showSenderDocumentsRelated(personId, "Sender"));
 				model.put("recipientDocsRelatedURL", HtmlUtils.showRecipientDocumentsRelated(personId, "Recipient"));
 				model.put("referringDocsRelatedURL", HtmlUtils.showReferringToDocumentsRelated(personId, "Referring To"));
 
-				if ((senderDocsRelated>0) || (recipientDocsRelated>0) || (referringDocsRelated>0)){
+				if ((numberOfSenderDocumentsRelated>0) || (numberOfRecipientDocumentsRelated>0) || (numberOfReferringDocumentsRelated>0)){
 					model.put("isDeletable", Boolean.FALSE.toString());
 				} else {
 					model.put("isDeletable", Boolean.TRUE.toString());

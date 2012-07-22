@@ -307,6 +307,67 @@ public class HtmlUtils {
 	
 	/**
 	 * 
+	 * @param placeAllId
+	 * @param numberOfActiveEndInPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showActiveEndPeoplePlace(Integer placeAllId, Integer numberOfActiveEndInPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfActiveStartInPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showActiveStartPeoplePlace(Integer placeAllId, Integer numberOfActiveStartInPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfBirthInPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showBirthPeoplePlace(Integer placeAllId, Integer numberOfBirthInPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfDocumentsInTopicsPlace
+	 * @param numberOfTopicsPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showDDocumentsInTopicsPlace(Integer placeAllId, Integer numberOfDocumentsInTopicsPlace, Integer numberOfTopicsPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfDeathInPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showDeathPeoplePlace(Integer placeAllId, Integer numberOfDeathInPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 
 	 * @param inputList
 	 * @param digitization
 	 * @return
@@ -373,7 +434,7 @@ public class HtmlUtils {
 
 		return url;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -399,7 +460,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -510,7 +571,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param singleRow
@@ -551,6 +612,18 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfRecipientDocumentsPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showRecipientDocumentsPlace(Integer placeAllId, Integer numberOfRecipientDocumentsPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	/**
 	 * 
@@ -567,7 +640,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -583,7 +656,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param volNum
@@ -664,7 +737,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param currentSchedone
@@ -694,7 +767,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param currentSchedone
@@ -712,6 +785,18 @@ public class HtmlUtils {
 		}
 
 		return anchor.toString();
+	}
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfSenderDocumentsPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showSenderDocumentsPlace(Integer placeAllId, Integer numberOfSenderDocumentsPlace, String description) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

@@ -68,14 +68,6 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;
 	
 	/**
-	 * 
-	 * @param placeAllId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException;
-	
-	/**
 	 * This method find the number of documents in topics with a specified place.
 	 * 
 	 * @param placeAllId
@@ -83,6 +75,22 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfTopicsByDocument(Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -100,7 +108,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @throws PersistenceException
 	 */
 	public Page searchTopics(String topic, PaginationFilter paginationFilter) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch

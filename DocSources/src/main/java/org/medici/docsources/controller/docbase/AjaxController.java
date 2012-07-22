@@ -116,10 +116,30 @@ public class AjaxController {
 			Document document = getDocBaseService().findDocument(entryId);
 
 			if (document != null) {
-				model.put("isDeletable", Boolean.FALSE.toString());
+				Integer numberOfTopicsOnDocument = getDocBaseService().findNumberOfTopicsOnDocument(document.getEntryId());
+				model.put("topicsOnDocument", numberOfTopicsOnDocument.toString());
+				if (numberOfTopicsOnDocument>0) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
 				
-				model.put("senderDocuments", "");
-				model.put("recipientDocuments", "");
+				Integer numberOfPeopleOnDocument = getDocBaseService().findNumberOfPeopleLinkedOnDocument(document.getEntryId());
+				model.put("peopleOnDocument", numberOfTopicsOnDocument.toString());
+				if (numberOfPeopleOnDocument>0) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
+
+				if (document.getSenderPeople() != null) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
+				if (document.getSenderPlace() != null) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
+				if (document.getRecipientPeople() != null) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
+				if (document.getRecipientPlace() != null) {
+					model.put("isDeletable", Boolean.FALSE.toString());
+				}
 			} else {
 				model.put("isDeletable", Boolean.FALSE.toString());
 			}

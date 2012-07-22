@@ -81,18 +81,6 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	 */
 	@SuppressWarnings({ "unchecked" })
 	@Override
-	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from EplToLink where document.entryId=:entryId ORDER BY topic.topicTitle");
-		query.setParameter("entryId", entryId);
-
-		return query.getResultList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings({ "unchecked" })
-	@Override
 	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("from EplToLink where eplToId=:eplToId and document.entryId=:entryId");
 		query.setParameter("eplToId", eplToId);
@@ -109,6 +97,18 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EplToLink where document.entryId=:entryId ORDER BY topic.topicTitle");
+		query.setParameter("entryId", entryId);
+
+		return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("Select count(distinct document.entryId) from EplToLink where place.placeAllId=:placeAllId");
@@ -117,7 +117,29 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public Integer findNumberOfTopicsByDocument(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT topic.topicTitle) FROM EplToLink where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT topic.topicTitle) FROM EplToLink where place.placeAllId=:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -149,18 +171,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		
 		return returnValues;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT topic.topicTitle) FROM EplToLink where place.placeAllId=:placeAllId");
-		query.setParameter("placeAllId", placeAllId);
-		Long result = (Long) query.getSingleResult();
-		return new Integer(result.intValue());
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -199,7 +210,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		
 		return page;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

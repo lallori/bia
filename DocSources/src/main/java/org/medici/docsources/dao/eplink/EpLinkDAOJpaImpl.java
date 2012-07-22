@@ -147,7 +147,18 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT person.personId) FROM EpLink where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
