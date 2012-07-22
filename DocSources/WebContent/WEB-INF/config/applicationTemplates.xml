@@ -498,10 +498,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 	</definition>
 	
-	<definition name="docbase/ShowMenuActionsDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuActionsDocument.jsp"/>
-	</definition>
-	
 	<definition name="docbase/ShowSameFolioDocuments" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowSameFolioDocuments.jsp"/>
 	</definition>
@@ -591,10 +587,6 @@
 	
 	<definition name="geobase/ShowGoogleMapsGeoCoorPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGoogleMapsGeoCoorPlace.jsp"/>
-	</definition>
-
-	<definition name="geobase/ShowMenuActionsPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowMenuActionsPlace.jsp"/>
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
@@ -806,10 +798,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowFamilyPerson.jsp" />
 	</definition>
 
-	<definition name="peoplebase/ShowMenuActionsPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowMenuActionsPerson.jsp"/>
-	</definition>
-
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
 	</definition>
@@ -993,10 +981,6 @@
 
 	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
-	</definition>
-
-	<definition name="volbase/ShowMenuActionsVolume" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuActionsVolume.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">
