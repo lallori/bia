@@ -35,8 +35,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
@@ -44,7 +42,6 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
@@ -169,23 +166,50 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> searchBornPlace(String query) throws PersistenceException {
-        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
 
         try  {
-        	String searchTextWithWildCard = query.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(query.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(query);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -204,7 +228,6 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 					result.addAll(result2);
 				}
 			}
-			
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -218,26 +241,54 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> searchDeathPlace(String query) throws PersistenceException {
-        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
 
         try  {
-        	String searchTextWithWildCard = query.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(query.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(query);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
+
 			List<Place> result = new ArrayList<Place>(0);
 			List<Place> result1 = fullTextQuery.list();
 			List<Place> result2 = fullTextQueryWithWildCard.list();
@@ -265,27 +316,54 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException {
-        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
 
         try  {
-        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
-			
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
+
 			List<Place> result = new ArrayList<Place>(0);
 			List<Place> result1 = fullTextQuery.list();
 			List<Place> result2 = fullTextQueryWithWildCard.list();
@@ -313,23 +391,50 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> searchPlaceParent(String query) throws PersistenceException{
-		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
 
         try  {
-        	String searchTextWithWildCard = query.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(query.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(query);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -404,104 +509,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> searchPlaces(String searchText) throws PersistenceException {
-		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
-
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-
-        try  {
-        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
-			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
-			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
-			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
-			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
-
-			List<Place> result = new ArrayList<Place>(0);
-			List<Place> result1 = fullTextQuery.list();
-			List<Place> result2 = fullTextQueryWithWildCard.list();
-			if(result1.size() > 0){
-				result.addAll(result1);
-			}
-			if(result2.size() > 0){
-				if(result.size() > 0){
-					result2.removeAll(result);
-				}
-				if(result2.size() > 0){
-					result.addAll(result2);
-				}
-			}
-			return result;
-        } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException {
-        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
-
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-
-        try  {
-        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
-	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserMapNameLf.parse(searchTextWithWildCard);
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
-
-	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
-			// Projection permits to extract only a subset of domain class, tuning application.
-			//fullTextQuery.setProjection(outputFields);
-			//fullTextQueryWithWildCard.setProjection(outputFields);
-			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
-			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
-			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
-
-			List<Place> result = new ArrayList<Place>(0);
-			List<Place> result1 = fullTextQuery.list();
-			List<Place> result2 = fullTextQueryWithWildCard.list();
-			if(result1.size() > 0){
-				result.addAll(result1);
-			}
-			if(result2.size() > 0){
-				if(result.size() > 0){
-					result2.removeAll(result);
-				}
-				if(result2.size() > 0){
-					result.addAll(result2);
-				}
-			}
-			return result;
-        } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Place> searchSendersPlace(String searchText) throws PersistenceException {
-//        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -511,10 +519,6 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         
 
         try  {
-//        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
-//	        org.apache.lucene.search.Query queryPlaceWithWildCard = parserPlaceName.parse(searchTextWithWildCard);
-//	        org.apache.lucene.search.Query queryPlaceName = parserPlaceName.parse(searchText.toLowerCase());
-
 	        BooleanQuery booleanQuery = new BooleanQuery();
 	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 	        for (int i = 0; i < words.length; i++) {
@@ -546,11 +550,159 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
-//	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
-//	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
+			return result;
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException {
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
+
+        try  {
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+			// Projection permits to extract only a subset of domain class, tuning application.
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
+			return result;
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchSendersPlace(String searchText) throws PersistenceException {
+//		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        
+
+        try  {
+	        BooleanQuery booleanQuery = new BooleanQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord;
+	        	if(i == 0)
+	        		singleWord = words[0];
+	        	else
+	        		singleWord = words[i] + "*";
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+	        booleanQuery = new BooleanQuery();
+	        for (int i = 0; i < words.length; i++) {
+	        	BooleanQuery text = new BooleanQuery();
+	        	String singleWord = words[i];
+	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	if(i == 0)
+	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
+	        	else
+	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        }
+	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
+			// Projection permits to extract only a subset of domain class, tuning application.
+//			fullTextQuery.setProjection(outputFields);
+//			fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
