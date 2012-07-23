@@ -38,6 +38,7 @@ import org.medici.docsources.domain.Month;
  * Month Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface MonthDAO extends Dao<Integer, Month> {
 	

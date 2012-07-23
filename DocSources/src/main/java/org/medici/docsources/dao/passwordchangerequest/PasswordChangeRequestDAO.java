@@ -38,7 +38,8 @@ import org.medici.docsources.domain.PasswordChangeRequest;
  * Month Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- */
+  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+*/
 public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequest> {
 
 	/**

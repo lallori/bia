@@ -40,6 +40,7 @@ import org.springframework.stereotype.Repository;
  * <b>ParentDAOJpaImpl</b> is a default implementation of <b>ParentDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.People
  */

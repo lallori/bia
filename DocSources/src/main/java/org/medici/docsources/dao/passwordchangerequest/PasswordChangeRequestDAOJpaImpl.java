@@ -46,6 +46,7 @@ import org.springframework.stereotype.Repository;
  * <b>PasswordChangeRequestDAOJpaImpl</b> is a default implementation of <b>PasswordChangeRequestDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Repository
 public class PasswordChangeRequestDAOJpaImpl extends JpaDao<String, PasswordChangeRequest> implements PasswordChangeRequestDAO {

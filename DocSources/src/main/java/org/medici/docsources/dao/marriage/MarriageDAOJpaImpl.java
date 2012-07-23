@@ -41,6 +41,7 @@ import org.springframework.stereotype.Repository;
  * <b>MarriageDAOJpaImpl</b> is a default implementation of <b>MarriageDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Repository
 public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements MarriageDAO {
