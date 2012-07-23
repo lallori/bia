@@ -143,6 +143,7 @@
 <tiles:insertAttribute name="digitizationMenu"/>
 <tiles:insertAttribute name="messagesMenu" />
 <tiles:insertAttribute name="profileMenu" />
+<tiles:insertAttribute name="markedListMenu"  />
 			</ul>
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>

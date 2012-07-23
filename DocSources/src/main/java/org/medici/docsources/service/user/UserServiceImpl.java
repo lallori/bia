@@ -53,6 +53,7 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.userinformation.UserInformationDAO;
+import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.ActivationUser;
@@ -114,6 +115,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserInformationDAO userInformationDAO;
+	
+	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
 
 	@Autowired
 	private UserMessageDAO userMessageDAO;
@@ -633,6 +637,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
 	 * @return the userMessageDAO
 	 */
 	public UserMessageDAO getUserMessageDAO() {
@@ -838,6 +849,18 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserMarkedList(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserMarkedListElementDAO().findMarkedList(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @param activationUserDAO the activationUserDAO to set
@@ -909,6 +932,14 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
 		this.userInformationDAO = userInformationDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
 	}
 
 	/**

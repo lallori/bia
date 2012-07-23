@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.usermarkedlistelement;
 
+import javax.persistence.PersistenceException;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.UserMarkedListElement;
 
@@ -34,7 +38,16 @@ import org.medici.docsources.domain.UserMarkedListElement;
  * UserMarkedListElement Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListElement> {
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException;
 
 }

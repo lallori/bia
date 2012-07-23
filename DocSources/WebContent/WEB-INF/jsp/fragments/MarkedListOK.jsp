@@ -14,6 +14,7 @@
 		$j(document).ready(function() {
 			$j("#close").click(function(){
 				$j("#DialogMarkedList").dialog("close");
+				$j("#DialogMarkedList").remove();
 				return false;
 			});
 		});

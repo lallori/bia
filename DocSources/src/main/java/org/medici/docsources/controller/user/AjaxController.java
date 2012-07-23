@@ -42,6 +42,7 @@ import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
@@ -332,7 +333,76 @@ public class AjaxController {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/user/MyMarkedListPagination.json", method = RequestMethod.GET)
+	public ModelAndView myMarkedListPagination(@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Page page = null;
+
+
+		try {
+			page = getUserService().searchUserMarkedList(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserMarkedListElement currentElement : (List<UserMarkedListElement>)page.getList()) {
+			List<String> singleRow = new ArrayList<String>();
+			singleRow.add(simpleDateFormat.format(currentElement.getDateCreated()));
+			if (currentElement.getDocument() != null) {
+				singleRow.add("Document");
+				singleRow.add(currentElement.getDocument().getMDPAndFolio());
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showDocument(singleRow, currentElement.getDocument().getEntryId()));
+			}  else if (currentElement.getVolume() != null) {
+				singleRow.add("Volume");
+				singleRow.add("");
+				singleRow.add(currentElement.getVolume().getMDP());
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showVolume(singleRow, currentElement.getVolume().getSummaryId()));
+			} else if (currentElement.getPlace() != null) {
+				singleRow.add("Place");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add(currentElement.getPlace().getPlaceNameFull());
+				singleRow.add("");
+				resultList.add(HtmlUtils.showPlace(singleRow, currentElement.getPlace().getPlaceAllId()));
+			} else if (currentElement.getPerson() != null) {
+				singleRow.add("Person");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add(currentElement.getPerson().getMapNameLf());
+				resultList.add(HtmlUtils.showPeople(singleRow, currentElement.getPerson().getPersonId()));
+			}
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
+	}
 	
 	
 	/**

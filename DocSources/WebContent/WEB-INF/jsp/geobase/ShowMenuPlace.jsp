@@ -28,6 +28,10 @@
 	<c:url var="ShowVettingChronologyPlaceURL" value="/de/peoplebase/ShowVettingChronologyPlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
+	
+	<c:url var="AddMarkedListPlaceURL" value="/src/geobase/AddMarkedListPlace.do">
+		<c:param name="placeAllId"	  value="${place.placeAllId}" />
+	</c:url>
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">CREATED BY ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
@@ -52,7 +56,7 @@
 		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
-	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
+	<a id="buttonMarkedList" href="${AddMarkedListPlaceURL}" title="Add this record to Marked List"></a>
 		<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -82,7 +86,34 @@
 		});
 		
 		$j("#buttonMarkedList").click(function() {	
-			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
+			if ($j("#DialogMarkedList").length > 0) {
+				$j("#DialogMarkedList").dialog("close");
+				return false;
+			} else {
+				var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
+					autoOpen: false,
+					width: 250,
+					height: 180,
+					modal: true,
+					zIndex: 3999,
+					overlay: {
+						backgroundColor: '#000',
+						opacity: 0.5
+					},
+					position: ['center',250],
+					open: function(event, ui) { 
+		        		$j.ajax({ type:"GET", url: '${AddMarkedListPlaceURL}', cache:false, success:function(html) { 
+							$j("#DialogMarkedList").focus();
+							$j("#DialogMarkedList").html(html);
+							} 
+						});
+		       		},
+					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+				});
+				$dialogMarkedList.dialog("open");
+				return false;
+			}
 			return false;
 		});
 		

@@ -1,5 +1,5 @@
 /*
- * AddMarkedListDocumentController.java
+ * AddMarkedListPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,17 +25,17 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.docbase;
+package org.medici.docsources.controller.geobase;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.docbase.AddMarkedListDocumentCommand;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.command.geobase.AddMarkedListPlaceCommand;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.UserMarkedList;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,70 +48,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Add marked list document".
+ * Controller for action "Add marked list place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/docbase/AddMarkedListDocument")
-public class AddMarkedListDocumentController {
+@RequestMapping("/src/geobase/AddMarkedListPlace")
+public class AddMarkedListPlaceController {
 	@Autowired
-	private DocBaseService docBaseService;
+	private GeoBaseService geoBaseService;
 	@Autowired
 	private UserMarkedListService userMarkedListService;
-
-	/**
-	 * 
-	 * @return
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * 
-	 * @param documentId
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@ModelAttribute("command") AddMarkedListDocumentCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		Document document = new Document();
-		
-		if(command.getEntryId() > 0){
-			try {
-				// Details
-				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
-				if(userMarkedList == null){
-					userMarkedList = new UserMarkedList();
-					userMarkedList.setDateCreated(new Date());
-					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
-				}
-				
-				document = getDocBaseService().findDocument(command.getEntryId());
-				userMarkedList = getUserMarkedListService().addNewDocumentToMarkedList(userMarkedList, document);
-				model.put("category", "document");
 	
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("response/MarkedListKO", model);
-			}
-		}
-		
-		model.put("document", document);		
-
-		return new ModelAndView("response/MarkedListOK", model);
-	}
-
 	/**
 	 * 
-	 * @param docBaseService
+	 * @return
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 	/**
@@ -122,9 +77,54 @@ public class AddMarkedListDocumentController {
 	}
 
 	/**
+	 * 
+	 * @param geoBaseService
+	 */
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
+	}
+
+	/**
+	 * 
+	 * @param placeId
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = {RequestMethod.GET})
+	public ModelAndView setupForm(@ModelAttribute("command") AddMarkedListPlaceCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		Place place = new Place();
+		
+		if(command.getPlaceAllId() > 0){
+			try {
+				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
+				if(userMarkedList == null){
+					userMarkedList = new UserMarkedList();
+					userMarkedList.setDateCreated(new Date());
+					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+				}
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+				userMarkedList = getUserMarkedListService().addNewPlaceToMarkedList(userMarkedList, place);
+				model.put("category", "place");
+				
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				new ModelAndView("response/MarkedListKO", model);
+			}
+		}
+		
+		model.put("place", place);
+
+		return new ModelAndView("response/MarkedListOK", model);
+	}
+
+	/**
 	 * @param userMarkedListService the userMarkedListService to set
 	 */
 	public void setUserMarkedListService(UserMarkedListService userMarkedListService) {
 		this.userMarkedListService = userMarkedListService;
 	}
+
 }

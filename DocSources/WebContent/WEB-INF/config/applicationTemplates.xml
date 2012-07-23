@@ -38,6 +38,7 @@
 		<put-attribute name="communityForumsMenu" value="/WEB-INF/jsp/menu/CommunityForums.jsp" />
 		<put-attribute name="historyMenu" value="/WEB-INF/jsp/menu/MyHistory.jsp" />
 		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/MyProfile.jsp" />
+		<put-attribute name="markedListMenu" value="/WEB-INF/jsp/menu/MyMarkedList.jsp" />
 		<put-attribute name="helpMenu" value="/WEB-INF/jsp/menu/Help.jsp" />
 		<put-attribute name="logoutMenu" value="/WEB-INF/jsp/menu/Logout.jsp" />
 		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
@@ -266,6 +267,10 @@
 
 	<definition name="user/ShowMyHistoryByCategoryModalWindow" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryByCategoryModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowMyMarkedListModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyMarkedListModalWindow.jsp"/>
     </definition>
     
     <definition name="user/ShowUserProfile" extends="template.partialDOM">

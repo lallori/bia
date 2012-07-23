@@ -82,34 +82,32 @@
 			return false;
 		});
 		
-		var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
-			autoOpen: false,
-			width: 250,
-			height: 180,
-			modal: true,
-			zIndex: 3999,
-			overlay: {
-				backgroundColor: '#000',
-				opacity: 0.5
-			},
-			position: ['center',250],
-			open: function(event, ui) { 
-        		$j.ajax({ type:"GET", url: '${AddMarkedListDocumentURL}', cache:false, success:function(html) { 
-					$j("#DialogMarkedList").focus();
-					$j("#DialogMarkedList").html(html);
-					} 
-				});
-       		},
-			dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-			dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-		});
-		
-		
 		$j("#buttonMarkedList").click(function() {	
-			if ($dialogMarkedList.dialog("isOpen")) {
-				$dialogMarkedList.dialog("close");
+			if ($j("#DialogMarkedList").length > 0) {
+				$j("#DialogMarkedList").dialog("close");
 				return false;
 			} else {
+				var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
+					autoOpen: false,
+					width: 250,
+					height: 180,
+					modal: true,
+					zIndex: 3999,
+					overlay: {
+						backgroundColor: '#000',
+						opacity: 0.5
+					},
+					position: ['center',250],
+					open: function(event, ui) { 
+		        		$j.ajax({ type:"GET", url: '${AddMarkedListDocumentURL}', cache:false, success:function(html) { 
+							$j("#DialogMarkedList").focus();
+							$j("#DialogMarkedList").html(html);
+							} 
+						});
+		       		},
+					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+				});
 				$dialogMarkedList.dialog("open");
 				return false;
 			}

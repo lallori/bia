@@ -27,7 +27,16 @@
  */
 package org.medici.docsources.dao.usermarkedlistelement;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
@@ -35,6 +44,8 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -81,6 +92,85 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	@Autowired
 	private VolumeDAO volumeDAO;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		if(paginationFilter.getTotal() == null){
+			String queryString = "SELECT count(*) FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE username=:username)";
+			
+			 Query query = getEntityManager().createQuery(queryString);
+		     query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		     page.setTotal(new Long((Long)query.getSingleResult()));
+		}
+		
+		String objectsQuery = "FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE username=:username)";
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} else {
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				}
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+		logger.debug("JPQL Query : " + jpql);
+
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		page.setList(query.getResultList());
+
+		return page;
+	}
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @param searchType
+	 * @return
+	 */
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		switch (paginationFilter.getSortingColumn()) {
+			case 0:
+				paginationFilter.addSortingCriteria("dateCreated", paginationFilter.getSortingDirection());
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("document.volume.volNum", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("document.volume.volLetExt", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("document.folioNum", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("document.folioMod", paginationFilter.getSortingDirection());
+				break;
+			case 2:  
+				paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection());
+				break;
+			case 3:
+				paginationFilter.addSortingCriteria("place.placeNameFull", paginationFilter.getSortingDirection());
+				break;
+			case 4:
+				paginationFilter.addSortingCriteria("person.mapNameLf", paginationFilter.getSortingDirection());
+				break;
+			default:
+				paginationFilter.addSortingCriteria("dateCreated", paginationFilter.getSortingDirection());
+				break;
+		}
+
+		return paginationFilter;
+	}
+	
 	/**
 	 * @return the documentDAO
 	 */
