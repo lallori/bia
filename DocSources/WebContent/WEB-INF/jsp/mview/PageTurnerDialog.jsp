@@ -466,7 +466,7 @@
 							if(data.countAlreadyEntered == 1){
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showTranscription").css('visibility', 'visible');
-// 								$j("#showAlreadyTranscribed").css('visibility', 'visible');
+								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 								$j("#transcribeAnyway").css('visibility', 'visible');
 								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 								$j("#notExtract").css('visibility', 'hidden');
@@ -475,6 +475,7 @@
 								$j("#readyToTranscribe").css('visibility', 'hidden');
 								$j("#choiceThisFolioStart").css('visibility', 'hidden');
 								$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+								$j("#currentEntryId").val(data.entryId);
 							}else if(data.countAlreadyEntered > 1){
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
