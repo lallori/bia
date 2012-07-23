@@ -8,7 +8,7 @@
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	
-	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
+	<c:url var="ShowDocumentsVolumeURL" value="/src/volbase/ShowDocumentsVolume.do">
 		<c:param name="summaryId" value="${volume.summaryId}" />
 	</c:url>
 	
