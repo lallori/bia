@@ -7,7 +7,7 @@
 	<div id="DeleteThisRecordDiv">
 		<h1>The selected document has been deleted.</h1>
 		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close window" value="Close"/>
 	</div>
 
 	<script>

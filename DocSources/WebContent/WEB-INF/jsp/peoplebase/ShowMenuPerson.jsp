@@ -82,11 +82,11 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE PERSON MENU", width: 450, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PERSON MENU", width: 400, height: 160});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PERSON MENU", width: 450, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PERSON MENU", width: 400, height: 160});return false;
 		});	
 
 		$j('#lastRecord').click(function() {

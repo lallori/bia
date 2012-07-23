@@ -5,9 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="DeleteThisRecordDiv">
-		<h1>The selected document has not been deleted. An error is occured.</h1>
+		<h1>The selected document has not been deleted. An error is occured, please check the logs or contact and Adminstrator.</h1>
 		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close window" value="Close"/>
 	</div>
 
 	<script>

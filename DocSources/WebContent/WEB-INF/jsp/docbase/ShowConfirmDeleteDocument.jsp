@@ -20,21 +20,12 @@
 		<a id="yes" href="${DeleteDocumentURL}">YES</a>
 	
 		<a id="no" href="#">NO</a>
-			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
-		
-		<form:form id=""></form:form>
 	</div>
 
 	<script>
-		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
-			
+		$j(document).ready(function() {		
 			$j("#no").click(function() {			
-				Modalbox.show($j(this).attr("href"), {title: "DOCUMENT ACTIONS MENU", width: 750, height: 150});
+				Modalbox.hide();
 				return false;
 			});
 
@@ -42,7 +33,7 @@
 				$j.ajax({ type:"GET", url: '${CheckDocumentIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
-						$j("#DeleteThisRecordDiv").append('<h1>Please remove people and topics indexed to this document before deleting it.<p></h1>');
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove ALL people and topics indexed to this document before trying to deleting it</h1>');
 					} else {
 						$j.ajax({ type:"POST", url: '${DeleteDocumentURL}', async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").html(html);

@@ -114,8 +114,8 @@ public class AjaxController {
 				Integer numberOfReferringDocumentsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(personId);
 				model.put("referringDocsRelated", numberOfReferringDocumentsRelated);
 
-				model.put("senderDocsRelatedURL", HtmlUtils.showSenderDocumentsRelated(personId, "Sender"));
-				model.put("recipientDocsRelatedURL", HtmlUtils.showRecipientDocumentsRelated(personId, "Recipient"));
+				model.put("senderDocsRelatedURL", HtmlUtils.showSenderDocumentsRelated(personId, "As Sender"));
+				model.put("recipientDocsRelatedURL", HtmlUtils.showRecipientDocumentsRelated(personId, "As Recipient"));
 				model.put("referringDocsRelatedURL", HtmlUtils.showReferringToDocumentsRelated(personId, "Referring To"));
 
 				if ((numberOfSenderDocumentsRelated>0) || (numberOfRecipientDocumentsRelated>0) || (numberOfReferringDocumentsRelated>0)){

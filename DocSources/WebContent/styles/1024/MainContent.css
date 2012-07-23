@@ -186,29 +186,7 @@ span.h7 {
 	right: -17px;
 }
 
-#menuActions { /* Actions Menu Button */
-	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
-	font-size: 11px;
-	padding: 2px 0 0;
-	width:65px;
-	height:17px;
-	position:absolute;
-	right: 133px;
-	text-align: center;
-}
-
-#deleteAction { /* Delete Menu Button */
-	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
-	font-size: 11px;
-	padding: 2px 0 0;
-	width:65px;
-	height:17px;
-	position:absolute;
-	right: 133px;
-	text-align: center;
-}
-
-#undeleteAction { /* Undelete Menu Button */
+#deleteAction, #undeleteAction { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
 	font-size: 11px;
 	padding: 2px 0 0;
@@ -579,6 +557,10 @@ item a{
 	width: 414px;
 }
 
+#browseContent .listForm { /* Whole display list */
+	margin: 20px 0 0 70px;
+}
+
 .listFormProfile { /* Whole display list */
 	display: table;
 	margin: 5px 0 0 3px;
@@ -794,14 +776,12 @@ input[type="submit"]:hover, input[type="image"]:hover{
 
 #AddNewValue, .AddNewValue  { /* "Add New Value" Button */
 	margin:5px auto 7px 310px;
-	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
 	text-align:center;
-	padding:4px 0 0 0;
 	width:52px;
 	height:23px;
 	border:none;
@@ -1261,6 +1241,10 @@ select {
 	width:250px;
 }
 
+.selectform_XXLlong{ /* dropdown menu class */
+	width:303px;
+}
+
 /* ---------------------------------------------------- */ 
 /*
 /*
@@ -1473,7 +1457,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 /* Body right (Tabs) Details Divs */
-#body_right #EditDetailsPersonDiv, #body_right #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv, #body_right #EditDetailsDocumentDiv, #body_right #EditDetailsVolumeDiv  {
+#body_right #EditDetailsPersonDiv, #body_right #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv, #body_right #EditDetailsDocumentDiv, #body_right #EditDetailsVolumeDiv, #EditTitleOccupationDiv  {
 	width:485px;
 	margin: 15px 0 0 3px;
 	min-height:100px;!important
@@ -1536,6 +1520,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin-right: 23px;
 }
 
+#SpineVolumeNotDigitDiv  {
+    background-image:url(/DocSources/images/1024/img_volume.png);
+}
+
 #SpineVolumeDiv img, #SpineVolumeDigitDiv img {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1549,7 +1537,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 #SpineVolumeDiv span, #SpineVolumeNotDigitDiv span {
     color: #C0272D;
     height: 60px;
-    position: absolute;
+    float: left;
     margin: 62px 0 0 25px;
     width: 69px;
 	font-size:11px;
@@ -1710,7 +1698,8 @@ p.notDigitized {
 
 div#text a.linkVolume {
     font-size: 16px;
-    color: #666EA4;
+    color: #808000;
+    text-decoration: underline;
 }
 
 
@@ -2068,6 +2057,25 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	float: right;
 	margin-top: -3px;
 	margin-right: 10px;
+}
+
+#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv #showDocumentsRelated span, #DeleteThisRecordDiv .referred_docs { /* Show documents related button */
+	float: none;
+	color:#900;
+	text-decoration:none;
+}
+
+#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv .referred_docs { /* Show documents related button */
+	display: block;
+	text-align:center;
+}
+
+#MB_window #DeleteThisRecordDiv p { /* Show documents related button */
+	
+	 text-align: center;
+ 
+	 margin: 0;
+	 line-height: 18px;
 }
 
 /*
@@ -3473,11 +3481,12 @@ form#EditUserProfileForm span{
 #createFilterDiv {
 	margin-left: 81px;
 	margin-top: 10px;
+	width: 205px;
 }
 
 #createFilter {
-	position: absolute;
-	margin: -4px 0 0 4px;
+	float: right;
+	margin: -4px 0 0 0;
 }
 
 #advancedSearch #advancedSearch_top { /* Advances Search window Title */

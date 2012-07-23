@@ -20,17 +20,10 @@
 		<a id="yes" href="${DeletePersonURL}">YES</a>
 	
 		<a id="no" href="#">NO</a>
-			
-		<input id="close" type="submit" title="Close Delete Menu window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
-			
 			$j("#no").click(function() {			
 				Modalbox.hide();
 				return false;
@@ -40,13 +33,18 @@
 				$j.ajax({ type:"GET", url: '${CheckPersonIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
-						$j("#DeleteThisRecordDiv").append('<h1>Please remove from any documents related to this Person<p>');
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove this person from all the documents listed here under before trying to deleting it:</h1>');
+						$j("#DeleteThisRecordDiv").append('<br>');
 						if (json.senderDocsRelated>0) {
-							$j("#DeleteThisRecordDiv").append(json.senderDocsRelatedURL + ' <span class=\"num_docs\"> ' + json.senderDocsRelated + '</span><p>');
-							
+							$j("#DeleteThisRecordDiv").append(json.senderDocsRelatedURL);
+						
+							$j("#DeleteThisRecordDiv > .sender_docs").append(' (' + json.senderDocsRelated + ')');
+							$j("#DeleteThisRecordDiv > .sender_docs").attr('title','Show me those documents');
+
+							$j("#DeleteThisRecordDiv").append('<br>');
 							$j(".sender_docs").die();
 							$j(".sender_docs").live('click', function() {
-								var tabName = "Sender Docs " + json.mapNameLf;
+								var tabName = json.mapNameLf + " - Documents as Sender";
 								var numTab = 0;
 								
 								//Check if already exist a tab with this person
@@ -73,11 +71,14 @@
 							});
 						}
 						if (json.recipientDocsRelated>0){
-							$j("#DeleteThisRecordDiv").append(json.recipientDocsRelatedURL  + ' <span class=\"num_docs\"> ' + json.recipientDocsRelated + '</span><p>');
-
+							$j("#DeleteThisRecordDiv").append(json.recipientDocsRelatedURL);
+							
+							$j("#DeleteThisRecordDiv > .recipient_docs").append(' (' + json.recipientDocsRelated + ')');
+							$j("#DeleteThisRecordDiv > .recipient_docs").attr('title','Show me those documents');
+							$j("#DeleteThisRecordDiv").append('<br>');
 							$j(".recipient_docs").die();
 							$j(".recipient_docs").live('click', function() {
-								var tabName = "Recipient Docs " + json.mapNameLf;
+								var tabName = json.mapNameLf + " - Documents as Recipient";
 								var numTab = 0;
 								
 								//Check if already exist a tab with this person
@@ -104,11 +105,15 @@
 							});
 						}
 						if (json.referringDocsRelated>0){
-							$j("#DeleteThisRecordDiv").append(json.referringDocsRelatedURL + ' <span class=\"num_docs\"> ' + json.referringDocsRelated + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.referringDocsRelatedURL);
 							
+							$j("#DeleteThisRecordDiv > .referred_docs").append(' (' + json.referringDocsRelated + ')');
+							$j("#DeleteThisRecordDiv > .referred_docs").attr('title','Show me those documents');
+
+							$j("#DeleteThisRecordDiv").append('<br>');
 							$j(".referred_docs").die();
 							$j(".referred_docs").live('click', function() {
-								var tabName = "Docs Referring To " + json.mapNameLf;
+								var tabName = json.mapNameLf + " - Documents Referring to";
 								var numTab = 0;
 								
 								//Check if already exist a tab with this person
