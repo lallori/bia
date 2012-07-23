@@ -141,6 +141,12 @@ public class SimpleSearchVolume extends SimpleSearch {
 			}
 			
 		}
+		
+		//To discard record deleted
+		if(jpaQuery.indexOf("WHERE") != -1){
+			jpaQuery.append(" AND logicalDelete = false");
+		}
+		
 		return jpaQuery.toString();
 	}
 
