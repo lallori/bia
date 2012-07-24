@@ -135,7 +135,7 @@
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditTitleOrOccupationPersonDiv").load($j(this).attr("href"));
+					$j("#EditTitleOrOccupationPersonDiv").load("${AddTitleOrOccupationPersonURL}");
 					return false;
 				});
 			});

@@ -116,7 +116,7 @@
 			});
 
 			$j("#AddNewValue").click(function(){
-				$j("#EditNamePersonDiv").load($j(this).attr("href"));
+				$j("#EditNamePersonDiv").load("${AddNamePersonURL}");
 				return false;
 			});
 		});

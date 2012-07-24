@@ -166,22 +166,7 @@
 				  };
 				})();
 
-			var $dialogNewTitleOccupation = $j('<div id="DialogNewTitleOccupation"></div>').dialog({
-				resizable: false,
-				width: 550,
-				height: 200, 
-				modal: true,
-				autoOpen : false,
-				zIndex: 3999,
-				open: function(event, ui) { 
-            		$j(this).load('${CreateNewTitleOrOccupationPersonURL}');
-           		},
-				overlay: {
-					backgroundColor: '#000',
-					opacity: 0.5
-				},
-				title: 'CREATE NEW TITLE / OCCUPATION'
-			});
+			
 			
 			$j('#titleAutocomplete').keyup(function(){
 				delay(function(){
@@ -203,7 +188,26 @@
 			$j("#createNew").live('click',function(){
 				titleOrOccupationDescription.killSuggestions();
 				$j("#titleAutocomplete").val("");
-				$dialogNewTitleOccupation.dialog("open");
+				if($j("#DialogNewTitleOccupation").length == 0){
+					var $dialogNewTitleOccupation = $j('<div id="DialogNewTitleOccupation"></div>').dialog({
+						resizable: false,
+						width: 550,
+						height: 200, 
+						modal: true,
+						autoOpen : false,
+						zIndex: 3999,
+						open: function(event, ui) { 
+		            		$j(this).load('${CreateNewTitleOrOccupationPersonURL}');
+		           		},
+						overlay: {
+							backgroundColor: '#000',
+							opacity: 0.5
+						},
+						title: 'CREATE NEW TITLE / OCCUPATION'
+					});
+					$dialogNewTitleOccupation.dialog("open");
+				}else
+					$j("#DialogNewTitleOccupation").dialog("open");
 				return false;
 			});
 			

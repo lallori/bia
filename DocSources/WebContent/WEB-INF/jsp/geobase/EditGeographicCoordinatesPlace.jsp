@@ -13,7 +13,7 @@
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
 		
-		<c:url var="ShowGoogleMapsGeoCoorPlaceURL" value="/de/geobase/ShowGoogleMapsGeoCoorPlace.do">
+		<c:url var="ShowGoogleMapsGeoCoorPlaceURL" value="/src/geobase/ShowGoogleMapsGeoCoorPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 			<c:param name="placeGeographicCoordinatesId" value="${command.placeGeographicCoordinatesId}" />
 		</c:url>

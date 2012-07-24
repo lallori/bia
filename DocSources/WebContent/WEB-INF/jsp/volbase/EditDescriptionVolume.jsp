@@ -19,11 +19,11 @@
 					<form:textarea path="orgNotes" cssClass="txtarea_big"/><form:errors path="orgNotes" cssClass="inputerrors"/>
 				</div>
 				<div class="row">
-					<div class="col_r">
-						<a class="helpIcon" title="<fmt:message key="volbase.description.edit.condition"></fmt:message>">?</a>
-						<form:label id="conditionLabel" for="ccondition" path="ccondition" cssErrorClass="error">Condition</form:label>
-						<form:input path="ccondition" cssClass="input_33c"/><form:errors path="ccondition" cssClass="inputerrors"/>
-					</div>
+					<a class="helpIcon" title="<fmt:message key="volbase.description.edit.condition"></fmt:message>">?</a>
+					<form:label id="conditionLabel" for="ccondition" path="ccondition" cssErrorClass="error">Condition</form:label>
+				</div>
+				<div class="row">
+					<form:textarea path="ccondition" id="condition" cssClass="txtarea"/><form:errors path="ccondition" cssClass="inputerrors"/>
 				</div>
 			</div>
 	

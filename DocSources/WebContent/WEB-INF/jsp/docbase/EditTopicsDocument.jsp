@@ -131,7 +131,7 @@
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
+					$j("#EditTopicDocumentDiv").load("${AddTopicURL}");
 					return false;
 				});
 

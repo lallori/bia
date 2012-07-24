@@ -153,7 +153,7 @@
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditSpousePersonDiv").load($j(this).attr("href"));
+					$j("#EditSpousePersonDiv").load("${AddSpousePersonURL}");
 					return false;
 				});
 

@@ -360,7 +360,7 @@
 			});
 			
 			$j("#AddNewValue").click(function(){
-				$j("#EditPersonDocumentDiv").load($j(this).attr("href"));
+				$j("#EditPersonDocumentDiv").load("${AddPersonURL}");
 				return false;
 			});
 

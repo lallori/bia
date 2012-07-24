@@ -134,7 +134,7 @@
 			});
 
 			$j("#AddNewValue").click(function(){
-				$j("#EditChildPersonDiv").load($j(this).attr("href"));
+				$j("#EditChildPersonDiv").load("${AddChildPersonURL}");
 				return false;
 			});
 
