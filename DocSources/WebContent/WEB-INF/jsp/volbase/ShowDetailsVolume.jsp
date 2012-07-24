@@ -66,15 +66,11 @@
 				<c:if test="${empty image && volume.digitized == false}">
 					<div id="SpineVolumeNotDigitDiv">
 						<span>To be digitized</span>
-						<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
-						<p>Volume Spine</p>
 					</div>
 				</c:if>
 				<c:if test="${empty image && volume.digitized == true}">
 					<div id="SpineVolumeNotDigitDiv">
-						<span>Spine not available</span>
-						<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
-						<p>Volume Spine</p>
+						<span>Spine not available</span>						<p>Volume Spine</p>
 					</div>
 				</c:if>
 			</security:authorize>
@@ -86,8 +82,6 @@
 			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<div id="SpineVolumeNotDigitDiv">
 					<span class="register">To see this Volume you must register</span>
-					<img alt="Volume" src="<c:url value="/images/1024/img_volume.png"/>" width="120px" height="160px">
-					<p>Volume Spine</p>
 				</div>
 			</security:authorize>
 			
