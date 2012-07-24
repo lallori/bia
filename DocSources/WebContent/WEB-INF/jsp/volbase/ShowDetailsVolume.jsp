@@ -70,7 +70,7 @@
 				</c:if>
 				<c:if test="${empty image && volume.digitized == true}">
 					<div id="SpineVolumeNotDigitDiv">
-						<span>Spine not available</span>						<p>Volume Spine</p>
+						<span>Spine not available</span>						
 					</div>
 				</c:if>
 			</security:authorize>

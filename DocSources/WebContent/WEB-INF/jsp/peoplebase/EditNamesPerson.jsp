@@ -47,7 +47,7 @@
 			
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Name" href="${AddNamePersonURL}">Add</a>
+				<input id="AddNewValue" type="submit" value="Add" title="Add new Name" />
 			</div>
 			
 		</fieldset>	

@@ -326,7 +326,7 @@ span.h7 {
 /*Are you sure you want to delete this record? */
 
 #DeleteThisRecordDiv #yes {
-	margin: 15px auto 7px 150px;
+	margin: 15px auto 7px 100px;
 	text-align: center;
 	padding-top: 4px;
 	position: absolute;
@@ -727,7 +727,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	filter:alpha(opacity=50); /* IE */
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLink { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -859,7 +859,7 @@ img.transparent {
 	-moz-border-radius: 4px;
 }
 
-#EditChildrenPersonDiv .inputerrors,  #EditDetailsPersonForm span.inputerrors {
+#EditChildrenPersonDiv .inputerrors,  #EditDetailsPersonForm span.inputerrors, #CreateNewTitlesOccupationsForm .inputerrors {
     float:none;
     text-align: left;
     display: block;
@@ -1243,6 +1243,11 @@ select {
 
 .selectform_XXLlong{ /* dropdown menu class */
 	width:303px;
+}
+
+.selectform_XXXLlong {
+	width: 417px;
+	margin-left: 0;
 }
 
 /* ---------------------------------------------------- */ 
@@ -1699,10 +1704,7 @@ p.notDigitized {
 div#text a.linkVolume {
     font-size: 16px;
     color: #808000;
-    text-decoration: underline;
 }
-
-
 
 div#text div#icons {
     height: 60px;
@@ -2059,21 +2061,19 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin-right: 10px;
 }
 
-#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv #showDocumentsRelated span, #DeleteThisRecordDiv .referred_docs { /* Show documents related button */
+#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv #showDocumentsRelated span, #DeleteThisRecordDiv .referred_docs, #DeleteThisRecordDiv .sender_docs, #DeleteThisRecordDiv .recipient_docs { /* Show documents related button */
 	float: none;
 	color:#900;
 	text-decoration:none;
 }
 
-#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv .referred_docs { /* Show documents related button */
+#DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv .referred_docs, #DeleteThisRecordDiv .sender_docs, #DeleteThisRecordDiv .recipient_docs { /* Show documents related button */
 	display: block;
 	text-align:center;
 }
 
 #MB_window #DeleteThisRecordDiv p { /* Show documents related button */
-	
 	 text-align: center;
- 
 	 margin: 0;
 	 line-height: 18px;
 }
@@ -2855,12 +2855,14 @@ a.refreshVolumeExplorer {
 
 #placeImageDiv { /* Place map */
     float:right; 
-    margin-right:15px;
+    margin-right: 20px;
     z-index:1;
     height:160px;
     width:120px;
     text-align:center;
     margin-top: 0;
+    background-image: url(/DocSources/images/1024/img_place.png);
+    background-repeat: no-repeat;
 }
 
 #geoTitle p {
@@ -5195,4 +5197,19 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
+}
+
+
+/* Menage Title Occupation */
+
+#addNewTitleOccupationDiv #topBodyLeftMenuDiv { /* Div containig "Crated By..." "Vetting Chronology" "Actions" "Print this record" "Share/Link" */
+	position:relative;
+}
+
+#addNewTitleOccupationDiv #topBodyLeftMenuDiv #deleteAction { /* Actions Menu Button */
+	right: 0;
+}
+
+#addNewTitleOccupationDiv #personTitle {
+	margin: 10px 0 20px 5px;
 }
