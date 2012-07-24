@@ -44,6 +44,24 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	
 	/**
 	 * 
+	 * @param idMarkedList
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserMarkedListElement findDocumentInMarkedList(Integer idMarkedList, Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param idMarkedList
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException

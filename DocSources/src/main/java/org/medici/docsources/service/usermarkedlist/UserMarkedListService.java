@@ -109,6 +109,24 @@ public interface UserMarkedListService {
 	/**
 	 * 
 	 * @param userMarkedList
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean ifDocumentAlreadyPresent(UserMarkedList userMarkedList, Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean ifPersonAlreadyPresent(UserMarkedList userMarkedList, Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
 	 * @param people
 	 * @return
 	 * @throws ApplicationThrowable

@@ -95,6 +95,42 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedListElement findDocumentInMarkedList(Integer idMarkedList, Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND document.entryId=:entryId");
+		query.setParameter("idMarkedList", idMarkedList);
+		query.setParameter("entryId", entryId);
+		
+		query.setMaxResults(1);
+		List<UserMarkedListElement> result = query.getResultList();
+		if(result.size() > 0)
+			return result.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND person.personId=:personId");
+		query.setParameter("idMarkedList", idMarkedList);
+		query.setParameter("personId", personId);
+		
+		query.setMaxResults(1);
+		List<UserMarkedListElement> result = query.getResultList();
+		if(result.size() > 0)
+			return result.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);

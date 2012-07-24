@@ -25,6 +25,9 @@
 	<c:url var="ShowVettingChronologyVolumeURL" value="/de/volbase/ShowVettingChronologyVolume.do">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
+	<c:url var="AddMarkedListVolumeURL" value="/src/volbase/AddMarkedListVolume.do">
+		<c:param name="summaryId"	  value="${volume.summaryId}" />
+	</c:url>
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
@@ -49,7 +52,7 @@
 		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintVolumeURL}" title="Print this record"></a>
-	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
+		<a id="buttonMarkedList" href="${AddMarkedListVolumeURL}" title="Add this record to Marked List"></a>
 		<a id="buttonShareLink" href="${ShareVolumeURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -78,8 +81,30 @@
 		});
 		
 		$j("#buttonMarkedList").click(function() {	
-			Modalbox.show($j(this).attr("href"), {title: "MARKET LIST", width: 760, height: 415});
+			var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
+				autoOpen: false,
+				width: 250,
+				height: 180,
+				modal: true,
+				zIndex: 3999,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				position: ['center',250],
+				open: function(event, ui) { 
+		       		$j.ajax({ type:"GET", url: '${AddMarkedListVolumeURL}', cache:false, success:function(html) { 
+						$j("#DialogMarkedList").focus();
+						$j("#DialogMarkedList").html(html);
+						} 
+					});
+		      		},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			});
+			$dialogMarkedList.dialog("open");
 			return false;
+				
 		});
 		
 		$j("#deleteAction").click( function() {															

@@ -89,17 +89,19 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	public UserMarkedList addNewDocumentToMarkedList(UserMarkedList userMarkedList, Document document) throws ApplicationThrowable {
 		try {
 			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
-			Date creationDate = new Date();
-			UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
-			userMarkedListElement.setDateCreated(creationDate);
-			userMarkedListElement.setDocument(getDocumentDAO().find(document.getEntryId()));
-			userMarkedListElement.setId(null);
-			getUserMarkedListElementDAO().persist(userMarkedListElement);
-			
-			userMarkedList.setDateLastUpdate(creationDate);
-			getUserMarkedListDAO().merge(userMarkedList);
-
-			getUserHistoryDAO().persist(new UserHistory("Add new document To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			if(!ifDocumentAlreadyPresent(userMarkedList, document.getEntryId())){
+				Date creationDate = new Date();
+				UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
+				userMarkedListElement.setDateCreated(creationDate);
+				userMarkedListElement.setDocument(getDocumentDAO().find(document.getEntryId()));
+				userMarkedListElement.setId(null);
+				getUserMarkedListElementDAO().persist(userMarkedListElement);
+				
+				userMarkedList.setDateLastUpdate(creationDate);
+				getUserMarkedListDAO().merge(userMarkedList);
+	
+				getUserHistoryDAO().persist(new UserHistory("Add new document To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			}
 
 			return userMarkedList;
 		} catch (Throwable th) {
@@ -115,16 +117,18 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	public UserMarkedList addNewPersonToMarkedList(UserMarkedList userMarkedList, People people) throws ApplicationThrowable {
 		try {
 			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
-			Date creationDate = new Date();
-			UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
-			userMarkedListElement.setDateCreated(creationDate);
-			userMarkedListElement.setPerson(getPeopleDAO().find(people.getPersonId()));
-			getUserMarkedListElementDAO().persist(userMarkedListElement);
-			
-			userMarkedList.setDateLastUpdate(creationDate);
-			getUserMarkedListDAO().merge(userMarkedList);
-
-			getUserHistoryDAO().persist(new UserHistory("Add new person To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			if(!ifPersonAlreadyPresent(userMarkedList, people.getPersonId())){
+				Date creationDate = new Date();
+				UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
+				userMarkedListElement.setDateCreated(creationDate);
+				userMarkedListElement.setPerson(getPeopleDAO().find(people.getPersonId()));
+				getUserMarkedListElementDAO().persist(userMarkedListElement);
+				
+				userMarkedList.setDateLastUpdate(creationDate);
+				getUserMarkedListDAO().merge(userMarkedList);
+	
+				getUserHistoryDAO().persist(new UserHistory("Add new person To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			}
 
 			return userMarkedList;
 		} catch (Throwable th) {
@@ -274,6 +278,44 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifDocumentAlreadyPresent(UserMarkedList userMarkedList, Integer entryId) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement element = getUserMarkedListElementDAO().findDocumentInMarkedList(userMarkedList.getIdMarkedList(), entryId);
+			if(element != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifPersonAlreadyPresent(UserMarkedList userMarkedList, Integer personId) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement element = getUserMarkedListElementDAO().findPersonInMarkedList(userMarkedList.getIdMarkedList(), personId);
+			if(element != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
 	}
 
 	/**
