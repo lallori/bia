@@ -53,7 +53,7 @@
 			</div>
 			<div class="row">
 				<div class="item">Note alla Cartulazione</div> 
-				<div class="value">${volumeSummary.noteCartulazione}</div> 
+				<div class="value">${volumeSummary.noteCartulazioneEng}</div> 
 			</div>
 			<div class="row">
 				<div class="item">Context</div>
