@@ -101,7 +101,9 @@ public class EditDetailsDocumentValidator implements Validator {
 	 */
 	private void validateLinkedVolume(String volume, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (!StringUtils.isEmpty(volume)) {
+			if (StringUtils.isEmpty(volume)) {
+				errors.rejectValue("volume", "error.volume.notfound");
+			}else{
 				try {
 					if (getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume)) == null) {
 						errors.reject("volume", "error.volume.notfound");

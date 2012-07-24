@@ -139,6 +139,8 @@
 			<form:hidden id="transcribeFolioMod" path="transcribeFolioMod" />
 			<form:hidden id="dateCreated" path="dateCreated" />
 			<form:hidden id="entryId" path="entryId" />
+			
+			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
 
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
@@ -220,6 +222,9 @@
 				);
 	 		}
 			$j("#volume").change(showVolumeExplorer);
+			
+			//MD: If we check on document ready
+			 $j("#EditDetailsDocumentForm :input").keyup(showVolumeExplorer);
 			
 			var alreadyDigitized = function(){
 				if($j("#folioNum").val() == $j("#folioNumStored").val()){
