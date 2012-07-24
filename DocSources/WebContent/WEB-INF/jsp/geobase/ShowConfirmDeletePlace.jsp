@@ -20,16 +20,10 @@
 		<a id="yes" href="${DeletePlaceURL}">YES</a>
 	
 		<a id="no" href="#">NO</a>
-			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
 			
 			$j("#no").click(function() {			
 				Modalbox.hide();
@@ -41,9 +35,14 @@
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
 						$j("#DeleteThisRecordDiv").append('<h1>Please remove people and documents indexed to this place before deleting it.<p></h1>');
-
+						
 						if (json.documentsInTopicsPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.documentsInTopicsPlaceURL + ' <span class=\"num_docs\"> ' + json.topicsPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.documentsInTopicsPlaceURL + ' <span class=\"num_docs\"> ' + json.topicsPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.documentsInTopicsPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .topics").append(' (' + json.topicsPlace + ')');
+							$j("#DeleteThisRecordDiv > .topics").attr('title','Show me those items');
+							
 							$j(".topics").die();
 							$j(".topics").live('click', function() {
 								var tabName = "Topics " + json.placeName;
@@ -74,7 +73,11 @@
 						}
 						
 						if(json.senderDocumentsPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.senderDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.senderDocumentsPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.senderDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.senderDocumentsPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.senderDocumentsPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .sender").append(' (' + json.senderDocumentsPlace + ')');
+							$j("#DeleteThisRecordDiv > .sender").attr('title','Show me those items');
 							$j(".sender").click(function(){
 								var tabName = "Senders " + json.placeName;
 								var numTab = 0;
@@ -104,7 +107,11 @@
 						}
 				
 						if(json.recipientDocumentsPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.recipientDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.recipientDocumentsPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.recipientDocumentsPlaceURL + ' <span class=\"num_docs\"> ' + json.recipientDocumentsPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.recipientDocumentsPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .recipient").append(' (' + json.recipientDocumentsPlace + ')');
+							$j("#DeleteThisRecordDiv > .recipient").attr('title','Show me those items');
 
 							$j(".recipient").click(function(){
 								var tabName = "Recipients " + json.placeName;
@@ -135,7 +142,11 @@
 						}
 		
 						if(json.birthPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.birthPlaceURL + ' <span class=\"num_docs\"> ' + json.birthPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.birthPlaceURL + ' <span class=\"num_docs\"> ' + json.birthPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.birthPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .birth").append(' (' + json.birthPlace + ')');
+							$j("#DeleteThisRecordDiv > .birth").attr('title','Show me those items');
 							$j(".birth").click(function(){
 								var tabName = "Birth " + json.placeName;
 								var numTab = 0;
@@ -165,7 +176,11 @@
 						}
 
 						if(json.activeStartPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.activeStartPlaceURL + ' <span class=\"num_docs\"> ' + json.activeStartPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.activeStartPlaceURL + ' <span class=\"num_docs\"> ' + json.activeStartPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.activeStartPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .activeStart").append(' (' + json.activeStartPlace + ')');
+							$j("#DeleteThisRecordDiv > .activeStart").attr('title','Show me those items');
 							
 							$j(".activeStart").click(function(){
 								var tabName = "Active Start " + json.placeName;
@@ -196,7 +211,11 @@
 						}
 
 						if(json.deathPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.deathPlaceURL + ' <span class=\"num_docs\"> ' + json.deathPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.deathPlaceURL + ' <span class=\"num_docs\"> ' + json.deathPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.deathPlaceURL);
+							
+							$j("#DeleteThisRecordDiv > .death").append(' (' + json.deathPlace + ')');
+							$j("#DeleteThisRecordDiv > .death").attr('title','Show me those items');
 							
 							$j(".death").click(function(){
 								var tabName = "Death " + json.placeName;
@@ -227,8 +246,11 @@
 						}
 
 						if(json.activeEndPlace>0) {
-							$j("#DeleteThisRecordDiv").append(json.activeEndPlaceURL + ' <span class=\"num_docs\"> ' + json.activeEndPlace + '</span><p>');
+							//$j("#DeleteThisRecordDiv").append(json.activeEndPlaceURL + ' <span class=\"num_docs\"> ' + json.activeEndPlace + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.activeEndPlaceURL);
 							
+							$j("#DeleteThisRecordDiv > .activeEnd").append(' (' + json.activeEndPlace + ')');
+							$j("#DeleteThisRecordDiv > .activeEnd").attr('title','Show me those items');
 							$j(".activeEnd").click(function(){
 								var tabName = "Active End ${place.placeName}";
 								var numTab = 0;

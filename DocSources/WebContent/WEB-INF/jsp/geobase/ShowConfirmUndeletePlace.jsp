@@ -18,15 +18,10 @@
 	
 		<a id="no" href="#">NO</a>
 			
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
 			
 			$j("#no").click(function() {			
 				Modalbox.hide();
