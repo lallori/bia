@@ -1,5 +1,5 @@
 /*
- * ShowTiltesOrOccupationsPeoplePersonController.java
+ * ShowTiltesOrOccupationsController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,7 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.command.peoplebase.ShowSearchTitlesOrOccupationsCommand;
 import org.medici.docsources.command.peoplebase.ShowTitlesOrOccupationsPeoplePersonCommand;
+import org.medici.docsources.command.peoplebase.ShowUploadPortraitPersonCommand;
 import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -50,8 +52,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson")
-public class ShowTitlesOrOccupationsPeoplePersonController {
+@RequestMapping("/src/peoplebase/ShowSearchTitlesOrOccupations")
+public class ShowTitlesOrOccupationsController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	
@@ -71,36 +73,38 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 		return peopleBaseService;
 	}
 
-
 	/**
 	 * 
-	 * @param placeId
+	 * @param peopleId
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowSearchTitlesOrOccupationsCommand command, BindingResult result){
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		return new ModelAndView("peoplebase/ShowSearchTitlesOrOccupationsModalWindow", model);
+	}
+	
+	/**
+	 * 
+	 * @param command
 	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTitlesOrOccupationsPeoplePersonCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowSearchTitlesOrOccupationsCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		
-		
 		if(command.getTitleOccId() > 0){
-			try{
-				TitleOccsList titleOcc = getPeopleBaseService().findTitleOccList(command.getTitleOccId());
-				List<String> outputFields = new ArrayList<String>(5);
-				outputFields.add("Title / Occupation");
-				outputFields.add("Assigned People");
-				
-				model.put("outputFields", outputFields);
-
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/ShowTitleOrOccupationsPeoplePerson", model);
-			}
+			List<String> outputFields = new ArrayList<String>(5);
+			outputFields.add("Title / Occupation");
+			outputFields.add("Assigned People");
 			
+			model.put("outputFields", outputFields);
 		}
 
-		return new ModelAndView("peoplebase/ShowTitlesOrOccupationsPeoplePerson", model);
+		return new ModelAndView("peoplebase/ShowTitlesOrOccupations", model);
 	}
 
 }

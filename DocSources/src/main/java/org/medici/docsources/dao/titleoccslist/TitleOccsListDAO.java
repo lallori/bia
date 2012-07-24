@@ -64,4 +64,14 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 */
 	public List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param alias
+	 * @param roleCatId
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchTitleOrOccupationWithAssignedPeople(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws PersistenceException;
+
 }

@@ -693,4 +693,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param alias
+	 * @param roleCatId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchTitlesOrOccupations(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

@@ -56,9 +56,7 @@ import org.medici.docsources.domain.TitleOccsList;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>TitleOccsListDAOJpaImpl</b> is a default implementation of <b>TitleOccsListDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -187,5 +185,14 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 			// TODO: handle exception
         	return null;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchTitleOrOccupationWithAssignedPeople(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -458,9 +458,18 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
+	/**
+	 * 
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/peoplebase/ShowDocumentsRelatedPerson.json", method = RequestMethod.GET)
-	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -1037,7 +1046,7 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json", method = RequestMethod.GET)
-	public ModelAndView ShowTitlesOrOccupationsPeoplePerson(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showTitlesOrOccupationsPeoplePerson(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -1081,6 +1090,49 @@ public class AjaxController {
 				}
 			}
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
+		}
+		
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method performs a simple search on people dictionary.
+	 * 
+	 * @param model
+	 * @param searchText
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowTitlesOrOccupations.json", method = RequestMethod.GET)
+	public ModelAndView showTitlesOrOccupations(@RequestParam(value="sSearch", required=false) String alias,
+												@RequestParam(value="roleCatId", required=false) Integer roleCatId,
+												@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+												@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+												@RequestParam(value="iDisplayStart") Integer firstRecord,
+				 								@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Page page = null;
+		Map<Integer, List<PoLink>> occupations = new HashMap<Integer, List<PoLink>>();
+
+		PaginationFilter paginationFilter = generatePaginationFilterForTitleOcc(sortingColumnNumber, sortingDirection, firstRecord, length);
+		try {
+			page = getPeopleBaseService().searchTitlesOrOccupations(alias, roleCatId, paginationFilter);
+
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List resultList = new ArrayList();
+		for (List<Object> currentRow : (List<List<Object>>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentRow.get(0));
+			singleRow.add(currentRow.get(1));
 		}
 		
 		model.put("iEcho", "" + 1);

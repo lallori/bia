@@ -220,41 +220,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Forum addNewPersonForum(People person) throws ApplicationThrowable {
-		try {
-			Forum forum = getForumDAO().getForumPerson(person.getPersonId());
-
-			//this control is mandatory to prevent duplication records on forum
-			if (forum == null) {
-				person = getPeopleDAO().find(person.getPersonId());
-				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
-				forum = getForumDAO().addNewPersonForum(parentForum, person);
-
-				ForumOption forumOption = new ForumOption(forum);
-				forumOption.setCanHaveTopics(Boolean.TRUE);
-				forumOption.setCanDeletePosts(Boolean.TRUE);
-				forumOption.setCanDeleteTopics(Boolean.TRUE);
-				forumOption.setCanEditPosts(Boolean.TRUE);
-				forumOption.setCanPostReplys(Boolean.TRUE);
-				getForumOptionDAO().persist(forumOption);
-
-				// thisi method call is mandatory to increment topic number on parent forum
-				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
-
-				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
-			}
-
-			return forum;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}	
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Override
 	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		try {
 			// Set marriageId to null to use generator value
@@ -294,7 +259,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -420,6 +385,41 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Forum addNewPersonForum(People person) throws ApplicationThrowable {
+		try {
+			Forum forum = getForumDAO().getForumPerson(person.getPersonId());
+
+			//this control is mandatory to prevent duplication records on forum
+			if (forum == null) {
+				person = getPeopleDAO().find(person.getPersonId());
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
+				forum = getForumDAO().addNewPersonForum(parentForum, person);
+
+				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setCanHaveTopics(Boolean.TRUE);
+				forumOption.setCanDeletePosts(Boolean.TRUE);
+				forumOption.setCanDeleteTopics(Boolean.TRUE);
+				forumOption.setCanEditPosts(Boolean.TRUE);
+				forumOption.setCanPostReplys(Boolean.TRUE);
+				getForumOptionDAO().persist(forumOption);
+
+				// thisi method call is mandatory to increment topic number on parent forum
+				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
+
+				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			}
+
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**
@@ -1513,13 +1513,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 	
 	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
 	 * @return the forumOptionDAO
 	 */
 	public ForumOptionDAO getForumOptionDAO() {
@@ -1639,14 +1632,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public ParentDAO getParentDAO() {
 		return parentDAO;
 	}
-	
+
 	/**
 	 * @return the peopleDAO
 	 */
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1672,7 +1665,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1684,7 +1677,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the roleCatsDAO
 	 */
@@ -1698,14 +1691,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public TitleOccsListDAO getTitleOccsListDAO() {
 		return titleOccsListDAO;
 	}
-	
+
 	/**
 	 * @return the userHistoryDAO
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1764,7 +1757,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1777,7 +1770,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				throw new ApplicationThrowable(th);
 			}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1789,7 +1782,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1801,7 +1794,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1825,7 +1818,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1837,7 +1830,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1893,6 +1886,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable {
 		try {
 			return getTitleOccsListDAO().searchTitleOrOccupationLinkableToPerson(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public Page searchTitlesOrOccupations(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getTitleOccsListDAO().searchTitleOrOccupationWithAssignedPeople(alias, roleCatId, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1957,6 +1962,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setForumDAO(ForumDAO forumDAO) {
 		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
 	}
 
 	/**
