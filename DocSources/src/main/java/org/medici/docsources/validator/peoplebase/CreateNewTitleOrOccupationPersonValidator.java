@@ -29,6 +29,7 @@ package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
 import org.medici.docsources.common.util.ValidationUtils;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -111,6 +112,13 @@ public class CreateNewTitleOrOccupationPersonValidator implements Validator {
 		if (!errors.hasErrors()) {
 			if(titleOcc == null){
 				errors.reject("titleOcc", "error.titleOcc.null");
+			}
+			try{
+				if(getPeopleBaseService().findTitleOccList(titleOcc) != null){
+					errors.rejectValue("titleOcc", "error.titleOcc.invalid");
+				}
+			}catch(ApplicationThrowable ath){
+				
 			}
 		}
 	}

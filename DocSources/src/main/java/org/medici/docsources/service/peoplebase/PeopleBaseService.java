@@ -420,6 +420,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public TitleOccsList findTitleOccList(Integer titleOccId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param titleOcc
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public TitleOccsList findTitleOccList(String titleOcc) throws ApplicationThrowable;
 
 	/**
 	 * 

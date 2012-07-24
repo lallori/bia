@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
@@ -85,6 +86,23 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TitleOccsList findTitleOcc(String titleOcc) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM TitleOccsList WHERE titleOcc LIKE :titleOcc");
+		query.setParameter("titleOcc", titleOcc);
+		query.setMaxResults(1);
+		if(query.getResultList().size() != 0)
+			return (TitleOccsList) query.getSingleResult();
+		else
+			return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchTitleOrOccupation(org.medici.docsources.common.search.Search searchContainer,	PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.

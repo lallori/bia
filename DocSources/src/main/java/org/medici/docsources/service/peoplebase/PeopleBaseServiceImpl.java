@@ -1291,6 +1291,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TitleOccsList findTitleOccList(String titleOcc) throws ApplicationThrowable {
+		try{
+			return getTitleOccsListDAO().findTitleOcc(titleOcc);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

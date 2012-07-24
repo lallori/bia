@@ -8,6 +8,10 @@
 		
 	</security:authorize>
 	
+	<c:url var="EditTitlesOrOccupationsPersonURL" value="/de/peoplebase/EditTitlesOrOccupationsPerson.do">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	
 	<form:form id="CreateNewTitlesOccupationsForm" method="post" cssClass="edit">
 	<!--- Loading div when saving the form -->
 	<div id="loadingDiv"></div>
@@ -20,13 +24,15 @@
 				<b>Role Categories</b><br />
 				<form:label id="ordByMajorLabel" for="roleCatId" path="roleCatId">Ordered by Role Category Mayor</form:label>
 				<form:select id="ordByMajor" cssClass="selectform_XLong" path="roleCatId">
-					<form:option value="-" label="-Please Select" />
+					<form:option value="" label="-Please Select" />
 					<c:forEach var="roleCatMinor" items="${roleCat}">
 						<form:option value="${roleCatMinor.roleCatId}">${roleCatMinor.roleCatMajor} / ${roleCatMinor.roleCatMinor}</form:option>
 					</c:forEach>
 <%-- 					<form:options items="${roleCat}" itemValue="roleCatId" itemLabel="roleCatMinor" /> --%>
 				</form:select>
 			</div>
+			
+			<form:errors path="titleOcc" cssClass="inputerrors" htmlEscape="false"/>
 						
 			<div>
 				<input id="closeDialog" type="submit" value="Close" title="do not save changes" class="button" />
@@ -46,7 +52,7 @@
 	        	});
 			
 				$j('#closeDialog').click(function() {
-					$j("#DialogNewTitleOccupation").block({ message: $j("#question"),
+					$j("#DialogNewTitleOccupation").block({ message: $j("#questionDialog"),
 					css: { 
 						border: 'none', 
 						padding: '5px',
@@ -59,7 +65,7 @@
 			});
 
 			$j("#CreateNewTitlesOccupationsForm").submit(function (){
-				if($j("#ordByMajor").val() == '-'){
+				if($j("#ordByMajor").val() == ''){
 					$j("#DialogNewTitleOccupation").block({ message: $j("#questionError"),
 						css: { 
 							border: 'none', 
@@ -72,8 +78,12 @@
 					return false;
 				}else{
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-						$j("#DialogNewTitleOccupation").dialog('close');
-					}})
+						if ($j(html).find(".inputerrors").length > 0){
+							$j("#DialogNewTitleOccupation").html(html);
+						}else{
+							$j("#DialogNewTitleOccupation").dialog('close');
+						}						
+					}});
 					return false;
 				}
 			});	
@@ -81,10 +91,10 @@
 		});
 	</script>
 	
-<div id="question" style="display:none; cursor: default"> 
+<div id="questionDialog" style="display:none; cursor: default"> 
 	<h1>Discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
+	<input type="button" id="yesDialog" value="Yes" /> 
+	<input type="button" id="noDialog" value="No" /> 
 </div>
 
 <div id="questionError" style="display:none; cursor:default">
@@ -94,21 +104,17 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j('#no').click(function() { 
+		$j('#noDialog').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
-			$j("#question").hide();
-			$j("#DialogNewTitleOccupation").append($j("#question"));
+			$j("#questionDialog").hide();
+			$j("#DialogNewTitleOccupation").append($j("#questionDialog"));
 			$j(".blockUI").remove();
 			return false; 
 		}); 
         
-		$j('#yes').click(function() { 
-			$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
-				$j("#EditTitlesOrOccupationsPersonDiv").html(html);
-			}});
+		$j('#yesDialog').click(function() { 
 			$j("#DialogNewTitleOccupation").dialog('close');
-				
 			return false; 
 		}); 
 		

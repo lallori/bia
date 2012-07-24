@@ -134,6 +134,7 @@ public class CreateNewTitleOrOccupationPersonController {
 		try{
 			roleCats = getPeopleBaseService().getRoleCat();
 			model.put("roleCat", roleCats);
+			command.setTitleOcc("");
 		}catch(ApplicationThrowable th){
 			return new ModelAndView("error/CreateNewTitleOrOccupationPerson", model);
 		}

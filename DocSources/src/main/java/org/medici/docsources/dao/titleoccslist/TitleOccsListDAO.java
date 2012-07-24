@@ -47,6 +47,14 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 
 	/**
 	 * 
+	 * @param titleOcc
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public TitleOccsList findTitleOcc(String titleOcc) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
