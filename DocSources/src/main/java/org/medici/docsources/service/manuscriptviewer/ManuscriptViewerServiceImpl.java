@@ -479,7 +479,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					volumeSummary.setMisnumberedFolios(foliosInformations.getMisnumberedFolios());
 				}
 				
-				Schedone catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
+				Schedone catalog = getCatalogDAO().findByVolume(volume.getVolNum(), volume.getVolLetExt());
 				if (catalog != null) {
 					volumeSummary.setCartulazione(catalog.getCartulazione());
 					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
