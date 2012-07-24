@@ -66,6 +66,8 @@ public class VolumeSummary {
 	private String cartulazione;
 	// Note to cartulazione
 	private String noteCartulazione;
+	// Note to cartulazione eng
+	private String noteCartulazioneEng;	
 	// Volume size (
 	private Integer volumeSize;
 	// Width expressed in millimeters
@@ -273,6 +275,20 @@ public class VolumeSummary {
 		this.noteCartulazione = noteCartulazione;
 	}
 	
+	/**
+	 * @return the noteCartulazioneEng
+	 */
+	public String getNoteCartulazioneEng() {
+		return noteCartulazioneEng;
+	}
+
+	/**
+	 * @param noteCartulazioneEng the noteCartulazioneEng to set
+	 */
+	public void setNoteCartulazioneEng(String noteCartulazioneEng) {
+		this.noteCartulazioneEng = noteCartulazioneEng;
+	}
+
 	/**
 	 * @return the volumeSize
 	 */

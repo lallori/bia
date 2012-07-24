@@ -483,6 +483,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				if (catalog != null) {
 					volumeSummary.setCartulazione(catalog.getCartulazione());
 					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
+					volumeSummary.setNoteCartulazioneEng(catalog.getNoteCartulazioneEng());
 					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
 					//volumeSummary.setWidth(catalog.getNumeroTotaleImmagini());
 				}
