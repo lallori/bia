@@ -6,6 +6,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="MyMarkedListPaginationURL" value="/user/MyMarkedListPagination.json" />
+
+<c:url var="EraseElementsMyMarkedListURL" value="/user/EraseElementsMyMarkedList.do" />
 	
 		
 <div id="researchHistoryTableDiv">
@@ -17,7 +19,8 @@
 	            <th>Volume/Folio</th>
 	            <th>Volume Number</th>
 	            <th>Place Name</th>
-	            <th>Name</th>
+	            <th>Person Name</th>
+	            <th>Select</th>
 	        </tr>
 	    </thead>
 	    <tbody>
@@ -30,8 +33,8 @@
 	
 <div id="MarketListButtons">
 	<a id="eraseList" href="#">Erase List</a>
-    <a id="closeMarketList" href="#" title="Close Marked List window">Close</a>
-    <a id="printAllItems" href="#">Print All Items</a>
+    <a id="removeSelected" href="#">Remove selected</a>
+    <a id="printAllItems" href="#">Print selected</a>
 </div>
 	
 	
@@ -48,7 +51,8 @@
 							{ sWidth : "120px" },
 							{ sWidth : "120px" },
 							{ sWidth : "120px" },
-							{ sWidth : "120px" }
+							{ sWidth : "120px" },
+							{ sWidth : "50px" }
 						],                           
 					"bDestroy" : true,  
 					"bFilter" : false,
@@ -96,6 +100,8 @@
 									return false;
 								}
 						);
+						
+						$j('.searchResult > input:checkbox').unwrap();
 					}
 				} );                                                                                              
 																												  
@@ -106,7 +112,12 @@
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;
-				});                                                                                               
+				}); 
+				
+// 				$j('#researchHistoryTable > tbody > tr > td > input:checkbox').live('click', function(){
+// 					alert("ok");
+// 					return false;
+// 				});
 			} );                                                                                                  
 	</script>
 		
@@ -116,5 +127,48 @@
 				Modalbox.hide();
 				return false;
 			});
+			
+			var $toRemove = "";
+			
+			$j("#removeSelected").click(function(){
+				$toRemove = "";
+				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
+					$toRemove += $j(this).attr("idtoerase") + "+";
+				});
+				$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				}); 
+				return false;
+			});
+			
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionRemoveMarked").hide();
+				// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+				$j("#researchHistoryTableDiv").parent().append($j("#questionRemoveMarked"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${EraseElementsMyMarkedListURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
+// 	 				$j("#body_left").html(html);
+	 			}});
+					
+				return false; 
+			}); 
 		});
 	</script>
+	
+<div id="questionRemoveMarked" style="display:none; cursor: default"> 
+	<h1>Are you sure?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>

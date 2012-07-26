@@ -28,6 +28,7 @@
 package org.medici.docsources.service.usermarkedlist;
 
 import java.util.Date;
+import java.util.List;
 
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
@@ -144,16 +145,18 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	public UserMarkedList addNewPlaceToMarkedList(UserMarkedList userMarkedList, Place place) throws ApplicationThrowable {
 		try {
 			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
-			Date creationDate = new Date();
-			UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
-			userMarkedListElement.setDateCreated(creationDate);
-			userMarkedListElement.setPlace(getPlaceDAO().find(place.getPlaceAllId()));
-			getUserMarkedListElementDAO().persist(userMarkedListElement);
-			
-			userMarkedList.setDateLastUpdate(creationDate);
-			getUserMarkedListDAO().merge(userMarkedList);
-
-			getUserHistoryDAO().persist(new UserHistory("Add new place To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			if(!ifPlaceAlreadyPresent(userMarkedList, place.getPlaceAllId())){
+				Date creationDate = new Date();
+				UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
+				userMarkedListElement.setDateCreated(creationDate);
+				userMarkedListElement.setPlace(getPlaceDAO().find(place.getPlaceAllId()));
+				getUserMarkedListElementDAO().persist(userMarkedListElement);
+				
+				userMarkedList.setDateLastUpdate(creationDate);
+				getUserMarkedListDAO().merge(userMarkedList);
+	
+				getUserHistoryDAO().persist(new UserHistory("Add new place To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			}
 
 			return userMarkedList;
 		} catch (Throwable th) {
@@ -169,16 +172,18 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	public UserMarkedList addNewVolumeToMarkedList(UserMarkedList userMarkedList, Volume volume) throws ApplicationThrowable {
 		try {
 			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
-			Date creationDate = new Date();
-			UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
-			userMarkedListElement.setDateCreated(creationDate);
-			userMarkedListElement.setVolume(getVolumeDAO().find(volume.getSummaryId()));
-			getUserMarkedListElementDAO().persist(userMarkedListElement);
-			
-			userMarkedList.setDateLastUpdate(creationDate);
-			getUserMarkedListDAO().merge(userMarkedList);
-
-			getUserHistoryDAO().persist(new UserHistory("Add new volume To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			if(!ifVolumeAlreadyPresent(userMarkedList, volume.getSummaryId())){
+				Date creationDate = new Date();
+				UserMarkedListElement userMarkedListElement = new UserMarkedListElement(userMarkedList);
+				userMarkedListElement.setDateCreated(creationDate);
+				userMarkedListElement.setVolume(getVolumeDAO().find(volume.getSummaryId()));
+				getUserMarkedListElementDAO().persist(userMarkedListElement);
+				
+				userMarkedList.setDateLastUpdate(creationDate);
+				getUserMarkedListDAO().merge(userMarkedList);
+	
+				getUserHistoryDAO().persist(new UserHistory("Add new volume To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+			}
 
 			return userMarkedList;
 		} catch (Throwable th) {
@@ -314,8 +319,43 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 			}
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
+		}		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifPlaceAlreadyPresent(UserMarkedList userMarkedList, Integer placeAllId) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement element = getUserMarkedListElementDAO().findPlaceInMarkedList(userMarkedList.getIdMarkedList(), placeAllId);
+			if(element != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
 		}
-		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifVolumeAlreadyPresent(UserMarkedList userMarkedList, Integer summaryId) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement element = getUserMarkedListElementDAO().findVolumeInMarkedList(userMarkedList.getIdMarkedList(), summaryId);
+			if(element != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -325,6 +365,20 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Override
 	public UserMarkedList removeDocumentFromMarkedList(UserMarkedList userMarkedList, Document document) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserMarkedList removeElementsFromMarkedList(UserMarkedList userMarkedList, List<Integer> idElementsToRemove) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			getUserMarkedListElementDAO().removeMarkedListElements(userMarkedList.getIdMarkedList(), idElementsToRemove);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 		return null;
 	}
 

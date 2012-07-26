@@ -53,6 +53,7 @@ import org.springframework.stereotype.Repository;
  * <b>UserMarkedListDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.UserHistory
  */
@@ -113,24 +114,6 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND person.personId=:personId");
-		query.setParameter("idMarkedList", idMarkedList);
-		query.setParameter("personId", personId);
-		
-		query.setMaxResults(1);
-		List<UserMarkedListElement> result = query.getResultList();
-		if(result.size() > 0)
-			return result.get(0);
-		else
-			return null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
@@ -170,6 +153,60 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		page.setList(query.getResultList());
 
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND person.personId=:personId");
+		query.setParameter("idMarkedList", idMarkedList);
+		query.setParameter("personId", personId);
+		
+		query.setMaxResults(1);
+		List<UserMarkedListElement> result = query.getResultList();
+		if(result.size() > 0)
+			return result.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedListElement findPlaceInMarkedList(Integer idMarkedList, Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND place.placeAllId=:placeAllId");
+		query.setParameter("idMarkedList", idMarkedList);
+		query.setParameter("placeAllId", placeAllId);
+		
+		query.setMaxResults(1);
+		List<UserMarkedListElement> result = query.getResultList();
+		if(result.size() > 0)
+			return result.get(0);
+		else
+			return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserMarkedListElement findVolumeInMarkedList(Integer idMarkedList, Integer summaryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND volume.summaryId=:summaryId");
+		query.setParameter("idMarkedList", idMarkedList);
+		query.setParameter("summaryId", summaryId);
+		
+		query.setMaxResults(1);
+		List<UserMarkedListElement> result = query.getResultList();
+		if(result.size() > 0)
+			return result.get(0);
+		else
+			return null;
 	}
 	
 	/**
@@ -262,5 +299,23 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException {
+		StringBuilder query = new StringBuilder("DELETE FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND (");
+		for(int i = 0; i < idElements.size(); i++){
+			query.append("id=" + idElements.get(i));
+			if(i != idElements.size()-1){
+				query.append(" OR ");
+			}
+		}
+		Query toQuery = getEntityManager().createQuery(query.toString() + ")");
+		toQuery.setParameter("idMarkedList", idMarkedList);
+		
+		return toQuery.executeUpdate();
 	}
 }

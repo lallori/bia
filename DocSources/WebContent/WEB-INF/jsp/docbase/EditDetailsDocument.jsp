@@ -403,6 +403,10 @@
 //  				if(error != ""){
 //  					return false;
 //  				}
+				//MD: The next instruction is for spring to assign the volume value, else it remains null
+				if($j("#volume").attr("disabled") == 'disabled'){
+					$j("#volume").removeAttr("disabled");
+				}
 				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        	

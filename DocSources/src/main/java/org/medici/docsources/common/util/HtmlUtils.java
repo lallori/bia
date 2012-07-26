@@ -659,6 +659,35 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param singleRow
+	 * @param placeAllId
+	 * @return
+	 */
+	public static List<String> showPlaceMarkedList(List<String> inputList, Integer placeAllId) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/geobase/ShowPlace.do?placeAllId=");
+		anchorBegin.append(placeAllId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
+		}
+		
+		return retValue;
+	}
 
 	/**
 	 * 

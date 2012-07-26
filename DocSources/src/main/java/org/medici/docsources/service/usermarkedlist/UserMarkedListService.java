@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.usermarkedlist;
 
+import java.util.List;
+
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -43,6 +45,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface UserMarkedListService {
 
@@ -127,12 +130,39 @@ public interface UserMarkedListService {
 	/**
 	 * 
 	 * @param userMarkedList
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean ifPlaceAlreadyPresent(UserMarkedList userMarkedList, Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean ifVolumeAlreadyPresent(UserMarkedList userMarkedList, Integer summaryId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
 	 * @param people
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public UserMarkedList removeDocumentFromMarkedList(UserMarkedList userMarkedList, Document document) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param userMarkedList
+	 * @param idElementsToRemove
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserMarkedList removeElementsFromMarkedList(UserMarkedList userMarkedList, List<Integer> idElementsToRemove) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param userMarkedList
