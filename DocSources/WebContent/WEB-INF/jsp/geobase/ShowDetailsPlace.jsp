@@ -70,7 +70,7 @@
 							<div style="margin-left:8px">
 									<c:forEach items="${placeNames}" var="currentName">
 										<c:if test="${currentName.prefFlag == 'P'}">
-											<p style="margin:0 0 5px 10px"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+											<p style="margin:0"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
 										</c:if>
 									</c:forEach>
 							</div>
