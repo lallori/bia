@@ -669,7 +669,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #close{
-	margin:110px 0 0 335px;
+	margin: 135px 0 0 335px;
 	position:absolute;
 }
 
@@ -688,7 +688,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #AddNewPerson{
-	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
+	background:url(/DocSources/images/1024/button_newperson.png) no-repeat;
 	margin: 20px 0 5px 374px;
 	position:absolute;
 	width:120px;
@@ -750,6 +750,74 @@ $('.searchResult').live('click', function() {
 	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
 }
+
+/* Add New Person & Menage Titles and Occupations */
+
+#addNewPersonModalDiv #AddNewPerson{
+	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
+	margin: 10px 0 5px 20px;
+	position:absolute;
+	width:120px;
+	height:75px;
+	background-position:top;
+	text-align:center;
+}
+
+#addNewPersonModalDiv #AddNewPerson p, #addNewPersonModalDiv #MenageTitlOcc p{
+	margin-top:60px;
+}
+
+#addNewPersonModalDiv #MenageTitlOcc{
+	background:url(/DocSources/images/1024/button_menageTitlOcc.png) no-repeat;
+	margin: 10px 0 5px 180px;
+	position:absolute;
+	width:120px;
+	height:75px;
+	background-position:top;
+	text-align:center;
+}
+
+#addNewPersonModalDiv #goBack{
+        background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	width:52px;
+	height:23px;
+	position:absolute;
+	text-decoration:none;
+	color:#6D5C4D;
+	text-align:center;
+	margin:130px 0 0 135px;
+	border:none;
+	cursor:pointer;
+	padding-top:4px;
+}
+
+/* Menage Titles and Occupations Modal */
+
+#AddNewTitlOcc {
+	position: absolute;
+	margin: 10px 0 0 30px;
+}
+
+#EditDeleteTitlOcc {
+	position: absolute;
+	margin: 50px 0 0 30px;
+}
+
+#menageTitlOccDiv #goBack{
+        background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	width:52px;
+	height:23px;
+	position:absolute;
+	text-decoration:none;
+	color:#6D5C4D;
+	text-align:center;
+	
+        margin: 110px 0 0 90px;
+	border:none;
+	cursor:pointer;
+	padding-top:4px;
+}
+
 
 /* BASIC SEARCH - MODAL WINDOW */
 
