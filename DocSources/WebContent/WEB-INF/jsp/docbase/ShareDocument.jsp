@@ -28,9 +28,7 @@
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<img src="<c:url value="/images/1024/img_toBeDigitizedDocument.png"/>" title="To be digitized" width="120px" height="160px">
-				</security:authorize>
+				<span>To be digitized</span>
 			</div>
 		</c:if>
 		<div id="text">

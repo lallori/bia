@@ -29,7 +29,6 @@
 					<c:if test="${place.prefFlag == 'P'}">
 						<a class="PlaceMap" href="#">Assign Geo Coordinates</a>
 					</c:if>
-					<img src="<c:url value="/images/1024/img_place.png" />" alt="Place">
 				</c:if>
 			</div>
 			<div id="text">

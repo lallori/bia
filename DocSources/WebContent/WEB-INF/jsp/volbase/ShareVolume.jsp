@@ -40,8 +40,6 @@
 		<c:if test="${empty image && volume.digitized == false}">
 			<div id="SpineVolumeNotDigitDiv">
 				<span>To be digitized</span>
-				<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
-				<p>Volume Spine</p>
 			</div>
 		</c:if>
 		<c:if test="${empty image && volume.digitized == true}">
