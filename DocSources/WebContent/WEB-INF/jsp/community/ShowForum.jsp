@@ -222,30 +222,30 @@
 
 				$j('.forumHref').die();
 				$j('.forumHref').live('click', function() {
-					$j("#mainContent").load($j(this).attr("href"));
+					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j('.pageHref').die();
 				$j('.pageHref').live('click', function() {
-					$j("#mainContent").load($j(this).attr("href"));
+					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j('.boardIndex').die();
 				$j('.boardIndex').live('click', function() {
-					$j("#mainContent").load($j(this).attr("href"));
+					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
 				
 				$j('.forum').die();
 				$j('.forum').live('click', function() {
-					$j("#mainContent").load($j(this).attr("href"));
+					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j('#newTopic').click(function (){
-					$j("#mainContent").load($j(this).attr("href"));
+					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
 			});
