@@ -66,20 +66,20 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
+	private List<Gender> gender;
+	private Boolean logicalDelete;
 	private List<String> names;
 	private List<NameType> namesTypes;
 	private List<String> place;
-	private List<String> placeType;
 	private List<Integer> placeId;
+	private List<String> placeType;
+	private List<String> researchNotes;
 	private List<String> roleCategories;
+	private List<String> titleOccWord;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
-	private List<String> titleOccWord;
 	private List<String> words;
 	private List<WordType> wordsTypes;
-	private List<String> researchNotes;
-	private List<Gender> gender;
-	private Boolean logicalDelete;
 
 	/**
 	 * Default constructor.
@@ -167,6 +167,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
 	 * @return the names
 	 */
 	public List<String> getNames() {
@@ -216,6 +223,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the titleOccWord
+	 */
+	public List<String> getTitleOccWord() {
+		return titleOccWord;
+	}
+
+	/**
 	 * @return the occupations
 	 */
 	public List<String> getTitlesOcc() {
@@ -227,13 +241,6 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getTitlesOccId() {
 		return titlesOccId;
-	}
-
-	/**
-	 * @return the titleOccWord
-	 */
-	public List<String> getTitleOccWord() {
-		return titleOccWord;
 	}
 
 	/**
@@ -501,6 +508,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		names.add(command.getText());
 	}
 
+	@Override
+	public Boolean isEmpty() {
+		return Boolean.FALSE;
+	}
+
 	/**
 	 * @param datesDay the datesDay to set
 	 */
@@ -558,6 +570,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
 	 * @param names the names to set
 	 */
 	public void setNames(List<String> names) {
@@ -607,6 +626,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param titleOccWord the titleOccWord to set
+	 */
+	public void setTitleOccWord(List<String> titleOccWord) {
+		this.titleOccWord = titleOccWord;
+	}
+
+	/**
 	 * @param occupations the occupations to set
 	 */
 	public void setTitlesOcc(List<String> titlesOcc) {
@@ -618,13 +644,6 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setTitlesOccId(List<Integer> titlesOccId) {
 		this.titlesOccId = titlesOccId;
-	}
-
-	/**
-	 * @param titleOccWord the titleOccWord to set
-	 */
-	public void setTitleOccWord(List<String> titleOccWord) {
-		this.titleOccWord = titleOccWord;
 	}
 
 	/**
@@ -640,21 +659,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	public void setWordsTypes(List<WordType> wordsTypes) {
 		this.wordsTypes = wordsTypes;
 	}
-
-	/**
-	 * @param logicalDelete the logicalDelete to set
-	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
-		this.logicalDelete = logicalDelete;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
+	
 	/**
 	 * This method return a JPA Query object. 
 	 */
@@ -1004,7 +1009,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		return jpaQuery.toString();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

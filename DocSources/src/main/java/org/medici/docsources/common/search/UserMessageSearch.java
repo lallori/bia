@@ -86,6 +86,16 @@ public class UserMessageSearch implements GenericSearch {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isEmpty() {
+		if (getUserMessageCategory() == null)
+			return Boolean.TRUE;
+
+		return Boolean.FALSE;
+	}
 
 	/**
 	 * @param userMessageCategory the userMessageCategory to set

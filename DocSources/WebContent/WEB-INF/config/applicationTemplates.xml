@@ -53,6 +53,8 @@
 
 	<definition name="template.manuscriptViewerHtmlSimple" template="/WEB-INF/templates/manuscriptViewerHtmlSimple.jsp" />
 
+	<definition name="template.manuscriptViewerHtmlAdvanced" template="/WEB-INF/templates/manuscriptViewerHtmlAdvanced.jsp" />
+
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
 	<definition name="template.person" template="/WEB-INF/templates/person.jsp" />
@@ -689,6 +691,10 @@
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
 	
+	<definition name="mview/ShowDocumentInManuscriptViewerHtmlAdvanced" extends="template.manuscriptViewerHtmlAdvanced">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtmlAdvanced.jsp"/>
+	</definition>
+
 	<definition name="mview/ShowExtractDocumentDialog" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowExtractDocumentDialog.jsp"/>
 	</definition>

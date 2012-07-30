@@ -64,6 +64,7 @@ import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 /**
  * @param <K>
@@ -683,8 +684,14 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 */
 	@Override
 	public Long countSearchMYSQL(org.medici.docsources.common.search.Search searchContainer) throws PersistenceException {
+		//if search Container is empty, is unable to execute count!
+		if (searchContainer.isEmpty()) {
+			return new Long(0);
+		}
 		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+
 		Query query = getEntityManager().createQuery(countQuery);
+		
 		return new Long((Long) query.getSingleResult());
 	}
 

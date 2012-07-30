@@ -57,12 +57,12 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = 3644033567435491386L;
 
-	private List<String> placesName;
-	private List<String> placeType;
-//	private List<Integer> linkedToTopicsId;
+	//	private List<Integer> linkedToTopicsId;
 //	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	private Boolean logicalDelete;
+private List<String> placesName;
+	private List<String> placeType;
 
 
 	/**
@@ -78,6 +78,62 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		linkedToPeople = new ArrayList<String>(0);
 		logicalDelete = Boolean.FALSE;
 	}
+
+	/**
+	 * @return the linkedToPeople
+	 */
+	public List<String> getLinkedToPeople() {
+		return linkedToPeople;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @return the placesName
+	 */
+	public List<String> getPlacesName() {
+		return placesName;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public List<String> getPlaceType() {
+		return placeType;
+	}
+
+//	/**
+//	 * @param linkedToTopicsId the linkedToTopicsId to set
+//	 */
+//	public void setLinkedToTopicsId(List<Integer> linkedToTopicsId) {
+//		this.linkedToTopicsId = linkedToTopicsId;
+//	}
+//
+//	/**
+//	 * @return the linkedToTopicsId
+//	 */
+//	public List<Integer> getLinkedToTopicsId() {
+//		return linkedToTopicsId;
+//	}
+
+//	/**
+//	 * @param linkedToTopics the linkedToTopics to set
+//	 */
+//	public void setLinkedToTopics(List<String> linkedToTopics) {
+//		this.linkedToTopics = linkedToTopics;
+//	}
+//
+//	/**
+//	 * @return the linkedToTopics
+//	 */
+//	public List<String> getLinkedToTopics() {
+//		return linkedToTopics;
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -170,74 +226,16 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 	}
 
+	@Override
+	public Boolean isEmpty() {
+		return Boolean.FALSE;
+	}
+
 	/**
 	 * @param linkedToPeople the linkedToPeople to set
 	 */
 	public void setLinkedToPeople(List<String> linkedToPeople) {
 		this.linkedToPeople = linkedToPeople;
-	}
-
-	/**
-	 * @return the linkedToPeople
-	 */
-	public List<String> getLinkedToPeople() {
-		return linkedToPeople;
-	}
-
-//	/**
-//	 * @param linkedToTopicsId the linkedToTopicsId to set
-//	 */
-//	public void setLinkedToTopicsId(List<Integer> linkedToTopicsId) {
-//		this.linkedToTopicsId = linkedToTopicsId;
-//	}
-//
-//	/**
-//	 * @return the linkedToTopicsId
-//	 */
-//	public List<Integer> getLinkedToTopicsId() {
-//		return linkedToTopicsId;
-//	}
-
-//	/**
-//	 * @param linkedToTopics the linkedToTopics to set
-//	 */
-//	public void setLinkedToTopics(List<String> linkedToTopics) {
-//		this.linkedToTopics = linkedToTopics;
-//	}
-//
-//	/**
-//	 * @return the linkedToTopics
-//	 */
-//	public List<String> getLinkedToTopics() {
-//		return linkedToTopics;
-//	}
-
-	/**
-	 * @param placesName the placesName to set
-	 */
-	public void setPlacesName(List<String> placesName) {
-		this.placesName = placesName;
-	}
-
-	/**
-	 * @return the placesName
-	 */
-	public List<String> getPlacesName() {
-		return placesName;
-	}
-
-	/**
-	 * @param placeType the placeTypeId to set
-	 */
-	public void setPlaceType(List<String> placeType) {
-		this.placeType = placeType;
-	}
-
-	/**
-	 * @return the placeType
-	 */
-	public List<String> getPlaceType() {
-		return placeType;
 	}
 
 	/**
@@ -248,10 +246,17 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the logicalDelete
+	 * @param placesName the placesName to set
 	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
+	public void setPlacesName(List<String> placesName) {
+		this.placesName = placesName;
+	}
+
+	/**
+	 * @param placeType the placeTypeId to set
+	 */
+	public void setPlaceType(List<String> placeType) {
+		this.placeType = placeType;
 	}
 
 	/**
@@ -363,7 +368,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		return jpaQuery.toString();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -452,7 +457,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		return luceneQuery;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

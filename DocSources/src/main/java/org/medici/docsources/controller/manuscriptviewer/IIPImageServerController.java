@@ -315,12 +315,13 @@ public class IIPImageServerController {
 		} else if (httpServletRequest.getParameter("JTL") != null) {
 			String imageName = httpServletRequest.getParameter("FIF");
 			Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
-	    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
-	    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
-	    //pageImage is inverted as stored in tiff file : first image is last image
-	    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
-	    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
-			generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
+		    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
+		    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
+		    //pageImage is inverted as stored in tiff file : first image is last image
+		    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
+		    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
+
+		    generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
 			String imageName = httpServletRequest.getParameter("FIF");

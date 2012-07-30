@@ -41,9 +41,7 @@ public class SchedoneSearch implements GenericSearch {
 	 * 
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
-	
-	private String alias; 
-	
+
 	private String searchType;
 	private Integer volNum;
 	private Integer volNumBetween;
@@ -57,15 +55,10 @@ public class SchedoneSearch implements GenericSearch {
 
 	/**
 	 * 
-	 * @param text
+	 * @param searchType
+	 * @param volNum
+	 * @param volNumBetween
 	 */
-	public SchedoneSearch(String text) {
-		super();
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
-		}
-	}
-	
 	public SchedoneSearch(String searchType, Integer volNum, Integer volNumBetween){
 		super();
 		if(!StringUtils.isEmpty(searchType)){
@@ -77,13 +70,6 @@ public class SchedoneSearch implements GenericSearch {
 		if(volNumBetween != null){
 			setVolNumBetween(volNumBetween);
 		}
-	}
-
-	/**
-	 * @return the alias
-	 */
-	public String getAlias() {
-		return alias;
 	}
 
 	/**
@@ -108,20 +94,14 @@ public class SchedoneSearch implements GenericSearch {
 	}
 
 	/**
-	 * 
-	 * @param command
+	 * {@inheritDoc}
 	 */
-	public void initFromText(String text) {
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
-		}
-	}
+	@Override
+	public Boolean isEmpty() {
+		if (StringUtils.isEmpty(searchType))
+			return Boolean.TRUE;
 
-	/**
-	 * @param alias the alias to set
-	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+		return Boolean.FALSE;
 	}
 
 	/**
@@ -180,16 +160,5 @@ public class SchedoneSearch implements GenericSearch {
 	public Query toLuceneQuery() {
 		// NOT IMPLEMENTED
 		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		if (getAlias() != null)
-			return getAlias();
-		else
-			return "";
 	}
 }

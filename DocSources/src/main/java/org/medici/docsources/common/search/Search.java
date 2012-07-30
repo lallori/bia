@@ -38,6 +38,11 @@ import org.apache.lucene.search.Query;
 public interface Search extends Serializable {
 	/**
 	 * 
+	 */
+	public Boolean isEmpty();
+
+	/**
+	 * 
 	 * @return
 	 */
 	public Query toLuceneQuery();

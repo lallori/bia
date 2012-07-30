@@ -75,6 +75,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<FolioType> foliosTypes;
 	private List<String> from;
 	private List<Integer> fromId;
+	private Boolean logicalDelete;
 	private List<String> person;
 	private List<Integer> personId;
 	private List<String> place;
@@ -90,14 +91,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<Integer> toId;
 	private List<String> topics;
 	private List<Integer> topicsId;
-	private List<Integer> topicsPlaceId;
 	private List<String> topicsPlace;
+	private List<Integer> topicsPlaceId;
 	private List<String> volumes;
 	private List<String> volumesBetween;
 	private List<VolumeType> volumesTypes;
 	private List<String> words;
 	private List<WordType> wordsTypes;
-	private Boolean logicalDelete;
 
 	/**
 	 * 
@@ -243,6 +243,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
 	 * @return the person
 	 */
 	public List<String> getPerson() {
@@ -311,7 +318,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public List<Integer> getSenderId() {
 		return senderId;
 	}
-
+	
 	/**
 	 * @return the synopsis
 	 */
@@ -346,20 +353,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public List<Integer> getTopicsId() {
 		return topicsId;
 	}
-	
-	/**
-	 * @return the topicsPlaceId
-	 */
-	public List<Integer> getTopicsPlaceId() {
-		return topicsPlaceId;
-	}
-
-	/**
-	 * @param topicsPlaceId the topicsPlaceId to set
-	 */
-	public void setTopicsPlaceId(List<Integer> topicsPlaceId) {
-		this.topicsPlaceId = topicsPlaceId;
-	}
 
 	/**
 	 * @return the topicsPlace
@@ -369,10 +362,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @param topicsPlace the topicsPlace to set
+	 * @return the topicsPlaceId
 	 */
-	public void setTopicsPlace(List<String> topicsPlace) {
-		this.topicsPlace = topicsPlace;
+	public List<Integer> getTopicsPlaceId() {
+		return topicsPlaceId;
 	}
 
 	/**
@@ -972,6 +965,31 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		}
 	}
 
+	@Override
+	public Boolean isEmpty() {
+		if (
+				(words.size()>0)	||
+				(personId.size()>0) ||
+				(placeId.size()>0) ||
+				(senderId.size()>0) ||
+				(fromId.size()>0) ||
+				(recipient.size()>0) ||
+				(to.size()>0) ||
+				(refersTo.size()>0) ||
+				(extract.size()>0) ||
+				(synopsis.size()>0) ||
+				(topicsId.size()>0) || 
+				(topicsPlaceId.size()>0) ||
+				(datesTypes.size()>0) ||
+				(volumes.size()>0) ||
+				(folios.size()>0) ||
+				(docIds.size()>0)) {
+			return Boolean.FALSE;
+		}
+
+		return Boolean.TRUE;
+	}
+
 	/**
 	 * @param datesDay the datesDay to set
 	 */
@@ -1068,6 +1086,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public void setFromId(List<Integer> fromId) {
 		this.fromId = fromId;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
 	}
 
 	/**
@@ -1176,6 +1201,20 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param topicsPlace the topicsPlace to set
+	 */
+	public void setTopicsPlace(List<String> topicsPlace) {
+		this.topicsPlace = topicsPlace;
+	}
+
+	/**
+	 * @param topicsPlaceId the topicsPlaceId to set
+	 */
+	public void setTopicsPlaceId(List<Integer> topicsPlaceId) {
+		this.topicsPlaceId = topicsPlaceId;
+	}
+
+	/**
 	 * @param volumes the volumes to set
 	 */
 	public void setVolumes(List<String> volumes) {
@@ -1209,21 +1248,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public void setWordsTypes(List<WordType> wordsTypes) {
 		this.wordsTypes = wordsTypes;
 	}
-
-	/**
-	 * @param logicalDelete the logicalDelete to set
-	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
-		this.logicalDelete = logicalDelete;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1869,7 +1894,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		return jpaQuery.toString();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

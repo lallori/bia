@@ -82,6 +82,17 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isEmpty() {
+		if (StringUtils.isEmpty(alias))
+			return Boolean.TRUE;
+
+		return Boolean.FALSE;
+	}
+
+	/**
 	 * @param alias the alias to set
 	 */
 	public void setAlias(String alias) {

@@ -41,7 +41,7 @@
 							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>
 							<c:if test="${empty currentForum.lastPost}">
-							<div class="four">empty forum</span></div>
+							<div class="four">empty forum</div>
 							</c:if>
 						</div>
                          	</c:forEach>
@@ -208,22 +208,6 @@
 			        </div>
 			    </c:if>
 		</div>
-<!-- 		 <div id="forumPaginate"> -->
-<!-- 			    <div id="jumpToDiv"> -->
-<!-- 			    	Jump to: -->
-<%-- 			        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post"> --%>
-<!-- 			            <select id="selectForum" name="selectForum" selected""="" class="selectform_long"> -->
-<!-- 			                <option value="" selected="selected">Select a Forum</option> -->
-<!-- 			            </select> -->
-<!-- 			            <input id="go" type="submit" title="go" value="Go" class="buttonMini"> -->
-<%-- 			        </form> --%>
-<!-- 			    </div> -->
-<%-- 				<c:set var="paginationData"> --%>
-<%-- 				<bia:paginationForum page="${subForumsPage}"/> --%>
-<%-- 				</c:set> --%>
-				
-<%-- 				${paginationData}    --%>
-<!-- 			</div> -->
  		</c:if> 
 		
 	</c:if>

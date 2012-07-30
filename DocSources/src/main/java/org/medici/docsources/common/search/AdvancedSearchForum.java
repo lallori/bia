@@ -29,26 +29,11 @@ package org.medici.docsources.common.search;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.util.URIUtil;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.medici.docsources.command.community.ShowMyForumPostCommand;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
-import org.medici.docsources.common.util.DateUtils;
-import org.medici.docsources.common.util.VolumeUtils;
 
 /**
  * 
@@ -62,21 +47,17 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = 2294835434784505729L;
 
-	private List<Integer> forumsId;
 	private String author;
+	private List<Integer> forumsId;
 
 	/**
-	 * @return the forumsId
+	 * 
 	 */
-	public List<Integer> getForumsId() {
-		return forumsId;
-	}
+	public AdvancedSearchForum() {
+		super();
 
-	/**
-	 * @param forumsId the forumsId to set
-	 */
-	public void setForumsId(List<Integer> forumsId) {
-		this.forumsId = forumsId;
+		forumsId = new ArrayList<Integer>(0);
+		author ="";
 	}
 
 	/**
@@ -87,20 +68,10 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @param author the author to set
+	 * @return the forumsId
 	 */
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	/**
-	 * 
-	 */
-	public AdvancedSearchForum() {
-		super();
-
-		forumsId = new ArrayList<Integer>(0);
-		author ="";
+	public List<Integer> getForumsId() {
+		return forumsId;
 	}
 
 	/**
@@ -117,6 +88,28 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
 	}
 
+	@Override
+	public Boolean isEmpty() {
+		if ((forumsId.size()>0) || (author != null)) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+
+	/**
+	 * @param author the author to set
+	 */
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	/**
+	 * @param forumsId the forumsId to set
+	 */
+	public void setForumsId(List<Integer> forumsId) {
+		this.forumsId = forumsId;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -148,7 +141,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 
 		return jpaQuery.toString();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

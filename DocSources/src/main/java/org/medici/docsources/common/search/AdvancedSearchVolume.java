@@ -1403,5 +1403,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			
 		return toString;
 	}
+
+	@Override
+	public Boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
