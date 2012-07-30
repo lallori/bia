@@ -209,6 +209,7 @@
 			</c:forEach>
 			</div>
 	</div>
+	</div>
 	
 	<br />
 	<br />
@@ -286,6 +287,16 @@
 					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
+			});
+			
+			$j('#documentDiv > #EditExtractOrSynopsisDocumentDiv > .list > .row > #extract').expander({
+                slicePoint: 500,
+                expandText: 'Click here to read more',
+                userCollapseText: 'Click here to hide text'
+       		});
+		
+			$j(".read-less").click(function(){
+				$j.scrollTo("#documentDiv > #EditExtractOrSynopsisDocumentDiv");
 			});
 		});
 	</script>
