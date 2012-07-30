@@ -72,12 +72,23 @@
 					credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
 				}
 				
-				iip = new IIPMooViewer( "targetframe", {
+
+			    var annotations = {
+				100 : { x: 0.7, y: 0.6, w: 0.2, h: 0.18, category: "pigments", text: "test" },
+				2: { x: 0.1, y: 0.8, w: 0.2, h: 0.18, category: "pigments", text: "azurite" }
+			    };
+			    
+			    iipmooviewer = new IIPMooViewer( "targetframe", {
 					image: '${documentExplorer.image}',
 					server: '${ReverseProxyIIPImage}',
 					credit: credit,
-					scale: 18.0
+					scale: 18.0,
+					annotations: annotations
 				});
+
+			    window.addEvent('keydown', function(e){
+			    	if( e.key == 'n' ) iipmooviewer.newAnnotation();
+			        });
 
 				var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>')
 				.dialog({                                                                                                                                                                   

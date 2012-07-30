@@ -94,6 +94,9 @@ IIPMooViewer.implement({
       else delete this.annotations[a].edit;
     }
 
+
+    var _this = this;
+
     // Check whether this annotation is already in edit mode. If so return
     if( annotation.getElement('div.handle') != null ) return;
 
@@ -142,8 +145,6 @@ IIPMooViewer.implement({
       'value': 'delete'
     }).inject( form );
 
-    // Assign this to a local variable to allow use in our event functions
-    var _this = this;
 
     // Add update event for our list of annotations
     form.addEvents({
@@ -160,9 +161,7 @@ IIPMooViewer.implement({
       'reset': function(){
 	delete _this.annotations[id].edit;
 	_this.updateAnnotations();
-      },
-      'dblclick': function(e){ e.stop(); },
-      'mousewheel': function(e){ e.stop(); }
+      }
     });
 
     // Add a delete event to our annotation
@@ -197,13 +196,15 @@ IIPMooViewer.implement({
 			 });
 
     // Add focus events and reset values to deactivate text selection
-    // Also prevent dragging
     form.getElements('input,textarea').addEvents({
       'click': function(){
         this.focus();
         this.value = this.value;
        },
-      'mousemove': function(e){ e.stop(); }
+      'dblclick': function(e){ e.stop; },
+      'mousedown': function(e){ e.stop(); },
+      'mousemove': function(e){ e.stop(); },
+      'mouseup': function(e){ e.stop(); }
     });
 
   },

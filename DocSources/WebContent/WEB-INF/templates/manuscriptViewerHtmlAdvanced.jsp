@@ -31,7 +31,7 @@ Joana Amill <joana.amill@gmail.com>
 		<!--[if lt IE 10]> 
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
 		<![endif]-->
- 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/adv/mview.css"/>" />                                                                               
+ 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/adv/iip.css"/>" />                                                                               
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		<title>BIA Manuscript Viewer</title>
@@ -46,7 +46,6 @@ Joana Amill <joana.amill@gmail.com>
 		<!-- jquery dialog -->
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.min.js"/>"/></script>                                                                                                
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.13.custom.min.js"/>"/></script>
-<%-- 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js"/>"/> --%>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"/></script>
 		

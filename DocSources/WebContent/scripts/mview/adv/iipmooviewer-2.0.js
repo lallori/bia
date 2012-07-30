@@ -1156,8 +1156,8 @@ var IIPMooViewer = new Class({
 	    _this.canvas.eliminate('tapstart');
 	    _this.requestImages();
 	    _this.positionZone();
-	    //	    if(IIPMooViewer.sync){ 
-	    //IIPMooViewer.windows(this).each( function(el){ el.moveTo(_this.view.x,_this.view.); }); 
+	    //	    if(IIPMooViewer.sync){
+	    //IIPMooViewer.windows(this).each( function(el){ el.moveTo(_this.view.x,_this.view.); });
 	    // }
 	  }
         },
