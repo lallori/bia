@@ -300,6 +300,17 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeAllMarkedListElements(Integer idMarkedList) throws PersistenceException {
+		Query query = getEntityManager().createQuery("DELETE FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList");
+		query.setParameter("idMarkedList", idMarkedList);
+		
+		return query.executeUpdate();
+	}
 
 	/**
 	 * {@inheritDoc}

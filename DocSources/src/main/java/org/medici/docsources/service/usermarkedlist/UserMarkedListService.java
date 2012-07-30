@@ -111,6 +111,12 @@ public interface UserMarkedListService {
 
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMyMarkedList() throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param userMarkedList
 	 * @param entryId
 	 * @return

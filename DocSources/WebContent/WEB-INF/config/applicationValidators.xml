@@ -63,6 +63,10 @@
 	</bean>
 
 	<!-- Document base Validator -->
+	<bean id="addMarkedListDocumentValidator" class="org.medici.docsources.validator.docbase.AddMarkedListDocumentValidator">
+		<description>Add Marked List Document Validator.</description>
+	</bean>
+	
 	<bean id="deleteDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteDocumentValidator">
         <description>Delete a Document Validator.</description>
 	</bean>
@@ -121,6 +125,10 @@
 	</bean>
 	
 	<!-- Geo base Validators -->
+	<bean id="addMarkedListPlaceValidator" class="org.medici.docsources.validator.geobase.AddMarkedListPlaceValidator">
+		<description>Add Marked List Place Validator.</description>
+	</bean>
+	
 	<bean id="deletePlaceValidator" class="org.medici.docsources.validator.geobase.DeletePlaceValidator">
         <description>Delete a Place Validator.</description>
 	</bean>
@@ -154,6 +162,10 @@
 	</bean>
 
 	<!-- People base validator -->
+	<bean id="addMarkedListPersonValidator" class="org.medici.docsources.validator.peoplebase.AddMarkedListPersonValidator">
+		<description>Add Marked List Person Validator.</description>
+	</bean>
+	
 	<bean id="createNewTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.CreateNewTitleOrOccupationPersonValidator">
 		<description>Create New Title Or Occupation Person Validator</description>
 	</bean>
@@ -231,6 +243,10 @@
 	</bean>
 
 	<!-- Volume base Validators-->
+	<bean id="addMarkedListVolumeValidator" class="org.medici.docsources.validator.volbase.AddMarkedListVolumeValidator">
+		<description>Add Marked List Volume Validator.</description>
+	</bean>
+	
 	<bean id="deleteVolumeValidator" class="org.medici.docsources.validator.volbase.DeleteVolumeValidator">
         <description>Delete a Volume Validator.</description>
 	</bean>

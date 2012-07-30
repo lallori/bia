@@ -8,6 +8,8 @@
 <c:url var="MyMarkedListPaginationURL" value="/user/MyMarkedListPagination.json" />
 
 <c:url var="EraseElementsMyMarkedListURL" value="/user/EraseElementsMyMarkedList.do" />
+
+<c:url var="ShowConfirmEraseMyMarkedListURL" value="/user/ShowConfirmEraseMyMarkedList.do" />
 	
 		
 <div id="researchHistoryTableDiv">
@@ -32,7 +34,7 @@
 </div>
 	
 <div id="MarketListButtons">
-	<a id="eraseList" href="#">Erase List</a>
+	<a id="eraseList" href="${ShowConfirmEraseMyMarkedListURL}">Erase List</a>
     <a id="removeSelected" href="#">Remove selected</a>
     <a id="printAllItems" href="#">Print selected</a>
 </div>
@@ -161,9 +163,14 @@
 				$j.ajax({ url: '${EraseElementsMyMarkedListURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
 // 	 				$j("#body_left").html(html);
 	 			}});
-					
+				Modalbox.hide();	
 				return false; 
 			}); 
+			
+			$j("#eraseList").click(function() {
+				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 310, height: 120});
+				return false;
+			});
 		});
 	</script>
 	

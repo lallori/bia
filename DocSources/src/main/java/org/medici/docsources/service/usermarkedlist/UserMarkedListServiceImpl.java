@@ -212,6 +212,19 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteMyMarkedList() throws ApplicationThrowable {
+		try{
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			getUserMarkedListElementDAO().removeAllMarkedListElements(userMarkedList.getIdMarkedList());
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}		
+	}
+	
+	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {

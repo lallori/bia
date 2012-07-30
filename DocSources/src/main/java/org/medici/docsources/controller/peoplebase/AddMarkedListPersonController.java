@@ -38,10 +38,12 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +62,9 @@ public class AddMarkedListPersonController {
 	private PeopleBaseService peopleBaseService;
 	@Autowired
 	private UserMarkedListService userMarkedListService;
+	@Autowired(required = false)
+	@Qualifier("addMarkedListPersonValidator")
+	private Validator validator;
 
 	/**
 	 * 
@@ -74,6 +79,13 @@ public class AddMarkedListPersonController {
 	 */
 	public UserMarkedListService getUserMarkedListService() {
 		return userMarkedListService;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 
 	/**
@@ -92,28 +104,33 @@ public class AddMarkedListPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") AddMarkedListPersonCommand command, BindingResult result){
+		getValidator().validate(command, result);
+		
 		Map<String, Object> model = new HashMap<String, Object>();
-		People person = new People();
-
-		if(command.getPersonId() > 0){
-			try {
-				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
-				if(userMarkedList == null){
-					userMarkedList = new UserMarkedList();
-					userMarkedList.setDateCreated(new Date());
-					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+		if(!result.hasErrors()){
+			People person = new People();
+	
+			if(command.getPersonId() > 0){
+				try {
+					UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
+					if(userMarkedList == null){
+						userMarkedList = new UserMarkedList();
+						userMarkedList.setDateCreated(new Date());
+						userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+						userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+					}
+					
+					person = getPeopleBaseService().findPerson(command.getPersonId());
+					userMarkedList = getUserMarkedListService().addNewPersonToMarkedList(userMarkedList, person);
+					
+					model.put("person", person);
+				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					new ModelAndView("response/MarkedListKO", model);
 				}
-				
-				person = getPeopleBaseService().findPerson(command.getPersonId());
-				userMarkedList = getUserMarkedListService().addNewPersonToMarkedList(userMarkedList, person);
-				model.put("category", "person");				
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				new ModelAndView("response/MarkedListKO", model);
-			}
-		}		
-		model.put("person", person);
+			}		
+		}
+		model.put("category", "person");
 
 		return new ModelAndView("response/MarkedListOK", model);
 	}
@@ -123,5 +140,12 @@ public class AddMarkedListPersonController {
 	 */
 	public void setUserMarkedListService(UserMarkedListService userMarkedListService) {
 		this.userMarkedListService = userMarkedListService;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 }

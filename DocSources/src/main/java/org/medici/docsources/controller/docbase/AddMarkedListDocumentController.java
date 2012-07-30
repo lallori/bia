@@ -38,10 +38,12 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +62,9 @@ public class AddMarkedListDocumentController {
 	private DocBaseService docBaseService;
 	@Autowired
 	private UserMarkedListService userMarkedListService;
+	@Autowired(required = false)
+	@Qualifier("addMarkedListDocumentValidator")
+	private Validator validator;
 
 	/**
 	 * 
@@ -77,33 +82,38 @@ public class AddMarkedListDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("command") AddMarkedListDocumentCommand command, BindingResult result) {
+		getValidator().validate(command, result);
+		
 		Map<String, Object> model = new HashMap<String, Object>();
-		Document document = new Document();
+		if(!result.hasErrors()){		
+			Document document = new Document();
+			
+			if(command.getEntryId() > 0){
+				try {
+					// Details
+					UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
+					if(userMarkedList == null){
+						userMarkedList = new UserMarkedList();
+						userMarkedList.setDateCreated(new Date());
+						userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+						userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+					}
+					
+					document = getDocBaseService().findDocument(command.getEntryId());
+					userMarkedList = getUserMarkedListService().addNewDocumentToMarkedList(userMarkedList, document);
+					
+					model.put("document", document);
 		
-		if(command.getEntryId() > 0){
-			try {
-				// Details
-				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
-				if(userMarkedList == null){
-					userMarkedList = new UserMarkedList();
-					userMarkedList.setDateCreated(new Date());
-					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					return new ModelAndView("response/MarkedListKO", model);
 				}
-				
-				document = getDocBaseService().findDocument(command.getEntryId());
-				userMarkedList = getUserMarkedListService().addNewDocumentToMarkedList(userMarkedList, document);
-				model.put("category", "document");
-	
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("response/MarkedListKO", model);
 			}
-		}
-		
-		model.put("document", document);		
-
+		}	
+		model.put("category", "document");
+	
 		return new ModelAndView("response/MarkedListOK", model);
+		
 	}
 
 	/**
@@ -126,5 +136,19 @@ public class AddMarkedListDocumentController {
 	 */
 	public void setUserMarkedListService(UserMarkedListService userMarkedListService) {
 		this.userMarkedListService = userMarkedListService;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 }

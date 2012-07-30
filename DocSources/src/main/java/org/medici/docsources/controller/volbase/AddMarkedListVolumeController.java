@@ -38,10 +38,12 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +62,9 @@ public class AddMarkedListVolumeController {
 	private VolBaseService volBaseService;
 	@Autowired
 	private UserMarkedListService userMarkedListService;
+	@Autowired(required = false)
+	@Qualifier("addMarkedListVolumeValidator")
+	private Validator validator;
 
 
 	/**
@@ -78,32 +83,35 @@ public class AddMarkedListVolumeController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST} )
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") AddMarkedListVolumeCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		Volume volume = new Volume();
+		getValidator().validate(command, result);
 		
-		if(command.getSummaryId() > 0){
-			try {
-				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
-				if(userMarkedList == null){
-					userMarkedList = new UserMarkedList();
-					userMarkedList.setDateCreated(new Date());
-					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+		Map<String, Object> model = new HashMap<String, Object>();
+		if(!result.hasErrors()){
+			Volume volume = new Volume();
+			
+			if(command.getSummaryId() > 0){
+				try {
+					UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
+					if(userMarkedList == null){
+						userMarkedList = new UserMarkedList();
+						userMarkedList.setDateCreated(new Date());
+						userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+						userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+					}
+					
+					volume = getVolBaseService().findVolume(command.getSummaryId());
+									
+					userMarkedList = getUserMarkedListService().addNewVolumeToMarkedList(userMarkedList, volume);
+					
+					model.put("volume", volume);
+				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					return new ModelAndView("response/MarkedListKO", model);
 				}
-				
-				volume = getVolBaseService().findVolume(command.getSummaryId());
-								
-				userMarkedList = getUserMarkedListService().addNewVolumeToMarkedList(userMarkedList, volume);
-				model.put("category", "volume");
-				
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("response/MarkedListKO", model);
 			}
 		}
+		model.put("category", "volume");
 		
-		model.put("volume", volume);
 
 		return new ModelAndView("response/MarkedListOK", model);
 	}
@@ -114,6 +122,22 @@ public class AddMarkedListVolumeController {
 	 */
 	public void setUserMarkedListService(UserMarkedListService userMarkedListService) {
 		this.userMarkedListService = userMarkedListService;
+	}
+
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 

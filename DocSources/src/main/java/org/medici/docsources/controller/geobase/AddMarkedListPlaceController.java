@@ -38,10 +38,12 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +62,9 @@ public class AddMarkedListPlaceController {
 	private GeoBaseService geoBaseService;
 	@Autowired
 	private UserMarkedListService userMarkedListService;
+	@Autowired(required = false)
+	@Qualifier("addMarkedListPlaceValidator")
+	private Validator validator;
 	
 	/**
 	 * 
@@ -74,6 +79,13 @@ public class AddMarkedListPlaceController {
 	 */
 	public UserMarkedListService getUserMarkedListService() {
 		return userMarkedListService;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 
 	/**
@@ -92,30 +104,34 @@ public class AddMarkedListPlaceController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET})
 	public ModelAndView setupForm(@ModelAttribute("command") AddMarkedListPlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		Place place = new Place();
+		getValidator().validate(command, result);
 		
-		if(command.getPlaceAllId() > 0){
-			try {
-				UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
-				if(userMarkedList == null){
-					userMarkedList = new UserMarkedList();
-					userMarkedList.setDateCreated(new Date());
-					userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-					userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+		Map<String, Object> model = new HashMap<String, Object>();
+		if(!result.hasErrors()){
+	
+			Place place = new Place();
+			
+			if(command.getPlaceAllId() > 0){
+				try {
+					UserMarkedList userMarkedList = getUserMarkedListService().getMyMarkedList();
+					if(userMarkedList == null){
+						userMarkedList = new UserMarkedList();
+						userMarkedList.setDateCreated(new Date());
+						userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+						userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
+					}
+					place = getGeoBaseService().findPlace(command.getPlaceAllId());
+					userMarkedList = getUserMarkedListService().addNewPlaceToMarkedList(userMarkedList, place);
+					
+					model.put("place", place);
+					
+				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					new ModelAndView("response/MarkedListKO", model);
 				}
-				place = getGeoBaseService().findPlace(command.getPlaceAllId());
-				userMarkedList = getUserMarkedListService().addNewPlaceToMarkedList(userMarkedList, place);
-				model.put("category", "place");
-				
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				new ModelAndView("response/MarkedListKO", model);
 			}
 		}
-		
-		model.put("place", place);
+		model.put("category", "place");		
 
 		return new ModelAndView("response/MarkedListOK", model);
 	}
@@ -125,6 +141,13 @@ public class AddMarkedListPlaceController {
 	 */
 	public void setUserMarkedListService(UserMarkedListService userMarkedListService) {
 		this.userMarkedListService = userMarkedListService;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 }
