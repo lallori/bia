@@ -259,8 +259,16 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/EraseMyHistory.jsp"/>
     </definition>
     
+    <definition name="user/EraseMyMarkedList" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EraseMyMarkedList.jsp"/>
+    </definition>
+    
     <definition name="user/ShowConfirmEraseMyHistoryModalWindow" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyHistoryModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowConfirmEraseMyMarkedListModalWindow" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyMarkedListModalWindow.jsp"/>
     </definition>
 
 	<definition name="user/ShowMyHistoryModalWindow" extends="template.partialDOM">
