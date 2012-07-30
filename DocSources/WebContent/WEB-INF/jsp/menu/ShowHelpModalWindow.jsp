@@ -34,7 +34,7 @@
     
     <div id="credits">
     	<p class="title">CREDITS</p>
-    	<p><u>Developer team:</u> Lorenzo Allori (Project Manager),  Lorenzo Pasquinelli (Senior Developer), Matteo Doni (Developer) and Joana Amill Luzondo (Graphic Designer).</p>
+    	<p><u>Developer team:</u> Lorenzo Allori (Project Manager),  Lorenzo Pasquinelli (Senior Developer), Matteo Doni (Developer) and Joana Amill Luzondo (Web Designer).</p>
         <p><u>Research and Testing team:</u> Alessio Assonitis, Maurizio Arfaioli, Lisa Kaborycha, Roberta Piccinelli, Julia Vicioso and Sheila Barker.</p>
         <p><u>Special thanks to:</u>The Mellon Foundation, L'Archivio di Stato di Firenze e la Direzione Generale degli Archivi. </p>
     </div>
