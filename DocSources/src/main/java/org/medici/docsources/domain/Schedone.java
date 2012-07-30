@@ -105,9 +105,9 @@ public class Schedone {
 	private String supporto;
 	@Column (name="\"CARTULAZIONE\"", length=1000)
 	private String cartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=1000)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", columnDefinition="LONGTEXT")
 	private String noteCartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", length=1000)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", columnDefinition="LONGTEXT")
 	private String noteCartulazioneEng;
 	@Column (name="\"CARTE_BIANCHE\"", columnDefinition="LONGTEXT")
 	private String carteBianche;
