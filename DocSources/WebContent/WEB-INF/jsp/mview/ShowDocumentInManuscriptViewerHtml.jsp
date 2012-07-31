@@ -119,7 +119,7 @@
 					closeOnEscape: false,
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide();
-						$j("#PageTurnerVerticalDiv").prev().append("<img src='/DocSources/images/mview/button_rotateHorizontal.png' id='rotateHorizontal' title='Horizontal Page Turner'/>");
+						//$j("#PageTurnerVerticalDiv").prev().append("<img src='/DocSources/images/mview/button_rotateHorizontal.png' id='rotateHorizontal' title='Horizontal Page Turner'/>");
                 		$(this).load('${PageTurnerDialogUrl}');
                			},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
