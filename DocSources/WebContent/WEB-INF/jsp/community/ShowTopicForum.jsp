@@ -120,7 +120,7 @@ ${paginationData}
 			});
 
 			$j('#postReply').click(function (){
-				$j("#mainContent").load($j(this).attr("href"));
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 		});
