@@ -127,7 +127,7 @@ var IIPMooViewer = new Class({
 
 
     // Disable the right click context menu on image tiles?
-    this.disableContextMenu = true;
+    this.disableContextMenu = false;
 
 
     // Navigation window options
