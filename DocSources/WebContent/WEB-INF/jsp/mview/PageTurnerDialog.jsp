@@ -118,7 +118,7 @@
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
+		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show extract</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
 		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
 		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
@@ -315,7 +315,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'SHOW EXTRACT',
+				title: 'EXTRACT',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -380,13 +380,14 @@
 			
 			$j('#showTranscription').click(function() {
 				if ($dialogShowExtract.dialog("isOpen")) {
-					return false;
+					$dialogShowExtract.load('${ShowExtractDialogURL}' + '?entryId=' + $j('#currentEntryId').val());
+					$dialogShowExtract.dialogExtend("restore");
 				} else {
 					$dialogShowExtract.dialog("open");
-					$j('#showTranscription').css('visibility','hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'visible');
-					return false;
 				}
+				$j('#showTranscription').css('visibility','hidden');
+				$j("#showAlreadyTranscribed").css('visibility', 'visible');
+				return false;
 			});
 			
 			$j('#extractTranscribe').click(function() {
@@ -476,6 +477,12 @@
 								$j("#choiceThisFolioStart").css('visibility', 'hidden');
 								$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 								$j("#currentEntryId").val(data.entryId);
+								if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+									if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+										$j("#showTranscription").css('visibility', 'hidden');
+										$j("#showAlreadyTranscribed").css('visibility', 'visible');
+									}
+								}
 							}else if(data.countAlreadyEntered > 1){
 								$j("#alreadyTranscribe").css('visibility', 'visible');
 								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
@@ -490,6 +497,7 @@
 								$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
 							}
 						}
+						
 					} else if (data.linkedDocument == 'false') {
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 						$j("#readyToTranscribe").css('visibility', 'visible');

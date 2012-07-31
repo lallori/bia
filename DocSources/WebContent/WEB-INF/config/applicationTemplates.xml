@@ -714,6 +714,10 @@
 	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtmlSimple">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerHtml.jsp"/>
 	</definition>
+	
+	<definition name="mview/ShowSynopsisDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSynopsisDocumentDialog.jsp"/>
+	</definition>
 
 	<definition name="mview/ShowSummaryVolumeDialog" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSummaryVolumeDialog.jsp"/>

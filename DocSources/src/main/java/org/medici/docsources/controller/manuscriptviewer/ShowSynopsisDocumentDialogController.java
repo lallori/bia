@@ -1,5 +1,5 @@
 /*
- * ShowExtractDocumentDialogController.java
+ * ShowSynopsisDocumentDialogController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,7 +30,7 @@ package org.medici.docsources.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.manuscriptviewer.ShowExtractDocumentDialogCommand;
+import org.medici.docsources.command.manuscriptviewer.ShowSynopsisDocumentDialogCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -43,14 +43,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Extract Document Dialog".
+ * Controller for action "Show Synopsis Document Dialog".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/ShowExtractDocumentDialog")
-public class ShowExtractDocumentDialogController {
+@RequestMapping("/de/mview/ShowSynopsisDocumentDialog")
+public class ShowSynopsisDocumentDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
 	
@@ -74,7 +74,7 @@ public class ShowExtractDocumentDialogController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowExtractDocumentDialogCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowSynopsisDocumentDialogCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if ((command != null) && (command.getEntryId() > 0)) {
@@ -85,9 +85,9 @@ public class ShowExtractDocumentDialogController {
 				Document document = getDocBaseService().findDocument(command.getEntryId());
 				
 				if (synExtract != null) {
-					model.put("docExtract", synExtract.getDocExtract());
+					model.put("synopsis", synExtract.getSynopsis());
 				} else {
-					model.put("docExtract", null);
+					model.put("synopsis", null);
 				}
 				
 				model.put("folioNum", document.getFolioNum());
@@ -95,14 +95,14 @@ public class ShowExtractDocumentDialogController {
 				model.put("entryId", document.getEntryId());
 			} catch (ApplicationThrowable ath) {
 				model.put("applicationThrowable", ath);
-				return new ModelAndView("error/ShowExtractDocumentDialog", model);
+				return new ModelAndView("error/ShowSynopsisDocumentDialog", model);
 			}
 		} else {
 			// On Document creation, the research is always the current user.
-			model.put("docExtract", null);
+			model.put("synopsis", null);
 		}
 
-		return new ModelAndView("mview/ShowExtractDocumentDialog", model);
+		return new ModelAndView("mview/ShowSynopsisDocumentDialog", model);
 	}
 
 }

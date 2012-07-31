@@ -169,6 +169,13 @@
 									$j("#choiceThisFolioStart").css('visibility', 'hidden');
 									$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 									$j("#currentEntryId").val(data.entryId);
+									//If the extract of this document is already opened, we visualize the "Show record" button
+			    					if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+			    						if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+			    							$j("#showTranscription").css('visibility', 'hidden');
+											$j("#showAlreadyTranscribed").css('visibility', 'visible');
+			    						}
+			    					}
 								}else if(data.countAlreadyEntered > 1){
 									$j("#alreadyTranscribe").css('visibility', 'visible');
 									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
@@ -183,6 +190,7 @@
 									$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
 								}
 	    					}
+	    					
 	    				} else if (data.linkedDocument == 'false') {
 	    					// Only users with special role can transcribe new document. 
 	    					if (functionParams["canTranscribe"] =='true' && data.imageType != "R") {
@@ -225,8 +233,10 @@
 						$j("#transcribeDiv").append($j("#transcribeMode"));
 						$j("#transcribeMode").css('visibility','visible');
 					}
+					
     			});
             });
+            
         });
 
         return $;
@@ -362,6 +372,13 @@
 										$j("#choiceThisFolioStart").css('visibility', 'hidden');
 										$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 										$j("#currentEntryId").val(data.entryId);
+										//If the extract of this document is already opened, we visualize the "Show record" button
+				    					if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+				    						if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+				    							$j("#showTranscription").css('visibility', 'hidden');
+												$j("#showAlreadyTranscribed").css('visibility', 'visible');
+				    						}
+				    					}
 									}else if(data.countAlreadyEntered > 1){
 										$j("#alreadyTranscribe").css('visibility', 'visible');
 										$j("#showAlreadyTranscribed").css('visibility', 'hidden');
@@ -376,6 +393,7 @@
 										$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
 									}
 		    					}
+		    					
 		    				} else if (data.linkedDocument == 'false') {
 		    					// Only users with special role can transcribe new document. 
 		    					if (functionParams["canTranscribe"] =='true') {
@@ -422,6 +440,7 @@
 
 				}});
             });
+            
         });
 
         return $;
