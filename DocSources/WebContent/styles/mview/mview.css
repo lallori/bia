@@ -36,7 +36,7 @@ body {
 }
 
 .button_medium {
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_medium.png);
 	background-repeat: no-repeat;
@@ -320,7 +320,7 @@ a.transcribe {
 }
 
 #PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
-	 margin: 75px 0 0 0px;
+	 margin: 45px 0 0 0px;
 	position: absolute;
 }
 

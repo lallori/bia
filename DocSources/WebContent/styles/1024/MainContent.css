@@ -150,7 +150,7 @@ span.h7 {
 	font-style:italic;
 }
 
-#docid { /* Document Id inside DocBase */
+#id { /* Document Id inside DocBase */
 	position: absolute;
 	top: 27px;
 }
@@ -452,18 +452,6 @@ item a{
 
 .extractText {
     width: 385px;
-}
-
-/* ----------------------------------------------------- */ 
-/*
-/* ------------------- ADJUST PLACE ---------------------------- */ 
-
-#adjustPlace {
-	width:140px;
-	height:110px;
-	font-size:10px;
-	display:none;
-	padding:0 5px 0 5px;
 }
 
 /* ---------------------------------------------------------------------------------------------------------- */ 
@@ -1480,38 +1468,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 5px 0;
 }
 
-/* ---------------------------------------------------- */ 
-/*
-/*
-/* ------------------- TEXTAREAS ---------------------- */
-
-
-div.fileinputs {
-	position: relative;
-}
-
-div.fakefile {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 1;
-}
-
-input.file {
-	position: relative;
-	text-align: right;
-	-moz-opacity:0 ;
-	filter:alpha(opacity: 0);
-	opacity: 0;
-	z-index: 2;
-	width: 345px;
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #000000;
-	padding-left:10px;
-	margin: 5px 6px 5px 5px; /* top right bottom left */
-}
-
 /* --------------------------------------------------------------------------------------------------------- */ 
 /*
 /*
@@ -1607,7 +1563,7 @@ p.notDigitized {
 
 div#text a.linkVolume {
     font-size: 16px;
-    color: #808000;
+    color: #666EA4;
 }
 
 div#text div#icons {
@@ -2778,13 +2734,11 @@ a.refreshVolumeExplorer {
 	float: left;
 	font-size: 11px;
 	text-shadow: 1px 1px 0 white;
-	margin: 55px 0 0 -22px;
+	margin: 43px 0 0 -22px;
 	width: 152px;
 	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
 	height:17px;
 }
-
-
 
 #placeImageDiv img {
 	border-radius: 4px;
@@ -4718,7 +4672,7 @@ h3.systemManagement {
 
 .refine { /* Refine this search button on Search Results Tab */
  	float: right;
-	margin: 20px 0 0 10px;
+	margin: 15px 0 10px 10px;
 	width: 127px;
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
