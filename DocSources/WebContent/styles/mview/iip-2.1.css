@@ -207,14 +207,59 @@ div.navcontainer div.navbuttons img.shiftUp { margin-left: 0px; margin-right: 0p
 div.navcontainer div.navbuttons img.shiftDown { margin-top: 10px; }
 div.navcontainer div.navbuttons img.corner { float: right;right: 0px; vertical-align:bottom; }
 
+/* DISPLAY */
+/* General */
 div.iipmooviewer div.canvas div.annotation {
   position: absolute;
   overflow: visible;
   z-index: 2;
-  border: 1px solid #888;
-  background-color: transparent;
+  border: 1px solid yellow;
+  background-color: rgba(255, 255, 0, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
-div.iipmooviewer div.canvas div.annotation:hover{ border-color: #fff; }
+
+/* Personal 
+div.iipmooviewer div.canvas div.annotation {
+  position: absolute;
+  overflow: visible;
+  z-index: 2;
+  border: 1px solid blue;
+  background-color: rgba(0, 0, 255, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+/* Paleography 
+   position: absolute;
+  overflow: visible;
+  z-index: 2;
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px; 
+
+
+
+
+/* HOVER */
+/* General */
+div.iipmooviewer div.canvas div.annotation:hover{ 
+    border-color: yellow; 
+}
+
+/* Personal 
+div.iipmooviewer div.canvas div.annotation:hover{ 
+    border-color: blue; 
+}
+
+/* Paleography 
+div.iipmooviewer div.canvas div.annotation:hover{ 
+    border-color: red; 
+}
 
 /* Info Window
  */
@@ -289,3 +334,4 @@ div.iipmooviewer div.info div ul {
   padding-left: 20px;
   margin-bottom: 0;
 }
+
