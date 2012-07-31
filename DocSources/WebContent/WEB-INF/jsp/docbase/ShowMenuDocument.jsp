@@ -34,7 +34,7 @@
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
 		<c:if test="${document.entryId != 0}">
-			<div id="docid">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
+			<div id="id">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
 		</c:if>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
