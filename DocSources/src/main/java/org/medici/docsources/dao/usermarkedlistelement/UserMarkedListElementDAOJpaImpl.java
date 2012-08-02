@@ -250,6 +250,29 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserMarkedListElement> getMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException {
+		StringBuilder query = new StringBuilder("FROM UserMarkedListElement WHERE userMarkedList.idMarkedList=:idMarkedList AND (");
+		for(int i = 0; i < idElements.size(); i++){
+			query.append("id=" + idElements.get(i));
+			if(i != idElements.size()-1){
+				query.append(" OR ");
+			}
+		}
+		Query toQuery = getEntityManager().createQuery(query.toString() + ")");
+		toQuery.setParameter("idMarkedList", idMarkedList);
+		
+		if(toQuery.getResultList().size() == 0){
+			return null;
+		}else{
+			return toQuery.getResultList();
+		}
+	}
 
 	/**
 	 * @return the peopleDAO

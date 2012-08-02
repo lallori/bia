@@ -91,6 +91,15 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	/**
 	 * 
 	 * @param idMarkedList
+	 * @param idElements
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<UserMarkedListElement> getMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param idMarkedList
 	 * @return
 	 * @throws PersistenceException
 	 */

@@ -238,6 +238,19 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UserMarkedListElement> getElementsFromMarkedList(UserMarkedList userMarkedList, List<Integer> idElements) throws ApplicationThrowable {
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			return getUserMarkedListElementDAO().getMarkedListElements(userMarkedList.getIdMarkedList(), idElements);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * {@inheritDoc} 
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)

@@ -10,6 +10,8 @@
 <c:url var="EraseElementsMyMarkedListURL" value="/user/EraseElementsMyMarkedList.do" />
 
 <c:url var="ShowConfirmEraseMyMarkedListURL" value="/user/ShowConfirmEraseMyMarkedList.do" />
+
+<c:url var="PrintElementsMyMarkedListURL" value="/user/PrintElementsMyMarkedList.do" />
 	
 		
 <div id="researchHistoryTableDiv">
@@ -36,7 +38,7 @@
 <div id="MarketListButtons">
 	<a id="eraseList" href="${ShowConfirmEraseMyMarkedListURL}">Erase List</a>
     <a id="removeSelected" href="#">Remove selected</a>
-    <a id="printAllItems" href="#">Print selected</a>
+    <a id="printAllItems" href="#" target="_blank">Print selected</a>
 </div>
 	
 	
@@ -135,7 +137,7 @@
 			$j("#removeSelected").click(function(){
 				$toRemove = "";
 				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
-					$toRemove += $j(this).attr("idtoerase") + "+";
+					$toRemove += $j(this).attr("idElement") + "+";
 				});
 				$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
 					css: { 
@@ -170,6 +172,18 @@
 			$j("#eraseList").click(function() {
 				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 310, height: 120});
 				return false;
+			});
+			
+			$j("#printAllItems").click(function(){
+				$toPrint = "";
+				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
+					$toPrint += $j(this).attr("idElement") + "+";
+				});
+// 				$j.ajax({ url: '${PrintElementsMyMarkedListURL}', cache: false, data: {"idToPrint" : $toPrint} ,success:function(html) { 
+	 				window.open('${PrintElementsMyMarkedListURL}' + '?idToPrint=' + $toPrint , 'PRINT ELEMENTS', 'width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
+// 	 			}});
+				Modalbox.hide();	
+				return false; 
 			});
 		});
 	</script>

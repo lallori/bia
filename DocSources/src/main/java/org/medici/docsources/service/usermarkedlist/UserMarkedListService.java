@@ -33,6 +33,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.UserMarkedList;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -114,6 +115,15 @@ public interface UserMarkedListService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteMyMarkedList() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMarkedList
+	 * @param idElelements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<UserMarkedListElement> getElementsFromMarkedList(UserMarkedList userMarkedList, List<Integer> idElements) throws ApplicationThrowable;
 	
 	/**
 	 * 

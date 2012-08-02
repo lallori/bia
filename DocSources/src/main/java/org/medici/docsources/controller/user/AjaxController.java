@@ -372,7 +372,7 @@ public class AjaxController {
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add("");
-				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idToErase=\"" + currentElement.getId() + "\" >");
+				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentElement.getId() + "\" >");
 				resultList.add(HtmlUtils.showDocument(singleRow, currentElement.getDocument().getEntryId()));
 			}  else if (currentElement.getVolume() != null) {
 				singleRow.add("Volume");
@@ -380,7 +380,7 @@ public class AjaxController {
 				singleRow.add(currentElement.getVolume().getMDP());
 				singleRow.add("");
 				singleRow.add("");
-				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idToErase=\"" + currentElement.getId() + "\" >");
+				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentElement.getId() + "\" >");
 				resultList.add(HtmlUtils.showVolume(singleRow, currentElement.getVolume().getSummaryId()));
 			} else if (currentElement.getPlace() != null) {
 				singleRow.add("Place");
@@ -388,7 +388,7 @@ public class AjaxController {
 				singleRow.add("");
 				singleRow.add(currentElement.getPlace().getPlaceNameFull());
 				singleRow.add("");
-				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idToErase=\"" + currentElement.getId() + "\" >");
+				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentElement.getId() + "\" >");
 				resultList.add(HtmlUtils.showPlaceMarkedList(singleRow, currentElement.getPlace().getPlaceAllId()));
 			} else if (currentElement.getPerson() != null) {
 				singleRow.add("Person");
@@ -396,7 +396,7 @@ public class AjaxController {
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add(currentElement.getPerson().getMapNameLf());
-				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idToErase=\"" + currentElement.getId() + "\" >");
+				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentElement.getId() + "\" >");
 				resultList.add(HtmlUtils.showPeople(singleRow, currentElement.getPerson().getPersonId()));
 			}
 		}
