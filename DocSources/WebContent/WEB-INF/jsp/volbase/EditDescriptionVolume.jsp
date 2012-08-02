@@ -18,6 +18,7 @@
 				<div class="row">
 					<form:textarea path="orgNotes" cssClass="txtarea_big"/><form:errors path="orgNotes" cssClass="inputerrors"/>
 				</div>
+				<br />
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="volbase.description.edit.condition"></fmt:message>">?</a>
 					<form:label id="conditionLabel" for="ccondition" path="ccondition" cssErrorClass="error">Condition</form:label>

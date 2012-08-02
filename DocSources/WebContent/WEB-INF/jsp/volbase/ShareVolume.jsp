@@ -23,6 +23,15 @@
 		<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
 		<h4>${volume.serieList}</h4>
 		<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+				<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font></p>
+			</c:if>
+			<c:if test="${volDocsRelated == 0}">
+				<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
+			</c:if>
+			<c:if test="${volDocsRelated == 1}">
+				<p style="margin:10px 0 8px 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font></p>
+			</c:if>
 	</div>
 	
 	<div id="EditDetailsVolumeDiv" class="background">
@@ -45,8 +54,6 @@
 		<c:if test="${empty image && volume.digitized == true}">
 			<div id="SpineVolumeNotDigitDiv">
 				<span>Spine not available</span>
-				<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
-				<p>Volume Spine</p>
 			</div>
 		</c:if>
 		
