@@ -99,6 +99,13 @@ public class ShowVolumeController {
 				model.put("image", image);
 
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
+				
+				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowVolume", model);

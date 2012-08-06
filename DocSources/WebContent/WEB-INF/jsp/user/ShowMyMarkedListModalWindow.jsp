@@ -52,11 +52,11 @@
 						"aoColumns" : [
 							{ sWidth : "120px" },
 							{ sWidth : "120px" },
-							{ sWidth : "120px" },
-							{ sWidth : "120px" },
-							{ sWidth : "120px" },
-							{ sWidth : "120px" },
-							{ sWidth : "50px" }
+							{ sWidth : "120px", "bSortable": false },
+							{ sWidth : "120px", "bSortable": false },
+							{ sWidth : "120px", "bSortable": false },
+							{ sWidth : "120px", "bSortable": false },
+							{ sWidth : "50px", "bSortable": false }
 						],                           
 					"bDestroy" : true,  
 					"bFilter" : false,

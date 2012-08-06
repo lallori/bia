@@ -551,6 +551,14 @@ public interface PeopleBaseService {
 	
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public boolean ifPersonALreadyPresentInMarkedList(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexPeople() throws ApplicationThrowable;

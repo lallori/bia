@@ -15,6 +15,8 @@
 			$j("#close").click(function(){
 				$j("#DialogMarkedList").dialog("close");
 				$j("#DialogMarkedList").remove();
+				$j("#buttonMarkedList").css('opacity','0.5');
+				$j("#buttonMarkedList").attr('href','#');
 				return false;
 			});
 		});

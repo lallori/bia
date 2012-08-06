@@ -86,6 +86,12 @@ public class ShowLastEntryVolumeController {
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
+				
+				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
 
 				return new ModelAndView("volbase/ShowVolume", model);
 			} else {

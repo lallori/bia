@@ -51,6 +51,8 @@ import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
+import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Place;
@@ -60,6 +62,8 @@ import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserMarkedList;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +105,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceTypeDAO placeTypeDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
+	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -897,6 +905,38 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
+	
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean ifPlaceAlreadyPresentInMarkedList(Integer placeAllId) throws ApplicationThrowable {
+		try{
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPlaceInMarkedList(userMarkedList.getIdMarkedList(), placeAllId);
+			if(userMarkedListElement != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1132,6 +1172,21 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
 		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
 	}
 
 	/**

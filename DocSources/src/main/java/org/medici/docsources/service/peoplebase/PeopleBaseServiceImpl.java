@@ -69,6 +69,8 @@ import org.medici.docsources.dao.polink.PoLinkDAO;
 import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
+import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.AltName.NameType;
 import org.medici.docsources.domain.Forum;
@@ -84,6 +86,8 @@ import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserMarkedList;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +153,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+	
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
+	
+	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
 	
 	/**
 	 * {@inheritDoc}
@@ -1712,6 +1722,38 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 	
 	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean ifPersonALreadyPresentInMarkedList(Integer personId) throws ApplicationThrowable {
+		try{
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPersonInMarkedList(userMarkedList.getIdMarkedList(), personId);
+			if(userMarkedListElement != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -2051,6 +2093,21 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
 		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
 	}
 
 	/**

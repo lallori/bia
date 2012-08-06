@@ -124,6 +124,14 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public boolean ifPlaceAlreadyPresentInMarkedList(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param place
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.

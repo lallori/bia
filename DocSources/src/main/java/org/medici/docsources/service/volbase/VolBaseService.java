@@ -342,6 +342,14 @@ public interface VolBaseService {
 
 	/**
 	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public boolean ifVolumeAlreadyPresentInMarkedList(Integer summaryId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexVolume() throws ApplicationThrowable;

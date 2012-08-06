@@ -440,6 +440,14 @@ public interface DocBaseService {
 	
 	/**
 	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param document
 	 * @return
 	 * @throws ApplicationThrowable

@@ -80,6 +80,13 @@ public class ShowLastEntryDocumentController {
 	
 				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 				model.put("image", image);
+				
+				if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("docbase/ShowDocument", model);
 			} else {
 				return new ModelAndView("empty", model);

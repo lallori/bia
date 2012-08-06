@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/peoplebase/ShowPerson")
@@ -102,6 +103,13 @@ public class ShowPersonController {
 				model.put("docsRelated", docsRelated);
 				
 				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(person));
+				
+				if(getPeopleBaseService().ifPersonALreadyPresentInMarkedList(person.getPersonId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPerson", model);

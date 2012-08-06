@@ -96,6 +96,12 @@ public class ShowDocumentFromHistoryController {
 				
 				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 				model.put("image", image);
+				
+				if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowDocument", model);

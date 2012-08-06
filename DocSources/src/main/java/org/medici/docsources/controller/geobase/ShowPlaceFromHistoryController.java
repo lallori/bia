@@ -106,6 +106,13 @@ public class ShowPlaceFromHistoryController {
 					model.put("linkGoogleMaps", null);
 				
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(command.getIdUserHistory()));
+				
+				if(getGeoBaseService().ifPlaceAlreadyPresentInMarkedList(place.getPlaceAllId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/ShowPlace", model);

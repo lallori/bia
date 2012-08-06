@@ -59,6 +59,8 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.synextract.SynExtractDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
+import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
@@ -75,6 +77,8 @@ import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserMarkedList;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +125,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private TopicsListDAO topicsListDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
+	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 
@@ -1331,10 +1339,42 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable {
+		try{
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findDocumentInMarkedList(userMarkedList.getIdMarkedList(), entryId);
+			if(userMarkedListElement != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -1503,6 +1543,21 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
 		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
 	}
 
 	/**

@@ -134,11 +134,10 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC "));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				} else {
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				}
 			}
 		}
@@ -221,14 +220,16 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 				paginationFilter.addSortingCriteria("dateCreated", paginationFilter.getSortingDirection());
 				break;
 			case 1:
+				paginationFilter.addSortingCriteria("document.entryId", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("person.personId", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("place.placeAllId", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("volume.summaryId", paginationFilter.getSortingDirection());
+				break;
+			case 2:  
 				paginationFilter.addSortingCriteria("document.volume.volNum", paginationFilter.getSortingDirection());
 				paginationFilter.addSortingCriteria("document.volume.volLetExt", paginationFilter.getSortingDirection());
 				paginationFilter.addSortingCriteria("document.folioNum", paginationFilter.getSortingDirection());
 				paginationFilter.addSortingCriteria("document.folioMod", paginationFilter.getSortingDirection());
-				break;
-			case 2:  
-				paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection());
-				paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection());
 				break;
 			case 3:
 				paginationFilter.addSortingCriteria("place.placeNameFull", paginationFilter.getSortingDirection());

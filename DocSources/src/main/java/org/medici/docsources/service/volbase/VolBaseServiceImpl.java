@@ -54,6 +54,8 @@ import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
+import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumOption;
@@ -64,6 +66,8 @@ import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserMarkedList;
+import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -105,6 +109,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private SeriesListDAO seriesListDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
+	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 
@@ -811,6 +819,20 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
@@ -882,6 +904,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean ifVolumeAlreadyPresentInMarkedList(Integer summaryId) throws ApplicationThrowable {
+		try{
+			UserMarkedList userMarrkedList = getUserMarkedListDAO().getMyMarkedList();
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findVolumeInMarkedList(userMarrkedList.getIdMarkedList(), summaryId);
+			if(userMarkedListElement != null){
+				return Boolean.TRUE;
+			}else{
+				return Boolean.FALSE;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 
@@ -988,6 +1028,21 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.userHistoryDAO = userHistoryDAO;
 	}
 
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
 
 	/**
 	 * @param volumeDAO the volumeDAO to set

@@ -45,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show last entry person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/peoplebase/ShowLastEntryPerson")
@@ -81,6 +82,12 @@ public class ShowLastEntryPersonController {
 				model.put("docsRelated", docsRelated);
 				
 				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(person));
+				
+				if(getPeopleBaseService().ifPersonALreadyPresentInMarkedList(person.getPersonId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
 
 				return new ModelAndView("peoplebase/ShowPerson", model);
 			} else {
