@@ -27,6 +27,7 @@
 				if($j('input:radio:checked').val() == "newSearch"){
 					$j("#idSearchFilterToReplace option").each(function(){
 						if($j(this).text() == $j("#saveAs").val()){
+							$j( "#DialogSaveAs" ).css("height", 150 );
 							$j("#saveFilter").before("<span class=\"error\" style=\"color:red\">Name already in use<br /></span>");
 							return false;
 						}
