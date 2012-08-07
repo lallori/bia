@@ -20,8 +20,6 @@
 		<a id="yes" href="${DeleteVolumeURL}">YES</a>
 	
 		<a id="no" href="#">NO</a>
-			
-		<input id="close" type="submit" title="Close Delete Menu window" value="Close"/>
 	</div>
 
 	<script>

@@ -31,6 +31,7 @@
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+		<div id="id">Vol ID ${volume.summaryId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
 				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
@@ -120,7 +121,7 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 450, height: 190});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 400, height: 110});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															

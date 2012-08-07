@@ -50,7 +50,7 @@
 	
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<a href="${AddNamePlaceURL}" id="AddNewValue" title="Add new Name">Add</a>
+			<input id="AddNewValue" value="Add" title="Add new Name" />
 		</div>
 		
 		</fieldset>
@@ -124,7 +124,7 @@
 			});
 			
 			$j("#AddNewValue").click(function(){
-				$j("#EditNameVariantPlaceDiv").load($j(this).attr("href"));
+				$j("#EditNameVariantPlaceDiv").load($j(this).attr("${AddNamePlaceURL}"));
 				return false;
 			});
 		});

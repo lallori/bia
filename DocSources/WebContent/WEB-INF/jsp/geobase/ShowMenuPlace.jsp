@@ -35,6 +35,7 @@
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+		<div id="id">Place ID ${place.placeAllId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
 				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
@@ -125,7 +126,7 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 400, height: 160});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 400, height: 110});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															

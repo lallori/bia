@@ -30,6 +30,8 @@
 			});
 
 			$j("#yes").click(function() {
+				Modalbox.resize("0", "20");
+				$j("#MB_content").css("height", "100px");
 				$j.ajax({ type:"GET", url: '${CheckPersonIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
@@ -40,7 +42,7 @@
 							$j("#DeleteThisRecordDiv > .sender_docs").append(' (' + json.senderDocsRelated + ')');
 							$j("#DeleteThisRecordDiv > .sender_docs").attr('title','Show me those documents');
 
-							$j("#DeleteThisRecordDiv").append('<br>');
+							
 							$j(".sender_docs").die();
 							$j(".sender_docs").live('click', function() {
 								var tabName = json.mapNameLf + " - Documents as Sender";

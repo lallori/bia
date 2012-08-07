@@ -31,6 +31,7 @@
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
+		<div id="id">Person ID ${person.personId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
 				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
@@ -118,7 +119,7 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE PERSON MENU", width: 400, height: 160});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE PERSON MENU", width: 400, height: 110});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
