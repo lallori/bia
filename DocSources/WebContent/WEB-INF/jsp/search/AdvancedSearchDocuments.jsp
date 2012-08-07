@@ -348,6 +348,27 @@
 				            </form>
 				        </div>
 					</div>
+					
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					<h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
+					<div class="documents">
+						<div class="listAdvSearch">
+							<form id="logicalDeleteSearchForm" method="post" class="edit">
+								<div class="row">
+									<div class="col_l">
+										<a class="helpIcon" title="<fmt:message key="advsearch.documents.logicaldelete"></fmt:message>">?</a>
+										<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
+										<input type="checkbox" name="logicalDelete" value="true"/>
+									</div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="hidden" id="category" value="Logical Delete">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					</security:authorize>
 				</div>
 			</div>
 
@@ -437,6 +458,7 @@
 			$j("#volumeSearchForm").advancedSearchForm();
 			$j("#folioSearchForm").advancedSearchForm();
 			$j("#docIdSearchForm").advancedSearchForm();
+			$j("#logicalDeleteSearchForm").advancedSearchForm();
 
 			$j('#accordion').accordion({
 				active: false, 

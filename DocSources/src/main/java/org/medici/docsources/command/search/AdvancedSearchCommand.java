@@ -86,7 +86,7 @@ public class AdvancedSearchCommand {
 	private List<String> researchNotes;
 	private List<String> gender;
 
-	private Boolean logicalDelete;
+	private String logicalDelete;
 
 	/**
 	 * 
@@ -675,14 +675,14 @@ public class AdvancedSearchCommand {
 	/**
 	 * @param logicalDelete the logicalDelete to set
 	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
+	public void setLogicalDelete(String logicalDelete) {
 		this.logicalDelete = logicalDelete;
 	}
 
 	/**
 	 * @return the logicalDelete
 	 */
-	public Boolean getLogicalDelete() {
+	public String getLogicalDelete() {
 		return logicalDelete;
 	}
 

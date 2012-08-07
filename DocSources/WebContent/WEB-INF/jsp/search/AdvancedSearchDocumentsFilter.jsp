@@ -182,6 +182,20 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.docIds))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="logicalDeleteSearchDiv">
+			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Logical Delete:</span><span class="wordSearch">Yes</span><a class="remove" href="#">(remove)</a>
+					<c:if test="${searchFilter.filterData.logicalDelete.toString() ==  'true'}">
+						<input type="hidden" value="true" name="logicalDelete">
+					</c:if>
+					<c:if test="${searchFilter.filterData.logicalDelete.toString() == 'false' }">
+						<input type="hidden" value="false" name="logicalDelete">
+					</c:if>
+				</div>
+			</c:if>
+			</div>
 			
 			<p class="yourSearchDiv">Records Found:
 			<span class="recordsNum"></span></p>
