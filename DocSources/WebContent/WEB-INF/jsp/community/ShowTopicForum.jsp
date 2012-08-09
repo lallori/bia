@@ -56,7 +56,7 @@
             <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>
-    <div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+    <div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
 </div>
 </c:forEach>
 
@@ -91,7 +91,7 @@ ${paginationData}
 </div>
 
 
-	<script>
+	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
    				$j("#chronologyDiv").html(json.chronology);
@@ -109,7 +109,7 @@ ${paginationData}
 			$j('.boardIndex').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.boardIndex').live('click', function() {
-				$j("#mainContent").load($j(this).attr("href"));
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 
@@ -120,6 +120,11 @@ ${paginationData}
 			});
 
 			$j('#postReply').click(function (){
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j('.returnTo').click(function(){
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});

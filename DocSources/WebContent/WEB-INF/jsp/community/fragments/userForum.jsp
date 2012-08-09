@@ -23,7 +23,7 @@
 							return false;
 						});
 
-						$j('#viewYourPosts').submit(function (){
+						$j('#viewYourPosts').click(function (){
 							$j("#main").load($j(this).attr("href"));
 							return false;
 						});

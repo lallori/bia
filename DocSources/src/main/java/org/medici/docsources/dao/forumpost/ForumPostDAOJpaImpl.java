@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.ForumPost;
@@ -47,6 +48,7 @@ import org.springframework.stereotype.Repository;
  * <b>ForumPostDAOJpaImpl</b> is a default implementation of <b>ForumPostDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.ForumPost
  * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
@@ -166,5 +168,54 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		String objectsQuery = searchContainer.toJPAQuery();
+//		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+//		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+//		StringBuilder orderBySQL = new StringBuilder();
+//		if (sortingCriterias.size() > 0) {
+//			orderBySQL.append(" ORDER BY ");
+//			for (int i=0; i<sortingCriterias.size(); i++) {
+//				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+//				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+//				if (i<(sortingCriterias.size()-1)) {
+//					orderBySQL.append(", ");
+//				} 
+//			}
+//		}
+		
+//		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery;
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		// We set pagination  
+//		query.setFirstResult(paginationFilter.getFirstRecord());
+//		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }
