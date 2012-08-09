@@ -7,11 +7,6 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<c:url var="ShowUserSearchURL" 	value="/admin/ShowUserSearch.do" />
 
-
-	
-	
-
-
 <h3 class="userSearch">USER SEARCH</h3>
 
 <form:form id="userSearchForm" method="post" cssClass="edit" action="${ShowUserSearchURL}">
@@ -28,7 +23,6 @@
         <form:input id="userName" path="userName" name="userName" cssClass="input_25c" type="text" value=""/>
 	</div>
 	<div>
-		<input  class="save" type="submit" value="Save" />
         <input class="search" type="submit" value="Search" />
 	</div>
 </fieldset>	

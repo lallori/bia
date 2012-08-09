@@ -34,16 +34,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.user.UserDAO;
-import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.domain.ApplicationProperty;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,22 +62,52 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
+
+	@Autowired
+	private AccessLogStatisticsDAO accessLogStatisticsDAO;
+
 	@Autowired
 	private MonthDAO monthDAO;
 	
 	@Autowired(required = false)
-	@Qualifier("userDaoLdapImpl")
+	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
 	
-	@Autowired(required = false)
-	private UserInformationDAO userInformationDAO;
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void createAccessLogDailyStatistics() throws ApplicationThrowable {
+		Date dateSelected = new DateTime().minusDays(1).toDate();
+
+		try {
+			Integer statisticsDeleted = getAccessLogStatisticsDAO().deleteStatisticsOnDay(dateSelected);
+			
+			logger.info("Removed " + statisticsDeleted + " on date " + dateSelected);
+			
+			Boolean status = getAccessLogStatisticsDAO().generateStatisticsOnDay(dateSelected);
+			
+			if (status.equals(Boolean.TRUE)) {
+				logger.info(" Statistics on date " + dateSelected + " successfully created.");
+			} else {
+				logger.error(" Statistics on date " + dateSelected + " not created.");
+			}
+		} catch(Throwable th){
+			logger.error(" Statistics on date " + dateSelected + " not created.");
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void editUser(User user, UserInformation userInformation) throws ApplicationThrowable {
+	public void editUser(User user) throws ApplicationThrowable {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount()); 
 			//userToUpdate.setAddress(user.getAddress());
@@ -96,25 +127,16 @@ public class AdminServiceImpl implements AdminService {
 //				getUserDAO().persist(userToUpdate);
 //			} else {
 				
-				getUserDAO().removeAllUserRoles(userToUpdate.getAccount());
-				userToUpdate.setUserRoles(user.getUserRoles());
-				getUserDAO().merge(userToUpdate);
-//				getUserDAO().persistUserRoles(userToUpdate.getAccount(), userToUpdate.getUserRoles());
-//			}
-			
-			UserInformation userInformationToUpdate = getUserInformationDAO().find(userInformation.getAccount());
-//			userInformationToUpdate.setActivationDate(userInformation.getActivationDate());
-//			userInformationToUpdate.setActive(userInformation.getActive());
-//			userInformationToUpdate.setApproved(userInformation.getApproved());
-			userInformationToUpdate.setExpirationDate(userInformation.getExpirationDate());
-//			userInformationToUpdate.setExpirationPasswordDate(userInformation.getExpirationDate());
-			userInformationToUpdate.setLastPasswordChangeDate(new Date());			
+//			userToUpdate.setActivationDate(userInformation.getActivationDate());
+//			userToUpdate.setActive(userInformation.getActive());
+//			userToUpdate.setApproved(userInformation.getApproved());
+			userToUpdate.setExpirationDate(user.getExpirationDate());
+//			userToUpdate.setExpirationPasswordDate(userInformation.getExpirationDate());
+			userToUpdate.setLastPasswordChangeDate(new Date());			
 						
-//			if (getUserInformationDAO().find(userInformationToUpdate.getAccount()) == null) {
-//				getUserInformationDAO().persist(userInformationToUpdate);
-//			} else {
-				getUserInformationDAO().merge(userInformationToUpdate);
-//			}
+			getUserDAO().removeAllUserRoles(userToUpdate.getAccount());
+			userToUpdate.setUserRoles(user.getUserRoles());
+			getUserDAO().merge(userToUpdate);
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -127,19 +149,6 @@ public class AdminServiceImpl implements AdminService {
 	public User findUser(String account) throws ApplicationThrowable {
 		try{
 			return getUserDAO().findUser(account);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public UserInformation findUserInformation(String account) throws ApplicationThrowable {
-		try{
-			return getUserInformationDAO().find(account);
-			
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -169,26 +178,19 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-
+	
 	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
 		return applicationPropertyDAO;
 	}
-	
+
 	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
-	}
-
-	/**
-	 * @param monthDAO the monthDAO to set
-	 */
-	public void setMonthDAO(MonthDAO monthDAO) {
-		this.monthDAO = monthDAO;
 	}
 
 	/**
@@ -215,13 +217,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @return the userInformationDAO
-	 */
-	public UserInformationDAO getUserInformationDAO() {
-		return userInformationDAO;
-	}
-
-	/**
 	 * @param applicationPropertyDAO
 	 *            the applicationPropertyDAO to set
 	 */
@@ -230,17 +225,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userInformationDAO the userInformationDAO to set
-	 */
-	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
-		this.userInformationDAO = userInformationDAO;
 	}
 
 	/**
@@ -262,5 +257,19 @@ public class AdminServiceImpl implements AdminService {
 		}
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * @return the accessLogStatisticsDAO
+	 */
+	public AccessLogStatisticsDAO getAccessLogStatisticsDAO() {
+		return accessLogStatisticsDAO;
+	}
+
+	/**
+	 * @param accessLogStatisticsDAO the accessLogStatisticsDAO to set
+	 */
+	public void setAccessLogStatisticsDAO(AccessLogStatisticsDAO accessLogStatisticsDAO) {
+		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
 	}
 }

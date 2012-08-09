@@ -55,11 +55,10 @@
 		<security:session-management session-fixation-protection="newSession">
 		 	<security:concurrency-control max-sessions="1"/>
 		</security:session-management>
-		<!-- <security:remember-me key="docSources" user-service-ref="ldapUserDetailsService"/>-->
 		<security:remember-me key="_spring_security_remember_me" token-validity-seconds="864000" token-repository-ref="tokenRepository" />
 
     </security:http>
-
+ 
 	<bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
       <property name="createTableOnStartup" value="false" />
       <property name="dataSource" ref="dataSource"/>
@@ -67,11 +66,11 @@
 
 	<bean id="rememberMeFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
 	  <property name="rememberMeServices" ref="rememberMeServices"/>
-	  <property name="authenticationManager" ref="docSourcesAuthenticationManager" />
+	  <property name="authenticationManager" ref="biaAuthenticationManager" />
 	</bean>
 	
 	<bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-	  <property name="userDetailsService" ref="ldapUserDetailsService"/>
+	  <property name="userDetailsService" ref="userDetailsService"/>
 	  <property name="key" value="springRocks"/>
 	</bean>
 	
@@ -79,17 +78,34 @@
 	  <property name="key" value="springRocks"/>
 	</bean> 
 
-	<security:authentication-manager alias="docSourcesAuthenticationManager">
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<description>Encoder for sha1 password stored on ldap server.</description>
+	</bean>
+
+	<security:authentication-manager alias="biaAuthenticationManager">
+		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
+
+		<security:authentication-provider ref="daoAuthenticationProvider">
+			<security:password-encoder ref="passwordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="daoAuthenticationProvider" class="org.medici.docsources.security.BiaDaoAuthenticationProvider">
+	  <property name="userDetailsService" ref="userDetailsService"/>
+	  <property name="passwordEncoder" ref="passwordEncoder"/>
+	</bean>
+
+   	<bean id="userDetailsService" class="org.medici.docsources.security.BiaJpaUserDetailsServiceImpl">
+   	</bean>
+
+<!--
+	<security:authentication-manager alias="biaAuthenticationManager">
 		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
 
 		<security:authentication-provider ref="ldapAuthenticationProvider" >
 			<security:password-encoder ref="passwordLdapShaEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
-
-	<bean id="passwordLdapShaEncoder" class="org.springframework.security.authentication.encoding.LdapShaPasswordEncoder">
-		<description>Encoder for sha1 password stored on ldap server.</description>
-	</bean>
 
 	<bean id="springSecurityAuthenticationSource" class="org.springframework.security.ldap.authentication.SpringSecurityAuthenticationSource"/>
    
@@ -154,7 +170,7 @@
    		<property name="userDetailsContextMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-	<bean id="ldapAuthoritiesPopulator" class="org.medici.docsources.security.DocSourcesAuthoritiesPopulator">
+	<bean id="ldapAuthoritiesPopulator" class="org.medici.docsources.security.BiaAuthoritiesPopulator">
 		<constructor-arg ref="contextSource"/>
 		<constructor-arg value="ou=Groups"/>
 		<property name="groupRoleAttribute" value="cn"/>
@@ -174,14 +190,14 @@
    		<property name="userDetailsMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-   	<bean id="ldapUserDetailsMapper" class="org.medici.docsources.security.DocSourcesLdapUserDetailsMapper"/>
+   	<bean id="ldapUserDetailsMapper" class="org.medici.docsources.security.BiaLdapUserDetailsMapper"/>
 
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
 		<constructor-arg ref="contextSource" />
 		<property name="ignorePartialResultException" value="true"/>
 	</bean>
 
-	<bean id="docSourcesLdapConfiguration" class="org.medici.docsources.security.DocSourcesLdapConfiguration">
+	<bean id="biaLdapConfiguration" class="org.medici.docsources.security.BiaLdapConfiguration">
 		<property name="baseDN" value="dc=docsources,dc=medici,dc=org"/>
 		<property name="usersDN" value="ou=Users"/>
 		<property name="userAttribute" value="cn"></property>
@@ -189,4 +205,5 @@
 		<property name="roleAttribute" value="member"></property>
 		<property name="roleAttributeValue" value="cn={0}"></property>
 	</bean>
+	-->
 </beans>

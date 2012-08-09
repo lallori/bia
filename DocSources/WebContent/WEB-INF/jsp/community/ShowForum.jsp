@@ -38,7 +38,7 @@
 							<div class="two">${currentForum.topicsNumber}</div>
 							<div class="three">${currentForum.postsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
-							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>
 							<c:if test="${empty currentForum.lastPost}">
 							<div class="four">empty forum</div>
@@ -92,7 +92,7 @@
 			            <div class="two">${fn:length(currentForum.forumTopics)}</div>
 			            <div class="three">0</div>
 					<c:if test="${not empty currentForum.lastPost}">
-			            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+			            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 			        </c:if>
 					<c:if test="${empty currentForum.lastPost}">
 			            <div class="four"></div>
@@ -167,7 +167,7 @@
 			            <div class="two">${currentTopic.totalReplies}</div>
 			            <div class="three">-</div>
 					<c:if test="${not empty currentTopic.lastPost}">
-			            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.userInformation.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+			            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 			        </c:if>
 					<c:if test="${empty currentTopic.lastPost}">
 			            <div class="four"></div>

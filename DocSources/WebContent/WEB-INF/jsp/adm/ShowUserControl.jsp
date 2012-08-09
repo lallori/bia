@@ -47,7 +47,7 @@
 		</div>
 		<div class="row">
 			<div class="item37">Account Expiration Time</div> 
-			<div class="value">${userInformation.expirationDate}</div>
+			<div class="value">${user.expirationDate}</div>
 		</div>
     </div>   
 </div>

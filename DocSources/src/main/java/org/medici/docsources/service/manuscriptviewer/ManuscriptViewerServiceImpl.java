@@ -49,7 +49,7 @@ import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
-import org.medici.docsources.dao.userinformation.UserInformationDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Forum;
@@ -59,16 +59,17 @@ import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.domain.Forum.Status;
 import org.medici.docsources.domain.Forum.SubType;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,7 +107,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Autowired
 	private VolumeDAO volumeDAO;
 	@Autowired
-	private UserInformationDAO userInformationDAO;
+	private UserDAO userDAO;
 
 	/**
 	 * 
@@ -122,7 +123,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
 				image = getImageDAO().find(image.getImageId());
 				Volume volume = getVolumeDAO().findVolume(image.getVolNum(), image.getVolLetExt()); 
-				UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				if (volume != null) {
 					Forum volumeForum = getForumDAO().findVolumeForumFromParent(generalQuestionsForum, volume.getSummaryId());
@@ -165,7 +166,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					forumTopic.setIpAddress(ipAddress);
 					forumTopic.setAnnotation(annotation);
 					
-					forumTopic.setUserInformation(userInformation);
+					forumTopic.setUser(user);
 					forumTopic.setSubject(annotation.getSubject());
 					forumTopic.setTotalReplies(new Integer(0));
 					forumTopic.setTotalViews(new Integer(0));
@@ -180,7 +181,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					forumPost.setTopic(forumTopic);
 					forumPost.setDateCreated(new Date());
 					forumPost.setLastUpdate(new Date());
-					forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+					forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 					forumPost.setAnnotation(annotation);
 					getForumPostDAO().persist(forumPost);
 
@@ -194,7 +195,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			} else if (annotation.getType().equals(Annotation.Type.PALEOGRAPHY)) {
 				Forum paleographyForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography")));
 				image = getImageDAO().find(image.getImageId());
-				UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				User user = getUserDAO().findUser((((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				// create specific topic on annotation...
 				ForumTopic forumTopic = new ForumTopic(null);
@@ -204,7 +205,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				forumTopic.setIpAddress(ipAddress);
 				forumTopic.setAnnotation(annotation);
 				
-				forumTopic.setUserInformation(userInformation);
+				forumTopic.setUser(user);
 				forumTopic.setSubject(annotation.getSubject());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
@@ -219,7 +220,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				forumPost.setTopic(forumTopic);
 				forumPost.setDateCreated(new Date());
 				forumPost.setLastUpdate(new Date());
-				forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+				forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 				forumPost.setAnnotation(annotation);
 				getForumPostDAO().persist(forumPost);
 
@@ -686,16 +687,16 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * @return the userInformationDAO
+	 * @return the userDAO
 	 */
-	public UserInformationDAO getUserInformationDAO() {
-		return userInformationDAO;
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 	/**
-	 * @param userInformationDAO the userInformationDAO to set
+	 * @param userDAO the userDAO to set
 	 */
-	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
-		this.userInformationDAO = userInformationDAO;
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 }

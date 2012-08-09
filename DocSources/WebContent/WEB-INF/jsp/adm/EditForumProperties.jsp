@@ -52,9 +52,12 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
+		$j("#EditEmailProperties").css('visibility', 'hidden');
 		$j("#EditGeneralProperties").css('visibility', 'hidden');
 		$j("#EditRecaptchaProperties").css('visibility', 'hidden');
 		$j("#EditIipImageProperties").css('visibility', 'hidden');
+		$j("#EditSchedoneProperties").css('visibility', 'hidden');
+		$j("#EditUserProperties").css('visibility', 'hidden');
 		
 		$j("#EditEmailSystemPropertiesForm :input").change(function(){
 			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>

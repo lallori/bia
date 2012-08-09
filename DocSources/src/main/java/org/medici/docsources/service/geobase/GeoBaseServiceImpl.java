@@ -65,7 +65,7 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.UserMarkedList;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -118,7 +118,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public Place addNewPlace(Place place) throws ApplicationThrowable {
 		try{
 			place.setPlaceAllId(null);
-			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			place.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			place.setDateEntered(new Date());
 			place.setDateCreated(new Date());
 			place.setLastUpdate(new Date());

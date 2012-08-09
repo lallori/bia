@@ -40,14 +40,15 @@ import org.springframework.security.core.userdetails.memory.InMemoryDaoImpl;
  * Spring Security TagLibs without a differentation base on guest role
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
-public class DocSourcesGuestUserDetailsServiceImpl extends InMemoryDaoImpl implements UserDetailsService {
+public class BiaGuestUserDetailsServiceImpl extends InMemoryDaoImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		UserDetails userDetails = super.loadUserByUsername(username);
-		DocSourcesGuestUserDetailsImpl docSourcesGuestUserDetailsImpl = new DocSourcesGuestUserDetailsImpl();
+		BiaGuestUserDetailsImpl docSourcesGuestUserDetailsImpl = new BiaGuestUserDetailsImpl();
 		docSourcesGuestUserDetailsImpl.setFirstName("");
 		docSourcesGuestUserDetailsImpl.setLastName("Guest");
 		docSourcesGuestUserDetailsImpl.setUsername(userDetails.getUsername());

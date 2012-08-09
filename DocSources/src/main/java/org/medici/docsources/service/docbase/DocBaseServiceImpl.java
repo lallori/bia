@@ -80,7 +80,7 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.UserMarkedList;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -144,7 +144,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to attach the correct volume istance by database extraction.
 			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			//Setting fields that are defined as nullable = false
-			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setDateCreated(new Date());
 			document.setLastUpdate(new Date());
 			document.setDocTobeVetted(true);
@@ -393,7 +393,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			Document document = new Document();
 			// New Document must have entryId set to zero
 			document.setEntryId(0);
-			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setDateCreated(new Date());
 			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);

@@ -185,6 +185,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditSchedoneProperties.jsp"/>
 	</definition>
 	
+	<definition name="admin/EditUserProperties" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserProperties.jsp"/>
+	</definition>
+	
 	<definition name="admin/EditUser" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserControl.jsp"/>
 	</definition>
@@ -194,12 +198,13 @@
 	</definition>	
 
 	<definition name="admin/ShowApplicationProperties" extends="template.properties">
-		<put-attribute name="general" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
  		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailProperties.jsp"/>
-		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
- 		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
- 		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
  		<put-attribute name="forum" value="/WEB-INF/jsp/adm/ShowForumProperties.jsp"/>
+		<put-attribute name="general" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
+ 		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
+		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
+ 		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
+ 		<put-attribute name="user" value="/WEB-INF/jsp/adm/ShowUserProperties.jsp"/>
 	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">

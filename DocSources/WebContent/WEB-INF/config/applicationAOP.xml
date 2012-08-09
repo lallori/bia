@@ -21,9 +21,7 @@
         <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.docsources.scheduler..*Job.*(..))"/>
        	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.docsources.validator..*Validator.validate(..))"/>
 		<aop:advisor pointcut-ref="daoOperation" advice-ref="logDAOAdvice" />
-        <!-- <aop:advisor pointcut-ref="schedulerOperation" advice-ref="txAdvice"/>-->
 		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />
-        <!-- <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice"/> -->
 		<aop:advisor pointcut-ref="validatorOperation" advice-ref="logValidatorAdvice" />
     </aop:config>
 </beans>

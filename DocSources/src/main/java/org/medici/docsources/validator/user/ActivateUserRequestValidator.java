@@ -32,7 +32,6 @@ import java.util.UUID;
 import org.medici.docsources.command.user.ActivateUserRequestCommand;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,15 +121,14 @@ public class ActivateUserRequestValidator extends AbstractUserValidator implemen
 				return;
 			}
 
-			UserInformation userInformation = getUserService().findUserInformation(activationUser.getAccount());
 			// the user must be not active
-			if (userInformation.getActive()) {
+			if (user.getActive()) {
 				errors.rejectValue("uuid", "error.account.alreadyactive");
 				return;
 			}
 
 			// the user must be not locked
-			if (userInformation.getLocked()) {
+			if (user.getLocked()) {
 				errors.rejectValue("uuid", "error.account.locked");
 				return;
 			}

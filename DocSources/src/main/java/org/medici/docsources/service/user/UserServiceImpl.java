@@ -28,7 +28,6 @@
 package org.medici.docsources.service.user;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,25 +50,25 @@ import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.personalnotes.PersonalNotesDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.user.UserDAO;
+import org.medici.docsources.dao.userauthority.UserAuthorityDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
-import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
+import org.medici.docsources.dao.userrole.UserRoleDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserAuthority;
+import org.medici.docsources.domain.UserAuthority.Authority;
+import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,21 +105,24 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PlaceDAO placeDAO;
 
-	@Autowired(required = false)
-	@Qualifier("userDaoLdapImpl")
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
+	
+	@Autowired(required=false)
+	@Qualifier(value="userDAOJpaImpl")
 	private UserDAO userDAO;
 
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
-
-	@Autowired
-	private UserInformationDAO userInformationDAO;
 	
 	@Autowired
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 
 	@Autowired
 	private UserMessageDAO userMessageDAO;
+
+	@Autowired
+	private UserRoleDAO userRoleDAO;
 
 	@Autowired
 	private VolumeDAO volumeDAO;
@@ -136,9 +138,9 @@ public class UserServiceImpl implements UserService {
 			ActivationUser activationUser = getActivationUserDAO().find(uuid.toString());
 			
 			//Search user by account and update active flag
-			UserInformation user = getUserInformationDAO().find(activationUser.getAccount());
+			User user = getUserDAO().findUser(activationUser.getAccount());
 			user.setActive(Boolean.TRUE);
-			getUserInformationDAO().merge(user);
+			getUserDAO().merge(user);
 			
 			//Complete the activation by updating the activation request.
 			activationUser.setActive(Boolean.TRUE);
@@ -400,30 +402,6 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserInformation findUserInformation() throws ApplicationThrowable {
-		try {
-			return getUserInformationDAO().find(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public UserInformation findUserInformation(String account) throws ApplicationThrowable {
-		try {
-			return getUserInformationDAO().find(account);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUsers(user);
@@ -486,10 +464,10 @@ public class UserServiceImpl implements UserService {
 	 * - First or more Letters of field Last Name;
 	 * 
 	 * The generation code is based on calculate user initial making a previous
-	 * search on LDAP tree (on field initial). If the initial are not present in LDAP,
-	 * we return it, otherwise we increment the initial with another letter get from
-	 * last name and so on until we find one initial that is not present on LDAP
-	 *  tree.
+	 * search. 
+	 * If the initial are not present, we return it, otherwise we increment the initial 
+	 * with another letter get from last name and so on until we find one initial that 
+	 * is not present on database.
 	 * 
 	 * @param user The user  
 	 * @return A string rapresenting user inital.
@@ -535,14 +513,14 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(UserInformation userInformation) throws ApplicationThrowable {
+	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(User user) throws ApplicationThrowable {
 		HashMap<String, Long> archiveStatistics = new HashMap<String, Long>(4);
 		try {
-			archiveStatistics.put("Document", getDocumentDAO().countDocumentCreatedAfterDate(userInformation.getLastLoginDate()));
-			archiveStatistics.put("People", getPeopleDAO().countPeopleCreatedAfterDate(userInformation.getLastLoginDate()));
-			archiveStatistics.put("Place", getPlaceDAO().countPlaceCreatedAfterDate(userInformation.getLastLoginDate()));
-			archiveStatistics.put("Volume", getVolumeDAO().countVolumeCreatedAfterDate(userInformation.getLastLoginDate()));
-			archiveStatistics.put("Message", getUserMessageDAO().countMessageReceivedAfterDate(userInformation.getLastLoginDate()));
+			archiveStatistics.put("Document", getDocumentDAO().countDocumentCreatedAfterDate(user.getLastLoginDate()));
+			archiveStatistics.put("People", getPeopleDAO().countPeopleCreatedAfterDate(user.getLastLoginDate()));
+			archiveStatistics.put("Place", getPlaceDAO().countPlaceCreatedAfterDate(user.getLastLoginDate()));
+			archiveStatistics.put("Volume", getVolumeDAO().countVolumeCreatedAfterDate(user.getLastLoginDate()));
+			archiveStatistics.put("Message", getUserMessageDAO().countMessageReceivedAfterDate(user.getLastLoginDate()));
 		} catch (Throwable th) {
 			archiveStatistics.put("Document", new Long(0));
 			archiveStatistics.put("People", new Long(0));
@@ -630,13 +608,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @return the userInformationDAO
-	 */
-	public UserInformationDAO getUserInformationDAO() {
-		return userInformationDAO;
-	}
-
-	/**
 	 * @return the userMarkedListElementDAO
 	 */
 	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
@@ -720,26 +691,27 @@ public class UserServiceImpl implements UserService {
 			user.setAccount(generateAccount(user));
 			//User initial is generated by application
 			user.setInitials(generateInitials(user));
-			// Every user is always register as COMMUNITY_USER
-			List<UserRole> userRoles = new ArrayList<UserRole>();
-			userRoles.add(UserRole.COMMUNITY_USERS);
-			user.setUserRoles(userRoles);
+
+			user.setRegistrationDate(new Date());
+			Calendar expirationDate = Calendar.getInstance();
+			expirationDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months")));
+			user.setExpirationDate(expirationDate.getTime());
+			Calendar expirationPasswordDate = Calendar.getInstance();
+			expirationPasswordDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months")));
+			user.setExpirationPasswordDate(expirationPasswordDate.getTime());
+			user.setBadLogin(0);
+			user.setActive(false);
+			user.setApproved(false);
+			user.setLocked(false);
 
 			getUserDAO().persist(user);
 
-			UserInformation userInformation = new UserInformation(user.getAccount());
-			userInformation.setRegistrationDate(new Date());
-			Calendar expirationDate = Calendar.getInstance();
-			expirationDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months")));
-			userInformation.setExpirationDate(expirationDate.getTime());
-			Calendar expirationPasswordDate = Calendar.getInstance();
-			expirationPasswordDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months")));
-			userInformation.setExpirationPasswordDate(expirationPasswordDate.getTime());
-			userInformation.setBadLogin(0);
-			userInformation.setActive(false);
-			userInformation.setLocked(false);
-			getUserInformationDAO().persist(userInformation);
+			// Every user is always register as COMMUNITY_USER
+			UserAuthority userAuthority = getUserAuthorityDAO().find(Authority.COMMUNITY_USERS);
 			
+			UserRole userRole = new UserRole(user, userAuthority);
+			getUserRoleDAO().persist(userRole);
+
 			// We generate the request for sending activation mail 
 			ActivationUser activationUser = new ActivationUser();
 			activationUser.setUuid(UUID.randomUUID().toString());
@@ -913,6 +885,14 @@ public class UserServiceImpl implements UserService {
 		this.placeDAO = placeDAO;
 	}
 
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+
 	/**
 	 * @param userDAO the userDAO to set
 	 */
@@ -928,13 +908,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @param userInformationDAO the userInformationDAO to set
-	 */
-	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
-		this.userInformationDAO = userInformationDAO;
-	}
-
-	/**
 	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
 	 */
 	public void setUserMarkedListElementDAO(
@@ -947,6 +920,14 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
+	}
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
 	}
 
 	/**

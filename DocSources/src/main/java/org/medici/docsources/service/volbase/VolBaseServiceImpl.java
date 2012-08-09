@@ -70,7 +70,7 @@ import org.medici.docsources.domain.UserMarkedList;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -136,7 +136,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			}
 
 			//Setting fields that are defined as nullable = false
-			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			volume.setDateCreated(new Date());
 			volume.setVolTobeVetted(true);
 			volume.setVolTobeVettedDate(new Date());
@@ -912,8 +912,11 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public boolean ifVolumeAlreadyPresentInMarkedList(Integer summaryId) throws ApplicationThrowable {
 		try{
-			UserMarkedList userMarrkedList = getUserMarkedListDAO().getMyMarkedList();
-			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findVolumeInMarkedList(userMarrkedList.getIdMarkedList(), summaryId);
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			if (userMarkedList ==null) {
+				return Boolean.FALSE;
+			}
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findVolumeInMarkedList(userMarkedList.getIdMarkedList(), summaryId);
 			if(userMarkedListElement != null){
 				return Boolean.TRUE;
 			}else{

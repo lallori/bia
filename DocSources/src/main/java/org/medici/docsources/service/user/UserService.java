@@ -41,7 +41,6 @@ import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -222,21 +221,6 @@ public interface UserService {
 	public User findUser(User user) throws ApplicationThrowable;
 
 	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public UserInformation findUserInformation() throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param account
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public UserInformation findUserInformation(String account) throws ApplicationThrowable;
-
-	/**
 	 * Given in input an user containing search fields conditions, this method
 	 * will returns {@link java.util.List} of User object that match with the search
 	 *   
@@ -265,7 +249,7 @@ public interface UserService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(UserInformation userInformation)throws ApplicationThrowable;
+	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(User user)throws ApplicationThrowable;
 
 	/**
 	 * 

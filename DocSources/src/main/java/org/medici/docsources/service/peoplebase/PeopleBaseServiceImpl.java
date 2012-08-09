@@ -89,9 +89,10 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.UserMarkedList;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -280,7 +281,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			person.setPersonId(null);
 			
 			//Setting fields that are defined as nullable = false
-			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			person.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			person.setDateCreated(new Date());
 			person.setLastUpdate(new Date());
 			person.setMapNameLf(PersonUtils.generateMapNameLf(person));
@@ -1772,9 +1773,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			String fileName;
 			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
-				fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename();
+				fileName = tempPath + "/" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename();
 			}else{
-				fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getPersonId() + personPortrait.getLink().substring(personPortrait.getLink().length() - 4, personPortrait.getLink().length());
+				fileName = tempPath + "/" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getPersonId() + personPortrait.getLink().substring(personPortrait.getLink().length() - 4, personPortrait.getLink().length());
 			}
 			File tempFile = new File(fileName);
 			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){

@@ -37,7 +37,7 @@ import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;
-import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -224,7 +224,7 @@ public interface CommunityService {
 	 * 
 	 * @throws ApplicationThrowable
 	 */
-	public UserInformation joinUserOnForum()throws ApplicationThrowable;
+	public User joinUserOnForum()throws ApplicationThrowable;
 
 	/**
 	 * 

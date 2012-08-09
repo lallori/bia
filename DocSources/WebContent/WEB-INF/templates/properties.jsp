@@ -8,6 +8,10 @@
 
 <br />
 
+<tiles:insertAttribute name="user"/>
+
+<br />
+
 <tiles:insertAttribute name="recaptcha"/>
 
 <br />

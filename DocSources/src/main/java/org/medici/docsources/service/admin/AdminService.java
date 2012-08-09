@@ -34,7 +34,6 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -50,7 +49,7 @@ public interface AdminService {
 	 * @param userInformation
 	 * @throws ApplicationThrowable
 	 */
-	public void editUser(User user, UserInformation userInformation) throws ApplicationThrowable;
+	public void editUser(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -59,14 +58,6 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	public User findUser(String account) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param account
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public UserInformation findUserInformation(String account) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -100,4 +91,10 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void createAccessLogDailyStatistics() throws ApplicationThrowable;
 }

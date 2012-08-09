@@ -7,36 +7,36 @@
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 <div id="loadingDiv"></div>
-<form:form id="EditEmailSystemPropertiesForm" method="post" cssClass="edit">
+<form:form id="EditUserSystemPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>EMAIL SYSTEM PROPERTIES</b></legend>
+		<legend><b>USER SYSTEM PROPERTIES</b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="activationSubject" for="activationSubject" id="activationMessageSubjectLabel">Activation message subject</form:label></div>
+				<div class="col_l"><form:label path="expirationUser" for="expirationUser" id="expirationUserLabel">Expiration User, number of months</form:label></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:textarea path="activationSubject" for="activationSubject" id="activationMessageSubject" cssClass="txtarea"/></div>
-			</div>
-			<br />
-			<div class="row">
-				<div class="col_l"><form:label path="activationText" for="activationText" id="activationMessageTextLabel">Activation message text</form:label></div>
-			</div>
-			<div class="row">
-				<div class="col_l"><form:textarea path="activationText" for="activationText" id="activationMessageText" cssClass="txtarea"/></div>
+				<div class="col_l"><form:input type="text" path="expirationUser" for="expirationUser" id="expirationUser" cssClass="input_24c"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="resetUserPasswordSubject" for="resetUserPasswordSubject" id="resetUserPasswordSubjectLabel">Reset user password subject</form:label></div>
+				<div class="col_l"><form:label path="expirationPassword" for="expirationPassword" id="expirationPasswordLabel">Expiration Password, number of months</form:label></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:textarea path="resetUserPasswordSubject" for="resetUserPasswordSubject" id="resetUserPasswordSubject" cssClass="txtarea"/></div>
+				<div class="col_l"><form:input type="text" path="expirationPassword" for="expirationPassword" id="expirationPassword" cssClass="input_24c"/></div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col_l"><form:label path="maxBadLogin" for="maxBadLogin" id="maxBadLoginLabel">Max Bad Login</form:label></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:input type="text" path="maxBadLogin" for="maxBadLogin" id="maxBadLogin" cssClass="input_24c"/></div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="col_l"><form:label path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordTextLabel">Reset user password text</form:label></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:textarea path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordText" cssClass="txtarea"/></div>
+				<div class="col_l"><form:textarea path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordText" class="txtarea"/></div>
 			</div>
 		</div>
 		
@@ -52,14 +52,14 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
+		$j("#EditEmailProperties").css('visibility', 'hidden');
 		$j("#EditForumProperties").css('visibility', 'hidden');
 		$j("#EditGeneralProperties").css('visibility', 'hidden');
 		$j("#EditRecaptchaProperties").css('visibility', 'hidden');
 		$j("#EditIipImageProperties").css('visibility', 'hidden');
 		$j("#EditSchedoneProperties").css('visibility', 'hidden');
-		$j("#EditUserProperties").css('visibility', 'hidden');
-
-		$j("#EditEmailSystemPropertiesForm :input").change(function(){
+		
+		$j("#EditUserSystemPropertiesForm :input").change(function(){
 			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 			return false;
 		});
@@ -69,7 +69,7 @@
 	       	$j("#loadingDiv").css('visibility', 'visible');
 	    });
 		
-		$j("#EditEmailSystemPropertiesForm").submit(function(){
+		$j("#EditUserSystemPropertiesForm").submit(function(){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
@@ -78,7 +78,7 @@
 		
 		$j("#close").click(function(){
 			if($j("#modify").val() == 1){
-				$j("#EditEmailSystemPropertiesForm").block({ message: $j("#question"),
+				$j("#EditUserSystemPropertiesForm").block({ message: $j("#question"),
 					css: { 
 						border: 'none', 
 						padding: '5px',
@@ -111,7 +111,7 @@
 			$j(".blockUI").fadeOut("slow");
 			$j("#question").hide();
 			// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-			$j("#EditEmailSystemPropertiesForm").append($j("#question"));
+			$j("#EditUserSystemPropertiesForm").append($j("#question"));
 			$j(".blockUI").remove();
 			return false; 
 		}); 

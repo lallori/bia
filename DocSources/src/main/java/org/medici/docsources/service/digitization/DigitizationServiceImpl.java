@@ -49,7 +49,7 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -116,7 +116,7 @@ public class DigitizationServiceImpl implements DigitizationService {
 					volume.setSerieList(getSeriesListDAO().find(schedone.getSerie().getSeriesRefNum()));
 				}
 				
-				volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+				volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 				volume.setDateCreated(new Date());
 				volume.setVolTobeVetted(true);
 				volume.setVolTobeVettedDate(new Date());

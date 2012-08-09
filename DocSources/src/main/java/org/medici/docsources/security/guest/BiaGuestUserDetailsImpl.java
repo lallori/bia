@@ -1,5 +1,5 @@
 /*
- * DocSourcesLdapUserDetailsMapper.java
+ * BiaLdapUserDetailsMapper.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -38,9 +38,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  * of custom attribute like first name, last name.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
-public class DocSourcesGuestUserDetailsImpl implements UserDetails {
+public class BiaGuestUserDetailsImpl implements UserDetails {
 	/**
 	 * 
 	 */
@@ -63,7 +64,7 @@ public class DocSourcesGuestUserDetailsImpl implements UserDetails {
 	/**
 	 * Default constructor.
 	 */
-	protected DocSourcesGuestUserDetailsImpl() {
+	protected BiaGuestUserDetailsImpl() {
 	}
 
 	/**

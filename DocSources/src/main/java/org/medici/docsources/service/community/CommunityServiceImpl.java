@@ -39,8 +39,8 @@ import org.medici.docsources.dao.annotation.AnnotationDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
 import org.medici.docsources.dao.forumtopic.ForumTopicDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
-import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
@@ -48,13 +48,13 @@ import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,9 +79,9 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;   
 	@Autowired
-	private UserHistoryDAO userHistoryDAO;   
+	private UserDAO userDAO;
 	@Autowired
-	private UserInformationDAO UserInformationDAO;
+	private UserHistoryDAO userHistoryDAO;   
 	@Autowired
 	private UserMessageDAO userMessageDAO;
 
@@ -129,7 +129,7 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			forumPost.setPostId(null);
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
-			UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			forumPost.setForum(forum);
 			
@@ -140,7 +140,7 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setLastUpdate(forumTopic.getDateCreated());
 				forumTopic.setIpAddress(forumPost.getIpAddress());
 				
-				forumTopic.setUserInformation(userInformation);
+				forumTopic.setUser(user);
 				forumTopic.setSubject(forumPost.getSubject());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
@@ -155,7 +155,7 @@ public class CommunityServiceImpl implements CommunityService {
 			}
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
-			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			getForumPostDAO().persist(forumPost);
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
@@ -168,8 +168,8 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumTopicDAO().merge(forumPost.getTopic());
 
 			// Update number of post 
-			userInformation.setForumNumberOfPost(userInformation.getForumNumberOfPost()+1);
-			getUserInformationDAO().merge(userInformation);
+			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
+			getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
@@ -224,7 +224,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
-			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			if (forumPost.getParentPost() != null) {
 				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
 			}
@@ -318,7 +318,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserInformationDAO().findForumMembers(letter, paginationFilter);
+			return getUserDAO().findForumMembers(letter, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -375,8 +375,8 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
 			hashMap.putAll(getForumDAO().getTotalTopicsAndPosts());
-			hashMap.put("newestMember", getUserInformationDAO().getNewestMember().getAccount());
-			hashMap.put("totalMembers", getUserInformationDAO().countMembersForum());
+			hashMap.put("newestMember", getUserDAO().getNewestMember().getAccount());
+			hashMap.put("totalMembers", getUserDAO().countMembersForum());
 			return hashMap;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -461,10 +461,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the userInformationDAO
+	 * @return the userDAO
 	 */
-	public UserInformationDAO getUserInformationDAO() {
-		return UserInformationDAO;
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 	/**
@@ -479,16 +479,16 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserInformation joinUserOnForum() throws ApplicationThrowable {
+	public User joinUserOnForum() throws ApplicationThrowable {
 		try {
-			UserInformation userInformation = getUserInformationDAO().find(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			
-			if (userInformation != null) {
-				userInformation.setForumJoinedDate(new Date());
+			if (user != null) {
+				user.setForumJoinedDate(new Date());
 			}
 			
-			getUserInformationDAO().merge(userInformation);
-			return userInformation;
+			getUserDAO().merge(user);
+			return user;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -514,13 +514,13 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getPostId());
-			UserInformation userInformation = getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
 			forumPost.setParentPost(parentPost);
-			forumPost.setUserInformation(userInformation);
+			forumPost.setUser(user);
 			getForumPostDAO().persist(forumPost);
 			
 			parentPost.setReplyNumber(parentPost.getReplyNumber()+1);
@@ -529,8 +529,8 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumDAO().recursiveIncreasePostsNumber(forum);
 
 			// Update number of post 
-			userInformation.setForumNumberOfPost(userInformation.getForumNumberOfPost()+1);
-			getUserInformationDAO().merge(userInformation);
+			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
+			getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
@@ -593,10 +593,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @param userInformationDAO the userInformationDAO to set
+	 * @param userDAO the userDAO to set
 	 */
-	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
-		UserInformationDAO = userInformationDAO;
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	/**

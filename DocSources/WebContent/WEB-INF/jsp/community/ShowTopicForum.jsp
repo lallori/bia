@@ -45,15 +45,15 @@
     </div>
     <div id="post">
         <h2>${currentPost.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${currentPost.userInformation.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         <p>${currentPost.text}</p>
     </div>
     <div id="postProfile">
     	<ul>
-        	<li><a href="#" id="userName" class="link">${currentPost.userInformation.account}</a></li>
+        	<li><a href="#" id="userName" class="link">${currentPost.user.account}</a></li>
             <li>Community User</li>
-            <li>Posts: <span>${currentPost.userInformation.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${currentPost.userInformation.forumJoinedDate}</span></li>
+            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
+            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>
     <div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->

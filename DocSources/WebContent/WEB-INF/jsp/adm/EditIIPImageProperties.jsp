@@ -45,9 +45,12 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
+		$j("#EditEmailProperties").css('visibility', 'hidden');
+		$j("#EditForumProperties").css('visibility', 'hidden');
 		$j("#EditGeneralProperties").css('visibility', 'hidden');
-		$j("#EditEmailSystemProperties").css('visibility', 'hidden');
 		$j("#EditRecaptchaProperties").css('visibility', 'hidden');
+		$j("#EditSchedoneProperties").css('visibility', 'hidden');
+		$j("#EditUserProperties").css('visibility', 'hidden');
 		
 		$j("#EditIipImagePropertiesForm :input").change(function(){
 			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>

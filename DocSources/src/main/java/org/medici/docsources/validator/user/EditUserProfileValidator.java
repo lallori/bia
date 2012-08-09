@@ -90,7 +90,7 @@ public class EditUserProfileValidator extends AbstractUserValidator implements V
 
 	/**
 	 * This method will perform mail validation.
-	 * If input mail is different from entry on ldap server, checks if there is
+	 * If input mail is different from entry on user store, checks if there is
 	 * already a user registered with this mail.
 	 * 
 	 * @param mail Input mail

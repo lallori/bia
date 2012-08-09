@@ -40,10 +40,13 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
-		$j("#EditGeneralProperties").css('visibility', 'visible');
 		$j("#EditEmailSystemProperties").css('visibility', 'visible');
+		$j("#EditForumProperties").css('visibility', 'visible');
+		$j("#EditGeneralProperties").css('visibility', 'visible');
 		$j("#EditRecaptchaProperties").css('visibility', 'visible');
 		$j("#EditIipImageProperties").css('visibility', 'visible');
+		$j("#EditSchedoneProperties").css('visibility', 'visible');
+		$j("#EditUserProperties").css('visibility', 'visible');
 		
 		$j("#EditIipImageProperties").click(function(){
 			$j(this).next().css('visibility', 'visible');
