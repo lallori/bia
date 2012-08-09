@@ -1406,8 +1406,22 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 
 	@Override
 	public Boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return null;
+		if (
+				(volumes.size()>0)	||
+				(datesTypes.size()>0) ||
+				(!ObjectUtils.toString(digitized).equals("")) ||
+				(languages.size()>0) ||
+				(otherLang.size() > 0) ||
+				(cipher.length() > 0) ||
+				(index.length() > 0) ||
+				(fromVolume.size() > 0) ||
+				(toVolume.size() > 0) ||
+				(context.size() > 0) ||
+				(inventario.size() > 0)
+			) {
+				return Boolean.FALSE;
+			}
+		return Boolean.TRUE;
 	}
 }
 

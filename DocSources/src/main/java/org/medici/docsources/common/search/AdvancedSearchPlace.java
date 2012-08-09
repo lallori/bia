@@ -61,7 +61,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 //	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	private Boolean logicalDelete;
-private List<String> placesName;
+	private List<String> placesName;
 	private List<String> placeType;
 
 
@@ -226,9 +226,18 @@ private List<String> placesName;
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean isEmpty() {
-		return Boolean.FALSE;
+		if (
+				(placesName.size()>0) ||
+				(placeType.size()>0) ||
+				(linkedToPeople.size()>0)) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
 	}
 
 	/**

@@ -502,15 +502,29 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-//		wordsTypes.add(WordType.TitlesAndNotes);
-//		words.add(command.getText());
 		namesTypes.add(NameType.AllNameTypes);
 		names.add(command.getText());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean isEmpty() {
-		return Boolean.FALSE;
+		if(
+				(names.size()>0) ||
+				(words.size()>0) ||
+				(datesTypes.size()>0) ||
+				(roleCategories.size()>0) ||
+				(titleOccWord.size()>0) ||
+				(titlesOccId.size()>0) ||
+				(gender.size()>0) ||
+				(placeId.size()>0) ||
+				(researchNotes.size()>0)) {
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
 	}
 
 	/**

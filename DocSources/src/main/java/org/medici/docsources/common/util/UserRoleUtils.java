@@ -29,10 +29,11 @@ package org.medici.docsources.common.util;
 
 import java.util.List;
 import org.apache.commons.lang.WordUtils;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserAuthority;
+import org.medici.docsources.domain.UserRole;
 
 /**
- * Utility Class for {@link org.medici.docsources.domain.User$UserRole}, it 
+ * Utility Class for {@link org.medici.docsources.domain.User$UserAuthority}, it 
  * contains some methods helpful in management user role.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -69,29 +70,33 @@ public class UserRoleUtils {
 		if (userRoles == null)
 			return null;
 
-		if (userRoles.contains(UserRole.ADMINISTRATORS))
-			return UserRole.ADMINISTRATORS;
-		else if (userRoles.contains(UserRole.ONSITE_FELLOWS))
-			return UserRole.ONSITE_FELLOWS;
-		else if (userRoles.contains(UserRole.SENIOR_DISTANCE_FELLOWS))
-			return UserRole.SENIOR_DISTANCE_FELLOWS;
-		else if (userRoles.contains(UserRole.DISTANCE_FELLOWS))
-			return UserRole.DISTANCE_FELLOWS;
-		else if (userRoles.contains(UserRole.DIGITIZATION_TECHNICIANS))
-			return UserRole.DIGITIZATION_TECHNICIANS;
-		else if (userRoles.contains(UserRole.COMMUNITY_USERS))
-			return UserRole.COMMUNITY_USERS;
-		else
-			return UserRole.GUESTS;
-	}
-	/**
-	 * Main method to test static methods.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println(UserRole.SENIOR_DISTANCE_FELLOWS + " : " + UserRoleUtils.toDescriptionString(UserRole.SENIOR_DISTANCE_FELLOWS));
-		System.out.println(UserRole.ADMINISTRATORS + " : " + UserRoleUtils.toDescriptionString(UserRole.ADMINISTRATORS));
-		System.out.println(UserRole.DIGITIZATION_TECHNICIANS + " : " + UserRoleUtils.toDescriptionString(UserRole.DIGITIZATION_TECHNICIANS));
+		UserRole mostSignificantRole = null;
+		
+		for (UserRole currentRole : userRoles) {
+			if (currentRole.containsAuthority(UserAuthority.Authority.ADMINISTRATORS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else if (currentRole.containsAuthority(UserAuthority.Authority.ONSITE_FELLOWS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else if (currentRole.containsAuthority(UserAuthority.Authority.SENIOR_DISTANCE_FELLOWS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else if (currentRole.containsAuthority(UserAuthority.Authority.DISTANCE_FELLOWS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else if (currentRole.containsAuthority(UserAuthority.Authority.DIGITIZATION_TECHNICIANS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else if (currentRole.containsAuthority(UserAuthority.Authority.COMMUNITY_USERS)) {
+				mostSignificantRole = currentRole;
+				break;
+			} else {
+				mostSignificantRole = currentRole;
+				break;
+			}
+		}
+		
+		return mostSignificantRole;
 	}
 }

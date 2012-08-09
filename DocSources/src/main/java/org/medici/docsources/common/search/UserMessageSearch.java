@@ -30,8 +30,8 @@ package org.medici.docsources.common.search;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.Query;
 import org.medici.docsources.domain.UserMessage.UserMessageCategory;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 
@@ -109,7 +109,7 @@ public class UserMessageSearch implements GenericSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		String account = ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 		StringBuilder jpaQuery = new StringBuilder("FROM UserMessage ");
 		
 		if (getUserMessageCategory() != null) {

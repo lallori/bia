@@ -34,7 +34,6 @@ import javax.servlet.http.HttpSession;
 
 import org.medici.docsources.command.community.ShowUserProfileForumCommand;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.medici.docsources.service.user.UserService;
@@ -72,24 +71,15 @@ public class ShowUserProfileForumController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			User user = null;
-			try {
-				user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			} catch (ApplicationThrowable ath) {
-				user = new User();
-			}
-			model.put("userProfile", user);		
-			
-			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
-			if (userInformation != null) {
-				if (userInformation.getForumJoinedDate() == null) {
-					userInformation = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("userInformation", userInformation);
+			if (user != null) {
+				if (user.getForumJoinedDate() == null) {
+					user = getCommunityService().joinUserOnForum();
 				}
-			} else {
-				userInformation = getUserService().findUserInformation();
 			}
+
+			model.put("userProfile", user);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowUserProfileForum", model);

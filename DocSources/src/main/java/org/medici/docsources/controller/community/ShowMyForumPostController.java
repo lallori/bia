@@ -40,7 +40,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearchFactory;
 import org.medici.docsources.common.search.AdvancedSearchForum;
 import org.medici.docsources.domain.ForumTopic;
-import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,12 +77,12 @@ public class ShowMyForumPostController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			User user = (User) httpSession.getAttribute("user");
 
-			if (userInformation != null) {
-				if (userInformation.getForumJoinedDate() == null) {
-					userInformation = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("userInformation", userInformation);
+			if (user != null) {
+				if (user.getForumJoinedDate() == null) {
+					user = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("user", user);
 				}
 			}
 	

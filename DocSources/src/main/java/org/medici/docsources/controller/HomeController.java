@@ -33,11 +33,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,13 +69,12 @@ public class HomeController {
 		model.put("searchTypes", SearchType.values());		
 
 		try {			
-			UserInformation userInformation = getUserService().findUserInformation();
-			httpSession.setAttribute("userInformation", userInformation);
+			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
 			HashMap<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
 			httpSession.setAttribute("userStatistics", userStatistics);
 
-			HashMap<String, Long> archiveStatistics = getUserService().getArchiveStatisticsFromLastLogin(userInformation);
+			HashMap<String, Long> archiveStatistics = getUserService().getArchiveStatisticsFromLastLogin(user);
 			httpSession.setAttribute("archiveStatistics", archiveStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

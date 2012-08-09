@@ -29,7 +29,7 @@ package org.medici.docsources.command.user;
 
 import java.util.List;
 
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserRole;
 
 /**
  * Command bean for action "create user".

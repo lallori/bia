@@ -28,6 +28,8 @@
 package org.medici.docsources.common.util;
 
 import javax.naming.Name;
+
+import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.security.LdapConfiguration;
 import org.springframework.ldap.core.DistinguishedName;
 
@@ -107,13 +109,13 @@ public class LdapUtils {
 	 * @param role
 	 * @return
 	 */
-	public static Name userRoleDistinguishedName(LdapConfiguration ldapConfiguration, String role) {
-		if ((ldapConfiguration == null) || (role == null))
+	public static Name userRoleDistinguishedName(LdapConfiguration ldapConfiguration, UserAuthority userAuthority) {
+		if ((ldapConfiguration == null) || (userAuthority == null))
 			return new DistinguishedName("");
 
 		StringBuilder userRoleDistinguishedName = new StringBuilder(ldapConfiguration.getRoleAttribute());
 		userRoleDistinguishedName.append("=\"cn=");
-		userRoleDistinguishedName.append(role);
+		userRoleDistinguishedName.append(userAuthority);
 		userRoleDistinguishedName.append("\",");
 		userRoleDistinguishedName.append(ldapConfiguration.getUsersDN());
 

@@ -39,8 +39,8 @@ import org.medici.docsources.command.community.ShowForumCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.Forum.Type;
-import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +74,12 @@ public class ShowForumController {
 		Forum forum = new Forum(); 
 
 		try {
-			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			User userInformation = (User) httpSession.getAttribute("user");
 
 			if (userInformation != null) {
 				if (userInformation.getForumJoinedDate() == null) {
 					userInformation = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("userInformation", userInformation);
+					httpSession.setAttribute("user", userInformation);
 				}
 			}
 			

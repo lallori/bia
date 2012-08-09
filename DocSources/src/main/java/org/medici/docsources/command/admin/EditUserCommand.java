@@ -27,7 +27,9 @@
  */
 package org.medici.docsources.command.admin;
 
-import org.medici.docsources.domain.User.UserRole;
+import java.util.List;
+
+import org.medici.docsources.domain.UserRole;
 
 /**
  * Command bean for action "show user".
@@ -54,7 +56,7 @@ public class EditUserCommand {
 	private Integer yearExpirTime;
 	private Integer monthExpirTime;
 	private Integer dayExpirTime;
-	private UserRole userRole;
+	private List<String> userRoles;
 
 	/**
 	 * This method returns account property.
@@ -185,17 +187,17 @@ public class EditUserCommand {
 	}
 
 	/**
-	 * @param userRole the userRole to set
+	 * @param userRole the userRoles to set
 	 */
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
+	public void setUserRoles(List<String> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 	/**
-	 * @return the userRole
+	 * @return the userRoles
 	 */
-	public UserRole getUserRole() {
-		return userRole;
+	public List<String> getUserRoles() {
+		return userRoles;
 	}
 
 	/**

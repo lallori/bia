@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 
 import org.medici.docsources.command.community.ShowPreviewForumPostCommand;
 import org.medici.docsources.domain.ForumPost;
-import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,13 +65,13 @@ public class ShowPreviewForumPostController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowPreviewForumPostCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+		User user = (User) httpSession.getAttribute("user");
 
 		try {
-			if (userInformation != null) {
-				if (userInformation.getForumJoinedDate() == null) {
-					userInformation = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("userInformation", userInformation);
+			if (user != null) {
+				if (user.getForumJoinedDate() == null) {
+					user = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("user", user);
 				}
 			}
 		}catch (ApplicationThrowable applicationThrowable) {
@@ -83,7 +83,7 @@ public class ShowPreviewForumPostController {
 		forumPost.setText(command.getText());
 		forumPost.setSubject(command.getSubject());
 		forumPost.setDateCreated(new Date());
-		forumPost.setUserInformation(userInformation);
+		forumPost.setUser(user);
 
 		model.put("forumPost", forumPost);
 
