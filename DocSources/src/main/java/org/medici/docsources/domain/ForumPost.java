@@ -72,7 +72,7 @@ public class ForumPost implements Serializable {
 	private ForumPost parentPost;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"account\"", nullable=true)
-	private UserInformation userInformation;
+	private User user;
 	@Column (name="\"dateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
@@ -137,17 +137,17 @@ public class ForumPost implements Serializable {
 
 
 	/**
-	 * @param userInformation the userInformation to set
+	 * @param user the user to set
 	 */
-	public void setUserInformation(UserInformation userInformation) {
-		this.userInformation = userInformation;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
 	 * @return the userInformation
 	 */
-	public UserInformation getUserInformation() {
-		return userInformation;
+	public User getUser() {
+		return user;
 	}
 
 	/**

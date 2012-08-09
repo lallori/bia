@@ -29,121 +29,101 @@ package org.medici.docsources.domain;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * User entity.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
+@Entity
+@Table ( name = "\"tblUser\"" ) 
 public class User implements Serializable {
-
-	/**
-	 * Class for mapping role application informations.<p><br>
-	 * 
-	 * 
-	 * User Groups The defined user groups are: Administrators, On-site Fellows,
-	 * Senior Distance Fellows, Distance Fellows, Digitization Technicians,
-	 * Community users and Guests.<br> Some special role users are also present:
-	 * Distance Fellow Coordinator, Community Coordinator and Digitization
-	 * Coordinator.<br> For a detailed description of the each user group see the
-	 * 2.4 chapter of Phase1_TLSRL.pdf document.<p>
-	 * 
-	 * Administrators Users belonging to this group are able to use all the
-	 * Administration Module’s sub-modules: User Management, Reports and
-	 * Revisions and System Management.<p>
-	 * 
-	 * On-site Fellows Users belonging to this group are able to use the Data
-	 * Entry Module and have the permission to correct and vet other On-site and
-	 * the Distance Fellows entered documents. They are part of the Scholarly
-	 * Community and have also access to all the other modules, with the
-	 * exception of the Digitization Module (see 2.7) and the Administration
-	 * Module (see 2.6). The On-site Fellows can be assigned (or “flagged”) as
-	 * Distance Fellows Coordinator or Community Coordinator or Digitization
-	 * Coordinator.<p>
-	 * 
-	 * Senior Distance Fellows Users belonging to this group are experienced
-	 * scholars that have been trained by the On-site Fellows on how to use the
-	 * system. They able to use the Data Entry Module (see 2.4) and have the
-	 * permission to correct and vet other Distance Fellows entered documents.
-	 * They are part of the Scholarly Community and have also access to all the
-	 * other modules, with the exception of the Digitization Module and the
-	 * Administration Module. The Senior Distance Fellows can be assigned (or
-	 * “flagged”) as Distance Fellows Coordinator or Community Coordinator.<p>
-	 * 
-	 * Distance Fellows Users belonging to this group are able to use the Data
-	 * Entry Module. Unlike the On-site Fellows or the Senior Distance Fellows,
-	 * the Distance Fellows are able to enter data but not to vet any document or
-	 * volume or delete any content, which has not been created by them. They
-	 * are part of the Scholarly Community and have also access to all the other
-	 * modules, with the exception of the Digitization Module and the
-	 * Administration Module.<p>
-	 * 
-	 * Community Users Users belonging to this group can access the Search
-	 * Module. They can also access the Community module’s three sub-modules:
-	 * comments, profiles and personal messages.<p>
-	 * 
-	 * Digitization Technicians Users belonging to this group are allowed to
-	 * access the Digitization Module and are in charge of uploading the
-	 * digitized documents to the system. The Digitization Technician is also
-	 * belongs to the Community User Group so has a read-only access al the
-	 * items contained into the database and can post comments.<p>
-	 * 
-	 * Guests These are the users that browse MAP’s system without logging with
-	 * username and password. They can access the Search Module and the access
-	 * to the Manuscript Viewer module though is forbidden. They can though fill
-	 * in the User Registration Form to become regular Community Users. Every
-	 * request is checked by the Community Coordinator and if accepted the user
-	 * become a regular Community User.<p>
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 * 
-	 */
-	public static enum UserRole {
-		ADMINISTRATORS("ADMINISTRATORS"), 
-		COMMUNITY_COORDINATORS("COMMUNITY_COORDINATORS"),
-		COMMUNITY_USERS("COMMUNITY_USERS"), 
-		DIGITIZATION_COORDINATORS("DIGITIZATION_COORDINATORS"), 
-		DIGITIZATION_TECHNICIANS("DIGITIZATION_TECHNICIANS"), 
-		DISTANCE_FELLOWS("DISTANCE_FELLOWS"),
-		DISTANCE_FELLOWS_COORDINATORS("DISTANCE_FELLOWS_COORDINATORS"),
-		FORMER_FELLOWS("FORMER_FELLOWS"),
-		GUESTS("GUESTS"), 
-		ONSITE_FELLOWS("ONSITE_FELLOWS"), 
-		SENIOR_DISTANCE_FELLOWS("SENIOR_DISTANCE_FELLOWS");
-
-		private final String role;
-
-		private UserRole(String value) {
-			role = value;
-		}
-
-		@Override
-		public String toString() {
-			return role;
-		}
-	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4232226019305595581L;
+	@Id
+	@Column (name="\"account\"", length=50, nullable=false)
 	private String account;
+	@Column (name="\"address\"", length=200, nullable=true)
 	private String address;
+	@Column (name="\"city\"", length=50, nullable=false)
 	private String city;
+	@Column (name="\"country\"", length=3, nullable=false)
 	private String country;
+	@Column (name="\"firstName\"", length=50, nullable=false)
 	private String firstName;
+	@Column (name="\"initials\"", length=5, nullable=false)
 	private String initials;
+	@Column (name="\"interests\"", length=500, nullable=false)
 	private String interests;
+	@Column (name="\"lastName\"", length=50, nullable=false)
 	private String lastName;
+	@Column (name="\" mail\"", length=50, nullable=false)
 	private String mail;
+	@Column (name="\"organization\"", length=50, nullable=false)
 	private String organization;
+	@Column (name="\"password\"", length=64, nullable=false)
 	private String password;
-	private BufferedImage photo;
+	@Column (name="\"title\"", length=50, nullable=true)
 	private String title;
+	@Column (name="\"photo\"", nullable=true)
+	@Lob
+	private BufferedImage photo;
 
-	private List<UserRole> userRoles;
+	@Column (name="\"active\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean active;
+	@Column (name="\"approved\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean approved;
+	@Column (name="\"locked\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean locked;
+	@Column (name="\"badLogin\"", nullable=false, columnDefinition="INT default '0'")
+	private Integer badLogin;
+	@Column (name="\"activationDate\"")
+	private Date activationDate;
+	@Column (name="\"currentLoginDate\"")
+	private Date currentLoginDate;
+	@Column (name="\"lastLoginDate\"")
+	private Date lastLoginDate;
+	@Column (name="\"expirationDate\"", nullable=false)
+	private Date expirationDate;
+	@Column (name="\"expirationPasswordDate\"", nullable=false)
+	private Date expirationPasswordDate;
+	@Column (name="\"lastPasswordChangeDate\"")
+	private Date lastPasswordChangeDate;
+	@Column (name="\"registrationDate\"", nullable=false)
+	private Date registrationDate;
+	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
+	private Long forumNumberOfPost;
+	@Column (name="\"forumJoinedDate\"", nullable=true)
+	private Date forumJoinedDate;
+	@Column (name="\"lastForumPostDate\"", nullable=true)
+	private Date lastForumPostDate;
+	@Column (name="\"lastActiveForumDate\"", nullable=true)
+	private Date lastActiveForumDate;
 
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<UserRole> userRoles;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<ForumTopic> forumTopics;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<ForumPost> forumPosts;
 	/**
 	 * Default constructor.
 	 */
@@ -249,7 +229,7 @@ public class User implements Serializable {
 	/**
 	 * @return the userRole
 	 */
-	public List<UserRole> getUserRoles() {
+	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}
 
@@ -348,10 +328,220 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the activationDate
+	 */
+	public Date getActivationDate() {
+		return activationDate;
+	}
+
+	/**
+	 * @param activationDate the activationDate to set
+	 */
+	public void setActivationDate(Date activationDate) {
+		this.activationDate = activationDate;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @return the approved
+	 */
+	public Boolean getApproved() {
+		return approved;
+	}
+
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
+
+	/**
+	 * @return the badLogin
+	 */
+	public Integer getBadLogin() {
+		return badLogin;
+	}
+
+	/**
+	 * @param badLogin the badLogin to set
+	 */
+	public void setBadLogin(Integer badLogin) {
+		this.badLogin = badLogin;
+	}
+
+	/**
+	 * @return the currentLoginDate
+	 */
+	public Date getCurrentLoginDate() {
+		return currentLoginDate;
+	}
+
+	/**
+	 * @param currentLoginDate the currentLoginDate to set
+	 */
+	public void setCurrentLoginDate(Date currentLoginDate) {
+		this.currentLoginDate = currentLoginDate;
+	}
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	/**
+	 * @return the expirationPasswordDate
+	 */
+	public Date getExpirationPasswordDate() {
+		return expirationPasswordDate;
+	}
+
+	/**
+	 * @param expirationPasswordDate the expirationPasswordDate to set
+	 */
+	public void setExpirationPasswordDate(Date expirationPasswordDate) {
+		this.expirationPasswordDate = expirationPasswordDate;
+	}
+
+	/**
+	 * @return the lastLoginDate
+	 */
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	/**
+	 * @param lastLoginDate the lastLoginDate to set
+	 */
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
+	/**
+	 * @return the lastPasswordChangeDate
+	 */
+	public Date getLastPasswordChangeDate() {
+		return lastPasswordChangeDate;
+	}
+
+	/**
+	 * @param lastPasswordChangeDate the lastPasswordChangeDate to set
+	 */
+	public void setLastPasswordChangeDate(Date lastPasswordChangeDate) {
+		this.lastPasswordChangeDate = lastPasswordChangeDate;
+	}
+
+	/**
+	 * @return the locked
+	 */
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	/**
+	 * @return the registrationDate
+	 */
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	/**
+	 * @param registrationDate the registrationDate to set
+	 */
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	/**
+	 * @return the forumNumberOfPost
+	 */
+	public Long getForumNumberOfPost() {
+		return forumNumberOfPost;
+	}
+
+	/**
+	 * @param forumNumberOfPost the forumNumberOfPost to set
+	 */
+	public void setForumNumberOfPost(Long forumNumberOfPost) {
+		this.forumNumberOfPost = forumNumberOfPost;
+	}
+
+	/**
+	 * @return the forumJoinedDate
+	 */
+	public Date getForumJoinedDate() {
+		return forumJoinedDate;
+	}
+
+	/**
+	 * @param forumJoinedDate the forumJoinedDate to set
+	 */
+	public void setForumJoinedDate(Date forumJoinedDate) {
+		this.forumJoinedDate = forumJoinedDate;
+	}
+
+	/**
+	 * @return the lastForumPostDate
+	 */
+	public Date getLastForumPostDate() {
+		return lastForumPostDate;
+	}
+
+	/**
+	 * @param lastForumPostDate the lastForumPostDate to set
+	 */
+	public void setLastForumPostDate(Date lastForumPostDate) {
+		this.lastForumPostDate = lastForumPostDate;
+	}
+
+	/**
+	 * @return the lastActiveForumDate
+	 */
+	public Date getLastActiveForumDate() {
+		return lastActiveForumDate;
+	}
+
+	/**
+	 * @param lastActiveForumDate the lastActiveForumDate to set
+	 */
+	public void setLastActiveForumDate(Date lastActiveForumDate) {
+		this.lastActiveForumDate = lastActiveForumDate;
+	}
+
+	/**
 	 * @param userRole
 	 *            the userRole to set
 	 */
-	public void setUserRoles(List<UserRole> userRoles) {
+	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
 }
