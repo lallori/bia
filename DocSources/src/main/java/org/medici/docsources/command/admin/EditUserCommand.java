@@ -29,7 +29,6 @@ package org.medici.docsources.command.admin;
 
 import java.util.List;
 
-import org.medici.docsources.domain.UserRole;
 
 /**
  * Command bean for action "show user".
@@ -49,210 +48,207 @@ public class EditUserCommand {
 	private String middleName;
 	private String lastName;
 	private String password;
-	private Integer yearPassExp;
-	private Integer monthPassExp;
-	private Integer dayPassExp;
-//	private Date accExpirTime;
-	private Integer yearExpirTime;
-	private Integer monthExpirTime;
-	private Integer dayExpirTime;
+	private Integer yearExpirationPassword;
+	private Integer monthExpirationPassword;
+	private Integer dayExpirationPassword;
+	private Integer yearExpirationUser;
+	private Integer monthExpirationUser;
+	private Integer dayExpirationUser;
+	private Boolean active;
+	private Boolean locked;
+	private Boolean approved;
 	private List<String> userRoles;
-
 	/**
-	 * This method returns account property.
-	 * 
-	 * @return the account name
+	 * @return the account
 	 */
 	public String getAccount() {
 		return account;
 	}
-
 	/**
 	 * @param account the account to set
 	 */
 	public void setAccount(String account) {
 		this.account = account;
 	}
-
 	/**
-	 * @param firstName the firstName to set
+	 * @return the newAccount
 	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public String getNewAccount() {
+		return newAccount;
 	}
-
+	/**
+	 * @param newAccount the newAccount to set
+	 */
+	public void setNewAccount(String newAccount) {
+		this.newAccount = newAccount;
+	}
 	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
-
 	/**
-	 * @param middleName the middleName to set
+	 * @param firstName the firstName to set
 	 */
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-
 	/**
 	 * @return the middleName
 	 */
 	public String getMiddleName() {
 		return middleName;
 	}
-
 	/**
-	 * @param lastName the lastName to set
+	 * @param middleName the middleName to set
 	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
-
 	/**
 	 * @return the lastName
 	 */
 	public String getLastName() {
 		return lastName;
 	}
-
 	/**
-	 * @param password the password to set
+	 * @param lastName the lastName to set
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-
 	/**
 	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
 	}
-
-//	/**
-//	 * @param accExpirTime the accExpirTime to set
-//	 */
-//	public void setAccExpirTime(Date accExpirTime) {
-//		this.accExpirTime = accExpirTime;
-//	}
-//
-//	/**
-//	 * @return the accExpirTime
-//	 */
-//	public Date getAccExpirTime() {
-//		return accExpirTime;
-//	}
-
 	/**
-	 * @return the yearPassExp
+	 * @param password the password to set
 	 */
-	public Integer getYearPassExp() {
-		return yearPassExp;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
 	/**
-	 * @param yearPassExp the yearPassExp to set
+	 * @return the yearExpirationPassword
 	 */
-	public void setYearPassExp(Integer yearPassExp) {
-		this.yearPassExp = yearPassExp;
+	public Integer getYearExpirationPassword() {
+		return yearExpirationPassword;
 	}
-
 	/**
-	 * @return the monthPassExp
+	 * @param yearExpirationPassword the yearExpirationPassword to set
 	 */
-	public Integer getMonthPassExp() {
-		return monthPassExp;
+	public void setYearExpirationPassword(Integer yearExpirationPassword) {
+		this.yearExpirationPassword = yearExpirationPassword;
 	}
-
 	/**
-	 * @param monthPassExp the monthPassExp to set
+	 * @return the monthExpirationPassword
 	 */
-	public void setMonthPassExp(Integer monthPassExp) {
-		this.monthPassExp = monthPassExp;
+	public Integer getMonthExpirationPassword() {
+		return monthExpirationPassword;
 	}
-
 	/**
-	 * @return the dayPassExp
+	 * @param monthExpirationPassword the monthExpirationPassword to set
 	 */
-	public Integer getDayPassExp() {
-		return dayPassExp;
+	public void setMonthExpirationPassword(Integer monthExpirationPassword) {
+		this.monthExpirationPassword = monthExpirationPassword;
 	}
-
 	/**
-	 * @param dayPassExp the dayPassExp to set
+	 * @return the dayExpirationPassword
 	 */
-	public void setDayPassExp(Integer dayPassExp) {
-		this.dayPassExp = dayPassExp;
+	public Integer getDayExpirationPassword() {
+		return dayExpirationPassword;
 	}
-
 	/**
-	 * @param userRole the userRoles to set
+	 * @param dayExpirationPassword the dayExpirationPassword to set
 	 */
-	public void setUserRoles(List<String> userRoles) {
-		this.userRoles = userRoles;
+	public void setDayExpirationPassword(Integer dayExpirationPassword) {
+		this.dayExpirationPassword = dayExpirationPassword;
 	}
-
+	/**
+	 * @return the yearExpirationUser
+	 */
+	public Integer getYearExpirationUser() {
+		return yearExpirationUser;
+	}
+	/**
+	 * @param yearExpirationUser the yearExpirationUser to set
+	 */
+	public void setYearExpirationUser(Integer yearExpirationUser) {
+		this.yearExpirationUser = yearExpirationUser;
+	}
+	/**
+	 * @return the monthExpirationUser
+	 */
+	public Integer getMonthExpirationUser() {
+		return monthExpirationUser;
+	}
+	/**
+	 * @param monthExpirationUser the monthExpirationUser to set
+	 */
+	public void setMonthExpirationUser(Integer monthExpirationUser) {
+		this.monthExpirationUser = monthExpirationUser;
+	}
+	/**
+	 * @return the dayExpirationUser
+	 */
+	public Integer getDayExpirationUser() {
+		return dayExpirationUser;
+	}
+	/**
+	 * @param dayExpirationUser the dayExpirationUser to set
+	 */
+	public void setDayExpirationUser(Integer dayExpirationUser) {
+		this.dayExpirationUser = dayExpirationUser;
+	}
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	/**
+	 * @return the locked
+	 */
+	public Boolean getLocked() {
+		return locked;
+	}
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+	/**
+	 * @return the approved
+	 */
+	public Boolean getApproved() {
+		return approved;
+	}
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
 	/**
 	 * @return the userRoles
 	 */
 	public List<String> getUserRoles() {
 		return userRoles;
 	}
-
 	/**
-	 * @param newAcount the newAcount to set
+	 * @param userRoles the userRoles to set
 	 */
-	public void setNewAccount(String newAccount) {
-		this.newAccount = newAccount;
+	public void setUserRoles(List<String> userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	/**
-	 * @return the newAcount
-	 */
-	public String getNewAccount() {
-		return newAccount;
-	}
-
-	/**
-	 * @return the yearExpirTime
-	 */
-	public Integer getYearExpirTime() {
-		return yearExpirTime;
-	}
-
-	/**
-	 * @param yearExpirTime the yearExpirTime to set
-	 */
-	public void setYearExpirTime(Integer yearExpirTime) {
-		this.yearExpirTime = yearExpirTime;
-	}
-
-	/**
-	 * @return the monthExpirTime
-	 */
-	public Integer getMonthExpirTime() {
-		return monthExpirTime;
-	}
-
-	/**
-	 * @param monthExpirTime the monthExpirTime to set
-	 */
-	public void setMonthExpirTime(Integer monthExpirTime) {
-		this.monthExpirTime = monthExpirTime;
-	}
-
-	/**
-	 * @return the dayExpirTime
-	 */
-	public Integer getDayExpirTime() {
-		return dayExpirTime;
-	}
-
-	/**
-	 * @param dayExpirTime the dayExpirTime to set
-	 */
-	public void setDayExpirTime(Integer dayExpirTime) {
-		this.dayExpirTime = dayExpirTime;
-	}
 }

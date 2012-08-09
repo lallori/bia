@@ -1743,6 +1743,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public boolean ifPersonALreadyPresentInMarkedList(Integer personId) throws ApplicationThrowable {
 		try{
 			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			if(userMarkedList == null){
+				return Boolean.FALSE;
+			}
+
 			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPersonInMarkedList(userMarkedList.getIdMarkedList(), personId);
 			if(userMarkedListElement != null){
 				return Boolean.TRUE;

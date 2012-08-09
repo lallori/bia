@@ -1366,6 +1366,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable {
 		try{
 			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+
+			if(userMarkedList == null){
+				return Boolean.FALSE;
+			}
+			
 			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findDocumentInMarkedList(userMarkedList.getIdMarkedList(), entryId);
 			if(userMarkedListElement != null){
 				return Boolean.TRUE;

@@ -69,7 +69,7 @@ public class User implements Serializable {
 	private String firstName;
 	@Column (name="\"initials\"", length=5, nullable=false)
 	private String initials;
-	@Column (name="\"interests\"", length=500, nullable=false)
+	@Column (name="\"interests\"", length=500)
 	private String interests;
 	@Column (name="\"lastName\"", length=50, nullable=false)
 	private String lastName;

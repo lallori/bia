@@ -97,6 +97,9 @@ public class EditUserController {
 		try {
 			months = getAdminService().getMonths();
 			model.put("months", months);
+			
+			List<Authority> authorities= getAdminService().getAuthorities();
+			model.put("authorities", authorities);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);
 		}
@@ -111,7 +114,7 @@ public class EditUserController {
 					command.setLastName(user.getLastName());
 					command.setPassword(user.getPassword());
 					Iterator<UserRole> iterator = user.getUserRoles().iterator();
-					List<String> userRoles = new ArrayList(0);
+					List<String> userRoles = new ArrayList<String>(0);
 					while (iterator.hasNext()) {
 						UserRole userRole = iterator.next();
 						userRoles.add(userRole.getUserAuthority().getAuthority().toString());
@@ -119,13 +122,17 @@ public class EditUserController {
 					command.setUserRoles(userRoles);
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(user.getExpirationDate());
-					command.setYearExpirTime(cal.get(Calendar.YEAR));
-					command.setMonthExpirTime(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-					command.setDayExpirTime(cal.get(Calendar.DAY_OF_MONTH));
+					command.setYearExpirationUser(cal.get(Calendar.YEAR));
+					command.setMonthExpirationUser(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+					command.setDayExpirationUser(cal.get(Calendar.DAY_OF_MONTH));
 					cal.setTime(user.getExpirationPasswordDate());
-					command.setYearPassExp(cal.get(Calendar.YEAR));
-					command.setMonthPassExp(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-					command.setDayPassExp(cal.get(Calendar.DAY_OF_MONTH));
+					command.setYearExpirationPassword(cal.get(Calendar.YEAR));
+					command.setMonthExpirationPassword(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+					command.setDayExpirationPassword(cal.get(Calendar.DAY_OF_MONTH));
+					
+					command.setActive(user.getActive());
+					command.setApproved(user.getApproved());
+					command.setLocked(user.getLocked());
 				}
 				command.setNewAccount(user.getAccount());
 				
@@ -145,6 +152,12 @@ public class EditUserController {
 		return new ModelAndView("admin/EditUser", model);
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditUserCommand command, BindingResult result) {
 		getValidator().validate(command, result);
@@ -153,6 +166,7 @@ public class EditUserController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
+			Calendar cal = Calendar.getInstance();
 
 			User user = new User(command.getNewAccount());
 			user.setFirstName(command.getFirstName());
@@ -166,14 +180,14 @@ public class EditUserController {
 			}
 			user.setUserRoles(userRole);
 
-			//TODO
-			Calendar cal = Calendar.getInstance();
-			cal.set(command.getYearExpirTime(), command.getMonthExpirTime() - 1, command.getDayExpirTime());
+			cal.set(command.getYearExpirationUser(), command.getMonthExpirationUser() - 1, command.getDayExpirationUser());
 			user.setExpirationDate(cal.getTime());
-			cal.set(command.getYearPassExp(), command.getMonthPassExp() - 1, command.getDayExpirTime());
+
+			cal.set(command.getYearExpirationPassword(), command.getMonthExpirationPassword() - 1, command.getDayExpirationPassword());
 			user.setExpirationPasswordDate(cal.getTime());
-			//userInformation.setExpirationDate(Calendar.getInstance().getTime());
-			//userInformation.setExpirationDate(command.getAccExpirTime());
+			user.setApproved(command.getApproved());
+			user.setActive(command.getActive());
+			user.setLocked(command.getLocked());
 			
 			try {
 				if(getAdminService().findUser(command.getNewAccount()) != null){

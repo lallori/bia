@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.admin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +47,7 @@ import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.ApplicationProperty;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserAuthority.Authority;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,19 +64,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
 	@Autowired
-	private ApplicationPropertyDAO applicationPropertyDAO;
-
-	@Autowired
 	private AccessLogStatisticsDAO accessLogStatisticsDAO;
 
+	@Autowired
+	private ApplicationPropertyDAO applicationPropertyDAO;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	private MonthDAO monthDAO;
 	
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
-	
-	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	/**
 	 * {@inheritDoc}
@@ -132,7 +135,12 @@ public class AdminServiceImpl implements AdminService {
 //			userToUpdate.setApproved(userInformation.getApproved());
 			userToUpdate.setExpirationDate(user.getExpirationDate());
 //			userToUpdate.setExpirationPasswordDate(userInformation.getExpirationDate());
-			userToUpdate.setLastPasswordChangeDate(new Date());			
+			userToUpdate.setLastPasswordChangeDate(new Date());
+			userToUpdate.setActive(user.getActive());
+			if (!userToUpdate.getApproved().equals(user.getApproved())) {
+				userToUpdate.setApproved(user.getApproved());
+			}
+			userToUpdate.setLocked(user.getLocked());
 						
 			getUserDAO().removeAllUserRoles(userToUpdate.getAccount());
 			userToUpdate.setUserRoles(user.getUserRoles());
@@ -180,10 +188,25 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	/**
+	 * @return the accessLogStatisticsDAO
+	 */
+	public AccessLogStatisticsDAO getAccessLogStatisticsDAO() {
+		return accessLogStatisticsDAO;
+	}
+
+	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
 		return applicationPropertyDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Authority> getAuthorities() throws ApplicationThrowable {
+		return new ArrayList<Authority>(Arrays.asList(Authority.values()));
 	}
 
 	/**
@@ -214,6 +237,13 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+
+	/**
+	 * @param accessLogStatisticsDAO the accessLogStatisticsDAO to set
+	 */
+	public void setAccessLogStatisticsDAO(AccessLogStatisticsDAO accessLogStatisticsDAO) {
+		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
 	}
 
 	/**
@@ -257,19 +287,5 @@ public class AdminServiceImpl implements AdminService {
 		}
 		// TODO Auto-generated method stub
 
-	}
-
-	/**
-	 * @return the accessLogStatisticsDAO
-	 */
-	public AccessLogStatisticsDAO getAccessLogStatisticsDAO() {
-		return accessLogStatisticsDAO;
-	}
-
-	/**
-	 * @param accessLogStatisticsDAO the accessLogStatisticsDAO to set
-	 */
-	public void setAccessLogStatisticsDAO(AccessLogStatisticsDAO accessLogStatisticsDAO) {
-		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
 	}
 }

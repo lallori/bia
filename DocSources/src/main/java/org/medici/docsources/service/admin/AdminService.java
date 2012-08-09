@@ -34,6 +34,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserAuthority.Authority;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -97,4 +98,11 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	public void createAccessLogDailyStatistics() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Authority> getAuthorities() throws ApplicationThrowable;
 }

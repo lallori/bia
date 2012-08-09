@@ -113,7 +113,11 @@ public class AjaxController {
 			singleRow.add(currentUser.getMail());
 			singleRow.add(currentUser.getCity());
 			singleRow.add(currentUser.getCountry());
-			singleRow.add("");
+			if (currentUser.getLastLoginDate() != null) {
+				singleRow.add(currentUser.getLastLoginDate());
+			} else {
+				singleRow.add("");
+			}
 			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
 		}
 

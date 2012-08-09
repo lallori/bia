@@ -37,17 +37,19 @@
 		</div>
         <div class="row">
 			<div class="item37">Password expires</div> 
-			<div class="value">march 03 2012</div>
+			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationPasswordDate}" /></div>
 		</div>
 		<div class="row">
-			<div class="item37">Group policies</div> 
+			<div class="item37">Group policies</div>
+			<div class="value">&nbsp;</div> 
 			<c:forEach items="${user.userRoles}" var="currentRole">
+				<div class="item37">&nbsp;</div>
 				<div class="value">${currentRole}</div>
 			</c:forEach>			
 		</div>
 		<div class="row">
 			<div class="item37">Account Expiration Time</div> 
-			<div class="value">${user.expirationDate}</div>
+			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationDate}" /></div>
 		</div>
     </div>   
 </div>

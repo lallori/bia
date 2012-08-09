@@ -927,6 +927,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public boolean ifPlaceAlreadyPresentInMarkedList(Integer placeAllId) throws ApplicationThrowable {
 		try{
 			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			if(userMarkedList == null){
+				return Boolean.FALSE;
+			}
+
 			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPlaceInMarkedList(userMarkedList.getIdMarkedList(), placeAllId);
 			if(userMarkedListElement != null){
 				return Boolean.TRUE;
