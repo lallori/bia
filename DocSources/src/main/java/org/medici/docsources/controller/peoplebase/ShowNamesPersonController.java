@@ -36,7 +36,7 @@ import org.medici.docsources.command.peoplebase.ShowNamesPersonCommand;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -98,7 +98,7 @@ public class ShowNamesPersonController {
 			}
 		} else {
 			person.setPersonId(0);
-			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			person.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			person.setDateCreated(new Date());
 		}
 		

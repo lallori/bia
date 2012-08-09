@@ -1,5 +1,5 @@
 /*
- * UserMarkedListDAOJpaImpl.java
+ * AccessLogStatisticsDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,31 +25,28 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.usermarkedlist;
+package org.medici.docsources.dao.accesslogstatistics;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.UserMarkedList;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.medici.docsources.domain.AccessLogStatistics;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>UserMarkedListDAOJpaImpl</b> is a default implementation of
- * <b>UserMarkedListDAO</b>.
+ * <b>AccessLogStatisticsDAOJpaImpl</b> is a default implementation of
+ * <b>AccessLogStatisticsDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.UserMarkedList
+ * @see org.medici.docsources.domain.AccessLogStatistics
  */
 @Repository
-public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> implements UserMarkedListDAO {
+public class AccessLogStatisticsDAOJpaImpl extends JpaDao<Integer, AccessLogStatistics> implements AccessLogStatisticsDAO {
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -68,27 +65,41 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = -7476588070749064315L;
+	private static final long serialVersionUID = -8437267572130386899L;
 
-	private final Logger logger = Logger.getLogger(this.getClass());
-	
+	@Override
+	public Integer deleteStatisticsOnDay(Date date) throws PersistenceException {
+		String jpql = "DELETE FROM AccessLogStatistics WHERE primaryKey.dateAndTime=:date";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("date", date);
+        
+        return query.executeUpdate();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserMarkedList getMyMarkedList() throws PersistenceException {
-		String queryString = "FROM UserMarkedList WHERE username=:username";
+	public Boolean generateStatisticsOnDay(Date date) throws PersistenceException {
+		// select date_format(dateAndTime, '%Y/%m/%d'), action, httpMethod, count(idAccessLog), max(executionTime), min(executionTime)  from tblAccessLog where date_format(dateAndTime, '%Y/%m/%d') = date_format('2012/08/03', '%Y/%m/%d') 
+		// group by action, httpMethod
+
+		String jpql = "SELECT dateAndTime, action, httpMethod, COUNT(idAccessLog), MAX(executionTime), MIN(executionTime) " +
+		"FROM AccessLog WHERE dateAndTime=:dateAndTime GROUP BY action, httpMethod";
+
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("date", date);
+		List<List<Object>> list = query.getResultList();
 		
-		Query query = getEntityManager().createQuery(queryString);
-		query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		query.setMaxResults(1);
+		for (List<Object> singleRow : list) {
+			AccessLogStatistics accessLogStatistics = new AccessLogStatistics((Date)singleRow.get(0), (String)singleRow.get(1), (String)singleRow.get(2));
+			
+			getEntityManager().persist(accessLogStatistics);
+		}
 		
-		List<UserMarkedList> result = query.getResultList();
-		
-		if(result.size() == 1){
-			return result.get(0);
-		}else
-			return null;
+		return Boolean.TRUE;
 	}
+
 }

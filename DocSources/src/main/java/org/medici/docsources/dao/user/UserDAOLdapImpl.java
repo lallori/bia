@@ -1,5 +1,5 @@
 /*
- * UserDaoLdapImpl.java
+ * UserDAOLdapImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -33,21 +33,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.naming.Name;
-import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.LdapUtils;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserAuthority;
+import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;
 import org.medici.docsources.security.LdapConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ldap.NameNotFoundException;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -61,7 +64,6 @@ import org.springframework.ldap.filter.LikeFilter;
 import org.springframework.ldap.filter.OrFilter;
 import org.springframework.ldap.filter.WhitespaceWildcardsFilter;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 
 /**
  * 
@@ -69,9 +71,7 @@ import org.springframework.stereotype.Repository;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
-@Repository
-public class UserDaoLdapImpl implements UserDAO {
-	private Logger logger = Logger.getLogger(this.getClass());
+public class UserDAOLdapImpl implements UserDAO {
 	/**
 	 * This class is DocSource's implementation to map LDAP Attribute in User
 	 * Model Object.
@@ -113,7 +113,7 @@ public class UserDaoLdapImpl implements UserDAO {
 				ioex.printStackTrace();
 			}
 
-			List<UserRole> userRoles = getUserRoles(context, "member");
+			Set<UserRole> userRoles = getUserRoles(context, "member");
 			user.setUserRoles(userRoles);
 			return user;
 		}
@@ -123,14 +123,16 @@ public class UserDaoLdapImpl implements UserDAO {
 		 * @param attributeName
 		 * @return
 		 */
-		private List<UserRole> getUserRoles(DirContextOperations context, String attributeName) {
+		private Set<UserRole> getUserRoles(DirContextOperations context, String attributeName) {
 			String[] userRolesAttribute = context.getStringAttributes(attributeName);
-			List<UserRole> userRoles = new ArrayList<UserRole>();
+			Set<UserRole> userRoles = new HashSet<UserRole>();
 			
 			if (userRolesAttribute != null) {
 				for(String role : userRolesAttribute) {
 					try {
-						userRoles.add(UserRole.valueOf(LdapUtils.getStringRole(role)));
+						UserRole userRole = new UserRole();
+						userRole.setUserAuthority(new UserAuthority(UserAuthority.Authority.valueOf(LdapUtils.getStringRole(role))));
+						userRoles.add(userRole);
 					} catch(IllegalArgumentException iaex){
 						// if the specified enum type has no constant with the 
 						// specified name, or the specified class object does not 
@@ -143,7 +145,6 @@ public class UserDaoLdapImpl implements UserDAO {
 			return userRoles;
 		}
 	}
-
 	/**
 	 * This class makes a mapping between context attribute cn and Authority
 	 * enum. It's used to istantiate UserRoles generated from the subTree
@@ -155,7 +156,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	private static class UserRoleContextMapper extends AbstractContextMapper {
 		@Override
 		public Object doMapFromContext(DirContextOperations context) {
-			return UserRole.valueOf(context.getStringAttribute("cn"));
+			return UserAuthority.Authority.valueOf(context.getStringAttribute("cn"));
 		}
 	}
 
@@ -170,8 +171,23 @@ public class UserDaoLdapImpl implements UserDAO {
 	@Autowired
 	private LdapTemplate ldapTemplate;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+
 	@Autowired
+	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
+
+	@Override
+	public Long countMembersForum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page findForumMembers(String letter, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * This method find an unique user searching on ldap server.
@@ -188,7 +204,7 @@ public class UserDaoLdapImpl implements UserDAO {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * 
 	 */
@@ -237,7 +253,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	 * @return
 	 */
 	public UserRole findUserRole(UserRole userRole) {
-		Name dn = LdapUtils.userRoleDistinguishedName(getLdapConfiguration(), userRole.name());
+		Name dn = LdapUtils.userRoleDistinguishedName(getLdapConfiguration(), userRole.getUserAuthority());
 
 		try {
 			return (UserRole) getLdapTemplate().lookup(dn, getUserRoleContextMapper());
@@ -245,7 +261,7 @@ public class UserDaoLdapImpl implements UserDAO {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Search for all users matching the supplied filter on following fields : -
 	 * account - first name - last name - organization - mail address
@@ -322,6 +338,12 @@ public class UserDaoLdapImpl implements UserDAO {
 	 */
 	public LdapTemplate getLdapTemplate() {
 		return ldapTemplate;
+	}
+
+	@Override
+	public User getNewestMember() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -443,7 +465,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		}
 		
 		if (user.getUserRoles() != null) {
-			for (User.UserRole singleRole : user.getUserRoles()) {
+			for (UserRole singleRole : user.getUserRoles()) {
 				context.addAttributeValue("member", "cn=" + singleRole);
 			}
 		}
@@ -478,13 +500,13 @@ public class UserDaoLdapImpl implements UserDAO {
 	 * @param account
 	 * @param userRole
 	 */
-	public void persistUserRoles(String account, List<User.UserRole> userRoles) {
+	public void persistUserRoles(String account, List<UserRole> userRoles) {
 		if ((account == null) || (userRoles == null))
 			return;
 		
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 
-		for (User.UserRole singleRole : userRoles) {
+		for (UserRole singleRole : userRoles) {
 			context.setAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
 	}
@@ -512,7 +534,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		getLdapTemplate().modifyAttributes(context);
 		
 		
-		for (User.UserRole singleRole : user.getUserRoles()) {
+		for (UserRole singleRole : user.getUserRoles()) {
 			context.removeAttributeValue("member", "cn=" + singleRole);
 		}
 		getLdapTemplate().modifyAttributes(context);
@@ -521,13 +543,13 @@ public class UserDaoLdapImpl implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removeUserRoles(String account, List<User.UserRole> userRoles) {
+	public void removeUserRoles(String account, List<UserRole> userRoles) {
 		if ((account == null) || (userRoles == null))
 			return;
 
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 		
-		for (User.UserRole singleRole : userRoles) {
+		for (UserRole singleRole : userRoles) {
 			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
 	}

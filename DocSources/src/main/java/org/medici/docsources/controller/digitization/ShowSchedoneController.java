@@ -35,7 +35,7 @@ import org.medici.docsources.command.digitization.ShowSchedoneCommand;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +113,7 @@ public class ShowSchedoneController {
 			schedone.setNomeFiles(ApplicationPropertyManager.getApplicationProperty("schedone.nomeFiles"));
 			schedone.setResponsabileFotoRiproduzione(ApplicationPropertyManager.getApplicationProperty("schedone.responsabileFotoRiproduzione"));
 			schedone.setOperatore(ApplicationPropertyManager.getApplicationProperty("schedone.operatore"));
-			schedone.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			schedone.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			schedone.setDataCreazione(new Date());
 		}
 

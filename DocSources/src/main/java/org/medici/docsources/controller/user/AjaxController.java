@@ -71,7 +71,7 @@ public class AjaxController {
 	
 	/**
 	 * This method will make a check if account passed as parameter is not 
-	 * already present in LDAP Tree.
+	 * already present in user store.
 	 *  
 	 * @param account
 	 * @return

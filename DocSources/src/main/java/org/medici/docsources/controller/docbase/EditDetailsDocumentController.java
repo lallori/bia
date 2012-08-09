@@ -42,7 +42,7 @@ import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,7 +228,7 @@ public class EditDetailsDocumentController {
 			command.setDateNotes(document.getDateNotes());
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			command.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setDateCreated(new Date());
 			command.setEntryId(0);
 			command.setInsertNum(null);

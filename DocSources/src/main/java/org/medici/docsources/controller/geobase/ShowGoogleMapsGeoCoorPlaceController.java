@@ -35,7 +35,7 @@ import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -172,7 +172,7 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 			}
 		}else{
 			place.setPlaceAllId(0);
-			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			place.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
 		if(place.getPlaceGeographicCoordinates() != null){
 			Double latitude = place.getPlaceGeographicCoordinates().getMinuteLatitude().doubleValue() * 60 + place.getPlaceGeographicCoordinates().getSecondLatitude().doubleValue();

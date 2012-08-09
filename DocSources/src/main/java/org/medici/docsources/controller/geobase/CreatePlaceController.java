@@ -32,7 +32,7 @@ import java.util.Map;
 
 import org.medici.docsources.command.geobase.CreatePlaceCommand;
 import org.medici.docsources.domain.Place;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,7 +81,7 @@ public class CreatePlaceController {
 		place.setPlaceAllId(0);
 		place.setPlSource(command.getPlSource());
 				
-		place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		place.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		
 		model.put("place", place);
 

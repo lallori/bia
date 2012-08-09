@@ -1,5 +1,5 @@
 /*
- * UserDaoJpaImpl.java
+ * UserRoleDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,15 +32,22 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -48,14 +55,35 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
+@Transactional(readOnly=true)
+public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5787775317601975421L;
 
 	@Autowired
+	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countMembersForum() {
+		Query query = getEntityManager().createQuery("SELECT COUNT(account) FROM User");
+		query.setMaxResults(1);
+		return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findForumMembers(String letter, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -141,7 +169,7 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * 
 	 * @param userRole
@@ -224,7 +252,7 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -233,10 +261,163 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public User merge(User user) throws PersistenceException {
+		if (user != null) {
+			return getEntityManager().merge(user);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page findUsers(User user, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		return null;
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		String jpql = "FROM User ";
+		String condition = getConditionOnUser(user);
+		
+		if (!StringUtils.equals(condition, "")) {
+			jpql = jpql + "WHERE " + condition;
+		}
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(jpql + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+			switch (paginationFilter.getSortingColumn()) {
+				case 0:
+					paginationFilter.addSortingCriteria("firstName", paginationFilter.getSortingDirection());
+					paginationFilter.addSortingCriteria("lastName", paginationFilter.getSortingDirection());
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("mail", paginationFilter.getSortingDirection());
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("city", paginationFilter.getSortingDirection());
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("lastLoginDate", paginationFilter.getSortingDirection());
+					break;
+				default:
+					paginationFilter.addSortingCriteria("account", "asc");
+					break;
+			}
+		}
+
+		return paginationFilter;
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	private String getConditionOnUser(User user) {
+		if (user ==null) {
+			return "";
+		}
+
+		StringBuilder conditionBuffer = new StringBuilder("");
+		if (user.getAccount() != null) {
+			conditionBuffer.append("account like '");
+			conditionBuffer.append(user.getAccount());
+			conditionBuffer.append("%'");
+		}
+		if (user.getInitials() != null) {
+			if (conditionBuffer.length() >0) {
+				conditionBuffer.append(" AND ");
+			}
+			conditionBuffer.append("initials like '");
+			conditionBuffer.append(user.getInitials());
+			conditionBuffer.append("%'");
+		}
+		if (user.getFirstName() != null) {
+			if (conditionBuffer.length() >0) {
+				conditionBuffer.append(" AND ");
+			}
+			conditionBuffer.append("firstName like '");
+			conditionBuffer.append(user.getFirstName());
+			conditionBuffer.append("%'");
+		}
+		if (user.getLastName() != null) {
+			if (conditionBuffer.length() >0) {
+				conditionBuffer.append(" AND ");
+			}
+			conditionBuffer.append("lastName like '");
+			conditionBuffer.append(user.getLastName());
+			conditionBuffer.append("%'");
+		}
+		if (user.getOrganization() != null) {
+			if (conditionBuffer.length() >0) {
+				conditionBuffer.append(" AND ");
+			}
+			conditionBuffer.append("organization like '");
+			conditionBuffer.append(user.getOrganization());
+			conditionBuffer.append("%'");
+		}
+		if (user.getMail() != null) {
+			if (conditionBuffer.length() >0) {
+				conditionBuffer.append(" AND ");
+			}
+			conditionBuffer.append("mail like '");
+			conditionBuffer.append(user.getMail());
+			conditionBuffer.append("%'");
+		}
+		
+		return conditionBuffer.toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User getNewestMember() {
+		try {
+			Query query = getEntityManager().createQuery("FROM User ORDER BY forumJoinedDate DESC");
+
+			query.setMaxResults(1);
+			return (User) query.getSingleResult();
+		} catch (PersistenceException persistenceException) {
+			
+			return null;
+		}
 	}
 
 	/**
@@ -246,13 +427,12 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 		return passwordEncoder;
 	}
 
-
 	/**
 	 * 
 	 * @param account
 	 * @param userRole
 	 */
-	public void persistUserRoles(String account, List<User.UserRole> userRoles) {
+	public void persistUserRoles(String account, List<UserRole> userRoles) {
 		return;
 	}
 

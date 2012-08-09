@@ -35,7 +35,7 @@ import org.medici.docsources.command.volbase.ShowVolumeFromHistoryRequestCommand
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +104,7 @@ public class ShowVolumeFromHistoryController {
 		} else {
 			//SummaryId equals to zero is 'New Volume'
 			volume.setSummaryId(0);
-			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			volume.setDateCreated(new Date());
 			model.put("volDocsRelated", 0);
 		}

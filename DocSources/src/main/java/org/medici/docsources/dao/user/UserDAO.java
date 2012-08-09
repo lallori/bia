@@ -29,10 +29,12 @@ package org.medici.docsources.dao.user;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;
 
 /**
@@ -41,6 +43,21 @@ import org.medici.docsources.exception.TooManyUsersException;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface UserDAO {
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Long countMembersForum();
+
+	/**
+	 * 
+	 * @param letter
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findForumMembers(String letter, PaginationFilter paginationFilter);
 
 	/**
      * This method finds the user with input account.
@@ -68,7 +85,7 @@ public interface UserDAO {
 	 * @return a {@link java.util.List} object containing result of search.
 	 */
 	public List<User> findUsers(User user);
-
+	
 	/**
 	 * Search method which managed pagination.
 	 * 
@@ -86,7 +103,13 @@ public interface UserDAO {
 	 * @return
 	 */
 	public Page findUsers(User user,PaginationFilter paginationFilter);
-	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public User getNewestMember();
+
 	/**
 	 * This method updates the input {@link org.medici.docsources.domain.User} 
 	 * object on the persistence layer. 

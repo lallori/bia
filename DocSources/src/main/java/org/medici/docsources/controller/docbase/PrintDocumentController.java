@@ -35,7 +35,7 @@ import org.medici.docsources.command.docbase.PrintDocumentRequestCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +94,7 @@ public class PrintDocumentController {
 		} else {
 			//EntryId equals to zero is 'New Document'
 			document.setEntryId(0);
-			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setDateCreated(new Date());
 		}
 		

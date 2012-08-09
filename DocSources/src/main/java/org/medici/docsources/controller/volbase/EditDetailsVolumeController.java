@@ -42,7 +42,7 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,7 +223,7 @@ public class EditDetailsVolumeController {
 				command.setEndDay(null);
 		} else {
 			// On Volume creation, the research is always the current user.
-			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			command.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			// We need to expose dateCreated field because it must be rendered on view
 			command.setDateCreated(new Date());
 			command.setVolNum(null);

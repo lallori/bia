@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.People;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,7 +75,7 @@ public class CreatePersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		People people = new People(0);
-		people.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		people.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		people.setDateCreated(new Date());
 
 		model.put("person", people);

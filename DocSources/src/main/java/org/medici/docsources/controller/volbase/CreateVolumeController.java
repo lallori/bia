@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.Volume;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,7 +70,7 @@ public class CreateVolumeController {
 
 		Volume volume = new Volume();
 		volume.setSummaryId(0);
-		volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		volume.setDateCreated(new Date());
 
 		model.put("volume", volume);
