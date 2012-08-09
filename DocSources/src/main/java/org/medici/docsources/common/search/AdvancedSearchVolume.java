@@ -251,7 +251,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		toVolume = new ArrayList<String>(0);
 		context = new ArrayList<String>(0);
 		inventario = new ArrayList<String>(0);
-		logicalDelete = Boolean.FALSE;
+		logicalDelete = null;
 	}
 	
 	/**
@@ -446,6 +446,15 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}
 		}else{
 			inventario = new ArrayList<String>(0);
+		}
+		
+		//LogicalDelete
+		if(command.getLogicalDelete() != null){
+			if(command.getLogicalDelete().equals("true")){
+				logicalDelete = Boolean.TRUE;
+			}else{
+				logicalDelete = Boolean.FALSE;
+			}
 		}
 	}
 
@@ -927,6 +936,25 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				}
 				jpaQuery.append(inventarioQuery);
 			}
+		}
+		
+		//LogicalDelete
+		if(!ObjectUtils.toString(logicalDelete).equals("")){
+			StringBuilder logicalDeleteQuery = new StringBuilder("(");
+			if(logicalDelete.equals(Boolean.TRUE)){
+				logicalDeleteQuery.append("(logicalDelete = true)");
+			}else if(logicalDelete.equals(Boolean.FALSE)){
+				logicalDeleteQuery.append("(logicalDelete = false)");
+			}
+			logicalDeleteQuery.append(")");
+			if(!logicalDeleteQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(logicalDeleteQuery);
+			}
+		}else{
+			jpaQuery.append(" AND logicalDelete = false");
 		}
 		
 		return jpaQuery.toString();

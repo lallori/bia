@@ -44,6 +44,21 @@
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
 		</div>
+		<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<div id="logicalDeleteSearchDiv">
+			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Logical Delete:</span><span class="wordSearch">Yes</span><a class="remove" href="#">(remove)</a>
+					<c:if test="${searchFilter.filterData.logicalDelete.toString() ==  'true'}">
+						<input type="hidden" value="true" name="logicalDelete">
+					</c:if>
+					<c:if test="${searchFilter.filterData.logicalDelete.toString() == 'false' }">
+						<input type="hidden" value="false" name="logicalDelete">
+					</c:if>
+				</div>
+			</c:if>
+		</div>
+		
 		<p class="yourSearchDiv">Records found:
 		<span class="recordsNum"></span></p>
 		

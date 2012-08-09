@@ -1917,6 +1917,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 				jpaQuery.append(logicalDeleteQuery);
 			}
+		}else{
+			jpaQuery.append(" AND logicalDelete = false");
 		}
 
 		return jpaQuery.toString();

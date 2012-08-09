@@ -33,6 +33,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.index.Term;
@@ -105,7 +106,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
 		titleOccWord = new ArrayList<String>(0);
-		logicalDelete = Boolean.FALSE;
+		logicalDelete = null;
 		researchNotes = new ArrayList<String>(0);
 		gender = new ArrayList<AdvancedSearchAbstract.Gender>(0);
 	}
@@ -494,6 +495,15 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			}
 		} else {
 			researchNotes = new ArrayList<String>(0);
+		}
+		
+		//Logical Delete
+		if(command.getLogicalDelete() != null){
+			if(command.getLogicalDelete().equals("true")){
+				logicalDelete = Boolean.TRUE;
+			}else{
+				logicalDelete = Boolean.FALSE;
+			}
 		}
 	}
 
@@ -1019,6 +1029,25 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				}
 				jpaQuery.append(researchNotesQuery);
 			}
+		}
+		
+		//LogicalDelete
+		if(!ObjectUtils.toString(logicalDelete).equals("")){
+			StringBuilder logicalDeleteQuery = new StringBuilder("(");
+			if(logicalDelete.equals(Boolean.TRUE)){
+				logicalDeleteQuery.append("(logicalDelete = true)");
+			}else if(logicalDelete.equals(Boolean.FALSE)){
+				logicalDeleteQuery.append("(logicalDelete = false)");
+			}
+			logicalDeleteQuery.append(")");
+			if(!logicalDeleteQuery.toString().equals("")){
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(logicalDeleteQuery);
+			}
+		}else{
+			jpaQuery.append(" AND logicalDelete = false");
 		}
 		
 		return jpaQuery.toString();

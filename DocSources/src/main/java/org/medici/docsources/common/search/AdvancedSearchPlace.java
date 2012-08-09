@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
@@ -76,7 +77,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 //		linkedToTopicsId = new ArrayList<Integer>(0);
 //		linkedToTopics = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
-		logicalDelete = Boolean.FALSE;
+		logicalDelete = null;
 	}
 
 	/**
@@ -213,6 +214,15 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			}
 		}else{
 			linkedToPeople = new ArrayList<String>(0);
+		}
+		
+		//LogicalDelete
+		if(command.getLogicalDelete() != null){
+			if(command.getLogicalDelete().equals("true")){
+				logicalDelete = Boolean.TRUE;
+			}else{
+				logicalDelete = Boolean.FALSE;
+			}
 		}
 		
 	}
@@ -373,6 +383,25 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				}
 				jpaQuery.append(linkedToPeopleQuery);
 			}
+		}
+		
+		//LogicalDelete
+		if(!ObjectUtils.toString(logicalDelete).equals("")){
+			StringBuilder logicalDeleteQuery = new StringBuilder("(");
+			if(logicalDelete.equals(Boolean.TRUE)){
+				logicalDeleteQuery.append("(logicalDelete = true)");
+			}else if(logicalDelete.equals(Boolean.FALSE)){
+				logicalDeleteQuery.append("(logicalDelete = false)");
+			}
+			logicalDeleteQuery.append(")");
+			if(!logicalDeleteQuery.toString().equals("")){
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(logicalDeleteQuery);
+			}
+		}else{
+			jpaQuery.append(" AND logicalDelete = false");
 		}
 		
 		return jpaQuery.toString();
