@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 			ActivationUser activationUser = getActivationUserDAO().find(uuid.toString());
 			
 			//Search user by account and update active flag
-			User user = getUserDAO().findUser(activationUser.getAccount());
+			User user = activationUser.getUser();
 			user.setActive(Boolean.TRUE);
 			getUserDAO().merge(user);
 			
@@ -161,9 +161,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
+			User userToSearch = getUserDAO().findUser(user);
+
 			ActivationUser activationUser = new ActivationUser();
 			activationUser.setUuid(UUID.randomUUID().toString());
-			activationUser.setAccount(user.getAccount());
+			activationUser.setUser(userToSearch);
 			activationUser.setRequestDate(new Date());
 			activationUser.setRequestIPAddress(remoteAddress);
 			activationUser.setActive(Boolean.FALSE);			
@@ -181,9 +183,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
+			User userToSearch = getUserDAO().findUser(user);
 			PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest();
 			passwordChangeRequest.setUuid(UUID.randomUUID().toString());
-			passwordChangeRequest.setAccount(user.getAccount());
+			passwordChangeRequest.setUser(userToSearch);
 			passwordChangeRequest.setRequestDate(new Date());
 			passwordChangeRequest.setRequestIPAddress(remoteAddress);
 			passwordChangeRequest.setReset(Boolean.FALSE);			
@@ -727,7 +730,7 @@ public class UserServiceImpl implements UserService {
 			// We generate the request for sending activation mail 
 			ActivationUser activationUser = new ActivationUser();
 			activationUser.setUuid(UUID.randomUUID().toString());
-			activationUser.setAccount(user.getAccount());
+			activationUser.setUser(user);
 			activationUser.setActive(Boolean.FALSE);
 			activationUser.setMailSended(Boolean.FALSE);
 			activationUser.setRequestDate(new Date());
@@ -1017,7 +1020,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			PasswordChangeRequest passwordChangeRequest = getPasswordChangeRequestDAO().find(uuid.toString());
 
-			User user = getUserDAO().findUser(passwordChangeRequest.getAccount());
+			User user = passwordChangeRequest.getUser();
 			user.setPassword(password);
 			getUserDAO().merge(user);
 			passwordChangeRequest.setReset(Boolean.TRUE);

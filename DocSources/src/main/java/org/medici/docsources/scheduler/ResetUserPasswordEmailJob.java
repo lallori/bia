@@ -31,8 +31,6 @@ import java.util.List;
 
 import org.apache.log4j.MDC;
 import org.medici.docsources.domain.PasswordChangeRequest;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.mail.MailService;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +76,7 @@ public class ResetUserPasswordEmailJob {
 			List<PasswordChangeRequest> passwordChangeRequests = getUserService().findPasswordResetRequests();
 
 			for(PasswordChangeRequest currentPasswordChange:passwordChangeRequests) {
-				try {
-					User user = getUserService().findUser(currentPasswordChange.getAccount());
-					getMailService().sendUserPasswordResetMail(currentPasswordChange, user);
-				} catch (ApplicationThrowable ath) {
-				}
+				getMailService().sendUserPasswordResetMail(currentPasswordChange, currentPasswordChange.getUser());
 			}
 			
 		} catch (Throwable th) {

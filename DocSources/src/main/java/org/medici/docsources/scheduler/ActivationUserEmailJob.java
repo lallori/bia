@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.apache.log4j.MDC;
 import org.medici.docsources.domain.ActivationUser;
-import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.mail.MailService;
 import org.medici.docsources.service.user.UserService;
@@ -75,11 +74,7 @@ public class ActivationUserEmailJob {
 			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();
 
 			for(ActivationUser currentActivation:usersToActivate) {
-				try {
-					User user = getUserService().findUser(currentActivation.getAccount());
-					getMailService().sendActivationMail(currentActivation, user);
-				} catch (ApplicationThrowable ath) {
-				}
+				getMailService().sendActivationMail(currentActivation, currentActivation.getUser());
 			}
 		} catch (ApplicationThrowable ath) {
 			

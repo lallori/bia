@@ -110,7 +110,8 @@ public class ActivateUserRequestValidator extends AbstractUserValidator implemen
 				return;
 			}
 
-			User user = getUserService().findUser(activationUser.getAccount());
+			User user = activationUser.getUser();
+
 			if (user == null) {
 				errors.rejectValue("uuid", "error.account.notfound");
 				return;

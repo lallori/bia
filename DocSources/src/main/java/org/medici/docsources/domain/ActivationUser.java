@@ -31,7 +31,10 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,8 +56,9 @@ public class ActivationUser implements Serializable {
 	@Id
 	@Column (name="\"UUID\"", length=50, nullable=false)
 	private String uuid;
-	@Column (name="\"ACCOUNT\"", length=30, nullable=false)
-	private String account;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private User user;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="\"REQUESTDATE\"", nullable=false)
 	private Date requestDate;
@@ -86,16 +90,16 @@ public class ActivationUser implements Serializable {
 		this.uuid = uuid;
 	}
 	/**
-	 * @return the account
+	 * @return the user
 	 */
-	public String getAccount() {
-		return account;
+	public User getUser() {
+		return user;
 	}
 	/**
-	 * @param account the account to set
+	 * @param user the user to set
 	 */
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	/**
 	 * @return the requestDate

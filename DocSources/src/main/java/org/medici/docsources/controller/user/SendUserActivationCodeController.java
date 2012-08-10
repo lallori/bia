@@ -139,7 +139,6 @@ public class SendUserActivationCodeController {
 			user.setMail(command.getMail());
 
 			try {
-				user = getUserService().findUser(user);
 				getUserService().addActivationUserRequest(user, command.getRemoteAddress());
 				model.put("user", user);
 			} catch (ApplicationThrowable applicationThrowable) {

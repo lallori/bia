@@ -122,7 +122,7 @@ public class ResetUserPasswordValidator extends AbstractUserValidator implements
 				errors.rejectValue("uuid", "error.uuid.notvalid");
 			}
 
-			User user = getUserService().findUser(passwordChangeRequest.getAccount());
+			User user = getUserService().findUser(passwordChangeRequest.getUser());
 			if (user == null) {
 				errors.rejectValue("uuid", "error.account.notfound");
 			}
