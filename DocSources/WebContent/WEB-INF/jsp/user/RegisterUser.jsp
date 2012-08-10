@@ -61,8 +61,8 @@
 		   theme : 'clean'
 		};
 
-		$(document).ready(function() {
-			var a = $('#countryAutoCompleter').autocomplete({ 
+		$j(document).ready(function() {
+			var a = $j('#countryAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findCountryUrl}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -71,7 +71,7 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#countryCode').val(data); }
+			    onSelect: function(value, data){ $j('#countryCode').val(data); }
 			  });
 		});
 
