@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.userauthority;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserAuthority.Authority;
@@ -44,4 +49,16 @@ public class UserAuthorityDAOJpaImpl extends JpaDao<Authority, UserAuthority> im
 	 * 
 	 */
 	private static final long serialVersionUID = 5581140548283171672L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UserAuthority> getAuthorities() throws PersistenceException {
+		String queryString = "FROM UserAuthority ORDER BY priority desc";
+		
+		Query query = getEntityManager().createQuery(queryString);
+		
+		return (List<UserAuthority>) query.getResultList();	
+	}
 }

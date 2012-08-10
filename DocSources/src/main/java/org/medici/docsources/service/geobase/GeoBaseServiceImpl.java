@@ -50,6 +50,7 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
@@ -59,6 +60,7 @@ import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
@@ -68,6 +70,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,6 +106,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO;
 	@Autowired
 	private PlaceTypeDAO placeTypeDAO;
+	@Autowired
+	private UserDAO userDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
 	@Autowired
@@ -150,7 +155,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				
 			getPlaceDAO().persist(place);
 
-			getUserHistoryDAO().persist(new UserHistory("Add new place", Action.CREATE, Category.PLACE, place));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new place", Action.CREATE, Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -172,7 +179,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			
 			getPlaceDAO().refresh(placeExternalLinks.getPlace());
 			
-			getUserHistoryDAO().persist(new UserHistory("Add external link", Action.MODIFY, Category.PLACE, placeExternalLinks.getPlace()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add external link", Action.MODIFY, Category.PLACE, placeExternalLinks.getPlace()));
 
 			return placeExternalLinks.getPlace();
 		}catch(Throwable th){
@@ -206,7 +215,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				// thisi method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
-				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
 			return forum;
@@ -238,7 +249,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			
 			getPlaceDAO().refresh(getPlaceDAO().find(placeGeographicCoordinatesToPersist.getPlace().getPlaceAllId()));
 			
-			getUserHistoryDAO().persist(new UserHistory("Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
 
 			return placeGeographicCoordinatesToPersist.getPlace();
 		}catch(Throwable th){
@@ -254,7 +267,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			Place place = getPlaceDAO().find(placeId);
 
-			getUserHistoryDAO().persist(new UserHistory("Compare place", Action.COMPARE, Category.PLACE, place));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Compare place", Action.COMPARE, Category.PLACE, place));
 
 			return place;
 		} catch (Throwable th) {
@@ -280,7 +295,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			getPlaceDAO().merge(placeToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Deleted place", Action.DELETE, Category.PLACE, placeToDelete));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Deleted place", Action.DELETE, Category.PLACE, placeToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -300,7 +317,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			getPlaceExternalLinksDAO().remove(placeExternalLinksToDelete);
 			placeExternalLinksToDelete.getPlace().setPlaceExternalLinks(null);
 
-			getUserHistoryDAO().persist(new UserHistory("Delete external link ", Action.MODIFY, Category.PLACE, placeExternalLinksToDelete.getPlace()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete external link ", Action.MODIFY, Category.PLACE, placeExternalLinksToDelete.getPlace()));
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -351,7 +370,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setLastUpdate(new Date());
 			getPlaceDAO().merge(placeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit details ", Action.MODIFY, Category.PLACE, placeToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit details ", Action.MODIFY, Category.PLACE, placeToUpdate));
 
 			return placeToUpdate;
 		}catch(Throwable th){
@@ -375,7 +396,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			
 			Place place = placeExternalLinksToUpdate.getPlace();
 			
-			getUserHistoryDAO().persist(new UserHistory("Edit external links", Action.MODIFY, Category.PLACE, place));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit external links", Action.MODIFY, Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -405,7 +428,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			
 			Place place = placeGeographicCoordinatesToUpdate.getPlace();
 			
-			getUserHistoryDAO().persist(new UserHistory("Edit geographic coordinates", Action.MODIFY, Category.PLACE, place));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit geographic coordinates", Action.MODIFY, Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -419,7 +444,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place findLastEntryPlace() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntry(Category.PLACE);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findLastEntry(user, Category.PLACE);
 			
 			if (userHistory != null) {
 				return userHistory.getPlace();
@@ -586,7 +613,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			Place place = getPlaceDAO().find(placeId);
 
-			getUserHistoryDAO().persist(new UserHistory("Show place", Action.VIEW, Category.PLACE, place));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Show place", Action.VIEW, Category.PLACE, place));
 
 			return place;
 		} catch (Throwable th) {
@@ -729,10 +758,12 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.PLACE, place.getPlaceAllId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -786,13 +817,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
 	 * @return the forumOptionDAO
 	 */
 	public ForumOptionDAO getForumOptionDAO() {
@@ -808,8 +832,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -829,10 +853,12 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public HistoryNavigator getHistoryNavigator(Place place) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.PLACE, place.getPlaceAllId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -884,19 +910,23 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the placeGeographicCoordinatesDAO
 	 */
 	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
 		return placeGeographicCoordinatesDAO;
 	}
-
+	
 	/**
 	 * @return the placeTypeDAO
 	 */
 	public PlaceTypeDAO getPlaceTypeDAO() {
 		return placeTypeDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 	
 	/**
@@ -926,7 +956,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public boolean ifPlaceAlreadyPresentInMarkedList(Integer placeAllId) throws ApplicationThrowable {
 		try{
-			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList(user);
 			if(userMarkedList == null){
 				return Boolean.FALSE;
 			}
@@ -1129,6 +1161,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
@@ -1171,6 +1210,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		this.placeTypeDAO = placeTypeDAO;
 	}
 
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
 	/**
 	 * @param userHistoryDAO the userHistoryDAO to set
 	 */
@@ -1211,7 +1254,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			getPlaceDAO().merge(placeToUndelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered place", Action.UNDELETE, Category.PLACE, placeToUndelete));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Recovered place", Action.UNDELETE, Category.PLACE, placeToUndelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

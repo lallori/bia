@@ -39,8 +39,6 @@ import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -95,7 +93,6 @@ public class AddMarkedListDocumentController {
 					if(userMarkedList == null){
 						userMarkedList = new UserMarkedList();
 						userMarkedList.setDateCreated(new Date());
-						userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 						userMarkedList = getUserMarkedListService().createMyMarkedList(userMarkedList);
 					}
 					

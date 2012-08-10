@@ -34,6 +34,7 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserMarkedList;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,11 +78,11 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserMarkedList getMyMarkedList() throws PersistenceException {
-		String queryString = "FROM UserMarkedList WHERE username=:username";
+	public UserMarkedList getMyMarkedList(User user) throws PersistenceException {
+		String queryString = "FROM UserMarkedList WHERE user=:username";
 		
 		Query query = getEntityManager().createQuery(queryString);
-		query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		query.setParameter("username", user);
 		query.setMaxResults(1);
 		
 		List<UserMarkedList> result = query.getResultList();

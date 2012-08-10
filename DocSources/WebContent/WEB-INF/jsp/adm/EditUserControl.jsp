@@ -68,7 +68,7 @@
         <div class="row">
             <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel">Group policies</label></div>
             <div class="col_r">
-            	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" path="userRoles" delimiter="<br/>"/>
+            	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" itemValue="authority" itemLabel="authority" path="userRoles" delimiter="<br/>"/>
             </div>
         </div>
     </div>
@@ -84,6 +84,12 @@
 			<div class="col_r"><form:input id="dayExpirationUser" path="dayExpirationUser" class="input_2c" maxlength="2"/></div>
 		</div>
 		<div class="row">
+            <div class="col_r">
+            	<label for="active" id="activeLabel">Active Account</label>
+				<form:checkbox path="active" cssClass="checkboxPers1"/>
+            </div>
+        </div>
+        <div class="row">
             <div class="col_r">
             	<label for="approved" id="approvedLabel">Approved Account</label>
 				<form:checkbox path="approved" cssClass="checkboxPers1"/>

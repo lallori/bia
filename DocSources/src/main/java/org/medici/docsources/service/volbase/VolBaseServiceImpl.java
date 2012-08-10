@@ -53,6 +53,7 @@ import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
@@ -63,6 +64,7 @@ import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
@@ -73,6 +75,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,6 +110,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private SchedoneDAO schedoneDAO;
 	@Autowired
 	private SeriesListDAO seriesListDAO;
+	@Autowired
+	private UserDAO userDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
 	@Autowired
@@ -179,7 +184,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			getVolumeDAO().persist(volume);
 			
-			getUserHistoryDAO().persist(new UserHistory("Create volume", Action.CREATE, Category.VOLUME, volume));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Create volume", Action.CREATE, Category.VOLUME, volume));
 			
 			return volume;
 		} catch (Throwable th) {
@@ -213,7 +220,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				// thisi method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
-				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
 			return forum;
@@ -282,7 +291,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			getUserHistoryDAO().persist(new UserHistory("Compare volume", Action.COMPARE, Category.VOLUME, volume));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Compare volume", Action.COMPARE, Category.VOLUME, volume));
 
 			return volume;
 		} catch (Throwable th) {
@@ -308,7 +319,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Delete volume", Action.DELETE, Category.VOLUME, volumeToDelete));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete volume", Action.DELETE, Category.VOLUME, volumeToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -335,7 +348,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit context", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit context", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -361,7 +376,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit correspondents", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit correspondents", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -403,7 +420,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit description", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit description", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -464,7 +483,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit details", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit details", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -478,7 +499,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findLastEntryVolume() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntry(Category.VOLUME);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findLastEntry(user, Category.VOLUME);
 			
 			if (userHistory != null) {
 				return userHistory.getVolume();
@@ -522,7 +545,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Show volume", Action.VIEW, Category.VOLUME, volume));
 
 			return volume;
 		} catch (Throwable th) {
@@ -539,7 +564,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
 			
 			if(volume != null){
-				getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Show volume", Action.VIEW, Category.VOLUME, volume));
 			}
 
 			return volume;
@@ -665,10 +692,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.VOLUME, volume.getSummaryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -718,6 +747,13 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -726,31 +762,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(historyId);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
-			
-			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
-			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-
-			return historyNavigator;
-		}catch(Throwable th){
-			logger.error(th);
-		}
-
-		return historyNavigator;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable {
-		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
-			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -764,11 +777,37 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.VOLUME, volume.getSummaryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
 		return imageDAO;
 	}
+
 
 	/**
 	 * @return the monthDAO
@@ -809,7 +848,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-
+	
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
 
 	/**
 	 * @return the UserMessageDAO
@@ -817,7 +859,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
-	
+
 	/**
 	 * @return the userMarkedListDAO
 	 */
@@ -825,12 +867,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return userMarkedListDAO;
 	}
 
+
 	/**
 	 * @return the userMarkedListElementDAO
 	 */
 	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
 		return userMarkedListElementDAO;
 	}
+
 
 	/**
 	 * @return the volumeDAO
@@ -863,8 +907,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -905,14 +948,16 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean ifVolumeAlreadyPresentInMarkedList(Integer summaryId) throws ApplicationThrowable {
 		try{
-			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList(user);
 			if (userMarkedList ==null) {
 				return Boolean.FALSE;
 			}
@@ -927,7 +972,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -937,6 +981,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -949,6 +994,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -993,6 +1039,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 
 	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+
+	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
@@ -1015,12 +1069,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.schedoneDAO = schedoneDAO;
 	}
 
-
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
 	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
 		this.seriesListDAO = seriesListDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 
@@ -1031,13 +1088,13 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.userHistoryDAO = userHistoryDAO;
 	}
 
-
 	/**
 	 * @param userMarkedListDAO the userMarkedListDAO to set
 	 */
 	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
 		this.userMarkedListDAO = userMarkedListDAO;
 	}
+
 
 	/**
 	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
@@ -1053,7 +1110,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -1073,7 +1129,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUnDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered volume", Action.UNDELETE, Category.VOLUME, volumeToUnDelete));
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Recovered volume", Action.UNDELETE, Category.VOLUME, volumeToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1094,7 +1152,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}		
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1106,19 +1163,5 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
-	 * @return the forumOptionDAO
-	 */
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
 	}
 }

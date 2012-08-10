@@ -112,7 +112,9 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			forum.setForumParent(parentForum);
 
-			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 			
 			return forum;
 		} catch (Throwable th) {
@@ -171,7 +173,7 @@ public class CommunityServiceImpl implements CommunityService {
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
 			getUserDAO().merge(user);
 
-			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
 			return forumPost;
 		} catch (Throwable th) {
@@ -231,7 +233,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 			getForumPostDAO().persist(forumPost);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
 			
 			return forumPost;
 		} catch (Throwable th) {
@@ -261,7 +265,9 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			ForumPost forumPost = getForumPostDAO().find(id);
 			
-			getUserHistoryDAO().persist(new UserHistory("Show post", Action.VIEW, Category.FORUM_POST, forumPost));
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Show post", Action.VIEW, Category.FORUM_POST, forumPost));
 
 			return forumPost;
 		} catch (Throwable th) {
@@ -532,7 +538,7 @@ public class CommunityServiceImpl implements CommunityService {
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
 			getUserDAO().merge(user);
 
-			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
+			getUserHistoryDAO().persist(new UserHistory(user, "Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
 			return forumPost;
 		} catch (Throwable th) {

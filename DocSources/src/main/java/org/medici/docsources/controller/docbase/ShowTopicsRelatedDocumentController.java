@@ -39,6 +39,7 @@ import javax.servlet.http.HttpSession;
 import org.medici.docsources.command.docbase.ShowTopicsRelatedDocumentCommand;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +117,7 @@ public class ShowTopicsRelatedDocumentController {
 			topic.add(command.getTopicTitle());
 			advancedSearchDocument.setTopics(topic);
 			searchFilter.setFilterData(advancedSearchDocument);
-			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+			searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 			// we get our map which contains all user's filter used at runtime. 
 			HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 			searchFilterMap.put(searchUUID, searchFilter);

@@ -34,6 +34,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserMarkedListElement;
 
 /**
@@ -82,11 +83,12 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	
 	/**
 	 * 
+	 * @param user
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException;
+	public Page findMarkedList(User user, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 

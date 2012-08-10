@@ -34,6 +34,7 @@ import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
@@ -41,6 +42,7 @@ import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
@@ -74,6 +76,8 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Autowired
 	private PlaceDAO placeDAO;
 	@Autowired
+	private UserDAO userDAO;
+	@Autowired
 	private UserHistoryDAO userHistoryDAO;
 	@Autowired
 	private UserMarkedListDAO userMarkedListDAO;
@@ -101,7 +105,9 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 				userMarkedList.setDateLastUpdate(creationDate);
 				getUserMarkedListDAO().merge(userMarkedList);
 	
-				getUserHistoryDAO().persist(new UserHistory("Add new document To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Add new document To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
 			}
 
 			return userMarkedList;
@@ -128,7 +134,9 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 				userMarkedList.setDateLastUpdate(creationDate);
 				getUserMarkedListDAO().merge(userMarkedList);
 	
-				getUserHistoryDAO().persist(new UserHistory("Add new person To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Add new person To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
 			}
 
 			return userMarkedList;
@@ -155,7 +163,9 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 				userMarkedList.setDateLastUpdate(creationDate);
 				getUserMarkedListDAO().merge(userMarkedList);
 	
-				getUserHistoryDAO().persist(new UserHistory("Add new place To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Add new place To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
 			}
 
 			return userMarkedList;
@@ -182,7 +192,9 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 				userMarkedList.setDateLastUpdate(creationDate);
 				getUserMarkedListDAO().merge(userMarkedList);
 	
-				getUserHistoryDAO().persist(new UserHistory("Add new volume To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Add new volume To Marked List", Action.MODIFY, Category.MARKED_LIST, userMarkedList.getIdMarkedList()));
 			}
 
 			return userMarkedList;
@@ -197,11 +209,13 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Override
 	public UserMarkedList createMyMarkedList(UserMarkedList userMarkedList) throws ApplicationThrowable {
 		try{
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()); 
+
 			userMarkedList.setIdMarkedList(null);
 			userMarkedList.setDateCreated(new Date());
 			userMarkedList.setDateLastUpdate(new Date());
 			userMarkedList.setDescription("");
-			userMarkedList.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			userMarkedList.setUser(user);
 			
 			getUserMarkedListDAO().persist(userMarkedList);
 			
@@ -217,8 +231,13 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Override
 	public void deleteMyMarkedList() throws ApplicationThrowable {
 		try{
-			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
-			getUserMarkedListElementDAO().removeAllMarkedListElements(userMarkedList.getIdMarkedList());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList(user);
+			
+			if (userMarkedList != null) {
+				getUserMarkedListElementDAO().removeAllMarkedListElements(userMarkedList.getIdMarkedList());
+			}
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}		
@@ -263,7 +282,9 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Override
 	public UserMarkedList getMyMarkedList() throws ApplicationThrowable {
 		try{
-			return getUserMarkedListDAO().getMyMarkedList();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserMarkedListDAO().getMyMarkedList(user);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -281,6 +302,10 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	 */
 	public PlaceDAO getPlaceDAO() {
 		return placeDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 	/**
@@ -303,7 +328,7 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
 		return userMarkedListElementDAO;
 	}
-
+	
 	/**
 	 * @return the volumeDAO
 	 */
@@ -365,7 +390,7 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -383,7 +408,7 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -393,7 +418,7 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -464,6 +489,10 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	 */
 	public void setPlaceDAO(PlaceDAO placeDAO) {
 		this.placeDAO = placeDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	/**

@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.User;
 
 /**
  * Search Filter DAO.
@@ -49,22 +50,22 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * This method searches a {@link org.medici.docsources.domain.SearchFilter} 
 	 * of a user by its username and the search filter's identifier.
 	 * 
-	 * @param username The name of the user 
+	 * @param user The name of the user 
 	 * @param idSearchFilter A SearchFilter identifier
 	 * @return The SearchFilter searched.
 	 * @throws PersistenceException
 	 */
-	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException;
+	public SearchFilter findUserSearchFilter(User user, Integer idSearchFilter) throws PersistenceException;
 
 	/**
 	 * This method searches every {@link org.medici.docsources.domain.SearchFilter} 
 	 * of a user by its username.
 	 * 
-	 * @param username The name of the user
+	 * @param user The user
 	 * @return A List<SearchFilter> of the user.
 	 * @throws PersistenceException
 	 */
-	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException;
+	public List<SearchFilter> findUserSearchFilters(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -73,15 +74,15 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
-	 * @param username
+	 * @param user
 	 * @param paginationFilter
 	 * @param searchType
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException;
+	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException;
 }

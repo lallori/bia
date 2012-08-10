@@ -34,6 +34,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
 
@@ -41,6 +42,7 @@ import org.medici.docsources.domain.UserHistory.Category;
  * UserHistory Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 
@@ -48,55 +50,52 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * 
 	 * @throws PersistenceException
 	 */
-	public Integer deleteMyHistory() throws PersistenceException;
+	public Integer deleteMyHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param category
 	 * @throws PersistenceException
 	 */
-	public Integer deleteMyHistory(Category category) throws PersistenceException;
+	public Integer deleteMyHistory(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
+	 * @param user
+	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteUserHistory(String username) throws PersistenceException;
+	public Integer deleteUserHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
+	 * @param user
 	 * @param category
+	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteUserHistory(String username, Category category) throws PersistenceException;
+	public Integer deleteUserHistory(User user, Category category) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param user
+	 * @param category
+	 * @param primaryKeyId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findCategoryHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
 
 	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
 	 * 
+	 * @param user
 	 * @param category
 	 * @param resultSize
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserHistory> findHistory(Category category, Integer resultSize) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page findHistory(Category category, PaginationFilter paginationFilter) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param category
-	 * @param paginationFilter
-	 * @param resultSize
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page findHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException;
+	public List<UserHistory> findHistory(User user,Category category, Integer resultSize) throws PersistenceException;
 	
 	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
@@ -105,7 +104,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserHistory> findHistory(Integer resultSize) throws PersistenceException;
+	public List<UserHistory> findHistory(User user, Integer resultSize) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findHistory(User user, PaginationFilter paginationFilter) throws PersistenceException;
 
 
 	/**
@@ -114,16 +121,17 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findHistory(PaginationFilter paginationFilter) throws PersistenceException;
+	public Page findHistory(User user, Category category, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
-	 * @param document
-	 * @param entryId
+	 * @param category
+	 * @param paginationFilter
+	 * @param resultSize
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findCategoryHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException;
+	public Page findHistory(User user, Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException;
 	
 	/**
 	 * 
@@ -132,7 +140,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException;
+	public UserHistory findHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
 
 	/**
 	 * 
@@ -140,7 +148,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findLastEntry() throws PersistenceException;
+	public UserHistory findLastEntry(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -148,7 +156,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findLastEntry(Category category) throws PersistenceException;
+	public UserHistory findLastEntry(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
@@ -157,7 +165,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findNextCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	public UserHistory findNextCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
 	
 	/**
 	 * 
@@ -165,7 +173,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findNextHistoryCursor(Integer idUserHisotry) throws PersistenceException;
+	public UserHistory findNextHistoryCursor(User user, Integer idUserHisotry) throws PersistenceException;
 
 	/**
 	 * 
@@ -174,7 +182,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findPreviousCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	public UserHistory findPreviousCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
 	
 	/**
 	 * 
@@ -182,14 +190,14 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findPreviousHistoryCursor(Integer idUserHistory) throws PersistenceException;
+	public UserHistory findPreviousHistoryCursor(User user, Integer idUserHistory) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreMyHistory() throws PersistenceException;
+	public Integer restoreMyHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -197,7 +205,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreMyHistory(Category category) throws PersistenceException;
+	public Integer restoreMyHistory(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
@@ -205,7 +213,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreUserHistory(String username) throws PersistenceException;
+	public Integer restoreUserHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -214,5 +222,5 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreUserHistory(String username, Category category) throws PersistenceException;
+	public Integer restoreUserHistory(User user, Category category) throws PersistenceException;
 }

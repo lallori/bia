@@ -34,6 +34,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserAuthority.Authority;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -44,6 +45,12 @@ import org.medici.docsources.exception.ApplicationThrowable;
  */
 public interface AdminService {
 
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void createAccessLogDailyStatistics() throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param user
@@ -59,14 +66,6 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	public User findUser(String account) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
-	 */
-	public List<User> findUsers(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -74,8 +73,23 @@ public interface AdminService {
 	 * @return
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
-	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public List<User> findUsers(User user) throws ApplicationThrowable;
 	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<UserAuthority> getAuthorities() throws ApplicationThrowable;
+
 	/**
 	 * Extracts all months available.
 	 *  
@@ -92,17 +106,4 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @throws ApplicationThrowable
-	 */
-	public void createAccessLogDailyStatistics() throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<Authority> getAuthorities() throws ApplicationThrowable;
 }

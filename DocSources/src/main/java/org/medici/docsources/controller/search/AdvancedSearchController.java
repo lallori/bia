@@ -48,6 +48,7 @@ import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -165,7 +166,7 @@ public class AdvancedSearchController {
 			}else{
 				searchFilter.setFilterData(new AdvancedSearchPlace());
 			}
-			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+			searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 			// we update user map
 			searchFilterMap.put(command.getSearchUUID(), searchFilter);
 			// we update information in session

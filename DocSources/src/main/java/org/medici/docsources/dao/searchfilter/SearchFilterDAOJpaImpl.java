@@ -36,6 +36,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -72,11 +73,11 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException {
-		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username and id=:id");
+	public SearchFilter findUserSearchFilter(User user, Integer idSearchFilter) throws PersistenceException {
+		StringBuilder jpql = new StringBuilder("from SearchFilter where user=:user and id=:id");
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("username", username);
+		query.setParameter("user", user);
 		query.setParameter("id", idSearchFilter);
 		
 		return (SearchFilter) query.getSingleResult();
@@ -87,11 +88,11 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException {
-		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username ");
+	public List<SearchFilter> findUserSearchFilters(User user) throws PersistenceException {
+		StringBuilder jpql = new StringBuilder("from SearchFilter where user=:user");
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("username", username);
+		query.setParameter("user", user);
 		
 		return query.getResultList();
 	}
@@ -100,19 +101,19 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-			String jpql = "SELECT count(username) from SearchFilter where username=:username";
+			String jpql = "SELECT count(user) from SearchFilter where user=:user";
 			Query query = getEntityManager().createQuery(jpql);
-			query.setParameter("username", username);
+			query.setParameter("user", user);
 
 			page.setTotal((Long) query.getSingleResult());
 		}
 
-		StringBuilder jpql = new StringBuilder("from SearchFilter where username=:username ");
+		StringBuilder jpql = new StringBuilder("from SearchFilter where user=:user ");
 		
 		if (paginationFilter.getSortingCriterias().size() > 0) {
 			jpql.append("order by ");
@@ -124,7 +125,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		}
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("username", username);
+		query.setParameter("user", user);
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
 		page.setList(query.getResultList());
@@ -136,14 +137,14 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException {
+	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-			String jpql = "SELECT count(username) from SearchFilter where username=:username and searchType=:searchType ";
+			String jpql = "SELECT count(username) from SearchFilter where user=:user and searchType=:searchType ";
 			Query query = getEntityManager().createQuery(jpql);
-			query.setParameter("username", username);
+			query.setParameter("user", user);
 			query.setParameter("searchType", searchType);
 
 			page.setTotal((Long) query.getSingleResult());
@@ -161,7 +162,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		}
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
-		query.setParameter("username", username);
+		query.setParameter("user", user);
 		query.setParameter("searchType", searchType);
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

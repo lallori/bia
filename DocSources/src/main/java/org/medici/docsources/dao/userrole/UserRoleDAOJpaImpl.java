@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.userrole;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -59,4 +60,27 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 
 		return query.getResultList();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeAllUserRoles(String account) throws PersistenceException {
+		String jpql = "DELETE FROM UserRole WHERE account=:account";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("account", account);
+        
+        return query.executeUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException {
+		for (UserRole userRole : userRoles) {
+			getEntityManager().persist(userRole);
+		}
+    }
 }

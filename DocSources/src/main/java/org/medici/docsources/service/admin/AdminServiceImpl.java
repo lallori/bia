@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.service.admin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,10 +42,13 @@ import org.medici.docsources.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.user.UserDAO;
+import org.medici.docsources.dao.userauthority.UserAuthorityDAO;
+import org.medici.docsources.dao.userrole.UserRoleDAO;
 import org.medici.docsources.domain.ApplicationProperty;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserAuthority.Authority;
+import org.medici.docsources.domain.UserAuthority;
+import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -63,13 +64,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	@Autowired
 	private AccessLogStatisticsDAO accessLogStatisticsDAO;
 
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
-
-	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private MonthDAO monthDAO;
@@ -77,6 +78,12 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
+
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
+	
+	@Autowired
+	private UserRoleDAO userRoleDAO;
 	
 	/**
 	 * {@inheritDoc}
@@ -142,7 +149,17 @@ public class AdminServiceImpl implements AdminService {
 			}
 			userToUpdate.setLocked(user.getLocked());
 						
-			getUserDAO().removeAllUserRoles(userToUpdate.getAccount());
+			getUserRoleDAO().removeAllUserRoles(userToUpdate.getAccount());
+			if (user.getUserRoles() != null) {
+				//We need before to attach jpa session..
+				for (UserRole userRole : user.getUserRoles()) {
+					userRole.setUser(userToUpdate);
+					userRole.setUserAuthority(getUserAuthorityDAO().find(userRole.getUserAuthority().getAuthority()));
+				}
+				getUserRoleDAO().addAllUserRoles(user.getUserRoles());
+			}
+			
+			
 			userToUpdate.setUserRoles(user.getUserRoles());
 			getUserDAO().merge(userToUpdate);
 		} catch(Throwable th){
@@ -205,8 +222,12 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Authority> getAuthorities() throws ApplicationThrowable {
-		return new ArrayList<Authority>(Arrays.asList(Authority.values()));
+	public List<UserAuthority> getAuthorities() throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getAuthorities();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -287,5 +308,27 @@ public class AdminServiceImpl implements AdminService {
 		}
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * @return the userAuthorityDAO
+	 */
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+
+	/**
+	 * @param userAuthorityDAO the userAuthorityDAO to set
+	 */
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
 	}
 }

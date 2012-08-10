@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.userrole;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -41,5 +42,25 @@ import org.medici.docsources.domain.UserRole;
  */
 public interface UserRoleDAO extends Dao<Integer, UserRole> {
 
+	/**
+	 * 
+	 * @param account
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public List<UserRole> findUserRoles(String account) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param account
+	 * @throws PersistenceException
+	 */
+	public Integer removeAllUserRoles(String account) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param userRoles
+	 * @throws PersistenceException
+	 */
+	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
 }

@@ -42,10 +42,9 @@ import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserMarkedListElement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -115,18 +114,18 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findMarkedList(PaginationFilter paginationFilter) throws PersistenceException {
+	public Page findMarkedList(User user, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		if(paginationFilter.getTotal() == null){
-			String queryString = "SELECT count(*) FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE username=:username)";
+			String queryString = "SELECT count(id) FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE user=:user)";
 			
 			 Query query = getEntityManager().createQuery(queryString);
-		     query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		     query.setParameter("user", user);
 		     page.setTotal(new Long((Long)query.getSingleResult()));
 		}
 		
-		String objectsQuery = "FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE username=:username)";
+		String objectsQuery = "FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE user=:user)";
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -146,7 +145,7 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		logger.debug("JPQL Query : " + jpql);
 
         Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("user", user);
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
 		page.setList(query.getResultList());

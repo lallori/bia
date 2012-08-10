@@ -30,20 +30,23 @@ package org.medici.docsources.dao.usermarkedlist;
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.dao.Dao;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserMarkedList;
 
 /**
  * UserMarkedList Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface UserMarkedListDAO extends Dao<Integer, UserMarkedList> {
 	
 	/**
 	 * 
+	 * @param user
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedList getMyMarkedList() throws PersistenceException;
+	public UserMarkedList getMyMarkedList(User user) throws PersistenceException;
 
 }

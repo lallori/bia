@@ -69,6 +69,8 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -199,7 +201,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteMyHistory() throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().deleteMyHistory();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().deleteMyHistory(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -212,7 +216,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteMyHistory(Category category) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().deleteMyHistory(category);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().deleteMyHistory(user, category);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -237,7 +243,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserHistory(String username) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().deleteUserHistory(username);
+			User user = getUserDAO().findUser(username);
+
+			getUserHistoryDAO().deleteUserHistory(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -249,7 +257,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserHistory(String username, Category category) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().deleteUserHistory(username, category);
+			User user = getUserDAO().findUser(username);
+
+			getUserHistoryDAO().deleteUserHistory(user, category);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -553,10 +563,12 @@ public class UserServiceImpl implements UserService {
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable {
 		HashMap<String, List<?>> historyReport = new HashMap<String, List<?>>(4);
 		try {
-			historyReport.put("Document", getUserHistoryDAO().findHistory(Category.DOCUMENT, 5));
-			historyReport.put("People", getUserHistoryDAO().findHistory(Category.PEOPLE, 5));
-			historyReport.put("Place", getUserHistoryDAO().findHistory(Category.PLACE, 5));
-			historyReport.put("Volume", getUserHistoryDAO().findHistory(Category.VOLUME, 5));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			historyReport.put("Document", getUserHistoryDAO().findHistory(user, Category.DOCUMENT, 5));
+			historyReport.put("People", getUserHistoryDAO().findHistory(user, Category.PEOPLE, 5));
+			historyReport.put("Place", getUserHistoryDAO().findHistory(user, Category.PLACE, 5));
+			historyReport.put("Volume", getUserHistoryDAO().findHistory(user, Category.VOLUME, 5));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -732,7 +744,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void restoreMyHistory() throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().restoreMyHistory();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().restoreMyHistory(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -744,7 +758,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void restoreMyHistory(Category category) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().restoreMyHistory(category);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().restoreMyHistory(user, category);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -756,7 +772,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void restoreUserHistory(String username) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().restoreUserHistory(username);
+			User user = getUserDAO().findUser(username);
+
+			getUserHistoryDAO().restoreUserHistory(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -768,7 +786,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable {
 		try {
-			getUserHistoryDAO().restoreUserHistory(username, category);
+			User user = getUserDAO().findUser(username);
+
+			getUserHistoryDAO().restoreUserHistory(user, category);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -780,7 +800,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable {
 		try{
-			return getUserHistoryDAO().findLastEntry();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserHistoryDAO().findLastEntry(user);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -792,7 +814,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserHistoryDAO().findHistory(category, paginationFilter);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserHistoryDAO().findHistory(user, category, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -804,7 +828,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws ApplicationThrowable {
 		try {
-			return getUserHistoryDAO().findHistory(category, paginationFilter, resultSize);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserHistoryDAO().findHistory(user, category, paginationFilter, resultSize);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -816,7 +842,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserHistoryDAO().findHistory(paginationFilter);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserHistoryDAO().findHistory(user, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -828,7 +856,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Page searchUserMarkedList(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserMarkedListElementDAO().findMarkedList(paginationFilter);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserMarkedListElementDAO().findMarkedList(user, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

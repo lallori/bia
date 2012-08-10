@@ -34,10 +34,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,8 +67,9 @@ public class SearchFilter implements Serializable {
 	@Column (name="\"id\"", length=10, nullable=false)
 	private Integer id;
 
-	@Column (name="\"username\"", length=20, nullable=false)
-	private String username;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private User user;
 
 	@Column (name="\"searchType\"", length=15)
 	@Enumerated(EnumType.STRING)
@@ -152,17 +156,17 @@ public class SearchFilter implements Serializable {
 	}
 
 	/**
-	 * @return the username
+	 * @return the user
 	 */
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param user the user to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

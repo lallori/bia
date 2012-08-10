@@ -30,16 +30,13 @@ package org.medici.docsources.domain;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -59,71 +56,72 @@ public class User implements Serializable {
 	@Id
 	@Column (name="\"account\"", length=50, nullable=false)
 	private String account;
+	@Column (name="\"activationDate\"")
+	private Date activationDate;
+	@Column (name="\"active\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean active;
 	@Column (name="\"address\"", length=200, nullable=true)
 	private String address;
+	@Column (name="\"approved\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean approved;
+	@Column (name="\"badLogin\"", nullable=false, columnDefinition="INT default '0'")
+	private Integer badLogin;
 	@Column (name="\"city\"", length=50, nullable=false)
 	private String city;
 	@Column (name="\"country\"", length=3, nullable=false)
 	private String country;
+	@Column (name="\"currentLoginDate\"")
+	private Date currentLoginDate;
+	@Column (name="\"expirationDate\"", nullable=false)
+	private Date expirationDate;
+	@Column (name="\"expirationPasswordDate\"", nullable=false)
+	private Date expirationPasswordDate;
 	@Column (name="\"firstName\"", length=50, nullable=false)
 	private String firstName;
+	@Column (name="\"forumJoinedDate\"", nullable=true)
+	private Date forumJoinedDate;
+
+	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
+	private Long forumNumberOfPost;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<ForumPost> forumPosts;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<ForumTopic> forumTopics;
 	@Column (name="\"initials\"", length=5, nullable=false)
 	private String initials;
 	@Column (name="\"interests\"", length=500)
 	private String interests;
+	@Column (name="\"lastActiveForumDate\"", nullable=true)
+	private Date lastActiveForumDate;
+	@Column (name="\"lastForumPostDate\"", nullable=true)
+	private Date lastForumPostDate;
+	@Column (name="\"lastLoginDate\"")
+	private Date lastLoginDate;
 	@Column (name="\"lastName\"", length=50, nullable=false)
 	private String lastName;
+	@Column (name="\"lastPasswordChangeDate\"")
+	private Date lastPasswordChangeDate;
+	@Column (name="\"locked\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean locked;
 	@Column (name="\" mail\"", length=50, nullable=false)
 	private String mail;
 	@Column (name="\"organization\"", length=50, nullable=false)
 	private String organization;
 	@Column (name="\"password\"", length=64, nullable=false)
 	private String password;
-	@Column (name="\"title\"", length=50, nullable=true)
-	private String title;
 	@Column (name="\"photo\"", nullable=true)
 	@Lob
 	private BufferedImage photo;
 
-	@Column (name="\"active\"", nullable=false, columnDefinition="BIT default 0")
-	private Boolean active;
-	@Column (name="\"approved\"", nullable=false, columnDefinition="BIT default 0")
-	private Boolean approved;
-	@Column (name="\"locked\"", nullable=false, columnDefinition="BIT default 0")
-	private Boolean locked;
-	@Column (name="\"badLogin\"", nullable=false, columnDefinition="INT default '0'")
-	private Integer badLogin;
-	@Column (name="\"activationDate\"")
-	private Date activationDate;
-	@Column (name="\"currentLoginDate\"")
-	private Date currentLoginDate;
-	@Column (name="\"lastLoginDate\"")
-	private Date lastLoginDate;
-	@Column (name="\"expirationDate\"", nullable=false)
-	private Date expirationDate;
-	@Column (name="\"expirationPasswordDate\"", nullable=false)
-	private Date expirationPasswordDate;
-	@Column (name="\"lastPasswordChangeDate\"")
-	private Date lastPasswordChangeDate;
 	@Column (name="\"registrationDate\"", nullable=false)
 	private Date registrationDate;
-	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
-	private Long forumNumberOfPost;
-	@Column (name="\"forumJoinedDate\"", nullable=true)
-	private Date forumJoinedDate;
-	@Column (name="\"lastForumPostDate\"", nullable=true)
-	private Date lastForumPostDate;
-	@Column (name="\"lastActiveForumDate\"", nullable=true)
-	private Date lastActiveForumDate;
+
+	@Column (name="\"title\"", length=50, nullable=true)
+	private String title;
 
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<UserRole> userRoles;
 
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<ForumTopic> forumTopics;
-
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<ForumPost> forumPosts;
 	/**
 	 * Default constructor.
 	 */
@@ -145,10 +143,37 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the activationDate
+	 */
+	public Date getActivationDate() {
+		return activationDate;
+	}
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+
+	/**
 	 * @return the address
 	 */
 	public String getAddress() {
 		return address;
+	}
+
+	/**
+	 * @return the approved
+	 */
+	public Boolean getApproved() {
+		return approved;
+	}
+
+	/**
+	 * @return the badLogin
+	 */
+	public Integer getBadLogin() {
+		return badLogin;
 	}
 
 	/**
@@ -166,11 +191,60 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the currentLoginDate
+	 */
+	public Date getCurrentLoginDate() {
+		return currentLoginDate;
+	}
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	/**
+	 * @return the expirationPasswordDate
+	 */
+	public Date getExpirationPasswordDate() {
+		return expirationPasswordDate;
+	}
+
+	/**
 	 * 
 	 * @return
 	 */
 	public String getFirstName() {
 		return firstName;
+	}
+
+	/**
+	 * @return the forumJoinedDate
+	 */
+	public Date getForumJoinedDate() {
+		return forumJoinedDate;
+	}
+
+	/**
+	 * @return the forumNumberOfPost
+	 */
+	public Long getForumNumberOfPost() {
+		return forumNumberOfPost;
+	}
+
+	/**
+	 * @return the forumPosts
+	 */
+	public Set<ForumPost> getForumPosts() {
+		return forumPosts;
+	}
+
+	/**
+	 * @return the forumTopics
+	 */
+	public Set<ForumTopic> getForumTopics() {
+		return forumTopics;
 	}
 
 	/**
@@ -188,10 +262,45 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the lastActiveForumDate
+	 */
+	public Date getLastActiveForumDate() {
+		return lastActiveForumDate;
+	}
+
+	/**
+	 * @return the lastForumPostDate
+	 */
+	public Date getLastForumPostDate() {
+		return lastForumPostDate;
+	}
+
+	/**
+	 * @return the lastLoginDate
+	 */
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	/**
 	 * @return the surname
 	 */
 	public String getLastName() {
 		return lastName;
+	}
+
+	/**
+	 * @return the lastPasswordChangeDate
+	 */
+	public Date getLastPasswordChangeDate() {
+		return lastPasswordChangeDate;
+	}
+
+	/**
+	 * @return the locked
+	 */
+	public Boolean getLocked() {
+		return locked;
 	}
 
 	/**
@@ -220,6 +329,13 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the registrationDate
+	 */
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	/**
 	 * @return person title
 	 */
 	public String getTitle() {
@@ -238,11 +354,39 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @param activationDate the activationDate to set
+	 */
+	public void setActivationDate(Date activationDate) {
+		this.activationDate = activationDate;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	/**
 	 * @param address
 	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
+
+	/**
+	 * @param badLogin the badLogin to set
+	 */
+	public void setBadLogin(Integer badLogin) {
+		this.badLogin = badLogin;
 	}
 
 	/**
@@ -262,11 +406,60 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @param currentLoginDate the currentLoginDate to set
+	 */
+	public void setCurrentLoginDate(Date currentLoginDate) {
+		this.currentLoginDate = currentLoginDate;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	/**
+	 * @param expirationPasswordDate the expirationPasswordDate to set
+	 */
+	public void setExpirationPasswordDate(Date expirationPasswordDate) {
+		this.expirationPasswordDate = expirationPasswordDate;
+	}
+
+	/**
 	 * 
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	/**
+	 * @param forumJoinedDate the forumJoinedDate to set
+	 */
+	public void setForumJoinedDate(Date forumJoinedDate) {
+		this.forumJoinedDate = forumJoinedDate;
+	}
+
+	/**
+	 * @param forumNumberOfPost the forumNumberOfPost to set
+	 */
+	public void setForumNumberOfPost(Long forumNumberOfPost) {
+		this.forumNumberOfPost = forumNumberOfPost;
+	}
+
+	/**
+	 * @param forumPosts the forumPosts to set
+	 */
+	public void setForumPosts(Set<ForumPost> forumPosts) {
+		this.forumPosts = forumPosts;
+	}
+
+	/**
+	 * @param forumTopics the forumTopics to set
+	 */
+	public void setForumTopics(Set<ForumTopic> forumTopics) {
+		this.forumTopics = forumTopics;
 	}
 
 	/**
@@ -284,11 +477,46 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @param lastActiveForumDate the lastActiveForumDate to set
+	 */
+	public void setLastActiveForumDate(Date lastActiveForumDate) {
+		this.lastActiveForumDate = lastActiveForumDate;
+	}
+
+	/**
+	 * @param lastForumPostDate the lastForumPostDate to set
+	 */
+	public void setLastForumPostDate(Date lastForumPostDate) {
+		this.lastForumPostDate = lastForumPostDate;
+	}
+
+	/**
+	 * @param lastLoginDate the lastLoginDate to set
+	 */
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
+	/**
 	 * @param lastName
 	 *            the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	/**
+	 * @param lastPasswordChangeDate the lastPasswordChangeDate to set
+	 */
+	public void setLastPasswordChangeDate(Date lastPasswordChangeDate) {
+		this.lastPasswordChangeDate = lastPasswordChangeDate;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 	/**
@@ -320,161 +548,6 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @param title
-	 *            the title to set
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * @return the activationDate
-	 */
-	public Date getActivationDate() {
-		return activationDate;
-	}
-
-	/**
-	 * @param activationDate the activationDate to set
-	 */
-	public void setActivationDate(Date activationDate) {
-		this.activationDate = activationDate;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	/**
-	 * @return the approved
-	 */
-	public Boolean getApproved() {
-		return approved;
-	}
-
-	/**
-	 * @param approved the approved to set
-	 */
-	public void setApproved(Boolean approved) {
-		this.approved = approved;
-	}
-
-	/**
-	 * @return the badLogin
-	 */
-	public Integer getBadLogin() {
-		return badLogin;
-	}
-
-	/**
-	 * @param badLogin the badLogin to set
-	 */
-	public void setBadLogin(Integer badLogin) {
-		this.badLogin = badLogin;
-	}
-
-	/**
-	 * @return the currentLoginDate
-	 */
-	public Date getCurrentLoginDate() {
-		return currentLoginDate;
-	}
-
-	/**
-	 * @param currentLoginDate the currentLoginDate to set
-	 */
-	public void setCurrentLoginDate(Date currentLoginDate) {
-		this.currentLoginDate = currentLoginDate;
-	}
-
-	/**
-	 * @return the expirationDate
-	 */
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	/**
-	 * @param expirationDate the expirationDate to set
-	 */
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	/**
-	 * @return the expirationPasswordDate
-	 */
-	public Date getExpirationPasswordDate() {
-		return expirationPasswordDate;
-	}
-
-	/**
-	 * @param expirationPasswordDate the expirationPasswordDate to set
-	 */
-	public void setExpirationPasswordDate(Date expirationPasswordDate) {
-		this.expirationPasswordDate = expirationPasswordDate;
-	}
-
-	/**
-	 * @return the lastLoginDate
-	 */
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-	/**
-	 * @param lastLoginDate the lastLoginDate to set
-	 */
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	/**
-	 * @return the lastPasswordChangeDate
-	 */
-	public Date getLastPasswordChangeDate() {
-		return lastPasswordChangeDate;
-	}
-
-	/**
-	 * @param lastPasswordChangeDate the lastPasswordChangeDate to set
-	 */
-	public void setLastPasswordChangeDate(Date lastPasswordChangeDate) {
-		this.lastPasswordChangeDate = lastPasswordChangeDate;
-	}
-
-	/**
-	 * @return the locked
-	 */
-	public Boolean getLocked() {
-		return locked;
-	}
-
-	/**
-	 * @param locked the locked to set
-	 */
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
-	}
-
-	/**
-	 * @return the registrationDate
-	 */
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
-
-	/**
 	 * @param registrationDate the registrationDate to set
 	 */
 	public void setRegistrationDate(Date registrationDate) {
@@ -482,59 +555,11 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @return the forumNumberOfPost
+	 * @param title
+	 *            the title to set
 	 */
-	public Long getForumNumberOfPost() {
-		return forumNumberOfPost;
-	}
-
-	/**
-	 * @param forumNumberOfPost the forumNumberOfPost to set
-	 */
-	public void setForumNumberOfPost(Long forumNumberOfPost) {
-		this.forumNumberOfPost = forumNumberOfPost;
-	}
-
-	/**
-	 * @return the forumJoinedDate
-	 */
-	public Date getForumJoinedDate() {
-		return forumJoinedDate;
-	}
-
-	/**
-	 * @param forumJoinedDate the forumJoinedDate to set
-	 */
-	public void setForumJoinedDate(Date forumJoinedDate) {
-		this.forumJoinedDate = forumJoinedDate;
-	}
-
-	/**
-	 * @return the lastForumPostDate
-	 */
-	public Date getLastForumPostDate() {
-		return lastForumPostDate;
-	}
-
-	/**
-	 * @param lastForumPostDate the lastForumPostDate to set
-	 */
-	public void setLastForumPostDate(Date lastForumPostDate) {
-		this.lastForumPostDate = lastForumPostDate;
-	}
-
-	/**
-	 * @return the lastActiveForumDate
-	 */
-	public Date getLastActiveForumDate() {
-		return lastActiveForumDate;
-	}
-
-	/**
-	 * @param lastActiveForumDate the lastActiveForumDate to set
-	 */
-	public void setLastActiveForumDate(Date lastActiveForumDate) {
-		this.lastActiveForumDate = lastActiveForumDate;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**

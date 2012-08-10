@@ -40,6 +40,7 @@ import org.medici.docsources.command.peoplebase.ShowDocumentsPersonCommand;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -126,7 +127,7 @@ public class ShowReferringToDocumentsPersonController {
 				advancedSearchDocument.setRefersToId(referringId);
 				advancedSearchDocument.setRefersTo(referringName);
 				searchFilter.setFilterData(advancedSearchDocument);
-				searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+				searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 				// we get our map which contains all user's filter used at runtime.
 				HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 				searchFilterMap.put(searchUUID, searchFilter);

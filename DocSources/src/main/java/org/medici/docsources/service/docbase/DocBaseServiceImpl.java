@@ -58,6 +58,7 @@ import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.synextract.SynExtractDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.docsources.dao.usermarkedlistelement.UserMarkedListElementDAO;
@@ -74,6 +75,7 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
@@ -83,6 +85,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,14 +127,17 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private TopicsListDAO topicsListDAO;
 	@Autowired
+	private UserDAO userDAO;
+	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+
 	@Autowired
 	private UserMarkedListDAO userMarkedListDAO;
+
 	@Autowired
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -189,14 +195,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getDocumentDAO().persist(document);
 
-			getUserHistoryDAO().persist(new UserHistory("Create document", Action.CREATE, Category.DOCUMENT, document));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Create document", Action.CREATE, Category.DOCUMENT, document));
 
 			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -223,7 +230,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 				// thisi method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
-				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
 			return forum;
@@ -248,7 +257,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document entity state, otherwise synExtract property will be null
 			getDocumentDAO().refresh(synExtract.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory("Add new extract", Action.MODIFY, Category.DOCUMENT, synExtract.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new extract", Action.MODIFY, Category.DOCUMENT, synExtract.getDocument()));
 
 			return synExtract.getDocument();
 		} catch (Throwable th) {
@@ -268,7 +279,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			factChecks.setDocument(getDocumentDAO().find(factChecks.getDocument().getEntryId()));
 			getFactChecksDAO().persist(factChecks);
 
-			getUserHistoryDAO().persist(new UserHistory("Add new fact checks", Action.MODIFY, Category.DOCUMENT, factChecks.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new fact checks", Action.MODIFY, Category.DOCUMENT, factChecks.getDocument()));
 
 			// We need to refresh linked document entity state, otherwise factChecks property will be null
 			getDocumentDAO().refresh(factChecks.getDocument());
@@ -294,7 +307,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEpLinkDAO().persist(epLink);
 
-			getUserHistoryDAO().persist(new UserHistory("Add new person", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new person", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
 
 			return epLink.getDocument();
 		} catch (Throwable th) {
@@ -333,7 +348,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document entity state, otherwise eplToLink property will be null
 			getDocumentDAO().refresh(eplToLink.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory("Add new topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
 
 			return eplToLink.getDocument();
 		} catch (Throwable th) {
@@ -376,7 +393,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			getUserHistoryDAO().persist(new UserHistory("Compare document", Action.COMPARE, Category.DOCUMENT, document));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Compare document", Action.COMPARE, Category.DOCUMENT, document));
 
 			return document;
 		} catch (Throwable th) {
@@ -429,7 +448,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			getDocumentDAO().merge(documentToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Deleted document", Action.DELETE, Category.DOCUMENT, documentToDelete));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Deleted document", Action.DELETE, Category.DOCUMENT, documentToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -450,7 +471,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			epLinkToDelete.getPerson().setEpLink(null);
 			getEpLinkDAO().remove(epLinkToDelete);
 			
-			getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -470,7 +493,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// Tnx to http://stackoverflow.com/questions/4748426/cannot-remove-entity-which-is-target-of-onetoone-relation
 			eplToLinkToDelete.getDocument().setEplToLink(null);
 
-			getUserHistoryDAO().persist(new UserHistory("Unlink topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -484,6 +509,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable {
 		try {
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
+
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			// fill fields of correspondents section
 			documentToUpdate.setLastUpdate(new Date());
@@ -514,7 +541,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkToDelete.getDocument().setEpLink(null);
 						epLinkToDelete.getPerson().setEpLink(null);
 						getEpLinkDAO().remove(epLinkToDelete);
-						getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+
+						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
 					}
 					documentToUpdate.setSenderPeople(null);
 					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
@@ -568,7 +596,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkToDelete.getDocument().setEpLink(null);
 						epLinkToDelete.getPerson().setEpLink(null);
 						getEpLinkDAO().remove(epLinkToDelete);
-						getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+
+						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
 					}
 					documentToUpdate.setRecipientPeople(null);
 					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
@@ -595,7 +624,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setRecipNotes(document.getRecipNotes());
 			}
 		
-			getUserHistoryDAO().persist(new UserHistory("Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 
 			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
@@ -672,7 +701,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getDocumentDAO().merge(documentToUpdate);
 			
-			getUserHistoryDAO().persist(new UserHistory("Edit Details", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit Details", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 			
 			return documentToUpdate;
 		} catch (Throwable th) {
@@ -700,7 +731,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory("Edit extract", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -727,7 +760,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory("Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -747,14 +782,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 			getFactChecksDAO().merge(factChecksToUpdate);
 			
-			getUserHistoryDAO().persist(new UserHistory("Edit fact checks", Action.MODIFY, Category.DOCUMENT, factChecksToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit fact checks", Action.MODIFY, Category.DOCUMENT, factChecksToUpdate.getDocument()));
 
 			return factChecksToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -771,7 +808,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEpLinkDAO().merge(epLinkToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory("Edit person linked", Action.MODIFY, Category.DOCUMENT, epLinkToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit person linked", Action.MODIFY, Category.DOCUMENT, epLinkToUpdate.getDocument()));
 
 			return epLinkToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -797,14 +836,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise synExtract property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory("Edit synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -834,7 +875,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise eplToLink property will be null
 			getDocumentDAO().refresh(eplToLinkToUpdate.getDocument());
 			
-			getUserHistoryDAO().persist(new UserHistory("Edit topic linked", Action.MODIFY, Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit topic linked", Action.MODIFY, Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
 
 			return eplToLinkToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -862,7 +905,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			getUserHistoryDAO().persist(new UserHistory("Show document", Action.VIEW, Category.DOCUMENT, document));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Show document", Action.VIEW, Category.DOCUMENT, document));
 
 			return document;
 		} catch (Throwable th) {
@@ -923,7 +968,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document findLastEntryDocument() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntry(Category.DOCUMENT);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findLastEntry(user, Category.DOCUMENT);
 			
 			if (userHistory != null) {
 				return userHistory.getDocument();
@@ -971,7 +1018,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -995,7 +1042,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1105,10 +1152,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(user, Category.DOCUMENT, document.getEntryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1137,7 +1185,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1167,7 +1215,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public EpLinkDAO getEpLinkDAO() {
 		return epLinkDAO;
 	}
-
+	
 	/**
 	 * @return the eplToLinkDAO
 	 */
@@ -1203,10 +1251,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try{
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.DOCUMENT, document.getEntryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1226,8 +1276,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1249,8 +1299,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(historyLog.getIdUserHistory());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getUser(), userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getUser(), userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1274,7 +1324,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1297,7 +1347,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-
+	
 	/**
 	 * @return the placeDAO
 	 */
@@ -1323,7 +1373,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the topicsListDAO
 	 */
@@ -1331,6 +1381,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return topicsListDAO;
 	}
 
+	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+	
 	/**
 	 * @return the userHistoryDAO
 	 */
@@ -1358,14 +1415,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable {
 		try{
-			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList(user);
 
 			if(userMarkedList == null){
 				return Boolean.FALSE;
@@ -1381,7 +1440,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1393,7 +1452,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1405,7 +1464,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1544,6 +1603,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @param userDAO the userDAO to set
+	 */
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
 	 * @param userHistoryDAO the userHistoryDAO to set
 	 */
 	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
@@ -1590,7 +1656,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			getDocumentDAO().merge(documentToUnDelete);
 
-			getUserHistoryDAO().persist(new UserHistory("Recovered document", Action.UNDELETE, Category.DOCUMENT, documentToUnDelete));
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Recovered document", Action.UNDELETE, Category.DOCUMENT, documentToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

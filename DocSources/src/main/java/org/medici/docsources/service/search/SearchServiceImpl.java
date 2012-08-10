@@ -43,6 +43,7 @@ import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Month;
@@ -50,6 +51,7 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.domain.Volume;
@@ -96,6 +98,9 @@ public class SearchServiceImpl implements SearchService {
 	private TopicsListDAO topicsListDAO;
 
 	@Autowired
+	private UserDAO userDAO;
+	
+	@Autowired
 	private VolumeDAO volumeDAO;
 
 	/**
@@ -104,6 +109,8 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public SearchFilter addSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			// we need to perform an advanced search to obtain total number result
 			Page page = null;
 			PaginationFilter paginationFilter = new PaginationFilter(1, 1);
@@ -125,7 +132,7 @@ public class SearchServiceImpl implements SearchService {
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());
 			searchFilter.setTotalResult(page.getTotal());
-			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+			searchFilter.setUser(user);
 			getSearchFilterDAO().persist(searchFilter);
 
 			return searchFilter;
@@ -205,7 +212,9 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public SearchFilter getSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
 		try {
-			return getSearchFilterDAO().findUserSearchFilter(searchFilter.getUsername(), searchFilter.getId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getSearchFilterDAO().findUserSearchFilter(user, searchFilter.getId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -243,13 +252,19 @@ public class SearchServiceImpl implements SearchService {
 		return topicsListDAO;
 	}
 
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
 	/**
 	 *{@inheritDoc} 
 	 */
 	@Override
 	public SearchFilter getUserSearchFilter(Integer idSearchFilter) throws ApplicationThrowable {
 		try {
-			return getSearchFilterDAO().findUserSearchFilter(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), idSearchFilter);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getSearchFilterDAO().findUserSearchFilter(user, idSearchFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -261,7 +276,9 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<SearchFilter> getUserSearchFilters() throws ApplicationThrowable {
 		try {
-			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getSearchFilterDAO().findUserSearchFilters(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -273,7 +290,9 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), paginationFilter);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getSearchFilterDAO().findUserSearchFilters(user, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -285,7 +304,9 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page getUserSearchFilters(PaginationFilter paginationFilter, SearchType searchType) throws ApplicationThrowable {
 		try {
-			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), paginationFilter, searchType);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getSearchFilterDAO().findUserSearchFilters(user, paginationFilter, searchType);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -297,14 +318,16 @@ public class SearchServiceImpl implements SearchService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-
+	
 	/**
 	 * 
 	 */
 	@Override
 	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
 		try {
-			SearchFilter searchFilterToUpdate = getSearchFilterDAO().findUserSearchFilter(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), searchFilter.getId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			SearchFilter searchFilterToUpdate = getSearchFilterDAO().findUserSearchFilter(user, searchFilter.getId());
 
 			searchFilterToUpdate.setDateUpdated(new Date());
 			searchFilterToUpdate.setSearchType(searchFilter.getSearchType());
@@ -328,18 +351,6 @@ public class SearchServiceImpl implements SearchService {
 			}
 			searchFilterToUpdate.setTotalResult(page.getTotal());
 			getSearchFilterDAO().merge(searchFilterToUpdate);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Long searchCount(Search searchContainer) throws ApplicationThrowable {
-		try {
-			return getDocumentDAO().countSearchMYSQL(searchContainer);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -397,6 +408,18 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long searchCount(Search searchContainer) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().countSearchMYSQL(searchContainer);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
@@ -416,7 +439,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -428,7 +451,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -452,7 +475,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -473,7 +496,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -486,7 +509,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -531,14 +554,14 @@ public class SearchServiceImpl implements SearchService {
 	public void setPeopleDAO(PeopleDAO peopleDAO) {
 		this.peopleDAO = peopleDAO;
 	}
-
+	
 	/**
 	 * @param placeDAO the placeDAO to set
 	 */
 	public void setPlaceDAO(PlaceDAO placeDAO) {
 		this.placeDAO = placeDAO;
 	}
-	
+
 	/**
 	 * @param placeTypeDAO the placeTypeDAO to set
 	 */
@@ -565,6 +588,10 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public void setTopicsListDAO(TopicsListDAO topicsListDAO) {
 		this.topicsListDAO = topicsListDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	/**

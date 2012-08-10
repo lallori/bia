@@ -81,6 +81,9 @@ public class UserRole implements Serializable{
 	 */
 	public UserRole(User user, UserAuthority userAuthority) {
 		super();
+		
+		setUser(user);
+		setUserAuthority(userAuthority);
 	}
 
 	/**

@@ -37,6 +37,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -75,8 +77,9 @@ public class UserMarkedList implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdate;
 	
-	@Column (name="\"username\"", length=25, nullable=false)
-	private String username;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private User user;
 
     @OneToMany(mappedBy="userMarkedList", fetch=FetchType.LAZY)
     @ContainedIn
@@ -110,10 +113,10 @@ public class UserMarkedList implements Serializable {
 		return idMarkedList;
 	}
 	/**
-	 * @return the username
+	 * @return the user
 	 */
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 	/**
 	 * @param dateCreated the dateCreated to set
@@ -135,10 +138,10 @@ public class UserMarkedList implements Serializable {
 	}
 	
 	/**
-	 * @param username the username to set
+	 * @param user the user to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

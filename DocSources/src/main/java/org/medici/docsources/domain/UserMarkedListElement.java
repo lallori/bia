@@ -59,21 +59,6 @@ public class UserMarkedListElement implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"idMarkedList\"", nullable=true)
 	private UserMarkedList userMarkedList;
@@ -109,6 +94,20 @@ public class UserMarkedListElement implements Serializable {
 		setUserMarkedList(userMarkedList);
 	}
 
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @param document the document to set
 	 */

@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.userauthority;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserAuthority.Authority;
@@ -38,4 +42,10 @@ import org.medici.docsources.domain.UserAuthority.Authority;
  */
 public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<UserAuthority> getAuthorities() throws PersistenceException;
 }

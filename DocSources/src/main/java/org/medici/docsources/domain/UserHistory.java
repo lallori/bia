@@ -44,8 +44,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.medici.docsources.common.search.Search;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * UserHistory entity.
@@ -67,9 +65,10 @@ public class UserHistory implements Serializable {
 	private Integer idUserHistory;
 	@Column (name="\"dateAndTime\"", nullable=false)
 	private Date dateAndTime;
-	@Column (name="\"username\"", length=25, nullable=false)
-	private String username;
-	@Column (name="\"action\"", length=10, nullable=true)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private User user;
+	@Column (name="\"action\"", length=20, nullable=true)
 	@Enumerated(EnumType.STRING)
 	private Action action;
 	@Column (name="\"category\"", length=20, nullable=true)
@@ -117,9 +116,9 @@ public class UserHistory implements Serializable {
 	 * @param action
 	 * @param document
 	 */
-	public UserHistory(String description, Action action, Category category, Object object) {
+	public UserHistory(User user, String description, Action action, Category category, Object object) {
 		this.setDateAndTime(new Date());
-		this.setUsername(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		this.setUser(user);
 		this.setDescription(description);
 		this.setAction(action);
 		this.setCategory(category);
@@ -183,15 +182,15 @@ public class UserHistory implements Serializable {
 	/**
 	 * @param username the username to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
 	 * @return the username
 	 */
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 
 	/**

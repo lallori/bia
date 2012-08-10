@@ -98,7 +98,7 @@ public class EditUserController {
 			months = getAdminService().getMonths();
 			model.put("months", months);
 			
-			List<Authority> authorities= getAdminService().getAuthorities();
+			List<UserAuthority> authorities= getAdminService().getAuthorities();
 			model.put("authorities", authorities);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);

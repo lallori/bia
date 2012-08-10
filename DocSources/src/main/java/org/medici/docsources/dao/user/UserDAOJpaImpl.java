@@ -28,10 +28,8 @@
 package org.medici.docsources.dao.user;
 
 import java.util.List;
-
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
@@ -436,12 +434,18 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		return;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeAllUserRoles(String account) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void removeUserRoles(String account, List<UserRole> userRoles) {
 		// TODO Auto-generated method stub
