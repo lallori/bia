@@ -66,7 +66,7 @@ public class User implements Serializable {
 	private Boolean approved;
 	@Column (name="\"badLogin\"", nullable=false, columnDefinition="INT default '0'")
 	private Integer badLogin;
-	@Column (name="\"city\"", length=50, nullable=false)
+	@Column (name="\"city\"", length=50, nullable=true)
 	private String city;
 	@Column (name="\"country\"", length=3, nullable=false)
 	private String country;

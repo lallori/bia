@@ -122,6 +122,7 @@ public class RegisterUserController {
 			User user = new User();
 			try {
 				BeanUtils.copyProperties(user, command);
+				user.setCountry(command.getCountryCode());
 			} catch (IllegalAccessException iaex) {
 			} catch (InvocationTargetException itex) {
 			}

@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
 			//Search user by account and update active flag
 			User user = activationUser.getUser();
 			user.setActive(Boolean.TRUE);
+			user.setActivationDate(new Date());
 			getUserDAO().merge(user);
 			
 			//Complete the activation by updating the activation request.

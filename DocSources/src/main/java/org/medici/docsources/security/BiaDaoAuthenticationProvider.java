@@ -115,7 +115,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				
 				user.setBadLogin(user.getBadLogin()+1);
 				
-				Integer badLogin = NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.badLogin"));
+				Integer badLogin = NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.maxBadLogin"));
 				
 				if (user.getBadLogin() > badLogin) {
 					user.setLocked(true);
