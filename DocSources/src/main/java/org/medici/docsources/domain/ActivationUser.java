@@ -60,21 +60,21 @@ public class ActivationUser implements Serializable {
 	@JoinColumn(name="\"account\"", nullable=true)
 	private User user;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"REQUESTDATE\"", nullable=false)
+	@Column (name="\"RequestDate\"", nullable=false)
 	private Date requestDate;
-	@Column (name="\"REQUESTIPADDRESS\"", length=50, nullable=false)
+	@Column (name="\"RequestIpAddress\"", length=50, nullable=false)
 	private String requestIPAddress;
-	@Column (name="\"MAILSENDED\"", nullable=false)
+	@Column (name="\"MailSended\"", nullable=false)
 	private Boolean mailSended;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"MAILSENDEDDATE\"")
+	@Column (name="\"MailSendedDate\"")
 	private Date mailSendedDate;
-	@Column (name="\"ACTIVE\"", length=30, nullable=false)
+	@Column (name="\"active\"", length=30, nullable=false)
 	private Boolean active;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"ACTIVATIONDATE\"")
+	@Column (name="\"ActivationDate\"")
 	private Date activationDate;
-	@Column (name="\"ACTIOVATIONIPADDRESS\"", length=50)
+	@Column (name="\"ActivationIpAddress\"", length=50)
 	private String activationIPAddress;
 
 	/**
