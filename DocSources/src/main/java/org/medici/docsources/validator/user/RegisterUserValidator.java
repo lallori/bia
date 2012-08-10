@@ -94,13 +94,18 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 	}
 
 	private void validateCountryCode(String countryCode, Errors errors) {
-		// TODO Auto-generated method stub
-		
+		if(countryCode == null){
+			errors.reject("countryDescription", "error.country.notfound");
+		}
 	}
 
 	private void validateCity(String city, Errors errors) {
 		if (errors.hasErrors())
 			return;
+
+		if(city == null){
+			errors.reject("city", "error.city.notfound");
+		}
 	}
 
 	private void validateOrganization(String organization, Errors errors) {
