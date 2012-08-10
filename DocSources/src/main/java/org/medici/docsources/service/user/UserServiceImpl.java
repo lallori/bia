@@ -718,6 +718,7 @@ public class UserServiceImpl implements UserService {
 			user.setActive(false);
 			user.setApproved(false);
 			user.setLocked(false);
+			user.setForumNumberOfPost(new Long(0));
 
 			getUserDAO().persist(user);
 
