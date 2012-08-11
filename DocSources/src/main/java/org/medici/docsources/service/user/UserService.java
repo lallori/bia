@@ -387,6 +387,14 @@ public interface UserService {
 	 * @return
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
+	public String generateUserPassword(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
 	public String updateUserPassword(User user) throws ApplicationThrowable;
 
 	/**
