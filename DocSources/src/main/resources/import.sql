@@ -632,3 +632,13 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedon
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.responsabileFotoRiproduzione', '', 'dr. Francesca Klein');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.supporto', '', 'Cartaceo');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.tipoRipresa', '', 'Da originale');
+
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.debug', 'Dump mail on application log', 'true');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.from', '', 'medici.archive@gmail.com');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.server.host', 'Host Server for sending email', 'smtp.gmail.com');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.server.password', 'Password to logon on smtp', 'cosimo1537.a');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.server.port', 'Port Server for sending email', '587');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.server.username', 'User to logon on smtp', 'medici.archive@gmail.com');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.smtp.auth', 'Enable smtp authentication', 'true');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.smtp.starttls.enable', 'Enable smtp starttls', 'true');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.transport.protocol', 'Mail Transport protocol', 'smtp');
