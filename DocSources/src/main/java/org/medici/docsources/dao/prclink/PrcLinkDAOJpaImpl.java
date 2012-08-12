@@ -32,10 +32,8 @@ import org.medici.docsources.domain.PrcLink;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
- * 
+ * <b>PrcLinkDAOJpaImpl</b> is a default implementation of <b>PrcLinkDAO</b>.
+ *  
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Repository

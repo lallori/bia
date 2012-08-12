@@ -34,6 +34,8 @@ import java.util.UUID;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SearchFromLast;
+import org.medici.docsources.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
@@ -245,12 +247,20 @@ public interface UserService {
 
 	/**
 	 * 
-	 * @param userInformation
+	 * @param user
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public String generateUserPassword(User user) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param searchFromLast
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(User user)throws ApplicationThrowable;
-
+	public HashMap<SearchPerimeter, Long> getArchiveStatisticsFromLast(SearchFromLast searchFromLast) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param numberOfHistory
@@ -258,7 +268,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param account
@@ -285,7 +295,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-
+	
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>
@@ -317,7 +327,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreMyHistory(Category category) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param username
@@ -339,7 +349,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param category
@@ -381,14 +391,6 @@ public interface UserService {
 	 */
 	public void updateUser(User user) throws ApplicationThrowable;
 
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
-	 */
-	public String generateUserPassword(User user) throws ApplicationThrowable;
-	
 	/**
 	 * 
 	 * @param user

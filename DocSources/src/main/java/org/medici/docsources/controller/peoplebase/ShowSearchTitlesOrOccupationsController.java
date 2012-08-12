@@ -1,5 +1,5 @@
 /*
- * EditTitleOrOccupationsPersonController.java
+ * ShowSearchTitlesOrOccupationsController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,104 +27,87 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.validation.Valid;
-
-import org.medici.docsources.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
+import org.medici.docsources.command.peoplebase.ShowSearchTitlesOrOccupationsCommand;
 import org.medici.docsources.domain.RoleCat;
-import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit single Title Or Occupation Person".
+ * Controller for action "Show Title Or Occupation Menu".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/CreateNewTitleOrOccupationPerson")
-public class CreateNewTitleOrOccupationPersonController {
+@RequestMapping("/src/peoplebase/ShowSearchTitlesOrOccupations")
+public class ShowSearchTitlesOrOccupationsController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
-	@Autowired(required = false)
-	@Qualifier("createNewTitleOrOccupationPersonValidator")
-	private Validator validator;
+
 
 	/**
-	 * @return the peopleBaseService
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
-
-	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
-	 * 
-	 * @return
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
-
-	/**
-	 * 
+	 * This controller act as a dispatcher for result view.
+	 *  
 	 * @param command
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-		
-		if(result.hasErrors()){
-			return setupForm(command);
-		}else{
-
-			Map<String, Object> model = new HashMap<String, Object>();
-			
-			TitleOccsList newTitleOcc = new TitleOccsList(0);
-			newTitleOcc.setTitleOcc(command.getTitleOcc());
-			newTitleOcc.setRoleCat(new RoleCat(command.getRoleCatId()));
-			
-			try{
-				getPeopleBaseService().addNewTitleOccupation(newTitleOcc);
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/CreateNewTitleOrOccupationPerson", model);
-			}
-			
-			return new ModelAndView("response/OK", model);
+	@RequestMapping(method = {RequestMethod.POST})
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowSearchTitlesOrOccupationsCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		 
+		try {
+			command.setTextSearch(URIUtil.decode(command.getTextSearch(), "UTF-8"));
+		} catch (URIException e) {
 		}
-	}
+		model.put("yourSearch", command.getTextSearch());
+		
+		if(command.getTextSearch().contains("\"")){
+			command.setTextSearch(command.getTextSearch().replace("\"", "\\\""));
+		}
+		// This number is used to generate an unique id for new search
+		UUID uuid = UUID.randomUUID();
+		command.setSearchUUID(uuid.toString());
+		model.put("searchUUID", uuid.toString());
 
-	/**
-	 * @param peopleBaseService
-	 *            the peopleBaseService to set
-	 */
-	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
-		this.peopleBaseService = peopleBaseService;
+		// Add outputFields;
+		List<String> outputFields = getOutputFields();
+		model.put("outputFields", outputFields);
+		return new ModelAndView("peoplebase/ShowSearchResultTitlesOrOccupations",model);
 	}
 
 	/**
 	 * 
-	 * @param command
+	 * @return
+	 */
+	private List<String> getOutputFields() {
+		List<String> result = new ArrayList<String>(2);
+		result.add("Title/Occupation");
+		result.add("Assigned People");
+		return result;
+	}
+
+	/**
+	 * 
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowSearchTitlesOrOccupationsCommand command) {
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		List<RoleCat> roleCats = null;
@@ -132,20 +115,28 @@ public class CreateNewTitleOrOccupationPersonController {
 		try{
 			roleCats = getPeopleBaseService().getRoleCat();
 			model.put("roleCat", roleCats);
-			command.setTitleOcc("");
 		}catch(ApplicationThrowable applicationThrowable){
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/CreateNewTitleOrOccupationPerson", model);
 		}
 
-		return new ModelAndView("peoplebase/CreateNewTitleOrOccupationPerson", model);
+		return new ModelAndView("peoplebase/ShowSearchTitlesOrOccupations", model);
 	}
 
 	/**
 	 * 
-	 * @param validator
+	 * @param peopleBaseService
 	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
 }

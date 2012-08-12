@@ -69,13 +69,8 @@ public class HomeController {
 		model.put("searchTypes", SearchType.values());		
 
 		try {			
-			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-
 			HashMap<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
 			httpSession.setAttribute("userStatistics", userStatistics);
-
-			HashMap<String, Long> archiveStatistics = getUserService().getArchiveStatisticsFromLastLogin(user);
-			httpSession.setAttribute("archiveStatistics", archiveStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/Welcome", model);

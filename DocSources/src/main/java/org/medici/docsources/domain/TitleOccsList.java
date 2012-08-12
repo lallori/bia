@@ -144,6 +144,17 @@ public class TitleOccsList implements Serializable {
 	}
 
     /**
+     * 
+     * @param titleOccId
+     * @param titleOcc
+     */
+    public TitleOccsList(Integer titleOccId, String titleOcc) {
+		super();
+		setTitleOccId(titleOccId);
+		setTitleOcc(titleOcc);
+	}
+
+	/**
 	 * @return the titleOccId
 	 */
 	public Integer getTitleOccId() {
@@ -205,5 +216,16 @@ public class TitleOccsList implements Serializable {
 
 	public Set<PoLink> getPoLinks() {
 		return poLinks;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		if (getTitleOcc() != null)
+			return titleOcc;
+		
+		return "";
 	}
 }

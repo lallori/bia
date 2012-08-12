@@ -1,7 +1,7 @@
 /*
- * ShowCreatePersonMenuController.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowTitleOrOccupationCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -25,34 +25,30 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.menu;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+package org.medici.docsources.command.peoplebase;
 
 /**
- * Controller for action "Show Create Person Menu".
+ * Command bean for action "Show Title Or Occupation".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
+ * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-@Controller
-@RequestMapping("/de/ShowCreatePersonMenu")
-public class ShowCreatePersonMenuController {
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit() {
-		Map<String, Object> model = new HashMap<String, Object>();
+public class ShowTitleOrOccupationCommand {
+	private Integer titleOccId;
 
-		return new ModelAndView("menu/ShowCreatePersonMenuModalWindow", model);
+	/**
+	 * @param titleOccId the titleOccId to set
+	 */
+	public void setTitleOccId(Integer titleOccId) {
+		this.titleOccId = titleOccId;
 	}
 
+	/**
+	 * @return the titleOccId
+	 */
+	public Integer getTitleOccId() {
+		return titleOccId;
+	}
+	
 }

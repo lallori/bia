@@ -10,7 +10,7 @@
 						<script type="text/javascript">
 							$j(document).ready(function() {
 								$j("#entryMenu").click( function() {															
-									Modalbox.show($j(this).attr("href"), {title: "ENTRY MENU", width: 750, height: 200});return false;
+									Modalbox.show($j(this).attr("href"), {title: "ENTRY MENU", width: 750, height: 225});return false;
 								});	
 							});
 						</script>

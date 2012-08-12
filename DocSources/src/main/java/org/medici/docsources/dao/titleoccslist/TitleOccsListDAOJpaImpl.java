@@ -27,12 +27,14 @@
  */
 package org.medici.docsources.dao.titleoccslist;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
@@ -51,6 +53,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.TitleOccsList;
@@ -141,7 +144,80 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 
 		return page;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		// select a.TitleOccID, a.TitleOcc, count(b.personId) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID group by a.titleOccID
+		StringBuilder stringBuilder = new StringBuilder("select a.titleOccID, a.titleOcc, count(b.personId) from tblTitleOccsList a");
+		stringBuilder.append(" left join tblPoLink b on b.titleOccID = a.TitleOccID ");
+		if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
+			stringBuilder.append(" where lower(a.titleOcc) like '%");
+			stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+			stringBuilder.append("%' ");
+		} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
+			stringBuilder.append(" where a.roleCatId=");
+			stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+		}
+		stringBuilder.append(" group by a.titleOccID ");
+
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			//select  count(*) from ( select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID group by a.titleOccID ) count
+			StringBuilder queryCountBuilder = new StringBuilder("select count(*) from (");
+			queryCountBuilder.append("select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID ");
+			if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
+				stringBuilder.append(" where lower(a.titleOcc) like '%");
+				stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+				stringBuilder.append("%' ");
+			} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
+				stringBuilder.append(" where a.roleCatMinorID=");
+				stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+			}
+			queryCountBuilder.append(" group by a.titleOccID ");
+			queryCountBuilder.append(") count");
+
+			// In this case we use Native Query!!!
+			Query query = getEntityManager().createNativeQuery(queryCountBuilder.toString());
+			
+			// Count(*) in native query is mapped as BigInteger, so we need to convert to Long...
+			BigInteger result = (BigInteger) query.getSingleResult();
+			page.setTotal(NumberUtils.createLong(result.toString()));
+		}
+
+		// We invoke native query beacuse we use left outer join with on condition 
+		Query query = getEntityManager().createNativeQuery(stringBuilder.toString());
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		List<Object> list = (List<Object>) query.getResultList();
+
+		List<Object> result = new ArrayList<Object>(list.size());
+		
+		for (int i=0; i<list.size(); i++) {
+			Object[] singleRow = (Object[]) list.get(i);
+			List<Object> row = new ArrayList<Object>(0);
+			
+			row.add(new TitleOccsList((Integer)singleRow[0], (String)singleRow[1]));
+			row.add(NumberUtils.createLong(((BigInteger)singleRow[2]).toString()));
+			result.add(row);
+		}
+
+		// We set search result on return method
+		page.setList(result);
+
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException {

@@ -28,6 +28,7 @@
  */
 package org.medici.docsources.common.search;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
@@ -46,7 +47,8 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = -7868927736853094973L;
 
-	private String alias; 
+	private Integer roleCatId;
+	private String textSearch;
 
 	/**
 	 * 
@@ -57,21 +59,45 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 
 	/**
 	 * 
-	 * @param text
+	 * @param query
 	 */
-	public SimpleSearchTitleOrOccupation(String text) {
+	public SimpleSearchTitleOrOccupation(String query) {
 		super();
 		
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+		if (!StringUtils.isEmpty(textSearch)) {
+			setTextSearch(textSearch.toLowerCase());
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * 
+	 * @param textSearch
+	 * @param roleCatId
 	 */
-	public String getAlias() {
-		return alias;
+	public SimpleSearchTitleOrOccupation(String textSearch, Integer roleCatId) {
+		super();
+		
+		if (!StringUtils.isEmpty(textSearch)) {
+			setTextSearch(textSearch.toLowerCase());
+		}
+		
+		if (roleCatId != null) {
+			setRoleCatId(roleCatId);
+		}
+	}
+
+	/**
+	 * @return the roleCatId
+	 */
+	public Integer getRoleCatId() {
+		return roleCatId;
+	}
+
+	/**
+	 * @return the textSearch
+	 */
+	public String getTextSearch() {
+		return textSearch;
 	}
 
 	/**
@@ -79,9 +105,6 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 * @param command
 	 */
 	public void initFromText(String text) {
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text);
-		}
 	}
 
 	/**
@@ -89,17 +112,24 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 */
 	@Override
 	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+		if (StringUtils.isEmpty(textSearch) || (!ObjectUtils.toString(roleCatId).equals("")))
 			return Boolean.TRUE;
 
 		return Boolean.FALSE;
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param roleCatId the roleCatId to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setRoleCatId(Integer roleCatId) {
+		this.roleCatId = roleCatId;
+	}
+
+	/**
+	 * @param textSearch the textSearch to set
+	 */
+	public void setTextSearch(String textSearch) {
+		this.textSearch = textSearch;
 	}
 
 	/**
@@ -118,7 +148,7 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
 		
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(textSearch)) {
 			return booleanQuery;
 		}
 
@@ -138,7 +168,7 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 		String[] dayFields = new String[]{
 		};
 
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(textSearch);
 			
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
@@ -170,10 +200,7 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
-			return getAlias();
-		else
-			return "";
+		return "";
 	}
 
 }

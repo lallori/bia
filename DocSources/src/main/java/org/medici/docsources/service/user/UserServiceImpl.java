@@ -40,7 +40,11 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.docsources.common.search.SearchFromLast;
+import org.medici.docsources.common.search.SearchFromLast.FromLast;
+import org.medici.docsources.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.docsources.common.util.ApplicationError;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.country.CountryDAO;
@@ -547,20 +551,37 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(User user) throws ApplicationThrowable {
-		HashMap<String, Long> archiveStatistics = new HashMap<String, Long>(4);
+	public HashMap<SearchPerimeter, Long> getArchiveStatisticsFromLast(SearchFromLast searchFromLast) throws ApplicationThrowable {
+		HashMap<SearchPerimeter, Long> archiveStatistics = new HashMap<SearchPerimeter, Long>(4);
 		try {
-			archiveStatistics.put("Document", getDocumentDAO().countDocumentCreatedAfterDate(user.getLastLoginDate()));
-			archiveStatistics.put("People", getPeopleDAO().countPeopleCreatedAfterDate(user.getLastLoginDate()));
-			archiveStatistics.put("Place", getPlaceDAO().countPlaceCreatedAfterDate(user.getLastLoginDate()));
-			archiveStatistics.put("Volume", getVolumeDAO().countVolumeCreatedAfterDate(user.getLastLoginDate()));
-			archiveStatistics.put("Message", getUserMessageDAO().countMessageReceivedAfterDate(user.getLastLoginDate()));
+			if (searchFromLast.getFromLast().equals(FromLast.LOGON)) {
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				Date dateFrom = user.getLastLoginDate();
+				
+				archiveStatistics.put(SearchPerimeter.DOCUMENT, getDocumentDAO().countDocumentCreatedAfterDate(dateFrom));
+				archiveStatistics.put(SearchPerimeter.PEOPLE, getPeopleDAO().countPeopleCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.PLACE, getPlaceDAO().countPlaceCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.VOLUME, getVolumeDAO().countVolumeCreatedAfterDate(dateFrom));
+			} else if (searchFromLast.getFromLast().equals(FromLast.LASTWEEK)) {
+				Date dateFrom = DateUtils.getFirstDayOfCurrentWeek();
+				
+				archiveStatistics.put(SearchPerimeter.DOCUMENT, getDocumentDAO().countDocumentCreatedAfterDate(dateFrom));
+				archiveStatistics.put(SearchPerimeter.PEOPLE, getPeopleDAO().countPeopleCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.PLACE, getPlaceDAO().countPlaceCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.VOLUME, getVolumeDAO().countVolumeCreatedAfterDate(dateFrom));
+			} else if (searchFromLast.getFromLast().equals(FromLast.LASTMONTH)) {
+				Date dateFrom = DateUtils.getFirstDayOfCurrentMonth();
+
+				archiveStatistics.put(SearchPerimeter.DOCUMENT, getDocumentDAO().countDocumentCreatedAfterDate(dateFrom));
+				archiveStatistics.put(SearchPerimeter.PEOPLE, getPeopleDAO().countPeopleCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.PLACE, getPlaceDAO().countPlaceCreatedAfterDate(dateFrom ));
+				archiveStatistics.put(SearchPerimeter.VOLUME, getVolumeDAO().countVolumeCreatedAfterDate(dateFrom));
+			}
 		} catch (Throwable th) {
-			archiveStatistics.put("Document", new Long(0));
-			archiveStatistics.put("People", new Long(0));
-			archiveStatistics.put("Place", new Long(0));
-			archiveStatistics.put("Volume", new Long(0));
-			archiveStatistics.put("Message", new Long(0));
+			archiveStatistics.put(SearchPerimeter.DOCUMENT, new Long(0));
+			archiveStatistics.put(SearchPerimeter.PEOPLE, new Long(0));
+			archiveStatistics.put(SearchPerimeter.PLACE, new Long(0));
+			archiveStatistics.put(SearchPerimeter.VOLUME, new Long(0));
 		}
 
 		return archiveStatistics;

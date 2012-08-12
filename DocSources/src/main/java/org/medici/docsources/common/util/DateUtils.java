@@ -27,6 +27,9 @@
  */
 package org.medici.docsources.common.util;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.domain.Month;
@@ -54,7 +57,14 @@ public class DateUtils {
 		
 		return NumberUtils.createInteger(nextToken);
 	}
-	
+
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
 	public static String getDateForSQLQuery(Integer year, Integer month, Integer day){
 		StringBuilder stringBuilder = new StringBuilder("");
 		StringBuilder dateFormat = new StringBuilder("");
@@ -384,4 +394,34 @@ public class DateUtils {
 		return stringBuilder.toString();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date getFirstDayOfCurrentWeek() {
+		// Get calendar set to current date and time
+		Calendar calendar = Calendar.getInstance();
+	
+		// Set the calendar to monday of the current week
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return new Date(calendar.getTimeInMillis());
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date getFirstDayOfCurrentMonth() {
+	    Calendar nowCal = Calendar.getInstance();
+	    int month = nowCal.get(Calendar.MONTH);
+	    int year = nowCal.get(Calendar.YEAR);
+
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.clear();
+	    calendar.set(Calendar.YEAR, year);
+	    calendar.set(Calendar.MONTH, month);
+	    calendar.set(Calendar.DAY_OF_MONTH, 1);
+	    return new Date(calendar.getTimeInMillis());
+	}
 }

@@ -28,7 +28,6 @@
 					<c:forEach var="roleCatMinor" items="${roleCat}">
 						<form:option value="${roleCatMinor.roleCatId}">${roleCatMinor.roleCatMajor} / ${roleCatMinor.roleCatMinor}</form:option>
 					</c:forEach>
-<%-- 					<form:options items="${roleCat}" itemValue="roleCatId" itemLabel="roleCatMinor" /> --%>
 				</form:select>
 			</div>
 			

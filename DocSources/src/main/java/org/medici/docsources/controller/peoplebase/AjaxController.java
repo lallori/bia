@@ -36,6 +36,7 @@ import java.util.Map;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
@@ -567,6 +568,58 @@ public class AjaxController {
 	}
 	
 	/**
+	 * 
+	 * @param textSearch
+	 * @param roleCatId
+	 * @param searchUUID
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/peoplebase/SearchTitlesOrOccupationsPagination.json", method = RequestMethod.GET)
+	public ModelAndView searchTitlesOrOccupationsPagination(@RequestParam(value="textSearch") String textSearch,
+										 @RequestParam(value="roleCatId") Integer roleCatId, 
+								   		 @RequestParam(value="searchUUID") String searchUUID,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
+
+		Page page = null;
+
+		try {
+			page = getPeopleBaseService().searchTitlesOrOccupations(new SimpleSearchTitleOrOccupation(textSearch, roleCatId), paginationFilter);
+			
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List resultList = new ArrayList();
+		for (List<Object> currentRecord : (List<List<Object>>)page.getList()) {
+			TitleOccsList titleOccsList = (TitleOccsList) currentRecord.get(0);
+			Long assignedPeople = (Long) currentRecord.get(1);
+
+			List<String> singleRow = new ArrayList<String>();
+			singleRow.add(titleOccsList.toString());
+			singleRow.add(assignedPeople.toString());
+			
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
 	 * @param model
@@ -677,7 +730,16 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
+	/**
+	 * 
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/peoplebase/ShowRecipientDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowRecipientDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
@@ -919,7 +981,16 @@ public class AjaxController {
 		
 		return new ModelAndView("responseOK", model);
 	}
-	
+
+	/**
+	 * 
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/peoplebase/ShowSenderDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowSenderDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
@@ -1118,7 +1189,6 @@ public class AjaxController {
 				 								@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Page page = null;
-		Map<Integer, List<PoLink>> occupations = new HashMap<Integer, List<PoLink>>();
 
 		PaginationFilter paginationFilter = generatePaginationFilterForTitleOcc(sortingColumnNumber, sortingDirection, firstRecord, length);
 		try {

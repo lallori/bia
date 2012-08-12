@@ -47,6 +47,7 @@ import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.HtmlUtils;
@@ -2012,6 +2013,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable {
 		try {
 			return getTitleOccsListDAO().searchTitleOrOccupationLinkableToPerson(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public Page searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getTitleOccsListDAO().searchTitlesOrOccupations(simpleSearchTitleOrOccupation, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

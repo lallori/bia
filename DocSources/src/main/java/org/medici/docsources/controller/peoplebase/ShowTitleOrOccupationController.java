@@ -1,5 +1,5 @@
 /*
- * ShowTiltesOrOccupationsController.java
+ * ShowTilteOrOccupationController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,17 +28,23 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import org.medici.docsources.command.peoplebase.ShowSearchTitlesOrOccupationsCommand;
+import org.medici.docsources.command.peoplebase.ShowTitleOrOccupationCommand;
 import org.medici.docsources.command.peoplebase.ShowTitlesOrOccupationsPeoplePersonCommand;
-import org.medici.docsources.command.peoplebase.ShowUploadPortraitPersonCommand;
+import org.medici.docsources.common.search.AdvancedSearchDocument;
+import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.TitleOccsList;
+import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,13 +53,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show titles or occupations people".
+ * Controller for action "Show title or occupation".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ShowSearchTitlesOrOccupations")
-public class ShowTitlesOrOccupationsController {
+@RequestMapping("/src/peoplebase/ShowTitleOrOccupation")
+public class ShowTitleOrOccupationController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	
@@ -73,38 +79,30 @@ public class ShowTitlesOrOccupationsController {
 		return peopleBaseService;
 	}
 
+
 	/**
 	 * 
-	 * @param peopleId
+	 * @param placeId
 	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowSearchTitlesOrOccupationsCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		return new ModelAndView("peoplebase/ShowSearchTitlesOrOccupationsModalWindow", model);
-	}
-	
-	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowSearchTitlesOrOccupationsCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTitleOrOccupationCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if(command.getTitleOccId() > 0){
-			List<String> outputFields = new ArrayList<String>(5);
-			outputFields.add("Title / Occupation");
-			outputFields.add("Assigned People");
-			
-			model.put("outputFields", outputFields);
+			try {
+				TitleOccsList titleOccsList = getPeopleBaseService().findTitleOccList(command.getTitleOccId());
+								
+				model.put("titleOccsList", titleOccsList);
+				
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				new ModelAndView("error/ShowTitleOrOccupation", model);
+			}
 		}
 
-		return new ModelAndView("peoplebase/ShowTitlesOrOccupations", model);
+		return new ModelAndView("peoplebase/ShowTitleOrOccupation", model);
 	}
 
 }

@@ -36,6 +36,9 @@ import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SearchFromLast;
+import org.medici.docsources.common.search.SearchFromLast.FromLast;
+import org.medici.docsources.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
@@ -113,6 +116,74 @@ public class AjaxController {
 		
 	}
 
+	/**
+	 * 
+	 * @param fromLast
+	 * @param searchPerimeter
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/user/ArchiveStatisticsFromLast.json", method = RequestMethod.GET)
+	public ModelAndView statisticsFromLast( @RequestParam(value="fromLast", required=false) FromLast fromLast,
+											@RequestParam(value="searchPerimeter", required=false) SearchPerimeter searchPerimeter,
+											@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		HashMap<SearchPerimeter, Long> archiveStatistics = new HashMap<SearchPerimeter, Long>(0);
+
+		try {
+			archiveStatistics = getUserService().getArchiveStatisticsFromLast(new SearchFromLast(fromLast, searchPerimeter));
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		List<Object> singleRow = new ArrayList<Object>();
+		
+		singleRow.add("Document");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.DOCUMENT));
+		resultList.add(singleRow);
+		singleRow.clear();
+				
+		singleRow.add("People");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.PEOPLE));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		singleRow.add("Places");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.PLACE));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		singleRow.add("Volumes");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.VOLUME));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", "4");
+		model.put("iTotalRecords", "4");
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
+	}
+/*	{
+		"iTotalDisplayRecords":89,
+		"iEcho":"1",
+		"iTotalRecords":89,
+		"aaData":[
+		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Document Extracts</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">2408</a>" ],
+		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Document Synopses</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">1573</a>" ],
+		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Volumes</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">1</a>" ],
+		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Peoples</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">0</a>" ],
+		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Places</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">13</a>" ]
+		]}
+	*/
 	/**
 	 * 
 	 * @param sortingColumnNumber

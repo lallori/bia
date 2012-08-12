@@ -35,6 +35,7 @@ import org.medici.docsources.common.image.PersonPortrait;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Marriage;
@@ -113,23 +114,6 @@ public interface PeopleBaseService {
 	
 	/**
 	 * 
-	 * @param titleOcc
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param poLink
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
-
-
-	/**
-	 * 
 	 * @param volume
 	 * @return
 	 * @throws ApplicationThrowable
@@ -138,12 +122,21 @@ public interface PeopleBaseService {
 	
 	/**
 	 * 
-	 * @param personId
+	 * @param titleOcc
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum getPersonForum(Integer personId) throws ApplicationThrowable;
+	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable;
 
+
+	/**
+	 * 
+	 * @param poLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param personId
@@ -178,7 +171,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method mark a {@link org.medici.docsources.domain.People} as deleted .
 	 * 
@@ -187,7 +180,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People deletePerson(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param marriage
@@ -275,7 +268,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -283,7 +276,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
 	 * 
@@ -317,7 +310,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Marriage> findMarriagesPerson(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -358,7 +351,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Integer findNumberOfSenderDocumentsRelated(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personIds
@@ -382,14 +375,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Parent findParentPerson(Integer id) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
 	 * @return
 	 */
 	public People findPerson(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -404,7 +397,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People findPersonFromHistory(Integer idUserHistory) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param roleCatId
@@ -428,7 +421,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public TitleOccsList findTitleOccList(String titleOcc) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -491,7 +484,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexTitleOccsList() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param person
@@ -499,7 +492,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getCategoryHistoryNavigator(People person) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param volNums
@@ -510,7 +503,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param idUserHistory
@@ -526,14 +519,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(People person) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param peopleIds
@@ -541,6 +534,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<Integer, List<PoLink>> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getPersonForum(Integer personId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -687,6 +688,24 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param simpleSearchTitleOrOccupation
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page  searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param alias
+	 * @param roleCatId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchTitlesOrOccupations(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param titleOccToSearch
 	 * @param paginationFilter
 	 * @return
@@ -709,14 +728,4 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param alias
-	 * @param roleCatId
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchTitlesOrOccupations(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

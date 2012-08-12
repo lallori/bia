@@ -1,5 +1,5 @@
 /*
- * ShowTitlesOrOccupationsPeoplePersonCommand.java
+ * ShowSearchTitlesOrOccupationsCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,46 +27,53 @@
  */
 package org.medici.docsources.command.peoplebase;
 
-import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Show Titles Or Occupations People".
+ * Command bean for action "Show Search Titles Or Occupations".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.docsources.controller.peoplebase.ShowPersonController
+ * @see org.docsources.controller.peoplebase.ShowSearchTitlesOrOccupationsController
  */
 public class ShowSearchTitlesOrOccupationsCommand {
-	@NotNull
-	private Integer titleOccId;
-	private String titleOcc;
+	private String searchUUID;
+	private Integer roleCatId;
+	private String textSearch;
 
 	/**
-	 * @param titleOccId the titleOccId to set
+	 * @return the roleCatId
 	 */
-	public void setTitleOccId(Integer titleOccId) {
-		this.titleOccId = titleOccId;
-	}
-
-	/**
-	 * @return the titleOccId
-	 */
-	public Integer getTitleOccId() {
-		return titleOccId;
-	}
-
-	/**
-	 * @param titleOcc the titleOcc to set
-	 */
-	public void setTitleOcc(String titleOcc) {
-		this.titleOcc = titleOcc;
-	}
-
-	/**
-	 * @return the titleOcc
-	 */
-	public String getTitleOcc() {
-		return titleOcc;
+	public Integer getRoleCatId() {
+		return roleCatId;
 	}
 	
+	/**
+	 * @return the textSearch
+	 */
+	public String getTextSearch() {
+		return textSearch;
+	}
+	
+	/**
+	 * @param roleCatId the roleCatId to set
+	 */
+	public void setRoleCatId(Integer roleCatId) {
+		this.roleCatId = roleCatId;
+	}
+	
+	/**
+	 * @param textSearch the textSearch to set
+	 */
+	public void setTextSearch(String textSearch) {
+		this.textSearch = textSearch;
+	}
+
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
+	}
+
+	public String getSearchUUID() {
+		return searchUUID;
+	}
+
 }

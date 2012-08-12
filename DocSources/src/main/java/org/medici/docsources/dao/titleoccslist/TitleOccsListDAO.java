@@ -34,6 +34,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.TitleOccsList;
 
@@ -62,6 +63,15 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 */
 	public Page searchTitleOrOccupation(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
+	/**
+	 * 
+	 * @param simpleSearchTitleOrOccupation
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws PersistenceException;
+
 	/**
 	 * This method searches a list of titles and occupations which could be related to a person 
 	 * which contains a text parameter (String searchText). 

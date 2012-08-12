@@ -73,6 +73,8 @@
 	  <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
 	</definition>
 
+	<definition name="template.searchTitlesOrOccupations" template="/WEB-INF/templates/searchTitlesOrOccupations.jsp" />
+
 	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
 
 	<definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
@@ -94,24 +96,28 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword"/>
 	</definition>
 
-    <definition name="menu/ShowEntryMenuModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowEntryMenuModalWindow.jsp"/>
+    <definition name="menu/ShowAdvancedSearchMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowAdvancedSearchMenuModalWindow.jsp"/>
 	</definition>
-	
+
 	<definition name="menu/ShowCreatePersonMenuModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowCreatePersonMenuModalWindow.jsp"/>
+	</definition>
+	
+    <definition name="menu/ShowEntryMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowEntryMenuModalWindow.jsp"/>
 	</definition>
 	
 	<definition name="menu/ShowHelpModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowHelpModalWindow.jsp" />
 	</definition>
 
-    <definition name="menu/ShowVetMenuModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowVetMenuModalWindow.jsp"/>
+	<definition name="menu/ShowTitlesOrOccupationsMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowTitlesOrOccupationsMenuModalWindow.jsp"/>
 	</definition>
 
-    <definition name="menu/ShowAdvancedSearchMenuModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowAdvancedSearchMenuModalWindow.jsp"/>
+    <definition name="menu/ShowVetMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowVetMenuModalWindow.jsp"/>
 	</definition>
 
 	<!-- Authentication Module BEGIN -->
@@ -875,6 +881,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>	
 	</definition>
 
+	<definition name="peoplebase/ShowSearchResultTitlesOrOccupations" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSearchResultTitlesOrOccupations.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowSearchTitlesOrOccupations" extends="template.searchTitlesOrOccupations">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSearchTitlesOrOccupations.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowSpousesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
 	</definition>
@@ -885,6 +899,10 @@
 	
 	<definition name="peoplebase/ShowTitlesOrOccupationsPeoplePerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPeoplePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/ShowVettingChronologyPersonModalWindow" extends="template.partialDOM">
