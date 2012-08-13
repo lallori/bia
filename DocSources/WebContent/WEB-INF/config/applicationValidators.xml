@@ -234,6 +234,10 @@
         <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
+	<bean id="EditTitleOrOccupationValidator" class="org.medici.docsources.validator.peoplebase.EditTitleOrOccupationValidator">
+        <description>Edit Title Or Occupation Validator.</description>
+	</bean>
+	
 	<bean id="undeletePersonValidator" class="org.medici.docsources.validator.peoplebase.UndeletePersonValidator">
         <description>Undelete a Person Validator.</description>
 	</bean>

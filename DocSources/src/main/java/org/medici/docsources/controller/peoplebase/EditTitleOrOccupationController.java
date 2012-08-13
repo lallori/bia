@@ -1,5 +1,5 @@
 /*
- * EditTitleOrOccupationsPersonController.java
+ * EditTitleOrOccupationController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,12 +28,11 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
+import org.medici.docsources.command.peoplebase.EditTitleOrOccupationCommand;
 import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -49,17 +48,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit single Title Or Occupation Person".
+ * Controller for action "Edit single Title Or Occupation".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/CreateNewTitleOrOccupationPerson")
-public class CreateNewTitleOrOccupationPersonController {
+@RequestMapping("/de/peoplebase/EditTitleOrOccupation")
+public class EditTitleOrOccupationController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("createNewTitleOrOccupationPersonValidator")
+	@Qualifier("editTitleOrOccupationValidator")
 	private Validator validator;
 
 	/**
@@ -80,6 +79,42 @@ public class CreateNewTitleOrOccupationPersonController {
 	}
 
 	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditTitleOrOccupationCommand command, BindingResult result) {
+		getValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			return setupForm(command);
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+
+			TitleOccsList titleOccsList = new TitleOccsList(command.getTitleOccId());
+			titleOccsList.setTitleOcc(command.getTitleOcc());
+			titleOccsList.setTitleVariants(command.getTitleVariants());
+			titleOccsList.setRoleCat(new RoleCat(command.getRoleCatId()));
+
+			try {
+				if (command.getTitleOccId().equals(0)) {
+					getPeopleBaseService().addNewTitleOrOccupation(titleOccsList);
+				} else {
+					getPeopleBaseService().editTitleOrOccupation(titleOccsList);
+				}
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ShowPerson", model);
+			}
+
+			return new ModelAndView("peoplebase/ShowTitleOrOccupationPerson", model);
+		}
+
+	}
+
+	/**
 	 * @param peopleBaseService
 	 *            the peopleBaseService to set
 	 */
@@ -93,21 +128,35 @@ public class CreateNewTitleOrOccupationPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command) {
-
+	public ModelAndView setupForm(@ModelAttribute("command") EditTitleOrOccupationCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<RoleCat> roleCats = null;
-		
-		try{
-			roleCats = getPeopleBaseService().getRoleCat();
-			model.put("roleCat", roleCats);
-			command.setTitleOcc("");
-		}catch(ApplicationThrowable applicationThrowable){
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/CreateTitleOrOccupationPerson", model);
+
+		if ((command != null) && (command.getTitleOccId().equals(0))) {
+			command.setTitleOcc(null);
+			command.setTitleVariants(null);
+			command.setRoleCatId(null);
+		} else {
+			try {
+				TitleOccsList titleOccsList = getPeopleBaseService().findTitleOrOccupation(command.getTitleOccId());
+
+				command.setTitleOcc(titleOccsList.getTitleOcc());
+				command.setTitleVariants(titleOccsList.getTitleVariants());
+				if (titleOccsList.getRoleCat() != null) {
+					command.setRoleCatId(titleOccsList.getRoleCat().getRoleCatId());
+				} else {
+					command.setTitleOcc(null);
+					command.setTitleVariants(null);
+					command.setRoleCatId(null);
+				}
+
+				return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/EditTopicDocument", model);
+			}
 		}
 
-		return new ModelAndView("peoplebase/CreateNewTitleOrOccupationPerson", model);
+		return new ModelAndView("peoplebase/EditTitleOrOccupation", model);
 	}
 
 	/**

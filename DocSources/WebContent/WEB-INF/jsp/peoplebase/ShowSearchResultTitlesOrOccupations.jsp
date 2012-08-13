@@ -11,11 +11,10 @@
 	</c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
-		<p>Total records found: <span id="allDocRecordsNum${personId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="titlesOrOccupationsRecordsNum${command.searchUUID}" class="recordsNum"></span></p>
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="titles${command.searchUUID}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -28,12 +27,10 @@
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			
-			
 			//dynamic field management
-			$j("#titles${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#titles${command.searchUUID}').dataTable( {
+			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,
@@ -54,47 +51,38 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
-					$j("#allDocRecordsNum${personId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("#titlesOrOccupationsRecordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					
-					$j("tr.odd").mouseover(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								return false;
-							}
-					);
+					$j("tr.odd").mouseover(function(){
+						$j(this).find("td.sorting_1").css('background-color','#b0addd');
+						return false;
+					});
 					
-					$j("tr.odd").mouseout(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
-								return false;
-							}
-					);
-					$j("tr.even").mouseover(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								return false;
-							}
-					);
+					$j("tr.odd").mouseout(function(){
+						$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+						return false;
+					});
+					$j("tr.even").mouseover(function(){
+						$j(this).find("td.sorting_1").css('background-color','#b0addd');
+						return false;
+					});
 					
-					$j("tr.even").mouseout(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
-								return false;
-							}
-					);
+					$j("tr.even").mouseout(function(){
+						$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+						return false;
+					});
 				}
 			});
 			
-			$j("#titles${command.searchUUID}_length").css('margin', '0 0 0 0');
-			$j("titles${command.searchUUID}_filter").remove();
-
 			// We need to remove any previous live function
 			$j('.showResult').die();
 
-			$j(".showResult").live('click', function() {
+			$j('.showResult').live('click', function() {
+				alert('a');
 				$j("#body_left").load($j(this).attr("href"));
+				return false;
 			});
 
-		} );
+		});
 	</script>
 	

@@ -1,5 +1,5 @@
 /*
- * EditTitleOrOccupationsPersonController.java
+ * CreateTitleOrOccupationController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,56 +27,37 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
-
-import org.medici.docsources.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
-import org.medici.docsources.domain.RoleCat;
+import org.medici.docsources.command.peoplebase.CreateTitleOrOccupationCommand;
 import org.medici.docsources.domain.TitleOccsList;
-import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit single Title Or Occupation Person".
+ * Controller for action "Create single Title Or Occupation ".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/CreateNewTitleOrOccupationPerson")
-public class CreateNewTitleOrOccupationPersonController {
+@RequestMapping("/de/peoplebase/CreateTitleOrOccupation")
+public class CreateTitleOrOccupationController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
-	@Autowired(required = false)
-	@Qualifier("createNewTitleOrOccupationPersonValidator")
-	private Validator validator;
 
 	/**
 	 * @return the peopleBaseService
 	 */
 	public PeopleBaseService getPeopleBaseService() {
 		return peopleBaseService;
-	}
-
-	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
-	 * 
-	 * @return
-	 */
-	public Validator getValidator() {
-		return validator;
 	}
 
 	/**
@@ -93,28 +74,16 @@ public class CreateNewTitleOrOccupationPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") CreateTitleOrOccupationCommand command) {
 
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<RoleCat> roleCats = null;
-		
-		try{
-			roleCats = getPeopleBaseService().getRoleCat();
-			model.put("roleCat", roleCats);
-			command.setTitleOcc("");
-		}catch(ApplicationThrowable applicationThrowable){
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/CreateTitleOrOccupationPerson", model);
-		}
 
-		return new ModelAndView("peoplebase/CreateNewTitleOrOccupationPerson", model);
-	}
+		TitleOccsList titleOccsList = new TitleOccsList(0);
+		titleOccsList.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		titleOccsList.setDateCreated(new Date());
 
-	/**
-	 * 
-	 * @param validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
+		model.put("titleOccsList", titleOccsList);
+
+		return new ModelAndView("peoplebase/ShowTitleOrOccupation", model);
 	}
 }

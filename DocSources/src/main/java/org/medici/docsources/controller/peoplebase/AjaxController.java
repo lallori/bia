@@ -605,8 +605,8 @@ public class AjaxController {
 			Long assignedPeople = (Long) currentRecord.get(1);
 
 			List<String> singleRow = new ArrayList<String>();
-			singleRow.add(titleOccsList.toString());
-			singleRow.add(assignedPeople.toString());
+			singleRow.add(HtmlUtils.showTitleOrOccupation(titleOccsList));
+			singleRow.add(HtmlUtils.showTitleOrOccupationAssignedPeopleSearch(titleOccsList, assignedPeople));
 			
 			resultList.add(singleRow);
 		}

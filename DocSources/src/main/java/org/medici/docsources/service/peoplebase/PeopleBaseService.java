@@ -119,16 +119,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Forum addNewPersonForum(People person) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
-	 * @param titleOcc
-	 * @return
+	 * @param titleOccsList
 	 * @throws ApplicationThrowable
 	 */
-	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable;
-
-
+	public TitleOccsList addNewTitleOrOccupation(TitleOccsList titleOccsList) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param poLink
@@ -136,7 +134,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -171,7 +169,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method mark a {@link org.medici.docsources.domain.People} as deleted .
 	 * 
@@ -180,7 +178,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People deletePerson(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param marriage
@@ -254,12 +252,19 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param titleOccsList
+	 * @throws ApplicationThrowable
+	 */
+	public TitleOccsList editTitleOrOccupation(TitleOccsList titleOccsList) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param poLink
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public People editTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -276,7 +281,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
 	 * 
@@ -302,7 +307,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Marriage findMarriagePerson(Integer marriageId, Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -310,7 +315,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Marriage> findMarriagesPerson(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -343,7 +348,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -351,7 +356,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Integer findNumberOfSenderDocumentsRelated(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personIds
@@ -367,7 +372,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Parent findParent(Integer id)throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param id
@@ -382,14 +387,14 @@ public interface PeopleBaseService {
 	 * @return
 	 */
 	public People findPerson(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
 	 * @return
 	 */
 	public People findPersonForNames(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param idUserHistory
@@ -397,7 +402,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People findPersonFromHistory(Integer idUserHistory) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param roleCatId
@@ -413,7 +418,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public TitleOccsList findTitleOccList(Integer titleOccId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param titleOcc
@@ -421,7 +426,15 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public TitleOccsList findTitleOccList(String titleOcc) throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @param titleOccId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public TitleOccsList findTitleOrOccupation(Integer titleOccId) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param personId
@@ -472,7 +485,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPoLink() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -484,7 +497,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexTitleOccsList() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param person
@@ -519,14 +532,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(People person) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param peopleIds
@@ -549,7 +562,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<RoleCat> getRoleCat() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -557,7 +570,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public boolean ifPersonALreadyPresentInMarkedList(Integer personId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -571,7 +584,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -580,7 +593,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personToSearch
@@ -589,7 +602,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param familyToSearch
@@ -598,7 +611,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -616,7 +629,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchMotherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personToSearch
@@ -660,7 +673,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchSenderDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query

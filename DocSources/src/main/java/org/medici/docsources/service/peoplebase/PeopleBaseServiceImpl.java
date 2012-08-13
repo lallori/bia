@@ -458,11 +458,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable {
+	public TitleOccsList addNewTitleOrOccupation(TitleOccsList titleOcc) throws ApplicationThrowable {
 		try{
 			TitleOccsList titleOccToPersist = new TitleOccsList(null);
 			titleOccToPersist.setTitleOcc(titleOcc.getTitleOcc());
 			titleOccToPersist.setRoleCat(getRoleCatDAO().find(titleOcc.getRoleCat().getRoleCatId()));
+
+			titleOccToPersist.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			titleOccToPersist.setDateCreated(new Date());
+			titleOccToPersist.setLastUpdate(new Date());
 			getTitleOccsListDAO().persist(titleOccToPersist);
 			return titleOccToPersist;
 		}catch(Throwable th){
@@ -595,7 +599,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -617,7 +621,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1045,6 +1049,30 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public TitleOccsList editTitleOrOccupation(TitleOccsList titleOccsList) throws ApplicationThrowable {
+		try {
+			TitleOccsList titleOccsListToUpdate = getTitleOccsListDAO().find(titleOccsList.getTitleOccId());
+			
+			titleOccsListToUpdate.setLastUpdate(new Date());
+			titleOccsListToUpdate.setTitleOcc(titleOccsList.getTitleOcc());
+			titleOccsListToUpdate.setTitleVariants(titleOccsList.getTitleVariants());
+			if (titleOccsList.getRoleCat() != null) {
+				titleOccsListToUpdate.setRoleCat(getRoleCatDAO().find(titleOccsList.getRoleCat().getRoleCatId()));
+			}
+			
+			getTitleOccsListDAO().merge(titleOccsListToUpdate);
+			
+			return titleOccsListToUpdate;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public People editTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
 		try {
 			PoLink poLinkToUpdate = getPoLinkDAO().find(poLink.getPrfLinkId());
@@ -1108,7 +1136,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1120,7 +1148,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1179,7 +1207,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1193,7 +1221,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1217,7 +1245,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1229,7 +1257,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1266,7 +1294,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1336,7 +1364,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1348,7 +1376,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1360,7 +1388,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1377,13 +1405,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public TitleOccsList findTitleOrOccupation(Integer titleOccId) throws ApplicationThrowable {
+		try {
+			return getTitleOccsListDAO().find(titleOccId);
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prfLinkId) throws ApplicationThrowable {
 		try {
 			return getPoLinkDAO().find(personId, prfLinkId);
 		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-		
 	}
 
 	/**
@@ -1515,7 +1554,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
 		return applicationPropertyDAO;
 	}
-
+	
 	/**
 	 * @return the biblioTDAO
 	 */
@@ -1554,14 +1593,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 		return historyNavigator;
 	}
-	
+
 	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
-
+	
 	@Override
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
@@ -1594,7 +1633,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public ForumDAO getForumDAO() {
 		return forumDAO;
 	}
-	
+
 	/**
 	 * @return the forumOptionDAO
 	 */
@@ -1686,7 +1725,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1724,7 +1763,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1736,7 +1775,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the placeDAO
 	 */
@@ -1776,11 +1815,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public TitleOccsListDAO getTitleOccsListDAO() {
 		return titleOccsListDAO;
 	}
-
+	
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-	
+
 	/**
 	 * @return the userHistoryDAO
 	 */
@@ -1794,7 +1833,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public UserMarkedListDAO getUserMarkedListDAO() {
 		return userMarkedListDAO;
 	}
-	
+
 	/**
 	 * @return the userMarkedListElementDAO
 	 */
@@ -1834,7 +1873,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1872,7 +1911,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1884,7 +1923,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1945,7 +1984,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

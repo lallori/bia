@@ -79,6 +79,8 @@
 
 	<definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
 
+	<definition name="template.titleOrOccupation" template="/WEB-INF/templates/titleOrOccupation.jsp" />
+
 	<definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
 
 	<definition name="template.user" template="/WEB-INF/templates/user.jsp" />
@@ -891,6 +893,10 @@
 
 	<definition name="peoplebase/ShowSpousesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.titlesOrOccupation">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/ShowTitlesOrOccupationsPerson" extends="template.partialDOM">

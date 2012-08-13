@@ -37,6 +37,7 @@ import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -371,29 +372,6 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param placeAllId
-	 * @param numberOfDocumentsInTopicsPlace
-	 * @param numberOfTopicsPlace
-	 * @param description
-	 * @return
-	 */
-	public static String showDocumentsInTopicsPlace(Integer placeAllId, Integer numberOfDocumentsInTopicsPlace, Integer numberOfTopicsPlace) {
-		StringBuilder anchor = new StringBuilder("<a class=\"topics\" href=\"");
-		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchor.append("/src/geobase/ShowTopicsPlace.do?placeAllId=");
-		anchor.append(placeAllId);
-		anchor.append("\">");
-		anchor.append(numberOfDocumentsInTopicsPlace);
-		anchor.append(" Documents on ");
-		anchor.append(numberOfTopicsPlace);
-		anchor.append(" Topics");
-		anchor.append("</a>");
-
-		return anchor.toString();	
-	}
-
-	/**
-	 * 
-	 * @param placeAllId
 	 * @param numberOfDeathInPlace
 	 * @param description
 	 * @return
@@ -411,7 +389,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -463,7 +441,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -506,7 +484,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param entryId
@@ -550,6 +528,47 @@ public class HtmlUtils {
 		return retValue;
 	}
 	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param numberOfDocumentsInTopicsPlace
+	 * @param numberOfTopicsPlace
+	 * @param description
+	 * @return
+	 */
+	public static String showDocumentsInTopicsPlace(Integer placeAllId, Integer numberOfDocumentsInTopicsPlace, Integer numberOfTopicsPlace) {
+		StringBuilder anchor = new StringBuilder("<a class=\"topics\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/geobase/ShowTopicsPlace.do?placeAllId=");
+		anchor.append(placeAllId);
+		anchor.append("\">");
+		anchor.append(numberOfDocumentsInTopicsPlace);
+		anchor.append(" Documents on ");
+		anchor.append(numberOfTopicsPlace);
+		anchor.append(" Topics");
+		anchor.append("</a>");
+
+		return anchor.toString();	
+	}
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @param description
+	 * @return
+	 */
+	public static String showDocumentsVolume(Integer summaryId, String description) {
+		StringBuilder anchor = new StringBuilder("<a id=\"showDocumentsRelated\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/volbase/ShowDocumentsVolume.do?summaryId=");
+		anchor.append(summaryId);
+		anchor.append("\">");
+		anchor.append(description);
+		anchor.append("</a>");
+		
+		return anchor.toString();
+	}
+
 	/**
 	 * 
 	 * @param messageId
@@ -618,7 +637,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param singleRow
@@ -659,7 +678,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param singleRow
@@ -688,7 +707,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param placeAllId
@@ -709,7 +728,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -725,7 +744,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -741,7 +760,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param volNum
@@ -911,6 +930,36 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param titleOccsList
+	 * @return
+	 */
+	public static String showTitleOrOccupation(TitleOccsList titleOccsList) {
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/peoplebase/ShowTitleOrOccupation.do?titleOccId=");
+		anchor.append(titleOccsList.getTitleOccId());
+		anchor.append("\">" + titleOccsList.getTitleOcc() + "</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
+	 * @param assignedPeople
+	 * @return
+	 */
+	public static String showTitleOrOccupationAssignedPeopleSearch(TitleOccsList titleOccsList, Long assignedPeople) {
+		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/src/peoplebase/ShowTitleOrOccupation.do?titleOccId=");
+		anchor.append(titleOccsList.getTitleOccId());
+		anchor.append("\">" + assignedPeople + "</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return
@@ -1047,23 +1096,5 @@ public class HtmlUtils {
 		}
 		
 		return retValue;
-	}
-
-	/**
-	 * 
-	 * @param summaryId
-	 * @param description
-	 * @return
-	 */
-	public static String showDocumentsVolume(Integer summaryId, String description) {
-		StringBuilder anchor = new StringBuilder("<a id=\"showDocumentsRelated\" href=\"");
-		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchor.append("/src/volbase/ShowDocumentsVolume.do?summaryId=");
-		anchor.append(summaryId);
-		anchor.append("\">");
-		anchor.append(description);
-		anchor.append("</a>");
-		
-		return anchor.toString();
 	}
 }

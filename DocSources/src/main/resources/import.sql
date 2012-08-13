@@ -338,6 +338,9 @@ update docsources.tblImages set missedNumbering = substr(imageName,12,3) where l
 update docsources.tblPeople set activeStart = null where activeStart = '';
 update docsources.tblPeople set activeEnd = null where activeEnd = '';
 
+-- Adjusting dateCreated and lastUpdate in table tblTitleOccsList
+UPDATE `tblTitleOccsList` SET `DATECREATED`='2012-01-01 00:00:00', `LASTUPDATE`='2012-01-01 00:00:00'
+
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 delete from docsources.tblCountries;
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
