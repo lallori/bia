@@ -27,24 +27,14 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.medici.docsources.command.peoplebase.ShowTitleOrOccupationCommand;
-import org.medici.docsources.command.peoplebase.ShowTitlesOrOccupationsPeoplePersonCommand;
-import org.medici.docsources.common.search.AdvancedSearchDocument;
-import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.TitleOccsList;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;

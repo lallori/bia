@@ -800,6 +800,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousesPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/EditTitleOrOccupation" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitleOrOccupation.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/EditTitleOrOccupationPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitleOrOccupationPerson.jsp"/>
 	</definition>

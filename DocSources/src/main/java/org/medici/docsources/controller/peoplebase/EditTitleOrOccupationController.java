@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -109,7 +110,7 @@ public class EditTitleOrOccupationController {
 				return new ModelAndView("error/ShowPerson", model);
 			}
 
-			return new ModelAndView("peoplebase/ShowTitleOrOccupationPerson", model);
+			return new ModelAndView("peoplebase/ShowTitleOrOccupation", model);
 		}
 
 	}
@@ -149,7 +150,10 @@ public class EditTitleOrOccupationController {
 					command.setRoleCatId(null);
 				}
 
-				return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);
+				List<RoleCat> roleCats = getPeopleBaseService().getRoleCat();
+				model.put("roleCat", roleCats);
+
+				return new ModelAndView("peoplebase/EditTitleOrOccupation", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditTopicDocument", model);

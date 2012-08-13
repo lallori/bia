@@ -10,19 +10,6 @@
 		<c:param name="roleCatId" value="${command.roleCatId}" />
 	</c:url>
 	
-	<div class="yourSearchDiv">
-		<p>Total records found: <span id="titlesOrOccupationsRecordsNum${command.searchUUID}" class="recordsNum"></span></p>
-	</div>
-	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
-		<thead>
-			<tr></tr>
-		</thead>
-		<tbody>
-
-		</tbody>
-	</table>
-	
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
@@ -83,6 +70,21 @@
 				return false;
 			});
 
+
+			$j(".dataTables_filter").css('display', 'none');
 		});
 	</script>
+
 	
+	<div class="yourSearchDiv">
+		<p>Total records found: <span id="titlesOrOccupationsRecordsNum${command.searchUUID}" class="recordsNum"></span></p>
+	</div>
+	
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
+		<thead>
+			<tr></tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>

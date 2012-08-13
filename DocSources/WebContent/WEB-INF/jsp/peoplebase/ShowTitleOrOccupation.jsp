@@ -6,7 +6,7 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditTitleOrOccupationURL" value="/de/peoplebase/EditTitleOrOccupation.do">
-			<c:param name="titleOccId"   value="${titleOccList.titleOccId}" />
+			<c:param name="titleOccId"   value="${titleOccsList.titleOccId}" />
 		</c:url>
 	</security:authorize>
 
@@ -20,11 +20,11 @@
 		<div class="list">
 			<div class="row">
 				Title/Occupation Name
-				<div class="value60">titleOccList.titleOcc<br>
+				<div class="value60">${titleOccsList.titleOcc}<br>
 			</div>
 			<div class="row">
 				Role
-				<div class="value60">titleOccList.<br>
+				<div class="value60">${titleOccsList.roleCat.roleCatMajor}/${titleOccsList.roleCat.roleCatMinor}<br>
 			</div>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditTitlesOrOccupationsPerson").click(function(){
+			$j("#EditTitleOrOccupation").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditTitleOrOccupationDiv").load($j(this).attr("href"));
 				return false;

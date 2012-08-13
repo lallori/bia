@@ -936,7 +936,7 @@ public class HtmlUtils {
 	public static String showTitleOrOccupation(TitleOccsList titleOccsList) {
 		StringBuilder anchor = new StringBuilder("<a class=\"searchResult\" href=\"");
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchor.append("/peoplebase/ShowTitleOrOccupation.do?titleOccId=");
+		anchor.append("/src/peoplebase/ShowTitleOrOccupation.do?titleOccId=");
 		anchor.append(titleOccsList.getTitleOccId());
 		anchor.append("\">" + titleOccsList.getTitleOcc() + "</a>");
 
