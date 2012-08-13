@@ -49,6 +49,7 @@ import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Status;
 import org.medici.docsources.domain.Forum.SubType;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
@@ -58,6 +59,7 @@ import org.springframework.stereotype.Repository;
  * <b>ForumDAOJpaImpl</b> is a default implementation of <b>ForumDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.Forum
  * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
@@ -658,5 +660,20 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		merge(forum);
 		
 		recursiveIncreaseTopicsNumber(forum.getForumParent());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws PersistenceException {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+		
+		forum.setLastPost(forumPost);
+		merge(forum);
+		
+		recursiveSetLastPost(forum.getForumParent(), forumPost);
 	}
 }

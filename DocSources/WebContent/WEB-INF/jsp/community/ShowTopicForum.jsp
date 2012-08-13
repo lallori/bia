@@ -61,7 +61,13 @@
 </c:forEach>
 
 <div id="forumPaginate">
-    <div id="jumpToDiv">
+    <c:set var="paginationData">
+		<bia:paginationForum page="${postsPage}"/>
+	</c:set>
+	
+	${paginationData}
+	
+	<div id="jumpToDiv">
     	Jump to:
         <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
             <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
@@ -70,12 +76,10 @@
             <input id="go" type="submit" title="go" value="Go" class="buttonMini">
         </form>
     </div>
-    <c:set var="paginationData">
-		<bia:paginationForum page="${postsPage}"/>
-	</c:set>
+ 
 </div>
 					
-${paginationData}
+
 
 <c:url var="ShowForumOfTopicURL" value="/community/ShowForum.do">
 	<c:param name="forumId" value="${topic.forum.forumId}"></c:param>

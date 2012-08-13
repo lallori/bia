@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.Image.ImageRectoVerso;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Forum.Type;
@@ -47,6 +48,7 @@ import org.medici.docsources.domain.Volume;
  * Forum DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public interface ForumDAO extends Dao<Integer, Forum> {
@@ -243,4 +245,12 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param parentForum
+	 * @param forumPost
+	 * @throws PersistenceException
+	 */
+	public void recursiveSetLastPost(Forum parentForum, ForumPost forumPost) throws PersistenceException;
 }

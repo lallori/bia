@@ -14,7 +14,7 @@
     
     <div id="post">
         <h2>${forumPost.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${forumPost.username}</a> » <span class="date">${forumPost.dateCreated}</span></p>
+        <p>by <a href="#" id="userName" class="link">${forumPost.user.account}</a> » <span class="date">${forumPost.dateCreated}</span></p>
         <p>${forumPost.text}</p>
     </div>
     <div id="postProfile">

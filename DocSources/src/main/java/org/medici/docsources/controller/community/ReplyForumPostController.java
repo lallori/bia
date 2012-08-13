@@ -53,6 +53,7 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/community/ReplyForumPost"})
@@ -114,7 +115,7 @@ public class ReplyForumPostController {
 			
 		}
 		//command.setParentPostId(postToReply.getParentPost().getId());
-		command.setSubject(firstPostTopicToReply.getSubject());
+		command.setSubject("RE: " + firstPostTopicToReply.getSubject());
 		command.setText(firstPostTopicToReply.getText());
 
 		return new ModelAndView("community/EditForumPost", model);

@@ -162,8 +162,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
 
-			forum.setLastPost(forumPost);
-			getForumDAO().merge(forum);
+			getForumDAO().recursiveSetLastPost(forum, forumPost);
+//			forum.setLastPost(forumPost);
+//			getForumDAO().merge(forum);
 			
 			forumPost.getTopic().setLastPost(forumPost);
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);

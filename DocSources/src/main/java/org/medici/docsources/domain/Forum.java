@@ -51,6 +51,7 @@ import javax.persistence.TemporalType;
  * This class represents entity Forum.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Entity
@@ -84,7 +85,7 @@ public class Forum implements Serializable {
 	private Integer postsNumber;
 	@Column (name="\"topicsNumber\"")
 	private Integer topicsNumber;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"lastPost\"", nullable=true)
 	private ForumPost lastPost;
 	@Column (name="\"dateCreated\"")

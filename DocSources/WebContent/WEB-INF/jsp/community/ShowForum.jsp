@@ -117,11 +117,6 @@
 				
 				${paginationData}   
 			</div>
-	
-			<c:if test="${not empty category.forumParent}">
-				<a href="/DocSources/forum/index.html" class="returnTo">&larr; Return to <span>Board Index</span></a>
-			</c:if>
-	
 			
 			</c:if>
 			
@@ -136,9 +131,20 @@
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
 			        </div>
-			    </div>
+			    </div>			    
 			</c:if>    
 			</div>
+			<c:url var="ReturnToForumURL" value="/community/ShowForum.do">
+					<c:param name="forumId" value="${forum.forumParent.forumId}" />
+			</c:url>
+			
+			<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
+				<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+			</c:if>
+			
+			<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
+				<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
+			</c:if>
 		</c:if>	
 
 		<c:if test="${forum.option.canHaveTopics}">
@@ -177,7 +183,13 @@
 			</div>
 		</div>
 			    <div id="forumPaginate">
-				    <div id="jumpToDiv">
+				    <c:set var="paginationData">
+						<bia:paginationForum page="${topicsPage}"/>
+					</c:set>
+					
+					${paginationData}
+					
+					<div id="jumpToDiv">
 				    	Jump to:
 				        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
 				            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
@@ -186,12 +198,16 @@
 				            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
 				        </form>
 				    </div>
-					<c:set var="paginationData">
-					<bia:paginationForum page="${topicsPage}"/>
-					</c:set>
-					
-					${paginationData}   
+					  
 				</div>
+				
+				<c:url var="ReturnToForumURL" value="/community/ShowForum.do">
+					<c:param name="forumId" value="${forum.forumParent.forumId}" />
+				</c:url>
+			
+				<c:if test="${not empty forum.forumParent}">
+					<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+				</c:if>
 			</c:if>
 
 <!-- EACH TOPIC PAGE?-->
@@ -225,6 +241,12 @@
 					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
+				
+				$j('.row').die();
+				$j('.row').live('click', function(){
+					if($j(this).children().find("a").attr('href') != '')
+						$j("#main").load($j(this).children().find("a").attr('href'));
+				});
 
 				$j('.pageHref').die();
 				$j('.pageHref').live('click', function() {
@@ -234,6 +256,12 @@
 
 				$j('.boardIndex').die();
 				$j('.boardIndex').live('click', function() {
+					$j("#main").load($j(this).attr("href"));
+					return false;
+				});
+				
+				$j('.returnTo').die();
+				$j('.returnTo').live('click', function() {
 					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
