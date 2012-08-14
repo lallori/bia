@@ -16,13 +16,17 @@
 
 				<script>
 					$j(document).ready(function() {
+						$j('#searchForumAllText').click(function(){
+							$j(this).val('');
+						});
+						
 						$j('#SearchForumAll').submit(function (){
-							$j("#mainContent").load($j(this).attr("href"));
+							$j("#main").load($j(this).attr("action") + '?' + $j(this).serialize());
 							return false;
 						});
 
-						$j('#advancedSearchButton').submit(function (){
-							$j("#mainContent").load($j(this).attr("href"));
+						$j('#advancedSearchButton').click(function (){
+							$j("#main").load($j(this).attr("href"));
 							return false;
 						});
 

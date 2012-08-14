@@ -48,6 +48,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	private static final long serialVersionUID = 2294835434784505729L;
 
 	private String author;
+	private String words;
 	private List<Integer> forumsId;
 
 	/**
@@ -72,6 +73,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getForumsId() {
 		return forumsId;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public String getWords() {
+		return words;
 	}
 
 	/**
@@ -110,6 +118,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		this.forumsId = forumsId;
 	}
 	
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(String words) {
+		this.words = words;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

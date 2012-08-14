@@ -27,16 +27,15 @@
  */
 package org.medici.docsources.command.community;
 
-import java.util.UUID;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SimpleSearchForumPostCommand {
 	private Boolean completeDOM;
-	private String text;
+	private String searchForumAllText;
 	private String searchUUID;
 
 	private Integer resultsForPage;
@@ -100,20 +99,6 @@ public class SimpleSearchForumPostCommand {
 	}
 
 	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
 	 * @param searchUUID the searchUUID to set
 	 */
 	public void setSearchUUID(String searchUUID) {
@@ -125,5 +110,19 @@ public class SimpleSearchForumPostCommand {
 	 */
 	public String getSearchUUID() {
 		return searchUUID;
+	}
+
+	/**
+	 * @param searchForumAllText the searchForumAllText to set
+	 */
+	public void setSearchForumAllText(String searchForumAllText) {
+		this.searchForumAllText = searchForumAllText;
+	}
+
+	/**
+	 * @return the searchForumAllText
+	 */
+	public String getSearchForumAllText() {
+		return searchForumAllText;
 	}
 }

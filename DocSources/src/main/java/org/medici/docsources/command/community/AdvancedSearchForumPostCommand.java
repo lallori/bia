@@ -30,8 +30,84 @@ package org.medici.docsources.command.community;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class AdvancedSearchForumPostCommand {
 
+	private String text;
+	private String textAuthor;
+	private Boolean allTerms;
+	private Integer idSearchFilter;
+	private String searchUUID;
+	
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+	
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	/**
+	 * @return the textAuthor
+	 */
+	public String getTextAuthor() {
+		return textAuthor;
+	}
+	
+	/**
+	 * @param textAuthor the textAuthor to set
+	 */
+	public void setTextAuthor(String textAuthor) {
+		this.textAuthor = textAuthor;
+	}
+	
+	/**
+	 * @return the allTerms
+	 */
+	public Boolean getAllTerms() {
+		return allTerms;
+	}
+	
+	/**
+	 * @param allTerms the allTerms to set
+	 */
+	public void setAllTerms(Boolean allTerms) {
+		this.allTerms = allTerms;
+	}
+
+	/**
+	 * @return the idSearchFilter
+	 */
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
+	}
+
+	/**
+	 * @param idSearchFilter the idSearchFilter to set
+	 */
+	public void setIdSearchFilter(Integer idSearchFilter) {
+		this.idSearchFilter = idSearchFilter;
+	}
+
+	/**
+	 * @return the searchUUID
+	 */
+	public String getSearchUUID() {
+		return searchUUID;
+	}
+
+	/**
+	 * @param searchUUID the searchUUID to set
+	 */
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
+	}
 }

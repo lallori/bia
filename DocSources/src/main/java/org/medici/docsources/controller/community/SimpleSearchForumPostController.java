@@ -33,6 +33,7 @@ import java.util.UUID;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.community.SimpleSearchForumPostCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -70,13 +71,15 @@ public class SimpleSearchForumPostController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		 
 		try {
-			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
+			command.setSearchForumAllText(URIUtil.decode(command.getSearchForumAllText(), "UTF-8"));
 		} catch (URIException e) {
 		}
-		model.put("yourSearch", command.getText());
+		model.put("yourSearch", command.getSearchForumAllText());
+		String [] toHighlight = StringUtils.split(command.getSearchForumAllText(), " ");
+		model.put("toHighlight", toHighlight);
 		
-		if(command.getText().contains("\"")){
-			command.setText(command.getText().replace("\"", "\\\""));
+		if(command.getSearchForumAllText().contains("\"")){
+			command.setSearchForumAllText(command.getSearchForumAllText().replace("\"", "\\\""));
 		}
 		// This number is used to generate an unique id for new search
 		UUID uuid = UUID.randomUUID();
@@ -104,7 +107,7 @@ public class SimpleSearchForumPostController {
 		Page page = new Page(paginationFilter);
 
 		try {
-			page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getText()), paginationFilter);
+			page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText()), paginationFilter);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			page = new Page(paginationFilter);

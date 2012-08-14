@@ -35,6 +35,7 @@ import org.medici.docsources.common.util.RegExUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SimpleSearchForumPost extends SimpleSearch {
@@ -113,9 +114,11 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		}
 		
 		for(int i = 0; i < words.length; i++){
-			jpaQuery.append("(text like '%");
+			jpaQuery.append("((text LIKE '%");
 			jpaQuery.append(words[i]);
-			jpaQuery.append("%')");
+			jpaQuery.append("%') OR (subject LIKE '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%'))");
 			if(i < words.length-1){
 				jpaQuery.append(" AND ");
 			}
