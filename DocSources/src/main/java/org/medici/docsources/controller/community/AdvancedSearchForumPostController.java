@@ -41,6 +41,8 @@ import javax.validation.Valid;
 import org.aspectj.weaver.ast.Or;
 import org.medici.docsources.command.community.AdvancedSearchForumPostCommand;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.AdvancedSearchFactory;
 import org.medici.docsources.common.search.AdvancedSearchForum;
@@ -100,6 +102,7 @@ public class AdvancedSearchForumPostController {
 			if(forum.getType().equals(Type.CATEGORY)){
 				if(forum.getOption().getCanHaveSubForum()){
 					subCategories = getCommunityService().getSubCategories(forum);
+					model.put("subCategories", subCategories);
 					List<Integer> subCategoriesIdsEnabledToSubForums = new ArrayList<Integer>(0);
 					for (Forum category : subCategories) {
 						if (category.getOption().getCanHaveSubForum()) {
@@ -110,7 +113,7 @@ public class AdvancedSearchForumPostController {
 					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
 					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					//MD: This is to populate the select
-					model.put("subForums", forumsHashMap.get(2));
+					model.put("subForums", forumsHashMap);
 				}
 			}
 
@@ -153,9 +156,67 @@ public class AdvancedSearchForumPostController {
 
 		// we prelevate our map which contains all user's filter used at runtime. 
 		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
-
 		
-		return new ModelAndView("community/SearchResultForumPost", model);
+		// if searchFilter is present in map we get  
+		if (searchFilterMap.get(command.getSearchUUID()) != null) {
+			searchFilter = searchFilterMap.get(command.getSearchUUID());
+		}else{
+			searchFilter = new SearchFilter(SearchType.FORUM);
+			searchFilter.setDateCreated(new Date());
+			searchFilter.setDateUpdated(new Date());
+		}
+		
+		// we update runtime filter with input from form 
+		AdvancedSearchForum advancedSearchForum = new AdvancedSearchForum();
+		//we populate the advanced search forum
+		advancedSearchForum.initFromAdvancedSearchForum(command);
+		searchFilter.setFilterData(advancedSearchForum);
+		// we update user map
+		searchFilterMap.put(command.getSearchUUID(), searchFilter);
+		// we update information in session
+		session.setAttribute("searchFilterMap", searchFilterMap);
+		model.put("yourSearch", searchFilter.getFilterData().toString());
+		
+		PaginationFilter paginationFilter = new PaginationFilter();
+		if (command.getResultsForPage() != null) {
+			paginationFilter.setElementsForPage(command.getResultsForPage());
+		} else {
+			paginationFilter.setElementsForPage(new Integer(10));
+		}
+		if (command.getResultPageNumber() != null) {
+			paginationFilter.setThisPage(command.getResultPageNumber());
+		} else {
+			paginationFilter.setThisPage(new Integer(1));
+		}
+		if (command.getResultPageTotal() != null) {
+			paginationFilter.setPageTotal(command.getResultPageTotal());
+		} else {
+			paginationFilter.setPageTotal(null);
+		}
+		if(command.getSortResults().equals("POST_TIME")){
+			paginationFilter.addSortingCriteria("dateCreated", command.getOrder());
+		} else if(command.getSortResults().equals("AUTHOR")){
+			paginationFilter.addSortingCriteria("author", command.getOrder());
+		} else if(command.getSortResults().equals("FORUM")){
+			paginationFilter.addSortingCriteria("forum.title", command.getOrder());
+		} else if(command.getSortResults().equals("TOPIC_TITLE")){
+			paginationFilter.addSortingCriteria("topic.subject", command.getOrder());
+		} else if(command.getSortResults().equals("POST_SUBJECT")){
+			paginationFilter.addSortingCriteria("subject", command.getOrder());
+		}
+		
+		Page page = new Page(paginationFilter);
+		
+		try{
+			page = getCommunityService().searchForumPosts(advancedSearchForum, paginationFilter);
+		}catch(ApplicationThrowable applicationThrowable){
+			model.put("applicationThrowable", applicationThrowable);
+			page = new Page(paginationFilter);
+		}
+
+		model.put("searchResultPage", page);
+		
+		return new ModelAndView("community/AdvancedSearchResultForumPost", model);
 	}
 
 	/**

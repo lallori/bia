@@ -13,7 +13,7 @@
 	</c:url>
 	
 	<h2>Advanced Search</h2>
-	<form id="advancedSearchForm" method="post">
+	<form id="advancedSearchForm" method="post" action="<c:url value="/community/AdvancedSearchForumPost.do"/>">
 		<div id="searchQueryDiv">
 			<h1>SEARCH QUERY</h1>
 			<p><b>Search for keywords:</b><br />
@@ -32,10 +32,13 @@
 			<p><b>Search in forums:</b><br />
    			Select the forum or forums you wish to search in. Subforums are searched automatically if you do not disable "search subforums" below.</p>
    			<div>
-   				<select name="searchForum" id="searchForum" multiple="multiple" size="${subForums.size()}" title="Search in forums">
+   				<select name="forumsId" id="searchForum" multiple="multiple" size="8" title="Search in forums">
    				<!-- MD: In this point we insert all the forum with subforums (Document > 2206 ; Person > Cosimo I, Cosimo II...) or only the main forums (Documents, People, Volumes, Places) ? -->
-   				<c:forEach items="${subForums}" var="currentForum">
-					<option value="${currentForum.forumId}">${currentForum.title}</option>
+   				<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
+   					<c:set var="forums" value="${subForums[currentCategory.forumId]}"/>
+   					<c:forEach items="${forums}" var="currentForum">
+						<option value="${currentForum.forumId}">${currentForum.title}</option>
+					</c:forEach>
 				</c:forEach>
    				</select>
    			</div>
@@ -56,10 +59,10 @@
 		            </div>
 		            <div class="value">
 		                <ul>
-		                    <li><label for="searchWithin"><input type="radio" name="searchWithin" id="sw_1" value="Post subjects and message text" checked="checked"> Post subjects and message text</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="searchWithin" id="swMessage" value="Message text only"> Message text only</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="searchWithin" id="swTopicTitles" value="Topic titles only"> Topic titles only</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="searchWithin" id="swFirstPost" value="First post of topics only"> First post of topics only</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="sw_1" value="SUBJECT_TEXT" checked="checked"> Post subjects and message text</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swMessage" value="TEXT"> Message text only</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swTopicTitles" value="TITLE"> Topic titles only</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swFirstPost" value="FIRST_POST"> First post of topics only</label></li>
 		                </ul>
 		            </div>
 		        </div>
@@ -80,14 +83,14 @@
 		             </div>
 		             <div class="value">
 		                <select name="sortResults" id="sortResults">
-		                    <option value="author">Author</option>
-		                    <option value="post time" selected="selected">Post time</option>
-		                    <option value="forum">Forum</option>
-		                    <option value="topic title">Topic title</option>
-		                    <option value="post subject">Post subject</option>
+		                    <option value="AUTHOR">Author</option>
+		                    <option value="POST_TIME" selected="selected">Post time</option>
+		                    <option value="FORUM">Forum</option>
+		                    <option value="TOPIC_TITLE">Topic title</option>
+		                    <option value="POST_SUBJECT">Post subject</option>
 		                </select>
-		                <label for="ascending"><input type="radio" name="ascending" id="ascending" value="Ascending" checked="checked"> Ascending</label> 
-		                <label for="descending"><input type="radio" name="descending" id="descending" value="Descending"> Descending</label> 
+		                <label for="ascending"><input type="radio" name="order" id="ascending" value="asc" checked="checked"> Ascending</label> 
+		                <label for="descending"><input type="radio" name="order" id="descending" value="desc"> Descending</label> 
 		             </div>
 		        </div>
 		        
@@ -180,22 +183,14 @@
 				return false;
 			});
 			
-			//MD: This code highlight the word inside the posts
-			var test = [];
-			test = $j('.search').text().split(" ");
-			
-			$j(".textPost").each(function(){
-			 	var newText = $j(this).text().split(" ").join("</span> <span class='toRemove'>");
-			  	newText = "<span class='toRemove'>" + newText + "</span>";
-			  	for(var i = 0; i < test.length; i++){
-			  		$j(this).html(newText).find('span').end().find(":contains('" + test[i] + "')").wrap("<span class='highlighted' />");
-			  		newText = $j(this).html();
-			  	}
-				$j(".toRemove").contents().unwrap();
-
-			});
-				
-// 			$j(".textPost:contains('${yourSearch}')").append($j('<span class="highlighted"></span>'));
+			$j('#advancedSearchForm').submit(function(){
+				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+// 				$j("#main").load(formSubmitURL);
+				$j.post(formSubmitURL, function(html) {
+					$j("#main").html(html);
+   				});
+				return false;
+			})
 
 		});
 	</script>

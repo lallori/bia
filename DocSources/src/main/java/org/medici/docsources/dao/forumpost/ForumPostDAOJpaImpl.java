@@ -202,9 +202,21 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 //				} 
 //			}
 //		}
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for(int i = 0; i < sortingCriterias.size(); i++){
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if(i < (sortingCriterias.size() - 1)){
+					orderBySQL.append(", ");
+				}
+			}
+		}
 		
-//		String jpql = objectsQuery + orderBySQL.toString();
-		String jpql = objectsQuery;
+		String jpql = objectsQuery + orderBySQL.toString();
+//		String jpql = objectsQuery;
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  

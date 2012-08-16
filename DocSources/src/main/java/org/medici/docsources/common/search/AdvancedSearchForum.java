@@ -32,8 +32,10 @@ import java.util.List;
 
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.medici.docsources.command.community.AdvancedSearchForumPostCommand;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.common.util.RegExUtils;
 
 /**
  * 
@@ -48,7 +50,8 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	private static final long serialVersionUID = 2294835434784505729L;
 
 	private String author;
-	private String words;
+	private List<String> words;
+	private String wordsType;
 	private List<Integer> forumsId;
 
 	/**
@@ -58,7 +61,9 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		super();
 
 		forumsId = new ArrayList<Integer>(0);
-		author ="";
+		author = null;
+		words = new ArrayList<String>(0);
+		wordsType = null;
 	}
 
 	/**
@@ -78,8 +83,15 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	/**
 	 * @return the words
 	 */
-	public String getWords() {
+	public List<String> getWords() {
 		return words;
+	}
+
+	/**
+	 * @return the wordsType
+	 */
+	public String getWordsType() {
+		return wordsType;
 	}
 
 	/**
@@ -94,6 +106,35 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
+	}
+	
+	/**
+	 * 
+	 * @param command
+	 */
+	public void initFromAdvancedSearchForum(AdvancedSearchForumPostCommand command){
+		//Words
+		if((command.getText() != null) && (command.getText().length() > 0)){
+			words = new ArrayList<String>();
+			wordsType = command.getWordsType();
+			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(command.getText());
+			for(String currentWord : wordArray){
+				words.add(currentWord);
+			}
+		} else {
+			words = new ArrayList<String>(0);
+		}
+		
+		//ForumsId
+		if((command.getForumsId() != null) && (command.getForumsId().size() > 0)){
+			forumsId = new ArrayList<Integer>(command.getForumsId().size());
+			
+			for(Integer currentForumId : command.getForumsId()){
+				forumsId.add(currentForumId);
+			}
+		} else {
+			forumsId = new ArrayList<Integer>(0);
+		}
 	}
 
 	@Override
@@ -117,12 +158,19 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	public void setForumsId(List<Integer> forumsId) {
 		this.forumsId = forumsId;
 	}
-	
+
 	/**
 	 * @param words the words to set
 	 */
-	public void setWords(String words) {
+	public void setWords(List<String> words) {
 		this.words = words;
+	}
+
+	/**
+	 * @param wordsType the wordsType to set
+	 */
+	public void setWordsType(String wordsType) {
+		this.wordsType = wordsType;
 	}
 
 	/**
@@ -132,8 +180,53 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	public String toJPAQuery() {
 		StringBuilder jpaQuery = new StringBuilder("FROM ForumPost WHERE ");
 
-		if (forumsId.size()>0) {
-			StringBuilder forumsQuery = new StringBuilder("(forum.forumId in (");
+		//Words
+		if(words != null && words.size() > 0){
+			StringBuilder textQuery = new StringBuilder("(");
+			if(wordsType.equals("TEXT")){
+				for(int i = 0; i < words.size(); i++){
+					if(textQuery.length() > 1){
+						textQuery.append(" AND ");
+					}
+					textQuery.append("(text LIKE '%");
+					textQuery.append(words.get(i));
+					textQuery.append("%')");
+				}
+			}else if(wordsType.equals("SUBJECT_TEXT")){
+				for(int i = 0; i < words.size(); i++){
+					if(textQuery.length() > 1){
+						textQuery.append(" AND ");
+					}
+					textQuery.append("(text LIKE '%");
+					textQuery.append(words.get(i));
+					textQuery.append("%') OR (subject LIKE '%");
+					textQuery.append(words.get(i));
+					textQuery.append("%')");
+				}
+			}else if(wordsType.equals("TITLE")){
+				for(int i = 0; i < words.size(); i++){
+					if(textQuery.length() > 1){
+						textQuery.append(" AND ");
+					}
+					textQuery.append("(topic.subject LIKE '%");
+					textQuery.append(words.get(i));
+					textQuery.append("%')");
+				}
+			}else if(wordsType.equals("FIRST_POST")){
+				
+			}
+			textQuery.append(")");
+			if(!textQuery.toString().equals("")){
+				if(jpaQuery.length() > 21){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(textQuery);
+			}
+		}
+		
+		//ForumsId
+		if (forumsId != null && forumsId.size()>0) {
+			StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
 			for (int i=0; i<forumsId.size(); i++) {
 				forumsQuery.append(forumsId.get(i));
 				forumsQuery.append(",");
@@ -141,6 +234,12 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 
 			forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
 			forumsQuery.append("))");
+			if(!forumsQuery.toString().equals("")){
+				if(jpaQuery.length() > 21){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(forumsQuery);
+			}
 		}
 
 		// person;

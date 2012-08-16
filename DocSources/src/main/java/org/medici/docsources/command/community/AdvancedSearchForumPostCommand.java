@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.community;
 
+import java.util.List;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -38,9 +40,63 @@ public class AdvancedSearchForumPostCommand {
 	private String text;
 	private String textAuthor;
 	private Boolean allTerms;
+	private List<Integer> forumsId;
+	private Boolean searchSubForums;
+	private String wordsType;
+	private String displayResults;
+	private String sortResults;
+	private String order;
+	private Integer limitResults;
+	private Integer returnFirst;
 	private Integer idSearchFilter;
 	private String searchUUID;
 	
+	private Integer resultsForPage;
+	private Integer resultPageNumber;
+	private Integer resultPageTotal;
+	
+	/**
+	 * @return the resultsForPage
+	 */
+	public Integer getResultsForPage() {
+		return resultsForPage;
+	}
+
+	/**
+	 * @param resultsForPage the resultsForPage to set
+	 */
+	public void setResultsForPage(Integer resultsForPage) {
+		this.resultsForPage = resultsForPage;
+	}
+
+	/**
+	 * @return the resultPageNumber
+	 */
+	public Integer getResultPageNumber() {
+		return resultPageNumber;
+	}
+
+	/**
+	 * @param resultPageNumber the resultPageNumber to set
+	 */
+	public void setResultPageNumber(Integer resultPageNumber) {
+		this.resultPageNumber = resultPageNumber;
+	}
+
+	/**
+	 * @return the resultPageTotal
+	 */
+	public Integer getResultPageTotal() {
+		return resultPageTotal;
+	}
+
+	/**
+	 * @param resultPageTotal the resultPageTotal to set
+	 */
+	public void setResultPageTotal(Integer resultPageTotal) {
+		this.resultPageTotal = resultPageTotal;
+	}
+
 	/**
 	 * @return the text
 	 */
@@ -81,6 +137,118 @@ public class AdvancedSearchForumPostCommand {
 	 */
 	public void setAllTerms(Boolean allTerms) {
 		this.allTerms = allTerms;
+	}
+
+	/**
+	 * @return the forumsId
+	 */
+	public List<Integer> getForumsId() {
+		return forumsId;
+	}
+
+	/**
+	 * @param forumsId the forumsId to set
+	 */
+	public void setForumsId(List<Integer> forumsId) {
+		this.forumsId = forumsId;
+	}
+
+	/**
+	 * @return the searchSubForums
+	 */
+	public Boolean getSearchSubForums() {
+		return searchSubForums;
+	}
+
+	/**
+	 * @param searchSubForums the searchSubForums to set
+	 */
+	public void setSearchSubForums(Boolean searchSubForums) {
+		this.searchSubForums = searchSubForums;
+	}
+
+	/**
+	 * @return the wordsType
+	 */
+	public String getWordsType() {
+		return wordsType;
+	}
+
+	/**
+	 * @param wordsType the wordsType to set
+	 */
+	public void setWordsType(String wordsType) {
+		this.wordsType = wordsType;
+	}
+
+	/**
+	 * @return the displayResults
+	 */
+	public String getDisplayResults() {
+		return displayResults;
+	}
+
+	/**
+	 * @param displayResults the displayResults to set
+	 */
+	public void setDisplayResults(String displayResults) {
+		this.displayResults = displayResults;
+	}
+
+	/**
+	 * @return the sortResults
+	 */
+	public String getSortResults() {
+		return sortResults;
+	}
+
+	/**
+	 * @param sortResults the sortResults to set
+	 */
+	public void setSortResults(String sortResults) {
+		this.sortResults = sortResults;
+	}
+
+	/**
+	 * @return the order
+	 */
+	public String getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	/**
+	 * @return the limitResults
+	 */
+	public Integer getLimitResults() {
+		return limitResults;
+	}
+
+	/**
+	 * @param limitResults the limitResults to set
+	 */
+	public void setLimitResults(Integer limitResults) {
+		this.limitResults = limitResults;
+	}
+
+	/**
+	 * @return the returnFirst
+	 */
+	public Integer getReturnFirst() {
+		return returnFirst;
+	}
+
+	/**
+	 * @param returnFirst the returnFirst to set
+	 */
+	public void setReturnFirst(Integer returnFirst) {
+		this.returnFirst = returnFirst;
 	}
 
 	/**
