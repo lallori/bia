@@ -336,8 +336,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
 
-	<definition name="community/AdvancedSearchForumPost" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchForumPost.jsp"/>
+	<definition name="community/ShowAdvancedSearchForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowAdvancedSearchForumPost.jsp"/>
 	</definition>
 	
 	<definition name="community/AdvancedSearchResultForumPost" extends="template.partialDOM">

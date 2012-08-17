@@ -54,6 +54,7 @@ public class AdvancedSearchForumPostCommand {
 	private Integer resultsForPage;
 	private Integer resultPageNumber;
 	private Integer resultPageTotal;
+	private Boolean newSearch;
 	
 	/**
 	 * @return the resultsForPage
@@ -277,5 +278,19 @@ public class AdvancedSearchForumPostCommand {
 	 */
 	public void setSearchUUID(String searchUUID) {
 		this.searchUUID = searchUUID;
+	}
+
+	/**
+	 * @return the newSearch
+	 */
+	public Boolean getNewSearch() {
+		return newSearch;
+	}
+
+	/**
+	 * @param newSearch the newSearch to set
+	 */
+	public void setNewSearch(Boolean newSearch) {
+		this.newSearch = newSearch;
 	}
 }

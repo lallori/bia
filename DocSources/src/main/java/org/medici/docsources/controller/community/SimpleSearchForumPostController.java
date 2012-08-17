@@ -102,7 +102,7 @@ public class SimpleSearchForumPostController {
 		} else {
 			paginationFilter.setPageTotal(null);
 		}
-		paginationFilter.addSortingCriteria("dispositionOrder", "asc");
+//		paginationFilter.addSortingCriteria("dispositionOrder", "asc");
 		
 		Page page = new Page(paginationFilter);
 

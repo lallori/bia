@@ -139,6 +139,9 @@
 		     </div>
 		</div>
 		
+		<input type="hidden" name="searchUUID" value="${command.searchUUID}">
+		<input type="hidden" name="newSearch" value="${command.newSearch}">
+		
 		<input type="submit" value="Search" class="buttonSmall" id="submitSearch">
     	<a href="/DocSources/forum/viewThreads.html" id="cancel" class="buttonSmall">Reset</a>
 	</form>
@@ -185,10 +188,10 @@
 			
 			$j('#advancedSearchForm').submit(function(){
 				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-// 				$j("#main").load(formSubmitURL);
-				$j.post(formSubmitURL, function(html) {
-					$j("#main").html(html);
-   				});
+				$j("#main").load(formSubmitURL);
+// 				$j.post(formSubmitURL, function(html) {
+// 					$j("#main").html(html);
+//    				});
 				return false;
 			})
 

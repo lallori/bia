@@ -143,6 +143,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {
 		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId order by dateCreated asc";
@@ -185,6 +186,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	        
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
 		String objectsQuery = searchContainer.toJPAQuery();
@@ -220,11 +222,11 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  
-//		query.setFirstResult(paginationFilter.getFirstRecord());
-//		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
-
+		
 		// We set search result on return method
 		page.setList(query.getResultList());
 		

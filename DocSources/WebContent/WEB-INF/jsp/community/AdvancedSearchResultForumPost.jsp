@@ -14,7 +14,7 @@
 	
 	<div id="searchResults">
 		<h2>SEARCH</h2>
-		<p>Found <span>${searchResultPage.list.size()}</span> match: <span class="search">${yourSearch}</span>
+		<p>Found <span>${searchResultPage.total}</span> match: <span class="search">${yourSearch}</span>
 
 <%-- <h2>${topic.subject }</h2> --%>
 
@@ -80,6 +80,9 @@
             <input id="go" type="submit" title="go" value="Go" class="buttonMini">
         </form>
     </div>
+    
+    <input type="hidden" name="searchUUID" value="${command.searchUUID}">
+    <input type="hidden" name="newSearch" value="${command.newSearch}">
  
 </div>
 					
@@ -105,7 +108,7 @@
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.pageHref').live('click', function() {
-				$j("#mainContent").load($j(this).attr("href"));
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			

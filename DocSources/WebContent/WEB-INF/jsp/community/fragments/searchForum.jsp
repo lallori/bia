@@ -11,7 +11,7 @@
 					</form>
 				</div>
 
-                <a href="<c:url value="/community/AdvancedSearchForumPost.do"/>" class="buttonMedium" id="advancedSearchButton">Advanced Search</a>
+                <a href="<c:url value="/community/ShowAdvancedSearchForumPost.do"/>" class="buttonMedium" id="advancedSearchButton">Advanced Search</a>
 
 
 				<script>
