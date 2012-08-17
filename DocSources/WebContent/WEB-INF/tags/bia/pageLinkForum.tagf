@@ -27,6 +27,12 @@
 
 			<span class="paginateButton"><a href="${baseUrl}${extraArgs}" class="pageHref">${currentPage}</a></span>	
 		</c:if>
+		<c:if test="${not empty searchResultPage}">
+			<c:url var="baseUrl" value="/community/AdvancedSearchForumPost.do"/>
+			<c:set var="extraArgs">?searchUUID=${command.searchUUID}&resultPageNumber=${currentPage}&resultPageTotal=${page.totalPages}&resultsForPage=${command.resultsForPage}&sortResults=${command.sortResults}&order=${command.order}&newSearch=false</c:set>
+			
+			<span class="paginateButton"><a href="${baseUrl}${extraArgs}" class="pageHref">${currentPage}</a></span>
+		</c:if>
 		</c:when>
 	<c:otherwise>
 		<span class="paginateActive">${currentPage}</span>
