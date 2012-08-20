@@ -33,6 +33,12 @@
 			
 			<span class="paginateButton"><a href="${baseUrl}${extraArgs}" class="pageHref">${currentPage}</a></span>
 		</c:if>
+		<c:if test="${not empty simpleSearchResultPage}">
+			<c:url var="baseUrl" value="/community/SimpleSearchForumPost.do"/>
+			<c:set var="extraArgs">?searchUUID=${command.searchUUID}&searchForumAllText=${command.searchForumAllText}&resultPageNumber=${currentPage}&resultPageTotal=${page.totalPages}&resultsForPage=${command.resultsForPage}&sortResults=${command.sortResults}&order=${command.order}</c:set>
+			
+			<span class="paginateButton"><a href="${baseUrl}${extraArgs}" class="pageHref">${currentPage}</a></span>
+		</c:if>
 		</c:when>
 	<c:otherwise>
 		<span class="paginateActive">${currentPage}</span>

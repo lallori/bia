@@ -14,7 +14,7 @@
 	
 	<div id="searchResults">
 		<h2>SEARCH</h2>
-		<p>Found <span>${searchResultPage.list.size()}</span> match: <span class="search">${yourSearch}</span>
+		<p>Found <span>${simpleSearchResultPage.total}</span> match: <span class="search">${yourSearch}</span>
 
 <%-- <h2>${topic.subject }</h2> --%>
 
@@ -29,7 +29,7 @@
 <!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print thread" width="17" height="15" /><span class="button_text">Print thread</span></a> -->
 <!-- </div> -->
 
-<c:forEach items="${searchResultPage.list}" var="currentPost" varStatus="status">
+<c:forEach items="${simpleSearchResultPage.list}" var="currentPost" varStatus="status">
 	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.do">
 		<c:param name="postId" value="${currentPost.postId}"/>
 		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
@@ -48,7 +48,7 @@
         <a href="${ReplyWithQuoteForumPostURL}" id="quotePost" title="Reply with quote"></a>
     </div>
     <div id="post">
-        <h2>${currentPost.subject}</h2>
+        <h2>${currentPost.subject} in: ${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</h2>
         <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         <p class="textPost">${currentPost.text}</p>
     </div>
@@ -66,7 +66,7 @@
 
 <div id="forumPaginate">
     <c:set var="paginationData">
-		<bia:paginationForum page="${searchResultPage}"/>
+		<bia:paginationForum page="${simpleSearchResultPage}"/>
 	</c:set>
 	
 	${paginationData}
@@ -105,7 +105,7 @@
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.pageHref').live('click', function() {
-				$j("#mainContent").load($j(this).attr("href"));
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			

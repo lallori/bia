@@ -38,6 +38,7 @@ import org.medici.docsources.domain.ForumTopic;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class ForumUtils {
@@ -84,7 +85,26 @@ public class ForumUtils {
 			return getForumChronology(forum.getForumParent());
 		}
 		
-		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumHrefUrl(forum) + "</span>";
+		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\" style=\"display:none;\" >&rarr; " + HtmlUtils.getShowForumHrefUrl(forum) + "</span>";
+	}
+	
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 */
+	public static String getSelectForumChronology(Forum forum) {
+		if(forum == null)
+			return "";
+		if (forum.getForumParent() == null) {
+			return "<option value='" + HtmlUtils.getShowForumUrl(forum) + "'>" + forum.getTitle() + "</option>"; 
+		}
+		
+		if (forum.getType().equals(Type.CATEGORY)) {
+			return getSelectForumChronology(forum.getForumParent());
+		}
+		
+		return getSelectForumChronology(forum.getForumParent()) + "<option value='" + HtmlUtils.getShowForumUrl(forum) + "'>" + forum.getTitle() + "</option>";
 	}
 
 	/**

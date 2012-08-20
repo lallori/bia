@@ -11,6 +11,10 @@
 		<c:param name="forumId" value="${topic.forum.forumId}"/>
 		<c:param name="topicId" value="${topic.topicId}"/>
 	</c:url>
+	
+	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+		<c:param name="forumId" value="${topic.forum.forumId}"/>
+	</c:url>
 
 <h2>${topic.subject }</h2>
 
@@ -69,12 +73,10 @@
 	
 	<div id="jumpToDiv">
     	Jump to:
-        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
-            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
-                <option value="" selected="selected">Select a Forum</option>
-            </select>
-            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
-        </form>
+        <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
+        	<option value="" selected="selected">Select a Forum</option>
+        </select>
+        <input id="go" title="go" value="Go" class="buttonMini">
     </div>
  
 </div>
@@ -99,8 +101,10 @@
 		$j(document).ready(function() {
 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
    				$j("#chronologyDiv").html(json.chronology);
-				$j(".arrowForum").css('visibility','visible');
-				$j(".forum").css('visibility','visible');
+				$j("#selectForum").append(json.selectChronology);
+				$j("#selectForum").append("<option value='${ShowForumOfTopicURL}'>${topic.forum.title}</option>");
+				$j(".arrowForum").css('display','');
+				$j(".forum").css('display','');
    			}});
 
 			$j('.pageHref').die();
@@ -132,5 +136,14 @@
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
+			
+			$j("#go").click(function(){
+				if($j("#selectForum option:selected").val() == '')
+					return false;
+				else{
+					$j("#main").load($j("#selectForum option:selected").val());
+					return false;
+				}
+			})
 		});
 	</script>

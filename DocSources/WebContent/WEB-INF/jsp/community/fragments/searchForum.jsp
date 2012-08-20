@@ -21,7 +21,7 @@
 						});
 						
 						$j('#SearchForumAll').submit(function (){
-							$j("#main").load($j(this).attr("action") + '?' + $j(this).serialize());
+							$j("#main").load($j(this).attr("action") + '?' + $j(this).serialize() + "&sortResults=POST_TIME&order=asc");
 							return false;
 						});
 

@@ -102,7 +102,17 @@ public class SimpleSearchForumPostController {
 		} else {
 			paginationFilter.setPageTotal(null);
 		}
-//		paginationFilter.addSortingCriteria("dispositionOrder", "asc");
+		if(command.getSortResults().equals("POST_TIME")){
+			paginationFilter.addSortingCriteria("dateCreated", command.getOrder());
+		} else if(command.getSortResults().equals("AUTHOR")){
+			paginationFilter.addSortingCriteria("author", command.getOrder());
+		} else if(command.getSortResults().equals("FORUM")){
+			paginationFilter.addSortingCriteria("forum.title", command.getOrder());
+		} else if(command.getSortResults().equals("TOPIC_TITLE")){
+			paginationFilter.addSortingCriteria("topic.subject", command.getOrder());
+		} else if(command.getSortResults().equals("POST_SUBJECT")){
+			paginationFilter.addSortingCriteria("subject", command.getOrder());
+		}
 		
 		Page page = new Page(paginationFilter);
 
@@ -113,7 +123,7 @@ public class SimpleSearchForumPostController {
 			page = new Page(paginationFilter);
 		}
 
-		model.put("searchResultPage", page);
+		model.put("simpleSearchResultPage", page);
 
 		return new ModelAndView("community/SearchResultForumPost",model);
 	}

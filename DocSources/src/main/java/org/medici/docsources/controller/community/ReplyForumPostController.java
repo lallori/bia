@@ -82,7 +82,7 @@ public class ReplyForumPostController {
 			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
 			forumPost.setText(command.getText());
 			forumPost.setSubject(command.getSubject());
-			//forumPost.setParentPost(new ForumPost(command.getParentPostId()));
+			forumPost.setParentPost(new ForumPost(command.getParentPostId()));
 			forumPost.setForum(new Forum(command.getForumId()));
 
 			try {
@@ -115,6 +115,7 @@ public class ReplyForumPostController {
 			
 		}
 		//command.setParentPostId(postToReply.getParentPost().getId());
+		command.setParentPostId(firstPostTopicToReply.getPostId());
 		command.setSubject("RE: " + firstPostTopicToReply.getSubject());
 		command.setText(firstPostTopicToReply.getText());
 

@@ -41,6 +41,8 @@ public class SimpleSearchForumPostCommand {
 	private Integer resultsForPage;
 	private Integer resultPageNumber;
 	private Integer resultPageTotal;
+	private String sortResults;
+	private String order;
 
 	/**
 	 * @return the resultsForPage
@@ -124,5 +126,33 @@ public class SimpleSearchForumPostCommand {
 	 */
 	public String getSearchForumAllText() {
 		return searchForumAllText;
+	}
+
+	/**
+	 * @return the sortResults
+	 */
+	public String getSortResults() {
+		return sortResults;
+	}
+
+	/**
+	 * @param sortResults the sortResults to set
+	 */
+	public void setSortResults(String sortResults) {
+		this.sortResults = sortResults;
+	}
+
+	/**
+	 * @return the order
+	 */
+	public String getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(String order) {
+		this.order = order;
 	}
 }

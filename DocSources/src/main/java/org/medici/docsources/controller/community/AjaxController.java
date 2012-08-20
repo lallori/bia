@@ -63,6 +63,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for Community.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("CommunityAjaxController")
 public class AjaxController {
@@ -116,6 +117,7 @@ public class AjaxController {
 			model.put("forumId", forum.getForumId().toString());
 			model.put("title", forum.getTitle());
 			model.put("chronology", ForumUtils.getForumChronology(forum));
+			model.put("selectChronology", ForumUtils.getSelectForumChronology(forum.getForumParent()));
 		}catch(ApplicationThrowable th){
 			model.put("error", th.getMessage());
 		}

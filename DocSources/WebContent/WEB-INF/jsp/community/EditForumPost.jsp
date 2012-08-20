@@ -76,6 +76,7 @@
 		$j(document).ready(function() {
 			$j('#submit').click(function(){
 	 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
+	 				var topicUrl = json.topicUrl;
 	 				if (json.operation == 'OK') {
 						$j("#messagePosted").css('display','inherit');
 						$j("#messagePosted").dialog({
@@ -87,7 +88,7 @@
 							  buttons: {
 								  Ok: function() {
 									  $j(this).dialog("close");
-									  $j("#mainContent").load(json.topicUrl);
+									  $j("#main").load(topicUrl);
 								  }
 							  }
 						  });

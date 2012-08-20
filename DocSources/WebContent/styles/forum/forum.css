@@ -217,9 +217,9 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	margin-bottom:10px;
 }
 
-#chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{
-	display:none;
-}
+/* #chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{ */
+/* 	display:none; */
+/* } */
 
 #userDiv { /* User profile Div */
 	width: 500px;
