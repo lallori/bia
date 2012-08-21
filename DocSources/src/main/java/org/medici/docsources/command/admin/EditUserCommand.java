@@ -48,6 +48,7 @@ public class EditUserCommand {
 	private String middleName;
 	private String lastName;
 	private String password;
+	private Boolean forcePswdChange;
 	private Integer yearExpirationPassword;
 	private Integer monthExpirationPassword;
 	private Integer dayExpirationPassword;
@@ -130,6 +131,23 @@ public class EditUserCommand {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	/**
+	 * 
+	 * @param forcePswdChange
+	 */
+	public void setForcePswdChange(Boolean forcePswdChange) {
+		this.forcePswdChange = forcePswdChange;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Boolean getForcePswdChange() {
+		return forcePswdChange;
+	}
+
 	/**
 	 * @return the yearExpirationPassword
 	 */

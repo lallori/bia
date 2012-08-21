@@ -296,6 +296,10 @@
         <description>User create validator (administration console component).</description>
     </bean>
     
+    <bean id="changeExpiratedUserPasswordValidator" class="org.medici.docsources.validator.user.ChangeExpiratedUserPasswordValidator">
+        <description>Change expirated user password validator.</description>
+    </bean>
+    
     <bean id="editUserProfileValidator" class="org.medici.docsources.validator.user.EditUserProfileValidator">
     	<description>Edit user profile validator.</description>
     </bean>

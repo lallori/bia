@@ -143,6 +143,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
     </definition>
 
+    <definition name="user/ChangeExpiratedUserPassword" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPassword.jsp"/>
+    </definition>
+
     <definition name="user/RegisterUserSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
     </definition>

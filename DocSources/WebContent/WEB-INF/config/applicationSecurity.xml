@@ -37,6 +37,7 @@
         <security:intercept-url pattern="/**.do"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
         <security:intercept-url pattern="/**.json"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
         <security:intercept-url pattern="/**.**"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/user/ChangeExpiratedUserPassword.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/UpdateUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowUserPhoto.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowMyHistory.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
@@ -46,19 +47,33 @@
         <security:form-login always-use-default-target="true"
         			login-page="/LoginUser.do"
                     login-processing-url="/loginProcess" 
-                    default-target-url="/Home.do"
-                    authentication-success-handler-ref=""
+                    authentication-success-handler-ref="loginSuccessHandler"
                     authentication-failure-url="/LoginUser.do?login_error=1" 
                     />
   
-        <security:logout invalidate-session="true" logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
+        <security:logout invalidate-session="true" logout-url="/LogoutUser.do" success-handler-ref="logoutSuccessHandler" />
+
 		<security:session-management session-fixation-protection="newSession">
 		 	<security:concurrency-control max-sessions="1"/>
 		</security:session-management>
+
 		<security:remember-me key="_spring_security_remember_me" token-validity-seconds="864000" token-repository-ref="tokenRepository" />
 
     </security:http>
  
+ 	<bean id="loginSuccessHandler" class="org.medici.docsources.security.BiaAuthenticationSuccessHandler">
+ 		<property name="defaultTargetUrl" value="/Home.do"/>
+ 		<property name="changeExpiratedUserPasswordUrl" value="/user/ChangeExpiratedUserPassword.do"/>
+ 	</bean>
+ 	
+ 	<bean id="loginFailureHandler" class="org.medici.docsources.security.BiaAuthenticationFailureHandler">
+ 		<property name="failureUrl" value="/LoginUser.do?login_error=1"/>
+ 	</bean>
+ 	
+ 	<bean id="logoutSuccessHandler" class="org.medici.docsources.security.BiaLogoutSuccessHandler">
+ 		<property name="defaultTargetUrl" value="/LoginUser.do"/>
+ 	</bean>
+
 	<bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
       <property name="createTableOnStartup" value="false" />
       <property name="dataSource" ref="dataSource"/>

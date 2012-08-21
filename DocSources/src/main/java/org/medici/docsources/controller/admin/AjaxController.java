@@ -114,7 +114,7 @@ public class AjaxController {
 			singleRow.add(currentUser.getCity());
 			singleRow.add(currentUser.getCountry());
 			if (currentUser.getLastLoginDate() != null) {
-				singleRow.add(currentUser.getLastLoginDate());
+				singleRow.add(currentUser.getLastLoginDate().toString());
 			} else {
 				singleRow.add("");
 			}

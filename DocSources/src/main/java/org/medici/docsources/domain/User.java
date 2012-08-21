@@ -97,6 +97,8 @@ public class User implements Serializable {
 	private Date lastForumPostDate;
 	@Column (name="\"lastLoginDate\"")
 	private Date lastLoginDate;
+	@Column (name="\"lastLogoutDate\"")
+	private Date lastLogoutDate;
 	@Column (name="\"lastName\"", length=50, nullable=false)
 	private String lastName;
 	@Column (name="\"lastPasswordChangeDate\"")
@@ -495,6 +497,14 @@ public class User implements Serializable {
 	 */
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
+	}
+
+	public void setLastLogoutDate(Date lastLogoutDate) {
+		this.lastLogoutDate = lastLogoutDate;
+	}
+
+	public Date getLastLogoutDate() {
+		return lastLogoutDate;
 	}
 
 	/**

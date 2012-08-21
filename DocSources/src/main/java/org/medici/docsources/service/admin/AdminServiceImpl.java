@@ -52,6 +52,7 @@ import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private MonthDAO monthDAO;
+	
+	@Autowired
+	@Qualifier("passwordEncoder")
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
@@ -123,26 +128,19 @@ public class AdminServiceImpl implements AdminService {
 			//userToUpdate.setAddress(user.getAddress());
 			//userToUpdate.setCity(user.getCity());
 			//userToUpdate.setCountry(user.getCountry());
+
+			if (!user.getPassword().equals(userToUpdate.getPassword())){
+				userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+				userToUpdate.setLastPasswordChangeDate(new Date());
+			}
+
 			userToUpdate.setFirstName(user.getFirstName());
 			userToUpdate.setInitials(user.getInitials());
 			userToUpdate.setInterests(user.getInterests());
 			userToUpdate.setLastName(user.getLastName());
 			
-			//userToUpdate.setMail(user.getMail());
-			//userToUpdate.setOrganization(user.getOrganization());
-			//userToUpdate.setPhoto(user.getPhoto());
-			//userToUpdate.setTitle(user.getTitle());
-			
-//			if (getUserDAO().findUser(user.getAccount()) == null) {
-//				getUserDAO().persist(userToUpdate);
-//			} else {
-				
-//			userToUpdate.setActivationDate(userInformation.getActivationDate());
-//			userToUpdate.setActive(userInformation.getActive());
-//			userToUpdate.setApproved(userInformation.getApproved());
 			userToUpdate.setExpirationDate(user.getExpirationDate());
-//			userToUpdate.setExpirationPasswordDate(userInformation.getExpirationDate());
-			userToUpdate.setLastPasswordChangeDate(new Date());
+			userToUpdate.setExpirationPasswordDate(user.getExpirationPasswordDate());
 			userToUpdate.setActive(user.getActive());
 			if (!userToUpdate.getApproved().equals(user.getApproved())) {
 				userToUpdate.setApproved(user.getApproved());
@@ -330,5 +328,13 @@ public class AdminServiceImpl implements AdminService {
 
 	public UserRoleDAO getUserRoleDAO() {
 		return userRoleDAO;
+	}
+
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
 	}
 }

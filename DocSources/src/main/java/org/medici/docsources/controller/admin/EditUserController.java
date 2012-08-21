@@ -169,6 +169,7 @@ public class EditUserController {
 			Calendar cal = Calendar.getInstance();
 
 			User user = new User(command.getNewAccount());
+			user.setPassword(command.getPassword());
 			user.setFirstName(command.getFirstName());
 			user.setLastName(command.getLastName());
 			user.setInitials(command.getFirstName().charAt(0) + "" + command.getLastName().charAt(0));
@@ -185,6 +186,13 @@ public class EditUserController {
 
 			cal.set(command.getYearExpirationPassword(), command.getMonthExpirationPassword() - 1, command.getDayExpirationPassword());
 			user.setExpirationPasswordDate(cal.getTime());
+			
+			if (command.getForcePswdChange().equals(Boolean.TRUE)) {
+				cal = Calendar.getInstance();
+				cal.add(Calendar.DATE, -1);
+				user.setExpirationPasswordDate(cal.getTime());
+			}
+
 			user.setApproved(command.getApproved());
 			user.setActive(command.getActive());
 			user.setLocked(command.getLocked());

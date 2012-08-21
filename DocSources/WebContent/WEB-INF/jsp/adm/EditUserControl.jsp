@@ -41,10 +41,6 @@
         <div class="row">
             <div class="col_l"><form:label for="newPassword" id="newPasswordLabel" path="password">New password</form:label></div>
             <div class="col_l"><form:input id="newPassword" name="newPassword" class="input_8c" type="password" value="" path="password"/></div>
-            <div class="col_r">
-            	<label for="unmask" id="unmaskLabel">Unmask</label>
-        		<input type="checkbox" name="unmaskLabel" class="checkboxPers2"/>
-            </div>
         </div>
         <div class="row">
         	<b>Password Expires:</b>

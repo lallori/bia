@@ -717,10 +717,16 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void lockUser(User user) throws ApplicationThrowable {
 		try {
+			User userToLock = getUserDAO().findUser(user.getAccount());
+			userToLock.setLocked(Boolean.TRUE);
+
 			getUserDAO().removeAllUserRoles(user.getAccount());
+			
+			getUserDAO().merge(userToLock);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -800,6 +806,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void restoreMyHistory() throws ApplicationThrowable {
 		try {
@@ -814,6 +821,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void restoreMyHistory(Category category) throws ApplicationThrowable {
 		try {
@@ -828,6 +836,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void restoreUserHistory(String username) throws ApplicationThrowable {
 		try {
@@ -842,6 +851,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable {
 		try {
@@ -1025,6 +1035,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateUser(User user) throws ApplicationThrowable {
 		try {
@@ -1040,6 +1051,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public String updateUserPassword(User user) throws ApplicationThrowable {
 		try {
@@ -1055,6 +1067,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
 		try {
@@ -1068,6 +1081,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable {
 		try {
@@ -1088,6 +1102,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable {
 		try {
