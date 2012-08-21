@@ -28,6 +28,8 @@
 package org.medici.docsources.common.search;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.search.BooleanQuery;
@@ -51,8 +53,10 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 
 	private String author;
 	private List<String> words;
+	private Boolean allTerms;
 	private String wordsType;
 	private List<Integer> forumsId;
+	private Integer limitResults;
 
 	/**
 	 * 
@@ -63,7 +67,16 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		forumsId = new ArrayList<Integer>(0);
 		author = null;
 		words = new ArrayList<String>(0);
+		allTerms = null;
 		wordsType = null;
+		limitResults = null;
+	}
+
+	/**
+	 * @return the allTerms
+	 */
+	public Boolean getAllTerms() {
+		return allTerms;
 	}
 
 	/**
@@ -78,6 +91,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getForumsId() {
 		return forumsId;
+	}
+
+	/**
+	 * @return the limitResults
+	 */
+	public Integer getLimitResults() {
+		return limitResults;
 	}
 
 	/**
@@ -125,6 +145,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			words = new ArrayList<String>(0);
 		}
 		
+		//AllTerms
+		if(command.getAllTerms() != null){
+			allTerms = command.getAllTerms();
+		}else{
+			allTerms = Boolean.FALSE;
+		}
+		
 		//ForumsId
 		if((command.getForumsId() != null) && (command.getForumsId().size() > 0)){
 			forumsId = new ArrayList<Integer>(command.getForumsId().size());
@@ -135,6 +162,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		} else {
 			forumsId = new ArrayList<Integer>(0);
 		}
+		
+		//LimitResults
+		if(command.getLimitResults() != null){
+			limitResults = command.getLimitResults();
+		}else{
+			limitResults = 0;
+		}
 	}
 
 	@Override
@@ -143,6 +177,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
+	}
+
+	/**
+	 * @param allTerms the allTerms to set
+	 */
+	public void setAllTerms(Boolean allTerms) {
+		this.allTerms = allTerms;
 	}
 
 	/**
@@ -157,6 +198,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	public void setForumsId(List<Integer> forumsId) {
 		this.forumsId = forumsId;
+	}
+
+	/**
+	 * @param limitResults the limitResults to set
+	 */
+	public void setLimitResults(Integer limitResults) {
+		this.limitResults = limitResults;
 	}
 
 	/**
@@ -213,7 +261,14 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 					textQuery.append("%')");
 				}
 			}else if(wordsType.equals("FIRST_POST")){
-				
+				for(int i = 0; i < words.size(); i++){
+					if(textQuery.length() > 1){
+						textQuery.append(" AND ");
+					}
+					textQuery.append("(text LIKE '%");
+					textQuery.append(words.get(i));
+					textQuery.append("%') AND (parentPost.postId IS NULL)");
+				}
 			}
 			textQuery.append(")");
 			if(!textQuery.toString().equals("")){
@@ -251,6 +306,42 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 				jpaQuery.append(" AND ");
 			}
 			jpaQuery.append(authorQuery);
+		}
+		
+		//LimitResults
+		if(limitResults != null && limitResults > 0){
+			StringBuilder dateQuery = new StringBuilder("(");
+			Date limitDate = new Date();
+			Calendar l = Calendar.getInstance();
+			l.setTime(limitDate);
+			l.set(l.get(Calendar.YEAR), l.get(Calendar.MONTH), l.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+			switch(limitResults){
+				case 30: 
+					l.add(Calendar.MONTH, -1);
+					break;
+				case 90:
+					l.add(Calendar.MONTH, -3);
+					break;
+				case 180:
+					l.add(Calendar.MONTH, -6);
+					break;
+				case 365:
+					l.add(Calendar.YEAR, -1);
+					break;
+				default:
+					l.add(Calendar.DAY_OF_MONTH, (0 - limitResults));
+					break;
+			}
+			dateQuery.append("lastUpdate BETWEEN '");
+			dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+			dateQuery.append("' AND '");
+			l.setTime(limitDate);
+			dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+			dateQuery.append("' )");
+			if(jpaQuery.length() > 21){
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append(dateQuery);
 		}
 
 		return jpaQuery.toString();

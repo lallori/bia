@@ -20,8 +20,8 @@
     		Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p>
     	
     		<input id="text" name="text" class="input_50c" type="text" value="" />
-    		<label for="allTerms" id="allTermsLabel"><input type="radio" name="allTerms" id="allTerms" value="1">Search for all terms or use query as entered</label>
-        	<label for="anyTerms" id="anyTermsLabel"><input type="radio" name="allTerms" id="anyTerms" value="0">Search for any terms</label>
+    		<label for="allTerms" id="allTermsLabel"><input type="radio" name="allTerms" id="allTerms" value="true" checked="checked">Search for all terms or use query as entered</label>
+        	<label for="anyTerms" id="anyTermsLabel"><input type="radio" name="allTerms" id="anyTerms" value="false">Search for any terms</label>
         	<p><b>Search for author:</b><br />
     		Use * as a wildcard for partial matches.</p>
     		<input id="textAuthor" name="textAuthor" class="input_50c" type="text" value=""/>

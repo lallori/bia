@@ -281,7 +281,14 @@
 						$j("#main").load($j("#selectForum option:selected").val());
 						return false;
 					}
-				})
+				});
+				
+				$j('.paginateForumButton').die();
+				// Result links have a specific class style on which we attach click live. 
+				$j('.paginateForumButton').live('click', function() {
+					$j("#main").load($j(this).attr("href"));
+					return false;
+				});
 			});
 		</script>
 					

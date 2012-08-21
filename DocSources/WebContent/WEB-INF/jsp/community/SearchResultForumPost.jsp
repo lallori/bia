@@ -145,9 +145,14 @@
 			  	}
 				$j(".toRemove").contents().unwrap();
 
-			});
-				
+			});				
 // 			$j(".textPost:contains('${yourSearch}')").append($j('<span class="highlighted"></span>'));
-
+			
+			$j('.paginateForumButton').die();
+			// Result links have a specific class style on which we attach click live. 
+			$j('.paginateForumButton').live('click', function() {
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
 		});
 	</script>
