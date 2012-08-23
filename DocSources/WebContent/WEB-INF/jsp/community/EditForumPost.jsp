@@ -24,7 +24,7 @@
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
 	    <div>
-			<textarea id="htmlbox" name="text" style="width:970px; height:300px"></textarea>
+			<form:textarea id="htmlbox" name="text" path="text" style="width:970px; height:300px"></form:textarea>
 	    </div>
 	    
 	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">

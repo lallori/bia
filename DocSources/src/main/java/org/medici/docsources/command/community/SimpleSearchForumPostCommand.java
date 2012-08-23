@@ -37,6 +37,7 @@ public class SimpleSearchForumPostCommand {
 	private Boolean completeDOM;
 	private String searchForumAllText;
 	private String searchUUID;
+	private Integer topicId;
 
 	private Integer resultsForPage;
 	private Integer resultPageNumber;
@@ -154,5 +155,19 @@ public class SimpleSearchForumPostCommand {
 	 */
 	public void setOrder(String order) {
 		this.order = order;
+	}
+
+	/**
+	 * @return the topicId
+	 */
+	public Integer getTopicId() {
+		return topicId;
+	}
+
+	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
 	}
 }

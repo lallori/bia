@@ -84,6 +84,13 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param postId
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteForumPost(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param userComment
 	 * @return
 	 * @throws ApplicationThrowable
@@ -97,7 +104,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param topicId
@@ -220,6 +227,14 @@ public interface CommunityService {
 	 */
 	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param postId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable

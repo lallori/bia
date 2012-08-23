@@ -21,8 +21,8 @@
 <div id="topicActions">
 	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><img src="<c:url value="/images/forum/img_reply.png"/>" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a>
     <div id="searchThisForumFormDiv">
-        <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
-            <input id="text" name="text" type="text" value="Search this forum...">
+        <form id="SearchForm" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
+            <input id="searchInForum" name="searchInForum" type="text" value="Search this forum...">
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>
@@ -42,10 +42,31 @@
 		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
 	</c:url>
 	
+	<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
+		<c:param name="postId" value="${currentPost.postId}"/>
+		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+	</c:url>
+	
+	<c:url var="DeleteForumPostURL" value="/community/DeletePost.json">
+		<c:param name="postId" value="${currentPost.postId}"/>
+	</c:url>
+	
 	<div id="postTable">
 	<div id="topicIcons">
+		<c:choose>
+		<c:when test="${currentPost.user.account == account}">
+			<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+			<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+		</c:when>
+		<c:otherwise>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+				<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+			</security:authorize>
+		</c:otherwise>
+		</c:choose>
         <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
-        <a href="${ReplyWithQuoteForumPostURL}" id="quotePost" title="Reply with quote"></a>
+        <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
     </div>
     <div id="post">
         <h2>${currentPost.subject}</h2>
@@ -94,6 +115,15 @@
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 		Are you sure you want to delete this post?
 	</p>
+	
+	<input type="hidden" value="" id="deleteUrl"/>
+</div>
+
+<div id="notDeletePost" title="Delete post" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Not deleted
+	</p>
 </div>
 
 
@@ -132,6 +162,12 @@
 				return false;
 			});
 			
+			$j('.editPost').die();
+			$j('.editPost').click(function(){
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			})
+			
 			$j('.returnTo').click(function(){
 				$j("#main").load($j(this).attr("href"));
 				return false;
@@ -152,5 +188,61 @@
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
+			
+			$j('#searchInForum').click(function(){
+				$j(this).val('');
+				return false;
+			});
+			
+			$j('#SearchForm').submit(function (){
+				$j("#main").load($j(this).attr("action") + '?searchForumAllText=' + $j("#searchInForum").val() + "&topicId=${topic.topicId}&sortResults=POST_TIME&order=asc");
+				return false;
+			});
+			
+			$j('.deletePost').click(function(){
+				$j('#deletePostModal').dialog('open');
+				$j('#deleteUrl').val($j(this).attr('href'));
+				return false;
+			});
+			
+			$j( "#deletePostModal" ).dialog({
+				  autoOpen : false,
+				  modal: true,
+				  resizable: false,
+				  width: 300,
+				  height: 130, 
+				  buttons: {
+					  Yes: function() {
+						  $j.ajax({ type:"POST", url:$j("#deleteUrl").val(), async:false, success:function(json) {
+				 				var topicUrl = json.topicUrl;
+				 				if (json.operation == 'OK') {
+									 $j("#main").load(topicUrl);
+									 $j( "#deletePostModal" ).dialog('close');
+									 return false;
+				 				} else {
+				 					 $j( "#deletePostModal" ).dialog('close');
+									$j("#notDeletePost").dialog({
+										  autoOpen : false,
+										  modal: true,
+										  resizable: false,
+										  width: 300,
+										  height: 130, 
+										  buttons: {
+											  Ok: function() {
+												  $j(this).dialog("close");
+											  }
+										  }
+									  });
+									$j("#notDeletePost").dialog('open');
+				 				}
+							}});
+							return false;
+					  },
+					  No: function() {
+						  $j( "#deletePostModal" ).dialog('close');
+					  }
+				  }
+			  });
+
 		});
 	</script>

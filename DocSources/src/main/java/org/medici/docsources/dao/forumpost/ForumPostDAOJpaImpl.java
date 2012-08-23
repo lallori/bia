@@ -83,6 +83,22 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM ForumPost WHERE parentPost.postId=:postId");
+		query.setParameter("postId", postId);
+		
+		List<ForumPost> result = query.getResultList();
+		if(result.size() > 0)
+			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
 		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId ";

@@ -208,6 +208,20 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteForumPost(Integer postId) throws ApplicationThrowable {
+		try{
+			ForumPost forumPost = getForumPostDAO().find(postId);
+			getForumPostDAO().remove(forumPost);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
+	/**
 	 * {@inheritDoc} 
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
@@ -223,19 +237,22 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
-			forumPost.setPostId(null);
+			ForumPost forumPostToUpdate = getForumPostDAO().find(forumPost.getPostId());
 
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 
-			forumPost.setForum(forum);
-			forumPost.setDateCreated(new Date());
-			forumPost.setLastUpdate(new Date());
-			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPostToUpdate.setForum(forum);
+			forumPostToUpdate.setDateCreated(new Date());
+			forumPostToUpdate.setLastUpdate(new Date());
+			forumPostToUpdate.setIpAddress(forumPost.getIpAddress());
+			forumPostToUpdate.setSubject(forumPost.getSubject());
+			forumPostToUpdate.setText(forumPost.getText());
+			forumPostToUpdate.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			if (forumPost.getParentPost() != null) {
-				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
+				forumPostToUpdate.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
 			}
 
-			getForumPostDAO().persist(forumPost);
+			getForumPostDAO().merge(forumPostToUpdate);
 
 			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			
@@ -482,6 +499,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public UserMessageDAO getUserMessageDAO() {
 		return userMessageDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable {
+		try{
+			return getForumPostDAO().findIfPostIsParent(postId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

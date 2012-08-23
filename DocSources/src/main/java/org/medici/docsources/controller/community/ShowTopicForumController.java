@@ -41,6 +41,8 @@ import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +82,8 @@ public class ShowTopicForumController {
 					httpSession.setAttribute("user", user);
 				}
 			}
+			
+			model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
 			PaginationFilter paginationFilterTopic = new PaginationFilter();
 			if (command.getPostsForPage() != null) {

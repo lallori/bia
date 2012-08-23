@@ -117,7 +117,10 @@ public class SimpleSearchForumPostController {
 		Page page = new Page(paginationFilter);
 
 		try {
-			page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText()), paginationFilter);
+			if(command.getTopicId() == null)
+				page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText()), paginationFilter);
+			else
+				page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText(), command.getTopicId()), paginationFilter);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			page = new Page(paginationFilter);

@@ -39,9 +39,18 @@ import org.medici.docsources.domain.ForumTopic;
  * ForumPost DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 
+	/**
+	 * 
+	 * @param postId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException;
+	
 	/**
 	 * Returns list of posts on a specific topic.
 	 * 

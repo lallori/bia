@@ -45,6 +45,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	private static final long serialVersionUID = 7370430153372138750L;
 
 	private String alias; 
+	private Integer topicId;
 
 	/**
 	 * 
@@ -63,6 +64,21 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		if (!StringUtils.isEmpty(text)) {
 			setAlias(text.toLowerCase());
 		}
+		topicId = null;
+	}
+	
+	/**
+	 * 
+	 * @param text
+	 * @param topicId
+	 */
+	public SimpleSearchForumPost(String text, Integer topicId) {
+		super();
+
+		if (!StringUtils.isEmpty(text)) {
+			setAlias(text.toLowerCase());
+		}
+		this.topicId = topicId;
 	}
 
 	/**
@@ -70,6 +86,13 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	public String getAlias() {
 		return alias;
+	}
+
+	/**
+	 * @return the topicId
+	 */
+	public Integer getTopicId() {
+		return topicId;
 	}
 
 	/**
@@ -101,6 +124,13 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	}
 
 	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -122,6 +152,12 @@ public class SimpleSearchForumPost extends SimpleSearch {
 			if(i < words.length-1){
 				jpaQuery.append(" AND ");
 			}
+		}
+		
+		if(topicId != null){
+			jpaQuery.append(" AND (topic.topicId = ");
+			jpaQuery.append(topicId);
+			jpaQuery.append(")");
 		}
 		return jpaQuery.toString();
 	}

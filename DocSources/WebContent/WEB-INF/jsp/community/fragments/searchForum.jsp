@@ -18,6 +18,7 @@
 					$j(document).ready(function() {
 						$j('#searchForumAllText').click(function(){
 							$j(this).val('');
+							return false;
 						});
 						
 						$j('#SearchForumAll').submit(function (){

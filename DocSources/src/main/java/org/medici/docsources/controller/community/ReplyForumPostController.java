@@ -117,7 +117,7 @@ public class ReplyForumPostController {
 		//command.setParentPostId(postToReply.getParentPost().getId());
 		command.setParentPostId(firstPostTopicToReply.getPostId());
 		command.setSubject("RE: " + firstPostTopicToReply.getSubject());
-		command.setText(firstPostTopicToReply.getText());
+		command.setText("");
 
 		return new ModelAndView("community/EditForumPost", model);
 	}
