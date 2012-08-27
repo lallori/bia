@@ -20,7 +20,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j(".yes").click(function() {
-				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 300, height: 120});
+				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 300, height: 80});
 				return false;
 			});
 			$j(".no").click(function() {															

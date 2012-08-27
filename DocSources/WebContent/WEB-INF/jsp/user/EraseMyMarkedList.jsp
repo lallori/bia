@@ -7,9 +7,7 @@
 
 	<div id="yesWindow"> 
 	<p style="text-align:center">Your Marked List has been erased</p>
-	    <div>
-	        <a class="close" title="Close my History Window">Close</a>
-	    </div>
+	    
 	</div>
 	
 	<script type="text/javascript">

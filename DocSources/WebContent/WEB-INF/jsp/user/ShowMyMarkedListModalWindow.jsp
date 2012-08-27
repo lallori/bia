@@ -139,16 +139,20 @@
 				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
 					$toRemove += $j(this).attr("idElement") + "+";
 				});
-				$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-				return false;
+				if($toRemove != ""){
+					$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+					return false;
+				}else{
+					return false;
+				}
 			});
 			
 			$j('#no').click(function() { 
@@ -170,7 +174,7 @@
 			}); 
 			
 			$j("#eraseList").click(function() {
-				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 310, height: 120});
+				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 330, height: 120});
 				return false;
 			});
 			
@@ -179,11 +183,14 @@
 				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
 					$toPrint += $j(this).attr("idElement") + "+";
 				});
-// 				$j.ajax({ url: '${PrintElementsMyMarkedListURL}', cache: false, data: {"idToPrint" : $toPrint} ,success:function(html) { 
+ 				if($toPrint != ""){
 	 				window.open('${PrintElementsMyMarkedListURL}' + '?idToPrint=' + $toPrint , 'PRINT ELEMENTS', 'width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
-// 	 			}});
-				Modalbox.hide();	
-				return false; 
+
+					Modalbox.hide();	
+					return false; 
+ 				}else{
+ 					return false;
+ 				}
 			});
 		});
 	</script>

@@ -7,7 +7,7 @@
 	<div id="DeleteThisRecordDiv">
 		<h1>The ${category} hasn't been saved in your marked list.</h1>
 		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:60px 0 0 90px;"/>
+		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:20px 0 0 90px;"/>
 	</div>
 
 	<script>

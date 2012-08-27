@@ -95,7 +95,7 @@
 				var $dialogMarkedList = $j('<div id="DialogMarkedList"></div>').dialog({
 					autoOpen: false,
 					width: 250,
-					height: 180,
+					height: 130,
 					modal: true,
 					zIndex: 3999,
 					overlay: {
