@@ -224,7 +224,7 @@
 			$j("#volume").change(showVolumeExplorer);
 			
 			//MD: If we check on document ready
-			 $j("#EditDetailsDocumentForm :input").keyup(showVolumeExplorer);
+// 			 $j("#EditDetailsDocumentForm :input").keyup(showVolumeExplorer);
 			
 			var alreadyDigitized = function(){
 				if($j("#folioNum").val() == $j("#folioNumStored").val()){

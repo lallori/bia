@@ -118,7 +118,11 @@ public class EditDetailsDocumentController {
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
 			document.setTranscribeFolioMod(command.getTranscribeFolioMod().toString());
 			// Paginated
-			document.setUnpaged(command.getUnpaged());
+			if(command.getUnpaged() == null){
+				document.setUnpaged(Boolean.FALSE);
+			}else{
+				document.setUnpaged(command.getUnpaged());
+			}
 			//Disc. Cont'd
 			document.setContDisc(command.getContDisc());
 			//Document Typology
