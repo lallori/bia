@@ -62,10 +62,9 @@
 			});
 			
 			// We need to remove any previous live function
-			$j('.showResult').die();
+			$j('.searchResult').die();
 
-			$j('.showResult').live('click', function() {
-				alert('a');
+			$j('.searchResult').live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));
 				return false;
 			});

@@ -158,7 +158,7 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 		StringBuilder stringBuilder = new StringBuilder("select a.titleOccID, a.titleOcc, count(b.personId) from tblTitleOccsList a");
 		stringBuilder.append(" left join tblPoLink b on b.titleOccID = a.TitleOccID ");
 		if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
-			stringBuilder.append(" where lower(a.titleOcc) like '%");
+			stringBuilder.append(" where a.titleOcc LIKE '%");
 			stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
 			stringBuilder.append("%' ");
 		} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
@@ -173,12 +173,12 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 			StringBuilder queryCountBuilder = new StringBuilder("select count(*) from (");
 			queryCountBuilder.append("select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID ");
 			if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
-				stringBuilder.append(" where lower(a.titleOcc) like '%");
-				stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
-				stringBuilder.append("%' ");
+				queryCountBuilder.append(" where a.titleOcc LIKE '%");
+				queryCountBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+				queryCountBuilder.append("%' ");
 			} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
-				stringBuilder.append(" where a.roleCatMinorID=");
-				stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+				queryCountBuilder.append(" where a.roleCatMinorID=");
+				queryCountBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
 			}
 			queryCountBuilder.append(" group by a.titleOccID ");
 			queryCountBuilder.append(") count");

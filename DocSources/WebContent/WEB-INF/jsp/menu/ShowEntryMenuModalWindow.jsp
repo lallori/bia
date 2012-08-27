@@ -11,7 +11,7 @@
 		</security:authorize>
 		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-			<a id="AddNewPerson" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><p>Add New Person & Menage Titles and Occupations</p></a>
+			<a id="AddNewPerson" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><p>Add New Person & Manage Titles and Occupations</p></a>
 		</security:authorize>
 				
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">

@@ -7,7 +7,7 @@
 		<div id="menageTitlOccDiv">
 			<a id="AddNewTitlOcc" href="<c:url value="/de/peoplebase/CreateTitleOrOccupation.do"/>" class="button_large">Add new Title/Occupation</a>
 		    <a id="EditDeleteTitlOcc" href="<c:url value="/src/peoplebase/ShowSearchTitlesOrOccupations.do"/>" class="button_large">Edit or delete Title/Occupation</a>
-		    <a id="goBack" title="Go back to Entry Menu window" href="<c:url value="/de/peoplebase/AddNewPersonModal.html"/>">Go Back</a>
+		    <a id="goBack" title="Go back to Entry Menu window" href="<c:url value="/de/ShowCreatePersonMenu.do"/>">Go Back</a>
 		</div>
 		
 		
