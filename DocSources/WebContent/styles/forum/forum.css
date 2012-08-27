@@ -53,7 +53,6 @@ input[type=radio] {
 
 h1 {
 	font-size: 12px;
-	width: 998px;
 	border-bottom: 1px solid #DCC0BA;
 	margin-left: 2px;
 	font-weight: normal;
@@ -208,6 +207,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	border:none;
 	cursor:pointer;
 	text-align:center;
+	padding:0;
 }
 
 
@@ -217,9 +217,9 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	margin-bottom:10px;
 }
 
-/* #chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{ */
-/* 	display:none; */
-/* } */
+#chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{
+	display:none;
+}
 
 #userDiv { /* User profile Div */
 	width: 500px;
@@ -538,7 +538,6 @@ a.returnTo {
 }
 
 #jumpToDiv {
-	width: 265px;
 	font-size:11px;
 	float: left;
 }
@@ -588,7 +587,7 @@ a.returnTo {
 	filter:alpha(opacity=50); /* IE */
 }
 
-#topicIcons .editPost {
+#topicIcons #editPost {
 	background-image:url(/DocSources/images/forum/button_edit.png);
 	width:20px;
 	height:20px;
@@ -596,7 +595,7 @@ a.returnTo {
 	margin:5px 0 0 0;
 }
 
-#topicIcons .deletePost {
+#topicIcons #deletePost {
 	background-image:url(/DocSources/images/forum/button_delete.png);
 	width:20px;
 	height:20px;
@@ -604,7 +603,7 @@ a.returnTo {
 	margin:5px 0 0 30px;
 }
 
-#topicIcons .reportPost {
+#topicIcons #reportPost {
 	background-image:url(/DocSources/images/forum/button_report.png);
 	width:22px;
 	height:20px;
@@ -612,7 +611,7 @@ a.returnTo {
 	margin:5px 0 0 60px;
 }
 
-#topicIcons .informationPost {
+#topicIcons #informationPost {
 	background-image:url(/DocSources/images/forum/button_info.png);
 	width:20px;
 	height:20px;
@@ -620,7 +619,7 @@ a.returnTo {
 	margin: 5px 0 0 85px;
 }
 
-#topicIcons .quotePost {
+#topicIcons #quotePost {
 	background-image:url(/DocSources/images/forum/button_quote.png);
 	width:20px;
 	height:20px;
@@ -742,8 +741,9 @@ input[type="submit"]:hover {
 #submit {
 	border: none;
 	background-color: transparent;
-	margin: 10px 0 0 488px;
+	margin: 10px 16px 0 0;
 	font-weight: bold;
+	float: right;
 }
 
 /* Html Box Text Editor jQuery */
@@ -756,7 +756,7 @@ input[type="submit"]:hover {
 }
 
 #preview {
-	position: absolute;
+	float: left;
 	margin: 10px;
 	padding-top: 3px;
 }
@@ -788,9 +788,14 @@ input[type="submit"]:hover {
 	margin-left: 110px;
 }
 
+#submitSearch {
+	float: right;
+	border: none;
+	font-weight: bold;
+}
+
 #cancel {
-	position: absolute;
-	margin: 10px;
+	float: left;
 	padding-top: 4px;
 }
 
