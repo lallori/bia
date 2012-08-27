@@ -185,8 +185,6 @@
 						<bia:paginationForum page="${topicsPage}"/>
 					</c:set>
 					
-					${paginationData}
-					
 					<div id="jumpToDiv">
 				    	Jump to:
 				    	<select id="selectForum" name="selectForum" selected""="" class="selectform_long">
@@ -194,6 +192,9 @@
 				        </select>
 				        <input id="go" title="go" value="Go" class="buttonMini">
 				    </div>
+					
+					${paginationData}
+					
 					  
 				</div>
 				

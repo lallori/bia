@@ -21,8 +21,8 @@
 <div id="topicActions">
 	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><img src="<c:url value="/images/forum/img_reply.png"/>" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a>
     <div id="searchThisForumFormDiv">
-        <form id="SearchForm" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
-            <input id="searchInForum" name="searchInForum" type="text" value="Search this forum...">
+        <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
+            <input id="searchForumThisText" name="searchInForum" type="text" value="Search this forum...">
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>
@@ -90,8 +90,6 @@
 		<bia:paginationForum page="${postsPage}"/>
 	</c:set>
 	
-	${paginationData}
-	
 	<div id="jumpToDiv">
     	Jump to:
         <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
@@ -99,6 +97,8 @@
         </select>
         <input id="go" title="go" value="Go" class="buttonMini">
     </div>
+	
+	${paginationData}
  
 </div>
 					
@@ -189,13 +189,13 @@
 				return false;
 			});
 			
-			$j('#searchInForum').click(function(){
+			$j('#searchForumThisText').click(function(){
 				$j(this).val('');
 				return false;
 			});
 			
-			$j('#SearchForm').submit(function (){
-				$j("#main").load($j(this).attr("action") + '?searchForumAllText=' + $j("#searchInForum").val() + "&topicId=${topic.topicId}&sortResults=POST_TIME&order=asc");
+			$j('#SearchForumThis').submit(function (){
+				$j("#main").load($j(this).attr("action") + '?searchForumAllText=' + $j("#searchForumThisText").val() + "&topicId=${topic.topicId}&sortResults=POST_TIME&order=asc");
 				return false;
 			});
 			

@@ -4,7 +4,7 @@
 <c:set var="pageCountToDiplay" value="5"/>
 <c:set var="pageCountToDiplayHalf" value="3"/>
 
-<div class="forumPaginate">
+
 	<c:choose>
 	<c:when test="${page.thisPage != 1}">
 		<c:if test="${not empty searchResultPage}">
@@ -109,4 +109,4 @@
 		<span id="lastPaginateButton">Last</span>
 	</c:otherwise>
 	</c:choose>
-</div>
+
