@@ -49,7 +49,7 @@
 		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare">Show or Edit this Document</a>
 	</div>
 	</security:authorize>
-	<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS">
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
 		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare">Show this Document</a>
 	</div>
