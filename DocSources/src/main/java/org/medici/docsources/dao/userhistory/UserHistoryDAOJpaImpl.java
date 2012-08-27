@@ -505,6 +505,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
 		queryString.append(user.getAccount());
 		queryString.append("'");
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("')");
 		queryString.append(" AND idUserHistory > ");
 		queryString.append(idUserHistory);        
 
@@ -584,6 +591,13 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
 		queryString.append(user.getAccount());
 		queryString.append("'");
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("')");
 		queryString.append(" AND idUserHistory < ");
 		queryString.append(idUserHistory);
         
