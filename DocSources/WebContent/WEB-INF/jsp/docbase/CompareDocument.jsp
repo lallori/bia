@@ -78,7 +78,7 @@
 			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
 				</c:otherwise>
 			</c:choose>
-			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+			<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
 		</div>
 		</c:if>
 	

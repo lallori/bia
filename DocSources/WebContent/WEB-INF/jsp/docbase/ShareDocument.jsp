@@ -52,7 +52,7 @@
 					<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
 					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
 					<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+					<h5>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h5>
 				</c:otherwise>
 			</c:choose>
 			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>

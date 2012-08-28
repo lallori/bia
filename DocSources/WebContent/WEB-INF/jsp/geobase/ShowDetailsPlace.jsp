@@ -48,7 +48,7 @@
 					</div>
 					<div id="text">
         				<h3>${place.placeName}</h3>
-						<h4>${place.parentPlace.getPlaceNameFull()}</h4>
+						<h4>${place.parentPlace.placeNameFull}</h4>
 						<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
             			<h5>TGN Place record</h5>
         				</c:if>
