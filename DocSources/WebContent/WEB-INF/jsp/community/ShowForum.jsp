@@ -221,6 +221,7 @@
 			        </div>
 			    </c:if>
 		</div>
+		</div>
  		</c:if> 
 		
 	</c:if>

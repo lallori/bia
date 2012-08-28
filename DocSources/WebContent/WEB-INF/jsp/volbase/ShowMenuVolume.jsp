@@ -70,7 +70,7 @@
 					$j("#comments").attr('href', json.forumUrlCompleteDOM);
 					$j("#comments").open({scrollbars: "yes"});
 				} else {
-					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 450, height: 150});
+					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 450, height: 100});
 				}
 			}});
 			return false;
