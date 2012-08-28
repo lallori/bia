@@ -75,45 +75,63 @@
 		
 		$j(document).ready(function() {
 			$j('#submit').click(function(){
-	 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
-	 				var topicUrl = json.topicUrl;
-	 				if (json.operation == 'OK') {
-						$j("#messagePosted").css('display','inherit');
-						$j("#messagePosted").dialog({
-							  autoOpen : false,
-							  modal: true,
-							  resizable: false,
-							  width: 300,
-							  height: 130, 
-							  buttons: {
-								  Ok: function() {
-									  $j(this).dialog("close");
-									  $j("#main").load(topicUrl);
+				if($j("#subject").val() != '' && $j("#htmlbox").val() != ''){
+		 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
+		 				var topicUrl = json.topicUrl;
+		 				if (json.operation == 'OK') {
+							$j("#messagePosted").css('display','inherit');
+							$j("#messagePosted").dialog({
+								  autoOpen : false,
+								  modal: true,
+								  resizable: false,
+								  width: 300,
+								  height: 130, 
+								  buttons: {
+									  Ok: function() {
+										  $j(this).dialog("close");
+										  $j("#main").load(topicUrl);
+									  }
 								  }
-							  }
-						  });
-						$j("#messagePosted").dialog('open');
-	 				} else {
-						$j("#messageNotPosted").css('display','inherit');
-						$j("#messageNotPosted").dialog({
-							  autoOpen : false,
-							  modal: true,
-							  resizable: false,
-							  width: 300,
-							  height: 130, 
-							  buttons: {
-								  Ok: function() {
-									  $j(this).dialog("close");
+							  });
+							$j("#messagePosted").dialog('open');
+		 				} else {
+							$j("#messageNotPosted").css('display','inherit');
+							$j("#messageNotPosted").dialog({
+								  autoOpen : false,
+								  modal: true,
+								  resizable: false,
+								  width: 300,
+								  height: 130, 
+								  buttons: {
+									  Ok: function() {
+										  $j(this).dialog("close");
+									  }
 								  }
+							  });
+							$j("#messageNotPosted").dialog('open');
+		 				}
+					}});
+	
+		 			/*$j('#postTable').css('display','inherit');
+					$j.scrollTo({top:'300px',left:'0px'}, 800 );*/
+					return false;
+				}else{
+					$j("#messageNotValid").css('display','inherit');
+					$j("#messageNotValid").dialog({
+						  autoOpen : false,
+						  modal: true,
+						  resizable: false,
+						  width: 300,
+						  height: 130, 
+						  buttons: {
+							  Ok: function() {
+								  $j(this).dialog("close");
 							  }
-						  });
-						$j("#messageNotPosted").dialog('open');
-	 				}
-				}});
-
-	 			/*$j('#postTable').css('display','inherit');
-				$j.scrollTo({top:'300px',left:'0px'}, 800 );*/
-				return false;
+						  }
+					  });
+					$j("#messageNotValid").dialog('open');
+					return false;
+				}
 			});
 
 			$j('#preview').click(function(){
@@ -142,5 +160,12 @@
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
 			This message has not been posted successfully.
+		</p>
+	</div>
+	
+	<div id="messageNotValid" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			Write subject and text in this message!
 		</p>
 	</div>
