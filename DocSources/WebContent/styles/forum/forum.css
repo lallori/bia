@@ -102,7 +102,7 @@ h2 {
 #top_bottom {
 	width: 1000px;
 	height: 65px;
-	margin-top: 165px;
+	margin-top: 175px;
 	position: absolute;
 	background-image:none;
 }
@@ -215,10 +215,6 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 
 #chronologyDiv { /* Navigation chronology Div  */
 	margin-bottom:10px;
-}
-
-#chronologyDiv .forum, #chronologyDiv .topic,  #chronologyDiv .arrowTopic, #chronologyDiv .arrowForum{
-	display:none;
 }
 
 #userDiv { /* User profile Div */
@@ -587,7 +583,7 @@ a.returnTo {
 	filter:alpha(opacity=50); /* IE */
 }
 
-#topicIcons #editPost {
+#topicIcons .editPost {
 	background-image:url(/DocSources/images/forum/button_edit.png);
 	width:20px;
 	height:20px;
@@ -595,7 +591,7 @@ a.returnTo {
 	margin:5px 0 0 0;
 }
 
-#topicIcons #deletePost {
+#topicIcons .deletePost {
 	background-image:url(/DocSources/images/forum/button_delete.png);
 	width:20px;
 	height:20px;
@@ -603,7 +599,7 @@ a.returnTo {
 	margin:5px 0 0 30px;
 }
 
-#topicIcons #reportPost {
+#topicIcons .reportPost {
 	background-image:url(/DocSources/images/forum/button_report.png);
 	width:22px;
 	height:20px;
@@ -611,7 +607,7 @@ a.returnTo {
 	margin:5px 0 0 60px;
 }
 
-#topicIcons #informationPost {
+#topicIcons .informationPost {
 	background-image:url(/DocSources/images/forum/button_info.png);
 	width:20px;
 	height:20px;
@@ -619,7 +615,7 @@ a.returnTo {
 	margin: 5px 0 0 85px;
 }
 
-#topicIcons #quotePost {
+#topicIcons .quotePost {
 	background-image:url(/DocSources/images/forum/button_quote.png);
 	width:20px;
 	height:20px;

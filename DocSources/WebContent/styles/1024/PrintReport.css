@@ -15,7 +15,7 @@ body {
 .print {
 	background-image:url(/DocSources/images/1024/img_print.png);
 	position:absolute;
-	margin: -10px 0 0 532px;
+	margin: 0 0 0 590px;
 	height:40px;
 	width:40px;
 }

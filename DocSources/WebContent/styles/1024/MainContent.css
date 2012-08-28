@@ -86,8 +86,8 @@ h2 { /* Error Text 403, 404, 500, 503*/
 }
 
 h2.addNew {
-	margin-top: 45px;
-	margin-bottom: 20px;
+	margin-top: 60px;
+	margin-bottom: 10px;
 }
 
 h1 { /* Help Title/About Map Title in My Profile */
@@ -468,6 +468,7 @@ item a{
 
 #browseContent .listForm { /* Whole display list */
 	margin: 20px 0 0 70px;
+ 	width: 650px;
 }
 
 .listFormProfile { /* Whole display list */
@@ -904,6 +905,10 @@ input[type="checkbox"] {
 	width: 402px;
 }
 
+.input_47c { /* input for 45 characters approx. */ 
+	 width: 443px;
+}
+
 .input_50c { /* input for 45 characters approx. */ 
 	width: 510px;
 }
@@ -1143,6 +1148,10 @@ select {
 .selectform_XXXLlong {
 	width: 417px;
 	margin-left: 0;
+}
+
+.selectform_XLlong{ /* dropdown menu class */
+	width:450px;
 }
 
 /* ---------------------------------------------------- */ 
@@ -1387,6 +1396,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #PeopleCorrespondentsDocumentsForm fieldset {
 	height:100%;
+}
+
+#EditTitleOrOccupationDiv {
+	margin-top: 15px;
 }
 
 /* Volume Details Display items */
@@ -3994,7 +4007,8 @@ table#savedSearchFiltersForm.display {
 
 #ConfirmCreateForum #open {
 	position: absolute;
-	margin-left: 145px;
+	margin-left: 150px;
+	padding-top: 4px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -4271,7 +4285,7 @@ ul#network a {
 
 /* Browse or Search "Schedoni" */
 
-#browseSearchSchedoni #search, #activateDeactivateVolume #search {
+#searchTitles #search, #activateDeactivateVolume #search {
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
 	width: 52px;
 	height: 22px;
@@ -4775,7 +4789,7 @@ h3.systemManagement {
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
-	width: 30%;
+	width: 140px;
 	text-align: center;
 	color: black;
 	background-color: #F6EDEC;
