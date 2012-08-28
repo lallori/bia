@@ -25,7 +25,7 @@
 					return false;
 				});
 
-			$j("#EditDeleteTitlOcc").open({width: 600, height: 130, scrollbars: "yes"});
+			$j("#EditDeleteTitlOcc").open({width: 750, height: 150, scrollbars: "yes"});
 				$j("#EditDeleteTitlOcc").click(function(){
 					Modalbox.hide();
 					return false;

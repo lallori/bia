@@ -9,47 +9,79 @@
 			<c:param name="titleOccId"   value="${command.titleOccId}" />
 		</c:url>
 		
+		<c:url var="ShowTitleOrOccupationURL" value="/src/peoplebase/ShowTitleOrOccupation.do">
+			<c:param name="titleOccId" value="${command.titleOccId}" />
+		</c:url>
+		
 	</security:authorize>
-	<br>
+	
 	<form:form id="EditTitleOrOccupationForm" method="post" cssClass="edit">
 		<!--- Loading div when saving the form -->
 		<div id="loadingDiv"></div>
             <fieldset>
+            	<legend><b>EDIT TITLES / OCCUPATIONS</b></legend>
                 <div class="listForm">
                     <div class="row">
                         <div class="col_l">
                             <label for="titleOcc" id="titleOccupationNameLabel">Title/Occupation Name</label>
                         </div>
                         <div class="col_r">
-                            <input id="titleOccupationName" name="titleOcc" class="input_28c" type="text" value="">
+                            <input id="titleOccupationName" name="titleOcc" class="input_33c" type="text" value="">
                         </div>
                    </div>
-                </div>
-                <div>
-                    <p><b>Role Categories</b></p>
-                    <label for="roleCatId" id="ordByMajorLabel">Ordered by Role Category Mayor</label>
-						<form:select id="ordByMajor" cssClass="selectform_XLong" path="roleCatId">
-							<form:option value="" label="-Please Select" />
-							<c:forEach var="roleCatMinor" items="${roleCat}">
-							<form:option value="${roleCatMinor.roleCatId}">${roleCatMinor.roleCatMajor} / ${roleCatMinor.roleCatMinor}</form:option>
-							</c:forEach>
-						</form:select>
+                	<div class="row">
+                    	<div class="col_l">Role Categories</div>
+                    	<div class="col_r">
+							<form:select id="ordByMajor" cssClass="selectform_XXLlong" path="roleCatId">
+								<form:option value="" label="-Please Select" />
+								<c:forEach var="roleCatMinor" items="${roleCat}">
+								<form:option value="${roleCatMinor.roleCatId}">${roleCatMinor.roleCatMajor} / ${roleCatMinor.roleCatMinor}</form:option>
+								</c:forEach>
+							</form:select>
+						</div>
+					</div>
 				</div>
                             
                 <div>
-                    <input id="closeDialog" type="submit" value="Close" title="do not save changes" class="button">
+                    <input id="close" type="submit" value="Close" title="do not save changes" class="button">
                     <input type="submit" value="Save" id="save">
                 </div>
-                
+                <input type="hidden" value="" id="modify" />
             </fieldset>	
 		</form:form>
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			
+			$j("#EditTitleOrOccupationForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
+			
+			$j("#close").click(function(){
+				if($j("#modify").val() == 1){
+					$j("#EditTitleOccupationDiv").block({ message: $j("#question"),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});  
+					return false;
+				}else{
+					$j.ajax({ url: '${ShowTitleOrOccupationURL}', cache: false, success:function(html) { 
+						$j("#EditTitleOccupationDiv").html(html);
+					}});
+						
+					return false; 
+				}
+			});
 
 			$j("#EditTitleOrOccupationForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditTitleOrOccupationDiv").load('${EditTitleOrOccupationURL}');
+					$j("#EditTitleOccupationDiv").load('${EditTitleOrOccupationURL}');
 				}})
 				return false;
 			});
@@ -68,14 +100,14 @@
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
 			$j("#question").hide();
-			$j("#EditTitleOrOccupationDiv").append($j("#question"));
+			$j("#EditTitleOccupationDiv").append($j("#question"));
 			$j(".blockUI").remove();
 			return false; 
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${EditTitleOrOccupationURL}', cache: false, success:function(html) { 
-				$j("#EditTitleOrOccupationDiv").html(html);
+			$j.ajax({ url: '${ShowTitleOrOccupationURL}', cache: false, success:function(html) { 
+				$j("#EditTitleOccupationDiv").html(html);
 			}});
 				
 			return false; 

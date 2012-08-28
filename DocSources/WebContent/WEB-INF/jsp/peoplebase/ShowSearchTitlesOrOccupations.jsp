@@ -11,7 +11,7 @@
                             <div class="col_l">
                                 <label for="containing" id="containing">Containing</label>
                             </div>
-                            <div class="col_l"><input id="textSearch" name="textSearch" class="input_23c" type="text" value=""/></div>
+                            <div class="col_l"><input id="textSearch" name="textSearch" class="input_47c" type="text" value=""/></div>
                             <div class="col_r"><input type="submit" id="search" class="searchSubmit" value="Search" title="Search"></div>
                         </div>
                         <!-- se usi uno si disattiva l'altro -->
@@ -58,7 +58,7 @@
 					if(!tabExist){
 						window.opener.$j("#tabs").tabs( "add" , formSubmitURL, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 						window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
-						//window.close();
+						window.close();
 					} else{
 						window.opener.$j("#tabs").tabs("select", numTab);
 						window.close();

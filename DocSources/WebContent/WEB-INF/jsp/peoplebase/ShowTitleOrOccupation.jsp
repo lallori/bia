@@ -10,21 +10,21 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="EditTitleOrOccupationDiv" class="background">
+	<div id="EditTitleOccupationDiv" class="background">
 		<div class="title">
 			<h5>TITLES / OCCUPATIONS </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-				<a id="EditTitleOrOccupation" href="${EditTitleOrOccupationURL}" class="editButton"></a><span id="loading"/>
+				<a id="EditTitleOccupation" href="${EditTitleOrOccupationURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
 		<div class="list">
 			<div class="row">
-				Title/Occupation Name
-				<div class="value60">${titleOccsList.titleOcc}<br>
+				<div class="item37">Title/Occupation Name</div>
+				<div class="value">${titleOccsList.titleOcc}</div>
 			</div>
 			<div class="row">
-				Role
-				<div class="value60">${titleOccsList.roleCat.roleCatMajor}/${titleOccsList.roleCat.roleCatMinor}<br>
+				<div class="item37">Role</div>
+				<div class="value">${titleOccsList.roleCat.roleCatMajor}/${titleOccsList.roleCat.roleCatMinor}</div>
 			</div>
 		</div>
 	</div>
@@ -33,9 +33,9 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditTitleOrOccupation").click(function(){
+			$j("#EditTitleOccupation").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditTitleOrOccupationDiv").load($j(this).attr("href"));
+				$j("#EditTitleOccupationDiv").load($j(this).attr("href"));
 				return false;
 			});
 		});

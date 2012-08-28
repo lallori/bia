@@ -7,7 +7,7 @@
 
 	<div id="addNewPersonModalDiv">
 		<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>"><p>Add New Person</p></a>
-	    <a id="MenageTitlOcc" href="<c:url value="/de/ShowTitlesOrOccupationsMenu.do"/>"><p>Menage Titles and Occupations</p></a>
+	    <a id="MenageTitlOcc" href="<c:url value="/de/ShowTitlesOrOccupationsMenu.do"/>"><p>Manage Titles and Occupations</p></a>
 	    <a id="goBack" title="Go back to Entry Menu window" href="<c:url value="/de/ShowEntryMenu.do"/>">Go Back</a>
 	</div>
 	
