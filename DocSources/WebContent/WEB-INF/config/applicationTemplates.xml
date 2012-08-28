@@ -339,6 +339,10 @@
 	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
+	
+	<definition name="community/ShowMyInbox" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyInbox.jsp"/>
+	</definition>
 
 	<definition name="community/ShowAdvancedSearchForumPost" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowAdvancedSearchForumPost.jsp"/>

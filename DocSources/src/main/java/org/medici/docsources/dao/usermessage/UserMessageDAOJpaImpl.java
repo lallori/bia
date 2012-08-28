@@ -40,6 +40,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.UserMessage.RecipientStatus;
@@ -53,6 +54,7 @@ import org.springframework.stereotype.Repository;
  * <b>UserMessageDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.UserMessage
  */
@@ -210,8 +212,8 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
 

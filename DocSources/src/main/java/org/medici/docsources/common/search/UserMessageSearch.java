@@ -36,6 +36,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class UserMessageSearch implements GenericSearch {
@@ -46,12 +47,16 @@ public class UserMessageSearch implements GenericSearch {
 	private static final long serialVersionUID = 1526279104072787935L;
 	
 	private UserMessageCategory userMessageCategory; 
+	private String recipient;
 
 	/**
 	 * 
 	 */
 	public UserMessageSearch() {
 		super();
+		
+		userMessageCategory = null;
+		recipient = null;
 	}
 
 	/**
@@ -63,6 +68,13 @@ public class UserMessageSearch implements GenericSearch {
 		if (userMessageCategory != null) {
 			setUserMessageCategory(userMessageCategory);
 		}
+	}
+
+	/**
+	 * @return the recipient
+	 */
+	public String getRecipient() {
+		return recipient;
 	}
 
 	/**
@@ -98,6 +110,13 @@ public class UserMessageSearch implements GenericSearch {
 	}
 
 	/**
+	 * @param recipient the recipient to set
+	 */
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	/**
 	 * @param userMessageCategory the userMessageCategory to set
 	 */
 	public void setUserMessageCategory(UserMessageCategory userMessageCategory) {
@@ -110,10 +129,9 @@ public class UserMessageSearch implements GenericSearch {
 	@Override
 	public String toJPAQuery() {
 		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-		StringBuilder jpaQuery = new StringBuilder("FROM UserMessage ");
+		StringBuilder jpaQuery = new StringBuilder("FROM UserMessage WHERE ");
 		
 		if (getUserMessageCategory() != null) {
-			jpaQuery.append(" WHERE ");
 
 			switch (getUserMessageCategory()) {
 				case DRAFT:
@@ -139,6 +157,17 @@ public class UserMessageSearch implements GenericSearch {
 			default:
 				break;
 			}
+		}
+		
+		//Recipient
+		if(recipient != null && recipient.length() > 0){
+			StringBuilder recipientQuery = new StringBuilder("(recipient LIKE '");
+			recipientQuery.append(recipient);
+			recipientQuery.append("')");
+			if(jpaQuery.length() > 23){
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append(recipientQuery);
 		}
 		
 		

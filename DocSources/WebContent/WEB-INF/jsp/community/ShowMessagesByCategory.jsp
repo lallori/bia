@@ -7,12 +7,36 @@
 	<c:url var="ShowMessagesByCategoryPaginationURL" value="/community/ShowMessagesByCategoryPagination.json">
 		<c:param name="category" value="INBOX"/>
 	</c:url>
+	
+	<h2>Messages</h2>
+	
+	<div id="tabs">
+		<ul>
+			<li><a href="<c:url value="/community/ShowMyInbox.do"/>">Inbox</a></li>
+			<li><a href="/DocSources/forum/outbox.html">Outbox</a></li>
+			<li><a href="/DocSources/forum/composeMessage.html">Compose message</a></li>
+		</ul>
+	</div>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 
 	<script type="text/javascript" charset="utf-8">
 
 		$j(document).ready(function() {
+			$j( "#tabs" ).tabs({
+				ajaxOptions: {
+					error: function( xhr, status, index, anchor ) {
+						$j( anchor.hash ).html(
+							"Couldn't load this tab. We'll try to fix this as soon as possible. " );
+					}
+				}
+			});
+			$j( "#tabs span.ui-icon-close" ).live( "click", function() {
+				var index = $j( "li", this ).index( $j( this ).parent() );
+				$j( "#tabs" ).tabs( "remove", index );
+			});
+			
+			/*
 			//dynamic field management
 			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 						
@@ -38,10 +62,10 @@
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
-					/* Add some extra data to the sender */
+					// Add some extra data to the sender 
 					aoData.push( { "name": "more_data", "value": "xxx" } );
 					$j.getJSON( sSource, aoData, function (json) { 
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						// Do whatever additional processing you want on the callback, then tell DataTables 
 						fnCallback(json)
 					}); 					
 				}
@@ -57,17 +81,17 @@
 			}); 
 
 			$j(".dataTables_filter").css('visibility', 'hidden');
-
+			*/
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
-		<thead>
-			<tr></tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
-			</tr>
-		</tbody>
-	</table>
+<%-- 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}"> --%>
+<!-- 		<thead> -->
+<!-- 			<tr></tr> -->
+<!-- 		</thead> -->
+<!-- 		<tbody> -->
+<!-- 			<tr> -->
+<!-- 				<td colspan="5" class="dataTables_empty">Loading data from server</td> -->
+<!-- 			</tr> -->
+<!-- 		</tbody> -->
+<!-- 	</table> -->
