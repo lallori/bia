@@ -394,7 +394,9 @@ var IIPMooViewer = new Class({
 	     // Add a suffix to prevent caching, but remove error event to avoid endless loops
 	     this.removeEvents('error');
 	     var src = this.src;
-	     this.set( 'src', src + '?'+ Date.now() );
+	     //MEDICI ARCHIVE PROJECT START
+//	     this.set( 'src', src + '?'+ Date.now() );
+		 //MEDICI ARCHIVE PROJECT END	
 	  }
 	});
 

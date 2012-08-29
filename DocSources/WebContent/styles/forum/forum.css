@@ -721,6 +721,10 @@ input[type="submit"]:hover {
 
 /* ---------- New Topic / New Post ---------- */
 
+#EditForumPost {
+	min-height: 395px;
+}
+
 .input_25c { /* input for 15 characters approx. */ 
 	width: 237px;
 }
