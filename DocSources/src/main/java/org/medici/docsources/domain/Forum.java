@@ -45,6 +45,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 /**
@@ -451,6 +452,29 @@ public class Forum implements Serializable {
 	 */
 	public List<ForumTopic> getForumTopics() {
 		return forumTopics;
+	}
+
+	@Transient
+	public String getTitleDynamic(){
+		StringBuilder stringBuilder = new StringBuilder("");
+		if (getSubType().equals(SubType.DOCUMENT)) {
+			stringBuilder.append("DOCID: #");
+			stringBuilder.append(getDocument().getEntryId());
+			stringBuilder.append(" ");
+			if (getDocument().getSenderPeople() != null) {
+				stringBuilder.append(getDocument().getSenderPeople().getMapNameLf());
+			} else {
+				stringBuilder.append("Unkwnown");
+			}
+			stringBuilder.append(" TO ");
+			if (getDocument().getRecipientPeople() != null) {
+				stringBuilder.append(getDocument().getRecipientPeople().getMapNameLf());
+			} else {
+				stringBuilder.append("Unkwnown");
+			}
+		}
+
+		return stringBuilder.toString();
 	}
 
 	/**
