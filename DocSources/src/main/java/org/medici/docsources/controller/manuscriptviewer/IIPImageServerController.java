@@ -305,35 +305,39 @@ public class IIPImageServerController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public void iipServer(HttpServletRequest httpServletRequest, HttpServletResponse response) {
-		String[] objs = httpServletRequest.getParameterValues("obj");
-		
-		// if user specify IIP
-		if (ArrayUtils.contains(objs, "IIP,1.0")) {
-			generateInformationsTiledImage(httpServletRequest, response);
-		} else if (httpServletRequest.getParameter("full") != null) {
-			generateFullImage(httpServletRequest, response);
-		} else if (httpServletRequest.getParameter("JTL") != null) {
-			String imageName = httpServletRequest.getParameter("FIF");
-			Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
-		    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
-		    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
-		    //pageImage is inverted as stored in tiff file : first image is last image
-		    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
-		    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
-
-		    generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
-		} else if (httpServletRequest.getParameter("WID") != null) {
-			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
-			String imageName = httpServletRequest.getParameter("FIF");
-			Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
-			if (quality == 0) {
-				quality=99;
+		try {
+			String[] objs = httpServletRequest.getParameterValues("obj");
+			
+			// if user specify IIP
+			if (ArrayUtils.contains(objs, "IIP,1.0")) {
+				generateInformationsTiledImage(httpServletRequest, response);
+			} else if (httpServletRequest.getParameter("full") != null) {
+				generateFullImage(httpServletRequest, response);
+			} else if (httpServletRequest.getParameter("JTL") != null) {
+				String imageName = httpServletRequest.getParameter("FIF");
+				Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
+			    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
+			    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
+			    //pageImage is inverted as stored in tiff file : first image is last image
+			    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
+			    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
+	
+			    generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
+			} else if (httpServletRequest.getParameter("WID") != null) {
+				Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
+				String imageName = httpServletRequest.getParameter("FIF");
+				Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
+				if (quality == 0) {
+					quality=99;
+				}
+				String thumbnailFormat = httpServletRequest.getParameter("CVT");
+				if (thumbnailFormat == null) {
+					thumbnailFormat = "jpeg";
+				}
+				generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
 			}
-			String thumbnailFormat = httpServletRequest.getParameter("CVT");
-			if (thumbnailFormat == null) {
-				thumbnailFormat = "jpeg";
-			}
-			generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
+		} catch (Throwable throwable) {
+			logger.error(throwable);
 		}
 	}
 
