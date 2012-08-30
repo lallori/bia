@@ -187,7 +187,7 @@ public class EditUserController {
 			cal.set(command.getYearExpirationPassword(), command.getMonthExpirationPassword() - 1, command.getDayExpirationPassword());
 			user.setExpirationPasswordDate(cal.getTime());
 			
-			if (command.getForcePswdChange().equals(Boolean.TRUE)) {
+			if ((command.getForcePswdChange() != null)  && (command.getForcePswdChange().equals(Boolean.TRUE))) {
 				cal = Calendar.getInstance();
 				cal.add(Calendar.DATE, -1);
 				user.setExpirationPasswordDate(cal.getTime());
