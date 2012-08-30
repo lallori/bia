@@ -354,7 +354,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 
 		StringBuilder conditionBuffer = new StringBuilder("");
 		if (user.getAccount() != null) {
-			conditionBuffer.append("account like '");
+			conditionBuffer.append("account like '%");
 			conditionBuffer.append(user.getAccount());
 			conditionBuffer.append("%'");
 		}
@@ -362,7 +362,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("initials like '");
+			conditionBuffer.append("initials like '%");
 			conditionBuffer.append(user.getInitials());
 			conditionBuffer.append("%'");
 		}
@@ -370,7 +370,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("firstName like '");
+			conditionBuffer.append("firstName like '%");
 			conditionBuffer.append(user.getFirstName());
 			conditionBuffer.append("%'");
 		}
@@ -378,7 +378,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("lastName like '");
+			conditionBuffer.append("lastName like '%");
 			conditionBuffer.append(user.getLastName());
 			conditionBuffer.append("%'");
 		}
@@ -386,7 +386,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("organization like '");
+			conditionBuffer.append("organization like '%");
 			conditionBuffer.append(user.getOrganization());
 			conditionBuffer.append("%'");
 		}
@@ -394,7 +394,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("mail like '");
+			conditionBuffer.append("mail like '%");
 			conditionBuffer.append(user.getMail());
 			conditionBuffer.append("%'");
 		}
