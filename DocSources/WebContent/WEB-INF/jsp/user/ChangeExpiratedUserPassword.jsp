@@ -4,22 +4,36 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+		<h1>PASSWORD EXPIRED</h1>
 		<form:form method="post">
-		  	<fieldset>		
-				<legend>Your Password is expirated!</legend>
-				<p>
-					<form:label	id="passwordLabel" for="password" path="password" cssErrorClass="error">Password*</form:label><br/>
-					<form:password path="password" cssClass="registerInput"/><form:errors path="password" />
-				</p>
-				<p>
-					<form:label	id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error">Confirm Password*</form:label><br/>
-					<form:password path="confirmPassword" cssClass="registerInput"/><form:errors path="confirmPassword" />
-				</p>
-				<p>
-					<c:out value="${reCaptchaHTML}" escapeXml="false"/>
-				</p>
-				<p>	
-					<input id="update" type="submit" value="Update" />
-				</p>
-			</fieldset>
+			<fieldset> 
+				<div class="list"> 
+					<div class="row"> 
+						<div class="col_l">
+							<form:label for="password" id="passwordLabel" path="password">Password <font color="#990000">*</font></form:label>
+						</div> 
+						<div class="col_l">
+							<form:password path="password" id="password" class="registerInput" /><form:errors path="password" />
+						</div> 
+					</div> 
+					<div class="row"> 
+						<div class="col_l">
+							<form:label for="confirmPassword" path="confirmPassword" id="confirmPasswordLabel">Confirm Password <font color="#990000">*</font></form:label>
+						</div> 
+						<div class="col_l">
+							<form:password path="confirmPassword" id="confirmPassword" class="registerInput" type="password" /><form:errors path="confirmPassword" />
+						</div>
+					</div>
+					<div class="row"> 
+						<div class="col_l">
+							<c:out value="${reCaptchaHTML}" escapeXml="false"/>
+						</div>
+					</div> 
+					<div class="row"> 
+						<div class="col_l">
+					<input id="update" type="submit" value="Update" class="button_small">
+						</div>
+					</div> 
+				</div>
+			</fieldset>		
 		</form:form>
