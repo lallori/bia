@@ -96,8 +96,6 @@ var IIPMooViewer = new Class({
     if( typeOf(options.image) == 'array' ){
        for( i=0; i<options.image.length;i++ ){
 	 this.images[i] = { src:options.image[i], sds:"0,90", cnt:(this.viewport&&this.viewport.contrast!=null)? this.viewport.contrast : 1.0 };
-
-
        }
     }
     else this.images = [{ src:options.image, sds:"0,90", cnt:(this.viewport&&this.viewport.contrast!=null)? this.viewport.contrast : 1.0 } ];
@@ -127,13 +125,20 @@ var IIPMooViewer = new Class({
 
 
     // Disable the right click context menu on image tiles?
-    this.disableContextMenu = false;
+    this.disableContextMenu = true;
 
+    //MEDICI ARCHIVE PROJECT START
+    this.initialZoom = options.zoom || 1;
+    //MEDICI ARCHIVE PROJECT END
 
     // Navigation window options
     this.showNavWindow = (options.showNavWindow == false) ? false : true;
     this.showNavButtons = (options.showNavButtons == false) ? false : true;
     this.navWinSize = options.navWinSize || 0.2;
+
+    //MEDICI ARCHIVE PROJECT START
+    this.navWinPos = options.navWinPos || 'right';
+    //MEDICI ARCHIVE PROJECT END
 
 
     this.winResize = (options.winResize==false)? false : true;
@@ -385,7 +390,10 @@ var IIPMooViewer = new Class({
 	     // Add a suffix to prevent caching, but remove error event to avoid endless loops
 	     this.removeEvents('error');
 	     var src = this.src;
-	     this.set( 'src', src + '?'+ Date.now() );
+   	    //MEDICI ARCHIVE PROJECT START
+   	    // this.set( 'src', src + '?'+ Date.now() );
+	    this.set( 'src', src + '&time='+ Date.now() );
+   	    //MEDICI ARCHIVE PROJECT END	
 	  }
 	});
 
@@ -617,7 +625,10 @@ var IIPMooViewer = new Class({
     else{
       // From a drag
       xmove = e.offsetLeft;
-      ymove = e.offsetTop-10;
+      //ymove = e.offsetTop-10;
+      //MEDICI ARCHIVE PROJECT START
+      ymove = e.offsetTop-18;
+      //MEDICI ARCHIVE PROJECT END
       if( (Math.abs(xmove-this.navpos.x) < 3) && (Math.abs(ymove-this.navpos.y) < 3) ) return;
     }
 
@@ -918,6 +929,12 @@ var IIPMooViewer = new Class({
     this.view.w = target_size.x;
     this.view.h = target_size.y;
 
+    // MEDICI ARCHIVE PROJECT START
+    // Navigation window in Manuscript Transcriber
+    if (this.view.w > 1000)
+        thumb_width = this.view.w / 8;
+    // MEDICI ARCHIVE PROJECT END
+
     // Calculate our navigation window size
     this.calculateNavSize();
 
@@ -930,14 +947,21 @@ var IIPMooViewer = new Class({
     // for our window size
     this.resolutions = new Array(this.num_resolutions);
     this.resolutions.push({w:tx,h:ty});
-    this.view.res = 0;
+    //MEDICI ARCHIVE PROJECT START
+    //MD: This is for the initial Zoom
+    //this.view.res = 0;
+    //MEDICI ARCHIVE PROJECT END
     for( var i=1; i<this.num_resolutions; i++ ){
       tx = Math.floor(tx/2);
       ty = Math.floor(ty/2);
       this.resolutions.push({w:tx,h:ty});
       if( tx < this.view.w && ty < this.view.h ) this.view.res++;
     }
-    this.view.res -= 1;
+    
+    // MEDICI ARCHIVE PROJECT START
+    this.view.res = this.initialZoom;
+    // MEDICI ARCHIVE PROJECT END
+    //this.view.res -= 1;
 
     // Sanity check and watch our for small screen displays causing the res to be negative
     if( this.view.res < 0 ) this.view.res = 0;
@@ -1076,9 +1100,17 @@ var IIPMooViewer = new Class({
     // In order to add keyboard events to a div, we need to give it a tabindex and focus it
     this.container.set( 'tabindex', 0 );
     this.container.focus();
+    // MEDICI ARCHIVE PROJECT START
+    //container.focus();
+    // MEDICI ARCHIVE PROJECT END
 
     // Focus and defocus when we move into and out of the div,
     // get key presses and prevent default scrolling via mousewheel
+    
+    //MEDICI ARCHIVE PROJECT START
+    this.container.removeEvents();
+    //MEDICI ARCHIVE PROJECT END
+    
     this.container.addEvents({
       'keydown': this.key.bind(this),
       'mouseenter': function(){ _this.container.focus(); },
@@ -1308,33 +1340,68 @@ var IIPMooViewer = new Class({
     // If the user does not want a navigation window, do not create one!
     if( (!this.showNavWindow) && (!this.showNavButtons) ) return;
 
-    var navcontainer = new Element( 'div', {
-      'class': 'navcontainer',
-      'styles': {
-	position: 'absolute',
-	width: this.navWin.w
-      }
-    });
+    //MEDICI ARCHIVE PROJECT START
+    if(this.navWinPos == 'left'){
+	    var navcontainer = new Element( 'div', {
+	      'class': 'navcontainer',
+	      'styles': {
+		position: 'absolute',
+		width: this.navWin.w,
+		left: '0px'
+	      }
+	    });
+    }else{
+    	var navcontainer = new Element( 'div', {
+  	      'class': 'navcontainer',
+  	      'styles': {
+  		position: 'absolute',
+  		width: this.navWin.w
+  	      }
+    	});
+    }
+//    var navcontainer = new Element( 'div', {
+//	      'class': 'navcontainer',
+//	      'styles': {
+//		position: 'absolute',
+//		width: this.navWin.w
+//	      }
+//  	});
+    //MEDICI ARCHIVE PROJECT END
 
+    // MEDICI ARCHIVE PROJECT START
     // For standalone iphone/ipad the logo gets covered by the status bar
-    if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
+    // if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
 
-    var toolbar = new Element( 'div', {
-      'class': 'toolbar',
-      'events': {
-	 dblclick: function(source){
-	   source.getElement('div.navbuttons').get('slide').toggle();
-         }.pass(this.container)
-      }
-    });
-    toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
-    toolbar.inject(navcontainer);
+//     var toolbar = new Element( 'div', {
+//       'class': 'toolbar',
+//       'events': {
+// 	 dblclick: function(source){
+// 	   source.getElement('div.navbuttons').get('slide').toggle();
+//          }.pass(this.container)
+//       }
+//     });
 
+       var toolbar = new Element('div', {
+	  'class' : 'toolbar',
+          'html' : '<span>DRAG ME</span>',
+          'events' : {
+             dblclick :  function(source){
+                source.getElement('div.navbuttons').get('slide').toggle();
+             }.pass(this.container)
+          },
+          'styles': {
+             height: '18px'
+          }
+       });
+       //MEDICI ARCHIVE PROJECT END
+		
+	toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
+    	toolbar.inject(navcontainer);
 
     // Create our navigation div and inject it inside our frame if requested
     if( this.showNavWindow ){
-
-      var navwin = new Element( 'div', {
+    // MEDICI ARCHIVE PROJECT START
+      /* var navwin = new Element( 'div', {
 	'class': 'navwin',
         'styles': {
 	  height: this.navWin.h
@@ -1354,8 +1421,30 @@ var IIPMooViewer = new Class({
           'mousedown': function(e){ var event = new DOMEvent(e); event.stop(); }
         }
       });
-      navimage.inject(navwin);
+      navimage.inject(navwin);*/
+      var navwin = new Element( 'div', {
+         'class': 'navwin',
+         'styles': {
+            height: this.navWin.h
+         }
+      });
+      navwin.inject( navcontainer );
+      //To increase the height of navigation toolbar
+      navcontainer.setAttribute("height", navwin.getAttribute("height") + 10);
 
+      // Create our navigation image and inject inside the div we just created
+      var navimage = new Element( 'img', {
+         'class': 'navimage',
+         'src': this.server + '?FIF=' + this.images[0].src + '&SDS=' + this.images[0].sds + '&WID=' + this.navWin.w + '&QLT=99&CVT=jpeg',
+         'events': {
+            click: this.scrollNavigation.bind(this),
+            mousewheel: this.zoom.bind(this),
+            // Prevent user from dragging navigation image
+            mousedown: function(e){ var event = new DOMEvent(e); event.stop(); }
+         }
+      });
+      navimage.inject(navwin);
+      // MEDICI ARCHIVE PROJECT END
 
       // Create our navigation zone and inject inside the navigation div
       this.zone = new Element( 'div', {
@@ -1369,7 +1458,14 @@ var IIPMooViewer = new Class({
  	  'dblclick': this.zoom.bind(this)
 	}
       });
-      this.zone.inject(navwin);
+     // MEDICI ARCHIVE PROJECT START
+     // this.zone.inject(navwin);
+     //if (this.showNavImage) {
+     this.zone.inject(navwin);
+     //} else {
+          //this.zone.inject(navcontainer);
+     //}
+     // MEDICI ARCHIVE PROJECT END
 
     }
 
@@ -1383,7 +1479,10 @@ var IIPMooViewer = new Class({
 
       // Create our buttons as SVG with fallback to PNG
       var prefix = this.prefix;
-      ['reset','zoomIn','zoomOut'].each( function(k){
+      //MEDICI ARCHIVE PROJECT START
+      //['reset','zoomIn','zoomOut'].each( function(k){
+      ['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each( function(k){
+      //MEDICI ARCHIVE PROJECT END
 	new Element('img',{
 	  'src': prefix + k + (Browser.buggy?'.png':'.svg'),
 	  'class': k,
@@ -1396,11 +1495,24 @@ var IIPMooViewer = new Class({
 	}).inject(navbuttons);
       });
 
+      
+      //navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
+
       navbuttons.inject(navcontainer);
 
       // Need to set this after injection
       navbuttons.set('slide', {duration: 300, transition: Fx.Transitions.Quad.easeInOut, mode:'vertical'});
 
+      // MEDICI ARCHIVE PROJECT
+      // Set titles (explanations) to buttons
+      navbuttons.getElement('img.zoomIn').set('title', 'Zoom In');
+      navbuttons.getElement('img.zoomOut').set('title', 'Zoom Out');
+      navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
+      navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
+      navbuttons.getElement('img.reset').set('title', 'Refresh Image');
+      
+      // MEDICI ARCHIVE PROJECT
+      
       // Add events to our buttons
       navbuttons.getElement('img.zoomIn').addEvent( 'click', function(){
 	IIPMooViewer.windows(this).each( function(el){ el.zoomIn(); });
@@ -1416,6 +1528,22 @@ var IIPMooViewer = new Class({
 	IIPMooViewer.windows(this).each( function(el){ el.reload(); });
 	this.reload();
       }.bind(this) );
+
+     //MEDICI ARCHIVE PROJECT START
+      navbuttons.getElement('img.rotateRight').addEvent( 'click', function(){
+         var r = this.view.rotation;
+         r += 45 % 360;
+         IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+         this.rotate(r);
+      }.bind(this) );
+      
+      navbuttons.getElement('img.rotateLeft').addEvent( 'click', function(){
+         var r = this.view.rotation;
+         r -= 45 % 360;
+         IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+         this.rotate(r);
+         }.bind(this) );
+     //MEDICI ARCHIVE PROJECT END
 
     }
 
@@ -1458,6 +1586,97 @@ var IIPMooViewer = new Class({
 
     navcontainer.makeDraggable( {container:this.container, handle:toolbar} );
 
+  },
+
+
+  // Create annotations if they are contained within our current view
+  createAnnotations: function() {
+
+    // Sort our annotations by size to make sure it's always possible to interact
+    // with annotations within annotations
+    if( !this.annotations ) return;
+    this.annotations.sort( function(a,b){ return (b.w*b.h)-(a.w*a.h); } );
+
+    for( var i=0; i<this.annotations.length; i++ ){
+
+      // Check whether this annotation is within our view
+      if( this.wid*(this.annotations[i].x+this.annotations[i].w) > this.view.x &&
+	  this.wid*this.annotations[i].x < this.view.x+this.view.w &&
+	  this.hei*(this.annotations[i].y+this.annotations[i].h) > this.view.y &&
+	  this.hei*this.annotations[i].y < this.view.y+this.view.h
+	  // Also don't show annotations that entirely fill the screen
+	  //	  (this.hei*this.annotations[i].x < this.view.x && this.hei*this.annotations[i].y < this.view.y &&
+	  //	   this.wid*(this.annotations[i].x+this.annotations[i].w) > this.view.x+this.view.w && 
+      ){
+
+	var annotation = new Element('div', {
+          'class': 'annotation',
+          'styles': {
+            left: Math.round(this.wid * this.annotations[i].x),
+            top: Math.round(this.hei * this.annotations[i].y ),
+	    width: Math.round( this.wid * this.annotations[i].w ),
+	    height: Math.round( this.hei * this.annotations[i].h )
+	  }
+        }).inject( this.canvas );
+
+	if( this.annotationsVisible==false ) annotation.addClass('hidden');
+
+	var text = this.annotations[i].text;
+	if( this.annotations[i].title ) text = '<h1>'+this.annotations[i].title+'</h1>' + text;
+        annotation.store( 'tip:text', text );
+      }
+    }
+
+
+    if( !this.annotationTip ){
+      var _this = this;
+      this.annotationTip = new Tips( 'div.annotation', {
+        className: 'tip', // We need this to force the tip in front of nav window
+	fixed: true,
+	offset: {x:30,y:30},
+	hideDelay: 300,
+	link: 'chain',
+        onShow: function(tip,el){
+	  tip.setStyles({opacity:0,display:'block'}).fade(0.9);
+
+	  // Prevent the tip from fading when we are hovering on the tip itself and not
+	  // just when we leave the annotated zone
+	  tip.addEvents({
+	    'mouseleave':  function(){
+	       this.active = false;
+	       this.fade('out').get('tween').chain( function(){ this.element.setStyle('display','none'); });
+	    },
+	    'mouseenter': function(){ this.active = true; }
+	  })
+        },
+        onHide: function(tip, el){
+	  if( !tip.active ){
+	    tip.fade('out').get('tween').chain( function(){ this.element.setStyle('display','none'); });
+	    tip.removeEvents(['mouseenter','mouseleave']);
+	  }
+        }
+      });
+    }
+
+  },
+
+
+
+  /* Toggle visibility of any annotations
+   */
+  toggleAnnotations: function() {
+    var els;
+    if( els = this.canvas.getElements('div.annotation') ){
+      if( this.annotationsVisible ){
+	els.addClass('hidden');
+	this.annotationsVisible = false;
+	this.showPopUp( IIPMooViewer.lang.annotationsDisabled );
+      }
+      else{
+	els.removeClass('hidden');
+	this.annotationsVisible = true;
+      }
+    }
   },
 
 
@@ -1622,10 +1841,23 @@ var IIPMooViewer = new Class({
     // And reposition the navigation window
     if( this.showNavWindow ){
       var navcontainer = this.container.getElement('div.navcontainer');
-      if( navcontainer ) navcontainer.setStyles({
-	top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-	left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
-      });
+    //MEDICI ARCHIVE PROJECT START
+    if(navcontainer && this.navWinPos == 'left')  {
+        navcontainer.setStyles({
+            top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+            left: '0px'		  
+        });
+    } else {
+        navcontainer.setStyles({
+    	    top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+            left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+        });
+    }
+//      if( navcontainer ) navcontainer.setStyles({
+//	top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+//	left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+//      });
+    //MEDICI ARCHIVE PROJECT END
 
       // Resize our navigation window div
       if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h );
@@ -1748,7 +1980,10 @@ var IIPMooViewer = new Class({
     // Move the zone to the new size and position
     this.zone.morph({
       left: pleft,
-      top: ptop + 8, // 8 is the height of toolbar
+      //top: ptop + 8, // 8 is the height of toolbar
+      //MEDICI ARCHIVE PROJECT START
+      top: ptop + 18, //18 is the height of toolbar
+      //MEDICI ARCHOVE PROJECT END
       width: (width-border>0)? width - border : 1, // Watch out for zero sizes!
       height: (height-border>0)? height - border : 1
     });
