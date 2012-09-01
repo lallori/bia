@@ -1,18 +1,18 @@
 /* DeepZoom Protocol Handler
  */
 
-var DeepZoom = new Class({
+Protocols.DeepZoom = new Class({
 
   /* Return metadata URL
    */
-  getMetaDataURL: function(image){
-    return "Deepzoom=" + image + ".dzi";
+  getMetaDataURL: function(server,image){
+    return server + image + ".dzi";
   },
 
   /* Return an individual tile request URL
    */
   getTileURL: function(server,image,resolution,sds,contrast,k,x,y){
-    return server+'?DeepZoom='+image+'_files/'+(resolution+1)+'/'+x+'_'+y+'.jpg';
+    return server+image+'_files/'+(resolution+1)+'/'+x+'_'+y+'.jpg';
   },
 
   /* Parse a Deepzoom protocol metadata request
@@ -33,8 +33,14 @@ var DeepZoom = new Class({
 
   /* Return URL for a full view - not possible with Deepzoom
    */
-  getRegionURL: function(image,x,y,w,h){
+  getRegionURL: function(server,image,region,w){
     return null;
+  },
+
+  /* Return thumbnail URL
+   */
+  getThumbnailURL: function(server,image,width){
+    return server+image+'_files/0/0_0.jpg';
   }
 
 });

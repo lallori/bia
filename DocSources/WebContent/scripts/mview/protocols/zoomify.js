@@ -1,18 +1,18 @@
 /* Zoomify Protocol Handler
  */
 
-var Zoomify = new Class({
+Protocols.Zoomify = new Class({
 
   /* Return metadata URL
    */
-  getMetaDataURL: function(image){
-    return "Zoomify=" + image + "/ImageProperties.xml";
+  getMetaDataURL: function(server,image){
+    return server + image + "/ImageProperties.xml";
   },
 
   /* Return an individual tile request URL
    */
   getTileURL: function(server,image,resolution,sds,contrast,k,x,y){
-    return server+"?Zoomify="+image+"/TileGroup0/"+resolution+"-"+x+"-"+y+".jpg";
+    return server+image+"/TileGroup0/"+resolution+"-"+x+"-"+y+".jpg";
   },
 
   /* Parse a Zoomify protocol metadata request
@@ -40,8 +40,14 @@ var Zoomify = new Class({
 
   /* Return URL for a full view - not possible with Zoomify
    */
-  getRegionURL: function(image,x,y,w,h){
+  getRegionURL: function(server,image,region,w){
     return null;
+  },
+
+  /* Return thumbnail URL
+   */
+  getThumbnailURL: function(server,image,width){
+    return server+image+'/TileGroup0/0-0-0.jpg';
   }
 
 });

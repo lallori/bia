@@ -2,7 +2,7 @@
    IIPMooViewer 2.0
    IIPImage Javascript Viewer <http://iipimage.sourceforge.net>
 
-   Copyright (c) 2007-2011 Ruven Pillay <ruven@users.sourceforge.net>
+   Copyright (c) 2007-2012 Ruven Pillay <ruven@users.sourceforge.net>
 
    ---------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
    ---------------------------------------------------------------------------
 
@@ -51,6 +51,7 @@
 	      enableFullscreen: allow full screen mode. Default true
 	      viewport: object containing x, y, resolution, rotation of initial view
 	      winResize: whether view is reflowed on window resize. Default true
+	      preload: load extra surrounding tiles
 
    Note: Requires mootools version 1.4 or later <http://www.mootools.net>
        : The page MUST have a standard-compliant HTML declaration at the beginning
@@ -84,7 +85,7 @@ var IIPMooViewer = new Class({
       this.viewport = {
 	resolution: (typeof(options.viewport.resolution)=='undefined') ? null : parseInt(options.viewport.resolution),
 	rotation: (typeof(options.viewport.rotation)=='undefined') ? null : parseInt(options.viewport.rotation),
-	contrast: (typeof(options.viewport.contrast)=='undefined') ? null : parseInt(options.viewport.contrast),
+	contrast: (typeof(options.viewport.contrast)=='undefined') ? null : parseFloat(options.viewport.contrast),
 	x: (typeof(options.viewport.x)=='undefined') ? null : parseFloat(options.viewport.x),
 	y: (typeof(options.viewport.y)=='undefined') ? null : parseFloat(options.viewport.y)
       }
@@ -127,14 +128,14 @@ var IIPMooViewer = new Class({
     this.disableContextMenu = true;
 
     //MEDICI ARCHIVE PROJECT START
-	this.initialZoom = options.zoom || 1;
+    this.initialZoom = options.zoom || 1;
     //MEDICI ARCHIVE PROJECT END
 
     // Navigation window options
     this.showNavWindow = (options.showNavWindow == false) ? false : true;
     this.showNavButtons = (options.showNavButtons == false) ? false : true;
     this.navWinSize = options.navWinSize || 0.2;
-    
+
     //MEDICI ARCHIVE PROJECT START
     this.navWinPos = options.navWinPos || 'right';
     //MEDICI ARCHIVE PROJECT END
@@ -147,32 +148,31 @@ var IIPMooViewer = new Class({
     // Set up our protocol handler
     switch( options.protocol ){
       case 'zoomify':
-	this.protocol = new Zoomify();
+	this.protocol = new Protocols.Zoomify();
 	break;
       case 'deepzoom':
-	this.protocol = new DeepZoom();
+	this.protocol = new Protocols.DeepZoom();
 	break;
       case 'djatoka':
-        this.protocol = new Djatoka();
+        this.protocol = new Protocols.Djatoka();
 	break;
       default:
-	this.protocol = new IIP();
+	this.protocol = new Protocols.IIP();
     }
 
 
     // Preload tiles surrounding view window?
-    this.preload = false;
+    this.preload = (options.preload == true) ? true : false;
     this.effects = false;
 
-    // Annotations
-    this.annotations = options.annotations || null;
-    this.annotationTip = null;
-    this.annotationsVisible = true;
+    // Set up our annotations if they have been set and our annotation functions implemented
+    this.annotations = ((typeof(this.initAnnotationTips)=="function")&&options.annotations)? options.annotations : null;
+
 
 
     // If we want to assign a function for a click within the image
     // - used for multispectral curve visualization, for example
-    this.targetclick = options.targetclick || null;
+    this.click = options.click || null;
 
     this.max_size = {};      // Dimensions of largest resolution
     this.navWin = {w:0,h:0}; // Dimensions of navigation window
@@ -222,11 +222,7 @@ var IIPMooViewer = new Class({
     this.canvas.setStyle( 'cursor', 'wait' );
 
     // Delete our annotations
-    if( this.annotationTip ) this.annotationTip.detach( this.canvas.getChildren('div.annotation') );
-    this.canvas.getChildren('div.annotation').each(function(el){
-      el.eliminate('tip:text');
-      el.destroy();
-    });
+    if( this.annotations ) this.destroyAnnotations();
 
     // Set our rotation origin - calculate differently if canvas is smaller than view port
     if( !Browser.buggy ){
@@ -239,9 +235,11 @@ var IIPMooViewer = new Class({
     // Load our image mosaic
     this.loadGrid();
 
-    // Create new annotations
-    this.createAnnotations();
-    if( this.annotationTip ) this.annotationTip.attach( this.canvas.getChildren('div.annotation') );
+    // Create new annotations and attach the tooltip to them if it already exists
+    if( this.annotations ){
+      this.createAnnotations();
+      if( this.annotationTip ) this.annotationTip.attach( this.canvas.getChildren('div.annotation') );
+    }
   },
 
 
@@ -349,7 +347,7 @@ var IIPMooViewer = new Class({
 
       if( this.tiles.contains(k) ){
 	this.nTilesLoaded += this.images.length;
-        if( this.showNavWindow ) this.refreshLoadBar(); 
+        if( this.showNavWindow ) this.refreshLoadBar();
 	if( this.nTilesLoaded >= this.nTilesToLoad ) this.canvas.setStyle( 'cursor', 'move' );
 	continue;
       }
@@ -376,9 +374,7 @@ var IIPMooViewer = new Class({
 
 	// Add our tile event functions after injection otherwise we get no event
 	tile.addEvents({
-	  'load': function(tiles){
-	     var tile = tiles[0];
-	     var id = tiles[1];
+	  'load': function(tile,id){
 	     if( this.effects ) tile.setStyle('opacity',1);
 	     if(!(tile.width&&tile.height)){
 	       tile.fireEvent('error');
@@ -388,15 +384,16 @@ var IIPMooViewer = new Class({
 	     if( this.showNavWindow ) this.refreshLoadBar();
 	     if( this.nTilesLoaded >= this.nTilesToLoad ) this.canvas.setStyle( 'cursor', 'move' );
 	     this.tiles.push(id); // Add to our list of loaded tiles
-	  }.bind(this,[tile,k]),
+	  }.bind(this,tile,k),
 	  'error': function(){
 	     // Try to reload if we have an error.
 	     // Add a suffix to prevent caching, but remove error event to avoid endless loops
 	     this.removeEvents('error');
 	     var src = this.src;
-	     //MEDICI ARCHIVE PROJECT START
-//	     this.set( 'src', src + '?'+ Date.now() );
-		 //MEDICI ARCHIVE PROJECT END	
+   	    //MEDICI ARCHIVE PROJECT START
+   	    // this.set( 'src', src + '?'+ Date.now() );
+	    this.set( 'src', src + '&time='+ Date.now() );
+   	    //MEDICI ARCHIVE PROJECT END	
 	  }
 	});
 
@@ -420,7 +417,8 @@ var IIPMooViewer = new Class({
   getRegionURL: function(){
     var w = this.resolutions[this.view.res].w;
     var h = this.resolutions[this.view.res].h;
-    var url = this.server + this.protocol.getRegionURL(this.images[0].src,this.view.x/w,this.view.y/h,this.view.w/w,this.view.h/h);
+    var region = {x: this.view.x/w, y: this.view.y/h, w: this.view.w/w, h: this.view.h/h};
+    var url = this.protocol.getRegionURL( this.server, this.images[0].src, region, w );
     return url;
   },
 
@@ -602,10 +600,13 @@ var IIPMooViewer = new Class({
   },
 
 
-
   /* Scroll resulting from a drag of the navigation window
    */
   scrollNavigation: function( e ) {
+
+    // Cancel any running morphs on the canvas or zone
+    this.zone.get('morph').cancel();
+    this.canvas.get('morph').cancel();
 
     var xmove = 0;
     var ymove = 0;
@@ -618,8 +619,8 @@ var IIPMooViewer = new Class({
     if( e.event ){
       e.stop();
       var pos = this.zone.getParent().getPosition();
-      xmove = e.client.x - pos.x - zone_w/2;
-      ymove = e.client.y - pos.y - zone_h/2;
+      xmove = e.page.x - pos.x - Math.floor(zone_w/2);
+      ymove = e.page.y - pos.y - Math.floor(zone_h/2);
     }
     else{
       // From a drag
@@ -686,11 +687,15 @@ var IIPMooViewer = new Class({
     var ymove =  -pos.y;
     this.moveTo( xmove, ymove );
 
+    if( IIPMooViewer.sync ){
+      IIPMooViewer.windows(this).each( function(el){ el.moveTo(xmove,ymove); });
+    }
+
   },
 
 
 
-  /* Check our scroll bounds. 
+  /* Check our scroll bounds.
    */
   checkBounds: function( x, y ) {
 
@@ -760,27 +765,28 @@ var IIPMooViewer = new Class({
     else if( event.shift ) z = -1;
     else z = 1;
 
+    // Bail out if at zoom limits
+    if( (z==1) && (this.view.res >= this.num_resolutions-1) ) return;
+    if( (z==-1) && (this.view.res <= 0) ) return;
 
-    var ct = event.target;
-    if( ct ){
-      var cc = ct.get('class');
+    if( event.target ){
       var pos, xmove, ymove;
+      var cc = event.target.get('class');
 
       if( cc != "zone" & cc != 'navimage' ){
 	pos = this.canvas.getPosition();
 
 	// Center our zooming on the mouse position when over the main target window
-	// - use clientX/Y because pageX/Y does not exist in IE
-	this.view.x = event.client.x - pos.x - (this.view.w/2);
-	this.view.y = event.client.y - pos.y - (this.view.h/2);
+	this.view.x = event.page.x - pos.x - Math.floor(this.view.w/2);
+	this.view.y = event.page.y - pos.y - Math.floor(this.view.h/2);
       }
       else{
 	// For zooms with the mouse over the navigation window
 	pos = this.zone.getParent().getPosition();
 	var n_size = this.zone.getParent().getSize();
 	var z_size = this.zone.getSize();
-	this.view.x = (event.client.x - pos.x - z_size.x/2) * this.wid/n_size.x;
-	this.view.y = (event.client.y - pos.y - z_size.y/2) * this.hei/n_size.y;
+	this.view.x = Math.round( (event.page.x - pos.x - z_size.x/2) * this.wid/n_size.x );
+	this.view.y = Math.round( (event.page.y - pos.y - z_size.y/2) * this.hei/n_size.y );
       }
 
       if( IIPMooViewer.sync ){
@@ -811,42 +817,7 @@ var IIPMooViewer = new Class({
   /* Zoom in by a factor of 2
    */
   zoomIn: function(){
-
-    if( this.view.res < this.num_resolutions-1 ){
-
-      this.view.res++;
-
-      // Get the image size for this resolution
-      this.wid = this.resolutions[this.view.res].w;
-      this.hei = this.resolutions[this.view.res].h;
-
-      var xoffset = (this.resolutions[this.view.res-1].w > this.view.w) ? this.view.w : this.resolutions[this.view.res-1].w;
-      this.view.x = Math.round( 2*(this.view.x + xoffset/4) );
-      if( this.view.x > (this.wid-this.view.w) ) this.view.x = this.wid - this.view.w;
-      if( this.view.x < 0 ) this.view.x = 0;
-
-      this.view.y = Math.round( 2*(this.view.y + this.view.h/4) );
-      if( this.view.y > (this.hei-this.view.h) ) this.view.y = this.hei - this.view.h;
-      if( this.view.y < 0 ) this.view.y = 0;
-
-      this.canvas.setStyles({
-	 left: (this.wid>this.view.w)? -this.view.x : Math.round((this.view.w-this.wid)/2),
-	 top: (this.hei>this.view.h)? -this.view.y : Math.round((this.view.h-this.hei)/2),
-	 width: this.wid,
-	 height: this.hei
-      });
-
-      // Center or contstrain our canvas to our containing div
-      if( this.wid < this.view.w || this.hei < this.view.h ) this.recenter();
-      else this.touch.options.limit = { x: Array(this.view.w-this.wid,0), y: Array(this.view.h-this.hei,0) };
-
-      this.canvas.getChildren('img').destroy();
-      this.tiles.empty();
-
-      this.requestImages();
-      this.positionZone();
-      if( this.scale ) this.updateScale();
-    }
+    if( this.view.res < this.num_resolutions-1 ) this.zoomTo( this.view.res+1 );
   },
 
 
@@ -854,50 +825,96 @@ var IIPMooViewer = new Class({
   /* Zoom out by a factor of 2
    */
   zoomOut: function(){
+    if( this.view.res > 0 ) this.zoomTo( this.view.res-1 );
+  },
 
-    if( this.view.res > 0 ){
 
-      this.view.res--;
 
-      // Get the image size for this resolution
-      this.wid = this.resolutions[this.view.res].w;
-      this.hei = this.resolutions[this.view.res].h;
+  /* Zoom to a particular resolution
+   */
+  zoomTo: function(r){
 
-      this.view.x = this.view.x/2 - (this.view.w/4);
-      if( this.view.x + this.view.w > this.wid ) this.view.x = this.wid - this.view.w;
+    if( r == this.view.res ) return;
 
-      this.view.y = this.view.y/2 - (this.view.h/4);
-      if( this.view.y + this.view.h > this.hei ) this.view.y = this.hei - this.view.h;
+    if( (r <= this.num_resolutions-1) && (r >= 0) ){
 
-      var xoffset = (this.wid > this.view.w ) ? this.view.x : (this.wid-this.view.w)/2;
-      var yoffset = (this.hei > this.view.h ) ? this.view.y : (this.hei-this.view.h)/2;
+      var factor = Math.pow( 2, r-this.view.res );
 
-      if( this.view.x < 0 ) this.view.x = 0;
-      if( this.view.y < 0 ) this.view.y = 0;
+      // Calculate an offset to take into account the view port size
+      // Center if our image width at this resolution is smaller than the view width - only need to do this on zooming in as our
+      // constraining will automatically recenter when zooming out
+      var xoffset, yoffset;
+      if( r > this.view.res ){
+	xoffset = (this.resolutions[this.view.res].w > this.view.w) ? this.view.w*(factor-1)/2 : this.resolutions[r].w/2 - this.view.w/2;
+	yoffset = (this.resolutions[this.view.res].h > this.view.h) ? this.view.h*(factor-1)/2 : this.resolutions[r].h/2 - this.view.h/2;
+      }
+      else{
+	xoffset = -this.view.w*(1-factor)/2;
+	yoffset = -this.view.h*(1-factor)/2;;
+      }
 
-      // Make sure we don't have -ve offsets when zooming out
-      if( xoffset < 0 ) xoffset = 0;
-      if( yoffset < 0 ) yoffset = 0;
+      this.view.x = Math.round( factor*this.view.x + xoffset );
+      this.view.y = Math.round( factor*this.view.y + yoffset );
 
-      this.canvas.setStyles({
-	 left: -xoffset,
-	 top: -yoffset,
-	 width: this.wid,
-	 height: this.hei
-      });
+      this.view.res = r;
 
-      if( this.wid < this.view.w || this.hei < this.view.h ) this.recenter();
-      else this.touch.options.limit = { x: Array(this.view.w-this.wid,0), y: Array(this.view.h-this.hei,0) };
-
-      // Delete our image tiles
-      this.canvas.getChildren('img').destroy();
-
-      this.tiles.empty();
-
-      this.requestImages();
-      this.positionZone();
-      if( this.scale ) this.updateScale();
+      this._zoom();
     }
+  },
+
+
+  /* Generic zoom function
+   */
+  _zoom: function(){
+
+    // Get the image size for this resolution
+    this.wid = this.resolutions[this.view.res].w;
+    this.hei = this.resolutions[this.view.res].h;
+
+    if( this.view.x + this.view.w > this.wid ) this.view.x = this.wid - this.view.w;
+    if( this.view.x < 0 ) this.view.x = 0;
+
+    if( this.view.y + this.view.h > this.hei ) this.view.y = this.hei - this.view.h;
+    if( this.view.y < 0 ) this.view.y = 0;
+
+    this.canvas.setStyles({
+      left: (this.wid>this.view.w)? -this.view.x : Math.round((this.view.w-this.wid)/2),
+      top: (this.hei>this.view.h)? -this.view.y : Math.round((this.view.h-this.hei)/2),
+      width: this.wid,
+      height: this.hei
+    });
+
+    // Contstrain our canvas to our containing div
+    this.constrain();
+
+    // Delete our image tiles
+    this.canvas.getChildren('img').destroy();
+
+    this.tiles.empty();
+
+    this.requestImages();
+    this.positionZone();
+    if( this.scale ) this.updateScale();
+
+  },
+
+
+  /* Calculate navigation view size
+   */
+  calculateNavSize: function(){
+
+    var thumb_width = this.view.w * this.navWinSize;;
+
+    // For panoramic images, use a large navigation window
+    if( this.max_size.w > 2*this.max_size.h ) thumb_width = this.view.w / 2;
+
+    // Make sure our height is not more than 50% of view height
+    if( (this.max_size.h/this.max_size.w)*thumb_width > this.view.h*0.5 ){
+      thumb_width = Math.round( this.view.h * 0.5 * this.max_size.w/this.max_size.h );
+    }
+
+    this.navWin.w = thumb_width;
+    this.navWin.h = Math.round( (this.max_size.h/this.max_size.w)*thumb_width );
   },
 
 
@@ -905,34 +922,26 @@ var IIPMooViewer = new Class({
    */
   calculateSizes: function(){
 
-    var tx = this.max_size.w;
-    var ty = this.max_size.h;
-    var thumb_width;
-
-    // Set up our default sizes 
+    // Set up our default sizes
     var target_size = this.container.getSize();
+    this.view.x = -1; // Intitalize x,y with dummy values
+    this.view.y = -1;
     this.view.w = target_size.x;
     this.view.h = target_size.y;
-    thumb_width = this.view.w * this.navWinSize;
 
-    // For panoramic images, use a large navigation window
-    if( tx > 2*ty ) thumb_width = this.view.w / 2;
-    
     // MEDICI ARCHIVE PROJECT START
-		// Navigation window in Manuscript Transcriber
-    	if (this.view.w > 1000)
-    		thumb_width = this.view.w / 8;
-	// MEDICI ARCHIVE PROJECT END
+    // Navigation window in Manuscript Transcriber
+    if (this.view.w > 1000)
+        thumb_width = this.view.w / 8;
+    // MEDICI ARCHIVE PROJECT END
 
-    //if( (ty/tx)*thumb_width > this.view.h*0.5 ) thumb_width = Math.round( this.view.h * 0.5 * tx/ty );
-
-    this.navWin.w = thumb_width;
-    this.navWin.h = Math.round( (ty/tx)*thumb_width );
+    // Calculate our navigation window size
+    this.calculateNavSize();
 
     // Determine the image size for this image view
     this.view.res = this.num_resolutions;
-    tx = this.max_size.w;
-    ty = this.max_size.h;
+    var tx = this.max_size.w;
+    var ty = this.max_size.h;
 
     // Calculate our list of resolution sizes and the best resolution
     // for our window size
@@ -940,7 +949,7 @@ var IIPMooViewer = new Class({
     this.resolutions.push({w:tx,h:ty});
     //MEDICI ARCHIVE PROJECT START
     //MD: This is for the initial Zoom
-    //this.view.res = 1;
+    //this.view.res = 0;
     //MEDICI ARCHIVE PROJECT END
     for( var i=1; i<this.num_resolutions; i++ ){
       tx = Math.floor(tx/2);
@@ -950,8 +959,9 @@ var IIPMooViewer = new Class({
     }
     
     // MEDICI ARCHIVE PROJECT START
-	this.view.res = this.initialZoom;
-	// MEDICI ARCHIVE PROJECT END
+    this.view.res = this.initialZoom;
+    // MEDICI ARCHIVE PROJECT END
+    //this.view.res -= 1;
 
     // Sanity check and watch our for small screen displays causing the res to be negative
     if( this.view.res < 0 ) this.view.res = 0;
@@ -1005,7 +1015,7 @@ var IIPMooViewer = new Class({
 
       if( this.fullscreen.enter ){
 	// Monitor Fullscreen change events
-	document.addEvent( this.fullscreen.eventChangeName, function(){ 
+	document.addEvent( this.fullscreen.eventChangeName, function(){
 			     _this.fullscreen.isFullscreen = !_this.fullscreen.isFullscreen;
 			     _this.reload();
 			   });
@@ -1044,14 +1054,7 @@ var IIPMooViewer = new Class({
     // Create our main view drag object for our canvas.
     // Add synchronization via the Drag start hook
     this.touch = new Drag( this.canvas, {
-      onComplete: this.scroll.bind(this),
-      onStart: function(element,event){
-	if( IIPMooViewer.sync ){
-	  IIPMooViewer.windows(_this).each( function(el){
-	    el.touch.start(event);
-	  });
-	}
-      }
+      onComplete: this.scroll.bind(this)
     });
 
 
@@ -1063,19 +1066,10 @@ var IIPMooViewer = new Class({
       'mousedown': function(e){ var event = new DOMEvent(e); event.stop(); }
     });
 
-    // Display / hide our annotations if we have any
-    if( this.annotations ){
-      this.canvas.addEvent( 'mouseenter', function(){
-        if( _this.annotationsVisible ){
-	  _this.canvas.getElements('div.annotation').removeClass('hidden');
-	}
-      });
-      this.canvas.addEvent( 'mouseleave', function(){
-	if( _this.annotationsVisible ){
-	  _this.canvas.getElements('div.annotation').addClass('hidden');
-	}
-      });
-    }
+
+    // Initialize canvas events for our annotations
+    if( this.annotations ) this.initAnnotationTips();
+
 
     // Disable the right click context menu if requested and show our info window instead
     if( this.disableContextMenu ){
@@ -1089,10 +1083,10 @@ var IIPMooViewer = new Class({
 
 
     // Add an external callback if we have been given one
-    if( this.targetclick ){
+    if( this.click ){
 
       // But add it mouseup rather than click to avoid triggering during dragging
-      var fn = this.targetclick.bind(this);
+      var fn = this.click.bind(this);
       this.canvas.addEvent( 'mouseup', fn );
 
       // And additionally disable this during dragging
@@ -1105,9 +1099,10 @@ var IIPMooViewer = new Class({
     // We want to add our keyboard events, but only when we are over the viewer div
     // In order to add keyboard events to a div, we need to give it a tabindex and focus it
     this.container.set( 'tabindex', 0 );
+    this.container.focus();
     // MEDICI ARCHIVE PROJECT START
-		//container.focus();
-	// MEDICI ARCHIVE PROJECT END
+    //container.focus();
+    // MEDICI ARCHIVE PROJECT END
 
     // Focus and defocus when we move into and out of the div,
     // get key presses and prevent default scrolling via mousewheel
@@ -1115,9 +1110,10 @@ var IIPMooViewer = new Class({
     //MEDICI ARCHIVE PROJECT START
     this.container.removeEvents();
     //MEDICI ARCHIVE PROJECT END
+    
     this.container.addEvents({
       'keydown': this.key.bind(this),
-      'mouseover': function(){ _this.container.focus(); },
+      'mouseenter': function(){ _this.container.focus(); },
       'mouseout': function(){ _this.container.blur(); },
       'mousewheel': function(e){ e.preventDefault(); }
     });
@@ -1125,8 +1121,6 @@ var IIPMooViewer = new Class({
 
     // Add touch and gesture support for mobile iOS and Android
     if( Browser.Platform.ios || Browser.Platform.android ){
-
-      this.preload = true;
 
       // Prevent dragging on the container div
       this.container.addEvent('touchmove', function(e){ e.preventDefault(); } );
@@ -1141,7 +1135,7 @@ var IIPMooViewer = new Class({
 	     height: '100%'
 	    });
 	    // Need to set a timeout the div is not resized immediately on some versions of iOS
-	    this.reload.delay(500,this);
+	    this.reflow.delay(500,this);
 	  }.bind(this)
       });
 
@@ -1185,7 +1179,7 @@ var IIPMooViewer = new Class({
 	    var xx = Math.round( (e.touches[0].pageX+e.touches[1].pageX) / 2 ) + _this.view.x;
 	    var yy = Math.round( (e.touches[0].pageY+e.touches[1].pageY) / 2 ) + _this.view.y;
 	    var origin = xx + 'px,' + yy + 'px';
-	    this.canvas.setStyle( this.CSSprefix+'transform-origin', origin );
+	    _this.canvas.setStyle( this.CSSprefix+'transform-origin', origin );
 	  }
         },
 	'touchend': function(e){
@@ -1194,8 +1188,8 @@ var IIPMooViewer = new Class({
 	    _this.canvas.eliminate('tapstart');
 	    _this.requestImages();
 	    _this.positionZone();
-	    //	    if(IIPMooViewer.sync){ 
-	    //IIPMooViewer.windows(this).each( function(el){ el.moveTo(_this.view.x,_this.view.); }); 
+	    //	    if(IIPMooViewer.sync){
+	    //IIPMooViewer.windows(this).each( function(el){ el.moveTo(_this.view.x,_this.view.); });
 	    // }
 	  }
         },
@@ -1273,9 +1267,10 @@ var IIPMooViewer = new Class({
     // Calculate some sizes and create the navigation window
     this.calculateSizes();
     this.createNavigationWindow();
-    this.createAnnotations();
+    if( this.annotations ) this.createAnnotations();
 
 
+    // Add tips if we are not on a mobile device
     if( !(Browser.Platform.ios||Browser.Platform.android) ){
       var tip_list = 'img.logo, div.toolbar, div.scale';
       if( Browser.ie8||Browser.ie7 ) tip_list = 'img.logo, div.toolbar'; // IE8 bug which triggers window resize
@@ -1309,7 +1304,7 @@ var IIPMooViewer = new Class({
       this.moveTo( this.viewport.x*this.wid, this.viewport.y*this.hei );
     }
     else this.recenter();
- 
+
 
     // Set the size of the canvas to that of the full image at the current resolution
     this.canvas.setStyles({
@@ -1373,46 +1368,40 @@ var IIPMooViewer = new Class({
 //  	});
     //MEDICI ARCHIVE PROJECT END
 
-    // For standalone iphone/ipad the logo gets covered by the status bar 
-    if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
-
-   /* var toolbar = new Element( 'div', {
-      'class': 'toolbar',
-      'events': {
-	 dblclick: function(source){
-	   source.getElement('div.navbuttons').get('slide').toggle();
-         }.pass(this.container)
-      }
-    });
-		toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
-    	toolbar.inject(navcontainer);*/
-    
     // MEDICI ARCHIVE PROJECT START
-	var toolbar = new Element('div', {
-			'class' : 'toolbar',
-			'html' : '<span>DRAG ME</span>',
-			'events' : {
-				dblclick :  function(source){
-	   				source.getElement('div.navbuttons').get('slide').toggle();
-         			}.pass(this.container)
-			//}
-			//MEDICI ARCHIVE PROJECT START
-			},
-			'styles': {
-				height: '18px'
-			}
-			//MEDICI ARCHIVE PROJECT END
-		});
-		
-		toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
-    	toolbar.inject(navcontainer);
-	// MEDICI ARCHIVE PROJECT END
+    // For standalone iphone/ipad the logo gets covered by the status bar
+    // if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
 
+//     var toolbar = new Element( 'div', {
+//       'class': 'toolbar',
+//       'events': {
+// 	 dblclick: function(source){
+// 	   source.getElement('div.navbuttons').get('slide').toggle();
+//          }.pass(this.container)
+//       }
+//     });
+
+       var toolbar = new Element('div', {
+	  'class' : 'toolbar',
+          'html' : '<span>DRAG ME</span>',
+          'events' : {
+             dblclick :  function(source){
+                source.getElement('div.navbuttons').get('slide').toggle();
+             }.pass(this.container)
+          },
+          'styles': {
+             height: '18px'
+          }
+       });
+       //MEDICI ARCHIVE PROJECT END
+		
+	toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
+    	toolbar.inject(navcontainer);
 
     // Create our navigation div and inject it inside our frame if requested
     if( this.showNavWindow ){
-
-     /* var navwin = new Element( 'div', {
+    // MEDICI ARCHIVE PROJECT START
+      /* var navwin = new Element( 'div', {
 	'class': 'navwin',
         'styles': {
 	  height: this.navWin.h
@@ -1424,8 +1413,7 @@ var IIPMooViewer = new Class({
       // Create our navigation image and inject inside the div we just created
       var navimage = new Element( 'img', {
 	'class': 'navimage',
-	'src': this.server + '?FIF=' + this.images[0].src + '&SDS=' + this.images[0].sds +
-               '&WID=' + this.navWin.w + '&QLT=99&CVT=jpeg',
+	'src': this.protocol.getThumbnailURL(this.server,this.images[0].src,this.navWin.w),
         'events': {
           'click': this.scrollNavigation.bind(this),
           'mousewheel:throttle(75)': this.zoom.bind(this),
@@ -1434,35 +1422,29 @@ var IIPMooViewer = new Class({
         }
       });
       navimage.inject(navwin);*/
-      
-      // MEDICI ARCHIVE PROJECT START
-			//if (this.showNavImage) {
-				var navwin = new Element( 'div', {
-					'class': 'navwin',
-					'styles': {
-						height: this.navWin.h
-					}
-				});
-				navwin.inject( navcontainer );
-				//To increase the height of navigation toolbar
-				navcontainer.setAttribute("height", navwin.getAttribute("height") + 10);
-				
-				
-				// Create our navigation image and inject inside the div we just created
-				var navimage = new Element( 'img', {
-					'class': 'navimage',
-					'src': this.server + '?FIF=' + this.images[0].src + '&SDS=' + this.images[0].sds + '&WID=' + this.navWin.w + '&QLT=99&CVT=jpeg',
-					'events': {
-						click: this.scrollNavigation.bind(this),
-						mousewheel: this.zoom.bind(this),
-						// Prevent user from dragging navigation image
-						mousedown: function(e){ var event = new DOMEvent(e); event.stop(); }
-					 }
-				});
-				navimage.inject(navwin);
-			//}
-			// MEDICI ARCHIVE PROJECT END
+      var navwin = new Element( 'div', {
+         'class': 'navwin',
+         'styles': {
+            height: this.navWin.h
+         }
+      });
+      navwin.inject( navcontainer );
+      //To increase the height of navigation toolbar
+      navcontainer.setAttribute("height", navwin.getAttribute("height") + 10);
 
+      // Create our navigation image and inject inside the div we just created
+      var navimage = new Element( 'img', {
+         'class': 'navimage',
+         'src': this.server + '?FIF=' + this.images[0].src + '&SDS=' + this.images[0].sds + '&WID=' + this.navWin.w + '&QLT=99&CVT=jpeg',
+         'events': {
+            click: this.scrollNavigation.bind(this),
+            mousewheel: this.zoom.bind(this),
+            // Prevent user from dragging navigation image
+            mousedown: function(e){ var event = new DOMEvent(e); event.stop(); }
+         }
+      });
+      navimage.inject(navwin);
+      // MEDICI ARCHIVE PROJECT END
 
       // Create our navigation zone and inject inside the navigation div
       this.zone = new Element( 'div', {
@@ -1477,13 +1459,13 @@ var IIPMooViewer = new Class({
 	}
       });
      // MEDICI ARCHIVE PROJECT START
-		// this.zone.inject(navwin);
-		//if (this.showNavImage) {
-			this.zone.inject(navwin);
-		//} else {
-			//this.zone.inject(navcontainer);
-		//}
-	// MEDICI ARCHIVE PROJECT END
+     // this.zone.inject(navwin);
+     //if (this.showNavImage) {
+     this.zone.inject(navwin);
+     //} else {
+          //this.zone.inject(navcontainer);
+     //}
+     // MEDICI ARCHIVE PROJECT END
 
     }
 
@@ -1502,17 +1484,17 @@ var IIPMooViewer = new Class({
       ['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each( function(k){
       //MEDICI ARCHIVE PROJECT END
 	new Element('img',{
-	  'src': prefix + k + '.svg',
+	  'src': prefix + k + (Browser.buggy?'.png':'.svg'),
 	  'class': k,
  	  'events':{
 	    'error': function(){
 	      this.removeEvents('error'); // Prevent infinite reloading
 	      this.src = this.src.replace('.svg','.png'); // PNG fallback
 	    }
-	  }	
+	  }
 	}).inject(navbuttons);
       });
-      
+
       
       //navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
 
@@ -1546,21 +1528,21 @@ var IIPMooViewer = new Class({
 	IIPMooViewer.windows(this).each( function(el){ el.reload(); });
 	this.reload();
       }.bind(this) );
-      
+
      //MEDICI ARCHIVE PROJECT START
       navbuttons.getElement('img.rotateRight').addEvent( 'click', function(){
-    var r = this.view.rotation;
-    r += 45 % 360;
-   	IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
-    this.rotate(r);
+         var r = this.view.rotation;
+         r += 45 % 360;
+         IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+         this.rotate(r);
       }.bind(this) );
       
       navbuttons.getElement('img.rotateLeft').addEvent( 'click', function(){
-    var r = this.view.rotation;
-    r -= 45 % 360;
-    IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
-    this.rotate(r);
-      }.bind(this) );
+         var r = this.view.rotation;
+         r -= 45 % 360;
+         IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+         this.rotate(r);
+         }.bind(this) );
      //MEDICI ARCHIVE PROJECT END
 
     }
@@ -1596,6 +1578,7 @@ var IIPMooViewer = new Class({
           onStart: function() {
 	    var pos = this.zone.getPosition();
 	    this.navpos = {x: pos.x, y: pos.y-10};
+	    this.zone.get('morph').cancel();
 	  }.bind(this),
 	onComplete: this.scrollNavigation.bind(this)
         });
@@ -1763,6 +1746,42 @@ var IIPMooViewer = new Class({
 
 
 
+  /* Change our image and reload our view
+   */
+  changeImage: function( image ){
+
+    // Replace our image array
+    this.images = [{ src:image, sds:"0,90", cnt:(this.viewport&&this.viewport.contrast!=null)? this.viewport.contrast : 1.0 } ];
+
+    // Send a new AJAX request for the metadata
+    var metadata = new Request({
+      method: 'get',
+      url: this.protocol.getMetaDataURL( this.server, this.images[0].src ),
+      onComplete: function(transport){
+	var response = transport || alert( "Error: No response from server " + this.server );
+
+	// Parse the result
+	var result = this.protocol.parseMetaData( response );
+	this.max_size = result.max_size;
+	this.tileSize = result.tileSize;
+	this.num_resolutions = result.num_resolutions;
+
+	this.reload();
+
+	// Change our navigation image
+	this.container.getElement('div.navcontainer img.navimage').src =
+	  this.protocol.getThumbnailURL(this.server, image, this.navWin.w );
+
+      }.bind(this),
+	onFailure: function(){ alert('Error: Unable to get image metadata from server!'); }
+    } );
+
+    // Send the metadata request
+    metadata.send();
+  },
+
+
+
   /* Use an AJAX request to get the image size, tile size and number of resolutions from the server
    */
   load: function(){
@@ -1775,26 +1794,25 @@ var IIPMooViewer = new Class({
       this.createWindows();
     }
     else{
-      var metadata = new Request(
-        {
-	  method: 'get',
-	  url: this.server,
-	  onComplete: function(transport){
-	    var response = transport || alert( "Error: No response from server " + this.server );
+      var metadata = new Request({
+	method: 'get',
+	url: this.protocol.getMetaDataURL( this.server, this.images[0].src ),
+	onComplete: function(transport){
+	  var response = transport || alert( "Error: No response from server " + this.server );
 
-	    // Parse the result
-            var result = this.protocol.parseMetaData( response );
-            this.max_size = result.max_size;
-            this.tileSize = result.tileSize;
-	    this.num_resolutions = result.num_resolutions;
+	  // Parse the result
+	  var result = this.protocol.parseMetaData( response );
+	  this.max_size = result.max_size;
+	  this.tileSize = result.tileSize;
+	  this.num_resolutions = result.num_resolutions;
 
-	    this.createWindows();
-          }.bind(this),
-	  onFailure: function(){ alert('Error: Unable to get image metadata from server!'); }
-	} );
+	  this.createWindows();
+        }.bind(this),
+	onFailure: function(){ alert('Error: Unable to get image metadata from server!'); }
+      });
 
       // Send the metadata request
-      metadata.send( this.protocol.getMetaDataURL(this.images[0].src) );
+      metadata.send();
     }
   },
 
@@ -1806,7 +1824,6 @@ var IIPMooViewer = new Class({
     var target_size = this.container.getSize();
     this.view.w = target_size.x;
     this.view.h = target_size.y;
-    thumb_width = this.view.w * this.navWinSize;
 
     // Constrain our canvas if it is smaller than the view window
     this.canvas.setStyles({
@@ -1814,23 +1831,9 @@ var IIPMooViewer = new Class({
       top: (this.hei>this.view.h)? -this.view.y : Math.round((this.view.h-this.hei)/2)
     });
 
-    // For panoramic images, use a large navigation window
-    if( this.max_size.w > 2*this.max_size.h ) thumb_width = this.view.w / 2;
-    
-    // MEDICI ARCHIVE PROJECT START
-	// Navigation window in Manuscript Transcriber
-	if (this.view.w > 1000)
-		thumb_width = this.view.w / 8;
-	// MEDICI ARCHIVE PROJECT END
 
-    // Make sure the height of our nav window also fits
-    if( thumb_width*this.max_size.w/this.max_size.h > this.view.h-50 ){
-      thumb_width = Math.round((this.view.h-50)*this.max_size.h/this.max_size.w);
-    }
-
-
-    this.navWin.w = thumb_width;
-    this.navWin.h = Math.floor( (this.max_size.h/this.max_size.w)*thumb_width );
+    // Calculate our new navigation window size
+    this.calculateNavSize();
 
     // Resize our navigation window
     this.container.getElements('div.navcontainer, div.navcontainer div.loadBarContainer').setStyle('width', this.navWin.w);
@@ -1838,23 +1841,26 @@ var IIPMooViewer = new Class({
     // And reposition the navigation window
     if( this.showNavWindow ){
       var navcontainer = this.container.getElement('div.navcontainer');
-      //MEDICI ARCHIVE PROJECT START
-      if(navcontainer && this.navWinPos == 'left') navcontainer.setStyles({
-    	  top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-    	  left: '0px'		  
-      });
-      else navcontainer.setStyles({
-    		top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-    		left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
-      });
+    //MEDICI ARCHIVE PROJECT START
+    if(navcontainer && this.navWinPos == 'left')  {
+        navcontainer.setStyles({
+            top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+            left: '0px'		  
+        });
+    } else {
+        navcontainer.setStyles({
+    	    top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+            left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+        });
+    }
 //      if( navcontainer ) navcontainer.setStyles({
 //	top: (Browser.Platform.ios&&window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
 //	left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
 //      });
-      //MEDICI ARCHIVE PROJECT END
+    //MEDICI ARCHIVE PROJECT END
 
       // Resize our navigation window div
-      if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h);
+      if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h );
     }
 
     // Reset and reposition our scale
@@ -1937,6 +1943,7 @@ var IIPMooViewer = new Class({
 
   },
 
+
   /* Constrain the movement of our canvas to our containing div
    */
   constrain: function(){
@@ -1959,14 +1966,14 @@ var IIPMooViewer = new Class({
     if( pleft < 0 ) pleft = 0;
 
     var ptop = (this.view.y/this.hei) * (this.navWin.h);
-    if( ptop > this.navWin.h) ptop = this.navWin.h;
+    if( ptop > this.navWin.h ) ptop = this.navWin.h;
     if( ptop < 0 ) ptop = 0;
 
     var width = (this.view.w/this.wid) * (this.navWin.w);
     if( pleft+width > this.navWin.w ) width = this.navWin.w - pleft;
 
     var height = (this.view.h/this.hei) * (this.navWin.h);
-    if( height+ptop > this.navWin.h) height = this.navWin.h - ptop;
+    if( height+ptop > this.navWin.h ) height = this.navWin.h - ptop;
 
     var border = this.zone.offsetHeight - this.zone.clientHeight;
 
@@ -1983,6 +1990,7 @@ var IIPMooViewer = new Class({
 
   }
 });
+
 
 /* Static function for synchronizing iipmooviewer instances
  */
@@ -2006,3 +2014,8 @@ IIPMooViewer.windows = function(s){
  */
 if( Browser.ie && Browser.version<9 ) Browser.buggy = true;
 else Browser.buggy = false;
+
+
+/* Setup our list of protocol objects
+ */
+var Protocols = {};

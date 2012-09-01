@@ -1,18 +1,18 @@
 /* IIP Protocol Handler
  */
 
-var IIP = new Class({
+Protocols.IIP = new Class({
 
   /* Return metadata URL
    */
-  getMetaDataURL: function(image){
-    return "FIF=" + image + "&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number";
+  getMetaDataURL: function(server,image){
+    return server+"?FIF=" + image + "&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number";
   },
 
   /* Return an individual tile request URL
    */
   getTileURL: function(server,image,resolution,sds,contrast,k,x,y){
-    return server+"?FIF="+image+"&CNT="+contrast+"&SDS="+sds+"&JTL="+resolution+"," + k + "&x=" + x + "&y=" + y;	
+    return server+"?FIF="+image+"&CNT="+contrast+"&SDS="+sds+"&JTL="+resolution+"," + k + "&x=" + x + "&y=" + y + "&";
   },
 
   /* Parse an IIP protocol metadata request
@@ -39,9 +39,17 @@ var IIP = new Class({
 
   /* Return URL for a full view
    */
-  getRegionURL: function(image,x,y,w,h){
-    var rgn = x + ',' + y + ',' + w + ',' + h;
-    return '?FIF='+image+'&WID='+w+'&RGN='+rgn+'&CVT=jpeg';
+  getRegionURL: function(server,image,region,width){
+    var rgn = region.x + ',' + region.y + ',' + region.w + ',' + region.h;
+    return server+'?FIF='+image+'&WID='+width+'&RGN='+rgn+'&CVT=jpeg';
+  },
+
+  /* Return thumbnail URL
+   */
+  getThumbnailURL: function(server,image,width){
+    return server+'?FIF='+image+'&WID='+width+'&QLT=98&CVT=jpeg';
   }
 
 });
+
+

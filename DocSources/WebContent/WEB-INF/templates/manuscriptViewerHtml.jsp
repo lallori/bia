@@ -37,8 +37,10 @@ Joana Amill <joana.amill@gmail.com>
 		<title>BIA Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
-  		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"/></script>
-  		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"/></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/annotations.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/annotations-edit.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/lang/help.en.js"/>"/></script>
 		
 		<!-- jquery dialog -->
