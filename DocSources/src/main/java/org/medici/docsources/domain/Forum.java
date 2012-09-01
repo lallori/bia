@@ -114,6 +114,9 @@ public class Forum implements Serializable {
 	@JoinColumn(name="\"imageId\"", nullable=true)
 	private Image image;
 
+	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean logicalDelete;
+
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"forumId\"", nullable=true)
 	private ForumOption option;
@@ -424,6 +427,14 @@ public class Forum implements Serializable {
 
 	public Image getImage() {
 		return image;
+	}
+
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**

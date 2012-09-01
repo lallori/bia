@@ -126,28 +126,27 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value = "/community/DeletePost", method = RequestMethod.POST)
-	public ModelAndView deleteForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
+	public ModelAndView deleteForumPost(@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="topicId", required=false) Integer topicId,
 										HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
+		ForumTopic forumTopic = null;
 		try{
-			ForumPost postToDelete = getCommunityService().findPost(postId);
-			if(!getCommunityService().ifPostIsParent(postId)){
-				getCommunityService().deleteForumPost(postId);
-				model.put("topicId", topicId);
-				model.put("postId", postId);
-				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(postToDelete.getTopic())); 
-				model.put("operation", "OK");
-			}else{
-				model.put("operation", "KO");
-				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(postToDelete.getTopic()));
-			}
+			getCommunityService().deleteForumPost(postId);
+			forumTopic = getCommunityService().getForumTopic(new ForumTopic(topicId));
+			model.put("topicId", topicId);
+			model.put("postId", postId);
+			model.put("operation", "OK");
 
 			return new ModelAndView("responseOK", model);		
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
+			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
+		} finally {
+			if (forumTopic != null){
+				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumTopic));
+			}
 		}
 	}
 

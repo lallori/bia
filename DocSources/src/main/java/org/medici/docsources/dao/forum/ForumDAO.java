@@ -245,12 +245,4 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param parentForum
-	 * @param forumPost
-	 * @throws PersistenceException
-	 */
-	public void recursiveSetLastPost(Forum parentForum, ForumPost forumPost) throws PersistenceException;
 }

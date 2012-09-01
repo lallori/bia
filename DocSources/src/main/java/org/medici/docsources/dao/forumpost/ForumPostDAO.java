@@ -32,6 +32,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;
 
@@ -45,12 +46,36 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 
 	/**
 	 * 
+	 * @param topicId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param postId
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException;
-	
+
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forumTopic
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException;
+
 	/**
 	 * Returns list of posts on a specific topic.
 	 * 
@@ -60,12 +85,4 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param topicId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
 }

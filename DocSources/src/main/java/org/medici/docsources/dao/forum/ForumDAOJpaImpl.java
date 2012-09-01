@@ -661,19 +661,4 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		
 		recursiveIncreaseTopicsNumber(forum.getForumParent());
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws PersistenceException {
-		if(forum.getType().equals(Type.CATEGORY)){
-			return;
-		}
-		
-		forum.setLastPost(forumPost);
-		merge(forum);
-		
-		recursiveSetLastPost(forum.getForumParent(), forumPost);
-	}
 }

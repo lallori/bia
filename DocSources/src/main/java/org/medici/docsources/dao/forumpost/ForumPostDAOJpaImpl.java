@@ -40,6 +40,7 @@ import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.util.PageUtils;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;
 import org.springframework.stereotype.Repository;
@@ -83,8 +84,39 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {
+		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false order by dateCreated asc";
+
+		if (topicId == null) {
+			return null;
+		}
+		
+		Query query = null;
+		logger.debug("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("topicId", topicId);
+
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM ForumPost WHERE parentPost.postId=:postId");
+		Query query = getEntityManager().createQuery("FROM ForumPost WHERE parentPost.postId=:postId AND logicalDelete=false ");
 		query.setParameter("postId", postId);
 		
 		List<ForumPost> result = query.getResultList();
@@ -93,7 +125,53 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		else
 			return Boolean.FALSE;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException {
+		String jpql = "FROM ForumPost  WHERE topic.forum.forumId = :forumId AND logicalDelete=false order by dateCreated desc";
+		
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("forumId", forum.getForumId());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException {
+		String jpql = "FROM ForumPost  WHERE topic.topicId = :topicId AND logicalDelete=false order by dateCreated desc";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("topicId", forumTopic.getTopicId());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -101,7 +179,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	@Override
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId ";
+		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false ";
 
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
@@ -156,37 +234,6 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		return page;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {
-		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId order by dateCreated asc";
-
-		if (topicId == null) {
-			return null;
-		}
-		
-		Query query = null;
-		logger.debug("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", topicId);
-
-        // We set pagination  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */

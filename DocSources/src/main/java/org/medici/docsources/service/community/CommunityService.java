@@ -30,6 +30,8 @@ package org.medici.docsources.service.community;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
@@ -273,4 +275,5 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
 }

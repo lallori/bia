@@ -88,6 +88,9 @@ public class ForumPost implements Serializable {
 	@Column (name="\"replyNumber\"")
 	private Integer replyNumber;
 
+	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean logicalDelete;
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"annotationId\"", nullable=true)
 	private Annotation annotation;
@@ -249,6 +252,14 @@ public class ForumPost implements Serializable {
 	 */
 	public Integer getReplyNumber() {
 		return replyNumber;
+	}
+
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	public void setAnnotation(Annotation annotation) {

@@ -111,6 +111,7 @@ public class CommunityServiceImpl implements CommunityService {
 			parentForum = getForumDAO().find(parentForum.getForumId());
 			
 			forum.setForumParent(parentForum);
+			forum.setLogicalDelete(Boolean.TRUE);
 
 			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			
@@ -130,6 +131,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
 			forumPost.setPostId(null);
+			forumPost.setLogicalDelete(Boolean.TRUE);
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
@@ -165,7 +167,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
 
-			getForumDAO().recursiveSetLastPost(forum, forumPost);
+			recursiveSetLastPost(forum, forumPost);
 //			forum.setLastPost(forumPost);
 //			getForumDAO().merge(forum);
 			
@@ -185,6 +187,36 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+		
+		forum.setLastPost(forumPost);
+		getForumDAO().merge(forum);
+		
+		recursiveSetLastPost(forum.getForumParent(), forumPost);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+
+		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
+		forum.setLastPost(lastPost);
+		getForumDAO().merge(forum);
+
+		recursiveSetLastPost(forum.getForumParent(), lastPost);
+	}
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -210,11 +242,23 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteForumPost(Integer postId) throws ApplicationThrowable {
 		try{
 			ForumPost forumPost = getForumPostDAO().find(postId);
-			getForumPostDAO().remove(forumPost);
+			Forum forum = forumPost.getForum();
+			ForumTopic forumTopic = forumPost.getTopic(); 
+			forumPost.setLogicalDelete(new Boolean(Boolean.TRUE));
+
+			getForumPostDAO().merge(forumPost);
+
+			ForumPost lastPost = getForumPostDAO().findLastPostFromForumTopic(forumTopic);
+			forumTopic.setLastPost(lastPost);
+			forumTopic.setTotalReplies(forumTopic.getTotalReplies()-1);
+			getForumTopicDAO().merge(forumTopic);
+			
+			recursiveSetLastPost(forum);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -234,6 +278,8 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
+
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {

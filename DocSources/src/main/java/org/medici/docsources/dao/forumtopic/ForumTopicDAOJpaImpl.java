@@ -84,7 +84,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	@Override
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumTopic WHERE topicId = :topicId ";
+		String queryString = "FROM ForumTopic WHERE topicId = :topicId AND logicalDelete=false ";
 
 		if (forumTopic == null) {
 			return null;
@@ -112,7 +112,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page findForumTopics(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
-		String queryString = "FROM ForumTopic WHERE forum.forumId = :forumId ";
+		String queryString = "FROM ForumTopic WHERE forum.forumId = :forumId AND logicalDelete=false ";
 
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);

@@ -110,6 +110,10 @@ public class ForumTopic implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"imageId\"", nullable=true)
 	private Image image;
+
+	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean logicalDelete;
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"annotationId\"", nullable=true)
 	private Annotation annotation;
@@ -165,6 +169,22 @@ public class ForumTopic implements Serializable {
 	 */
 	public Forum getForum() {
 		return forum;
+	}
+
+	public void setTotalViews(Integer totalViews) {
+		this.totalViews = totalViews;
+	}
+
+	public Integer getTotalViews() {
+		return totalViews;
+	}
+
+	public void setTotalReplies(Integer totalReplies) {
+		this.totalReplies = totalReplies;
+	}
+
+	public Integer getTotalReplies() {
+		return totalReplies;
 	}
 
 	/**
@@ -242,20 +262,6 @@ public class ForumTopic implements Serializable {
 	 */
 	public Integer getTopicId() {
 		return topicId;
-	}
-
-	/**
-	 * @return the totalReplies
-	 */
-	public int getTotalReplies() {
-		return totalReplies;
-	}
-
-	/**
-	 * @return the totalViews
-	 */
-	public int getTotalViews() {
-		return totalViews;
 	}
 
 	/**
@@ -410,34 +416,6 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @param totalReplies the totalReplies to set
-	 */
-	public void setTotalReplies(int totalReplies) {
-		this.totalReplies = totalReplies;
-	}
-
-	/**
-	 * @param totalReplies the totalReplies to set
-	 */
-	public void setTotalReplies(Integer totalReplies) {
-		this.totalReplies = totalReplies;
-	}
-
-	/**
-	 * @param totalViews the totalViews to set
-	 */
-	public void setTotalViews(int totalViews) {
-		this.totalViews = totalViews;
-	}
-
-	/**
-	 * @param totalViews the totalViews to set
-	 */
-	public void setTotalViews(Integer totalViews) {
-		this.totalViews = totalViews;
-	}
-
-	/**
 	 * @param type the type to set
 	 */
 	public void setType(Type type) {
@@ -477,6 +455,15 @@ public class ForumTopic implements Serializable {
 		stringBuilder.append("]");
 
 		return stringBuilder.toString();
+	}
+
+
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 
