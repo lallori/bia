@@ -61,7 +61,7 @@ public class AccessLog implements Serializable {
 	private String ipAddress;
 	@Column (name="\"username\"", length=50, nullable=false)
 	private String username;
-	@Column (name="\"authorities\"", length=50)
+	@Column (name="\"authorities\"", length=500)
 	private String authorities;
 	@Column (name="\"httpMethod\"", length=8, nullable=false)
 	private String httpMethod;
