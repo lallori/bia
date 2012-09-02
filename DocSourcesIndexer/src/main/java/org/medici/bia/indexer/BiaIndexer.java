@@ -1,5 +1,5 @@
 /*
- * DocSourcesIndexer.java
+ * BiaIndexer.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -42,9 +42,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
-public class DocSourcesIndexer {
+public class BiaIndexer {
 
-	private static Logger logger = Logger.getLogger(DocSourcesIndexer.class);
+	private static Logger logger = Logger.getLogger(BiaIndexer.class);
 	
 	public static void main(String[] args) {
 		if ((args ==null) || (args.length != 2)) {
@@ -52,7 +52,7 @@ public class DocSourcesIndexer {
 			return;
 		} 
 		
-		DocSourcesIndexer docSourcesIndexer = new DocSourcesIndexer();
+		BiaIndexer docSourcesIndexer = new BiaIndexer();
 		
     	ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationIndexer.xml");   
 
