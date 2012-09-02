@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-    <context:component-scan base-package="org.medici.docsources.scheduler"/>
+    <context:component-scan base-package="org.medici.bia.scheduler"/>
     
    	<task:annotation-driven scheduler="applicationSchedulers" />
 	
@@ -39,10 +39,10 @@
     	<constructor-arg value="${mail.from}"/>
     </bean>
 
-	<bean id="activationUserEmailJob" class="org.medici.docsources.scheduler.ActivationUserEmailJob"/>
+	<bean id="activationUserEmailJob" class="org.medici.bia.scheduler.ActivationUserEmailJob"/>
 
-	<bean id="resetUserPasswordEmailJob" class="org.medici.docsources.scheduler.ResetUserPasswordEmailJob"/>
+	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
 
-	<bean id="checkDigitizedVolumeJob" class="org.medici.docsources.scheduler.CheckDigitizedVolumeJob"/>
+	<bean id="checkDigitizedVolumeJob" class="org.medici.bia.scheduler.CheckDigitizedVolumeJob"/>
 
 </beans>

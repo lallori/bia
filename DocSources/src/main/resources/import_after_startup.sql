@@ -47,14 +47,14 @@ INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `can
 INSERT INTO `docsources`.`tblForumOption` (`forumId`, `canHaveSubCategory`, `canHaveSubForum`, `canHaveTopics`, `canDeletePosts`, `canDeleteTopics`, `canDownloadAttachments`, `canEditPosts`, `canOnlyViewOwnTopics`, `canPostAttachments`, `canPostReplys`, `canRateTopics`, `canView`) VALUES (12, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1);
 
 -- Users Authority
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('ADMINISTRATORS', 1);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('DIGITIZATION_COORDINATORS', 2);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('COMMUNITY_COORDINATORS', 3);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('DISTANCE_FELLOWS_COORDINATORS', 4);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('SENIOR_DISTANCE_FELLOWS', 5);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('FORMER_FELLOWS', 6);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('DISTANCE_FELLOWS', 7);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('ONSITE_FELLOWS', 8);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('DIGITIZATION_TECHNICIANS', 9);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('COMMUNITY_USERS', 10);
-INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`) VALUES ('GUESTS', 11);
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `description`) VALUES ('ADMINISTRATORS', 1, 'Administrators' );
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('DIGITIZATION_COORDINATORS', 2, 'Digitization Coordinators' );
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('COMMUNITY_COORDINATORS', 3, 'Community Coordinators');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('DISTANCE_FELLOWS_COORDINATORS', 4, 'Distance Fellows Coordinators');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('SENIOR_DISTANCE_FELLOWS', 5, 'Senior Distance Fellows');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('FORMER_FELLOWS', 6, 'Former Fellows');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('DISTANCE_FELLOWS', 7, 'Distance Fellows');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('ONSITE_FELLOWS', 8, 'Onsite Fellows');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('DIGITIZATION_TECHNICIANS', 9, 'Digitization Technicians');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('COMMUNITY_USERS', 10, 'Community Users');
+INSERT INTO `docsources`.`tblUserAuthority` (`authority`, `priority`, `descritpion`) VALUES ('GUESTS', 11, 'Guests');

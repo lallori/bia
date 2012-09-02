@@ -61,16 +61,16 @@
 
     </security:http>
  
- 	<bean id="loginSuccessHandler" class="org.medici.docsources.security.BiaAuthenticationSuccessHandler">
+ 	<bean id="loginSuccessHandler" class="org.medici.bia.security.BiaAuthenticationSuccessHandler">
  		<property name="defaultTargetUrl" value="/Home.do"/>
  		<property name="changeExpiratedUserPasswordUrl" value="/user/ChangeExpiratedUserPassword.do"/>
  	</bean>
  	
- 	<bean id="loginFailureHandler" class="org.medici.docsources.security.BiaAuthenticationFailureHandler">
+ 	<bean id="loginFailureHandler" class="org.medici.bia.security.BiaAuthenticationFailureHandler">
  		<property name="failureUrl" value="/LoginUser.do?login_error=1"/>
  	</bean>
  	
- 	<bean id="logoutSuccessHandler" class="org.medici.docsources.security.BiaLogoutSuccessHandler">
+ 	<bean id="logoutSuccessHandler" class="org.medici.bia.security.BiaLogoutSuccessHandler">
  		<property name="defaultTargetUrl" value="/LoginUser.do"/>
  	</bean>
 
@@ -105,12 +105,12 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<bean id="daoAuthenticationProvider" class="org.medici.docsources.security.BiaDaoAuthenticationProvider">
+	<bean id="daoAuthenticationProvider" class="org.medici.bia.security.BiaDaoAuthenticationProvider">
 	  <property name="userDetailsService" ref="userDetailsService"/>
 	  <property name="passwordEncoder" ref="passwordEncoder"/>
 	</bean>
 
-   	<bean id="userDetailsService" class="org.medici.docsources.security.BiaJpaUserDetailsServiceImpl">
+   	<bean id="userDetailsService" class="org.medici.bia.security.BiaJpaUserDetailsServiceImpl">
    	</bean>
 
 <!--
@@ -185,7 +185,7 @@
    		<property name="userDetailsContextMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-	<bean id="ldapAuthoritiesPopulator" class="org.medici.docsources.security.BiaAuthoritiesPopulator">
+	<bean id="ldapAuthoritiesPopulator" class="org.medici.bia.security.BiaAuthoritiesPopulator">
 		<constructor-arg ref="contextSource"/>
 		<constructor-arg value="ou=Groups"/>
 		<property name="groupRoleAttribute" value="cn"/>
@@ -205,14 +205,14 @@
    		<property name="userDetailsMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-   	<bean id="ldapUserDetailsMapper" class="org.medici.docsources.security.BiaLdapUserDetailsMapper"/>
+   	<bean id="ldapUserDetailsMapper" class="org.medici.bia.security.BiaLdapUserDetailsMapper"/>
 
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
 		<constructor-arg ref="contextSource" />
 		<property name="ignorePartialResultException" value="true"/>
 	</bean>
 
-	<bean id="biaLdapConfiguration" class="org.medici.docsources.security.BiaLdapConfiguration">
+	<bean id="biaLdapConfiguration" class="org.medici.bia.security.BiaLdapConfiguration">
 		<property name="baseDN" value="dc=docsources,dc=medici,dc=org"/>
 		<property name="usersDN" value="ou=Users"/>
 		<property name="userAttribute" value="cn"></property>
