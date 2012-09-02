@@ -30,8 +30,8 @@ package org.medici.bia.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.medici.docsources.common.util.LdapUtils;
-import org.medici.docsources.common.util.UserRoleUtils;
+import org.medici.bia.common.util.LdapUtils;
+import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserAuthority.Authority;
 import org.medici.docsources.domain.UserRole;

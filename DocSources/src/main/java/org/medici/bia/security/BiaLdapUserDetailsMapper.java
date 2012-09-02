@@ -36,7 +36,7 @@ import javax.persistence.PersistenceException;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

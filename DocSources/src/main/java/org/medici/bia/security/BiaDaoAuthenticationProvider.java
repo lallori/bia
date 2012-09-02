@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

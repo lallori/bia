@@ -34,7 +34,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.util.UserRoleUtils;
+import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userrole.UserRoleDAO;
 import org.medici.docsources.domain.User;
