@@ -31,9 +31,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

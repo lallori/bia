@@ -31,11 +31,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.peoplebase.ShowPersonRequestCommand;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

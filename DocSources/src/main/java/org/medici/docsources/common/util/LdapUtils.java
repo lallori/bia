@@ -29,8 +29,8 @@ package org.medici.docsources.common.util;
 
 import javax.naming.Name;
 
+import org.medici.bia.security.LdapConfiguration;
 import org.medici.docsources.domain.UserAuthority;
-import org.medici.docsources.security.LdapConfiguration;
 import org.springframework.ldap.core.DistinguishedName;
 
 /**

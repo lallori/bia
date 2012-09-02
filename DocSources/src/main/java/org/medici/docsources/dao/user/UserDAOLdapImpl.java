@@ -41,6 +41,7 @@ import javax.imageio.ImageIO;
 import javax.naming.Name;
 
 import org.apache.log4j.Logger;
+import org.medici.bia.security.LdapConfiguration;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.LdapUtils;
@@ -48,7 +49,6 @@ import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;
-import org.medici.docsources.security.LdapConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ldap.NameNotFoundException;

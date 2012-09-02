@@ -30,9 +30,9 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.geobase.CreatePlaceCommand;
 import org.medici.docsources.domain.Place;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

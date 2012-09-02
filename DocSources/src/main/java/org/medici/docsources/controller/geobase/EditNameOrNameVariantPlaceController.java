@@ -32,10 +32,10 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.geobase.EditNameOrNameVariantPlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

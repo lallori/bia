@@ -31,8 +31,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

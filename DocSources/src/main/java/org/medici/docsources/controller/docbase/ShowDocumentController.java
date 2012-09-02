@@ -31,13 +31,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;

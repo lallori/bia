@@ -37,6 +37,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Marriage;
@@ -44,7 +45,6 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

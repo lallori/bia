@@ -31,11 +31,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.volbase.PrintVolumeRequestCommand;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.BiaUserDetailsImpl;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
