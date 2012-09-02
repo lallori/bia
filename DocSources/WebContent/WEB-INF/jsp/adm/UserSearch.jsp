@@ -44,14 +44,16 @@
 					tabExist = true;
 			});
 			if(!tabExist){
-				$j( "#tabs" ).tabs( "add" , formSubmitURL, title + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs( "add" , formSubmitURL, title + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
-			}else{
-				$j("#tabs").tabs("select", numTab-1);
-				$j("#tabs").tabs("url", numTab - 1, formSubmitURL);
-				
-				$j("#tabs").tabs("load", numTab - 1);
+			} else {
+				$j("#tabs").tabs("select", numTab-2);
+				$j("#tabs").tabs("url", numTab-2, formSubmitURL);
+
+				console.log(" tabs ->" + (numTab-1) + " url ->" + formSubmitURL);
+
+				$j("#tabs").tabs("load", numTab-2);
 				return false;
 			}
 		});
