@@ -44,7 +44,7 @@
 			<div class="value">&nbsp;</div> 
 			<c:forEach items="${user.userRoles}" var="currentRole">
 				<div class="item37">&nbsp;</div>
-				<div class="value">${currentRole}</div>
+				<div class="value">${currentRole.userAuthority.description}</div>
 			</c:forEach>			
 		</div>
 		<div class="row">
