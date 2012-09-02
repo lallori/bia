@@ -34,9 +34,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.medici.docsources.domain.User;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.user.UserService;
+import org.medici.bia.domain.User;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

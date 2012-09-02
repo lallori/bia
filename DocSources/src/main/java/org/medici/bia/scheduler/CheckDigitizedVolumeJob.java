@@ -30,8 +30,8 @@ package org.medici.bia.scheduler;
 import java.util.List;
 
 import org.apache.log4j.MDC;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;

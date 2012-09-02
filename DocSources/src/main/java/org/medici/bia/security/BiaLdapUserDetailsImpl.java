@@ -32,9 +32,9 @@ import java.util.List;
 
 import org.medici.bia.common.util.LdapUtils;
 import org.medici.bia.common.util.UserRoleUtils;
-import org.medici.docsources.domain.UserAuthority;
-import org.medici.docsources.domain.UserAuthority.Authority;
-import org.medici.docsources.domain.UserRole;
+import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 

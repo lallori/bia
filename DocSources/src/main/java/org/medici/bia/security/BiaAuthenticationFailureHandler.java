@@ -33,7 +33,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.medici.docsources.dao.user.UserDAO;
+import org.medici.bia.dao.user.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

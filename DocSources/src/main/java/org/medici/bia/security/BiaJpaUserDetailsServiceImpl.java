@@ -35,10 +35,10 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.util.UserRoleUtils;
-import org.medici.docsources.dao.user.UserDAO;
-import org.medici.docsources.dao.userrole.UserRoleDAO;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.UserRole;
+import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userrole.UserRoleDAO;
+import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;

@@ -30,9 +30,9 @@ package org.medici.bia.scheduler;
 import java.util.List;
 
 import org.apache.log4j.MDC;
-import org.medici.docsources.domain.PasswordChangeRequest;
-import org.medici.docsources.service.mail.MailService;
-import org.medici.docsources.service.user.UserService;
+import org.medici.bia.domain.PasswordChangeRequest;
+import org.medici.bia.service.mail.MailService;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;

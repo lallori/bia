@@ -32,8 +32,8 @@ import java.util.Date;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.docsources.dao.user.UserDAO;
-import org.medici.docsources.domain.User;
+import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
