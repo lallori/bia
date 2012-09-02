@@ -136,7 +136,7 @@
 					</archive>
 					<warSourceDirectory>WebContent/</warSourceDirectory>
 					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
-					<warName>Bia</warName>
+					<warName>DocSources</warName>
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
