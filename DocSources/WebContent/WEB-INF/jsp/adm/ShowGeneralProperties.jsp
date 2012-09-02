@@ -18,7 +18,6 @@
 			<div class="item">Website domain</div> 
 			<div class="value60">${fn2:getApplicationProperty("website.domain")}</div>
 		</div> 
-		</div>
         <div class="row">
 			<div class="item">Images Path</div> 
 			<div class="value60">${fn2:getApplicationProperty("iipimage.image.path")}</div>

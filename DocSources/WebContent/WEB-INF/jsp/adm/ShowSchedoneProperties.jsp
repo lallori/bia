@@ -16,12 +16,11 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Istituto</div> 
-			<div class="value60">${fn2:getApplicationProperty:getApplicationProperty('schedone.istituto');
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.istituto')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Fondo</div> 
-			<div class="value60">${fn2:getApplicationProperty:getApplicationProperty('schedone.fondo')}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.fondo')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Legatura</div> 
@@ -37,7 +36,7 @@
 		</div>
 		<div class="row">
 			<div class="item">Schema colore immagini</div> 
-			<div class="value60">getApplicationProperty:getApplicationProperty("schedone.coloreImmagine")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.coloreImmagine')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Nome files</div> 
