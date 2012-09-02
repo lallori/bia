@@ -57,10 +57,10 @@ import org.hibernate.search.Search;
 import org.hibernate.search.SearchFactory;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.PaginationFilter.Order;
-import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter.Order;
+import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
@@ -592,7 +592,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page search(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page search(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
@@ -635,7 +635,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * 
 	 */
 	@Override
-	public Page searchMYSQL(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchMYSQL(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
@@ -683,7 +683,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * 
 	 */
 	@Override
-	public Long countSearchMYSQL(org.medici.docsources.common.search.Search searchContainer) throws PersistenceException {
+	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException {
 		//if search Container is empty, is unable to execute count!
 		if (searchContainer.isEmpty()) {
 			return new Long(0);

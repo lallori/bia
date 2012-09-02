@@ -32,9 +32,9 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
 
 /**
  * 
@@ -53,7 +53,7 @@ public interface Dao<K, E> extends Serializable {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countSearchMYSQL(org.medici.docsources.common.search.Search searchContainer) throws PersistenceException;
+	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException;
 	
 	/**
 	 * 

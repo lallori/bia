@@ -31,10 +31,10 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.TitleOccsList;
 

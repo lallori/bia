@@ -41,10 +41,10 @@ import javax.imageio.ImageIO;
 import javax.naming.Name;
 
 import org.apache.log4j.Logger;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.util.LdapUtils;
 import org.medici.bia.security.LdapConfiguration;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.util.LdapUtils;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserAuthority;
 import org.medici.docsources.domain.UserRole;

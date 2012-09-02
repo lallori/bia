@@ -33,10 +33,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.PaginationFilter.Order;
-import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter.Order;
+import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;

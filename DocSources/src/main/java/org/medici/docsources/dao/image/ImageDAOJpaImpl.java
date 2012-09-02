@@ -40,14 +40,14 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.DocumentExplorer;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.VolumeExplorer;
-import org.medici.docsources.common.util.DocumentUtils;
-import org.medici.docsources.common.util.ImageUtils;
-import org.medici.docsources.common.util.VolumeUtils;
-import org.medici.docsources.common.volume.FoliosInformations;
+import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.util.DocumentUtils;
+import org.medici.bia.common.util.ImageUtils;
+import org.medici.bia.common.util.VolumeUtils;
+import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -793,7 +793,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 	/**
 	 * This method updates every totals in input 
-	 * {@link org.medici.docsources.common.pagination.DocumentExplorer}.
+	 * {@link org.medici.bia.common.pagination.DocumentExplorer}.
 	 * 
 	 * @param documentExplorer DocumentExplorer input object to be update.
 	 */
@@ -877,7 +877,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 	/**
 	 * This method updates every totals in input 
-	 * {@link org.medici.docsources.common.pagination.VolumeExplorer}.
+	 * {@link org.medici.bia.common.pagination.VolumeExplorer}.
 	 * 
 	 * @param volumeExplorer VolumeExplorer input object to be update.
 	 */

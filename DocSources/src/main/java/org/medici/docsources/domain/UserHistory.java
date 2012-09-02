@@ -43,7 +43,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.medici.docsources.common.search.Search;
+import org.medici.bia.common.search.Search;
 
 /**
  * UserHistory entity.

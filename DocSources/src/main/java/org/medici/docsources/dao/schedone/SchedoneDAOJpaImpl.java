@@ -33,7 +33,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Schedone;
 import org.springframework.stereotype.Repository;

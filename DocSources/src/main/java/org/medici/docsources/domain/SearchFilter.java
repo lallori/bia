@@ -44,8 +44,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
+
+import org.medici.bia.common.search.AdvancedSearch;
+import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 
 /**
  * SearchFilter entity.

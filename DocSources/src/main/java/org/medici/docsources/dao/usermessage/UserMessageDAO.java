@@ -31,9 +31,9 @@ import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.UserMessage;
 

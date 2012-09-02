@@ -31,9 +31,9 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.TopicList;
 
@@ -72,7 +72,7 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;
 
 	/**
-	 * This method searches topics which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * This method searches topics which contains the parameters set in {@link org.medici.bia.common.search}
 	 * object and return a result page.
 	 * 
 	 * @param searchContainer

@@ -30,11 +30,11 @@ package org.medici.docsources.dao.image;
 import java.util.List;
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.DocumentExplorer;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.VolumeExplorer;
-import org.medici.docsources.common.volume.FoliosInformations;
+import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;

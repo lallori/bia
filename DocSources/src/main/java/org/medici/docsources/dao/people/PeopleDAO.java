@@ -33,9 +33,9 @@ import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
 
@@ -189,7 +189,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchMotherLinkableToPerson(String query) throws PersistenceException;
 	
 	/**
-	 * This method searches for person entities which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * This method searches for person entities which contains the parameters set in {@link org.medici.bia.common.search}
 	 * object and return a result page.
 	 * 
 	 * @param searchContainer

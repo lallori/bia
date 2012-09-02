@@ -31,8 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;

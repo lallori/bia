@@ -49,12 +49,12 @@ import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.PaginationFilter.Order;
-import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
-import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
-import org.medici.docsources.common.util.RegExUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter.Order;
+import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
+import org.medici.bia.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.TitleOccsList;
 import org.springframework.stereotype.Repository;
@@ -107,7 +107,7 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchTitleOrOccupation(org.medici.docsources.common.search.Search searchContainer,	PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchTitleOrOccupation(org.medici.bia.common.search.Search searchContainer,	PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		

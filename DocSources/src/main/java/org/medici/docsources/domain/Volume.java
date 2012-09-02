@@ -74,7 +74,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
-import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.bia.common.util.VolumeUtils;
 
 /**
  * Volume entity.
