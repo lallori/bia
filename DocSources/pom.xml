@@ -136,7 +136,7 @@
 					</archive>
 					<warSourceDirectory>WebContent/</warSourceDirectory>
 					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
-					<warName>DocSources</warName>
+					<warName>Bia</warName>
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
@@ -186,51 +186,51 @@
 					<groups>
 						<group>
 							<title>Auditing services</title>
-							<packages>org.medici.docsources.audit</packages>
+							<packages>org.medici.bia.audit</packages>
 						</group>
 						<group>
 							<title>Command Beans</title>
-							<packages>org.medici.docsources.command.*</packages>
+							<packages>org.medici.bia.command.*</packages>
 						</group>
 						<group>
 							<title>Controllers</title>
-							<packages>org.medici.docsources.controller.*</packages>
+							<packages>org.medici.bia.controller.*</packages>
 						</group>
 						<group>
 							<title>Data Access Objects</title>
-							<packages>org.medici.docsources.dao.*</packages>
+							<packages>org.medici.bia.dao.*</packages>
 						</group>
 						<group>
 							<title>Domain Objects</title>
-							<packages>org.medici.docsources.domain.*</packages>
+							<packages>org.medici.bia.domain.*</packages>
 						</group>
 						<group>
 							<title>Data Transfer Objects</title>
-							<packages>org.medici.docsources.dto.*</packages>
+							<packages>org.medici.bia.dto.*</packages>
 						</group>
 						<group>
 							<title>Application Exceptions</title>
-							<packages>org.medici.docsources.exception.*</packages>
+							<packages>org.medici.bia.exception.*</packages>
 						</group>
 						<group>
 							<title>Security Objects</title>
-							<packages>org.medici.docsources.security.*</packages>
+							<packages>org.medici.bia.security.*</packages>
 						</group>
 						<group>
 							<title>Service Objects</title>
-							<packages>org.medici.docsources.service.*</packages>
+							<packages>org.medici.bia.service.*</packages>
 						</group>
 						<group>
 							<title>Support Objects</title>
-							<packages>org.medici.docsources.support.*</packages>
+							<packages>org.medici.bia.support.*</packages>
 						</group>
 						<group>
 							<title>Utility Objects</title>
-							<packages>org.medici.docsources.util.*</packages>
+							<packages>org.medici.bia.util.*</packages>
 						</group>
 						<group>
 							<title>Validator Objects</title>
-							<packages>org.medici.docsources.validator.*</packages>
+							<packages>org.medici.bia.validator.*</packages>
 						</group>
 					</groups>
 				</configuration>
