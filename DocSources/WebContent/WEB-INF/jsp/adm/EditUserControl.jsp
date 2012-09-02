@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel">Group policies</label></div>
             <div class="col_r">
-            	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" itemValue="authority" itemLabel="authority" path="userRoles" delimiter="<br/>"/>
+            	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" itemValue="authority" itemLabel="description" path="userRoles" delimiter="<br/>"/>
             </div>
         </div>
     </div>

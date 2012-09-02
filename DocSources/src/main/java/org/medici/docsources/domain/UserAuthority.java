@@ -93,6 +93,9 @@ public class UserAuthority implements Serializable {
 	@Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @Column(name = "description", nullable=false)
+    private String description;
+
     @Column(name = "priority", nullable=false)
     private Integer priority;
     
@@ -126,6 +129,14 @@ public class UserAuthority implements Serializable {
     public void setAuthority(Authority authority) {
         this.authority = authority;
     }
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
