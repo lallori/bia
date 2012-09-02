@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/ShowHelp")
+@RequestMapping("/src/ShowHelp")
 public class ShowHelpModalWindowController {
 	/**
 	 * 
