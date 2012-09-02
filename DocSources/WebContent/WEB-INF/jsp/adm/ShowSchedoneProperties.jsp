@@ -16,82 +16,40 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Istituto</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("schedone.istituto");
+			<div class="value60">${fn2:getApplicationProperty:getApplicationProperty('schedone.istituto');
 })}</div> 
 		</div>
         <div class="row">
 			<div class="item">Fondo</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("schedone.fondo")}</div> 
+			<div class="value60">${fn2:getApplicationProperty:getApplicationProperty('schedone.fondo')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Legatura</div> 
-			<div class="value60">${16107public String _elExpressionorg.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("schedone.legatura");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.legatura')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Supporto</div> 
-			<div class="value60">${public String _elExpression()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(16108org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("schedone.supporto");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.supporto')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Digitization Type</div> 
-			<div class="value60">${org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("schedone.tipoRipresa");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.tipoRipresa')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Schema colore immagini</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(16110getApplicationProperty:getApplicationProperty("schedone.coloreImmagine")}</div> 
+			<div class="value60">getApplicationProperty:getApplicationProperty("schedone.coloreImmagine")}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Nome files</div> 
-			<div class="value60">${public String _elExpression()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("schedone.nomeFiles")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.nomeFiles')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Responsabile fotoriproduzione</div> 
-			<div class="value60">${org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("schedone.responsabileFotoRiproduzione")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.responsabileFotoRiproduzione')}</div> 
 		</div>
 		<div class="row">
 			<div class="item">Operatore</div> 
-			<div class="value60">${public String _elExpression16113org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('schedone.operatore')}</div> 
+			<div class="value60">${fn2:getApplicationProperty('schedone.operatore')}</div> 
 		</div>
 	</div>
 </div>

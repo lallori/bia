@@ -16,59 +16,19 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Activation message subject</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("mail.activationUser.subject")}</div>
+			<div class="value60">${fn2:getApplicationProperty('mail.activationUser.subject')}</div>
 		</div>
 		<div class="row">
 			<div class="item">Activation message text</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(public String _elExpressiongetApplicationProperty:getApplicationProperty("mail.activationUser.text")}</div>
+			<div class="value60">${fn2:getApplicationProperty('mail.activationUser.text')}</div>
 		</div>
         <div class="row">
 			<div class="item">Reset user password subject</div> 
-			<div class="value60">${16171()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("mail.resetUserPassword.subject");
-})}</div>
+			<div class="value60">${fn2:getApplicationProperty('mail.resetUserPassword.subject')}</div>
 		</div>
         <div class="row">
 			<div class="item">Reset user password text</div> 
-			<div class="value60">${public String _elExpression()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(16172org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('mail.resetUserPassword.text')}</div>
+			<div class="value60">${fn2:getApplicationProperty('mail.resetUserPassword.text')}</div>
 		</div>
 	</div>
 </div>

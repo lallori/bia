@@ -16,30 +16,15 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Expiration password, number of months :</div> 
-			<div class="value60">${org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("user.expiration.password.months");
-})}</div>
+			<div class="value60">${fn2:getApplicationProperty("user.expiration.password.months")}</div>
 		</div>
 		<div class="row">
 			<div class="item">Expiration user, number of  months :</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("user.expiration.user.months");
-})}</div>
+			<div class="value60">${fn2:getApplicationProperty("user.expiration.user.months")}</div>
 		</div>
         <div class="row">
 			<div class="item">Max Bad Login</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('user.maxBadLogin')}</div>
+			<div class="value60">${fn2:getApplicationProperty('user.maxBadLogin')}</div>
 		</div>
 	</div>
 </div>

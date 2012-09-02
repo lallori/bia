@@ -16,25 +16,12 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Website domain</div> 
-			<div class="value60">${org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("website.domain");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty("website.domain")}</div>
+		</div> 
 		</div>
         <div class="row">
 			<div class="item">Images Path</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(public String _elExpressionorg.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('iipimage.image.path')}</div> 
+			<div class="value60">${fn2:getApplicationProperty("iipimage.image.path")}</div>
 		</div>
 	</div>
 </div>

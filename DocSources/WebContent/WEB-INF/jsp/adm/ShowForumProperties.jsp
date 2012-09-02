@@ -16,34 +16,20 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Unique identifier for Document forum :</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("forum.identifier.document");
+			<div class="value60">${fn2getApplicationProperty:getApplicationProperty("forum.identifier.document");
 })}</div> 
 		</div>
         <div class="row">
 			<div class="item">Unique identifier for Place forum :</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("forum.identifier.place");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty("forum.identifier.place")}</div> 
 		</div>
         <div class="row">
 			<div class="item">Unique identifier for People forum :</div> 
-			<div class="value60">${public String _elExpression20728org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("forum.identifier.people")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('forum.identifier.people')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Unique identifier for Volume forum :</div> 
-			<div class="value60">${20729public String _elExpressionorg.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('forum.identifier.volume')}</div> 
+			<div class="value60">${fn2:getApplicationProperty('forum.identifier.volume')}</div> 
 		</div>
 	</div>
 </div>

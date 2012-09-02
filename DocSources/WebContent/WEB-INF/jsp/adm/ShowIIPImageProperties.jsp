@@ -17,38 +17,23 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Server fcgi-bin path</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("iipimage.reverseproxy.fcgi.path")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.fcgi.path')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Server host-name</div> 
-			<div class="value60">${getApplicationProperty:getApplicationProperty("iipimage.reverseproxy.host");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.host')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Server port</div> 
-			<div class="value60">${16147org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty("iipimage.reverseproxy.port");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.port')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Server protocol</div> 
-			<div class="value60">${()
-		throws java.io.IOException, javax.servlet.ServletException, javax.servlet.jsp.JspException {
-javax.servlet.jsp.PageContext pageContext = null;
-java.util.Map<String, String> param = null;
-java.util.Map<String, String[]> paramValues = null;
-java.util.Map<String, String> header = null;
-java.util.Map<String, String[]> headerValues = null;
-java.util.Map<String, javax.servlet.http.Cookie> cookie = null;
-java.util.Map<String, String> initParam = null;
-java.util.Map<String, Object> pageScope = null;
-java.util.Map<String, Object> requestScope = null;
-java.util.Map<String, Object> sessionScope = null;
-java.util.Map<String, Object> applicationScope = null;
-return ""+(16148getApplicationProperty:getApplicationProperty("iipimage.reverseproxy.protocol")}</div> 
+			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.protocol')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Server version</div> 
-			<div class="value60">${16149org.medici.bia.common.util.JSTLFunctions.:getApplicationProperty('iipimage.reverseproxy.version')}</div> 
+			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.version')}</div> 
 		</div>
 	</div>
 </div>
