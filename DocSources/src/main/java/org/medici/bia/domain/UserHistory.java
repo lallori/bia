@@ -101,7 +101,7 @@ public class UserHistory implements Serializable {
 	@Column (name="\"searchData\"", nullable=true)
 	@Lob
 	private Search searchData;
-	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean logicalDelete;
 	/**
 	 * Default Constructor
