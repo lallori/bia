@@ -65,13 +65,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
-	private final Logger logger = Logger.getLogger(this.getClass());
-
 	@Autowired
 	private AccessLogStatisticsDAO accessLogStatisticsDAO;
 
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private MonthDAO monthDAO;
@@ -80,16 +80,49 @@ public class AdminServiceImpl implements AdminService {
 	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
+
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
-
-	@Autowired
-	private UserAuthorityDAO userAuthorityDAO;
 	
 	@Autowired
 	private UserRoleDAO userRoleDAO;
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public User addNewUser(User user) throws ApplicationThrowable {
+		try{
+			User userToCreate = user; 
+			//userToUpdate.setAddress(user.getAddress());
+			//userToUpdate.setCity(user.getCity());
+			//userToUpdate.setCountry(user.getCountry());
+
+			userToCreate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+			getUserDAO().persist(userToCreate);
+
+			getUserRoleDAO().removeAllUserRoles(userToCreate.getAccount());
+			if (user.getUserRoles() != null) {
+				//We need before to attach jpa session..
+				for (UserRole userRole : user.getUserRoles()) {
+					userRole.setUser(userToCreate);
+					userRole.setUserAuthority(getUserAuthorityDAO().find(userRole.getUserAuthority().getAuthority()));
+				}
+				getUserRoleDAO().addAllUserRoles(user.getUserRoles());
+			}
+
+			userToCreate.setUserRoles(user.getUserRoles());
+			
+			return userToCreate;
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -122,7 +155,7 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void editUser(User user) throws ApplicationThrowable {
+	public User editUser(User user) throws ApplicationThrowable {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount()); 
 			//userToUpdate.setAddress(user.getAddress());
@@ -160,11 +193,13 @@ public class AdminServiceImpl implements AdminService {
 			
 			userToUpdate.setUserRoles(user.getUserRoles());
 			getUserDAO().merge(userToUpdate);
+			
+			return userToUpdate;
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -176,7 +211,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -188,7 +223,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -201,7 +236,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * @return the accessLogStatisticsDAO
 	 */
@@ -251,11 +286,26 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	/**
+	 * @return the userAuthorityDAO
+	 */
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+
 	/**
 	 * @return the userDAO
 	 */
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
 	}
 
 	/**
@@ -280,11 +330,26 @@ public class AdminServiceImpl implements AdminService {
 		this.monthDAO = monthDAO;
 	}
 
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	/**
+	 * @param userAuthorityDAO the userAuthorityDAO to set
+	 */
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+
 	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
 	}
 
 	/**
@@ -306,35 +371,5 @@ public class AdminServiceImpl implements AdminService {
 		}
 		// TODO Auto-generated method stub
 
-	}
-
-	/**
-	 * @return the userAuthorityDAO
-	 */
-	public UserAuthorityDAO getUserAuthorityDAO() {
-		return userAuthorityDAO;
-	}
-
-	/**
-	 * @param userAuthorityDAO the userAuthorityDAO to set
-	 */
-	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
-		this.userAuthorityDAO = userAuthorityDAO;
-	}
-
-	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-		this.userRoleDAO = userRoleDAO;
-	}
-
-	public UserRoleDAO getUserRoleDAO() {
-		return userRoleDAO;
-	}
-
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
 	}
 }

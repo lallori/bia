@@ -35,7 +35,6 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -44,6 +43,14 @@ import org.medici.bia.exception.ApplicationThrowable;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface AdminService {
+
+	/**
+	 * 
+	 * @param user
+	 * @param userInformation
+	 * @throws ApplicationThrowable
+	 */
+	public User addNewUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -57,7 +64,7 @@ public interface AdminService {
 	 * @param userInformation
 	 * @throws ApplicationThrowable
 	 */
-	public void editUser(User user) throws ApplicationThrowable;
+	public User editUser(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
