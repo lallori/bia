@@ -32,7 +32,7 @@ package org.medici.bia.audit;
 import java.lang.reflect.Method;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-import org.medici.docsources.common.util.ClassUtils;
+import org.medici.bia.common.util.ClassUtils;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
 

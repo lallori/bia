@@ -34,8 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
-import org.medici.docsources.common.util.GrantedAuthorityUtils;
-import org.medici.docsources.common.util.HttpUtils;
+import org.medici.bia.common.util.GrantedAuthorityUtils;
+import org.medici.bia.common.util.HttpUtils;
 import org.medici.docsources.domain.AccessLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.log.LogService;
