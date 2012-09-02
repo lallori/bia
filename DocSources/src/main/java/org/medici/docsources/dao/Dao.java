@@ -27,15 +27,6 @@
  */
 package org.medici.docsources.dao;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.PersistenceException;
-
-import org.medici.bia.common.pagination.Page;
-import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.search.Search;
-
 /**
  * 
  * @param <K>
@@ -44,78 +35,5 @@ import org.medici.bia.common.search.Search;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public interface Dao<K, E> extends Serializable {
-	
-	/**
-	 * This method is used to count advanced search functions.
-	 * 
-	 * @param searchContainer
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public E find(K id) throws PersistenceException;
-
-	/**
-	 * 
-	 * @throws PersistenceException
-	 */
-	public void generateIndex() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	public E merge(E entity) throws PersistenceException;
-
-	/**
-	 * 
-	 * @throws PersistenceException
-	 */
-	public void optimizeIndex() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	public void persist(E entity) throws PersistenceException;	
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	public void refresh(E entity) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	public void remove(E entity) throws PersistenceException;	
-
-	/**
-	 * 
-	 * @param searchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param fromDate
-	 * @throws PersistenceException
-	 */
-	public void updateIndex(Date fromDate) throws PersistenceException;
+public interface Dao<K, E>  {
 }
