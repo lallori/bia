@@ -104,8 +104,8 @@ public class EditUserController {
 			return new ModelAndView("error/ShowDocument", model);
 		}
 
-		if (StringUtils.isNotBlank(command.getAccount())) {
-			try {
+		try {
+			if (StringUtils.isNotBlank(command.getAccount())) {
 				user = getAdminService().findUser(command.getAccount());
 
 				if(user != null){
@@ -136,19 +136,32 @@ public class EditUserController {
 				}
 				command.setNewAccount(user.getAccount());
 				
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/EditUser", model);
+			} else {
+				// If account is blank, flow manage create new account
+				command.setAccount("");
+				command.setFirstName("");
+				command.setLastName("");
+				command.setPassword("");
+				List<String> userRoles = new ArrayList<String>(0);
+				command.setUserRoles(userRoles);
+				Calendar cal = Calendar.getInstance();
+				command.setYearExpirationUser(cal.get(Calendar.YEAR));
+				command.setMonthExpirationUser(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+				command.setDayExpirationUser(cal.get(Calendar.DAY_OF_MONTH));
+				cal.setTime(user.getExpirationPasswordDate());
+				command.setYearExpirationPassword(cal.get(Calendar.YEAR));
+				command.setMonthExpirationPassword(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+				command.setDayExpirationPassword(cal.get(Calendar.DAY_OF_MONTH));
+				
+				command.setActive(Boolean.FALSE);
+				command.setApproved(Boolean.TRUE);
+				command.setLocked(Boolean.FALSE);
 			}
-		} else {
-			command.setAccount("");
-			command.setFirstName("");
-			command.setLastName("");
-			command.setPassword("");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/EditUser", model);
 		}
-		
-		//model.put("userRoles", UserRole.values());
-		
+
 		return new ModelAndView("admin/EditUser", model);
 	}
 
@@ -201,7 +214,7 @@ public class EditUserController {
 				if(getAdminService().findUser(command.getNewAccount()) != null){
 					getAdminService().editUser(user);
 				}else{
-//					getAdminService().addNewUser(user, userInformation);
+					getAdminService().addNewUser(user);
 				}
 				
 				model.put("user", user);

@@ -25,23 +25,14 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller.user;
+package org.medici.bia.controller.admin;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.medici.bia.command.user.CreateUserCommand;
 import org.medici.bia.domain.User;
-import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.service.user.UserService;
+import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,58 +43,45 @@ import org.springframework.web.servlet.ModelAndView;
  * This is an administration function.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
 @Controller
-@RequestMapping("/user/CreateUser")
+@RequestMapping("/admin/CreateUser")
 public class CreateUserController {
 	@Autowired
-	private UserService userService;
+	private AdminService adminService;
 
 	/**
 	 * 
 	 * @return
 	 */
-	public UserService getUserService() {
-		return userService;
-	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") CreateUserCommand command, BindingResult result) {
-
-		if (result.hasErrors()) {
-			return setupForm();
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			User user = new User();
-			try {
-				BeanUtils.copyProperties(user, command);
-			} catch (InvocationTargetException itex) {
-			} catch (IllegalAccessException iaex) {
-			}
-
-			try {
-				getUserService().registerUser(user);
-				model.put("user", getUserService().findUser(user.getAccount()));
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-			}
-
-			return new ModelAndView("responseOK",model);
-		}
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
-
-		return new ModelAndView("user/CreateUser");
+	public AdminService getAdminService() {
+		return adminService;
 	}
 
 	/**
 	 * 
-	 * @param userService
+	 * @param command
+	 * @param result
+	 * @return
 	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm() {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		User user = new User("");
+
+		model.put("user", user);
+		
+		return new ModelAndView("admin/ShowUser", model);
+	}
+
+	/**
+	 * 
+	 * @param adminService
+	 */
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 }
