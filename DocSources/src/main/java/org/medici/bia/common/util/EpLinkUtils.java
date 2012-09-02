@@ -30,7 +30,7 @@ package org.medici.bia.common.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.medici.docsources.domain.EpLink;
+import org.medici.bia.domain.EpLink;
 
 /**
  * 

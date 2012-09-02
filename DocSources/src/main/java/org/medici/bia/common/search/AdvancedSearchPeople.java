@@ -44,9 +44,9 @@ import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.util.DateUtils;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
 
 /**
  * 
@@ -869,11 +869,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					roleCatQuery.append(" AND ");
 				}
 				if(roleCategories.get(i).equals("ARTISTS and ARTISANS") || roleCategories.get(i).equals("CORPORATE BODIES") || roleCategories.get(i).equals("ECCLESIASTICS") || roleCategories.get(i).equals("HEADS of STATE") || roleCategories.get(i).equals("MILITARY and NAVAL PERSONNEL") || roleCategories.get(i).equals("NOBLES") || roleCategories.get(i).equals("PROFESSIONS") || roleCategories.get(i).equals("SCHOLARLY and LITERARY") || roleCategories.get(i).equals("STATE and COURT PERSONNEL") || roleCategories.get(i).equals("UNASSIGNED")){
-					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatMajor like '%");
+					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.roleCat.roleCatMajor like '%");
 					roleCatQuery.append(roleCategories.get(i));
 					roleCatQuery.append("%'))");
 				}else{
-					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatMinor like '%");
+					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.roleCat.roleCatMinor like '%");
 					roleCatQuery.append(roleCategories.get(i));
 					roleCatQuery.append("%'))");
 				}
@@ -896,7 +896,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					titleOccWordQuery.append(" AND ");
 				}
 				for(int j = 0; j < wordsOccupation.length; j++){
-					titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
+					titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.titleOcc like '%");
 					titleOccWordQuery.append(wordsOccupation[j].replace("'", "''"));
 					titleOccWordQuery.append("%'))");
 					if(j < (wordsOccupation.length - 1)){
@@ -921,11 +921,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					titleOccIdQuery.append(" AND ");
 				}
 				if(titlesOccId.get(i) > 0){
-					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=");
+					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.titleOccId=");
 					titleOccIdQuery.append(titlesOccId.get(i));
 					titleOccIdQuery.append("))");
 				}else{
-					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
+					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.titleOcc like '%");
 					titleOccIdQuery.append(titlesOcc.get(i).replace("'", "''"));
 					titleOccIdQuery.append("%'))");
 				}

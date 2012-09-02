@@ -34,10 +34,10 @@ import java.util.List;
 
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.medici.bia.command.community.AdvancedSearchForumPostCommand;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.util.RegExUtils;
-import org.medici.docsources.command.community.AdvancedSearchForumPostCommand;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
 
 /**
  * 

@@ -119,7 +119,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 		for(int i = 0; i < words.length; i++){
 			jpaQuery.append("((mapNameLf like '%");
 			jpaQuery.append(words[i]);
-			jpaQuery.append("%') OR personId IN(SELECT person FROM org.medici.docsources.domain.AltName WHERE altName like '%");
+			jpaQuery.append("%') OR personId IN(SELECT person FROM org.medici.bia.domain.AltName WHERE altName like '%");
 			jpaQuery.append(words[i]);
 			jpaQuery.append("%'))");
 			if(i < words.length-1){

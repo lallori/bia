@@ -44,11 +44,11 @@ import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.VolumeUtils;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
 
 /**
  * 
@@ -1324,7 +1324,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personIdQuery.append(" AND ");
 					}
 					
-					personIdQuery.append("(entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
+					personIdQuery.append("(entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=");
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(") or senderPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
@@ -1336,7 +1336,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personQuery.append(" AND ");
 					}
 					
-					personQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
+					personQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf like '%");
 					personQuery.append(person.get(i).toLowerCase().replace("'", "''"));
 					personQuery.append("%')"); 
 					/*personQuery.append("%') or altName.altName like '%'");
@@ -1374,7 +1374,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					placeIdQuery.append(placeId.get(i).toString());
 					placeIdQuery.append(") or recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(") or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
+					placeIdQuery.append(") or entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
 					placeIdQuery.append(")))");
 				} else {
@@ -1386,7 +1386,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
 					placeQuery.append("%' or recipientPlace.placeName like '%'");
 					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
-					placeQuery.append("%' or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeName like '%'");
+					placeQuery.append("%' or entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%'");
 					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
 					placeQuery.append("%'))");
 				}
@@ -1573,7 +1573,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						refersToIdQuery.append(" AND ");
 					}
 					
-					refersToIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
+					refersToIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=");
 					refersToIdQuery.append(refersToId.get(i).toString());
 					refersToIdQuery.append(" AND docRole IS NULL))");
 				} else {
@@ -1581,7 +1581,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						refersToQuery.append(" AND ");
 					}
 					
-					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
+					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf like '%");
 					refersToQuery.append(refersTo.get(i).toLowerCase().replace("'", "''"));
 					refersToQuery.append("%' AND docRole IS NULL))");
 				}
@@ -1658,7 +1658,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						topicsIdQuery.append(" AND ");
 					}
 					
-					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
+					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
 					topicsIdQuery.append(topicsId.get(i).toString());
 					topicsIdQuery.append(")");
 				} else {
@@ -1666,7 +1666,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						topicsQuery.append(" AND ");
 					}
 					
-					topicsQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicTitle like '%");
+					topicsQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicTitle like '%");
 					topicsQuery.append(topics.get(i).toLowerCase().replace("'", "''"));
 					topicsQuery.append("%'))");
 				}
@@ -1696,11 +1696,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					topicsPlaceIdQuery.append(" AND ");
 				}
 				if(topicsPlaceId.get(i) > 0){
-					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId=");
+					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeAllId=");
 					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
 					topicsPlaceIdQuery.append(")");
 				}else{
-					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeName like '%");
+					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
 					topicsPlaceQuery.append(topicsPlace.get(i));
 					topicsPlaceQuery.append("%')");
 				}

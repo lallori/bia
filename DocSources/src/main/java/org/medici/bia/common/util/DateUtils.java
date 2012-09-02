@@ -32,7 +32,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.medici.docsources.domain.Month;
+import org.medici.bia.domain.Month;
 
 /**
  * 

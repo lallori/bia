@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.lucene.search.SortField;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
-import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.SearchFilter.SearchType;
 
  /**
   * 

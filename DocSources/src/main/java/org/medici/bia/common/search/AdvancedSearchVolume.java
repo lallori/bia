@@ -44,10 +44,10 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.VolumeUtils;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
 
 
 /**

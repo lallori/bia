@@ -30,12 +30,12 @@ package org.medici.bia.common.search;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.medici.bia.command.community.ShowMyForumPostCommand;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SaveUserSearchFilterCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
-import org.medici.docsources.command.community.ShowMyForumPostCommand;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
-import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.SearchFilter.SearchType;
 
 /**
  * 

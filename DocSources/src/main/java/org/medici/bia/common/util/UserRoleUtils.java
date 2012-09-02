@@ -29,11 +29,11 @@ package org.medici.bia.common.util;
 
 import java.util.List;
 import org.apache.commons.lang.WordUtils;
-import org.medici.docsources.domain.UserAuthority;
-import org.medici.docsources.domain.UserRole;
+import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserRole;
 
 /**
- * Utility Class for {@link org.medici.docsources.domain.User$UserAuthority}, it 
+ * Utility Class for {@link org.medici.bia.domain.User$UserAuthority}, it 
  * contains some methods helpful in management user role.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)

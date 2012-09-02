@@ -30,7 +30,7 @@ package org.medici.bia.common.hibernate.search.bridge;
 import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.common.util.StringHelper;
 import org.hibernate.search.bridge.TwoWayStringBridge;
-import org.medici.docsources.domain.Month;
+import org.medici.bia.domain.Month;
 
 /**
  * Map a Month field.

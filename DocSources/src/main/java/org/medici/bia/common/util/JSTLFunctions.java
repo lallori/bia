@@ -32,7 +32,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.docsources.domain.Forum;
+import org.medici.bia.domain.Forum;
 
 /**
   * Utility class to provides custom jstl functions.

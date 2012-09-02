@@ -31,15 +31,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.bia.common.pagination.DocumentExplorer;
-import org.medici.docsources.domain.Digitization;
-import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.ForumTopic;
-import org.medici.docsources.domain.PlaceGeographicCoordinates;
-import org.medici.docsources.domain.Schedone;
-import org.medici.docsources.domain.SearchFilter.SearchType;
-import org.medici.docsources.domain.TitleOccsList;
-import org.medici.docsources.domain.UserHistory;
-import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.bia.domain.Digitization;
+import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.PlaceGeographicCoordinates;
+import org.medici.bia.domain.Schedone;
+import org.medici.bia.domain.TitleOccsList;
+import org.medici.bia.domain.UserHistory;
+import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.UserHistory.Category;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

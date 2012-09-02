@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.Forum.Type;
-import org.medici.docsources.domain.ForumTopic;
+import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Forum.Type;
 
 /**
  * 

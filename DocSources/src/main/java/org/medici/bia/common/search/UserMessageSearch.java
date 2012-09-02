@@ -29,7 +29,7 @@ package org.medici.bia.common.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.Query;
-import org.medici.docsources.domain.UserMessage.UserMessageCategory;
+import org.medici.bia.domain.UserMessage.UserMessageCategory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -29,7 +29,7 @@ package org.medici.bia.common.ajax;
 
 import java.util.List;
 
-import org.medici.docsources.domain.User;
+import org.medici.bia.domain.User;
 
 /**
  * 

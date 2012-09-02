@@ -27,8 +27,8 @@
  */
 package org.medici.bia.common.search;
 
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 
 /**
  * 

@@ -28,7 +28,7 @@
 package org.medici.bia.common.util;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.domain.People;
+import org.medici.bia.domain.People;
 
 /**
  * 

@@ -27,7 +27,7 @@
  */
 package org.medici.bia.common.pagination;
 
-import org.medici.docsources.domain.Image;
+import org.medici.bia.domain.Image;
 
 /**
  * 

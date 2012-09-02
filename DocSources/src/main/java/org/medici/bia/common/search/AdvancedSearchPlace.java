@@ -44,8 +44,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.command.search.SimpleSearchCommand;
 
 /**
  * 
@@ -343,7 +343,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 //				if(linkedToTopicsIdQuery.length() > 1){
 //					linkedToTopicsIdQuery.append(" AND ");
 //				}
-//				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
+//				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
 //				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
 //				linkedToTopicsIdQuery.append("))");
 //			}
