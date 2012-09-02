@@ -34,10 +34,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.month.MonthDAO;
@@ -97,12 +99,17 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public User addNewUser(User user) throws ApplicationThrowable {
 		try{
-			User userToCreate = user; 
-			//userToUpdate.setAddress(user.getAddress());
-			//userToUpdate.setCity(user.getCity());
-			//userToUpdate.setCountry(user.getCountry());
+			User userToCreate = user;
+			userToCreate.setInitials(generateInitials(userToCreate));
+			userToCreate.setAddress("");
+			userToCreate.setCity("");
+			userToCreate.setCountry("");
+			userToCreate.setMail("");
+			userToCreate.setOrganization("");
 
 			userToCreate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+			userToCreate.setBadLogin(new Integer(0));
+			userToCreate.setForumNumberOfPost(new Long(0));
 			getUserDAO().persist(userToCreate);
 
 			getUserRoleDAO().removeAllUserRoles(userToCreate.getAccount());
@@ -199,7 +206,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -211,7 +218,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -223,7 +230,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -235,6 +242,50 @@ public class AdminServiceImpl implements AdminService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}	
+	}
+	
+	/**
+	 * This method will generate the user inital. The format of the returned string is :
+	 * - First Letter of field First Name;
+	 * - First or more Letters of field Last Name;
+	 * 
+	 * The generation code is based on calculate user initial making a previous
+	 * search. 
+	 * If the initial are not present, we return it, otherwise we increment the initial 
+	 * with another letter get from last name and so on until we find one initial that 
+	 * is not present on database.
+	 * 
+	 * @param user The user  
+	 * @return A string rapresenting user inital.
+	 */
+	private String generateInitials(User user) throws ApplicationThrowable {
+		try {
+			// We extract name and surname from user object and we clean eventually wrong chars, it's necessary to calculate user initial 
+			String name = user.getFirstName().trim().toUpperCase();;
+			String surname = user.getLastName().trim().toUpperCase();
+			if (!StringUtils.isAlpha(name)) {
+				name = RegExUtils.trimNonAlphaChars(name);
+			}
+			if (!StringUtils.isAlpha(surname)) {
+				surname = RegExUtils.trimNonAlphaChars(surname);
+			}
+			
+			String initialLetterOfName = name.substring(0, 1).toUpperCase();
+
+			// We try to search user with these inital, if we find one, we increment letters in initial  
+			for (int i=1; i<surname.length(); i++) {
+				String initialChoiced = initialLetterOfName + surname.substring(0, i);
+				User userToSearch = new User();
+				userToSearch.setInitials(initialChoiced);
+				if (getUserDAO().findUser(userToSearch) == null)
+					return initialChoiced;
+			}
+			
+			// unreachable statement, we always find unused initial, but we need to insert this code beacuse the method must always return a value.
+			return null;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

@@ -39,7 +39,10 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.joda.time.DateTime;
 import org.medici.bia.command.admin.EditUserCommand;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
@@ -120,15 +123,14 @@ public class EditUserController {
 						userRoles.add(userRole.getUserAuthority().getAuthority().toString());
 					}
 					command.setUserRoles(userRoles);
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(user.getExpirationDate());
-					command.setYearExpirationUser(cal.get(Calendar.YEAR));
-					command.setMonthExpirationUser(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-					command.setDayExpirationUser(cal.get(Calendar.DAY_OF_MONTH));
-					cal.setTime(user.getExpirationPasswordDate());
-					command.setYearExpirationPassword(cal.get(Calendar.YEAR));
-					command.setMonthExpirationPassword(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-					command.setDayExpirationPassword(cal.get(Calendar.DAY_OF_MONTH));
+					DateTime expirationUserDate = new DateTime(user.getExpirationDate());
+					command.setYearExpirationUser(expirationUserDate.getYear());
+					command.setMonthExpirationUser(new Month(expirationUserDate.getMonthOfYear()).getMonthNum());
+					command.setDayExpirationUser(expirationUserDate.getDayOfMonth());
+					DateTime expirationPasswordDate = new DateTime(user.getExpirationPasswordDate());
+					command.setYearExpirationPassword(expirationPasswordDate.getYear());
+					command.setMonthExpirationPassword(new Month(expirationPasswordDate.getMonthOfYear()).getMonthNum());
+					command.setDayExpirationPassword(expirationPasswordDate.getDayOfMonth());
 					
 					command.setActive(user.getActive());
 					command.setApproved(user.getApproved());
@@ -142,18 +144,25 @@ public class EditUserController {
 				command.setFirstName("");
 				command.setLastName("");
 				command.setPassword("");
+
+				// Default user role is GUEST
 				List<String> userRoles = new ArrayList<String>(0);
+				userRoles.add(UserAuthority.Authority.COMMUNITY_USERS.toString());
 				command.setUserRoles(userRoles);
-				Calendar cal = Calendar.getInstance();
-				command.setYearExpirationUser(cal.get(Calendar.YEAR));
-				command.setMonthExpirationUser(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-				command.setDayExpirationUser(cal.get(Calendar.DAY_OF_MONTH));
-				cal.setTime(user.getExpirationPasswordDate());
-				command.setYearExpirationPassword(cal.get(Calendar.YEAR));
-				command.setMonthExpirationPassword(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
-				command.setDayExpirationPassword(cal.get(Calendar.DAY_OF_MONTH));
-				
-				command.setActive(Boolean.FALSE);
+
+				Integer expirationUserMonth = NumberUtils.toInt(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months"));
+				DateTime expirationUserDate = (new DateTime()).plusMonths(expirationUserMonth);
+				command.setYearExpirationUser(expirationUserDate.getYear());
+				command.setMonthExpirationUser(new Month(expirationUserDate.getMonthOfYear()).getMonthNum());
+				command.setDayExpirationUser(expirationUserDate.getDayOfMonth());
+
+				Integer expirationPasswordMonth = NumberUtils.toInt(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months"));
+				DateTime expirationPasswordDate = (new DateTime()).plusMonths(expirationPasswordMonth);
+				command.setYearExpirationPassword(expirationPasswordDate.getYear());
+				command.setMonthExpirationPassword(new Month(expirationPasswordDate.getMonthOfYear()).getMonthNum());
+				command.setDayExpirationPassword(expirationPasswordDate.getDayOfMonth());
+
+				command.setActive(Boolean.TRUE);
 				command.setApproved(Boolean.TRUE);
 				command.setLocked(Boolean.FALSE);
 			}
