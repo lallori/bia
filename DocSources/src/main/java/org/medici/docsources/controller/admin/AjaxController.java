@@ -86,13 +86,12 @@ public class AjaxController {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
 		User user = new User();
-		if(userName != null && userName.length() > 0)
+		if(userName != null && userName.length() > 0) {
 			user.setAccount(userName);
-		else
-			user.setAccount("");
+		}
+
 		if(fullName != null && fullName.length() > 0){
 			user.setFirstName(fullName);
-			user.setLastName(fullName);
 		}
 
 		try {

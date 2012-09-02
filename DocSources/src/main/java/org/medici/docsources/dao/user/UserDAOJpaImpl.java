@@ -370,9 +370,11 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("firstName like '%");
+			conditionBuffer.append("(firstName like '%");
 			conditionBuffer.append(user.getFirstName());
-			conditionBuffer.append("%'");
+			conditionBuffer.append("%' or lastName like '%");
+			conditionBuffer.append(user.getFirstName());
+			conditionBuffer.append("%')");
 		}
 		if (user.getLastName() != null) {
 			if (conditionBuffer.length() >0) {
