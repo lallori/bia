@@ -35,6 +35,6 @@
     <function>
         <name>getForumChronology</name>
         <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
-        <function-signature>java.lang.String getForumChronology(org.medici.docsources.domain.Forum)</function-signature>
+        <function-signature>java.lang.String getForumChronology(org.medici.bia.domain.Forum)</function-signature>
     </function>
 </taglib>

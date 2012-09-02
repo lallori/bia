@@ -15,7 +15,7 @@ timeToLiveSeconds="600"
 overflowToDisk="true"
 />
 
-<cache name="org.medici.docsources.domain.Month" 
+<cache name="org.medici.bia.domain.Month" 
 maxElementsInMemory="13"
 eternal="true"
 timeToIdleSeconds="300"
@@ -23,7 +23,7 @@ timeToLiveSeconds="600"
 overflowToDisk="true"
 />
 
-<cache name="org.medici.docsources.domain.SerieList" 
+<cache name="org.medici.bia.domain.SerieList" 
 maxElementsInMemory="10000"
 eternal="true"
 timeToIdleSeconds="300"
@@ -31,7 +31,7 @@ timeToLiveSeconds="600"
 overflowToDisk="true"
 />
 
-<cache name="org.medici.docsources.domain.TopicList" 
+<cache name="org.medici.bia.domain.TopicList" 
 maxElementsInMemory="10000"
 eternal="true"
 timeToIdleSeconds="300"
@@ -39,7 +39,7 @@ timeToLiveSeconds="600"
 overflowToDisk="true"
 />
 
-<cache name="org.medici.docsources.domain.UserAuthority" 
+<cache name="org.medici.bia.domain.UserAuthority" 
 maxElementsInMemory="50"
 eternal="true"
 timeToIdleSeconds="300"

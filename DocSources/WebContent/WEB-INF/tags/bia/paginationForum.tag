@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ attribute name="page" required="true" type="org.medici.docsources.common.pagination.Page" %>
+<%@ attribute name="page" required="true" type="org.medici.bia.common.pagination.Page" %>
 <c:set var="pageCountToDiplay" value="5"/>
 <c:set var="pageCountToDiplayHalf" value="3"/>
 
