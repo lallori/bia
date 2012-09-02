@@ -9,53 +9,53 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
-    <context:component-scan base-package="org.medici.docsources"/>
+    <context:component-scan base-package="org.medici.bia"/>
 
-    <bean id="adminService" class="org.medici.docsources.service.admin.AdminServiceImpl">
+    <bean id="adminService" class="org.medici.bia.service.admin.AdminServiceImpl">
     	<description>Service that manages every information on admin process (users, properties).</description>
     </bean>
     
-    <bean id="communityService" class="org.medici.docsources.service.community.CommunityServiceImpl">
+    <bean id="communityService" class="org.medici.bia.service.community.CommunityServiceImpl">
     	<description>Service that manages every information on community process (comments, private messages).</description>
     </bean>
 
-    <bean id="digitizationService" class="org.medici.docsources.service.digitization.DigitizationServiceImpl">
+    <bean id="digitizationService" class="org.medici.bia.service.digitization.DigitizationServiceImpl">
     	<description>Service that manages every information on digitization process.</description>
     </bean>
 
-    <bean id="docBaseService" class="org.medici.docsources.service.docbase.DocBaseServiceImpl">
+    <bean id="docBaseService" class="org.medici.bia.service.docbase.DocBaseServiceImpl">
     	<description>Service that manages documents informations.</description>
     </bean>
 
-    <bean id="geoBaseService" class="org.medici.docsources.service.geobase.GeoBaseServiceImpl">
+    <bean id="geoBaseService" class="org.medici.bia.service.geobase.GeoBaseServiceImpl">
     	<description>Service that manages Geographics locations.</description>
     </bean>
 
-    <bean id="logService" class="org.medici.docsources.service.log.LogServiceImpl">
+    <bean id="logService" class="org.medici.bia.service.log.LogServiceImpl">
         <description>Service that manages accessLog and history log.</description>
     </bean>
     
-    <bean id="mailService" class="org.medici.docsources.service.mail.MailServiceImpl">
+    <bean id="mailService" class="org.medici.bia.service.mail.MailServiceImpl">
     	<description>Service that manages mail.</description>
     </bean>
 
-    <bean id="manuscriptViewerService" class="org.medici.docsources.service.manuscriptviewer.ManuscriptViewerServiceImpl">
+    <bean id="manuscriptViewerService" class="org.medici.bia.service.manuscriptviewer.ManuscriptViewerServiceImpl">
     	<description>Service that manages manuscript informations.</description>
     </bean>
     
-    <bean id="peopleBaseService" class="org.medici.docsources.service.peoplebase.PeopleBaseServiceImpl">
+    <bean id="peopleBaseService" class="org.medici.bia.service.peoplebase.PeopleBaseServiceImpl">
     	<description>Service that manages peoples informations.</description>
     </bean>
 
-    <bean id="reCaptchaService" class="org.medici.docsources.service.recaptcha.ReCaptchaServiceImpl">
+    <bean id="reCaptchaService" class="org.medici.bia.service.recaptcha.ReCaptchaServiceImpl">
     	<description>Service to interface Recaptcha Antispam functions</description>
     </bean>
 
-    <bean id="userService" class="org.medici.docsources.service.user.UserServiceImpl">
+    <bean id="userService" class="org.medici.bia.service.user.UserServiceImpl">
         <description>Service that manages user's information.</description>
     </bean>
 
-    <bean id="volBaseService" class="org.medici.docsources.service.volbase.VolBaseServiceImpl">
+    <bean id="volBaseService" class="org.medici.bia.service.volbase.VolBaseServiceImpl">
     	<description>Service that manages voBase informations.</description>
     </bean>
 

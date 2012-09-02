@@ -151,7 +151,7 @@
    		<property name="userDetailsContextMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-	<bean id="ldapAuthoritiesPopulator" class="org.medici.docsources.security.DocSourcesAuthoritiesPopulator">
+	<bean id="ldapAuthoritiesPopulator" class="org.medici.bia.security.DocSourcesAuthoritiesPopulator">
 		<constructor-arg ref="contextSource"/>
 		<constructor-arg value="ou=Groups"/>
 		<property name="groupRoleAttribute" value="cn"/>
@@ -171,14 +171,14 @@
    		<property name="userDetailsMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
-   	<bean id="ldapUserDetailsMapper" class="org.medici.docsources.security.DocSourcesLdapUserDetailsMapper"/>
+   	<bean id="ldapUserDetailsMapper" class="org.medici.bia.security.DocSourcesLdapUserDetailsMapper"/>
 
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
 		<constructor-arg ref="contextSource" />
 		<property name="ignorePartialResultException" value="true"/>
 	</bean>
 
-	<bean id="docSourcesLdapConfiguration" class="org.medici.docsources.security.DocSourcesLdapConfiguration">
+	<bean id="docSourcesLdapConfiguration" class="org.medici.bia.security.DocSourcesLdapConfiguration">
 		<property name="baseDN" value="dc=docsources,dc=medici,dc=org"/>
 		<property name="usersDN" value="ou=Users"/>
 		<property name="userAttribute" value="cn"></property>

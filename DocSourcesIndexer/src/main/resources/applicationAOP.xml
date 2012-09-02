@@ -9,17 +9,17 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-    <context:component-scan base-package="org.medici.docsources"/>
+    <context:component-scan base-package="org.medici.bia"/>
 
-	<bean id="logDAOAdvice" class="org.medici.docsources.audit.LogDAOAdvice" />
-	<bean id="logServiceAdvice" class="org.medici.docsources.audit.LogServiceAdvice" />
-	<bean id="logValidatorAdvice" class="org.medici.docsources.audit.LogValidatorAdvice" />
+	<bean id="logDAOAdvice" class="org.medici.bia.audit.LogDAOAdvice" />
+	<bean id="logServiceAdvice" class="org.medici.bia.audit.LogServiceAdvice" />
+	<bean id="logValidatorAdvice" class="org.medici.bia.audit.LogValidatorAdvice" />
 
     <aop:config>
-        <aop:pointcut id="daoOperation" expression="execution(* org.medici.docsources.dao..*DAO*.*(..))"/>
-        <aop:pointcut id="serviceOperation" expression="execution(* org.medici.docsources.service..*Service*.*(..))"/>
-        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.docsources.scheduler..*Job.*(..))"/>
-       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.docsources.validator..*Validator.validate(..))"/>
+        <aop:pointcut id="daoOperation" expression="execution(* org.medici.bia.dao..*DAO*.*(..))"/>
+        <aop:pointcut id="serviceOperation" expression="execution(* org.medici.bia.service..*Service*.*(..))"/>
+        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.bia.scheduler..*Job.*(..))"/>
+       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.bia.validator..*Validator.validate(..))"/>
 		<aop:advisor pointcut-ref="daoOperation" advice-ref="logDAOAdvice" />
         <!-- <aop:advisor pointcut-ref="schedulerOperation" advice-ref="txAdvice"/>-->
 		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />

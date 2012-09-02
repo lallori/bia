@@ -25,7 +25,7 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.indexer;
+package org.medici.bia.indexer;
 
 import java.util.Date;
 
@@ -33,11 +33,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.event.FlushEventListener;
 import org.hibernate.search.event.FullTextIndexEventListener;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.geobase.GeoBaseService;
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.geobase.GeoBaseService;
+import org.medici.bia.service.peoplebase.PeopleBaseService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;

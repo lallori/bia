@@ -35,8 +35,8 @@
     	<constructor-arg value="l.pasquinelli@gmail.com"/>
     </bean>
 
-<!-- 	<bean id="activationUserEmailJob" class="org.medici.docsources.scheduler.ActivationUserEmailJob"/>
+<!-- 	<bean id="activationUserEmailJob" class="org.medici.bia.scheduler.ActivationUserEmailJob"/>
 
-	<bean id="resetUserPasswordEmailJob" class="org.medici.docsources.scheduler.ResetUserPasswordEmailJob"/>
+	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
  -->
 </beans>
