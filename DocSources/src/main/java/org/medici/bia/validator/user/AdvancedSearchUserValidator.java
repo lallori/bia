@@ -1,7 +1,7 @@
 /*
- * SimpleSearchCommand.java
- *
- * Developed by The Medici Archive Project Inc. (2010-2012)
+ * SearchUserValidator.java
+ * 
+ * Developed by Medici Archive Project (2010-2012).
  * 
  * This file is part of DocSources.
  * 
@@ -25,59 +25,40 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.search;
+package org.medici.bia.validator.user;
 
-import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.docsources.command.user.AdvancedSearchUserCommand;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- *
+ * 
  */
-public class SimpleSearchCommand {
-	private SimpleSearchPerimeter simpleSearchPerimeter;
-	private String text;
-	private String searchUUID;
+public class AdvancedSearchUserValidator extends AbstractUserValidator implements Validator {
 
 	/**
-	 * @param simpleSearchPerimeter the simple search perimeter to set
+	 * Indicates whether the given class is supported by this converter. This
+	 * validator supports only SearchUserCommand.
+	 * 
+	 * @param givenClass the class to test for support
+	 * @return true if supported; false otherwise
 	 */
-	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
-		this.simpleSearchPerimeter = simpleSearchPerimeter;
-	}
-	
-	/**
-	 * @return the simpleSearchPerimeter
-	 */
-	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
-		return simpleSearchPerimeter;
-	}
-	
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-	
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
+	@SuppressWarnings("rawtypes")
+	public boolean supports(Class givenClass) {
+		return givenClass.equals(AdvancedSearchUserCommand.class);
 	}
 
 	/**
-	 * @param searchUUID the searchUUID to set
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
+	 * 
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
-	public void setSearchUUID(String searchUUID) {
-		this.searchUUID = searchUUID;
-	}
-
-	/**
-	 * @return the searchUUID
-	 */
-	public String getSearchUUID() {
-		return searchUUID;
+	public void validate(Object object, Errors errors) {
 	}
 }

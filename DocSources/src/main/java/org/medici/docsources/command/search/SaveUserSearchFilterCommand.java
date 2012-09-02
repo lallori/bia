@@ -29,8 +29,8 @@ package org.medici.docsources.command.search;
 
 import java.util.List;
 
-import org.medici.docsources.common.search.AdvancedSearchAbstract.NameType;
-import org.medici.docsources.common.search.AdvancedSearchAbstract.WordType;
+import org.medici.bia.common.search.AdvancedSearchAbstract.NameType;
+import org.medici.bia.common.search.AdvancedSearchAbstract.WordType;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**

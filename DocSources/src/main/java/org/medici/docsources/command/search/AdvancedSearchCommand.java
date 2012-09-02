@@ -31,8 +31,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.bia.common.search.AdvancedSearch;
+import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 
