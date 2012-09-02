@@ -27,11 +27,11 @@
  */
 package org.medici.bia.validator.volbase;
 
-import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
-import org.medici.docsources.domain.Image.ImageType;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.bia.command.volbase.ShowExplorerVolumeCommand;
+import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

@@ -27,9 +27,9 @@
  */
 package org.medici.bia.validator.volbase;
 
-import org.medici.docsources.command.volbase.EditCorrespondentsVolumeCommand;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.bia.command.volbase.EditCorrespondentsVolumeCommand;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

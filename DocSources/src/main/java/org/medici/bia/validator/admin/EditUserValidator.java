@@ -27,8 +27,8 @@
  */
 package org.medici.bia.validator.admin;
 
-import org.medici.docsources.command.admin.EditUserCommand;
-import org.medici.docsources.service.admin.AdminService;
+import org.medici.bia.command.admin.EditUserCommand;
+import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

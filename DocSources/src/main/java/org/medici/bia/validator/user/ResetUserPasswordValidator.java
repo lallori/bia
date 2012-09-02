@@ -31,11 +31,11 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.medici.docsources.command.user.ResetUserPasswordCommand;
-import org.medici.docsources.domain.PasswordChangeRequest;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.user.UserService;
+import org.medici.bia.command.user.ResetUserPasswordCommand;
+import org.medici.bia.domain.PasswordChangeRequest;
+import org.medici.bia.domain.User;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

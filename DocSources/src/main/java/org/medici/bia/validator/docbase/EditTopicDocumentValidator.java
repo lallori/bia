@@ -29,12 +29,12 @@ package org.medici.bia.validator.docbase;
 
 import java.util.Set;
 
-import org.medici.docsources.command.docbase.EditTopicDocumentCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EplToLink;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.geobase.GeoBaseService;
+import org.medici.bia.command.docbase.EditTopicDocumentCommand;
+import org.medici.bia.domain.Document;
+import org.medici.bia.domain.EplToLink;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -27,7 +27,7 @@
  */
 package org.medici.bia.validator.user;
 
-import org.medici.docsources.command.user.SearchUserCommand;
+import org.medici.bia.command.user.SearchUserCommand;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

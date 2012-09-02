@@ -28,11 +28,11 @@
 package org.medici.bia.validator.docbase;
 
 import org.apache.commons.lang.StringUtils;
+import org.medici.bia.command.docbase.EditDetailsDocumentCommand;
 import org.medici.bia.common.util.VolumeUtils;
-import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

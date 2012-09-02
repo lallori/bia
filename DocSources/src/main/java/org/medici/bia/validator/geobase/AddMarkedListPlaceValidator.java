@@ -27,11 +27,11 @@
  */
 package org.medici.bia.validator.geobase;
 
-import org.medici.docsources.command.geobase.AddMarkedListPlaceCommand;
-import org.medici.docsources.domain.UserMarkedList;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.geobase.GeoBaseService;
-import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
+import org.medici.bia.command.geobase.AddMarkedListPlaceCommand;
+import org.medici.bia.domain.UserMarkedList;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.geobase.GeoBaseService;
+import org.medici.bia.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

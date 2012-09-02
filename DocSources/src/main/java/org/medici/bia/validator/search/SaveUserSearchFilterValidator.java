@@ -29,11 +29,11 @@ package org.medici.bia.validator.search;
 
 import java.util.List;
 
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand.SaveType;
-import org.medici.docsources.domain.SearchFilter;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.search.SearchService;
+import org.medici.bia.command.search.SaveUserSearchFilterCommand;
+import org.medici.bia.command.search.SaveUserSearchFilterCommand.SaveType;
+import org.medici.bia.domain.SearchFilter;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

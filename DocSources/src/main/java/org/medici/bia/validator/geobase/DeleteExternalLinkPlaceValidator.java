@@ -29,11 +29,11 @@ package org.medici.bia.validator.geobase;
 
 import java.util.Set;
 
-import org.medici.docsources.command.geobase.DeleteExternalLinkPlaceCommand;
-import org.medici.docsources.domain.Place;
-import org.medici.docsources.domain.PlaceExternalLinks;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.geobase.GeoBaseService;
+import org.medici.bia.command.geobase.DeleteExternalLinkPlaceCommand;
+import org.medici.bia.domain.Place;
+import org.medici.bia.domain.PlaceExternalLinks;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

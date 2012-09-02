@@ -27,8 +27,8 @@
  */
 package org.medici.bia.validator.user;
 
-import org.medici.docsources.command.user.UnregisterUserCommand;
-import org.medici.docsources.service.user.UserService;
+import org.medici.bia.command.user.UnregisterUserCommand;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -27,8 +27,8 @@
  */
 package org.medici.bia.validator.docbase;
 
-import org.medici.docsources.command.docbase.SearchDocumentCommand;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.bia.command.docbase.SearchDocumentCommand;
+import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

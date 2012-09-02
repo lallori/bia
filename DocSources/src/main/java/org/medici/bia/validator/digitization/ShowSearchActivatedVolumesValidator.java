@@ -27,8 +27,8 @@
  */
 package org.medici.bia.validator.digitization;
 
-import org.medici.docsources.command.digitization.ShowSearchActivatedVolumesCommand;
-import org.medici.docsources.service.digitization.DigitizationService;
+import org.medici.bia.command.digitization.ShowSearchActivatedVolumesCommand;
+import org.medici.bia.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

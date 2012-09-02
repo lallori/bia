@@ -27,10 +27,10 @@
  */
 package org.medici.bia.validator.user;
 
-import org.medici.docsources.command.user.UpdateUserCommand;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.user.UserService;
+import org.medici.bia.command.user.UpdateUserCommand;
+import org.medici.bia.domain.User;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

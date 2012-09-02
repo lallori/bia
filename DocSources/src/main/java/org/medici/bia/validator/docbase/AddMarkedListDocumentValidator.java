@@ -27,11 +27,11 @@
  */
 package org.medici.bia.validator.docbase;
 
-import org.medici.docsources.command.docbase.AddMarkedListDocumentCommand;
-import org.medici.docsources.domain.UserMarkedList;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.usermarkedlist.UserMarkedListService;
+import org.medici.bia.command.docbase.AddMarkedListDocumentCommand;
+import org.medici.bia.domain.UserMarkedList;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

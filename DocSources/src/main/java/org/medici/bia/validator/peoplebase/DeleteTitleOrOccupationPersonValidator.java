@@ -27,10 +27,10 @@
  */
 package org.medici.bia.validator.peoplebase;
 
-import org.medici.docsources.command.peoplebase.DeleteTitleOrOccupationPersonCommand;
-import org.medici.docsources.domain.PoLink;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
+import org.medici.bia.command.peoplebase.DeleteTitleOrOccupationPersonCommand;
+import org.medici.bia.domain.PoLink;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

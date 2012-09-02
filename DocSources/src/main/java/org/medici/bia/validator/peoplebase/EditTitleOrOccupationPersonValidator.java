@@ -27,10 +27,10 @@
  */
 package org.medici.bia.validator.peoplebase;
 
+import org.medici.bia.command.peoplebase.EditTitleOrOccupationPersonCommand;
 import org.medici.bia.common.util.ValidationUtils;
-import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

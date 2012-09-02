@@ -28,8 +28,8 @@
 package org.medici.bia.validator.search;
 
 import org.apache.commons.lang.StringUtils;
-import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.service.search.SearchService;
+import org.medici.bia.command.search.AdvancedSearchCommand;
+import org.medici.bia.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
