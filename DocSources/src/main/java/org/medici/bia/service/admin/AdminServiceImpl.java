@@ -110,6 +110,11 @@ public class AdminServiceImpl implements AdminService {
 			userToCreate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
 			userToCreate.setBadLogin(new Integer(0));
 			userToCreate.setForumNumberOfPost(new Long(0));
+
+			userToCreate.setRegistrationDate(new Date());
+			if (user.getActive()){ 
+				userToCreate.setActivationDate(new Date());
+			}
 			getUserDAO().persist(userToCreate);
 
 			getUserRoleDAO().removeAllUserRoles(userToCreate.getAccount());
