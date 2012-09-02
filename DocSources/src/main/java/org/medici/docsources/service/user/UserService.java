@@ -32,10 +32,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.SearchFromLast;
-import org.medici.docsources.common.search.SearchFromLast.SearchPerimeter;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.SearchFromLast;
+import org.medici.bia.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
@@ -238,7 +238,7 @@ public interface UserService {
 	 * @param user {@link org.medici.docsources.domain.User} containing search fields
 	 * @param pageNumber {@link java.lang.Integer} Number of page result that we want to obtain
 	 * @param pageSize {@link java.lang.Integer} Number of records that compose a single page result
-	 * @return {@link org.medici.docsources.common.pagination.Page} containing the result page.
+	 * @return {@link org.medici.bia.common.pagination.Page} containing the result page.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 * {@inheritDoc}
 	 */

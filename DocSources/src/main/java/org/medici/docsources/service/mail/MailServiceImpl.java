@@ -30,7 +30,7 @@ package org.medici.docsources.service.mail;
 import java.net.URLEncoder;
 import java.util.Date;
 
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.docsources.domain.ActivationUser;

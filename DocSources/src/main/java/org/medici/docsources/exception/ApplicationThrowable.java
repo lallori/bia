@@ -28,7 +28,7 @@
 package org.medici.docsources.exception;
 
 import org.apache.log4j.Logger;
-import org.medici.docsources.common.util.ApplicationError;
+import org.medici.bia.common.util.ApplicationError;
 
 /**
  * Classe di gestione degli errori applicativi.

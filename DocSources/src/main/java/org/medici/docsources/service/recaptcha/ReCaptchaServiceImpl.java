@@ -31,7 +31,7 @@ import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

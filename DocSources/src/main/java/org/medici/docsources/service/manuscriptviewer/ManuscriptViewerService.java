@@ -29,10 +29,10 @@ package org.medici.docsources.service.manuscriptviewer;
 
 import java.util.List;
 
-import org.medici.docsources.common.pagination.DocumentExplorer;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
@@ -170,13 +170,13 @@ public interface ManuscriptViewerService {
 
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Image}
-	 * using a {@link org.medici.docsources.common.pagination.Page} object result
-	 * based on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
+	 * using a {@link org.medici.bia.common.pagination.Page} object result
+	 * based on {@link org.medici.bia.common.pagination.PaginationFilter} input object.
 	 * 
 	 * @param summaryId Unique Volume Identifier
-	 * @param paginationFilter {@link org.medici.docsources.common.pagination.PaginationFilter} 
+	 * @param paginationFilter {@link org.medici.bia.common.pagination.PaginationFilter} 
 	 *        with search parameters
-	 * @return {@link org.medici.docsources.common.pagination.Page}
+	 * @return {@link org.medici.bia.common.pagination.Page}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */

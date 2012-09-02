@@ -29,9 +29,9 @@ package org.medici.docsources.service.search;
 
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;

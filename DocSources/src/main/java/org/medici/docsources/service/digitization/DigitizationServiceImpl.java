@@ -32,12 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.security.BiaUserDetailsImpl;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.util.DateUtils;
-import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.digitization.DigitizationDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;

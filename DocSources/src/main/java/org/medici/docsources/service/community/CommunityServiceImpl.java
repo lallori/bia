@@ -31,10 +31,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.docsources.dao.annotation.AnnotationDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;

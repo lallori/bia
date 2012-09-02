@@ -32,10 +32,10 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;

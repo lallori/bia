@@ -36,8 +36,8 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.month.MonthDAO;

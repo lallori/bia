@@ -31,10 +31,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.util.EplToLinkUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.util.EplToLinkUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;

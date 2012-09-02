@@ -30,8 +30,8 @@ package org.medici.docsources.service.admin;
 import java.util.HashMap;
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserAuthority;

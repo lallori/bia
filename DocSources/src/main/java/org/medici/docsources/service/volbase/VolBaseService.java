@@ -31,11 +31,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.common.pagination.HistoryNavigator;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.VolumeExplorer;
-import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.bia.common.pagination.HistoryNavigator;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Schedone;
@@ -375,13 +375,13 @@ public interface VolBaseService {
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
 	 * containing input text and return a specific 
-	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
-	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
+	 * {@link org.medici.bia.common.pagination.Page} of complete reulst 
+	 * base on {@link org.medici.bia.common.pagination.PaginationFilter} input object.
 	 * 
 	 * @param text Text to search inside {@link org.medici.docsources.domain.Volume}
 	 * @param paginationFilter Object that contains information for filtering on
 	 * pagination 
-	 * @return {@link org.medici.docsources.common.pagination.Page} containing 
+	 * @return {@link org.medici.bia.common.pagination.Page} containing 
 	 * partial result
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
