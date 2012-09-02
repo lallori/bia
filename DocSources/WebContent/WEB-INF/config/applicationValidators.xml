@@ -4,351 +4,351 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 	<!-- Admin base Validator -->
-	<bean id="editRecaptchaPropertiesValidator" class="org.medici.docsources.validator.admin.EditRecaptchaPropertiesValidator">
+	<bean id="editRecaptchaPropertiesValidator" class="org.medici.bia.validator.admin.EditRecaptchaPropertiesValidator">
         <description>Edit Recaptcha Properties Validator.</description>
 	</bean>
 
-	<bean id="editEmailPropertiesValidator" class="org.medici.docsources.validator.admin.EditEmailPropertiesValidator">
+	<bean id="editEmailPropertiesValidator" class="org.medici.bia.validator.admin.EditEmailPropertiesValidator">
         <description>Edit Email Properties Validator.</description>
 	</bean>
 
-	<bean id="editForumPropertiesValidator" class="org.medici.docsources.validator.admin.EditForumPropertiesValidator">
+	<bean id="editForumPropertiesValidator" class="org.medici.bia.validator.admin.EditForumPropertiesValidator">
         <description>Edit Forum Properties Validator.</description>
 	</bean>
 	
-	<bean id="editGeneralPropertiesValidator" class="org.medici.docsources.validator.admin.EditGeneralPropertiesValidator">
+	<bean id="editGeneralPropertiesValidator" class="org.medici.bia.validator.admin.EditGeneralPropertiesValidator">
         <description>Edit General Properties Validator.</description>
 	</bean>
 
-	<bean id="editIIPImagePropertiesValidator" class="org.medici.docsources.validator.admin.EditIIPImagePropertiesValidator">
+	<bean id="editIIPImagePropertiesValidator" class="org.medici.bia.validator.admin.EditIIPImagePropertiesValidator">
         <description>Edit IIPImage Properties Validator.</description>
 	</bean>
 
-	<bean id="editUserValidator" class="org.medici.docsources.validator.admin.EditUserValidator">
+	<bean id="editUserValidator" class="org.medici.bia.validator.admin.EditUserValidator">
         <description>Edit User Validator.</description>
 	</bean>
 
 	<!-- Community base Validator -->
-	<bean id="editForumPostValidator" class="org.medici.docsources.validator.community.EditForumPostValidator">
+	<bean id="editForumPostValidator" class="org.medici.bia.validator.community.EditForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>
 
-	<bean id="replyForumPostValidator" class="org.medici.docsources.validator.community.ReplyForumPostValidator">
+	<bean id="replyForumPostValidator" class="org.medici.bia.validator.community.ReplyForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>
 
 	<!-- Digitization base Validator -->
-	<bean id="editDetailsSchedoneValidator" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
+	<bean id="editDetailsSchedoneValidator" class="org.medici.bia.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>
 	</bean>
 	
-	<bean id="editJpegImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditJpegImagesSchedoneValidator">
+	<bean id="editJpegImagesSchedoneValidator" class="org.medici.bia.validator.digitization.EditJpegImagesSchedoneValidator">
         <description>Edit Jpeg Images Schedone Validator.</description>
 	</bean>
 
-	<bean id="editPdfImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditPdfImagesSchedoneValidator">
+	<bean id="editPdfImagesSchedoneValidator" class="org.medici.bia.validator.digitization.EditPdfImagesSchedoneValidator">
         <description>Edit Pdf Images Schedone Validator.</description>
 	</bean>
 
-	<bean id="editTiffImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditTiffImagesSchedoneValidator">
+	<bean id="editTiffImagesSchedoneValidator" class="org.medici.bia.validator.digitization.EditTiffImagesSchedoneValidator">
         <description>Edit Tiff Images Schedone Validator.</description>
 	</bean>
 	
-	<bean id="showSearchActivatedVolumesValidator" class="org.medici.docsources.validator.digitization.ShowSearchActivatedVolumesValidator">
+	<bean id="showSearchActivatedVolumesValidator" class="org.medici.bia.validator.digitization.ShowSearchActivatedVolumesValidator">
 		<description>Show Search Activated Volumes Validator</description>
 	</bean>
 	
-	<bean id="showSearchDigitizedVolumesValidator" class="org.medici.docsources.validator.digitization.ShowSearchDigitizedVolumesValidator">
+	<bean id="showSearchDigitizedVolumesValidator" class="org.medici.bia.validator.digitization.ShowSearchDigitizedVolumesValidator">
 		<description>Show Search Digitized Volumes Validator</description>
 	</bean>
 
 	<!-- Document base Validator -->
-	<bean id="addMarkedListDocumentValidator" class="org.medici.docsources.validator.docbase.AddMarkedListDocumentValidator">
+	<bean id="addMarkedListDocumentValidator" class="org.medici.bia.validator.docbase.AddMarkedListDocumentValidator">
 		<description>Add Marked List Document Validator.</description>
 	</bean>
 	
-	<bean id="deleteDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteDocumentValidator">
+	<bean id="deleteDocumentValidator" class="org.medici.bia.validator.docbase.DeleteDocumentValidator">
         <description>Delete a Document Validator.</description>
 	</bean>
 
-	<bean id="deletePersonDocumentValidator" class="org.medici.docsources.validator.docbase.DeletePersonDocumentValidator">
+	<bean id="deletePersonDocumentValidator" class="org.medici.bia.validator.docbase.DeletePersonDocumentValidator">
         <description>Delete Linked People to a Document Validator.</description>
 	</bean>
 
-	<bean id="deleteTopicDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteTopicDocumentValidator">
+	<bean id="deleteTopicDocumentValidator" class="org.medici.bia.validator.docbase.DeleteTopicDocumentValidator">
         <description>Delete Linked topic to a Document Validator.</description>
 	</bean>
 
-	<bean id="editCorrespondentsOrPeopleDocumentValidator" class="org.medici.docsources.validator.docbase.EditCorrespondentsOrPeopleDocumentValidator">
+	<bean id="editCorrespondentsOrPeopleDocumentValidator" class="org.medici.bia.validator.docbase.EditCorrespondentsOrPeopleDocumentValidator">
         <description>Edit Correspondents Or People Document Validator.</description>
 	</bean>
 
-	<bean id="editDetailsDocumentValidator" class="org.medici.docsources.validator.docbase.EditDetailsDocumentValidator">
+	<bean id="editDetailsDocumentValidator" class="org.medici.bia.validator.docbase.EditDetailsDocumentValidator">
         <description>Edit Details Document Validator.</description>
 	</bean>
 
-	<bean id="editExtractOrSynopsisDocumentValidator" class="org.medici.docsources.validator.docbase.EditExtractOrSynopsisDocumentValidator">
+	<bean id="editExtractOrSynopsisDocumentValidator" class="org.medici.bia.validator.docbase.EditExtractOrSynopsisDocumentValidator">
         <description>Edit Extract Or Synopsis Document Validator.</description>
 	</bean>
 
-	<bean id="editFactCheckDocumentValidator" class="org.medici.docsources.validator.docbase.EditFactCheckDocumentValidator">
+	<bean id="editFactCheckDocumentValidator" class="org.medici.bia.validator.docbase.EditFactCheckDocumentValidator">
         <description>Edit Fact Check Document Validator.</description>
 	</bean>
 
-	<bean id="editPersonDocumentValidator" class="org.medici.docsources.validator.docbase.EditPersonDocumentValidator">
+	<bean id="editPersonDocumentValidator" class="org.medici.bia.validator.docbase.EditPersonDocumentValidator">
         <description>Edit People Document Validator.</description>
 	</bean>
 
-	<bean id="editTopicDocumentValidator" class="org.medici.docsources.validator.docbase.EditTopicDocumentValidator">
+	<bean id="editTopicDocumentValidator" class="org.medici.bia.validator.docbase.EditTopicDocumentValidator">
         <description>Edit Topic Document Validator.</description>
 	</bean>
 	
-	<bean id="searchDocumentValidator" class="org.medici.docsources.validator.docbase.SearchDocumentValidator">
+	<bean id="searchDocumentValidator" class="org.medici.bia.validator.docbase.SearchDocumentValidator">
         <description>Search Document Validator.</description>
 	</bean>
 
-	<bean id="showExplorerDocumentValidator" class="org.medici.docsources.validator.docbase.ShowExplorerDocumentValidator">
+	<bean id="showExplorerDocumentValidator" class="org.medici.bia.validator.docbase.ShowExplorerDocumentValidator">
         <description>Show Document Explorer Validator.</description> 
 	</bean>
 	
-	<bean id="undeleteDocumentValidator" class="org.medici.docsources.validator.docbase.UndeleteDocumentValidator">
+	<bean id="undeleteDocumentValidator" class="org.medici.bia.validator.docbase.UndeleteDocumentValidator">
         <description>Undelete a Document Validator.</description> 
 	</bean>
 	
 	<!-- Manuscript Viewer Validators -->
-	<bean id="editExtractDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
+	<bean id="editExtractDocumentDialogValidator" class="org.medici.bia.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
         <description>Edit Extract Document Dialog Validator.</description>
 	</bean>
 
-	<bean id="editSynopsisDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditSynopsisDocumentDialogValidator">
+	<bean id="editSynopsisDocumentDialogValidator" class="org.medici.bia.validator.manuscriptviewer.EditSynopsisDocumentDialogValidator">
         <description>Edit Synopsis Validator.</description>
 	</bean>
 	
 	<!-- Geo base Validators -->
-	<bean id="addMarkedListPlaceValidator" class="org.medici.docsources.validator.geobase.AddMarkedListPlaceValidator">
+	<bean id="addMarkedListPlaceValidator" class="org.medici.bia.validator.geobase.AddMarkedListPlaceValidator">
 		<description>Add Marked List Place Validator.</description>
 	</bean>
 	
-	<bean id="deletePlaceValidator" class="org.medici.docsources.validator.geobase.DeletePlaceValidator">
+	<bean id="deletePlaceValidator" class="org.medici.bia.validator.geobase.DeletePlaceValidator">
         <description>Delete a Place Validator.</description>
 	</bean>
 
-	<bean id="deleteExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.DeleteExternalLinkPlaceValidator">
+	<bean id="deleteExternalLinkPlaceValidator" class="org.medici.bia.validator.geobase.DeleteExternalLinkPlaceValidator">
 		<description>Delete External Link Place Validator.</description>
 	</bean>
 	
-	<bean id="deleteNameOrNameVariantPlaceValidator" class="org.medici.docsources.validator.geobase.DeleteNameOrNameVariantPlaceValidator">
+	<bean id="deleteNameOrNameVariantPlaceValidator" class="org.medici.bia.validator.geobase.DeleteNameOrNameVariantPlaceValidator">
 		<description>Delete Name Or Name Variant Place Validator.</description>
 	</bean>
 	
-	<bean id="editDetailsPlaceValidator" class="org.medici.docsources.validator.geobase.EditDetailsPlaceValidator">
+	<bean id="editDetailsPlaceValidator" class="org.medici.bia.validator.geobase.EditDetailsPlaceValidator">
         <description>Edit Details Place Validator.</description>
 	</bean>
 	
-	<bean id="editGeographicCoordinatesPlaceValidator" class="org.medici.docsources.validator.geobase.EditGeographicCoordinatesPlaceValidator">
+	<bean id="editGeographicCoordinatesPlaceValidator" class="org.medici.bia.validator.geobase.EditGeographicCoordinatesPlaceValidator">
 		<description>Edit Geographic Coordinates Place Validator.</description>
 	</bean>
 	
-	<bean id="editExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.EditExternalLinkPlaceValidator">
+	<bean id="editExternalLinkPlaceValidator" class="org.medici.bia.validator.geobase.EditExternalLinkPlaceValidator">
 		<description>Edit External Link Place Validator.</description>
 	</bean>
 	
-	<bean id="editNameOrNameVariantPlaceValidator" class="org.medici.docsources.validator.geobase.EditNameOrNameVariantPlaceValidator">
+	<bean id="editNameOrNameVariantPlaceValidator" class="org.medici.bia.validator.geobase.EditNameOrNameVariantPlaceValidator">
 		<description>Edit Name Or Name Variant Place Validator.</description>
 	</bean>
 
-	<bean id="undeletePlaceValidator" class="org.medici.docsources.validator.geobase.UndeletePlaceValidator">
+	<bean id="undeletePlaceValidator" class="org.medici.bia.validator.geobase.UndeletePlaceValidator">
         <description>Undelete a Place Validator.</description>
 	</bean>
 
 	<!-- People base validator -->
-	<bean id="addMarkedListPersonValidator" class="org.medici.docsources.validator.peoplebase.AddMarkedListPersonValidator">
+	<bean id="addMarkedListPersonValidator" class="org.medici.bia.validator.peoplebase.AddMarkedListPersonValidator">
 		<description>Add Marked List Person Validator.</description>
 	</bean>
 	
-	<bean id="createNewTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.CreateNewTitleOrOccupationPersonValidator">
+	<bean id="createNewTitleOrOccupationPersonValidator" class="org.medici.bia.validator.peoplebase.CreateNewTitleOrOccupationPersonValidator">
 		<description>Create New Title Or Occupation Person Validator</description>
 	</bean>
 	
-	<bean id="deleteChildPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteChildPersonValidator">
+	<bean id="deleteChildPersonValidator" class="org.medici.bia.validator.peoplebase.DeleteChildPersonValidator">
         <description>Delete Child Person Validator.</description>
 	</bean>
 
-	<bean id="deleteFatherPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteFatherPersonValidator">
+	<bean id="deleteFatherPersonValidator" class="org.medici.bia.validator.peoplebase.DeleteFatherPersonValidator">
         <description>Delete Father Person Validator.</description>
 	</bean>
 
-	<bean id="deleteMotherPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteMotherPersonValidator">
+	<bean id="deleteMotherPersonValidator" class="org.medici.bia.validator.peoplebase.DeleteMotherPersonValidator">
         <description>Delete Mother Person Validator.</description>
 	</bean>
 
-	<bean id="deleteNamePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteNamePersonValidator">
+	<bean id="deleteNamePersonValidator" class="org.medici.bia.validator.peoplebase.DeleteNamePersonValidator">
         <description>Delete Name Person Validator.</description>
 	</bean>
 
-	<bean id="deletePersonValidator" class="org.medici.docsources.validator.peoplebase.DeletePersonValidator">
+	<bean id="deletePersonValidator" class="org.medici.bia.validator.peoplebase.DeletePersonValidator">
         <description>Delete a Person Validator.</description>
 	</bean>
 
-	<bean id="deleteSpousePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteSpousePersonValidator">
+	<bean id="deleteSpousePersonValidator" class="org.medici.bia.validator.peoplebase.DeleteSpousePersonValidator">
         <description>Delete Spouse Person Validator.</description>
 	</bean>
 
-	<bean id="deleteTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteTitleOrOccupationPersonValidator">
+	<bean id="deleteTitleOrOccupationPersonValidator" class="org.medici.bia.validator.peoplebase.DeleteTitleOrOccupationPersonValidator">
         <description>Delete Title Or Occupation Validator.</description>
 	</bean>
 
-	<bean id="editChildPersonValidator" class="org.medici.docsources.validator.peoplebase.EditChildPersonValidator">
+	<bean id="editChildPersonValidator" class="org.medici.bia.validator.peoplebase.EditChildPersonValidator">
         <description>Edit Child Person Validator.</description>
 	</bean>
 
-	<bean id="editDetailsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditDetailsPersonValidator">
+	<bean id="editDetailsPersonValidator" class="org.medici.bia.validator.peoplebase.EditDetailsPersonValidator">
         <description>Edit Details Person Validator.</description>
 	</bean>
 	
-	<bean id="editFatherPersonValidator" class="org.medici.docsources.validator.peoplebase.EditFatherPersonValidator">
+	<bean id="editFatherPersonValidator" class="org.medici.bia.validator.peoplebase.EditFatherPersonValidator">
         <description>Edit Father Person Validator.</description>
 	</bean>
 
-	<bean id="editMotherPersonValidator" class="org.medici.docsources.validator.peoplebase.EditMotherPersonValidator">
+	<bean id="editMotherPersonValidator" class="org.medici.bia.validator.peoplebase.EditMotherPersonValidator">
         <description>Edit Mother Person Validator.</description>
 	</bean>
 
-	<bean id="editNamePersonValidator" class="org.medici.docsources.validator.peoplebase.EditNamePersonValidator">
+	<bean id="editNamePersonValidator" class="org.medici.bia.validator.peoplebase.EditNamePersonValidator">
         <description>Edit Name Person Validator.</description>
 	</bean>
 	
-	<bean id="editParentsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditParentsPersonValidator">
+	<bean id="editParentsPersonValidator" class="org.medici.bia.validator.peoplebase.EditParentsPersonValidator">
 		<description>Edit Parents Person Validator</description>
 	</bean>
 
-	<bean id="editResearchNotesPersonValidator" class="org.medici.docsources.validator.peoplebase.EditResearchNotesPersonValidator">
+	<bean id="editResearchNotesPersonValidator" class="org.medici.bia.validator.peoplebase.EditResearchNotesPersonValidator">
         <description>Edit ResearchNotes Person Validator.</description>
 	</bean>
 
-	<bean id="editSpousePersonValidator" class="org.medici.docsources.validator.peoplebase.EditSpousePersonValidator">
+	<bean id="editSpousePersonValidator" class="org.medici.bia.validator.peoplebase.EditSpousePersonValidator">
         <description>Edit Spouse Person Validator.</description>
 	</bean>
 
-	<bean id="editTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.EditTitleOrOccupationPersonValidator">
+	<bean id="editTitleOrOccupationPersonValidator" class="org.medici.bia.validator.peoplebase.EditTitleOrOccupationPersonValidator">
         <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
-	<bean id="EditTitleOrOccupationValidator" class="org.medici.docsources.validator.peoplebase.EditTitleOrOccupationValidator">
+	<bean id="EditTitleOrOccupationValidator" class="org.medici.bia.validator.peoplebase.EditTitleOrOccupationValidator">
         <description>Edit Title Or Occupation Validator.</description>
 	</bean>
 	
-	<bean id="undeletePersonValidator" class="org.medici.docsources.validator.peoplebase.UndeletePersonValidator">
+	<bean id="undeletePersonValidator" class="org.medici.bia.validator.peoplebase.UndeletePersonValidator">
         <description>Undelete a Person Validator.</description>
 	</bean>
 
-	<bean id="uploadPortraitPersonValidator" class="org.medici.docsources.validator.peoplebase.UploadPortraitPersonValidator">
+	<bean id="uploadPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.UploadPortraitPersonValidator">
         <description>Upload Portrait Person Validator.</description>
 	</bean>
 
 	<!-- Volume base Validators-->
-	<bean id="addMarkedListVolumeValidator" class="org.medici.docsources.validator.volbase.AddMarkedListVolumeValidator">
+	<bean id="addMarkedListVolumeValidator" class="org.medici.bia.validator.volbase.AddMarkedListVolumeValidator">
 		<description>Add Marked List Volume Validator.</description>
 	</bean>
 	
-	<bean id="deleteVolumeValidator" class="org.medici.docsources.validator.volbase.DeleteVolumeValidator">
+	<bean id="deleteVolumeValidator" class="org.medici.bia.validator.volbase.DeleteVolumeValidator">
         <description>Delete a Volume Validator.</description>
 	</bean>
 
-	<bean id="editContextVolumeValidator" class="org.medici.docsources.validator.volbase.EditContextVolumeValidator">
+	<bean id="editContextVolumeValidator" class="org.medici.bia.validator.volbase.EditContextVolumeValidator">
         <description>Edit Context Volume Validator.</description> 
 	</bean>
 
-	<bean id="editCorrespondentsVolumeValidator" class="org.medici.docsources.validator.volbase.EditCorrespondentsVolumeValidator">
+	<bean id="editCorrespondentsVolumeValidator" class="org.medici.bia.validator.volbase.EditCorrespondentsVolumeValidator">
         <description>Edit Correspondents Volume Validator.</description> 
 	</bean>
 	
-	<bean id="editDescriptionVolumeValidator" class="org.medici.docsources.validator.volbase.EditDescriptionVolumeValidator">
+	<bean id="editDescriptionVolumeValidator" class="org.medici.bia.validator.volbase.EditDescriptionVolumeValidator">
         <description>Edit Description Volume Validator.</description> 
 	</bean>
 
-	<bean id="editDetailsVolumeValidator" class="org.medici.docsources.validator.volbase.EditDetailsVolumeValidator">
+	<bean id="editDetailsVolumeValidator" class="org.medici.bia.validator.volbase.EditDetailsVolumeValidator">
         <description>Edit Details Volume Validator.</description> 
 	</bean>
 
-	<bean id="showExplorerVolumeValidator" class="org.medici.docsources.validator.volbase.ShowExplorerVolumeValidator">
+	<bean id="showExplorerVolumeValidator" class="org.medici.bia.validator.volbase.ShowExplorerVolumeValidator">
         <description>Show Volume Explorer Validator.</description> 
 	</bean>
 	
-	<bean id="undeleteVolumeValidator" class="org.medici.docsources.validator.volbase.UndeleteVolumeValidator">
+	<bean id="undeleteVolumeValidator" class="org.medici.bia.validator.volbase.UndeleteVolumeValidator">
         <description>Undelete a Volume Validator.</description>
 	</bean>
 	<!-- Search Validators -->
-	<bean id="saveUserSearchFilterValidator" class="org.medici.docsources.validator.search.SaveUserSearchFilterValidator">
+	<bean id="saveUserSearchFilterValidator" class="org.medici.bia.validator.search.SaveUserSearchFilterValidator">
 	    <description>Save Search Validator.</description>
 	</bean>
 
 	<!-- User's Validators-->
-    <bean id="activateUserRequestValidator" class="org.medici.docsources.validator.user.ActivateUserRequestValidator">
+    <bean id="activateUserRequestValidator" class="org.medici.bia.validator.user.ActivateUserRequestValidator">
         <description>Validator for action "Activate user.".</description>
     </bean>
     
-    <bean id="advancedSearchUserValidator" class="org.medici.docsources.validator.user.AdvancedSearchUserValidator">
+    <bean id="advancedSearchUserValidator" class="org.medici.bia.validator.user.AdvancedSearchUserValidator">
         <description>Advanced search user validator.</description>
     </bean>
     
-    <bean id="createUserValidator" class="org.medici.docsources.validator.user.CreateUserValidator">
+    <bean id="createUserValidator" class="org.medici.bia.validator.user.CreateUserValidator">
         <description>User create validator (administration console component).</description>
     </bean>
     
-    <bean id="changeExpiratedUserPasswordValidator" class="org.medici.docsources.validator.user.ChangeExpiratedUserPasswordValidator">
+    <bean id="changeExpiratedUserPasswordValidator" class="org.medici.bia.validator.user.ChangeExpiratedUserPasswordValidator">
         <description>Change expirated user password validator.</description>
     </bean>
     
-    <bean id="editUserProfileValidator" class="org.medici.docsources.validator.user.EditUserProfileValidator">
+    <bean id="editUserProfileValidator" class="org.medici.bia.validator.user.EditUserProfileValidator">
     	<description>Edit user profile validator.</description>
     </bean>
 
-    <bean id="lockUserValidator" class="org.medici.docsources.validator.user.LockUserValidator">
+    <bean id="lockUserValidator" class="org.medici.bia.validator.user.LockUserValidator">
         <description>User lock validator (administration console component).</description>
     </bean>
 
-    <bean id="registerUserValidator" class="org.medici.docsources.validator.user.RegisterUserValidator">
+    <bean id="registerUserValidator" class="org.medici.bia.validator.user.RegisterUserValidator">
         <description>User registration validator.</description>
     </bean>
 
-    <bean id="resetUserPasswordRequestValidator" class="org.medici.docsources.validator.user.ResetUserPasswordRequestValidator">
+    <bean id="resetUserPasswordRequestValidator" class="org.medici.bia.validator.user.ResetUserPasswordRequestValidator">
         <description>User registration validator.</description>
     </bean>
     
-    <bean id="resetUserPasswordValidator" class="org.medici.docsources.validator.user.ResetUserPasswordValidator">
+    <bean id="resetUserPasswordValidator" class="org.medici.bia.validator.user.ResetUserPasswordValidator">
         <description>User registration validator.</description>
     </bean>
 
-    <bean id="sendUserActivationCodeValidator" class="org.medici.docsources.validator.user.SendUserActivationCodeValidator">
+    <bean id="sendUserActivationCodeValidator" class="org.medici.bia.validator.user.SendUserActivationCodeValidator">
         <description>Validator for action "Send user activation code by mail".</description>
     </bean>
 
-    <bean id="sendUserPasswordResetValidator" class="org.medici.docsources.validator.user.SendUserPasswordResetValidator">
+    <bean id="sendUserPasswordResetValidator" class="org.medici.bia.validator.user.SendUserPasswordResetValidator">
         <description>Validator for action "Send user passowrd reset by mail".</description>
     </bean>
 
-  	<bean id="showUserPhotoValidator" class="org.medici.docsources.validator.user.ShowUserPhotoValidator">
+  	<bean id="showUserPhotoValidator" class="org.medici.bia.validator.user.ShowUserPhotoValidator">
         <description>User registration validator.</description>
 	</bean>
 	
-	<bean id="showUserSearchValidator" class="org.medici.docsources.validator.admin.ShowUserSearchValidator">
+	<bean id="showUserSearchValidator" class="org.medici.bia.validator.admin.ShowUserSearchValidator">
 		<description>User Search Validator</description>
 	</bean>
     
-    <bean id="searchUserValidator" class="org.medici.docsources.validator.user.SearchUserValidator">
+    <bean id="searchUserValidator" class="org.medici.bia.validator.user.SearchUserValidator">
         <description>User search validator.</description>
     </bean>
 
-    <bean id="unregisterUserValidator" class="org.medici.docsources.validator.user.UnregisterUserValidator">
+    <bean id="unregisterUserValidator" class="org.medici.bia.validator.user.UnregisterUserValidator">
         <description>User registration validator.</description>
     </bean>
 
-    <bean id="updateUserValidator" class="org.medici.docsources.validator.user.UpdateUserValidator">
+    <bean id="updateUserValidator" class="org.medici.bia.validator.user.UpdateUserValidator">
         <description>User update validator.</description>
     </bean>
 
-    <bean id="updateUserPasswordValidator" class="org.medici.docsources.validator.user.UpdateUserPasswordValidator">
+    <bean id="updateUserPasswordValidator" class="org.medici.bia.validator.user.UpdateUserPasswordValidator">
         <description>User password update validator.</description>
     </bean>
 </beans>

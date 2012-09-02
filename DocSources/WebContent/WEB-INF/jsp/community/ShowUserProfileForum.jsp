@@ -1,8 +1,8 @@
-<%@page import="org.medici.docsources.common.util.ForumUtils"%>
+<%@page import="org.medici.bia.common.util.ForumUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="bia" uri="http://docsources.medici.org/jsp:jstl" %>  
+update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>

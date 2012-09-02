@@ -7,10 +7,10 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="applicationContextProvider" class="org.medici.docsources.common.context.ApplicationContextProvider">
+    <bean id="applicationContextProvider" class="org.medici.bia.common.context.ApplicationContextProvider">
 	</bean>
 
-	<bean id="applicationPropertyPlaceholderConfigurer" class="org.medici.docsources.common.property.ApplicationPropertyPlaceholderConfigurer" lazy-init="true">
+	<bean id="applicationPropertyPlaceholderConfigurer" class="org.medici.bia.common.property.ApplicationPropertyPlaceholderConfigurer" lazy-init="true">
 		<property name="jdbcTemplate">
 			<bean class="org.springframework.jdbc.core.JdbcTemplate">
 				<constructor-arg ref="dataSource" />

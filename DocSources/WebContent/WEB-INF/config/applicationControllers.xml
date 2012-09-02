@@ -135,11 +135,11 @@
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
     
-    <bean id="uploadProgressListener" class="org.medici.docsources.common.ajax.UploadProgressListener">
+    <bean id="uploadProgressListener" class="org.medici.bia.common.ajax.UploadProgressListener">
     	<description>Common bean for manage progress bar in upload functions.</description>
     </bean>
 
-	<bean id="multipartResolver" class="org.medici.docsources.common.ajax.AjaxMultipartResolver">
+	<bean id="multipartResolver" class="org.medici.bia.common.ajax.AjaxMultipartResolver">
 		<description>Resolver for multipart form</description>
 		<property name="maxInMemorySize">
 			<description>Max in memory 10kbytes </description>		

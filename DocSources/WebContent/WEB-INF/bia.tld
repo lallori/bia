@@ -7,7 +7,7 @@
 
     <display-name>Bia Custom Functions</display-name>    
     <tlib-version>1.0</tlib-version>
-    <uri>http://docsources.medici.org/jsp:jstl</uri>
+    <uri>http://bia.medici.org/jsp:jstl</uri>
 
 	<tag-file>
 		<name>paginationForum</name>
@@ -16,25 +16,25 @@
 
     <function>
         <name>encode</name>
-        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String encode(java.lang.String)</function-signature>
     </function>
 
     <function>
         <name>getApplicationProperty</name>
-        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String getApplicationProperty(java.lang.String)</function-signature>
     </function>
 
     <function>
         <name>toString</name>
-        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String toString(java.util.List)</function-signature>
     </function>
 
     <function>
         <name>getForumChronology</name>
-        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String getForumChronology(org.medici.docsources.domain.Forum)</function-signature>
     </function>
 </taglib>
