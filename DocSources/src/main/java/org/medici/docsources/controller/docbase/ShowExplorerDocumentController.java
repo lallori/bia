@@ -33,8 +33,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.BooleanUtils;
+import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.docsources.command.docbase.ShowExplorerDocumentCommand;
-import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;

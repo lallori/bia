@@ -37,10 +37,10 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.pagination.HistoryNavigator;
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
-import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;

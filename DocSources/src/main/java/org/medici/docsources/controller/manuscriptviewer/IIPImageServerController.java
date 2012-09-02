@@ -71,7 +71,7 @@ import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.sanselan.formats.tiff.constants.TiffTagConstants;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

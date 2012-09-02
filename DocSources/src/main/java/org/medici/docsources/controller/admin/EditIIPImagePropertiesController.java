@@ -32,8 +32,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.command.admin.EditIIPImagePropertiesCommand;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;

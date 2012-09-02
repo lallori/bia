@@ -37,9 +37,9 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;

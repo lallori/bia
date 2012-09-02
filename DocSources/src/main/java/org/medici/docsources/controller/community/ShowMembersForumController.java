@@ -30,9 +30,9 @@ package org.medici.docsources.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.command.community.ShowMembersForumCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;

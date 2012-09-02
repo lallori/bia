@@ -30,10 +30,10 @@ package org.medici.docsources.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.docsources.command.community.ShowMyInboxCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.UserMessage.UserMessageCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;

@@ -37,8 +37,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.medici.bia.common.search.AdvancedSearchForum;
 import org.medici.docsources.command.community.AdvancedSearchForumPostCommand;
-import org.medici.docsources.common.search.AdvancedSearchForum;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.SearchFilter;

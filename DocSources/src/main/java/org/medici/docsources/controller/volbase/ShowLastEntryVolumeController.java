@@ -30,7 +30,7 @@ package org.medici.docsources.controller.volbase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;

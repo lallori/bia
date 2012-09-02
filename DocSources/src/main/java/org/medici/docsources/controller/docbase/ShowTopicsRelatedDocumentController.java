@@ -36,8 +36,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.medici.bia.common.search.AdvancedSearchDocument;
 import org.medici.docsources.command.docbase.ShowTopicsRelatedDocumentCommand;
-import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.SearchFilter.SearchType;

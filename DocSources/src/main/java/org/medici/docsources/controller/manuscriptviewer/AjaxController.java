@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.medici.docsources.common.pagination.DocumentExplorer;
-import org.medici.docsources.common.util.HtmlUtils;
-import org.medici.docsources.common.util.ImageUtils;
+import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.common.util.ImageUtils;
 import org.medici.docsources.domain.Annotation;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;

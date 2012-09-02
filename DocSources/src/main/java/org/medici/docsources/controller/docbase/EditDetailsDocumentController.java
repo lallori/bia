@@ -34,9 +34,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;

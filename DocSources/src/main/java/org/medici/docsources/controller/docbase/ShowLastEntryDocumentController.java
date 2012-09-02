@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Image;

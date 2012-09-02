@@ -35,8 +35,8 @@ import java.util.UUID;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.command.search.SimpleSearchCommand;
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;

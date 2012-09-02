@@ -32,8 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.docsources.command.manuscriptviewer.ShowDocumentInManuscriptViewerCommand;
-import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;

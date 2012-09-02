@@ -29,7 +29,7 @@ package org.medici.docsources.controller.common;
 
 import javax.servlet.http.HttpSession;
 
-import org.medici.docsources.common.ajax.UploadInfoBean;
+import org.medici.bia.common.ajax.UploadInfoBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

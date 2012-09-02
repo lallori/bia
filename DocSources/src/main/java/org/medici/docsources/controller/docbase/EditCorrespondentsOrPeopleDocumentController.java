@@ -34,8 +34,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;

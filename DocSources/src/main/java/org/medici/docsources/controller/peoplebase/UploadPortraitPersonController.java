@@ -32,8 +32,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.image.PersonPortrait;
 import org.medici.docsources.command.peoplebase.UploadPortraitPersonCommand;
-import org.medici.docsources.common.image.PersonPortrait;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;

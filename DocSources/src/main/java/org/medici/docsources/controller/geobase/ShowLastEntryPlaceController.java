@@ -29,7 +29,8 @@ package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.medici.docsources.common.util.HtmlUtils;
+
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;

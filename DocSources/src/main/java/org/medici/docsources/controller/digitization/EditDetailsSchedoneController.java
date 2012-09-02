@@ -34,8 +34,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.command.digitization.EditDetailsSchedoneCommand;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;

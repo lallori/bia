@@ -34,9 +34,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand.SaveType;
-import org.medici.docsources.common.search.AdvancedSearchFactory;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;

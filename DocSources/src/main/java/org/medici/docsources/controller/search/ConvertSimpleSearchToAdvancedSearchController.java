@@ -35,10 +35,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.medici.bia.common.search.AdvancedSearch;
+import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.AdvancedSearchFactory;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;

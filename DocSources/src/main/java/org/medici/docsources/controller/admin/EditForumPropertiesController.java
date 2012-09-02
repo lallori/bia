@@ -33,8 +33,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.docsources.command.admin.EditForumPropertiesCommand;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.exception.ApplicationThrowable;

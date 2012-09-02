@@ -31,8 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+
+import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.docsources.command.docbase.ChoiceStartFolioDocumentRequestCommand;
-import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;

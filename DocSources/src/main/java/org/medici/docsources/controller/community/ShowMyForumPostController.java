@@ -33,12 +33,12 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.AdvancedSearchFactory;
+import org.medici.bia.common.search.AdvancedSearchForum;
 import org.medici.docsources.command.community.ShowMyForumPostCommand;
 import org.medici.docsources.command.community.ShowTopicForumCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearchFactory;
-import org.medici.docsources.common.search.AdvancedSearchForum;
 import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;

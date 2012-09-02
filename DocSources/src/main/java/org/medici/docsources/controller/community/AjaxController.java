@@ -36,12 +36,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.UserMessageSearch;
+import org.medici.bia.common.util.ForumUtils;
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.docsources.command.community.EditForumPostCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.UserMessageSearch;
-import org.medici.docsources.common.util.ForumUtils;
-import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.ForumTopic;

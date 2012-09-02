@@ -30,8 +30,9 @@ package org.medici.docsources.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
+
+import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.docsources.command.manuscriptviewer.ShowSummaryVolumeDialogCommand;
-import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;

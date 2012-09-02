@@ -34,12 +34,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
-import org.medici.docsources.common.util.DateUtils;
-import org.medici.docsources.common.util.HtmlUtils;
-import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
+import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.People;

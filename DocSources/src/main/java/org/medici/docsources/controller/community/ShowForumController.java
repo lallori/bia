@@ -35,9 +35,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.docsources.command.community.ShowForumCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.Forum.Type;

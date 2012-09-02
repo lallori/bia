@@ -32,9 +32,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.medici.bia.common.pagination.HistoryNavigator;
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.docsources.command.geobase.EditGeographicCoordinatesPlaceCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
-import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.exception.ApplicationThrowable;

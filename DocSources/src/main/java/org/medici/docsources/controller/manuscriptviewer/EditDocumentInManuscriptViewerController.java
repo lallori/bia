@@ -31,8 +31,8 @@ package org.medici.docsources.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.docsources.command.manuscriptviewer.EditDocumentInManuscriptViewerCommand;
-import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;

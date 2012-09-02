@@ -31,9 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.medici.docsources.command.geobase.ShowPlaceRequestCommand;
-import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;

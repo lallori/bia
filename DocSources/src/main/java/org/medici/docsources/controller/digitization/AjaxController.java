@@ -32,12 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.SchedoneSearch;
-import org.medici.docsources.common.util.HtmlUtils;
-import org.medici.docsources.common.util.ListBeanUtils;
-import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.SchedoneSearch;
+import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.common.util.ListBeanUtils;
+import org.medici.bia.common.util.VolumeUtils;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SerieList;
