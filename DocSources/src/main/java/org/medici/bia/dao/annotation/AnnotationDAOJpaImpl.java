@@ -27,6 +27,11 @@
  */
 package org.medici.bia.dao.annotation;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Annotation;
 import org.springframework.stereotype.Repository;
@@ -60,4 +65,17 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -6882494398469472058L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE image.imageName=:imageName order by annotationId desc";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("imageName", imageName);
+
+		return (List<Annotation>) query.getResultList();
+	}
 }

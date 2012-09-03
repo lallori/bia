@@ -27,6 +27,7 @@
  */
 package org.medici.bia.controller.manuscriptviewer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +85,10 @@ public class AjaxController {
 			Annotation annotation = new Annotation();
 			annotation.setX(x);
 			annotation.setY(y);
-			annotation.setWidth(w);
-			annotation.setHeight(h);
+			annotation.setW(w);
+			annotation.setH(h);
 			annotation.setType(Annotation.Type.valueOf(category));
-			annotation.setSubject(title);
+			annotation.setCategory(title);
 			annotation.setText(text);
 			Image image = new Image();
 			image.setImageType(Image.ImageType.valueOf(imageType));
@@ -125,12 +126,25 @@ public class AjaxController {
 	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-	/*	try {
-			List<String> = getDocBaseService().getImageAnnotation(imageName);			
-			model.put("annotations", null);
+		try {
+			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);			
+			List<Object> resultList = new ArrayList<Object>();
+			for (Annotation currentAnnotation : annotations) {
+				List<Object> singleRow = new ArrayList<Object>();
+				singleRow.add(currentAnnotation.getId());
+				singleRow.add(currentAnnotation.getX());
+				singleRow.add(currentAnnotation.getY());
+				singleRow.add(currentAnnotation.getW());
+				singleRow.add(currentAnnotation.getH());
+				singleRow.add(currentAnnotation.getType());
+				singleRow.add(currentAnnotation.getText());
+				
+				resultList.add(singleRow);
+			}
+			model.put("annotations", resultList);
 		} catch (ApplicationThrowable ath) {
 		}
-		*/	
+	
 		return new ModelAndView("responseOK", model);
 	}
 

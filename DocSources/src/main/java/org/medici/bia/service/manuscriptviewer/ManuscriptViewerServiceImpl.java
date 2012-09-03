@@ -105,9 +105,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Autowired
 	private PlaceDAO placeDAO;
 	@Autowired
-	private VolumeDAO volumeDAO;
-	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * 
@@ -167,7 +167,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					forumTopic.setAnnotation(annotation);
 					
 					forumTopic.setUser(user);
-					forumTopic.setSubject(annotation.getSubject());
+					forumTopic.setSubject(annotation.getCategory());
 					forumTopic.setTotalReplies(new Integer(0));
 					forumTopic.setTotalViews(new Integer(0));
 					forumTopic.setLastPost(null);
@@ -176,7 +176,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					getForumTopicDAO().persist(forumTopic);
 					
 					ForumPost forumPost = new ForumPost();
-					forumPost.setSubject(annotation.getSubject());
+					forumPost.setSubject(annotation.getCategory());
 					forumPost.setText(annotation.getText());
 					forumPost.setTopic(forumTopic);
 					forumPost.setDateCreated(new Date());
@@ -206,7 +206,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				forumTopic.setAnnotation(annotation);
 				
 				forumTopic.setUser(user);
-				forumTopic.setSubject(annotation.getSubject());
+				forumTopic.setSubject(annotation.getCategory());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
 				forumTopic.setLastPost(null);
@@ -215,7 +215,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				getForumTopicDAO().persist(forumTopic);
 				
 				ForumPost forumPost = new ForumPost();
-				forumPost.setSubject(annotation.getSubject());
+				forumPost.setSubject(annotation.getCategory());
 				forumPost.setText(annotation.getText());
 				forumPost.setTopic(forumTopic);
 				forumPost.setDateCreated(new Date());
@@ -233,8 +233,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 
 			return annotation;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -274,8 +274,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				
 				return null;
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -298,8 +298,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			} else {
 				return new ArrayList<Image>(0);
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -311,8 +311,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try {
 			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
 			
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -330,8 +330,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 			
 			return null;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -350,8 +350,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				return null;
 			}
 
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 	
@@ -368,8 +368,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				} else {
 					return null;
 				}
-			} catch (Throwable th) {
-				throw new ApplicationThrowable(th);
+			} catch (Throwable throwable) {
+				throw new ApplicationThrowable(throwable);
 			}
 		}
 		if ((summaryId == null) && (imageOrder==null) && (imageProgTypeNum == null) && (volNum != null)) {
@@ -392,8 +392,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
 			return findVolumeImages(null, volume.getVolNum(), volume.getVolLetExt(), null, null, null);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -423,8 +423,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			Volume volume = getVolumeDAO().find(summaryId);
 
 			return getImageDAO().findImages(volume.getVolNum(), volume.getVolLetExt(), paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -435,8 +435,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findImages(volNum, volLetExt, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -447,8 +447,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findVolumeSpine(volNum, volLetExt);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -491,8 +491,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 			
 			return volumeSummary;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}	
 	}
 
@@ -508,38 +508,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	public SchedoneDAO getCatalogDAO() {
 		return catalogDAO;
-	}
-
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
-	}
-
-	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
-		this.forumPostDAO = forumPostDAO;
-	}
-
-	public ForumPostDAO getForumPostDAO() {
-		return forumPostDAO;
-	}
-
-	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
-		this.forumTopicDAO = forumTopicDAO;
-	}
-
-	public ForumTopicDAO getForumTopicDAO() {
-		return forumTopicDAO;
 	}
 
 	/**
@@ -570,8 +538,36 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 
 			return getImageDAO().findImages(documentExplorer);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
+	}
+
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Annotation> getImageAnnotations(String imageName) throws ApplicationThrowable {
+		try {
+			return getAnnotationDAO().findAnnotationsByImage(imageName);
+		} catch(Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -594,11 +590,11 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 			
 			return null;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
 		}	
 	}
-	
+
 	/**
 	 * @return the peopleDAO
 	 */
@@ -613,6 +609,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		return placeDAO;
 	}
 
+	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+	
 	/**
 	 * @return the volumeDAO
 	 */
@@ -632,8 +635,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}else{
 				return false;
 			}
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
+		}catch(Throwable throwable){
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 
@@ -658,6 +661,22 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		this.documentDAO = documentDAO;
 	}
 
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+
 	/**
 	 * @param imageDAO the imageDAO to set
 	 */
@@ -680,23 +699,16 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
-	}
-
-	/**
-	 * @return the userDAO
-	 */
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
 	}
 }

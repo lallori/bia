@@ -33,12 +33,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  * This class represents entity Annotation.
@@ -47,7 +51,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table ( name = "\"tblAnnotation\"" ) 
+@Table ( name = "\"tblAnnotations\"" ) 
 public class Annotation implements Serializable {
 	/**
 	 * 
@@ -58,6 +62,11 @@ public class Annotation implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"annotationId\"", length=10, nullable=false)
 	private Integer annotationId;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"imageId\"")
+	private Image image;
+	
 	@Column (name="\"type\"", length=10, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -74,12 +83,54 @@ public class Annotation implements Serializable {
 	private Double x;
 	@Column (name="\"y\"", nullable=false)
 	private Double y;
-	@Column (name="\"width\"", nullable=false)
-	private Double width;
-	@Column (name="\"height\"", nullable=false)
-	private Double height;
-	@Column (name="\"subject\"", nullable=false) 
-	private String subject;
+	/**
+	 * @return the w
+	 */
+	public Double getW() {
+		return w;
+	}
+
+	/**
+	 * @param w the w to set
+	 */
+	public void setW(Double w) {
+		this.w = w;
+	}
+
+	/**
+	 * @return the h
+	 */
+	public Double getH() {
+		return h;
+	}
+
+	/**
+	 * @param h the h to set
+	 */
+	public void setH(Double h) {
+		this.h = h;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	@Column (name="\"w\"", nullable=false)
+	private Double w;
+	@Column (name="\"h\"", nullable=false)
+	private Double h;
+	@Column (name="\"category\"", nullable=false) 
+	private String category;
 	@Column (name="\"text\"", nullable=true) 
 	private String text;
 	
@@ -124,6 +175,14 @@ public class Annotation implements Serializable {
 	 */
 	public void setAnnotationId(Integer annotationId) {
 		this.annotationId = annotationId;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public Image getImage() {
+		return image;
 	}
 
 	/**
@@ -208,48 +267,6 @@ public class Annotation implements Serializable {
 	 */
 	public void setY(Double y) {
 		this.y = y;
-	}
-
-	/**
-	 * @return the width
-	 */
-	public Double getWidth() {
-		return width;
-	}
-
-	/**
-	 * @param width the width to set
-	 */
-	public void setWidth(Double width) {
-		this.width = width;
-	}
-
-	/**
-	 * @return the height
-	 */
-	public Double getHeight() {
-		return height;
-	}
-
-	/**
-	 * @param height the height to set
-	 */
-	public void setHeight(Double height) {
-		this.height = height;
-	}
-
-	/**
-	 * @return the subject
-	 */
-	public String getSubject() {
-		return subject;
-	}
-
-	/**
-	 * @param subject the subject to set
-	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 
 	/**

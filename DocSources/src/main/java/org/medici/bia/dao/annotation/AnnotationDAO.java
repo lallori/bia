@@ -27,6 +27,10 @@
  */
 package org.medici.bia.dao.annotation;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Annotation;
 
@@ -37,4 +41,12 @@ import org.medici.bia.domain.Annotation;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface AnnotationDAO extends Dao<Integer, Annotation> {
+
+	/**
+	 * 
+	 * @param imageName
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
 }

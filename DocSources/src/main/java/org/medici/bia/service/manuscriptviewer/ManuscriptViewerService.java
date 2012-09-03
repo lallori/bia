@@ -226,6 +226,14 @@ public interface ManuscriptViewerService {
 	
 	/**
 	 * 
+	 * @param imageName
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Annotation> getImageAnnotations(String imageName)throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param volNum
 	 * @param volLetExt
 	 * @param imageOrder
