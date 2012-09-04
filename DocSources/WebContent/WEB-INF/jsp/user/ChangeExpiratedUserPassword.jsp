@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+
+		<div id="passwordExpirated">
 		<h1>PASSWORD EXPIRED</h1>
 		<form:form method="post">
 			<fieldset> 

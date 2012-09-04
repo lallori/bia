@@ -13,6 +13,7 @@
 		<div id="bgImgUserProfile">
 			<div id="imgUserProfile"></div>
 			<!--  <img src="/DocSources/images/default_user.jpg" alt="default image" id="imgProfile"/>-->
+			<a id="ChangePassword" href="#">Change Password</a>
 			<a id="PersonalNotesButton" href="#">Personal Notes</a>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>

@@ -161,6 +161,7 @@ public class CommunityServiceImpl implements CommunityService {
 				forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
 			}
 			forumPost.setDateCreated(new Date());
+			forumPost.setLogicalDelete(Boolean.FALSE);
 			forumPost.setLastUpdate(new Date());
 			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			getForumPostDAO().persist(forumPost);
