@@ -711,4 +711,38 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList) throws ApplicationThrowable {
+		try {
+			Image image = getImageDAO().findImageByImageId(imageId);
+			if (image == null) {
+				return new ArrayList<Annotation>(0);
+			}
+
+			for (Annotation annotation : annotationsList) {
+				Annotation persistedAnnotation = getAnnotationDAO().findByAnnotationId(annotation.getAnnotationId());
+				if (persistedAnnotation == null) {
+					annotation.setDateCreated(new Date());
+					annotation.setLastUpdate(new Date());
+					annotation.setImage(image);
+					if (annotation.getType() == null) {
+						annotation.setType(Annotation.Type.GENERAL);
+					}
+					getAnnotationDAO().persist(annotation);
+				} else {
+					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
+					getAnnotationDAO().merge(annotation);
+				}
+			}
+			
+			return annotationsList;
+		} catch (Throwable throwable){
+			throw new ApplicationThrowable(throwable);
+		}
+	}
 }
+

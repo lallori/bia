@@ -78,4 +78,43 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 
 		return (List<Annotation>) query.getResultList();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Annotation findById(String id) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE id=:id";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("annotationId", id);
+
+		List<Annotation> resultList = (List<Annotation>) query.getResultList();
+		
+		if (resultList.size() == 1){
+			return resultList.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE annotationId=:annotationId";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("annotationId", annotationId);
+
+		List<Annotation> resultList = (List<Annotation>) query.getResultList();
+		
+		if (resultList.size() == 1){
+			return resultList.get(0);
+		}
+		
+		return null;
+	}
+
 }

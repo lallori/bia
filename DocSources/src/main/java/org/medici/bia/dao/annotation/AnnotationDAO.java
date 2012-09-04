@@ -49,4 +49,20 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @throws PersistenceException
 	 */
 	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Annotation findById(String id) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param annotationId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException;
 }

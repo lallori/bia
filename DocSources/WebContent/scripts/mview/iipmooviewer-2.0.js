@@ -123,7 +123,6 @@ var IIPMooViewer = new Class({
       }
     }
 
-
     // Disable the right click context menu on image tiles?
     this.disableContextMenu = true;
 
@@ -165,10 +164,45 @@ var IIPMooViewer = new Class({
     this.preload = (options.preload == true) ? true : false;
     this.effects = false;
 
-    // Set up our annotations if they have been set and our annotation functions implemented
     this.annotations = ((typeof(this.initAnnotationTips)=="function")&&options.annotations)? options.annotations : null;
+    
+    // MEDICI ARCHIVE PROJECT START
+	this.annotationsType = options.annotationsType || 'local';
+	this.retrieveAnnotationsUrl = options.retrieveAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
+	this.updateAnnotationsUrl= options.updateAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
 
+	if (typeof(this.retrieveAnnotations) == "function") {
+		this.retrieveAnnotations();
+	}
 
+	if (typeof(this.newAnnotation)=="function") {
+	    window.addEvent('keydown', function(e){
+	    	if( e.key == 'n' ) {
+	    		if (typeof(window.iip.newAnnotation)=="function") {
+	    			window.iip.newAnnotation();
+	    		} else {
+	    	    	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
+	    		}
+	    	}
+	    });
+	    
+	    this.addEvent('annotationChange', function(e){
+	    	var queryParameter = "imageName=" + this.images[0].src + "&" + IIPMooViewer.annotationsAsQueryParameterString(this.annotations);
+	    	var metadata = new Request({
+	    	  method: 'post',
+	    	  secure: true,
+	    	  encoding: 'utf-8',
+	    	  url: this.updateAnnotationsUrl,
+	    	  data: queryParameter,	
+	    	  onSuccess: function(json){
+	    	    console.log('notified annotation change to server.');
+	              }
+	    	}).send();
+        });
+    } else {
+    	console.log("Annotation-edit.js is not included in main page. Please correct import");
+    }
+	// MEDICI ARCHIVE PROJECT END
 
     // If we want to assign a function for a click within the image
     // - used for multispectral curve visualization, for example
@@ -1066,9 +1100,11 @@ var IIPMooViewer = new Class({
       'mousedown': function(e){ var event = new DOMEvent(e); event.stop(); }
     });
 
-
-    // Initialize canvas events for our annotations
-    if( this.annotations ) this.initAnnotationTips();
+	// Initialize canvas events for our annotations
+    if( this.annotations ) {
+    	this.initAnnotationTips();
+    	this.retrieveAnnotations();
+    }
 
 
     // Disable the right click context menu if requested and show our info window instead
@@ -1998,6 +2034,43 @@ IIPMooViewer.synchronize = function(viewers){
   this.sync = viewers;
 };
 
+//MEDICI ARCHIVE PROJECT START
+IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
+	var retValue = '';
+	
+    // Convert our annotation object into an array - we'll need this for sorting later
+    var annotation_array = new Array();
+    for( var a in annotations ){
+      annotations[a].id = a;
+      annotation_array.push( annotations[a] );
+    }
+    
+    for( var i=0; i<annotation_array.length; i++ ){
+    	// we need to control typeOf beacause in annotation there are also functions...
+    	if (typeof(annotation_array[i])=="object" ){
+    		retValue +="annotations=";
+			retValue +=annotation_array[i].id;
+			retValue +=",";
+			retValue +=annotation_array[i].x;
+			retValue +=",";
+			retValue +=annotation_array[i].y;
+			retValue +=",";
+			retValue +=annotation_array[i].w;
+			retValue +=",";
+			retValue +=annotation_array[i].h;
+			retValue +=",";
+			retValue +=annotation_array[i].category;
+			retValue +=",";
+			retValue +=annotation_array[i].title;
+			retValue +=",";
+			retValue +=annotation_array[i].text;
+			retValue +="&";
+    	}
+	}
+
+    return retValue;
+};
+//MEDICI ARCHOVE PROJECT END
 
 /* Static function get get an array of the windows that are
    synchronized to this one

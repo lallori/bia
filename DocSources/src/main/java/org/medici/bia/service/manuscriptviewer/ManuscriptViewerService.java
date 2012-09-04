@@ -249,4 +249,12 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param imageId
+	 * @param annotationsList
+	 * @throws ApplicationThrowable
+	 */
+	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList) throws ApplicationThrowable;
 }

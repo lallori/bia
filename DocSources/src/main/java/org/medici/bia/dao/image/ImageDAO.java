@@ -47,6 +47,14 @@ import org.medici.bia.domain.Image.ImageType;
 public interface ImageDAO extends Dao<Integer, Image> {
 
 	/**
+	 * 
+	 * @param imageId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Image findImageByImageId(Integer imageId) throws PersistenceException;
+
+	/**
 	 * This method searches a document image identified by volume identifiers, number of folio
 	 * and folio format.
 	 *  
@@ -148,7 +156,7 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param volNum
@@ -157,7 +165,7 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public FoliosInformations findVolumeFoliosInformations(Integer volNum, String volLetExt) throws PersistenceException;
-	
+
 	/**
 	 * This method searches a volume image identified by volume identifiers and image order.
 	 * 

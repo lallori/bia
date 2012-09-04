@@ -89,6 +89,26 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public Image findImageByImageId(Integer imageId) throws PersistenceException {
+        String jpql = "FROM Image WHERE imageId=:imageId";
+
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("imageId", imageId);
+
+		List<Image> result = query.getResultList();
+		
+		if (result.size() == 1) {
+			return result.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
         if (StringUtils.isEmpty(volLetExt))
@@ -645,7 +665,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		query.setMaxResults(1);
 		return (Image) query.getSingleResult();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -666,7 +686,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 		return query.getResultList();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

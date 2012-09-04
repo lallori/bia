@@ -5,6 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="ReverseProxyIIPImage" value="/mview/IIPImageServer.do"/>
+	<c:url var="GetImageAnnotationURL" value="/src/mview/GetImageAnnotation.json">
+		<c:param name="imageId" value="${documentExplorer.image.imageId}"></c:param>
+		<c:param name="imageName" value="${documentExplorer.image.imageName}"></c:param>
+	</c:url>
+	<c:url var="UpdateAnnotationsURL" value="/src/mview/UpdateAnnotations.json">
+		<c:param name="imageId" value="${documentExplorer.image.imageId}"></c:param>
+		<c:param name="imageName" value="${documentExplorer.image.imageName}"></c:param>
+	</c:url>
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 
 	<c:url var="PageTurnerDialogUrl" value="/src/mview/PageTurnerDialog.do" >
@@ -38,6 +46,7 @@
 
 				var credit = '';
 				var imageName = "${documentExplorer.image.imageName}";
+				var annotations = new Array();
 				if ("${documentExplorer.image.imageType}" == 'R') {
 					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'C') {
@@ -78,7 +87,11 @@
 					image: '${documentExplorer.image}',
 					zoom: 3,
 					credit: credit,
-					navWinPos: 'left'
+					navWinPos: 'left',
+					annotationsType: 'remote',
+					retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+					annotations: annotations
 				});
 
 // 				var $pageTurner = $j('<div>PageTurnerHorizontalDiv</div>')

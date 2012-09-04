@@ -150,17 +150,17 @@ IIPMooViewer.implement({
     form.addEvents({
       'submit': function(e){
         e.stop();
-	_this.updateShape(this.getParent());
-	_this.annotations[id].category = e.target['category'].value;
-	_this.annotations[id].title = e.target['title'].value;
-	_this.annotations[id].text = e.target['text'].value;
-	delete _this.annotations[id].edit;
-	_this.updateAnnotations();
-	_this.fireEvent('annotationChange', _this.annotations);
-      },
+		_this.updateShape(this.getParent());
+		_this.annotations[id].category = e.target['category'].value;
+		_this.annotations[id].title = e.target['title'].value;
+		_this.annotations[id].text = e.target['text'].value;
+		delete _this.annotations[id].edit;
+		_this.updateAnnotations();
+		_this.fireEvent('annotationChange', _this.annotations);
+	 },
       'reset': function(){
-	delete _this.annotations[id].edit;
-	_this.updateAnnotations();
+		delete _this.annotations[id].edit;
+		_this.updateAnnotations();
       }
     });
 

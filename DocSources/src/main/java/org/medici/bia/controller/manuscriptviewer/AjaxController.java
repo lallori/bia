@@ -31,11 +31,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ImageUtils;
@@ -46,6 +48,7 @@ import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -145,6 +148,43 @@ public class AjaxController {
 		} catch (ApplicationThrowable ath) {
 		}
 	
+		return new ModelAndView("responseOK", model);
+	}
+
+	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
+	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			// In this controller we get input parameter at low level beacause 
+			// there is a bug in spring which construct a wrong list of 
+			// annotations in case of client send 1 single annotation 
+			//String imageName = httpServletRequest.getParameter("imageName");
+			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
+			String[] annotations = httpServletRequest.getParameterValues("annotations");
+			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
+
+			if (annotations != null) {
+				for (String string : annotations) {
+					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
+					StringTokenizer stringTokenizer = new StringTokenizer(string, ",");
+					Annotation annotation = new Annotation();
+					annotation.setId(stringTokenizer.nextToken());
+					annotation.setX(NumberUtils.toDouble(stringTokenizer.nextToken()));
+					annotation.setY(NumberUtils.toDouble(stringTokenizer.nextToken()));
+					annotation.setW(NumberUtils.toDouble(stringTokenizer.nextToken()));
+					annotation.setH(NumberUtils.toDouble(stringTokenizer.nextToken()));
+					annotation.setCategory(stringTokenizer.nextToken());
+					annotation.setTitle(stringTokenizer.nextToken());
+					annotation.setText(stringTokenizer.nextToken());
+					annotationsList.add(annotation);
+				}
+			}
+			getManuscriptViewerService().updateAnnotations(imageId, annotationsList);
+		}catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("responseKO", model);
+		}
+		
 		return new ModelAndView("responseOK", model);
 	}
 

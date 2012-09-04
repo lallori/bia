@@ -125,12 +125,22 @@ public class Annotation implements Serializable {
 		this.category = category;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
 	@Column (name="\"w\"", nullable=false)
 	private Double w;
 	@Column (name="\"h\"", nullable=false)
 	private Double h;
 	@Column (name="\"category\"", nullable=false) 
 	private String category;
+	@Column (name="\"title\"", nullable=true) 
+	private String title;
 	@Column (name="\"text\"", nullable=true) 
 	private String text;
 	

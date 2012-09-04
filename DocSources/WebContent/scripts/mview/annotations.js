@@ -187,7 +187,31 @@ IIPMooViewer.implement({
       el.eliminate('tip:text');
       el.destroy();
     });
+  },
+
+   retrieveAnnotations: function() {
+	  if (this.annotationsType == 'remote') {
+			this.annotations = new Array();
+
+			new Request.JSON({
+				method: 'get',
+				async: false,
+				url: this.retrieveAnnotationsUrl,
+				noCache: true,
+	        	onRequest: function(){
+	            	// show some rotating loader gif...
+	        	},
+				onComplete: function(responseText) {
+					for (i=0; i<responseText.annotations.length; i++) {
+						this.annotations.push( {x: responseText.annotations[i][0].toFloat(), y: responseText.annotations[i][1].toFloat(), w: responseText.annotations[i][2].toFloat(), h: responseText.annotations[i][3].toFloat(), text: responseText.annotations[i][4]} );
+					}
+				}.bind(this), 
+				onError: function(text, error){
+					console.log('error!!!' + text + ' - error : ' + error);
+				}
+		    }).get('');
+	  } else if (this.annotationsType == 'local') {
+		  // in case of local annotation, we do nothing
+	  }
   }
-
-
 });
