@@ -10,23 +10,25 @@
 <h3 class="userSearch">USER SEARCH</h3>
 
 <form:form id="userSearchForm" method="post" cssClass="edit" action="${ShowUserSearchURL}">
-<fieldset>
-<legend><b>NEW FILTER</b></legend>
-	<div style="margin-top:5px;">	
-		<form:label path="fullName" for="fullName" id="fullNameLabel">Full name</form:label>
-		<input id="fullName" name="fullName" class="input_7c" type="text" value="Contains" disabled="">
-        <form:input id="fullName" path="fullName" name="fullName" cssClass="input_25c" type="text" value=""/>
-	</div>	
-	<div>
-		<form:label path="userName" for="userName" id="userNameLabel">User name</form:label>
-		<input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/>
-        <form:input id="userName" path="userName" name="userName" cssClass="input_25c" type="text" value=""/>
-	</div>
-	<div>
-        <input class="search" type="submit" value="Search" />
-	</div>
-</fieldset>	
+	<fieldset>
+	<legend><b>NEW FILTER</b></legend>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="fullName" for="fullName" id="fullNameLabel">Full name</form:label></div>
+				<div class="col_r"><input id="fullName" name="fullName" class="input_7c" type="text" value="Contains" disabled=""></div>
+				<div class="col_r"><form:input id="fullName" path="fullName" name="fullName" cssClass="input_25c" type="text" value=""/></div>	
+			</div>	
+			<div class="row">
+					<div class="col_l"><form:label path="userName" for="userName" id="userNameLabel">User name</form:label></div>
+					<div class="col_r"><input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/></div>
+			        <div class="col_r"><form:input id="userName" path="userName" name="userName" cssClass="input_25c" type="text" value=""/></div>
+			</div>
+		</div>	
+	<input class="search" type="submit" value="Search" />
+	</fieldset>	
 </form:form>
+
+
 
 <script>
 	$j(document).ready(function() {

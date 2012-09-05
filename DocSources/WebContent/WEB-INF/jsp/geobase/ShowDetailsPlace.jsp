@@ -19,7 +19,6 @@
 	<div id="geoDiv">
 			<%-- Creating a New Place Record --%>
 			<c:if test="${place.placeAllId == 0}">
-				<div id="geoTitle">
 					<c:if test="${place.plSource == 'TGN'}">
 	            		<h2 class="addNew">ADD New - TGN Place Record</h2>
 	            		<p style="margin:0 0 5px 15px">Get this place data through the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
@@ -30,7 +29,6 @@
 					<c:if test="${place.plSource == 'MAPSITE'}">
 						<h2 class="addNew">ADD New -  MAP SITE or SUBSITE Place Record</h2>
 					</c:if>
-				</div>
 			</c:if>
 			<%-- Editing Place Records --%>
 			<c:if test="${place.placeAllId != 0}">

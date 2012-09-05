@@ -477,7 +477,7 @@ item a{
 	width: 525px;
 }
 
-.listFormPreferences { /* Whole display list */
+.listFormPassword { /* Whole display list */
 	display: table;
 	margin: 5px 0 0 0;
 	width: 360px;
@@ -494,18 +494,26 @@ item a{
 	width: 440px;
 }
 
-.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r, .listAdvSearch .col_r, .listFormPreferences .col_r{ /* Sub-fields title cell */
+.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r, .listAdvSearch .col_r, .listFormPassword .col_r{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:right;
 }
 
-.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l, .listAdvSearch .col_l, .listFormPreferences .col_l{ /* Sub-fields title cell */
+.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l, .listAdvSearch .col_l, .listFormPassword .col_l{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:left;
 }
 
 .listForm .row .helpIcon, .listAdvSearch .row .helpIcon {
 	margin-right: 5px;
+}
+
+.listForm ul {
+	list-style:none;
+}
+
+.listForm ul input[type="checkbox"]{
+	margin-right:5px;
 }
 
 /*-----------------------------*/
@@ -2979,7 +2987,7 @@ form#EditUserProfileForm span{
 	text-align:center;
 }
 
-#userProfile #EditUserProfile {
+#userProfile #EditUserProfile, #userProfile #ChangePassword {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	width:127px;
 	height:23px;
@@ -3145,11 +3153,10 @@ form#EditUserProfileForm span{
 }
 
 
-/* ---------------------------- USER PREFERENCES ---------------------------------- */
+/* ---------------------------- CHANGE PASSWORD ---------------------------------- */
 
-#userPreferences #save{
+#ChangePasswordDiv #save{
 	margin:25px 0 0 148px;
-
 }
 
 

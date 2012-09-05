@@ -62,6 +62,12 @@ h1 {
 h2 {
 	font-size: 13px;
 	color: #6D5C4D;
+	width: 620px;
+	display: inline-block;
+}
+
+h2.title {
+	width: 1000px;
 }
 
 #postTable h2 {
@@ -76,6 +82,12 @@ h2 {
 	margin: 10px;
 	text-align: justify;
 	line-height: 17px;
+}
+
+#postTable img {
+	border-radius:2px;
+	margin: 0 5px 0 5px;
+	box-shadow: 0 0 6px #B7958F;
 }
 
 /* ------------------------------------------------- STRUCTURE ------------------------------------------------- */ 
@@ -168,14 +180,25 @@ h2 {
 .buttonMedium { /* Button medium class */
 	width:122px;
 	height:22px;
-	display:inline;
+	display: inline-block;
 	background-image:url(/DocSources/images/forum/button_medium.png);
 	background-repeat:no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 }
 
-a.buttonMedium:hover, a.buttonSmall:hover {
+.buttonLarge { /* Button medium class */
+	width: 182px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_large.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+}
+
+a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:hover {
 	text-decoration:none;
 	color:#6F6B69;
 	opacity: 0.5;
@@ -500,7 +523,7 @@ a.returnTo {
 /* ---------- Topic Actions ---------- */
 
 #topicActions {
-	width: 350px;
+	width: 1000px;
 	height: 20px;
 	margin: 15px 0 20px 0;
 }
@@ -547,9 +570,12 @@ a.returnTo {
 }
 
 #printButton {
-	margin: 6px 0 0 879px;
-	position: absolute;
+	margin: 0 0 0 879px;
 	background-repeat:none;
+}
+
+#fullscreenButton {
+    margin-left: 693px;
 }
 
 /* ---------- Post Table ---------- */
@@ -720,10 +746,6 @@ input[type="submit"]:hover {
 }
 
 /* ---------- New Topic / New Post ---------- */
-
-#EditForumPost {
-	min-height: 395px;
-}
 
 .input_25c { /* input for 15 characters approx. */ 
 	width: 237px;

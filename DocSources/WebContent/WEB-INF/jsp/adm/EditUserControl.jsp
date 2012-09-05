@@ -34,43 +34,53 @@
             <div class="col_l"><form:input id="lastName" name="lastName" class="input_14c" type="text" value="" path="lastName"/></div>
         </div>
     </div>
-    
+      
     <hr />
     
     <div class="listForm">
         <div class="row">
             <div class="col_l"><form:label for="newPassword" id="newPasswordLabel" path="password">New password</form:label></div>
-            <div class="col_l"><form:input id="newPassword" name="newPassword" class="input_8c" type="password" value="" path="password"/></div>
+            <div class="col_l"><form:input id="newPassword" name="newPassword" class="input_15c" type="password" value="" path="password"/></div>
         </div>
-        <div class="row">
-        	<b>Password Expires:</b>
-			<br />
+    </div>
+   	<p><b>Password Expires:</b></p>
+    <div class="listForm">
+		<div class="row">
             <div class="col_r"><form:label id="yearExpirationPasswordLabel" for="yearExpirationPassword" path="yearExpirationPassword" cssErrorClass="error">Year</form:label></div>
 			<div class="col_l"><form:input id="yearExpirationPassword" path="yearExpirationPassword" class="input_4c" value="" maxlength="4"/></div>
 			<div class="col_r"><form:label id="monthExpirationPasswordLabel" for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error">Month</form:label></div>
 			<div class="col_l"><form:select id="monthExpirationPassword" path="monthExpirationPassword" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
 			<div class="col_r"><form:label  for="dayExpirationPassword" id="dayExpirationPassword" path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
 			<div class="col_r"><form:input id="dayExpirationPassword" path="dayExpirationPassword" class="input_2c" maxlength="2"/></div>
-            <div class="col_r">
+        </div>   
+     </div>
+     <div class="listForm">
+		<div class="row">      
+          <div class="col_r">
             	<label for="forcePswdChange" id="forcePswdChangeLabel">Force Password Change
                 <input type="checkbox" name="forcePswdChange" class="checkboxPers2"/>
             </div>
         </div>
    	</div>
-    
+
     <hr />
     
     <div class="listForm">
         <div class="row">
-            <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel">Group policies</label></div>
-            <div class="col_r">
+            <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel"><b>Group policies:</b></label></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col_l">
             	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" itemValue="authority" itemLabel="description" path="userRoles" delimiter="<br/>"/>
             </div>
         </div>
     </div>
-    <div class="listForm">
-    	<b>Account Expiration Time:</b>
-		<br />
+   
+    <hr />
+    
+   	<p><b>Account Expiration Time:</b></p>
+	<div class="listForm">
         <div class="row">
 			<div class="col_r"><form:label id="yearExpirationUserLabel" for="yearExpirationUser" path="yearExpirationUser" cssErrorClass="error">Year</form:label></div>
 			<div class="col_l"><form:input id="yearExpirationUser" path="yearExpirationUser" cssClass="input_4c" value="" maxlength="4"/></div>
@@ -79,26 +89,25 @@
 			<div class="col_r"><form:label  id="dayExpirationUserLabel" path="dayExpirationUser" for="dayExpirationUser" cssErrorClass="error">Day</form:label></div>
 			<div class="col_r"><form:input id="dayExpirationUser" path="dayExpirationUser" class="input_2c" maxlength="2"/></div>
 		</div>
-		<div class="row">
-            <div class="col_r">
-            	<label for="active" id="activeLabel">Active Account</label>
-				<form:checkbox path="active" cssClass="checkboxPers1"/>
-            </div>
-        </div>
+	</div>
+	<div class="listForm">
         <div class="row">
-            <div class="col_r">
-            	<label for="approved" id="approvedLabel">Approved Account</label>
-				<form:checkbox path="approved" cssClass="checkboxPers1"/>
-            </div>
-        </div>
-		<div class="row">
-            <div class="col_r">
-            	<label for="locked" id="lockedLabel">Lock account</label>
-				<form:checkbox path="locked" cssClass="checkboxPers1"/>
-            </div>
-        </div>
+	        <ul>
+				<li>
+					<form:checkbox path="active" cssClass="checkboxPers1"/>	
+			        <label for="active" id="activeLabel">Active Account</label>
+		        </li>
+      			<li>
+	      			<form:checkbox path="approved" cssClass="checkboxPers1"/>
+	                <label for="approved" id="approvedLabel">Approved Account</label>
+				</li>
+				<li>
+					<form:checkbox path="locked" cssClass="checkboxPers1"/>
+					<label for="locked" id="lockedLabel">Lock account</label>
+				</li>
+			</ul>
+         </div>
     </div>
-
     <div>
 		<input id="close" type="submit" value="Close" title="Do not save changes" />
 		<input id="save" class="save" type="submit" value="Save" />
