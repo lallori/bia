@@ -171,18 +171,17 @@ var IIPMooViewer = new Class({
 	this.retrieveAnnotationsUrl = options.retrieveAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
 	this.updateAnnotationsUrl= options.updateAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
 
-	if (typeof(this.retrieveAnnotations) == "function") {
-		this.retrieveAnnotations();
-	}
-
 	if (typeof(this.newAnnotation)=="function") {
 	    window.addEvent('keydown', function(e){
 	    	if( e.key == 'n' ) {
-	    		if (typeof(window.iip.newAnnotation)=="function") {
-	    			window.iip.newAnnotation();
-	    		} else {
-	    	    	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
-	    		}
+	    		// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
+		    	if (typeof(e.target.form)=='undefined') {
+		    		if (typeof(window.iip.newAnnotation)=="function") {
+		    			window.iip.newAnnotation();
+		    		} else {
+		    	    	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
+		    		}
+		    	}
 	    	}
 	    });
 	    
@@ -1103,7 +1102,9 @@ var IIPMooViewer = new Class({
 	// Initialize canvas events for our annotations
     if( this.annotations ) {
     	this.initAnnotationTips();
-    	this.retrieveAnnotations();
+    	if (typeof(this.retrieveAnnotations) == "function") {
+    		this.retrieveAnnotations();
+    	}
     }
 
 
@@ -2049,6 +2050,8 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
     	// we need to control typeOf beacause in annotation there are also functions...
     	if (typeof(annotation_array[i])=="object" ){
     		retValue +="annotations=";
+    		retValue +=annotation_array[i].annotationId;
+    		retValue +=",";
 			retValue +=annotation_array[i].id;
 			retValue +=",";
 			retValue +=annotation_array[i].x;
@@ -2058,6 +2061,8 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
 			retValue +=annotation_array[i].w;
 			retValue +=",";
 			retValue +=annotation_array[i].h;
+			retValue +=",";
+			retValue +=annotation_array[i].type;
 			retValue +=",";
 			retValue +=annotation_array[i].category;
 			retValue +=",";

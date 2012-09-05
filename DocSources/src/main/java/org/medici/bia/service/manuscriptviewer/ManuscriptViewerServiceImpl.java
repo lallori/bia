@@ -66,7 +66,6 @@ import org.medici.bia.domain.Forum.SubType;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -114,8 +113,11 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Annotation createAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
+	public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			annotation.setUser(user);
+
 			// first of all, persisting annotation 
 			getAnnotationDAO().persist(annotation);
 			
@@ -123,7 +125,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
 				image = getImageDAO().find(image.getImageId());
 				Volume volume = getVolumeDAO().findVolume(image.getVolNum(), image.getVolLetExt()); 
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				if (volume != null) {
 					Forum volumeForum = getForumDAO().findVolumeForumFromParent(generalQuestionsForum, volume.getSummaryId());
@@ -195,7 +196,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			} else if (annotation.getType().equals(Annotation.Type.PALEOGRAPHY)) {
 				Forum paleographyForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography")));
 				image = getImageDAO().find(image.getImageId());
-				User user = getUserDAO().findUser((((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				// create specific topic on annotation...
 				ForumTopic forumTopic = new ForumTopic(null);
@@ -723,18 +723,24 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				return new ArrayList<Annotation>(0);
 			}
 
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			for (Annotation annotation : annotationsList) {
+				annotation.setUser(user);
+				annotation.setImage(image);
+
 				Annotation persistedAnnotation = getAnnotationDAO().findByAnnotationId(annotation.getAnnotationId());
 				if (persistedAnnotation == null) {
 					annotation.setDateCreated(new Date());
 					annotation.setLastUpdate(new Date());
-					annotation.setImage(image);
 					if (annotation.getType() == null) {
 						annotation.setType(Annotation.Type.GENERAL);
 					}
 					getAnnotationDAO().persist(annotation);
 				} else {
-					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
+					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
+					annotation.setId(persistedAnnotation.getId());
+					annotation.setLastUpdate(new Date());
 					getAnnotationDAO().merge(annotation);
 				}
 			}

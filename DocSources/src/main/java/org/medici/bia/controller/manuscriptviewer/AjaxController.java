@@ -31,10 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -48,7 +45,6 @@ import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -98,7 +94,7 @@ public class AjaxController {
 			image.setImageProgTypeNum(imageProgTypeNum);
 			image.setImageOrder(imageOrder);
 			image.setImageName(imageName);
-			annotation = getManuscriptViewerService().createAnnotation(annotation, image, httpServletRequest.getRemoteAddr());			
+			annotation = getManuscriptViewerService().addNewAnnotation(annotation, image, httpServletRequest.getRemoteAddr());			
 			model.put("annotationId", annotation.getAnnotationId());
 		} catch (ApplicationThrowable ath) {
 		}
@@ -133,15 +129,17 @@ public class AjaxController {
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);			
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
-				List<Object> singleRow = new ArrayList<Object>();
-				singleRow.add(currentAnnotation.getId());
-				singleRow.add(currentAnnotation.getX());
-				singleRow.add(currentAnnotation.getY());
-				singleRow.add(currentAnnotation.getW());
-				singleRow.add(currentAnnotation.getH());
-				singleRow.add(currentAnnotation.getType());
-				singleRow.add(currentAnnotation.getText());
-				
+				HashMap<String, Object> singleRow = new HashMap<String, Object>();
+				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
+				singleRow.put("id", currentAnnotation.getId());
+				singleRow.put("x", currentAnnotation.getX());
+				singleRow.put("y", currentAnnotation.getY());
+				singleRow.put("w", currentAnnotation.getW());
+				singleRow.put("h", currentAnnotation.getH());
+				singleRow.put("type", currentAnnotation.getType());
+				singleRow.put("category", currentAnnotation.getCategory());
+				singleRow.put("title", currentAnnotation.getTitle());
+				singleRow.put("text", currentAnnotation.getText());
 				resultList.add(singleRow);
 			}
 			model.put("annotations", resultList);
@@ -167,16 +165,18 @@ public class AjaxController {
 			if (annotations != null) {
 				for (String string : annotations) {
 					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
-					StringTokenizer stringTokenizer = new StringTokenizer(string, ",");
+					String[] splitted = StringUtils.splitPreserveAllTokens(string, ",");
 					Annotation annotation = new Annotation();
-					annotation.setId(stringTokenizer.nextToken());
-					annotation.setX(NumberUtils.toDouble(stringTokenizer.nextToken()));
-					annotation.setY(NumberUtils.toDouble(stringTokenizer.nextToken()));
-					annotation.setW(NumberUtils.toDouble(stringTokenizer.nextToken()));
-					annotation.setH(NumberUtils.toDouble(stringTokenizer.nextToken()));
-					annotation.setCategory(stringTokenizer.nextToken());
-					annotation.setTitle(stringTokenizer.nextToken());
-					annotation.setText(stringTokenizer.nextToken());
+					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
+					annotation.setId(splitted[1]);
+					annotation.setX(NumberUtils.toDouble(splitted[2]));
+					annotation.setY(NumberUtils.toDouble(splitted[3]));
+					annotation.setW(NumberUtils.toDouble(splitted[4]));
+					annotation.setH(NumberUtils.toDouble(splitted[5]));
+					annotation.setType(Annotation.Type.valueOf(splitted[6]));
+					annotation.setCategory(splitted[7]);
+					annotation.setTitle(splitted[8]);
+					annotation.setText(splitted[9]);
 					annotationsList.add(annotation);
 				}
 			}

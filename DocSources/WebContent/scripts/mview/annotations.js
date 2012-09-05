@@ -189,6 +189,7 @@ IIPMooViewer.implement({
     });
   },
 
+   // MEDICI ARCHIVE PROJECT START
    retrieveAnnotations: function() {
 	  if (this.annotationsType == 'remote') {
 			this.annotations = new Array();
@@ -201,11 +202,23 @@ IIPMooViewer.implement({
 	        	onRequest: function(){
 	            	// show some rotating loader gif...
 	        	},
-				onComplete: function(responseText) {
-					for (i=0; i<responseText.annotations.length; i++) {
-						this.annotations.push( {x: responseText.annotations[i][0].toFloat(), y: responseText.annotations[i][1].toFloat(), w: responseText.annotations[i][2].toFloat(), h: responseText.annotations[i][3].toFloat(), text: responseText.annotations[i][4]} );
+	        	
+	        	onSuccess: function(responseJSON, responseText){
+					for (i=0; i<responseJSON.annotations.length; i++) {
+						this.annotations.push( {
+							annotationId: responseJSON.annotations[i].annotationId.toInt(),
+							id: responseJSON.annotations[i].id,
+							x: responseJSON.annotations[i].x.toFloat(), 
+							y: responseJSON.annotations[i].y.toFloat(), 
+							w: responseJSON.annotations[i].w.toFloat(), 
+							h: responseJSON.annotations[i].h.toFloat(),
+							type: responseJSON.annotations[i].type,
+							category: responseJSON.annotations[i].category,
+							title: responseJSON.annotations[i].title,
+							text: responseJSON.annotations[i].text
+						} );
 					}
-				}.bind(this), 
+	        	}.bind(this), 
 				onError: function(text, error){
 					console.log('error!!!' + text + ' - error : ' + error);
 				}
@@ -214,4 +227,6 @@ IIPMooViewer.implement({
 		  // in case of local annotation, we do nothing
 	  }
   }
+	// MEDICI ARCHIVE PROJECT END
+
 });

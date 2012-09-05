@@ -120,10 +120,17 @@ IIPMooViewer.implement({
     html += '/></td></tr>';
 
     html += '<tr><td>category</td><td><input type="text" name="category" tabindex="2"';
-    if( this.annotations[id].category ) html += this.annotations[id].category + '"';
+    // MEDICI ARCHIVE PROJECT START
+    // ruven miss to put ' value="' + 
+    if( this.annotations[id].category ) html += ' value="' + this.annotations[id].category + '"';
+    // MEDICI ARCHIVE PROJECT END
     html += '/></td></tr>';
 
     html += '<tr><td colspan="2"><textarea name="text" rows="5" tabindex="3">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
+    // MEDICI ARCHIVE PROJECT START
+    html += '<input type="hidden" name="annotationId" value="' + this.annotations[id].annotationId + '">';
+    html += '<input type="hidden" name="type" value="' + this.annotations[id].type + '">';
+    // MEDICI ARCHIVE PROJECT END
 
     form.set( 'html', html );
 

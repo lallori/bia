@@ -56,7 +56,7 @@ public class Annotation implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5735698070115951563L;
+	private static final long serialVersionUID = 2032010411783359973L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -76,63 +76,17 @@ public class Annotation implements Serializable {
 	@Column (name="\"lastUpdate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"")
+	private User user;
+	
 	@Column (name="\"id\"", nullable=false) 
 	private String id;
 	@Column (name="\"x\"", nullable=false)
 	private Double x;
 	@Column (name="\"y\"", nullable=false)
 	private Double y;
-	/**
-	 * @return the w
-	 */
-	public Double getW() {
-		return w;
-	}
-
-	/**
-	 * @param w the w to set
-	 */
-	public void setW(Double w) {
-		this.w = w;
-	}
-
-	/**
-	 * @return the h
-	 */
-	public Double getH() {
-		return h;
-	}
-
-	/**
-	 * @param h the h to set
-	 */
-	public void setH(Double h) {
-		this.h = h;
-	}
-
-	/**
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
 	@Column (name="\"w\"", nullable=false)
 	private Double w;
 	@Column (name="\"h\"", nullable=false)
@@ -178,6 +132,64 @@ public class Annotation implements Serializable {
 	 */
 	public Integer getAnnotationId() {
 		return annotationId;
+	}
+
+	/**
+	 * @return the w
+	 */
+	public Double getW() {
+		return w;
+	}
+
+	/**
+	 * @param w the w to set
+	 */
+	public void setW(Double w) {
+		this.w = w;
+	}
+
+	/**
+	 * @return the h
+	 */
+	public Double getH() {
+		return h;
+	}
+
+	/**
+	 * @param h the h to set
+	 */
+	public void setH(Double h) {
+		this.h = h;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * 
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTitle() {
+		return title;
 	}
 
 	/**
@@ -291,6 +303,14 @@ public class Annotation implements Serializable {
 	 */
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
 	}
 
 	/**
