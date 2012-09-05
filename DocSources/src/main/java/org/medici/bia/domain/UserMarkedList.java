@@ -78,7 +78,7 @@ public class UserMarkedList implements Serializable {
 	private Date dateLastUpdate;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="\"account\"", nullable=true)
+	@JoinColumn(name="\"account\"")
 	private User user;
 
     @OneToMany(mappedBy="userMarkedList", fetch=FetchType.LAZY)
