@@ -577,9 +577,6 @@ item a{
 
 .showOrEditCompare:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
@@ -637,12 +634,6 @@ input, select { /* INPUT text */
 
 label {
 	color:#6d5c4d;
-}
-
-input[type="submit"]:hover, input[type="image"]:hover{ 
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
@@ -717,9 +708,6 @@ input[type="submit"]:hover, input[type="image"]:hover{
 
 #AddNewValue:hover, .AddNewValue:hover, .Add:hover  {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 .Add  { /* "Add" Button */
@@ -2373,12 +2361,6 @@ a.refreshVolumeExplorer {
 	width:700px;
 }
 
-#modalBox a:hover, #VolumeExplorerModalLeft a:hover{
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
-}
-
 /* modalBox Previous / Next Folio */
 
 #modalBox #prevNextButtons {
@@ -2699,9 +2681,6 @@ a.refreshVolumeExplorer {
 
 
 #AddNewTgnPlace:hover,#AddNewMapPlace:hover, #AddNewMapSitePlace:hover, #goBack:hover  {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 	text-decoration:none;
 }
 
@@ -2739,12 +2718,6 @@ a.refreshVolumeExplorer {
     background-image: url(/DocSources/images/1024/img_place.png);
     background-repeat: no-repeat;
 	background-position-y:10px;
-}
-
-#body_left #placeImageDiv a:hover{ /* Place map */
-        opacity:1; /* FireFox, Chrome, Safari */
-	-moz-opacity: 1;
-	filter:alpha(opacity=100); /* IE */ !important
 }
 
 #geoTitle p {
@@ -3011,12 +2984,6 @@ form#EditUserProfileForm span{
 	text-align:center;
 }
 
-#PersonalNotesButton:hover, #EditUserProfile:hover, #CloseUserProfile:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
-}
-
 #modalBox P{
 	line-height:20px;
 	text-align:justify;
@@ -3089,9 +3056,6 @@ form#EditUserProfileForm span{
 
 
 #modalBox #editCleanClose #cleanAll:hover, #modalBox #editCleanClose #edit:hover, #modalBox #editCleanClose #goBack:hover, #modalBox #editCleanClose #close:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 	text-decoration: none;
 }
 
@@ -3332,18 +3296,15 @@ form#EditUserProfileForm span{
 }
 
 #advancedSearchModal a:hover{ /* On Rollover transparency effect */
-	opacity:0.5; /* Chrome, Safari */
-	-moz-opacity: 0.5; /* Firefox */
-	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
 }
 
 #savedSearchFiltersTableDiv {
-	height:320px !important;
-	height /**/: 330px;
-	overflow:auto !important;
-	width: 740px;
-	margin-bottom:25px;
+	height: 310px !important;
+	height /**/: 320px;
+	overflow: auto !important;
+	width: 725px;
+	margin-bottom: 25px;
 }
 
 /*
@@ -3606,12 +3567,6 @@ div.title a.helpIcon{ /* Help symbol "?" */
 	position:absolute;
 }
 
-#advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
-	opacity:0.5; /* Chrome, Safari */
-	-moz-opacity: 0.5; /* FireFox */
-	filter:alpha(opacity=50); /* IE */
-}
-
 #yourEasySearchFilterForm {
 	background:url(/DocSources/images/1024/bg_searchFilter.jpg) no-repeat;
 	margin: 0;
@@ -3847,13 +3802,6 @@ table#savedSearchFiltersForm.display {
 	height:22px;
 }
 
-#goBackToAdvancedSearch:hover, #closeSavedFilters:hover {
-	opacity:0.5; /* Chrome, Safari */
-	-moz-opacity: 0.5; /* FireFox */
-	filter:alpha(opacity=50); /* IE */
-	text-decoration:none;
-}
-
 
 /* -------------------------------------------------------------------------- */
 /*
@@ -3986,9 +3934,6 @@ table#savedSearchFiltersForm.display {
 
 #commentsDiv a:hover{
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #ConfirmCreateForum h1 {
@@ -4041,9 +3986,6 @@ table#savedSearchFiltersForm.display {
 
 .addComment:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 .commentDiv { 
@@ -4173,9 +4115,6 @@ a.showDigitizedDocument:hover {
 
 #close:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 
@@ -4269,10 +4208,7 @@ ul#network a {
 }
 
 #digitizationModalDiv #CreateSchedone:hover, #digitizationModalDiv #ActivateFilza:hover, #digitizationModalDiv #BrowseFilze:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
 	text-decoration:none;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #digitizationModalDiv #CreateSchedoneDiv {
@@ -4315,6 +4251,18 @@ ul#network a {
 #betweenSearchLabel {
 	width: 50px;
 	text-align: center;
+}
+
+#browseSearchSchedoni #search {
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(/DocSources/images/1024/button_small.png);
+    width: 52px;
+    height: 23px;
+    border: none;
+    text-align: center;
+    padding-top: 3px;
+    background-repeat: no-repeat;
 }
 
 
@@ -4444,13 +4392,6 @@ ul#network a {
 	margin: 0px;
 }
 
-#administrationModalDiv #userManagement:hover, #administrationModalDiv #reportsRevisions:hover, #administrationModalDiv #systemWide:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	text-decoration:none;
-	filter:alpha(opacity=50); /* IE */ !important
-}
-
 #administrationModalDiv #systemWideDiv {
 	width:200px;
 	margin:15px 0 0 25px;
@@ -4490,13 +4431,6 @@ ul#network a {
 	width:182px;
 	height:22px;
 	margin:-5px 0 0 10px;
-}
-
-#userManagementDiv #addNew:hover, #userManagementDiv #editOrShow:hover, #userManagementDiv #globalProperties:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	text-decoration:none;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #userManagementDiv #addNewDiv {
@@ -4714,9 +4648,6 @@ h3.systemManagement {
  
 .refine:hover, .print:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 }
  
 .yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
@@ -4921,16 +4852,10 @@ h3.systemManagement {
 	float: right;
 	width: 46px;
 	color:#900;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #moreDocs:hover, #morePeople:hover, #moreVolumes:hover, #morePlaces:hover {
 	text-decoration:none;
-	opacity:1; /* FireFox, Chrome, Safari */
-	-moz-opacity: 1;
-	filter:alpha(opacity=100); /* IE */
 }
 
 #myHistoryDiv a:hover {
@@ -5001,9 +4926,6 @@ h3.systemManagement {
 
 #MyHistoryButtons a:hover, #MarketListButtons a:hover  {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 /* ------------------- Data Table ----------------- */ 
@@ -5073,9 +4995,6 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 }
 
 .yes:hover, .no:hover, .close:hover, .goBack:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
 }
 

@@ -14,25 +14,18 @@
 	<div class="listFormProfile">
 		<div class="row">
 			<div class="col_l"><form:label id="emailLabel" for="mail" path="mail">Email</form:label></div>
-			<div class="col_l"><form:input id="email" path="mail" cssClass="input_20c" /><form:errors path="mail" /></div>
-		</div>
-		<div class="row">
-			<div class="col_l"><label for="password" id="passwordLabel">Password</label></div>
-			<div class="col_l"><input id="password" name="password" class="input_15c" type="password" /></div>
-			<div class="col_r"><label for="newPassword" id="newPasswordLabel">New Password</label></div>
-			<div class="col_r"><input id="newPassword" name="newPassword" class="input_15c" type="password" /></div>
+			<div class="col_l"><form:input id="email" path="mail" cssClass="input_29c" /><form:errors path="mail" /></div>
 		</div>
 	</div>
-	
 	<div class="listFormProfile">
 		<div class="row">
 			<div class="col_l"><label for="link" id="linkLabel">Link</label></div>
-			<div class="col_r"><input id="link" name="link" class="input_33c" type="text" value="http://" /></div>
+			<div class="col_r"><input id="link" name="link" class="input_43c" type="text" value="http://" /></div>
 			<div class="col_r"><span>(Portrait image)</span></div>
 		</div>
 		<div class="row">
 			<div class="col_l"><label for="browse" id="browseLabel">Browse</label></div>
-			<div class="col_r"><input id="browse" name="browse" class="input_33c" type="file" value="" size="24"/></div>
+			<div class="col_r"><input id="browse" name="browse" class="input_43c" type="file" value="" size="24"/></div>
 			<div class="col_r"><span>(Portrait image)</span></div>
 		</div>
 	</div>
@@ -40,7 +33,7 @@
 	<div class="listFormProfile">
 		<div class="row">
 			<div class="col_r"><form:label id="addressLabel" for="address" path="address">Address</form:label></div>
-			<div class="col_l"><form:input id="address" cssClass="input_20c" path="address"/><form:errors path="address" /></div>
+			<div class="col_l"><form:input id="address" cssClass="input_43c" path="address"/><form:errors path="address" /></div>
 			<div class="col_r"><form:label for="country" id="countryLabel" path="country">Country</form:label><!-- Autocomplete or DropdownMenu --></div>
 			<div class="col_r"><form:input id="country" path="country" cssClass="input_20c" /><form:errors path="country" /></div>
 		</div>
