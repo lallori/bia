@@ -44,26 +44,28 @@
 				<a id="nextRecord" title="Go back to the next Record" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
-		</security:authorize>
-		<a id="comments" href="#">Comments</a>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:if test="${!place.logicalDelete}">
-			<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>
-		</c:if>	
-		<c:if test="${place.logicalDelete}">
-			<a id="undeleteAction" href="${UndeletePlaceURL}">Undelete</a>
-		</c:if>	
-		</security:authorize>
-		<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
-		<c:if test="${inMarkedList == 'false'}">
-			<a id="buttonMarkedList" href="${AddMarkedListPlaceURL}" title="Add this record to Marked List"></a>
+		<c:if test="${place.placeAllId != 0}">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
+			</security:authorize>
+			<a id="comments" href="#">Comments</a>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<c:if test="${!place.logicalDelete}">
+				<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>
+			</c:if>	
+			<c:if test="${place.logicalDelete}">
+				<a id="undeleteAction" href="${UndeletePlaceURL}">Undelete</a>
+			</c:if>	
+			</security:authorize>
+			<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
+			<c:if test="${inMarkedList == 'false'}">
+				<a id="buttonMarkedList" href="${AddMarkedListPlaceURL}" title="Add this record to Marked List"></a>
+			</c:if>
+			<c:if test="${inMarkedList == 'true'}">
+				<a id="buttonMarkedList" href="#" title="Already added to Marked List" style="opacity:0.5;"></a>
+			</c:if>
+			<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 		</c:if>
-		<c:if test="${inMarkedList == 'true'}">
-			<a id="buttonMarkedList" href="#" title="Already added to Marked List" style="opacity:0.5;"></a>
-		</c:if>
-		<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
 	<script type="text/javascript">
