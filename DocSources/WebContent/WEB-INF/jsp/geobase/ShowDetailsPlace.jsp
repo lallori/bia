@@ -15,8 +15,6 @@
 			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
 	</security:authorize>
-	
-	<div id="geoDiv">
 			<%-- Creating a New Place Record --%>
 			<c:if test="${place.placeAllId == 0}">
 					<c:if test="${place.plSource == 'TGN'}">
@@ -31,6 +29,7 @@
 					</c:if>
 			</c:if>
 			<%-- Editing Place Records --%>
+			<div id="geoDiv">
 			<c:if test="${place.placeAllId != 0}">
 				<div id="geoTitle">
 					<div id="placeImageDiv">
