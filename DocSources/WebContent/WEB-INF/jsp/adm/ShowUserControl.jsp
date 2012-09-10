@@ -39,7 +39,6 @@
 			<div class="item37">Password expires</div> 
 			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationPasswordDate}" /></div>
 		</div>
-		<hr>
 		<div class="row">
 			<div class="item37">Group policies</div>
 			<div class="value">&nbsp;</div>
@@ -53,7 +52,7 @@
 				</ul>	
 			</c:forEach>			
 		</div>
-		<hr>
+<!-- 		<hr> -->
 		<div class="row">
 			<div class="item37">Account Expiration Time</div> 
 			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationDate}" /></div>
