@@ -61,7 +61,7 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 * 
 	 * @param query
 	 */
-	public SimpleSearchTitleOrOccupation(String query) {
+	public SimpleSearchTitleOrOccupation(String textSearch) {
 		super();
 		
 		if (!StringUtils.isEmpty(textSearch)) {
