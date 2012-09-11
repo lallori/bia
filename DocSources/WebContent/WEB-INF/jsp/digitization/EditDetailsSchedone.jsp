@@ -45,7 +45,7 @@
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Volume number">?</a>
-	            		<form:label for="numeroUnita" path="numeroUnita" id ="numeroUnitaLabel" cssErrorClass="error" title="Unit&agrave;">N. Unit&agrave; (Numero volume)</form:label>
+	            		<form:label for="numeroUnita" path="numeroUnita" id ="numeroUnitaLabel" cssErrorClass="error" title="Unit&agrave;">N. unit&agrave; (Numero volume)</form:label>
 					</div>
 					<div class="col_l"><form:input path="numeroUnita" id="numeroUnita" cssClass="input_4c" /></div>
 					<div class="col_r"><form:label for="volLetExt" id="volLetExtLabel" path="volLetExt">Volume extension</form:label></div>
@@ -204,7 +204,7 @@
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="Data della Ripresa">?</a>
-	            		<label for="daRipresa" id="daRipresaLabel">Da ripresa</label>
+	            		<label for="daRipresa" id="daRipresaLabel">Data ripresa</label>
 					</div>
 					<div class="col_r">
 						<form:label for="dataRipresaAnno" id="dataRipresaAnnoLabel" path="dataRipresaAnno">Anno</form:label>

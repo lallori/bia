@@ -29,7 +29,7 @@
 			<div class="value60">${schedone.serie}</div> 
 		</div>
 		<div class="row">
-			<div class="item">N. Unità</div>
+			<div class="item">N. unità</div>
 			<div class="value60">${schedone.numeroUnita} ${schedone.volLetExt}</div>
 		</div>
         <div class="row">
@@ -101,7 +101,7 @@
 			<div class="value60">${schedone.responsabileFotoRiproduzione}</div>
 		</div>
 		<div class="row">
-			<div class="item">Da ripresa</div>
+			<div class="item">Data ripresa</div>
 			<div class="value60">${schedone.dataRipresaAnno} ${schedone.dataRipresaMese} ${schedone.dataRipresaGiorno}</div>
 		</div>
 		<div class="row">
