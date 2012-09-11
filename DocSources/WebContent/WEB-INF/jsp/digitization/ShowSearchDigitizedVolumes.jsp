@@ -51,7 +51,7 @@
                     <div class="col_l"><form:input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5" path="volNum"/></div>
                     <div class="col_l">
                     	<form:label for="volLetExt" id="volExtensionLabel" path="volLetExt">Vol. Ext.</form:label>
-                    	<form:label for="volNumBetween" id="betweenSearchlabel" path="volNumBetween" style="display:none;">and</form:label>
+                    	<form:label for="volNumBetween" id="betweenSearchLabel" path="volNumBetween" style="display:none">and</form:label>
                     </div>
                     <div class="col_l">
                     	<form:input id="volExtension" name="volLetExt" class="input_5c" type="text" value="" maxlength="5" path="volLetExt"/>
@@ -73,6 +73,7 @@
 				    $j('#volExtension').css('display','inherit');
 				    $j('#betweenSearch').css('display','none');
 				    $j('#volumeSearch').css('display','inherit');
+			
 				}
 				if(this.options[1].selected) {
 					$j('#volExtensionLabel').css('display','none');

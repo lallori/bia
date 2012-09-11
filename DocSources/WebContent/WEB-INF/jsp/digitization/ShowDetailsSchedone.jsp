@@ -74,11 +74,11 @@
 		</div>
 		<div class="row">
 			<div class="item">Dimensioni Base</div>
-			<div class="value60">${schedone.dimensioniBase}</div>
+			<div class="value60">${schedone.dimensioniBase} mm</div>
 		</div>
 		<div class="row">
 			<div class="item">Dimensioni Altezza</div>
-			<div class="value60">${schedone.dimensioniAltezza}</div>
+			<div class="value60">${schedone.dimensioniAltezza} mm</div>
 		</div>
 		<div class="row">
 			<div class="item">Digitization Type</div>
