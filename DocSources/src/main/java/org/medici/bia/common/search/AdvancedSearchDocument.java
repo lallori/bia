@@ -418,11 +418,17 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 2) {
 						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						StringBuffer tempString = new StringBuffer(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						if(StringUtils.countMatches(tempString.toString(), "\"")%2 != 0){
+							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
+						}
+						words.add(tempString.toString());
 						
 					} else {
 						continue;
@@ -1269,11 +1275,42 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		if (words.size()>0) {
 			StringBuilder wordsQuery = new StringBuilder("(");
 			for (int i=0; i<words.size(); i++) {
-				String[] wordsSingleWordSearch = StringUtils.split(words.get(i), " ");
+				String currentWords = words.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleWordSearch = StringUtils.split(currentWords, " ");
 				if (wordsQuery.length()>1) {
 					wordsQuery.append(" AND ");
 				}
 				if (wordsTypes.get(i).equals(WordType.Extract)) {
+					for(int j = 0; j < exactWords.size(); j++){
+						wordsQuery.append("(synExtract.docExtract like '%");
+						wordsQuery.append(exactWords.get(j).replace("'", "''"));
+						wordsQuery.append("%')");
+						if(j < (exactWords.size() - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
+					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
+						wordsQuery.append(" AND ");
+					}
 					for(int j = 0; j < wordsSingleWordSearch.length; j++){
 						wordsQuery.append("(synExtract.docExtract like '%");
 						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
@@ -1283,6 +1320,17 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						}
 					}
 				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
+					for(int j = 0; j < exactWords.size(); j++){
+						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append(exactWords.get(j).replace("'", "''"));
+						wordsQuery.append("%')");
+						if(j < (exactWords.size() - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
+					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
+						wordsQuery.append(" AND ");
+					}
 					for(int j = 0; j < wordsSingleWordSearch.length; j++){
 						wordsQuery.append("(synExtract.synopsis like '%");
 						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
@@ -1292,6 +1340,20 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						}
 					}
 				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
+					for(int j = 0; j < exactWords.size(); j++){
+						wordsQuery.append("((synExtract.docExtract like '%");
+						wordsQuery.append(exactWords.get(j).replace("'", "''"));
+						wordsQuery.append("%') OR ");
+						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append(exactWords.get(j).replace("'", "''"));
+						wordsQuery.append("%'))");
+						if(j < (exactWords.size() - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
+					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
+						wordsQuery.append(" AND ");
+					}					
 					for(int j = 0; j < wordsSingleWordSearch.length; j++){
 						wordsQuery.append("((synExtract.docExtract like '%");
 						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));

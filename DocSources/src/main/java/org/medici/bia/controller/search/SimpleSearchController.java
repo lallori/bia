@@ -35,6 +35,7 @@ import java.util.UUID;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.service.docbase.DocBaseService;
@@ -110,11 +111,17 @@ public class SimpleSearchController {
 			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
 		} catch (URIException e) {
 		}
+		if(StringUtils.countMatches(command.getText(), "\"")%2 != 0){
+			StringBuffer tempString = new StringBuffer(command.getText());
+			tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
+			command.setText(tempString.toString());			
+		}
 		model.put("yourSearch", command.getText());
 		
 		if(command.getText().contains("\"")){
 			command.setText(command.getText().replace("\"", "\\\""));
 		}
+		
 		// This number is used to generate an unique id for new search
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());

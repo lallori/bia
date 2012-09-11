@@ -98,7 +98,9 @@
 							}else{
 								title = title.replace('s','');
 							}
-							var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+							var text = $j("#text").val();
+							text = text.replace("'","%27");
+							var formSubmitURL = $j(this).attr("action") + '?simpleSearchPerimeter=' + $j('#simpleSearchPerimeter').find('option:selected').val() + '&text=' + text;
 							$j( "#tabs" ).tabs( "add" , formSubmitURL, title + " Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 							$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 							return false;

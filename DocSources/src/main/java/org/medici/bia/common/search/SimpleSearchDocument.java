@@ -27,6 +27,9 @@
  */
 package org.medici.bia.common.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
@@ -127,14 +130,43 @@ public class SimpleSearchDocument extends SimpleSearch {
 		
 		//MD: We need to re-convert the alias
 		alias = alias.replace("\\\"", "\"");
+		String toSearch = alias;
 		
-		String[] words = StringUtils.split(alias, " ");
+		List<String> exactWords = new ArrayList<String>();
 		
-		if (words.length >0) {
+		//MD: This code is to identify the words between double quotes
+		while(toSearch.contains("\"")){
+			//First double quote
+			int from = toSearch.indexOf("\"");
+			//Second double quote
+			int to = toSearch.indexOf("\"", from + 1);
+			//If there is the second double quote or not
+			if(to != -1){
+				//Add the exact words to the list and remove them from the string
+				exactWords.add(toSearch.substring(from + 1, to));
+				toSearch = toSearch.substring(0, from) + toSearch.substring(to + 1, toSearch.length());
+			}else{
+				toSearch = toSearch.replace("\"", " ");
+			}
+		}
+		String[] words = StringUtils.split(toSearch, " ");
+		
+		if (words.length >0 || exactWords.size() > 0) {
 			jpaQuery.append(" WHERE ");
 		}
 		
 		if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
+			for(int i = 0; i < exactWords.size(); i++){
+				jpaQuery.append("(synExtract.docExtract LIKE '%");
+				jpaQuery.append(exactWords.get(i).replace("'", "''"));
+				jpaQuery.append("%')");
+				if(i < exactWords.size() - 1){
+					jpaQuery.append(" AND ");
+				}
+			}			
+			if(exactWords.size() > 0 && words.length > 0){
+				jpaQuery.append(" AND ");
+			}
 			for(int i = 0; i < words.length; i++){
 				jpaQuery.append("(synExtract.docExtract like '%");
 				jpaQuery.append(words[i]);
@@ -144,6 +176,14 @@ public class SimpleSearchDocument extends SimpleSearch {
 				}
 			}
 		}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
+			for(int i = 0; i < exactWords.size(); i++){
+				jpaQuery.append("(synExtract.synopsis LIKE '%");
+				jpaQuery.append(exactWords.get(i).replace("'", "''"));
+				jpaQuery.append("%')");
+				if(i < exactWords.size() - 1){
+					jpaQuery.append(" AND ");
+				}
+			}		
 			for(int i = 0; i < words.length; i++){
 				jpaQuery.append("(synExtract.synopsis like '%");
 				jpaQuery.append(words[i]);
