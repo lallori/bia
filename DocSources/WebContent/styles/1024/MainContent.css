@@ -4244,10 +4244,6 @@ ul#network a {
 	margin: 30px auto 0 auto;
 }
 
-#volumeSearch {
-	margin-right: 5px;
-}
-
 #betweenSearchLabel {
 	width: 50px;
 	text-align: center;
@@ -4261,10 +4257,9 @@ ul#network a {
     height: 23px;
     border: none;
     text-align: center;
-    padding-top: 3px;
     background-repeat: no-repeat;
+    margin-left: 5px;
 }
-
 
 /* Activate */
 
