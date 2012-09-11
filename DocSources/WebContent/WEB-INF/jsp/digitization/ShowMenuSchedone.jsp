@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="topBodyLeftMenuDiv">
-    <a id="printTiff" href="#">Print schedone TIFF</a>
-	<a id="printJpeg" href="#">Print schedone JPEG</a>
-	<a id="printPdf" href="#">Print schedone PDF</a>
+<!--     <a id="printTiff" href="#">Print schedone TIFF</a> -->
+<!-- 	<a id="printJpeg" href="#">Print schedone JPEG</a> -->
+<!-- 	<a id="printPdf" href="#">Print schedone PDF</a> -->
 </div>
