@@ -30,7 +30,7 @@
 		<c:if test="${not empty postsPage}">
 			<c:url var="baseUrl" value="/community/ShowTopicForum.do"/>
 			<c:set var="firstArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=1&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>
-			<c:set var="prevArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber={page.thisPage - 1}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
+			<c:set var="prevArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.thisPage - 1}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
 		</c:if>
 		<span id="firstPaginateButton"><a href="${baseUrl}${firstArgs}" class="paginateForumButton">First</a></span>
 		<span id="previousPaginateButton"><a href="${baseUrl}${prevArgs}" class="paginateForumButton">Previous</a></span>
@@ -95,7 +95,7 @@
 		<c:if test="${not empty postsPage}">
 			<c:url var="baseUrl" value="/community/ShowTopicForum.do"/>
 			<c:set var="nextArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.thisPage + 1}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>
-			<c:set var="lastArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber={page.totalPages}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
+			<c:set var="lastArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.totalPages}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
 		</c:if>
 		<span id="nextPaginateButton"><a href="${baseUrl}${nextArgs}" class="paginateForumButton">Next</a></span>
 		<span id="lastPaginateButton"><a href="${baseUrl}${lastArgs}" class="paginateForumButton">Last</a></span>

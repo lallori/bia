@@ -93,6 +93,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * - reset user password
  *  
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
@@ -859,6 +860,20 @@ public class UserServiceImpl implements UserService {
 
 			getUserHistoryDAO().restoreUserHistory(user, category);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserHistory searchLastUserHistoryBaseEntry() throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserHistoryDAO().findLastEntryBase(user);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

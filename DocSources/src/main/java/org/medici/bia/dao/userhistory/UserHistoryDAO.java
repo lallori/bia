@@ -157,6 +157,14 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public UserHistory findLastEntry(User user, Category category) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param category
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findLastEntryBase(User user) throws PersistenceException;
 
 	/**
 	 * 

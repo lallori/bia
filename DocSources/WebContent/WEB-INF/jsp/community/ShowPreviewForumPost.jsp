@@ -19,9 +19,9 @@
     </div>
     <div id="postProfile">
     	<ul>
-        	<li><a href="#" id="userName" class="link">${user.account}</a></li>
+        	<li><a href="#" id="userName" class="link">${forumPost.user.account}</a></li>
             <li><security:authentication property="principal.significantRoleDescription"/></li>
-            <li>Posts: <span>${user.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${user.forumJoinedDate}</span></li>
+            <li>Posts: <span>${forumPost.user.forumNumberOfPost}</span></li>
+            <li>Joined: <span>${forumPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>

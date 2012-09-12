@@ -258,10 +258,16 @@ public class AjaxController {
 					volumeExactly = getDigitizationService().searchVolume(volNum, volLetExt);
 				}
 				List<Volume> listForPage = new ArrayList<Volume>();
-				listForPage.add(volumeExactly);
-				page = new Page(paginationFilter);
-				page.setList(listForPage);
-				page.setTotal(new Long(listForPage.size()));
+				if(volumeExactly != null){
+					listForPage.add(volumeExactly);
+					page = new Page(paginationFilter);
+					page.setList(listForPage);
+					page.setTotal(new Long(listForPage.size()));
+				}
+				else{
+					page = new Page(paginationFilter);
+					page.setTotal(new Long(0));
+				}
 				
 				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
 			}else if(searchType.equals("Between")){

@@ -20,7 +20,7 @@
 			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 						
 			$j('#${command.searchUUID}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],    
+				"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] , "bSortable": false, "aTargets": [2]}],    
 				"bAutoWidth" : false,
 				"aoColumns" : [
 				{ sWidth : "50px" },

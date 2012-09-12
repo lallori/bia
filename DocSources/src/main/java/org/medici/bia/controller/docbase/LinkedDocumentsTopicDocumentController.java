@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.medici.bia.command.docbase.LinkedDocumentsTopicDocumentCommand;
 import org.medici.bia.service.docbase.DocBaseService;
@@ -91,7 +92,11 @@ public class LinkedDocumentsTopicDocumentController {
 			model.put("outputFields", outputFields);
 
 			model.put("topicTitle", command.getTopicTitle());
-			model.put("placeAllId", command.getPlaceAllId());			
+			model.put("placeAllId", command.getPlaceAllId());	
+			
+			// This number is used to generate an unique id for new search
+			UUID uuid = UUID.randomUUID();
+			model.put("UUID", uuid.toString());
 			
 		}
 

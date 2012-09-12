@@ -106,12 +106,19 @@ public class EditDetailsSchedoneValidator implements Validator {
 							Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 							ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
 							if(ifSchedone.get(volNum + volLetExt) == null){
-								errors.reject("volNum", "error.volNum.alreadyPresent");
+								errors.reject("numeroUnita", "error.numeroUnita.alreadyPresent");
 							}
 						}
 					}
 				}catch(ApplicationThrowable ath){
 					errors.reject("schedoneId", "error.schedone.notfound");
+				}
+			}else{
+				try{
+					if(getDigitizationService().findSchedone(volNum, volLetExt) != null){
+						errors.rejectValue("numeroUnita", "error.numeroUnita.alreadyPresent");
+					}
+				}catch(ApplicationThrowable ath){
 				}
 			}
 		}

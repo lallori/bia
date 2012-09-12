@@ -150,6 +150,7 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setTotalViews(new Integer(0));
 				forumTopic.setLastPost(null);
 				forumTopic.setFirstPost(null);
+				forumTopic.setLogicalDelete(Boolean.FALSE);
 				
 				getForumTopicDAO().persist(forumTopic);
 				

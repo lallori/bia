@@ -140,7 +140,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.pageHref').live('click', function() {
-				$j("#mainContent").load($j(this).attr("href"));
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			
@@ -189,6 +189,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				return false;
 			});
 			
+			if("${topic.topicId}" == ''){
+				$j('#postReply').css("visibility", "hidden");
+			}
+			
 			$j('#searchForumThisText').click(function(){
 				$j(this).val('');
 				return false;
@@ -201,7 +205,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			
 			$j('.deletePost').click(function(){
 				$j('#deletePostModal').dialog('open');
-				$j('#deleteUrl').val($j(this).attr('href'));
+				$j('#deleteUrl').val($j(this).attr('href') + '&topicId=${topic.topicId}');
 				return false;
 			});
 			
@@ -214,9 +218,9 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				  buttons: {
 					  Yes: function() {
 						  $j.ajax({ type:"POST", url:$j("#deleteUrl").val(), async:false, success:function(json) {
-				 				var topicUrl = json.topicUrl;
+				 			    var topicUrl = json.topicUrl;
 				 				if (json.operation == 'OK') {
-									 $j("#main").load(topicUrl);
+				 					 $j("#main").load(topicUrl);
 									 $j( "#deletePostModal" ).dialog('close');
 									 return false;
 				 				} else {

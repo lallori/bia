@@ -352,6 +352,20 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Schedone findSchedone(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			Schedone schedone = getSchedoneDAO().findByVolume(volNum, volLetExt);
+			
+			return schedone;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Map<String, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
 		try{
 			Map<String, Schedone> result = new HashMap<String, Schedone>();

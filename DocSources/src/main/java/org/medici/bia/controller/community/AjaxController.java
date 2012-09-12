@@ -137,16 +137,14 @@ public class AjaxController {
 			model.put("topicId", topicId);
 			model.put("postId", postId);
 			model.put("operation", "OK");
-
+			if (forumTopic != null){
+				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumTopic));
+			}
 			return new ModelAndView("responseOK", model);		
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
-		} finally {
-			if (forumTopic != null){
-				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumTopic));
-			}
 		}
 	}
 

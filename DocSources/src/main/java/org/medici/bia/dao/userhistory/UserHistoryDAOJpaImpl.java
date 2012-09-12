@@ -442,6 +442,28 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findLastEntryBase(User user) throws PersistenceException {
+        String queryString = "FROM UserHistory WHERE user=:user and logicalDelete=false  AND (category LIKE 'DOCUMENT' OR category LIKE 'VOLUME' OR category LIKE 'PEOPLE' OR category LIKE 'PLACE') ORDER BY dateAndTime DESC";
+
+        Query query = getEntityManager().createQuery(queryString);
+
+        query.setParameter("user", user);
+        query.setMaxResults(1);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size() == 1) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -511,6 +533,8 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		queryString.append(Category.FORUM_TOPIC.name());
 		queryString.append("' AND category NOT LIKE '");
 		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
 		queryString.append("')");
 		queryString.append(" AND idUserHistory > ");
 		queryString.append(idUserHistory);        
@@ -597,6 +621,8 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		queryString.append(Category.FORUM_TOPIC.name());
 		queryString.append("' AND category NOT LIKE '");
 		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
 		queryString.append("')");
 		queryString.append(" AND idUserHistory < ");
 		queryString.append(idUserHistory);

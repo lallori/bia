@@ -11,7 +11,7 @@
 		<p>Total records found: <span id="linkedDocumentsTopic${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showLinkedDocumentTopic${placeAllId}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showLinkedDocumentTopic${UUID}${placeAllId}">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -25,9 +25,9 @@
 
 		$j(document).ready(function() {
 			//dynamic field management
-			$j("#showLinkedDocumentTopic${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showLinkedDocumentTopic${UUID}${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showLinkedDocumentTopic${placeAllId}').dataTable( {
+			$j('#showLinkedDocumentTopic${UUID}${placeAllId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }],
 				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,
@@ -79,8 +79,8 @@
 				}
 			});
 			
-			$j("#showLinkedDocumentTopic${placeAllId}_length").css('margin', '0 0 0 0');
-			$j("#showLinkedDocumentTopic${placeAllId}_filter").remove();
+			$j("#showLinkedDocumentTopic${UUID}${placeAllId}_length").css('margin', '0 0 0 0');
+			$j("#showLinkedDocumentTopic${UUID}${placeAllId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();

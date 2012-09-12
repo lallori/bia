@@ -100,7 +100,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		UserHistory lastEntry = null;
 		try{
-			lastEntry = getUserService().searchLastUserHistoryEntry();
+			lastEntry = getUserService().searchLastUserHistoryBaseEntry();
 			
 			// Check is necessary for new user which has not history... 
 			if (lastEntry != null) {

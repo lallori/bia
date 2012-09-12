@@ -112,6 +112,15 @@ public interface DigitizationService {
 	/**
 	 * 
 	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Schedone findSchedone(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
 	 * @param volNumBetween
 	 * @return
 	 * @throws ApplicationThrowable

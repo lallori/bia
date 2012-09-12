@@ -29,6 +29,7 @@
 	    
 	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
 	    <a href="#" id="preview" class="buttonSmall">Preview</a>
+	    <a href="#" id="discard" class="buttonSmall">Discard</a>
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>
@@ -146,7 +147,7 @@
 		});
 </script>
 
-	<div id="postTable" title="Post" style="display:none; margin-top:15px">
+	<div id="postTable" title="Post" style="display:none; margin-top:45px">
 	</div>
 
 	<div id="messagePosted" title="Post" style="display:none"> 
