@@ -18,7 +18,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					<div class="list">
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
-							<div class="two">FORUMS</div>
+							<div class="two">THREADS</div>
 							<div class="three">POSTS</div>
 							<div class="four">LAST POST</div>
 						</div>
