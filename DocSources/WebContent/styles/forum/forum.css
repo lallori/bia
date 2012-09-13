@@ -214,10 +214,10 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 .buttonSmall { /* Button medium class */
 	width:53px;
 	height:22px;
-	display:inline;
+	display: inline-block;
 	background-image:url(/DocSources/images/forum/button_small.png);
 	background-repeat:no-repeat;
-	padding: 0;
+	padding-top: 3px;
 	text-align:center;
 }
 
@@ -763,9 +763,9 @@ input[type="submit"]:hover {
 #submit {
 	border: none;
 	background-color: transparent;
-	margin: 10px 16px 0 0;
+	margin: 0 0 0 800px;
 	font-weight: bold;
-	float: right;
+	right: 0;
 }
 
 /* Html Box Text Editor jQuery */
@@ -778,9 +778,7 @@ input[type="submit"]:hover {
 }
 
 #preview {
-	float: left;
 	margin: 10px;
-	padding-top: 3px;
 }
 
 #preview:hover, #save:hover {
