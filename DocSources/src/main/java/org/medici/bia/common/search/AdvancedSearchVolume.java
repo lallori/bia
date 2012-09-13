@@ -387,6 +387,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try{
 					fromVolume.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
@@ -404,6 +406,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try{
 					toVolume.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
@@ -421,6 +425,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try{
 					context.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
@@ -438,6 +444,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try{
 					inventario.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
@@ -838,10 +846,42 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(fromVolume.size() > 0){
 			StringBuilder fromVolumeQuery = new StringBuilder("(");
 			for(int i = 0; i < fromVolume.size(); i++){
+				String currentWords = fromVolume.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
 				if(fromVolumeQuery.length() > 1){
 					fromVolumeQuery.append(" AND ");
 				}
-				String[] wordsSingleFromVolume = StringUtils.split(fromVolume.get(i), " ");
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleFromVolume = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					fromVolumeQuery.append("(senders like '%");
+					fromVolumeQuery.append(exactWords.get(j).replace("'", "''"));
+					fromVolumeQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						fromVolumeQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleFromVolume.length > 0){
+					fromVolumeQuery.append(" AND ");
+				}
 				for(int j = 0; j < wordsSingleFromVolume.length; j++){
 					if(j > 0){
 						fromVolumeQuery.append(" AND ");
@@ -864,10 +904,42 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(toVolume.size() > 0){
 			StringBuilder toVolumeQuery = new StringBuilder("(");
 			for(int i = 0; i < toVolume.size(); i++){
+				String currentWords = toVolume.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
 				if(toVolumeQuery.length() > 1){
 					toVolumeQuery.append(" AND ");
 				}
-				String[] wordsSingleToVolume = StringUtils.split(toVolume.get(i), " ");
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleToVolume = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					toVolumeQuery.append("(recips like '%");
+					toVolumeQuery.append(exactWords.get(j).replace("'", "''"));
+					toVolumeQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						toVolumeQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleToVolume.length > 0){
+					toVolumeQuery.append(" AND ");
+				}
 				for(int j = 0; j < wordsSingleToVolume.length; j++){
 					if(j > 0){
 						toVolumeQuery.append(" AND ");
@@ -890,10 +962,42 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(context.size() > 0){
 			StringBuilder contextQuery = new StringBuilder("(");
 			for(int i = 0; i < context.size(); i++){
+				String currentWords = context.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
 				if(contextQuery.length() > 1){
 					contextQuery.append(" AND ");
 				}
-				String[] wordsSingleContext = StringUtils.split(context.get(i), " ");
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleContext = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					contextQuery.append("(ccontext like '%");
+					contextQuery.append(exactWords.get(j).replace("'", "''"));
+					contextQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						contextQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleContext.length > 0){
+					contextQuery.append(" AND ");
+				}
 				for(int j = 0; j < wordsSingleContext.length; j++){
 					if(j > 0){
 						contextQuery.append(" AND ");
@@ -916,10 +1020,41 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(inventario.size() > 0){
 			StringBuilder inventarioQuery = new StringBuilder("(");
 			for(int i = 0; i < inventario.size(); i++){
+				String currentWords = inventario.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
 				if(inventarioQuery.length() > 1){
 					inventarioQuery.append(" AND ");
 				}
-				String[] wordsSingleInventario = StringUtils.split(inventario.get(i), " ");
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				String[] wordsSingleInventario = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					inventarioQuery.append("(inventarioSommarioDescription like '%");
+					inventarioQuery.append(exactWords.get(j).replace("'", "''"));
+					inventarioQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						inventarioQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleInventario.length > 0){
+					inventarioQuery.append(" AND ");
+				}
 				for(int j = 0; j < wordsSingleInventario.length; j++){
 					if(j > 0){
 						inventarioQuery.append(" AND ");

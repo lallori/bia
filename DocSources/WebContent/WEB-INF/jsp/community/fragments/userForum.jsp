@@ -9,6 +9,8 @@
 					<a href="<c:url value="/community/ShowUserProfileForum.do"/>" id="profile">User Profile</a>
 					<a href="<c:url value="/community/ShowMessagesByCategory.do"/>?userMessageCategory=INBOX" id="userMessages">(<span>0</span> new messages)</a>
 					<a href="<c:url value="/community/ShowMyForumPost.do"/>" id="viewYourPosts">View your posts</a>
+					
+					<input type="hidden" value="" id="prevUrl" />
 				</div>
 
 				<script type="text/javascript">

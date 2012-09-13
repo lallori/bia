@@ -45,7 +45,7 @@
 
 	<script type="text/javascript" charset="utf-8">                                                           
 			$j(document).ready(function() {                                                                       
-				$j('#researchHistoryTable').dataTable( {                                                             
+				var $markedTable = $j('#researchHistoryTable').dataTable( {                                                             
 					"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],   
 					"aaSorting": [[0, "desc"]],
 					"bAutoWidth" : false,
@@ -122,76 +122,84 @@
 // 					alert("ok");
 // 					return false;
 // 				});
+
+				$j("#closeMarketList").click(function(){
+					Modalbox.hide();
+					return false;
+				});
+				
+				var $toRemove = "";
+				
+				$j("#removeSelected").click(function(){
+					$toRemove = "";
+					$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
+						$toRemove += $j(this).attr("idElement") + "+";
+					});
+					if($toRemove != ""){
+						$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
+							css: { 
+								border: 'none', 
+								padding: '5px',
+								boxShadow: '1px 1px 10px #666',
+								'-webkit-box-shadow': '1px 1px 10px #666'
+								} ,
+								overlayCSS: { backgroundColor: '#999' }	
+						}); 
+						return false;
+					}else{
+						return false;
+					}
+				});
+				
+				$j('#no').click(function() { 
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#questionRemoveMarked").hide();
+					// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j("#researchHistoryTableDiv").parent().append($j("#questionRemoveMarked"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+		        
+				$j('#yes').click(function() { 
+					$j.ajax({ url: '${EraseElementsMyMarkedListURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
+//	 	 				$j("#body_left").html(html);
+						$markedTable.fnDraw();
+		 			}});
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#questionRemoveMarked").hide();
+					// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j("#researchHistoryTableDiv").parent().append($j("#questionRemoveMarked"));
+					$j(".blockUI").remove();						
+					return false; 
+				}); 
+				
+				$j("#eraseList").click(function() {
+					Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 330, height: 120});
+					return false;
+				});
+				
+				$j("#printAllItems").click(function(){
+					$toPrint = "";
+					$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
+						$toPrint += $j(this).attr("idElement") + "+";
+					});
+	 				if($toPrint != ""){
+		 				window.open('${PrintElementsMyMarkedListURL}' + '?idToPrint=' + $toPrint , 'PRINT ELEMENTS', 'width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
+
+// 						Modalbox.hide();	
+						return false; 
+	 				}else{
+	 					return false;
+	 				}
+				});
 			} );                                                                                                  
 	</script>
 		
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#closeMarketList").click(function(){
-				Modalbox.hide();
-				return false;
-			});
 			
-			var $toRemove = "";
-			
-			$j("#removeSelected").click(function(){
-				$toRemove = "";
-				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
-					$toRemove += $j(this).attr("idElement") + "+";
-				});
-				if($toRemove != ""){
-					$j("#researchHistoryTableDiv").block({ message: $j('#questionRemoveMarked'), 
-						css: { 
-							border: 'none', 
-							padding: '5px',
-							boxShadow: '1px 1px 10px #666',
-							'-webkit-box-shadow': '1px 1px 10px #666'
-							} ,
-							overlayCSS: { backgroundColor: '#999' }	
-					}); 
-					return false;
-				}else{
-					return false;
-				}
-			});
-			
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#questionRemoveMarked").hide();
-				// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-				$j("#researchHistoryTableDiv").parent().append($j("#questionRemoveMarked"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.ajax({ url: '${EraseElementsMyMarkedListURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
-// 	 				$j("#body_left").html(html);
-	 			}});
-				Modalbox.hide();	
-				return false; 
-			}); 
-			
-			$j("#eraseList").click(function() {
-				Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 330, height: 120});
-				return false;
-			});
-			
-			$j("#printAllItems").click(function(){
-				$toPrint = "";
-				$j('#researchHistoryTable > tbody > tr > td > input:checked').each(function(){
-					$toPrint += $j(this).attr("idElement") + "+";
-				});
- 				if($toPrint != ""){
-	 				window.open('${PrintElementsMyMarkedListURL}' + '?idToPrint=' + $toPrint , 'PRINT ELEMENTS', 'width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
-
-					Modalbox.hide();	
-					return false; 
- 				}else{
- 					return false;
- 				}
-			});
 		});
 	</script>
 	

@@ -63,6 +63,7 @@ import org.springframework.stereotype.Repository;
  * <b>TitleOccsListDAOJpaImpl</b> is a default implementation of <b>TitleOccsListDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Repository
 public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> implements TitleOccsListDAO {
@@ -162,8 +163,8 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 			stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
 			stringBuilder.append("%' ");
 		} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
-			stringBuilder.append(" where a.roleCatId=");
-			stringBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+			stringBuilder.append(" where a.roleCatMinorId=");
+			stringBuilder.append(simpleSearchTitleOrOccupation.getRoleCatId());
 		}
 		stringBuilder.append(" group by a.titleOccID ");
 
@@ -174,11 +175,11 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 			queryCountBuilder.append("select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID ");
 			if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
 				queryCountBuilder.append(" where a.titleOcc LIKE '%");
-				queryCountBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+				queryCountBuilder.append(simpleSearchTitleOrOccupation.getRoleCatId());
 				queryCountBuilder.append("%' ");
 			} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
 				queryCountBuilder.append(" where a.roleCatMinorID=");
-				queryCountBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
+				queryCountBuilder.append(simpleSearchTitleOrOccupation.getRoleCatId());
 			}
 			queryCountBuilder.append(" group by a.titleOccID ");
 			queryCountBuilder.append(") count");

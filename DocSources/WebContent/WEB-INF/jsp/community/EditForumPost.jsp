@@ -27,9 +27,9 @@
 			<form:textarea id="htmlbox" name="text" path="text" style="width:970px; height:300px"></form:textarea>
 	    </div>
 	    
-	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
 	    <a href="#" id="preview" class="buttonSmall">Preview</a>
 	    <a href="#" id="discard" class="buttonSmall">Discard</a>
+	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>
@@ -144,6 +144,19 @@
 				$j.scrollTo({top:'300px',left:'0px'}, 800 );
 				return false;
 			});
+			
+			$j('#discard').click(function(){
+				$j('#main').block({ message: $j('#question'),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				}); 
+				return false;
+			});
 		});
 </script>
 
@@ -170,3 +183,28 @@
 			Write subject and text in this message!
 		</p>
 	</div>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<p>Discard changes?</p> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			$j("#main").append($j("#question"));
+			$j(".blockUI").remove();
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j("#main").load($j("#prevUrl").val());				
+			return false; 
+		}); 
+     
+	});
+</script>

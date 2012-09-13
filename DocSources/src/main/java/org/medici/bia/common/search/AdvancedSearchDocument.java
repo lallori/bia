@@ -745,6 +745,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try {
 					extract.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException nex) {
@@ -762,6 +764,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			for (String singleWord : command.getSynopsis()) {
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("\"", "%22");
+				singleWord = singleWord.replace("'", "%27");
 				try {
 					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException nex) {
@@ -1668,7 +1672,42 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		if (extract.size()>0) {
 			StringBuilder extractQuery = new StringBuilder("(");
 			for (int i=0; i<extract.size(); i++) {
-				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
+				String currentWords = extract.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				if(extractQuery.length() > 1){
+					extractQuery.append(" AND ");
+				}
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleExtract = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					extractQuery.append("(synExtract.docExtract like '%");
+					extractQuery.append(exactWords.get(j).replace("'", "''"));
+					extractQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						extractQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleExtract.length > 0){
+					extractQuery.append(" AND ");
+				}
 				for (int j=0; j<wordsSingleExtract.length; j++) {
 					extractQuery.append("(synExtract.docExtract like '%");
 					extractQuery.append(wordsSingleExtract[j].replace("'", "''"));
@@ -1691,7 +1730,42 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		if (synopsis.size() >0) {
 			StringBuilder synopsisQuery = new StringBuilder("(");
 			for (int i=0; i<synopsis.size(); i++) {
-				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
+				String currentWords = synopsis.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				if(synopsisQuery.length() > 1){
+					synopsisQuery.append(" AND ");
+				}
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleSynopsis = StringUtils.split(currentWords, " ");
+				for(int j = 0; j < exactWords.size(); j++){
+					synopsisQuery.append("(synExtract.synopsis like '%");
+					synopsisQuery.append(exactWords.get(j).replace("'", "''"));
+					synopsisQuery.append("%')");
+					if(j < (exactWords.size() - 1)){
+						synopsisQuery.append(" AND ");
+					}
+				}
+				if(exactWords.size() > 0 && wordsSingleSynopsis.length > 0){
+					synopsisQuery.append(" AND ");
+				}
 				for (int j=0; j<wordsSingleSynopsis.length; j++) {
 					synopsisQuery.append("(synExtract.synopsis like '%");
 					synopsisQuery.append(wordsSingleSynopsis[j].replace("'", "''"));

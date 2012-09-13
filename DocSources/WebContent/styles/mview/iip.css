@@ -11,30 +11,39 @@
 }
 .iipmooviewer:focus, .iipmooviewer:active {
   outline: none;
+  text-transform:
 }
 
 .iipmooviewer .navcontainer {
-  position: absolute;
-  z-index: 2;
-  text-align: center;
-  background: transparent;
-  top: 10px;
-  right: 10px;  
+	position: absolute;
+	z-index: 2;
+	text-align: center;
+	background: transparent;
+	top: 10px;
+	right: 10px;  
 }
 .iipmooviewer .navcontainer .toolbar {
-  height: 8px;
-  cursor: move;
-  width: 100%;
-  opacity: 0.8;
-  /* Cross browser CSS gradients from http://www.colorzilla.com/gradient-editor/ */
-  background: #a9aba6; /* Old browsers */
-  background: -moz-linear-gradient(top, #a9aba6 0%, #c0c2be 22%, #d5d5d2 33%, #e2e1dd 44%, #ededed 56%, #bebec1 67%, #c3c3c2 78%, #a1a4a0 89%, #878686 100%) repeat-x; /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9aba6), color-stop(22%,#c0c2be), color-stop(33%,#d5d5d2), color-stop(44%,#e2e1dd), color-stop(56%,#ededed), color-stop(67%,#bebec1), color-stop(78%,#c3c3c2), color-stop(89%,#a1a4a0), color-stop(100%,#878686)) repeat-x; /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* Opera11.10+ */
-  background: -ms-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#6f706d',GradientType=0 ); /* IE6-9 */
-  background: linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* W3C */
+	height: 8px;
+	cursor: move;
+	width: 100%;
+	opacity: 0.5;
+	/* Cross browser CSS gradients from http://www.colorzilla.com/gradient-editor/ */
+	background: #000; /* Old browsers */
+	border-radius: 4px 4px 0 0;
+	/* The Medici Archive Project (we do not use this)
+	background: -moz-linear-gradient(top, #a9aba6 0%, #c0c2be 22%, #d5d5d2 33%, #e2e1dd 44%, #ededed 56%, #bebec1 67%, #c3c3c2 78%, #a1a4a0 89%, #878686 100%) repeat-x; /* FF3.6+ 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9aba6), color-stop(22%,#c0c2be), color-stop(33%,#d5d5d2), color-stop(44%,#e2e1dd), color-stop(56%,#ededed), color-stop(67%,#bebec1), color-stop(78%,#c3c3c2), color-stop(89%,#a1a4a0), color-stop(100%,#878686)) repeat-x; /* Chrome,Safari4+ 
+	background: -webkit-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* Chrome10+,Safari5.1+ 
+	background: -o-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* Opera11.10+ 
+	background: -ms-linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* IE10+ 
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#6f706d',GradientType=0 ); /* IE6-9 
+	background: linear-gradient(top, #a9aba6 0%,#c0c2be 22%,#d5d5d2 33%,#e2e1dd 44%,#ededed 56%,#bebec1 67%,#c3c3c2 78%,#a1a4a0 89%,#878686 100%) repeat-x; /* W3C 
+	*/
+	font-size: 11px;
+	padding: 3px  0 0 0;
+	font-weight: bold;
+	color: #F6EDEC;
+	text-transform: uppercase;
 }
 
 .iipmooviewer .navcontainer .toolbar:hover { opacity: 1.0 }
@@ -237,9 +246,6 @@
   position: relative;
   padding: 1px;
 }
-
-/* Annotation styles
- */
 .iipmooviewer .canvas .annotation {
   position: absolute;
   overflow: visible;
@@ -267,112 +273,6 @@
   -ms-transition: visibility 0s linear 0.3s, opacity 0.3s linear;
   transition: visibility 0s linear 0.2s, opacity 0.2s linear;
 }
-
-.iipmooviewer .canvas .annotation.edit {
-  border-color: yellow;
-}
-
-.iipmooviewer .canvas .annotation.handle {
-  cursor: se-resize;
-  background: none repeat scroll 0 0 white;
-  border: 1px solid black;
-  bottom: 0;
-  height: 5px;
-  margin: -2px;
-  position: absolute;
-  right: 0;
-  width: 5px;
-}
-
-.iipmooviewer .canvas .annotation.form {
-  padding: 3px;
-  width: auto;
-  height: auto;
-  margin-top: 2px;
-  border: 1px solid #aaa;
-  line-height: 100%;
-  display: inline-block;
-  background: #F3E7E2; /* Old browsers */
-  font-size: 12px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 5px 5px 8px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
-  -o-box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
-  min-width:250px;
-  box-shadow: 1px 1px 10px #666;
-  -webkit-box-shadow: 1px 1px 10px #666;
-  -moz-border-radius: 4px; 
-  -webkit-border-radius: 4px; 
-  border-radius: 4px; 
-}
-
-.iipmooviewer .canvas .annotation.form tr td:first-of-type{
-  color: #6D5C4D;
-}
-.iipmooviewer .canvas .annotation.form input {
-  width: 240px;
-  border: 1px solid #DCC0BA;
-  margin: 0 0 0 auto;
-  -moz-border-radius: 4px; 
-  -webkit-border-radius: 4px; 
-  border-radius: 4px; 
-  font-family:Georgia, "Times New Roman", Times, serif;
-  background-color: #fbf7f4;
-  color: #6d5c4d;
-  padding:3px;
-}
-
-.iipmooviewer .canvas .annotation.form textarea {
-  width: 295px;
-  border: 1px solid #DCC0BA;
-  margin: 0 0 0 auto;
-  -moz-border-radius: 4px; 
-  -webkit-border-radius: 4px; 
-  border-radius: 4px; 
-  font-family:Georgia, "Times New Roman", Times, serif;
-  background-color: #fbf7f4;
-  color: #6d5c4d;
-  padding:3px;
-}
-
-
-.iipmooviewer .canvas .annotation.form input.button{
-  width: auto;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  border: 1px solid #E6D0C6;
-  font-family:Georgia, "Times New Roman", Times, serif;
-  color: #6F6B69;
-  background: #fff; /* Old browsers */
-  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZWVlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjY2NjY2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-  background: -moz-linear-gradient(top, #fff 0%, #F3E7E2 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F3E7E2), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #fff 0%,#F3E7E2 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #fff 0%,#F3E7E2 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #fff 0%,#F3E7E2 100%); /* IE10+ */
-  background: linear-gradient(to bottom, #fff 0%,#F3E7E2 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#F3E7E2',GradientType=0 ); /* IE6-8 */
-  margin-right:10px;
-  font-size:12px;
-  cursor:pointer;
-}
-
-
-
-.iipmooviewer .canvas .annotation.form input.button:hover {
-  border: 1px solid #6D5C4D;
-}
-
-.iipmooviewer .canvas .annotation.form input:focus, .iipmooviewer .canvas .annotation.form textarea:focus {
-  border: 1px solid red;
-}
-
-
 
 /* Info Window
  */
@@ -495,8 +395,7 @@ a.logo:link, a.logo:visited {
   .loadbar { -webkit-text-size-adjust: 90%; }
   .iipmooviewer .info div div { width: 90%; }
   .iipmooviewer .navcontainer .navbuttons img {
-    width: 36px;
-    height: 36px;
-    padding: 2px;
+    width: 24px;
+    height: 24px;
   }
 }
