@@ -72,14 +72,14 @@
         <br>
         <div class="row">
             <div class="col_l">
-	            <c:forEach var="userRoles" items="${authorities}" varStatus="iterator">
-		  			<ul>
-					<li>
-						<input id="groupPolicies" name="userRoles" type="checkbox" value="${authorities[iterator.index].authority}">
-						<label for="groupPolicies">${authorities[iterator.index].description}</label>
-					</li>
-					</ul>    				
-	 			</c:forEach>           
+            	<ul>
+		            <c:forEach var="userRoles" items="${authorities}" varStatus="iterator">		  			
+						<li>
+							<input id="groupPolicies" name="userRoles" type="checkbox" value="${authorities[iterator.index].authority}">
+							<label for="groupPolicies">${authorities[iterator.index].description}</label>
+						</li>			
+		 			</c:forEach>
+	 			</ul>           
             </div>
         </div>
     </div>

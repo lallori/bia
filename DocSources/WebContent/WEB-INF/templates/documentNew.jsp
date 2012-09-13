@@ -1,12 +1,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<tiles:insertAttribute name="menu"/>
-
-<br />
-
 <h2 class="addNew">ADD New - Document Record</h2>
-
-<br />
 
 <tiles:insertAttribute name="details"/>
 

@@ -28,7 +28,16 @@
 	<c:url var="AddMarkedListPersonURL" value="/src/peoplebase/AddMarkedListPerson.do">
 		<c:param name="personId"	  value="${person.personId}" />
 	</c:url>
+	
+<%-- Create new Volume Record --%>
+<c:if test="${person.personId == 0}">
+	<div id="topBodyLeftMenuDiv">
+		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
+	</div>
+</c:if>
 
+<%-- Existing Volume Record --%>
+<c:if test="${person.personId != 0}">
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
 		<div id="id">Person ID ${person.personId}</div>
@@ -61,6 +70,7 @@
 		</c:if>
 		<a id="buttonShareLink" href="${SharePersonURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
+</c:if>
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {

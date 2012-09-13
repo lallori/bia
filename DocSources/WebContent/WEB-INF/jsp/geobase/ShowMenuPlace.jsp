@@ -32,7 +32,13 @@
 	<c:url var="AddMarkedListPlaceURL" value="/src/geobase/AddMarkedListPlace.do">
 		<c:param name="placeAllId"	  value="${place.placeAllId}" />
 	</c:url>
+<c:if test="${place.placeAllId == 0}">
+	<div id="topBodyLeftMenuDiv">
+		<div id="createdby">Created by ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+	</div>	
+</c:if>	
 
+<c:if test="${place.placeAllId != 0}">
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 		<div id="id">Place ID ${place.placeAllId}</div>
@@ -67,6 +73,7 @@
 			<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 		</c:if>
 	</div>
+</c:if>	
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {

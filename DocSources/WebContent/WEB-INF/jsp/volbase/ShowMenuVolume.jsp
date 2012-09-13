@@ -29,7 +29,16 @@
 		<c:param name="summaryId"	  value="${volume.summaryId}" />
 	</c:url>
 
+<%-- Create new Volume Record --%>
+<c:if test="${volume.summaryId == 0}">
 	<div id="topBodyLeftMenuDiv">
+			<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+	</div>	
+</c:if>	
+
+<%-- Existing Volume Record --%>
+<c:if test="${volume.summaryId != 0}">
+	 <div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
 		<div id="id">Vol ID ${volume.summaryId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
@@ -61,6 +70,8 @@
 		</c:if>
 		<a id="buttonShareLink" href="${ShareVolumeURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
+	
+	</c:if>	
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {

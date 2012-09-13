@@ -59,26 +59,28 @@
 		<%-- Comparing Document Record --%>
 		<c:if test="${document.volume != null}">
 		<div id="documentTitle">
-			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
-			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-			<c:choose>
-				<%-- Recipient empty --%>
-				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
-				</c:when>
-				<%-- Sender empty --%>
-				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-				</c:when>
-				<%-- Sender and Recipient filled in --%>
-				<c:otherwise>
-			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-				</c:otherwise>
-			</c:choose>
-			<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
+			<div id="text">
+				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<c:choose>
+					<%-- Recipient empty --%>
+					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+					</c:when>
+					<%-- Sender empty --%>
+					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+					</c:when>
+					<%-- Sender and Recipient filled in --%>
+					<c:otherwise>
+				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+					</c:otherwise>
+				</c:choose>
+				<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
+			</div>
 		</div>
 		</c:if>
 	
