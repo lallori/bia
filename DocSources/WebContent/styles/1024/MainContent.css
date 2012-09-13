@@ -746,7 +746,6 @@ img.transparent {
 	margin: -21px 0 0 0;
 	width:auto;
 	border:1px solid #900;
-	float: right;
 	border-radius:4px;
 	-moz-border-radius: 4px;
 }
@@ -4740,7 +4739,7 @@ h3.systemManagement {
 	margin-bottom:5px;
 }
 
-#yes, #no, #yesPerson, #noPerson, #removeTabsYes, #removeTabsNo {
+#yes, #no, #yesPerson, #noPerson, #removeTabsYes, #removeTabsNo, #okGender {
 	margin: 0;
 	width: 52px;
 	height: 22px;

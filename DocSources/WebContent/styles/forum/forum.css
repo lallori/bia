@@ -528,10 +528,6 @@ a.returnTo {
 	margin: 15px 0 20px 0;
 }
 
-#newTopic, #postReply {
-	position:absolute;
-}
-
 #postReply.buttonMedium, #printButton.buttonMedium {
 	padding:0;
 }
@@ -548,12 +544,11 @@ a.returnTo {
 }
 
 #searchThisForumFormDiv { /* Search Form Container */
-	margin: 0 0 0 145px;
 	width: 250px;
 	height: 80px;
-	position: absolute;
 	width: 250px;
 	height: 20px;
+	display: inline-block;
 }
 
 #jumpToDiv {
