@@ -425,22 +425,9 @@
 				// We set currentImage
 				currentImage = data.imageId;
 				$j("#currentImageOrder").val(data.imageOrder);
-				if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#alreadyTranscribe").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-					$j("#showTranscription").css('visibility', 'hidden');
-					$j("#transcribeAnyway").css('visibility', 'hidden');
-					$j("#notExtract").css('visibility', 'hidden');
-					$j("#extractTranscribe").css('visibility', 'hidden');
-					$j("#readyToTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					$j("#transcribeDiv").append($j("#transcribeMode"));
-					$j("#transcribeMode").css('display', 'inline');
-				}else{
-					if (data.error == 'wrongType' || data.imageType == 'R') {
-						$j("#unvailableTranscribe").css('visibility', 'visible');
+				if(transcribing == false){
+					if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
+						$j("#unvailableTranscribe").css('visibility', 'hidden');
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
@@ -450,78 +437,93 @@
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
 						$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					} else if (data.linkedDocument == 'true') {
-						if(data.isExtract == 'false'){
-							$j("#notExtract").css('visibility', 'visible');
-							$j("#extractTranscribe").css('visibility', 'visible');
-							$j("#currentEntryId").val(data.entryId);
+						$j("#transcribeDiv").append($j("#transcribeMode"));
+						$j("#transcribeMode").css('display', 'inline');
+					}else{
+						if (data.error == 'wrongType' || data.imageType == 'R') {
+							$j("#unvailableTranscribe").css('visibility', 'visible');
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 							$j("#showTranscription").css('visibility', 'hidden');
 							$j("#transcribeAnyway").css('visibility', 'hidden');
-							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
-						}else{
-							if(data.countAlreadyEntered == 1){
-								$j("#alreadyTranscribe").css('visibility', 'visible');
-								$j("#showTranscription").css('visibility', 'visible');
-								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-								$j("#transcribeAnyway").css('visibility', 'visible');
-								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-								$j("#notExtract").css('visibility', 'hidden');
-								$j("#extractTranscribe").css('visibility', 'hidden');
-								$j("#unvailableTranscribe").css('visibility', 'hidden');
-								$j("#readyToTranscribe").css('visibility', 'hidden');
-								$j("#choiceThisFolioStart").css('visibility', 'hidden');
-								$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+						} else if (data.linkedDocument == 'true') {
+							if(data.isExtract == 'false'){
+								$j("#notExtract").css('visibility', 'visible');
+								$j("#extractTranscribe").css('visibility', 'visible');
 								$j("#currentEntryId").val(data.entryId);
-								if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
-									if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
-										$j("#showTranscription").css('visibility', 'hidden');
-										$j("#showAlreadyTranscribed").css('visibility', 'visible');
-									}
-								}
-							}else if(data.countAlreadyEntered > 1){
-								$j("#alreadyTranscribe").css('visibility', 'visible');
+								$j("#alreadyTranscribe").css('visibility', 'hidden');
 								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-								$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
 								$j("#showTranscription").css('visibility', 'hidden');
-								$j("#transcribeAnyway").css('visibility', 'visible');
-								$j("#notExtract").css('visibility', 'hidden');
-								$j("#extractTranscribe").css('visibility', 'hidden');
+								$j("#transcribeAnyway").css('visibility', 'hidden');
 								$j("#unvailableTranscribe").css('visibility', 'hidden');
 								$j("#readyToTranscribe").css('visibility', 'hidden');
 								$j("#choiceThisFolioStart").css('visibility', 'hidden');
-								$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+							}else{
+								if(data.countAlreadyEntered == 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+									$j("#currentEntryId").val(data.entryId);
+									if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+										if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+											$j("#showTranscription").css('visibility', 'hidden');
+											$j("#showAlreadyTranscribed").css('visibility', 'visible');
+										}
+									}
+								}else if(data.countAlreadyEntered > 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+								}
 							}
+							
+						} else if (data.linkedDocument == 'false') {
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							$j("#readyToTranscribe").css('visibility', 'visible');
+							</security:authorize>
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#showTranscription").css('visibility', 'hidden');
+							$j("#transcribeAnyway").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						} else {
+							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#showTranscription").css('visibility', 'hidden');
+							$j("#transcribeAnyway").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
 						}
-						
-					} else if (data.linkedDocument == 'false') {
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-						$j("#readyToTranscribe").css('visibility', 'visible');
-						</security:authorize>
-						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-						$j("#showTranscription").css('visibility', 'hidden');
-						$j("#transcribeAnyway").css('visibility', 'hidden');
-						$j("#notExtract").css('visibility', 'hidden');
-						$j("#extractTranscribe").css('visibility', 'hidden');
-						$j("#unvailableTranscribe").css('visibility', 'hidden');
-						$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					} else {
-						$j("#unvailableTranscribe").css('visibility', 'hidden');
-						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
-						$j("#showTranscription").css('visibility', 'hidden');
-						$j("#transcribeAnyway").css('visibility', 'hidden');
-						$j("#notExtract").css('visibility', 'hidden');
-						$j("#extractTranscribe").css('visibility', 'hidden');
-						$j("#readyToTranscribe").css('visibility', 'hidden');
-						$j("#choiceThisFolioStart").css('visibility', 'hidden');
 					}
 				}
 			}});
@@ -543,59 +545,61 @@
 				return false;
 			});
 			
-			$j('#choiceThisFolioStart').click(function() {	
-				$j("#choiceThisFolioStart").css('visibility', 'visible');
-				$j("#readyToTranscribe").css('visibility', 'hidden');
-				imageDocumentFolioStart=currentImage;
-				var urlToTranscribe = "/DocSources/de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
-				var urlToExplore;
-				var volLetExt;
-				if("${command.volLetExt}" == ""){
-					volLetExt = "";
-				}
-				else{
-					volLetExt = "${command.volLetExt}";
-				}
-				urlToExplore = "/DocSources/src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
-				window.opener.$j("#body_left").load(urlToTranscribe);
-				$j("#choiceThisFolioStart").css('visibility', 'hidden');
-				//To open volume explorer in a tab
-				var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Volume ${command.volNum}" + volLetExt + "</span>";
-				var numTab = 0;
-				var hrefRemove = "";
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				window.opener.$j("#tabs ul li a").each(function(){
-					var toTest = "";
-					toTest += this.text;
-					if(!tabExist){
-						if(toTest != ""){
-							numTab++;
+			$j('#choiceThisFolioStart').click(function() {
+				if($j("#alreadyTranscribe").css('visibility') != 'visible'){
+					$j("#choiceThisFolioStart").css('visibility', 'visible');
+					$j("#readyToTranscribe").css('visibility', 'hidden');
+					imageDocumentFolioStart=currentImage;
+					var urlToTranscribe = "/DocSources/de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
+					var urlToExplore;
+					var volLetExt;
+					if("${command.volLetExt}" == ""){
+						volLetExt = "";
+					}
+					else{
+						volLetExt = "${command.volLetExt}";
+					}
+					urlToExplore = "/DocSources/src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
+					window.opener.$j("#body_left").load(urlToTranscribe);
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					//To open volume explorer in a tab
+					var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Volume ${command.volNum}" + volLetExt + "</span>";
+					var numTab = 0;
+					var hrefRemove = "";
+					
+					//Check if already exist a tab with this person
+					var tabExist = false;
+					window.opener.$j("#tabs ul li a").each(function(){
+						var toTest = "";
+						toTest += this.text;
+						if(!tabExist){
+							if(toTest != ""){
+								numTab++;
+							}
 						}
-					}
-						
-					if(this.text == tabName || toTest.indexOf("Volume ${command.volNum}" + volLetExt) != -1){
-						tabExist = true;
-						hrefRemove = $j(this).attr("href");
-					}
-				});
-// 				if(tabExist){
-// 					alert(hrefRemove);
-// 					window.opener.$j("#tabs").tabs("remove", hrefRemove);
-// 				}
 							
-				if(!tabExist){
-					window.opener.$j( "#tabs" ).tabs( "add" , urlToExplore, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
-				}else{
-					window.opener.$j("#tabs").tabs("select", numTab);
-					window.opener.$j("#tabs").tabs("url", numTab, urlToExplore);
-					window.opener.$j("#tabs").tabs("load", numTab);
+						if(this.text == tabName || toTest.indexOf("Volume ${command.volNum}" + volLetExt) != -1){
+							tabExist = true;
+							hrefRemove = $j(this).attr("href");
+						}
+					});
+	// 				if(tabExist){
+	// 					alert(hrefRemove);
+	// 					window.opener.$j("#tabs").tabs("remove", hrefRemove);
+	// 				}
+								
+					if(!tabExist){
+						window.opener.$j( "#tabs" ).tabs( "add" , urlToExplore, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+						window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+					}else{
+						window.opener.$j("#tabs").tabs("select", numTab);
+						window.opener.$j("#tabs").tabs("url", numTab, urlToExplore);
+						window.opener.$j("#tabs").tabs("load", numTab);
+					}
+					window.blur();
+					window.opener.focus();
+					window.close();
 				}
-				window.blur();
-				window.opener.focus();
-				window.close();
 				return false;
 			});
 			
