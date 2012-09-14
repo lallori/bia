@@ -40,6 +40,7 @@ import org.springframework.validation.Validator;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class EditChildPersonValidator implements Validator {
@@ -88,6 +89,7 @@ public class EditChildPersonValidator implements Validator {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
 		validatePersonId(editChildPersonCommand.getId(), errors);
 		validateChildId(editChildPersonCommand.getChildId(), errors);
+		validateIfChildIsParent(editChildPersonCommand.getChildId(), editChildPersonCommand.getParentId(), errors);
 		validateParentChild(editChildPersonCommand.getChildId(), editChildPersonCommand.getParentId(), errors);
 //		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
 		
@@ -152,6 +154,35 @@ public class EditChildPersonValidator implements Validator {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param childId
+	 * @param parentId
+	 * @param errors
+	 */
+	public void validateIfChildIsParent(Integer childId, Integer parentId, Errors errors){
+		if(!errors.hasErrors()){
+			try{
+				if(childId != null && childId > 0){
+					People parent = getPeopleBaseService().findPerson(parentId);
+					for(Parent currentParent: parent.getParents()){
+						if(currentParent.getParent().getPersonId().equals(childId)){
+							errors.rejectValue("childId", "error.childId.isParent");
+						}
+					}
+				}
+			}catch(ApplicationThrowable ath){
+				
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param childId
+	 * @param parentId
+	 * @param errors
+	 */
 	public void validateParentChild(Integer childId, Integer parentId, Errors errors){
 		if(!errors.hasErrors()){
 			try{
