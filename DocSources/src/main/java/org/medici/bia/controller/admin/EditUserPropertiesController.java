@@ -93,7 +93,7 @@ public class EditUserPropertiesController {
 			try {
 				HashMap<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("user.expiration.password.months", command.getExpirationPassword());
-				hashMap.put("user.expiration.user.months", command.getExiprationUser());
+				hashMap.put("user.expiration.user.months", command.getExpirationUser());
 				hashMap.put("user.maxBadLogin", command.getMaxBadLogin());
 				getAdminService().updateApplicationProperties(hashMap);
 
@@ -124,7 +124,7 @@ public class EditUserPropertiesController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserPropertiesCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		command.setExpirationPassword(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months"));
-		command.setExiprationUser(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months"));
+		command.setExpirationUser(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months"));
 		command.setMaxBadLogin(ApplicationPropertyManager.getApplicationProperty("user.maxBadLogin"));
 
 		return new ModelAndView("admin/EditUserProperties", model);

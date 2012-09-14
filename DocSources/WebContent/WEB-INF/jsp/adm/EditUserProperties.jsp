@@ -32,12 +32,12 @@
 				<div class="col_l"><form:input type="text" path="maxBadLogin" for="maxBadLogin" id="maxBadLogin" cssClass="input_24c"/></div>
 			</div>
 			<br />
-			<div class="row">
-				<div class="col_l"><form:label path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordTextLabel">Reset user password text</form:label></div>
-			</div>
-			<div class="row">
-				<div class="col_l"><form:textarea path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordText" class="txtarea"/></div>
-			</div>
+<!-- 			<div class="row"> -->
+<%-- 				<div class="col_l"><form:label path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordTextLabel">Reset user password text</form:label></div> --%>
+<!-- 			</div> -->
+<!-- 			<div class="row"> -->
+<%-- 				<div class="col_l"><form:textarea path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordText" class="txtarea"/></div> --%>
+<!-- 			</div> -->
 		</div>
 		
 		<div>
@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
-		$j("#EditEmailProperties").css('visibility', 'hidden');
+		$j("#EditEmailSystemProperties").css('visibility', 'hidden');
 		$j("#EditForumProperties").css('visibility', 'hidden');
 		$j("#EditGeneralProperties").css('visibility', 'hidden');
 		$j("#EditRecaptchaProperties").css('visibility', 'hidden');

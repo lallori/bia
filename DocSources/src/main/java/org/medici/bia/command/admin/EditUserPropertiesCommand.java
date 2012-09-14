@@ -35,7 +35,7 @@ package org.medici.bia.command.admin;
  */
 public class EditUserPropertiesCommand {
 	private String expirationPassword;
-	private String exiprationUser;
+	private String expirationUser;
 	private String maxBadLogin;
 
 	/**
@@ -53,17 +53,17 @@ public class EditUserPropertiesCommand {
 	}
 
 	/**
-	 * @return the exiprationUser
+	 * @return the expirationUser
 	 */
-	public String getExiprationUser() {
-		return exiprationUser;
+	public String getExpirationUser() {
+		return expirationUser;
 	}
 	
 	/**
-	 * @param exiprationUser the exiprationUser to set
+	 * @param expirationUser the exiprationUser to set
 	 */
-	public void setExiprationUser(String exiprationUser) {
-		this.exiprationUser = exiprationUser;
+	public void setExpirationUser(String expirationUser) {
+		this.expirationUser = expirationUser;
 	}
 	
 	/**
