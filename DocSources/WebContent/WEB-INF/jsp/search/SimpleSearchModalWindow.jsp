@@ -9,7 +9,7 @@
 	</c:url>
 	
 	<div id="basicSearchDiv">
-		<h1>You searched for "<span>${yourSearch}</span>" in all catergories:</h1>
+		<h1>You searched for "<span>${yourSearch}</span>" in ALL categories:</h1>
 		
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="basicSearchTable">
         <thead>
