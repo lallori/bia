@@ -62,6 +62,17 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
+			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT'}">
+				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+					<c:param name="entryId" value="${documentExplorer.entryId}"/>
+					<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+					<c:param name="flashVersion"   value="false" />
+					<c:param name="showHelp" value="true" />
+					<c:param name="showThumbnail" value="true" />
+				</c:url>
+			
+				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+			</c:if>
 			<div id="topicActions">
 				<c:if test="${forum.option.canHaveTopics}">
 				<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
@@ -147,6 +158,9 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 		<c:if test="${forum.option.canHaveTopics}">
 		<!-- Topic For Category or Topic for general use forums (questions on bia, paleography, ecc.)-->
+			<c:url var="ShowForumURL" value="/community/ShowForum.do">
+				<c:param name="forumId" value="${forum.forumId}" />
+			</c:url>
 			<div id="forumTable">
 			    <div class="list">
 			        <div class="rowFirst">
@@ -253,11 +267,11 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					return false;
 				});
 
-				$j('.boardIndex').die();
-				$j('.boardIndex').live('click', function() {
-					$j("#main").load($j(this).attr("href"));
-					return false;
-				});
+// 				$j('.boardIndex').die();
+// 				$j('.boardIndex').live('click', function() {
+// 					$j("#main").load($j(this).attr("href"));
+// 					return false;
+// 				});
 				
 				$j('.returnTo').die();
 				$j('.returnTo').live('click', function() {
@@ -273,7 +287,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 				$j('#newTopic').click(function (){
 					$j("#main").load($j(this).attr("href"));
-					$j("#prevUrl").val($j(".paginateActive").attr('href'));
+					if($j(".paginateActive").length > 0)
+						$j("#prevUrl").val($j(".paginateActive").attr('href'));
+					else
+						$j("#prevUrl").val("${ShowForumURL}");
 					return false;
 				});
 				
@@ -292,6 +309,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					$j("#main").load($j(this).attr("href"));
 					return false;
 				});
+				
+				<c:if test="${command.forumId != null && command.forumId != 1}">
+					$j("#footer").css('display','none');
+				</c:if>
 			});
 		</script>
 					

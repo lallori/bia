@@ -34,12 +34,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowTopicForumCommand;
+import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -62,6 +67,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowTopicForumController {
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 	
 	/**
 	 * 
@@ -108,6 +115,24 @@ public class ShowTopicForumController {
 			ForumTopic forumTopic = getCommunityService().getForumTopic(new ForumTopic(command.getTopicId()));
 			model.put("topic", forumTopic);
 			
+			if(forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null){
+				//MD: Prepare the Manuscript Viewer
+				Document document = forumTopic.getForum().getDocument();
+				DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+				documentExplorer.setImage(new Image());
+				documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+				documentExplorer.getImage().setImageType(ImageType.C);
+				
+				try {
+					documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+		
+					model.put("documentExplorer", documentExplorer);
+				} catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					return new ModelAndView("error/ShowTopicForum", model);
+				}
+			}
+			
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
 			model.put("postsPage", postsPage);
 		} catch (ApplicationThrowable applicationThrowable) {
@@ -130,9 +155,24 @@ public class ShowTopicForumController {
 	}
 
 	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
 	 * @return the communityService
 	 */
 	public CommunityService getCommunityService() {
 		return communityService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

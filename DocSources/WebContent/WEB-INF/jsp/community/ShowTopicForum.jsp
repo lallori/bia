@@ -18,6 +18,18 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 <h2>${topic.subject }</h2>
 
+<c:if test="${topic.forum.document != null}">
+	<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+		<c:param name="entryId" value="${documentExplorer.entryId}"/>
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="flashVersion"   value="false" />
+		<c:param name="showHelp" value="true" />
+		<c:param name="showThumbnail" value="true" />
+	</c:url>
+			
+	<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+</c:if>
+
 <div id="topicActions">
 	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><img src="<c:url value="/images/forum/img_reply.png"/>" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a>
     <div id="searchThisForumFormDiv">
@@ -144,12 +156,12 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				return false;
 			});
 			
-			$j('.boardIndex').die();
-			// Result links have a specific class style on which we attach click live. 
-			$j('.boardIndex').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
-				return false;
-			});
+// 			$j('.boardIndex').die();
+// 			Result links have a specific class style on which we attach click live. 
+// 			$j('.boardIndex').live('click', function() {
+// 				$j("#main").load($j(this).attr("href"));
+// 				return false;
+// 			});
 
 			$j('.quotePost').die();
 			$j('.quotePost').click(function (){

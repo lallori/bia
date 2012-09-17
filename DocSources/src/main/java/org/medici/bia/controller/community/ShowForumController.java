@@ -36,13 +36,18 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowForumCommand;
+import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,12 +60,15 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/community/ShowForum"})
 public class ShowForumController {
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 	
 	/**
 	 * 
@@ -110,6 +118,23 @@ public class ShowForumController {
 				}
 			} else if (forum.getType().equals(Type.FORUM)) {
 				model.put("forum", forum);
+				if(forum.getDocument() != null){
+					//MD: Prepare the Manuscript Viewer
+					Document document = forum.getDocument();
+					DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+					documentExplorer.setImage(new Image());
+					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+					documentExplorer.getImage().setImageType(ImageType.C);
+					
+					try {
+						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+			
+						model.put("documentExplorer", documentExplorer);
+					} catch (ApplicationThrowable applicationThrowable) {
+						model.put("applicationThrowable", applicationThrowable);
+						return new ModelAndView("error/ShowForum", model);
+					}
+				}
 			}
 
 			if (forum.getOption().getCanHaveSubForum()) {
@@ -185,9 +210,24 @@ public class ShowForumController {
 	}
 
 	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
 	 * @return the communityService
 	 */
 	public CommunityService getCommunityService() {
 		return communityService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }
