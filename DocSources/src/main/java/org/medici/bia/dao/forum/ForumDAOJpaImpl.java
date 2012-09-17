@@ -113,6 +113,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setTopicsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.DOCUMENT);
+		forum.setLogicalDelete(Boolean.FALSE);
 
 		getEntityManager().persist(forum);
 
@@ -154,6 +155,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setType(Type.FORUM);
 		forum.setTitle(person.getMapNameLf());
 		forum.setSubType(SubType.PEOPLE);
+		forum.setLogicalDelete(Boolean.FALSE);
 
 		getEntityManager().persist(forum);
 
@@ -184,6 +186,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setTopicsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.PLACE);
+		forum.setLogicalDelete(Boolean.FALSE);
 
 		getEntityManager().persist(forum);
 
@@ -215,6 +218,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setTopicsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.VOLUME);
+		forum.setLogicalDelete(Boolean.FALSE);
 
 		getEntityManager().persist(forum);
 

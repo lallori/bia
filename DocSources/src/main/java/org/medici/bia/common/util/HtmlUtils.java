@@ -267,7 +267,7 @@ public class HtmlUtils {
 		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		stringBuilder.append("/community/ShowForum.do?forumId=");
 		stringBuilder.append(forum.getForumId());
-		stringBuilder.append("\" class=\"boardIndex\">");
+		stringBuilder.append("&completeDOM=true\" class=\"boardIndex\">");
 		stringBuilder.append(forum.getTitle());
 		stringBuilder.append("</a>");
 

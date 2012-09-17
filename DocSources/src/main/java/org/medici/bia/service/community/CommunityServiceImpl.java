@@ -152,6 +152,17 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setFirstPost(null);
 				forumTopic.setLogicalDelete(Boolean.FALSE);
 				
+				//MD: To attach entity from forum to topic
+				if(forum.getDocument() != null){
+					forumTopic.setDocument(forum.getDocument());
+				}else if(forum.getVolume() != null){
+					forumTopic.setVolume(forum.getVolume());
+				}else if(forum.getPerson() != null){
+					forumTopic.setPerson(forum.getPerson());
+				}else if(forum.getPlace() != null){
+					forumTopic.setPlace(forum.getPlace());
+				}
+				
 				getForumTopicDAO().persist(forumTopic);
 				
 				forumPost.setTopic(forumTopic);
