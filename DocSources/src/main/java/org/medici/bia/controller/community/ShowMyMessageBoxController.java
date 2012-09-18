@@ -30,7 +30,7 @@ package org.medici.bia.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.bia.command.community.ShowMyInboxCommand;
+import org.medici.bia.command.community.ShowMyMessageBoxCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.UserMessageSearch;
@@ -38,8 +38,6 @@ import org.medici.bia.domain.UserMessage.UserMessageCategory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,8 +52,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/community/ShowMyInbox")
-public class ShowMyInboxController {
+@RequestMapping("/community/ShowMyMessageBox")
+public class ShowMyMessageBoxController {
 	@Autowired
 	private CommunityService communityService;
 	
@@ -66,7 +64,7 @@ public class ShowMyInboxController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowMyInboxCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowMyMessageBoxCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		PaginationFilter paginationFilter = new PaginationFilter();
@@ -90,7 +88,14 @@ public class ShowMyInboxController {
 		
 		UserMessageSearch userMessageSearch = new UserMessageSearch();
 //		userMessageSearch.setRecipient(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
+		if(command.getCategory() != null){
+			if(command.getCategory().equals("inbox")){
+				userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
+			}else if(command.getCategory().equals("outbox")){
+				userMessageSearch.setUserMessageCategory(UserMessageCategory.OUTBOX);
+			}
+		}else
+			userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
 		
 		try{
 			page = getCommunityService().searchMessages(userMessageSearch, paginationFilter);
@@ -99,9 +104,9 @@ public class ShowMyInboxController {
 			page = new Page(paginationFilter);
 		}
 		
-		model.put("inboxPage", page);
+		model.put("messageboxPage", page);
 
-		return new ModelAndView("community/ShowMyInbox", model);
+		return new ModelAndView("community/ShowMyMessageBox", model);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * ShowMessagesByCategoryCommand.java
+ * ShowMyMessageBoxCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,14 +32,27 @@ import org.medici.bia.domain.UserMessage.UserMessageCategory;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
-public class ShowMyInboxCommand {
+public class ShowMyMessageBoxCommand {
 	
-	
+	private String category;
 	private Integer resultsForPage;
 	private Integer resultPageNumber;
 	private Integer resultPageTotal;
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	/**
 	 * @return the resultsForPage
 	 */

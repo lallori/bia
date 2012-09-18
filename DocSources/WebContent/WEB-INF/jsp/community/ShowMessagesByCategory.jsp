@@ -8,13 +8,21 @@
 		<c:param name="category" value="INBOX"/>
 	</c:url>
 	
+	<c:url var="ShowMyInboxURL" value="/community/ShowMyMessageBox.do">
+		<c:param name="category" value="inbox"/>
+	</c:url>
+	
+	<c:url var="ShowMyOutboxURL" value="/community/ShowMyMessageBox.do">
+		<c:param name="category" value="outbox"/>
+	</c:url>
+	
 	<h2>Messages</h2>
 	
 	<div id="tabs">
 		<ul>
-			<li><a href="<c:url value="/community/ShowMyInbox.do"/>">Inbox</a></li>
-			<li><a href="/DocSources/forum/outbox.html">Outbox</a></li>
-			<li><a href="/DocSources/forum/composeMessage.html">Compose message</a></li>
+			<li><a href="${ShowMyInboxURL}">Inbox</a></li>
+			<li><a href="${ShowMyOutboxURL}">Outbox</a></li>
+			<li><a href="<c:url value="/community/ComposeMessage.do"/>">Compose message</a></li>
 		</ul>
 	</div>
 

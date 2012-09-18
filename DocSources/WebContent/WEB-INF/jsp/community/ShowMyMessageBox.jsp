@@ -14,11 +14,20 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 	
 	<div id="messagesTable">
 		<div class="list">
-        	<div class="rowFirst">
-           		<div class="one">FROM</div>
-            	<div class="two">MESSAGE</div>
-            	<div class="three">DATE</div>
-        	</div>
+        	<c:if test="${command.category == 'inbox'}">
+	        	<div class="rowFirst">
+	           		<div class="one">FROM</div>
+	            	<div class="two">MESSAGE</div>
+	            	<div class="three">DATE</div>
+	        	</div>
+        	</c:if>
+        	<c:if test="${command.category == 'outbox'}">
+        		<div class="rowFirst">
+        			<div class="one">TO</div>
+        			<div class="two">MESSAGE</div>
+        			<div class="three">DATE</div>
+        		</div>
+        	</c:if>
 
 <%-- <h2>${topic.subject }</h2> --%>
 
@@ -33,7 +42,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print thread" width="17" height="15" /><span class="button_text">Print thread</span></a> -->
 <!-- </div> -->
 
-			<c:forEach items="${inboxPage.list}" var="currentMessage" varStatus="status">
+			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
 			<div class="row">
 				<div class="one"><input type="checkbox" name="css" value="css"/><a href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
 				<div class="two"><span class="subject">${currentMessage.messageSubject}</span> - <span class="message">${currentMessage.messageBody}</span></div>
@@ -45,7 +54,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 <div id="forumPaginate">
     <c:set var="paginationData">
-		<bia:paginationForum page="${inboxPage}"/>
+		<bia:paginationForum page="${messageboxPage}"/>
 	</c:set>
 	
 	${paginationData}
@@ -78,12 +87,12 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				return false;
 			});
 			
-			$j('.boardIndex').die();
+// 			$j('.boardIndex').die();
 			// Result links have a specific class style on which we attach click live. 
-			$j('.boardIndex').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
-				return false;
-			});
+// 			$j('.boardIndex').live('click', function() {
+// 				$j("#main").load($j(this).attr("href"));
+// 				return false;
+// 			});
 
 			$j('.returnTo').click(function(){
 				$j("#main").load($j(this).attr("href"));
