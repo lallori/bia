@@ -528,20 +528,24 @@ a.returnTo {
 	margin: 15px 0 20px 0;
 }
 
-#postReply.buttonMedium, #printButton.buttonMedium {
-	padding:0;
+
+#topicActions span.button_print {
+    background-image: url(/DocSources/images/forum/img_print.png);   
+    height: 17px;   
+    width: 15px;
+    background-repeat: no-repeat;
+    padding-left: 25px;
 }
 
-#topicActions span.button_text {
-	margin: 4px 14px 0 0;
-	float: right;
+#topicActions span.button_reply {
+    background-image: url(/DocSources/images/forum/img_reply.png);   
+    height: 17px;   
+    width: 15px;
+    background-repeat: no-repeat;
+    padding-left: 25px;
 }
 
-#topicActions img {
-	margin: 4px 0 0 11px;
-	float: left;
-	border: none;
-}
+
 
 #searchThisForumFormDiv { /* Search Form Container */
 	width: 250px;
@@ -565,8 +569,7 @@ a.returnTo {
 }
 
 #printButton {
-	margin: 0 0 0 879px;
-	background-repeat:none;
+	margin: 0 0 0 500px;
 }
 
 #fullscreenButton {

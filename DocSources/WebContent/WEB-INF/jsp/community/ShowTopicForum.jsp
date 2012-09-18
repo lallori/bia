@@ -31,14 +31,14 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 </c:if>
 
 <div id="topicActions">
-	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><img src="<c:url value="/images/forum/img_reply.png"/>" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a>
+	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
     <div id="searchThisForumFormDiv">
         <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
             <input id="searchForumThisText" name="searchInForum" type="text" value="Search this forum...">
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>
-    <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print thread" width="17" height="15" /><span class="button_text">Print thread</span></a>
+    <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print thread</span></a>
 </div>
 
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
