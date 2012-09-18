@@ -326,6 +326,10 @@
 	<!-- Administration Module END -->
 
 	<!-- Community Module BEGIN -->
+	<definition name="community/ComposeMessage" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ComposeMessage.jsp"/>
+	</definition>
+	
 	<definition name="community/EditForumPost" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
 	</definition>
@@ -338,8 +342,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
 	
-	<definition name="community/ShowMyInbox" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyInbox.jsp"/>
+	<definition name="community/ShowMyMessageBox" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyMessageBox.jsp"/>
 	</definition>
 
 	<definition name="community/ShowAdvancedSearchForumPost" extends="template.partialDOM">
