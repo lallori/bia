@@ -124,7 +124,7 @@ public class SchedoneDAOJpaImpl extends JpaDao<Integer, Schedone> implements Sch
 			query = getEntityManager().createQuery("FROM Schedone WHERE volNum=:volNum AND volLetExt IS NULL");
 			query.setParameter("volNum", volNum);
 		}else{
-			query = getEntityManager().createQuery("FROM Schedone WHERE volNum=:volNum AND volLetExt LIKE ':volLetExt'");
+			query = getEntityManager().createQuery("FROM Schedone WHERE volNum=:volNum AND volLetExt = :volLetExt");
 			query.setParameter("volNum", volNum);
 			query.setParameter("volLetExt", volLetExt);
 		}
