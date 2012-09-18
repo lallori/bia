@@ -301,6 +301,12 @@ public class HtmlUtils {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
 			stringBuilder.append(forumTopic.getTopicId());
+			//For generate a link to the last page of topic
+			stringBuilder.append("&postForPage=10&postPageNumber=");
+			stringBuilder.append((forumTopic.getTotalReplies() / 10) + 1);
+			stringBuilder.append("&postPageTotal=");
+			stringBuilder.append((forumTopic.getTotalReplies() / 10) + 1);
+			
 		}
 
 		return stringBuilder.toString();

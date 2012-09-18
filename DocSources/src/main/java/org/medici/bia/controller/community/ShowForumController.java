@@ -115,6 +115,32 @@ public class ShowForumController {
 					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
 					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					model.put("forumsBySubCategories", forumsHashMap);
+					
+					if (forum.getOption().getCanHaveSubForum()) {
+						PaginationFilter paginationFilterForum = new PaginationFilter();
+						if (command.getForumsForPage() != null) {
+							paginationFilterForum.setElementsForPage(command.getForumsForPage());
+						} else {
+							paginationFilterForum.setElementsForPage(new Integer(10));
+							command.setForumsForPage(paginationFilterForum.getElementsForPage());
+						}
+						if (command.getForumPageNumber() != null) {
+							paginationFilterForum.setThisPage(command.getForumPageNumber());
+						} else {
+							paginationFilterForum.setThisPage(new Integer(1));
+							command.setForumPageNumber(paginationFilterForum.getThisPage());
+						}
+						if (command.getForumPageTotal() != null) {
+							paginationFilterForum.setPageTotal(command.getForumPageTotal());
+						} else {
+							paginationFilterForum.setPageTotal(null);
+						}
+						paginationFilterForum.addSortingCriteria("dispositionOrder", "asc");
+						
+						Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
+						model.put("subForumsPage", page);
+						
+					}
 				}
 			} else if (forum.getType().equals(Type.FORUM)) {
 				model.put("forum", forum);
@@ -135,31 +161,31 @@ public class ShowForumController {
 						return new ModelAndView("error/ShowForum", model);
 					}
 				}
-			}
-
-			if (forum.getOption().getCanHaveSubForum()) {
-				PaginationFilter paginationFilterForum = new PaginationFilter();
-				if (command.getForumsForPage() != null) {
-					paginationFilterForum.setElementsForPage(command.getForumsForPage());
-				} else {
-					paginationFilterForum.setElementsForPage(new Integer(10));
-					command.setForumsForPage(paginationFilterForum.getElementsForPage());
-				}
-				if (command.getForumPageNumber() != null) {
-					paginationFilterForum.setThisPage(command.getForumPageNumber());
-				} else {
-					paginationFilterForum.setThisPage(new Integer(1));
-					command.setForumPageNumber(paginationFilterForum.getThisPage());
-				}
-				if (command.getForumPageTotal() != null) {
-					paginationFilterForum.setPageTotal(command.getForumPageTotal());
-				} else {
-					paginationFilterForum.setPageTotal(null);
-				}
-				paginationFilterForum.addSortingCriteria("dispositionOrder", "asc");
 				
-				Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
-				model.put("subForumsPage", page);
+				if (forum.getOption().getCanHaveSubForum()) {
+					PaginationFilter paginationFilterForum = new PaginationFilter();
+					if (command.getForumsForPage() != null) {
+						paginationFilterForum.setElementsForPage(command.getForumsForPage());
+					} else {
+						paginationFilterForum.setElementsForPage(new Integer(10));
+						command.setForumsForPage(paginationFilterForum.getElementsForPage());
+					}
+					if (command.getForumPageNumber() != null) {
+						paginationFilterForum.setThisPage(command.getForumPageNumber());
+					} else {
+						paginationFilterForum.setThisPage(new Integer(1));
+						command.setForumPageNumber(paginationFilterForum.getThisPage());
+					}
+					if (command.getForumPageTotal() != null) {
+						paginationFilterForum.setPageTotal(command.getForumPageTotal());
+					} else {
+						paginationFilterForum.setPageTotal(null);
+					}
+					paginationFilterForum.addSortingCriteria("lastPost", "desc");
+					
+					Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
+					model.put("subForumsPage", page);
+				}
 			}
 
 			if (forum.getOption().getCanHaveTopics()) {
@@ -182,7 +208,7 @@ public class ShowForumController {
 				} else {
 					paginationFilterTopic.setPageTotal(null);
 				}
-				paginationFilterTopic.addSortingCriteria("forumId", "asc");
+				paginationFilterTopic.addSortingCriteria("lastPost", "desc");
 	
 				Page topicPage = getCommunityService().getForumTopics(forum, paginationFilterTopic);
 				model.put("topicsPage", topicPage);

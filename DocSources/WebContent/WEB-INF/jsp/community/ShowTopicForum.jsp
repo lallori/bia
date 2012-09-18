@@ -81,7 +81,15 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
         <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
     </div>
     <div id="post">
-        <h2>${currentPost.subject}</h2>
+<!--     		In this case we enter in "my posts page" -->
+    	<c:choose>
+    		<c:when test="${topic.topicId == null}">
+    			<h2>${currentPost.subject} <i>in</i> ${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</h2>
+    		</c:when>
+    		<c:otherwise>
+        		<h2>${currentPost.subject}</h2>
+        	</c:otherwise>
+        </c:choose>
         <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         <p>${currentPost.text}</p>
     </div>
@@ -203,7 +211,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			});
 			
 			if("${topic.topicId}" == ''){
-				$j('#postReply').css("visibility", "hidden");
+				$j('#postReply').css("display", "none");
 			}
 			
 			$j('#searchForumThisText').click(function(){
