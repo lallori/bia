@@ -107,10 +107,10 @@ public class EditDetailsDocumentValidator implements Validator {
 			}else{
 				try {
 					if (getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume)) == null) {
-						errors.reject("volume", "error.volume.notfound");
+						errors.rejectValue("volume", "error.volume.notfound");
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.reject("volume", "error.volume.notfound");
+					errors.rejectValue("volume", "error.volume.notfound");
 				}
 			}
 		}
@@ -128,10 +128,10 @@ public class EditDetailsDocumentValidator implements Validator {
 			if (entryId > 0) {
 				try {
 					if (getDocBaseService().findDocument(entryId) == null) {
-						errors.reject("entryId", "error.document.notfound");
+						errors.rejectValue("entryId", "error.document.notfound");
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.reject("entryId", "error.document.notfound");
+					errors.rejectValue("entryId", "error.document.notfound");
 				}
 			}
 		}
@@ -152,17 +152,17 @@ public class EditDetailsDocumentValidator implements Validator {
 		if (!errors.hasErrors()) {
 			if (startYear != null) {
 				if ((startYear < 1200) || (startYear > 1700)) {
-					errors.reject("docYear", "error.docYear.invalid");
+					errors.rejectValue("docYear", "error.docYear.invalid");
 				}
 			}
 			if (startMonthNum != null) {
 				if ((startMonthNum <1) || (startMonthNum >12)) {
-					errors.reject("docMonthNum", "error.docMonthNum.invalid");
+					errors.rejectValue("docMonthNum", "error.docMonthNum.invalid");
 				}
 			}
 			if (startDay != null) {
 				if ((startDay < 0) || (startDay > 31)) {
-					errors.reject("docDay", "error.docDay.invalid");
+					errors.rejectValue("docDay", "error.docDay.invalid");
 				}
 			}
 		}

@@ -201,6 +201,7 @@
 						} else {
 							if ($j("#volNotExist").length > 0) {
 								$j("#volNotExist").remove();
+								$j("#volume\\.errors").remove();
 							}
 							$j("#save").removeAttr("disabled");
 							

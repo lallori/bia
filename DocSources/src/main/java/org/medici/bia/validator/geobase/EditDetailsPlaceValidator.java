@@ -100,7 +100,7 @@ public class EditDetailsPlaceValidator implements Validator {
 			if(placeAllId > 0){
 				try {
 					if (getGeoBaseService().findPlace(placeAllId) == null) {
-						errors.reject("placeId", "error.placeId.notfound");
+						errors.rejectValue("placeId", "error.placeId.notfound");
 					}
 				} catch (ApplicationThrowable ath) {
 				}
@@ -111,17 +111,17 @@ public class EditDetailsPlaceValidator implements Validator {
 	public void validateGeogKey(Integer geogKey, String plSource, Errors errors){
 		if(!errors.hasErrors()){
 			if(geogKey == null){
-				errors.reject("geogKey", "error.geogKey.notvalid");
+				errors.rejectValue("geogKey", "error.geogKey.notvalid");
 			}
 			if(geogKey != null && plSource != null){
 				if (plSource.equals("TGN") && geogKey < 1000000){
-					errors.reject("geogKey", "error.geogKey.notvalid");
+					errors.rejectValue("geogKey", "error.geogKey.notvalid");
 				}
 				if(plSource.equals("MAPSITE") && (geogKey < 400000 || geogKey > 1000000) ){
-					errors.reject("geogKey", "error.geogKey.notvalid");
+					errors.rejectValue("geogKey", "error.geogKey.notvalid");
 				}
 				if(plSource.equals("MAPPLACE") && (geogKey < 100000 || geogKey > 400000)){
-					errors.reject("geogKey", "error.geogKey.notvalid");
+					errors.rejectValue("geogKey", "error.geogKey.notvalid");
 				}
 			}
 		}
@@ -134,10 +134,10 @@ public class EditDetailsPlaceValidator implements Validator {
 			try{
 				Place place = getGeoBaseService().findPlace(parentPlaceAllId);
 				if(place == null){
-					errors.reject("parentPlaceAllId", "error.parentPlaceAllId.notfound");
+					errors.rejectValue("parentPlaceAllId", "error.parentPlaceAllId.notfound");
 				}
 			}catch(ApplicationThrowable th){
-				errors.reject("parentPlaceAllId", "error.parentPlaceAllId.notfound");
+				errors.rejectValue("parentPlaceAllId", "error.parentPlaceAllId.notfound");
 			}
 		}
 	}

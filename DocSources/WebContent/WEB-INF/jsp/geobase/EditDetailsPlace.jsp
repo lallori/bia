@@ -98,6 +98,8 @@
 			<form:hidden path="parentPlaceAllId" />
 			<form:hidden path="geogKey"/>
 			<form:hidden path="plSource"/>
+			
+			<form:errors path="parentPlaceAllId" cssClass="inputerrors" htmlescape="false" />
 		</form:form>
 	</div>
 	
@@ -160,7 +162,7 @@
 			$j("#EditDetailsTgnPlaceForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){
-						$j("#body_left").html(html);
+						$j("#EditDetailsPlaceDiv").html(html);
 					} else {
 				<c:choose> 
 					<c:when test="${command.placeAllId == 0}"> 
