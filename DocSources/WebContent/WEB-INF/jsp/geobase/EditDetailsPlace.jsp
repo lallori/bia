@@ -99,6 +99,7 @@
 			<form:hidden path="geogKey"/>
 			<form:hidden path="plSource"/>
 			
+			<form:errors path="geogKey" cssClass="inputerrors" htmlescape="false" />
 			<form:errors path="parentPlaceAllId" cssClass="inputerrors" htmlescape="false" />
 		</form:form>
 	</div>
