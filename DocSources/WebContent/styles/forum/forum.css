@@ -569,7 +569,7 @@ a.returnTo {
 }
 
 #printButton {
-	margin: 0 0 0 500px;
+	float: right;
 }
 
 #fullscreenButton {
