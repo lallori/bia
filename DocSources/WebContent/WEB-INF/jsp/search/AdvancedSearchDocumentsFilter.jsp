@@ -98,7 +98,7 @@
 			<div id="extractSearchDiv">
 			<c:forEach items="${searchFilter.filterData.extract}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Extract: </span><span class="wordSearch">${searchFilter.filterData.extract[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch">Transcription: </span><span class="wordSearch">${searchFilter.filterData.extract[iterator.index]}</span><a class="remove" href="#">(remove)</a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.extract[iterator.index])}" name="extract">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>

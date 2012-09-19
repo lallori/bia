@@ -29,9 +29,9 @@
 					               	<div class="col_l">in</div>
 					               	<div class="col_l">
 					               		<select id="wordType" name="wordType" class="selectform_LXlong">
-											<option value="SynopsisAndExtract" selected="selected">Synopsis and Extract</option>
+											<option value="SynopsisAndExtract" selected="selected">Synopsis and Transcription</option>
 											<option value="Synopsis">Document Synopsis</option>
-											<option value="Extract">Document Extract</option>				
+											<option value="Extract">Document Transcription</option>				
 										</select>
 					               	</div>
 					               	<div class="col_r">
@@ -157,14 +157,14 @@
 				        </div>
 					</div>
 				
-					<h1 id="extractSynopsis"><a>Extract and/or Synopsis</a></h1>
+					<h1 id="extractSynopsis"><a>Transcription and/or Synopsis</a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="extractSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.extractorsynopsis.extract"></fmt:message>">?</a>
-										<label for="extract" id="extractLabel">Extract</label>
+										<label for="extract" id="extractLabel">Transcription</label>
 					               	</div>
 					            </div>
 					            <div class="row">
