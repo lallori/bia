@@ -96,8 +96,14 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	public Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException {
 		Forum forum = new Forum();
 		forum.setDateCreated(new Date());
-		forum.setTitle(document.toString());
-		forum.setDescription(document.toString());
+		forum.setTitle("DocID #" + document.getEntryId());
+		if(document.getFolioNum() == null){
+			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio NNF");
+		}else if(document.getFolioMod() != null){
+			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio " + document.getFolioNum() + document.getFolioMod());
+		}else{
+			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio " + document.getFolioNum());
+		}
 		forum.setForumParent(forumParent);
 		forum.setLastPost(null);
 		forum.setLastUpdate(new Date());

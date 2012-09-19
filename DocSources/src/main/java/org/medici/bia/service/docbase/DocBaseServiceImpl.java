@@ -641,6 +641,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
+			//Update the title of the linked forum if exist
+//			Forum forum = getForumDAO().getForumDocument(document.getEntryId());
+//			Boolean changeTitleForum = Boolean.FALSE;
+//			if(forum != null){
+//				if((document.getVolume().getVolNum() != documentToUpdate.getVolume().getVolNum()) || (document.getVolume().getVolLetExt() != documentToUpdate.getVolume().getVolLetExt()) || (document.getFolioNum() != documentToUpdate.getFolioNum()) || (document.getFolioMod().equals("") && documentToUpdate.getFolioMod() != null) || (!document.getFolioMod().equals(documentToUpdate.getFolioMod()))){
+//					changeTitleForum = Boolean.TRUE;
+//				}
+//			}
+			
 			//fill fields to update document section
 			documentToUpdate.setLastUpdate(new Date());
 			// We need to attach the correct volume istance by database extraction.
@@ -700,6 +709,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setDateNotes(document.getDateNotes());
 
 			getDocumentDAO().merge(documentToUpdate);
+			
+			//Update the title of the linked forum if exist
+			Forum forum = getForumDAO().getForumDocument(document.getEntryId());
+			if(forum != null){
+				if(documentToUpdate.getFolioNum() == null){
+					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio NNF");
+				}else if(documentToUpdate.getFolioMod() != null){
+					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio " + documentToUpdate.getFolioNum() + documentToUpdate.getFolioMod());
+				}else{
+					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio " + documentToUpdate.getFolioNum());
+				}
+				getForumDAO().merge(forum);
+			}
 			
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
