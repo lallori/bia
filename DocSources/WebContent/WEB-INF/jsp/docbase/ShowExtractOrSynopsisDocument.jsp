@@ -19,7 +19,7 @@
 		
 	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
 		<div class="title">
-			<h5>EXTRACT/SYNOPSIS </h5>
+			<h5>TRANSCRIPTION/SYNOPSIS </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
 				<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="Edit Extract/Synopsis"></a>
@@ -36,7 +36,7 @@
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Extract</div>
+				<div class="item">Transcription</div>
 				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">

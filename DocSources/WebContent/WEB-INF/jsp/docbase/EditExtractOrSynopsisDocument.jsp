@@ -13,11 +13,11 @@
 <div id="loadingDiv"></div>
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>EXTRACT/SYNOPSIS</b></legend>
+			<legend><b>TRANSCRIPTION/SYNOPSIS</b></legend>
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.extract"></fmt:message>">?</a>
-					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract</form:label>
+					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Transcription</form:label>
 				</div>
 				<div class="row">
 					<form:textarea id="docExtract" path="docExtract" class="txtarea_big" />
