@@ -176,7 +176,9 @@
 				}); 
 				
 				$j("#eraseList").click(function() {
-					Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 330, height: 120});
+					if($j(".searchResult").length > 0){
+						Modalbox.show($j(this).attr("href"), {title: "ERASE MARKED LIST", width: 330, height: 120});
+					}
 					return false;
 				});
 				
