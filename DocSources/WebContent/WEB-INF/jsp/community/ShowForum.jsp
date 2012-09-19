@@ -62,10 +62,21 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
-			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT'}">
+			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT' && not empty documentExplorer}">
 				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 					<c:param name="entryId" value="${documentExplorer.entryId}"/>
 					<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+					<c:param name="flashVersion"   value="false" />
+					<c:param name="showHelp" value="true" />
+					<c:param name="showThumbnail" value="true" />
+				</c:url>
+			
+				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+			</c:if>
+			<c:if test="${forum.option.canHaveTopics && forum.subType == 'VOLUME' && not empty volumeExplorer}">
+				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+					<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+					<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 					<c:param name="flashVersion"   value="false" />
 					<c:param name="showHelp" value="true" />
 					<c:param name="showThumbnail" value="true" />

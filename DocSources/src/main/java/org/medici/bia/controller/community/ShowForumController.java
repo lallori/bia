@@ -39,12 +39,14 @@ import org.medici.bia.command.community.ShowForumCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -144,21 +146,49 @@ public class ShowForumController {
 				}
 			} else if (forum.getType().equals(Type.FORUM)) {
 				model.put("forum", forum);
+				//MD: Prepare the Manuscript Viewer
 				if(forum.getDocument() != null){
-					//MD: Prepare the Manuscript Viewer
 					Document document = forum.getDocument();
-					DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
-					documentExplorer.setImage(new Image());
-					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
-					documentExplorer.getImage().setImageType(ImageType.C);
+					if(getManuscriptViewerService().findDocumentImageThumbnail(document) != null){
+						DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+						documentExplorer.setImage(new Image());
+						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+						documentExplorer.getImage().setImageType(ImageType.C);
 					
-					try {
-						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-			
-						model.put("documentExplorer", documentExplorer);
-					} catch (ApplicationThrowable applicationThrowable) {
-						model.put("applicationThrowable", applicationThrowable);
-						return new ModelAndView("error/ShowForum", model);
+						try {
+							documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+							
+							model.put("documentExplorer", documentExplorer);
+						} catch (ApplicationThrowable applicationThrowable) {
+							model.put("applicationThrowable", applicationThrowable);
+							return new ModelAndView("error/ShowForum", model);
+						}
+					}else{
+						model.put("documentExplorer", null);
+					}
+				}else if(forum.getVolume() != null){
+					Volume volume = forum.getVolume();
+					if(volume.getDigitized()){
+						VolumeExplorer volumeExplorer = new VolumeExplorer(volume.getSummaryId(), volume.getVolNum(), volume.getVolLetExt());
+						if(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()) != null){
+							volumeExplorer.setImage(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()));
+						}else{
+							volumeExplorer.setImage(new Image());
+//							volumeExplorer.getImage().setImageProgTypeNum(1);
+							volumeExplorer.getImage().setImageOrder(1);
+							volumeExplorer.getImage().setImageType(ImageType.C);
+						}
+						
+//						try{
+//							volumeExplorer = getManuscriptViewerService().getDocumentExplorer(volumeExplorer);
+							
+							model.put("volumeExplorer", volumeExplorer);
+//						}catch (ApplicationThrowable applicationThrowable) {
+//							model.put("applicationThrowable", applicationThrowable);
+//							return new ModelAndView("error/ShowForum", model);
+//						}
+					}else{
+						model.put("volumeExplorer", null);
 					}
 				}
 				

@@ -18,7 +18,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 <h2>${topic.subject }</h2>
 
-<c:if test="${topic.forum.document != null}">
+<c:if test="${topic.forum.document != null && not empty documentExplorer}">
 	<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 		<c:param name="entryId" value="${documentExplorer.entryId}"/>
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />

@@ -118,18 +118,22 @@ public class ShowTopicForumController {
 			if(forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null){
 				//MD: Prepare the Manuscript Viewer
 				Document document = forumTopic.getForum().getDocument();
-				DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
-				documentExplorer.setImage(new Image());
-				documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
-				documentExplorer.getImage().setImageType(ImageType.C);
+				if(getManuscriptViewerService().findDocumentImageThumbnail(document) != null){
+					DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+					documentExplorer.setImage(new Image());
+					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+					documentExplorer.getImage().setImageType(ImageType.C);
 				
-				try {
-					documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+					try {
+						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 		
-					model.put("documentExplorer", documentExplorer);
-				} catch (ApplicationThrowable applicationThrowable) {
-					model.put("applicationThrowable", applicationThrowable);
-					return new ModelAndView("error/ShowTopicForum", model);
+						model.put("documentExplorer", documentExplorer);
+					} catch (ApplicationThrowable applicationThrowable) {
+						model.put("applicationThrowable", applicationThrowable);
+						return new ModelAndView("error/ShowTopicForum", model);
+					}
+				}else{
+					model.put("documentExplorer", null);
 				}
 			}
 			
