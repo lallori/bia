@@ -13,7 +13,7 @@
 								<div class="col_l">Simple Search in</div>
 								<div class="col_r"><select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
 										<option value="ALL" selected="selected">All</option>
-										<option value="EXTRACT">Document Extracts</option>
+										<option value="EXTRACT">Document Transcriptions</option>
 										<option value="SYNOPSIS">Document Synopses</option>
 										<option value="VOLUME">Volumes</option>
 										<option value="PEOPLE">People</option>
@@ -96,7 +96,8 @@
 							if(title == 'Document Synopses'){
 								title = "Document Synopses"
 							}else{
-								title = title.replace('s','');
+								//title = title.replace('s','');
+								title = title.replace('','');
 							}
 							var text = $j("#text").val();
 							text = text.replace("'","%27");
