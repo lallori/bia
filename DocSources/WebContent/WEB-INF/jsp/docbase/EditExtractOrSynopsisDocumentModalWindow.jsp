@@ -11,7 +11,7 @@
 	<form:form id="EditExtractOrSynopsisDocumentFullscreenForm" method="post" cssClass="edit">
 
 		<div style="float:left">
-			<form:label for="docExtract" id="docExtractLabel" path="docExtract">Trascription:</form:label>
+			<form:label for="docExtract" id="docExtractLabel" path="docExtract">Transcription:</form:label>
 			<br />
 			<form:textarea id="docExtract" path="docExtract" cssClass="txtarea_fullscreen"/>
 		</div>
