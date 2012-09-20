@@ -2465,7 +2465,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			if(stringBuilder.length()>0){
 				stringBuilder.append("AND ");
 			}
-			stringBuilder.append("Extract: ");
+			stringBuilder.append("Transcritption: ");
 			for(int i = 0; i < extract.size(); i++){
 				if(i > 0){
 					stringBuilder.append("AND ");

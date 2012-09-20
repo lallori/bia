@@ -118,7 +118,7 @@
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show extract</a>
+		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
 		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
 		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
@@ -315,7 +315,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EXTRACT',
+				title: 'TRANSCRIPTION',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -335,7 +335,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EDIT EXTRACT',
+				title: 'EDIT TRANSCRIPTION',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,

@@ -36,7 +36,7 @@
 				}
 			});
 			
-			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("EXTRACT / Start Folio: ${folioNum} - MDP: ${volNum}");
+			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("TRANSCRIPTION / Start Folio: ${folioNum} - MDP: ${volNum}");
 			
 			$j('#editExtract').click(function() {
 					$j("#ShowExtractDocumentDiv").dialog("close");
