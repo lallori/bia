@@ -33,7 +33,7 @@
 						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error">Topic</form:label>
 					</div>
 					<div class="col_l">
-						<form:select path="topicId" id="topicId" cssClass="selectform_XLlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />
+						<form:select path="topicId" id="topicId" cssClass="selectform_XXXlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />
 <%-- 						<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" /> --%>
 						<!--<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>-->
 					</div>
