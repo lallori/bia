@@ -123,6 +123,7 @@ public class ShowTopicForumController {
 					documentExplorer.setImage(new Image());
 					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 					documentExplorer.getImage().setImageType(ImageType.C);
+					documentExplorer.setTotal(null);
 				
 					try {
 						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);

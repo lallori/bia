@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
@@ -223,6 +224,14 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param pageTurner
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeExplorer getVolumeExplorer(VolumeExplorer pageTurner) throws ApplicationThrowable;
 	
 	/**
 	 * 

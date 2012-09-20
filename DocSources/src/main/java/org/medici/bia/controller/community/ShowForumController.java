@@ -154,6 +154,7 @@ public class ShowForumController {
 						documentExplorer.setImage(new Image());
 						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 						documentExplorer.getImage().setImageType(ImageType.C);
+						documentExplorer.setTotal(null);
 					
 						try {
 							documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
@@ -178,15 +179,16 @@ public class ShowForumController {
 							volumeExplorer.getImage().setImageOrder(1);
 							volumeExplorer.getImage().setImageType(ImageType.C);
 						}
+						volumeExplorer.setTotal(null);
 						
-//						try{
-//							volumeExplorer = getManuscriptViewerService().getDocumentExplorer(volumeExplorer);
+						try{
+							volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
 							
 							model.put("volumeExplorer", volumeExplorer);
-//						}catch (ApplicationThrowable applicationThrowable) {
-//							model.put("applicationThrowable", applicationThrowable);
-//							return new ModelAndView("error/ShowForum", model);
-//						}
+						}catch (ApplicationThrowable applicationThrowable) {
+							model.put("applicationThrowable", applicationThrowable);
+							return new ModelAndView("error/ShowForum", model);
+						}
 					}else{
 						model.put("volumeExplorer", null);
 					}

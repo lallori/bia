@@ -35,6 +35,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.ImageUtils;
 import org.medici.bia.common.volume.FoliosInformations;
@@ -540,6 +541,30 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			return getImageDAO().findImages(documentExplorer);
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable {
+		try {
+			if (volumeExplorer.getSummaryId() != null && volumeExplorer.getVolNum() == null) {
+				if (volumeExplorer.getSummaryId() >0) {
+					Volume volume = getVolumeDAO().find(volumeExplorer.getSummaryId());
+					volumeExplorer.setVolNum(volume.getVolNum());
+					volumeExplorer.setVolLetExt(volume.getVolLetExt());
+				}
+			} else if (volumeExplorer.getSummaryId() == null && volumeExplorer.getVolNum() != null) {
+				Volume volume = getVolumeDAO().findVolume(volumeExplorer.getVolNum(), volumeExplorer.getVolLetExt());
+				if (volume != null) {
+					volumeExplorer.setSummaryId(volume.getSummaryId());
+				}
+			}
+			return getImageDAO().findImages(volumeExplorer);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 

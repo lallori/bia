@@ -70,6 +70,34 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					<c:param name="showHelp" value="true" />
 					<c:param name="showThumbnail" value="true" />
 				</c:url>
+				
+				<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
+
+				<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
+				<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
+								
+				<div id="prevNextButtons">
+    				<c:if test="${documentExplorer.image.imageOrder == 1}">
+    					<div id="previousPage">
+        					<a href="#" style="visibility:hidden;"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${documentExplorer.image.imageOrder > 1}">
+    					<div id="previousPage">
+        					<a href="#"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total}">
+    					<div id="nextPage">
+        					<a href="#" style="visibility:hidden;"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total}">
+    					<div id="nextPage">
+        					<a href="#"></a>
+    					</div>
+    				</c:if>
+				</div>
 			
 				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 			</c:if>
@@ -81,6 +109,34 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					<c:param name="showHelp" value="true" />
 					<c:param name="showThumbnail" value="true" />
 				</c:url>
+				
+				<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
+
+				<input type="hidden" id="currentPage" value="${volumeExplorer.image.imageOrder}"/>
+				<input type="hidden" id="typeManuscript" value="VOLUME"/>
+								
+				<div id="prevNextButtons">
+    				<c:if test="${volumeExplorer.image.imageOrder == 1}">
+    					<div id="previousPage">
+        					<a href="#" style="visibility:hidden;"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${volumeExplorer.image.imageOrder > 1}">
+    					<div id="previousPage">
+        					<a href="#"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total}">
+    					<div id="nextPage">
+        					<a href="#" style="visibility:hidden;"></a>
+    					</div>
+    				</c:if>
+    				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total}">
+    					<div id="nextPage">
+        					<a href="#"></a>
+    					</div>
+    				</c:if>
+				</div>
 			
 				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 			</c:if>
@@ -318,6 +374,45 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				// Result links have a specific class style on which we attach click live. 
 				$j('.paginateForumButton').live('click', function() {
 					$j("#main").load($j(this).attr("href"));
+					return false;
+				});
+				
+				//To change page in the ManuscriptViewer
+				var $currentPage = $j("#currentPage").val();
+				
+				$j("#previousPage").die();
+				$j("#previousPage").live('click', function(){
+					$currentPage = parseInt($currentPage) - 1;
+					var prevUrl;
+					if($j("#typeManuscript").val() == 'DOCUMENT')
+						prevUrl = "${PageTurnerURL}?entryId=${documentExplorer.entryId}&imageOrder=" + $currentPage + "&flashVersion=false&showHelp=true&showThumbnail=true";
+					else
+						prevUrl = "${PageTurnerURL}?summaryId=${volumeExplorer.summaryId}&imageOrder=" + $currentPage + "&flashVersion=false&showHelp=true&showThumbnail=true";
+					$j(".iframeVolumeExplorer").attr("src", prevUrl);
+					if($currentPage == 1){
+						$j("#previousPage").children().css("visibility", "hidden");
+					}else{
+						$j("#previousPage").children().css("visibility", "visible");
+						$j("#nextPage").children().css("visibility", "visible");
+					}
+					return false;
+				});
+				
+				$j("#nextPage").die();
+				$j("#nextPage").live('click', function(){
+					$currentPage = parseInt($currentPage) + 1;
+					var nextUrl;
+					if($j("#typeManuscript").val() == 'DOCUMENT')
+						nextUrl = "${PageTurnerURL}?entryId=${documentExplorer.entryId}&imageOrder=" + $currentPage + "&flashVersion=false&showHelp=true&showThumbnail=true";
+					else
+						nextUrl = "${PageTurnerURL}?summaryId=${volumeExplorer.summaryId}&imageOrder=" + $currentPage + "&flashVersion=false&showHelp=true&showThumbnail=true";
+					$j(".iframeVolumeExplorer").attr("src", nextUrl);
+					if($currentPage == '${documentExplorer.total}'){
+						$j("#nextPage").children().css("visibility", "hidden");
+					}else{
+						$j("#previousPage").children().css("visibility", "visible");
+						$j("#nextPage").children().css("visibility", "visible");
+					}
 					return false;
 				});
 				
