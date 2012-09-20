@@ -12,7 +12,7 @@
 		<div id="content">${docExtract}</div>
 		
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<input id="editExtract" class="button_medium" type="submit" value="Edit Extract"/>
+		<input id="editExtract" class="button_medium" type="submit" value="Edit Transcription"/>
 	</security:authorize>
 	<input id="showSynopsis" class="button_medium" type="submit" value="Show Synopsis"/>
 	<input id="exitExtract" class="button_small" type="submit" value="Close"/>

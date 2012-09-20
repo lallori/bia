@@ -88,7 +88,7 @@
 					width: 352,
 					minWidth: 350,
 					minHeight: 200,                                                                                                                                                         
-					title: 'EDIT EXTRACT',
+					title: 'EDIT TRANSCRIPTION',
 					position: ['center','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,

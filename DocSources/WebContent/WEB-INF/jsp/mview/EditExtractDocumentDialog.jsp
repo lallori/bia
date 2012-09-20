@@ -30,7 +30,7 @@
 	</div>
 	
 	<div id="saveSuccess" title="Alert" style="display:none">
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your extract has been saved!</p>
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your transcription has been saved!</p>
 	</div>
 
 	<script type="text/javascript">
@@ -126,7 +126,7 @@
 				height:150,
 				modal: true,
 				autoOpen : false,
-				title: 'EXTRACT SAVED',
+				title: 'TRANSCRIPTION SAVED',
 				overlay: {
 					backgroundColor: '#000',
 					opacity: 0.5
