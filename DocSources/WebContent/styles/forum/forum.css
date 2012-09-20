@@ -60,7 +60,7 @@ h1 {
 }
 
 h2 {
-	font-size: 13px;
+	font-size: 16px;
 	color: #6D5C4D;
 	width: 620px;
 	display: inline-block;
@@ -122,7 +122,7 @@ h2.title {
 #main {
 	width: 1000px;
 	height: auto;
-	margin-top: 250px;
+	margin-top: 280px;
 	position: absolute;
 }
 
@@ -255,6 +255,34 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	float: right;
 }
 
+#urlActions {
+    margin-bottom: 40px;
+}
+
+#urlActions a#button_refresh span {
+    background-image: url(/DocSources/images/forum/icon_refresh.png);   
+    height: 17px;   
+    width: 15px;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+#urlActions a#button_refresh {
+	float:left;
+}
+
+#urlActions a#button_link span {
+    background-image: url(/DocSources/images/forum/icon_link.png);   
+    height: 17px;   
+    width: 25px;
+    background-repeat: no-repeat;
+    padding-left: 33px;
+}
+
+#urlActions a#button_link{
+	float:right;
+}
+
 
 /* ---------- main tables ---------- */
 
@@ -311,7 +339,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	display: table-cell;
 	text-align: left;
 	color: #6d5c4d;
-	padding: 7px 0 3px 10px;
+	padding: 7px 5px 3px 10px;
 	border-bottom:1px solid #DCC0BA
 }
 
@@ -323,8 +351,8 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	 width: 15%;
 }
 
-.two, .three, .four  { /* Other column width */
-	width: 20%;
+.two, .three, .four, .five  { /* Other column width */
+	 width: 20%;
 }
 
 #forumTablePaleography .two { /* First column width */
@@ -384,6 +412,10 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	margin: 0 0 0 30px;
 	font-size: 13px;
 	display: block;
+}
+
+.list .five a  { /* First column forum title */
+	 display: inline;
 }
 
 #forumTablePaleography .list a  { /* First column forum title */
@@ -573,7 +605,7 @@ a.returnTo {
 }
 
 #fullscreenButton {
-    margin-left: 693px;
+    margin-left: 268px;
 }
 
 /* ---------- Post Table ---------- */
@@ -1205,6 +1237,39 @@ span.search {
 	border: 1px solid;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
+}
+
+/* ---------- Buttons --------- */
+/*
+/* Previous / Next */
+
+#prevNextButtons {
+	margin: 0 0 0 455px;
+	width: 92px;
+	z-index:2;
+	display:inline-block;
+}
+
+#prevNextButtons.thread{
+	margin: 0 0 0 330px;
+}
+
+#prevNextButtons #previousPage a{
+	float:left;
+	background:url(/DocSources/images/1024/button_lastRecord_pageTurner.png) no-repeat;
+	width:35px;
+	height: 26px;
+}
+
+#prevNextButtons #nextPage a{
+	float:right;
+	background:url(/DocSources/images/1024/button_nextRecord_pageTurner.png) no-repeat;
+	width:35px;
+	height: 26px;
+}
+
+#prevNextButtons #previousPage a:hover, #prevNextButtons #nextPage a:hover {
+	text-decoration:none;
 }
 
 
