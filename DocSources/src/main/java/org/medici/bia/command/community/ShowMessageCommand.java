@@ -1,5 +1,5 @@
 /*
- * EditForumPostCommand.java
+ * ShowMessagesByCategoryCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,71 +27,28 @@
  */
 package org.medici.bia.command.community;
 
+import org.medici.bia.domain.UserMessage.UserMessageCategory;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
-public class ComposeMessageCommand {
-	private String account;
-	private String accountDescription;
-	private String subject;
-	private String text;
-	
+public class ShowMessageCommand {
+	private Integer messageId;
+
 	/**
-	 * @return the account
+	 * @return the messageId
 	 */
-	public String getAccount() {
-		return account;
+	public Integer getMessageId() {
+		return messageId;
 	}
 
 	/**
-	 * @param account the account to set
+	 * @param messageId the messageId to set
 	 */
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	/**
-	 * @return the accountDescription
-	 */
-	public String getAccountDescription() {
-		return accountDescription;
-	}
-
-	/**
-	 * @param accountDescription the accountDescription to set
-	 */
-	public void setAccountDescription(String accountDescription) {
-		this.accountDescription = accountDescription;
-	}
-
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
-	
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-	
-	/**
-	 * @param subject the subject to set
-	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	
-	/**
-	 * @return the subject
-	 */
-	public String getSubject() {
-		return subject;
+	public void setMessageId(Integer messageId) {
+		this.messageId = messageId;
 	}
 }

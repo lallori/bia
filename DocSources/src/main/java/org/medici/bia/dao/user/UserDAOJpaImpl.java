@@ -50,6 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Repository
@@ -315,6 +316,25 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsers(String text) {
+		try {
+			StringBuilder toQuery = new StringBuilder("FROM User WHERE account LIKE '%");
+			toQuery.append(text);
+			toQuery.append("%'");
+			Query query = getEntityManager().createQuery(toQuery.toString());
+			
+			return (List<User>) query.getResultList();
+		} catch (PersistenceException persistenceException) {
+			
+			return null;
+		}
 	}
 
 	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {

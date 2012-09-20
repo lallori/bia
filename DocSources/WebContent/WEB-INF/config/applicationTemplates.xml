@@ -338,6 +338,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMembersForum.jsp"/>
 	</definition>
 
+	<definition name="community/ShowMessage" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessage.jsp"/>
+	</definition>
+	
 	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>

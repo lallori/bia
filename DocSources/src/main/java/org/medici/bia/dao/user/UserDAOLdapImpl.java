@@ -576,4 +576,10 @@ public class UserDAOLdapImpl implements UserDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+
+	@Override
+	public List<User> findUsers(String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

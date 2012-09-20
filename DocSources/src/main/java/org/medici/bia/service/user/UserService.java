@@ -391,6 +391,14 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserMarkedList(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<User> searchUsers(String query) throws ApplicationThrowable;
 
 	/**
 	 * 

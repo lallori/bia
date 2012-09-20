@@ -947,6 +947,18 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> searchUsers(String query) throws ApplicationThrowable {
+		try{
+			return getUserDAO().findUsers(query);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @param activationUserDAO the activationUserDAO to set

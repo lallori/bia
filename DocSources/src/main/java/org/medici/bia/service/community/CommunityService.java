@@ -122,6 +122,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost findPost(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param messageId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserMessage findUserMessage(Integer messageId) throws ApplicationThrowable;
 
 	/**
 	 * 

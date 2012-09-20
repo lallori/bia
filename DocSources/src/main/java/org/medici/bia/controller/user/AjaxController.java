@@ -491,6 +491,26 @@ public class AjaxController {
 	public @ResponseBody Integer ratePassword(@RequestParam("quavadis") String password) {
 		return getUserService().ratePassword(password);
 	}
+	
+	@RequestMapping(value= "/user/SearchUsers", method = RequestMethod.GET)
+	public ModelAndView searchUsers(@RequestParam("query") String query){
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			List<User> users = getUserService().searchUsers(query);
+			model.put("query", query);
+			model.put("count", users.size());
+			model.put("data", ListBeanUtils.transformList(users, "account"));
+			List<String> names = new ArrayList<String>();
+			for(User currentUser : users){
+				names.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+			}
+			model.put("suggestions", names);
+		}catch(ApplicationThrowable aex){
+			return new ModelAndView("responseKO", model);
+		}
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * This method will search Country entity by name field. 

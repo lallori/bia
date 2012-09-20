@@ -29,6 +29,10 @@
 	</bean>
 
 	<!-- Community base Validator -->
+	<bean id="composeMessageValidator" class="org.medici.bia.validator.community.ComposeMessageValidator">
+		<description>Compose Message Validator.</description>
+	</bean>
+	
 	<bean id="editForumPostValidator" class="org.medici.bia.validator.community.EditForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>

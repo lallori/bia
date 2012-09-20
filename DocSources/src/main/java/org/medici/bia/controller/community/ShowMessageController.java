@@ -1,5 +1,5 @@
 /*
- * ComposeMessageController.java
+ * ShowMessageController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,81 +27,35 @@
  */
 package org.medici.bia.controller.community;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.medici.bia.command.community.ComposeMessageCommand;
+import org.medici.bia.command.community.ShowMessageCommand;
 import org.medici.bia.domain.UserMessage;
-import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to compose a message.
+ * Controller to view a message.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/ComposeMessage"})
-public class ComposeMessageController {
+@RequestMapping("/community/ShowMessage")
+public class ShowMessageController {
 	@Autowired
 	private CommunityService communityService;
-	@Autowired(required = false)
-	@Qualifier("composeMessageValidator")
-	private Validator validator;
 	
-	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ComposeMessageCommand command, BindingResult result, HttpServletRequest httpServletRequest) {
-		getValidator().validate(command, result);
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			UserMessage userMessage = new UserMessage();
-			userMessage.setMessageId(null);
-			userMessage.setSender(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			userMessage.setRecipient(command.getAccount());
-			userMessage.setSubject(command.getSubject());
-			userMessage.setBody(command.getText());
-			userMessage.setSendedDate(new Date());
-			userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
-
-			try {
-				userMessage = getCommunityService().createNewMessage(userMessage);
-				model.put("userMessage", userMessage);
-				
-				return new ModelAndView("community/ComposeMessage", model);
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/ComposeMessage", model);
-			}
-		}
-	}
-		
 	/**
 	 * 
 	 * @param request
@@ -109,13 +63,24 @@ public class ComposeMessageController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ComposeMessageCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowMessageCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
-		command.setSubject("");
-		command.setText("");
 		
-		return new ModelAndView("community/ComposeMessage", model);
+		if(command.getMessageId() != null){
+			try{
+				UserMessage userMessage = getCommunityService().findUserMessage(command.getMessageId());
+				if(userMessage.getSender().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())){
+					model.put("userMessage", userMessage);
+				}else{
+					return new ModelAndView("error/ShowMessage");
+				}
+			}catch(ApplicationThrowable applicationThrowable){
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ShowMessage", model);
+			}
+		}
+		
+		return new ModelAndView("community/ShowMessage", model);
 	}
 
 	/**
@@ -130,19 +95,5 @@ public class ComposeMessageController {
 	 */
 	public CommunityService getCommunityService() {
 		return communityService;
-	}
-
-	/**
-	 * @param validator the validator to set
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
 	}
 }

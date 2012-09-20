@@ -44,9 +44,14 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
 			<div class="row">
-				<div class="one"><input type="checkbox" name="css" value="css"/><a href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
-				<div class="two"><span class="subject">${currentMessage.messageSubject}</span> - <span class="message">${currentMessage.messageBody}</span></div>
-				<div class="three">${currentMessage.messageSendedDate}</div>
+				<c:if test="${command.category == 'inbox'}">
+					<div class="one"><input type="checkbox" name="css" value="css"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
+				</c:if>
+				<c:if test="${command.category == 'outbox'}">
+					<div class="one"><input type="checkbox" name="css" value="css"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
+				</c:if>
+				<div class="two"><span class="subject">${currentMessage.subject}</span> - <span class="message">${currentMessage.body}</span></div>
+				<div class="three">${currentMessage.sendedDate}</div>
 			</div>
 			</c:forEach>
 		</div>
@@ -102,6 +107,11 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			$j('.paginateForumButton').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.paginateForumButton').live('click', function() {
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".messageLink").click(function(){
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});

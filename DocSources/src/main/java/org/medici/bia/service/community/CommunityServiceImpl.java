@@ -248,8 +248,14 @@ public class CommunityServiceImpl implements CommunityService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			userMessage.setMessageId(null);
+			getUserMessageDAO().persist(userMessage);
+			
+			return userMessage;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -351,6 +357,18 @@ public class CommunityServiceImpl implements CommunityService {
 
 			return forumPost;
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserMessage findUserMessage(Integer messageId) throws ApplicationThrowable {
+		try{
+			return getUserMessageDAO().find(messageId);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
