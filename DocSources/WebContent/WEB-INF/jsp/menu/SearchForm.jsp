@@ -93,12 +93,7 @@
 								Modalbox.show('${SimpleSearchModalURL}' + '?text=' + $j("#text").val(), {title: "BASIC SEARCH", width: 350, height: 250});
 								return false;
 							}
-							if(title == 'Document Synopses'){
-								title = "Document Synopses"
-							}else{
-								//title = title.replace('s','');
-								title = title.replace('','');
-							}
+							
 							var text = $j("#text").val();
 							text = text.replace("'","%27");
 							var formSubmitURL = $j(this).attr("action") + '?simpleSearchPerimeter=' + $j('#simpleSearchPerimeter').find('option:selected').val() + '&text=' + text;
