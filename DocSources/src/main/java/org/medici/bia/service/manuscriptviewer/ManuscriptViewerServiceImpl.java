@@ -134,6 +134,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						volumeForum = getForumDAO().addNewVolumeForum(generalQuestionsForum, volume);
 						
 						ForumOption forumOption = new ForumOption(volumeForum);
+						forumOption.setGroupBySubForum(Boolean.TRUE);
 						forumOption.setCanHaveTopics(Boolean.TRUE);
 						forumOption.setCanDeletePosts(Boolean.TRUE);
 						forumOption.setCanDeleteTopics(Boolean.TRUE);

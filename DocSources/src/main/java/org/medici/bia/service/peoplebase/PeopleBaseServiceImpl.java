@@ -435,6 +435,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				forum = getForumDAO().addNewPersonForum(parentForum, person);
 
 				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setGroupBySubForum(Boolean.TRUE);
 				forumOption.setCanHaveTopics(Boolean.TRUE);
 				forumOption.setCanDeletePosts(Boolean.TRUE);
 				forumOption.setCanDeleteTopics(Boolean.TRUE);

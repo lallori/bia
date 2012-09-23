@@ -210,6 +210,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 				forum = getForumDAO().addNewVolumeForum(parentForum, volume);
 				
 				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setGroupBySubForum(Boolean.TRUE);
 				forumOption.setCanHaveTopics(Boolean.TRUE);
 				forumOption.setCanDeletePosts(Boolean.TRUE);
 				forumOption.setCanDeleteTopics(Boolean.TRUE);

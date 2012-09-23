@@ -86,20 +86,6 @@ public class CommunityServiceImpl implements CommunityService {
 	private UserMessageDAO userMessageDAO;
 
 	/**
-	 * @return the annotationDAO
-	 */
-	public AnnotationDAO getAnnotationDAO() {
-		return annotationDAO;
-	}
-
-	/**
-	 * @param annotationDAO the annotationDAO to set
-	 */
-	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
-		this.annotationDAO = annotationDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
@@ -199,36 +185,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
-	private void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws ApplicationThrowable {
-		if(forum.getType().equals(Type.CATEGORY)){
-			return;
-		}
-		
-		forum.setLastPost(forumPost);
-		getForumDAO().merge(forum);
-		
-		recursiveSetLastPost(forum.getForumParent(), forumPost);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
-		if(forum.getType().equals(Type.CATEGORY)){
-			return;
-		}
-
-		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
-		forum.setLastPost(lastPost);
-		getForumDAO().merge(forum);
-
-		recursiveSetLastPost(forum.getForumParent(), lastPost);
-	}
 
 	/**
 	 * {@inheritDoc} 
@@ -257,6 +213,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 
 	/**
 	 * {@inheritDoc}
@@ -283,7 +240,7 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -374,6 +331,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -396,7 +360,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -525,6 +489,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable {
+		try {
+			return getForumTopicDAO().getForumTopicsByParentForum(forum, paginationFilterTopics);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable {
 		try {
 			return getForumDAO().findSubCategories(forum);
@@ -558,17 +534,17 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
 	 * @return the userDAO
 	 */
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
 	}
 
 	/**
@@ -577,7 +553,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public UserMessageDAO getUserMessageDAO() {
 		return userMessageDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -608,6 +584,35 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+
+		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
+		forum.setLastPost(lastPost);
+		getForumDAO().merge(forum);
+
+		recursiveSetLastPost(forum.getForumParent(), lastPost);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+		
+		forum.setLastPost(forumPost);
+		getForumDAO().merge(forum);
+		
+		recursiveSetLastPost(forum.getForumParent(), forumPost);
 	}
 
 	/**
@@ -681,6 +686,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	/**
 	 * @param forumDAO the forumDAO to set
 	 */
 	public void setForumDAO(ForumDAO forumDAO) {
@@ -702,17 +714,17 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
 	}
 
 	/**

@@ -57,6 +57,8 @@ public class ForumOption implements Serializable {
 	private Boolean canHaveSubCategory;
 	@Column (name="\"canHaveSubForum\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canHaveSubForum;
+	@Column (name="\"groupBySubForum\"", length=1, columnDefinition="tinyint default 1", nullable=false)
+	private Boolean groupBySubForum;
 	@Column (name="\"canHaveTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canHaveTopics;
 	@Column (name="\"canView\"", length=1, columnDefinition="tinyint default 0", nullable=false)
@@ -370,6 +372,14 @@ public class ForumOption implements Serializable {
 		stringBuilder.append("]");
 
 		return stringBuilder.toString();
+	}
+
+	public void setGroupBySubForum(Boolean groupBySubForum) {
+		this.groupBySubForum = groupBySubForum;
+	}
+
+	public Boolean getGroupBySubForum() {
+		return groupBySubForum;
 	}
 }
 

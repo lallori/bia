@@ -147,6 +147,8 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			</div>
 
 		<c:if test="${forum.option.canHaveSubForum}">
+		<c:choose>
+      		<c:when test="${forum.option.groupBySubForum=='true'}">
 			<div id="forumTable">
 			    <div class="list">
 			        <div class="rowFirst">
@@ -221,6 +223,89 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
 				<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
 			</c:if>
+			</c:when>
+			<c:otherwise>
+			<!-- Topic For Category or Topic for general use forums (questions on bia, paleography, ecc.)-->
+				<c:url var="ShowForumURL" value="/community/ShowForum.do">
+					<c:param name="forumId" value="${forum.forumId}" />
+				</c:url>
+				<div id="forumTable">
+				    <div class="list">
+				        <div class="rowFirst">
+				            <div class="one">TOPIC</div>
+				            <div class="two">REPLY</div>
+				            <div class="three">VIEWS</div>
+				            <div class="four">LAST POST</div>
+				        </div>
+	
+				<c:if test="${not empty subForumsTopicsPage.list}">
+					<c:forEach items="${subForumsTopicsPage.list}" var="currentTopic" varStatus="status">
+						<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+							<c:param name="topicId" value="${currentTopic.topicId}"/>
+							<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+						</c:url>
+						<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+							<div class="one">
+				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+				                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+				                <span>subtitle</span>
+				            </div>
+				            <div class="two">${currentTopic.totalReplies}</div>
+				            <div class="three">-</div>
+						<c:if test="${not empty currentTopic.lastPost}">
+				            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+				        </c:if>
+						<c:if test="${empty currentTopic.lastPost}">
+				            <div class="four"></div>
+				        </c:if>
+				        </div>
+				    </c:forEach>
+				</div>
+			</div>
+				    <div id="forumPaginate">
+					    <c:set var="paginationData">
+							<bia:paginationForum page="${subForumsTopicsPage}"/>
+						</c:set>
+						
+						<div id="jumpToDiv">
+					    	Jump to:
+					    	<select id="selectForum" name="selectForum" selected""="" class="selectform_long">
+					        	<option value="" selected="selected">Select a Forum</option>
+					        </select>
+					        <input id="go" title="go" value="Go" class="buttonMini">
+					    </div>
+						
+						${paginationData}
+						
+						  
+					</div>
+					
+					<c:url var="ReturnToForumURL" value="/community/ShowForum.do">
+						<c:param name="forumId" value="${forum.forumParent.forumId}" />
+					</c:url>
+				
+					<c:if test="${not empty forum.forumParent}">
+						<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+					</c:if>
+				</c:if>
+	
+	<!-- EACH TOPIC PAGE?-->
+					<c:if test="${empty subForumsTopicsPage.list}">
+						<div class="rowLast">						            
+							<div class="one">
+				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+				                <a id="viewTopic">No topics available</a>
+				                <span>${currentForum.description}</span>
+				            </div>
+				            <div class="two">0</div>
+				            <div class="three">0</div>
+				            <div class="four">empty forum</div>
+				        </div>
+				    </c:if>
+			</div>
+			</div>
+				</c:otherwise>
+		</c:choose>
 		</c:if>	
 
 		<c:if test="${forum.option.canHaveTopics}">

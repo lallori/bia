@@ -30,8 +30,6 @@ package org.medici.bia.service.community;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
-
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
@@ -211,7 +209,16 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
+	 * @param paginationFilterTopic
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -220,7 +227,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param integer
@@ -228,7 +235,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param integer
@@ -236,7 +243,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param postId
@@ -244,7 +251,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable

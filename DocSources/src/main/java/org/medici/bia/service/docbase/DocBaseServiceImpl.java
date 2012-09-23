@@ -220,6 +220,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				forum = getForumDAO().addNewDocumentForum(parentForum, document);
 				
 				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setGroupBySubForum(Boolean.TRUE);
 				forumOption.setCanHaveTopics(Boolean.TRUE);
 				forumOption.setCanDeletePosts(Boolean.TRUE);
 				forumOption.setCanDeleteTopics(Boolean.TRUE);

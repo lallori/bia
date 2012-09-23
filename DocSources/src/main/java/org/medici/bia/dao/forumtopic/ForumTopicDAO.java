@@ -33,7 +33,6 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 
 /**
@@ -61,4 +60,12 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forum
+	 * @param paginationFilterTopics
+	 * @return
+	 */
+	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws PersistenceException;
 }
