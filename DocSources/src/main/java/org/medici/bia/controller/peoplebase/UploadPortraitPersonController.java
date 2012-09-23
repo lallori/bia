@@ -27,6 +27,7 @@
  */
 package org.medici.bia.controller.peoplebase;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,7 +84,7 @@ public class UploadPortraitPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processRequest(@Valid @ModelAttribute("requestCommand") UploadPortraitPersonCommand command, BindingResult result){
+	public ModelAndView processRequest(@Valid @ModelAttribute("command") UploadPortraitPersonCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		getValidator().validate(command, result);
@@ -94,16 +95,17 @@ public class UploadPortraitPersonController {
 			PersonPortrait personPortrait = new PersonPortrait(command.getPersonId(), command.getBrowse(), command.getLink());
 
 			try {
-				String fileName = getPeopleBaseService().saveTemporaryImage(personPortrait);
+				BufferedImage bufferedImage = getPeopleBaseService().savePortaitPerson(personPortrait);
 				
-				model.put("tempFileName", fileName);
+				model.put("portraitWidth", bufferedImage.getWidth());
+				model.put("portraitHeight", bufferedImage.getHeight());
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);
+				new ModelAndView("error/UploadPortraitPerson", model);
 			}
 		}
 		
-		return new ModelAndView("peoplebase/UploadPortraitPersonModalWindow", model);
+		return new ModelAndView("peoplebase/CropPortraitPersonModalWindow", model);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * UploadPortraitPersonCommand.java
+ * ShowPortraitPersonCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,57 +27,19 @@
  */
 package org.medici.bia.command.peoplebase;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class UploadPortraitPersonCommand {
+public class ShowPortraitPersonCommand {
 	private Integer personId;
-	private CommonsMultipartFile browse;
-	private String link;
 
-	/**
-	 * @param personId the personId to set
-	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
 
-	/**
-	 * @return the personId
-	 */
 	public Integer getPersonId() {
 		return personId;
-	}
-
-	/**
-	 * @param browse the browse to set
-	 */
-	public void setBrowse(CommonsMultipartFile browse) {
-		this.browse = browse;
-	}
-
-	/**
-	 * @return the browse
-	 */
-	public CommonsMultipartFile getBrowse() {
-		return browse;
-	}
-
-	/**
-	 * @param link the link to set
-	 */
-	public void setLink(String link) {
-		this.link = link;
-	}
-
-	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
 	}
 }

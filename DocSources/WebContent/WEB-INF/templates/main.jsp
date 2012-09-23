@@ -16,6 +16,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
 <!-- 	<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />  -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.Jcrop.css" />"/>
 		
 		
 <!-- 
@@ -63,7 +64,9 @@
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.form.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.Jcrop.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.color.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>

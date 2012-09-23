@@ -761,13 +761,17 @@
 	<definition name="peoplebase/CreateNewTitleOrOccupationPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreateNewTitleOrOccupationPerson.jsp" />
 	</definition>
-	
+
+	<definition name="peoplebase/CreatedPersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatedPersonForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ComparePerson" extends="template.compare">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/CreatedPersonForumModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatedPersonForumModalWindow.jsp"/>
+	<definition name="peoplebase/CropPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CropPortraitPersonModalWindow.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">

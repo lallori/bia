@@ -27,6 +27,7 @@
  */
 package org.medici.bia.service.peoplebase;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.text.Normalizer;
@@ -37,6 +38,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ObjectUtils;
@@ -559,6 +562,28 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public void cropPortraitPerson(Integer personId, Integer x, Integer y, Integer x2, Integer y2, Integer width, Integer height) throws ApplicationThrowable {
+		try {
+			People person = getPeopleDAO().find(personId);
+			
+			if ((person != null) && (person.getPortrait())) {
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person");
+				File portraitFile = new File(portraitPath + "/" + person.getPortraitImageName());
+				BufferedImage bufferedImage = ImageIO.read(portraitFile);
+				//here code for cropping... TO BE TESTED...
+				BufferedImage croppedBufferedImage = bufferedImage.getSubimage(x, y, width, height);
+				ImageIO.write(croppedBufferedImage, "jpg", portraitFile);
+			}
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteChildFromPerson(Parent parent) throws ApplicationThrowable {
@@ -577,7 +602,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -599,7 +624,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1043,7 +1068,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1067,7 +1092,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1193,7 +1218,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1233,7 +1258,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1281,7 +1306,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1294,7 +1319,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1306,7 +1331,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1318,7 +1343,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1336,7 +1361,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1364,7 +1389,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1547,14 +1572,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public AltNameDAO getAltNameDAO() {
 		return altNameDAO;
 	}
-
+	
 	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
 		return applicationPropertyDAO;
 	}
-	
+
 	/**
 	 * @return the biblioTDAO
 	 */
@@ -1593,14 +1618,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 		return historyNavigator;
 	}
-
+	
 	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
-	
+
 	@Override
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
@@ -1709,7 +1734,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1725,7 +1750,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1763,7 +1788,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1775,7 +1800,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the placeDAO
 	 */
@@ -1788,6 +1813,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
+	}
+	
+	@Override
+	public BufferedImage getPortraitPerson(String portraitImageName) throws ApplicationThrowable {
+		try {
+			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("path.portrait.person") + "/" + portraitImageName);
+			
+			return ImageIO.read(imageFile);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+
 	}
 
 	/**
@@ -1815,7 +1852,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public TitleOccsListDAO getTitleOccsListDAO() {
 		return titleOccsListDAO;
 	}
-	
+
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
@@ -1877,6 +1914,47 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public BufferedImage savePortaitPerson(PersonPortrait personPortrait) throws ApplicationThrowable {
+		try {
+			People person = getPeopleDAO().find(personPortrait.getPersonId());
+			
+			if (person != null) {
+				String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
+				
+				String fileName = null;
+				if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
+					fileName =  personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() +  "_" + personPortrait.getFile().getOriginalFilename();
+					File tempFile = new File(tempPath + "/" + fileName);
+					FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
+				}else{
+					fileName = personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+					File tempFile = new File(tempPath + "/" + fileName);
+					FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
+				}
+	
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person");
+				File portraitFile = new File(portraitPath + "/" + fileName);
+				FileUtils.writeByteArrayToFile(portraitFile, personPortrait.getFile().getBytes());
+			
+				person.setPortrait(Boolean.TRUE);
+				person.setPortraitImageName(fileName);
+				getPeopleDAO().merge(person);
+				
+				BufferedImage bufferedImage = ImageIO.read(portraitFile);
+				return bufferedImage;
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable {
 		try {
@@ -1884,16 +1962,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			String fileName;
 			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
-				fileName = tempPath + "/" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename();
-			}else{
-				fileName = tempPath + "/" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getPersonId() + personPortrait.getLink().substring(personPortrait.getLink().length() - 4, personPortrait.getLink().length());
-			}
-			File tempFile = new File(fileName);
-			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
+				fileName =  personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() +  "_" + personPortrait.getFile().getOriginalFilename();
+				File tempFile = new File(tempPath + "/" + fileName);
 				FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
 			}else{
+				fileName = personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+				File tempFile = new File(tempPath + "/" + fileName);
 				FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
 			}
+
 			return fileName;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1948,7 +2025,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

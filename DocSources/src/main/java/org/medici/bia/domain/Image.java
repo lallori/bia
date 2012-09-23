@@ -75,7 +75,7 @@ public class Image implements Serializable {
 	@Column (name="\"imageType\"", length=1, nullable=false)
 	private ImageType imageType;
 	@Enumerated(EnumType.STRING)
-	@Column (name="\"imageRectoVerso\"", length=1, nullable=false)
+	@Column (name="\"imageRectoVerso\"", length=1, nullable=true)
 	private ImageRectoVerso imageRectoVerso;
 	@Column (name="\"missedNumbering\"", length=45, nullable=false)
 	private String missedNumbering;

@@ -1,5 +1,5 @@
 /*
- * ShowUploadPortraitPersonController.java
+ * ShowPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,10 +27,17 @@
  */
 package org.medici.bia.controller.peoplebase;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.medici.bia.command.peoplebase.CropPortraitPersonCommand;
+import org.apache.log4j.Logger;
+import org.medici.bia.command.peoplebase.ShowPortraitPersonCommand;
+import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.domain.People;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +45,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Upload Portrait Person".
+ * Controller for action "Show Portrait Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/ShowUploadPortraitPerson")
-public class CropPortraitPersonController {
+@RequestMapping("/src/peoplebase/ShowPortraitPerson")
+public class ShowPortraitPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -67,23 +75,45 @@ public class CropPortraitPersonController {
 		this.peopleBaseService = peopleBaseService;
 	}
 
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
 	/**
 	 * 
-	 * @param peopleId
-	 * @param result
+	 * 
+	 * @param volumeId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView setupForm(@ModelAttribute("command") CropPortraitPersonCommand command){
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		try {
-			getPeopleBaseService().cropPortraitPerson(command.getPersonId(), command.getX(), command.getY(), command.getX2(), command.getY2(), command.getW(), command.getH());
-			
-		} catch (ApplicationThrowable applicationThrowable) {
-			
-		}
+	@RequestMapping(method = RequestMethod.GET)
+	public void setupForm(@ModelAttribute("command") ShowPortraitPersonCommand command, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+		People person = new People();
 
-		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
+		if(command.getPersonId() > 0){
+			try {
+				person = getPeopleBaseService().findPerson(command.getPersonId());
+				
+				if (person.getPortrait()) {
+					BufferedImage bufferedImage = getPeopleBaseService().getPortraitPerson(person.getPortraitImageName());
+				    httpServletResponse.setContentType("image/jpeg");
+					ImageIO.write(bufferedImage, "jpg", httpServletResponse.getOutputStream());
+
+					httpServletResponse.getOutputStream().flush();
+				} else {
+					
+				}
+			} catch (IOException ioException){
+				getLogger().error("error on reading image", ioException);
+				// need to return default image error
+			} catch (ApplicationThrowable applicationThrowable){
+				getLogger().error("error on reading image", applicationThrowable);
+			}
+		} else {
+			// need to return default image error
+		}
 	}
 }

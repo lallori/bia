@@ -645,3 +645,8 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.se
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.smtp.auth', 'Enable smtp authentication', 'true');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.smtp.starttls.enable', 'Enable smtp starttls', 'true');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.transport.protocol', 'Mail Transport protocol', 'smtp');
+
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.person', '', '/data/portrait/person');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.person.temp', '', '/data/portrait/person/temp');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.user', '', '/data/portrait/user');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.user.temp', '', '/data/portrait/user/temp');

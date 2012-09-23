@@ -75,27 +75,6 @@
 				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 				return false;
 			});
-			
-// 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
-// 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
-// 			    minChars:1, 
-// 			    delimiter: /(,|;)\s*/, // regex or character
-// 			    maxHeight:400,
-// 			    width:250,
-// 			    zIndex: 9999,
-// 			    deferRequestBy: 0, //miliseconds
-// 			    noCache: true, //default is false, set to true to disable caching
-// 			    onSelect: function(value, data){ 
-// 					var oldTopic = $j('#topicId').val();
-// 					$j('#topicId').val(data);
-// 					var link = $j('#refreshDescription').attr('href');
-// 					if(oldTopic == '')
-// 						link += data;
-// 					else
-// 						link = link.replace(oldTopic, data);
-// 					$j('#refreshDescription').attr('href', link); 
-// 				}
-// 			  });
 
 			var placeDescription = $j('#placeDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchPlaceLinkableToTopicDocumentURL}',

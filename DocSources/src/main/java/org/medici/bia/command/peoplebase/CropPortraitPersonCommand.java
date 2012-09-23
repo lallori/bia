@@ -1,5 +1,5 @@
 /*
- * UploadPortraitPersonCommand.java
+ * CropPortraitPersonCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,57 +27,101 @@
  */
 package org.medici.bia.command.peoplebase;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class UploadPortraitPersonCommand {
+public class CropPortraitPersonCommand {
 	private Integer personId;
-	private CommonsMultipartFile browse;
-	private String link;
-
-	/**
-	 * @param personId the personId to set
-	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
-
 	/**
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-
 	/**
-	 * @param browse the browse to set
+	 * @param personId the personId to set
 	 */
-	public void setBrowse(CommonsMultipartFile browse) {
-		this.browse = browse;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
-
 	/**
-	 * @return the browse
+	 * @return the x
 	 */
-	public CommonsMultipartFile getBrowse() {
-		return browse;
+	public Integer getX() {
+		return x;
 	}
-
 	/**
-	 * @param link the link to set
+	 * @param x the x to set
 	 */
-	public void setLink(String link) {
-		this.link = link;
+	public void setX(Integer x) {
+		this.x = x;
 	}
-
 	/**
-	 * @return the link
+	 * @return the y
 	 */
-	public String getLink() {
-		return link;
+	public Integer getY() {
+		return y;
 	}
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(Integer y) {
+		this.y = y;
+	}
+	/**
+	 * @return the x2
+	 */
+	public Integer getX2() {
+		return x2;
+	}
+	/**
+	 * @param x2 the x2 to set
+	 */
+	public void setX2(Integer x2) {
+		this.x2 = x2;
+	}
+	/**
+	 * @return the y2
+	 */
+	public Integer getY2() {
+		return y2;
+	}
+	/**
+	 * @param y2 the y2 to set
+	 */
+	public void setY2(Integer y2) {
+		this.y2 = y2;
+	}
+	/**
+	 * @return the w
+	 */
+	public Integer getW() {
+		return w;
+	}
+	/**
+	 * @param w the w to set
+	 */
+	public void setW(Integer w) {
+		this.w = w;
+	}
+	/**
+	 * @return the h
+	 */
+	public Integer getH() {
+		return h;
+	}
+	/**
+	 * @param h the h to set
+	 */
+	public void setH(Integer h) {
+		this.h = h;
+	}
+	private Integer x;
+	private Integer y;
+	private Integer x2;
+	private Integer y2;
+	private Integer w;
+	private Integer h;
 }

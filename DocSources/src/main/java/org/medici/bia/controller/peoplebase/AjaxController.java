@@ -27,6 +27,7 @@
  */
 package org.medici.bia.controller.peoplebase;
 
+import java.awt.image.BufferedImage;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,38 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/src/peoplebase/GetPortraitPersonInformation", method = RequestMethod.GET) 
+	public ModelAndView getPortraitPersonInformation(@RequestParam(value="personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person= getPeopleBaseService().findPerson(personId);
+			if (person != null) {
+				if (person.getPortrait()) {
+					BufferedImage bufferedImage = getPeopleBaseService().getPortraitPerson(person.getPortraitImageName());
+
+					model.put("portraitWidth", bufferedImage.getWidth());
+					model.put("portraitHeight", bufferedImage.getHeight());
+				} else {
+					model.put("portraitWidth", new Integer(0));
+					model.put("portraitHeight", new Integer(0));
+				}
+			} else {
+				model.put("portraitWidth", new Integer(0));
+				model.put("portraitHeight", new Integer(0));
+			}
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 

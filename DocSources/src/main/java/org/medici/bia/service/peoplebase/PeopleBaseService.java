@@ -27,6 +27,7 @@
  */
 package org.medici.bia.service.peoplebase;
 
+import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -583,6 +584,14 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public BufferedImage savePortaitPerson(PersonPortrait personPortrait) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personPortrait
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable;
 	
 	/**
@@ -602,7 +611,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param familyToSearch
@@ -611,7 +620,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -620,7 +629,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchFatherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -638,7 +647,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchRecipientDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param query
@@ -646,7 +655,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personToSearch
@@ -741,4 +750,24 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public BufferedImage getPortraitPerson(String portraitImageName) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param x
+	 * @param y
+	 * @param x2
+	 * @param y2
+	 * @param w
+	 * @param h
+	 */
+	public void cropPortraitPerson(Integer personId, Integer x, Integer y, Integer x2, Integer y2, Integer w, Integer h) throws ApplicationThrowable;
 }

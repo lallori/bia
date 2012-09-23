@@ -310,6 +310,9 @@ public class People implements Serializable {
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean portrait;
 	
+	@Column (name="\"portraitImageName\"", length=100)
+	private String portraitImageName;
+	
 	@Column (name="\"RESID\"")
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
@@ -939,6 +942,14 @@ public class People implements Serializable {
 	 */
 	public void setPortrait(Boolean portrait) {
 		this.portrait = portrait;
+	}
+
+	public void setPortraitImageName(String portraitImageName) {
+		this.portraitImageName = portraitImageName;
+	}
+
+	public String getPortraitImageName() {
+		return portraitImageName;
 	}
 
 	/**
