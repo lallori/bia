@@ -46,7 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/ShowUploadPortraitPerson")
+@RequestMapping("/de/peoplebase/CropPortraitPerson")
 public class CropPortraitPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
