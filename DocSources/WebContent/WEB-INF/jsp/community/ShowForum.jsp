@@ -225,7 +225,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			</c:if>
 			</c:when>
 			<c:otherwise>
-			<!-- Topic For Category or Topic for general use forums (questions on bia, paleography, ecc.)-->
+				<!-- In this case we manage forum displaying subforums as topics-->
 				<c:url var="ShowForumURL" value="/community/ShowForum.do">
 					<c:param name="forumId" value="${forum.forumId}" />
 				</c:url>
