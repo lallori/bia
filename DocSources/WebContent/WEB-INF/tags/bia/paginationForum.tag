@@ -27,6 +27,11 @@
 			<c:set var="firstArgs">?forumId=${forum.forumId}&topicPageNumber=1&topicPageTotal=${page.totalPages}&topicsForPage=${command.topicsForPage}</c:set>
 			<c:set var="prevArgs">?forumId=${forum.forumId}&topicPageNumber=${page.thisPage - 1}&topicPageTotal=${page.totalPages}&topicsForPage=${command.topicsForPage}</c:set>	
 		</c:if>
+		<c:if test="${not empty subForumsTopicsPage}">
+			<c:url var="baseUrl" value="/community/ShowForum.do"/>
+			<c:set var="firstArgs">?forumId=${forum.forumId}&topicPageNumber=1&topicPageTotal=${page.totalPages}&topicsForPage=${command.topicsForPage}</c:set>
+			<c:set var="prevArgs">?forumId=${forum.forumId}&topicPageNumber=${page.thisPage - 1}&topicPageTotal=${page.totalPages}&topicsForPage=${command.topicsForPage}</c:set>	
+		</c:if>
 		<c:if test="${not empty postsPage}">
 			<c:url var="baseUrl" value="/community/ShowTopicForum.do"/>
 			<c:set var="firstArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=1&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>
