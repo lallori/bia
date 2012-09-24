@@ -1,4 +1,4 @@
-update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -15,6 +15,15 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${topic.forum.forumId}"/>
 	</c:url>
+	
+	<c:url var="ShowTopicRefreshURL" value="/community/ShowTopicForum.do">
+		<c:param name="topicId" value="${topic.topicId}"/>
+	</c:url>
+
+<div id="urlActions">
+	<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+	<a href="#" class="buttonMedium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
+</div>
 
 <h2>${topic.subject }</h2>
 
@@ -172,6 +181,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 		Not deleted
 	</p>
+</div>
+
+<div id="copyLink" title="Copy Link" style="display:none"> 
+	<input id="linkToCopy" type="text" value="" size="50"/>
 </div>
 
 
@@ -334,6 +347,37 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 					$j("#nextPage").children().css("visibility", "visible");
 				}
 				return false;
+			});
+			
+			$j("#button_refresh").die();
+			$j("#button_refresh").live('click', function(){
+// 				$j("#main").load("${ShowTopicRefreshURL}");
+				$j("#main").load($j(".paginateActive").attr('href'));
+				return false;
+			});
+			
+			$j("#button_link").die();
+			$j("#button_link").live('click', function(){
+				$j("#copyLink").css('display','inherit');
+				$j("#copyLink").dialog({
+					  autoOpen : false,
+					  modal: true,
+					  resizable: false,
+					  scrollable: false,
+					  width: 310,
+					  height: 130, 
+					  buttons: {
+						  Ok: function() {
+							  $j(this).dialog("close");
+						  }
+					  },
+					  open: function(event, ui) { 
+						  $j("#linkToCopy").val('${bia:getApplicationProperty("website.domain")}' + $j(".paginateActive").attr('href') + '&completeDOM=true');
+						  $j("#linkToCopy").select();
+						  return false;
+					  }
+				  });
+				$j("#copyLink").dialog('open');
 			});
 
 		});

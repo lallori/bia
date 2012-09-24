@@ -1,4 +1,4 @@
-update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -9,10 +9,18 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${category.forumId}"/>
 	</c:url>
-   	
+	
 <!-- Main Forum Page -->
+	<div id="urlActions">
+		<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+		<a href="#" class="buttonMedium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
+	</div>
 	<c:if test="${not empty category}">
 		<c:if test="${category.option.canHaveSubCategory}">
+			<c:url var="ShowForumRefreshURL" value="/community/ShowForum.do">
+				<c:param name="forumId" value="${category.forumId}"/>
+			</c:url>
+		
 			<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
 				<div id="forumTable">
 					<div class="list">
@@ -56,6 +64,11 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 				<c:param name="forumId" value="${forum.forumId}"/>
 			</c:url>
+			
+			<c:url var="ShowForumRefreshURL" value="/community/ShowForum.do">
+				<c:param name="forumId" value="${forum.forumId}"/>
+			</c:url>
+			
 			<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
 				<c:param name="postId" value="0"/>
 				<c:param name="forumId" value="${forum.forumId}"/>
@@ -391,6 +404,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
  		</c:if> 
 		
 	</c:if>
+	
+	<div id="copyLink" title="Copy Link" style="display:none"> 
+		<input id="linkToCopy" type="text" value="" size="50"/>
+	</div>
 
 		<script>
 			$j(document).ready(function() {
@@ -498,6 +515,44 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 						$j("#previousPage").children().css("visibility", "visible");
 						$j("#nextPage").children().css("visibility", "visible");
 					}
+					return false;
+				});
+				
+				$j("#button_refresh").die();
+				$j("#button_refresh").live('click', function(){
+					$j("#main").load("${ShowForumRefreshURL}");
+					return false;
+				});
+				
+				$j("#button_link").die();
+				$j("#button_link").live('click', function(){
+					$j("#copyLink").css('display','inherit');
+					$j("#copyLink").dialog({
+						  autoOpen : false,
+						  modal: true,
+						  resizable: false,
+						  width: 310,
+						  height: 130, 
+						  buttons: {
+							  Ok: function() {
+								  $j(this).dialog("close");
+								  $j(".ui-dialog").remove();
+// 								  $j(this).dialog("destroy");
+								  return false;
+							  }
+						  },
+						  open: function(event, ui) { 
+							  $j("#linkToCopy").val('${bia:getApplicationProperty("website.domain")}${ShowForumRefreshURL}' + '&completeDOM=true');
+							  $j("#linkToCopy").select();
+							  return false;
+						  },
+						  close: function(event, ui){
+							  $j(".ui-dialog").remove();
+// 							  $j(this).dialog("destroy");
+							  return false;
+						  }						  
+					  });
+					$j("#copyLink").dialog('open');
 					return false;
 				});
 				
