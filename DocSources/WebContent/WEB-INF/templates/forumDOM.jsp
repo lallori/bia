@@ -17,7 +17,8 @@
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery-ui.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.dialogextend.min.js"/>"></script>
         <script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/scripts/forum/htmlbox.full.js"/>"></script>
+<%--         <script type="text/javascript" src="<c:url value="/scripts/forum/htmlbox.full.js"/>"></script> --%>
+		<script type="text/javascript" src="<c:url value="/scripts/forum/tiny_mce.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/packed.js"/>"></script>
         
         <script type="text/javascript">
