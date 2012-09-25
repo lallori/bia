@@ -125,6 +125,27 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);		
 	}
 	
+	/**
+	 * 
+	 * @param forumId
+	 * @param httpServletRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/community/DeleteForum", method = RequestMethod.POST)
+	public ModelAndView deleteForum(@RequestParam(value="forumId", required=false) Integer forumId,
+										HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		try{
+			getCommunityService().deleteForum(forumId);
+			model.put("operation", "OK");
+			
+			return new ModelAndView("responseOK", model);		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
+	
 	@RequestMapping(value = "/community/DeletePost", method = RequestMethod.POST)
 	public ModelAndView deleteForumPost(@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="topicId", required=false) Integer topicId,
@@ -143,6 +164,27 @@ public class AjaxController {
 			return new ModelAndView("responseOK", model);		
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
+	
+	/**
+	 * 
+	 * @param topicId
+	 * @param httpServletRequest
+	 * @return
+	 */
+	@RequestMapping(value = "/community/DeleteForumTopic", method = RequestMethod.POST)
+	public ModelAndView deleteForumTopic(@RequestParam(value="topicId", required=false) Integer topicId,
+										HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		try{
+			getCommunityService().deleteForumTopic(topicId);
+			model.put("operation", "OK");
+			
+			return new ModelAndView("responseOK", model);		
+		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
 		}

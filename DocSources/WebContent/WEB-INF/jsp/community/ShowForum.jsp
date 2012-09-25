@@ -169,11 +169,17 @@
 			            <div class="two">SUB-THREADS</div>
 			            <div class="three">VIEWS</div>
 			            <div class="four">LAST POST</div>
+			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            	<div class="five">DEL</div>
+			            </security:authorize>
 			        </div>
 
 			<c:if test="${not empty subForumsPage.list}">
 				<c:forEach items="${subForumsPage.list}" var="currentForum" varStatus="status">
 					<c:url var="ShowForumURL" value="/community/ShowForum.do">
+						<c:param name="forumId" value="${currentForum.forumId}" />
+					</c:url>
+					<c:url var="DeleteForumURL" value="/community/DeleteForum.json">
 						<c:param name="forumId" value="${currentForum.forumId}" />
 					</c:url>
 					<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
@@ -190,6 +196,9 @@
 					<c:if test="${empty currentForum.lastPost}">
 			            <div class="four"></div>
 			        </c:if>
+			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        	<div class="five"><a href="${DeleteForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        </security:authorize>
 			        </div>
 			    </c:forEach>
 			    </div>
@@ -221,6 +230,9 @@
 			            <div class="two">0</div>
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
+			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            	<div class="five">DEL</div>
+			            </security:authorize>
 			        </div>
 			    </div>			    
 			</c:if>    
@@ -249,6 +261,9 @@
 				            <div class="two">REPLY</div>
 				            <div class="three">VIEWS</div>
 				            <div class="four">LAST POST</div>
+				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            		<div class="five">DEL</div>
+			            	</security:authorize>
 				        </div>
 	
 				<c:if test="${not empty subForumsTopicsPage.list}">
@@ -256,6 +271,9 @@
 						<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
 							<c:param name="topicId" value="${currentTopic.topicId}"/>
 							<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+						</c:url>
+						<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
+							<c:param name="topicId" value="${currentTopic.topicId}" />
 						</c:url>
 						<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 							<div class="one">
@@ -271,6 +289,9 @@
 						<c:if test="${empty currentTopic.lastPost}">
 				            <div class="four"></div>
 				        </c:if>
+				        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        		<div class="five"><a href="${DeleteTopicForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        	</security:authorize>
 				        </div>
 				    </c:forEach>
 				</div>
@@ -313,6 +334,9 @@
 				            <div class="two">0</div>
 				            <div class="three">0</div>
 				            <div class="four">empty forum</div>
+				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        			<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        		</security:authorize>
 				        </div>
 				    </c:if>
 			</div>
@@ -333,6 +357,9 @@
 			            <div class="two">REPLY</div>
 			            <div class="three">VIEWS</div>
 			            <div class="four">LAST POST</div>
+			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            	<div class="five">DEL</div>
+			            </security:authorize>
 			        </div>
 
 			<c:if test="${not empty topicsPage.list}">
@@ -340,6 +367,9 @@
 					<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
 						<c:param name="topicId" value="${currentTopic.topicId}"/>
 						<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+					</c:url>
+					<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
+						<c:param name="topicId" value="${currentTopic.topicId}" />
 					</c:url>
 					<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 						<div class="one">
@@ -355,6 +385,9 @@
 					<c:if test="${empty currentTopic.lastPost}">
 			            <div class="four"></div>
 			        </c:if>
+			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        	<div class="five"><a href="${DeleteTopicForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        </security:authorize>
 			        </div>
 			    </c:forEach>
 			</div>
@@ -397,6 +430,9 @@
 			            <div class="two">0</div>
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
+			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        		<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        	</security:authorize>
 			        </div>
 			    </c:if>
 		</div>
@@ -534,10 +570,11 @@
 						  width: 310,
 						  height: 130, 
 						  buttons: {
-							  Ok: function() {
+							  Close: function() {
 								  $j(this).dialog("close");
-								  $j(".ui-dialog").remove();
-// 								  $j(this).dialog("destroy");
+								  $j(this).dialog("destroy");
+								  //MD: This instruction is for move the div back after closing
+								  $j(this).appendTo("#main").css("display", "none");
 								  return false;
 							  }
 						  },
@@ -547,12 +584,54 @@
 							  return false;
 						  },
 						  close: function(event, ui){
-							  $j(".ui-dialog").remove();
-// 							  $j(this).dialog("destroy");
+							  $j(this).dialog("destroy");
+							  //MD: This instruction is for move the div back after closing
+							  $j(this).appendTo("#main").css("display", "none");
 							  return false;
 						  }						  
 					  });
 					$j("#copyLink").dialog('open');
+					return false;
+				});
+				
+				$j('.deleteHref').click(function(){
+					var deleteUrl = $j(this).attr('href');
+					$j( "#deleteModal" ).dialog({
+						  autoOpen : false,
+						  modal: true,
+						  resizable: false,
+						  width: 300,
+						  height: 130, 
+						  buttons: {
+							  Yes: function() {
+								  $j.ajax({ type:"POST", url:deleteUrl, async:false, success:function(json) {
+						 			    if (json.operation == 'OK') {
+						 					 $j("#main").load('${ShowForumRefreshURL}');
+											 $j( "#deleteModal" ).dialog('close');
+											 $j("#deleteModal").dialog("destroy");
+											 $j(this).appendTo("#main").css("display", "none");
+											 return false;
+						 				} else {
+						 					//MD: In this case the delete operation returns a problem
+						 				}
+									}});
+									return false;
+							  },
+							  No: function() {
+								  $j( "#deleteModal" ).dialog('close');
+								  $j("#deleteModal").dialog("destroy");
+								  $j(this).appendTo("#main").css("display", "none");
+								  return false;
+							  }
+						  },
+						  close: function(event, ui){
+							  $j("#deleteModal").dialog("destroy");
+							  //MD: This instruction is for move the div back after closing
+							  $j("#deleteModal").appendTo("#main").css("display", "none");
+							  return false;
+						  }
+					  });
+					$j('#deleteModal').dialog('open');
 					return false;
 				});
 				
@@ -561,4 +640,11 @@
 				</c:if>
 			});
 		</script>
+		
+		<div id="deleteModal" title="Delete" style="display:none"> 
+			<p>
+				<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+				Are you sure you want to delete?
+			</p>
+		</div>
 					

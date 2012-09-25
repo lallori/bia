@@ -290,7 +290,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		Collections.sort(categoriesIds);
 
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String jpql = "FROM Forum WHERE type=:typeForum " +
+		String jpql = "FROM Forum WHERE logicalDelete = false AND type=:typeForum " +
         " and forumParent.id in (:forumParent) and forumParent.type=:forumParentTypeCategory " +
         " order by forumParent asc, title asc";
     	
@@ -355,7 +355,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	@Override
 	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM Forum WHERE type=:typeForum  and forumParent.id = :forumParentId " +
+		String queryString = "FROM Forum WHERE logicalDelete = false AND type=:typeForum  and forumParent.id = :forumParentId " +
 		"and forumParent.type=:forumParentTypeForum";
 
 		// We prepare object of return method.

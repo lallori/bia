@@ -47,6 +47,7 @@ import org.springframework.stereotype.Repository;
  * <b>ForumTopicDAOJpaImpl</b> is a default implementation of <b>ForumTopicDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.ForumPost
  * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
@@ -173,7 +174,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
-		String queryString = "FROM ForumTopic WHERE forum.forumParent.forumId = :forumId AND logicalDelete=false ";
+		String queryString = "FROM ForumTopic WHERE logicalDelete = false AND forum.forumParent.forumId = :forumId AND logicalDelete=false ";
 
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);

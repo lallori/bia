@@ -169,7 +169,6 @@ h2.title {
 	width: 52px;
 	background-image:url(/DocSources/images/forum/button_small.png);
 	height: 22px;
-	padding: 0 0 0 2px;
 	background-repeat: no-repeat;
 	background-color: transparent;
 	border: none;
@@ -286,7 +285,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 /* ---------- main tables ---------- */
 
-#forumTable, #membersTable, #messagesTable, #forumTablePaleography { /* tables */
+#forumTable, #membersTable, #messagesTable, #forumTablePaleography, #documentTable { /* tables */
 	border: 1px solid #DCC0BA;
 	width: 1000px;
 	height: auto;
@@ -335,7 +334,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	background-color:#EFE0DE;
 }
 
-.one, .two, .three, .four, .five { /* Columns */
+.one, .two, .three, .four, .five, .six { /* Columns */
 	display: table-cell;
 	text-align: left;
 	color: #6d5c4d;
@@ -347,12 +346,57 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	width: 40%;
 }
 
-#forumTablePaleography .one { /* First column width */
-	 width: 15%;
+.two, .three, .four, .five, .six  { /* Other column width */
+	 width: 20%;
 }
 
-.two, .three, .four, .five  { /* Other column width */
+.rowFirst .two, .rowFirst .three, .row .two, .row .three, .rowLast .two, .rowLast .three {
+	text-align:center;
+}
+
+.rowLast .one, .rowLast .two, .rowLast .three, .rowLast .four, .rowLast .five, .rowLast .six  { /* No border for the last row */
+	border-bottom:none;
+}
+
+
+/* Documents Table */
+
+#documentTable .one { /* First column width */
+	 width: 25%;
+}
+
+#documentTable .two, #documentTable .five  { /* Other column width */
 	 width: 20%;
+}
+
+#documentTable .three, #documentTable .four  { /* Other column width */
+	 width: 10%;
+}
+
+#documentTable .six  { /* Other column width */
+	 width: 5%;
+}
+
+#documentTable .one, #documentTable .five  { /* Columns */
+	text-align: left;
+}
+
+#documentTable .four, #documentTable .six { /* Columns */
+	text-align: center;
+}
+
+#documentTable .list .six a  { /* First column forum title */
+	margin: 0;
+}
+
+#documentTable .list .six a img {
+    float:left;
+}
+
+/* Paleography Table */ 
+
+#forumTablePaleography .one { /* First column width */
+	 width: 15%;
 }
 
 #forumTablePaleography .two { /* First column width */
@@ -369,12 +413,16 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	text-align:left;
 }
 
-.rowFirst .two, .rowFirst .three, .row .two, .row .three, .rowLast .two, .rowLast .three {
-	text-align:center;
+#forumTablePaleography .list a  { /* First column forum title */
+	text-decoration: none;
+	color: #6F6B69;
+	margin: 0;
+	font-size: 13px;
+	display: block;
 }
 
-.rowLast .one, .rowLast .two, .rowLast .three, .rowLast .four, .rowLast .five  { /* No border for the last row */
-	border-bottom:none;
+#forumTablePaleography .list .five a  { /* First column forum title */
+	display: inline;
 }
 
 /* Members Table */ 
@@ -418,17 +466,6 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	 display: inline;
 }
 
-#forumTablePaleography .list a  { /* First column forum title */
-	text-decoration: none;
-	color: #6F6B69;
-	margin: 0;
-	font-size: 13px;
-	display: block;
-}
-
-#forumTablePaleography .list .five a  { /* First column forum title */
-	display: inline;
-}
 
 .list .row .one a:hover, .list .rowLast .one a:hover  { /* First column forum title */
 	color:#000;
@@ -1150,6 +1187,25 @@ span.highlighted, #postTable span.highlighted{
     margin-left: 0;
 }
 
+.list .row .one a span.highlighted{
+    background-color: #F3BFCC;
+    color: #BC2A4D;
+    margin-left: 0;
+    display: inline;
+    margin-left: 0;
+    opacity: 1;
+    font-size: 13px;
+}
+
+.list .row .one span.highlighted{
+    background-color: #F3BFCC;
+    color: #BC2A4D;
+    margin-left: 0;
+    display: inline;
+    margin-left: 0;
+    opacity: 1;
+}
+
 span.search {
     font-weight: bold;
     color: #BC2A4D;
@@ -1283,4 +1339,19 @@ span.search {
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
 	position: absolute;
+}
+
+
+/* ------------------------ Documents--------------------------------*/
+
+#searchDocument {
+    border: 1px solid #DCC0BA;
+    background-color: #F2E6E5;
+    padding: 5px 10px 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+#newTopic {
+    margin: 2px 0 10px 0;
 }

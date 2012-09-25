@@ -42,15 +42,18 @@ import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
+import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -84,6 +87,8 @@ public class CommunityServiceImpl implements CommunityService {
 	private UserHistoryDAO userHistoryDAO;   
 	@Autowired
 	private UserMessageDAO userMessageDAO;
+	@Autowired
+	private UserRoleDAO userRoleDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -214,6 +219,31 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteForum(Integer forumId) throws ApplicationThrowable {
+		try{
+			Boolean authorize = Boolean.FALSE;
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			int i = 0;
+			while(i < userRoles.size() && !authorize){
+				if(userRoles.get(i).getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS))
+					authorize = Boolean.TRUE;
+			}
+			if(authorize){
+				Forum forum = getForumDAO().find(forumId);
+				forum.setLogicalDelete(Boolean.TRUE);
+				
+				getForumDAO().merge(forum);
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -234,7 +264,35 @@ public class CommunityServiceImpl implements CommunityService {
 			forumTopic.setTotalReplies(forumTopic.getTotalReplies()-1);
 			getForumTopicDAO().merge(forumTopic);
 			
+			forum.setPostsNumber(forum.getPostsNumber() - 1);
+			getForumDAO().merge(forum);
+			
 			recursiveSetLastPost(forum);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteForumTopic(Integer topicId) throws ApplicationThrowable {
+		try{
+			Boolean authorize = Boolean.FALSE;
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			int i = 0;
+			while(i < userRoles.size() && !authorize){
+				if(userRoles.get(i).getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS))
+					authorize = Boolean.TRUE;
+			}
+			if(authorize){
+				ForumTopic forumTopic = getForumTopicDAO().find(topicId);
+				forumTopic.setLogicalDelete(Boolean.TRUE);
+				
+				getForumTopicDAO().merge(forumTopic);
+			}
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -555,6 +613,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @return the userRoleDAO
+	 */
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -732,5 +797,12 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
+	}
+
+	/**
+	 * @param userRoleDAO the userRoleDAO to set
+	 */
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
 	}
 }

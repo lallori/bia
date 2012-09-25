@@ -84,10 +84,24 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param forumId
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteForum(Integer forumId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param postId
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteForumPost(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param topicId
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteForumTopic(Integer topicId) throws ApplicationThrowable;
 	
 	/**
 	 * 

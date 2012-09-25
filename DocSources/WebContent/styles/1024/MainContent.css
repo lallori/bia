@@ -420,7 +420,7 @@ item a{
 }
 
 /* Bottom Div Containers */
-#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv, #EditPdfImagesSchedoneDiv, #SchedoneDiv {
+#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv, #EditPdfImagesSchedoneDiv, #EditSchedonePropertiesDiv, #EditEmailControlDiv {
 	margin-bottom:30px;!important
 	min-height:100px;!important
 }
@@ -485,7 +485,7 @@ item a{
 
 .listSearch { /* Whole display list */
 	display: table;
-	width: 275px;
+	 width: 302px;
 }
 
 .listAdvSearch { /* Whole display list */
@@ -743,7 +743,7 @@ img.transparent {
 	font-size: 11px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
-	margin: -21px 0 0 0;
+	margin: 0 0 0 16px;
 	width:auto;
 	border:1px solid #900;
 	border-radius:4px;
@@ -4308,7 +4308,7 @@ ul#network a {
 /*------------------------------- Edit/Display Divs -------------------------------------*/
 
 #EditDetailsSchedoneDiv {
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
 #EditSchedoneDetailsDiv .helpIcon, #EditEditTiffImagesForm .helpIcon, #EditEditJpegImagesForm .helpIcon, #EditEditPdfImagesForm .helpIcon, #EditDetailsSchedoneDiv .helpIcon, #EditSchedoneForm .helpIcon{
@@ -4450,7 +4450,7 @@ ul#network a {
 /* Display */
 
 #EditUserControlDiv {
-	margin-top:20px;
+	margin-top:10px;
 }
 
 /* Edit */
@@ -4604,7 +4604,7 @@ h3.systemManagement {
 /* Display Elements */
 
 #EditGeneralPropertiesDiv {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 #IipImagePropertiesDiv p {
