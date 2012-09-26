@@ -16,7 +16,7 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowTopicsPlaceURL" value="/de/geobase/ShowTopicsPlace.do">
+<c:url var="ShowTopicsPlaceURL" value="/src/geobase/ShowTopicsPlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 

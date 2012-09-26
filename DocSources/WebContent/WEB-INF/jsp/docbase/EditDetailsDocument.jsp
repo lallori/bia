@@ -141,6 +141,9 @@
 			<form:hidden id="entryId" path="entryId" />
 			
 			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="docDay" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="yearModern" cssClass="inputerrors" htmlEscape="false"/>
 
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
