@@ -154,7 +154,7 @@ a {
 #searchForm { /* Search Form Container */
 	width: 250px;
 	height:80px;
-	margin: 17px 0 0 10px;
+	margin: 17px 0 0 2px;
 	position:absolute;
 }
 
@@ -210,12 +210,12 @@ a {
 
 
 #text {
-	width: 216px;
+	width: 245px;
 	margin: 5px 4px 0 5px;
 }
 
 #simpleSearchPerimeter {
-	width: 145px;
+	width: 175px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 

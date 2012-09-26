@@ -46,6 +46,22 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 
 	/**
 	 * 
+	 * @param forumId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param topicId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param topicId
 	 * @return
 	 * @throws PersistenceException

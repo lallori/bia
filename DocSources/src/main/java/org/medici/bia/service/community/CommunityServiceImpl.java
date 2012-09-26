@@ -238,6 +238,20 @@ public class CommunityServiceImpl implements CommunityService {
 				forum.setLogicalDelete(Boolean.TRUE);
 				
 				getForumDAO().merge(forum);
+				getForumDAO().deleteForumFromParent(forum.getForumId());
+				getForumTopicDAO().deleteForumTopicsFromForum(forum.getForumId());
+				getForumPostDAO().deleteForumPostsFromForum(forum.getForumId());
+				if(forum.getForumParent() != null){
+					//MD: Update the last Post and the number of posts
+					Forum forumParent = forum.getForumParent();
+//					ForumPost forumPost = getForumPostDAO().findLastPostFromForum(forumParent);
+//					forumParent.setLastPost(forumPost);
+//					getForumDAO().merge(forumParent);
+					recursiveSetLastPost(forumParent);
+					forumParent.setPostsNumber(forumParent.getPostsNumber() - forum.getPostsNumber());
+					getForumDAO().merge(forumParent);					
+				}
+				
 			}
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -292,6 +306,11 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setLogicalDelete(Boolean.TRUE);
 				
 				getForumTopicDAO().merge(forumTopic);
+				getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
+				Forum forum = forumTopic.getForum();
+				recursiveSetLastPost(forum);
+				forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
+				getForumDAO().merge(forum);				
 			}
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -338,7 +357,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
 			
-			return forumPost;
+			return forumPostToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

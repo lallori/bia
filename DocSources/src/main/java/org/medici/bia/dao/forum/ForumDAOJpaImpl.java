@@ -230,6 +230,17 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return forum;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE Forum SET logicalDelete = true WHERE forumParent.forumId=:forumParentId");
+		query.setParameter("forumParentId", forumParentId);
+			
+		return query.executeUpdate();		
+	}
 
 	@Override
 	public Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException {

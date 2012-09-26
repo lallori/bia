@@ -39,9 +39,18 @@ import org.medici.bia.domain.ForumTopic;
  * ForumPost DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 
+	/**
+	 * 
+	 * @param forumId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
+	
 	/**
 	 * Returns list of topics on a specific forum.
 	 * 

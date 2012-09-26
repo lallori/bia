@@ -82,6 +82,28 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE forum.forumId=:forumId");
+		query.setParameter("forumId", forumId);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE topic.topicId=:topicId");
+		query.setParameter("topicId", topicId);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {

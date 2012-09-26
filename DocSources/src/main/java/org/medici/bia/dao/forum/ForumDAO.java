@@ -99,6 +99,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	
 	/**
 	 * 
+	 * @param forumParentId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param volumeForum
 	 * @param imageProgTypeNum
 	 * @param imageRectoVerso

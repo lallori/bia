@@ -81,6 +81,17 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE forum.forumId=:forumid");
+		query.setParameter("forumId", forumId);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
