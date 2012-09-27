@@ -195,7 +195,7 @@ a {
 	-moz-border-radius: 8px;
 	border-radius: 8px;
 	cursor:default;
-	margin:0 0 0 7px;
+	margin: 0 0 0 4px;
 }
 
 #SearchForm a:hover.helpIcon { /* Help symbol "?" */
@@ -210,12 +210,13 @@ a {
 
 
 #text {
-	width: 245px;
-	margin: 5px 4px 0 5px;
+	width: 251px;
+	margin: 5px 2px 0 5px;
 }
 
 #simpleSearchPerimeter {
-	width: 175px;
+	width: 179px;
+	margin: 5px 0 5px 0;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 

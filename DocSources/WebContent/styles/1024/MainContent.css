@@ -743,11 +743,12 @@ img.transparent {
 	font-size: 11px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
-	margin: 0 0 0 16px;
+	margin: 5px 0 0 5px;
 	width:auto;
 	border:1px solid #900;
 	border-radius:4px;
 	-moz-border-radius: 4px;
+	display: inline-block;
 }
 
 #EditChildrenPersonDiv .inputerrors,  #EditDetailsPersonForm span.inputerrors, #CreateNewTitlesOccupationsForm .inputerrors {
@@ -762,12 +763,13 @@ img.transparent {
 .inputerrorsForm { /* Error Span messages */
 	color:#900;
 	padding:1px 4px 1px 4px;
-	margin: 10px 0 0 0;
+	margin: 5px 0 0 5px;
 	width:auto;
 	border:1px solid #900;
 	max-width: 407px;
 	border-radius:4px;
 	-moz-border-radius: 4px;
+	display: inline-block;
 }
 
 .inputerrorsVolumeExist p { /* Error Span messages */

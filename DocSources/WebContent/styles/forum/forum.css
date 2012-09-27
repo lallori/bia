@@ -381,12 +381,16 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	text-align: left;
 }
 
-#documentTable .four, #documentTable .six { /* Columns */
-	text-align: center;
+#documentTable .four { /* Columns */
+	 text-align: center;
+}
+
+#documentTable .six { /* Columns */
+	 text-align: left;
 }
 
 #documentTable .list .six a  { /* First column forum title */
-	margin: 0;
+	 margin: 0;
 }
 
 #documentTable .list .six a img {
@@ -462,8 +466,13 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	display: block;
 }
 
-.list .five a  { /* First column forum title */
+.list a.button_delete  { /* First column forum title */
 	 display: inline;
+         margin-left: 0;
+}
+
+.list a.button_delete img  { /* First column forum title */
+	position:relative;
 }
 
 
@@ -493,9 +502,11 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 }
 
 
-.list img { /* Icons */
-	position: absolute;
-	margin-top: 5px;
+.list img {
+    position: absolute;
+ /* Icons */
+	
+	
 }
 
 a.link {  /* "Last post by" user name */
@@ -569,6 +580,7 @@ a.returnTo {
 
 #firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
     border: 1px solid #DCC0BA;
+	border-radius:5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     padding: 2px 5px;
