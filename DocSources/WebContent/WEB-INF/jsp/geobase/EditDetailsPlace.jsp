@@ -86,6 +86,9 @@
 					<div class="row"><a class="helpIcon" title="Text">?</a><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
 					<div class="row"><form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/></div>
 				</div>
+				
+				<form:errors path="geogKey" cssClass="inputerrors" htmlEscape="false" />
+				<form:errors path="parentPlaceAllId" cssClass="inputerrors" htmlEscape="false" />
 
 				<div>
 					<input type="submit" title="Do not save changes" value="Close" id="close">
@@ -96,11 +99,9 @@
 
 			<form:hidden path="placeAllId"/>
 			<form:hidden path="parentPlaceAllId" />
-			<form:hidden path="geogKey"/>
+<%-- 			<form:hidden path="geogKey"/> --%>
 			<form:hidden path="plSource"/>
 			
-			<form:errors path="geogKey" cssClass="inputerrors" htmlescape="false" />
-			<form:errors path="parentPlaceAllId" cssClass="inputerrors" htmlescape="false" />
 		</form:form>
 	</div>
 	

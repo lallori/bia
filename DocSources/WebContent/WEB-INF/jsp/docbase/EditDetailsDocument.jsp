@@ -140,6 +140,7 @@
 			<form:hidden id="dateCreated" path="dateCreated" />
 			<form:hidden id="entryId" path="entryId" />
 			
+			<form:errors path="folioNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docDay" cssClass="inputerrors" htmlEscape="false"/>
@@ -152,7 +153,7 @@
 			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
-		<form:hidden id="folioNumStored" path="folioNum" />
+		<input type="hidden" id="folioNumStored" value=""/>
 
 	</form:form>
 
@@ -171,6 +172,8 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j.scrollTo("#EditDetailsDocumentForm");
+			
+			$j("#folioNumStored").val($j("#folioNum").val());
 			
 	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden');
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
