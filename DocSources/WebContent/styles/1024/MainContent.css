@@ -749,15 +749,7 @@ img.transparent {
 	border-radius:4px;
 	-moz-border-radius: 4px;
 	display: inline-block;
-}
-
-#EditChildrenPersonDiv .inputerrors,  #EditDetailsPersonForm span.inputerrors, #CreateNewTitlesOccupationsForm .inputerrors {
-    float:none;
-    text-align: left;
-    display: block;
-    width: 390px;
-    border:none;
-	margin:0;
+	max-width: 400px;
 }
 
 .inputerrorsForm { /* Error Span messages */
@@ -770,6 +762,7 @@ img.transparent {
 	border-radius:4px;
 	-moz-border-radius: 4px;
 	display: inline-block;
+	max-width: 400px;
 }
 
 .inputerrorsVolumeExist p { /* Error Span messages */
