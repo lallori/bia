@@ -94,6 +94,7 @@
 								  buttons: {
 									  Ok: function() {
 										  $j(this).dialog("close");
+										  $j(this).dialog("destroy");
 										  $j("#main").load(topicUrl);
 									  }
 								  }

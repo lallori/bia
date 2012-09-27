@@ -756,6 +756,18 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchForumTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getForumTopicDAO().searchMYSQL(searchContainer, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc} 

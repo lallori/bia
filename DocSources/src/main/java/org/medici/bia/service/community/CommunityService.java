@@ -295,6 +295,14 @@ public interface CommunityService {
 	 * @return
 	 */
 	public Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param simpleSearchForumPost
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page searchForumTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

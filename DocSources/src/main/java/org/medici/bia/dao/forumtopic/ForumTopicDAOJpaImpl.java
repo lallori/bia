@@ -37,6 +37,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.PaginationFilter.Order;
 import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.search.Search;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Forum;
@@ -236,6 +237,68 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 
 		// We set search result on return method
 		page.setList(list);
+		
+		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		}
+
+		String objectsQuery = searchContainer.toJPAQuery();
+//		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+//		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+//		StringBuilder orderBySQL = new StringBuilder();
+//		if (sortingCriterias.size() > 0) {
+//			orderBySQL.append(" ORDER BY ");
+//			for (int i=0; i<sortingCriterias.size(); i++) {
+//				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+//				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+//				if (i<(sortingCriterias.size()-1)) {
+//					orderBySQL.append(", ");
+//				} 
+//			}
+//		}
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for(int i = 0; i < sortingCriterias.size(); i++){
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if(i < (sortingCriterias.size() - 1)){
+					orderBySQL.append(", ");
+				}
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+//		String jpql = objectsQuery;
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		// We set pagination  
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		
+		// We set search result on return method
+		page.setList(query.getResultList());
 		
 		return page;
 	}

@@ -153,11 +153,11 @@
 			
 				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 			</c:if>
-			<div id="topicActions">
-				<c:if test="${forum.option.canHaveTopics}">
-				<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
-				</c:if>
-			</div>
+			<c:if test="${forum.option.canHaveTopics}">
+				<div id="topicActions">
+					<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
+				</div>
+			</c:if>
 
 		<c:if test="${forum.option.canHaveSubForum}">
 		<c:choose>
@@ -197,7 +197,7 @@
 			            <div class="four"></div>
 			        </c:if>
 			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        	<div class="five"><a href="${DeleteForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        	<div class="five"><a href="${DeleteForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
 			        </security:authorize>
 			        </div>
 			    </c:forEach>
@@ -254,18 +254,48 @@
 				<c:url var="ShowForumURL" value="/community/ShowForum.do">
 					<c:param name="forumId" value="${forum.forumId}" />
 				</c:url>
-				<div id="forumTable">
-				    <div class="list">
-				        <div class="rowFirst">
-				            <div class="one">TOPIC</div>
-				            <div class="two">REPLY</div>
-				            <div class="three">VIEWS</div>
-				            <div class="four">LAST POST</div>
-				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            		<div class="five">DEL</div>
-			            	</security:authorize>
-				        </div>
-	
+				<c:if test="${forum.title == 'Documents' }">
+					<div id="searchDocument">
+   						<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    					<div id="topicActions">
+        					<div id="searchThisForumFormDiv">
+            					<form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
+                					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
+                					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall"/>
+                				</form>
+                			</div>
+                		</div>
+            		</div>
+            	</c:if>
+				<c:choose>
+					<c:when test="${forum.subType == 'DOCUMENT'}">
+						<div id="documentTable">
+							<div class="list">
+								<div class="rowFirst">
+									<div class="one">DISCUSSION</div>
+				        			<div class="two">DOCUMENTS</div>
+				        			<div class="three">REPLIES</div>
+				        			<div class="four">VIEWS</div>
+				        			<div class="five">LAST POST</div>
+				        			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            				<div class="six">DEL</div>
+			            			</security:authorize>
+								</div>						
+					</c:when>
+					<c:otherwise>
+						<div id="forumTable">
+				    		<div class="list">
+				        		<div class="rowFirst">
+				        	   		<div class="one">TOPIC</div>
+				            		<div class="two">REPLY</div>
+				            		<div class="three">VIEWS</div>
+				            		<div class="four">LAST POST</div>
+				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            				<div class="five">DEL</div>
+			            			</security:authorize>
+			            		</div>			            	
+			       </c:otherwise>
+			   	</c:choose>
 				<c:if test="${not empty subForumsTopicsPage.list}">
 					<c:forEach items="${subForumsTopicsPage.list}" var="currentTopic" varStatus="status">
 						<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
@@ -275,24 +305,49 @@
 						<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
 							<c:param name="topicId" value="${currentTopic.topicId}" />
 						</c:url>
-						<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
-							<div class="one">
-				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-				                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
-				                <span>subtitle</span>
-				            </div>
-				            <div class="two">${currentTopic.totalReplies}</div>
-				            <div class="three">-</div>
-						<c:if test="${not empty currentTopic.lastPost}">
-				            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
-				        </c:if>
-						<c:if test="${empty currentTopic.lastPost}">
-				            <div class="four"></div>
-				        </c:if>
-				        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        		<div class="five"><a href="${DeleteTopicForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-			        	</security:authorize>
-				        </div>
+						<c:choose>
+							<c:when test="${forum.subType == 'DOCUMENT'}">
+								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+									<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <span>subtitle</span>
+						            </div>
+						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
+						            <div class="three">${currentTopic.totalReplies}</div>
+						            <div class="four">-</div>
+								<c:if test="${not empty currentTopic.lastPost}">
+						            <div class="five">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentTopic.lastPost}">
+						            <div class="five"></div>
+						        </c:if>
+						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+						        </div>
+							</c:when>
+							<c:otherwise>
+								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+									<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <span>subtitle</span>
+						            </div>
+						            <div class="two">${currentTopic.totalReplies}</div>
+						            <div class="three">-</div>
+								<c:if test="${not empty currentTopic.lastPost}">
+						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentTopic.lastPost}">
+						            <div class="four"></div>
+						        </c:if>
+						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+						        </div>
+						    </c:otherwise>
+						</c:choose>     
 				    </c:forEach>
 				</div>
 			</div>
@@ -325,19 +380,39 @@
 	
 	<!-- EACH TOPIC PAGE?-->
 					<c:if test="${empty subForumsTopicsPage.list}">
-						<div class="rowLast">						            
-							<div class="one">
-				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-				                <a id="viewTopic">No topics available</a>
-				                <span>${currentForum.description}</span>
-				            </div>
-				            <div class="two">0</div>
-				            <div class="three">0</div>
-				            <div class="four">empty forum</div>
-				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        			<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-			        		</security:authorize>
-				        </div>
+						<c:choose>
+							<c:when test="${forum.subType == 'DOCUMENT'}">
+								<div class="rowLast">						            
+									<div class="one">
+				            			<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+				                		<a id="viewTopic">No topics available</a>
+				                		<span>${currentForum.description}</span>
+				            		</div>
+				            		<div class="two">empty forum</div>
+				            		<div class="three">0</div>
+				            		<div class="four">0</div>
+				            		<div class="five">empty forum</div>
+				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        					<div class="six"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        				</security:authorize>
+			        			</div>
+			        		</c:when>
+			        		<c:otherwise>
+								<div class="rowLast">						            
+									<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a id="viewTopic">No topics available</a>
+						                <span>${currentForum.description}</span>
+						            </div>
+						            <div class="two">0</div>
+						            <div class="three">0</div>
+						            <div class="four">empty forum</div>
+						            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        			<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        		</security:authorize>
+						        </div>
+						    </c:otherwise>
+						</c:choose>  
 				    </c:if>
 			</div>
 			</div>
@@ -350,17 +425,48 @@
 			<c:url var="ShowForumURL" value="/community/ShowForum.do">
 				<c:param name="forumId" value="${forum.forumId}" />
 			</c:url>
-			<div id="forumTable">
-			    <div class="list">
-			        <div class="rowFirst">
-			            <div class="one">TOPIC</div>
-			            <div class="two">REPLY</div>
-			            <div class="three">VIEWS</div>
-			            <div class="four">LAST POST</div>
-			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DEL</div>
-			            </security:authorize>
-			        </div>
+			<c:if test="${forum.title == 'Documents' }">
+				<div id="searchDocument">
+   					<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    				<div id="topicActions">
+        				<div id="searchThisForumFormDiv">
+            				<form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
+               					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
+               					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall"/>
+               				</form>
+               			</div>
+               		</div>
+            	</div>
+            </c:if>
+			<c:choose>
+				<c:when test="${forum.subType == 'DOCUMENT'}">
+					<div id="documentTable">
+						<div class="list">
+							<div class="rowFirst">
+								<div class="one">DISCUSSION</div>
+				       			<div class="two">DOCUMENTS</div>
+				       			<div class="three">REPLIES</div>
+				       			<div class="four">VIEWS</div>
+				       			<div class="five">LAST POST</div>
+				       			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			           				<div class="six">DEL</div>
+			           			</security:authorize>
+							</div>						
+				</c:when>
+				<c:otherwise>
+					<div id="forumTable">
+			    		<div class="list">
+			        		<div class="rowFirst">
+			        	   		<div class="one">TOPIC</div>
+			            		<div class="two">REPLY</div>
+			            		<div class="three">VIEWS</div>
+			            		<div class="four">LAST POST</div>
+			            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			           				<div class="five">DEL</div>
+			           			</security:authorize>
+			           		</div>			            	
+				</c:otherwise>
+			</c:choose>
 
 			<c:if test="${not empty topicsPage.list}">
 				<c:forEach items="${topicsPage.list}" var="currentTopic" varStatus="status">
@@ -371,24 +477,49 @@
 					<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
 						<c:param name="topicId" value="${currentTopic.topicId}" />
 					</c:url>
-					<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
-						<div class="one">
-			            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-			                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
-			                <span>subtitle</span>
-			            </div>
-			            <div class="two">${currentTopic.totalReplies}</div>
-			            <div class="three">-</div>
-					<c:if test="${not empty currentTopic.lastPost}">
-			            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
-			        </c:if>
-					<c:if test="${empty currentTopic.lastPost}">
-			            <div class="four"></div>
-			        </c:if>
-			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        	<div class="five"><a href="${DeleteTopicForumURL}" class="deleteHref"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-			        </security:authorize>
-			        </div>
+					<c:choose>
+							<c:when test="${forum.subType == 'DOCUMENT'}">
+								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+									<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <span>subtitle</span>
+						            </div>
+						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
+						            <div class="three">${currentTopic.totalReplies}</div>
+						            <div class="four">-</div>
+								<c:if test="${not empty currentTopic.lastPost}">
+						            <div class="five">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentTopic.lastPost}">
+						            <div class="five"></div>
+						        </c:if>
+						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+						        </div>
+							</c:when>
+							<c:otherwise>
+								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+									<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <span>subtitle</span>
+						            </div>
+						            <div class="two">${currentTopic.totalReplies}</div>
+						            <div class="three">-</div>
+								<c:if test="${not empty currentTopic.lastPost}">
+						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						        </c:if>
+								<c:if test="${empty currentTopic.lastPost}">
+						            <div class="four"></div>
+						        </c:if>
+						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+						        </div>
+						    </c:otherwise>
+						</c:choose>     
 			    </c:forEach>
 			</div>
 		</div>
@@ -594,7 +725,7 @@
 					return false;
 				});
 				
-				$j('.deleteHref').click(function(){
+				$j('.button_delete').click(function(){
 					var deleteUrl = $j(this).attr('href');
 					$j( "#deleteModal" ).dialog({
 						  autoOpen : false,

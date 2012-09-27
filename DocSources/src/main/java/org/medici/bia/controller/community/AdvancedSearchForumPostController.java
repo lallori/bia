@@ -120,30 +120,51 @@ public class AdvancedSearchForumPostController {
 		} else {
 			paginationFilter.setPageTotal(null);
 		}
-		if(command.getSortResults().equals("POST_TIME")){
-			paginationFilter.addSortingCriteria("dateCreated", command.getOrder());
-		} else if(command.getSortResults().equals("AUTHOR")){
-			paginationFilter.addSortingCriteria("author", command.getOrder());
-		} else if(command.getSortResults().equals("FORUM")){
-			paginationFilter.addSortingCriteria("forum.title", command.getOrder());
-		} else if(command.getSortResults().equals("TOPIC_TITLE")){
-			paginationFilter.addSortingCriteria("topic.subject", command.getOrder());
-		} else if(command.getSortResults().equals("POST_SUBJECT")){
-			paginationFilter.addSortingCriteria("subject", command.getOrder());
+		if(command.getDisplayResults().equals("Posts")){
+			if(command.getSortResults().equals("POST_TIME")){
+				paginationFilter.addSortingCriteria("dateCreated", command.getOrder());
+			} else if(command.getSortResults().equals("AUTHOR")){
+				paginationFilter.addSortingCriteria("author", command.getOrder());
+			} else if(command.getSortResults().equals("FORUM")){
+				paginationFilter.addSortingCriteria("forum.title", command.getOrder());
+			} else if(command.getSortResults().equals("TOPIC_TITLE")){
+				paginationFilter.addSortingCriteria("topic.subject", command.getOrder());
+			} else if(command.getSortResults().equals("POST_SUBJECT")){
+				paginationFilter.addSortingCriteria("subject", command.getOrder());
+			}
+		}else if(command.getDisplayResults().equals("Topics")){
+			if(command.getSortResults().equals("POST_TIME")){
+				paginationFilter.addSortingCriteria("lastPost.dateCreated", command.getOrder());
+			}else if(command.getSortResults().equals("AUTHOR")){
+				paginationFilter.addSortingCriteria("account", command.getOrder());
+			}else if(command.getSortResults().equals("FORUM")){
+				paginationFilter.addSortingCriteria("forum.title", command.getOrder());
+			} else if(command.getSortResults().equals("TOPIC_TITLE")){
+				paginationFilter.addSortingCriteria("subject", command.getOrder());
+			}
 		}
 		
 		Page page = new Page(paginationFilter);
 		
 		try{
-			page = getCommunityService().searchForumPosts(searchFilter.getFilterData(), paginationFilter);
+			if(command.getDisplayResults().equals("Posts")){
+				page = getCommunityService().searchForumPosts(searchFilter.getFilterData(), paginationFilter);
+				model.put("searchResultPage", page);
+				
+				return new ModelAndView("community/AdvancedSearchResultForumPost", model);
+			}else if(command.getDisplayResults().equals("Topics")){
+				page = getCommunityService().searchForumTopics(searchFilter.getFilterData(), paginationFilter);
+				model.put("searchResultPage", page);
+				
+				return new ModelAndView("community/AdvancedSearchResultForumTopic", model);
+			}
+				
 		}catch(ApplicationThrowable applicationThrowable){
 			model.put("applicationThrowable", applicationThrowable);
 			page = new Page(paginationFilter);
 		}
 
-		model.put("searchResultPage", page);
-		
-		return new ModelAndView("community/AdvancedSearchResultForumPost", model);
+		return new ModelAndView("error/AdvancedSearchResultForum", model);
 	}
 
 	/**

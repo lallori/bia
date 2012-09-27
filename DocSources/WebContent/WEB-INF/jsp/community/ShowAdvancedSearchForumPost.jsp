@@ -72,8 +72,8 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		                <label for="displayResults" id="displayResultsLabel">Display results as:</label>
 		             </div>
 		             <div class="value">
-		                <label for="drPosts"><input type="radio" name="displayResults" id="drPosts" value="Posts" checked="checked"> Posts</label> 
-		                <label for="drTopics"><input type="radio" name="displayResults" id="drTopics" value="Topics"> Topics</label> 
+		                <label for="drPosts"><input type="radio" name="displayResults" id="drPosts" value="Posts"> Posts</label> 
+		                <label for="drTopics"><input type="radio" name="displayResults" id="drTopics" value="Topics" checked="checked"> Topics</label> 
 		             </div>
 				</div>
 		        
@@ -163,12 +163,12 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				return false;
 			});
 			
-			$j('.boardIndex').die();
+// 			$j('.boardIndex').die();
 			// Result links have a specific class style on which we attach click live. 
-			$j('.boardIndex').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
-				return false;
-			});
+// 			$j('.boardIndex').live('click', function() {
+// 				$j("#main").load($j(this).attr("href"));
+// 				return false;
+// 			});
 
 			$j('.quotePost').die();
 			$j('.quotePost').click(function (){

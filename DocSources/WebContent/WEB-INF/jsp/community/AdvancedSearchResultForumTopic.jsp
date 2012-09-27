@@ -29,40 +29,47 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print thread" width="17" height="15" /><span class="button_text">Print thread</span></a> -->
 <!-- </div> -->
 
-<c:forEach items="${searchResultPage.list}" var="currentPost" varStatus="status">
-	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.do">
-		<c:param name="postId" value="${currentPost.postId}"/>
-		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-	</c:url>
+		<div id="forumTable">
+			<div class="list">
+				<div class="rowFirst">
+					<div class="one">TOPIC</div>
+			        <div class="two">REPLY</div>
+			        <div class="three">VIEWS</div>
+			        <div class="four">LAST POST</div>
+			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			        	<div class="five">DEL</div>
+			        </security:authorize>
+				</div>
+				<c:forEach items="${searchResultPage.list}" var="currentTopic" varStatus="status">
+					<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+						<c:param name="topicId" value="${currentTopic.topicId}"/>
+						<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+					</c:url>
+					<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
+						<c:param name="topicId" value="${currentTopic.topicId}" />
+					</c:url>
+					<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
+						<div class="one">
+					       	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+					        <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+					        <span>subtitle</span>
+					    </div>
+					    <div class="two">${currentTopic.totalReplies}</div>
+					    <div class="three">-</div>
+						<c:if test="${not empty currentTopic.lastPost}">
+							<div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						</c:if>
+						<c:if test="${empty currentTopic.lastPost}">
+						    <div class="four"></div>
+						</c:if>
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					    	<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					    </security:authorize>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 
-	<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReportForumPost.do">
-		<c:param name="postId" value="${currentPost.postId}"/>
-		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-	</c:url>
-	
-	<div id="postTable">
-	<div id="topicIcons">
-        <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
-        <a href="${ReplyWithQuoteForumPostURL}" id="quotePost" title="Reply with quote"></a>
-    </div>
-    <div id="post">
-        <h2>${currentPost.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
-        <p class="textPost">${currentPost.text}</p>
-    </div>
-    <div id="postProfile">
-    	<ul>
-        	<li><a href="#" id="userName" class="link">${currentPost.user.account}</a></li>
-            <li>Community User</li>
-            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
-        </ul>
-    </div>
-    <div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-</div>
-</c:forEach>
 
 <div id="forumPaginate">
     <c:set var="paginationData">

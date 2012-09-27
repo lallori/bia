@@ -357,6 +357,10 @@
 	<definition name="community/AdvancedSearchResultForumPost" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchResultForumPost.jsp"/>
 	</definition>
+	
+	<definition name="community/AdvancedSearchResultForumTopic" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchResultForumTopic.jsp"/>
+	</definition>
 
 	<definition name="community/SearchResultForumPost" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/SearchResultForumPost.jsp"/>

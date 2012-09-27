@@ -57,6 +57,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	private String wordsType;
 	private List<Integer> forumsId;
 	private Integer limitResults;
+	private String displayResults;
 
 	/**
 	 * 
@@ -70,6 +71,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		allTerms = null;
 		wordsType = null;
 		limitResults = null;
+		displayResults = null;
 	}
 
 	/**
@@ -84,6 +86,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	public String getAuthor() {
 		return author;
+	}
+
+	/**
+	 * @return the displayResults
+	 */
+	public String getDisplayResults() {
+		return displayResults;
 	}
 
 	/**
@@ -169,6 +178,15 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		}else{
 			limitResults = 0;
 		}
+		
+		//DisplayResults
+		if(command.getDisplayResults() != null){
+			if(command.getDisplayResults().equals("Posts")){
+				displayResults = new String("ForumPost");
+			}else if(command.getDisplayResults().equals("Topics")){
+				displayResults = new String("ForumTopic");
+			}
+		}
 	}
 
 	@Override
@@ -191,6 +209,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	/**
+	 * @param displayResults the displayResults to set
+	 */
+	public void setDisplayResults(String displayResults) {
+		this.displayResults = displayResults;
 	}
 
 	/**
@@ -226,125 +251,263 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuilder jpaQuery = new StringBuilder("FROM ForumPost WHERE ");
-
-		//Words
-		if(words != null && words.size() > 0){
-			StringBuilder textQuery = new StringBuilder("(");
-			if(wordsType.equals("TEXT")){
-				for(int i = 0; i < words.size(); i++){
-					if(textQuery.length() > 1){
-						textQuery.append(" AND ");
+		if(displayResults.equals("ForumPost")){
+			StringBuilder jpaQuery = new StringBuilder("FROM ForumPost WHERE ");
+	
+			//Words
+			if(words != null && words.size() > 0){
+				StringBuilder textQuery = new StringBuilder("(");
+				if(wordsType.equals("TEXT")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')");
 					}
-					textQuery.append("(text LIKE '%");
-					textQuery.append(words.get(i));
-					textQuery.append("%')");
+				}else if(wordsType.equals("SUBJECT_TEXT")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%') OR (subject LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')");
+					}
+				}else if(wordsType.equals("TITLE")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(topic.subject LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')");
+					}
+				}else if(wordsType.equals("FIRST_POST")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%') AND (parentPost.postId IS NULL)");
+					}
 				}
-			}else if(wordsType.equals("SUBJECT_TEXT")){
-				for(int i = 0; i < words.size(); i++){
-					if(textQuery.length() > 1){
-						textQuery.append(" AND ");
+				textQuery.append(")");
+				if(!textQuery.toString().equals("")){
+					if(jpaQuery.length() > 21){
+						jpaQuery.append(" AND ");
 					}
-					textQuery.append("(text LIKE '%");
-					textQuery.append(words.get(i));
-					textQuery.append("%') OR (subject LIKE '%");
-					textQuery.append(words.get(i));
-					textQuery.append("%')");
-				}
-			}else if(wordsType.equals("TITLE")){
-				for(int i = 0; i < words.size(); i++){
-					if(textQuery.length() > 1){
-						textQuery.append(" AND ");
-					}
-					textQuery.append("(topic.subject LIKE '%");
-					textQuery.append(words.get(i));
-					textQuery.append("%')");
-				}
-			}else if(wordsType.equals("FIRST_POST")){
-				for(int i = 0; i < words.size(); i++){
-					if(textQuery.length() > 1){
-						textQuery.append(" AND ");
-					}
-					textQuery.append("(text LIKE '%");
-					textQuery.append(words.get(i));
-					textQuery.append("%') AND (parentPost.postId IS NULL)");
+					jpaQuery.append(textQuery);
 				}
 			}
-			textQuery.append(")");
-			if(!textQuery.toString().equals("")){
+			
+			//ForumsId
+			if (forumsId != null && forumsId.size()>0) {
+				StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
+				for (int i=0; i<forumsId.size(); i++) {
+					forumsQuery.append(forumsId.get(i));
+					forumsQuery.append(",");
+				}
+	
+				forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
+				forumsQuery.append("))");
+				if(!forumsQuery.toString().equals("")){
+					if(jpaQuery.length() > 21){
+						jpaQuery.append(" AND ");
+					}
+					jpaQuery.append(forumsQuery);
+				}
+			}
+	
+			// person;
+			if (author != null) {
+				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '");
+				authorQuery.append(author);
+				authorQuery.append("')");
 				if(jpaQuery.length() > 21){
 					jpaQuery.append(" AND ");
 				}
-				jpaQuery.append(textQuery);
+				jpaQuery.append(authorQuery);
 			}
-		}
-		
-		//ForumsId
-		if (forumsId != null && forumsId.size()>0) {
-			StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
-			for (int i=0; i<forumsId.size(); i++) {
-				forumsQuery.append(forumsId.get(i));
-				forumsQuery.append(",");
-			}
-
-			forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
-			forumsQuery.append("))");
-			if(!forumsQuery.toString().equals("")){
+			
+			//LimitResults
+			if(limitResults != null && limitResults > 0){
+				StringBuilder dateQuery = new StringBuilder("(");
+				Date limitDate = new Date();
+				Calendar l = Calendar.getInstance();
+				l.setTime(limitDate);
+				l.set(l.get(Calendar.YEAR), l.get(Calendar.MONTH), l.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+				switch(limitResults){
+					case 30: 
+						l.add(Calendar.MONTH, -1);
+						break;
+					case 90:
+						l.add(Calendar.MONTH, -3);
+						break;
+					case 180:
+						l.add(Calendar.MONTH, -6);
+						break;
+					case 365:
+						l.add(Calendar.YEAR, -1);
+						break;
+					default:
+						l.add(Calendar.DAY_OF_MONTH, (0 - limitResults));
+						break;
+				}
+				dateQuery.append("lastUpdate BETWEEN '");
+				dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+				dateQuery.append("' AND '");
+				l.setTime(limitDate);
+				dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+				dateQuery.append("' )");
 				if(jpaQuery.length() > 21){
 					jpaQuery.append(" AND ");
 				}
-				jpaQuery.append(forumsQuery);
+				jpaQuery.append(dateQuery);
 			}
-		}
-
-		// person;
-		if (author != null) {
-			StringBuilder authorQuery = new StringBuilder("(user.account LIKE '");
-			authorQuery.append(author);
-			authorQuery.append("')");
+			
+			//Logical Delete
 			if(jpaQuery.length() > 21){
 				jpaQuery.append(" AND ");
 			}
-			jpaQuery.append(authorQuery);
+			jpaQuery.append("logicalDelete = false");
+			
+			return jpaQuery.toString();
+		}else if(displayResults.equals("ForumTopic")){
+			StringBuilder jpaQuery = new StringBuilder("FROM ForumTopic WHERE ");
+			
+			//Words
+			if(words != null && words.size() > 0){
+				StringBuilder textQuery = new StringBuilder("(");
+				if(wordsType.equals("SUBJECT_TEXT")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(subject LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%') OR (topicId IN (SELECT topic.topicId FROM ForumPost WHERE (subject LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%') OR (text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')))");						
+					}
+				}else if(wordsType.equals("TEXT")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(topicId IN (SELECT topic.topicId FROM ForumPost WHERE (text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')))");
+					}
+				}else if(wordsType.equals("TITLE")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(subject LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%')");
+					}
+				}else if(wordsType.equals("FIRST_POST")){
+					for(int i = 0; i < words.size(); i++){
+						if(textQuery.length() > 1){
+							textQuery.append(" AND ");
+						}
+						textQuery.append("(topicId IN (SELECT topic.topicId FROM ForumPost WHERE (text LIKE '%");
+						textQuery.append(words.get(i));
+						textQuery.append("%') AND (parentPost.postId IS NULL)))");
+					}
+				}
+				textQuery.append(")");
+				if(!textQuery.toString().equals("")){
+					if(jpaQuery.length() > 22){
+						jpaQuery.append(" AND ");
+					}
+					jpaQuery.append(textQuery);
+				}
+			}
+			
+			//ForumsId
+			if (forumsId != null && forumsId.size()>0) {
+				StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
+				for (int i=0; i<forumsId.size(); i++) {
+					forumsQuery.append(forumsId.get(i));
+					forumsQuery.append(",");
+				}
+	
+				forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
+				forumsQuery.append("))");
+				if(!forumsQuery.toString().equals("")){
+					if(jpaQuery.length() > 22){
+						jpaQuery.append(" AND ");
+					}
+					jpaQuery.append(forumsQuery);
+				}
+			}
+			
+			// person;
+			if (author != null) {
+				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '");
+				authorQuery.append(author);
+				authorQuery.append("')");
+				if(jpaQuery.length() > 22){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(authorQuery);
+			}
+			
+			//LimitResults
+			if(limitResults != null && limitResults > 0){
+				StringBuilder dateQuery = new StringBuilder("(");
+				Date limitDate = new Date();
+				Calendar l = Calendar.getInstance();
+				l.setTime(limitDate);
+				l.set(l.get(Calendar.YEAR), l.get(Calendar.MONTH), l.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+				switch(limitResults){
+					case 30: 
+						l.add(Calendar.MONTH, -1);
+						break;
+					case 90:
+						l.add(Calendar.MONTH, -3);
+						break;
+					case 180:
+						l.add(Calendar.MONTH, -6);
+						break;
+					case 365:
+						l.add(Calendar.YEAR, -1);
+						break;
+					default:
+						l.add(Calendar.DAY_OF_MONTH, (0 - limitResults));
+						break;
+				}
+				dateQuery.append("(topicId IN (SELECT topic.topicId FROM ForumPost WHERE lastUpdate BETWEEN '");
+				dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+				dateQuery.append("' AND '");
+				l.setTime(limitDate);
+				dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
+				dateQuery.append("' )))");
+				if(jpaQuery.length() > 22){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(dateQuery);
+			}
+			
+			//Logical Delete
+			if(jpaQuery.length() > 22){
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append("logicalDelete = false");
+			
+			return jpaQuery.toString();
 		}
 		
-		//LimitResults
-		if(limitResults != null && limitResults > 0){
-			StringBuilder dateQuery = new StringBuilder("(");
-			Date limitDate = new Date();
-			Calendar l = Calendar.getInstance();
-			l.setTime(limitDate);
-			l.set(l.get(Calendar.YEAR), l.get(Calendar.MONTH), l.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-			switch(limitResults){
-				case 30: 
-					l.add(Calendar.MONTH, -1);
-					break;
-				case 90:
-					l.add(Calendar.MONTH, -3);
-					break;
-				case 180:
-					l.add(Calendar.MONTH, -6);
-					break;
-				case 365:
-					l.add(Calendar.YEAR, -1);
-					break;
-				default:
-					l.add(Calendar.DAY_OF_MONTH, (0 - limitResults));
-					break;
-			}
-			dateQuery.append("lastUpdate BETWEEN '");
-			dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
-			dateQuery.append("' AND '");
-			l.setTime(limitDate);
-			dateQuery.append(l.get(Calendar.YEAR) + "/" + (l.get(Calendar.MONTH) + 1) + "/" + l.get(Calendar.DAY_OF_MONTH));
-			dateQuery.append("' )");
-			if(jpaQuery.length() > 21){
-				jpaQuery.append(" AND ");
-			}
-			jpaQuery.append(dateQuery);
-		}
-
-		return jpaQuery.toString();
+		return null;
 	}
 
 	/**
