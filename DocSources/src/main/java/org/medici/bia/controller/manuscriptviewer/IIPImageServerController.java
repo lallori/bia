@@ -83,7 +83,8 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
 /**
  * This controller is IIPImage Server.
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 @Controller
@@ -93,44 +94,53 @@ public class IIPImageServerController {
 
 	/**
 	 * This method retun a specific tiled image.
+	 * 
 	 * @param httpServletRequest
 	 * @param httpServletResponse
 	 */
 	private void generateFullImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
-		
-		ImageInputStream imageInputStream = null; 
+
+		ImageInputStream imageInputStream = null;
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		InputStream inputStream = null;
-		
-		  
+
 		try {
-			// Reading complete tiff information
-			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageFile.canRead()) {
+				// Reading complete tiff information
+				imageInputStream = ImageIO.createImageInputStream(imageFile);
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				if (imageFile.canRead()) {
+					// Reading complete tiff information
+					imageInputStream = ImageIO.createImageInputStream(imageFile);
+				} else {
+					logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				}
+			}
+
 			if (imageInputStream != null) {
 				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
-				ImageReader reader = readers.next(); 
-				reader.setInput(imageInputStream, true,true); 
-	
+				ImageReader reader = readers.next();
+				reader.setInput(imageInputStream, true, true);
+
 				// Reading image position requested
 				Integer imageFullIndex = NumberUtils.createInteger(httpServletRequest.getParameter("full"));
 				// Positioning at correct page
 				BufferedImage pageImage = reader.read(imageFullIndex);
-				//preparing image for output
-			    ImageIO.write(pageImage, "jpeg", byteArrayOutputStream);
-			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-			    //writing image to output
-			    httpServletResponse.setContentType("image/jpeg");
-				IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-			} else {
-				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
+				// preparing image for output
+				ImageIO.write(pageImage, "jpeg", byteArrayOutputStream);
+				inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+				// writing image to output
+				httpServletResponse.setContentType("image/jpeg");
+				IOUtils.copy(inputStream, httpServletResponse.getOutputStream());
 			}
-
 			// Flushing request
 			httpServletResponse.getOutputStream().flush();
-	    } catch (Throwable throwable) {
+		} catch (Throwable throwable) {
 			logger.error(throwable);
-		} finally{ 
+		} finally {
 			try {
 				if (inputStream != null) {
 					inputStream.close();
@@ -149,16 +159,13 @@ public class IIPImageServerController {
 				}
 			} catch (IOException ioException) {
 			}
-		 }
+		}
 	}
 
 	/**
 	 * This method return image and tile information.
 	 * 
-	 * EXAMPLE OUTPUT :
-	 * IIP:1.0
-	 * Max-size:1832 2448
-	 * Tile-size:128 128
+	 * EXAMPLE OUTPUT : IIP:1.0 Max-size:1832 2448 Tile-size:128 128
 	 * Resolution-number:6
 	 * 
 	 * @param httpServletRequest
@@ -167,34 +174,44 @@ public class IIPImageServerController {
 	 */
 	private void generateInformationsTiledImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
-		ImageInputStream imageInputStream = null; 
-        Integer imageWidth = new Integer(0);
-        Integer imageHeight = new Integer(0);
-        Integer tileWidth = new Integer(0);
-        Integer tileHeight = new Integer(0);
-        Integer resolutionNumber = new Integer(0);
-		  
+		ImageInputStream imageInputStream = null;
+		Integer imageWidth = new Integer(0);
+		Integer imageHeight = new Integer(0);
+		Integer tileWidth = new Integer(0);
+		Integer tileHeight = new Integer(0);
+		Integer resolutionNumber = new Integer(0);
+
 		try {
-			// Reading complete tiff information
-			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageFile.canRead()) {
+				// Reading complete tiff information
+				imageInputStream = ImageIO.createImageInputStream(imageFile);
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				if (imageFile.canRead()) {
+					// Reading complete tiff information
+					imageInputStream = ImageIO.createImageInputStream(imageFile);
+				} else {
+					logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				}
+			}
 			if (imageInputStream != null) {
 				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
 				if (readers.hasNext()) {
-					ImageReader reader = readers.next(); 
-					reader.setInput(imageInputStream,false,true);
+					ImageReader reader = readers.next();
+					reader.setInput(imageInputStream, false, true);
 					tileWidth = reader.getTileWidth(0);
 					tileHeight = reader.getTileHeight(0);
 					imageWidth = reader.getWidth(0);
-			        imageHeight = reader.getHeight(0);
-			        //Last level is not readable, I don't know why but i remove this
-			        resolutionNumber = reader.getNumImages(true);
+					imageHeight = reader.getHeight(0);
+					// Last level is not readable, I don't know why but i remove
+					// this
+					resolutionNumber = reader.getNumImages(true);
 				}
-			} else {
-				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
-	    } catch (Throwable throwable) {
+		} catch (Throwable throwable) {
 			logger.error(throwable);
-	    } finally {
+		} finally {
 			try {
 				if (imageInputStream != null) {
 					imageInputStream.close();
@@ -202,8 +219,8 @@ public class IIPImageServerController {
 			} catch (IOException ioException) {
 			}
 
-	    	try {
-	    		httpServletResponse.setContentType("text/plain");
+			try {
+				httpServletResponse.setContentType("text/plain");
 				ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 				servletOutputStream.println("IIP:1.0");
 				servletOutputStream.println("Max-size:" + imageWidth + " " + imageHeight);
@@ -211,10 +228,10 @@ public class IIPImageServerController {
 				servletOutputStream.println("Resolution-number:" + resolutionNumber);
 				servletOutputStream.println("");
 				httpServletResponse.getOutputStream().flush();
-		    } catch (IOException ioException) {
+			} catch (IOException ioException) {
 				logger.error("IOException", ioException);
-		    }
-	    }
+			}
+		}
 	}
 
 	/**
@@ -229,53 +246,67 @@ public class IIPImageServerController {
 	@SuppressWarnings("unused")
 	private void generateTiledImage(String fileName, Integer pageImage, Integer tileNumber, Integer xCoordinate, Integer yCoordinate, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + fileName);
-        Integer imageWidth = new Integer(0);
-        Integer imageHeight = new Integer(0);
-        Integer tileWidth = new Integer(0);
-        Integer tileHeight = new Integer(0);
-        Integer resolutionNumber = new Integer(0);
-        Integer convertedPageImage = new Integer(0);
+		Integer imageWidth = new Integer(0);
+		Integer imageHeight = new Integer(0);
+		Integer tileWidth = new Integer(0);
+		Integer tileHeight = new Integer(0);
+		Integer resolutionNumber = new Integer(0);
+		Integer convertedPageImage = new Integer(0);
 
-		ImageInputStream imageInputStream = null; 
+		ImageInputStream imageInputStream = null;
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		InputStream inputStream = null;
 
 		try {
-			// Reading complete tiff information
-			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageFile.canRead()) {
+				// Reading complete tiff information
+				imageInputStream = ImageIO.createImageInputStream(imageFile);
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				if (imageFile.canRead()) {
+					// Reading complete tiff information
+					imageInputStream = ImageIO.createImageInputStream(imageFile);
+				} else {
+					logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				}
+			}
+
 			if (imageInputStream != null) {
 				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
 				if (readers.hasNext()) {
-					ImageReader reader = readers.next(); 
-					reader.setInput(imageInputStream,false,true);
+					ImageReader reader = readers.next();
+					reader.setInput(imageInputStream, false, true);
 					tileWidth = reader.getTileWidth(0);
 					tileHeight = reader.getTileHeight(0);
 					imageWidth = reader.getWidth(0);
-	        imageHeight = reader.getHeight(0);
-	        //Last level is not readable, I don't know why but i remove this
-	        resolutionNumber = reader.getNumImages(true)-1;
-	        // Calculate of image position, final -1 is beacause index start from 0 and not from 1
-	        convertedPageImage = resolutionNumber - pageImage;
-	        // We read our specific tile 
-					ImageReadParam param = reader.getDefaultReadParam(); 
-					param.setSourceRegion(new Rectangle(new Point(xCoordinate*tileWidth, yCoordinate * tileHeight), new Dimension(tileWidth, tileHeight))); 
-					BufferedImage subImage = reader.read(convertedPageImage,param);
-					//preparing image for output
-			    ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
-			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-			    //writing image to output
-			    httpServletResponse.setContentType("image/jpeg");
-					IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-					
+					imageHeight = reader.getHeight(0);
+					// Last level is not readable, I don't know why but i remove
+					// this
+					resolutionNumber = reader.getNumImages(true) - 1;
+					// Calculate of image position, final -1 is beacause index
+					// start from 0 and not from 1
+					convertedPageImage = resolutionNumber - pageImage;
+					// We read our specific tile
+					ImageReadParam param = reader.getDefaultReadParam();
+					param.setSourceRegion(new Rectangle(new Point(xCoordinate * tileWidth, yCoordinate * tileHeight), new Dimension(tileWidth, tileHeight)));
+					BufferedImage subImage = reader.read(convertedPageImage, param);
+					// preparing image for output
+					ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
+					inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+					// writing image to output
+					httpServletResponse.setContentType("image/jpeg");
+					IOUtils.copy(inputStream, httpServletResponse.getOutputStream());
+
 					// Flushing request
 					httpServletResponse.getOutputStream().flush();
 				}
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
-	    } catch (Throwable throwable) {
+		} catch (Throwable throwable) {
 			logger.error(throwable);
-	    } finally {
+		} finally {
 			try {
 				if (inputStream != null) {
 					inputStream.close();
@@ -307,7 +338,7 @@ public class IIPImageServerController {
 	public void iipServer(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		try {
 			String[] objs = httpServletRequest.getParameterValues("obj");
-			
+
 			// if user specify IIP
 			if (ArrayUtils.contains(objs, "IIP,1.0")) {
 				generateInformationsTiledImage(httpServletRequest, response);
@@ -316,19 +347,20 @@ public class IIPImageServerController {
 			} else if (httpServletRequest.getParameter("JTL") != null) {
 				String imageName = httpServletRequest.getParameter("FIF");
 				Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
-			    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
-			    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
-			    //pageImage is inverted as stored in tiff file : first image is last image
-			    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
-			    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
-	
-			    generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
+				Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
+				StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"), ",");
+				// pageImage is inverted as stored in tiff file : first image is
+				// last image
+				Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
+				Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
+
+				generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
 			} else if (httpServletRequest.getParameter("WID") != null) {
 				Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
 				String imageName = httpServletRequest.getParameter("FIF");
 				Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
 				if (quality == 0) {
-					quality=99;
+					quality = 99;
 				}
 				String thumbnailFormat = httpServletRequest.getParameter("CVT");
 				if (thumbnailFormat == null) {
@@ -351,77 +383,97 @@ public class IIPImageServerController {
 	private void generateThumbnailImage(String imageName, Double thumbnailWidth, Integer imageQuality, String thumbnailFormat, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + imageName);
 
-		ImageInputStream imageInputStream = null; 
+		ImageInputStream imageInputStream = null;
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		InputStream inputStream = null;
 
 		try {
-			// Reading complete tiff information
-			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageFile.canRead()) {
+				// Reading complete tiff information
+				imageInputStream = ImageIO.createImageInputStream(imageFile);
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				if (imageFile.canRead()) {
+					// Reading complete tiff information
+					imageInputStream = ImageIO.createImageInputStream(imageFile);
+				} else {
+					logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
+				}
+			}
+
 			if (imageInputStream != null) {
 				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
 				if (readers.hasNext()) {
-					ImageReader reader = readers.next(); 
-					reader.setInput(imageInputStream,true,true);
-					BufferedImage page = reader.read(2); 
-					
+					ImageReader reader = readers.next();
+					reader.setInput(imageInputStream, false, true);
+
+					BufferedImage page = null;
+					if (reader.getNumImages(true) <= 2) {
+						logger.error(imageFile + " have " + reader.getNumImages(true) + " level. Trying to render thumbnail image from level 1");
+						page = reader.read(0);
+					} else {
+						page = reader.read(2);
+					}
+
 					if (page != null) {
 						RenderedOp thubmnailImage = null;
-				        try {
-				            double resizeFactor = thumbnailWidth/page.getWidth();
-				            
-				            if (resizeFactor < 1) {
-				            	 ParameterBlock paramBlock = new ParameterBlock();
-				            	 paramBlock.addSource(page); // The source image
-				            	 paramBlock.add(resizeFactor); // The xScale
-				            	 paramBlock.add(resizeFactor); // The yScale
-				            	 paramBlock.add(0.0); // The x translation
-				            	 paramBlock.add(0.0); // The y translation
-				            	 RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				            	 thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);			            	 
-				            } else if (resizeFactor > 1) {
-				            	thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
-				            }
-	
-				            if ((thumbnailFormat != null) && (thumbnailFormat.toLowerCase().equals("jpeg"))) {
-					            // replaced statement to control jpeg quality 
-					            // ImageIO.write(thubmnailImage, "jpeg", byteArrayOutputStream);
-					            JPEGEncodeParam jpgparam = new JPEGEncodeParam();
-					            jpgparam.setQuality(imageQuality);
-					            ImageEncoder enc = ImageCodec.createImageEncoder("jpeg", byteArrayOutputStream, jpgparam);
-					            enc.encode(thubmnailImage);
-				            } else {
-				            	logger.error("Unmanaged thumbnail format " + thumbnailFormat);
-				            }
-			            } catch (IOException ioException) {
-			                logger.error(ioException);
-			            } finally {
-				            //is.close();
-				        }
+						try {
+							double resizeFactor = thumbnailWidth / page.getWidth();
+
+							if (resizeFactor <= 1) {
+								ParameterBlock paramBlock = new ParameterBlock();
+								paramBlock.addSource(page); // The source image
+								paramBlock.add(resizeFactor); // The xScale
+								paramBlock.add(resizeFactor); // The yScale
+								paramBlock.add(0.0); // The x translation
+								paramBlock.add(0.0); // The y translation
+								RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+								thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);
+							} else if (resizeFactor > 1) {
+								thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
+							}
+
+							if ((thumbnailFormat != null) && (thumbnailFormat.toLowerCase().equals("jpeg"))) {
+								// replaced statement to control jpeg quality
+								// ImageIO.write(thubmnailImage, "jpeg",
+								// byteArrayOutputStream);
+								JPEGEncodeParam jpgparam = new JPEGEncodeParam();
+								jpgparam.setQuality(imageQuality);
+								ImageEncoder enc = ImageCodec.createImageEncoder("jpeg", byteArrayOutputStream, jpgparam);
+								enc.encode(thubmnailImage);
+							} else {
+								logger.error("Unmanaged thumbnail format " + thumbnailFormat);
+							}
+						} catch (IOException ioException) {
+							logger.error(ioException);
+						} finally {
+							// is.close();
+						}
 					}
-	
-					//preparing image for output
-				    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-	
-				    //writing image to output
-				    httpServletResponse.setContentType("image/jpeg");
-					IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-	
+
+					// preparing image for output
+					inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+					// writing image to output
+					httpServletResponse.setContentType("image/jpeg");
+					IOUtils.copy(inputStream, httpServletResponse.getOutputStream());
+
 					// Flushing request
 					httpServletResponse.getOutputStream().flush();
 				}
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
-	    } catch (IIOException iioException) {
-	    	if (iioException.getMessage().equals("Unsupported Image Type")) {
-	    		logger.error("Unsupported Image Type " + imageFile);
-	    	} else {
-	    		logger.error(iioException);
-	    	}
-	    } catch (Throwable throwable) {
+		} catch (IIOException iioException) {
+			if (iioException.getMessage().equals("Unsupported Image Type")) {
+				logger.error("Unsupported Image Type " + imageFile);
+			} else {
+				logger.error(iioException);
+			}
+		} catch (Throwable throwable) {
 			logger.error(throwable);
-	    } finally {
+		} finally {
 			try {
 				if (inputStream != null) {
 					inputStream.close();
@@ -443,80 +495,82 @@ public class IIPImageServerController {
 		}
 	}
 
+	/**
+	 * Convenience method that returns a scaled instance of the provided
+	 * {@code BufferedImage}.
+	 * 
+	 * @param img
+	 *            the original image to be scaled
+	 * @param targetWidth
+	 *            the desired width of the scaled instance, in pixels
+	 * @param targetHeight
+	 *            the desired height of the scaled instance, in pixels
+	 * @param hint
+	 *            one of the rendering hints that corresponds to
+	 *            {@code RenderingHints.KEY_INTERPOLATION} (e.g.
+	 *            {@code RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR},
+	 *            {@code RenderingHints.VALUE_INTERPOLATION_BILINEAR},
+	 *            {@code RenderingHints.VALUE_INTERPOLATION_BICUBIC})
+	 * @param higherQuality
+	 *            if true, this method will use a multi-step scaling technique
+	 *            that provides higher quality than the usual one-step technique
+	 *            (only useful in downscaling cases, where {@code targetWidth}
+	 *            or {@code targetHeight} is smaller than the original
+	 *            dimensions, and generally only when the {@code BILINEAR} hint
+	 *            is specified)
+	 * @return a scaled version of the original {@code BufferedImage}
+	 * 
+	 *         This method has been taken from :
+	 *         http://today.java.net/pub/a/today
+	 *         /2007/04/03/perils-of-image-getscaledinstance.html
+	 * 
+	 * 
+	 */
+	public BufferedImage getScaledInstance(BufferedImage img, int targetWidth, int targetHeight, Object hint, boolean higherQuality) {
+		int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+		BufferedImage ret = (BufferedImage) img;
+		int w, h;
+		if (higherQuality) {
+			// Use multi-step technique: start with original size, then
+			// scale down in multiple passes with drawImage()
+			// until the target size is reached
+			w = img.getWidth();
+			h = img.getHeight();
+		} else {
+			// Use one-step technique: scale directly from original
+			// size to target size with a single drawImage() call
+			w = targetWidth;
+			h = targetHeight;
+		}
 
-    /**
-     * Convenience method that returns a scaled instance of the
-     * provided {@code BufferedImage}.
-     *
-     * @param img the original image to be scaled
-     * @param targetWidth the desired width of the scaled instance,
-     *    in pixels
-     * @param targetHeight the desired height of the scaled instance,
-     *    in pixels
-     * @param hint one of the rendering hints that corresponds to
-     *    {@code RenderingHints.KEY_INTERPOLATION} (e.g.
-     *    {@code RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR},
-     *    {@code RenderingHints.VALUE_INTERPOLATION_BILINEAR},
-     *    {@code RenderingHints.VALUE_INTERPOLATION_BICUBIC})
-     * @param higherQuality if true, this method will use a multi-step
-     *    scaling technique that provides higher quality than the usual
-     *    one-step technique (only useful in downscaling cases, where
-     *    {@code targetWidth} or {@code targetHeight} is
-     *    smaller than the original dimensions, and generally only when
-     *    the {@code BILINEAR} hint is specified)
-     * @return a scaled version of the original {@code BufferedImage}
-     * 
-     * This method has been taken from : 
-     * http://today.java.net/pub/a/today/2007/04/03/perils-of-image-getscaledinstance.html
-     * 
-     * 
-     */
-    public BufferedImage getScaledInstance(BufferedImage img, int targetWidth, int targetHeight, Object hint, boolean higherQuality) {
-        int type = (img.getTransparency() == Transparency.OPAQUE) ?
-            BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage)img;
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
-        }
-        
-        do {
-            if (higherQuality && w > targetWidth) {
-                w /= 2;
-                if (w < targetWidth) {
-                    w = targetWidth;
-                }
-            }
+		do {
+			if (higherQuality && w > targetWidth) {
+				w /= 2;
+				if (w < targetWidth) {
+					w = targetWidth;
+				}
+			}
 
-            if (higherQuality && h > targetHeight) {
-                h /= 2;
-                if (h < targetHeight) {
-                    h = targetHeight;
-                }
-            }
+			if (higherQuality && h > targetHeight) {
+				h /= 2;
+				if (h < targetHeight) {
+					h = targetHeight;
+				}
+			}
 
-            BufferedImage tmp = new BufferedImage(w, h, type);
-            Graphics2D g2 = tmp.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-            g2.drawImage(ret, 0, 0, w, h, null);
-            g2.dispose();
+			BufferedImage tmp = new BufferedImage(w, h, type);
+			Graphics2D g2 = tmp.createGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
+			g2.drawImage(ret, 0, 0, w, h, null);
+			g2.dispose();
 
-            ret = tmp;
-        } while (w != targetWidth || h != targetHeight);
+			ret = tmp;
+		} while (w != targetWidth || h != targetHeight);
 
-        return ret;
-    }
-    
-    /**
+		return ret;
+	}
+
+	/**
 	 * 
 	 * @param httpServletRequest
 	 * @param httpServletResponse
@@ -524,73 +578,71 @@ public class IIPImageServerController {
 	 */
 	@SuppressWarnings("unused")
 	private void manageTileImageApache(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        String imageWidth = "";
-        String imageHeight = "";
+		String imageWidth = "";
+		String imageHeight = "";
 
-        File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 
 		try {
 			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			
+
 			TiffDirectory tiffDirectory = ((TiffImageMetadata) metadata).findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 			imageWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH).getValue().toString();
-        	imageHeight = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH).getValue().toString();
-        	//tileWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH).getValue().toString();
-        	//tileLength = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH).getValue().toString();
+			imageHeight = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH).getValue().toString();
+			// tileWidth =
+			// tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH).getValue().toString();
+			// tileLength =
+			// tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH).getValue().toString();
 
-        	ByteSourceFile byteSource = new ByteSourceFile(imageFile);
-        	ArrayList<?> elements = tiffDirectory.getTiffRawImageDataElements();
-        	TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
-        	for (int i = 0; i < elements.size(); i++)
-        	{
-        		TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) elements.get(i);
-        		byte bytes[] = byteSource.getBlock(element.offset, element.length);
-        		data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
-        	}
+			ByteSourceFile byteSource = new ByteSourceFile(imageFile);
+			ArrayList<?> elements = tiffDirectory.getTiffRawImageDataElements();
+			TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
+			for (int i = 0; i < elements.size(); i++) {
+				TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) elements.get(i);
+				byte bytes[] = byteSource.getBlock(element.offset, element.length);
+				data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
+			}
 
-        	if (tiffDirectory.imageDataInStrips())
-        	{
-        		TiffField rowsPerStripField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-        		if (null == rowsPerStripField)
-        			throw new ImageReadException("Can't find rows per strip field.");
-        		int rowsPerStrip = rowsPerStripField.getIntValue();
+			if (tiffDirectory.imageDataInStrips()) {
+				TiffField rowsPerStripField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
+				if (null == rowsPerStripField)
+					throw new ImageReadException("Can't find rows per strip field.");
+				int rowsPerStrip = rowsPerStripField.getIntValue();
 
-        		// DEAD STORE!!! TiffImageData.Strips strips = new TiffImageData.Strips(data, rowsPerStrip);
-        	} else
-        	{
-        		TiffField tileWidthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-        		if (null == tileWidthField)
-        			throw new ImageReadException("Can't find tile width field.");
-        		int tileWidth = tileWidthField.getIntValue();
+				// DEAD STORE!!! TiffImageData.Strips strips = new
+				// TiffImageData.Strips(data, rowsPerStrip);
+			} else {
+				TiffField tileWidthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
+				if (null == tileWidthField)
+					throw new ImageReadException("Can't find tile width field.");
+				int tileWidth = tileWidthField.getIntValue();
 
-        		TiffField tileLengthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-        		if (null == tileLengthField)
-        			throw new ImageReadException("Can't find tile length field.");
-        		int tileLength = tileLengthField.getIntValue();
-        	}
-	    } catch (ImageReadException imageReadException) {
+				TiffField tileLengthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
+				if (null == tileLengthField)
+					throw new ImageReadException("Can't find tile length field.");
+				int tileLength = tileLengthField.getIntValue();
+			}
+		} catch (ImageReadException imageReadException) {
 			logger.error("ImageReadException", imageReadException);
-	    } catch (IOException ioException) {
+		} catch (IOException ioException) {
 			logger.error("IOException", ioException);
-	    } finally {
-	    	try {
-		        /** EXAMPLE OUTPUT :
-				IIP:1.0
-				Max-size:1832 2448
-				Tile-size:128 128
-				Resolution-number:6
-				**/
-	    		httpServletResponse.setContentType("text/plain");
+		} finally {
+			try {
+				/**
+				 * EXAMPLE OUTPUT : IIP:1.0 Max-size:1832 2448 Tile-size:128 128
+				 * Resolution-number:6
+				 **/
+				httpServletResponse.setContentType("text/plain");
 				ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 				servletOutputStream.println("IIP:1.0");
 				servletOutputStream.println("Max-Size:" + imageWidth + " " + imageHeight);
 				servletOutputStream.println("Resolution-number:6");
-	
+
 				httpServletResponse.getOutputStream().flush();
-		    } catch (IOException ioException) {
+			} catch (IOException ioException) {
 				logger.error("IOException", ioException);
-		    }
-	    }
+			}
+		}
 	}
 
 	/**
@@ -602,46 +654,44 @@ public class IIPImageServerController {
 	 */
 	@SuppressWarnings("unused")
 	private void manageTilesInformationApache(HttpServletRequest httpServletRequest, HttpServletResponse response) {
-        String imageWidth = "";
-        String imageHeight = "";
-        String tileWidth = "";
-        String tileLength = "";
+		String imageWidth = "";
+		String imageHeight = "";
+		String tileWidth = "";
+		String tileLength = "";
 
-        File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 
 		try {
 			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
-			
+
 			TiffDirectory tiffDirectory = ((TiffImageMetadata) metadata).findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 
 			imageWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH).getValue().toString();
-        	imageHeight = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH).getValue().toString();
-        	tileWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH).getValue().toString();
-        	tileLength = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH).getValue().toString();
-	    } catch (ImageReadException imageReadException) {
+			imageHeight = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH).getValue().toString();
+			tileWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH).getValue().toString();
+			tileLength = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH).getValue().toString();
+		} catch (ImageReadException imageReadException) {
 			logger.error("ImageReadException", imageReadException);
-	    } catch (IOException ioException) {
+		} catch (IOException ioException) {
 			logger.error("IOException", ioException);
-	    } finally {
-	    	try {
-		        /** EXAMPLE OUTPUT :
-				IIP:1.0
-				Max-size:1832 2448
-				Tile-size:128 128
-				Resolution-number:6
-				**/
-		        response.setContentType("text/plain");
+		} finally {
+			try {
+				/**
+				 * EXAMPLE OUTPUT : IIP:1.0 Max-size:1832 2448 Tile-size:128 128
+				 * Resolution-number:6
+				 **/
+				response.setContentType("text/plain");
 				ServletOutputStream servletOutputStream = response.getOutputStream();
 				servletOutputStream.println("IIP:1.0");
 				servletOutputStream.println("Max-size:" + imageWidth + " " + imageHeight);
 				servletOutputStream.println("Tile-size:" + tileWidth + " " + tileLength);
 				servletOutputStream.println("Resolution-number:6");
 				servletOutputStream.println("");
-	
+
 				response.getOutputStream().flush();
-		    } catch (IOException ioException) {
+			} catch (IOException ioException) {
 				logger.error("IOException", ioException);
-		    }
-	    }
+			}
+		}
 	}
 }
