@@ -1,5 +1,5 @@
 /*
- * UpdateUserPasswordValidator.java
+ * EditPasswordUserValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,34 +27,24 @@
  */
 package org.medici.bia.validator.user;
 
-import org.medici.bia.command.user.UpdateUserPasswordCommand;
-import org.medici.bia.domain.User;
+import org.medici.bia.command.user.EditPasswordUserCommand;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
+ * This is validator class for action "Change User Password".
+ * 
+ * This performs validations checks on fields, account, mail.  
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class UpdateUserPasswordValidator extends AbstractUserValidator implements Validator {
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+public class EditPasswordUserValidator extends AbstractUserValidator implements Validator {
 	@Autowired
 	private UserService userService;
-
-	/**
-	 * @return the passwordEncoder
-	 */
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
-	}
 
 	/**
 	 * @return the userService
@@ -64,15 +54,7 @@ public class UpdateUserPasswordValidator extends AbstractUserValidator implement
 	}
 
 	/**
-	 * @param passwordEncoder the passwordEncoder to set
-	 */
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
-	/**
-	 * @param userService
-	 *            the userService to set
+	 * @param userService the userService to set
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -80,14 +62,14 @@ public class UpdateUserPasswordValidator extends AbstractUserValidator implement
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only UpdaateUserCommand.
+	 * validator supports only RegisterUserCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(UpdateUserPasswordCommand.class);
+		return givenClass.equals(EditPasswordUserCommand.class);
 	}
 
 	/**
@@ -100,31 +82,52 @@ public class UpdateUserPasswordValidator extends AbstractUserValidator implement
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		UpdateUserPasswordCommand updateUserPasswordCommand = (UpdateUserPasswordCommand) object;
+		EditPasswordUserCommand changeUserPasswordCommand = (EditPasswordUserCommand) object;
 
-		validateAccount(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), errors);
-		validateOldPassword(updateUserPasswordCommand.getOldPassword(), errors);
-		validateConfirmPassword(updateUserPasswordCommand.getPassword(), updateUserPasswordCommand.getConfirmPassword(), errors);
+		validateOldPassword(changeUserPasswordCommand.getOldPassword(), errors);
+		validatePassword(changeUserPasswordCommand.getPassword(), changeUserPasswordCommand.getConfirmPassword(), errors);
+	}
+
+	private void validateOldPassword(String oldPassword, Errors errors) {
+		if (oldPassword == null) {
+			errors.rejectValue("password", "error.oldpassword.null");
+			return;
+		}
+		
+		try {
+			if (getUserService().checkUserPassword(oldPassword).equals(Boolean.FALSE)) {
+				errors.rejectValue("password", "error.oldpassword.wrong");
+				return;
+			}
+		} catch(ApplicationThrowable applicationThrowable) {
+			
+		}
 	}
 
 	/**
 	 * 
-	 * @param account
+	 * @param password
+	 * @param confirmPassword
 	 * @param errors
 	 */
-	public void validateOldPassword(String password, Errors errors) {
-		if (errors.hasErrors())
-			return;
-
-		User user = null;
-		try {
-			user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			
-			if (!passwordEncoder.isPasswordValid(user.getPassword(), password, null)) {
-				errors.rejectValue("oldPassword", "error.oldpassword.mismatch");
+	private void validatePassword(String password, String confirmPassword, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (password == null) {
+				errors.rejectValue("password", "error.password.null");
+				return;
 			}
-		} catch(ApplicationThrowable ath) {
-
+			
+			if (confirmPassword == null) {
+				errors.rejectValue("password", "error.confirmpassword.null");
+				return;
+			} 
+		
+			if (password.equals(confirmPassword)) {
+				errors.rejectValue("password", "error.password.notequals");
+				return;
+			}
 		}
+
+		return;
 	}
 }

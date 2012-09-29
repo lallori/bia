@@ -1,5 +1,5 @@
 /*
- * UpdateUserPasswordController.java
+ * EditPersonalNotesUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,15 +30,16 @@ package org.medici.bia.controller.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.medici.bia.command.user.UpdateUserPasswordCommand;
+import org.medici.bia.command.user.EditPersonalNotesUserCommand;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -48,93 +49,91 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to permit user password update action.
- * It manages View and request's elaboration process.
+ * Controller to edit personal notes.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/user/UpdateUserPassword")
-public class UpdateUserPasswordController {
+@RequestMapping("/user/EditPersonalNotesUser")
+public class EditPersonalNotesUserController {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	@Qualifier("updateUserPasswordValidator")
+
+	@Autowired(required = false)
+	@Qualifier("editPersonalNotesUserValidator")
 	private Validator validator;
 
 	/**
 	 * 
+	 * @param request
+	 * @param model
 	 * @return
 	 */
-	public UserService getUserService() {
-		return userService;
-	}
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesUserCommand command, BindingResult result) {
 
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		return new ModelAndView("user/EditPersonalNotesUser", model);
 	}
 
 	/**
 	 * 
 	 * @param command
 	 * @param result
-	 * @param status
-	 * @param model
+	 * @param request
+	 * @param response
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") UpdateUserPasswordCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPersonalNotesUserCommand command, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return setupForm(command);
+			Map<String, Object> model = new HashMap<String, Object>();
+			return new ModelAndView("user/EditPersonalNotesUser", model);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-
+			
 			try {
-				getUserService().updateUserPassword(getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()), command.getPassword());
+				UserPersonalNotes userPersonalNotes = new UserPersonalNotes();
+				getUserService().editPersonalNotes(userPersonalNotes);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("responseKO", model);
+				return new ModelAndView("error/EditPersonalNotesUser", model);
 			}
 
-			return new ModelAndView("responseOK", model);
+			return new ModelAndView("user/EditPersonalNotesUserSuccess", model);
 		}
 	}
-
+	
 	/**
-	 * 
-	 * @param command
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") UpdateUserPasswordCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		UpdateUserPasswordCommand updateUserPasswordCommand = new UpdateUserPasswordCommand();
-		model.put("command", updateUserPasswordCommand);
-
-		return new ModelAndView("user/UpdateUserPassword", model);
-	}
-
-	/**
-	 * 
-	 * @param userService
+	 * @param userService the userService to set
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
 	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * 
 	 * @param validator
-	 *            the validator to set
 	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }

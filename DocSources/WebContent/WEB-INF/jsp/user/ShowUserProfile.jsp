@@ -6,20 +6,19 @@
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
 
+<c:url var="EditPasswordUserURL" value="/user/EditPasswordUser.do" />
+
 <div id="myProfile">
 	<div id="userProfile">
 		<h3>${userProfile.firstName} ${userProfile.lastName}</h3>
 		
 		<div id="bgImgUserProfile">
 			<div id="imgUserProfile"></div>
-			<!--  <img src="/DocSources/images/default_user.jpg" alt="default image" id="imgProfile"/>-->
-			<a id="ChangePassword" href="#">Change Password</a>
 			<a id="PersonalNotesButton" href="#">Personal Notes</a>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
+			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>
 		</div>
-		
-		
 		
 		<div id="EditUserProfileDiv">
 			<div class="list">
@@ -62,14 +61,6 @@
 			</div>
 	</div>
 </div>
-	
-	
-	
-		
-	
-	
-	
-	<!--  <a href="http://courses.medici.org/" target="_blank"><img src="/DocSources/images/button_courses.jpg" alt="MAP courses" id="coursesProfile"/></a>-->
 
 </div>
 	
@@ -77,6 +68,11 @@
 			$j(document).ready(function() {
 				$j("#CloseUserProfile").click(function(){
 					Modalbox.hide();
+					return false;
+				});
+
+				$j("#ChangePassword").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "CHANGE PASSWORD", width: 440, height: 207});
 					return false;
 				});
 

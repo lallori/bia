@@ -1,5 +1,5 @@
 /*
- * PersonalNotesDAO.java
+ * UserPersonalNotesDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,15 +25,26 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.personalnotes;
+package org.medici.bia.dao.userpersonalnotes;
+
+import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
-import org.medici.bia.domain.PersonalNotes;
+import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserPersonalNotes;
 
 /**
  * Personal Notes Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface PersonalNotesDAO extends Dao<String, PersonalNotes> {
+public interface UserPersonalNotesDAO extends Dao<Integer, UserPersonalNotes> {
+
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserPersonalNotes getMyPersonalNotes(User user) throws PersistenceException;
 }

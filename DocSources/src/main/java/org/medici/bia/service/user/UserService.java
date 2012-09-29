@@ -39,7 +39,7 @@ import org.medici.bia.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.Country;
 import org.medici.bia.domain.PasswordChangeRequest;
-import org.medici.bia.domain.PersonalNotes;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Category;
@@ -63,7 +63,6 @@ import org.medici.bia.exception.ApplicationThrowable;
  */
 public interface UserService {
 
-
 	/**
 	 * This method activates a new user.<br>
 	 * Using the unique identify of activation request (uuid ndr), this method
@@ -86,7 +85,7 @@ public interface UserService {
 	 * @see org.medici.bia.domain.ActivationUser
 	 */
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user The {@link org.medici.bia.domain.User} object changes password.
@@ -94,6 +93,14 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable;
+	
+	/**
+	 * Check if inputPassword is equals to user password
+	 * @param user
+	 * @param newPassword
+	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public Boolean checkUserPassword(String inputPassword) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -142,8 +149,15 @@ public interface UserService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable;
+	public UserPersonalNotes editPersonalNotes(String account, UserPersonalNotes personalNotes) throws ApplicationThrowable;
 	
+	/**
+	 * 
+	 * @param userPersonalNotes
+	 * @throws ApplicationThrowable
+	 */
+	public UserPersonalNotes editPersonalNotes(UserPersonalNotes userPersonalNotes) throws ApplicationThrowable;
+
 	/**
 	 * This method will find an activation user entity.
 	 * 
@@ -199,14 +213,6 @@ public interface UserService {
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
 
 	/**
-	 * 
-	 * @param username
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public PersonalNotes findPersonalNotes(String username) throws ApplicationThrowable;
-
-	/**
 	 * Given in input user account, this method returns the user object.
 	 * 
 	 * @param account the {@link java.lang.String} user account that we are searching 
@@ -222,6 +228,14 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public User findUser(User user) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserPersonalNotes findUserPersonalNotes() throws ApplicationThrowable;
+
 
 	/**
 	 * Given in input an user containing search fields conditions, this method
@@ -244,8 +258,7 @@ public interface UserService {
 	 * {@inheritDoc}
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
-
-
+	
 	/**
 	 * 
 	 * @param user
@@ -261,7 +274,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public HashMap<SearchPerimeter, Long> getArchiveStatisticsFromLast(SearchFromLast searchFromLast) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param numberOfHistory
@@ -277,7 +290,7 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param user
@@ -296,7 +309,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-	
+
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>
@@ -335,7 +348,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreUserHistory(String username) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param username
@@ -343,21 +356,21 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchLastUserHistoryBaseEntry() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param category
@@ -366,7 +379,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param category
@@ -375,7 +388,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param paginationFilter
@@ -383,7 +396,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param paginationFilter
@@ -391,7 +404,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserMarkedList(PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query
@@ -409,19 +422,18 @@ public interface UserService {
 
 	/**
 	 * 
+	 * @param newPassword
+	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public void updateUserPassword(String newPassword) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param user
 	 * @return
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public String updateUserPassword(User user) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param user
-	 * @param newPassword
-	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
-	 */
-	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable;
 
 	/**
 	 * This method update user password on the user account linked to the request
@@ -441,4 +453,5 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable;
+
 }

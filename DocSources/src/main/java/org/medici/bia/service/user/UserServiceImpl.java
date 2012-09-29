@@ -51,19 +51,19 @@ import org.medici.bia.dao.country.CountryDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.dao.people.PeopleDAO;
-import org.medici.bia.dao.personalnotes.PersonalNotesDAO;
 import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
+import org.medici.bia.dao.userpersonalnotes.UserPersonalNotesDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.Country;
 import org.medici.bia.domain.PasswordChangeRequest;
-import org.medici.bia.domain.PersonalNotes;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
@@ -112,25 +112,25 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PeopleDAO peopleDAO;
 	@Autowired
-	private PersonalNotesDAO personalNotesDAO;
-	@Autowired
 	private PlaceDAO placeDAO;
-
 	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
-	
+
 	@Autowired(required=false)
 	@Qualifier(value="userDAOJpaImpl")
 	private UserDAO userDAO;
-
-	@Autowired
-	private UserHistoryDAO userHistoryDAO;
 	
 	@Autowired
-	private UserMarkedListElementDAO userMarkedListElementDAO;
+	private UserHistoryDAO userHistoryDAO;
 
 	@Autowired
+	private UserMarkedListElementDAO userMarkedListElementDAO;
+	
+	@Autowired
 	private UserMessageDAO userMessageDAO;
+
+	@Autowired
+	private UserPersonalNotesDAO userPersonalNotesDAO;
 
 	@Autowired
 	private UserRoleDAO userRoleDAO;
@@ -210,6 +210,26 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Boolean checkUserPassword(String inputPassword) throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			if (user != null) {
+				if (getPasswordEncoder().isPasswordValid(user.getPassword(), inputPassword, null)) {
+					return Boolean.TRUE;
+				}
+			}
+
+			return Boolean.FALSE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteMyHistory() throws ApplicationThrowable {
@@ -236,7 +256,6 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -262,7 +281,7 @@ public class UserServiceImpl implements UserService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
+	} 
 	/**
 	 * {@inheritDoc}
 	 */
@@ -276,34 +295,69 @@ public class UserServiceImpl implements UserService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	} 
+	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable {
-		PersonalNotes personalNotesToUpdate = null;
+	public UserPersonalNotes editPersonalNotes(String account, UserPersonalNotes personalNotes) throws ApplicationThrowable {
+		UserPersonalNotes userPersonalNotesToUpdate = null;
 		
 		try {
-			personalNotesToUpdate = getPersonalNotesDAO().find(account);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getMyPersonalNotes(user);
 			
-			if (personalNotesToUpdate == null) {
-				personalNotesToUpdate = new PersonalNotes(personalNotes.getPersonalNotes());
-				personalNotesToUpdate.setAccount(account);
-				personalNotesToUpdate.setLastUpdate(new Date());
-				getPersonalNotesDAO().persist(personalNotesToUpdate);
+			if (userPersonalNotesToUpdate == null) {
+				userPersonalNotesToUpdate = new UserPersonalNotes(personalNotes.getPersonalNotes());
+				userPersonalNotesToUpdate.setIdPersonalNotes(null);
+				userPersonalNotesToUpdate.setUser(user);
+				userPersonalNotesToUpdate.setDateCreated(new Date());
+				userPersonalNotesToUpdate.setLastUpdate(new Date());
+				getUserPersonalNotesDAO().persist(userPersonalNotesToUpdate);
 			} else {
-				personalNotesToUpdate.setPersonalNotes(personalNotes.getPersonalNotes());
-				personalNotesToUpdate.setLastUpdate(new Date());
-				getPersonalNotesDAO().merge(personalNotesToUpdate);
+				userPersonalNotesToUpdate.setPersonalNotes(personalNotes.getPersonalNotes());
+				userPersonalNotesToUpdate.setLastUpdate(new Date());
+				getUserPersonalNotesDAO().merge(userPersonalNotesToUpdate);
 			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
-		return personalNotesToUpdate;
+		return userPersonalNotesToUpdate;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public UserPersonalNotes editPersonalNotes(UserPersonalNotes userPersonalNotes) throws ApplicationThrowable {
+		UserPersonalNotes userPersonalNotesToUpdate = null;
+		
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getMyPersonalNotes(user);
+			
+			if (userPersonalNotesToUpdate == null) {
+				userPersonalNotesToUpdate = new UserPersonalNotes(userPersonalNotes.getPersonalNotes());
+				userPersonalNotesToUpdate.setIdPersonalNotes(null);
+				userPersonalNotesToUpdate.setUser(user);
+				userPersonalNotesToUpdate.setDateCreated(new Date());
+				userPersonalNotesToUpdate.setLastUpdate(new Date());
+				getUserPersonalNotesDAO().persist(userPersonalNotesToUpdate);
+			} else {
+				userPersonalNotesToUpdate.setPersonalNotes(userPersonalNotes.getPersonalNotes());
+				userPersonalNotesToUpdate.setLastUpdate(new Date());
+				getUserPersonalNotesDAO().merge(userPersonalNotesToUpdate);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		return userPersonalNotesToUpdate;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -342,7 +396,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -366,7 +420,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -377,15 +431,6 @@ public class UserServiceImpl implements UserService {
 			passwordChangeRequest.setReset(Boolean.FALSE);
 			passwordChangeRequest.setMailSended(Boolean.FALSE);
 			return getPasswordChangeRequestDAO().search(passwordChangeRequest);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	@Override
-	public PersonalNotes findPersonalNotes(String account) throws ApplicationThrowable {
-		try {
-			return getPersonalNotesDAO().find(account);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -416,6 +461,20 @@ public class UserServiceImpl implements UserService {
 	public User findUser(User userToFind) throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUser(userToFind);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserPersonalNotes findUserPersonalNotes() throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserPersonalNotesDAO().getMyPersonalNotes(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -548,6 +607,7 @@ public class UserServiceImpl implements UserService {
 		return activationUserDAO;
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -587,7 +647,7 @@ public class UserServiceImpl implements UserService {
 
 		return archiveStatistics;
 	}
-
+	
 	/**
 	 * @return the countryDAO
 	 */
@@ -601,7 +661,6 @@ public class UserServiceImpl implements UserService {
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -622,7 +681,7 @@ public class UserServiceImpl implements UserService {
 
 		return historyReport;
 	}
-	
+
 	/**
 	 * @return the passwordChangeRequestDAO
 	 */
@@ -639,13 +698,6 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
-	}
-
-	/**
-	 * @return the personalNotesDAO
-	 */
-	public PersonalNotesDAO getPersonalNotesDAO() {
-		return personalNotesDAO;
 	}
 
 	/**
@@ -685,6 +737,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	public UserMessageDAO getUserMessageDAO() {
 		return userMessageDAO;
+	}
+
+	/**
+	 * @return the personalNotesDAO
+	 */
+	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
+		return userPersonalNotesDAO;
 	}
 
 	public UserRoleDAO getUserRoleDAO() {
@@ -732,7 +791,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -790,6 +849,12 @@ public class UserServiceImpl implements UserService {
 			UserRole userRole = new UserRole(user, userAuthority);
 			getUserRoleDAO().persist(userRole);
 
+			if (getUserPersonalNotesDAO().getMyPersonalNotes(user) == null) {
+				UserPersonalNotes userPersonalNotes = new UserPersonalNotes();
+				userPersonalNotes.setUser(user);
+				userPersonalNotes.setPersonalNotes("");
+			}
+
 			// We generate the request for sending activation mail 
 			ActivationUser activationUser = new ActivationUser();
 			activationUser.setUuid(UUID.randomUUID().toString());
@@ -833,7 +898,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -863,7 +928,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -877,7 +942,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -905,7 +970,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -947,7 +1012,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -990,6 +1055,10 @@ public class UserServiceImpl implements UserService {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
 	}
 
+	/**
+	 * 
+	 * @param passwordEncoder
+	 */
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -999,13 +1068,6 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setPeopleDAO(PeopleDAO peopleDAO) {
 		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param personalNotesDAO the personalNotesDAO to set
-	 */
-	public void setPersonalNotesDAO(PersonalNotesDAO personalNotesDAO) {
-		this.personalNotesDAO = personalNotesDAO;
 	}
 
 	/**
@@ -1048,6 +1110,13 @@ public class UserServiceImpl implements UserService {
 		this.userMessageDAO = userMessageDAO;
 	}
 
+	/**
+	 * @param userPersonalNotesDAO the userPersonalNotesDAO to set
+	 */
+	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
+		this.userPersonalNotesDAO = userPersonalNotesDAO;
+	}
+
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
 	}
@@ -1080,12 +1149,11 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public String updateUserPassword(User user) throws ApplicationThrowable {
+	public void updateUserPassword(String newPassword) throws ApplicationThrowable {
 		try {
-			User usetToUpdate = getUserDAO().findUser(user.getAccount());
-			usetToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+			User usetToUpdate = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			usetToUpdate.setPassword(newPassword);
 			getUserDAO().merge(usetToUpdate);
-			return user.getPassword();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1096,10 +1164,12 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
+	public String updateUserPassword(User user) throws ApplicationThrowable {
 		try {
-			user.setPassword(newPassword);
-			getUserDAO().merge(user);
+			User usetToUpdate = getUserDAO().findUser(user.getAccount());
+			usetToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+			getUserDAO().merge(usetToUpdate);
+			return user.getPassword();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

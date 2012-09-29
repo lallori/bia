@@ -35,14 +35,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.medici.bia.command.user.ChangeExpiratedUserPasswordCommand;
-import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.recaptcha.ReCaptchaService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -105,8 +102,7 @@ public class ChangeExpiratedUserPasswordController {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			try {
-				User user = new User(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-				getUserService().updateUserPassword(user, command.getPassword());
+				getUserService().updateUserPassword(command.getPassword());
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ChangeExiparedUserPassword", model);

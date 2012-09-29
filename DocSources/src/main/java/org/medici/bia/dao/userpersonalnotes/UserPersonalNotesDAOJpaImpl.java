@@ -1,5 +1,5 @@
 /*
- * PersonalNotesDAOJpaImpl.java
+ * UserPersonalNotesDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,21 +25,27 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.personalnotes;
+package org.medici.bia.dao.userpersonalnotes;
+
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.medici.bia.dao.JpaDao;
-import org.medici.bia.domain.PersonalNotes;
+import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>PersonalNotesDAOJpaImpl</b> is a default implementation of <b>PersonalNotesDAO</b>.
+ * <b>UserPersonalNotesDAOJpaImpl</b> is a default implementation of <b>UserPersonalNotesDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.bia.domain.PersonalNotes
+ * @see org.medici.bia.domain.UserPersonalNotes
  */
 @Repository
-public class PersonalNotesDAOJpaImpl extends JpaDao<String, PersonalNotes> implements PersonalNotesDAO {
+public class UserPersonalNotesDAOJpaImpl extends JpaDao<Integer, UserPersonalNotes> implements UserPersonalNotesDAO {
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -59,4 +65,24 @@ public class PersonalNotesDAOJpaImpl extends JpaDao<String, PersonalNotes> imple
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 4515725678978290250L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserPersonalNotes getMyPersonalNotes(User user) throws PersistenceException {
+		String queryString = "FROM UserPersonalNotes WHERE user=:username";
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("username", user);
+		query.setMaxResults(1);
+		
+		List<UserPersonalNotes> result = query.getResultList();
+		
+		if(result.size() == 1){
+			return result.get(0);
+		}else
+			return null;
+	}
 }

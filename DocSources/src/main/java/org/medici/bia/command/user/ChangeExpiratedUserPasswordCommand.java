@@ -62,12 +62,14 @@ public class ChangeExpiratedUserPasswordCommand {
 	public String getPassword() {
 		return password;
 	}
+
 	/**
 	 * @return the recaptcha_challenge_field
 	 */
 	public String getRecaptcha_challenge_field() {
 		return recaptcha_challenge_field;
 	}
+
 	/**
 	 * @return the recaptcha_response_field
 	 */
@@ -94,18 +96,21 @@ public class ChangeExpiratedUserPasswordCommand {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	/**
 	 * @param recaptcha_challenge_field the recaptcha_challenge_field to set
 	 */
 	public void setRecaptcha_challenge_field(String recaptcha_challenge_field) {
 		this.recaptcha_challenge_field = recaptcha_challenge_field;
 	}
+
 	/**
 	 * @param recaptcha_response_field the recaptcha_response_field to set
 	 */
 	public void setRecaptcha_response_field(String recaptcha_response_field) {
 		this.recaptcha_response_field = recaptcha_response_field;
 	}
+
 	/**
 	 * @param remoteAddress the remoteAddress to set
 	 */

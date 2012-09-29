@@ -1,5 +1,5 @@
 /*
- * PersonalNotes.java
+ * UserPersonalNotes.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,8 +32,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 
@@ -44,27 +51,37 @@ import org.hibernate.envers.Audited;
  */
 @Entity
 @Audited
-@Table ( name = "\"tblPersonalNotes\"" ) 
-public class PersonalNotes implements Serializable {
+@Table ( name = "\"tblUserPersonalNotes\"" ) 
+public class UserPersonalNotes implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1291475929350819638L;
 
 	@Id
-	@Column (name="\"account\"", length=30, nullable=false)
-	private String account;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column (name="\"idPersonalNotes\"", length=10, nullable=false)
+	private Integer idPersonalNotes;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"")
+	private User user;
 
 	@Column (name="\"personalNotes\"", columnDefinition="LONGTEXT")
 	private String personalNotes;
 	
+	@Column (name="\"dateCreated\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreated;
+
 	@Column (name="\"lastUpdate\"")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
 
 	/**
 	 * Default Constructor 
 	 */
-	public PersonalNotes() {
+	public UserPersonalNotes() {
 		super();
 	}
 
@@ -72,23 +89,63 @@ public class PersonalNotes implements Serializable {
 	 * 
 	 * @param personalNotes
 	 */
-	public PersonalNotes(String personalNotes) {
+	public UserPersonalNotes(String personalNotes) {
 		super();
 		setPersonalNotes(personalNotes);
 	}
 
 	/**
-	 * @param account the account to set
+	 * 
+	 * @param idPersonalNotes
 	 */
-	public void setAccount(String account) {
-		this.account = account;
+	public void setIdPersonalNotes(Integer idPersonalNotes) {
+		this.idPersonalNotes = idPersonalNotes;
 	}
 
 	/**
-	 * @return the account
+	 * 
+	 * @return
 	 */
-	public String getAccount() {
-		return account;
+	public Integer getIdPersonalNotes() {
+		return idPersonalNotes;
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	/**
+	 * @param lastUpdate the lastUpdate to set
+	 */
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @return the lastUpdate
+	 */
+	public Date getLastUpdate() {
+		return lastUpdate;
 	}
 
 	/**
@@ -110,11 +167,11 @@ public class PersonalNotes implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		if (getAccount() == null) {
+		if (getUser() == null) {
 			return "";
 		}
 		
-		return getAccount();
+		return getUser().toString();
 	}
 
 	/* (non-Javadoc)
@@ -124,7 +181,7 @@ public class PersonalNotes implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((getUser() == null) ? 0 : getUser().getAccount().hashCode());
 		return result;
 	}
 
@@ -139,27 +196,13 @@ public class PersonalNotes implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonalNotes other = (PersonalNotes) obj;
-		if (account == null) {
-			if (other.account != null)
+		UserPersonalNotes other = (UserPersonalNotes) obj;
+		if (getUser() == null) {
+			if (other.getUser().getAccount() != null)
 				return false;
-		} else if (!account.equals(other.account))
+		} else if (!getUser().getAccount().equals(other.getUser().getAccount()))
 			return false;
 		return true;
-	}
-
-	/**
-	 * @param lastUpdate the lastUpdate to set
-	 */
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	/**
-	 * @return the lastUpdate
-	 */
-	public Date getLastUpdate() {
-		return lastUpdate;
 	}
 }
 

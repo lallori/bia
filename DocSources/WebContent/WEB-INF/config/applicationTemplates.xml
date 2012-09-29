@@ -145,6 +145,14 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPassword.jsp"/>
     </definition>
 
+    <definition name="user/EditPasswordUser" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUser.jsp"/>
+    </definition>
+
+    <definition name="user/EditPasswordUserSuccess" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUserSuccess.jsp"/>
+    </definition>
+    
     <definition name="user/RegisterUserSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
     </definition>
@@ -314,10 +322,6 @@
 
     <definition name="user/UpdateUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUser.jsp"/>
-    </definition>
-    
-    <definition name="user/UpdateUserPassword" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUserPassword.jsp"/>
     </definition>
     
 	<definition name="user/UploadUserPhoto" extends="template.partialDOM">

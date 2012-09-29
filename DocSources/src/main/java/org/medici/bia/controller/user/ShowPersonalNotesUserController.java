@@ -1,5 +1,5 @@
 /*
- * EditPersonalNotesDialogController.java
+ * ShowPersonalNotesUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,97 +25,66 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller.manuscriptviewer;
+package org.medici.bia.controller.user;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.medici.bia.command.manuscriptviewer.EditPersonalNotesDialogCommand;
 import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Personal Notes Dialog".
+ * Controller to view user personal notes.
+ * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/mview/EditPersonalNotesDialog")
-public class EditPersonalNotesDialogController {
+@RequestMapping("/user/ShowPersonalNotesUser")
+public class ShowPersonalNotesUserController {
 	@Autowired
 	private UserService userService;
 
 	/**
 	 * 
-	 * @param command
-	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPersonalNotesDialogCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		UserPersonalNotes personalNotes = new UserPersonalNotes(command.getPersonalNotes());
-
-		try {
-			personalNotes = getUserService().editPersonalNotes(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), personalNotes);
-
-			command.setPersonalNotes(personalNotes.getPersonalNotes());
-			return new ModelAndView("mview/EditPersonalNotesDialog", model);
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/EditPersonalNotesDialog", model);
-		}
+	public UserService getUserService() {
+		return userService;
 	}
 
 	/**
 	 * 
-	 * @param command
+	 * @param request
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesDialogCommand command) {
+	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
-
+		UserPersonalNotes userPersonalNotes = null;
 		try {
-			UserPersonalNotes personalNotes = getUserService().findUserPersonalNotes();
-			
-			if (personalNotes != null) {
-				command.setPersonalNotes(personalNotes.getPersonalNotes());
-			} else {
-				command.setPersonalNotes(null);
-			}
+			userPersonalNotes = getUserService().findUserPersonalNotes();
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/EditPersonalNotesDialog", model);
+			userPersonalNotes = new UserPersonalNotes();
 		}
+		model.put("userPersonalNotes", userPersonalNotes);		
 
-		return new ModelAndView("mview/EditPersonalNotesDialog", model);
+		return new ModelAndView("user/ShowPersonalNoteUser", model);
 	}
 
 	/**
-	 * @param userService the userService to set
+	 * 
+	 * @param userService
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
 	}
 }

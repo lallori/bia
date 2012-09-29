@@ -1,7 +1,7 @@
 /*
- * UpdateUserPasswordCommand.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * EditPasswordUserCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -31,22 +31,36 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Command bean for action "update user password".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.merdici.docsources.controller.user.UpdateUserController
+ *
  */
-public class UpdateUserPasswordCommand {
-	@NotNull
-	@Size(min = 8, max = 15)
-	private String confirmPassword;
+public class EditPasswordUserCommand {
 	@NotNull
 	@Size(min = 8, max = 15)
 	private String oldPassword;
 	@NotNull
 	@Size(min = 8, max = 15)
+	private String confirmPassword;
+	@NotNull
+	@Size(min = 8, max = 15)
 	private String password;
+
+	/**
+	 * 
+	 * @param oldPassword
+	 */
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getOldPassword() {
+		return oldPassword;
+	}
 
 	/**
 	 * @return the confirmPassword
@@ -55,12 +69,6 @@ public class UpdateUserPasswordCommand {
 		return confirmPassword;
 	}
 
-	/**
-	 * @return the oldPassword
-	 */
-	public String getOldPassword() {
-		return oldPassword;
-	}
 	/**
 	 * @return the password
 	 */
@@ -74,14 +82,7 @@ public class UpdateUserPasswordCommand {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
-	/**
-	 * @param oldPassword the oldPassword to set
-	 */
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-
+	
 	/**
 	 * @param password the password to set
 	 */

@@ -13,7 +13,7 @@
 				</c:if>
 			<div id="login">
 				<h1>PLEASE LOG IN</h1>
-	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
+	  			<form name="login" action="<c:url value="/loginProcess" />" method="post" accept-charset="utf-8">
 					<table class="loginform">
 						<tr>
 							<td>Username: </td>

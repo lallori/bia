@@ -1,5 +1,5 @@
 /*
- * EditPersonalNotesDialogController.java
+ * EditPasswordUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,86 +25,86 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller.manuscriptviewer;
+package org.medici.bia.controller.user;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.medici.bia.command.manuscriptviewer.EditPersonalNotesDialogCommand;
-import org.medici.bia.domain.UserPersonalNotes;
+import org.medici.bia.command.user.EditPasswordUserCommand;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Personal Notes Dialog".
+ * Controller to change user password.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/mview/EditPersonalNotesDialog")
-public class EditPersonalNotesDialogController {
+@RequestMapping("/user/EditPasswordUser")
+public class EditPasswordUserController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired(required = false)
+	@Qualifier("editPasswordUserValidator")
+	private Validator validator;
+
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("command") EditPasswordUserCommand command, BindingResult result) {
+
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		return new ModelAndView("user/EditPasswordUser", model);
+	}
 
 	/**
 	 * 
 	 * @param command
 	 * @param result
+	 * @param request
+	 * @param response
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPersonalNotesDialogCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPasswordUserCommand command, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
+		getValidator().validate(command, result);
 
-		UserPersonalNotes personalNotes = new UserPersonalNotes(command.getPersonalNotes());
-
-		try {
-			personalNotes = getUserService().editPersonalNotes(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), personalNotes);
-
-			command.setPersonalNotes(personalNotes.getPersonalNotes());
-			return new ModelAndView("mview/EditPersonalNotesDialog", model);
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/EditPersonalNotesDialog", model);
-		}
-	}
-
-	/**
-	 * 
-	 * @param command
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesDialogCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			UserPersonalNotes personalNotes = getUserService().findUserPersonalNotes();
+		if (result.hasErrors()) {
+			Map<String, Object> model = new HashMap<String, Object>();
+			return new ModelAndView("user/EditPasswordUser", model);
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
 			
-			if (personalNotes != null) {
-				command.setPersonalNotes(personalNotes.getPersonalNotes());
-			} else {
-				command.setPersonalNotes(null);
+			try {
+				getUserService().updateUserPassword(command.getPassword());
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/EditPasswordUser", model);
 			}
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/EditPersonalNotesDialog", model);
+
+			return new ModelAndView("user/EditPasswordUserSuccess", model);
 		}
-
-		return new ModelAndView("mview/EditPersonalNotesDialog", model);
 	}
-
+	
 	/**
 	 * @param userService the userService to set
 	 */
@@ -117,5 +117,21 @@ public class EditPersonalNotesDialogController {
 	 */
 	public UserService getUserService() {
 		return userService;
+	}
+
+	/**
+	 * 
+	 * @param validator
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }

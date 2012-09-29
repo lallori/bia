@@ -304,6 +304,10 @@
         <description>Change expirated user password validator.</description>
     </bean>
     
+    <bean id="editPasswordUserValidator" class="org.medici.bia.validator.user.EditPasswordUserValidator">
+        <description>Edit user password validator.</description>
+    </bean>
+    
     <bean id="editUserProfileValidator" class="org.medici.bia.validator.user.EditUserProfileValidator">
     	<description>Edit user profile validator.</description>
     </bean>
@@ -350,9 +354,5 @@
 
     <bean id="updateUserValidator" class="org.medici.bia.validator.user.UpdateUserValidator">
         <description>User update validator.</description>
-    </bean>
-
-    <bean id="updateUserPasswordValidator" class="org.medici.bia.validator.user.UpdateUserPasswordValidator">
-        <description>User password update validator.</description>
     </bean>
 </beans>
