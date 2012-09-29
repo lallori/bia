@@ -75,6 +75,7 @@
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT' && not empty documentExplorer}">
 				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 					<c:param name="entryId" value="${documentExplorer.entryId}"/>
@@ -153,10 +154,13 @@
 			
 				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 			</c:if>
+			</security:authorize>
 			<c:if test="${forum.option.canHaveTopics}">
+				<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
 					<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 				</div>
+				</security:authorize>
 			</c:if>
 
 		<c:if test="${forum.option.canHaveSubForum}">

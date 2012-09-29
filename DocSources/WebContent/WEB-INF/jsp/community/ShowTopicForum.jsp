@@ -6,12 +6,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-		<c:param name="postId" value="0"/>
-		<c:param name="forumId" value="${topic.forum.forumId}"/>
-		<c:param name="topicId" value="${topic.topicId}"/>
-	</c:url>
-	
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${topic.forum.forumId}"/>
 	</c:url>
@@ -27,48 +21,57 @@
 
 <h2>${topic.subject }</h2>
 
-<c:if test="${topic.forum.document != null && not empty documentExplorer}">
-	<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-		<c:param name="entryId" value="${documentExplorer.entryId}"/>
-		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-		<c:param name="flashVersion"   value="false" />
-		<c:param name="showHelp" value="true" />
-		<c:param name="showThumbnail" value="true" />
-	</c:url>
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+	<c:if test="${topic.forum.document != null && not empty documentExplorer}">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+			<c:param name="entryId" value="${documentExplorer.entryId}"/>
+			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+			<c:param name="flashVersion"   value="false" />
+			<c:param name="showHelp" value="true" />
+			<c:param name="showThumbnail" value="true" />
+		</c:url>
+		
+		<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
 	
-	<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
-
-	<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
-	<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
-							
-	<div id="prevNextButtons" class="thread">
-    	<c:if test="${documentExplorer.image.imageOrder == 1}">
-    		<div id="previousPage">
-        		<a href="#" style="visibility:hidden;"></a>
-    		</div>
-    	</c:if>
-    	<c:if test="${documentExplorer.image.imageOrder > 1}">
-    		<div id="previousPage">
-        		<a href="#"></a>
-    		</div>
-    	</c:if>
-    	<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total}">
-    		<div id="nextPage">
-        		<a href="#" style="visibility:hidden;"></a>
-    		</div>
-    	</c:if>
-    	<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total}">
-    		<div id="nextPage">
-        		<a href="#"></a>
-    		</div>
-    	</c:if>
-	</div>
-			
-	<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
-</c:if>
+		<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
+		<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
+								
+		<div id="prevNextButtons" class="thread">
+	    	<c:if test="${documentExplorer.image.imageOrder == 1}">
+	    		<div id="previousPage">
+	        		<a href="#" style="visibility:hidden;"></a>
+	    		</div>
+	    	</c:if>
+	    	<c:if test="${documentExplorer.image.imageOrder > 1}">
+	    		<div id="previousPage">
+	        		<a href="#"></a>
+	    		</div>
+	    	</c:if>
+	    	<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total}">
+	    		<div id="nextPage">
+	        		<a href="#" style="visibility:hidden;"></a>
+	    		</div>
+	    	</c:if>
+	    	<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total}">
+	    		<div id="nextPage">
+	        		<a href="#"></a>
+	    		</div>
+	    	</c:if>
+		</div>
+				
+		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+	</c:if>
+</security:authorize>
 
 <div id="topicActions">
-	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+		<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
+			<c:param name="postId" value="0"/>
+			<c:param name="forumId" value="${topic.forum.forumId}"/>
+			<c:param name="topicId" value="${topic.topicId}"/>
+		</c:url>
+		<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+	</security:authorize>
     <div id="searchThisForumFormDiv">
         <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
             <input id="searchForumThisText" name="searchInForum" type="text" value="Search this forum...">
@@ -118,7 +121,7 @@
         <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
     </div>
     <div id="post">
-<!--     		In this case we enter in "my posts page" -->
+		<%-- In this case we enter in "my posts page" --%>
     	<c:choose>
     		<c:when test="${topic.topicId == null}">
     			<h2>${currentPost.subject} <i>in</i> ${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</h2>
