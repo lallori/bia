@@ -607,6 +607,7 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('forum.i
 
 
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.image.path', 'Remote server image path', '/data/tiled_mdp/');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.image.notavailabe', 'Tif image name for not available', 'img_notAvailable.tif');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.fcgi.path', 'IIPImage fcgi-bin path', '/fcgi-bin/iipsrv.fcgi');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.host', 'IIPImage host name', 'iipimage.medici.org');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.port', 'IIPImage listening port', '80');
