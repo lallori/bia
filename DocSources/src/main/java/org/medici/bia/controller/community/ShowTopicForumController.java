@@ -90,7 +90,12 @@ public class ShowTopicForumController {
 				}
 			}
 			
-			model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			// Control to anonymous access
+			if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().getName().toString().equals("java.lang.String")) {
+				model.put("account", null);
+			} else {
+				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			}
 
 			PaginationFilter paginationFilterTopic = new PaginationFilter();
 			if (command.getPostsForPage() != null) {
