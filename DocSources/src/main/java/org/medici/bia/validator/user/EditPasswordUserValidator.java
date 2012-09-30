@@ -90,13 +90,13 @@ public class EditPasswordUserValidator extends AbstractUserValidator implements 
 
 	private void validateOldPassword(String oldPassword, Errors errors) {
 		if (oldPassword == null) {
-			errors.rejectValue("password", "error.oldpassword.null");
+			errors.rejectValue("oldPassword", "error.oldpassword.null");
 			return;
 		}
 		
 		try {
 			if (getUserService().checkUserPassword(oldPassword).equals(Boolean.FALSE)) {
-				errors.rejectValue("password", "error.oldpassword.wrong");
+				errors.rejectValue("oldPassword", "error.oldpassword.wrong");
 				return;
 			}
 		} catch(ApplicationThrowable applicationThrowable) {
