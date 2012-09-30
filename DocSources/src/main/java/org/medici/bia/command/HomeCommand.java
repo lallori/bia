@@ -1,5 +1,5 @@
 /*
- * ShowMessagesByCategoryCommand.java
+ * HomeCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,61 +25,76 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.command.community;
-
-import org.medici.bia.domain.UserMessage.UserMessageCategory;
+package org.medici.bia.command;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowMessagesByCategoryCommand {
-	private String searchUUID;
-	private UserMessageCategory userMessageCategory;
-	private String completeDOM;
+public class HomeCommand {
+	private Integer entryId;
+	private Integer personId;
+	private Integer placeAllId;
+	private Integer summaryId;
 
 	/**
-	 * @return the searchUUID
+	 * @return the entryId
 	 */
-	public String getSearchUUID() {
-		return searchUUID;
+	public Integer getEntryId() {
+		return entryId;
 	}
-
+	
 	/**
-	 * @return the userMessageCategory
+	 * @param entryId the entryId to set
 	 */
-	public UserMessageCategory getUserMessageCategory() {
-		return userMessageCategory;
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
 	}
-
-	/**
-	 * @param searchUUID the searchUUID to set
-	 */
-	public void setSearchUUID(String searchUUID) {
-		this.searchUUID = searchUUID;
-	}
-
-	/**
-	 * @param userMessageCategory the userMessageCategory to set
-	 */
-	public void setUserMessageCategory(UserMessageCategory userMessageCategory) {
-		this.userMessageCategory = userMessageCategory;
-	}
-
+	
 	/**
 	 * 
-	 * @param completeDOM
+	 * @param personId
 	 */
-	public void setCompleteDOM(String completeDOM) {
-		this.completeDOM = completeDOM;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public String getCompleteDOM() {
-		return completeDOM;
+	public Integer getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @return the summaryId
+	 */
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+	
+	/**
+	 * @param summaryId the summaryId to set
+	 */
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+	
+
+	
+	/**
+	 * @return the placeAllId
+	 */
+	public Integer getPlaceAllId() {
+		return placeAllId;
+	}
+	
+	/**
+	 * @param placeAllId the placeAllId to set
+	 */
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
 	}
 }

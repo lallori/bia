@@ -213,6 +213,13 @@ public interface UserService {
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserPersonalNotes findPersonalNotes() throws ApplicationThrowable;
+
+	/**
 	 * Given in input user account, this method returns the user object.
 	 * 
 	 * @param account the {@link java.lang.String} user account that we are searching 
@@ -229,13 +236,13 @@ public interface UserService {
 	 */
 	public User findUser(User user) throws ApplicationThrowable;
 
+
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public UserPersonalNotes findUserPersonalNotes() throws ApplicationThrowable;
-
 
 	/**
 	 * Given in input an user containing search fields conditions, this method
@@ -246,7 +253,7 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method will make a search paginated.
 	 * 
@@ -258,7 +265,7 @@ public interface UserService {
 	 * {@inheritDoc}
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user
@@ -282,7 +289,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param account
@@ -290,7 +297,7 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user
@@ -341,7 +348,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreMyHistory(Category category) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param username
@@ -356,7 +363,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @return
@@ -370,7 +377,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param category
@@ -388,7 +395,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param paginationFilter
@@ -426,14 +433,6 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUserPassword(String newPassword) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
-	 */
-	public String updateUserPassword(User user) throws ApplicationThrowable;
 
 	/**
 	 * This method update user password on the user account linked to the request

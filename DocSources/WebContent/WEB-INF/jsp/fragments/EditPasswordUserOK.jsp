@@ -4,7 +4,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowForumURL" value="/community/ShowForum.do?completeDOM=true"/>
+	<div id="OK">
+		<h1>Your password has been changed!</h1>
+		
+		<input id="close" type="submit" title="Close window" value="Close"/>
+	</div>
 
-	<li class="forumsMenu"><a id="forumsMenu" href="${ShowForumURL}" target="_blank"></a></li>
-								
+	<script>
+		$j(document).ready(function() {
+			$j("#close").click(function(){
+				Modalbox.hide();
+				return false;
+			});
+		});
+	</script>

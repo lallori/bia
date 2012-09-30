@@ -267,17 +267,13 @@
 	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
     </definition>
-    
-    <definition name="user/EditUserProfile" extends="template.partialDOM">
-    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditUserProfile.jsp"></put-attribute>
+
+    <definition name="user/EditPersonalNotesUser" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditPersonalNotesUser.jsp"></put-attribute>
     </definition>
 
-   	<definition name="user/SearchUserResult" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUserResult.jsp"/>
-    </definition>
-    
-   	<definition name="user/SearchUser" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUser.jsp"/>
+    <definition name="user/EditUserProfile" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditUserProfile.jsp"></put-attribute>
     </definition>
 
 	<definition name="user/EraseMyHistory" extends="template.partialDOM">
@@ -291,8 +287,16 @@
      <definition name="user/PrintElementsMyMarkedList" extends="template.printMarkedListDOM">
      	<put-attribute name="main" value="/WEB-INF/jsp/user/PrintElementsMarkedList.jsp" />
      </definition>
+
+   	<definition name="user/SearchUserResult" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUserResult.jsp"/>
+    </definition>
     
-    <definition name="user/ShowConfirmEraseMyHistoryModalWindow" extends="template.partialDOM">
+   	<definition name="user/SearchUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUser.jsp"/>
+    </definition>
+
+	<definition name="user/ShowConfirmEraseMyHistoryModalWindow" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyHistoryModalWindow.jsp"/>
     </definition>
     
@@ -316,6 +320,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyMarkedListModalWindow.jsp"/>
     </definition>
     
+	<definition name="user/ShowPersonalNotesUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/ShowPersonalNotesUser.jsp"/>
+	</definition>
+
     <definition name="user/ShowUserProfile" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowUserProfile.jsp"/>
     </definition>
@@ -349,8 +357,16 @@
 	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
-	
+
+	<definition name="community/ShowMessagesByCategoryCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
+	</definition>
+
 	<definition name="community/ShowMyMessageBox" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyMessageBox.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMyMessageBoxCompleteDOM" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyMessageBox.jsp"/>
 	</definition>
 
@@ -1101,9 +1117,18 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeactivateVolumeKO.jsp"/>
 	</definition>
 	
+	<definition name="response/EditPasswordUserOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/EditPasswordUserOK.jsp"/>
+	</definition>
+
+	<definition name="response/EditPasswordUserKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/EditPasswordUserKO.jsp"/>
+	</definition>
+
 	<definition name="response/OK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/OK.jsp"/>
 	</definition>
+
 	<definition name="response/KO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/KO.jsp"/>
 	</definition>

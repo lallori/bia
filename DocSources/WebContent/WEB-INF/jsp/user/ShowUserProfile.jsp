@@ -8,15 +8,17 @@
 
 <c:url var="EditPasswordUserURL" value="/user/EditPasswordUser.do" />
 
+<c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
+
 <div id="myProfile">
 	<div id="userProfile">
 		<h3>${userProfile.firstName} ${userProfile.lastName}</h3>
 		
 		<div id="bgImgUserProfile">
 			<div id="imgUserProfile"></div>
-			<a id="PersonalNotesButton" href="#">Personal Notes</a>
-			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
 			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
+			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
+			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>
 		</div>
 		
@@ -73,6 +75,11 @@
 
 				$j("#ChangePassword").click(function(){
 					Modalbox.show($j(this).attr("href"), {title: "CHANGE PASSWORD", width: 440, height: 207});
+					return false;
+				});
+
+				$j("#PersonalNotesButton").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "PERSONAL NOTES", width: 750, height: 415});
 					return false;
 				});
 

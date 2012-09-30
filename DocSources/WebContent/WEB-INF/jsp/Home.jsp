@@ -4,6 +4,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId" value="${command.entryId}"/>
+	</c:url>
+
+	<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+		<c:param name="placeAllId" value="${command.placeAllId}"/>
+	</c:url>
+
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId" value="${command.personId}"/>
+	</c:url>
+
+	<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
+		<c:param name="summaryId" value="${command.summaryId}"/>
+	</c:url>
+
 	<div id="DocSourcesContent">
 		<div id="body_left">
 			<h1 class="welcome">The Medici Archive Project Scholarly Community</h1>
@@ -64,25 +80,41 @@
 			}
 			return false;
 		});
-		
-		$j.get('${LastEntryUserURL}', function(data){
-			if(data.category == 'Document'){
-				$j("#body_left").load('<c:url value="/src/docbase/ShowLastEntryDocument.do"/>');
-				return false;
-			}
-			if(data.category == 'Volume'){
-				$j("#body_left").load('<c:url value="/src/volbase/ShowLastEntryVolume.do"/>');
-				return false;
-			}
-			if(data.category == 'People'){
-				$j("#body_left").load('<c:url value="/src/peoplebase/ShowLastEntryPerson.do"/>');
-				return false;
-			}
-			if(data.category == 'Place'){
-				$j("#body_left").load('<c:url value="/src/geobase/ShowLastEntryPlace.do"/>');
-				return false;
-			}
-		});
+
+	<c:choose>
+		<c:when test="${not empty command.entryId}">
+		$j("#body_left").load('${ShowDocumentURL}');
+		</c:when>
+		<c:when test="${not empty command.personId}">
+		$j("#body_left").load('${ShowPersonURL}');
+		</c:when>
+		<c:when test="${not empty command.placeAllId}">
+		$j("#body_left").load('${ShowPlaceURL}');
+		</c:when>
+		<c:when test="${not empty command.summaryId}">
+		$j("#body_left").load('${ShowVolumeURL}');
+		</c:when>
+		<c:otherwise>
+			$j.get('${LastEntryUserURL}', function(data){
+				if(data.category == 'Document'){
+					$j("#body_left").load('<c:url value="/src/docbase/ShowLastEntryDocument.do"/>');
+					return false;
+				}
+				if(data.category == 'Volume'){
+					$j("#body_left").load('<c:url value="/src/volbase/ShowLastEntryVolume.do"/>');
+					return false;
+				}
+				if(data.category == 'People'){
+					$j("#body_left").load('<c:url value="/src/peoplebase/ShowLastEntryPerson.do"/>');
+					return false;
+				}
+				if(data.category == 'Place'){
+					$j("#body_left").load('<c:url value="/src/geobase/ShowLastEntryPlace.do"/>');
+					return false;
+				}
+			});
+		</c:otherwise>
+	</c:choose>
 	});
 </script>
 

@@ -98,10 +98,10 @@ public class EditPasswordUserController {
 				getUserService().updateUserPassword(command.getPassword());
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/EditPasswordUser", model);
+				return new ModelAndView("reponse/EditPasswordUserKO", model);
 			}
 
-			return new ModelAndView("user/EditPasswordUserSuccess", model);
+			return new ModelAndView("response/EditPasswordUserOK", model);
 		}
 	}
 	

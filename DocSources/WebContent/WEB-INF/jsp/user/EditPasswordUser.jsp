@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 
-		<div id="ChangePasswordDiv">
+	<div id="ChangePasswordDiv">
 		<form:form id="ChangePasswordForm" method="post" cssClass="edit">
 			<fieldset> 
 				<div class="listFormPassword"> 
@@ -39,5 +39,15 @@
 				</div>
 			</fieldset>		
 		</form:form>
-		</div>
-	
+	</div>
+
+
+	<script type="text/javascript">
+		$j("#ChangePasswordForm").submit(function (){
+ 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j("#ChangePasswordDiv").html(html);
+			}});
+
+			return false;
+		});
+	</script>

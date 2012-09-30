@@ -30,6 +30,7 @@ package org.medici.bia.controller.community;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowMyMessageBoxCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -106,7 +107,11 @@ public class ShowMyMessageBoxController {
 		
 		model.put("messageboxPage", page);
 
-		return new ModelAndView("community/ShowMyMessageBox", model);
+		if (ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())) {
+			return new ModelAndView("community/ShowMyMessageBoxCompleteDOM", model);
+		} else {
+			return new ModelAndView("community/ShowMyMessageBox", model);
+		}
 	}
 
 	/**

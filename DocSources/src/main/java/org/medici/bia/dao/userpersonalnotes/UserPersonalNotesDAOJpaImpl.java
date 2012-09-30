@@ -71,7 +71,7 @@ public class UserPersonalNotesDAOJpaImpl extends JpaDao<Integer, UserPersonalNot
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserPersonalNotes getMyPersonalNotes(User user) throws PersistenceException {
+	public UserPersonalNotes getPersonalNotes(User user) throws PersistenceException {
 		String queryString = "FROM UserPersonalNotes WHERE user=:username";
 		
 		Query query = getEntityManager().createQuery(queryString);

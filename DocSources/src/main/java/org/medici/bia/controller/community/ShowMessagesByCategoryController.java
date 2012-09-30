@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowMessagesByCategoryCommand;
 import org.medici.bia.domain.UserMessage.UserMessageCategory;
 import org.medici.bia.service.community.CommunityService;
@@ -72,7 +73,12 @@ public class ShowMessagesByCategoryController {
 		// Add outputFields;
 		List<String> outputFields = getOutputFields(command.getUserMessageCategory());
 		model.put("outputFields", outputFields);
-		return new ModelAndView("community/ShowMessagesByCategory", model);
+
+		if (ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())) {
+			return new ModelAndView("community/ShowMessagesByCategoryCompleteDOM", model);
+		} else {
+			return new ModelAndView("community/ShowMessagesByCategory", model);
+		}	
 	}
 
 	/**

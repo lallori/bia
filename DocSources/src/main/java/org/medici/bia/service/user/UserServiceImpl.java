@@ -306,7 +306,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getMyPersonalNotes(user);
+			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getPersonalNotes(user);
 			
 			if (userPersonalNotesToUpdate == null) {
 				userPersonalNotesToUpdate = new UserPersonalNotes(personalNotes.getPersonalNotes());
@@ -337,7 +337,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getMyPersonalNotes(user);
+			userPersonalNotesToUpdate = getUserPersonalNotesDAO().getPersonalNotes(user);
 			
 			if (userPersonalNotesToUpdate == null) {
 				userPersonalNotesToUpdate = new UserPersonalNotes(userPersonalNotes.getPersonalNotes());
@@ -440,6 +440,20 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public UserPersonalNotes findPersonalNotes() throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			return getUserPersonalNotesDAO().getPersonalNotes(user);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User findUser(String account) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser(account);
@@ -474,7 +488,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			return getUserPersonalNotesDAO().getMyPersonalNotes(user);
+			return getUserPersonalNotesDAO().getPersonalNotes(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -600,14 +614,14 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
 	/**
 	 * @return the activationUserDAO
 	 */
 	public ActivationUserDAO getActivationUserDAO() {
 		return activationUserDAO;
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -647,7 +661,7 @@ public class UserServiceImpl implements UserService {
 
 		return archiveStatistics;
 	}
-	
+
 	/**
 	 * @return the countryDAO
 	 */
@@ -773,7 +787,7 @@ public class UserServiceImpl implements UserService {
 				throw applicationException;
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -791,7 +805,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -849,7 +863,7 @@ public class UserServiceImpl implements UserService {
 			UserRole userRole = new UserRole(user, userAuthority);
 			getUserRoleDAO().persist(userRole);
 
-			if (getUserPersonalNotesDAO().getMyPersonalNotes(user) == null) {
+			if (getUserPersonalNotesDAO().getPersonalNotes(user) == null) {
 				UserPersonalNotes userPersonalNotes = new UserPersonalNotes();
 				userPersonalNotes.setUser(user);
 				userPersonalNotes.setPersonalNotes("");
@@ -868,7 +882,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -898,7 +912,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -956,7 +970,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -970,7 +984,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1152,24 +1166,8 @@ public class UserServiceImpl implements UserService {
 	public void updateUserPassword(String newPassword) throws ApplicationThrowable {
 		try {
 			User usetToUpdate = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			usetToUpdate.setPassword(newPassword);
+			usetToUpdate.setPassword(getPasswordEncoder().encodePassword(newPassword, null));
 			getUserDAO().merge(usetToUpdate);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Override
-	public String updateUserPassword(User user) throws ApplicationThrowable {
-		try {
-			User usetToUpdate = getUserDAO().findUser(user.getAccount());
-			usetToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
-			getUserDAO().merge(usetToUpdate);
-			return user.getPassword();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

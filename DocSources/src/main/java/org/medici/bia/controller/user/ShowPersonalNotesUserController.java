@@ -77,7 +77,7 @@ public class ShowPersonalNotesUserController {
 		}
 		model.put("userPersonalNotes", userPersonalNotes);		
 
-		return new ModelAndView("user/ShowPersonalNoteUser", model);
+		return new ModelAndView("user/ShowPersonalNotesUser", model);
 	}
 
 	/**

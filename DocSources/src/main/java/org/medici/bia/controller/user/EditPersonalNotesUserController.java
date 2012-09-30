@@ -71,8 +71,18 @@ public class EditPersonalNotesUserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesUserCommand command, BindingResult result) {
-
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			UserPersonalNotes userPersonalNotes = getUserService().findPersonalNotes();
+			if (userPersonalNotes == null)  {
+				userPersonalNotes = new UserPersonalNotes();
+			}
+			command.setPersonalNotes(userPersonalNotes.getPersonalNotes());
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/EditPersonalNotesUser", model);
+		}
 
 		return new ModelAndView("user/EditPersonalNotesUser", model);
 	}

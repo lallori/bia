@@ -34,12 +34,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowMyForumPostCommand;
-import org.medici.bia.command.community.ShowTopicForumCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.bia.common.search.AdvancedSearchForum;
-import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;

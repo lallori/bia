@@ -4,12 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
-
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-<%-- 				<li class="myprofileMenu"><a id="myprofileMenu" href="${ShowUserProfileURL}" title="MY PROFILE"></a></li> --%>
+				<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
+
 				<li><a href="${ShowUserProfileURL}" id="myprofileMenu">User Preferences</a></li>
-			</security:authorize>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {
@@ -17,3 +15,5 @@
 						);	
 					});
 				</script>						
+			</security:authorize>
+				

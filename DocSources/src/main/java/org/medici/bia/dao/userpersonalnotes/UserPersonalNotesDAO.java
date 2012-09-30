@@ -46,5 +46,5 @@ public interface UserPersonalNotesDAO extends Dao<Integer, UserPersonalNotes> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserPersonalNotes getMyPersonalNotes(User user) throws PersistenceException;
+	public UserPersonalNotes getPersonalNotes(User user) throws PersistenceException;
 }

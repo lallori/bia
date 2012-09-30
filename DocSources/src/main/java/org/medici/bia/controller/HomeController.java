@@ -33,14 +33,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.medici.bia.domain.User;
+import org.medici.bia.command.HomeCommand;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,7 +62,7 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(HttpSession httpSession) {
+	public ModelAndView setupForm(@ModelAttribute("command") HomeCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// We need genders enumeration to populate relative combo-box
 		model.put("searchTypes", SearchType.values());		

@@ -27,7 +27,6 @@
  */
 package org.medici.bia.command.community;
 
-import org.medici.bia.domain.UserMessage.UserMessageCategory;
 
 /**
  * 
@@ -41,6 +40,8 @@ public class ShowMyMessageBoxCommand {
 	private Integer resultsForPage;
 	private Integer resultPageNumber;
 	private Integer resultPageTotal;
+	private String completeDOM;
+
 	/**
 	 * @return the category
 	 */
@@ -88,5 +89,11 @@ public class ShowMyMessageBoxCommand {
 	 */
 	public void setResultPageTotal(Integer resultPageTotal) {
 		this.resultPageTotal = resultPageTotal;
+	}
+	public void setCompleteDOM(String completeDOM) {
+		this.completeDOM = completeDOM;
+	}
+	public String getCompleteDOM() {
+		return completeDOM;
 	}
 }

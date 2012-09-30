@@ -34,5 +34,21 @@ package org.medici.bia.command.user;
  *
  */
 public class EditPersonalNotesUserCommand {
+	private String personalNotes;
 
+	/**
+	 * 
+	 * @param personalNotes
+	 */
+	public void setPersonalNotes(String personalNotes) {
+		this.personalNotes = personalNotes;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPersonalNotes() {
+		return personalNotes;
+	}
 }

@@ -34,9 +34,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.medici.bia.command.community.EditForumPostCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.UserMessageSearch;
@@ -87,7 +84,6 @@ public class AjaxController {
 		try{
 			Long numberOfNewMessages = getCommunityService().checkNewMessages();
 			model.put("numberOfNewMessages", numberOfNewMessages.toString());
-			model.put("numberOfNewMessages", "0");
 			model.put("newMessages", (numberOfNewMessages>0) ? "true" : "false");
 		}catch(ApplicationThrowable th){
 			model.put("numberOfNewMessages", "0");
