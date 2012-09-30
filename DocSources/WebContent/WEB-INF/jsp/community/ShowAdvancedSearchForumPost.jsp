@@ -61,7 +61,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		                <ul>
 		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="sw_1" value="SUBJECT_TEXT" checked="checked"> Post subjects and message text</label></li>
 		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swMessage" value="TEXT"> Message text only</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swTopicTitles" value="TITLE"> Topic titles only</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swTopicTitles" value="TITLE"> Discussion titles only</label></li>
 		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swFirstPost" value="FIRST_POST"> First post of topics only</label></li>
 		                </ul>
 		            </div>
@@ -73,7 +73,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		             </div>
 		             <div class="value">
 		                <label for="drPosts"><input type="radio" name="displayResults" id="drPosts" value="Posts"> Posts</label> 
-		                <label for="drTopics"><input type="radio" name="displayResults" id="drTopics" value="Topics" checked="checked"> Topics</label> 
+		                <label for="drTopics"><input type="radio" name="displayResults" id="drTopics" value="Topics" checked="checked"> Discussions</label> 
 		             </div>
 				</div>
 		        
@@ -86,7 +86,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		                    <option value="AUTHOR">Author</option>
 		                    <option value="POST_TIME" selected="selected">Post time</option>
 		                    <option value="FORUM">Forum</option>
-		                    <option value="TOPIC_TITLE">Topic title</option>
+		                    <option value="TOPIC_TITLE">Discussion title</option>
 		                    <option value="POST_SUBJECT">Post subject</option>
 		                </select>
 		                <label for="ascending"><input type="radio" name="order" id="ascending" value="asc" checked="checked"> Ascending</label> 
