@@ -27,8 +27,8 @@
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
 							<div class="two">THREADS</div>
-							<div class="three">POSTS</div>
-							<div class="four">LAST POST</div>
+							<div class="three">DISCUSSIONS</div>
+							<div class="four">LAST DISCUSSION</div>
 						</div>
 
 					<c:set var="forums" value="${forumsBySubCategories[currentCategory.forumId]}"/>
@@ -169,12 +169,12 @@
 			<div id="forumTable">
 			    <div class="list">
 			        <div class="rowFirst">
-			            <div class="one">THREADS</div>
-			            <div class="two">SUB-THREADS</div>
+			            <div class="one">THREAD</div>
+			            <div class="two">DISCUSSIONS</div>
 			            <div class="three">VIEWS</div>
-			            <div class="four">LAST POST</div>
+			            <div class="four">LAST DISCUSSION</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DEL</div>
+			            	<div class="five">DELETE</div>
 			            </security:authorize>
 			        </div>
 
@@ -235,7 +235,7 @@
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DEL</div>
+			            	<div class="five">DELETE</div>
 			            </security:authorize>
 			        </div>
 			    </div>			    
@@ -277,12 +277,12 @@
 							<div class="list">
 								<div class="rowFirst">
 									<div class="one">DISCUSSION</div>
-				        			<div class="two">DOCUMENTS</div>
+				        			<div class="two">DOC. #ID</div>
 				        			<div class="three">REPLIES</div>
 				        			<div class="four">VIEWS</div>
 				        			<div class="five">LAST POST</div>
 				        			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            				<div class="six">DEL</div>
+			            				<div class="six">DELETE</div>
 			            			</security:authorize>
 								</div>						
 					</c:when>
@@ -290,12 +290,12 @@
 						<div id="forumTable">
 				    		<div class="list">
 				        		<div class="rowFirst">
-				        	   		<div class="one">TOPIC</div>
-				            		<div class="two">REPLY</div>
+				        	   		<div class="one">DISCUSSIONS</div>
+				            		<div class="two">REPLIES</div>
 				            		<div class="three">VIEWS</div>
-				            		<div class="four">LAST POST</div>
+				            		<div class="four">LAST DISCUSSION</div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            				<div class="five">DEL</div>
+			            				<div class="five">DELETE</div>
 			            			</security:authorize>
 			            		</div>			            	
 			       </c:otherwise>
@@ -389,7 +389,7 @@
 								<div class="rowLast">						            
 									<div class="one">
 				            			<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-				                		<a id="viewTopic">No topics available</a>
+				                		<a id="viewTopic">No discussions available</a>
 				                		<span>${currentForum.description}</span>
 				            		</div>
 				            		<div class="two">empty forum</div>
@@ -405,7 +405,7 @@
 								<div class="rowLast">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a id="viewTopic">No topics available</a>
+						                <a id="viewTopic">No discussions available</a>
 						                <span>${currentForum.description}</span>
 						            </div>
 						            <div class="two">0</div>
@@ -448,12 +448,12 @@
 						<div class="list">
 							<div class="rowFirst">
 								<div class="one">DISCUSSION</div>
-				       			<div class="two">DOCUMENTS</div>
+				       			<div class="two">DOC. #ID</div>
 				       			<div class="three">REPLIES</div>
 				       			<div class="four">VIEWS</div>
 				       			<div class="five">LAST POST</div>
 				       			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			           				<div class="six">DEL</div>
+			           				<div class="six">DELETE</div>
 			           			</security:authorize>
 							</div>						
 				</c:when>
@@ -461,12 +461,12 @@
 					<div id="forumTable">
 			    		<div class="list">
 			        		<div class="rowFirst">
-			        	   		<div class="one">TOPIC</div>
-			            		<div class="two">REPLY</div>
+			        	   		<div class="one">DISCUSSION</div>
+			            		<div class="two">REPLIES</div>
 			            		<div class="three">VIEWS</div>
 			            		<div class="four">LAST POST</div>
 			            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			           				<div class="five">DEL</div>
+			           				<div class="five">DELETE</div>
 			           			</security:authorize>
 			           		</div>			            	
 				</c:otherwise>
@@ -559,7 +559,7 @@
 					<div class="rowLast">						            
 						<div class="one">
 			            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-			                <a id="viewTopic">No topics available</a>
+			                <a id="viewTopic">No discussions available</a>
 			                <span>${currentForum.description}</span>
 			            </div>
 			            <div class="two">0</div>

@@ -26,7 +26,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <!--             <input id="search" type="submit" title="Search" value="Search"/> -->
 <%--         </form> --%>
 <!--     </div> -->
-<!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print thread" width="17" height="15" /><span class="button_text">Print thread</span></a> -->
+<!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print discussion" width="17" height="15" /><span class="button_text">Print discussion</span></a> -->
 <!-- </div> -->
 
 <c:forEach items="${searchResultPage.list}" var="currentPost" varStatus="status">

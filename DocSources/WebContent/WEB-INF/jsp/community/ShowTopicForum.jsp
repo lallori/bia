@@ -78,7 +78,7 @@
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>
-    <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print thread</span></a>
+<!--     <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print discussion</span></a> -->
 </div>
 
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
