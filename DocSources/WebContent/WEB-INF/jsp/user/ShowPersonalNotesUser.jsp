@@ -10,6 +10,8 @@
 	
 	<c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 	
+	<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
+
 	<div id="modalBox">
 		<div id="EditPersonalNotes">
 			${userPersonalNotes.personalNotes}
@@ -18,7 +20,7 @@
 			<a id="edit" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
 			<a id="cleanAll" href="${DeletePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
 			<a id="close" href="#" title="Close this window">Close</a>
-			<a id="goBack" href="/DocSources/cm/userProfile.html" title="Go Back to My Profile">Go back</a>
+			<a id="goBack" href="${ShowUserProfileURL}" title="Go Back to My Profile">Go back</a>
 		</div>
 		
 		</div>	
@@ -35,7 +37,7 @@
 				return false;
 			});
 			$j("#goBack").click(function(){
-				Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 750, height: 440});
+				Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});																
 				return false;
 			});
 			$j("#close").click(function(){

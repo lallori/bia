@@ -10,32 +10,26 @@
 	
 	<c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 	
-	<div id="modalBox">
-		<div id="EditPersonalNotes">
-			${userPersonalNotes.personalNotes}
-	
-		<div id="editCleanClose">
-			<a id="edit" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
-			<a id="cleanAll" href="${DeletePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
+	<form:form id="EditPersonalNotesForm" method="post" cssClass="edit">
+			
+		<form:textarea path="personalNotes" cssClass="txtarea_personalNotes"/>
+
+		<div id="closesavePersonalNotes">
+	   		<a id="goBack" href="${ShowPersonalNotesUserURL}" title="Go Back to Personal Notes" >Go Back</a>
 			<a id="close" href="#" title="Close this window">Close</a>
-			<a id="goBack" href="/DocSources/cm/userProfile.html" title="Go Back to My Profile">Go back</a>
 		</div>
+	    <input id="savePersonalNotes" type="submit" title="Save your Personal Notes" value="Save"/>
 		
-		</div>	
-	</div>
+	</form:form>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#edit").click(function(){
-				$j("#EditPersonalNotes").load($j(this).attr("href"));
-				return false;
-			});
-			$j("#cleanAll").click(function(){
-				//$j("#EditPersonalNotes").load($j(this).attr("href"));
+			$j("#close").click(function(){
+				Modalbox.hide();
 				return false;
 			});
 			$j("#goBack").click(function(){
-				Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 750, height: 440});
+				Modalbox.show($j(this).attr("href"), {title: "PERSONAL NOTES", width: 750, height: 415});
 				return false;
 			});
 			$j("#close").click(function(){
