@@ -104,7 +104,7 @@ public class ChangeExpiratedUserPasswordValidator extends AbstractUserValidator 
 			return;
 		} 
 		
-		if (password.equals(confirmPassword)) {
+		if (!password.equals(confirmPassword)) {
 			errors.rejectValue("password", "error.password.notequals");
 			return;
 		}

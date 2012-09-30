@@ -122,7 +122,7 @@ public class EditPasswordUserValidator extends AbstractUserValidator implements 
 				return;
 			} 
 		
-			if (password.equals(confirmPassword)) {
+			if (!password.equals(confirmPassword)) {
 				errors.rejectValue("password", "error.password.notequals");
 				return;
 			}
