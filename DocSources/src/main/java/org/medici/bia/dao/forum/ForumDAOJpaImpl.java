@@ -303,7 +303,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
 		String jpql = "FROM Forum WHERE logicalDelete = false AND type=:typeForum " +
         " and forumParent.id in (:forumParent) and forumParent.type=:forumParentTypeCategory " +
-        " order by forumParent asc, title asc";
+        " order by forumParent asc, dispositionOrder asc, title asc";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("typeForum", Type.FORUM);
