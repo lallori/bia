@@ -403,50 +403,89 @@ a {
 	position:absolute;
 }
 
+.welcome_list #topDiscussions {
+    margin-bottom: 30px;
+}
+
+.welcome_list #mostRecentDiscussions {
+    margin-bottom: 50px;
+}
+
 .welcome_list{
-	margin-left: 80px;
-	margin-top: 20px;
 	line-height:20px;
 	position:absolute;
-	width: 345px;
+	width: 480px;
+}
+
+.welcome_list h1{
+        font-size:12px;
+        margin-left:20px;
+}
+
+.welcome_list .discussion {
+    margin-left: 18px;
 }
 
 .welcome_list h3{
 	padding:0;
-	text-align: center;
+	margin: 10px 0 25px 10px;
+	font-size: 14px;
+	text-align: left;
 }
 
-.welcome_list ul li{
-	list-style-type:none;
-	margin:7px 0 0 40px;
-	font-size:12px;
-	color:#6F6B69;
+.welcome_list h5{
+	position:relative;
+	display:block;
+	margin:10px;
+	border-bottom:1px solid #DCC0BA;
+	width:470px;
 }
 
-#lastLogOnDiv, #thisWeekDiv, #thisMonthDiv { /* Documents Chronology Div */
-	width: 346px;
-	height: 225px;
-	color:#6F6B69;
-	padding: 0 10px 0 9px;
-	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
-	margin: 30px 0 0 0;
+.welcome_list .forumHref {
+    font-weight: bold;
+    color: #937570;
 }
 
-#lastLogOnTable, #thisWeekTable, #thisMonthTable {
-	width:330px;
-	margin: 15px 0 0 0;
+.welcome_list .date { /* Date format */
+	font-style:italic;
+	opacity: 0.7;
+	font-size: 11px;
+	margin-left:5px;
 }
 
-#lastLogOnDiv p{
-	padding:20px 0 0 20px;
-	font-weight:bold;
-	color:#666EA4;
+#lastLogOnDiv, #thisWeekDiv, #thisMonthDiv {
+    width: 300px;
+    height: 200px; 
 }
 
-#thisWeekDiv p, #thisMonthDiv p{
-	padding:20px 0 0 20px;
-	font-weight:bold;
+#lastLogOnDiv div, #thisWeekDiv div, #thisMonthDiv div {
+    padding-left:25px;
+    padding-right:20px;
+    padding-top:3px;
+    margin-left:20px;
+    width: 415px;
+    height: 22px;
+    cursor:pointer;
 }
+
+#lastLogOnDiv div:hover, #thisWeekDiv div:hover, #thisMonthDiv div:hover {
+    background-color:#B0ADDD;
+}
+
+.welcome_list .databaseActivity {
+        font-weight: bold;
+        color: #6D5C4D;
+        float: left;
+}
+
+#lastLogOnDiv div span, #thisWeekDiv div span, #thisMonthDiv div span{
+        font-weight: normal;
+        margin-left: 26px;
+        float:right;
+}
+
+
+
 
 
 
