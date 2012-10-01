@@ -111,7 +111,7 @@ public class IIPImageServerController {
 				imageInputStream = ImageIO.createImageInputStream(imageFile);
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
-				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailable"));
 				if (imageFile.canRead()) {
 					// Reading complete tiff information
 					imageInputStream = ImageIO.createImageInputStream(imageFile);
@@ -187,7 +187,7 @@ public class IIPImageServerController {
 				imageInputStream = ImageIO.createImageInputStream(imageFile);
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
-				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailable"));
 				if (imageFile.canRead()) {
 					// Reading complete tiff information
 					imageInputStream = ImageIO.createImageInputStream(imageFile);
@@ -263,7 +263,7 @@ public class IIPImageServerController {
 				imageInputStream = ImageIO.createImageInputStream(imageFile);
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
-				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailable"));
 				if (imageFile.canRead()) {
 					// Reading complete tiff information
 					imageInputStream = ImageIO.createImageInputStream(imageFile);
@@ -393,7 +393,7 @@ public class IIPImageServerController {
 				imageInputStream = ImageIO.createImageInputStream(imageFile);
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem. ");
-				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailabe"));
+				imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + ApplicationPropertyManager.getApplicationProperty("iipimage.image.notavailable"));
 				if (imageFile.canRead()) {
 					// Reading complete tiff information
 					imageInputStream = ImageIO.createImageInputStream(imageFile);
