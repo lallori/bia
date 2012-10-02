@@ -6,15 +6,10 @@
 
 	<div id="DeleteThisRecordDiv">
 		<h1>The selected volume has been undeleted.</h1>
-		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
+			$j("#MB_window").css("height", "110px");
 		});
 	</script>

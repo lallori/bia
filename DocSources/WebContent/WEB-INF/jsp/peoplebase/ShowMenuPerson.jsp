@@ -74,16 +74,19 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+			if (json.isPresent == 'true') {
+				$j("#comments").attr('href', json.forumUrlCompleteDOM);
+				$j("#comments").attr('target', '_blank');
+				return false;
+			}
+		}});
+		
 		$j("#comments").click(function() {
-			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-				if (json.isPresent == 'true') {
-					$j("#comments").attr('href', json.forumUrlCompleteDOM);
-					$j("#comments").open({scrollbars: "yes"});
-				} else {
-					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
-				}
-			}});
-			return false;
+			if($j(this).attr('href') == '#'){
+				Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
+				return false;
+			}
 		});
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		

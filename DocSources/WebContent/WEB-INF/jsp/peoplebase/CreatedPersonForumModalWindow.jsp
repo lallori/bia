@@ -16,9 +16,8 @@
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
+			$j("#open").click(function(){
 				Modalbox.hide();
-				return false;
 			});
 		});
 	</script>

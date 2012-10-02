@@ -9,15 +9,10 @@
 	<div id="DeleteThisRecordDiv">
 	<c:if test="${fn:length(person. }"></c:if>
 		<h1>The selected person has not been deleted. An error is occured.</h1>
-		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
+			$j("#MB_window").css("height", "70px");
 		});
 	</script>

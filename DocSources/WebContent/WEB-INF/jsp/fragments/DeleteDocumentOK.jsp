@@ -6,15 +6,10 @@
 
 	<div id="DeleteThisRecordDiv">
 		<h1>The selected document has been deleted.</h1>
-		
-		<input id="close" type="submit" title="Close window" value="Close"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
-			$j("#close").click(function(){
-				Modalbox.hide();
-				return false;
-			});
+			$j("#MB_window").css("height", "70px");
 		});
 	</script>
