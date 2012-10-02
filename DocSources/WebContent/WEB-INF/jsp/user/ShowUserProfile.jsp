@@ -74,7 +74,7 @@
 				});
 
 				$j("#ChangePassword").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "CHANGE PASSWORD", width: 440, height: 207});
+					Modalbox.show($j(this).attr("href"), {title: "CHANGE PASSWORD", width: 500, height: 275});
 					return false;
 				});
 
