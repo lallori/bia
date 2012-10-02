@@ -1305,9 +1305,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 				if (wordsTypes.get(i).equals(WordType.Extract)) {
 					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("(synExtract.docExtract like '%");
+						wordsQuery.append("(synExtract.docExtract like '% ");
 						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append("%')");
+						wordsQuery.append(" %')");
 						if(j < (exactWords.size() - 1)){
 							wordsQuery.append(" AND ");
 						}
@@ -1325,9 +1325,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
 					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append("(synExtract.synopsis like '% ");
 						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append("%')");
+						wordsQuery.append(" %')");
 						if(j < (exactWords.size() - 1)){
 							wordsQuery.append(" AND ");
 						}
@@ -1345,12 +1345,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
 					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("((synExtract.docExtract like '%");
+						wordsQuery.append("((synExtract.docExtract like '% ");
 						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append("%') OR ");
-						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append(" %') OR ");
+						wordsQuery.append("(synExtract.synopsis like '% ");
 						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append("%'))");
+						wordsQuery.append(" %'))");
 						if(j < (exactWords.size() - 1)){
 							wordsQuery.append(" AND ");
 						}
@@ -1698,9 +1698,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				
 				String[] wordsSingleExtract = StringUtils.split(currentWords, " ");
 				for(int j = 0; j < exactWords.size(); j++){
-					extractQuery.append("(synExtract.docExtract like '%");
+					extractQuery.append("(synExtract.docExtract like '% ");
 					extractQuery.append(exactWords.get(j).replace("'", "''"));
-					extractQuery.append("%')");
+					extractQuery.append(" %')");
 					if(j < (exactWords.size() - 1)){
 						extractQuery.append(" AND ");
 					}
@@ -1709,9 +1709,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					extractQuery.append(" AND ");
 				}
 				for (int j=0; j<wordsSingleExtract.length; j++) {
-					extractQuery.append("(synExtract.docExtract like '%");
+					extractQuery.append("(synExtract.docExtract like '% ");
 					extractQuery.append(wordsSingleExtract[j].replace("'", "''"));
-					extractQuery.append("%')");
+					extractQuery.append(" %')");
 					if (j< (wordsSingleExtract.length-1)) {
 						extractQuery.append(" AND ");
 					}
@@ -1756,9 +1756,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				
 				String[] wordsSingleSynopsis = StringUtils.split(currentWords, " ");
 				for(int j = 0; j < exactWords.size(); j++){
-					synopsisQuery.append("(synExtract.synopsis like '%");
+					synopsisQuery.append("(synExtract.synopsis like '% ");
 					synopsisQuery.append(exactWords.get(j).replace("'", "''"));
-					synopsisQuery.append("%')");
+					synopsisQuery.append(" %')");
 					if(j < (exactWords.size() - 1)){
 						synopsisQuery.append(" AND ");
 					}

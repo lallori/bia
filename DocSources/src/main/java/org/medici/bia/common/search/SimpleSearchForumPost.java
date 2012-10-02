@@ -140,7 +140,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		
 		if (words.length >0) {
-			jpaQuery.append(" WHERE ");
+			jpaQuery.append(" WHERE logicalDelete = false AND ");
 		}
 		
 		for(int i = 0; i < words.length; i++){
@@ -159,6 +159,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 			jpaQuery.append(topicId);
 			jpaQuery.append(")");
 		}
+		
 		return jpaQuery.toString();
 	}
 
