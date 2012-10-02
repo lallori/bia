@@ -84,7 +84,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	 */
 	@Override
 	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE forum.forumId=:forumid");
+		Query query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE forum.forumId=:forumId");
 		query.setParameter("forumId", forumId);
 		
 		return query.executeUpdate();

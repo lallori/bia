@@ -72,9 +72,6 @@
 			}
 		});
 		
-		//MD: Fix a problem with tinyMCE alert when change page.
-		window.onbeforeunload = function() {};
-		
 		$j(document).ready(function() {
 			$j('#submit').click(function(){
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
@@ -163,6 +160,9 @@
 				}); 
 				return false;
 			});
+			
+			//MD: Fix a problem with tinyMCE alert when change page.
+			window.onbeforeunload = function() {};
 		});
 </script>
 

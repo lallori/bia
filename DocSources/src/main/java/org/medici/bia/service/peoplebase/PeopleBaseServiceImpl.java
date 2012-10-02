@@ -443,12 +443,21 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
 
-				// thisi method call is mandatory to increment topic number on parent forum
+				// this method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+			}else if(forum.getLogicalDelete()){
+				//In this case a user restore a forum deleted.				
+				forum.setLogicalDelete(Boolean.FALSE);
+				getForumDAO().merge(forum);
+				
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+
 			}
 
 			return forum;

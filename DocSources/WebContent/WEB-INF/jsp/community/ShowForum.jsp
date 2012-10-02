@@ -26,7 +26,8 @@
 					<div class="list">
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
-							<div class="two">THREADS</div>
+							<!-- MD: Hide the second column -->
+							<div class="two" style="visibility:hidden;">THREADS</div>
 							<div class="three">DISCUSSIONS</div>
 							<div class="four">LAST DISCUSSION</div>
 						</div>
@@ -43,7 +44,8 @@
 							<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
 								<span>Description of this forum</span>
 							</div>
-							<div class="two">${currentForum.topicsNumber}</div>
+							<!-- MD: Hide the second column -->
+							<div class="two"><span style="visibility:hidden;">${currentForum.topicsNumber}</span></div>
 							<div class="three">${currentForum.postsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
 							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>

@@ -109,12 +109,12 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				return false;
 			});
 			
-			$j('.boardIndex').die();
+// 			$j('.boardIndex').die();
 			// Result links have a specific class style on which we attach click live. 
-			$j('.boardIndex').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
-				return false;
-			});
+// 			$j('.boardIndex').live('click', function() {
+// 				$j("#main").load($j(this).attr("href"));
+// 				return false;
+// 			});
 
 			$j('.quotePost').die();
 			$j('.quotePost').click(function (){

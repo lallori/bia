@@ -70,7 +70,7 @@
 			<c:param name="forumId" value="${topic.forum.forumId}"/>
 			<c:param name="topicId" value="${topic.topicId}"/>
 		</c:url>
-		<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+		<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 	</security:authorize>
     <div id="searchThisForumFormDiv">
         <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
@@ -144,6 +144,10 @@
     <div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
 </div>
 </c:forEach>
+
+<!-- <div id="topicActions"> -->
+	<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+<!-- </div> -->
 
 <div id="forumPaginate">
     <c:set var="paginationData">
@@ -221,7 +225,7 @@
 				return false;
 			});
 
-			$j('#postReply').click(function (){
+			$j('.postReply').click(function (){
 				$j("#main").load($j(this).attr("href"));
 				$j("#prevUrl").val($j(".paginateActive").attr("href"));
 				return false;
@@ -255,7 +259,7 @@
 			});
 			
 			if("${topic.topicId}" == ''){
-				$j('#postReply').css("display", "none");
+				$j('.postReply').css("display", "none");
 			}
 			
 			$j('#searchForumThisText').click(function(){
@@ -382,6 +386,9 @@
 				  });
 				$j("#copyLink").dialog('open');
 			});
+			
+			//MD: Fix a problem with tinyMCE alert when change page.
+			window.onbeforeunload = function() {};
 
 		});
 	</script>
