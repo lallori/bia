@@ -17,23 +17,22 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		<div id="searchQueryDiv">
 			<h1>SEARCH QUERY</h1>
 			<p><b>Search for keywords:</b><br />
-    		Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p>
+<!--     		Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p> -->
     	
     		<input id="text" name="text" class="input_50c" type="text" value="" />
     		<label for="allTerms" id="allTermsLabel"><input type="radio" name="allTerms" id="allTerms" value="true" checked="checked">Search for all terms or use query as entered</label>
         	<label for="anyTerms" id="anyTermsLabel"><input type="radio" name="allTerms" id="anyTerms" value="false">Search for any terms</label>
         	<p><b>Search for author:</b><br />
-    		Use * as a wildcard for partial matches.</p>
+<!--     		Use * as a wildcard for partial matches.</p> -->
     		<input id="textAuthor" name="textAuthor" class="input_50c" type="text" value=""/>
 		</div>
 		
 		<div id="searchOptionsDiv">
 			<h1>SEARCH OPTIONS</h1>
 			<p><b>Search in forums:</b><br />
-   			Select the forum or forums you wish to search in. Subforums are searched automatically if you do not disable "search subforums" below.</p>
+   			Select the forum or forums you wish to search in.</p>
    			<div>
    				<select name="forumsId" id="searchForum" multiple="multiple" size="8" title="Search in forums">
-   				<!-- MD: In this point we insert all the forum with subforums (Document > 2206 ; Person > Cosimo I, Cosimo II...) or only the main forums (Documents, People, Volumes, Places) ? -->
    				<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
    					<c:set var="forums" value="${subForums[currentCategory.forumId]}"/>
    					<c:forEach items="${forums}" var="currentForum">
@@ -42,25 +41,15 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 				</c:forEach>
    				</select>
    			</div>
-   			<div class="listForm">
-		        <div class="row">
-		             <div class="item">
-		                <label for="searchSubforums" id="searchSubforumsLabel">Search subforums:</label>
-		             </div>
-		             <div class="value">
-		                <label for="ssYes"><input type="radio" name="searchSubforums" id="ssYes" value="Yes" checked="checked"> Yes</label> 
-		                <label for="ssNo"><input type="radio" name="searchSubforums" id="ssNo" value="No"> No</label> 
-		             </div>
-		        </div> 
-		        
+   			<div class="listForm"> 
 		        <div class="row">
 		            <div class="item">
 		            	<label for="searchWithin" id="searchWithinLabel">Search within:</label>
 		            </div>
 		            <div class="value">
 		                <ul>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="sw_1" value="SUBJECT_TEXT" checked="checked"> Post subjects and message text</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swMessage" value="TEXT"> Message text only</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="sw_1" value="SUBJECT_TEXT" checked="checked"> User post subjects and text</label></li>
+		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swMessage" value="TEXT"> User posts only</label></li>
 		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swTopicTitles" value="TITLE"> Discussion titles only</label></li>
 		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swFirstPost" value="FIRST_POST"> First post of topics only</label></li>
 		                </ul>
@@ -138,12 +127,14 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		        </div>
 		     </div>
 		</div>
-		
-		<input type="hidden" name="searchUUID" value="${command.searchUUID}">
+		<hr />
+		<div>
+		   <input type="hidden" name="searchUUID" value="${command.searchUUID}">
 		<input type="hidden" name="newSearch" value="${command.newSearch}">
 		
-		<input type="submit" value="Search" class="buttonSmall" id="submitSearch">
+			<input type="submit" value="Search" class="buttonSmall" id="submitSearch">
     	<a href="/DocSources/forum/viewThreads.html" id="cancel" class="buttonSmall">Reset</a>
+    	</div>
 	</form>
 
 
