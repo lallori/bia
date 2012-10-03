@@ -12,6 +12,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		<c:param name="topicId" value="${topic.topicId}"/>
 	</c:url>
 	
+	<c:if test="${userMessage.user.account == account}">
 	<div id="message">
 		<h3>Message</h3>
 		<div class="list">
@@ -29,7 +30,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
         	</div>
 		</div>
 	</div>
-
+</c:if>
 
 					
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>

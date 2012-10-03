@@ -210,8 +210,31 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable {
 		try{
-			userMessage.setMessageId(null);
-			getUserMessageDAO().persist(userMessage);
+			//MD: Persist two messages for both user that have the message in the inbox (recipient) and outbox(sender)
+			User outBoxUser = getUserDAO().findUser(userMessage.getSender());
+			User inBoxUser = getUserDAO().findUser(userMessage.getRecipient());
+			
+			UserMessage outBoxMessage = new UserMessage();
+			outBoxMessage.setSubject(userMessage.getSubject());
+			outBoxMessage.setBody(userMessage.getBody());
+			outBoxMessage.setSender(userMessage.getSender());
+			outBoxMessage.setRecipient(userMessage.getRecipient());
+			outBoxMessage.setSendedDate(userMessage.getSendedDate());
+			outBoxMessage.setRecipientStatus(userMessage.getRecipientStatus());
+			outBoxMessage.setMessageId(null);
+			outBoxMessage.setUser(outBoxUser);
+			getUserMessageDAO().persist(outBoxMessage);
+			
+			UserMessage inBoxMessage = new UserMessage();
+			inBoxMessage.setSubject(userMessage.getSubject());
+			inBoxMessage.setBody(userMessage.getBody());
+			inBoxMessage.setSender(userMessage.getSender());
+			inBoxMessage.setRecipient(userMessage.getRecipient());
+			inBoxMessage.setSendedDate(userMessage.getSendedDate());
+			inBoxMessage.setRecipientStatus(userMessage.getRecipientStatus());
+			inBoxMessage.setMessageId(null);
+			inBoxMessage.setUser(inBoxUser);
+			getUserMessageDAO().persist(inBoxMessage);
 			
 			return userMessage;
 		}catch(Throwable th){

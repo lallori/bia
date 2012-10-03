@@ -36,6 +36,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,6 +46,7 @@ import javax.persistence.TemporalType;
  * UserMessage entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Entity
 @Table ( name = "\"tblUserMessage\"" ) 
@@ -77,6 +79,10 @@ public class UserMessage implements Serializable{
 	private UserMessage parentMessage;
 	@Column (name="\"recipientStatus\"", length=10)
 	private RecipientStatus recipientStatus;
+	//MD: User that has the message in his inbox or outbox
+	@ManyToOne (fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"")
+	private User user;
 
 	/**
 	 * @return the messageId
@@ -219,6 +225,22 @@ public class UserMessage implements Serializable{
 	 */
 	public void setRecipientStatus(RecipientStatus recipientStatus) {
 		this.recipientStatus = recipientStatus;
+	}
+
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

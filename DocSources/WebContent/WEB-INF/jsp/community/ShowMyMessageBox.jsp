@@ -1,4 +1,4 @@
-update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -45,10 +45,10 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
 			<div class="row">
 				<c:if test="${command.category == 'inbox'}">
-					<div class="one"><input type="checkbox" name="css" value="css"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
 				</c:if>
 				<c:if test="${command.category == 'outbox'}">
-					<div class="one"><input type="checkbox" name="css" value="css"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
 				</c:if>
 				<div class="two"><span class="subject">${currentMessage.subject}</span> - <span class="message">${currentMessage.body}</span></div>
 				<div class="three">${currentMessage.sendedDate}</div>
@@ -56,6 +56,8 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			</c:forEach>
 		</div>
 	</div>
+	
+	<a href="#" id="deleteMessages" class="buttonSmall">Delete</a>
 
 <div id="forumPaginate">
     <c:set var="paginationData">
@@ -69,12 +71,14 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
 
 
-<!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->
-<!-- 	<p> -->
-<!-- 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span> -->
-<!-- 		Are you sure you want to delete this post? -->
-<!-- 	</p> -->
-<!-- </div> -->
+<div id="deleteMessagesModal" title="Delete" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Are you sure you want to delete this/these message/s?
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" />
+	</p>
+</div>  
 
 
 	<script type="text/javascript">
@@ -113,6 +117,37 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			
 			$j(".messageLink").click(function(){
 				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".row").die();
+			
+			var $toRemove = '';	
+			$j("#deleteMessages").die();
+			$j("#deleteMessages").live("click", function(){
+				$toRemove = '';
+				$j(".list > .row > .one > input:checked").each(function(){
+					$toRemove += $j(this).attr("id") + "+";
+				});
+				if($toRemove != ''){
+					$j( "#deleteMessagesModal" ).dialog({
+						  autoOpen : false,
+						  modal: true,
+						  resizable: false,
+						  width: 300,
+						  height: 150, 
+						  buttons: {
+							  Yes: function() {
+								  
+							  },
+							  No: function() {
+								  
+							  }
+						  }
+					  });
+					$j("#deleteMessagesModal").dialog("open");
+					return false;
+				}
 				return false;
 			});
 		});

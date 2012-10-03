@@ -27,7 +27,12 @@
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
 							<!-- MD: Hide the second column -->
-							<div class="two" style="visibility:hidden;">THREADS</div>
+							<c:if test="${currentCategory.dispositionOrder != 1}">
+								<div class="two"></div>
+							</c:if>
+							<c:if test="${currentCategory.dispositionOrder == 1}">
+								<div class="two">THREADS</div>
+							</c:if>
 							<div class="three">DISCUSSIONS</div>
 							<div class="four">LAST DISCUSSION</div>
 						</div>
@@ -45,7 +50,13 @@
 								<span>Description of this forum</span>
 							</div>
 							<!-- MD: Hide the second column -->
-							<div class="two"><span style="visibility:hidden;">${currentForum.topicsNumber}</span></div>
+							<c:if test="${currentCategory.dispositionOrder != 1}">
+								<div class="two"></div>
+							</c:if>
+							<c:if test="${currentCategory.dispositionOrder == 1}">
+								<div class="two">${currentForum.topicsNumber}</div>
+							</c:if>
+<%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
 							<div class="three">${currentForum.postsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
 							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>

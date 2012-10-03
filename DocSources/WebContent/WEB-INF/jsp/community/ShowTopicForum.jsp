@@ -70,7 +70,7 @@
 			<c:param name="forumId" value="${topic.forum.forumId}"/>
 			<c:param name="topicId" value="${topic.topicId}"/>
 		</c:url>
-		<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+		<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 	</security:authorize>
     <div id="searchThisForumFormDiv">
         <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
@@ -146,7 +146,14 @@
 </c:forEach>
 
 <!-- <div id="topicActions"> -->
-	<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+<%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
+<%-- 	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do"> --%>
+<%-- 			<c:param name="postId" value="0"/> --%>
+<%-- 			<c:param name="forumId" value="${topic.forum.forumId}"/> --%>
+<%-- 			<c:param name="topicId" value="${topic.topicId}"/> --%>
+<%-- 	</c:url> --%>
+<%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a> --%>
+<%-- 	</security:authorize> --%>
 <!-- </div> -->
 
 <div id="forumPaginate">
@@ -225,7 +232,7 @@
 				return false;
 			});
 
-			$j('.postReply').click(function (){
+			$j('#postReply').click(function (){
 				$j("#main").load($j(this).attr("href"));
 				$j("#prevUrl").val($j(".paginateActive").attr("href"));
 				return false;
@@ -259,7 +266,7 @@
 			});
 			
 			if("${topic.topicId}" == ''){
-				$j('.postReply').css("display", "none");
+				$j('#postReply').css("display", "none");
 			}
 			
 			$j('#searchForumThisText').click(function(){

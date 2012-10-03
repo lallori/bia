@@ -79,7 +79,7 @@ public class ShowMessageController {
 				return new ModelAndView("error/ShowMessage", model);
 			}
 		}
-		
+		model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		return new ModelAndView("community/ShowMessage", model);
 	}
 

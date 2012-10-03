@@ -154,6 +154,13 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			words = new ArrayList<String>(0);
 		}
 		
+		//Author
+		if(command.getTextAuthor() != null){
+			author = command.getTextAuthor();
+		}else{
+			author = null;
+		}
+		
 		//AllTerms
 		if(command.getAllTerms() != null){
 			allTerms = command.getAllTerms();
@@ -325,9 +332,9 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	
 			// person;
 			if (author != null) {
-				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '");
+				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '%");
 				authorQuery.append(author);
-				authorQuery.append("')");
+				authorQuery.append("%')");
 				if(jpaQuery.length() > 21){
 					jpaQuery.append(" AND ");
 				}
@@ -453,9 +460,9 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			
 			// person;
 			if (author != null) {
-				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '");
+				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '%");
 				authorQuery.append(author);
-				authorQuery.append("')");
+				authorQuery.append("%')");
 				if(jpaQuery.length() > 22){
 					jpaQuery.append(" AND ");
 				}

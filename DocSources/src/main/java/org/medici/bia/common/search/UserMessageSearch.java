@@ -142,20 +142,24 @@ public class UserMessageSearch implements GenericSearch {
 					jpaQuery.append("'");
 				break;
 				
-			case INBOX:
-				jpaQuery.append("recipient = '");
-				jpaQuery.append(account);
-				jpaQuery.append("'");
-				break;
-			
-			case OUTBOX:
-				jpaQuery.append("sender = '");
-				jpaQuery.append(account);
-				jpaQuery.append("'");
-				break;
+				case INBOX:
+					jpaQuery.append("recipient = '");
+					jpaQuery.append(account);
+					jpaQuery.append("' and user.account = '");
+					jpaQuery.append(account);
+					jpaQuery.append("'");
+					break;
+				
+				case OUTBOX:
+					jpaQuery.append("sender = '");
+					jpaQuery.append(account);
+					jpaQuery.append("' and user.account = '");
+					jpaQuery.append(account);
+					jpaQuery.append("'");
+					break;
 
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 		
