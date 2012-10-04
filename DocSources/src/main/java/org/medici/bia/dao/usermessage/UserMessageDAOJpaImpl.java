@@ -42,6 +42,7 @@ import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.domain.UserMessage.UserMessageCategory;
@@ -174,6 +175,24 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		}
 
 		return paginationFilter;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException {
+		StringBuilder query = new StringBuilder("DELETE FROM UserMessage WHERE user.account=:account AND (");
+		for(int i = 0; i < idElements.size(); i++){
+			query.append("messageId=" + idElements.get(i));
+			if(i != idElements.size()-1){
+				query.append(" OR ");
+			}
+		}
+		Query toQuery = getEntityManager().createQuery(query.toString() + ")");
+		toQuery.setParameter("account", user.getAccount());
+		
+		return toQuery.executeUpdate();
 	}
 
 	/**

@@ -26,7 +26,7 @@
 					<div class="list">
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
-							<!-- MD: Hide the second column -->
+							<!-- MD: Hide the second column if the category hasn't threads-->
 							<c:if test="${currentCategory.dispositionOrder != 1}">
 								<div class="two"></div>
 							</c:if>
@@ -47,9 +47,9 @@
 						<div class="one">
 							<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
 							<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
-								<span>Description of this forum</span>
+								<span>${currentForum.description}</span>
 							</div>
-							<!-- MD: Hide the second column -->
+							<!-- MD: Hide the second column if the category hasn't threads -->
 							<c:if test="${currentCategory.dispositionOrder != 1}">
 								<div class="two"></div>
 							</c:if>

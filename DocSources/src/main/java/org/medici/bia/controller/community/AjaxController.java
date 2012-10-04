@@ -31,9 +31,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.UserMessageSearch;
@@ -91,6 +94,31 @@ public class AjaxController {
 		}
 
 		return new ModelAndView("responseOK", model);		
+	}
+	
+	@RequestMapping(value="/community/EraseMessages", method = RequestMethod.POST)
+	public ModelAndView EraseMessages(@RequestParam("idToErase") String idToErase) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			if(!idToErase.equals("")){
+				StringTokenizer stringTokenizer = new StringTokenizer(idToErase, "+");
+				List<Integer> idElements = new ArrayList<Integer>();
+				while(stringTokenizer.hasMoreTokens()){
+					String current = stringTokenizer.nextToken();
+					if(NumberUtils.isNumber(current)){
+						idElements.add(NumberUtils.createInteger(current));
+					}
+				}
+				
+				getCommunityService().deleteMessages(idElements);
+			}
+		}catch(ApplicationThrowable ath){
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);
+		}
+		model.put("operation", "OK");
+		return new ModelAndView("responseOK", model);
 	}
 
 	/**

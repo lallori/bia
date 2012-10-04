@@ -150,11 +150,13 @@ public class AdvancedSearchForumPostController {
 			if(command.getDisplayResults().equals("Posts")){
 				page = getCommunityService().searchForumPosts(searchFilter.getFilterData(), paginationFilter);
 				model.put("searchResultPage", page);
+				model.put("yourSearch", searchFilter.getFilterData());
 				
 				return new ModelAndView("community/AdvancedSearchResultForumPost", model);
 			}else if(command.getDisplayResults().equals("Topics")){
 				page = getCommunityService().searchForumTopics(searchFilter.getFilterData(), paginationFilter);
 				model.put("searchResultPage", page);
+				model.put("yourSearch", searchFilter.getFilterData());
 				
 				return new ModelAndView("community/AdvancedSearchResultForumTopic", model);
 			}

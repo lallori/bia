@@ -127,7 +127,7 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 		        </div>
 		     </div>
 		</div>
-		<hr />
+		
 		<div>
 		   <input type="hidden" name="searchUUID" value="${command.searchUUID}">
 		<input type="hidden" name="newSearch" value="${command.newSearch}">

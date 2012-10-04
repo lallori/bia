@@ -97,6 +97,8 @@ public class Forum implements Serializable {
 	private Date lastUpdate;
 	@Column (name="\"dispositionOrder\"", length=10, columnDefinition="TINYINT default '0'")
 	private Integer dispositionOrder;
+	@Column (name="\"forumHelpText\"", columnDefinition="LONGTEXT")
+	private String forumHelpText;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"entryId\"", nullable=true)
@@ -329,6 +331,20 @@ public class Forum implements Serializable {
 	 */
 	public Integer getDispositionOrder() {
 		return dispositionOrder;
+	}
+
+	/**
+	 * @return the forumHelpText
+	 */
+	public String getForumHelpText() {
+		return forumHelpText;
+	}
+
+	/**
+	 * @param forumHelpText the forumHelpText to set
+	 */
+	public void setForumHelpText(String forumHelpText) {
+		this.forumHelpText = forumHelpText;
 	}
 
 	/**

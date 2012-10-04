@@ -28,6 +28,7 @@
 package org.medici.bia.dao.usermessage;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.PersistenceException;
 
@@ -35,12 +36,14 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserMessage;
 
 /**
  * UserMessages Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 
@@ -65,6 +68,14 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 	 * @throws PersistenceException
 	 */
 	public Long findNumberOfUnreadedMessages() throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param idElements
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException;
 
 	/**
 	 * 

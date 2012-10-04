@@ -110,6 +110,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param idElementsToRemove
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMessages(List<Integer> idElementsToRemove) throws ApplicationThrowable;
 
 	/**
 	 * 

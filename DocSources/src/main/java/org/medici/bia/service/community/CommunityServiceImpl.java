@@ -350,6 +350,21 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteMessages(List<Integer> idElementsToRemove) throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			getUserMessageDAO().removeMessages(user, idElementsToRemove);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}		
+	}
 
 	/**
 	 * {@inheritDoc}

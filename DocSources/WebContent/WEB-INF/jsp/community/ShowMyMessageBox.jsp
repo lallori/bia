@@ -6,11 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-		<c:param name="postId" value="0"/>
-		<c:param name="forumId" value="${topic.forum.forumId}"/>
-		<c:param name="topicId" value="${topic.topicId}"/>
-	</c:url>
+	<c:url var="EraseMessagesURL" value="/community/EraseMessages.json" />
 	
 	<div id="messagesTable">
 		<div class="list">
@@ -57,7 +53,7 @@
 		</div>
 	</div>
 	
-	<a href="#" id="deleteMessages" class="buttonSmall">Delete</a>
+	<a href="#" class="deleteMessages" class="buttonSmall">Delete</a>
 
 <div id="forumPaginate">
     <c:set var="paginationData">
@@ -75,8 +71,6 @@
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 		Are you sure you want to delete this/these message/s?
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" />
 	</p>
 </div>  
 
@@ -123,8 +117,8 @@
 			$j(".row").die();
 			
 			var $toRemove = '';	
-			$j("#deleteMessages").die();
-			$j("#deleteMessages").live("click", function(){
+			$j(".deleteMessages").die();
+			$j(".deleteMessages").live("click", function(){
 				$toRemove = '';
 				$j(".list > .row > .one > input:checked").each(function(){
 					$toRemove += $j(this).attr("id") + "+";
@@ -138,10 +132,17 @@
 						  height: 150, 
 						  buttons: {
 							  Yes: function() {
-								  
+								  $j.ajax({type: 'POST', url: '${EraseMessagesURL}', async: false, data: {"idToErase" : $toRemove}, success: function(json){
+									 if(json.operation == 'OK'){
+										 $j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+									 }
+								  }});
+								  $j(this).dialog('close');
+								  return false;
 							  },
 							  No: function() {
-								  
+								  $j(this).dialog('close');
+								  return false;
 							  }
 						  }
 					  });
