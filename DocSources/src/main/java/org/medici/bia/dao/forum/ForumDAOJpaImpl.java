@@ -121,6 +121,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setSubType(SubType.DOCUMENT);
 		forum.setLogicalDelete(Boolean.FALSE);
 
+		forum.setHierarchyLevel(forum.getForumParent().getHierarchyLevel()+1);
+		forum.setFullPath(forum.getForumParent().getFullPath());
+
 		getEntityManager().persist(forum);
 
         return forum;
@@ -163,6 +166,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setSubType(SubType.PEOPLE);
 		forum.setLogicalDelete(Boolean.FALSE);
 
+		forum.setHierarchyLevel(forum.getForumParent().getHierarchyLevel()+1);
+		forum.setFullPath(forum.getForumParent().getFullPath());
+
 		getEntityManager().persist(forum);
 
         return forum;
@@ -193,6 +199,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.PLACE);
 		forum.setLogicalDelete(Boolean.FALSE);
+
+		forum.setHierarchyLevel(forum.getForumParent().getHierarchyLevel()+1);
+		forum.setFullPath(forum.getForumParent().getFullPath());
 
 		getEntityManager().persist(forum);
 
@@ -225,6 +234,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.VOLUME);
 		forum.setLogicalDelete(Boolean.FALSE);
+
+		forum.setHierarchyLevel(forum.getForumParent().getHierarchyLevel()+1);
+		forum.setFullPath(forum.getForumParent().getFullPath());
 
 		getEntityManager().persist(forum);
 

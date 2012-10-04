@@ -213,6 +213,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
 
+				// we need to set new FullPath for recursive functions...
+				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
+				getForumDAO().merge(forum);
+
 				// thisi method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 

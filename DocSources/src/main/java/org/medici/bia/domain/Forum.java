@@ -76,6 +76,10 @@ public class Forum implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"forumParent\"", nullable=true)
 	private Forum forumParent;
+	@Column (name="\"hierarchyLevel\"", nullable=false)
+	private Integer hierarchyLevel;
+	@Column (name="\"fullPath\"", length=50, nullable=false)
+	private String fullPath;	
 	@Column (name="\"title\"", length=2000, nullable=false)
 	private String title;
 	@Column (name="\"description\"", length=2000)
@@ -205,6 +209,22 @@ public class Forum implements Serializable {
 	 */
 	public void setForumParent(Forum forumParent) {
 		this.forumParent = forumParent;
+	}
+
+	public void setHierarchyLevel(Integer hierarchyLevel) {
+		this.hierarchyLevel = hierarchyLevel;
+	}
+
+	public Integer getHierarchyLevel() {
+		return hierarchyLevel;
+	}
+
+	public void setFullPath(String fullPath) {
+		this.fullPath = fullPath;
+	}
+
+	public String getFullPath() {
+		return fullPath;
 	}
 
 	/**

@@ -101,13 +101,19 @@ public class CommunityServiceImpl implements CommunityService {
 
 			parentForum = getForumDAO().find(parentForum.getForumId());
 			
+			forum.setHierarchyLevel(parentForum.getHierarchyLevel()+1);
+			forum.setFullPath(parentForum.getFullPath());
 			forum.setForumParent(parentForum);
-			forum.setLogicalDelete(Boolean.TRUE);
+			forum.setLogicalDelete(Boolean.FALSE);
 
 			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			
+			getForumDAO().persist(forum);
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
-			
+
+			forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
+			getForumDAO().merge(forum);
+
 			return forum;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

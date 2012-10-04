@@ -218,7 +218,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 				document = getDocumentDAO().find(document.getEntryId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
 				forum = getForumDAO().addNewDocumentForum(parentForum, document);
-				
+
+				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
+				getForumDAO().merge(forum);
+
 				ForumOption forumOption = new ForumOption(forum);
 				forumOption.setGroupBySubForum(Boolean.TRUE);
 				forumOption.setCanHaveTopics(Boolean.TRUE);

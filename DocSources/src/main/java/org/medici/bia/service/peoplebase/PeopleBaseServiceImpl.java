@@ -446,6 +446,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				// this method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
+				// we need to set new FullPath for recursive functions...
+				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
+				getForumDAO().merge(forum);
+
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
