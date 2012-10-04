@@ -218,6 +218,9 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	background-repeat:no-repeat;
 	padding-top: 3px;
 	text-align:center;
+	border: none;
+	background-color: transparent;
+	margin: 0;
 }
 
 .buttonMini {
@@ -520,6 +523,8 @@ a.link {  /* "Last post by" user name */
 
 a.returnTo {
 	color: #B7958F;
+	margin-bottom: 20px;
+	display: block;
 }
 
 .list a.link:hover {	
