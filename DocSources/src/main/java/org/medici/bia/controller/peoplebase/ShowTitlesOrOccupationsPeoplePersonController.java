@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.bia.command.peoplebase.ShowTitlesOrOccupationsPeoplePersonCommand;
+import org.medici.bia.domain.TitleOccsList;
+import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,11 +83,26 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if(command.getTitleOccId() > 0){
-			List<String> outputFields = new ArrayList<String>(5);
-			outputFields.add("Title / Occupation");
-			outputFields.add("Assigned People");
+			try{
+				TitleOccsList titleOcc = getPeopleBaseService().findTitleOccList(command.getTitleOccId());
+				List<String> outputFields = new ArrayList<String>(5);
+				outputFields.add("Name");
+				outputFields.add("Gender");
+				outputFields.add("Born Date");
+				outputFields.add("Death Date");
+				outputFields.add("Start Date");
+				outputFields.add("End Date");
+				
+				model.put("outputFields", outputFields);
+
+				
+				model.put("titleOccId", titleOcc.getTitleOccId());
+				model.put("titleOcc", titleOcc.getTitleOcc());
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ShowTitleOrOccupationsPeoplePerson", model);
+			}
 			
-			model.put("outputFields", outputFields);
 		}
 
 		return new ModelAndView("peoplebase/ShowTitlesOrOccupationsPeoplePerson", model);

@@ -75,7 +75,7 @@
 	<script type="text/javascript">
 	$j(document).ready(function() {
 		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-			if (json.isPresent == 'true') {
+			if (json.isPresent == 'true' && json.logicalDelete == 'false') {
 				$j("#comments").attr('href', json.forumUrlCompleteDOM);
 				$j("#comments").attr('target', '_blank');
 				return false;
@@ -83,6 +83,15 @@
 		}});
 		
 		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if((json.isPresent == 'true' && json.logicalDelete == 'true') || json.isPresent == 'false'){
+					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
+					return false;
+				}else if(json.isPresent == 'true' && json.logicalDelete == 'false'){
+					$j("#comments").attr('href', json.forumUrlCompleteDOM);
+					$j("#comments").attr('target', '_blank');
+				}
+			}});
 			if($j(this).attr('href') == '#'){
 				Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
 				return false;
