@@ -206,8 +206,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 			//this control is mandatory to prevent duplication records on forum
 			if (forum == null) {
 				volume = getVolumeDAO().find(volume.getSummaryId());
+				Schedone schedone = getSchedoneDAO().findByVolume(volume.getVolNum(),volume.getVolLetExt());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume")));
-				forum = getForumDAO().addNewVolumeForum(parentForum, volume);
+				forum = getForumDAO().addNewVolumeForum(parentForum, volume, schedone);
 				
 				ForumOption forumOption = new ForumOption(forum);
 				forumOption.setGroupBySubForum(Boolean.TRUE);
@@ -218,7 +219,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
 
-				// thisi method call is mandatory to increment topic number on parent forum
+				// this method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
 				// we need to set new FullPath for recursive functions...

@@ -49,6 +49,7 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
+import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.Forum.Status;
 import org.medici.bia.domain.Forum.SubType;
@@ -212,12 +213,21 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException {
+	public Forum addNewVolumeForum(Forum forumParent, Volume volume, Schedone schedone) throws PersistenceException {
 		Forum forum = new Forum();
 		forum.setDateCreated(new Date());
-		forum.setDescription(volume.getSerieList().toString());
-		forum.setTitle("Volume - " + volume.toString());
-
+		if (volume.getSerieList() == null ) {
+			forum.setDescription("");
+		}
+		else {
+			forum.setDescription(volume.getSerieList().toString());
+		}
+		 if (schedone == null) {
+			 	forum.setTitle("Mediceo del Principato: Volume n. " + volume.toString());
+	        } 
+		 else {
+			 	forum.setTitle(schedone.getFondo() + ": Volume n. " + volume.toString());
+		 }
 		forum.setForumParent(forumParent);
 		forum.setLastPost(null);
 		forum.setLastUpdate(new Date());

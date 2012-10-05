@@ -40,6 +40,7 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
+import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Image.ImageRectoVerso;
@@ -84,10 +85,11 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * 
 	 * @param forumParent
 	 * @param volume
+	 * @param schedone
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException;
+	public Forum addNewVolumeForum(Forum forumParent, Volume volume, Schedone schedone) throws PersistenceException;
 
 	/**
 	 * 
