@@ -10,17 +10,17 @@
 
 <br />
 
-<tiles:insertAttribute name="sendersAndRecipients"/>
+<%-- <tiles:insertAttribute name="sendersAndRecipients"/> --%>
 
-<br />
+<!-- <br /> -->
 
-<tiles:insertAttribute name="topicsList"/>
+<%-- <tiles:insertAttribute name="topicsList"/> --%>
 
-<br/>
+<!-- <br/> -->
 
-<tiles:insertAttribute name="birthAndDeath"/>
+<%-- <tiles:insertAttribute name="birthAndDeath"/> --%>
 
-<br/>
+<!-- <br/> -->
 
 <tiles:insertAttribute name="geographicCoordinates"/>
 

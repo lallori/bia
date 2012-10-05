@@ -14,6 +14,34 @@
 		<c:url var="EditGeographicCoordinatesPlaceURL" value="/de/geobase/EditGeographicCoordinatesPlace.do">
 			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
+		
+		<c:url var="ShowTopicsPlaceURL" value="/src/geobase/ShowTopicsPlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+		
+		<c:url var="ShowSenderDocumentsPlaceURL" value="/src/geobase/ShowSenderDocumentsPlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+
+		<c:url var="ShowRecipientDocumentsPlaceURL" value="/src/geobase/ShowRecipientDocumentsPlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+		
+		<c:url var="ShowBirthPeoplePlaceURL" value="/src/geobase/ShowBirthPeoplePlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+		
+		<c:url var="ShowDeathPeoplePlaceURL" value="/src/geobase/ShowDeathPeoplePlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+		
+		<c:url var="ShowActiveStartPeoplePlaceURL" value="/src/geobase/ShowActiveStartPeoplePlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
+		
+		<c:url var="ShowActiveEndPeoplePlaceURL" value="/src/geobase/ShowActiveEndPeoplePlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
 	</security:authorize>
 			<%-- Creating a New Place Record --%>
 			<c:if test="${place.placeAllId == 0}">
@@ -62,6 +90,48 @@
 						<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
 						<p style="margin:20px 0 5px 10px">To compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 						</c:if>
+						<p>Linked to this place entry:</p>
+						<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
+							<a id="linkSearch" class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a>
+						</c:if>
+						<c:if test="${topicsPlace == 1}">
+							<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a>
+						</c:if>
+						<c:if test="${docInTopics == 1 && topicsPlace != 1}">
+							<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a>
+						</c:if>
+						<c:if test="${topicsPlace == 0 || topicsPlace == null}">
+							0 Documents on 0 Topics
+						</c:if>
+						<hr />
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+						</c:if>
+						<c:if test="${senderPlace == 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+						</c:if>
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace == 1}">
+							<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace == 1}">
+							0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
+						</c:if>
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && (recipientPlace == 0 || recipientPlace == null)}">
+							<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and 0 Recipient
+						</c:if>
+						<c:if test="${senderPlace == 1 && (recipientPlace == 0 || recipientPlace == null)}">
+							<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and 0 Recipient
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && (recipientPlace == 0 || recipientPlace == null)}">
+							0 Sender and 0 Recipient
+						</c:if>
+						<hr />
+						<c:if test="${birthPlace != 0}"><a class="birth placeText_left" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Births</a></c:if><c:if test="${birthPlace == 0}">0 Births</c:if> and <c:if test="${activeStartPlace != 0}"><a class="activeStart placeText" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Starts</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if>
+						<br />
+						<c:if test="${deathPlace != 0}"><a class="death placeText_left" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Deaths</a></c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if> and <c:if test="${activeEndPlace != 0}"><a class="activeEnd placeText" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active Ends</a></c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if>
 						<c:if test="${place.prefFlag == 'V'}">
 							<br />
 							<div style="margin-left:8px">
@@ -139,6 +209,195 @@
 // 				$j("#EditDetailsPlaceDiv").load($j(this).attr("href"));
 // 				return false;
 // 			});
+
+			$j(".topics").click(function(){
+				var tabName = "Topics ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".birth").click(function(){
+				var tabName = "Birth ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".death").click(function(){
+				var tabName = "Death ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".activeStart").click(function(){
+				var tabName = "Active Start ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".activeEnd").click(function(){
+				var tabName = "Active End ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".sender").click(function(){
+				var tabName = "Senders ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".recipient").click(function(){
+				var tabName = "Recipients ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
 		});
 	</script>
 </security:authorize>

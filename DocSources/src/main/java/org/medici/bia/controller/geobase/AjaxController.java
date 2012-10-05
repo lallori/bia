@@ -616,7 +616,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowRecipientDocumentsPlace.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/ShowRecipientDocumentsPlacePagination.json", method = RequestMethod.GET)
 	public ModelAndView ShowRecipientDocumentsPlace(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
