@@ -1564,9 +1564,32 @@ p.notDigitized {
 	width: 290px;
 }
 
+#geoTitle #text p{
+	margin: 25px 0 10px 10px; 
+	line-height:18px;
+	color: #B7958F;
+	font-weight: bold; 
+}
+
+#geoTitle #text hr{
+	width:190px;
+	margin-left:10px;
+}
+
 div#text a.linkVolume {
     font-size: 16px;
     color: #666EA4;
+}
+
+div#text a.placeText {
+    color: #B7958F;
+    text-decoration:underline;
+}
+
+div#text a.placeText_left {
+    margin-left:10px;
+    color: #B7958F;
+    text-decoration:underline;
 }
 
 div#text div#icons {

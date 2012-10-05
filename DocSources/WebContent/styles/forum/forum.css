@@ -1140,7 +1140,7 @@ input[type="checkbox"] {
 	padding-right: 10px;
 }
 
-#deleteMessages {
+.deleteMessages {
 	margin: 6px 0 0 0;
 	position: absolute;
 	background-repeat: none;
@@ -1234,7 +1234,7 @@ span.search {
 .listForm { /* Whole display list */
 	display: table;
 	margin:5px 0 0 30px;
-	width:500px; 
+	width: 520px; 
 	font-size: 12px;
 	line-height: 18px;
 }
