@@ -131,7 +131,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					Forum volumeForum = getForumDAO().findVolumeForumFromParent(generalQuestionsForum, volume.getSummaryId());
 					if (volumeForum == null) {
 						volume = getVolumeDAO().find(volume.getSummaryId());
-						volumeForum = getForumDAO().addNewVolumeForum(generalQuestionsForum, volume);
+						Schedone schedone = getCatalogDAO().findByVolume(volume.getVolNum(),volume.getVolLetExt());
+						volumeForum = getForumDAO().addNewVolumeForum(generalQuestionsForum, volume, schedone);
 						
 						ForumOption forumOption = new ForumOption(volumeForum);
 						forumOption.setGroupBySubForum(Boolean.TRUE);
