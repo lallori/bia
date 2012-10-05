@@ -47,7 +47,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		</security:authorize>
-		<a id="comments" href="#">Comments</a>
+		<a id="comments" href="#">Discussions</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!document.logicalDelete}">
 				<a id="deleteAction" href="${DeleteDocumentURL}">Delete</a>
@@ -79,7 +79,7 @@
 		
 		$j("#comments").click(function() {
 			if($j(this).attr('href') == '#'){
-				Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "COMMENTS", width: 470, height: 100});
+				Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
 				return false;
 			}
 		});
