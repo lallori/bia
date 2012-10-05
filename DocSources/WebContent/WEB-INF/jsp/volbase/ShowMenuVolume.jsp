@@ -52,7 +52,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyVolumeURL}">Vetting History</a>
 		</security:authorize>
-		<a id="comments" href="#">Comments</a>
+		<a id="comments" href="#">Discussions</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:if test="${!volume.logicalDelete}">
 			<a id="deleteAction" href="${DeleteVolumeURL}">Delete</a>
@@ -81,7 +81,7 @@
 					$j("#comments").attr('href', json.forumUrlCompleteDOM);
 					$j("#comments").open({scrollbars: "yes"});
 				} else {
-					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 470, height: 100});
+					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
 				}
 			}});
 			return false;

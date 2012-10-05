@@ -215,8 +215,8 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException {
 		Forum forum = new Forum();
 		forum.setDateCreated(new Date());
-		forum.setDescription(volume.toString() + " - " + volume.getSerieList().toString());
-		forum.setTitle(volume.getSerieList().toString());
+		forum.setDescription(volume.getSerieList().toString());
+		forum.setTitle("Volume - " + volume.toString());
 
 		forum.setForumParent(forumParent);
 		forum.setLastPost(null);
