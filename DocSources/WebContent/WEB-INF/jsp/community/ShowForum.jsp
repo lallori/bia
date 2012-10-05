@@ -569,19 +569,39 @@
 
 <!-- EACH TOPIC PAGE?-->
 				<c:if test="${empty topicsPage.list}">
-					<div class="rowLast">						            
-						<div class="one">
-			            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-			                <a id="viewTopic">No discussions available</a>
-			                <span>${currentForum.description}</span>
-			            </div>
-			            <div class="two">0</div>
-			            <div class="three">0</div>
-			            <div class="four">empty forum</div>
-			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        		<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-			        	</security:authorize>
-			        </div>
+					<c:choose>
+						<c:when test="${forum.subType == 'DOCUMENT'}">
+							<div class="rowLast">
+								<div class="one">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a id="viewTopic">No discussions available</a>
+						                <span>${currentForum.description}</span>
+						        </div>
+						        <div class="two">empty forum</span></div>
+						        <div class="three">0</div>
+						        <div class="four">0</div>
+								<div class="five">empty forum</div>	
+						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+							</div>
+						</c:when>
+						<c:otherwise>					
+							<div class="rowLast">						            
+								<div class="one">
+					            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+					                <a id="viewTopic">No discussions available</a>
+					                <span>${currentForum.description}</span>
+					            </div>
+					            <div class="two">0</div>
+					            <div class="three">0</div>
+					            <div class="four">empty forum</div>
+					            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					        		<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        	</security:authorize>
+					        </div>
+					    </c:otherwise>
+					</c:choose>
 			    </c:if>
 		</div>
 		</div>

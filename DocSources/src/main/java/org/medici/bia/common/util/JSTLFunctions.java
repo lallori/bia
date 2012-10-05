@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.ForumPost;
 
 /**
   * Utility class to provides custom jstl functions.
@@ -97,5 +98,9 @@ public final class JSTLFunctions {
      */
     public static String getForumChronology(Forum forum){
     	return ForumUtils.getForumChronology(forum);
+    }
+    
+    public static String searchTextResultPost(ForumPost forumPost, String searchText){
+    	return ForumUtils.searchTextResultPost(forumPost, searchText);
     }
 }

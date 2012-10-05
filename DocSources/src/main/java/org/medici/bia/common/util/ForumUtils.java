@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Forum.Type;
 
@@ -114,5 +116,40 @@ public class ForumUtils {
 	 */
 	public static String getForumChronology(ForumTopic forumTopic) {
 		return getForumChronology(forumTopic.getForum()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowTopicForumHrefUrl(forumTopic) + "</span>";
+	}
+	
+	public static String searchTextResultPost(ForumPost forumPost, String searchText){
+		if(forumPost.getText().length() < 40){
+			return forumPost.getText();
+		}else{
+			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+			StringBuffer returnText = new StringBuffer();
+			for(String currentWord : wordArray){
+				Integer indexToBeginResult = forumPost.getText().indexOf(currentWord);
+				Integer indexToEndResult = forumPost.getText().length();
+				if(indexToBeginResult > 10){
+					String temp = forumPost.getText().substring(0, indexToBeginResult - 10);
+					indexToBeginResult = temp.lastIndexOf(" ");
+				}else{
+					indexToBeginResult = 0;
+				}
+				if(indexToBeginResult + 40 < forumPost.getText().length()){
+					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 40);
+					indexToEndResult = temp.lastIndexOf(" ");
+					if(indexToEndResult == -1){
+						indexToEndResult = indexToBeginResult + 40;
+					}
+				}
+				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length())
+					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...\n");
+				else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length())
+					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "\n");
+				else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length())
+					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...\n");
+				else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length())
+					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()));					
+			}
+			return returnText.toString();
+		}
 	}
 }
