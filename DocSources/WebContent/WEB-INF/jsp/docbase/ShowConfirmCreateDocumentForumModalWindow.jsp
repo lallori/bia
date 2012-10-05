@@ -9,7 +9,7 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1>"This volume is not linked to a forum discussion. Do you want to create it?</h1>
+		<h1>This document is not linked to a forum discussion. Do you want to create it?</h1>
 		
 		<a id="yes" href="${ShowConfirmCreateDocumentForumURL}" class="button_small">YES</a>
 	
