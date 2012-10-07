@@ -61,10 +61,10 @@ public class AccessLogStatisticsJob {
 	private AdminService adminService;
 
 	/**
-	 * Scheduled task ad 00:30 every day @Scheduled(cron="30 0 * * * ?")
+	 * Scheduled task ad 00:30 every day @Scheduled(cron="0 30 0 * * ?")
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(cron="1 * * * * ?")
+	@Scheduled(cron="0 0/20 * * * ?")
 	public void execute() {
 		MDC.put("username", "threadstatistics");
 		try {

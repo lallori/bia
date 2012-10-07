@@ -50,10 +50,10 @@ public class SitemapGeneratorJob {
 	private SitemapService sitemapService;
 
 	/**
-	 * Scheduled task every 20 minutes every day @Scheduled(cron="20 * * * * ?")
+	 * Scheduled task every 20 minutes every day @Scheduled(cron="0 0/20 * * * ?")
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(cron="20 * * * * ?")
+	@Scheduled(cron="0 0/20 * * * ?")
 	public void execute() {
 		MDC.put("username", "threadsitemap");
 		try {
