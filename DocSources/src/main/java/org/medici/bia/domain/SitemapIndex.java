@@ -57,6 +57,9 @@ public class SitemapIndex implements Serializable {
 	@Column (name="\"lastModification\"", nullable=true)
 	@Temporal(TemporalType.DATE)
 	private Date lastModification;
+	@Column (name="\"dateCreated\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreated;
 	@Column (name="\"xmlFile\"", columnDefinition="LONGTEXT")
 	private String xmlFile;
 
@@ -109,6 +112,14 @@ public class SitemapIndex implements Serializable {
 	 */
 	public void setLastModification(Date lastModification) {
 		this.lastModification = lastModification;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 	/**

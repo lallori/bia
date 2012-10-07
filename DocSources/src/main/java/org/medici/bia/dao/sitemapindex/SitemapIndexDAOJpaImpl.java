@@ -120,6 +120,7 @@ public class SitemapIndexDAOJpaImpl extends JpaDao<String, SitemapIndex> impleme
 			siteMapIndex.setId(pageNumber);
 			siteMapIndex.setLocation(HtmlUtils.getSitemapUrl(pageNumber));
 			siteMapIndex.setLastModification(new Date());
+			siteMapIndex.setDateCreated(new Date());
 			File siteMapXmlFile = new File(System.getProperty("java.io.tmpdir") + "sitemap.xml");
 			siteMapIndex.setXmlFile(FileUtils.readFileToString(siteMapXmlFile));
 			getEntityManager().persist(siteMapIndex);

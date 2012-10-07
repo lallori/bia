@@ -58,7 +58,7 @@ public class Sitemap implements Serializable {
 	@Column (name="\"lastModification\"", nullable=true)
 	@Temporal(TemporalType.DATE)
 	private Date lastModification;
-	@Column (name="\"DATECREATED\"")
+	@Column (name="\"dateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 	@Enumerated(EnumType.STRING) 
