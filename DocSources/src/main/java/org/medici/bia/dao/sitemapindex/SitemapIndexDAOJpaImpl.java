@@ -100,7 +100,7 @@ public class SitemapIndexDAOJpaImpl extends JpaDao<String, SitemapIndex> impleme
 	@Override
 	public void generatePage(Integer pageNumber, List<Sitemap> list) throws PersistenceException {
 		String website = ApplicationPropertyManager.getApplicationProperty("website.protocol") + "://" + ApplicationPropertyManager.getApplicationProperty("website.domain");
-		File workingDirectory = new File(System.getProperty("java.io.tmpdir"));
+		File workingDirectory = new File(ApplicationPropertyManager.getApplicationProperty("path.tmpdir"));
 		
 		try {
 			WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator(website, workingDirectory);
@@ -121,7 +121,7 @@ public class SitemapIndexDAOJpaImpl extends JpaDao<String, SitemapIndex> impleme
 			siteMapIndex.setLocation(HtmlUtils.getSitemapUrl(pageNumber));
 			siteMapIndex.setLastModification(new Date());
 			siteMapIndex.setDateCreated(new Date());
-			File siteMapXmlFile = new File(System.getProperty("java.io.tmpdir") + "sitemap.xml");
+			File siteMapXmlFile = new File(System.getProperty("java.io.tmpdir") + "/sitemap.xml");
 			siteMapIndex.setXmlFile(FileUtils.readFileToString(siteMapXmlFile));
 			getEntityManager().persist(siteMapIndex);
 		} catch (MalformedURLException malformedURLException) {

@@ -72,7 +72,7 @@ public class SitemapIndexController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public void setupPage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
-		File sitemapIndexFile = new File(System.getProperty("java.io.tmpdir") + "sitemapIndex" + UUID.randomUUID() + ".xml");
+		File sitemapIndexFile = new File(ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + "sitemapIndex" + UUID.randomUUID() + ".xml");
 
 		try {
 			List<SitemapIndex> list = getSitemapService().getSitemapIndex();
