@@ -38,6 +38,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 /**
  * Sitemap entity.
  * 
@@ -57,6 +58,9 @@ public class Sitemap implements Serializable {
 	@Column (name="\"lastModification\"", nullable=true)
 	@Temporal(TemporalType.DATE)
 	private Date lastModification;
+	@Column (name="\"DATECREATED\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreated;
 	@Enumerated(EnumType.STRING) 
 	@Column (name="\"changeFrequency\"",length=10, nullable=true)
 	private ChangeFrequency changeFrequency;
@@ -96,6 +100,14 @@ public class Sitemap implements Serializable {
 	 */
 	public void setLastModification(Date lastModification) {
 		this.lastModification = lastModification;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 	/**

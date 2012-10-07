@@ -137,6 +137,7 @@ public class SitemapDAOJpaImpl extends JpaDao<String, Sitemap> implements Sitema
 			Sitemap siteMap = new Sitemap();
 			siteMap.setLocation(HtmlUtils.getSitemapForumUrl(pairs.getKey(), Boolean.TRUE));
 			siteMap.setChangeFrequency(ChangeFrequency.HOURLY);
+			siteMap.setDateCreated(new Date());
 			siteMap.setLastModification(pairs.getValue());
 			siteMap.setPriority(new Double(0.5));
 			getEntityManager().persist(siteMap);
@@ -166,6 +167,7 @@ public class SitemapDAOJpaImpl extends JpaDao<String, Sitemap> implements Sitema
 				siteMap.setLocation(HtmlUtils.getSitemapForumTopicUrl(pairs.getKey(), 1, numberOfPages.intValue(), 10, Boolean.TRUE));
 				siteMap.setChangeFrequency(ChangeFrequency.HOURLY);
 				siteMap.setLastModification(lastUpdate);
+				siteMap.setDateCreated(new Date());
 				siteMap.setPriority(new Double(0.5));
 				getEntityManager().persist(siteMap);
 
