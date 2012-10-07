@@ -15,8 +15,16 @@
 	</div>
 	<div class="list">
 		<div class="row">
+			<div class="item">Website protocol</div> 
+			<div class="value60">${fn2:getApplicationProperty("website.protocl")}</div>
+		</div> 
+		<div class="row">
 			<div class="item">Website domain</div> 
 			<div class="value60">${fn2:getApplicationProperty("website.domain")}</div>
+		</div> 
+		<div class="row">
+			<div class="item">Website contextPath</div> 
+			<div class="value60">${fn2:getApplicationProperty("website.contextPath")}</div>
 		</div> 
         <div class="row">
 			<div class="item">Images Path</div> 

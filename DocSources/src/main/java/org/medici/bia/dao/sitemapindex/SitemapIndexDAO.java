@@ -1,5 +1,5 @@
 /*
- * ForumOptionDAOJpaImpl.java
+ * SitemapIndexDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,28 +25,48 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.forumoption;
+package org.medici.bia.dao.sitemapindex;
 
-import org.medici.bia.dao.JpaDao;
-import org.medici.bia.domain.ForumOption;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+import javax.persistence.PersistenceException;
+import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.Sitemap;
+import org.medici.bia.domain.SitemapIndex;
 
 /**
- * <b>ForumOptionDAOJpaImpl</b> is a default implementation of <b>ForumOptionDAO</b>.
+ * Site Map Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.medici.bia.domain.Forum
- * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
- * 
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
-@Repository
-public class ForumOptionDAOJpaImpl extends JpaDao<Integer, ForumOption> implements ForumOptionDAO {
+public interface SitemapIndexDAO extends Dao<String, SitemapIndex>{
 
 	/**
 	 * 
+	 * @return
+	 * @throws PersistenceException
 	 */
-	private static final long serialVersionUID = 1419802513516930632L;
+	public Integer deleteSitemapIndex() throws PersistenceException;
 
+	/**
+	 * 
+	 * @param i
+	 * @param list
+	 * @throws PersistenceException
+	 */
+	public void generatePage(Integer pageNumber, List<Sitemap> list) throws PersistenceException;
 
+	/**
+	 * 
+	 * @return
+	 */
+	public List<SitemapIndex> getAllSitemapIndex() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public SitemapIndex getSitemapIndex(Integer id) throws PersistenceException;
 }

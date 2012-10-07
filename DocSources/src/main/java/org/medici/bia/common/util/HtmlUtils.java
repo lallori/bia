@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Digitization;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
@@ -311,6 +312,78 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
+
+	/**
+	 * Urls must be encoded.
+	 * 
+	 * @param topicId
+	 * @param postPageNumber
+	 * @param postPageTotal
+	 * @param postsForPage
+	 * @return
+	 */
+	public static String getSitemapForumTopicUrl(Integer topicId, Integer postPageNumber, Integer postPageTotal, Integer postsForPage, Boolean completeDOM) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (topicId != null) {
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
+			stringBuilder.append("://");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.domain"));
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.contextPath"));
+			stringBuilder.append("community/ShowTopicForum.do?forumId=");
+			stringBuilder.append("&amp;topicId=");
+			stringBuilder.append(topicId);
+			stringBuilder.append("&amp;postPageNumber");
+			stringBuilder.append(postPageNumber);
+			stringBuilder.append("&amp;postPageTotal=");
+			stringBuilder.append(postPageTotal);
+			stringBuilder.append("&amp;postsForPage=");
+			stringBuilder.append(postsForPage);
+			stringBuilder.append("&amp;completeDOM=");
+			stringBuilder.append(completeDOM);
+		}
+
+		return stringBuilder.toString();
+	}
+	
+	/**
+	 * 
+	 * @param integer
+	 * @return
+	 */
+	public static String getSitemapForumUrl(Integer forumId, Boolean completeDOM) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (forumId != null) {
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
+			stringBuilder.append("://");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.domain"));
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.contextPath"));
+			stringBuilder.append("community/ShowForum.do?forumId=");
+			stringBuilder.append(forumId);
+			stringBuilder.append("&amp;completeDOM=");
+			stringBuilder.append(completeDOM);
+		}
+		
+		return stringBuilder.toString();
+	}
+
+	/**
+	 * 
+	 * @param pageNumber
+	 * @return
+	 */
+	public static String getSitemapUrl(Integer pageNumber) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (pageNumber != null) {
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
+			stringBuilder.append("://");
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.domain"));
+			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.contextPath"));
+			stringBuilder.append("sitemap/Sitemap.do?id=");
+			stringBuilder.append(pageNumber);
+		}
+		
+		return stringBuilder.toString();
+	}
 	
 	/**
 	 * 
@@ -332,7 +405,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -353,7 +426,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param placeAllId
@@ -421,7 +494,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -464,7 +537,7 @@ public class HtmlUtils {
 
 		return url;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -490,7 +563,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -505,7 +578,7 @@ public class HtmlUtils {
 				
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -536,7 +609,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -559,7 +632,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-	
+
 	/**
 	 * 
 	 * @param summaryId
@@ -577,7 +650,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param messageId
@@ -621,7 +694,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	public static List<String> showPeopleRelated(List<String> inputList, Integer personId){
 		if (inputList == null)
 			return null;
@@ -646,7 +719,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param singleRow
@@ -687,7 +760,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param singleRow
@@ -716,7 +789,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -753,7 +826,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param personId

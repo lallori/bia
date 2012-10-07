@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.forum;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,13 +38,11 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.Forum.Type;
-import org.medici.bia.domain.Image.ImageRectoVerso;
 
 /**
  * Forum DAO.
@@ -63,6 +62,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 */
 	public Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException;
 	
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewForum(Forum forum) throws PersistenceException;
+
 	/**
 	 * 
 	 * @param forumParent
@@ -90,15 +97,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public Forum addNewVolumeForum(Forum forumParent, Volume volume, Schedone schedone) throws PersistenceException;
-
+	
 	/**
 	 * 
-	 * @param forum
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewForum(Forum forum) throws PersistenceException;
-	
+	public Long countTotalActive() throws PersistenceException;
+
 	/**
 	 * 
 	 * @param forumParentId
@@ -169,6 +175,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 
 	/**
 	 * 
+	 * @param i
+	 * @param numberOfForumForPagethrows
+	 * @return
+	 */
+	public HashMap<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param category
 	 * @return
 	 * @throws PersistenceException
@@ -221,14 +235,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public Forum getForumVolume(Integer summaryId) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param parentForum

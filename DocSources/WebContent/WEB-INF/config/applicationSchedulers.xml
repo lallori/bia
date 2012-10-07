@@ -45,4 +45,5 @@
 
 	<bean id="checkDigitizedVolumeJob" class="org.medici.bia.scheduler.CheckDigitizedVolumeJob"/>
 
+	<bean id="sitemapGeneratorJob" class="org.medici.bia.scheduler.SitemapGeneratorJob"/>
 </beans>

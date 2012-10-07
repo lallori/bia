@@ -627,6 +627,7 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('user.ex
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('user.maxBadLogin', 'How many bad login user can have before user lock', '5');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.domain', '', 'bia.medici.org');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.protocol', '', 'http');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('website.contextPath', '', '/DocSources/');
 
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.coloreImmagine', '', 'RGB');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('schedone.nomeFiles', '', 'Quattro cifre (numero progressivo immagine) _ coperta/C (carta)/G(guardia)/A (allegato)/R(repertorio) _ tre cifre (numero della carta) _ tre lettere (bis ter qua) _ R/V');

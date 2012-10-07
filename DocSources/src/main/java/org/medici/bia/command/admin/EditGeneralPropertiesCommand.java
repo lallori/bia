@@ -34,26 +34,64 @@ package org.medici.bia.command.admin;
  *
  */
 public class EditGeneralPropertiesCommand {
+	private String websiteContextPath;
+	private String websiteProtocol;
 	private String websiteDomain;
 	private String imagesPath;
+
+	/**
+	 * 
+	 * @param websiteProtocol
+	 */
+	public void setWebsiteProtocol(String websiteProtocol) {
+		this.websiteProtocol = websiteProtocol;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getWebsiteProtocol() {
+		return websiteProtocol;
+	}
+
+	/**
+	 * 
+	 * @param websiteContextPath
+	 */
+	public void setWebsiteContextPath(String websiteContextPath) {
+		this.websiteContextPath = websiteContextPath;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getWebsiteContextPath() {
+		return websiteContextPath;
+	}
+
 	/**
 	 * @return the websiteDomain
 	 */
 	public String getWebsiteDomain() {
 		return websiteDomain;
 	}
+	
 	/**
 	 * @param websiteDomain the websiteDomain to set
 	 */
 	public void setWebsiteDomain(String websiteDomain) {
 		this.websiteDomain = websiteDomain;
 	}
+	
 	/**
 	 * @return the imagesPath
 	 */
 	public String getImagesPath() {
 		return imagesPath;
 	}
+	
 	/**
 	 * @param imagesPath the imagesPath to set
 	 */

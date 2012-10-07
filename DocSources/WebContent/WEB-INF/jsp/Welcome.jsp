@@ -6,51 +6,252 @@
 
 	<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
 	<div class="welcome_list">
-		<h2>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h2>
-			<ul>
-				<c:if test="${archiveStatistics['Message'] == 0 || archiveStatistics['Message'] > 1}">
-							<b><li>you have <li><b>${archiveStatistics['Message']}</b> new messages</li>
-				</c:if>
-				<c:if test="${archiveStatistics['Message'] == 1}">
-							<b><li>you have <li><b>${archiveStatistics['Message']}</b> new message</li>
-				</c:if>
-				
-				<c:if test="${archiveStatistics['Volume'] == 0 || archiveStatistics['Volume'] > 1}">
-							<li><b>${archiveStatistics['Volume']}</b> new volumes have been entered</li>
-				</c:if>
-				<c:if test="${archiveStatistics['Volume'] == 1}">
-							<li><b>${archiveStatistics['Volume']}</b> new volume has been entered</li>
-				</c:if>
-				
-				<c:if test="${archiveStatistics['Document'] == 0 || archiveStatistics['Document'] > 1}">
-							<li><b>${archiveStatistics['Document']}</b> new documents have been entered</li>
-				</c:if>
-				<c:if test="${archiveStatistics['Document'] == 1}">
-							<li><b>${archiveStatistics['Document']}</b> new document has been entered</li>
-				</c:if>
-	
-				<c:if test="${archiveStatistics['People'] == 0 || archiveStatistics['People'] > 1}">
-							<li><b>${archiveStatistics['People']}</b> new bios have been entered</li>
-				</c:if>
-				<c:if test="${archiveStatistics['People'] == 1}">
-							<li><b>${archiveStatistics['People']}</b> new bio has been entered</li>
-				</c:if>
-				
-				<c:if test="${archiveStatistics['Place'] == 0 || archiveStatistics['Place'] > 1}">
-							<li><b>${archiveStatistics['Place']}</b> new places have been entered</li>
-				</c:if>
-				<c:if test="${archiveStatistics['Place'] == 1}">
-							<li><b>${archiveStatistics['Place']}</b> new places has been entered</li>
-				</c:if>
-				
-				<c:if test="${archiveStatistics['Comments'] == 0 || archiveStatistics['Comments'] > 1}">
-							<li><b>${archiveStatistics['Comments']}</b> new community comments have been entered</li>
-				</c:if>
-				<c:if test="${archiveStatistics['Comments'] == 1}">
-							<li><b>${archiveStatistics['Comments']}</b> new community comment has been entered</li>
-				</c:if>
-				
-	
-			</ul>				
-	</div>
+		<h2>Welcome back <security:authentication property="principal.firstName"/>. <br /></h2>
+
+	    <div id="lastLogOnDiv">
+	    	<p>From your last log on:</p>    
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="lastLogOnTable">
+	            <thead>
+	                <tr>
+	                    <th></th>
+	                    <th></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	    </div>
+	    
+	    <div id="thisWeekDiv">
+	    	<p>This week:</p>    
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="thisWeekTable">
+	            <thead>
+	                <tr>
+	                    <th></th>
+	                    <th></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	    </div>
+	    
+	    <div id="thisMonthDiv">
+	    	<p>This month:</p>    
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="thisMonthTable">
+	            <thead>
+	                <tr>
+	                    <th></th>
+	                    <th></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	    </div>
+   	</div>
+
+<script type="text/javascript" charset="utf-8">
+		$j(document).ready(function() {
+			$j('#lastLogOnTable').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
+				"bAutoWidth" : false,
+				"bSort": false,
+					"aoColumns" : [
+					{ sWidth : "150px" },
+					{ sWidth : "150px" },
+					],
+				"bDestroy" : true,
+				"bFilter" : false,
+				"bLengthChange": false,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": ""},
+				"sAjaxSource": "/DocSources/template/lastLogOn.json",
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,
+				"bFilter":false,
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {
+					/* Add some extra data to the sender */
+					aoData.push( { "name": "more_data", "value": "xxx" } );
+					$j.getJSON( sSource, aoData, function (json) {
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)
+					} );
+				}
+			} );
+
+			// We need to remove any previous live function
+			$j('.searchResult').die();
+			// Result links have a specific class style on which we attach click live.
+			$j('.searchResult').live('click', function() {
+				return false;
+			});
+			
+			$j('#thisWeekTable').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
+				"bAutoWidth" : false,
+				"bSort": false,
+					"aoColumns" : [
+					{ sWidth : "150px" },
+					{ sWidth : "150px" },
+					],
+				"bDestroy" : true,
+				"bFilter" : false,
+				"bLengthChange": false,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": ""},             
+				"sAjaxSource": "/DocSources/template/lastLogOn.json",
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,
+				"bFilter":false,
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );
+				}
+			} );
+
+			// We need to remove any previous live function
+			$j('.searchResult').die();
+			// Result links have a specific class style on which we attach click live.
+			$j('.searchResult').live('click', function() {
+				return false;
+			});
+			
+			$j('#thisMonthTable').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
+				"bAutoWidth" : false,
+				"bSort": false,
+					"aoColumns" : [
+					{ sWidth : "150px" },
+					{ sWidth : "150px" },
+					],       
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": ""},
+				"sAjaxSource": "/DocSources/template/lastLogOn.json",
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );                                                                                      
+				}                                                                                             
+			} );                                                                                              
+																											  
+			// We need to remove any previous live function                                                   
+			$j('.searchResult').die();                                                                        
+			// Result links have a specific class style on which we attach click live.                        
+			$j('.searchResult').live('click', function() {                                                    
+				return false;                                                                                 
+			});  
+			
+			$j('#lastWeekTable').dataTable( {                                                             
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
+				"bAutoWidth" : false,
+				"bSort": false,
+					"aoColumns" : [
+					{ sWidth : "150px" },
+					{ sWidth : "150px" },
+					],       
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,                   
+				"iDisplayStart": 0, 
+				"oSearch": {"sSearch": ""},             
+				"sAjaxSource": "/DocSources/template/lastLogOn.json",                       
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );
+				}
+			} );
+
+			// We need to remove any previous live function
+			$j('.searchResult').die();
+			// Result links have a specific class style on which we attach click live.
+			$j('.searchResult').live('click', function() {
+				return false;
+			});
+
+			$j('#lastMonthTable').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
+				"bAutoWidth" : false,
+				"bSort": false,
+					"aoColumns" : [
+					{ sWidth : "150px" },
+					{ sWidth : "150px" },
+					],       
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,                   
+				"iDisplayStart": 0, 
+				"oSearch": {"sSearch": ""},             
+				"sAjaxSource": "/DocSources/template/lastLogOn.json",                       
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {
+					/* Add some extra data to the sender */
+					aoData.push( { "name": "more_data", "value": "xxx" } );  
+					$j.getJSON( sSource, aoData, function (json) {
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)
+					} );
+				}
+			} );
+
+			// We need to remove any previous live function
+			$j('.searchResult').die();
+			// Result links have a specific class style on which we attach click live.
+			$j('.searchResult').live('click', function() {
+				return false;
+			});
+		} );
+	</script>
+
 	

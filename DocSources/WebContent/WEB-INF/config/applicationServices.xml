@@ -51,12 +51,16 @@
     	<description>Service to interface Recaptcha Antispam functions</description>
     </bean>
 
-    <bean id="userService" class="org.medici.bia.service.user.UserServiceImpl">
-        <description>Service that manages user's information.</description>
+    <bean id="sitemapService" class="org.medici.bia.service.sitemap.SitemapServiceImpl">
+        <description>Service that manages sitemap urls.</description>
     </bean>
     
     <bean id="userMarkedListService" class="org.medici.bia.service.usermarkedlist.UserMarkedListServiceImpl">
         <description>Service that manages user's marked list.</description>
+    </bean>
+
+    <bean id="userService" class="org.medici.bia.service.user.UserServiceImpl">
+        <description>Service that manages user's information.</description>
     </bean>
 
     <bean id="volBaseService" class="org.medici.bia.service.volbase.VolBaseServiceImpl">

@@ -83,13 +83,24 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long countTotalActive() throws PersistenceException {
+		String countQuery = "SELECT COUNT(*) from ForumTopic where logicalDelete=0";
+        
+		Query query = getEntityManager().createQuery(countQuery);
+		return (Long) query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE forum.forumId=:forumId");
 		query.setParameter("forumId", forumId);
 		
 		return query.executeUpdate();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -179,7 +190,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		
 		return page;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -240,7 +251,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		
 		return page;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

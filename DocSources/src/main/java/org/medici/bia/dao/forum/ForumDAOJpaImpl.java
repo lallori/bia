@@ -46,7 +46,6 @@ import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.Schedone;
@@ -257,6 +256,17 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long countTotalActive() throws PersistenceException {
+		String countQuery = "SELECT COUNT(*) from Forum where logicalDelete=0";
+        
+		Query query = getEntityManager().createQuery(countQuery);
+		return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("UPDATE Forum SET logicalDelete = true WHERE forumParent.forumId=:forumParentId");
 		query.setParameter("forumParentId", forumParentId);
@@ -264,6 +274,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		return query.executeUpdate();		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException {
 		if (volumeForum == null){
@@ -336,7 +347,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         
         return ForumUtils.convertToHashMapByCategory(forumResult, categoriesIds);
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -358,7 +369,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return (List<Forum>) query.getResultList();
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -447,6 +458,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Forum findVolumeForumFromParent(Forum generalQuestionsForum, Integer summaryId) throws PersistenceException {
 		if (generalQuestionsForum == null){
@@ -469,6 +481,30 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         }
 
         return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException {
+		String jpql = "SELECT forumId, lastUpdate from Forum where logicalDelete = 0 ORDER BY lastUpdate ASC";
+
+		Query query = getEntityManager().createQuery(jpql );
+		query.setFirstResult(PageUtils.calculeStart(pageNumber, numberOfForumForPage));
+		query.setMaxResults(numberOfForumForPage);
+
+        List<Object> list = (List<Object>) query.getResultList();
+        
+        HashMap<Integer, Date> retValue = new HashMap<Integer, Date>(0);
+        
+        for (int i=0; i<list.size(); i++) {
+        	Object[] singleRow = (Object[]) list.get(i);
+        	retValue.put((Integer) singleRow[0], (Date) singleRow[1]);
+        }
+
+        return retValue;
 	}
 
 	/**
@@ -563,6 +599,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		return null;	
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -600,7 +637,6 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return query.getResultList();
 	}
-
 
 	/**
 	 * {@inheritDoc}

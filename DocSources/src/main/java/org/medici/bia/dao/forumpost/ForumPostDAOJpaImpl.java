@@ -27,6 +27,9 @@
  */
 package org.medici.bia.dao.forumpost;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -151,6 +154,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException {
 		String jpql = "FROM ForumPost  WHERE topic.forum.forumId = :forumId AND logicalDelete=false order by dateCreated desc";
@@ -174,6 +178,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException {
 		String jpql = "FROM ForumPost  WHERE topic.topicId = :topicId AND logicalDelete=false order by dateCreated desc";
@@ -254,6 +259,33 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		page.setList(list);
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException {
+		String jpql = "SELECT topic.topicId, ROUND(count(postId)/10), lastUpdate from ForumPost where logicalDelete = 0 GROUP BY topic ORDER BY lastUpdate ASC";
+
+		Query query = getEntityManager().createQuery(jpql );
+		query.setFirstResult(PageUtils.calculeStart(page, numberOfTopicsForPage));
+		query.setMaxResults(numberOfTopicsForPage);
+
+        List<Object> list = (List<Object>) query.getResultList();
+        
+        HashMap<Integer, List<Object>> retValue = new HashMap<Integer, List<Object>>(0);
+        
+        for (int i=0; i<list.size(); i++) {
+        	Object[] singleRow = (Object[]) list.get(i);
+        	List<Object> singleRowValues = new ArrayList<Object>(0);
+        	singleRowValues.add((Long) singleRow[1]);
+        	singleRowValues.add((Date) singleRow[2]);
+        	retValue.put((Integer) singleRow[0], singleRowValues);
+        }
+
+        return retValue;
 	}
 
 	/**

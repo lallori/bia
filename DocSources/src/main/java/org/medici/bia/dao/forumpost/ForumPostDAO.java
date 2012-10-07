@@ -27,6 +27,9 @@
  */
 package org.medici.bia.dao.forumpost;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
@@ -101,4 +104,11 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public HashMap<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
 }

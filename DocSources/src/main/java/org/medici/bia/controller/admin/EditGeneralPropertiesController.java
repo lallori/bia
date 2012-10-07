@@ -94,6 +94,8 @@ public class EditGeneralPropertiesController {
 				HashMap<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("iipimage.image.path", command.getImagesPath());
 				hashMap.put("website.domain", command.getWebsiteDomain());
+				hashMap.put("website.protocol", command.getWebsiteProtocol());
+				hashMap.put("website.contextPath", command.getWebsiteContextPath());
 				
 				getAdminService().updateApplicationProperties(hashMap);
 

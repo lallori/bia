@@ -45,21 +45,18 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 
 	/**
 	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countTotalActive() throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param forumId
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
-	
-	/**
-	 * Returns list of topics on a specific forum.
-	 * 
-	 * @param forum
-	 * @param paginationFilterPost
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
 
 	/**
 	 * Returns a specific forum topic.
@@ -69,6 +66,16 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
+
+	/**
+	 * Returns list of topics on a specific forum.
+	 * 
+	 * @param forum
+	 * @param paginationFilterPost
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
 
 	/**
 	 * 

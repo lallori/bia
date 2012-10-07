@@ -1,5 +1,5 @@
 /*
- * ForumOptionDAOJpaImpl.java
+ * SitemapDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,28 +25,58 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.forumoption;
+package org.medici.bia.dao.sitemap;
 
-import org.medici.bia.dao.JpaDao;
-import org.medici.bia.domain.ForumOption;
-import org.springframework.stereotype.Repository;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
+import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.Sitemap;
 
 /**
- * <b>ForumOptionDAOJpaImpl</b> is a default implementation of <b>ForumOptionDAO</b>.
+ * Site Map Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.medici.bia.domain.Forum
- * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
- * 
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
-@Repository
-public class ForumOptionDAOJpaImpl extends JpaDao<Integer, ForumOption> implements ForumOptionDAO {
+public interface SitemapDAO extends Dao<String, Sitemap>{
 
 	/**
 	 * 
+	 * @return
+	 * @throws PersistenceException
 	 */
-	private static final long serialVersionUID = 1419802513516930632L;
+	public Long countTotal() throws PersistenceException;
 
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer deleteSitemap() throws PersistenceException;
 
+	/**
+	 * 
+	 * @param pageNumber
+	 * @param totalPages
+	 * @param numberOfSitemapForPage
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Sitemap> getSitemaps(Integer pageNumber, Integer totalPages, Integer numberOfSitemapForPage) throws PersistenceException;
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public Integer insertForumSitemap(HashMap<Integer, Date> activeForumsInformations) throws PersistenceException;
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public Integer insertForumTopicSitemap(HashMap<Integer, List<Object>> activeTopics) throws PersistenceException;
 }
