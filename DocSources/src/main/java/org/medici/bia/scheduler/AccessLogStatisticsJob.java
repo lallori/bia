@@ -61,7 +61,7 @@ public class AccessLogStatisticsJob {
 	private AdminService adminService;
 
 	/**
-	 * Scheduled task ad 00:30 everrydai @Scheduled(cron="30 0 * * * ?")
+	 * Scheduled task ad 00:30 every day @Scheduled(cron="30 0 * * * ?")
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(cron="1 * * * * ?")
