@@ -724,6 +724,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
 		forum.setLastPost(lastPost);
+		//last update must be updated to obtain a correct indexing of forum
+		forum.setLastUpdate(new Date());
 		getForumDAO().merge(forum);
 
 		recursiveSetLastPost(forum.getForumParent(), lastPost);
@@ -738,6 +740,8 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 		
 		forum.setLastPost(forumPost);
+		//last update must be updated to obtain a correct indexing of forum
+		forum.setLastUpdate(new Date());
 		getForumDAO().merge(forum);
 		
 		recursiveSetLastPost(forum.getForumParent(), forumPost);
