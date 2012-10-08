@@ -388,6 +388,12 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	 text-align: center;
 }
 
+#searchOptionsDiv #buttons {
+    width: 960px;
+    height: 20px;
+    margin: 10px 0 10px 10px;
+}
+
 #documentTable .six { /* Columns */
 	 text-align: left;
 }
@@ -1274,26 +1280,36 @@ span.search {
 	margin-left: 13px;
 }
 
-#searchQueryDiv, #searchOptionsDiv {
+#searchQueryDiv {
 	background-color: #F2E6E5;
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	padding: 8px;
+}
+
+#textAuthor {
+    margin-bottom: 50px;
+}
+
+#searchQueryDiv #buttons {
+    height: 20px;
+    width: 960px;
+    margin: 10px 0 10px 10px;
 }
 
 #searchForum {
 	margin: 0 0 5px 10px;
 }
 
-#searchOptionsDiv ul{
+#searchQueryDiv ul{
 	list-style: none;
 	padding: 0;
 	line-height: 20px;
 	display: inline;
 }
 
-#searchOptionsDiv div{ 
+#searchQueryDiv div{ 
 	margin:10px 0 10px 0;
 	
 }

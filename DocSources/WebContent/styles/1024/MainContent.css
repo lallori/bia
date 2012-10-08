@@ -1564,8 +1564,12 @@ p.notDigitized {
 	width: 290px;
 }
 
-#geoTitle #text p{
-	margin: 25px 0 10px 10px; 
+#geoTitle #text #linked{
+	margin-left:10px;
+}
+
+#geoTitle #text #linked p{
+	margin: 25px 0 10px 0; 
 	line-height:18px;
 	color: #B7958F;
 	font-weight: bold; 
@@ -1573,7 +1577,6 @@ p.notDigitized {
 
 #geoTitle #text hr{
 	width:190px;
-	margin-left:10px;
 }
 
 div#text a.linkVolume {
@@ -1587,7 +1590,6 @@ div#text a.placeText {
 }
 
 div#text a.placeText_left {
-    margin-left:10px;
     color: #B7958F;
     text-decoration:underline;
 }

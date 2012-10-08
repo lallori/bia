@@ -17,17 +17,17 @@
 		<div id="searchQueryDiv">
 			<h1>SEARCH QUERY</h1>
 			<p><b>Search for keywords:</b><br />
-<!--     		Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p> -->
+			<!-- Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p> -->
     	
     		<input id="text" name="text" class="input_50c" type="text" value="" />
     		<label for="allTerms" id="allTermsLabel"><input type="radio" name="allTerms" id="allTerms" value="true" checked="checked">Search for all terms or use query as entered</label>
         	<label for="anyTerms" id="anyTermsLabel"><input type="radio" name="allTerms" id="anyTerms" value="false">Search for any terms</label>
         	<p><b>Search for author:</b><br />
-<!--     		Use * as a wildcard for partial matches.</p> -->
+			<!-- Use * as a wildcard for partial matches.</p> -->
     		<input id="textAuthor" name="textAuthor" class="input_50c" type="text" value=""/>
-		</div>
 		
-		<div id="searchOptionsDiv">
+		
+		
 			<h1>SEARCH OPTIONS</h1>
 			<p><b>Search in forums:</b><br />
    			Select the forum or forums you wish to search in.</p>
@@ -126,14 +126,14 @@
 		             </div>
 		        </div>
 		     </div>
-		</div>
+			 <div id="buttons">
+				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> <a href="/DocSources/forum/viewThreads.html" id="cancel" class="buttonSmall">Reset</a> 
+			</div>
 		
-		<div>
-		   <input type="hidden" name="searchUUID" value="${command.searchUUID}">
-		<input type="hidden" name="newSearch" value="${command.newSearch}">
-		
-			<input type="submit" value="Search" class="buttonSmall" id="submitSearch">
-    	<a href="/DocSources/forum/viewThreads.html" id="cancel" class="buttonSmall">Reset</a>
+			<div>
+			   	<input type="hidden" name="searchUUID" value="${command.searchUUID}">
+				<input type="hidden" name="newSearch" value="${command.newSearch}">
+    		</div>
     	</div>
 	</form>
 
