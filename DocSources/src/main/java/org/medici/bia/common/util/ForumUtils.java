@@ -120,34 +120,44 @@ public class ForumUtils {
 	
 	public static String searchTextResultPost(ForumPost forumPost, String searchText){
 		if(forumPost.getText().length() < 40){
+			//MD: In this case we return all the text
 			return forumPost.getText();
 		}else{
 			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 			StringBuffer returnText = new StringBuffer();
+			//For every word we find where is positioned inside the post
 			for(String currentWord : wordArray){
 				Integer indexToBeginResult = forumPost.getText().indexOf(currentWord);
 				Integer indexToEndResult = forumPost.getText().length();
+				//If the word isn't at the begin of the post
 				if(indexToBeginResult > 10){
 					String temp = forumPost.getText().substring(0, indexToBeginResult - 10);
+					//we find a blank space to "cut" the text of the post
 					indexToBeginResult = temp.lastIndexOf(" ");
+					if(indexToBeginResult == -1){
+						indexToBeginResult = 0;
+					}
 				}else{
 					indexToBeginResult = 0;
 				}
+				//if the word isn't at the end of the post 
 				if(indexToBeginResult + 40 < forumPost.getText().length()){
 					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 40);
 					indexToEndResult = temp.lastIndexOf(" ");
 					if(indexToEndResult == -1){
 						indexToEndResult = indexToBeginResult + 40;
+					}else{
+						indexToEndResult += indexToBeginResult;
 					}
 				}
 				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length())
-					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...\n");
+					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...<br />");
 				else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length())
-					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "\n");
+					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");
 				else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length())
-					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...\n");
+					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...<br />");
 				else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length())
-					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()));					
+					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");					
 			}
 			return returnText.toString();
 		}

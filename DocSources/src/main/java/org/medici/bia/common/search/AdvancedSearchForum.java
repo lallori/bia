@@ -314,14 +314,18 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			
 			//ForumsId
 			if (forumsId != null && forumsId.size()>0) {
-				StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
+				StringBuilder forumsQuery = new StringBuilder("("); 
 				for (int i=0; i<forumsId.size(); i++) {
+					if(forumsQuery.length() > 1){
+						forumsQuery.append(" OR ");
+					}
+					forumsQuery.append("(forum.fullPath LIKE '%.");
+				
 					forumsQuery.append(forumsId.get(i));
-					forumsQuery.append(",");
+					forumsQuery.append(".%')");
 				}
 	
-				forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
-				forumsQuery.append("))");
+				forumsQuery.append(")");
 				if(!forumsQuery.toString().equals("")){
 					if(jpaQuery.length() > 21){
 						jpaQuery.append(" AND ");
@@ -331,7 +335,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			}
 	
 			// person;
-			if (author != null) {
+			if (author != null && author.length() > 0) {
 				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '%");
 				authorQuery.append(author);
 				authorQuery.append("%')");
@@ -442,24 +446,30 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			
 			//ForumsId
 			if (forumsId != null && forumsId.size()>0) {
-				StringBuilder forumsQuery = new StringBuilder("(forum.forumParent.forumId in (");
-				for (int i=0; i<forumsId.size(); i++) {
-					forumsQuery.append(forumsId.get(i));
-					forumsQuery.append(",");
-				}
-	
-				forumsQuery.delete(forumsQuery.length() - 1, forumsQuery.length());
-				forumsQuery.append("))");
-				if(!forumsQuery.toString().equals("")){
-					if(jpaQuery.length() > 22){
-						jpaQuery.append(" AND ");
+				if (forumsId != null && forumsId.size()>0) {
+					StringBuilder forumsQuery = new StringBuilder("("); 
+					for (int i=0; i<forumsId.size(); i++) {
+						if(forumsQuery.length() > 1){
+							forumsQuery.append(" OR ");
+						}
+						forumsQuery.append("(forum.fullPath LIKE '%.");
+					
+						forumsQuery.append(forumsId.get(i));
+						forumsQuery.append(".%')");
 					}
-					jpaQuery.append(forumsQuery);
+		
+					forumsQuery.append(")");
+					if(!forumsQuery.toString().equals("")){
+						if(jpaQuery.length() > 21){
+							jpaQuery.append(" AND ");
+						}
+						jpaQuery.append(forumsQuery);
+					}
 				}
 			}
 			
 			// person;
-			if (author != null) {
+			if (author != null && author.length() > 0) {
 				StringBuilder authorQuery = new StringBuilder("(user.account LIKE '%");
 				authorQuery.append(author);
 				authorQuery.append("%')");
