@@ -74,15 +74,16 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
-		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-			if (json.isPresent == 'true' && json.logicalDelete == 'false') {
-				$j("#comments").attr('href', json.forumUrlCompleteDOM);
-				$j("#comments").attr('target', '_blank');
-				return false;
-			}
-		}});
+// 		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+// 			if (json.isPresent == 'true' && json.logicalDelete == 'false') {
+// 				$j("#comments").attr('href', json.forumUrlCompleteDOM);
+// 				$j("#comments").attr('target', '_blank');
+// 				return false;
+// 			}
+// 		}});
 		
-		$j("#comments").click(function() {
+		$j("#comments").click(function(e) {
+			e.preventDefault();
 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
 				if((json.isPresent == 'true' && json.logicalDelete == 'true') || json.isPresent == 'false'){
 					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
@@ -90,12 +91,14 @@
 				}else if(json.isPresent == 'true' && json.logicalDelete == 'false'){
 					$j("#comments").attr('href', json.forumUrlCompleteDOM);
 					$j("#comments").attr('target', '_blank');
+					window.open($j("#comments").attr('href'), '_blank');
+					return false;
 				}
 			}});
-			if($j(this).attr('href') == '#'){
-				Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
-				return false;
-			}
+// 			if($j(this).attr('href') == '#'){
+// 				Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 470, height: 100});
+// 				return false;
+// 			}
 		});
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		

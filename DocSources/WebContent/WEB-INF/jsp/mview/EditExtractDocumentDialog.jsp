@@ -82,12 +82,18 @@
 							$j("#EditExtractDocumentDiv").html(html);
 							extractChanged=false;
 							window.opener.$j("#body_left").load('${ShowDocumentURL}');
-							$j("#EditSynopsisDocumentDiv").dialog( "open" );
+							if($j("#EditSynopsisDocumentDiv").dialog("isOpen"))
+								$j("#EditSynopsisDocumentDiv").dialogExtend( "restore" );
+							else
+								$j("#EditSynopsisDocumentDiv").dialog( "open" );
 							} 
 						});
 				}
 				else {
-					$j("#EditSynopsisDocumentDiv").dialog( "open" );
+					if($j("#EditSynopsisDocumentForm").length > 0)
+							return false;
+					else
+						$j("#EditSynopsisDocumentDiv").dialog("open");
 				}
 				//$j("#EditExtractDocumentDiv").dialog("option" , "position" , ['left', 'middle']);
 				//$j("#EditSynopsisDocumentDiv").dialog( "open" );
