@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr class="rowModalSearch" id="Document Extract Search">   
-            	<td><a href="${SimpleSearchURL}" class="EXTRACT">Document Extracts</a></td>                                                                                           
+            	<td><a href="${SimpleSearchURL}" class="EXTRACT">Document Transcriptions</a></td>                                                                                           
                 <td><a href="${SimpleSearchURL}" class="EXTRACT">${documentsExtractCount}</a></td>                        
             </tr>
             <tr class="rowModalSearch" id="Document Synopsis Search">
