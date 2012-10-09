@@ -8,250 +8,135 @@
 	<div class="welcome_list">
 		<h2>Welcome back <security:authentication property="principal.firstName"/>. <br /></h2>
 
-	    <div id="lastLogOnDiv">
-	    	<p>From your last log on:</p>    
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="lastLogOnTable">
-	            <thead>
-	                <tr>
-	                    <th></th>
-	                    <th></th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
-	    </div>
-	    
-	    <div id="thisWeekDiv">
-	    	<p>This week:</p>    
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="thisWeekTable">
-	            <thead>
-	                <tr>
-	                    <th></th>
-	                    <th></th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
-	    </div>
-	    
-	    <div id="thisMonthDiv">
-	    	<p>This month:</p>    
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="thisMonthTable">
-	            <thead>
-	                <tr>
-	                    <th></th>
-	                    <th></th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
-	    </div>
-   	</div>
-
-<script type="text/javascript" charset="utf-8">
-		$j(document).ready(function() {
-			$j('#lastLogOnTable').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
-				"bAutoWidth" : false,
-				"bSort": false,
-					"aoColumns" : [
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
-					],
-				"bDestroy" : true,
-				"bFilter" : false,
-				"bLengthChange": false,
-				"bProcessing": true,
-				"bServerSide": true,
-				"iDisplayLength": 10,
-				"iDisplayStart": 0,
-				"oSearch": {"sSearch": ""},
-				"sAjaxSource": "/DocSources/template/lastLogOn.json",
-				"sDom": 'T<"clear">lfrtip',
-				"bInfo":false,
-				"bFilter":false,
-				"sPaginationType": "two_button", 
-				"fnServerData": function ( sSource, aoData, fnCallback ) {
-					/* Add some extra data to the sender */
-					aoData.push( { "name": "more_data", "value": "xxx" } );
-					$j.getJSON( sSource, aoData, function (json) {
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
-						fnCallback(json)
-					} );
-				}
-			} );
-
-			// We need to remove any previous live function
-			$j('.searchResult').die();
-			// Result links have a specific class style on which we attach click live.
-			$j('.searchResult').live('click', function() {
-				return false;
-			});
-			
-			$j('#thisWeekTable').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
-				"bAutoWidth" : false,
-				"bSort": false,
-					"aoColumns" : [
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
-					],
-				"bDestroy" : true,
-				"bFilter" : false,
-				"bLengthChange": false,
-				"bProcessing": true,
-				"bServerSide": true,
-				"iDisplayLength": 10,
-				"iDisplayStart": 0,
-				"oSearch": {"sSearch": ""},             
-				"sAjaxSource": "/DocSources/template/lastLogOn.json",
-				"sDom": 'T<"clear">lfrtip',
-				"bInfo":false,
-				"bFilter":false,
-				"sPaginationType": "two_button", 
-				"fnServerData": function ( sSource, aoData, fnCallback ) {    
-					/* Add some extra data to the sender */                                                   
-					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
-					$j.getJSON( sSource, aoData, function (json) {                                            
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
-						fnCallback(json)                                                                      
-					} );
-				}
-			} );
-
-			// We need to remove any previous live function
-			$j('.searchResult').die();
-			// Result links have a specific class style on which we attach click live.
-			$j('.searchResult').live('click', function() {
-				return false;
-			});
-			
-			$j('#thisMonthTable').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
-				"bAutoWidth" : false,
-				"bSort": false,
-					"aoColumns" : [
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
-					],       
-				"bDestroy" : true,  
-				"bFilter" : false,
-				"bLengthChange": false,
-				"bProcessing": true,
-				"bServerSide": true,
-				"iDisplayLength": 10,
-				"iDisplayStart": 0,
-				"oSearch": {"sSearch": ""},
-				"sAjaxSource": "/DocSources/template/lastLogOn.json",
-				"sDom": 'T<"clear">lfrtip',
-				"bInfo":false,             
-				"bFilter":false,
-				"sPaginationType": "two_button", 
-				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
-					/* Add some extra data to the sender */                                                   
-					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
-					$j.getJSON( sSource, aoData, function (json) {                                            
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
-						fnCallback(json)                                                                      
-					} );                                                                                      
-				}                                                                                             
-			} );                                                                                              
-																											  
-			// We need to remove any previous live function                                                   
-			$j('.searchResult').die();                                                                        
-			// Result links have a specific class style on which we attach click live.                        
-			$j('.searchResult').live('click', function() {                                                    
-				return false;                                                                                 
-			});  
-			
-			$j('#lastWeekTable').dataTable( {                                                             
-				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
-				"bAutoWidth" : false,
-				"bSort": false,
-					"aoColumns" : [
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
-					],       
-				"bDestroy" : true,  
-				"bFilter" : false,
-				"bLengthChange": false,
-				"bProcessing": true,
-				"bServerSide": true,
-				"iDisplayLength": 10,                   
-				"iDisplayStart": 0, 
-				"oSearch": {"sSearch": ""},             
-				"sAjaxSource": "/DocSources/template/lastLogOn.json",                       
-				"sDom": 'T<"clear">lfrtip',
-				"bInfo":false,             
-				"bFilter":false,
-				"sPaginationType": "two_button", 
-				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
-					/* Add some extra data to the sender */                                                   
-					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
-					$j.getJSON( sSource, aoData, function (json) {                                            
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
-						fnCallback(json)                                                                      
-					} );
-				}
-			} );
-
-			// We need to remove any previous live function
-			$j('.searchResult').die();
-			// Result links have a specific class style on which we attach click live.
-			$j('.searchResult').live('click', function() {
-				return false;
-			});
-
-			$j('#lastMonthTable').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],
-				"bAutoWidth" : false,
-				"bSort": false,
-					"aoColumns" : [
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
-					],       
-				"bDestroy" : true,  
-				"bFilter" : false,
-				"bLengthChange": false,
-				"bProcessing": true,
-				"bServerSide": true,
-				"iDisplayLength": 10,                   
-				"iDisplayStart": 0, 
-				"oSearch": {"sSearch": ""},             
-				"sAjaxSource": "/DocSources/template/lastLogOn.json",                       
-				"sDom": 'T<"clear">lfrtip',
-				"bInfo":false,             
-				"bFilter":false,
-				"sPaginationType": "two_button", 
-				"fnServerData": function ( sSource, aoData, fnCallback ) {
-					/* Add some extra data to the sender */
-					aoData.push( { "name": "more_data", "value": "xxx" } );  
-					$j.getJSON( sSource, aoData, function (json) {
-						/* Do whatever additional processing you want on the callback, then tell DataTables */
-						fnCallback(json)
-					} );
-				}
-			} );
-
-			// We need to remove any previous live function
-			$j('.searchResult').die();
-			// Result links have a specific class style on which we attach click live.
-			$j('.searchResult').live('click', function() {
-				return false;
-			});
-		} );
-	</script>
-
-	
+	  <h5>ACTIVITY IN FORUMS</h5>
+    
+    <div id="topDiscussions">
+        <h1>TOP DISCUSSIONS</h1>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref">Eleonora di Toledo</a> 
+            <span>(5 replies)</span>
+            <span>by <a href="#" id="userName" class="link">rpiccinelli</a><span class="date">2012-09-26</span></span>
+        </div>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref">Calmady-Narborough, Elizabeth</a> 
+            <span>(3 replies)</span>
+            <span>by <a href="#" id="userName" class="link">marfaioli</a><span class="date">2012-09-18</span></span>
+        </div>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref">When was Maria de' Medici born?</a> 
+            <span>(3 replies)</span>
+            <span>by <a href="#" id="userName" class="link">ebrizio</a><span class="date">2012-09-17</span></span>
+        </div>
+    </div>
+    
+    <div id="mostRecentDiscussions">
+        <h1>MOST RECENT DISCUSSIONS</h1>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref" title="Schenckenschanz / Gelderland / Nederland / Europe">Schenckenschanz / Gelderland / N...</a> 
+            <span>(1 reply)</span>
+            <span>by <a href="#" id="userName" class="link">assonitis</a><span class="date">2012-10-01</span></span>
+        </div>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref" title="Minute di Lettere e Registri / Minute: Cosimo I / Segretario: Concino">Minute di Lettere e Registri / Min...</a> 
+            <span>(3 replies)</span>
+            <span>by <a href="#" id="userName" class="link">marfaioli</a><span class="date">2012-09-30</span></span>
+        </div>
+        <div class="discussion">
+            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            <a href="#" class="forumHref">Vitelli, Gian Luigi (Chiappino)</a> 
+            <span>(0 replies)</span>
+            <span>by <a href="#" id="userName" class="link">ebrizio</a><span class="date">2012-09-29</span></span>
+        </div>
+    </div>
+        
+    
+    <h5>ACTIVITY IN THE DATABASE</h5>
+    
+    <div id="lastLogOnDiv">
+    	<h1>FROM YOUR LAST LOG ON</h1>
+        <div>
+        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Volumes</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">People</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Places</a>
+            <span>0</span>
+        </div>
+    </div>
+    
+    <div id="thisWeekDiv">
+    	<h1>THIS WEEK</h1>
+        <div>
+        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Volumes</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">People</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Places</a>
+            <span>0</span>
+        </div>
+    </div>
+    
+    <div id="thisMonthDiv">
+    	<h1>THIS MONTH</h1>
+        <div>
+        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Document Synopsis</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Volumes</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">People</a>
+            <span>0</span>
+        </div>
+        <div>
+        	<a href="#" class="databaseActivity">Places</a>
+            <span>0</span>
+        </div>    
+    </div>
