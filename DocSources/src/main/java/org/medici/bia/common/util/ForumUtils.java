@@ -31,11 +31,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
-import org.medici.bia.domain.Forum.Type;
 
 /**
  * 
@@ -118,8 +117,15 @@ public class ForumUtils {
 		return getForumChronology(forumTopic.getForum()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowTopicForumHrefUrl(forumTopic) + "</span>";
 	}
 	
+	/**
+	 * 
+	 * @param forumPost
+	 * @param searchText
+	 * @return
+	 */
 	public static String searchTextResultPost(ForumPost forumPost, String searchText){
-		if(forumPost.getText().length() < 40){
+		//The length of the text to return is about 300 characters
+		if(forumPost.getText().length() < 300){
 			//MD: In this case we return all the text
 			return forumPost.getText();
 		}else{
@@ -130,8 +136,8 @@ public class ForumUtils {
 				Integer indexToBeginResult = forumPost.getText().indexOf(currentWord);
 				Integer indexToEndResult = forumPost.getText().length();
 				//If the word isn't at the begin of the post
-				if(indexToBeginResult > 10){
-					String temp = forumPost.getText().substring(0, indexToBeginResult - 10);
+				if(indexToBeginResult > 150){
+					String temp = forumPost.getText().substring(0, indexToBeginResult - 150);
 					//we find a blank space to "cut" the text of the post
 					indexToBeginResult = temp.lastIndexOf(" ");
 					if(indexToBeginResult == -1){
@@ -141,11 +147,11 @@ public class ForumUtils {
 					indexToBeginResult = 0;
 				}
 				//if the word isn't at the end of the post 
-				if(indexToBeginResult + 40 < forumPost.getText().length()){
-					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 40);
+				if(indexToBeginResult + 300 < forumPost.getText().length()){
+					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 300);
 					indexToEndResult = temp.lastIndexOf(" ");
 					if(indexToEndResult == -1){
-						indexToEndResult = indexToBeginResult + 40;
+						indexToEndResult = indexToBeginResult + 300;
 					}else{
 						indexToEndResult += indexToBeginResult;
 					}

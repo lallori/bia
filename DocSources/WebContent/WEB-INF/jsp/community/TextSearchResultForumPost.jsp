@@ -98,7 +98,12 @@
 
 
 	<script type="text/javascript">
-		$j(document).ready(function() {
+	$j.extend($j.expr[":"], {
+		  "containsIgnoreCase": function(elem, i, match, array) {
+		     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		}}); 	
+	
+	$j(document).ready(function() {
 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
    				$j("#chronologyDiv").html(json.chronology);
 				$j(".arrowForum").css('visibility','visible');
@@ -139,11 +144,11 @@
 			var test = [];
 			test = $j('.search').text().split(" ");
 			
-			$j(".textPost").each(function(){
+			$j("#post > div > p").each(function(){
 			 	var newText = $j(this).text().split(" ").join("</span> <span class='toRemove'>");
 			  	newText = "<span class='toRemove'>" + newText + "</span>";
 			  	for(var i = 0; i < test.length; i++){
-			  		$j(this).html(newText).find('span').end().find(":contains('" + test[i] + "')").wrap("<span class='highlighted' />");
+			  		$j(this).html(newText).find('span').end().find(":containsIgnoreCase('" + test[i] + "')").wrap("<span class='highlighted' />");
 			  		newText = $j(this).html();
 			  	}
 				$j(".toRemove").contents().unwrap();

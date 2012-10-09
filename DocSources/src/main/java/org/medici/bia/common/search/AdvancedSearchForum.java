@@ -552,11 +552,51 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			}
 		}
 		
-		stringBuilder.append(" ");
+		if(stringBuilder.length() > 0)
+			stringBuilder.append(" - ");
 		
-		if(author != null){
+		if(author != null && author.length() > 0){
 			stringBuilder.append("Author: ");
 			stringBuilder.append(author);
+		}
+		
+		if(author != null && author.length() > 0)
+			stringBuilder.append(" - ");
+		
+		if(forumsId != null && forumsId.size() > 0){
+			StringBuilder forums = new StringBuilder();
+			stringBuilder.append(" in Forum: ");
+			for(int i : forumsId){
+				if(forums.length() > 0)
+					forums.append(",");
+				switch(i){
+					case 5: 
+						forums.append(" Documents");
+						break;
+					case 6: 
+						forums.append(" People");
+						break;
+					case 7:
+						forums.append(" Places");
+						break;
+					case 8:
+						forums.append(" Volumes");
+						break;
+					case 9:
+						forums.append(" General Questions");
+						break;
+					case 10:
+						forums.append(" Paleography");
+						break;
+					case 11:
+						forums.append(" How to use BIA");
+						break;
+					case 12:
+						forums.append(" Problems with BIA");
+						break;
+				}
+			}
+			stringBuilder.append(forums);
 		}
 		
 		return stringBuilder.toString();

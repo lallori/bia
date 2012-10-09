@@ -7,7 +7,7 @@
 				<div id="searchForumAllDiv">
 					<form id="SearchForumAll" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
                         <input id="searchForumAllText" name="searchForumAllText" type="text" value="Search all forums...">
-                        <input id="search" type="submit" title="Search" value="Search"/>
+                        <input id="search" type="submit" title="Search" value="Search" disabled="disabled"/>
 					</form>
 				</div>
 
@@ -18,6 +18,7 @@
 					$j(document).ready(function() {
 						$j('#searchForumAllText').click(function(){
 							$j(this).val('');
+							$j("#search").removeAttr('disabled');
 							return false;
 						});
 						
