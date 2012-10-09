@@ -649,7 +649,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	public Image findVolumeImage(Integer volNum, String volLetExt, Integer imageOrder) throws PersistenceException {
 		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
 		if (!StringUtils.isEmpty(volLetExt))
-			stringBuilder.append("=:volLetExt");
+			stringBuilder.append(" LIKE :volLetExt");
 		else
 			stringBuilder.append(" is null");
 		stringBuilder.append(" and imageOrder=:imageOrder");
