@@ -14,7 +14,9 @@
 
 	<div id="modalBox">
 		<div id="EditPersonalNotes">
-			${userPersonalNotes.personalNotes}
+			<div class="personalNotesText">
+				${userPersonalNotes.personalNotes}
+			</div>
 	
 		<div id="editCleanClose">
 			<a id="edit" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
@@ -44,5 +46,7 @@
 				Modalbox.hide(); 
 				return false;
 			});
+			
+			$j(".personalNotesText").html($j(".personalNotesText").text().replace(/\n\r?/g, '<br />'));
 		});
 	</script>

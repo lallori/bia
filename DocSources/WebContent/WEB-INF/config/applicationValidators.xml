@@ -308,6 +308,10 @@
         <description>Edit user password validator.</description>
     </bean>
     
+    <bean id="editPersonalNotesUserValidator" class="org.medici.bia.validator.user.EditPersonalNotesUserValidator">
+    	<description>Edit personal notes user validator</description>
+    </bean>
+    
     <bean id="editUserProfileValidator" class="org.medici.bia.validator.user.EditUserProfileValidator">
     	<description>Edit user profile validator.</description>
     </bean>

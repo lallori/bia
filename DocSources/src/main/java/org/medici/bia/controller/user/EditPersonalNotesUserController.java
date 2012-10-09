@@ -107,13 +107,16 @@ public class EditPersonalNotesUserController {
 			
 			try {
 				UserPersonalNotes userPersonalNotes = new UserPersonalNotes();
-				getUserService().editPersonalNotes(userPersonalNotes);
+				userPersonalNotes.setPersonalNotes(command.getPersonalNotes());
+				userPersonalNotes = getUserService().editPersonalNotes(userPersonalNotes);
+				
+				model.put("userPersonalNotes", userPersonalNotes);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditPersonalNotesUser", model);
 			}
-
-			return new ModelAndView("user/EditPersonalNotesUserSuccess", model);
+			
+			return new ModelAndView("user/ShowPersonalNotesUser", model);
 		}
 	}
 	

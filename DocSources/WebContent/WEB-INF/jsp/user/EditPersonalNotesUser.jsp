@@ -28,12 +28,18 @@
 				Modalbox.hide();
 				return false;
 			});
+			
 			$j("#goBack").click(function(){
 				Modalbox.show($j(this).attr("href"), {title: "PERSONAL NOTES", width: 750, height: 415});
 				return false;
 			});
-			$j("#close").click(function(){
-				Modalbox.hide(); 
+						
+			$j("#EditPersonalNotesForm").submit(function(){
+				if($j("#personalNotes") != ""){
+					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+						$j("#EditPersonalNotes").html(html);
+					}});
+				}
 				return false;
 			});
 		});
