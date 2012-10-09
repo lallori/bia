@@ -174,9 +174,11 @@ public class AdminServiceImpl implements AdminService {
 			//userToUpdate.setCity(user.getCity());
 			//userToUpdate.setCountry(user.getCountry());
 
-			if (!user.getPassword().equals(userToUpdate.getPassword())){
-				userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
-				userToUpdate.setLastPasswordChangeDate(new Date());
+			if (user.getPassword() != null) {
+				if (!user.getPassword().equals(userToUpdate.getPassword())){
+					userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+					userToUpdate.setLastPasswordChangeDate(new Date());
+				}
 			}
 
 			userToUpdate.setFirstName(user.getFirstName());

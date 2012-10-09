@@ -135,9 +135,7 @@ public class EditUserController {
 					command.setActive(user.getActive());
 					command.setApproved(user.getApproved());
 					command.setLocked(user.getLocked());
-				}
-				command.setNewAccount(user.getAccount());
-				
+				}				
 			} else {
 				// If account is blank, flow manage create new account
 				command.setAccount("");
@@ -190,8 +188,12 @@ public class EditUserController {
 			Map<String, Object> model = new HashMap<String, Object>();
 			Calendar cal = Calendar.getInstance();
 
-			User user = new User(command.getNewAccount());
-			user.setPassword(command.getPassword());
+			User user = new User(command.getAccount());
+			if (StringUtils.isBlank(command.getPassword())) {
+				user.setPassword(null);
+			} else {
+				user.setPassword(command.getPassword());
+			}
 			user.setFirstName(command.getFirstName());
 			user.setLastName(command.getLastName());
 			user.setInitials(command.getFirstName().charAt(0) + "" + command.getLastName().charAt(0));
@@ -220,7 +222,7 @@ public class EditUserController {
 			user.setLocked(command.getLocked());
 			
 			try {
-				if(getAdminService().findUser(command.getNewAccount()) != null){
+				if(getAdminService().findUser(command.getAccount()) != null){
 					getAdminService().editUser(user);
 				}else{
 					getAdminService().addNewUser(user);

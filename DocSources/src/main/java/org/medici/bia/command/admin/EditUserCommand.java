@@ -42,12 +42,11 @@ public class EditUserCommand {
 	/** User's Account **/
 	private String account;
 	
-	private String newAccount;
-	
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private String password;
+	private String confirmPassword;
 	private Boolean forcePswdChange;
 	private Integer yearExpirationPassword;
 	private Integer monthExpirationPassword;
@@ -71,18 +70,7 @@ public class EditUserCommand {
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	/**
-	 * @return the newAccount
-	 */
-	public String getNewAccount() {
-		return newAccount;
-	}
-	/**
-	 * @param newAccount the newAccount to set
-	 */
-	public void setNewAccount(String newAccount) {
-		this.newAccount = newAccount;
-	}
+	
 	/**
 	 * @return the firstName
 	 */
@@ -132,6 +120,12 @@ public class EditUserCommand {
 		this.password = password;
 	}
 	
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
 	/**
 	 * 
 	 * @param forcePswdChange

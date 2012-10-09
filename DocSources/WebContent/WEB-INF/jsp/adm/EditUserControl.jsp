@@ -4,34 +4,30 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-		<c:url var="ShowUserURL" 	value="/admin/ShowUser.do">
-			<c:param name="account"   	value="${command.account}" />
-		</c:url>
-		
-		<c:url var="EditUserURL" value="/admin/EditUserControl.do" />
-	</security:authorize>
-	
-	
-
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+	<c:url var="ShowUserURL" value="/admin/ShowUser.do">
+		<c:param name="account" value="${command.account}" />
+	</c:url>
+	
+	<c:url var="EditUserURL" value="/admin/EditUserControl.do" />
+
 	<form:form id="EditUserControlForm" method="post" class="edit">
 	<fieldset>
 		<legend><b>USER CONTROL</b></legend>
 		<div class="listForm">
         	<div class="row">
-            	<div class="col_l"><form:label for="account" id="userNameLabel" path="newAccount">Username</form:label></div>
-            	<div class="col_l"><form:input id="account" name="account" cssClass="input_14c" path="newAccount"/></div>
+            	<div class="col_l"><form:label for="account" path="account">Username</form:label></div>
+            	<div class="col_l"><form:input path="account" cssClass="input_14c" /></div>
         	</div>
         <div class="row">
-            <div class="col_l"><form:label for="firstName" id="firstNameLabel" path="firstName">First Name</form:label></div>
-            <div class="col_l"><form:input id="firstName" name="firstName" class="input_14c" type="text" value="" path="firstName"/></div>
-            <div class="col_r"><form:label for="middleName" id="middleNameLabel" path="middleName">Middle Name</form:label></div>
-            <div class="col_r"><form:input id="middleName" name="middleName" class="input_14c" type="text" value="" path="middleName"/></div>
+            <div class="col_l"><form:label for="firstName" path="firstName">First Name</form:label></div>
+            <div class="col_l"><form:input path="firstName" class="input_14c"/></div>
+            <div class="col_r"><form:label for="middleName" path="middleName">Middle Name</form:label></div>
+            <div class="col_r"><form:input path="middleName" class="input_14c" /></div>
         </div>
         <div class="row">
             <div class="col_l"><form:label for="lastName" id="lastNameLabel" path="lastName">Last Name</form:label></div>
-            <div class="col_l"><form:input id="lastName" name="lastName" class="input_14c" type="text" value="" path="lastName"/></div>
+            <div class="col_l"><form:input path="lastName" class="input_14c" /></div>
         </div>
     </div>
       
@@ -39,19 +35,23 @@
     
     <div class="listForm">
         <div class="row">
-            <div class="col_l"><form:label for="newPassword" id="newPasswordLabel" path="password">New password</form:label></div>
-            <div class="col_l"><form:input id="newPassword" name="newPassword" class="input_15c" type="password" value="" path="password"/></div>
+            <div class="col_l"><label id="passwordLabel" for="password">New password</label></div>
+            <div class="col_l"><input type="password" name="password" id="password" class="input_15c" value=""></div>
+        </div>
+         <div class="row">
+            <div class="col_l"><label id="confirmPasswordLabel" for="confirmPassword">Confirm password</label></div>
+            <div class="col_l"><input type="password" name="confirmPassword" id="confirmPassword" class="input_15c" value=""></div>
         </div>
     </div>
    	<p><b>Password Expires:</b></p>
     <div class="listForm">
 		<div class="row">
-            <div class="col_r"><form:label id="yearExpirationPasswordLabel" for="yearExpirationPassword" path="yearExpirationPassword" cssErrorClass="error">Year</form:label></div>
-			<div class="col_l"><form:input id="yearExpirationPassword" path="yearExpirationPassword" class="input_4c" value="" maxlength="4"/></div>
-			<div class="col_r"><form:label id="monthExpirationPasswordLabel" for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error">Month</form:label></div>
-			<div class="col_l"><form:select id="monthExpirationPassword" path="monthExpirationPassword" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-			<div class="col_r"><form:label  for="dayExpirationPassword" id="dayExpirationPassword" path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
-			<div class="col_r"><form:input id="dayExpirationPassword" path="dayExpirationPassword" class="input_2c" maxlength="2"/></div>
+            <div class="col_r"><form:label for="yearExpirationPassword" path="yearExpirationPassword" cssErrorClass="error">Year</form:label></div>
+			<div class="col_l"><form:input path="yearExpirationPassword" cssClass="input_4c" maxlength="4"/></div>
+			<div class="col_r"><form:label for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error">Month</form:label></div>
+			<div class="col_l"><form:select path="monthExpirationPassword" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+			<div class="col_r"><form:label  for="dayExpirationPassword"path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:input path="dayExpirationPassword" class="input_2c" maxlength="2"/></div>
         </div>   
      </div>
      <div class="listForm">
@@ -74,6 +74,7 @@
             <div class="col_l">
             	<ul>
 		            <c:forEach var="userRoles" items="${authorities}" varStatus="iterator">		  			
+            	<form:checkboxes id="groupPolicies" name="groupPolicies" items="${authorities}" itemValue="authority" itemLabel="description" path="userRoles" delimiter="<br/>"/>
 						<li>
 							<input id="groupPolicies" name="userRoles" type="checkbox" value="${authorities[iterator.index].authority}">
 							<label for="groupPolicies">${authorities[iterator.index].description}</label>

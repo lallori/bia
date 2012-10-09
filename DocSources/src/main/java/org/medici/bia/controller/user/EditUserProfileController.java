@@ -31,9 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
-
-
-
 import org.medici.bia.command.user.EditUserProfileCommand;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -95,17 +92,14 @@ public class EditUserProfileController {
 		
 			Map<String, Object> model = new HashMap<String, Object>();
 			User user = new User();
-			try{
-				user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			}catch(ApplicationThrowable ath){
-				
-			}
+
 			user.setMail(command.getMail());
 			user.setAddress(command.getAddress());
 			user.setCountry(command.getCountry());
 			user.setInterests(command.getInterests());
 			user.setOrganization(command.getOrganization());
 			user.setTitle(command.getTitle());
+
 			//MD: I don't know if the location is the city
 			user.setCity(command.getLocation());
 			
@@ -138,7 +132,7 @@ public class EditUserProfileController {
 			model.put("applicationThrowable", applicationThrowable);
 			user = new User();
 		}
-		command.setAccount(user.getAccount());
+
 		command.setMail(user.getMail());
 		command.setAddress(user.getAddress());
 		command.setCountry(user.getCountry());

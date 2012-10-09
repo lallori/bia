@@ -1149,6 +1149,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUser(User user) throws ApplicationThrowable {
 		try {
+			User userToUpdate = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+
+			userToUpdate.setMail(user.getMail());
+			userToUpdate.setAddress(user.getAddress());
+			userToUpdate.setCountry(user.getCountry());
+			userToUpdate.setInterests(user.getInterests());
+			userToUpdate.setOrganization(user.getOrganization());
+			userToUpdate.setTitle(user.getTitle());
+			//MD: I don't know if the location is the city
+			userToUpdate.setCity(user.getCity());
+			
+			if (user.getPassword() != null) {
+				userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
+			}
+			
 			getUserDAO().merge(user);
 
 //			getUserDAO().removeAllUserRoles(user.getAccount());
@@ -1165,9 +1180,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUserPassword(String newPassword) throws ApplicationThrowable {
 		try {
-			User usetToUpdate = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			usetToUpdate.setPassword(getPasswordEncoder().encodePassword(newPassword, null));
-			getUserDAO().merge(usetToUpdate);
+			User userToUpdate = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			userToUpdate.setPassword(getPasswordEncoder().encodePassword(newPassword, null));
+			getUserDAO().merge(userToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
