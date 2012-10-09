@@ -171,7 +171,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -186,7 +186,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -199,7 +199,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -246,7 +246,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -261,7 +261,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -274,7 +274,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -321,7 +321,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -336,7 +336,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -349,7 +349,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -396,7 +396,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -411,7 +411,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -424,7 +424,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -514,7 +514,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -529,7 +529,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -542,7 +542,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -589,7 +589,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -604,7 +604,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -617,7 +617,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -664,7 +664,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserPlaceName = new QueryParser(Version.LUCENE_30, "placeName", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
-        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+//        QueryParser parserPlaceNameFull = new QueryParser(Version.LUCENE_30, "placeNameFull", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         QueryParser parserTermAccent = new QueryParser(Version.LUCENE_30, "termAccent", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
         
 
@@ -679,7 +679,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	else
 	        		singleWord = words[i] + "*";
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
@@ -692,7 +692,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord = words[i];
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+//	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
