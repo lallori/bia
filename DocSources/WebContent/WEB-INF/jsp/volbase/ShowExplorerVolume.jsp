@@ -231,9 +231,9 @@
 				delay(function(){
 					$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
 						if(data.imageType == 'C'){
-							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}/' + data.imageProgTypeNum);
+							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}${volumeExplorer.volLetExt}/' + data.imageProgTypeNum);
 						}else{
-							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}');
+							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}${volumeExplorer.volLetExt}');
 						}
 				}});},250);
 

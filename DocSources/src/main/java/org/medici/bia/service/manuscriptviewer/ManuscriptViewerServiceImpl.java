@@ -363,7 +363,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	@Override
 	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
-		if (summaryId != null && volNum == null) {
+		if (summaryId != null) {
 			try {
 				Volume volume = getVolumeDAO().find(summaryId);
 				if (volume != null) {
