@@ -11,7 +11,7 @@
 	
 	<c:url var="EditUserURL" value="/admin/EditUserControl.do" />
 
-	<form:form id="EditUserControlForm" method="post" class="edit">
+	<form:form id="EditUserControlForm" method="post" class="edit" action="${EditUserURL}">
 	<fieldset>
 		<legend><b>USER CONTROL</b></legend>
 		<div class="listForm">
@@ -50,7 +50,7 @@
 			<div class="col_l"><form:input path="yearExpirationPassword" cssClass="input_4c" maxlength="4"/></div>
 			<div class="col_r"><form:label for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error">Month</form:label></div>
 			<div class="col_l"><form:select path="monthExpirationPassword" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-			<div class="col_r"><form:label  for="dayExpirationPassword"path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:label  for="dayExpirationPassword" path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
 			<div class="col_r"><form:input path="dayExpirationPassword" class="input_2c" maxlength="2"/></div>
         </div>   
      </div>
@@ -120,6 +120,7 @@
 		<input id="save" class="save" type="submit" value="Save" />
 	</div>
 	<input type="hidden" value="" id="modify" />
+	<input type="hidden" value="${command.userRoles}" id="roles" />
 </fieldset>	
 </form:form>
 
@@ -129,6 +130,17 @@
 			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 			return false;
 		});
+		
+		//MD: Code for check the roles (Beta)
+		var allRoles = $j("#roles").val();
+		var roles = allRoles.substring(1, allRoles.length - 1).split(", ");
+		for(var i = 0; i < roles.length; i++){
+			$j(":checkbox").each(function(){
+				if($j(this).val() == roles[i]){
+					$j(this).attr("checked", "checked");
+				}
+			});
+		}
 		
 		$j("#EditUserControlForm").submit(function (){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
