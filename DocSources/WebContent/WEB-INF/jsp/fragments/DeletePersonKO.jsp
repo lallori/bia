@@ -7,7 +7,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="DeleteThisRecordDiv">
-	<c:if test="${fn:length(person. }"></c:if>
 		<h1>The selected person has not been deleted. An error is occured.</h1>
 	</div>
 

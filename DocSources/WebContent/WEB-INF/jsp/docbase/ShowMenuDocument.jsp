@@ -130,11 +130,11 @@
 		});
 		
 		$j("#deleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "DELETE DOCUMENT", width: 400, height: 110});return false;
+			Modalbox.show($j(this).attr("href"), {title: "DELETE DOCUMENT", width: 400, height: 120});return false;
 		});	
 		
 		$j("#undeleteAction").click( function() {															
-			Modalbox.show($j(this).attr("href"), {title: "UNDELETE DOCUMENT", width: 400, height: 110});return false;
+			Modalbox.show($j(this).attr("href"), {title: "UNDELETE DOCUMENT", width: 400, height: 120});return false;
 		});	
 
 		$j('#lastRecord').click(function() {
