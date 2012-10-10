@@ -121,11 +121,10 @@ IIPMooViewer.implement({
 
     // MEDICI ARCHIVE PROJECT START
     //html += '<tr><td>Annotation Type</td><td><input type="text" name="category" tabindex="2"';
-    html += '<tr><td><select><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="mercedes">Mercedes</option><option value="audi">Audi</option></select>';
+    html += '<tr><td><select tabindex="2"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';
     // MEDICI ARCHIVE PROJECT END
     
-    // MEDICI ARCHIVE PROJECT START
-    // ruven miss to put ' value="' + 
+    // MEDICI ARCHIVE PROJECT START 
     if( this.annotations[id].category ) html += ' value="' + this.annotations[id].category + '"';
     
     html += '/></td></tr>';
