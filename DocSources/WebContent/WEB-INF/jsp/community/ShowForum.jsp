@@ -187,7 +187,7 @@
 			            <div class="three">VIEWS</div>
 			            <div class="four">LAST DISCUSSION</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DELETE</div>
+			            	<div class="five">DEL</div>
 			            </security:authorize>
 			        </div>
 
@@ -248,7 +248,7 @@
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DELETE</div>
+			            	<div class="five">DEL</div>
 			            </security:authorize>
 			        </div>
 			    </div>			    
@@ -295,7 +295,7 @@
 				        			<div class="four">VIEWS</div>
 				        			<div class="five">LAST POST</div>
 				        			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            				<div class="six">DELETE</div>
+			            				<div class="six">DEL</div>
 			            			</security:authorize>
 								</div>						
 					</c:when>
@@ -308,7 +308,7 @@
 				            		<div class="three">VIEWS</div>
 				            		<div class="four">LAST DISCUSSION</div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            				<div class="five">DELETE</div>
+			            				<div class="five">DEL</div>
 			            			</security:authorize>
 			            		</div>			            	
 			       </c:otherwise>
@@ -466,7 +466,7 @@
 				       			<div class="four">VIEWS</div>
 				       			<div class="five">LAST POST</div>
 				       			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			           				<div class="six">DELETE</div>
+			           				<div class="six">DEL</div>
 			           			</security:authorize>
 							</div>						
 				</c:when>
@@ -479,7 +479,7 @@
 			            		<div class="three">VIEWS</div>
 			            		<div class="four">LAST POST</div>
 			            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			           				<div class="five">DELETE</div>
+			           				<div class="five">DEL</div>
 			           			</security:authorize>
 			           		</div>			            	
 				</c:otherwise>
