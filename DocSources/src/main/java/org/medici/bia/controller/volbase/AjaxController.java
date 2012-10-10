@@ -302,7 +302,7 @@ public class AjaxController {
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
 	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,

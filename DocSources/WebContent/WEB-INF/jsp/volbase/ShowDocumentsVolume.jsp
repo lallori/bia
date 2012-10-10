@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowDocumentsRelatedVolumeURL" value="/de/volbase/ShowDocumentsRelatedVolume.json"></c:url>
+	<c:url var="ShowDocumentsRelatedVolumeURL" value="/src/volbase/ShowDocumentsRelatedVolume.json"></c:url>
 	
 	<div class="yourSearchDiv">
 	<p>Documents indexed to <font color="red" style="margin-left:5px">Volume ${volNum}</font></p>
