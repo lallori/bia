@@ -130,7 +130,6 @@
 					// We set currentImage
 					currentImage = data.imageId;
 					$j("#currentImageOrder").val(data.imageOrder);
-					alert(transcribing);
 					if (transcribing == false) {
 						if (data.error == 'wrongType' || data.imageType == 'R') {
 							$j("#unvailableTranscribe").css('visibility', 'visible');
@@ -366,7 +365,6 @@
 						// We set currentImage
 						currentImage = data.imageId;
 						$j("#currentImageOrder").val(data.imageOrder);
-						alert(transcribing);
 						if (transcribing == false) {
 							if (data.error == 'wrongType') {
 		    					$j("#unvailableTranscribe").css('visibility', 'visible');

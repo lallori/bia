@@ -425,7 +425,6 @@
 				// We set currentImage
 				currentImage = data.imageId;
 				$j("#currentImageOrder").val(data.imageOrder);
-				alert(transcribing);
 				if(transcribing == false){
 					if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
