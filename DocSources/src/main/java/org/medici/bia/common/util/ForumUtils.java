@@ -157,11 +157,11 @@ public class ForumUtils {
 					}
 				}
 				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length())
-					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...<br />");
+					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
 				else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length())
-					returnText.append("..." + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");
+					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");
 				else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length())
-					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + "...<br />");
+					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
 				else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length())
 					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");					
 			}

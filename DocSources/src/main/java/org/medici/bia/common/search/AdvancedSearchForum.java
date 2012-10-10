@@ -542,7 +542,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	public String toString(){
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		if(words != null && words.get(0) != ""){
+		if(words != null && words.size() > 0){
 			stringBuilder.append("Words: ");
 			for(int i = 0; i < words.size(); i++){
 				stringBuilder.append(words.get(i));
