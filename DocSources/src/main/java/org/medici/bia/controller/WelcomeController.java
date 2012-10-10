@@ -28,10 +28,11 @@
 package org.medici.bia.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class WelcomeController {
 	@Autowired
 	private UserService userService;
-
+	@Autowired 
+	private CommunityService communityService;
+	
 	/**
 	 * @return the userService
 	 */
@@ -72,7 +75,21 @@ public class WelcomeController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
+		try {			
+			HashMap<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(3);
+			model.put("forumStatistics", forumStatistics);
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			return new ModelAndView("error/Welcome", model);
+		}
 		return new ModelAndView("Welcome", model);
+	}
+
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	public CommunityService getCommunityService() {
+		return communityService;
 	}
 }

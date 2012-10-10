@@ -27,6 +27,8 @@
  */
 package org.medici.bia.dao.forumtopic;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
@@ -34,6 +36,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.exception.ApplicationThrowable;
 
 /**
  * ForumPost DAO.
@@ -76,6 +79,22 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param numberOfElements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param numberOfElements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable;
 
 	/**
 	 * 

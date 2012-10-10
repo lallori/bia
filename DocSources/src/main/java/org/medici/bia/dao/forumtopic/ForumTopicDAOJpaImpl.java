@@ -42,6 +42,7 @@ import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -191,6 +192,40 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		return page;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws ApplicationThrowable {
+		String jpql = "FROM ForumTopic WHERE logicalDelete = false ORDER BY lastUpdate desc";
+
+		Query query = getEntityManager().createQuery(jpql);
+		
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(numberOfElements);
+		
+		return (List<ForumTopic>) query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable {
+		String jpql = "FROM ForumTopic WHERE logicalDelete = false ORDER BY totalReplies desc";
+
+		Query query = getEntityManager().createQuery(jpql);
+		
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(numberOfElements);
+		
+		return (List<ForumTopic>) query.getResultList();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

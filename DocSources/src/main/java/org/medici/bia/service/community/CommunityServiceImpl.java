@@ -27,10 +27,10 @@
  */
 package org.medici.bia.service.community;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
@@ -182,6 +182,7 @@ public class CommunityServiceImpl implements CommunityService {
 //			getForumDAO().merge(forum);
 			
 			forumPost.getTopic().setLastPost(forumPost);
+			forumPost.getTopic().setLastUpdate(new Date());
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
 			getForumTopicDAO().merge(forumPost.getTopic());
 
@@ -536,6 +537,27 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public HashMap<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable {
+		HashMap<String, List<?>> forumStatistics = new HashMap<String, List<?>>(0);
+		try {
+			List<ForumTopic> topForumTopics = getForumTopicDAO().findTopForumTopics(numberOfElements);
+			forumStatistics.put("TOP DISCUSSIONS", topForumTopics);
+			List<ForumTopic> mostRecentForumTopics = getForumTopicDAO().findMostRecentForumTopics(numberOfElements);
+			forumStatistics.put("MOST RECENT DISCUSSIONS", mostRecentForumTopics);
+		} catch (Throwable th) {
+			if (forumStatistics.get("TOP DISCUSSIONS") == null) {
+				forumStatistics.put("TOP DISCUSSIONS", new ArrayList<ForumTopic>(0));
+			}
+			forumStatistics.put("MOST RECENT DISCUSSIONS", new ArrayList<ForumTopic>(0));
+		}
+
+		return forumStatistics;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable {
 		try {
 			return getForumDAO().getForumsByType(type);
@@ -693,7 +715,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -713,7 +735,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -792,7 +814,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -804,7 +826,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

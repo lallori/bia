@@ -29,7 +29,6 @@ package org.medici.bia.service.community;
 
 import java.util.HashMap;
 import java.util.List;
-
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
@@ -319,5 +318,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param numberOfElements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HashMap<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
 
 }
