@@ -115,13 +115,13 @@ IIPMooViewer.implement({
     }).inject( annotation );
 
     // Create our input fields
-    var html = '<table><tr><td>title</td><td><input type="text" name="title" tabindex="1" autofocus';
+    var html = '<table><tr><td>Annotation Title</td><td><input type="text" name="title" autofocus';
     if( this.annotations[id].title ) html += ' value="' + this.annotations[id].title + '"';
     html += '/></td></tr>';
 
     // MEDICI ARCHIVE PROJECT START
-    //html += '<tr><td>Annotation Type</td><td><input type="text" name="category" tabindex="2"';
-    html += '<tr><td><select tabindex="2"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';
+    //html += '<tr><td>Annotation Type</td><td><input type="text" name="category"';
+    html += '<tr><td>Annotation Type</td><td><select name="category"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';
     // MEDICI ARCHIVE PROJECT END
     
     // MEDICI ARCHIVE PROJECT START 
@@ -129,7 +129,7 @@ IIPMooViewer.implement({
     
     html += '/></td></tr>';
 
-    html += '<tr><td colspan="2"><textarea name="text" rows="5" tabindex="3">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
+    html += '<tr><td colspan="2"><textarea name="text" rows="5">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
     // MEDICI ARCHIVE PROJECT START
     html += '<input type="hidden" name="annotationId" value="' + this.annotations[id].annotationId + '">';
     html += '<input type="hidden" name="type" value="' + this.annotations[id].type + '">';
