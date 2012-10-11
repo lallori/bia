@@ -908,7 +908,11 @@
 		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
 		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
 	</definition>
-	
+
+	<definition name="peoplebase/ShowPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPortraitPersonModalWindow.jsp" />
+	</definition>
+
 	<definition name="peoplebase/ShowRecipientDocumentsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRecipientDocumentsPerson.jsp" />
 	</definition>

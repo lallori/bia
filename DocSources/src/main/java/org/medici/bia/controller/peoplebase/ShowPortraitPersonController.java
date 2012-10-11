@@ -1,5 +1,5 @@
 /*
- * ShowPersonController.java
+ * ShowPortraitPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,7 +28,6 @@
 package org.medici.bia.controller.peoplebase;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.medici.bia.command.peoplebase.ShowPortraitPersonCommand;
-import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.People;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;

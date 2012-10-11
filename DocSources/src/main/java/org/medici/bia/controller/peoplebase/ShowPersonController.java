@@ -122,6 +122,7 @@ public class ShowPersonController {
 		}
 		
 		model.put("person", person);
+		model.put("time", System.currentTimeMillis());
 
 		return new ModelAndView("peoplebase/ShowPerson", model);
 	}

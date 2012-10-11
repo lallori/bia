@@ -46,7 +46,7 @@
 	<div id="documentTitle">
 		<c:if test="${not empty image}">
 					<div id="DocumentImageDigitDiv">
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS, GUEST_USERS">
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 						</security:authorize>
 						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">

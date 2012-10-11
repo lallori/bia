@@ -99,6 +99,7 @@ public class UploadPortraitPersonController {
 				
 				model.put("portraitWidth", bufferedImage.getWidth());
 				model.put("portraitHeight", bufferedImage.getHeight());
+				model.put("time", System.currentTimeMillis());
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/UploadPortraitPerson", model);

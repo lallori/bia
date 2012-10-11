@@ -584,7 +584,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void cropPortraitPerson(Integer personId, Integer x, Integer y, Integer x2, Integer y2, Integer width, Integer height) throws ApplicationThrowable {
+	public void cropPortraitPerson(Integer personId, Double x, Double y, Double x2, Double y2, Double width, Double height) throws ApplicationThrowable {
 		try {
 			People person = getPeopleDAO().find(personId);
 			
@@ -593,7 +593,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				File portraitFile = new File(portraitPath + "/" + person.getPortraitImageName());
 				BufferedImage bufferedImage = ImageIO.read(portraitFile);
 				//here code for cropping... TO BE TESTED...
-				BufferedImage croppedBufferedImage = bufferedImage.getSubimage(x, y, width, height);
+				BufferedImage croppedBufferedImage = bufferedImage.getSubimage(x.intValue(), y.intValue(), width.intValue(), height.intValue());
 				ImageIO.write(croppedBufferedImage, "jpg", portraitFile);
 			}
 		} catch(Throwable th) {

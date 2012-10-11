@@ -113,11 +113,11 @@
 			<div id="EditPortraitPersonDiv">
 				<c:if test="${person.portrait}">
 					<c:url var="ShowPortraitPersonURL" value="/src/peoplebase/ShowPortraitPerson.do">
-						<c:param name="personId" value="${command.personId}" />
+						<c:param name="personId" value="${person.personId}" />
+						<c:param name="time" value="${time}" />
 					</c:url>
 					<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
 				</c:if>
-				<div id="imgPortraitPerson"></div>
 				<p style="text-align:center"><b>Portrait</b></p>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 				<c:if test="${person.personId != 0}">

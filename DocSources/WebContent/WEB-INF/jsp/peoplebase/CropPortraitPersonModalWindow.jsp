@@ -6,9 +6,14 @@
 	
 	<c:url var="ShowPortraitPersonURL" value="/src/peoplebase/ShowPortraitPerson.do">
 		<c:param name="personId" value="${command.personId}" />
+		<c:param name="time" value="${time}" />
 	</c:url>
 
-	<c:url var="CropPortraitPersonURL" value="/src/peoplebase/CropPortraitPerson.do">
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId"   value="${command.personId}" />
+	</c:url>
+
+	<c:url var="CropPortraitPersonURL" value="/de/peoplebase/CropPortraitPerson.do">
 		<c:param name="personId" value="${command.personId}" />
 	</c:url>
 	
@@ -16,7 +21,7 @@
 		<img id="jcrop_target" src="${ShowPortraitPersonURL}" />
 	</div>
 
-	<form id="cropPortraitPersonForm" action="${CropPortraitPersonURL}"method="post" class="edit" enctype="multipart/form-data">
+	<form id="cropPortraitPersonForm" action="${CropPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 		<div>
 			<input id="save" type="submit" value="Save" />
 		</div>
@@ -33,7 +38,8 @@
 
 			$j('#jcrop_target').Jcrop({
 				onChange: fillForm,
-				onSelect: fillForm
+				onSelect: fillForm,
+				aspectRatio: 111 / 145
 			});
 
 			function fillForm(c) {
@@ -44,5 +50,15 @@
 				$j('#w').val(c.w);
 				$j('#h').val(c.h);
 			};
+			
+			$j("#cropPortraitPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#uploadPortraitWindow").html(html);
+					$j("#uploadPortraitWindow").dialog("option", "width", 170);
+					$j("#uploadPortraitWindow").dialog("option", "height", 200);
+					$j("#body_left").load('${ShowPersonURL}');
+				}});
+				return false;
+			});
 		});
 	</script>

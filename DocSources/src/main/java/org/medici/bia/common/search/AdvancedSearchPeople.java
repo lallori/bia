@@ -46,6 +46,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 
 /**
@@ -67,6 +68,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
+	private List<Integer> datesLastUpdateDay;
+	private List<Integer> datesLastUpdateDayBetween;
+	private List<Integer> datesLastUpdateMonth;
+	private List<Integer> datesLastUpdateMonthBetween;
+	private List<Integer> datesLastUpdateYear;
+	private List<Integer> datesLastUpdateYearBetween;
+	private List<DateType> datesLastUpdateTypes;
 	private List<Gender> gender;
 	private Boolean logicalDelete;
 	private List<String> names;
@@ -99,6 +107,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		datesYearBetween = new ArrayList<Integer>(0);
 		datesMonthBetween = new ArrayList<Integer>(0);
 		datesDayBetween = new ArrayList<Integer>(0);
+		datesLastUpdateDay = new ArrayList<Integer>(0);
+		datesLastUpdateDayBetween = new ArrayList<Integer>(0);
+		datesLastUpdateMonth = new ArrayList<Integer>(0);
+		datesLastUpdateMonthBetween = new ArrayList<Integer>(0);
+		datesLastUpdateYear = new ArrayList<Integer>(0);
+		datesLastUpdateYearBetween = new ArrayList<Integer>(0);
+		datesLastUpdateTypes = new ArrayList<DateType>(0);
 		placeId = new ArrayList<Integer>(0);
 		place = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
@@ -684,6 +699,104 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		this.wordsTypes = wordsTypes;
 	}
 	
+	/**
+	 * @return the datesLastUpdateDay
+	 */
+	public List<Integer> getDatesLastUpdateDay() {
+		return datesLastUpdateDay;
+	}
+
+	/**
+	 * @param datesLastUpdateDay the datesLastUpdateDay to set
+	 */
+	public void setDatesLastUpdateDay(List<Integer> datesLastUpdateDay) {
+		this.datesLastUpdateDay = datesLastUpdateDay;
+	}
+
+	/**
+	 * @return the datesLastUpdateDayBetween
+	 */
+	public List<Integer> getDatesLastUpdateDayBetween() {
+		return datesLastUpdateDayBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateDayBetween the datesLastUpdateDayBetween to set
+	 */
+	public void setDatesLastUpdateDayBetween(List<Integer> datesLastUpdateDayBetween) {
+		this.datesLastUpdateDayBetween = datesLastUpdateDayBetween;
+	}
+
+	/**
+	 * @return the datesLastUpdateMonth
+	 */
+	public List<Integer> getDatesLastUpdateMonth() {
+		return datesLastUpdateMonth;
+	}
+
+	/**
+	 * @param datesLastUpdateMonth the datesLastUpdateMonth to set
+	 */
+	public void setDatesLastUpdateMonth(List<Integer> datesLastUpdateMonth) {
+		this.datesLastUpdateMonth = datesLastUpdateMonth;
+	}
+
+	/**
+	 * @return the datesLastUpdateMonthBetween
+	 */
+	public List<Integer> getDatesLastUpdateMonthBetween() {
+		return datesLastUpdateMonthBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateMonthBetween the datesLastUpdateMonthBetween to set
+	 */
+	public void setDatesLastUpdateMonthBetween(List<Integer> datesLastUpdateMonthBetween) {
+		this.datesLastUpdateMonthBetween = datesLastUpdateMonthBetween;
+	}
+
+	/**
+	 * @return the datesLastUpdateYear
+	 */
+	public List<Integer> getDatesLastUpdateYear() {
+		return datesLastUpdateYear;
+	}
+
+	/**
+	 * @param datesLastUpdateYear the datesLastUpdateYear to set
+	 */
+	public void setDatesLastUpdateYear(List<Integer> datesLastUpdateYear) {
+		this.datesLastUpdateYear = datesLastUpdateYear;
+	}
+
+	/**
+	 * @return the datesLastUpdateYearBetween
+	 */
+	public List<Integer> getDatesLastUpdateYearBetween() {
+		return datesLastUpdateYearBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateYearBetween the datesLastUpdateYearBetween to set
+	 */
+	public void setDatesLastUpdateYearBetween(List<Integer> datesLastUpdateYearBetween) {
+		this.datesLastUpdateYearBetween = datesLastUpdateYearBetween;
+	}
+
+	/**
+	 * @return the datesLastUpdateTypes
+	 */
+	public List<DateType> getDatesLastUpdateTypes() {
+		return datesLastUpdateTypes;
+	}
+
+	/**
+	 * @param datesLastUpdateTypes the datesLastUpdateTypes to set
+	 */
+	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
+		this.datesLastUpdateTypes = datesLastUpdateTypes;
+	}
+
 	/**
 	 * This method return a JPA Query object. 
 	 */

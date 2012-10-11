@@ -769,5 +769,5 @@ public interface PeopleBaseService {
 	 * @param w
 	 * @param h
 	 */
-	public void cropPortraitPerson(Integer personId, Integer x, Integer y, Integer x2, Integer y2, Integer w, Integer h) throws ApplicationThrowable;
+	public void cropPortraitPerson(Integer personId, Double x, Double y, Double x2, Double y2, Double w, Double h) throws ApplicationThrowable;
 }

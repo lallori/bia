@@ -89,6 +89,7 @@ public class ShowLastEntryPersonController {
 					model.put("inMarkedList", "false");
 				}
 
+				model.put("time", System.currentTimeMillis());
 				return new ModelAndView("peoplebase/ShowPerson", model);
 			} else {
 				return new ModelAndView("empty", model);

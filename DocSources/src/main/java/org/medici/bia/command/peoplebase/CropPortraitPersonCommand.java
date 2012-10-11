@@ -34,6 +34,13 @@ package org.medici.bia.command.peoplebase;
  */
 public class CropPortraitPersonCommand {
 	private Integer personId;
+	private Double x;
+	private Double y;
+	private Double x2;
+	private Double y2;
+	private Double w;
+	private Double h;
+	
 	/**
 	 * @return the personId
 	 */
@@ -49,79 +56,73 @@ public class CropPortraitPersonCommand {
 	/**
 	 * @return the x
 	 */
-	public Integer getX() {
+	public Double getX() {
 		return x;
 	}
 	/**
 	 * @param x the x to set
 	 */
-	public void setX(Integer x) {
+	public void setX(Double x) {
 		this.x = x;
 	}
 	/**
 	 * @return the y
 	 */
-	public Integer getY() {
+	public Double getY() {
 		return y;
 	}
 	/**
 	 * @param y the y to set
 	 */
-	public void setY(Integer y) {
+	public void setY(Double y) {
 		this.y = y;
 	}
 	/**
 	 * @return the x2
 	 */
-	public Integer getX2() {
+	public Double getX2() {
 		return x2;
 	}
 	/**
 	 * @param x2 the x2 to set
 	 */
-	public void setX2(Integer x2) {
+	public void setX2(Double x2) {
 		this.x2 = x2;
 	}
 	/**
 	 * @return the y2
 	 */
-	public Integer getY2() {
+	public Double getY2() {
 		return y2;
 	}
 	/**
 	 * @param y2 the y2 to set
 	 */
-	public void setY2(Integer y2) {
+	public void setY2(Double y2) {
 		this.y2 = y2;
 	}
 	/**
 	 * @return the w
 	 */
-	public Integer getW() {
+	public Double getW() {
 		return w;
 	}
 	/**
 	 * @param w the w to set
 	 */
-	public void setW(Integer w) {
+	public void setW(Double w) {
 		this.w = w;
 	}
 	/**
 	 * @return the h
 	 */
-	public Integer getH() {
+	public Double getH() {
 		return h;
 	}
 	/**
 	 * @param h the h to set
 	 */
-	public void setH(Integer h) {
+	public void setH(Double h) {
 		this.h = h;
 	}
-	private Integer x;
-	private Integer y;
-	private Integer x2;
-	private Integer y2;
-	private Integer w;
-	private Integer h;
 }

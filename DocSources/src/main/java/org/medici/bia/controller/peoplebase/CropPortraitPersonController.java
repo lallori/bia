@@ -81,9 +81,12 @@ public class CropPortraitPersonController {
 			getPeopleBaseService().cropPortraitPerson(command.getPersonId(), command.getX(), command.getY(), command.getX2(), command.getY2(), command.getW(), command.getH());
 			
 		} catch (ApplicationThrowable applicationThrowable) {
-			
+			model.put("applicationThrowable", applicationThrowable);
+			new ModelAndView("error/ShowPortraitPersonModalWindow", model);
 		}
 
-		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
+		model.put("time", System.currentTimeMillis());
+
+		return new ModelAndView("peoplebase/ShowPortraitPersonModalWindow", model);
 	}
 }
