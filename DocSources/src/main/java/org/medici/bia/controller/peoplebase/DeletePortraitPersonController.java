@@ -1,5 +1,5 @@
 /*
- * DeletePersonController.java
+ * DeletePortraitPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,7 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.bia.command.peoplebase.DeletePersonCommand;
+import org.medici.bia.command.peoplebase.DeletePortraitPersonCommand;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +52,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/DeletePerson")
-public class DeletePersonController {
+@RequestMapping("/de/peoplebase/DeletePortraitPerson")
+public class DeletePortraitPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("deletePersonValidator")
+	@Qualifier("deletePortraitPersonValidator")
 	private Validator validator;
 
 	/**
@@ -82,22 +82,22 @@ public class DeletePersonController {
 	 * @param command
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePersonCommand command, BindingResult result) {
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePortraitPersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePerson");
+			return new ModelAndView("error/DeletePortraitPerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			try {
-				getPeopleBaseService().deletePerson(command.getPersonId());
+				getPeopleBaseService().removePortraitPerson(command.getPersonId());
 
-				return new ModelAndView("response/DeletePersonOK", model);
+				return new ModelAndView("response/DeletePortraitPersonOK", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("response/DeletePersonKO", model);
+				return new ModelAndView("response/DeletePortraitPersonKO", model);
 			}
 		}
 	}
@@ -107,18 +107,6 @@ public class DeletePersonController {
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * 
-	 * @param command
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") DeletePersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		return new ModelAndView("peoplebase/ShowConfirmDeletePerson", model);
 	}
 
 	/**

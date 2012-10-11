@@ -8,6 +8,14 @@
 		<c:param name="personId" value="${person.personId }" />
 	</c:url>
 	
+	<c:url var="DeletePortraitPersonURL" value="/de/peoplebase/DeletePortraitPerson.do">
+		<c:param name="personId" value="${person.personId }" />
+	</c:url>
+	
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	
 	<c:url var="GetPortraitPersonInformationURL" value="/src/peoplebase/GetPortraitPersonInformation.json">
 		<c:param name="personId" value="${person.personId }" />
 	</c:url>
@@ -32,6 +40,9 @@
 			</div>
 		</div>
 		<div>
+			<a id="resetPortrait" href="">Reset Portrait</a>
+		</div>
+		<div>
 			<input id="save" type="submit" value="Save" />
 		</div>
 	
@@ -40,6 +51,14 @@
 	<div id="output"></div>
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#resetPortrait").click(function(){
+				$j.ajax({ type:"POST", url:$j(this).attr("url"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#body_left").load('${ShowPersonURL}');
+					$j("#uploadPortraitWindow").dialog("close");
+				}});
+				return false;
+			});
+			
 			var options = { 
 				target:        '#output',   // target element(s) to be updated with server response 
 				success:       showResponse  // post-submit callback 

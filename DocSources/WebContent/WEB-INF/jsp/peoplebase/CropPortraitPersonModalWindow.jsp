@@ -53,10 +53,8 @@
 			
 			$j("#cropPortraitPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#uploadPortraitWindow").html(html);
-					$j("#uploadPortraitWindow").dialog("option", "width", 170);
-					$j("#uploadPortraitWindow").dialog("option", "height", 200);
 					$j("#body_left").load('${ShowPersonURL}');
+					$j("#uploadPortraitWindow").dialog("close");
 				}});
 				return false;
 			});

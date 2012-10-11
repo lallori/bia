@@ -194,6 +194,10 @@
         <description>Delete a Person Validator.</description>
 	</bean>
 
+	<bean id="deletePortraitPersonValidator" class="org.medici.bia.validator.peoplebase.DeletePortraitPersonValidator">
+        <description>Delete a Portrait Person Validator.</description>
+	</bean>
+
 	<bean id="deleteSpousePersonValidator" class="org.medici.bia.validator.peoplebase.DeleteSpousePersonValidator">
         <description>Delete Spouse Person Validator.</description>
 	</bean>

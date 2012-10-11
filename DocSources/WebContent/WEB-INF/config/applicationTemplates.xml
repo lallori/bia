@@ -1161,6 +1161,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceKO.jsp"/>
 	</definition>
 
+	<definition name="response/DeletePortraitPersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitPersonOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePortraitPersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitPersonKO.jsp"/>
+	</definition>
+
 	<definition name="response/DeletePersonOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonOK.jsp"/>
 	</definition>
