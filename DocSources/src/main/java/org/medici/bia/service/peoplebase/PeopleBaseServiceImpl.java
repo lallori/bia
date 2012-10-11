@@ -589,7 +589,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			People person = getPeopleDAO().find(personId);
 			
 			if ((person != null) && (person.getPortrait())) {
-				String portraitPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person");
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path");
 				File portraitFile = new File(portraitPath + "/" + person.getPortraitImageName());
 				BufferedImage bufferedImage = ImageIO.read(portraitFile);
 				//here code for cropping... TO BE TESTED...
@@ -1835,11 +1835,29 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BufferedImage getPortraitPerson(String portraitImageName) throws ApplicationThrowable {
 		try {
-			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("path.portrait.person") + "/" + portraitImageName);
+			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("portrait.person.path") + "/" + portraitImageName);
+			
+			return ImageIO.read(imageFile);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BufferedImage getPortraitPersonDefault() throws ApplicationThrowable {
+		try {
+			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("portrait.person.default"));
 			
 			return ImageIO.read(imageFile);
 		}catch(Throwable th){
@@ -1942,7 +1960,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			People person = getPeopleDAO().find(personPortrait.getPersonId());
 			
 			if (person != null) {
-				String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
+				String tempPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path.tmp");
 				
 				String fileName = null;
 				if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
@@ -1955,7 +1973,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 					FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
 				}
 	
-				String portraitPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person");
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path");
 				File portraitFile = new File(portraitPath + "/" + fileName);
 				FileUtils.writeByteArrayToFile(portraitFile, personPortrait.getFile().getBytes());
 			
@@ -1979,7 +1997,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable {
 		try {
-			String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
+			String tempPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path.tmp");
 			
 			String fileName;
 			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){

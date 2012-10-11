@@ -102,7 +102,9 @@ public class ShowPortraitPersonController {
 
 					httpServletResponse.getOutputStream().flush();
 				} else {
-					
+					BufferedImage bufferedImage = getPeopleBaseService().getPortraitPersonDefault();
+				    httpServletResponse.setContentType("image/jpeg");
+					ImageIO.write(bufferedImage, "jpg", httpServletResponse.getOutputStream());				
 				}
 			} catch (IOException ioException){
 				getLogger().error("error on reading image", ioException);

@@ -761,6 +761,13 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public BufferedImage getPortraitPersonDefault() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param personId
 	 * @param x
 	 * @param y

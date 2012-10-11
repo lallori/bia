@@ -649,7 +649,10 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.sm
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.transport.protocol', 'Mail Transport protocol', 'smtp');
 
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.tmpdir', '', '/data/');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.person', '', '/data/portrait/person');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.person.temp', '', '/data/portrait/person/temp');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.user', '', '/data/portrait/user');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.portrait.user.temp', '', '/data/portrait/user/temp');
+
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.person.path', '', '/data/portrait/person');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.person.path.tmp', '', '/data/portrait/person/tmp');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.person.default', '', '/data/portrait/person/img_user.jpg');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.path', '', '/data/portrait/user');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.path.tmp', '', '/data/portrait/user/tmp');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.default', '', '/data/portrait/user/img_user.jpg');
