@@ -1955,6 +1955,25 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public void removePortraitPerson(Integer personId) throws ApplicationThrowable {
+		try {
+			People person = getPeopleDAO().find(personId);
+			
+			if (person != null) {
+				person.setPortrait(Boolean.FALSE);
+				person.setPortraitImageName(null);
+				getPeopleDAO().merge(person);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public BufferedImage savePortaitPerson(PersonPortrait personPortrait) throws ApplicationThrowable {
 		try {
 			People person = getPeopleDAO().find(personPortrait.getPersonId());
@@ -2015,7 +2034,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -2027,7 +2046,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
