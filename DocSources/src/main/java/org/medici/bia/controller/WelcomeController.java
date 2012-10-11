@@ -76,7 +76,7 @@ public class WelcomeController {
 	public ModelAndView setupForm(HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		try {			
-			HashMap<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(3);
+			HashMap<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(5);
 			model.put("forumStatistics", forumStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
