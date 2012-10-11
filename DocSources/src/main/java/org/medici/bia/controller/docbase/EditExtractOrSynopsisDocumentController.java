@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.medici.bia.command.docbase.EditExtractOrSynopsisDocumentCommand;
+import org.medici.bia.common.util.BiaTextUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.SynExtract;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -97,8 +98,8 @@ public class EditExtractOrSynopsisDocumentController {
 			SynExtract synExtract = new SynExtract(command.getSynExtrId());
 			synExtract.setDocument(new Document(command.getEntryId()));
 			synExtract.setSynopsis(command.getSynopsis());
-			synExtract.setDocExtract(command.getDocExtract());
-			synExtract.setSynopsis(command.getSynopsis());
+			synExtract.setDocExtract(BiaTextUtils.normalize(command.getDocExtract()));
+			synExtract.setSynopsis(BiaTextUtils.normalize(command.getSynopsis()));
 
 			try {
 				Document document = null;
