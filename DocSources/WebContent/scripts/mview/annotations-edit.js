@@ -128,7 +128,8 @@ IIPMooViewer.implement({
     // MEDICI ARCHIVE PROJECT START 
     if( this.annotations[id].category ) html += ' value="' + this.annotations[id].category + '"';
     
-    html += '/></td></tr>';
+    //html += '/></td></tr>';
+    html += '</td></tr>';
 
     html += '<tr><td colspan="2"><textarea name="text" rows="5">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
     // MEDICI ARCHIVE PROJECT START
