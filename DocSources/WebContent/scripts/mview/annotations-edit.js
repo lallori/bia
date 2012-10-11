@@ -122,7 +122,7 @@ IIPMooViewer.implement({
     // MEDICI ARCHIVE PROJECT START
     //html += '<tr><td>Annotation Type</td><td><input type="text" name="category"';
     //html += '<tr><td>Annotation Type</td><td><select name="category"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';
-    html += '<tr><td>Annotation Type</td><td><input name="category" type="radio"  value="general">General Annotation<br><input name="category" type="radio" value="paleography">Paleography Annotation<br><input name="category" type="radio" value="personal">Personal Annotation';
+    html += '<tr><td>Annotation Type</td><td><input name="category" type="radio"  value="general">General<br><input name="category" type="radio" value="paleography">Paleography<br><input name="category" type="radio" value="personal">Personal';
     // MEDICI ARCHIVE PROJECT END
     
     // MEDICI ARCHIVE PROJECT START 
