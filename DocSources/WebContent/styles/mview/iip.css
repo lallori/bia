@@ -320,8 +320,9 @@
 .iipmooviewer .canvas .annotation.form tr td:first-of-type{
   color: #6D5C4D;
 }
-.iipmooviewer .canvas .annotation.form input {
-  width: 240px;
+
+.iipmooviewer .canvas .annotation.form input, .iipmooviewer .canvas .annotation.form select{
+  width: 180px;
   border: 1px solid #DCC0BA;
   margin: 0 0 0 auto;
   -moz-border-radius: 4px; 
