@@ -92,6 +92,7 @@
 									  Ok: function() {
 										  $j(this).dialog("close");
 										  $j(this).dialog("destroy");
+										  $j(this).appendTo("#main").css("display", "none");
 										  $j("#main").load(topicUrl);
 									  }
 								  }
@@ -108,6 +109,7 @@
 								  buttons: {
 									  Ok: function() {
 										  $j(this).dialog("close");
+										  $j(this).appendTo("#main").css("display", "none");
 									  }
 								  }
 							  });
@@ -129,6 +131,7 @@
 						  buttons: {
 							  Ok: function() {
 								  $j(this).dialog("close");
+								  $j(this).appendTo("#main").css("display", "none");
 							  }
 						  }
 					  });

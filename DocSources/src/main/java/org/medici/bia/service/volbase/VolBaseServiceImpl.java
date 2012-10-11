@@ -225,6 +225,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				// we need to set new FullPath for recursive functions...
 				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
 				getForumDAO().merge(forum);
+				
+				// Increment the number of subforums
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 

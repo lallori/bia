@@ -117,6 +117,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
+		forum.setSubForumsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.DOCUMENT);
 		forum.setLogicalDelete(Boolean.FALSE);
@@ -161,6 +162,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
+		forum.setSubForumsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setTitle(person.getMapNameLf());
 		forum.setSubType(SubType.PEOPLE);
@@ -196,6 +198,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
+		forum.setSubForumsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.PLACE);
 		forum.setLogicalDelete(Boolean.FALSE);
@@ -240,6 +243,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
+		forum.setSubForumsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
 		forum.setSubType(SubType.VOLUME);
 		forum.setLogicalDelete(Boolean.FALSE);
@@ -695,6 +699,36 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		
 		recursiveDecreasePostsNumber(forum.getForumParent());
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveDecreasePostsNumber(Forum forum, Integer decreaseNumber) throws PersistenceException {
+		if(forum == null){
+			return;
+		}
+		
+		forum.setPostsNumber(forum.getPostsNumber() - decreaseNumber);
+		merge(forum);
+		
+		recursiveDecreasePostsNumber(forum.getForumParent(), decreaseNumber);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveDecreaseSubForumsNumber(Forum forum) throws PersistenceException {
+		if(forum == null){
+			return;
+		}
+		
+		forum.setSubForumsNumber(forum.getSubForumsNumber() - 1);
+		merge(forum);
+		
+		recursiveDecreaseSubForumsNumber(forum.getForumParent());
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -708,7 +742,22 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setTopicsNumber(forum.getTopicsNumber()-1);
 		merge(forum);
 		
-		recursiveIncreaseTopicsNumber(forum.getForumParent());
+		recursiveDecreaseTopicsNumber(forum.getForumParent());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveDecreaseTopicsNumber(Forum forum, Integer decreaseNumber) throws PersistenceException {
+		if(forum == null){
+			return;
+		}
+		
+		forum.setTopicsNumber(forum.getTopicsNumber() - decreaseNumber);
+		merge(forum);
+		
+		recursiveDecreaseTopicsNumber(forum.getForumParent(), decreaseNumber);
 	}
 
 	/**
@@ -724,6 +773,21 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		merge(forum);
 		
 		recursiveIncreasePostsNumber(forum.getForumParent());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveIncreaseSubForumsNumber(Forum forum) throws PersistenceException {
+		if(forum == null){
+			return;
+		}
+		
+		forum.setSubForumsNumber(forum.getSubForumsNumber() + 1);
+		merge(forum);
+		
+		recursiveIncreaseSubForumsNumber(forum.getForumParent());
 	}
 
 	/**

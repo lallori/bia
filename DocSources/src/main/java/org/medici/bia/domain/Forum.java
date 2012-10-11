@@ -90,6 +90,8 @@ public class Forum implements Serializable {
 	private Integer postsNumber;
 	@Column (name="\"topicsNumber\"")
 	private Integer topicsNumber;
+	@Column (name="\"subForumsNumber\"")
+	private Integer subForumsNumber;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"lastPost\"", nullable=true)
 	private ForumPost lastPost;
@@ -295,6 +297,20 @@ public class Forum implements Serializable {
 	 */
 	public void setTopicsNumber(Integer topicsNumber) {
 		this.topicsNumber = topicsNumber;
+	}
+
+	/**
+	 * @return the subForumsNumber
+	 */
+	public Integer getSubForumsNumber() {
+		return subForumsNumber;
+	}
+
+	/**
+	 * @param subForumsNumber the subForumsNumber to set
+	 */
+	public void setSubForumsNumber(Integer subForumsNumber) {
+		this.subForumsNumber = subForumsNumber;
 	}
 
 	/**

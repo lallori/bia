@@ -447,16 +447,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
 				// we need to set new FullPath for recursive functions...
-				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
-				getForumDAO().merge(forum);
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
+				
+				// Increment the number of subforums
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 			}else if(forum.getLogicalDelete()){
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
+				
 				//In this case a user restore a forum deleted.				
 				forum.setLogicalDelete(Boolean.FALSE);
 				getForumDAO().merge(forum);
+				
+				// Increment the number of subforums
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 				
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 

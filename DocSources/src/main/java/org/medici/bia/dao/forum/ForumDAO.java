@@ -249,12 +249,35 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public void recursiveDecreasePostsNumber(Forum parentForum) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param parentForum
+	 * @param decreaseNumber
+	 * @throws PersistenceException
+	 */
+	public void recursiveDecreasePostsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param parentForum
+	 * @throws PersistenceException
+	 */
+	public void recursiveDecreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param parentForum
 	 */
 	public void recursiveDecreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param parentForum
+	 * @param decreaseNumber
+	 * @throws PersistenceException
+	 */
+	public void recursiveDecreaseTopicsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
 
 	/**
 	 * 
@@ -263,6 +286,13 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 */
 	public void recursiveIncreasePostsNumber(Forum parentForum) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param parentForum
+	 * @throws PersistenceException
+	 */
+	public void recursiveIncreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param parentForum

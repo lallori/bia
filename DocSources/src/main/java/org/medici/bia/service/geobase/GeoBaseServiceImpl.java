@@ -219,6 +219,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 
 				// thisi method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
+				
+				// Increment the number of subforums
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 

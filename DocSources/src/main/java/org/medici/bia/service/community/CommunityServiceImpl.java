@@ -113,6 +113,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 			forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
 			getForumDAO().merge(forum);
+			
+			getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
 			return forum;
 		} catch (Throwable th) {
@@ -135,6 +137,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setForum(forum);
 			
 			if (forumPost.getTopic().getTopicId() == 0) {
+				//Create the first post of a new topic
 				ForumTopic forumTopic = new ForumTopic(null);
 				forumTopic.setForum(forum);
 				forumTopic.setDateCreated(new Date());
@@ -163,6 +166,9 @@ public class CommunityServiceImpl implements CommunityService {
 				getForumTopicDAO().persist(forumTopic);
 				
 				forumPost.setTopic(forumTopic);
+				
+				//Increment the topicsNumber in forum
+				getForumDAO().recursiveIncreaseTopicsNumber(forum);
 			} else {
 				forumPost.setTopic(getForumTopicDAO().find(forumPost.getTopic().getTopicId()));
 				//To set the parent post Id
@@ -278,9 +284,13 @@ public class CommunityServiceImpl implements CommunityService {
 //					forumParent.setLastPost(forumPost);
 //					getForumDAO().merge(forumParent);
 					recursiveSetLastPost(forumParent);
-					forumParent.setPostsNumber(forumParent.getPostsNumber() - forum.getPostsNumber());
+					
+//					forumParent.setPostsNumber(forumParent.getPostsNumber() - forum.getPostsNumber());
 					getForumDAO().merge(forumParent);					
 				}
+				getForumDAO().recursiveDecreasePostsNumber(forum, forum.getPostsNumber());
+				getForumDAO().recursiveDecreaseTopicsNumber(forum, forum.getTopicsNumber());
+				getForumDAO().recursiveDecreaseSubForumsNumber(forum.getForumParent());
 				
 			}
 		}catch(Throwable th){
@@ -308,7 +318,8 @@ public class CommunityServiceImpl implements CommunityService {
 			forumTopic.setTotalReplies(forumTopic.getTotalReplies()-1);
 			getForumTopicDAO().merge(forumTopic);
 			
-			forum.setPostsNumber(forum.getPostsNumber() - 1);
+			getForumDAO().recursiveDecreasePostsNumber(forum);
+//			forum.setPostsNumber(forum.getPostsNumber() - 1);
 			getForumDAO().merge(forum);
 			
 			recursiveSetLastPost(forum);
@@ -339,7 +350,9 @@ public class CommunityServiceImpl implements CommunityService {
 				getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
 				Forum forum = forumTopic.getForum();
 				recursiveSetLastPost(forum);
-				forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
+				getForumDAO().recursiveDecreasePostsNumber(forum, forumTopic.getTotalReplies());
+				getForumDAO().recursiveDecreaseTopicsNumber(forum);
+//				forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
 				getForumDAO().merge(forum);				
 			}
 		}catch(Throwable th){

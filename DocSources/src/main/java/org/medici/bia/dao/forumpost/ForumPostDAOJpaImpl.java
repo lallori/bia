@@ -157,10 +157,11 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	@SuppressWarnings("unchecked")
 	@Override
 	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException {
-		String jpql = "FROM ForumPost  WHERE topic.forum.forumId = :forumId AND logicalDelete=false order by dateCreated desc";
+		StringBuffer jpql = new StringBuffer("FROM ForumPost  WHERE forum.fullPath LIKE '%.");
+		jpql.append(forum.getForumId());
+		jpql.append(".%' AND logicalDelete=false order by dateCreated desc");
 		
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("forumId", forum.getForumId());
+		Query query = getEntityManager().createQuery(jpql.toString());
 
         // We set pagination to obtain first post...  
 		query.setFirstResult(0);

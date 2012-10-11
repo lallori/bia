@@ -205,7 +205,8 @@
 			                <a href="${ShowForumURL}" class="forumHref">${currentForum.title}</a>
 			                <span>${currentForum.description}</span>
 			            </div>
-			            <div class="two">${fn:length(currentForum.forumTopics)}</div>
+<%-- 			            <div class="two">${fn:length(currentForum.forumTopics)}</div> --%>
+						<div class="two">${currentForum.topicsNumber}</div>
 			            <div class="three">0</div>
 					<c:if test="${not empty currentForum.lastPost}">
 			            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
@@ -248,7 +249,7 @@
 			            <div class="three">0</div>
 			            <div class="four">empty forum</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            	<div class="five">DEL</div>
+			            	<div class="five"></div>
 			            </security:authorize>
 			        </div>
 			    </div>			    
@@ -410,7 +411,7 @@
 				            		<div class="four">0</div>
 				            		<div class="five">empty forum</div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        					<div class="six"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+			        					<div class="six"></div>
 			        				</security:authorize>
 			        			</div>
 			        		</c:when>
@@ -425,7 +426,7 @@
 						            <div class="three">0</div>
 						            <div class="four">empty forum</div>
 						            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					        			<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        			<div class="five"></div>
 					        		</security:authorize>
 						        </div>
 						    </c:otherwise>
@@ -582,7 +583,7 @@
 						        <div class="four">0</div>
 								<div class="five">empty forum</div>	
 						        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        		<div class="six"></div>
 					        	</security:authorize>
 							</div>
 						</c:when>
@@ -597,7 +598,7 @@
 					            <div class="three">0</div>
 					            <div class="four">empty forum</div>
 					            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					        		<div class="five"><a href="#"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+					        		<div class="five"></div>
 					        	</security:authorize>
 					        </div>
 					    </c:otherwise>
