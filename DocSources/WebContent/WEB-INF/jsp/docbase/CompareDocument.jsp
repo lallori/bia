@@ -59,6 +59,27 @@
 		<%-- Comparing Document Record --%>
 		<c:if test="${document.volume != null}">
 		<div id="documentTitle">
+			<c:if test="${not empty image}">
+					<div id="DocumentImageDigitDiv">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+						</security:authorize>
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<span class="register">To see this Document image  you must register</span>
+							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);">
+						</security:authorize>
+					</div>
+				</c:if>
+			<c:if test="${empty image}">
+				<div id="DocumentImageNotDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+						<span>To be digitized</span>
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+						<span class="register">To be digitized</span>
+					</security:authorize>
+				</div>
+			</c:if>
 			<div id="text">
 				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
 				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
@@ -80,6 +101,22 @@
 					</c:otherwise>
 				</c:choose>
 				<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
+				<c:if test="${not empty image}">
+				<div id="icons">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
+							<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
+						</security:authorize>
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<span class="register">To see this Document you must register</span>
+							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+						</security:authorize>
+				</div>
+			</c:if>
+			<c:if test="${image == null}">
+				<br>
+        		<p class="notDigitized">This document is not digitized yet</p>
+         	</c:if>
 			</div>
 		</div>
 		</c:if>
