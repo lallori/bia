@@ -43,7 +43,6 @@
 	</div>
 
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j("#EditDetailsPerson").css('visibility', 'visible'); 
@@ -91,4 +90,3 @@
 			});
 		});
 	</script>
-</security:authorize>

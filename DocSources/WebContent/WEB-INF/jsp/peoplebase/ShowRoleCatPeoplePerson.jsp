@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowRoleCatPeoplePersonURL" value="/de/peoplebase/ShowRoleCatPeoplePerson.json"></c:url>
+	<c:url var="ShowRoleCatPeoplePersonURL" value="/src/peoplebase/ShowRoleCatPeoplePerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Role Category: <font color="red" style="margin-left:5px">"${roleCat}"</font></p>

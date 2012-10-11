@@ -981,7 +981,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowRoleCatPeoplePerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowRoleCatPeoplePerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowRoleCatPeoplePerson(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -1150,7 +1150,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json", method = RequestMethod.GET)
 	public ModelAndView showTitlesOrOccupationsPeoplePerson(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,

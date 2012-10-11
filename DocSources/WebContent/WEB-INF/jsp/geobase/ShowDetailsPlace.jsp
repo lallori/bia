@@ -10,7 +10,8 @@
 			<c:param name="plSource" 	 		value="${place.plSource}" />
 			<c:param name="parentPlaceAllId"	value="${place.parentPlace.placeAllId}" />
 		</c:url>
-		
+	</security:authorize>
+	
 		<c:url var="EditGeographicCoordinatesPlaceURL" value="/de/geobase/EditGeographicCoordinatesPlace.do">
 			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
@@ -42,7 +43,6 @@
 		<c:url var="ShowActiveEndPeoplePlaceURL" value="/src/geobase/ShowActiveEndPeoplePlace.do">
 			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
-	</security:authorize>
 			<%-- Creating a New Place Record --%>
 			<c:if test="${place.placeAllId == 0}">
 					<c:if test="${place.plSource == 'TGN'}">
@@ -192,7 +192,6 @@
 		<br />
 
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPlace").css('visibility', 'visible');
@@ -402,4 +401,3 @@
 			});
 		});
 	</script>
-</security:authorize>

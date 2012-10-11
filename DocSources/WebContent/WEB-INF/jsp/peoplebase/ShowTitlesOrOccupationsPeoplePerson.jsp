@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json"></c:url>
+	<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Title / Occupation : <font color="red" style="margin-left:5px">"${titleOcc}"</font></p>

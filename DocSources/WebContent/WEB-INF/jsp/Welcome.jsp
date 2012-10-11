@@ -6,7 +6,7 @@
 
 	<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
 	<div class="welcome_list">
-		<h2>Welcome back <security:authentication property="principal.firstName"/>. <br /></h2>
+		<h3>Welcome back <security:authentication property="principal.firstName"/>. <br /></h3>
 
 	  <h5>ACTIVITY IN FORUMS</h5>
     
