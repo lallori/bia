@@ -116,7 +116,9 @@
 						<c:param name="personId" value="${person.personId}" />
 						<c:param name="time" value="${time}" />
 					</c:url>
-					<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
+					<div id="imgPortraitPerson">
+						<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
+					</div>				
 				</c:if>
 				<p style="text-align:center"><b>Portrait</b></p>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
