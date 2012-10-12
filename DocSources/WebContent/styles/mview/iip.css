@@ -294,7 +294,7 @@
 
 .iipmooviewer .canvas .annotation.form {
   padding: 3px;
-  width: auto;
+  width: 353px;
   height: auto;
   margin-top: 2px;
   border: 1px solid #aaa;
@@ -314,7 +314,7 @@
   -webkit-box-shadow: 1px 1px 10px #666;
   -moz-border-radius: 4px; 
   -webkit-border-radius: 4px; 
-  border-radius: 4px; 
+  border-radius: 4px;  
 }
 
 .iipmooviewer .canvas .annotation.form tr td:first-of-type{
@@ -322,7 +322,7 @@
 }
 
 .iipmooviewer .canvas .annotation.form input, .iipmooviewer .canvas .annotation.form select{
-  width: 180px;
+  width: 237px;
   border: 1px solid #DCC0BA;
   margin: 0 0 0 auto;
   -moz-border-radius: 4px; 
@@ -334,8 +334,14 @@
   padding:3px;
 }
 
+.iipmooviewer .canvas .annotation.form input[type="radio"]{
+  width: 10px;
+  margin: 0 5px 5px 10px;
+  
+}
+
 .iipmooviewer .canvas .annotation.form textarea {
-  width: 295px;
+  width: 338px;
   border: 1px solid #DCC0BA;
   margin: 0 0 0 auto;
   -moz-border-radius: 4px; 
