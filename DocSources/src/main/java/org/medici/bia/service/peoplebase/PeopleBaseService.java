@@ -785,31 +785,4 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param personId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public BufferedImage getPortraitPerson(String portraitImageName) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public BufferedImage getPortraitPersonDefault() throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param personId
-	 * @param x
-	 * @param y
-	 * @param x2
-	 * @param y2
-	 * @param w
-	 * @param h
-	 */
-	public void cropPortraitPerson(Integer personId, Double x, Double y, Double x2, Double y2, Double w, Double h) throws ApplicationThrowable;
 }
