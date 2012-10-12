@@ -15,7 +15,7 @@
 }
 
 /* These styles define the border lines */
-.jcrop-vline,.jcrop-hline{background:#FFF url(/DocSources/images/1024/Jcrop.gif) top left repeat;font-size:0;position:absolute;}
+.jcrop-vline,.jcrop-hline{background:transparent;font-size:0;position:absolute;border:none}
 .jcrop-vline{height:100%;width:1px!important;}
 .jcrop-hline{height:1px!important;width:100%;}
 .jcrop-vline.right{right:0;}

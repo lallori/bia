@@ -1841,6 +1841,30 @@ span.docId, span.placeId {
 /*
 /* --------- EditDetailsPerson ---------- */
 
+div.resetPortrait, div.savePortrait {
+    display: inline-block;
+}
+
+#resetPortrait {
+    float: left;
+}
+
+#save.savePortrait {
+    float: right;
+    margin: 0;
+}
+
+#crop { /* Save button on bottom right  */
+	margin:5px auto 10px 0;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+}
+
 #personTitle p {
 	margin: 10px 0 0 10px;
 }

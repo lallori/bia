@@ -17,13 +17,10 @@
 		<c:param name="personId" value="${command.personId}" />
 	</c:url>
 	
-	<div style="width:${portraitWidth}px;height:${portraitHeight}px;overflow:hidden;margin-left:5px;">
-		<img id="jcrop_target" src="${ShowPortraitPersonURL}" />
-	</div>
-
 	<form id="cropPortraitPersonForm" action="${CropPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 		<div>
-			<input id="save" type="submit" value="Save" />
+<!-- 			<input id="save" type="submit" value="Save" /> -->
+		<input id="crop" type="submit" value="Crop" />
 		</div>
 		<input type="hidden" id="x" name="x" value"0">
 		<input type="hidden" id="x2" name="x2" value"0">
@@ -33,6 +30,10 @@
 		<input type="hidden" id="h" name="h" value"0">
 	</form>
 	
+	<div style="width:auto;height:${portraitHeight}px;overflow:hidden;margin-left:5px;">
+		<img id="jcrop_target" src="${ShowPortraitPersonURL}" />
+	</div>
+
 	<script type="text/javascript">
 		$j(document).ready(function() {
 

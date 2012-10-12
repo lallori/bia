@@ -39,11 +39,10 @@
 				</div>
 			</div>
 		</div>
+		<br>
 		<div>
-			<a id="resetPortrait" href="">Reset Portrait</a>
-		</div>
-		<div>
-			<input id="save" type="submit" value="Save" />
+			<a id="resetPortrait" href="" class="button_medium">Reset Portrait</a>
+			<input id="save" type="submit" class="savePortrait"  value="Save" />
 		</div>
 	
 	</form>
@@ -74,7 +73,7 @@
 			 	$j('#uploadPortraitWindow').html(responseText);
 			 	$j.ajax({ url: '${GetPortraitPersonInformationURL}', cache: false, success:function(json) { 
 			 		if (json.portraitWidth > 100) {
-						$j("#uploadPortraitWindow").dialog("option", "width", json.portraitWidth + 100);
+						$j("#uploadPortraitWindow").dialog("option", "width", json.portraitWidth + 10);
 			 		}
 			 		if (json.portraitHeight> 100) {
 						$j("#uploadPortraitWindow").dialog("option", "height", json.portraitHeight + 100);

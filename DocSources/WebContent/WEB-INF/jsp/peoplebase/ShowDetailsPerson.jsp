@@ -185,7 +185,7 @@
 			.dialog({                                                                                                                                                                   
 				resizable: false,
 				width: 450,
-				height: 150, 
+				height: 160, 
 				modal: true,
 				autoOpen : false,
 				zIndex: 3999,
@@ -196,7 +196,7 @@
 	        
 	        $j('#uploadPortrait').click(function(){
 	        	$j("#uploadPortraitWindow").dialog("option", "width", 450);
-	 			$j("#uploadPortraitWindow").dialog("option", "height", 150);
+	 			$j("#uploadPortraitWindow").dialog("option", "height", 160);
 	 			
 				$j('#uploadPortraitWindow').dialog('open');
 				return false;
