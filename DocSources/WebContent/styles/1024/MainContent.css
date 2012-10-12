@@ -450,6 +450,10 @@ item a{
 	min-height: 170px;
 }
 
+#personTitle {
+	min-height: 200px;
+}
+
 .extractText {
     width: 385px;
 }
@@ -1395,14 +1399,17 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* Volume Details Display items */
 
 #EditPortraitPersonDiv {
-	z-index:1;
-	margin:0 0 0 340px;
-	background-image:url(/DocSources/images/1024/bg_userimage.jpg);
 	width:128px;
 	height:160px;
-	position:absolute;
-	font-size:11px;
+	display: inline-block;
 	color:#6F6B69;
+}
+
+#imgPortraitPerson img {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 0 0 15px #ccc;
 }
 
 #EditPortraitPersonDiv p {
@@ -1562,6 +1569,12 @@ p.notDigitized {
 
 #documentTitle #text, #geoTitle #text {
 	width: 290px;
+}
+
+#personTitle #text {
+	width: 330px;
+	display: inline-block;
+	vertical-align: top;
 }
 
 #geoTitle #text #linked{
@@ -1839,7 +1852,6 @@ span.docId, span.placeId {
 }
 
 #personTitle div {
-	margin-top: 10px;
 }
 
 .num_docs {
