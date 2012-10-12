@@ -332,7 +332,7 @@
 			var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
 			.dialog({                                                                                                                                                                   
 				autoOpen: false,
-				width: 352,
+				width: 355,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
 				title: 'EDIT TRANSCRIPTION',

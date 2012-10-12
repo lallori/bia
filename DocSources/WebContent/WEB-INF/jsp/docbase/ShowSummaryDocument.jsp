@@ -101,6 +101,18 @@
 					<br />
 				</c:otherwise>
 			</c:choose>
+			<c:if test="${not empty image}">
+				<div id="icons">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
+							<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
+						</security:authorize>
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							<span class="register">To see this Document you must register</span>
+							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+						</security:authorize>
+				</div>
+			</c:if>
 			<c:if test="${image == null}">
 				<br>
         		<p class="notDigitized">This document is not digitized yet</p>

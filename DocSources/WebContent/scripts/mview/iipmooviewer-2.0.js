@@ -940,6 +940,12 @@ var IIPMooViewer = new Class({
 
     // For panoramic images, use a large navigation window
     if( this.max_size.w > 2*this.max_size.h ) thumb_width = this.view.w / 2;
+    
+    // MEDICI ARCHIVE PROJECT START
+    // Navigation window in Manuscript Transcriber
+    if (this.view.w > 1000)
+        thumb_width = this.view.w / 8;
+    // MEDICI ARCHIVE PROJECT END
 
     // Make sure our height is not more than 50% of view height
     if( (this.max_size.h/this.max_size.w)*thumb_width > this.view.h*0.5 ){
@@ -1284,6 +1290,24 @@ var IIPMooViewer = new Class({
 	  mouseout: function(){ this.fade(0.6); }
 	}
       }).inject(this.container);
+      
+     //MEDICI ARCHIVE PROJECT START
+      new Element( 'div', {
+    		'class': 'hideNavWindow',
+    		'html': '<img class="hideNavWindow" src="' + this.prefix + 'icon_hide.png" title="Hide/Restore navigation window">',
+    		'events': {
+    		  // We specify the start value to stop a strange problem where on the first
+    		  // mouseover we get a sudden transition to opacity 1.0
+    		  mouseover: function(){ this.fade([0.6,0.9]); },
+    		  mouseout: function(){ this.fade(0.6); },
+    		  click: function(){_this.toggleNavigationWindow(); }
+    		},
+    		'styles': {
+    	  		position: 'absolute',
+    	  		display: 'none'
+    	  	      }
+    	      }).inject(this.container);
+      //MEDICI ARCHIVE PROJECT END
     }
 
 

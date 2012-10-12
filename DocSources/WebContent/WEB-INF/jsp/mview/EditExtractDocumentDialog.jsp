@@ -20,9 +20,9 @@
 	<form:form id="EditExtractDocumentForm" method="post" action="${editExtractDocumentDialogURL}" cssClass="edit">
 		<form:textarea id="extract" path="docExtract" rows="22"/>
 		
-		<input id="saveExtract" class="button_small" type="submit" value="Save"/>
+		<input id="save" class="button_small" type="submit" value="Save"/>
 		<input id="saveAndExit" class="button_medium" type="submit" value="Save and Exit"/>
-        <input id="saveAndEditSynopsis" class="button_medium" type="submit" value="Edit Synopsis"/>
+        <input id="editSynopsis" class="button_medium" type="submit" value="Edit Synopsis"/>
 		
 		<form:hidden path="entryId"/>
 		<form:hidden path="synExtrId" />
@@ -41,7 +41,7 @@
 				return false;
 			});
 			
-			$j("#saveExtract").click(function (){
+			$j("#save").click(function (){
 				if (extractChanged) {
 					$j("#editModify").val(0);
 					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -74,7 +74,7 @@
 			});
 			
 			
-			$j("#saveAndEditSynopsis").click(function (){
+			$j("#editSynopsis").click(function (){
 				if (extractChanged) {
 					$j("#editModify").val(0);
 						$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
