@@ -142,6 +142,15 @@ public interface CommunityService {
 	public ForumPost findPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
+	 * Given in input user account, this method returns the user object.
+	 * 
+	 * @param account the {@link java.lang.String} user account that we are searching 
+	 * @return
+	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public User findUser(String account) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param messageId
 	 * @return

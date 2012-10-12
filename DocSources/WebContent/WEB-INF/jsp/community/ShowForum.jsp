@@ -196,7 +196,7 @@
 					<c:url var="ShowForumURL" value="/community/ShowForum.do">
 						<c:param name="forumId" value="${currentForum.forumId}" />
 					</c:url>
-					<c:url var="DeleteForumURL" value="/community/DeleteForum.json">
+					<c:url var="DeleteForumURL" value="/de/community/DeleteForum.json">
 						<c:param name="forumId" value="${currentForum.forumId}" />
 					</c:url>
 					<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
@@ -320,7 +320,7 @@
 							<c:param name="topicId" value="${currentTopic.topicId}"/>
 							<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 						</c:url>
-						<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
+						<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
 							<c:param name="topicId" value="${currentTopic.topicId}" />
 						</c:url>
 						<c:choose>
@@ -492,7 +492,7 @@
 						<c:param name="topicId" value="${currentTopic.topicId}"/>
 						<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 					</c:url>
-					<c:url var="DeleteTopicForumURL" value="/community/DeleteForumTopic.json">
+					<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
 						<c:param name="topicId" value="${currentTopic.topicId}" />
 					</c:url>
 					<c:choose>

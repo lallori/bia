@@ -35,6 +35,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
+import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
@@ -47,13 +48,11 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.User;
-import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -262,37 +261,28 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public void deleteForum(Integer forumId) throws ApplicationThrowable {
 		try{
-			Boolean authorize = Boolean.FALSE;
-			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			int i = 0;
-			while(i < userRoles.size() && !authorize){
-				if(userRoles.get(i).getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS))
-					authorize = Boolean.TRUE;
-			}
-			if(authorize){
-				Forum forum = getForumDAO().find(forumId);
-				forum.setLogicalDelete(Boolean.TRUE);
+			Forum forum = getForumDAO().find(forumId);
+			forum.setLogicalDelete(Boolean.TRUE);
 				
-				getForumDAO().merge(forum);
-				getForumDAO().deleteForumFromParent(forum.getForumId());
-				getForumTopicDAO().deleteForumTopicsFromForum(forum.getForumId());
-				getForumPostDAO().deleteForumPostsFromForum(forum.getForumId());
-				if(forum.getForumParent() != null){
-					//MD: Update the last Post and the number of posts
-					Forum forumParent = forum.getForumParent();
-//					ForumPost forumPost = getForumPostDAO().findLastPostFromForum(forumParent);
-//					forumParent.setLastPost(forumPost);
-//					getForumDAO().merge(forumParent);
-					recursiveSetLastPost(forumParent);
-					
-//					forumParent.setPostsNumber(forumParent.getPostsNumber() - forum.getPostsNumber());
-					getForumDAO().merge(forumParent);					
-				}
-				getForumDAO().recursiveDecreasePostsNumber(forum, forum.getPostsNumber());
-				getForumDAO().recursiveDecreaseTopicsNumber(forum, forum.getTopicsNumber());
-				getForumDAO().recursiveDecreaseSubForumsNumber(forum.getForumParent());
+			getForumDAO().merge(forum);
+			getForumDAO().deleteForumFromParent(forum.getForumId());
+			getForumTopicDAO().deleteForumTopicsFromForum(forum.getForumId());
+			getForumPostDAO().deleteForumPostsFromForum(forum.getForumId());
+			if(forum.getForumParent() != null){
+				//MD: Update the last Post and the number of posts
+				Forum forumParent = forum.getForumParent();
+//				ForumPost forumPost = getForumPostDAO().findLastPostFromForum(forumParent);
+//				forumParent.setLastPost(forumPost);
+//				getForumDAO().merge(forumParent);
+				recursiveSetLastPost(forumParent);
 				
+//				forumParent.setPostsNumber(forumParent.getPostsNumber() - forum.getPostsNumber());
+				getForumDAO().merge(forumParent);					
 			}
+			getForumDAO().recursiveDecreasePostsNumber(forum, forum.getPostsNumber());
+			getForumDAO().recursiveDecreaseTopicsNumber(forum, forum.getTopicsNumber());
+			getForumDAO().recursiveDecreaseSubForumsNumber(forum.getForumParent());
+			
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -335,26 +325,17 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public void deleteForumTopic(Integer topicId) throws ApplicationThrowable {
 		try{
-			Boolean authorize = Boolean.FALSE;
-			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			int i = 0;
-			while(i < userRoles.size() && !authorize){
-				if(userRoles.get(i).getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS))
-					authorize = Boolean.TRUE;
-			}
-			if(authorize){
-				ForumTopic forumTopic = getForumTopicDAO().find(topicId);
-				forumTopic.setLogicalDelete(Boolean.TRUE);
+			ForumTopic forumTopic = getForumTopicDAO().find(topicId);
+			forumTopic.setLogicalDelete(Boolean.TRUE);
 				
-				getForumTopicDAO().merge(forumTopic);
-				getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
-				Forum forum = forumTopic.getForum();
-				recursiveSetLastPost(forum);
-				getForumDAO().recursiveDecreasePostsNumber(forum, forumTopic.getTotalReplies());
-				getForumDAO().recursiveDecreaseTopicsNumber(forum);
-//				forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
-				getForumDAO().merge(forum);				
-			}
+			getForumTopicDAO().merge(forumTopic);
+			getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
+			Forum forum = forumTopic.getForum();
+			recursiveSetLastPost(forum);
+			getForumDAO().recursiveDecreasePostsNumber(forum, forumTopic.getTotalReplies());
+			getForumDAO().recursiveDecreaseTopicsNumber(forum);
+//			forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
+			getForumDAO().merge(forum);				
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -448,6 +429,24 @@ public class CommunityServiceImpl implements CommunityService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Show post", Action.VIEW, Category.FORUM_POST, forumPost));
 
 			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User findUser(String account) throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser(account);
+
+			if (user != null) {
+				return user;
+			} else {
+				throw new ApplicationThrowable(ApplicationError.USER_NOT_FOUND_ERROR);
+			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

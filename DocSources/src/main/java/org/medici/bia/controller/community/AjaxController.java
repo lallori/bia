@@ -155,7 +155,7 @@ public class AjaxController {
 	 * @param httpServletRequest
 	 * @return
 	 */
-	@RequestMapping(value = "/community/DeleteForum", method = RequestMethod.POST)
+	@RequestMapping(value = "/de/community/DeleteForum", method = RequestMethod.POST)
 	public ModelAndView deleteForum(@RequestParam(value="forumId", required=false) Integer forumId,
 										HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -199,7 +199,7 @@ public class AjaxController {
 	 * @param httpServletRequest
 	 * @return
 	 */
-	@RequestMapping(value = "/community/DeleteForumTopic", method = RequestMethod.POST)
+	@RequestMapping(value = "/de/community/DeleteForumTopic", method = RequestMethod.POST)
 	public ModelAndView deleteForumTopic(@RequestParam(value="topicId", required=false) Integer topicId,
 										HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>();

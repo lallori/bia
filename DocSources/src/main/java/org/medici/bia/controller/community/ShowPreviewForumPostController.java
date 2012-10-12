@@ -39,6 +39,8 @@ import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +75,10 @@ public class ShowPreviewForumPostController {
 					user = getCommunityService().joinUserOnForum();
 					httpSession.setAttribute("user", user);
 				}
+			}else{
+				user = getCommunityService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			}
+			
 		}catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/ShowPreviewForumPost", model);
 		}
@@ -83,9 +88,11 @@ public class ShowPreviewForumPostController {
 		forumPost.setText(command.getText());
 		forumPost.setSubject(command.getSubject());
 		forumPost.setDateCreated(new Date());
+		forumPost.setLastUpdate(new Date());
 		forumPost.setUser(user);
 
 		model.put("forumPost", forumPost);
+		model.put("user", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 
 		return new ModelAndView("community/ShowPreviewForumPost", model);
 	}
