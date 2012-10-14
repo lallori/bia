@@ -71,7 +71,7 @@ public class ShowMyForumPostController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowMyForumPostCommand command, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			User user = (User) httpSession.getAttribute("user");

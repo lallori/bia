@@ -30,6 +30,7 @@ package org.medici.bia.service.sitemap;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.forum.ForumDAO;
@@ -117,7 +118,7 @@ public class SitemapServiceImpl implements SitemapService {
 			Integer totalPages = PageUtils.calculeTotalPages(total, numberOfForumForPage);
 			Integer counter = new Integer(0);
 			for (int i=0; i<totalPages; i++) {
-				HashMap<Integer, Date> activeForumsInformations = getForumDAO().getActiveForumsInformations(i+1, numberOfForumForPage);
+				Map<Integer, Date> activeForumsInformations = getForumDAO().getActiveForumsInformations(i+1, numberOfForumForPage);
 			
 				counter += getSitemapDAO().insertForumSitemap(activeForumsInformations);
 			}
@@ -140,7 +141,7 @@ public class SitemapServiceImpl implements SitemapService {
 			Integer totalPages = PageUtils.calculeTotalPages(total, numberOfTopicsForPage);
 			Integer counter = new Integer(0);
 			for (int i=0; i<totalPages; i++) {
-				HashMap<Integer, List<Object>> activeTopicsInformations= getForumPostDAO().getActiveTopicsInformations(i+1, numberOfTopicsForPage);
+				Map<Integer, List<Object>> activeTopicsInformations= getForumPostDAO().getActiveTopicsInformations(i+1, numberOfTopicsForPage);
 			
 				counter += getSitemapDAO().insertForumTopicSitemap(activeTopicsInformations);
 			}

@@ -93,7 +93,7 @@ public class EditFatherPersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Parent parent = new Parent(command.getId());
 			parent.setParent(new People(command.getParentId()));
@@ -130,7 +130,7 @@ public class EditFatherPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditFatherPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		List<Month> months = null;
 		try {

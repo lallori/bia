@@ -83,8 +83,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/digitization/FindSchedone", method = RequestMethod.GET)
-	public ModelAndView FindSchedone(@RequestParam(value="schedoneId", required=true) Integer schedoneId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView findSchedone(@RequestParam(value="schedoneId", required=true) Integer schedoneId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			Schedone schedone = getDigitizationService().findSchedone(schedoneId);
@@ -122,14 +122,15 @@ public class AjaxController {
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 
 		Boolean activated;
-		if(active.equals("Yes"))
+		if(active.equals("Yes")) {
 			activated = Boolean.TRUE;
-		else
+		} else {
 			activated = Boolean.FALSE;
+		}
 		
 		List<Integer> volNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>();
@@ -165,12 +166,12 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for(Digitization currentDigitization : (List<Digitization>)page.getList()){
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			//MDP
 			if(currentDigitization.getVolLetExt() != null){
-				singleRow.add(currentDigitization.getVolNum().toString() + currentDigitization.getVolLetExt().toString());
+				singleRow.add(currentDigitization.getVolNum().toString() + currentDigitization.getVolLetExt());
 			}else{
 				singleRow.add(currentDigitization.getVolNum().toString());
 			}
@@ -240,7 +241,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Map<String, Schedone> ifSchedone = new HashMap<String, Schedone>();
 		Map<String, Boolean> ifDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>();
@@ -291,19 +292,20 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		if(searchType.equals("Exactly") || searchType.equals("Between")){
 			if(page.getList().size() > 0){
 				for(Volume currentVolume : (List<Volume>)page.getList()){
-					List singleRow = new ArrayList();
+					List singleRow = new ArrayList(0);
 					//MDP
 					singleRow.add(currentVolume.getMDP());
 					//Schedone
 					Schedone currentSchedone;
-					if(currentVolume.getVolLetExt() != null)
+					if(currentVolume.getVolLetExt() != null) {
 						currentSchedone = ifSchedone.get(currentVolume.getVolNum() + currentVolume.getVolLetExt());
-					else
+					} else {
 						currentSchedone = ifSchedone.get(currentVolume.getVolNum().toString());
+					}
 					if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
 						singleRow.add("YES");
 					}else{
@@ -322,12 +324,10 @@ public class AjaxController {
 						resultList.add(singleRow);
 					}
 				}
-			}else{
-				
 			}
-		}else if(searchType.equals("All")){
+		} else if(searchType.equals("All")){
 			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
-				List singleRow = new ArrayList();
+				List singleRow = new ArrayList(0);
 				//MDP
 				singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));
 				//Schedone
@@ -373,7 +373,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/digitization/SearchSeriesList.json", method = RequestMethod.GET)
 	public ModelAndView searchSeriesList(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<SerieList> series = getDigitizationService().searchSeriesList(query);

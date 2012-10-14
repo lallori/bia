@@ -43,11 +43,26 @@ public class ApplicationThrowable extends Throwable {
 	private ApplicationError applicationError;
 	private final Logger logger = Logger.getLogger(getClass());
 
+	/**
+	 * 
+	 */
+	public ApplicationThrowable() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param applicationError
+	 */
 	public ApplicationThrowable(ApplicationError applicationError) {
 		initCause(null);
 		setApplicationError(applicationError);
 	}
 
+	/**
+	 * 
+	 * @param th
+	 */
 	public ApplicationThrowable(Throwable th) {
 		initCause(th);
 		setApplicationError(throawbleToApplicationError());
@@ -88,12 +103,16 @@ public class ApplicationThrowable extends Throwable {
 			} else if (getCause().getClass().getName().endsWith("NoResultException")) {
 				return ApplicationError.RECORD_NOT_FOUND_ERROR;
 			} else if (getCause().getClass().getName().endsWith("DataAccessException")) {
-				if (getCause().getMessage().indexOf("Connection") != -1)
+				if (getCause().getMessage().indexOf("Connection") != -1) {
 					return ApplicationError.DB_CONNECTION_LOST_ERROR;
+				}
+				
 				return ApplicationError.GENERIC_ERROR;
 			} else if (getCause().getClass().getName().endsWith("InvalidDataAccessApiUsageException")) {
-				if (getCause().getMessage().indexOf("QuerySyntaxException") != -1)
+				if (getCause().getMessage().indexOf("QuerySyntaxException") != -1) {
 					return ApplicationError.DB_INCORRECT_SQL_ERROR;
+				}
+				
 				return ApplicationError.GENERIC_ERROR;
 			} else if (getCause().getClass().getName().endsWith("IllegalArgumentException")) {
 				if (getCause().getMessage() != null) {
@@ -110,7 +129,6 @@ public class ApplicationThrowable extends Throwable {
 				return ApplicationError.LDAP_SERVER_NOT_RESPONDING_ERROR;
 			} else if (getCause().getClass().getName().endsWith("ldap.NameNotFoundException")) {
 				return ApplicationError.USER_NAME_NOT_FOUND_ERROR;
-				
 			} else if (getCause().getClass().getName().endsWith("NullPointerException")) {
 				if (getCause().getMessage() != null) {
 					if (getCause().getMessage().contains("no enum")) {
@@ -136,10 +154,11 @@ public class ApplicationThrowable extends Throwable {
 		StringBuilder stringBuilder = new StringBuilder("Error Code : ");
 		stringBuilder.append(getApplicationError());
 		stringBuilder.append(", Cause Message : ");
-		if (getCause() != null)
+		if (getCause() != null) {
 			stringBuilder.append(getCause().getMessage());
-		else
+		} else {
 			stringBuilder.append("not available");
+		}
 
 		return stringBuilder.toString();
 	}

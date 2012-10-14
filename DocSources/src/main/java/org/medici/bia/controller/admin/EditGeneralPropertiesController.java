@@ -88,10 +88,10 @@ public class EditGeneralPropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("iipimage.image.path", command.getImagesPath());
 				hashMap.put("website.domain", command.getWebsiteDomain());
 				hashMap.put("website.protocol", command.getWebsiteProtocol());
@@ -124,7 +124,7 @@ public class EditGeneralPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditGeneralPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setImagesPath(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 		command.setWebsiteDomain(ApplicationPropertyManager.getApplicationProperty("website.domain"));

@@ -109,7 +109,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
@@ -201,7 +201,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditCorrespondentsOrPeopleDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getEntryId() > 0)) {
 			Document document = new Document();

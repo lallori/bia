@@ -31,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
@@ -41,7 +42,8 @@ import org.medici.bia.domain.ForumPost;
  *
  */
 public final class JSTLFunctions {
-    private JSTLFunctions() {}
+    
+    private static Logger logger = Logger.getLogger(JSTLFunctions.class);
 
     /**
      * This method encodes a string in UTF-8 charset.
@@ -50,12 +52,14 @@ public final class JSTLFunctions {
      * @return input string encoded.
      */
     public static String encode(String stringToEncode) {
-    	if (stringToEncode == null)
+    	if (stringToEncode == null) {
     		return "";
-     
+    	}
+    	
     	try {
     		return URLEncoder.encode(stringToEncode, "UTF-8");
     	} catch (UnsupportedEncodingException unsupportedEncodingException) {
+    		logger.error(unsupportedEncodingException);
     		return "unsupportedEncodingException";
     	}
      }
@@ -67,8 +71,9 @@ public final class JSTLFunctions {
      * @return input string encoded.
      */
     public static String toString(List<Object> list) {
-    	if (list == null)
+    	if (list == null) {
     		return "";
+    	}
     	 
     	StringBuilder stringBuilder = new StringBuilder("");
     	for (int i=0; i<list.size(); i++) {

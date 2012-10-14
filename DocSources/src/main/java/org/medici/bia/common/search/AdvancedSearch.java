@@ -42,7 +42,7 @@ public interface AdvancedSearch extends Search {
 	 * 
 	 * @param command Advanced Search command bean,
 	 */
-	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command);
+	void initFromAdvancedSearchCommand(AdvancedSearchCommand command);
 
 	/**
 	 * This method initialize object from a simple search command bea.
@@ -50,5 +50,5 @@ public interface AdvancedSearch extends Search {
 	 * 
 	 * @param command Simple Search command bean,
 	 */
-	public void initFromSimpleSearchCommand(SimpleSearchCommand command);
+	void initFromSimpleSearchCommand(SimpleSearchCommand command);
 }

@@ -88,10 +88,10 @@ public class EditIIPImagePropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("iipimage.reverseproxy.fcgi.path", command.getServerFcgiBinPath());
 				hashMap.put("iipimage.reverseproxy.host", command.getServerHostName());
 				hashMap.put("iipimage.reverseproxy.port", command.getServerPort());
@@ -125,7 +125,7 @@ public class EditIIPImagePropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditIIPImagePropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setServerFcgiBinPath(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
 		command.setServerHostName(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));

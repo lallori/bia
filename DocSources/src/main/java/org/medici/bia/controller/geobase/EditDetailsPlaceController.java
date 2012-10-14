@@ -37,6 +37,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.command.geobase.EditDetailsPlaceCommand;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.util.HtmlUtils;
@@ -94,7 +95,7 @@ public class EditDetailsPlaceController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Place place = new Place(command.getPlaceAllId());
 			place.setResearcher(command.getResearcher());
@@ -145,10 +146,11 @@ public class EditDetailsPlaceController {
 					model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 					model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
 					
-					if(place.getPlaceGeographicCoordinates() != null)
+					if(place.getPlaceGeographicCoordinates() != null) {
 						model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-					else
+					} else {
 						model.put("linkGoogleMaps", null);
+					}
 					
 					HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
 					model.put("historyNavigator", historyNavigator);
@@ -179,7 +181,7 @@ public class EditDetailsPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<PlaceType> placeTypes; 
 		try {
 			placeTypes = getGeoBaseService().findPlaceTypes();

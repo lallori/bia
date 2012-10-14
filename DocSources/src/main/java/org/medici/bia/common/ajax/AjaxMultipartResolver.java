@@ -80,12 +80,8 @@ public class AjaxMultipartResolver extends CommonsMultipartResolver {
     }
  
     public MultipartHttpServletRequest resolveMultipart(HttpServletRequest request) throws MultipartException {
-        try {
-            setHttpServletRequest(request);
-            return super.resolveMultipart(request);
-        } catch (Exception ex) {
-            throw new MultipartException(ex.getMessage());
-        }
+        setHttpServletRequest(request);
+        return super.resolveMultipart(request);
     }
  
     /**

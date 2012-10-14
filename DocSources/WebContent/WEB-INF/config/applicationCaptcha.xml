@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+		<description>Bean for recaptcha</description>
 		<property name="privateKey" value="${recaptcha.privateKey}" />
 		<property name="publicKey" value="${recaptcha.publicKey}" />
 		<property name="recaptchaServer" value="${recaptcha.server}" />

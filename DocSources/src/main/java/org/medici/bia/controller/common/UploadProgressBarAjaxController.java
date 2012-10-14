@@ -83,9 +83,8 @@ public class UploadProgressBarAjaxController {
 			if (uploadInfoBean.getBytes_total().equals(uploadInfoBean.getBytes_uploaded())) {
 				session.removeAttribute("uploadInfoBean");
 			}
-		} else {
-			//model.addAttribute("null");
 		}
+
 		return "OK";
 	}
 }

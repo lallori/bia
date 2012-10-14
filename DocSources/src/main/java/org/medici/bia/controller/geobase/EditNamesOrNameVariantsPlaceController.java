@@ -82,7 +82,7 @@ public class EditNamesOrNameVariantsPlaceController {
 	 * getValidator().validate(command, result);
 	 * 
 	 * if (result.hasErrors()) { return setupForm(command); } else { Map<String,
-	 * Object> model = new HashMap<String, Object>();
+	 * Object> model = new HashMap<String, Object>(0);
 	 * 
 	 * 
 	 * getGeoBaseService();
@@ -107,7 +107,7 @@ public class EditNamesOrNameVariantsPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNamesOrNameVariantsPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			List<Place> placeNames;

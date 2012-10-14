@@ -28,6 +28,7 @@
 package org.medici.bia.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 import org.medici.bia.domain.UserMessage.UserMessageCategory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,6 +50,8 @@ public class UserMessageSearch implements GenericSearch {
 	private UserMessageCategory userMessageCategory; 
 	private String recipient;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	/**
 	 * 
 	 */
@@ -92,7 +95,11 @@ public class UserMessageSearch implements GenericSearch {
 		if (!StringUtils.isEmpty(text)) {
 			try {
 				setUserMessageCategory(UserMessageCategory.valueOf(text)); 
-			} catch (Exception exception) {
+			} catch (IllegalArgumentException illegalArgumentException) {
+				logger.debug(illegalArgumentException);
+				setUserMessageCategory(null);
+			} catch (NullPointerException nullPointerException) {
+				logger.debug(nullPointerException);
 				setUserMessageCategory(null);
 			}
 		}
@@ -102,9 +109,10 @@ public class UserMessageSearch implements GenericSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (getUserMessageCategory() == null)
+	public Boolean empty() {
+		if (getUserMessageCategory() == null) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -139,7 +147,7 @@ public class UserMessageSearch implements GenericSearch {
 					jpaQuery.append(account);
 					jpaQuery.append("' and recipientStatus ='");
 					jpaQuery.append(getUserMessageCategory());
-					jpaQuery.append("'");
+					jpaQuery.append('\'');
 				break;
 				
 				case INBOX:
@@ -147,7 +155,7 @@ public class UserMessageSearch implements GenericSearch {
 					jpaQuery.append(account);
 					jpaQuery.append("' and user.account = '");
 					jpaQuery.append(account);
-					jpaQuery.append("'");
+					jpaQuery.append('\'');
 					break;
 				
 				case OUTBOX:
@@ -155,7 +163,7 @@ public class UserMessageSearch implements GenericSearch {
 					jpaQuery.append(account);
 					jpaQuery.append("' and user.account = '");
 					jpaQuery.append(account);
-					jpaQuery.append("'");
+					jpaQuery.append('\'');
 					break;
 
 				default:
@@ -192,9 +200,10 @@ public class UserMessageSearch implements GenericSearch {
 	 */
 	@Override
 	public String toString() {
-		if (getUserMessageCategory() != null)
+		if (getUserMessageCategory() != null) {
 			return getUserMessageCategory().toString();
-		else
-			return "";
+		}
+
+		return "";
 	}
 }

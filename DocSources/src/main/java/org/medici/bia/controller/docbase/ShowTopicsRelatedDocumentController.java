@@ -39,8 +39,8 @@ import javax.servlet.http.HttpSession;
 import org.medici.bia.command.docbase.ShowTopicsRelatedDocumentCommand;
 import org.medici.bia.common.search.AdvancedSearchDocument;
 import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,7 +86,7 @@ public class ShowTopicsRelatedDocumentController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTopicsRelatedDocumentCommand command, BindingResult result, HttpSession session) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if(command.getTopicId() > 0){
 												
@@ -119,7 +119,7 @@ public class ShowTopicsRelatedDocumentController {
 			searchFilter.setFilterData(advancedSearchDocument);
 			searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 			// we get our map which contains all user's filter used at runtime. 
-			HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+			Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 			searchFilterMap.put(searchUUID, searchFilter);
 			session.setAttribute("searchFilterMap", searchFilterMap);
 		}

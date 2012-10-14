@@ -80,7 +80,7 @@ public class SearchUserController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			return new ModelAndView("user/SearchUserResult", model);
 		}
@@ -88,7 +88,7 @@ public class SearchUserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") SearchUserCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("user/SearchUser", model);
 	}

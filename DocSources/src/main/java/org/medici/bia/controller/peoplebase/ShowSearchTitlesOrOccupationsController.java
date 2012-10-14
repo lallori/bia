@@ -69,7 +69,7 @@ public class ShowSearchTitlesOrOccupationsController {
 	 */
 	@RequestMapping(method = {RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowSearchTitlesOrOccupationsCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		 
 		try {
 			command.setTextSearch(URIUtil.decode(command.getTextSearch(), "UTF-8"));
@@ -109,7 +109,7 @@ public class ShowSearchTitlesOrOccupationsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowSearchTitlesOrOccupationsCommand command) {
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<RoleCat> roleCats = null;
 		
 		try{

@@ -88,15 +88,11 @@ public class ActivateUserController {
 	 */
 	@SuppressWarnings("unused")
 	private void autoLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) {
-		try {
-			// Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-			token.setDetails(new WebAuthenticationDetails(request));
-			Authentication authentication = authenticationManager.authenticate(token);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		} catch (Exception e) {
-			SecurityContextHolder.getContext().setAuthentication(null);
-		}
+		// Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authentication = authenticationManager.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	/**
@@ -180,7 +176,7 @@ public class ActivateUserController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/ActivateUser");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			model.put("command", command);
 			try {

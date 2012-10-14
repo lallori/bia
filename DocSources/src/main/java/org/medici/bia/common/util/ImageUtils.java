@@ -54,16 +54,16 @@ public class ImageUtils {
 		if (StringUtils.isNumeric(folioNumber)){
 			try {
 				return new Integer(folioNumber);
-			} catch (NumberFormatException nfx){
-				logger.error("Unable to convert folio number. Image file " + fileName);
+			} catch (NumberFormatException numberFormatException){
+				logger.debug("Unable to convert folio number. Image file " + fileName, numberFormatException);
 				return null;
 			}
 		} else {
 			if (StringUtils.isAlphanumeric(folioNumber)) {
 				try {
 					return new Integer(folioNumber.substring(0, folioNumber.length()-1));
-				} catch (NumberFormatException nfx){
-					logger.error("Unable to convert folio number. Image file " + fileName);
+				} catch (NumberFormatException numberFormatException){
+					logger.error("Unable to convert folio number. Image file " + fileName, numberFormatException);
 					return null;
 				}
 			}

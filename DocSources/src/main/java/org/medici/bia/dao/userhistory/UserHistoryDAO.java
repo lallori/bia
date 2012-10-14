@@ -50,14 +50,14 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * 
 	 * @throws PersistenceException
 	 */
-	public Integer deleteMyHistory(User user) throws PersistenceException;
+	Integer deleteMyHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param category
 	 * @throws PersistenceException
 	 */
-	public Integer deleteMyHistory(User user, Category category) throws PersistenceException;
+	Integer deleteMyHistory(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
@@ -65,7 +65,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteUserHistory(User user) throws PersistenceException;
+	Integer deleteUserHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -74,7 +74,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteUserHistory(User user, Category category) throws PersistenceException;
+	Integer deleteUserHistory(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
@@ -84,7 +84,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findCategoryHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
+	UserHistory findCategoryHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
 
 	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
@@ -95,7 +95,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserHistory> findHistory(User user,Category category, Integer resultSize) throws PersistenceException;
+	List<UserHistory> findHistory(User user,Category category, Integer resultSize) throws PersistenceException;
 	
 	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
@@ -104,7 +104,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserHistory> findHistory(User user, Integer resultSize) throws PersistenceException;
+	List<UserHistory> findHistory(User user, Integer resultSize) throws PersistenceException;
 	
 	/**
 	 * 
@@ -112,7 +112,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findHistory(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findHistory(User user, PaginationFilter paginationFilter) throws PersistenceException;
 
 
 	/**
@@ -121,7 +121,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findHistory(User user, Category category, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findHistory(User user, Category category, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -131,7 +131,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findHistory(User user, Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException;
+	Page findHistory(User user, Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException;
 	
 	/**
 	 * 
@@ -140,7 +140,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
+	UserHistory findHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException;
 
 	/**
 	 * 
@@ -148,7 +148,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findLastEntry(User user) throws PersistenceException;
+	UserHistory findLastEntry(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -156,7 +156,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findLastEntry(User user, Category category) throws PersistenceException;
+	UserHistory findLastEntry(User user, Category category) throws PersistenceException;
 	
 	/**
 	 * 
@@ -164,7 +164,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findLastEntryBase(User user) throws PersistenceException;
+	UserHistory findLastEntryBase(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -173,7 +173,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findNextCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
+	UserHistory findNextCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
 	
 	/**
 	 * 
@@ -181,7 +181,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findNextHistoryCursor(User user, Integer idUserHisotry) throws PersistenceException;
+	UserHistory findNextHistoryCursor(User user, Integer idUserHisotry) throws PersistenceException;
 
 	/**
 	 * 
@@ -190,7 +190,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findPreviousCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
+	UserHistory findPreviousCategoryHistoryCursor(User user, Category category, Integer idUserHistory) throws PersistenceException;
 	
 	/**
 	 * 
@@ -198,14 +198,14 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findPreviousHistoryCursor(User user, Integer idUserHistory) throws PersistenceException;
+	UserHistory findPreviousHistoryCursor(User user, Integer idUserHistory) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreMyHistory(User user) throws PersistenceException;
+	Integer restoreMyHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -213,7 +213,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreMyHistory(User user, Category category) throws PersistenceException;
+	Integer restoreMyHistory(User user, Category category) throws PersistenceException;
 
 	/**
 	 * 
@@ -221,7 +221,7 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreUserHistory(User user) throws PersistenceException;
+	Integer restoreUserHistory(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -230,5 +230,5 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer restoreUserHistory(User user, Category category) throws PersistenceException;
+	Integer restoreUserHistory(User user, Category category) throws PersistenceException;
 }

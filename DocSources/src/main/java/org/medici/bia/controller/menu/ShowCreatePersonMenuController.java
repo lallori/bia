@@ -50,7 +50,7 @@ public class ShowCreatePersonMenuController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("menu/ShowCreatePersonMenuModalWindow", model);
 	}

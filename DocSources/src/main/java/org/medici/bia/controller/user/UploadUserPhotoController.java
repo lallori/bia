@@ -70,12 +70,13 @@ public class UploadUserPhotoController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView handleFormUpload(@RequestParam("idUpload") String name, @RequestParam("file") MultipartFile file) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if (!file.isEmpty()) {
+			InputStream in = null;
 			try {
 				User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-				InputStream in = new ByteArrayInputStream(file.getBytes());
+				in = new ByteArrayInputStream(file.getBytes());
 
 				getUserService().updateUserPhoto(user, ImageIO.read(in));
 				// store the bytes somewhere
@@ -85,6 +86,14 @@ public class UploadUserPhotoController {
 				return new ModelAndView("responseKO", model);
 			} catch(IOException ioex) {
 				return new ModelAndView("responseKO");
+			} finally {
+				if (in != null) {
+					try {
+						in.close();
+					} catch(IOException ioException) {
+
+					}
+				}
 			}
 		} else {
 			return setupForm();
@@ -98,7 +107,7 @@ public class UploadUserPhotoController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		model.put("idUpload", System.currentTimeMillis());
 
 		return new ModelAndView("user/UploadUserPhoto");

@@ -40,7 +40,7 @@ import org.springframework.validation.Errors;
  * @see org.springframework.validation.ValidationUtils
  *
  */
-public abstract class ValidationUtils extends org.springframework.validation.ValidationUtils {
+public class ValidationUtils extends org.springframework.validation.ValidationUtils {
 	/**
 	 * Reject the given field with the given error code if the value is empty
 	 * or not contains alphabetic charactes.

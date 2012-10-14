@@ -51,7 +51,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countTotalActive() throws PersistenceException;
+	Long countTotalActive() throws PersistenceException;
 	
 	/**
 	 * 
@@ -59,7 +59,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
+	Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
 
 	/**
 	 * Returns a specific forum topic.
@@ -68,7 +68,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
+	ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
 
 	/**
 	 * Returns list of topics on a specific forum.
@@ -78,7 +78,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
+	Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
 
 	/**
 	 * 
@@ -86,7 +86,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws ApplicationThrowable;
+	List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable;
+	List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -102,5 +102,5 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @param paginationFilterTopics
 	 * @return
 	 */
-	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws PersistenceException;
+	Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws PersistenceException;
 }

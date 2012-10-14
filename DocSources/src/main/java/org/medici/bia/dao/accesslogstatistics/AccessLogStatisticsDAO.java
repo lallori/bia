@@ -46,12 +46,12 @@ public interface AccessLogStatisticsDAO extends Dao<Integer, AccessLogStatistics
 	 * @param date
 	 * @throws PersistenceException
 	 */
-	public Integer deleteStatisticsOnDay(Date date) throws PersistenceException;
+	Integer deleteStatisticsOnDay(Date date) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param date
 	 * @throws PersistenceException
 	 */
-	public Boolean generateStatisticsOnDay(Date date) throws PersistenceException;
+	Boolean generateStatisticsOnDay(Date date) throws PersistenceException;
 }

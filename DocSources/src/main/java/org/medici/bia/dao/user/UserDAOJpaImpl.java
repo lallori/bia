@@ -296,7 +296,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -453,7 +453,6 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 * @param userRole
 	 */
 	public void persistUserRoles(String account, List<UserRole> userRoles) {
-		return;
 	}
 
 	/**

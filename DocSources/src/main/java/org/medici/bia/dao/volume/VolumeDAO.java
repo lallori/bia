@@ -52,7 +52,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countVolumeCreatedAfterDate(Date inputDate) throws PersistenceException;
+	Long countVolumeCreatedAfterDate(Date inputDate) throws PersistenceException;
 
 	/**
 	 * This method returns last entry {@link org.medici.bia.domain.Volume}created on database.
@@ -60,7 +60,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return Last entry {@link org.medici.bia.domain.Volume}
 	 * @throws PersistenceException
 	 */
-	public Volume findLastEntryVolume() throws PersistenceException;
+	Volume findLastEntryVolume() throws PersistenceException;
 
 	/**
 	 * This method searches a single volume identified by is unique identifiers.
@@ -70,7 +70,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return The Volume searched.
 	 * @throws PersistenceException
 	 */
-	public Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
+	Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
 
 	/**
 	 * 
@@ -78,7 +78,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<String> searchOtherLang(String query) throws PersistenceException;
+	List<String> searchOtherLang(String query) throws PersistenceException;
 	
 	/**
 	 * This method searches volumes which contains the parameters set in {@link org.medici.bia.common.search}
@@ -89,7 +89,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -98,7 +98,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Volume> searchVolumes(String query) throws PersistenceException;
+	List<Volume> searchVolumes(String query) throws PersistenceException;
 	
 	/**
 	 * 
@@ -108,7 +108,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchVolumesByDigitization(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchVolumesByDigitization(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method searches volumes which contains text input parameter in one of his fields
@@ -119,7 +119,7 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return A result page of volumes searched
 	 * @throws PersistenceException
 	 */
-	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method set digitized information to true to a list of input volumes.
@@ -128,5 +128,5 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws PersistenceException;
+	Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws PersistenceException;
 }

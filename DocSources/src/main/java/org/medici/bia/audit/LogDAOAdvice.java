@@ -51,16 +51,13 @@ import org.springframework.aop.ThrowsAdvice;
 public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	public LogDAOAdvice() {
-	}
-
 	/**
 	 * 
 	 */
 	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		stringBuilder.append(target.getClass().getName());
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(method.getName());
 		stringBuilder.append(" OK ");
 		appendReturns(stringBuilder, returnValue);
@@ -76,9 +73,9 @@ public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * @param throwable
 	 */
 	public void afterThrowing(Method method, Object[] args, Object target, Throwable throwable) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		stringBuilder.append(target.getClass().getName());
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(method.getName());
 		stringBuilder.append(" KO ");
 		appendThrowable(stringBuilder, throwable);

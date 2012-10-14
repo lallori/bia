@@ -98,10 +98,10 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 		Query query = getEntityManager().createQuery("FROM TitleOccsList WHERE titleOcc LIKE :titleOcc");
 		query.setParameter("titleOcc", titleOcc);
 		query.setMaxResults(1);
-		if(query.getResultList().size() != 0)
+		if(query.getResultList().size() != 0) {
 			return (TitleOccsList) query.getSingleResult();
-		else
-			return null;
+		}
+		return null;
 	}
 	
 	/**
@@ -271,8 +271,10 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 				if(result.size() > 0){
 					result2.removeAll(result);
 				}
-				if(result2.size() > 0)
+				
+				if(result2.size() > 0) {
 					result.addAll(result2);
+				}
 			}
 
 			return result;

@@ -42,10 +42,10 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.Image;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
@@ -80,7 +80,7 @@ public class ShowForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowForumCommand command, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Forum forum = new Forum(); 
 
 		try {
@@ -114,7 +114,7 @@ public class ShowForumController {
 						}
 					}
 
-					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
+					Map<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
 					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					model.put("forumsBySubCategories", forumsHashMap);
 					
@@ -272,7 +272,7 @@ public class ShowForumController {
 				model.put("topicsPage", topicPage);
 			}
 
-			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
+			Map<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 			model.put("statisticsHashMap", statisticsHashMap);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

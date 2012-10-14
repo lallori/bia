@@ -88,10 +88,10 @@ public class EditEmailPropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("mail.activationUser.subject", command.getActivationSubject());
 				hashMap.put("mail.activationUser.text", command.getActivationText());
 				hashMap.put("mail.resetUserPassword.subject", command.getResetUserPasswordSubject());
@@ -124,7 +124,7 @@ public class EditEmailPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditEmailPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setActivationSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
 		command.setActivationText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text"));

@@ -32,7 +32,6 @@ package org.medici.bia.audit;
 import java.lang.reflect.Method;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-import org.medici.bia.common.util.ClassUtils;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
 
@@ -52,16 +51,13 @@ import org.springframework.aop.ThrowsAdvice;
 public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	public LogServiceAdvice() {
-	}
-
 	/**
 	 * 
 	 */
 	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		stringBuilder.append(target.getClass().getName());
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(method.getName());
 		stringBuilder.append(" OK ");
 		appendReturns(stringBuilder, returnValue);
@@ -77,29 +73,14 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * @param throwable
 	 */
 	public void afterThrowing(Method method, Object[] args, Object target, Throwable throwable) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		stringBuilder.append(target.getClass().getName());
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(method.getName());
 		stringBuilder.append(" KO ");
 		appendThrowable(stringBuilder, throwable);
 
 		logger.error(stringBuilder.toString());
-	}
-
-	/**
-	 * 
-	 * @param stringBuilder
-	 * @param args
-	 */
-	@SuppressWarnings("unused")
-	private void appendParameters(StringBuilder stringBuilder, Object[] args) {
-		stringBuilder.append(" - Parameters : ");
-		for (int i = 0; i < args.length; i++) {
-			stringBuilder.append(ClassUtils.toString(args[i]));
-			stringBuilder.append(" - ");
-		}
-		stringBuilder.delete(stringBuilder.length() - 3, stringBuilder.length());
 	}
 
 	/**

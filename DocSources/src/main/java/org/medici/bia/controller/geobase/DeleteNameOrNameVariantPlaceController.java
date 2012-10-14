@@ -84,7 +84,7 @@ public class DeleteNameOrNameVariantPlaceController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteNameOrNameVariantPlace");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				getGeoBaseService().deletePlace(command.getPlaceAllId());

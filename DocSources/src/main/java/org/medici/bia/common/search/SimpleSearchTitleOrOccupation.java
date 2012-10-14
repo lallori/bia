@@ -111,9 +111,10 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(textSearch) || (!ObjectUtils.toString(roleCatId).equals("")))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(textSearch) || (!ObjectUtils.toString(roleCatId).equals(""))) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}

@@ -95,7 +95,7 @@ public class EditPersonDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			EpLink epLink = new EpLink(command.getEpLinkId());
 			epLink.setAssignUnsure(command.getAssignUnsure());
@@ -133,7 +133,7 @@ public class EditPersonDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditPersonDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getEntryId() > 0)) {
 

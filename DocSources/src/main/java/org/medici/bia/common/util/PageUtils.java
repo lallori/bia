@@ -33,19 +33,49 @@ package org.medici.bia.common.util;
  *
  */
 public class PageUtils {
-
+	/**
+	 * 
+	 * @param page
+	 * @param elementsForPage
+	 * @return
+	 */
 	public static Integer calculeStart(Integer page, Integer elementsForPage) {
-		return page <= 1 ? 0 : (page - 1) * elementsForPage;
+		return (page <= 1) ? 0 : (page - 1) * elementsForPage;
 	}
 
+	/**
+	 * 
+	 * @param count
+	 * @param elementsForPage
+	 * @return
+	 */
 	public static Integer calculeStartFromCount(int count, int elementsForPage) {
-		return count / elementsForPage + (count % elementsForPage > 0 ? 1 : 0);
+		Integer retValue = count / elementsForPage;
+		if ((count % elementsForPage) > 0) {
+			retValue +=1;
+		} else {
+			retValue +=0;
+		}
+		
+		return retValue;
 	}
 
+	/**
+	 * 
+	 * @param totalPages
+	 * @param page
+	 * @return
+	 */
 	public static Integer calculeThisPage(Integer totalPages, int page) {
 		return Math.min(totalPages, Math.max(1, page));
 	}
 
+	/**
+	 * 
+	 * @param totalRecords
+	 * @param elementsForPage
+	 * @return
+	 */
 	public static Integer calculeTotalPages(Long totalRecords, Integer elementsForPage) {
 		return (int)Math.ceil((double) totalRecords / (double)elementsForPage);
 	}

@@ -29,6 +29,7 @@ package org.medici.bia.dao.forumpost;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -53,7 +54,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException;
+	Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -61,7 +62,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException;
+	Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -69,7 +70,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
+	ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -77,7 +78,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException;
+	Boolean findIfPostIsParent(Integer postId) throws PersistenceException;
 
 	/**
 	 * 
@@ -85,7 +86,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException;
+	ForumPost findLastPostFromForum(Forum forum) throws PersistenceException;
 
 	/**
 	 * 
@@ -93,7 +94,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException;
+	ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException;
 
 	/**
 	 * Returns list of posts on a specific topic.
@@ -103,12 +104,12 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public HashMap<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
+	Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
 }

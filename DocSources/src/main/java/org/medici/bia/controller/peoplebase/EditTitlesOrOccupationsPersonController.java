@@ -89,7 +89,7 @@ public class EditTitlesOrOccupationsPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTitlesOrOccupationsPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if ((command != null) && (command.getPersonId() > 0)) {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());

@@ -71,7 +71,7 @@ public class EditPasswordUserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditPasswordUserCommand command, BindingResult result) {
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("user/EditPasswordUser", model);
 	}
@@ -89,10 +89,10 @@ public class EditPasswordUserController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			return new ModelAndView("user/EditPasswordUser", model);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			try {
 				getUserService().updateUserPassword(command.getPassword());

@@ -50,8 +50,9 @@ public class EplToLinkUtils {
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<Integer> getTopicIdList(List<EplToLink> inputList) {
-		if (inputList.size() == 0)
+		if (inputList.size() == 0) {
 			return new ArrayList<Integer>(0);
+		}
 
 		List<Integer> retValue = new ArrayList(inputList.size());
 

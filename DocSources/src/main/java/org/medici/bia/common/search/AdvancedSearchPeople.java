@@ -36,6 +36,7 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -46,7 +47,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
-import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 
 /**
@@ -90,6 +90,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> words;
 	private List<WordType> wordsTypes;
 
+	private Logger logger = Logger.getLogger(this.getClass());
 	/**
 	 * Default constructor.
 	 */
@@ -288,14 +289,15 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("+", "%20");
 				singleWord = singleWord.replace("%E7", "ç");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				try{
+				try {
 					if(stringTokenizer.countTokens() == 2){
 						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken().replace(" ", "")));
 						names.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					}else{
 						continue;
 					}
-				}catch(URIException e){
+				} catch (URIException uriException){
+					logger.debug(uriException);
 					namesTypes.remove(namesTypes.size()-1);
 				}
 			}
@@ -319,7 +321,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					//} else {
 					//	continue;
 					//}
-				} catch (URIException e) {
+				} catch (URIException uriException){
+					logger.debug(uriException);
 					//wordsTypes.remove(wordsTypes.size()-1);
 					words.remove(words.size()-1);
 				}
@@ -343,8 +346,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				//e.g. After|1222|01|12|1223|12|12
 				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
 				try{
-				datesTypes.add(URIUtil.decode(fields[0], "UTF-8"));
-				}catch(URIException e){}
+					datesTypes.add(URIUtil.decode(fields[0], "UTF-8"));
+				}catch(URIException uriException){
+					logger.debug(uriException);
+				}
 				datesYear.add(DateUtils.getDateYearFromString(fields[1]));
 				datesMonth.add(DateUtils.getDateMonthFromString(fields[2]));
 				datesDay.add(DateUtils.getDateDayFromString(fields[3]));
@@ -368,7 +373,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			for(String singleWord : command.getRoleCategory()){
 				try{
 					roleCategories.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(URIException e){
+				} catch (URIException uriException){
+					logger.debug(uriException);
 					roleCategories.remove(roleCategories.size() - 1);
 				}
 			}
@@ -385,8 +391,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("%E7", "ç");
 				try{
 					titleOccWord.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(URIException e){
-					
+				} catch (URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -419,9 +425,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						}
 						titlesOcc.add(URIUtil.decode(singleText, "UTF-8"));
 					}
-				}catch(NumberFormatException nex){
-													
-				}catch(URIException e){
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch (URIException uriException){
+					logger.debug(uriException);
 					titlesOccId.remove(titlesOccId.size() - 1);
 				}
 			}
@@ -437,8 +444,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			for(String singleWord : command.getGender()){
 				try{
 					gender.add(Gender.valueOf(URIUtil.decode(singleWord, "UTF-8")));
-				}catch(URIException e){
-					
+				} catch (URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -482,9 +489,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						}
 						place.add(URIUtil.decode(singleText, "UTF-8"));
 					}
-				}catch(NumberFormatException nex){
-					
-				}catch(URIException e){
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch(URIException uriException){
+					logger.debug(uriException);
 					placeId.remove(placeId.size() - 1);
 				}
 			}
@@ -504,7 +512,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("%E7", "ç");
 				try {
 					researchNotes.add(URIUtil.decode(singleWord, "UTF-8"));
-				} catch (URIException e) {
+				} catch(URIException uriException){
+					logger.debug(uriException);
 					researchNotes.remove(researchNotes.size()-1);
 				}
 			}
@@ -535,7 +544,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if(
 				(names.size()>0) ||
 				(words.size()>0) ||
@@ -838,7 +847,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			namesQuery.append(")");
+			namesQuery.append(')');
 			if(!namesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -871,7 +880,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				wordsQuery.append(names.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%'))");
 			}
-			wordsQuery.append(")");
+			wordsQuery.append(')');
 			if(!wordsQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -928,8 +937,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append("))) AND bornDateBc = false AND deathDateBc = false");
 				}else if(datesTypes.get(i).equals("Born/Died on")){
-					StringBuilder bornQuery = new StringBuilder();
-					StringBuilder deathQuery = new StringBuilder();
+					StringBuilder bornQuery = new StringBuilder(0);
+					StringBuilder deathQuery = new StringBuilder(0);
 					if(datesYear.get(i) != null){
 						bornQuery.append("(bornYear =");
 						bornQuery.append(datesYear.get(i) + ")");
@@ -965,7 +974,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 //					datesQuery.append("))");
 				}
 			}
-			datesQuery.append(")");
+			datesQuery.append(')');
 			if(!datesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -991,7 +1000,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					roleCatQuery.append("%'))");
 				}
 			}
-			roleCatQuery.append(")");
+			roleCatQuery.append(')');
 			if(!roleCatQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1017,7 +1026,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			titleOccWordQuery.append(")");
+			titleOccWordQuery.append(')');
 			if(!titleOccWordQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1043,7 +1052,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					titleOccIdQuery.append("%'))");
 				}
 			}
-			titleOccIdQuery.append(")");
+			titleOccIdQuery.append(')');
 			if(!titleOccIdQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1063,7 +1072,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				genderQuery.append(gender.get(i));
 				genderQuery.append("' )");
 			}
-			genderQuery.append(")");
+			genderQuery.append(')');
 			if(!genderQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1115,7 +1124,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			placeIdQuery.append(")");
+			placeIdQuery.append(')');
 			if(!placeIdQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1135,7 +1144,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				researchNotesQuery.append(researchNotes.get(i).toLowerCase().replace("'", "''"));
 				researchNotesQuery.append("%')");
 			}
-			researchNotesQuery.append(")");
+			researchNotesQuery.append(')');
 			if(!researchNotesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1152,7 +1161,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			}else if(logicalDelete.equals(Boolean.FALSE)){
 				logicalDeleteQuery.append("(logicalDelete = false)");
 			}
-			logicalDeleteQuery.append(")");
+			logicalDeleteQuery.append(')');
 			if(!logicalDeleteQuery.toString().equals("")){
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1385,7 +1394,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	public String toString(){
-		StringBuilder toString = new StringBuilder();
+		StringBuilder toString = new StringBuilder(0);
 		if(!names.isEmpty()){
 			if(toString.length()>0){
 				toString.append("AND ");
@@ -1396,7 +1405,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					toString.append("AND ");
 				}
 				toString.append(names.get(i));
-				toString.append(" ");
+				toString.append(' ');
 			}
 		}
 		if(!words.isEmpty()){

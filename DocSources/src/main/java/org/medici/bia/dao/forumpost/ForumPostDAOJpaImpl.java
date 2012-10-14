@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -145,10 +146,11 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		query.setParameter("postId", postId);
 		
 		List<ForumPost> result = query.getResultList();
-		if(result.size() > 0)
+		if(result.size() > 0) {
 			return Boolean.TRUE;
-		else
+		} else {
 			return Boolean.FALSE;
+		}
 	}
 
 	/**
@@ -232,7 +234,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -267,7 +269,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public HashMap<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException {
+	public Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException {
 		String jpql = "SELECT topic.topicId, ROUND(count(postId)/10), lastUpdate from ForumPost where logicalDelete = 0 GROUP BY topic ORDER BY lastUpdate ASC";
 
 		Query query = getEntityManager().createQuery(jpql );
@@ -311,7 +313,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 //		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 //		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-//		StringBuilder orderBySQL = new StringBuilder();
+//		StringBuilder orderBySQL = new StringBuilder(0);
 //		if (sortingCriterias.size() > 0) {
 //			orderBySQL.append(" ORDER BY ");
 //			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -323,7 +325,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 //			}
 //		}
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for(int i = 0; i < sortingCriterias.size(); i++){

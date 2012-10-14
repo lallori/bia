@@ -52,7 +52,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedListElement findDocumentInMarkedList(Integer idMarkedList, Integer entryId) throws PersistenceException;
+	UserMarkedListElement findDocumentInMarkedList(Integer idMarkedList, Integer entryId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -61,7 +61,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException;
+	UserMarkedListElement findPersonInMarkedList(Integer idMarkedList, Integer personId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -70,7 +70,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedListElement findPlaceInMarkedList(Integer idMarkedList, Integer placeAllId) throws PersistenceException;
+	UserMarkedListElement findPlaceInMarkedList(Integer idMarkedList, Integer placeAllId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -79,7 +79,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedListElement findVolumeInMarkedList(Integer idMarkedList, Integer summaryId) throws PersistenceException;
+	UserMarkedListElement findVolumeInMarkedList(Integer idMarkedList, Integer summaryId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -88,7 +88,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findMarkedList(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findMarkedList(User user, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -97,7 +97,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserMarkedListElement> getMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException;
+	List<UserMarkedListElement> getMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException;
 	
 	/**
 	 * 
@@ -105,7 +105,7 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer removeAllMarkedListElements(Integer idMarkedList) throws PersistenceException;
+	Integer removeAllMarkedListElements(Integer idMarkedList) throws PersistenceException;
 	
 	/**
 	 * 
@@ -114,6 +114,6 @@ public interface UserMarkedListElementDAO extends Dao<Integer, UserMarkedListEle
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer removeMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException;
+	Integer removeMarkedListElements(Integer idMarkedList, List<Integer> idElements) throws PersistenceException;
 
 }

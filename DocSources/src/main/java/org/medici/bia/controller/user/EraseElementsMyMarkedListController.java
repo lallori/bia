@@ -68,7 +68,7 @@ public class EraseElementsMyMarkedListController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@RequestParam("idToErase") String idToErase) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			if(!idToErase.equals("")){

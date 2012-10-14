@@ -36,8 +36,8 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 
 /**
  * Search Filter DAO.
@@ -55,7 +55,7 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return The SearchFilter searched.
 	 * @throws PersistenceException
 	 */
-	public SearchFilter findUserSearchFilter(User user, Integer idSearchFilter) throws PersistenceException;
+	SearchFilter findUserSearchFilter(User user, Integer idSearchFilter) throws PersistenceException;
 
 	/**
 	 * This method searches every {@link org.medici.bia.domain.SearchFilter} 
@@ -65,7 +65,7 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return A List<SearchFilter> of the user.
 	 * @throws PersistenceException
 	 */
-	public List<SearchFilter> findUserSearchFilters(User user) throws PersistenceException;
+	List<SearchFilter> findUserSearchFilters(User user) throws PersistenceException;
 
 	/**
 	 * 
@@ -74,7 +74,7 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findUserSearchFilters(User user, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -84,5 +84,5 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findUserSearchFilters(User user, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException;
+	Page findUserSearchFilters(User user, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException;
 }

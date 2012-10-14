@@ -73,17 +73,16 @@ public class ReverseProxyIIPImageThumbnailController {
 		stringBuilder.append(properties.getProperty("iipimage.protocol"));
 		stringBuilder.append("://");
 		stringBuilder.append(properties.getProperty("iipimage.host"));
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(properties.getProperty("iipimage.port"));
 		stringBuilder.append(properties.getProperty("iipimage.fcgi.path"));
-		stringBuilder.append("?");
+		stringBuilder.append('?');
 
 		stringBuilder.append("WID=120&");
 		stringBuilder.append("FIF=");
 		stringBuilder.append(properties.getProperty("iipimage.image.path"));
 		stringBuilder.append(httpServletRequest.getParameter("imageName"));
-		stringBuilder.append("&");
-		stringBuilder.append("CVT=JPEG");
+		stringBuilder.append("&CVT=JPEG");
 
 		// Create a method instance.
 		GetMethod method = new GetMethod(stringBuilder.toString());

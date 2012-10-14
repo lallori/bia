@@ -62,7 +62,7 @@ package org.medici.bia.controller.peoplebase;
 //	 */
 //	@RequestMapping(method = RequestMethod.GET)
 //	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
-//		Map<String, Object> model = new HashMap<String, Object>();
+//		Map<String, Object> model = new HashMap<String, Object>(0);
 //
 //		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
 //	}

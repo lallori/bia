@@ -133,7 +133,7 @@ public class SendUserActivationCodeController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			User user = new User();
 			user.setMail(command.getMail());
@@ -175,7 +175,7 @@ public class SendUserActivationCodeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") SendUserActivationCodeCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 		getMessageSource();
 		return new ModelAndView("user/SendUserActivationCode", model);

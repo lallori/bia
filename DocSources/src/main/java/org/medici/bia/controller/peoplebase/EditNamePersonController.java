@@ -91,7 +91,7 @@ public class EditNamePersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			AltName altName = new AltName(command.getNameId(), command.getPersonId());
 			altName.setAltName(command.getAltName());
@@ -129,7 +129,7 @@ public class EditNamePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNamePersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPersonId() > 0)) {
 
@@ -141,7 +141,7 @@ public class EditNamePersonController {
 				try {
 					AltName altName = getPeopleBaseService().findAltNamePerson(command.getPersonId(), command.getNameId());
 
-					command.setNameType(altName.getNameType().toString());
+					command.setNameType(altName.getNameType());
 					command.setNamePrefix(altName.getNamePrefix());
 					command.setAltName(altName.getAltName());
 					
@@ -153,8 +153,6 @@ public class EditNamePersonController {
 			model.put("nameTypes", AltName.NameType.values());
 
 			return new ModelAndView("peoplebase/EditNamePerson", model);
-		} else {
-			// On Name creation, every field is null
 		}
 
 		return new ModelAndView("peoplebase/EditNamePerson", model);

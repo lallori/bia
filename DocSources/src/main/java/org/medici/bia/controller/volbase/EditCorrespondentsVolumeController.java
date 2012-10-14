@@ -91,7 +91,7 @@ public class EditCorrespondentsVolumeController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			Volume volume = new Volume();
 			volume.setSummaryId(command.getSummaryId());
 			volume.setRecips(command.getRecips());
@@ -115,7 +115,7 @@ public class EditCorrespondentsVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditCorrespondentsVolumeCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
 			Volume volume = new Volume();

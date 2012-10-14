@@ -40,10 +40,10 @@ import javax.servlet.http.HttpSession;
 import org.medici.bia.command.community.AdvancedSearchForumPostCommand;
 import org.medici.bia.common.search.AdvancedSearchForum;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.SearchFilter;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +82,7 @@ public class ShowAdvancedSearchForumPostController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(@ModelAttribute("command") AdvancedSearchForumPostCommand command, HttpSession session){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Forum forum = new Forum();
 		List<Forum> subCategories = null;
@@ -101,7 +101,7 @@ public class ShowAdvancedSearchForumPostController {
 						}
 					}
 
-					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
+					Map<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
 					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					//MD: This is to populate the select
 					model.put("subForums", forumsHashMap);
@@ -114,7 +114,7 @@ public class ShowAdvancedSearchForumPostController {
 		}
 		
 		// we get our map which contains all user's filter used at runtime. 
-		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 		command.setSearchUUID(UUID.randomUUID().toString());
 		command.setNewSearch(Boolean.TRUE);
 		searchFilter = new SearchFilter(0, SearchType.FORUM);

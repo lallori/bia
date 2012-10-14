@@ -27,7 +27,6 @@
  */
 package org.medici.bia.common.util;
 
-import com.mchange.v1.util.StringTokenizerUtils;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -36,7 +35,11 @@ import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
+
+import com.mchange.v1.util.StringTokenizerUtils;
+
 
 /**
  * Utility class to work on list object containing java bean object.
@@ -45,6 +48,8 @@ import org.springframework.beans.BeanUtils;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public class ListBeanUtils {
+	public static Logger logger = Logger.getLogger(ListBeanUtils.class);
+	
 	/**
 	 * Method to obtains a list of a specific field contained in input list
 	 * inputObject. This method is able to manage simple property and nested
@@ -57,10 +62,11 @@ public class ListBeanUtils {
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<?> transformList(List inputList, String fieldName) {
-		if (inputList == null || inputList.size() == 0)
+		if (inputList == null || inputList.size() == 0) {
 			return new ArrayList<Object>(0);
+		}
 
-		ArrayList retValue = new ArrayList(inputList.size());
+		List retValue = new ArrayList(inputList.size());
 
 		if (!StringUtils.contains(fieldName, ".")) {
 			PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(inputList.get(0).getClass(), fieldName);
@@ -92,7 +98,7 @@ public class ListBeanUtils {
 	 * @param addBlankSpace
 	 * @return
 	 */
-	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
+	public static List<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
 		return toStringListWithConcatenationFields(beansList, concatenatedFields, fieldsSeparator, outputFieldsSeparator, addBlankSpace, Boolean.FALSE);
 	}
 
@@ -109,19 +115,21 @@ public class ListBeanUtils {
 	 * @param excludeZero If a field is numeric and his value is 0, the field is discarded from output. 
 	 * @return
 	 */
-	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace, Boolean excludeZero) {
-		if (beansList == null)
+	public static List<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace, Boolean excludeZero) {
+		if (beansList == null) {
 			return new ArrayList<String>(0);
+		}
 		
-		if ((beansList.size() == 0) || (StringUtils.isEmpty(fieldsSeparator)) || (StringUtils.isEmpty(outputFieldsSeparator)))
+		if ((beansList.size() == 0) || (StringUtils.isEmpty(fieldsSeparator)) || (StringUtils.isEmpty(outputFieldsSeparator))) {
 			return new ArrayList<String>(0);
-
-		ArrayList<String> retValue = new ArrayList<String>(beansList.size());
+		}
+	
+		List<String> retValue = new ArrayList<String>(beansList.size());
 		String[] fields = StringTokenizerUtils.tokenizeToArray(concatenatedFields, fieldsSeparator);
 		StringBuilder stringBuilder = null;  
 
 		for (int i = 0; i<beansList.size(); i++) {
-			stringBuilder = new StringBuilder();
+			stringBuilder = new StringBuilder(0);
 			for (int j=0; j<fields.length; j++) {
 				PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(beansList.get(0).getClass(), fields[j]);
 				Method method = pd.getReadMethod();
@@ -137,9 +145,9 @@ public class ListBeanUtils {
 						}
 						if (j>0) {
 							if (addBlankSpace) {
-								stringBuilder.append(" ");
+								stringBuilder.append(' ');
 								stringBuilder.append(outputFieldsSeparator);
-								stringBuilder.append(" ");
+								stringBuilder.append(' ');
 							} else {
 								stringBuilder.append(outputFieldsSeparator);
 							}
@@ -166,25 +174,26 @@ public class ListBeanUtils {
 	 * @return List<Object> Result list containing the specific input field of input list.
 	 **/
 	public static List<Object> transformToPlainList(List<Object> beansList) {
-		if ((beansList == null) || (beansList.size() == 0))
+		if ((beansList == null) || (beansList.size() == 0)) {
 			return new ArrayList<Object>(0);
+		}
 
-		ArrayList<Object> arrayList = new ArrayList<Object>(beansList.size());
+		List<Object> arrayList = new ArrayList<Object>(beansList.size());
 
 		PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(beansList.get(0).getClass());
 		
 		for (int i=0; i<beansList.size(); i++) {
-			ArrayList<Object> singleBean = new ArrayList<Object>(propertyDescriptors.length);
+			List<Object> singleBean = new ArrayList<Object>(propertyDescriptors.length);
 			
 			for (int j=0; j<propertyDescriptors.length; j++) {
 				Method method = propertyDescriptors[i].getReadMethod();
 				try {
 					singleBean.add(method.invoke(beansList.get(i), (Object[]) null));
-				} catch (InvocationTargetException itex) {
-					itex.printStackTrace();
+				} catch (InvocationTargetException invocationTargetException) {
+					logger.debug(invocationTargetException);
 					singleBean.add("");
-				} catch (IllegalAccessException iaex) {
-					iaex.printStackTrace();
+				} catch (IllegalAccessException illegalAccessException) {
+					logger.debug(illegalAccessException);
 					singleBean.add("");
 				}
 			}

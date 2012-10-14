@@ -93,7 +93,7 @@ public class DeleteTitleOrOccupationPersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeletePersonDocument");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			PoLink poLink = new PoLink(command.getPrfLinkId());
 			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccId()));

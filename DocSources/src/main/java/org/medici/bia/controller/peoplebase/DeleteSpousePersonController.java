@@ -92,7 +92,7 @@ public class DeleteSpousePersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteSpousePerson");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			Marriage marriage = new Marriage(command.getMarriageId());
 			if(command.getHusbandId() != null){

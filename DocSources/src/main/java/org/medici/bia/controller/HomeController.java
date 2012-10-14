@@ -63,12 +63,12 @@ public class HomeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") HomeCommand command, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		// We need genders enumeration to populate relative combo-box
 		model.put("searchTypes", SearchType.values());		
 
 		try {			
-			HashMap<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
+			Map<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
 			httpSession.setAttribute("userStatistics", userStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

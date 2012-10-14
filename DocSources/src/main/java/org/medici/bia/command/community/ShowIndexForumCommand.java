@@ -33,5 +33,14 @@ package org.medici.bia.command.community;
  *
  */
 public class ShowIndexForumCommand {
+	private Integer forumId;
 
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
+	}
+
+	public Integer getForumId() {
+		return forumId;
+	}
+	
 }

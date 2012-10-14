@@ -47,8 +47,9 @@ public class UserRoleUtils {
 	 * @return true if the input parameter is in email format, false otherwise.
 	 */
 	public static String toDescriptionString(UserRole userRole) {
-		if (userRole == null)
+		if (userRole == null) {
 			return "";
+		}
 
 		String descriptionString =  WordUtils.capitalize(userRole.toString().replaceAll("[_]", " ").toLowerCase());
 		
@@ -67,8 +68,9 @@ public class UserRoleUtils {
 	 * @return 
 	 */
 	public static UserRole getMostSignificantRole(List<UserRole> userRoles){
-		if (userRoles == null)
+		if (userRoles == null) {
 			return null;
+		}
 
 		UserRole mostSignificantRole = null;
 		

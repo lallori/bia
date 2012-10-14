@@ -90,7 +90,7 @@ public class EditNamesPersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			/** TODO : Implement invocation business logic */
 			getPeopleBaseService();
@@ -115,7 +115,7 @@ public class EditNamesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNamesPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPersonId() > 0)) {
 			People people = new People();

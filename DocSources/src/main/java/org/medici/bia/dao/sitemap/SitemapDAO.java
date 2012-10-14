@@ -28,8 +28,8 @@
 package org.medici.bia.dao.sitemap;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -49,14 +49,14 @@ public interface SitemapDAO extends Dao<String, Sitemap>{
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countTotal() throws PersistenceException;
+	Long countTotal() throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteSitemap() throws PersistenceException;
+	Integer deleteSitemap() throws PersistenceException;
 
 	/**
 	 * 
@@ -66,17 +66,17 @@ public interface SitemapDAO extends Dao<String, Sitemap>{
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Sitemap> getSitemaps(Integer pageNumber, Integer totalPages, Integer numberOfSitemapForPage) throws PersistenceException;
+	List<Sitemap> getSitemaps(Integer pageNumber, Integer totalPages, Integer numberOfSitemapForPage) throws PersistenceException;
 
 	/**
 	 * 
 	 * @throws PersistenceException
 	 */
-	public Integer insertForumSitemap(HashMap<Integer, Date> activeForumsInformations) throws PersistenceException;
+	Integer insertForumSitemap(Map<Integer, Date> activeForumsInformations) throws PersistenceException;
 
 	/**
 	 * 
 	 * @throws PersistenceException
 	 */
-	public Integer insertForumTopicSitemap(HashMap<Integer, List<Object>> activeTopics) throws PersistenceException;
+	Integer insertForumTopicSitemap(Map<Integer, List<Object>> activeTopics) throws PersistenceException;
 }

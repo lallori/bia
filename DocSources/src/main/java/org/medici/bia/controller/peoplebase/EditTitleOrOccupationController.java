@@ -92,7 +92,7 @@ public class EditTitleOrOccupationController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			TitleOccsList titleOccsList = new TitleOccsList(command.getTitleOccId());
 			titleOccsList.setTitleOcc(command.getTitleOcc());
@@ -130,7 +130,7 @@ public class EditTitleOrOccupationController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTitleOrOccupationCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getTitleOccId().equals(0))) {
 			command.setTitleOcc(null);

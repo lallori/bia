@@ -82,7 +82,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/community/CheckNewMessages", method = RequestMethod.GET)
 	public ModelAndView checkNewMessages() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			Long numberOfNewMessages = getCommunityService().checkNewMessages();
@@ -97,8 +97,8 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="/community/EraseMessages", method = RequestMethod.POST)
-	public ModelAndView EraseMessages(@RequestParam("idToErase") String idToErase) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView eraseMessages(@RequestParam("idToErase") String idToErase) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			if(!idToErase.equals("")){
@@ -128,7 +128,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/community/GetForumChronology", method = RequestMethod.GET)
 	public ModelAndView showForumChronology(@RequestParam(value="forumId", required=false) Integer forumId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Forum forum = new Forum();
 		
 		try{
@@ -158,7 +158,7 @@ public class AjaxController {
 	@RequestMapping(value = "/de/community/DeleteForum", method = RequestMethod.POST)
 	public ModelAndView deleteForum(@RequestParam(value="forumId", required=false) Integer forumId,
 										HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		try{
 			getCommunityService().deleteForum(forumId);
 			model.put("operation", "OK");
@@ -174,7 +174,7 @@ public class AjaxController {
 	public ModelAndView deleteForumPost(@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="topicId", required=false) Integer topicId,
 										HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		ForumTopic forumTopic = null;
 		try{
 			getCommunityService().deleteForumPost(postId);
@@ -202,7 +202,7 @@ public class AjaxController {
 	@RequestMapping(value = "/de/community/DeleteForumTopic", method = RequestMethod.POST)
 	public ModelAndView deleteForumTopic(@RequestParam(value="topicId", required=false) Integer topicId,
 										HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		try{
 			getCommunityService().deleteForumTopic(topicId);
 			model.put("operation", "OK");
@@ -221,7 +221,7 @@ public class AjaxController {
 										@RequestParam(value="subject", required=false) String subject,
 										@RequestParam(value="text", required=false) String text,
 										HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		ForumPost forumPost = new ForumPost(postId);
 		forumPost.setForum(new Forum(forumId));
@@ -265,7 +265,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);

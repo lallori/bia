@@ -82,7 +82,7 @@ public class PrintPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") PrintPersonRequestCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		People person = new People();
 
 		if(command.getPersonId() > 0){

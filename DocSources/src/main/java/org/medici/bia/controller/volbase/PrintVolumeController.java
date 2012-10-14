@@ -78,7 +78,7 @@ public class PrintVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") PrintVolumeRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Volume volume = new Volume();
 		
 		if (command.getSummaryId() > 0) {

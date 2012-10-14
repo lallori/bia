@@ -86,7 +86,7 @@ public class ShowExplorerVolumeController {
 			command.setImageProgTypeNum(null);
 			return setupForm(command, result);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 			volumeExplorer.setImage(new Image());
@@ -124,7 +124,7 @@ public class ShowExplorerVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 		volumeExplorer.setImage(new Image());

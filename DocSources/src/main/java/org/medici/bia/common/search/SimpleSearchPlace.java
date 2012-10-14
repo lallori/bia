@@ -88,9 +88,10 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(alias)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -199,10 +200,11 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
+		if (alias != null) {
 			return getAlias();
-		else
-			return "";
+		}
+
+		return "";
 	}
 }
 

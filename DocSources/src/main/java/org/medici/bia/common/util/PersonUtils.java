@@ -48,30 +48,31 @@ public class PersonUtils {
 			return "";
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (!ObjectUtils.toString(people.getLast()).equals("")) {
 			stringBuilder.append(people.getLast());
-			if(!ObjectUtils.toString(people.getFirst()).equals("") || !ObjectUtils.toString(people.getSucNum()).equals("") || !ObjectUtils.toString(people.getMidPrefix()).equals("") || !ObjectUtils.toString(people.getMiddle()).equals("") || !ObjectUtils.toString(people.getLastPrefix()).equals(""))
-				stringBuilder.append(",");
+			if(!ObjectUtils.toString(people.getFirst()).equals("") || !ObjectUtils.toString(people.getSucNum()).equals("") || !ObjectUtils.toString(people.getMidPrefix()).equals("") || !ObjectUtils.toString(people.getMiddle()).equals("") || !ObjectUtils.toString(people.getLastPrefix()).equals("")) {
+				stringBuilder.append(',');
+			}
 		}
 		if (!ObjectUtils.toString(people.getFirst()).equals("")) {
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			stringBuilder.append(people.getFirst()); 
 		}
 		if (!ObjectUtils.toString(people.getSucNum()).equals("")) {
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			stringBuilder.append(people.getSucNum()); 
 		}
 		if (!ObjectUtils.toString(people.getMidPrefix()).equals("")) {
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			stringBuilder.append(people.getMidPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getMiddle()).equals("")) {
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			stringBuilder.append(people.getMiddle()); 
 		}
 		if (!ObjectUtils.toString(people.getLastPrefix()).equals("")) {
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			stringBuilder.append(people.getLastPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
@@ -80,7 +81,7 @@ public class PersonUtils {
 				stringBuilder.append(people.getPostLastPrefix() + " ");
 			}
 			stringBuilder.append(people.getPostLast());
-			stringBuilder.append(")"); 
+			stringBuilder.append(')'); 
 		}
 		
 		return stringBuilder.toString();

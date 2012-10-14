@@ -79,7 +79,7 @@ public class SharePersonController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") SharePersonRequestCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(command.getPersonId());

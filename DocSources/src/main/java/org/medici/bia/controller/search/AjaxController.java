@@ -41,12 +41,12 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AdvancedSearch;
 import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.common.search.SimpleSearchDocument;
 import org.medici.bia.common.search.SimpleSearchPeople;
 import org.medici.bia.common.search.SimpleSearchPlace;
 import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.bia.common.search.SimpleSearchVolume;
-import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
@@ -55,9 +55,9 @@ import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.RoleCat;
 import org.medici.bia.domain.SearchFilter;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.medici.bia.service.geobase.GeoBaseService;
@@ -106,11 +106,11 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/AdvancedSearchCount.json", method = RequestMethod.POST)
 	public ModelAndView advancedSearchCount(HttpSession httpSession, AdvancedSearchCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Long totalResult = new Long(0);
 
-		AdvancedSearch advancedSearch = AdvancedSearchFactory.create(command);
+		AdvancedSearch advancedSearch = AdvancedSearchFactory.createFromAdvancedSearchCommand(command);
 
 		try {
 			totalResult = getSearchService().searchCount((Search) advancedSearch);
@@ -137,7 +137,7 @@ public class AjaxController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void advancedSearchDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
@@ -158,61 +158,65 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if(currentDocument.getYearModern() != null){
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else{
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
 			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
-			
+			}
+
 			if (currentDocument.getMDPAndFolio() != null){
 				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-				}else{
+				} else {
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}
 				
-			}
-			else
+			} else {
 				singleRow.add("");
+			}
 
 			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 		}
@@ -240,7 +244,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, searchType);
@@ -268,7 +272,7 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> personIds = new ArrayList<Integer>();
@@ -284,18 +288,19 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (People currentPerson : (List<People>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
-			if(documentsRelated.containsKey(currentPerson.getPersonId()))
+			if(documentsRelated.containsKey(currentPerson.getPersonId())) {
 				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
-			else
+			} else {
 				singleRow.add("0");
+			}
 			
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
@@ -315,7 +320,7 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		Map<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
 		Map<Integer, Long> fromToRelated = new HashMap<Integer, Long>();
@@ -336,23 +341,28 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Place currentPlace : (List<Place>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add(currentPlace.getPlaceName() + " / " + currentPlace.getPlParent());
 			singleRow.add(currentPlace.getPlType());
-			if(peopleRelated.containsKey(currentPlace.getPlaceAllId()))
+			if(peopleRelated.containsKey(currentPlace.getPlaceAllId())) {
 				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
-			else
+			} else {
 				singleRow.add("0");
-			if(fromToRelated.containsKey(currentPlace.getPlaceAllId()))
+			}
+			
+			if(fromToRelated.containsKey(currentPlace.getPlaceAllId())) {
 				singleRow.add(fromToRelated.get(currentPlace.getPlaceAllId()).toString());
-			else
+			} else {
 				singleRow.add("0");
-			if(documentsRelated.containsKey(currentPlace.getPlaceAllId()))
+			}
+
+			if(documentsRelated.containsKey(currentPlace.getPlaceAllId())) {
 				singleRow.add(documentsRelated.get(currentPlace.getPlaceAllId()).toString());
-			else
+			} else {
 				singleRow.add("0");
+			}
 
 			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
 		}
@@ -373,7 +383,7 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		
 		Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
@@ -388,9 +398,9 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Volume currentVolume : (List<Volume>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			if(currentVolume.getSerieList() != null){
 				singleRow.add(currentVolume.getSerieList().toString());
 			}else{
@@ -400,10 +410,11 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
-			if(stateVolumesDigitized.get(currentVolume.getMDP()))
+			if(stateVolumesDigitized.get(currentVolume.getMDP())) {
 				singleRow.add("YES");
-			else
+			} else {
 				singleRow.add("NO");
+			}
 			
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
@@ -486,7 +497,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/SearchOtherLang", method = RequestMethod.GET)
 	public ModelAndView searchOtherLang(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<String> otherLang = getSearchService().searchOtherLang(query);
@@ -524,7 +535,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/SearchPerson", method = RequestMethod.GET)
 	public ModelAndView searchPerson(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 //			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
@@ -561,7 +572,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/SearchPlace", method = RequestMethod.GET)
 	public ModelAndView searchPlace(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 //			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
@@ -597,7 +608,7 @@ public class AjaxController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/src/SearchTitleOrOccupation", method = RequestMethod.GET)
 	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
@@ -630,7 +641,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/SearchTopic", method = RequestMethod.GET)
 	public ModelAndView searchTopic(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<TopicList> topics = getSearchService().searchTopics(query, new PaginationFilter(0, Integer.MAX_VALUE));
@@ -655,7 +666,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/SearchVolume", method = RequestMethod.GET)
 	public ModelAndView searchVolume(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<Volume> volumes = getSearchService().searchVolumes(query, new PaginationFilter(0, Integer.MAX_VALUE));
@@ -817,7 +828,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, simpleSearchPerimeter);
 
@@ -1055,7 +1066,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = generatePaginationUserSearchFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 

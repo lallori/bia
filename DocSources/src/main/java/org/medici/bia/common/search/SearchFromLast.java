@@ -80,7 +80,7 @@ public  class SearchFromLast implements Search {
 	}
 
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if (fromLast == null) {
 			return Boolean.TRUE;
 		}

@@ -84,7 +84,7 @@ public class UndeleteDocumentController {
 		if (result.hasErrors()) {
 			return new ModelAndView("response/UndeleteDocumentKO");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 	
 			try {
 				getDocBaseService().undeleteDocument(command.getEntryId());
@@ -111,7 +111,7 @@ public class UndeleteDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") UndeleteDocumentCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("docbase/ShowConfirmUndeleteDocument", model);
 	}

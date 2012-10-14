@@ -46,8 +46,8 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.PoLink;
 import org.medici.bia.domain.RoleCat;
-import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/peoplebase/GetPortraitPersonInformation", method = RequestMethod.GET) 
 	public ModelAndView getPortraitPersonInformation(@RequestParam(value="personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person= getPeopleBaseService().findPerson(personId);
@@ -107,7 +107,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/peoplebase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Forum forum = getPeopleBaseService().getPersonForum(personId);
@@ -134,7 +134,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/CheckPersonIsDeletable", method = RequestMethod.GET)
 	public ModelAndView checkPersonIsDeletable(@RequestParam(value="personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(personId);
@@ -207,6 +207,7 @@ public class AjaxController {
 				break;
 			case 5:
 				paginationFilter.addSortingCriteria("t.endYear", sortingDirection);
+				break;
 			default:
 				paginationFilter.addSortingCriteria("p.mapNameLf", "asc");
 				break;
@@ -233,7 +234,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchChildLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchChildLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -267,7 +268,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchFatherLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchFatherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -301,7 +302,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchMotherLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchMotherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -334,7 +335,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
 	public ModelAndView searchRecipients(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -368,7 +369,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
 	public ModelAndView searchSenders(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -405,7 +406,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchSpouseLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchSpouseLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -439,7 +440,7 @@ public class AjaxController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/de/peoplebase/SearchTitleOrOccupation", method = RequestMethod.GET)
 	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		try {
 			query = new String(query.getBytes(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -478,7 +479,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/ShowChildDetails", method = RequestMethod.GET)
 	public ModelAndView showChildDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(personId);
@@ -509,7 +510,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -620,7 +621,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
 
@@ -668,7 +669,7 @@ public class AjaxController {
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> personIds = new ArrayList<Integer>();
@@ -717,7 +718,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/ShowFatherDetails", method = RequestMethod.GET)
 	public ModelAndView showFatherDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(personId);
@@ -745,7 +746,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/peoplebase/ShowMotherDetails", method = RequestMethod.GET)
 	public ModelAndView showMotherDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(personId);
@@ -781,7 +782,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -880,7 +881,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -987,7 +988,7 @@ public class AjaxController {
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
@@ -1032,7 +1033,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -1126,7 +1127,7 @@ public class AjaxController {
 	
 	@RequestMapping(value = "/de/peoplebase/ShowSpouseDetails", method = RequestMethod.GET)
 	public ModelAndView showSpouseDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			People person = getPeopleBaseService().findPerson(personId);
@@ -1156,7 +1157,7 @@ public class AjaxController {
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 		List<Integer> peopleIds = new ArrayList<Integer>(); 
 		Map<Integer, List<PoLink>> occupations = new HashMap<Integer, List<PoLink>>();
@@ -1221,7 +1222,7 @@ public class AjaxController {
 												@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 												@RequestParam(value="iDisplayStart") Integer firstRecord,
 				 								@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = generatePaginationFilterForTitleOcc(sortingColumnNumber, sortingDirection, firstRecord, length);

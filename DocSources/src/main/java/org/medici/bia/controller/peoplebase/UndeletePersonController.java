@@ -87,7 +87,7 @@ public class UndeletePersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("response/UndeletePersonKO");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 	
 			try {
 				getPeopleBaseService().undeletePerson(command.getPersonId());
@@ -113,7 +113,7 @@ public class UndeletePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") UndeletePersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("peoplebase/ShowConfirmUndeletePerson", model);
 	}

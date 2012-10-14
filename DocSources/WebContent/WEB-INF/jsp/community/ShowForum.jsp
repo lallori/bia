@@ -816,4 +816,3 @@
 				Are you sure you want to delete?
 			</p>
 		</div>
-					

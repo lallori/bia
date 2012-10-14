@@ -53,21 +53,21 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countMessageReceivedAfterDate(Date inputDate) throws PersistenceException;
+	Long countMessageReceivedAfterDate(Date inputDate) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long findNumberOfNewMessages() throws PersistenceException;
+	Long findNumberOfNewMessages() throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long findNumberOfUnreadedMessages() throws PersistenceException;
+	Long findNumberOfUnreadedMessages() throws PersistenceException;
 	
 	/**
 	 * 
@@ -75,7 +75,7 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException;
+	Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException;
 
 	/**
 	 * 
@@ -84,5 +84,5 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException;
 }

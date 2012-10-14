@@ -59,9 +59,9 @@ public class ShowMyHistoryReportController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		HashMap<String, List<?>> historyReport = null;
+		Map<String, List<?>> historyReport = null;
 		try {
 			historyReport = getUserService().getMyHistoryReport(5);
 		} catch (ApplicationThrowable applicationThrowable) {

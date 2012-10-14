@@ -48,6 +48,6 @@ public interface ActivationUserDAO extends Dao<String, ActivationUser> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<ActivationUser> searchUsersToActivate(ActivationUser activationUser) throws PersistenceException;
+	List<ActivationUser> searchUsersToActivate(ActivationUser activationUser) throws PersistenceException;
 
 }

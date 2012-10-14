@@ -65,7 +65,7 @@ public class EditPersonalNotesDialogController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPersonalNotesDialogCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		UserPersonalNotes personalNotes = new UserPersonalNotes(command.getPersonalNotes());
 
@@ -87,7 +87,7 @@ public class EditPersonalNotesDialogController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesDialogCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			UserPersonalNotes personalNotes = getUserService().findUserPersonalNotes();

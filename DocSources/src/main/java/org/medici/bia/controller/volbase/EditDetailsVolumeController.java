@@ -110,7 +110,7 @@ public class EditDetailsVolumeController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Volume volume = new Volume(command.getSummaryId());
 			volume.setVolNum(command.getVolNum());
@@ -173,7 +173,7 @@ public class EditDetailsVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsVolumeCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Month> months = null;
 		try {
 			months = getVolBaseService().getMonths();
@@ -210,17 +210,21 @@ public class EditDetailsVolumeController {
 				command.setEndMonthNum(volume.getEndMonthNum().getMonthNum());
 			}
 
-			if (command.getStartYear() == 0)
-				command.setStartYear(null);
+			if (command.getStartYear() == 0){
+				command.setStartYear(null); 
+			}
 
-			if (command.getStartDay() == 0)
+			if (command.getStartDay() == 0) {
 				command.setStartDay(null);
+			}
 
-			if (command.getEndYear() == 0)
+			if (command.getEndYear() == 0) {
 				command.setEndYear(null);
+			}
 
-			if (command.getEndDay() == 0)
+			if (command.getEndDay() == 0) {
 				command.setEndDay(null);
+			}
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

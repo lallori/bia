@@ -27,8 +27,9 @@
  */
 package org.medici.bia.service.community;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
@@ -214,14 +215,22 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HashMap<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable;
+	public Map<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HashMap<String, Object> getForumsStatistics() throws ApplicationThrowable;
+	public Map<String, Object> getForumsStatistics() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param numberOfElements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -248,7 +257,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param forum
@@ -256,14 +265,6 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param integer
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -271,8 +272,16 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
 	
+	/**
+	 * 
+	 * @param integer
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param postId
@@ -302,7 +311,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param simpleSearchForumPost
@@ -310,7 +319,7 @@ public interface CommunityService {
 	 * @return
 	 */
 	public Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param simpleSearchForumPost
@@ -327,13 +336,5 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param numberOfElements
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public HashMap<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
 
 }

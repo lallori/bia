@@ -44,11 +44,11 @@ public interface ApplicationPropertyDAO extends Dao<String, ApplicationProperty>
 	 * @param key
 	 * @return
 	 */
-	public String getApplicationProperty(String key);
+	String getApplicationProperty(String key);
 
 	/**
 	 * 
 	 * @return
 	 */
-	public List<String> getApplicationPropertiesNames();
+	List<String> getApplicationPropertiesNames();
 }

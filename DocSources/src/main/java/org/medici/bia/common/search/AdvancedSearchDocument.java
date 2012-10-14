@@ -36,6 +36,7 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -107,6 +108,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<String> words;
 	private List<WordType> wordsTypes;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	/**
 	 * 
 	 */
@@ -447,7 +450,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					} else {
 						continue;
 					}
-				}catch (URIException e) {
+				}catch (URIException uriException) {
+					logger.debug(uriException);
 					wordsTypes.remove(wordsTypes.size()-1);
 				} 
 			}
@@ -475,7 +479,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personId.add(new Integer(0));
 						try {
 							person.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
-						} catch (URIException e) {
+						} catch (URIException uriException) {
+							logger.debug(uriException);
 						}
 					} else if (stringTokenizer.countTokens() == 2) {
 						// string format is number|text
@@ -491,13 +496,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						}
 						try {
 							person.add(URIUtil.decode(singleText, "UTF-8"));
-						} catch (URIException e) {
+						} catch (URIException uriException) {
+							logger.debug(uriException);
 							personId.remove(personId.size()-1);
 						}
-					} else {
-						// we skip field
 					}
 				} catch (NumberFormatException nex) {
+					logger.error(nex);
 				}
 			}
 		} else {
@@ -535,11 +540,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							placeId.add(new Integer(0));
 						}
 						place.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+					logger.debug(nex);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					placeId.remove(placeId.size()-1);
 				}
 			}
@@ -574,11 +579,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							senderId.add(new Integer(0));
 						}
 						sender.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+					logger.debug(nex);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					senderId.remove(senderId.size()-1);
 				}
 			}
@@ -617,11 +622,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							fromId.add(new Integer(0));
 						}
 						from.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					fromId.remove(fromId.size()-1);
 				}
 			}
@@ -656,11 +661,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							recipientId.add(new Integer(0));
 						}
 						recipient.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					recipientId.remove(recipientId.size()-1);
 				}
 			}
@@ -699,11 +704,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							toId.add(new Integer(0));
 						}
 						to.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					toId.remove(toId.size()-1);
 				}
 			}
@@ -738,11 +743,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							refersToId.add(new Integer(0));
 						}
 						refersTo.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					refersToId.remove(refersToId.size()-1);
 				}
 			}
@@ -763,8 +768,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try {
 					extract.add(URIUtil.decode(singleWord, "UTF-8"));
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		} else {
@@ -782,8 +789,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try {
 					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		} else {
@@ -818,11 +827,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							topicsId.add(new Integer(0));
 						}
 						topics.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					topicsId.remove(topicsId.size()-1);
 				}
 			}
@@ -862,11 +871,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							topicsPlaceId.add(new Integer(0));
 						}
 						topicsPlace.add(URIUtil.decode(singleText, "UTF-8"));
-					} else {
-						// we skip field
 					}
-				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					topicsPlaceId.remove(topicsPlaceId.size()-1);
 				}
 			}
@@ -967,8 +976,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			for(String singleWord : command.getDocId()){
 				try{
 					docIds.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){					
-				}catch(URIException e){
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -1000,7 +1011,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if (
 				(words.size()>0)	||
 				(personId.size()>0) ||
@@ -1483,7 +1494,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			wordsQuery.append(")");
+			wordsQuery.append(')');
 			if (!wordsQuery.toString().equals("")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1508,7 +1519,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(" or recipientPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(")");
+					personIdQuery.append(')');
 				} else {
 					if (personQuery.length()>1) {
 						personQuery.append(" AND ");
@@ -1522,8 +1533,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					personQuery.append("%')");*/
 				}
 			}
-			personIdQuery.append(")");
-			personQuery.append(")");
+			personIdQuery.append(')');
+			personQuery.append(')');
 			if (!personIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1569,8 +1580,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					placeQuery.append("%'))");
 				}
 			}
-			placeIdQuery.append(")");
-			placeQuery.append(")");
+			placeIdQuery.append(')');
+			placeQuery.append(')');
 			if (!placeIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1597,7 +1608,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					senderIdQuery.append("(senderPeople.personId=");
 					senderIdQuery.append(senderId.get(i).toString());
-					senderIdQuery.append(")");
+					senderIdQuery.append(')');
 				} else {
 					if (senderQuery.length()>1) {
 						senderQuery.append(" AND ");
@@ -1608,8 +1619,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					senderQuery.append("%')");
 				}
 			}
-			senderIdQuery.append(")");
-			senderQuery.append(")");
+			senderIdQuery.append(')');
+			senderQuery.append(')');
 			if (!senderIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1647,8 +1658,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					fromQuery.append("%')");
 				}
 			}
-			fromIdQuery.append(")");
-			fromQuery.append(")");
+			fromIdQuery.append(')');
+			fromQuery.append(')');
 			if (!fromIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1675,7 +1686,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					recipientIdQuery.append("(recipientPeople.personId=");
 					recipientIdQuery.append(recipientId.get(i).toString());
-					recipientIdQuery.append(")");
+					recipientIdQuery.append(')');
 				} else {
 					if (recipientQuery.length()>1) {
 						recipientQuery.append(" AND ");
@@ -1686,8 +1697,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					recipientQuery.append("%')");
 				}
 			}
-			recipientIdQuery.append(")");
-			recipientQuery.append(")");
+			recipientIdQuery.append(')');
+			recipientQuery.append(')');
 			if (!recipientIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1725,8 +1736,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					toQuery.append("%')");
 				}
 			}
-			toIdQuery.append(")");
-			toQuery.append(")");
+			toIdQuery.append(')');
+			toQuery.append(')');
 			if (!toIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1764,8 +1775,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					refersToQuery.append("%' AND docRole IS NULL))");
 				}
 			}
-			refersToIdQuery.append(")");
-			refersToQuery.append(")");
+			refersToIdQuery.append(')');
+			refersToQuery.append(')');
 			if (!refersToIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1829,7 +1840,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			extractQuery.append(")");
+			extractQuery.append(')');
 			if (!extractQuery.toString().equals("")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1887,7 +1898,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			synopsisQuery.append(")");
+			synopsisQuery.append(')');
 			if (!synopsisQuery.toString().equals("")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1908,7 +1919,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
 					topicsIdQuery.append(topicsId.get(i).toString());
-					topicsIdQuery.append(")");
+					topicsIdQuery.append(')');
 				} else {
 					if (topicsQuery.length()>1) {
 						topicsQuery.append(" AND ");
@@ -1919,8 +1930,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					topicsQuery.append("%'))");
 				}
 			}
-			topicsIdQuery.append(")");
-			topicsQuery.append(")");
+			topicsIdQuery.append(')');
+			topicsQuery.append(')');
 			if (!topicsIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1946,15 +1957,15 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				if(topicsPlaceId.get(i) > 0){
 					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeAllId=");
 					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
-					topicsPlaceIdQuery.append(")");
+					topicsPlaceIdQuery.append(')');
 				}else{
 					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
 					topicsPlaceQuery.append(topicsPlace.get(i));
 					topicsPlaceQuery.append("%')");
 				}
 			}
-			topicsPlaceIdQuery.append(")");
-			topicsPlaceQuery.append(")");
+			topicsPlaceIdQuery.append(')');
+			topicsPlaceQuery.append(')');
 			if (!topicsPlaceIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -1985,17 +1996,17 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					//datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
 					datesQuery.append("(sortableDateInt >=");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(')');
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
 					datesQuery.append("(sortableDateInt <");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(')');
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
 					datesQuery.append("(sortableDateInt >=");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(") AND (sortableDateInt <");
 					datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(')');
 				}else if (datesTypes.get(i).equals(DateType.InOn)){
 					if(datesYear.get(i) != null){
 						datesQuery.append("(yearModern =");
@@ -2039,7 +2050,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 //					}
 				}
 			}
-			datesQuery.append(")");
+			datesQuery.append(')');
 			if (!datesQuery.toString().equals("")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -2062,7 +2073,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						if (StringUtils.isNumeric(volumes.get(i))) {
 							volumesQuery.append("(volume.volNum=");
 							volumesQuery.append(volumes.get(i));
-							volumesQuery.append(")");
+							volumesQuery.append(')');
 						} else {
 							volumesQuery.append("(volume.volNum=");
 							volumesQuery.append(volumes.get(i));
@@ -2075,14 +2086,14 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						volumesQuery.append(volumes.get(i));
 						volumesQuery.append(" AND volume.volNum<=");
 						volumesQuery.append(volumesBetween.get(i));
-						volumesQuery.append(")");
+						volumesQuery.append(')');
 					}
 				} else {
 					// if volume value is not in volume format we discard it!
 					continue;
 				}
 			}
-			volumesQuery.append(")");
+			volumesQuery.append(')');
 			if (!volumesQuery.toString().equals("")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -2104,19 +2115,19 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					if(foliosTypes.get(i).equals(FolioType.Exactly)){
 						foliosQuery.append("(folioNum=");
 						foliosQuery.append(folios.get(i));
-						foliosQuery.append(")");
+						foliosQuery.append(')');
 					}else if(foliosTypes.get(i).equals(FolioType.Between)){
 						foliosQuery.append("(folioNum>=");
 						foliosQuery.append(folios.get(i));
 						foliosQuery.append(" AND folioNum<=");
 						foliosQuery.append(foliosBetween.get(i));
-						foliosQuery.append(")");
+						foliosQuery.append(')');
 					}
 				}else{
 					continue;
 				}
 			}
-			foliosQuery.append(")");
+			foliosQuery.append(')');
 			if(!foliosQuery.toString().equals("")){
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -2136,12 +2147,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					docIdQuery.append("(entryId=");
 					docIdQuery.append(docIds.get(i));
-					docIdQuery.append(")");
+					docIdQuery.append(')');
 				}else{
 					continue;
 				}
 			}
-			docIdQuery.append(")");
+			docIdQuery.append(')');
 			if(!docIdQuery.toString().equals("")){
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -2158,7 +2169,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}else if(logicalDelete.equals(Boolean.FALSE)){
 				logicalDeleteQuery.append("(logicalDelete = false)");
 			}
-			logicalDeleteQuery.append(")");
+			logicalDeleteQuery.append(')');
 			if(!logicalDeleteQuery.toString().equals("")){
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -2558,7 +2569,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if(!words.isEmpty()){
 			if(stringBuilder.length()>0){
 				stringBuilder.append("AND ");
@@ -2569,7 +2580,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(words.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		
@@ -2583,7 +2594,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(extract.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		
@@ -2597,7 +2608,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(synopsis.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		
@@ -2611,7 +2622,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(person.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		
@@ -2651,7 +2662,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(from.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!recipient.isEmpty()){
@@ -2664,7 +2675,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(recipient.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!to.isEmpty()){
@@ -2677,7 +2688,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(to.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!refersTo.isEmpty()){
@@ -2690,7 +2701,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(refersTo.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!topics.isEmpty()){
@@ -2703,7 +2714,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(topics.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesYear.isEmpty()){
@@ -2716,7 +2727,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesYear.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesMonth.isEmpty()){
@@ -2729,7 +2740,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesMonth.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesDay.isEmpty()){
@@ -2742,7 +2753,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesDay.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
@@ -2755,7 +2766,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesYearBetween.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
@@ -2768,7 +2779,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesMonthBetween.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
@@ -2781,7 +2792,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(datesDayBetween.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!volumes.isEmpty()){
@@ -2794,7 +2805,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(volumes.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!volumesBetween.isEmpty()){
@@ -2807,7 +2818,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(volumesBetween.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		
@@ -2821,7 +2832,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(folios.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!foliosBetween.isEmpty()){
@@ -2834,7 +2845,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(foliosBetween.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		if(!docIds.isEmpty()){
@@ -2847,7 +2858,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(docIds.get(i));
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 		}
 		

@@ -47,5 +47,5 @@ public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserAuthority> getAuthorities() throws PersistenceException;
+	List<UserAuthority> getAuthorities() throws PersistenceException;
 }

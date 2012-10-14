@@ -47,6 +47,5 @@ public interface SynExtractDAO extends Dao<Integer, SynExtract> {
 	 * @return The SynExtract searched.
 	 * @throws PersistenceException
 	 */
-	public SynExtract findByEntryId(Integer entryId) throws PersistenceException;
-
+	SynExtract findByEntryId(Integer entryId) throws PersistenceException;
 }

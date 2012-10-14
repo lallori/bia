@@ -83,7 +83,7 @@ public class ShowUserSearchController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			//Add Output fields
 			List<String> outputFields = getOutputFields();
@@ -111,7 +111,7 @@ public class ShowUserSearchController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowUserSearchCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("admin/UserSearch", model);
 	}

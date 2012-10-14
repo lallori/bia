@@ -81,7 +81,7 @@ public class AjaxController {
 					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 					   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Page page = null;
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
@@ -105,9 +105,9 @@ public class AjaxController {
 		PropertyComparator.sort(page.getList(), new MutableSortDefinition("firstName", true, true));
 		page.setList(Collections.unmodifiableList(page.getList()));
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for(User currentUser : (List<User>) page.getList()){
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add(currentUser.getFirstName() + " " + currentUser.getLastName());
 			singleRow.add(currentUser.getMail());
 			singleRow.add(currentUser.getCity());

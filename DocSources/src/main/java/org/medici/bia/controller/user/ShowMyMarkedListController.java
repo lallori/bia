@@ -58,7 +58,7 @@ public class ShowMyMarkedListController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("user/ShowMyMarkedListModalWindow", model);
 	}

@@ -34,48 +34,169 @@ package org.medici.bia.command.digitization;
  *
  */
 public class EditDetailsSchedoneCommand {
+	/**
+	 * 
+	 */
 	private Integer schedoneId;
+	/**
+	 * 
+	 */
 	private String istituto;
+	/**
+	 * 
+	 */
 	private String fondo;
-	
+	/**
+	 * 
+	 */
 	private Integer seriesRefNum;
+	/**
+	 * 
+	 */
 	private String serie;
-	
+	/**
+	 * 
+	 */
 	private Integer numeroUnita;
+	/**
+	 * 
+	 */
 	private String volLetExt;
+	/**
+	 * 
+	 */
 	private Integer dataInizioAnno;
+	/**
+	 * 
+	 */
 	private Integer dataInizioMese;
+	/**
+	 * 
+	 */
 	private Integer dataInizioGiorno;
+	/**
+	 * 
+	 */
 	private Integer dataFineAnno;
+	/**
+	 * 
+	 */
 	private Integer dataFineMese;
+	/**
+	 * 
+	 */
 	private Integer dataFineGiorno;
+	/**
+	 * 
+	 */
 	private String titolo;
+	/**
+	 * 
+	 */
 	private String descrizioneContenuto;
+	/**
+	 * 
+	 */
 	private String descrizioneContenutoEng;
+	/**
+	 * 
+	 */
 	private String legatura;
+	/**
+	 * 
+	 */
 	private String supporto;
+	/**
+	 * 
+	 */
 	private String cartulazione;
+	/**
+	 * 
+	 */
 	private String noteCartulazione;
+	/**
+	 * 
+	 */
 	private String noteCartulazioneEng;
+	/**
+	 * 
+	 */
 	private String carteBianche;
+	/**
+	 * 
+	 */
 	private String carteMancanti;
+	/**
+	 * 
+	 */
 	private String dimensioniBase;
+	/**
+	 * 
+	 */
 	private Integer dimensioniAltezza;
+	/**
+	 * 
+	 */
 	private String sistemaScansione;
+	/**
+	 * 
+	 */
 	private String profonditaColore;
+	/**
+	 * 
+	 */
 	private String risoluzione;
+	/**
+	 * 
+	 */
 	private String coloreImmagine;
+	/**
+	 * 
+	 */
 	private String formato;
+	/**
+	 * 
+	 */
 	private String compressione;
+	/**
+	 * 
+	 */
 	private String nomeFiles;
+	/**
+	 * 
+	 */
 	private Integer numeroTotaleImmagini;
+	/**
+	 * 
+	 */
 	private Long dimMediaImmagini;
+	/**
+	 * 
+	 */
 	private Long dimTotaleImmagini;
+	/**
+	 * 
+	 */
 	private String responsabileFotoRiproduzione;
+	/**
+	 * 
+	 */
 	private String tipoRipresa;
+	/**
+	 * 
+	 */
 	private Integer dataRipresaAnno;
+	/**
+	 * 
+	 */
 	private Integer dataRipresaMese;
+	/**
+	 * 
+	 */
 	private Integer dataRipresaGiorno;
+	/**
+	 * 
+	 */
 	private String operatore;
 	
 	/**

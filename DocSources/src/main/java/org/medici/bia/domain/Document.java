@@ -1105,8 +1105,9 @@ public class Document implements Serializable{
 
 	@Override
 	public String toString() {
-		if (getEntryId() == null)
+		if (getEntryId() == null) {
 			return "";
+		}
 
 		return getEntryId().toString();
 	}

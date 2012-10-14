@@ -78,14 +78,14 @@ public class AjaxController {
 											@RequestParam(value="category", required=true) String category,
 											@RequestParam(value="text", required=false) String text,
 											HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Annotation annotation = new Annotation();
 			annotation.setX(x);
 			annotation.setY(y);
-			annotation.setW(w);
-			annotation.setH(h);
+			annotation.setWidth(w);
+			annotation.setHeight(h);
 			annotation.setType(Annotation.Type.valueOf(category));
 			annotation.setCategory(title);
 			annotation.setText(text);
@@ -123,19 +123,19 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
 	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);			
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
-				HashMap<String, Object> singleRow = new HashMap<String, Object>();
+				Map<String, Object> singleRow = new HashMap<String, Object>(0);
 				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
 				singleRow.put("id", currentAnnotation.getId());
 				singleRow.put("x", currentAnnotation.getX());
 				singleRow.put("y", currentAnnotation.getY());
-				singleRow.put("w", currentAnnotation.getW());
-				singleRow.put("h", currentAnnotation.getH());
+				singleRow.put("w", currentAnnotation.getWidth());
+				singleRow.put("h", currentAnnotation.getHeight());
 				singleRow.put("type", currentAnnotation.getType());
 				singleRow.put("category", currentAnnotation.getCategory());
 				singleRow.put("title", currentAnnotation.getTitle());
@@ -151,7 +151,7 @@ public class AjaxController {
 
 	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
 	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			// In this controller we get input parameter at low level beacause 
@@ -171,8 +171,8 @@ public class AjaxController {
 					annotation.setId(splitted[1]);
 					annotation.setX(NumberUtils.toDouble(splitted[2]));
 					annotation.setY(NumberUtils.toDouble(splitted[3]));
-					annotation.setW(NumberUtils.toDouble(splitted[4]));
-					annotation.setH(NumberUtils.toDouble(splitted[5]));
+					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
+					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
 					annotation.setType(Annotation.Type.valueOf(splitted[6]));
 					annotation.setCategory(splitted[7]);
 					annotation.setTitle(splitted[8]);
@@ -204,7 +204,7 @@ public class AjaxController {
 			@RequestParam(value="totalGuardia", required=false) Long totalGuardia,
 			@RequestParam(value="modeEdit", required=false) Boolean modeEdit, 
 			HttpServletRequest request) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Integer documentId = null;
@@ -248,15 +248,16 @@ public class AjaxController {
 			model.put("entryId", documentId );
 			if(documents != null && documents.size() == 1){
 				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
-			}else if(documents != null && documents.size() > 1){
+			} else if(documents != null && documents.size() > 1){
 				Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
 				String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
-				if(folioMod != null)
+				if(folioMod != null) {
 					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, folioMod));
-				else
+				} else {
 					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, ""));
+				}
 			}
-			model.put("isExtract", (isExtract == true) ? "true" : "false");
+			model.put("isExtract", (isExtract.equals(Boolean.TRUE)) ? "true" : "false");
 		}catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
 			model.put("linkedDocument", "false");
@@ -305,7 +306,7 @@ public class AjaxController {
 			@RequestParam(value="modeEdit", required=false) Boolean modeEdit, 
 			HttpServletRequest request){
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		DocumentExplorer documentExplorer = new DocumentExplorer(entryId, volNum, volLetExt);
 		documentExplorer.setImage(new Image());

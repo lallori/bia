@@ -28,7 +28,6 @@
 package org.medici.bia.service.admin;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -268,7 +267,7 @@ public class AdminServiceImpl implements AdminService {
 	private String generateInitials(User user) throws ApplicationThrowable {
 		try {
 			// We extract name and surname from user object and we clean eventually wrong chars, it's necessary to calculate user initial 
-			String name = user.getFirstName().trim().toUpperCase();;
+			String name = user.getFirstName().trim().toUpperCase();
 			String surname = user.getLastName().trim().toUpperCase();
 			if (!StringUtils.isAlpha(name)) {
 				name = RegExUtils.trimNonAlphaChars(name);
@@ -415,7 +414,7 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable {
+	public void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable {
 		try {
 			Iterator<Entry<String,String>> iterator = hashMap.entrySet().iterator();
 			while (iterator.hasNext()) {

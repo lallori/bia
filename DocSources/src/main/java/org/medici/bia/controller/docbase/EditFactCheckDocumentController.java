@@ -92,7 +92,7 @@ public class EditFactCheckDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			FactChecks factChecks = new FactChecks(command.getVetId());
 			factChecks.setDocument(new Document(command.getEntryId()));
@@ -129,7 +129,7 @@ public class EditFactCheckDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditFactCheckDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if ((command != null) && (command.getEntryId() > 0)) {
 			FactChecks factChecks = new FactChecks();
 

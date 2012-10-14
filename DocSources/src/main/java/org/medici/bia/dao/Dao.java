@@ -53,7 +53,7 @@ public interface Dao<K, E> extends Serializable {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException;
+	Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException;
 	
 	/**
 	 * 
@@ -61,47 +61,47 @@ public interface Dao<K, E> extends Serializable {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public E find(K id) throws PersistenceException;
+	E find(K id) throws PersistenceException;
 
 	/**
 	 * 
 	 * @throws PersistenceException
 	 */
-	public void generateIndex() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	public E merge(E entity) throws PersistenceException;
-
-	/**
-	 * 
-	 * @throws PersistenceException
-	 */
-	public void optimizeIndex() throws PersistenceException;
+	void generateIndex() throws PersistenceException;
 
 	/**
 	 * 
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void persist(E entity) throws PersistenceException;	
+	E merge(E entity) throws PersistenceException;
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	void optimizeIndex() throws PersistenceException;
 
 	/**
 	 * 
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void refresh(E entity) throws PersistenceException;
+	void persist(E entity) throws PersistenceException;	
 
 	/**
 	 * 
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void remove(E entity) throws PersistenceException;	
+	void refresh(E entity) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	void remove(E entity) throws PersistenceException;	
 
 	/**
 	 * 
@@ -110,12 +110,12 @@ public interface Dao<K, E> extends Serializable {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
 	 * @param fromDate
 	 * @throws PersistenceException
 	 */
-	public void updateIndex(Date fromDate) throws PersistenceException;
+	void updateIndex(Date fromDate) throws PersistenceException;
 }

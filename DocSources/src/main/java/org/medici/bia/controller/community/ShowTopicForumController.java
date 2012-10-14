@@ -40,8 +40,8 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -78,7 +78,7 @@ public class ShowTopicForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowTopicForumCommand command, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			User user = (User) httpSession.getAttribute("user");
@@ -91,7 +91,7 @@ public class ShowTopicForumController {
 			}
 			
 			// Control to anonymous access
-			if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().getName().toString().equals("java.lang.String")) {
+			if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().getName().equals("java.lang.String")) {
 				model.put("account", null);
 			} else {
 				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());

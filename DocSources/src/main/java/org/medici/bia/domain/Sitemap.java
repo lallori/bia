@@ -177,15 +177,15 @@ public class Sitemap implements Serializable {
 		YEARLY("YEARLY"),
 		NEVER("NEVER"); 
 
-		private final String ChangeFrequency;
+		private final String changeFrequency;
 
 	    private ChangeFrequency(String value) {
-	    	ChangeFrequency = value;
+	    	changeFrequency = value;
 	    }
 
 	    @Override
 	    public String toString(){
-	        return ChangeFrequency;
+	        return changeFrequency;
 	    }
 	}	
 }

@@ -49,6 +49,6 @@ public interface AltNameDAO extends Dao<Integer, AltName> {
 	 * @return the alternative name of a person {@link org.medici.bia.domain.AltName}
 	 * @throws PersistenceException
 	 */
-	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException;
+	AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException;
 
 }

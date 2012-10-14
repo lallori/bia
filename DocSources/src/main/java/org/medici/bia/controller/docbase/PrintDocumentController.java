@@ -77,7 +77,7 @@ public class PrintDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") PrintDocumentRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Document document = new Document();
 		
 		if(command.getEntryId() > 0){

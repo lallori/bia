@@ -90,7 +90,7 @@ public class EditGeographicCoordinatesPlaceController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			PlaceGeographicCoordinates placeGeographicCoordinates;
 			try {
@@ -103,38 +103,54 @@ public class EditGeographicCoordinatesPlaceController {
 			if (placeGeographicCoordinates.getPlace() == null) {
 				placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
 			}
-			if (command.getDegreeLatitude() != null)
+			
+			if (command.getDegreeLatitude() != null) {
 				placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
-			else
+			} else {
 				placeGeographicCoordinates.setDegreeLatitude(0);
-			if (command.getMinuteLatitude() != null)
+			}
+			
+			if (command.getMinuteLatitude() != null) {
 				placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
-			else
+			} else {
 				placeGeographicCoordinates.setMinuteLatitude(0);
-			if (command.getSecondLatitude() != null)
+			}
+			
+			if (command.getSecondLatitude() != null) {
 				placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
-			else
+			} else {
 				placeGeographicCoordinates.setSecondLatitude(0);
-			if (!command.getDirectionLatitude().equals(""))
+			}
+
+			if (!command.getDirectionLatitude().equals("")) {
 				placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude().toUpperCase());
-			else
+			} else {
 				placeGeographicCoordinates.setDirectionLatitude("N");
-			if (command.getDegreeLongitude() != null)
+			}
+			
+			if (command.getDegreeLongitude() != null) {
 				placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
-			else
+			} else {
 				placeGeographicCoordinates.setDegreeLongitude(0);
-			if (command.getMinuteLongitude() != null)
+			}
+			
+			if (command.getMinuteLongitude() != null) {
 				placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
-			else
+			} else {
 				placeGeographicCoordinates.setMinuteLongitude(0);
-			if (command.getSecondLongitude() != null)
+			}
+			
+			if (command.getSecondLongitude() != null) {
 				placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
-			else
+			} else {
 				placeGeographicCoordinates.setSecondLongitude(0);
-			if (!command.getDirectionLongitude().equals(""))
+			}
+			
+			if (!command.getDirectionLongitude().equals("")) {
 				placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude().toUpperCase());
-			else
+			} else {
 				placeGeographicCoordinates.setDirectionLongitude("E");
+			}
 
 			try {
 				Place place = null;
@@ -159,10 +175,11 @@ public class EditGeographicCoordinatesPlaceController {
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
 
-				if (place.getPlaceGeographicCoordinates() != null)
+				if (place.getPlaceGeographicCoordinates() != null) {
 					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-				else
+				} else {
 					model.put("linkGoogleMaps", null);
+				}
 
 				HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
 				model.put("historyNavigator", historyNavigator);
@@ -191,7 +208,7 @@ public class EditGeographicCoordinatesPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditGeographicCoordinatesPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			PlaceGeographicCoordinates placeGeographicCoordinates = new PlaceGeographicCoordinates();

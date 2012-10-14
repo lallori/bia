@@ -31,11 +31,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.bia.command.search.SimpleSearchModalCommand;
+import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.common.search.SimpleSearchDocument;
 import org.medici.bia.common.search.SimpleSearchPeople;
 import org.medici.bia.common.search.SimpleSearchPlace;
 import org.medici.bia.common.search.SimpleSearchVolume;
-import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +87,7 @@ public class SimpleSearchModalController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET})
 	public ModelAndView setupForm(@ModelAttribute("command") SimpleSearchModalCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Long totalResult = new Long(0);
 		

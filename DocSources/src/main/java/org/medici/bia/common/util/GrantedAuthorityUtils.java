@@ -38,26 +38,6 @@ import org.springframework.security.core.GrantedAuthority;
  * 
  */
 public class GrantedAuthorityUtils {
-
-	/**
-	 * This method convert an array of GrantedAuthority in a string
-	 * rappresentation.
-	 * 
-	 * @param grantedAuthorities List of GrantedAuthority object to convert
-	 * @return String rappresentation of input parameter
-	 * 
-	 * @see org.springframework.security.GrantedAuthority
-	 **/
-	public static String toString(GrantedAuthority[] grantedAuthorities) {
-		StringBuilder stringBuilder = new StringBuilder("[");
-		for (int i = 0; i < grantedAuthorities.length; i++) {
-			stringBuilder.append(grantedAuthorities[i].getAuthority());
-			stringBuilder.append(",");
-		}
-		stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(),
-		"]");
-		return stringBuilder.toString();
-	}
 	
 	/**
 	 * This method convert an array of GrantedAuthority in a string
@@ -72,7 +52,7 @@ public class GrantedAuthorityUtils {
 		StringBuilder stringBuilder = new StringBuilder("[");
 		for (GrantedAuthority currentGrantedAutorithy : grantedAuthorities) {
 			stringBuilder.append(currentGrantedAutorithy);
-			stringBuilder.append(",");
+			stringBuilder.append(',');
 		}
 		stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(),
 		"]");

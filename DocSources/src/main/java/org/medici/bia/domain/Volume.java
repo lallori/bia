@@ -1159,18 +1159,27 @@ public class Volume implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof Volume)) {
 			return false;
+		}
+
 		Volume other = (Volume) obj;
 		if (summaryId == null) {
-			if (other.summaryId != null)
+			if (other.summaryId != null){
 				return false;
-		} else if (!summaryId.equals(other.summaryId))
+			}
+		} else if (!summaryId.equals(other.summaryId)){
 			return false;
+		}
+		
 		return true;
 	}
 
@@ -1179,7 +1188,7 @@ public class Volume implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (volNum != null) {
 			stringBuilder.append(volNum);
 			if (volLetExt != null) {

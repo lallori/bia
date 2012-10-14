@@ -62,7 +62,7 @@ public class ShowMembersForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowMembersForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			PaginationFilter paginationFilter = new PaginationFilter();

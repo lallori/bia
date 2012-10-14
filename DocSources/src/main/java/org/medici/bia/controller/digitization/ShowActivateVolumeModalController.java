@@ -69,7 +69,7 @@ public class ShowActivateVolumeModalController {
 		if(result.hasErrors()){
 			return new ModelAndView("error/ActivateVolumeKO");
 		}else{
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			try{
 				if(command.getId() != 0){
 					Digitization digitization = getDigitizationService().findActivateVolumeDigitized(command.getId());

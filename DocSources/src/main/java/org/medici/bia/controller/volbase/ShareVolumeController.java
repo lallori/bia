@@ -74,7 +74,7 @@ public class ShareVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShareVolumeRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Volume volume = new Volume();
 		
 		if (command.getSummaryId() > 0) {

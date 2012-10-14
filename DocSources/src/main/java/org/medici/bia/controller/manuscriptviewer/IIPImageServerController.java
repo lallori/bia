@@ -42,6 +42,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.imageio.IIOException;
@@ -138,8 +140,8 @@ public class IIPImageServerController {
 			}
 			// Flushing request
 			httpServletResponse.getOutputStream().flush();
-		} catch (Throwable throwable) {
-			logger.error(throwable);
+		} catch (IOException ioException) {
+			logger.debug(ioException);
 		} finally {
 			try {
 				if (inputStream != null) {
@@ -209,8 +211,8 @@ public class IIPImageServerController {
 					resolutionNumber = reader.getNumImages(true);
 				}
 			}
-		} catch (Throwable throwable) {
-			logger.error(throwable);
+		} catch (IOException ioException) {
+			logger.debug(ioException);
 		} finally {
 			try {
 				if (imageInputStream != null) {
@@ -229,7 +231,7 @@ public class IIPImageServerController {
 				servletOutputStream.println("");
 				httpServletResponse.getOutputStream().flush();
 			} catch (IOException ioException) {
-				logger.error("IOException", ioException);
+				logger.error(ioException);
 			}
 		}
 	}
@@ -304,8 +306,8 @@ public class IIPImageServerController {
 			} else {
 				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
-		} catch (Throwable throwable) {
-			logger.error(throwable);
+		} catch (IOException ioException) {
+			logger.error(ioException);
 		} finally {
 			try {
 				if (inputStream != null) {
@@ -336,40 +338,36 @@ public class IIPImageServerController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public void iipServer(HttpServletRequest httpServletRequest, HttpServletResponse response) {
-		try {
-			String[] objs = httpServletRequest.getParameterValues("obj");
+		String[] objs = httpServletRequest.getParameterValues("obj");
 
-			// if user specify IIP
-			if (ArrayUtils.contains(objs, "IIP,1.0")) {
-				generateInformationsTiledImage(httpServletRequest, response);
-			} else if (httpServletRequest.getParameter("full") != null) {
-				generateFullImage(httpServletRequest, response);
-			} else if (httpServletRequest.getParameter("JTL") != null) {
-				String imageName = httpServletRequest.getParameter("FIF");
-				Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
-				Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
-				StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"), ",");
-				// pageImage is inverted as stored in tiff file : first image is
-				// last image
-				Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
-				Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
+		// if user specify IIP
+		if (ArrayUtils.contains(objs, "IIP,1.0")) {
+			generateInformationsTiledImage(httpServletRequest, response);
+		} else if (httpServletRequest.getParameter("full") != null) {
+			generateFullImage(httpServletRequest, response);
+		} else if (httpServletRequest.getParameter("JTL") != null) {
+			String imageName = httpServletRequest.getParameter("FIF");
+			Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
+			Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
+			StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"), ",");
+			// pageImage is inverted as stored in tiff file : first image is
+			// last image
+			Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
+			Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
 
-				generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
-			} else if (httpServletRequest.getParameter("WID") != null) {
-				Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
-				String imageName = httpServletRequest.getParameter("FIF");
-				Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
-				if (quality == 0) {
-					quality = 99;
-				}
-				String thumbnailFormat = httpServletRequest.getParameter("CVT");
-				if (thumbnailFormat == null) {
-					thumbnailFormat = "jpeg";
-				}
-				generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
+			generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
+		} else if (httpServletRequest.getParameter("WID") != null) {
+			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
+			String imageName = httpServletRequest.getParameter("FIF");
+			Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
+			if (quality == 0) {
+				quality = 99;
 			}
-		} catch (Throwable throwable) {
-			logger.error(throwable);
+			String thumbnailFormat = httpServletRequest.getParameter("CVT");
+			if (thumbnailFormat == null) {
+				thumbnailFormat = "jpeg";
+			}
+			generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
 		}
 	}
 
@@ -428,7 +426,7 @@ public class IIPImageServerController {
 								paramBlock.add(resizeFactor); // The yScale
 								paramBlock.add(0.0); // The x translation
 								paramBlock.add(0.0); // The y translation
-								RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+								Map qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 								thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);
 							} else if (resizeFactor > 1) {
 								thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
@@ -447,8 +445,6 @@ public class IIPImageServerController {
 							}
 						} catch (IOException ioException) {
 							logger.error(ioException);
-						} finally {
-							// is.close();
 						}
 					}
 
@@ -471,8 +467,8 @@ public class IIPImageServerController {
 			} else {
 				logger.error(iioException);
 			}
-		} catch (Throwable throwable) {
-			logger.error(throwable);
+		} catch (IOException ioException) {
+			logger.error(ioException);
 		} finally {
 			try {
 				if (inputStream != null) {
@@ -529,43 +525,44 @@ public class IIPImageServerController {
 	public BufferedImage getScaledInstance(BufferedImage img, int targetWidth, int targetHeight, Object hint, boolean higherQuality) {
 		int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
 		BufferedImage ret = (BufferedImage) img;
-		int w, h;
+		int width=0;
+		int height =0;
 		if (higherQuality) {
 			// Use multi-step technique: start with original size, then
 			// scale down in multiple passes with drawImage()
 			// until the target size is reached
-			w = img.getWidth();
-			h = img.getHeight();
+			width = img.getWidth();
+			height = img.getHeight();
 		} else {
 			// Use one-step technique: scale directly from original
 			// size to target size with a single drawImage() call
-			w = targetWidth;
-			h = targetHeight;
+			width = targetWidth;
+			height = targetHeight;
 		}
 
 		do {
-			if (higherQuality && w > targetWidth) {
-				w /= 2;
-				if (w < targetWidth) {
-					w = targetWidth;
+			if (higherQuality && width > targetWidth) {
+				width /= 2;
+				if (width < targetWidth) {
+					width = targetWidth;
 				}
 			}
 
-			if (higherQuality && h > targetHeight) {
-				h /= 2;
-				if (h < targetHeight) {
-					h = targetHeight;
+			if (higherQuality && height > targetHeight) {
+				height /= 2;
+				if (height < targetHeight) {
+					height = targetHeight;
 				}
 			}
 
-			BufferedImage tmp = new BufferedImage(w, h, type);
+			BufferedImage tmp = new BufferedImage(width, height, type);
 			Graphics2D g2 = tmp.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-			g2.drawImage(ret, 0, 0, w, h, null);
+			g2.drawImage(ret, 0, 0, width, height, null);
 			g2.dispose();
 
 			ret = tmp;
-		} while (w != targetWidth || h != targetHeight);
+		} while (width != targetWidth || height != targetHeight);
 
 		return ret;
 	}
@@ -589,37 +586,37 @@ public class IIPImageServerController {
 			TiffDirectory tiffDirectory = ((TiffImageMetadata) metadata).findDirectory(TiffDirectoryConstants.DIRECTORY_TYPE_ROOT);
 			imageWidth = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_WIDTH).getValue().toString();
 			imageHeight = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_IMAGE_LENGTH).getValue().toString();
-			// tileWidth =
-			// tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH).getValue().toString();
-			// tileLength =
-			// tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH).getValue().toString();
 
 			ByteSourceFile byteSource = new ByteSourceFile(imageFile);
-			ArrayList<?> elements = tiffDirectory.getTiffRawImageDataElements();
-			TiffImageData.Data data[] = new TiffImageData.Data[elements.size()];
+			List<?> elements = tiffDirectory.getTiffRawImageDataElements();
+			TiffImageData.Data[] data = new TiffImageData.Data[elements.size()];
 			for (int i = 0; i < elements.size(); i++) {
 				TiffDirectory.ImageDataElement element = (TiffDirectory.ImageDataElement) elements.get(i);
-				byte bytes[] = byteSource.getBlock(element.offset, element.length);
+				byte[] bytes = byteSource.getBlock(element.offset, element.length);
 				data[i] = new TiffImageData.Data(element.offset, element.length, bytes);
 			}
 
 			if (tiffDirectory.imageDataInStrips()) {
 				TiffField rowsPerStripField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_ROWS_PER_STRIP);
-				if (null == rowsPerStripField)
+				if (null == rowsPerStripField) {
 					throw new ImageReadException("Can't find rows per strip field.");
+				}
+				
 				int rowsPerStrip = rowsPerStripField.getIntValue();
 
 				// DEAD STORE!!! TiffImageData.Strips strips = new
 				// TiffImageData.Strips(data, rowsPerStrip);
 			} else {
 				TiffField tileWidthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
-				if (null == tileWidthField)
+				if (null == tileWidthField) {
 					throw new ImageReadException("Can't find tile width field.");
+				}
 				int tileWidth = tileWidthField.getIntValue();
 
 				TiffField tileLengthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_LENGTH);
-				if (null == tileLengthField)
+				if (null == tileLengthField){
 					throw new ImageReadException("Can't find tile length field.");
+				}
 				int tileLength = tileLengthField.getIntValue();
 			}
 		} catch (ImageReadException imageReadException) {

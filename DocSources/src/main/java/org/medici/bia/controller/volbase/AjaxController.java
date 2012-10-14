@@ -41,9 +41,9 @@ import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.SerieList;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.medici.bia.service.volbase.VolBaseService;
@@ -74,7 +74,7 @@ public class AjaxController {
 	public ModelAndView checkVolumeDigitized(	@RequestParam(value="summaryId", required=false) Integer summaryId,
 												@RequestParam(value="volNum", required=false) Integer volNum, 
 												@RequestParam(value="volLetExt", required=false) String volLetExt) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		if (summaryId != null) {
 			try {
@@ -92,11 +92,11 @@ public class AjaxController {
 				Boolean digitized = getVolBaseService().checkVolumeDigitized(volNum, volLetExt);
 				
 				model.put("volNum", volNum.toString());
-				model.put("volLetExt", volLetExt.toString());
+				model.put("volLetExt", volLetExt);
 				model.put("digitized", digitized.toString());
 			} catch (ApplicationThrowable aex) {
 				model.put("volNum", volNum.toString());
-				model.put("volLetExt", volLetExt.toString());
+				model.put("volLetExt", volLetExt);
 				model.put("digitized", "false");
 				model.put("error", aex.getApplicationError().toString());
 			}
@@ -114,8 +114,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/de/volbase/CheckVolumeIsDeletable", method = RequestMethod.GET)
-	public ModelAndView CheckVolumeIsDeletable(@RequestParam(value="summaryId") Integer summaryId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public ModelAndView checkVolumeIsDeletable(@RequestParam(value="summaryId") Integer summaryId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Volume volume = getVolBaseService().findVolume(summaryId);
@@ -150,17 +150,17 @@ public class AjaxController {
 	 * @return
 	 */
 	private ModelAndView findVolume(Integer volNum, String volLetExt) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Volume volume = getVolBaseService().findVolume(volNum, volLetExt);
 			model.put("volNum", volNum.toString());
-			model.put("volLetExt", volLetExt.toString());
+			model.put("volLetExt", volLetExt);
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
 			model.put("volumeDigitized", (volume != null) ? volume.getDigitized() : "false");
 		} catch (ApplicationThrowable aex) {
 			model.put("volNum", (volNum != null) ? volNum.toString() : "");
-			model.put("volLetExt", (volLetExt != null) ? volLetExt.toString() : "");
+			model.put("volLetExt", (volLetExt != null) ? volLetExt : "");
 			model.put("summaryId", "");
 			model.put("folioCount", "");
 			model.put("volumeDigitized", "false");
@@ -176,21 +176,21 @@ public class AjaxController {
 	 * @return ModelAndView containing input params and summaryId.
 	 */
 	private ModelAndView findVolume(String inputVolume) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Volume volume = getVolBaseService().findVolume(VolumeUtils.extractVolNum(inputVolume), VolumeUtils.extractVolLetExt(inputVolume));
 			if(volume != null){
 				model.put("volNum", volume.getVolNum().toString());
-				model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt().toString() : "");
+				model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt() : "");
 				model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
-				if(volume.getFolioCount() != null)
+				if(volume.getFolioCount() != null) {
 					model.put("folioCount", volume.getFolioCount());
-				else
+				} else {
 					model.put("folioCount", "");
+				}
 				model.put("volumeDigitized", volume.getDigitized());
-			}
-			else{
+			} else {
 				model.put("volume", (inputVolume != null) ? inputVolume : "");
 				model.put("summaryId", "");
 				model.put("volumeDigitized", "false");
@@ -229,7 +229,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/volbase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="summaryId") Integer summaryId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Forum forum = getVolBaseService().getVolumeForum(summaryId);
@@ -272,7 +272,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/volbase/SearchSeriesList", method = RequestMethod.GET)
 	public ModelAndView searchSeriesList(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<SerieList> series = getVolBaseService().searchSeriesList(query);
@@ -303,12 +303,12 @@ public class AjaxController {
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
-	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -331,26 +331,28 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 		
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if(currentDocument.getYearModern() != null){
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
@@ -359,30 +361,34 @@ public class AjaxController {
 			}
 			
 			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getMDPAndFolio() != null){
 				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-				}else{
+				} else {
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}				
-			}
-			else
+			} else {
 				singleRow.add("");
+			}
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}

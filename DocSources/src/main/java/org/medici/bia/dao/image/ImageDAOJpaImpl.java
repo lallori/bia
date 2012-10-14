@@ -111,10 +111,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
-        if (StringUtils.isEmpty(volLetExt))
+        if (StringUtils.isEmpty(volLetExt)) {
         	stringBuilder.append(" is null");
-        else
+        } else {
         	stringBuilder.append(" = :volLetExt");
+        }
 
     	stringBuilder.append(" and imageName like '%_C_");
     	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
@@ -123,8 +124,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
-        if (!StringUtils.isEmpty(volLetExt))
+        if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
+        }
 
 		List<Image> result = query.getResultList();
 		
@@ -142,10 +144,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@Override
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
-        if (volLetExt != null)
+        if (volLetExt != null) {
         	stringBuilder.append(" = :volLetExt");
-        else
+        } else {
         	stringBuilder.append(" is null");
+        } 
     	stringBuilder.append(" and imageName like '%_C_");
     	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
     	stringBuilder.append("_%.tif'");
@@ -153,8 +156,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
-        if (volLetExt != null)
+        if (volLetExt != null) {
         	query.setParameter("volLetExt", volLetExt);
+        }
 
 		List<Image> result = query.getResultList();
 		
@@ -181,7 +185,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	        	} else {
 		        	stringBuilder.append("='");
 		        	stringBuilder.append(volLetExts.get(i));
-		        	stringBuilder.append("'");
+		        	stringBuilder.append('\'');
 	        	}
 		
 		    	stringBuilder.append(" and imageName like '%_C_");
@@ -199,10 +203,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		
         	
         	for (int i=0; i<result.size(); i++) {
-        		if(ImageUtils.extractFolioExtension(result.get(i).getImageName()) != null)
+        		if(ImageUtils.extractFolioExtension(result.get(i).getImageName()) != null) {
         			returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), ImageUtils.extractFolioExtension(result.get(i).getImageName()).toLowerCase()));
-        		else
+        		} else {
         			returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), null));
+        		}
         	}
         }
 		return returnValues;
@@ -215,10 +220,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(volLetExt))
+        if (!StringUtils.isEmpty(volLetExt)){
         	stringBuilder.append("=:volLetExt");
-        else
+        } else {
         	stringBuilder.append(" is null");
+        }
 
         stringBuilder.append(" and imageType=:imageType");
         stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
@@ -254,10 +260,12 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		} 
 
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
+        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
         	stringBuilder.append("=:volLetExt");
-        else
+        } else {
         	stringBuilder.append(" is null");
+        }
+        
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuilder.append(" and imageType=:imageType");
         	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
@@ -324,8 +332,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		// Set values in predicate's elements  
 		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
+		if (!StringUtils.isEmpty(volLetExt)) {
 			typedQuery.setParameter("volLetExt", volLetExt);
+		}
 
 		return typedQuery.getResultList();
 	}
@@ -361,8 +370,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
 			typedQueryCount.setParameter("volNum", volNum);
-			if (!StringUtils.isEmpty(volLetExt))
+			if (!StringUtils.isEmpty(volLetExt)) {
 				typedQueryCount.setParameter("volLetExt", volLetExt);
+			}
 			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
 		}
 
@@ -386,8 +396,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		// Set values in predicate's elements  
 		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
+		if (!StringUtils.isEmpty(volLetExt)) {
 			typedQuery.setParameter("volLetExt", volLetExt);
+		}
 
 		//Pagination will work with index [1 ... total] and not [0 ... total1-] 
 		typedQuery.setFirstResult(paginationFilter.getFirstRecord()-1);
@@ -409,10 +420,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		} 
 
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
         	stringBuilder.append("=:volLetExt");
-        else
+        } else {
         	stringBuilder.append(" is null");
+        }
         if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuilder.append(" and imageType=:imageType");
         	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
@@ -473,8 +485,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         
         result.addAll(query.getResultList());
 
-		if (result.isEmpty())
+		if (result.isEmpty()) {
 			return new ArrayList<Integer>(0);
+		}
 		
 		return result;
 	}
@@ -486,10 +499,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@Override
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(volLetExt))
+        if (!StringUtils.isEmpty(volLetExt)) {
         	stringBuilder.append("=:volLetExt");
-        else
+        } else {
         	stringBuilder.append(" is null");
+        }
 
         stringBuilder.append(" and imageOrder=:imageOrder");
     	
@@ -763,7 +777,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	        	} else {
 		        	stringBuilder.append("='");
 		        	stringBuilder.append(volLetExts.get(i));
-		        	stringBuilder.append("'");
+		        	stringBuilder.append('\'');
 	        	}
 	        	stringBuilder.append(" and imageOrder=1) ");
         	}

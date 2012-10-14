@@ -109,9 +109,10 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(alias)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -157,7 +158,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		if(topicId != null){
 			jpaQuery.append(" AND (topic.topicId = ");
 			jpaQuery.append(topicId);
-			jpaQuery.append(")");
+			jpaQuery.append(')');
 		}
 		
 		return jpaQuery.toString();
@@ -178,9 +179,10 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
+		if (alias != null) {
 			return getAlias();
-		else
-			return "";
+		}
+
+		return "";
 	}
 }

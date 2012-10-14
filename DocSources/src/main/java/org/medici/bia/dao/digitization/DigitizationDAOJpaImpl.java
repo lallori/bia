@@ -80,11 +80,12 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween);
-		if(activated)
+		String toSearch = "FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween;
+		if(activated) {
 			toSearch = toSearch.concat(" AND active = 1");
-		else
+		} else {
 			toSearch = toSearch.concat(" AND active = 0");
+		}
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -95,7 +96,7 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 //		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -136,7 +137,7 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 //		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

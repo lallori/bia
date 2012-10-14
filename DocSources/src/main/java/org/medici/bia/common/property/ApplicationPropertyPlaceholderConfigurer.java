@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
@@ -44,7 +45,6 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 public class ApplicationPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 	private JdbcTemplate jdbcTemplate;
 
-	private Logger logger = Logger.getLogger(this.getClass());
 	private String nameColumn;
 	private String propertiesTable;
 	private String valueColumn;
@@ -80,9 +80,10 @@ public class ApplicationPropertyPlaceholderConfigurer extends PropertyPlaceholde
 				}
 
 			});
-		} catch (Exception e) {
-			logger.fatal("There is an error in either 'application.properties' or the configuration database.");
-			throw new IOException(e);
+		} catch (DataAccessException dataAccessException) {
+			String message = "There is an error in either 'application.properties' or the configuration database.";
+			logger.fatal(message);
+			throw new IOException(message, dataAccessException);
 		}
 		if (props.size() == 0) {
 			logger.fatal("The configuration database could not be reached or does not contain any properties in '" + propertiesTable + "'");

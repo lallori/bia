@@ -65,7 +65,7 @@ public class ShowConfirmCreatePlaceForumController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowConfirmCreatePlaceForumCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			Place place = new Place(command.getPlaceAllId());
@@ -86,7 +86,7 @@ public class ShowConfirmCreatePlaceForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowConfirmCreatePlaceForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("geobase/ShowConfirmCreatePlaceForumModalWindow", model);
 	}

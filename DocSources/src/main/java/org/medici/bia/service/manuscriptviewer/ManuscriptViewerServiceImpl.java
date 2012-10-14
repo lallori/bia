@@ -658,10 +658,10 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try{
 			Document document = getDocumentDAO().find(entryId);
 			if(document.getSynExtract() != null && (!document.getSynExtract().getDocExtract().isEmpty())){
-				return true;
-			}else{
-				return false;
+				return Boolean.TRUE;
 			}
+			
+			return Boolean.FALSE;
 		}catch(Throwable throwable){
 			throw new ApplicationThrowable(throwable);
 		}

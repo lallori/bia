@@ -76,7 +76,7 @@ public class EditForumPostController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			ForumPost forumPost = new ForumPost(command.getPostId());
 			forumPost.setForum(new Forum(command.getForumId()));
@@ -109,7 +109,7 @@ public class EditForumPostController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditForumPostCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command.getPostId() != null) && (command.getPostId() > 0)) {
 			ForumPost forumPost = new ForumPost();

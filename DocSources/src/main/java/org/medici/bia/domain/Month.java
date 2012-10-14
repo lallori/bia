@@ -180,18 +180,27 @@ public class Month implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof Month)) {
 			return false;
+		}
+
 		Month other = (Month) obj;
 		if (monthNum == null) {
-			if (other.monthNum != null)
+			if (other.monthNum != null) {
 				return false;
-		} else if (!monthNum.equals(other.monthNum))
+			}
+		} else if (!monthNum.equals(other.monthNum)) {
 			return false;
+		}
+
 		return true;
 	}
 	

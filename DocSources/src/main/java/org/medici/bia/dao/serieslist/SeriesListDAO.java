@@ -50,5 +50,5 @@ public interface SeriesListDAO extends Dao<Integer, SerieList> {
 	 * @return a List of serieList
 	 * @throws PersistenceException
 	 */
-	public List<SerieList> findSeries(String alias) throws PersistenceException;
+	List<SerieList> findSeries(String alias) throws PersistenceException;
 }

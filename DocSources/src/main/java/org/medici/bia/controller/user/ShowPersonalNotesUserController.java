@@ -67,7 +67,7 @@ public class ShowPersonalNotesUserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		UserPersonalNotes userPersonalNotes = null;
 		try {
 			userPersonalNotes = getUserService().findUserPersonalNotes();

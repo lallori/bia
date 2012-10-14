@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
@@ -45,8 +46,8 @@ import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
-import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.TopicList;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,7 @@ public class AjaxController {
 	@Autowired
 	private DocBaseService docBaseService;
 
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -77,7 +79,7 @@ public class AjaxController {
 												@RequestParam(value="volLetExt", required=false) String volLetExt,
 												@RequestParam(value="folioNum", required=false) Integer folioNum,
 												@RequestParam(value="folioMod", required=false) String folioMod) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		if (entryId != null) {
 			try {
@@ -94,11 +96,14 @@ public class AjaxController {
 		
 		model.put("entryId", entryId.toString());
 		model.put("folioNum", folioNum.toString());
-		if(folioMod != null)
-			model.put("folioMod", folioMod.toString());
+		if(folioMod != null) {
+			model.put("folioMod", folioMod);
+		}
 		model.put("volNum", volNum.toString()); 
-		if(volLetExt != null)
-		model.put("volLetExt", volLetExt.toString());
+		
+		if(volLetExt != null) {
+			model.put("volLetExt", volLetExt);
+		}
 
 		return new ModelAndView("responseOK", model);
 	}
@@ -110,7 +115,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/docbase/CheckDocumentIsDeletable", method = RequestMethod.GET)
 	public ModelAndView checkDocumentIsDeletable(@RequestParam(value="entryId") Integer entryId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Document document = getDocBaseService().findDocument(entryId);
@@ -158,7 +163,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/docbase/CheckVolumeFolio", method = RequestMethod.GET)
 	public ModelAndView checkVolumeFolio(	@RequestParam(value="summaryId", required=false) Integer summaryId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			Document document = getDocBaseService().checkVolumeFolio(summaryId);
@@ -167,7 +172,7 @@ public class AjaxController {
 			}else{
 				model.put("folioMax", "");
 			}			
-		}catch(ApplicationThrowable th){
+		}catch(ApplicationThrowable applicationThrowable){
 			model.put("folioMax", "");
 		}
 		return new ModelAndView("responseOK", model);		
@@ -186,7 +191,7 @@ public class AjaxController {
 									@RequestParam(value="volLetExt", required=false) String volLetExt,
 									@RequestParam(value="folioNum", required=false) Integer folioNum,
 									@RequestParam(value="folioMod", required=false) String folioMod) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
@@ -276,7 +281,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/docbase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="entryId") Integer entryId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Forum forum = getDocBaseService().getDocumentForum(entryId);
@@ -305,12 +310,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/docbase/SearchPersonLinkableToDocument", method = RequestMethod.GET)
 	public ModelAndView searchPersonLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		try{
+		try {
 			query = new String(query.getBytes(), "UTF-8");
-		}catch(UnsupportedEncodingException e){
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 
 		try {
@@ -343,12 +348,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/docbase/SearchPlaceLinkableToTopicDocument", method = RequestMethod.GET)
 	public ModelAndView searchPlaceLinkableToTopicDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			query = new String(query.getBytes(), "UTF-8");
-		}catch(UnsupportedEncodingException e){
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 
 		try {
@@ -377,7 +382,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/docbase/SearchTopicLinkableToDocument", method = RequestMethod.GET)
 	public ModelAndView searchTopicLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<TopicList> topics = getDocBaseService().searchTopicLinkableToDocument(entryId, query);
@@ -402,12 +407,12 @@ public class AjaxController {
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/de/docbase/LinkedDocumentsTopic.json", method = RequestMethod.GET)
-	public ModelAndView ShowLinkedDocumentsTopic(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showLinkedDocumentsTopic(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
@@ -436,26 +441,28 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 		
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if(currentDocument.getYearModern() != null){
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
@@ -464,33 +471,34 @@ public class AjaxController {
 			}
 			
 			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
-			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+			}
+
+			if (currentDocument.getRecipientPlace() != null) {
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				} 
+			} else {
 				singleRow.add("");
+			} 
 			
-			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+			if (currentDocument.getMDPAndFolio() != null) {
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio()) ){
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-				}else{
+				} else {
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}
-				
-			}
-			else
+			} else {
 				singleRow.add("");
+			}
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
@@ -504,7 +512,7 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowSameFolioDocuments.json", method = RequestMethod.GET)
-	public ModelAndView ShowSameFolioDocuments(@RequestParam(value="volNum", required=false) Integer volNum,
+	public ModelAndView showSameFolioDocuments(@RequestParam(value="volNum", required=false) Integer volNum,
 										 @RequestParam(value="volLetExt", required=false) String volLetExt,
 										 @RequestParam(value="folioNum", required=false) Integer folioNum,
 										 @RequestParam(value="folioMod", required=false) String folioMod,
@@ -512,64 +520,68 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Document> documents = null;
 		try{
 			documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
-		}catch(ApplicationThrowable aex){
-			
+		}catch(ApplicationThrowable applicationThrowable){
+			logger.debug(applicationThrowable);
 		}
 		
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (Document currentDocument : documents) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
-			if(currentDocument.getYearModern() != null){
+			if(currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+			if (currentDocument.getSenderPlace() != null) {
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
-					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());	
+				} else {
 					singleRow.add("Place Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentDocument.getMDPAndFolio() != null){
 				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
-			}
-			else
+			} else {
 				singleRow.add("");
+			}
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
@@ -578,9 +590,6 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", documents.size());
 		model.put("iTotalRecords", documents.size());
 		model.put("aaData", resultList);
-		
-
-		
 
 		return new ModelAndView("responseOK", model);
 	}
@@ -592,7 +601,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
@@ -608,30 +617,32 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentEplToLink.getPlace().getPlaceName());
 			if (currentEplToLink.getDocument().getSenderPeople() != null){
-				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
-				else
+				} else{
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 			
 			if (currentEplToLink.getDocument().getRecipientPeople() != null){
-				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
 					singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
-				else
+				} else {
 					singleRow.add("Person Name Lost");
-			}
-			else
+				}
+			} else {
 				singleRow.add("");
+			}
 
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
 			
-			if (currentEplToLink.getDocument().getMDPAndFolio() != null){
+			if (currentEplToLink.getDocument().getMDPAndFolio() != null) {
 				singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");				
-			}
-			else
+			} else {
 				singleRow.add("");
+			}
 			
 			
 			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
@@ -641,11 +652,7 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
-		
-
-		
 
 		return new ModelAndView("responseOK", model);
 	}
-
 }

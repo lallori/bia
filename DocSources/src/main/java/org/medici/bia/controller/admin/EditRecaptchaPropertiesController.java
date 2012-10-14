@@ -88,10 +88,10 @@ public class EditRecaptchaPropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("recaptcha.domainName", command.getDomainName());
 				hashMap.put("recaptcha.privateKey", command.getPrivateKey());
 				hashMap.put("recaptcha.publicKey", command.getPublicKey());
@@ -125,7 +125,7 @@ public class EditRecaptchaPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditRecaptchaPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setDomainName(ApplicationPropertyManager.getApplicationProperty("recaptcha.domainName"));
 		command.setPrivateKey(ApplicationPropertyManager.getApplicationProperty("recaptcha.privateKey"));

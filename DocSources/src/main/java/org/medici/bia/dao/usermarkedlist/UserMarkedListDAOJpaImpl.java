@@ -68,8 +68,6 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -7476588070749064315L;
-
-	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	/**
 	 * {@inheritDoc}
@@ -87,7 +85,8 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 		
 		if(result.size() == 1){
 			return result.get(0);
-		}else
-			return null;
+		}
+
+		return null;
 	}
 }

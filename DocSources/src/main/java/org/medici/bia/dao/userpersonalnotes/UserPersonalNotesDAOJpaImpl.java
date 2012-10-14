@@ -82,7 +82,8 @@ public class UserPersonalNotesDAOJpaImpl extends JpaDao<Integer, UserPersonalNot
 		
 		if(result.size() == 1){
 			return result.get(0);
-		}else
-			return null;
+		}
+		
+		return null;
 	}
 }

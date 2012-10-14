@@ -77,11 +77,11 @@ public class AdvancedSearchForumPostController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView executeSearch(@Valid @ModelAttribute("command") AdvancedSearchForumPostCommand command, BindingResult result, HttpSession session) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		SearchFilter searchFilter = null;  
 
 		// we prelevate our map which contains all user's filter used at runtime. 
-		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 		
 		// if searchFilter is present in map we get  
 		if (searchFilterMap.get(command.getSearchUUID()) != null) {
@@ -91,7 +91,7 @@ public class AdvancedSearchForumPostController {
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());
 		}
-		if(command.getNewSearch() == true){
+		if(command.getNewSearch().equals(Boolean.TRUE)) {
 			// we update runtime filter with input from form 
 			AdvancedSearchForum advancedSearchForum = new AdvancedSearchForum();
 			//we populate the advanced search forum

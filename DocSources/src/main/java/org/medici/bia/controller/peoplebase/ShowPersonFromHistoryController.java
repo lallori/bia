@@ -83,7 +83,7 @@ public class ShowPersonFromHistoryController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPersonFromHistoryRequestCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		People person = new People();
 
 		if(command.getIdUserHistory() > 0){

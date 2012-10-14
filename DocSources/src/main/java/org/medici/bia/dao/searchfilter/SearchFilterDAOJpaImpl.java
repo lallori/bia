@@ -36,8 +36,8 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -120,7 +120,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 			jpql.append("order by ");
 			for (int i=0; i<paginationFilter.getSortingCriterias().size(); i++) {
 				jpql.append(paginationFilter.getSortingCriterias().get(i).getColumn());
-				jpql.append(" ");
+				jpql.append(' ');
 				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder().toStringJPQL());
 			}
 		}
@@ -157,7 +157,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 			jpql.append("order by ");
 			for (int i=0; i<paginationFilter.getSortingCriterias().size(); i++) {
 				jpql.append(paginationFilter.getSortingCriterias().get(i).getColumn());
-				jpql.append(" ");
+				jpql.append(' ');
 				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder().toStringJPQL());
 			}
 		}

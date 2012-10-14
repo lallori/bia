@@ -92,7 +92,7 @@ public class DeleteChildPersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteChildPerson");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Parent parent = new Parent(command.getId());
 			parent.setParent(new People(command.getChildId()));

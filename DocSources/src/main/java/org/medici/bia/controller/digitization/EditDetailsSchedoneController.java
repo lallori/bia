@@ -91,7 +91,7 @@ public class EditDetailsSchedoneController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Schedone schedone = new Schedone(command.getSchedoneId());
 			schedone.setIstituto(command.getIstituto());
@@ -177,7 +177,7 @@ public class EditDetailsSchedoneController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsSchedoneCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Month> months = null;
 
 		try {

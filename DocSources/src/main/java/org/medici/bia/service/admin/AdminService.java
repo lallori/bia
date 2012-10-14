@@ -27,8 +27,8 @@
  */
 package org.medici.bia.service.admin;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -50,13 +50,13 @@ public interface AdminService {
 	 * @param userInformation
 	 * @throws ApplicationThrowable
 	 */
-	public User addNewUser(User user) throws ApplicationThrowable;
+	User addNewUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
-	public void createAccessLogDailyStatistics() throws ApplicationThrowable;
+	void createAccessLogDailyStatistics() throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -64,7 +64,7 @@ public interface AdminService {
 	 * @param userInformation
 	 * @throws ApplicationThrowable
 	 */
-	public User editUser(User user) throws ApplicationThrowable;
+	User editUser(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -72,7 +72,7 @@ public interface AdminService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public User findUser(String account) throws ApplicationThrowable;
+	User findUser(String account) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -80,7 +80,7 @@ public interface AdminService {
 	 * @return
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
-	public List<User> findUsers(User user) throws ApplicationThrowable;
+	List<User> findUsers(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -88,14 +88,14 @@ public interface AdminService {
 	 * @return
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
-	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<UserAuthority> getAuthorities() throws ApplicationThrowable;
+	List<UserAuthority> getAuthorities() throws ApplicationThrowable;
 
 	/**
 	 * Extracts all months available.
@@ -105,12 +105,12 @@ public interface AdminService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
+	List<Month> getMonths() throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @param hashMap
 	 * @throws ApplicationThrowable
 	 */
-	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable;
+	void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable;
 }

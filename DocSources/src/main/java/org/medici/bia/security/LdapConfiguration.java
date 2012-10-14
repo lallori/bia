@@ -38,78 +38,78 @@ public interface LdapConfiguration {
 	/**
 	 * @return the baseDN
 	 */
-	public String getBaseDN();
+	String getBaseDN();
 
 	/**
 	 * @return the groupsDN
 	 */
-	public String getGroupsDN();
+	String getGroupsDN();
 
 	/**
 	 * @return the roleAttribute
 	 */
-	public String getRoleAttribute();
+	String getRoleAttribute();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public String getRoleAttributeValue();
+	String getRoleAttributeValue();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public String getRoleFilter();
+	String getRoleFilter();
 
 	/**
 	 * @return the userAttribute
 	 */
-	public String getUserAttribute();
+	String getUserAttribute();
 
 	/**
 	 * @return the usersDN
 	 * 
 	 */
-	public String getUsersDN();
+	String getUsersDN();
 
 	/**
 	 * @param baseDN the baseDN to set
 	 * 
 	 */
-	public void setBaseDN(String baseDN);
+	void setBaseDN(String baseDN);
 
 	/**
 	 * @param groupsDN the groupsDN to set
 	 */
-	public void setGroupsDN(String groupsDN);
+	void setGroupsDN(String groupsDN);
 
 	/**
 	 * @param roleAttribute the roleAttribute to set
 	 */
-	public void setRoleAttribute(String roleAttribute);
+	void setRoleAttribute(String roleAttribute);
 
 	/**
 	 * 
 	 * @param roleAttributeValue
 	 */
-	public void setRoleAttributeValue(String roleAttributeValue);
+	void setRoleAttributeValue(String roleAttributeValue);
 
 	/**
 	 * 
 	 * @param roleFilter
 	 */
-	public void setRoleFilter(String roleFilter);
+	void setRoleFilter(String roleFilter);
 
 	/**
 	 * 
 	 * @param userAttribute the userAttribute to set
 	 */
-	public void setUserAttribute(String userAttribute);
+	void setUserAttribute(String userAttribute);
 	
 	/**
 	 * 
 	 * @param usersDN the usersDN to set
 	 */
-	public void setUsersDN(String usersDN);
+	void setUsersDN(String usersDN);
 }

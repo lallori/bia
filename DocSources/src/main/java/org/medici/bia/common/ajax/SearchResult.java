@@ -42,6 +42,10 @@ public class SearchResult {
 	private Integer iTotalRecords;
 	private Integer sEcho;
 
+	public SearchResult() {
+		super();
+	}
+
 	/**
 	 * @return the aaData
 	 */

@@ -98,7 +98,7 @@ public class EditTopicDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			EplToLink eplToLink = new EplToLink(command.getEplToId());
 			eplToLink.setDocument(new Document(command.getEntryId()));
@@ -144,7 +144,7 @@ public class EditTopicDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<TopicList> topicsList = null;
 		
 		if ((command != null) && (command.getEntryId() > 0)) {

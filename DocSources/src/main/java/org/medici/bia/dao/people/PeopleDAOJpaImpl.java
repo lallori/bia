@@ -241,7 +241,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -282,7 +282,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -323,7 +323,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -399,7 +399,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -430,8 +430,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		Query query = null;
 		//MD: If the name of the family contains apostrophe, I replace it with two apostrophes for the SQL query
-		if(familyName.contains("'"))
+		if(familyName.contains("'")) {
 			familyName = familyName.replace("'", "\'\'");
+		}
 		
 		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.bia.domain.AltName WHERE (altName.altName like '" + familyName + "%' OR altName.altName like '% " + familyName + "%' OR altName.altName like '%-" + familyName + "%') AND altName.nameType like 'Family')");
 		
@@ -453,7 +454,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -717,7 +718,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -860,7 +861,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

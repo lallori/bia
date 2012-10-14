@@ -52,7 +52,7 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public TitleOccsList findTitleOcc(String titleOcc) throws PersistenceException;
+	TitleOccsList findTitleOcc(String titleOcc) throws PersistenceException;
 	
 	/**
 	 * 
@@ -61,7 +61,7 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTitleOrOccupation(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchTitleOrOccupation(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -70,7 +70,7 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchTitlesOrOccupations(SimpleSearchTitleOrOccupation simpleSearchTitleOrOccupation, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method searches a list of titles and occupations which could be related to a person 
@@ -80,7 +80,7 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * @return A List<TitleOccsList> searched.
 	 * @throws PersistenceException
 	 */
-	public List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException;
+	List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException;
 
 	/**
 	 * 
@@ -90,6 +90,6 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTitleOrOccupationWithAssignedPeople(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchTitleOrOccupationWithAssignedPeople(String alias, Integer roleCatId, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

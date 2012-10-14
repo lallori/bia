@@ -75,7 +75,7 @@ public class CreatePlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") CreatePlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Place place = new Place();
 		place.setPlaceAllId(0);

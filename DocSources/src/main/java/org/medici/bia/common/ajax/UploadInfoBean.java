@@ -193,7 +193,7 @@ public class UploadInfoBean implements Serializable {
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
 		stringBuffer.append(ClassUtils.toString(this));
-		stringBuffer.append("]");
+		stringBuffer.append(']');
 		return stringBuffer.toString();
 	}
 

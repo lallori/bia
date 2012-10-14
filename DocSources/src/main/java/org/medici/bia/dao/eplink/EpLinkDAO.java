@@ -52,7 +52,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return A person linked found
 	 * @throws PersistenceException
 	 */
-	public EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException;
+	EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException;
 
 	/**
 	 * This method searches every people linked to a document identified by
@@ -62,7 +62,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return List of people found
 	 * @throws PersistenceException
 	 */
-	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
+	List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -71,7 +71,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public EpLink findByEntryIdAndPersonId(Integer entryId, Integer personId) throws PersistenceException;
+	EpLink findByEntryIdAndPersonId(Integer entryId, Integer personId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -80,7 +80,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public EpLink findByEntryIdAndRole(Integer entryId, String docRole) throws PersistenceException;
+	EpLink findByEntryIdAndRole(Integer entryId, String docRole) throws PersistenceException;
 	
 	/**
 	 * 
@@ -88,7 +88,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException;
+	Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -96,7 +96,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws PersistenceException;
+	Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -104,7 +104,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws PersistenceException;
+	Integer findNumberOfReferringDocumentsRelated(Integer personId) throws PersistenceException;
 
 	/**
 	 * 
@@ -112,6 +112,6 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException;
+	Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException;
 
 }

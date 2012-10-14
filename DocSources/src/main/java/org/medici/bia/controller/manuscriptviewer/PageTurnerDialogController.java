@@ -64,7 +64,7 @@ public class PageTurnerDialogController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Image image = null;
 
 		try {
@@ -86,10 +86,11 @@ public class PageTurnerDialogController {
 		try {
 			// We check if this image has a document linked...
 			List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
-			if(documents != null)
+			if(documents != null) {
 				model.put("entryId", documents.get(0).getEntryId());
-			else
+			} else {
 				model.put("entryId", null);
+			}
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			model.put("entryId", null);

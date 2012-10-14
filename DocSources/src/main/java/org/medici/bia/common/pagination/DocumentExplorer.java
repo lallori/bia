@@ -39,6 +39,10 @@ public class DocumentExplorer extends VolumeExplorer {
 	private Integer folioNum;
 	private String folioMod;
 
+	public DocumentExplorer() {
+		super();
+	}
+
 	public DocumentExplorer(Integer entryId, Integer volNum, String volLetExt) {
 		super(volNum, volLetExt);
 		setEntryId(entryId);

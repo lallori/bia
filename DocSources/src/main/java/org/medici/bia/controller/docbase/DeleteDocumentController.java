@@ -91,7 +91,7 @@ public class DeleteDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") DeleteDocumentCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("docbase/ShowConfirmDeleteDocument", model);
 	}
@@ -108,7 +108,7 @@ public class DeleteDocumentController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteDocument");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				getDocBaseService().deleteDocument(command.getEntryId());

@@ -87,7 +87,7 @@ public class EditExternalLinkPlaceController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId());
 			placeExternalLinks.setPlace(new Place(command.getPlaceAllId()));
@@ -129,7 +129,7 @@ public class EditExternalLinkPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditExternalLinkPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			if (command.getPlaceExternalLinksId().equals(0)) {

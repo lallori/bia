@@ -571,7 +571,7 @@ public class UserServiceImpl implements UserService {
 	private String generateInitials(User user) throws ApplicationThrowable {
 		try {
 			// We extract name and surname from user object and we clean eventually wrong chars, it's necessary to calculate user initial 
-			String name = user.getFirstName().trim().toUpperCase();;
+			String name = user.getFirstName().trim().toUpperCase();
 			String surname = user.getLastName().trim().toUpperCase();
 			if (!StringUtils.isAlpha(name)) {
 				name = RegExUtils.trimNonAlphaChars(name);

@@ -85,13 +85,11 @@ public class UploadPortraitPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processRequest(@Valid @ModelAttribute("command") UploadPortraitPersonCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		getValidator().validate(command, result);
 
-		if (result.hasErrors()) {
-			//return setupForm(command);
-		} else {
+		if (!result.hasErrors()) {
 			PersonPortrait personPortrait = new PersonPortrait(command.getPersonId(), command.getBrowse(), command.getLink());
 
 			try {

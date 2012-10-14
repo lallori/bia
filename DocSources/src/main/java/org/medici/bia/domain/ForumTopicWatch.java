@@ -113,7 +113,7 @@ public class ForumTopicWatch implements Serializable {
 	/**
 	 * @return the read
 	 */
-	public Boolean isRead() {
+	public Boolean read() {
 		return read;
 	}
 

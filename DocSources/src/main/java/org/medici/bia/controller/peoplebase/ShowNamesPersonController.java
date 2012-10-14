@@ -82,7 +82,7 @@ public class ShowNamesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowNamesPersonCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		People person = new People();
 
 		if(command != null && command.getPersonId() > 0){

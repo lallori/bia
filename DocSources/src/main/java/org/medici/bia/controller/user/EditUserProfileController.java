@@ -90,7 +90,7 @@ public class EditUserProfileController {
 		}
 		else {
 		
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			User user = new User();
 
 			user.setMail(command.getMail());
@@ -124,7 +124,7 @@ public class EditUserProfileController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserProfileCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		User user = null;
 		try {
 			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());

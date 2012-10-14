@@ -104,10 +104,11 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		
 		query.setMaxResults(1);
 		List<UserMarkedListElement> result = query.getResultList();
-		if(result.size() > 0)
+		if(result.size() > 0) {
 			return result.get(0);
-		else
+		} else {
 			return null;
+		}
 	}
 	
 	/**
@@ -129,7 +130,7 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -165,10 +166,11 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		
 		query.setMaxResults(1);
 		List<UserMarkedListElement> result = query.getResultList();
-		if(result.size() > 0)
+		if(result.size() > 0) {
 			return result.get(0);
-		else
-			return null;
+		}
+
+		return null;
 	}
 	
 	/**
@@ -183,10 +185,11 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		
 		query.setMaxResults(1);
 		List<UserMarkedListElement> result = query.getResultList();
-		if(result.size() > 0)
+		if(result.size() > 0) {
 			return result.get(0);
-		else
+		} else {
 			return null;
+		}
 	}
 	
 	/**
@@ -201,10 +204,11 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		
 		query.setMaxResults(1);
 		List<UserMarkedListElement> result = query.getResultList();
-		if(result.size() > 0)
+		if(result.size() > 0) {
 			return result.get(0);
-		else
-			return null;
+		}
+
+		return null;
 	}
 	
 	/**

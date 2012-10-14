@@ -91,11 +91,11 @@ public class EpLink implements Serializable{
 	@Column (name="\"ASSIGNUNSURE\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean AssignUnsure;
+	private Boolean assignUnsure;
 	
 	@Column (name="\"DOCROLE\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String DocRole;
+	private String docRole;
 	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -201,28 +201,28 @@ public class EpLink implements Serializable{
 	 * @return the assignUnsure
 	 */
 	public Boolean getAssignUnsure() {
-		return AssignUnsure;
+		return assignUnsure;
 	}
 	
 	/**
 	 * @param assignUnsure the assignUnsure to set
 	 */
 	public void setAssignUnsure(Boolean assignUnsure) {
-		AssignUnsure = assignUnsure;
+		this.assignUnsure = assignUnsure;
 	}
 	
 	/**
 	 * @return the docRole
 	 */
 	public String getDocRole() {
-		return DocRole;
+		return docRole;
 	}
 	
 	/**
 	 * @param docRole the docRole to set
 	 */
 	public void setDocRole(String docRole) {
-		DocRole = docRole;
+		this.docRole = docRole;
 	}
 
 	/* (non-Javadoc)
@@ -241,18 +241,27 @@ public class EpLink implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof EpLink)) {
 			return false;
+		}
+
 		EpLink other = (EpLink) obj;
 		if (epLinkId == null) {
-			if (other.epLinkId != null)
+			if (other.epLinkId != null) {
 				return false;
-		} else if (!epLinkId.equals(other.epLinkId))
+			}
+		} else if (!epLinkId.equals(other.epLinkId)) {
 			return false;
+		}
+		
 		return true;
 	}
 	

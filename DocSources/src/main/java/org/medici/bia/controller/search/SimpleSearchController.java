@@ -105,7 +105,7 @@ public class SimpleSearchController {
 	 */
 	@RequestMapping(method = {RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		 
 		try {
 			command.setText(URIUtil.decode(command.getText(), "UTF-8"));

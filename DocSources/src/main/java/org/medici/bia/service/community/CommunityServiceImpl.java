@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
@@ -549,8 +551,8 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable {
-		HashMap<String, List<?>> forumStatistics = new HashMap<String, List<?>>(0);
+	public Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable {
+		Map<String, List<?>> forumStatistics = new HashMap<String, List<?>>(0);
 		try {
 			List<ForumTopic> topForumTopics = getForumTopicDAO().findTopForumTopics(numberOfElements);
 			forumStatistics.put("TOP DISCUSSIONS", topForumTopics);
@@ -582,7 +584,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable {
+	public Map<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable {
 		try {
 			return getForumDAO().findForumsGroupByCategory(categoriesIds);
 		} catch (Throwable th) {
@@ -596,7 +598,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public HashMap<String, Object> getForumsStatistics() throws ApplicationThrowable {
 		try {
-			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			HashMap<String, Object> hashMap = new HashMap<String, Object>(0);
 			hashMap.putAll(getForumDAO().getTotalTopicsAndPosts());
 			hashMap.put("newestMember", getUserDAO().getNewestMember().getAccount());
 			hashMap.put("totalMembers", getUserDAO().countMembersForum());

@@ -57,7 +57,7 @@ public class ShowUserSearchFiltersController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("search/ShowUserSearchFiltersModalWindow", model);
 	}

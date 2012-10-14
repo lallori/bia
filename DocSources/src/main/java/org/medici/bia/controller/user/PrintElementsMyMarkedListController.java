@@ -78,7 +78,7 @@ public class PrintElementsMyMarkedListController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@RequestParam("idToPrint") String idToPrint) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try{
 			if(!idToPrint.equals("")){

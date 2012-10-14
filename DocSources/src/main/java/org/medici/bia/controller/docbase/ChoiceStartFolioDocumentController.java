@@ -87,7 +87,7 @@ public class ChoiceStartFolioDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ChoiceStartFolioDocumentRequestCommand command, BindingResult result, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 		volumeExplorer.setImage(new Image());

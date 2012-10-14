@@ -29,9 +29,9 @@ package org.medici.bia.common.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.common.util.SimpleSearchUtils;
 
@@ -88,9 +88,10 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(alias)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -122,7 +123,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 			if(NumberUtils.isNumber(words[0])){
 				jpaQuery.append("(volNum = ");
 				jpaQuery.append(words[0]);
-				jpaQuery.append(")");
+				jpaQuery.append(')');
 			}else{
 				if(words[0].length() == 1){
 					jpaQuery.append("(volLetExt like '");
@@ -235,9 +236,10 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
+		if (alias != null) {
 			return getAlias();
-		else
-			return "";
+		}
+		
+		return "";
 	}
 }

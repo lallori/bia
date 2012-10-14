@@ -47,6 +47,5 @@ public interface UserMarkedListDAO extends Dao<Integer, UserMarkedList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserMarkedList getMyMarkedList(User user) throws PersistenceException;
-
+	UserMarkedList getMyMarkedList(User user) throws PersistenceException;
 }

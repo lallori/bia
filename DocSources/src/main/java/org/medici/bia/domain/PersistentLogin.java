@@ -80,6 +80,7 @@ public class PersistentLogin implements java.io.Serializable {
         if (!(other instanceof PersistentLogin)) {
             return false;
         }
+        
         final PersistentLogin castOther = (PersistentLogin) other;
         return new EqualsBuilder().append(userName, castOther.userName)
                                   .append(token, castOther.token)

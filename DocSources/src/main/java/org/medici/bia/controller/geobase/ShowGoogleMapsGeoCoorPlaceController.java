@@ -74,44 +74,58 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PlaceGeographicCoordinates placeGeographicCoordinates = new PlaceGeographicCoordinates(command.getPlaceGeographicCoordinatesId());
 				
 		placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
 		
-		if(command.getDegreeLatitude() != null)
+		if(command.getDegreeLatitude() != null) {
 			placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
-		else
+		} else {
 			placeGeographicCoordinates.setDegreeLatitude(0);
-		if(command.getMinuteLatitude() != null)
+		}
+
+		if(command.getMinuteLatitude() != null) {
 			placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
-		else
-			placeGeographicCoordinates.setMinuteLatitude(0);
-		if(command.getSecondLatitude() != null)
+		} else {
+			placeGeographicCoordinates.setMinuteLatitude(0);	
+		}
+		
+		if(command.getSecondLatitude() != null) {
 			placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
-		else
+		} else {
 			placeGeographicCoordinates.setSecondLatitude(0);
-		if(command.getDirectionLatitude() != null)
+		}
+		
+		if(command.getDirectionLatitude() != null) {
 			placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
-		else
+		} else {
 			placeGeographicCoordinates.setDirectionLatitude("N");
-		if(command.getDegreeLongitude() != null)
+		}
+		
+		if(command.getDegreeLongitude() != null) {
 			placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
-		else
+		} else {
 			placeGeographicCoordinates.setDegreeLongitude(0);
-		if(command.getMinuteLongitude() != null)
+		}
+		if(command.getMinuteLongitude() != null) {
 			placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
-		else
+		} else {
 			placeGeographicCoordinates.setMinuteLongitude(0);
-		if(command.getSecondLongitude() != null)
+		}
+		
+		if(command.getSecondLongitude() != null) {
 			placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
-		else
+		} else {
 			placeGeographicCoordinates.setSecondLongitude(0);
-		if(command.getDirectionLongitude() != null)
+		}
+		
+		if(command.getDirectionLongitude() != null) {
 			placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
-		else
+		} else {
 			placeGeographicCoordinates.setDirectionLongitude("E");
+		}
 		
 		try{
 			Place place = null;
@@ -159,7 +173,7 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Place place = new Place();
 				

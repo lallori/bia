@@ -28,9 +28,9 @@
 package org.medici.bia.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.common.util.SimpleSearchUtils;
 
@@ -86,9 +86,10 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(alias)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -188,9 +189,10 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
+		if (alias != null) {
 			return getAlias();
-		else
-			return "";
+		}
+
+		return "";
 	}
 }

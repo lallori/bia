@@ -55,7 +55,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return A topic linked found.
 	 * @throws PersistenceException
 	 */
-	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException;
+	EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException;
 
 	/**
 	 * This method searches every topics linked to a document identified by
@@ -65,7 +65,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return List of topic linked to a document.
 	 * @throws PersistenceException
 	 */
-	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;
+	List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;
 	
 	/**
 	 * This method find the number of documents in topics with a specified place.
@@ -74,7 +74,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException;
+	Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -82,7 +82,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfTopicsByDocument(Integer entryId) throws PersistenceException;
+	Integer findNumberOfTopicsByDocument(Integer entryId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -90,7 +90,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException;
+	Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -98,7 +98,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException;
+	Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException;
 	
 	/**
 	 * 
@@ -107,7 +107,7 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTopics(String topic, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchTopics(String topic, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -116,6 +116,6 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws PersistenceException;
+	Map<String, Long> searchTopicsPlace(String placeToSearch) throws PersistenceException;
 
 }

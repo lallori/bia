@@ -43,7 +43,11 @@ public class Page {
 	private Integer thisPage;
 	private Long total;
 	private Integer totalPages;
-	
+
+	public Page() {
+		super();
+	}
+
 	/**
 	 * 
 	 * @param inputListResult
@@ -51,7 +55,7 @@ public class Page {
 	 */
 	public Page(List<?> list, Integer firstRecordNumber, Integer lastRecordNumber) {
 		this.setTotal(new Long(list.size()));
-		this.results = list;
+		results = list;
 	}
 
 	/**
@@ -62,7 +66,7 @@ public class Page {
 	 */
 	public Page(List<?> list, Long totalResult, Integer firstRecordNumber, Integer lastRecordNumber) {
 		this.setTotal(totalResult);
-		this.results = list;
+		results = list;
 		this.firstRecordNumber = firstRecordNumber;
 		this.lastRecordNumber = lastRecordNumber;
 	}
@@ -149,7 +153,7 @@ public class Page {
 	 * @param list
 	 */
 	public void setList(List<?> list) {
-		this.results = list;
+		results = list;
 	}
 
 	/**
@@ -205,7 +209,7 @@ public class Page {
 		stringBuilder.append(getTotal());
 		stringBuilder.append(",totalPages=");
 		stringBuilder.append(getTotalPages());
-		stringBuilder.append("]");
+		stringBuilder.append(']');
 		return stringBuilder.toString();
 	}
 }

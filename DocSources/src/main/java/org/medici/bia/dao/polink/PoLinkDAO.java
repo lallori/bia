@@ -48,7 +48,7 @@ public interface PoLinkDAO extends Dao<Integer, PoLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public PoLink find(Integer personId, Integer prfLinkId) throws PersistenceException;
+	PoLink find(Integer personId, Integer prfLinkId) throws PersistenceException;
 
 	/**
 	 * This method will reset to false every PreferredRole setted on person's titles.
@@ -57,7 +57,7 @@ public interface PoLinkDAO extends Dao<Integer, PoLink> {
 	 * @param personId
 	 * @throws PersistenceException
 	 */
-	public void resetPreferredRoleForPersonTitles(Integer prfLinkId, Integer personId) throws PersistenceException;
+	void resetPreferredRoleForPersonTitles(Integer prfLinkId, Integer personId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -65,6 +65,6 @@ public interface PoLinkDAO extends Dao<Integer, PoLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws PersistenceException;
+	List<PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws PersistenceException;
 
 }

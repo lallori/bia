@@ -62,7 +62,7 @@ public class ShowConfirmCreateDocumentForumController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowConfirmCreateDocumentForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			Document document = new Document(command.getEntryId());
@@ -84,7 +84,7 @@ public class ShowConfirmCreateDocumentForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowConfirmCreateDocumentForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("docbase/ShowConfirmCreateDocumentForumModalWindow", model);
 	}

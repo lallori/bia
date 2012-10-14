@@ -48,9 +48,9 @@ import org.medici.bia.common.search.AdvancedSearchVolume;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.PlaceType;
 import org.medici.bia.domain.SearchFilter;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.User;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +90,7 @@ public class AdvancedSearchController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(@ModelAttribute("command") AdvancedSearchCommand command, HttpSession session){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		SearchFilter searchFilter = null;
 		List<Month> months = null;
 		List<PlaceType> placeTypes = null;
@@ -105,7 +105,7 @@ public class AdvancedSearchController {
 		}
 
 		// we get our map which contains all user's filter used at runtime. 
-		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 
 		// if searchUUID is present, it's a refine search
 		if (command.getSearchUUID() != null) {
@@ -209,11 +209,11 @@ public class AdvancedSearchController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView executeSearch(@Valid @ModelAttribute("command") AdvancedSearchCommand command, BindingResult result, HttpSession session) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		SearchFilter searchFilter = null;  
 
 		// we prelevate our map which contains all user's filter used at runtime. 
-		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 
 		// if searchFilter is present in map we get  
 		if (searchFilterMap.get(command.getSearchUUID()) != null) {
@@ -228,7 +228,7 @@ public class AdvancedSearchController {
 		}
 
 		// we update runtime filter with input from form 
-		AdvancedSearch advancedSearch = AdvancedSearchFactory.create(command);
+		AdvancedSearch advancedSearch = AdvancedSearchFactory.createFromAdvancedSearchCommand(command);
 		searchFilter.setFilterData(advancedSearch);
 		// we update user map
 		searchFilterMap.put(command.getSearchUUID(), searchFilter);

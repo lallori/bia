@@ -34,6 +34,7 @@ import java.util.UUID;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.command.community.SimpleSearchForumPostCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -59,6 +60,8 @@ public class SimpleSearchForumPostController {
 	@Autowired
 	private CommunityService communityService;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * This controller act as a dispatcher for result view.
 	 *  
@@ -68,12 +71,14 @@ public class SimpleSearchForumPostController {
 	 */
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchForumPostCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		 
 		try {
 			command.setSearchForumAllText(URIUtil.decode(command.getSearchForumAllText(), "UTF-8"));
-		} catch (URIException e) {
+		} catch (URIException uriException) {
+			logger.debug(uriException);
 		}
+
 		model.put("yourSearch", command.getSearchForumAllText());
 		String [] toHighlight = StringUtils.split(command.getSearchForumAllText(), " ");
 		model.put("toHighlight", toHighlight);
@@ -117,10 +122,11 @@ public class SimpleSearchForumPostController {
 		Page page = new Page(paginationFilter);
 
 		try {
-			if(command.getTopicId() == null)
+			if(command.getTopicId() == null) {
 				page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText()), paginationFilter);
-			else
+			} else {
 				page = getCommunityService().searchForumPosts(new SimpleSearchForumPost(command.getSearchForumAllText(), command.getTopicId()), paginationFilter);
+			}
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			page = new Page(paginationFilter);

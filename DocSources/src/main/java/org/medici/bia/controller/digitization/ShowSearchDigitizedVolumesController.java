@@ -79,7 +79,7 @@ public class ShowSearchDigitizedVolumesController {
 		if(result.hasErrors()){
 			return new ModelAndView("error/BrowseDigitizedVolumes");
 		}else{
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			// This number is used to generate an unique id for new search 
 			UUID uuid = UUID.randomUUID();
 			command.setSearchUUID(uuid.toString());

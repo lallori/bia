@@ -79,7 +79,7 @@ public class ShowSenderDocumentsPlaceController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowSenderDocumentsPlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Place place = new Place();
 		

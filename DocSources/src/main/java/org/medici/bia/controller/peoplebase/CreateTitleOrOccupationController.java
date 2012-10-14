@@ -77,7 +77,7 @@ public class CreateTitleOrOccupationController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") CreateTitleOrOccupationCommand command) {
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		TitleOccsList titleOccsList = new TitleOccsList(0);
 		titleOccsList.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

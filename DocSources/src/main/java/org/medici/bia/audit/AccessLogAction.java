@@ -67,6 +67,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * 
  */
 public class AccessLogAction extends HandlerInterceptorAdapter {
+	/**
+	 * 
+	 */
 	private final Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	private LogService logService;
@@ -96,7 +99,8 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 
 			try {
 				getLogService().traceAccessLog(accessLog);
-			} catch (ApplicationThrowable ex) {
+			} catch (ApplicationThrowable applicationThrowable) {
+				logger.debug(applicationThrowable);
 			}
 
 			MDC.put("username", accessLog.getUsername());
@@ -139,12 +143,12 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		try {
 			getLogService().traceAccessLog(accessLog);
 		} catch (ApplicationThrowable applicationThrowable) {
-			logger.error(applicationThrowable);
+			logger.debug(applicationThrowable);
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(10);
 		stringBuilder.append(accessLog.getHttpMethod());
-		stringBuilder.append(" ");
+		stringBuilder.append(' ');
 		stringBuilder.append(accessLog.getAction());
 		if (accessLog.getErrors() != null) {
 			stringBuilder.append("KO ");
@@ -171,6 +175,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		// Nel pre-handle prepara l'oggetto prima dell'esecuzione
 		// dell'operazione
 		AccessLog accessLog = new AccessLog();
+		StringBuilder stringBuilder = new StringBuilder(10);
 
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("AnonymousAuthenticationToken")) {
@@ -192,19 +197,18 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 
 		accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		accessLog.setIpAddress(request.getRemoteAddr());
-		accessLog.setAction(request.getRequestURI().toString());
+		accessLog.setAction(request.getRequestURI());
 		accessLog.setHttpMethod(HttpMethod.valueOf(request.getMethod()).toString());
 		accessLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
 		accessLog.setExecutionTime(System.currentTimeMillis());
 		request.setAttribute("accessLog", accessLog);
 
-		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(accessLog.getHttpMethod());
-		stringBuilder.append(" ");
+		stringBuilder.append(' ');
 		stringBuilder.append(accessLog.getAction());
 		stringBuilder.append(" START (Http Parameters ");
 		stringBuilder.append(accessLog.getInformations());
-		stringBuilder.append(")");
+		stringBuilder.append(')');
 		logger.info(stringBuilder.toString());
 
 		return true;

@@ -85,7 +85,7 @@ public class DeleteExternalLinkPlaceController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteExternalLinkPlace");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId(), command.getPlaceAllId());
 

@@ -62,7 +62,7 @@ public class ShowApplicationPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowApplicationPropertiesCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		return new ModelAndView("admin/ShowApplicationProperties", model);
 	}

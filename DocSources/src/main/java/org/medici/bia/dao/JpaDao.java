@@ -92,9 +92,9 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public JpaDao() {
+	protected JpaDao() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
+		entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 	}
 
 	/**
@@ -652,7 +652,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -685,7 +685,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	@Override
 	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException {
 		//if search Container is empty, is unable to execute count!
-		if (searchContainer.isEmpty()) {
+		if (searchContainer.empty()) {
 			return new Long(0);
 		}
 		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();

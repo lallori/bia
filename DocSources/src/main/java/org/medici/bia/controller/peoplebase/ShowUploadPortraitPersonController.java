@@ -77,7 +77,7 @@ public class ShowUploadPortraitPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if(command.getPersonId() > 0){
 			try{
 				People person = getPeopleBaseService().findPerson(command.getPersonId());

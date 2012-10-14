@@ -82,7 +82,7 @@ public class ShowPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPlaceRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Place place = new Place();
 		List<Place> placeNames;
@@ -100,10 +100,11 @@ public class ShowPlaceController {
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
 				
-				if(place.getPlaceGeographicCoordinates() != null)
+				if(place.getPlaceGeographicCoordinates() != null) {
 					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-				else
+				} else {
 					model.put("linkGoogleMaps", null);
+				}
 
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
 				

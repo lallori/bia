@@ -39,11 +39,17 @@ public class AccountNotApprovedException extends AccountStatusException {
 
 	/**
 	 * 
+	 */
+	public AccountNotApprovedException() {
+		super("");
+	}
+	
+	/**
+	 * 
 	 * @param msg
 	 */
 	public AccountNotApprovedException(String msg) {
 		super(msg);
-		// TODO Auto-generated constructor stub
 	}
 
 

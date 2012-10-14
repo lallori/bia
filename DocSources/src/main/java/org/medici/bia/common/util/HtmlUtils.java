@@ -37,9 +37,9 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.PlaceGeographicCoordinates;
 import org.medici.bia.domain.Schedone;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.UserHistory.Category;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -86,11 +86,13 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getDocumentExplorerNextPageUrl(DocumentExplorer documentExplorer) {
-		if (documentExplorer == null)
+		if (documentExplorer == null) {
 			return "";
+		}
 		
-		if (documentExplorer.getImage().getImageOrder() == documentExplorer.getTotal().intValue())
+		if (documentExplorer.getImage().getImageOrder() == documentExplorer.getTotal().intValue()) {
 			return "";
+		}
 
 		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
 		stringBuilder.append("?entryId=");
@@ -123,11 +125,13 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getDocumentExplorerPreviousPageUrl(DocumentExplorer documentExplorer) {
-		if (documentExplorer == null)
+		if (documentExplorer == null) {
 			return "";
+		}
 		
-		if (documentExplorer.getImage().getImageOrder() == 1)
+		if (documentExplorer.getImage().getImageOrder() == 1){
 			return "";
+		}
 
 		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
 		stringBuilder.append("?entryId=");
@@ -161,8 +165,9 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getHistoryNavigatorNextPageUrl(UserHistory userHistory) {
-		if (userHistory == null)
+		if (userHistory == null) {
 			return null;
+		}
 
 		return getHistoryNavigatorUrl(userHistory.getCategory(), userHistory.getIdUserHistory());
 	}
@@ -174,8 +179,9 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getHistoryNavigatorPreviousPageUrl(UserHistory userHistory) {
-		if (userHistory == null)
+		if (userHistory == null) {
 			return null;
+		}
 
 		return getHistoryNavigatorUrl(userHistory.getCategory(), userHistory.getIdUserHistory());
 	}
@@ -187,8 +193,9 @@ public class HtmlUtils {
 	 * @return
 	 */
 	private static String getHistoryNavigatorUrl(Category category, Integer idUserHistory) {
-		if ((category == null) || (idUserHistory ==null))
+		if ((category == null) || (idUserHistory ==null)) {
 			return null;
+		}
 
 		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
 		switch (category) {
@@ -263,7 +270,8 @@ public class HtmlUtils {
 
 		StringBuilder stringBuilder = new StringBuilder("<img src=\"");
 		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuilder.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />\n");
+		stringBuilder.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />");
+		stringBuilder.append(System.getProperty("line.separator"));
 		stringBuilder.append("<a href=\"");
 		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		stringBuilder.append("/community/ShowForum.do?forumId=");
@@ -323,7 +331,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getSitemapForumTopicUrl(Integer topicId, Integer postPageNumber, Integer postPageTotal, Integer postsForPage, Boolean completeDOM) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (topicId != null) {
 			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
 			stringBuilder.append("://");
@@ -351,7 +359,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getSitemapForumUrl(Integer forumId, Boolean completeDOM) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (forumId != null) {
 			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
 			stringBuilder.append("://");
@@ -372,7 +380,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getSitemapUrl(Integer pageNumber) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (pageNumber != null) {
 			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("website.protocol"));
 			stringBuilder.append("://");
@@ -399,7 +407,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfActiveEndInPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 
@@ -420,7 +428,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfActiveStartInPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 		
@@ -441,7 +449,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfBirthInPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 		
@@ -462,7 +470,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfDeathInPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 		
@@ -483,7 +491,7 @@ public class HtmlUtils {
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		
-		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		List<String> retValue = new ArrayList<String>(inputList.size());
 		
 		for (int i=0; i<inputList.size(); i++) {
 			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
@@ -509,7 +517,7 @@ public class HtmlUtils {
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		
-		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		List<String> retValue = new ArrayList<String>(inputList.size());
 		
 		for (int i=0; i<inputList.size(); i++) {
 			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
@@ -528,8 +536,9 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String showDocument(Integer entryId) {
-		if (entryId == null)
+		if (entryId == null) {
 			return "";
+		}
 
 		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
 		url += "/src/docbase/ShowDocument.do?entryId=";
@@ -545,10 +554,11 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static List<String> showDocument(List<String> inputList, Integer entryId) {
-		if (inputList == null)
+		if (inputList == null) {
 			return null;
+		}
 
-		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		List<String> retValue = new ArrayList<String>(inputList.size());
 		
 		String anchorBegin = "<a class=\"searchResult\" href=\"";
 		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
@@ -804,7 +814,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfRecipientDocumentsPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 
@@ -987,7 +997,7 @@ public class HtmlUtils {
 		anchor.append(placeAllId);
 		anchor.append("\">");
 		anchor.append(numberOfSenderDocumentsPlace);
-		anchor.append(" ");
+		anchor.append(' ');
 		anchor.append(description);
 		anchor.append("</a>");
 

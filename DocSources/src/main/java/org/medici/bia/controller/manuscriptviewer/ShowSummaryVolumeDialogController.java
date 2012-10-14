@@ -63,7 +63,7 @@ public class ShowSummaryVolumeDialogController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@Valid @ModelAttribute("command") ShowSummaryVolumeDialogCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			VolumeSummary volumeSummary = getManuscriptViewerService().findVolumeSummmary(command.getVolNum(), command.getVolLetExt());

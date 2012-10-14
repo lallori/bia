@@ -81,7 +81,7 @@ public class ShowFamilyPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowFamilyPersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if(command.getAltName() != null){
 														

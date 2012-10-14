@@ -186,7 +186,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 
         paginationFilter = generatePaginationFilterMYSQL(category, paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -226,8 +226,9 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	        query.setParameter("category", category); 
 	        // we need to force to resultSize total if result is bigger
 	        Long total = new Long((Long)query.getSingleResult());
-	        if (total > resultSize)
+	        if (total > resultSize) {
 	        	total=new Long(resultSize);
+	        }
 
 	        page.setTotal(total);
 		}
@@ -280,7 +281,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -475,7 +476,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		// SELECT * FROM tblUserHistory WHERE user.account='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
 		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE user.account='");
 		stringBuilder.append(user.getAccount());
-		stringBuilder.append("'");
+		stringBuilder.append('\'');
 		stringBuilder.append(" AND idUserHistory > ");
 		stringBuilder.append(idUserHistory);        
 
@@ -526,7 +527,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		// SELECT * FROM tblUserHistory WHERE user.account='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
 		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
 		queryString.append(user.getAccount());
-		queryString.append("'");
+		queryString.append('\'');
 		queryString.append(" AND (category NOT LIKE '");
 		queryString.append(Category.FORUM.name());
 		queryString.append("' AND category NOT LIKE '");
@@ -614,7 +615,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		// SELECT * FROM tblUserHistory WHERE user.account='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
 		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
 		queryString.append(user.getAccount());
-		queryString.append("'");
+		queryString.append('\'');
 		queryString.append(" AND (category NOT LIKE '");
 		queryString.append(Category.FORUM.name());
 		queryString.append("' AND category NOT LIKE '");

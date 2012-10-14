@@ -46,6 +46,5 @@ public interface PlaceTypeDAO extends Dao<Integer, PlaceType> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<PlaceType> findPlaceTypes() throws PersistenceException;
-
+	List<PlaceType> findPlaceTypes() throws PersistenceException;
 }

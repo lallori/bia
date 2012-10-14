@@ -1715,7 +1715,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public void updateIndexTopicList(Date fromDate) throws ApplicationThrowable {
 		try {
-			//getDocumentDAO().updateIndex(fromDate);
+			getTopicsListDAO().updateIndex(fromDate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	

@@ -153,7 +153,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 			}
 			stringBuilder.append("(place.placeAllId=");
 			stringBuilder.append(placeAllIds.get(i));
-			stringBuilder.append(")");
+			stringBuilder.append(')');
 		}
 		stringBuilder.append(" GROUP BY place.placeAllId");
 		
@@ -189,7 +189,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		}
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

@@ -74,7 +74,7 @@ public class ShowUserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUserCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		User user = new User();
 
 		if (StringUtils.isNotBlank(command.getAccount())) {

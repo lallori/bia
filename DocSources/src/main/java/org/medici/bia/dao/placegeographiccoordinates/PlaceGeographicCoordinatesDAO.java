@@ -47,6 +47,5 @@ public interface PlaceGeographicCoordinatesDAO extends Dao<Integer, PlaceGeograp
 	 * @return A placeGeographicCoordinates linked to a place.
 	 * @throws PersistenceException
 	 */
-	public PlaceGeographicCoordinates findByPlaceAllId(Integer placeAllId) throws PersistenceException;
-
+	PlaceGeographicCoordinates findByPlaceAllId(Integer placeAllId) throws PersistenceException;
 }

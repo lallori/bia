@@ -343,8 +343,11 @@ public class ForumOption implements Serializable {
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("[");
 		stringBuilder.append("id=");
-		if (getForum() ==null)
-		stringBuilder.append((getForum() ==null) ? null : getForum().getForumId());
+		if (getForum() !=null) {
+			stringBuilder.append(getForum().getForumId());
+		} else {
+			stringBuilder.append("null");
+		}
 		stringBuilder.append(", canHaveSubCategory=");
 		stringBuilder.append(getCanHaveSubCategory());
 		stringBuilder.append(", canHaveSubForum=");
@@ -369,7 +372,7 @@ public class ForumOption implements Serializable {
 		stringBuilder.append(getCanDeleteTopics());
 		stringBuilder.append(", canDeletePosts=");
 		stringBuilder.append(getCanDeletePosts());
-		stringBuilder.append("]");
+		stringBuilder.append(']');
 
 		return stringBuilder.toString();
 	}

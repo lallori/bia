@@ -81,7 +81,7 @@ public class ShowExplorerDocumentController {
 			command.setImageProgTypeNum(null);
 			return setupForm(command, result);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
 			documentExplorer.setImage(new Image());
@@ -119,7 +119,7 @@ public class ShowExplorerDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)              
 	public ModelAndView setupForm(@ModelAttribute("command") ShowExplorerDocumentCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
 		documentExplorer.setImage(new Image());
@@ -137,7 +137,8 @@ public class ShowExplorerDocumentController {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 
 			model.put("documentExplorer", documentExplorer);
-		} catch (ApplicationThrowable ath) {
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
 		}
 
 		if (BooleanUtils.isTrue(command.getModalWindow())) {

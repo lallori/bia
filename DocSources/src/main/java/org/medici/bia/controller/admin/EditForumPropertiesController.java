@@ -108,9 +108,9 @@ public class EditForumPropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("forum.identifier.document", command.getIdForumDocument());
 				hashMap.put("forum.identifier.people", command.getIdForumPeople());
 				hashMap.put("forum.identifier.place", command.getIdForumPlace());
@@ -143,7 +143,7 @@ public class EditForumPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditForumPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<Forum> forums = getCommunityService().getForumsByType(Type.FORUM);

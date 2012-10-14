@@ -77,7 +77,7 @@ public class SaveUserSearchFilter {
 		if (result.hasErrors()) {
 			return setupForm();
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			try {
 				SearchFilter searchFilter = new SearchFilter();
 				if (command.getSaveType().equals(SaveType.newSearch)) {
@@ -87,7 +87,7 @@ public class SaveUserSearchFilter {
 				}
 				searchFilter.setFilterName(command.getSaveAs());
 				searchFilter.setSearchType(command.getSearchType());
-				searchFilter.setFilterData(AdvancedSearchFactory.create(command));
+				searchFilter.setFilterData(AdvancedSearchFactory.createFromSaveUserSearchFilterCommand(command));
 
 				if (command.getSaveType().equals(SaveType.newSearch)) {
 					getSearchService().addSearchFilter(searchFilter);
@@ -108,7 +108,7 @@ public class SaveUserSearchFilter {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try{
 			List<SearchFilter> searchFilters = getSearchService().getUserSearchFilters();

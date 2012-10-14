@@ -62,8 +62,9 @@ public class BiaJpaUserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
 		User user = getUserDAO().findUser(username);
-	    if (user == null)
+	    if (user == null) {
 	    	throw new UsernameNotFoundException("user not found");
+	    }
 	    
 	    List<UserRole> userRoles = new ArrayList<UserRole>(0);
 	    try {
@@ -99,7 +100,7 @@ public class BiaJpaUserDetailsServiceImpl implements UserDetailsService {
 		return userRoleDAO;
 	}
 
-	private class UserDetailsBuilder implements Serializable {
+	private static class UserDetailsBuilder implements Serializable {
 
 		/**
 		 * 

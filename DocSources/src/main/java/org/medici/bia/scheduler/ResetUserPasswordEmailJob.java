@@ -29,6 +29,7 @@ package org.medici.bia.scheduler;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.service.mail.MailService;
@@ -64,6 +65,7 @@ public class ResetUserPasswordEmailJob {
 	@Autowired
 	private UserService userService;
 
+	private Logger logger = Logger.getLogger(this.getClass());
 	/**
 	 * 
 	 * Scheduled is defined in milliseconds
@@ -80,7 +82,7 @@ public class ResetUserPasswordEmailJob {
 			}
 			
 		} catch (Throwable th) {
-			th.printStackTrace();
+			logger.error(th);
 			return;
 		}
 	}

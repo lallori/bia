@@ -242,7 +242,7 @@ public class Image implements Serializable {
 		if (!ObjectUtils.toString(getVolLetExt()).equals("")) {
 			stringBuilder.append(getVolLetExt());
 		}
-		stringBuilder.append("/");
+		stringBuilder.append('/');
 		if (!StringUtils.isEmpty(getImageName())) {
 			stringBuilder.append(getImageName());
 		}

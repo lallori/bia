@@ -68,7 +68,7 @@ public class ShowDocumentInManuscriptViewerController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(@ModelAttribute("requestCommand") ShowDocumentInManuscriptViewerCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
 		documentExplorer.setImage(new Image());

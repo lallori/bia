@@ -104,7 +104,7 @@ public class AddMarkedListPersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") AddMarkedListPersonCommand command, BindingResult result){
 		getValidator().validate(command, result);
 		
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if(!result.hasErrors()){
 			People person = new People();
 	

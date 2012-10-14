@@ -49,7 +49,7 @@ public interface SchedoneDAO extends Dao<Integer, Schedone> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Schedone findBySummaryId(Integer summaryId) throws PersistenceException;
+	Schedone findBySummaryId(Integer summaryId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -58,7 +58,7 @@ public interface SchedoneDAO extends Dao<Integer, Schedone> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Schedone findByVolume(Integer volNum, String volLetExt) throws PersistenceException;
+	Schedone findByVolume(Integer volNum, String volLetExt) throws PersistenceException;
 	
 	/**
 	 * 
@@ -67,5 +67,5 @@ public interface SchedoneDAO extends Dao<Integer, Schedone> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Schedone> findByVolumesNumber(Integer volNum, Integer volNumBetween) throws PersistenceException;
+	List<Schedone> findByVolumesNumber(Integer volNum, Integer volNumBetween) throws PersistenceException;
 }

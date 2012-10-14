@@ -83,7 +83,7 @@ public class AddMarkedListVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") AddMarkedListVolumeCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 		
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if(!result.hasErrors()){
 			Volume volume = new Volume();
 			

@@ -29,6 +29,7 @@ package org.medici.bia.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -51,7 +52,7 @@ public class RegExUtils {
 	public static Boolean checkMail(String mail) {
 		String regExEmail = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
 
-		return searchPattern(regExEmail, mail);
+		return equalPattern(regExEmail, mail);
 	}
 
 	/**
@@ -99,12 +100,12 @@ public class RegExUtils {
 	 * @param inputString String where search the regular expression.
 	 * @return true if the inputString contains regular expression, false otherwise.
 	 */
-	private static boolean searchPattern(String regex, String inputString) {
+	private static Boolean equalPattern(String regex, String inputString) {
 		Pattern pattern = null;
 		try {
 			pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-		} catch (Exception ex) {
-			logger.error("Espressione regolare non valida.", ex);
+		} catch (PatternSyntaxException patternSyntaxException) {
+			logger.debug(patternSyntaxException);
 			return false;
 		}
 		Matcher matcher = pattern.matcher(inputString);

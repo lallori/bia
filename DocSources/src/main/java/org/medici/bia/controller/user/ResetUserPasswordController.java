@@ -91,15 +91,11 @@ public class ResetUserPasswordController {
 	 * @param password
 	 */
 	private void autoLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) {
-		try {
-			// Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-			token.setDetails(new WebAuthenticationDetails(request));
-			Authentication authentication = authenticationManager.authenticate(token);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		} catch (Exception e) {
-			SecurityContextHolder.getContext().setAuthentication(null);
-		}
+		// Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authentication = authenticationManager.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	/**
@@ -171,12 +167,12 @@ public class ResetUserPasswordController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 
 			return new ModelAndView("user/ResetUserPassword", model);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			try {
 				getUserService().updateUserPassword(command.getUuid(), command.getPassword());
@@ -233,7 +229,7 @@ public class ResetUserPasswordController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/ResetUserPassword");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			ResetUserPasswordCommand resetUserPasswordCommand = new ResetUserPasswordCommand();
 			resetUserPasswordCommand.setUuid(command.getUuid());
 

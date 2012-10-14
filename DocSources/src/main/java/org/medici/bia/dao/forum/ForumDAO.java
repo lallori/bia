@@ -30,6 +30,7 @@ package org.medici.bia.dao.forum;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -38,11 +39,11 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.Forum.Type;
 
 /**
  * Forum DAO.
@@ -60,7 +61,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException;
+	Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException;
 	
 	/**
 	 * 
@@ -68,7 +69,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewForum(Forum forum) throws PersistenceException;
+	Forum addNewForum(Forum forum) throws PersistenceException;
 
 	/**
 	 * 
@@ -77,7 +78,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewPersonForum(Forum forumParent, People person) throws PersistenceException;
+	Forum addNewPersonForum(Forum forumParent, People person) throws PersistenceException;
 
 	/**
 	 * 
@@ -86,7 +87,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewPlaceForum(Forum forumParent, Place place) throws PersistenceException;
+	Forum addNewPlaceForum(Forum forumParent, Place place) throws PersistenceException;
 
 	/**
 	 * 
@@ -96,14 +97,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum addNewVolumeForum(Forum forumParent, Volume volume, Schedone schedone) throws PersistenceException;
+	Forum addNewVolumeForum(Forum forumParent, Volume volume, Schedone schedone) throws PersistenceException;
 	
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Long countTotalActive() throws PersistenceException;
+	Long countTotalActive() throws PersistenceException;
 
 	/**
 	 * 
@@ -111,7 +112,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException;
+	Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -121,7 +122,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException;
+	Forum findFolioForumFromParent(Forum volumeForum, Integer imageId) throws PersistenceException;
 
 	/**
 	 * 
@@ -129,7 +130,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Forum> findForumCategories(Forum forum) throws PersistenceException;
+	List<Forum> findForumCategories(Forum forum) throws PersistenceException;
 
 	/**
 	 * 
@@ -137,7 +138,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public HashMap<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException;
+	Map<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException;
 
 	/**
 	 * 
@@ -145,7 +146,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Forum> findSubCategories(Forum forum) throws PersistenceException;
+	List<Forum> findSubCategories(Forum forum) throws PersistenceException;
 
 	/**
 	 * 
@@ -153,7 +154,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
+	List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
 
 	/**
 	 * 
@@ -162,7 +163,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException;
+	Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -171,7 +172,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum findVolumeForumFromParent(Forum generalQuestionsForum, Integer summaryId) throws PersistenceException;
+	Forum findVolumeForumFromParent(Forum generalQuestionsForum, Integer summaryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -179,7 +180,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @param numberOfForumForPagethrows
 	 * @return
 	 */
-	public HashMap<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException;
+	Map<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException;
 
 	/**
 	 * 
@@ -187,14 +188,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getCategory(Forum category) throws PersistenceException;
+	Forum getCategory(Forum category) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getFirstCategory() throws PersistenceException;
+	Forum getFirstCategory() throws PersistenceException;
 
 	/**
 	 * 
@@ -202,7 +203,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getForumDocument(Integer entryId) throws PersistenceException;
+	Forum getForumDocument(Integer entryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -210,7 +211,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getForumPerson(Integer personId) throws PersistenceException;
+	Forum getForumPerson(Integer personId) throws PersistenceException;
 
 	/**
 	 * 
@@ -218,7 +219,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getForumPlace(Integer placeAllId) throws PersistenceException;
+	Forum getForumPlace(Integer placeAllId) throws PersistenceException;
 
 	/**
 	 * 
@@ -226,7 +227,7 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Forum> getForumsByType(Type type) throws PersistenceException;
+	List<Forum> getForumsByType(Type type) throws PersistenceException;
 
 	/**
 	 * 
@@ -234,21 +235,21 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Forum getForumVolume(Integer summaryId) throws PersistenceException;
+	Forum getForumVolume(Integer summaryId) throws PersistenceException;
 	
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
+	Map<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
 
 	/**
 	 * 
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveDecreasePostsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveDecreasePostsNumber(Forum parentForum) throws PersistenceException;
 	
 	/**
 	 * 
@@ -256,20 +257,20 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @param decreaseNumber
 	 * @throws PersistenceException
 	 */
-	public void recursiveDecreasePostsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
+	void recursiveDecreasePostsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveDecreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveDecreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
 	
 	/**
 	 * 
 	 * @param parentForum
 	 */
-	public void recursiveDecreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveDecreaseTopicsNumber(Forum parentForum) throws PersistenceException;
 	
 	/**
 	 * 
@@ -277,26 +278,26 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @param decreaseNumber
 	 * @throws PersistenceException
 	 */
-	public void recursiveDecreaseTopicsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
+	void recursiveDecreaseTopicsNumber(Forum parentForum, Integer decreaseNumber) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveIncreasePostsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveIncreasePostsNumber(Forum parentForum) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveIncreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveIncreaseSubForumsNumber(Forum parentForum) throws PersistenceException;
 	
 	/**
 	 * 
 	 * @param parentForum
 	 * @throws PersistenceException
 	 */
-	public void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+	void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
 }

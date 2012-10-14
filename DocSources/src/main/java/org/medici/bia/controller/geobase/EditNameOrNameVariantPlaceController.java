@@ -87,7 +87,7 @@ public class EditNameOrNameVariantPlaceController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Place place = new Place(command.getCurrentPlaceAllId());
 			place.setResearcher(command.getResearcher());
@@ -137,7 +137,7 @@ public class EditNameOrNameVariantPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNameOrNameVariantPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			if (command.getCurrentPlaceAllId().equals(0)) {

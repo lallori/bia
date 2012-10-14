@@ -94,7 +94,7 @@ public class ShowSchedoneController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowSchedoneCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Schedone schedone = new Schedone();
 		if(command.getSchedoneId() > 0){
 			try{

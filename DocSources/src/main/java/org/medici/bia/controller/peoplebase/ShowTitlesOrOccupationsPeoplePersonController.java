@@ -80,7 +80,7 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTitlesOrOccupationsPeoplePersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if(command.getTitleOccId() > 0){
 			try{

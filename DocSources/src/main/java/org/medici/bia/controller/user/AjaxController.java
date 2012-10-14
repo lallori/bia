@@ -45,8 +45,8 @@ import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Country;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.UserMarkedListElement;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserMarkedListElement;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +97,7 @@ public class AjaxController {
 	
 	@RequestMapping(value = "/user/LastEntryUser.json", method = RequestMethod.GET)
 	public ModelAndView lastEntryUser(){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		UserHistory lastEntry = null;
 		try{
 			lastEntry = getUserService().searchLastUserHistoryBaseEntry();
@@ -116,60 +116,77 @@ public class AjaxController {
 		
 	}
 
-	/**
+	/** This method returns 4 elements for History Category View Preview.
 	 * 
-	 * @param fromLast
-	 * @param searchPerimeter
+	 * @param searchType
 	 * @param sortingColumnNumber
 	 * @param sortingDirection
 	 * @param firstRecord
 	 * @param length
 	 * @return
 	 */
-	@RequestMapping(value = "/user/ArchiveStatisticsFromLast.json", method = RequestMethod.GET)
-	public ModelAndView statisticsFromLast( @RequestParam(value="fromLast", required=false) FromLast fromLast,
-											@RequestParam(value="searchPerimeter", required=false) SearchPerimeter searchPerimeter,
-											@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
-								   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/user/MyHistoryFirstFourElementsByCategoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView myHistoryFirstFourElementsByCategoryPagination(@RequestParam(value="category") Category category,
+	   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+		     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		HashMap<SearchPerimeter, Long> archiveStatistics = new HashMap<SearchPerimeter, Long>(0);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Page page = null;
 
 		try {
-			archiveStatistics = getUserService().getArchiveStatisticsFromLast(new SearchFromLast(fromLast, searchPerimeter));
+			page = getUserService().searchUserHistory(category, paginationFilter, 4);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
-		List<Object> resultList = new ArrayList<Object>();
-		List<Object> singleRow = new ArrayList<Object>();
 		
-		singleRow.add("Document");
-		singleRow.add(archiveStatistics.get(SearchPerimeter.DOCUMENT));
-		resultList.add(singleRow);
-		singleRow.clear();
-				
-		singleRow.add("People");
-		singleRow.add(archiveStatistics.get(SearchPerimeter.PEOPLE));
-		resultList.add(singleRow);
-		singleRow.clear();
-
-		singleRow.add("Places");
-		singleRow.add(archiveStatistics.get(SearchPerimeter.PLACE));
-		resultList.add(singleRow);
-		singleRow.clear();
-
-		singleRow.add("Volumes");
-		singleRow.add(archiveStatistics.get(SearchPerimeter.VOLUME));
-		resultList.add(singleRow);
-		singleRow.clear();
+		 List<Object> resultList = new ArrayList<Object>();
+		  for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
+		   List<String> singleRow = new ArrayList<String>();
+		   if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
+				singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			    singleRow.add(currentUserHistory.getAction().toString());
+			    singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
+			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
+			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   	singleRow.add(currentUserHistory.getAction().toString());
+			   	//MD: This code is for prevent a string too long.
+			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 38) {
+			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf());	
+			   	} else {
+			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf().substring(0, 35) + "...");
+			   	}
+			    resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
+			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   singleRow.add(currentUserHistory.getAction().toString());
+			   //MD: This code is for prevent a string too long
+			   String placeNameAndParent = currentUserHistory.getPlace().getPlaceName() + " / " + currentUserHistory.getPlace().getPlParent();
+			   if(placeNameAndParent.length() < 40) {
+				   singleRow.add(placeNameAndParent);
+			   } else {
+				   singleRow.add(placeNameAndParent.substring(0, 37) + "...");
+			   }
+			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
+			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   singleRow.add(currentUserHistory.getAction().toString());
+			   singleRow.add(currentUserHistory.getVolume().getMDP());
+			   resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
+		   }
+		  }
 
 		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", "4");
-		model.put("iTotalRecords", "4");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
-
 		return new ModelAndView("responseOK", model);
 	}
 /*	{
@@ -198,7 +215,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
@@ -269,7 +286,7 @@ public class AjaxController {
 	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 		     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
@@ -308,10 +325,11 @@ public class AjaxController {
 				singleRow.add((currentUserHistory.getVolume().getSerieList() == null) ? "" : currentUserHistory.getVolume().getSerieList().toString());
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
-				if(currentUserHistory.getVolume().getDigitized().equals(Boolean.TRUE))
+				if(currentUserHistory.getVolume().getDigitized().equals(Boolean.TRUE)) {
 					singleRow.add("YES");
-				else
+				} else {
 					singleRow.add("NO");
+				}
 				resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
@@ -332,79 +350,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-	/** This method returns 4 elements for History Category View Preview.
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/user/MyHistoryFirstFourElementsByCategoryPagination.json", method = RequestMethod.GET)
-	public ModelAndView myHistoryFirstFourElementsByCategoryPagination(@RequestParam(value="category") Category category,
-	   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-		     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Page page = null;
-
-		try {
-			page = getUserService().searchUserHistory(category, paginationFilter, 4);
-		} catch (ApplicationThrowable aex) {
-			page = new Page(paginationFilter);
-		}
-
-		
-		 List<Object> resultList = new ArrayList<Object>();
-		  for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
-		   List<String> singleRow = new ArrayList<String>();
-		   if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
-				singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
-			    singleRow.add(currentUserHistory.getAction().toString());
-			    singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
-			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
-		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
-			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
-			   	singleRow.add(currentUserHistory.getAction().toString());
-			   	//MD: This code is for prevent a string too long.
-			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 38)
-			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf());
-			   	else
-			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf().substring(0, 35) + "...");
-			    resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
-		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
-			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
-			   singleRow.add(currentUserHistory.getAction().toString());
-			   //MD: This code is for prevent a string too long
-			   String placeNameAndParent = currentUserHistory.getPlace().getPlaceName() + " / " + currentUserHistory.getPlace().getPlParent();
-			   if(placeNameAndParent.length() < 40)
-				   singleRow.add(placeNameAndParent);
-			   else
-				   singleRow.add(placeNameAndParent.substring(0, 37) + "...");
-			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
-		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
-			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
-			   singleRow.add(currentUserHistory.getAction().toString());
-			   singleRow.add(currentUserHistory.getVolume().getMDP());
-			   resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
-		   }
-		  }
-
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-		return new ModelAndView("responseOK", model);
-	}
-	
-	
 	/**
 	 * 
 	 * @param sortingColumnNumber
@@ -419,7 +364,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
@@ -492,26 +437,7 @@ public class AjaxController {
 		return getUserService().ratePassword(password);
 	}
 	
-	@RequestMapping(value= "/user/SearchUsers", method = RequestMethod.GET)
-	public ModelAndView searchUsers(@RequestParam("query") String query){
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		try{
-			List<User> users = getUserService().searchUsers(query);
-			model.put("query", query);
-			model.put("count", users.size());
-			model.put("data", ListBeanUtils.transformList(users, "account"));
-			List<String> names = new ArrayList<String>();
-			for(User currentUser : users){
-				names.add(currentUser.getFirstName() + " " + currentUser.getLastName());
-			}
-			model.put("suggestions", names);
-		}catch(ApplicationThrowable aex){
-			return new ModelAndView("responseKO", model);
-		}
-		return new ModelAndView("responseOK", model);
-	}
-
+	
 	/**
 	 * This method will search Country entity by name field. 
 	 * @param name Description field of the country
@@ -519,7 +445,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/user/ajax/FindCountries", method = RequestMethod.GET)
 	public ModelAndView searchCountries(@RequestParam("query") String name) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			List<Country> countries = getUserService().findCountries(name);
@@ -532,7 +458,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-
+	
 	/**
 	 * 
 	 * @param alias
@@ -568,9 +494,9 @@ public class AjaxController {
 		pagedListHolder.setPageSize(pageSize);
 		//SearchResult userSearchPagination = new SearchResult(searchResults, 1, 10);
 		//model.addAttribute(userSearchPagination);
-		List test = new ArrayList();
+		List test = new ArrayList(0);
 		for (int i=0; i<10; i++) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add("Lorenzo");
 			singleRow.add("Pasquinelli");
 			singleRow.add("pasquinelli");
@@ -585,12 +511,89 @@ public class AjaxController {
 		return "OK";
 	}
 
+	@RequestMapping(value= "/user/SearchUsers", method = RequestMethod.GET)
+	public ModelAndView searchUsers(@RequestParam("query") String query){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try{
+			List<User> users = getUserService().searchUsers(query);
+			model.put("query", query);
+			model.put("count", users.size());
+			model.put("data", ListBeanUtils.transformList(users, "account"));
+			List<String> names = new ArrayList<String>();
+			for(User currentUser : users){
+				names.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+			}
+			model.put("suggestions", names);
+		}catch(ApplicationThrowable aex){
+			return new ModelAndView("responseKO", model);
+		}
+		return new ModelAndView("responseOK", model);
+	}
+
 	/**
 	 * @param userService
 	 *            the userService to set
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	/**
+	 * 
+	 * @param fromLast
+	 * @param searchPerimeter
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/user/ArchiveStatisticsFromLast.json", method = RequestMethod.GET)
+	public ModelAndView statisticsFromLast( @RequestParam(value="fromLast", required=false) FromLast fromLast,
+											@RequestParam(value="searchPerimeter", required=false) SearchPerimeter searchPerimeter,
+											@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		Map<SearchPerimeter, Long> archiveStatistics = new HashMap<SearchPerimeter, Long>(0);
+
+		try {
+			archiveStatistics = getUserService().getArchiveStatisticsFromLast(new SearchFromLast(fromLast, searchPerimeter));
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		List<Object> singleRow = new ArrayList<Object>();
+		
+		singleRow.add("Document");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.DOCUMENT));
+		resultList.add(singleRow);
+		singleRow.clear();
+				
+		singleRow.add("People");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.PEOPLE));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		singleRow.add("Places");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.PLACE));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		singleRow.add("Volumes");
+		singleRow.add(archiveStatistics.get(SearchPerimeter.VOLUME));
+		resultList.add(singleRow);
+		singleRow.clear();
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", "4");
+		model.put("iTotalRecords", "4");
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
 	}
 
 }

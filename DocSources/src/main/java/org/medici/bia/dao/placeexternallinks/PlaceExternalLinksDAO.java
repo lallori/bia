@@ -50,7 +50,7 @@ public interface PlaceExternalLinksDAO extends Dao<Integer, PlaceExternalLinks> 
 	 * @return A placeExternalLinks linked to a place.
 	 * @throws PersistenceException
 	 */
-	public PlaceExternalLinks find(Integer placeAllId, Integer placeExternalLinksId) throws PersistenceException;
+	PlaceExternalLinks find(Integer placeAllId, Integer placeExternalLinksId) throws PersistenceException;
 	
 	/**
 	 * This method searches every external links to a place identified by
@@ -60,6 +60,5 @@ public interface PlaceExternalLinksDAO extends Dao<Integer, PlaceExternalLinks> 
 	 * @return List of external links to a place.
 	 * @throws PersistenceException
 	 */
-	public List<PlaceExternalLinks> findByPlaceAllId(Integer placeAllId) throws PersistenceException;	
-
+	List<PlaceExternalLinks> findByPlaceAllId(Integer placeAllId) throws PersistenceException;
 }

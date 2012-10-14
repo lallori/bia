@@ -64,11 +64,11 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.NumericField;
 import org.hibernate.search.annotations.NumericFields;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
@@ -1174,7 +1174,7 @@ public class People implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (getLast() != null) {
 			stringBuilder.append(getLast());
 		}
@@ -1187,7 +1187,7 @@ public class People implements Serializable {
 
 		if (getSucNum() != null) {
 			if (stringBuilder.length() > 0) {
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 			
 			stringBuilder.append(getSucNum());
@@ -1212,18 +1212,26 @@ public class People implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof People)) {
 			return false;
+		}
 		People other = (People) obj;
 		if (personId == null) {
-			if (other.personId != null)
+			if (other.personId != null) {
 				return false;
-		} else if (!personId.equals(other.personId))
+			}
+		} else if (!personId.equals(other.personId)) {
 			return false;
+		}
+	
 		return true;
 	}
 

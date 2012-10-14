@@ -47,6 +47,5 @@ public interface RoleCatDAO extends Dao<Integer, RoleCat> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<RoleCat> getAllRoleCat() throws PersistenceException;
-
+	List<RoleCat> getAllRoleCat() throws PersistenceException;
 }

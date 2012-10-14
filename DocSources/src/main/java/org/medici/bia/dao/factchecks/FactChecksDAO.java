@@ -47,6 +47,5 @@ public interface FactChecksDAO extends Dao<Integer, FactChecks> {
 	 * @return A factChecks linked to a document.
 	 * @throws PersistenceException
 	 */
-	public FactChecks findByEntryId(Integer entryId) throws PersistenceException;
-
+	FactChecks findByEntryId(Integer entryId) throws PersistenceException;
 }

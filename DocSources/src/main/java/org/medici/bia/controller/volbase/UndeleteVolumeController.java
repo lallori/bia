@@ -89,7 +89,7 @@ public class UndeleteVolumeController {
 		if (result.hasErrors()) {
 			return new ModelAndView("response/UndeleteVolumeKO");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				getVolBaseService().undeleteVolume(command.getSummaryId());
@@ -109,7 +109,7 @@ public class UndeleteVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") UndeleteVolumeCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("volbase/ShowConfirmUndeleteVolume", model);
 	}

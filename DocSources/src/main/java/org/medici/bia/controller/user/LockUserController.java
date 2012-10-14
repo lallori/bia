@@ -98,7 +98,7 @@ public class LockUserController {
 			 */
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			User user = new User();
 			try {

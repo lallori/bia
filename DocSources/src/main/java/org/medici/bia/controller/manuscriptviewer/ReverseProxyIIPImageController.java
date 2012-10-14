@@ -113,14 +113,13 @@ public class ReverseProxyIIPImageController {
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
 		stringBuilder.append("://");
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		stringBuilder.append("?");
-		stringBuilder.append("FIF=");
+		stringBuilder.append("?FIF=");
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 		stringBuilder.append(httpServletRequest.getParameter("FIF"));
-		stringBuilder.append("&");
+		stringBuilder.append('&');
 
 		Enumeration<String> enumeration = httpServletRequest.getParameterNames();
 		
@@ -133,9 +132,9 @@ public class ReverseProxyIIPImageController {
 				String[] values = httpServletRequest.getParameterValues(httpParameter);
 				for (int i=0; i<values.length;i++) {
 					stringBuilder.append(httpParameter);
-					stringBuilder.append("=");
+					stringBuilder.append('=');
 					stringBuilder.append(values[i]);
-					stringBuilder.append("&");
+					stringBuilder.append('&');
 				}
 			}
 		}
@@ -157,23 +156,23 @@ public class ReverseProxyIIPImageController {
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
 		stringBuilder.append("://");
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
 		stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		stringBuilder.append("?");
+		stringBuilder.append('?');
 
 		if (httpServletRequest.getParameter("obj") != null) {
 			// This get image tile informations
 			stringBuilder.append("FIF=");
 			stringBuilder.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 			stringBuilder.append(httpServletRequest.getParameter("FIF"));
-			stringBuilder.append("&");
+			stringBuilder.append('&');
 			String[] values = httpServletRequest.getParameterValues("obj");
 			for (int i=0; i<values.length;i++) {
 				stringBuilder.append("obj");
-				stringBuilder.append("=");
+				stringBuilder.append('=');
 				stringBuilder.append(values[i]);
-				stringBuilder.append("&");
+				stringBuilder.append('&');
 			}
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			// This get image preview
@@ -184,7 +183,7 @@ public class ReverseProxyIIPImageController {
 			stringBuilder.append(httpServletRequest.getParameter("FIF"));
 			stringBuilder.append("&CVT=");
 			stringBuilder.append(httpServletRequest.getParameter("CVT"));
-			stringBuilder.append("&");
+			stringBuilder.append('&');
 		} else if (httpServletRequest.getParameter("jtl") != null) {
 			// This get tiff section image.
 			stringBuilder.append("&FIF=");
@@ -192,7 +191,7 @@ public class ReverseProxyIIPImageController {
 			stringBuilder.append(httpServletRequest.getParameter("FIF"));
 			stringBuilder.append("&jtl=");
 			stringBuilder.append(httpServletRequest.getParameter("jtl"));
-			stringBuilder.append("&");
+			stringBuilder.append('&');
 		}
 		
 		return stringBuilder.toString();

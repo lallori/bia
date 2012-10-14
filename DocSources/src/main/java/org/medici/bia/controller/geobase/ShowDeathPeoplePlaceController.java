@@ -79,7 +79,7 @@ public class ShowDeathPeoplePlaceController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDeathPeoplePlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Place place = new Place();
 		

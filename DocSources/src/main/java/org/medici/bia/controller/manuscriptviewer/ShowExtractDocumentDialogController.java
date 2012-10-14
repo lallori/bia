@@ -75,7 +75,7 @@ public class ShowExtractDocumentDialogController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowExtractDocumentDialogCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getEntryId() > 0)) {
 			SynExtract synExtract = new SynExtract();

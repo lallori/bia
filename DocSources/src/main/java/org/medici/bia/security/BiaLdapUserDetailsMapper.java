@@ -161,18 +161,21 @@ public class BiaLdapUserDetailsMapper extends LdapUserDetailsMapper {
 
 		}
 		
-		if (!user.getActive()) 
+		if (!user.getActive()) {
 			throw new DisabledException("User is not activated");
+		}
 		
 		//MD: This code isn't implemented
 		/*if (!user.getApproved()) 
 			throw new AccountNotApprovedException("User is not approved");*/
 
-		if (!user.getExpirationDate().after(new Date())) 
+		if (!user.getExpirationDate().after(new Date())) {
 			throw new AccountExpiredException("User is expired");
+		}
 
-		if (user.getLocked())
+		if (user.getLocked()) {
 			throw new LockedException("User is locked");
+		}
 
 		return docSourcesLdapUserDetailsImpl;
 	}

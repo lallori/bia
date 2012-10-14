@@ -51,14 +51,14 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<TopicList> findTopicsList() throws PersistenceException;
+	List<TopicList> findTopicsList() throws PersistenceException;
 	
 	/**
 	 * This method return all the topicList excluding topic that can not inserted
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<TopicList> findTopicsListForUsers() throws PersistenceException;
+	List<TopicList> findTopicsListForUsers() throws PersistenceException;
 	
 	/**
 	 * This method searches for topics which could be related to a document which contains 
@@ -69,7 +69,7 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	 * @return A List<TopicList> that could be related to a document.
 	 * @throws PersistenceException
 	 */
-	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;
+	List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;
 
 	/**
 	 * This method searches topics which contains the parameters set in {@link org.medici.bia.common.search}
@@ -80,6 +80,6 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

@@ -62,7 +62,7 @@ public class ShowMyHistoryByCategoryController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowMyHistoryByCategoryCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		// Add outputFields;
 		List<String> outputFields = getOutputFields(command.getCategory());

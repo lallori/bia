@@ -39,6 +39,10 @@ public class PersonPortrait {
 	private CommonsMultipartFile file;
 	private String link;
 
+	public PersonPortrait() {
+		super();
+	}
+
 	/**
 	 * 
 	 * @param personId
@@ -47,7 +51,7 @@ public class PersonPortrait {
 	 */
 	public PersonPortrait(Integer personId, CommonsMultipartFile browse, String link) {
 		this.personId = personId;
-		this.file = browse;	
+		file = browse;	
 		this.link = link;
 	}
 

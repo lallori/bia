@@ -50,11 +50,11 @@ public class ApplicationPropertyManager {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
 	private final Map<String, String> simpleProperties = new HashMap<String, String>();
-	protected final static ApplicationPropertyManager instance;
+	protected static final ApplicationPropertyManager INSTANCE;
 
 	static {
-		instance = new ApplicationPropertyManager();
-		instance.init(true);
+		INSTANCE = new ApplicationPropertyManager();
+		INSTANCE.init(true);
 	}
 	/**
 	 * 
@@ -62,7 +62,7 @@ public class ApplicationPropertyManager {
 	 */
 	public static List<String> getApplicationPropertiesNames() {
 		List<String> list = new ArrayList<String>();
-		list.addAll(instance.simpleProperties.keySet());
+		list.addAll(INSTANCE.simpleProperties.keySet());
 		Collections.sort(list);
 
 		return list;
@@ -75,12 +75,12 @@ public class ApplicationPropertyManager {
 	 * @return
 	 */
 	public static String getApplicationProperty(String propertyName) {
-		if (!instance.simpleProperties.containsKey(propertyName)) {
-			String property = instance.getApplicationPropertyDAO().getApplicationProperty(propertyName);
-			instance.simpleProperties.put(propertyName, property);
+		if (!INSTANCE.simpleProperties.containsKey(propertyName)) {
+			String property = INSTANCE.getApplicationPropertyDAO().getApplicationProperty(propertyName);
+			INSTANCE.simpleProperties.put(propertyName, property);
 		}
 
-		return instance.simpleProperties.get(propertyName);
+		return INSTANCE.simpleProperties.get(propertyName);
 	}
 
 	/**
@@ -90,12 +90,12 @@ public class ApplicationPropertyManager {
 	 * @return
 	 */
 	public static String getApplicationProperty(String propertyName, String[] stringsToBeReplaced, String prefixPlaceHolder, String suffixPlaceHolder) {
-		if (!instance.simpleProperties.containsKey(propertyName)) {
-			String property = instance.getApplicationPropertyDAO().getApplicationProperty(propertyName);
-			instance.simpleProperties.put(propertyName, property);
+		if (!INSTANCE.simpleProperties.containsKey(propertyName)) {
+			String property = INSTANCE.getApplicationPropertyDAO().getApplicationProperty(propertyName);
+			INSTANCE.simpleProperties.put(propertyName, property);
 		}
 
-		String property = instance.simpleProperties.get(propertyName);
+		String property = INSTANCE.simpleProperties.get(propertyName);
 		
 		for (int i=0; i<stringsToBeReplaced.length; i++) {
 			property = StringUtils.replace(property, prefixPlaceHolder + i + suffixPlaceHolder, stringsToBeReplaced[i]);
@@ -107,8 +107,8 @@ public class ApplicationPropertyManager {
 	/**
      * 
      */
-	public final static void init() {
-		instance.init(false);
+	public static final void init() {
+		INSTANCE.init(false);
 	}
 
 	/**
@@ -116,10 +116,10 @@ public class ApplicationPropertyManager {
      */
 	public static void refreshProperties() {
 		List<String> list = new ArrayList<String>();
-		list.addAll(instance.simpleProperties.keySet());
+		list.addAll(INSTANCE.simpleProperties.keySet());
 
 		for (int i = 0; i < list.size(); i++) {
-			instance.simpleProperties.remove(list.get(i));
+			INSTANCE.simpleProperties.remove(list.get(i));
 			getApplicationProperty(list.get(i));
 		}
 	}

@@ -31,6 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.common.search.AdvancedSearch;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.domain.SearchFilter.SearchType;
@@ -87,6 +88,8 @@ public class AdvancedSearchCommand {
 	private List<String> gender;
 
 	private String logicalDelete;
+	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -104,8 +107,10 @@ public class AdvancedSearchCommand {
 	public AdvancedSearchCommand(AdvancedSearch advancedSearch, SearchType searchType, String searchUUID) {
 		try {
 			BeanUtils.copyProperties(this, advancedSearch);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		} catch (IllegalAccessException illegalAccessException) {
+			logger.error(illegalAccessException);
+		} catch (InvocationTargetException invocationTargetException) {
+			logger.error(invocationTargetException);
 		}
 		
 		setSearchType(searchType);
@@ -121,8 +126,10 @@ public class AdvancedSearchCommand {
 	public AdvancedSearchCommand(AdvancedSearch advancedSearch, SimpleSearchPerimeter simpleSearchPerimeter, String searchUUID2) {
 		try {
 			BeanUtils.copyProperties(this, advancedSearch);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		} catch (IllegalAccessException illegalAccessException) {
+			logger.error(illegalAccessException);
+		} catch (InvocationTargetException invocationTargetException) {
+			logger.error(invocationTargetException);
 		}
 
 		setSearchUUID(searchUUID2);

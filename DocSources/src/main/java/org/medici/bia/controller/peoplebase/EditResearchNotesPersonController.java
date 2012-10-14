@@ -90,7 +90,7 @@ public class EditResearchNotesPersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			People person = new People(command.getPersonId());
 			person.setBioNotes(command.getBioNotes());
@@ -123,7 +123,7 @@ public class EditResearchNotesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditResearchNotesPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPersonId() > 0)) {
 			People person = new People();

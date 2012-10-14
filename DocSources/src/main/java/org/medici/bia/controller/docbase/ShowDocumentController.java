@@ -80,7 +80,7 @@ public class ShowDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowDocumentRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Document document = new Document();
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		

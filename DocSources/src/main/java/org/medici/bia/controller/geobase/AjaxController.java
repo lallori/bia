@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
@@ -64,6 +65,7 @@ public class AjaxController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -72,7 +74,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/CheckPlaceIsDeletable", method = RequestMethod.GET)
 	public ModelAndView checkPlaceIsDeletable(@RequestParam(value="placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -193,7 +195,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/geobase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
@@ -220,7 +222,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/SearchBornPlace", method = RequestMethod.GET)
 	public ModelAndView searchBornPlace(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			query = new String(query.getBytes(), "UTF-8");
@@ -251,12 +253,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/SearchDeathPlace", method = RequestMethod.GET)
 	public ModelAndView searchDeathPlace(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			query = new String(query.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 		
 		try {
@@ -284,12 +286,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/SearchPlaceParent", method = RequestMethod.GET)
 	public ModelAndView searchPlaceParent(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			query = new String(query.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 		
 		try {
@@ -315,12 +317,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/SearchRecipientPlace", method = RequestMethod.GET)
 	public ModelAndView searchRecipients(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			query = new String(query.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 		
 		try {
@@ -346,12 +348,12 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/SearchSenderPlace", method = RequestMethod.GET)
 	public ModelAndView searchSenders(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			query = new String(query.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
+		} catch(UnsupportedEncodingException unsupportedEncodingException){
+			logger.debug(unsupportedEncodingException);
 		}
 		
 		try {
@@ -386,12 +388,12 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowActiveEndPeoplePlacePagination.json", method = RequestMethod.GET)
-	public ModelAndView ShowActiveEndPeoplePlace(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showActiveEndPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
@@ -401,9 +403,9 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (People currentPerson : (List<People>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
@@ -430,12 +432,12 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowActiveStartPeoplePlacePagination.json", method = RequestMethod.GET)
-	public ModelAndView ShowActiveStartPeoplePlace(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showActiveStartPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
@@ -445,9 +447,9 @@ public class AjaxController {
 			page = new Page(paginationFilter);
 		}
 
-		List resultList = new ArrayList();
+		List resultList = new ArrayList(0);
 		for (People currentPerson : (List<People>)page.getList()) {
-			List singleRow = new ArrayList();
+			List singleRow = new ArrayList(0);
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
@@ -474,12 +476,12 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowBirthPeoplePlacePagination.json", method = RequestMethod.GET)
-	public ModelAndView ShowBirthPeoplePlace(@RequestParam(value="sSearch") String alias,
+	public ModelAndView showBirthPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
@@ -516,7 +518,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showBirthPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -544,7 +546,7 @@ public class AjaxController {
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
@@ -581,7 +583,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/ShowDeathPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showDeathPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -602,7 +604,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/de/geobase/ShowPlaceLinkableToTopicDocument", method = RequestMethod.GET)
 	public ModelAndView showPlaceLinkableToTopicDocument(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -622,7 +624,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -722,7 +724,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/geobase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showRecipientPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -742,7 +744,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
@@ -839,7 +841,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/geobase/ShowSenderPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showSenderPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findPlace(placeAllId);
@@ -868,7 +870,7 @@ public class AjaxController {
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		//Page page = null;
 		//PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);

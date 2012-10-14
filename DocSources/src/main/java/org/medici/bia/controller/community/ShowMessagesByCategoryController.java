@@ -64,7 +64,7 @@ public class ShowMessagesByCategoryController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowMessagesByCategoryCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		// This number is used to generate an unique id for new search 
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());

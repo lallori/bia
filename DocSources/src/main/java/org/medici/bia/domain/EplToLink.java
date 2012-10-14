@@ -210,18 +210,27 @@ public class EplToLink implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof EplToLink)) {
 			return false;
+		}
+		
 		EplToLink other = (EplToLink) obj;
 		if (eplToId == null) {
-			if (other.eplToId != null)
+			if (other.eplToId != null) {
 				return false;
-		} else if (!eplToId.equals(other.eplToId))
+			}
+		} else if (!eplToId.equals(other.eplToId)) {
 			return false;
+		}
+
 		return true;
 	}
 

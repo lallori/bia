@@ -30,7 +30,7 @@ package org.medici.bia.common.search;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.medici.bia.command.community.ShowMyForumPostCommand;
+import org.apache.log4j.Logger;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SaveUserSearchFilterCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
@@ -43,12 +43,7 @@ import org.medici.bia.domain.SearchFilter.SearchType;
  *
  */
 public class AdvancedSearchFactory {
-	/**
-	 * 
-	 */
-	public AdvancedSearchFactory() {
-		super();
-	}
+	private static Logger logger = Logger.getLogger(AdvancedSearchFactory.class);
 
 	/**
 	 * 
@@ -56,13 +51,15 @@ public class AdvancedSearchFactory {
 	 * @return
 	 * @throws Exception
 	 */
-	public static AdvancedSearch create(SaveUserSearchFilterCommand command) {
+	public static AdvancedSearch createFromSaveUserSearchFilterCommand(SaveUserSearchFilterCommand command) {
 		AdvancedSearch advancedSearch = null;
 		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand();
 		try {
 			BeanUtils.copyProperties(advancedSearchCommand, command);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		} catch (IllegalAccessException illegalAccessException) {
+			logger.debug(illegalAccessException);
+		} catch (InvocationTargetException invocationTargetException) {
+			logger.debug(invocationTargetException);
 		}
 
 		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
@@ -80,7 +77,7 @@ public class AdvancedSearchFactory {
 		return advancedSearch;
 	}
 
-	public static AdvancedSearch create(AdvancedSearchCommand command) {
+	public static AdvancedSearch createFromAdvancedSearchCommand(AdvancedSearchCommand command) {
 		AdvancedSearch advancedSearch = null;
 		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
 			advancedSearch = new AdvancedSearchDocument();
@@ -102,7 +99,7 @@ public class AdvancedSearchFactory {
 	 * @param searchType 
 	 * @return
 	 */
-	public static AdvancedSearch create(SearchType searchType) {
+	public static AdvancedSearch createFromSearchType(SearchType searchType) {
 		if (searchType.equals(SearchType.DOCUMENT)) {
 			return new AdvancedSearchDocument();
 		} else if (searchType.equals(SearchType.PEOPLE)) {
@@ -119,7 +116,7 @@ public class AdvancedSearchFactory {
 	 * @param command
 	 * @return
 	 */
-	public static AdvancedSearch create(SimpleSearchCommand command) {
+	public static AdvancedSearch createFromSimpleSearchCommand(SimpleSearchCommand command) {
 		if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.EXTRACT)) {
 			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
 			advancedSearchDocument.initFromSimpleSearchCommand(command);

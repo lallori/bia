@@ -28,7 +28,6 @@
 package org.medici.bia.dao.sitemap;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +76,9 @@ public class SitemapDAOJpaImpl extends JpaDao<String, Sitemap> implements Sitema
 	 */
 	private static final long serialVersionUID = 7748919283250523252L;
 
+	/**
+	 * Logger class.
+	 */
 	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
@@ -128,7 +130,7 @@ public class SitemapDAOJpaImpl extends JpaDao<String, Sitemap> implements Sitema
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer insertForumSitemap(HashMap<Integer, Date> activeForums) throws PersistenceException {
+	public Integer insertForumSitemap(Map<Integer, Date> activeForums) throws PersistenceException {
 		Iterator<Map.Entry<Integer, Date>> iterator = activeForums.entrySet().iterator();
 		Integer counter = new Integer(0);
 		while (iterator.hasNext()) {
@@ -152,7 +154,7 @@ public class SitemapDAOJpaImpl extends JpaDao<String, Sitemap> implements Sitema
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer insertForumTopicSitemap(HashMap<Integer, List<Object>> activeTopics) throws PersistenceException {
+	public Integer insertForumTopicSitemap(Map<Integer, List<Object>> activeTopics) throws PersistenceException {
 		Iterator<Map.Entry<Integer, List<Object>>> iterator = activeTopics.entrySet().iterator();
 		Integer counter = new Integer(0);
 		while (iterator.hasNext()) {

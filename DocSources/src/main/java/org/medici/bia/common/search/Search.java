@@ -39,17 +39,17 @@ public interface Search extends Serializable {
 	/**
 	 * 
 	 */
-	public Boolean isEmpty();
+	Boolean empty();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Query toLuceneQuery();
+	Query toLuceneQuery();
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public String toJPAQuery();
+	String toJPAQuery();
 }

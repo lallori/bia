@@ -89,7 +89,7 @@ public class DeletePersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeletePerson");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				getPeopleBaseService().deletePerson(command.getPersonId());
@@ -116,7 +116,7 @@ public class DeletePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") DeletePersonCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("peoplebase/ShowConfirmDeletePerson", model);
 	}

@@ -68,7 +68,7 @@ public class ShowTopicDescriptionController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowTopicDescriptionRequestCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			// Details

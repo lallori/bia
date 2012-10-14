@@ -33,15 +33,16 @@ import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.medici.bia.command.search.AdvancedSearchCommand;
@@ -69,6 +70,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private List<Integer> datesLastUpdateYearBetween;
 	private List<DateType> datesLastUpdateTypes;
 
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -232,8 +234,10 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("%E7", "ç");
 				try{
 					placesName.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){					
-				}catch(URIException e){
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -247,8 +251,10 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			for(String singleWord : command.getPlaceType()){
 				try{
 					placeType.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){					
-				}catch(URIException e){
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -289,8 +295,10 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			for(String singleWord : command.getLinkedToPeople()){
 				try{
 					linkedToPeople.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -321,7 +329,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if (
 				(placesName.size()>0) ||
 				(placeType.size()>0) ||
@@ -371,7 +379,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		if(placesName.size() > 0){
 			StringBuilder placesNameQuery = new StringBuilder("(");
 			for(int i = 0; i < placesName.size(); i++){
-				String wordsSinglePlaceNames[] = StringUtils.split(placesName.get(i), " ");
+				String[] wordsSinglePlaceNames = StringUtils.split(placesName.get(i), " ");
 				if(placesNameQuery.length() > 1){
 					placesNameQuery.append(" AND ");
 				}
@@ -387,7 +395,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			placesNameQuery.append(")");
+			placesNameQuery.append(')');
 			if(!placesNameQuery.toString().equals("")){
 				if(jpaQuery.length() > 17){
 					jpaQuery.append(" AND ");
@@ -407,7 +415,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				placeTypeQuery.append(placeType.get(i).toLowerCase());
 				placeTypeQuery.append("%')");
 			}
-			placeTypeQuery.append(")");
+			placeTypeQuery.append(')');
 			if(!placeTypeQuery.toString().equals("")){
 				if(jpaQuery.length() > 17){
 					jpaQuery.append(" AND ");
@@ -428,7 +436,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 //				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
 //				linkedToTopicsIdQuery.append("))");
 //			}
-//			linkedToTopicsIdQuery.append(")");
+//			linkedToTopicsIdQuery.append(')');
 //			if(!linkedToTopicsIdQuery.toString().equals("")){
 //				if(jpaQuery.length() > 17){
 //					jpaQuery.append(" AND ");
@@ -457,7 +465,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					linkedToPeopleQuery.append("(geogKey IN (SELECT deathPlace.geogKey FROM People WHERE deathPlace is not null))");
 				}
 			}
-			linkedToPeopleQuery.append(")");
+			linkedToPeopleQuery.append(')');
 			if(!linkedToPeopleQuery.toString().equals("")){
 				if(jpaQuery.length() > 17){
 					jpaQuery.append(" AND ");
@@ -474,7 +482,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			}else if(logicalDelete.equals(Boolean.FALSE)){
 				logicalDeleteQuery.append("(logicalDelete = false)");
 			}
-			logicalDeleteQuery.append(")");
+			logicalDeleteQuery.append(')');
 			if(!logicalDeleteQuery.toString().equals("")){
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
@@ -562,9 +570,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					try {
 						Query test = query.parse("*");
 						linkedToPeopleQuery.add(test, Occur.MUST);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (ParseException parseException) {
+						logger.debug(parseException);
 					}
 				}
 			}

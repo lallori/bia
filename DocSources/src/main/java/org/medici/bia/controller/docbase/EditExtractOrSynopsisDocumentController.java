@@ -93,7 +93,7 @@ public class EditExtractOrSynopsisDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			SynExtract synExtract = new SynExtract(command.getSynExtrId());
 			synExtract.setDocument(new Document(command.getEntryId()));
@@ -133,7 +133,7 @@ public class EditExtractOrSynopsisDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditExtractOrSynopsisDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getEntryId() > 0)) {
 			SynExtract synExtract = new SynExtract();

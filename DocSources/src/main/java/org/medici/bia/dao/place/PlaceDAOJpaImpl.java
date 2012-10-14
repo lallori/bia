@@ -181,17 +181,19 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -201,10 +203,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -256,17 +259,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
+	        	
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -276,10 +282,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -331,17 +338,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
+
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -351,10 +361,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -406,17 +417,19 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -426,10 +439,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -524,17 +538,19 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -544,10 +560,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -599,17 +616,19 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();
@@ -619,10 +638,11 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else { 
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -674,17 +694,19 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        for (int i = 0; i < words.length; i++) {
 	        	BooleanQuery text = new BooleanQuery();
 	        	String singleWord;
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		singleWord = words[0];
-	        	else
+	        	} else {
 	        		singleWord = words[i] + "*";
+	        	}
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
-	        	if(i == 0)
+	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
-	        	else
+	        	} else {
 	        		booleanQuery.add(new BooleanClause(text, Occur.SHOULD));
+	        	}
 	        }
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Place.class);
 	        booleanQuery = new BooleanQuery();

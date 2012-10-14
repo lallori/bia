@@ -57,6 +57,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditSchedonePropertiesController {
 	@Autowired
 	private AdminService adminService;
+
 	@Autowired(required = false)
 	@Qualifier("editSchedonePropertiesValidator")
 	private Validator validator;
@@ -88,10 +89,10 @@ public class EditSchedonePropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("schedone.istituto", command.getIstituto());
 				hashMap.put("schedone.fondo", command.getFondo());
 				hashMap.put("schedone.legatura", command.getLegatura());
@@ -129,7 +130,7 @@ public class EditSchedonePropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditSchedonePropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setIstituto(ApplicationPropertyManager.getApplicationProperty("schedone.istituto"));
 		command.setFondo(ApplicationPropertyManager.getApplicationProperty("schedone.fondo"));

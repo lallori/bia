@@ -97,7 +97,7 @@ public class DeleteTopicDocumentController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteTopicDocument");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			EplToLink eplToLink = new EplToLink(command.getEplToId(), command.getEntryId());
 

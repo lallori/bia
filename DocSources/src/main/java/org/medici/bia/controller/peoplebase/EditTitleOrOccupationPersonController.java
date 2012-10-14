@@ -94,7 +94,7 @@ public class EditTitleOrOccupationPersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			PoLink poLink = new PoLink(command.getPrfLinkId());
 			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccIdNew()));
@@ -142,7 +142,7 @@ public class EditTitleOrOccupationPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTitleOrOccupationPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getPersonId() > 0)) {
 			try {
@@ -197,9 +197,6 @@ public class EditTitleOrOccupationPersonController {
 					return new ModelAndView("error/EditTopicDocument", model);
 				}
 			}
-
-		} else {
-			// On Title creation, every field is null
 		}
 
 		return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);

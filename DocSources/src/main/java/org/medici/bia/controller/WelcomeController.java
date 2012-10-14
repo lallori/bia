@@ -74,9 +74,9 @@ public class WelcomeController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		try {			
-			HashMap<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(5);
+			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(5);
 			model.put("forumStatistics", forumStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

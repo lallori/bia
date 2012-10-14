@@ -100,9 +100,10 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(alias))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(alias)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}
@@ -137,9 +138,9 @@ public class SimpleSearchDocument extends SimpleSearch {
 		//MD: This code is to identify the words between double quotes
 		while(toSearch.contains("\"")){
 			//First double quote
-			int from = toSearch.indexOf("\"");
+			int from = toSearch.indexOf('\"');
 			//Second double quote
-			int to = toSearch.indexOf("\"", from + 1);
+			int to = toSearch.indexOf('\"', from + 1);
 			//If there is the second double quote or not
 			if(to != -1){
 				//Add the exact words to the list and remove them from the string
@@ -225,10 +226,11 @@ public class SimpleSearchDocument extends SimpleSearch {
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = null;
-		if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT))
+		if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
 			stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFieldExtract, words);
-		else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS))
+		} else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
 			stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFieldSynopsis, words);
+		}
 
 		if (!stringQuery.toString().equals("")) {
 			booleanQuery.add(stringQuery,Occur.SHOULD);
@@ -242,9 +244,10 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null)
+		if (alias != null) {
 			return getAlias();
-		else
+		} else {
 			return "";
+		}
 	}
 }

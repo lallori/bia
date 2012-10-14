@@ -81,6 +81,8 @@ public class UserDAOLdapImpl implements UserDAO {
 	 * 
 	 */
 	private static class UserContextMapper extends AbstractContextMapper {
+		private static Logger logger = Logger.getLogger(UserContextMapper.class);
+
 		@Override
 		public Object doMapFromContext(DirContextOperations context) {
 			
@@ -88,9 +90,10 @@ public class UserDAOLdapImpl implements UserDAO {
 			user.setAccount(context.getStringAttribute("cn"));
 			try {
 				user.setPassword(new String((byte[]) context.getObjectAttribute("userPassword"), "US-ASCII"));
-			} catch (UnsupportedEncodingException ueex) {
-				
+			} catch (UnsupportedEncodingException unsupportedEncodingException) {
+				logger.error(unsupportedEncodingException);
 			}
+
 			user.setFirstName(context.getStringAttribute("givenName"));
 			user.setLastName(context.getStringAttribute("surname"));
 			user.setOrganization(context.getStringAttribute("ou"));
@@ -102,15 +105,24 @@ public class UserDAOLdapImpl implements UserDAO {
 			user.setTitle(context.getStringAttribute("personalTitle"));
 			user.setInterests(context.getStringAttribute("info"));
 			
+			InputStream inputStream = null;
 			try {
 				if (context.getObjectAttribute("photo") != null) {
-					InputStream in = new ByteArrayInputStream((byte[]) context.getObjectAttribute("photo"));
+					inputStream = new ByteArrayInputStream((byte[]) context.getObjectAttribute("photo"));
 	
-					user.setPhoto(ImageIO.read(in));
+					user.setPhoto(ImageIO.read(inputStream));
 				}
-			} catch (IOException ioex) {
+			} catch (IOException ioException) {
+				logger.debug(ioException);
 				user.setPhoto(null);
-				ioex.printStackTrace();
+			} finally {
+				if (inputStream != null) {
+					try {
+						inputStream.close();
+					} catch(IOException ioException2) {
+						logger.debug(ioException2);
+					}
+				}
 			}
 
 			Set<UserRole> userRoles = getUserRoles(context, "member");
@@ -133,11 +145,13 @@ public class UserDAOLdapImpl implements UserDAO {
 						UserRole userRole = new UserRole();
 						userRole.setUserAuthority(new UserAuthority(UserAuthority.Authority.valueOf(LdapUtils.getStringRole(role))));
 						userRoles.add(userRole);
-					} catch(IllegalArgumentException iaex){
+					} catch(IllegalArgumentException illegalArgumentException){
+						logger.error(illegalArgumentException);
 						// if the specified enum type has no constant with the 
 						// specified name, or the specified class object does not 
 						// represent an enum type. 
-					} catch (NullPointerException nex){
+					} catch (NullPointerException nullPointerException){
+						logger.error(nullPointerException);
 						// if enum name is null
 					}
 				}
@@ -278,7 +292,7 @@ public class UserDAOLdapImpl implements UserDAO {
 		try {
 			users = getLdapTemplate().search(DistinguishedName.EMPTY_PATH,filter.encode(), getUserContextMapper());
 		} catch (Throwable th) {
-			th.printStackTrace();
+			logger.debug(th);
 		}
 		return users;
 	}
@@ -417,33 +431,52 @@ public class UserDAOLdapImpl implements UserDAO {
 				context.setAttributeValue("userPassword", passwordEncoder.encodePassword(user.getPassword(), null));
 			}
 		}
-		if (user.getFirstName() != null)
-			if (!user.getFirstName().equals("")) 
+		if (user.getFirstName() != null) {
+			if (!user.getFirstName().equals("")){ 
 				context.setAttributeValue("givenName", user.getFirstName());
-		if (user.getLastName() != null)
-			if (!user.getLastName().equals("")) 
+			}
+		}
+		if (user.getLastName() != null) {
+			if (!user.getLastName().equals("")){ 
 				context.setAttributeValue("surname", user.getLastName());
-		if (user.getOrganization() != null)
-			if (!user.getOrganization().equals("")) 
+			}
+		}
+		if (user.getOrganization() != null) {
+			if (!user.getOrganization().equals("")) { 
 				context.setAttributeValue("ou", user.getOrganization());
-		if (user.getAddress() != null)
-			if (!user.getAddress().equals(""))
+			}
+		}
+		if (user.getAddress() != null) {
+			if (!user.getAddress().equals("")) {
 				context.setAttributeValue("street", user.getAddress());
-		if (user.getCity() != null)
-			if (!user.getCity().equals(""))
+			}
+		}
+		if (user.getCity() != null) {
+			if (!user.getCity().equals("")) {
 				context.setAttributeValue("l", user.getCity());
-		if (user.getCountry() != null)
-			if (!user.getCountry().equals(""))
+			}
+		}
+		if (user.getCountry() != null) {
+			if (!user.getCountry().equals("")) {
 				context.setAttributeValue("c", user.getCountry());
-		if (user.getMail() != null)
-			if (!user.getMail().equals(""))
+			}
+		}
+		if (user.getMail() != null){
+			if (!user.getMail().equals("")) {
 				context.setAttributeValue("mail", user.getMail());
-		if (user.getTitle() != null)
-			if (!user.getTitle().equals(""))
+			}
+		}
+		if (user.getTitle() != null) {
+			if (!user.getTitle().equals("")) {
 				context.setAttributeValue("personalTitle", user.getTitle());
-		if (user.getInterests() != null)
-			if (!user.getInterests().equals(""))
+			}
+		}
+		
+		if (user.getInterests() != null) {
+			if (!user.getInterests().equals("")) {
 				context.setAttributeValue("info", user.getInterests());
+			}
+		}
 
 		if (context.getObjectAttribute("photo") != null)  {
 			context.removeAttributeValue("photo;binary", context.getObjectAttribute("photo"));
@@ -457,10 +490,16 @@ public class UserDAOLdapImpl implements UserDAO {
 				ImageIO.write( user.getPhoto(), "jpeg", baos );
 				baos.flush();
 				context.setAttributeValue("photo;binary", baos.toByteArray());
-				baos.close();
-			} catch (IOException ioex) {
-				
+			} catch (IOException ioException) {
+				logger.error(ioException);
 			} finally {
+				if (baos != null) {
+					try {
+						baos.close();
+					}catch (IOException ioException2) {
+						logger.error(ioException2);
+					}
+				}
 			}
 		}
 		
@@ -501,8 +540,9 @@ public class UserDAOLdapImpl implements UserDAO {
 	 * @param userRole
 	 */
 	public void persistUserRoles(String account, List<UserRole> userRoles) {
-		if ((account == null) || (userRoles == null))
+		if ((account == null) || (userRoles == null)) {
 			return;
+		}
 		
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 
@@ -524,8 +564,9 @@ public class UserDAOLdapImpl implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public void removeAllUserRoles(String account) {
-		if (account == null)
+		if (account == null) {
 			return;
+		}
 
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 		
@@ -544,8 +585,9 @@ public class UserDAOLdapImpl implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public void removeUserRoles(String account, List<UserRole> userRoles) {
-		if ((account == null) || (userRoles == null))
+		if ((account == null) || (userRoles == null)) {
 			return;
+		}
 
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 		

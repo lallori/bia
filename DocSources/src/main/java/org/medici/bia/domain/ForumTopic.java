@@ -452,7 +452,7 @@ public class ForumTopic implements Serializable {
 			stringBuilder.append(", forum=");
 			stringBuilder.append(getForum().getForumId());
 		}
-		stringBuilder.append("]");
+		stringBuilder.append(']');
 
 		return stringBuilder.toString();
 	}

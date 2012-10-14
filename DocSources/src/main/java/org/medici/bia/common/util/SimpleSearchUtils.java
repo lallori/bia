@@ -31,11 +31,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
+
 
 /**
  * 
@@ -227,7 +228,7 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnDayFields(String[] dayFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -240,7 +241,7 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<dayFields.length; j++) {
-				stringBuilder.append("(");
+				stringBuilder.append("( ");
 				stringBuilder.append(dayFields[j]);
 				stringBuilder.append(": ");
 				stringBuilder.append(words[i]);
@@ -258,7 +259,7 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnMonthFields(String[] monthFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on month fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -271,7 +272,7 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<monthFields.length; j++) {
-				stringBuilder.append("(");
+				stringBuilder.append("( ");
 				stringBuilder.append(monthFields[j]);
 				stringBuilder.append(": ");
 				stringBuilder.append(words[i]);
@@ -289,7 +290,7 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnNumericFields(String[] numericFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -297,7 +298,7 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<numericFields.length; j++) {
-				stringBuilder.append("(");
+				stringBuilder.append("( ");
 				stringBuilder.append(numericFields[j]);
 				stringBuilder.append(": ");
 				stringBuilder.append(words[i]);
@@ -315,17 +316,17 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnStringFields(String[] stringFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on string fields
 		for (int i=0; i<stringFields.length; i++) {
 			// volume.serieList.title
-			stringBuilder.append("(");
+			stringBuilder.append("( ");
 			stringBuilder.append(stringFields[i]);
 			stringBuilder.append(": (");
 			for (int j=0; j<words.length; j++) {
-				stringBuilder.append("+");
+				stringBuilder.append('+');
 				stringBuilder.append( words[j]);
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 			}
 			stringBuilder.append(")) ");
 		}
@@ -340,7 +341,7 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnVolumeFields(String[] volumeFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on volume 
 		for (int i=0; i<words.length; i++) {
 			// if word is not in volume format we skip
@@ -371,7 +372,7 @@ public class SimpleSearchUtils {
 	 * @return
 	 */
 	public static StringBuilder constructConditionOnYearFields(String[] yearFields, String[] words) {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		// We add conditions on numeric fields only for input word which are numbers
 		for (int i=0; i<words.length; i++) {
 			if (!NumberUtils.isNumber(words[i])) {
@@ -384,7 +385,7 @@ public class SimpleSearchUtils {
 			}
 			
 			for (int j=0; j<yearFields.length; j++) {
-				stringBuilder.append("(");
+				stringBuilder.append("( ");
 				stringBuilder.append(yearFields[j]);
 				stringBuilder.append(": ");
 				stringBuilder.append(words[i]);

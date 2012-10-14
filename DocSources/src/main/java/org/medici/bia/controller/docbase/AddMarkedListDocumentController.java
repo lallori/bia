@@ -82,7 +82,7 @@ public class AddMarkedListDocumentController {
 	public ModelAndView processSubmit(@ModelAttribute("command") AddMarkedListDocumentCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 		
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if(!result.hasErrors()){		
 			Document document = new Document();
 			

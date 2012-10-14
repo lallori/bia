@@ -119,7 +119,7 @@ public class UserAuthority implements Serializable {
      * @return
      */
     public Authority getAuthority() {
-        return this.authority;
+        return authority;
     }
 
     /**

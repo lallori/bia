@@ -74,7 +74,7 @@ public class ChangeExpiratedUserPasswordController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ChangeExpiratedUserPasswordCommand command, BindingResult result) {
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 
@@ -94,12 +94,12 @@ public class ChangeExpiratedUserPasswordController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 
 			return new ModelAndView("user/ChangeExpiratedUserPassword", model);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			try {
 				getUserService().updateUserPassword(command.getPassword());

@@ -82,7 +82,7 @@ public class PrintPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") PrintPlaceRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Place place = new Place();
 		List<Place> placeNames;
@@ -99,10 +99,11 @@ public class PrintPlaceController {
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
 
-				if (place.getPlaceGeographicCoordinates() != null)
+				if (place.getPlaceGeographicCoordinates() != null) {
 					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-				else
+				} else {
 					model.put("linkGoogleMaps", null);
+				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/PrintPlace", model);

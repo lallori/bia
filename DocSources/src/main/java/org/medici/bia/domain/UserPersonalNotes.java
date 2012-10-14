@@ -190,18 +190,27 @@ public class UserPersonalNotes implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof UserPersonalNotes)) {
 			return false;
+		}
+
 		UserPersonalNotes other = (UserPersonalNotes) obj;
 		if (getUser() == null) {
-			if (other.getUser().getAccount() != null)
+			if (other.getUser().getAccount() != null) {
 				return false;
-		} else if (!getUser().getAccount().equals(other.getUser().getAccount()))
+			}
+		} else if (!getUser().getAccount().equals(other.getUser().getAccount())) {
 			return false;
+		}
+
 		return true;
 	}
 }

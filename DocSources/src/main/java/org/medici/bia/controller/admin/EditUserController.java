@@ -46,8 +46,8 @@ import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +93,7 @@ public class EditUserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Month> months = null;
 		User user = new User();
 		
@@ -185,7 +185,7 @@ public class EditUserController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			Calendar cal = Calendar.getInstance();
 
 			User user = new User(command.getAccount());

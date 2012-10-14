@@ -30,6 +30,7 @@ package org.medici.bia.dao.applicationproperty;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
@@ -87,8 +88,8 @@ public class ApplicationPropertyDAOJpaImpl extends JpaDao<String, ApplicationPro
 	        } else {
 	        	return "";
 	        }
-		} catch(Throwable th) {
-			logger.error("Exception during reading application property " + id, th);
+		} catch(PersistenceException persistenceException) {
+			logger.debug("Exception during reading application property " + id, persistenceException);
 			return "";
 		}
 	}
@@ -102,8 +103,8 @@ public class ApplicationPropertyDAOJpaImpl extends JpaDao<String, ApplicationPro
 	        Query query = getEntityManager().createQuery("SELECT id FROM ApplicationProperty ORDER by id ASC ");
 
 	         return query.getResultList();
-		} catch(Throwable th) {
-			logger.error("Exception during reading application properties names ", th);
+		} catch(PersistenceException persistenceException) {
+			logger.error("Exception during reading application properties names ", persistenceException);
 			return new ArrayList<String>(0);
 		}
 	}

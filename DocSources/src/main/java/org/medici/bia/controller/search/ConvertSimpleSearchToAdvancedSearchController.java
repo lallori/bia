@@ -72,7 +72,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(SimpleSearchCommand command, HttpSession session){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		SearchFilter searchFilter = null;  
 		List<Month> months = null;
 
@@ -85,7 +85,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		}
 
 		// we prelevate our map which contains all user's filter used at runtime. 
-		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 
 		// if search filter is not present in request, user make a new search filter 
 		searchFilter = new SearchFilter(command.getSimpleSearchPerimeter());
@@ -93,7 +93,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		searchFilter.setDateUpdated(new Date());
 
 		// we update runtime filter with input from form 
-		AdvancedSearch advancedSearch = AdvancedSearchFactory.create(command);
+		AdvancedSearch advancedSearch = AdvancedSearchFactory.createFromSimpleSearchCommand(command);
 		searchFilter.setFilterData(advancedSearch);
 		model.put("searchFilter", searchFilter);
 

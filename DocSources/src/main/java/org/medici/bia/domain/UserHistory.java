@@ -146,8 +146,6 @@ public class UserHistory implements Serializable {
 			setForumTopic((ForumTopic) object);
 		} else if (category.equals(Category.FORUM_POST)) {
 			setForumPost((ForumPost) object);
-		} else {
-			// do nothing...
 		}
 	}
 

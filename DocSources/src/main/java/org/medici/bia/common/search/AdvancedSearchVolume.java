@@ -36,14 +36,15 @@ import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.util.DateUtils;
@@ -91,6 +92,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> inventario;
 	private Boolean logicalDelete;
 
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	/**
 	 * 
 	 */
@@ -288,7 +291,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					} else {
 						continue;
 					}
-				} catch (URIException e) {
+				} catch (URIException uriException) {
+					logger.debug(uriException);
 					wordsTypes.remove(wordsTypes.size()-1);
 				}
 			}
@@ -406,8 +410,10 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try{
 					fromVolume.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				}catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch (URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -425,8 +431,10 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try{
 					toVolume.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch(URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -444,8 +452,10 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try{
 					context.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch(URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -463,8 +473,10 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				singleWord = singleWord.replace("'", "%27");
 				try{
 					inventario.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch(URIException uriException){
+					logger.debug(uriException);
 				}
 			}
 		}else{
@@ -779,7 +791,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						if(StringUtils.isNumeric(volumes.get(i))){
 							volumesQuery.append("(volNum=");
 							volumesQuery.append(volumes.get(i));
-							volumesQuery.append(")");
+							volumesQuery.append(')');
 						}else{
 							volumesQuery.append("(volNum=");
 							volumesQuery.append(volumes.get(i));
@@ -792,13 +804,13 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						volumesQuery.append(volumes.get(i));
 						volumesQuery.append(" AND volNum<=");
 						volumesQuery.append(volumesBetween.get(i));
-						volumesQuery.append(")");
+						volumesQuery.append(')');
 					}
 				}else{
 					continue;
 				}
 			}
-			volumesQuery.append(")");
+			volumesQuery.append(')');
 			if(!volumesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -821,11 +833,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				if(datesTypes.get(i).equals(DateType.From)){
 					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(')');
 				}else if(datesTypes.get(i).equals(DateType.Before)){
 					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')<");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(')');
 				}else if(datesTypes.get(i).equals(DateType.Between)){
 					datesQuery.append("((STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
@@ -834,7 +846,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					datesQuery.append("))");
 				}
 			}
-			datesQuery.append(")");
+			datesQuery.append(')');
 			if(!datesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -851,7 +863,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}else if(digitized.equals(Boolean.FALSE)){
 				digitizedQuery.append("(digitized=false)");
 			}
-			digitizedQuery.append(")");
+			digitizedQuery.append(')');
 			if(!digitizedQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -892,7 +904,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					}
 				}
 			}
-			languagesQuery.append(")");
+			languagesQuery.append(')');
 			if(!languagesQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -912,7 +924,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				otherLangQuery.append(otherLang.get(i));
 				otherLangQuery.append("%'");
 			}
-			otherLangQuery.append(")");
+			otherLangQuery.append(')');
 			if(!otherLangQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -929,7 +941,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}else if(cipher.equals("No")){
 				cipherQuery.append("(cipher=false)");
 			}
-			cipherQuery.append(")");
+			cipherQuery.append(')');
 			if(!cipherQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -946,7 +958,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}else if(index.equals("No")){
 				indexQuery.append("(oldAlphaIndex=false)");
 			}
-			indexQuery.append(")");
+			indexQuery.append(')');
 			if(!indexQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -969,9 +981,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This code is to identify the words between double quotes
 				while(currentWords.contains("\"")){
 					//First double quote
-					int from = currentWords.indexOf("\"");
+					int from = currentWords.indexOf('\"');
 					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
+					int to = currentWords.indexOf('\"', from + 1);
 					//If there is the second double quote or not
 					if(to != -1){
 						//Add the exact words to the list and remove them from the string
@@ -1004,7 +1016,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					fromVolumeQuery.append("%')");
 				}
 			}
-			fromVolumeQuery.append(")");
+			fromVolumeQuery.append(')');
 			if(!fromVolumeQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1027,9 +1039,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This code is to identify the words between double quotes
 				while(currentWords.contains("\"")){
 					//First double quote
-					int from = currentWords.indexOf("\"");
+					int from = currentWords.indexOf('\"');
 					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
+					int to = currentWords.indexOf('\"', from + 1);
 					//If there is the second double quote or not
 					if(to != -1){
 						//Add the exact words to the list and remove them from the string
@@ -1062,7 +1074,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					toVolumeQuery.append("%')");
 				}
 			}
-			toVolumeQuery.append(")");
+			toVolumeQuery.append(')');
 			if(!toVolumeQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1085,9 +1097,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				//MD: This code is to identify the words between double quotes
 				while(currentWords.contains("\"")){
 					//First double quote
-					int from = currentWords.indexOf("\"");
+					int from = currentWords.indexOf('\"');
 					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
+					int to = currentWords.indexOf('\"', from + 1);
 					//If there is the second double quote or not
 					if(to != -1){
 						//Add the exact words to the list and remove them from the string
@@ -1120,7 +1132,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					contextQuery.append("%')");
 				}
 			}
-			contextQuery.append(")");
+			contextQuery.append(')');
 			if(!contextQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1177,7 +1189,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					inventarioQuery.append("%')");
 				}
 			}
-			inventarioQuery.append(")");
+			inventarioQuery.append(')');
 			if(!inventarioQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1194,7 +1206,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}else if(logicalDelete.equals(Boolean.FALSE)){
 				logicalDeleteQuery.append("(logicalDelete = false)");
 			}
-			logicalDeleteQuery.append(")");
+			logicalDeleteQuery.append(')');
 			if(!logicalDeleteQuery.toString().equals("")){
 				if(jpaQuery.length() > 18){
 					jpaQuery.append(" AND ");
@@ -1586,7 +1598,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				toString += (volumes.get(i) + " ");
 			}
 		}
-		if(!volumesBetween.isEmpty() && !(volumesBetween.size() == 1 && volumesBetween.get(0) == "0")){
+		if(!volumesBetween.isEmpty() && !(volumesBetween.size() == 1 && volumesBetween.get(0).equals("0"))) {
 			if(!toString.isEmpty()){
 				toString += "AND ";
 			}
@@ -1681,7 +1693,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	}
 
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if (
 				(volumes.size()>0)	||
 				(datesTypes.size()>0) ||

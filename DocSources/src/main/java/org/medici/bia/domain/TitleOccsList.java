@@ -286,8 +286,9 @@ public class TitleOccsList implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		if (getTitleOcc() != null)
+		if (getTitleOcc() != null) {
 			return titleOcc;
+		}
 		
 		return "";
 	}

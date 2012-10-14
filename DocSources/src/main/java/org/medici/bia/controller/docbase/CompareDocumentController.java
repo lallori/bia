@@ -72,7 +72,7 @@ public class CompareDocumentController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") CompareDocumentRequestCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			// Details

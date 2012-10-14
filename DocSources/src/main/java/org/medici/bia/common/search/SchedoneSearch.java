@@ -97,9 +97,10 @@ public class SchedoneSearch implements GenericSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEmpty() {
-		if (StringUtils.isEmpty(searchType))
+	public Boolean empty() {
+		if (StringUtils.isEmpty(searchType)) {
 			return Boolean.TRUE;
+		}
 
 		return Boolean.FALSE;
 	}

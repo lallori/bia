@@ -71,7 +71,7 @@ public class EditPersonalNotesUserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditPersonalNotesUserCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			UserPersonalNotes userPersonalNotes = getUserService().findPersonalNotes();
@@ -100,10 +100,10 @@ public class EditPersonalNotesUserController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			return new ModelAndView("user/EditPersonalNotesUser", model);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			
 			try {
 				UserPersonalNotes userPersonalNotes = new UserPersonalNotes();

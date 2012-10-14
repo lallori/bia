@@ -79,7 +79,7 @@ public class ComposeMessageController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			UserMessage userMessage = new UserMessage();
 			userMessage.setMessageId(null);
@@ -110,7 +110,7 @@ public class ComposeMessageController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ComposeMessageCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		command.setSubject("");
 		command.setText("");

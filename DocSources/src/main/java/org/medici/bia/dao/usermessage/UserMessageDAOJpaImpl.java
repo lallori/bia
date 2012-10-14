@@ -215,7 +215,7 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		paginationFilter = generatePaginationFilterMYSQL(userMessageSearch, paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

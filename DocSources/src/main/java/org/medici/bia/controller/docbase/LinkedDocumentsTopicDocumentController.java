@@ -77,7 +77,7 @@ public class LinkedDocumentsTopicDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") LinkedDocumentsTopicDocumentCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if(command.getPlaceAllId() > 0){
 								

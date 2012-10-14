@@ -52,7 +52,7 @@ public interface ParentDAO extends Dao<Integer, Parent> {
 	 * @return A {@link org.medici.bia.domain.People} who represents a child of a parent
 	 * @throws PersistenceException
 	 */
-	public People findChild(Integer parentId, Integer childId) throws PersistenceException;
+	People findChild(Integer parentId, Integer childId) throws PersistenceException;
 
 	/**
 	 * This method searches a every children of a parent identified by a parent identifier.
@@ -61,12 +61,12 @@ public interface ParentDAO extends Dao<Integer, Parent> {
 	 * @return A List<People> who represents children of a parent
 	 * @throws PersistenceException
 	 */
-	public List<People> findChildren(Integer parentId) throws PersistenceException;
+	List<People> findChildren(Integer parentId) throws PersistenceException;
 
 	/**
 	 * This method generate Hibernate search index.
 	 * 
 	 * @throws PersistenceException
 	 */
-	public void generateIndex() throws PersistenceException;
+	void generateIndex() throws PersistenceException;
 }

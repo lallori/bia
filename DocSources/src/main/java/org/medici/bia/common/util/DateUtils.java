@@ -50,10 +50,12 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Integer getDateDayFromString(String nextToken) {
-		if (nextToken == null)
+		if (nextToken == null) {
 			return null;
-		if (nextToken.equals(""))
+		}
+		if (nextToken.equals("")) {
 			return null;
+		}
 		
 		return NumberUtils.createInteger(nextToken);
 	}
@@ -83,16 +85,16 @@ public class DateUtils {
 		}
 		if(month != null){
 			if(stringBuilder.length() > 13){
-				stringBuilder.append(",");
-				dateFormat.append(",");
+				stringBuilder.append(',');
+				dateFormat.append(',');
 			}
 			stringBuilder.append(month);
 			dateFormat.append("%m");
 		}
 		if(day != null){
 			if(stringBuilder.length() > 13){
-				stringBuilder.append(",");
-				dateFormat.append(",");
+				stringBuilder.append(',');
+				dateFormat.append(',');
 			}
 			stringBuilder.append(day);
 			dateFormat.append("%d");
@@ -110,10 +112,12 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Integer getDateMonthFromString(String nextToken) {
-		if (nextToken == null)
+		if (nextToken == null) {
 			return null;
-		if (nextToken.equals(""))
+		}
+		if (nextToken.equals("")) {
 			return null;
+		}
 		
 		return NumberUtils.createInteger(nextToken);
 	}
@@ -124,10 +128,13 @@ public class DateUtils {
 	 * @return
 	 */
 	public static Integer getDateYearFromString(String nextToken) {
-		if (nextToken == null)
+		if (nextToken == null) {
 			return null;
-		if (nextToken.equals(""))
+		}
+
+		if (nextToken.equals("")) {
 			return null;
+		}
 		
 		return NumberUtils.createInteger(nextToken);
 	}
@@ -150,7 +157,7 @@ public class DateUtils {
 
 		if (!ObjectUtils.toString(month).equals("")) {
 			if (month.getMonthNum()<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(month.getMonthNum());
 		} else {
@@ -159,7 +166,7 @@ public class DateUtils {
 		
 		if (day != null) {
 			if (day<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(day);
 		} else {
@@ -187,7 +194,7 @@ public class DateUtils {
 
 		if (!ObjectUtils.toString(month).equals("")) {
 			if (month<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(month);
 		} else {
@@ -196,7 +203,7 @@ public class DateUtils {
 		
 		if (day != null) {
 			if (day<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(day);
 		} else {
@@ -235,7 +242,7 @@ public class DateUtils {
 
 		if (month != null) {
 			if (month <10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(month);
 		} else {
@@ -244,7 +251,7 @@ public class DateUtils {
 		
 		if (day != null) {
 			if (day<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(day);
 		} else {
@@ -272,7 +279,7 @@ public class DateUtils {
 
 		if (!ObjectUtils.toString(month).equals("")) {
 			if (month.getMonthNum()<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(month.getMonthNum());
 		} else {
@@ -281,7 +288,7 @@ public class DateUtils {
 		
 		if (day != null) {
 			if (day<10) {
-				stringBuilder.append("0");
+				stringBuilder.append('0');
 			}
 			stringBuilder.append(day);
 		} else {
@@ -307,14 +314,14 @@ public class DateUtils {
 
 		if (!ObjectUtils.toString(month).equals("")) {
 			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
+				returnValue.append(' ');
 			}
 			returnValue.append(month);
 		}
 
 		if (day != null) {
 			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
+				returnValue.append(' ');
 			}
 			returnValue.append(day);
 		}
@@ -374,7 +381,7 @@ public class DateUtils {
 				stringBuilder.append(" 0");
 				stringBuilder.append(month.getMonthNum());
 			} else {
-				stringBuilder.append(" ");
+				stringBuilder.append(' ');
 				stringBuilder.append(month.getMonthNum());
 			}
 		} else {
@@ -385,8 +392,10 @@ public class DateUtils {
 			if (day<10) {
 				stringBuilder.append(" 0");
 				stringBuilder.append(day);
-			}else
-				stringBuilder.append(" " + day);
+			}else {
+				stringBuilder.append(' ');
+				stringBuilder.append(day);
+			}
 		} else {
 			stringBuilder.append(" 00");
 		}

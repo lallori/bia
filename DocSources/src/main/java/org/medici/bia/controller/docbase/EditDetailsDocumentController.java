@@ -103,7 +103,7 @@ public class EditDetailsDocumentController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Document document = new Document(command.getEntryId());
 			document.setResearcher(command.getResearcher());
@@ -113,10 +113,10 @@ public class EditDetailsDocumentController {
 			document.setInsertLet(command.getInsertLet());
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
-			document.setFolioMod(command.getFolioMod().toString());
+			document.setFolioMod(command.getFolioMod());
 			// Transcribe Folio Start:
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
-			document.setTranscribeFolioMod(command.getTranscribeFolioMod().toString());
+			document.setTranscribeFolioMod(command.getTranscribeFolioMod());
 			// Paginated
 			if(command.getUnpaged() == null){
 				document.setUnpaged(Boolean.FALSE);
@@ -187,7 +187,7 @@ public class EditDetailsDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Month> months = null;
 
 		try {

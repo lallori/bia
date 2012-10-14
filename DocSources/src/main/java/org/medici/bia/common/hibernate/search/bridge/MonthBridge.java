@@ -28,6 +28,7 @@
 package org.medici.bia.common.hibernate.search.bridge;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.log4j.Logger;
 import org.hibernate.annotations.common.util.StringHelper;
 import org.hibernate.search.bridge.TwoWayStringBridge;
 import org.medici.bia.domain.Month;
@@ -38,13 +39,15 @@ import org.medici.bia.domain.Month;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public class MonthBridge implements TwoWayStringBridge {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public Month stringToObject(String stringValue) {
 		if ( StringHelper.isEmpty(stringValue) ) return null;
 		
 		try {
 			return new Month(Integer.valueOf(stringValue));
-		} catch(NumberFormatException nfex) {
+		} catch(NumberFormatException numberFormatException) {
+			logger.debug(numberFormatException);
 			return null;
 		}
 	}
@@ -53,15 +56,19 @@ public class MonthBridge implements TwoWayStringBridge {
 	 * 
 	 */
 	public String objectToString(Object object) {
-		if (object == null) return null;
-		
-		if (object.getClass() != Month.class) 
+		if (object == null){
 			return null;
+		}
+		
+		if (!object.getClass().equals(Month.class)) { 
+			return null;
+		}
 		
 		Month month = (Month) object;
 		
-		if (ObjectUtils.toString(month.getMonthNum()).equals(""))
+		if (ObjectUtils.toString(month.getMonthNum()).equals("")) {
 			return "";
+		}
 		
 		return month.getMonthNum().toString();
 	}

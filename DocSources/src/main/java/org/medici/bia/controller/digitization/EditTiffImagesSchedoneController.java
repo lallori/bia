@@ -87,7 +87,7 @@ public class EditTiffImagesSchedoneController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Schedone schedone = new Schedone(command.getSchedoneId());
 			schedone.setDimMediaImmaginiTiff(command.getDimMediaImmaginiTiff());
@@ -116,7 +116,7 @@ public class EditTiffImagesSchedoneController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTiffImagesSchedoneCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getSchedoneId() > 0)) {
 			Schedone schedone = new Schedone();

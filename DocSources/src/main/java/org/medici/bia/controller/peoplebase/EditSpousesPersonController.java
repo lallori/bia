@@ -91,7 +91,7 @@ public class EditSpousesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousesPersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if ((command != null) && (command.getPersonId() > 0)) {
 			try {
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(command.getPersonId());

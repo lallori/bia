@@ -112,8 +112,6 @@ public class ShowPortraitPersonController {
 			} catch (ApplicationThrowable applicationThrowable){
 				getLogger().error("error on reading image", applicationThrowable);
 			}
-		} else {
-			// need to return default image error
 		}
 	}
 }

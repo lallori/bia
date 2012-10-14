@@ -67,13 +67,15 @@ public class LogValidatorAdvice implements AfterReturningAdvice, ThrowsAdvice {
 
 		BeanPropertyBindingResult beanPropertyBindingResult = (BeanPropertyBindingResult) args[1];
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		stringBuilder.append(target.getClass().getName());
-		stringBuilder.append(":");
+		stringBuilder.append(':');
 		stringBuilder.append(method.getName());
 		
 		if (beanPropertyBindingResult.hasErrors()) {
-			stringBuilder.append("Validation object KO (" + beanPropertyBindingResult.getAllErrors().get(0) + ")");
+			stringBuilder.append("Validation object KO (");
+			stringBuilder.append(beanPropertyBindingResult.getAllErrors().get(0));
+			stringBuilder.append(')');
 			logger.error(stringBuilder.toString());
 		} else {
 			stringBuilder.append("Validation object OK.");

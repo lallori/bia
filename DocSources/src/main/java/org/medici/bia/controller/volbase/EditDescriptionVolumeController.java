@@ -91,7 +91,7 @@ public class EditDescriptionVolumeController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			Volume volume = new Volume();
 			volume.setSummaryId(command.getSummaryId());
 			volume.setOrgNotes(command.getOrgNotes());
@@ -132,7 +132,7 @@ public class EditDescriptionVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDescriptionVolumeCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
 			Volume volume = new Volume();

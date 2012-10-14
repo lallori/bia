@@ -88,9 +88,9 @@ public class Annotation implements Serializable {
 	@Column (name="\"y\"", nullable=false)
 	private Double y;
 	@Column (name="\"w\"", nullable=false)
-	private Double w;
+	private Double width;
 	@Column (name="\"h\"", nullable=false)
-	private Double h;
+	private Double height;
 	@Column (name="\"category\"", nullable=false) 
 	private String category;
 	@Column (name="\"title\"", nullable=true) 
@@ -137,29 +137,29 @@ public class Annotation implements Serializable {
 	/**
 	 * @return the w
 	 */
-	public Double getW() {
-		return w;
+	public Double getWidth() {
+		return width;
 	}
 
 	/**
 	 * @param w the w to set
 	 */
-	public void setW(Double w) {
-		this.w = w;
+	public void setWidth(Double width) {
+		this.width = width;
 	}
 
 	/**
 	 * @return the h
 	 */
-	public Double getH() {
-		return h;
+	public Double getHeight() {
+		return height;
 	}
 
 	/**
-	 * @param h the h to set
+	 * @param height the height to set
 	 */
-	public void setH(Double h) {
-		this.h = h;
+	public void setHeight(Double height) {
+		this.height = height;
 	}
 
 	/**

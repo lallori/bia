@@ -34,6 +34,8 @@ import java.util.Enumeration;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 /**
  * Utility class to work on http protocol.
  * 
@@ -41,8 +43,10 @@ import javax.servlet.http.HttpServletRequest;
  * 
  */
 public class HttpUtils {
-	public final static String ENCODING_SCHEME = "UTF-8";
-	public final static String UNSUPPORTED_SCHEME = "UNSUPPORTED_SCHEME";
+	public static final String ENCODING_SCHEME = "UTF-8";
+	public static final String UNSUPPORTED_SCHEME = "UNSUPPORTED_SCHEME";
+
+	private static Logger logger = Logger.getLogger(HttpUtils.class);
 
 	/**
 	 * This method retrieves all request cookies from an input
@@ -53,22 +57,23 @@ public class HttpUtils {
 	 *         (format is cookie1Name=cookie1Value&cookie2Name=cookie2Value).
 	 */
 	public static String retrieveCookiesAsString(HttpServletRequest req) {
-		if (req == null)
+		if (req == null) {
 			return "";
+		}
 
-		StringBuilder buffer = new StringBuilder();
+		StringBuilder buffer = new StringBuilder(0);
 		Cookie[] cookieArray = req.getCookies();
 
-		if (cookieArray == null)
+		if (cookieArray == null) {
 			buffer.append("(no cookie present in http request)");
-
-		else {
+		} else {
 			for (int i = 0; i < cookieArray.length; i++) {
 				buffer.append(cookieArray[i].getName());
-				buffer.append("=");
+				buffer.append('=');
 				buffer.append(cookieArray[i].getValue());
-				if (i < (cookieArray.length - 1))
+				if (i < (cookieArray.length - 1)) {
 					buffer.append(", ");
+				}
 			}
 		}
 
@@ -85,11 +90,12 @@ public class HttpUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static String retrieveHttpParametersAsString(HttpServletRequest req) {
-		if (req == null)
+		if (req == null) {
 			return "";
+		}
 
 		Enumeration<String> enumer = req.getParameterNames();
-		StringBuilder buffer = new StringBuilder();
+		StringBuilder buffer = new StringBuilder(0);
 		buffer.setLength(0);
 		while (enumer.hasMoreElements()) {
 			String paramName = enumer.nextElement();
@@ -115,29 +121,31 @@ public class HttpUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static String retrieveHttpParametersAsString(HttpServletRequest req, boolean encodeParameterName, boolean encodeParameterValue) {
-		if (req == null)
+		if (req == null) {
 			return "";
+		}
 
 		Enumeration<String> enumer = req.getParameterNames();
-		StringBuilder buffer = new StringBuilder();
+		StringBuilder buffer = new StringBuilder(0);
 		buffer.setLength(0);
 		while (enumer.hasMoreElements()) {
 			String paramName = enumer.nextElement();
 			try {
-				if (encodeParameterName)
+				if (encodeParameterName) {
 					buffer.append(URLEncoder.encode(paramName, HttpUtils.ENCODING_SCHEME));
-				else
+				} else {
 					buffer.append(paramName);
-				buffer.append("=");
+				}
+				buffer.append('=');
 
-				if (encodeParameterValue)
-					buffer.append(URLEncoder.encode(
-							req.getParameter(paramName),
-							HttpUtils.ENCODING_SCHEME));
-				else
+				if (encodeParameterValue) {
+					buffer.append(URLEncoder.encode(req.getParameter(paramName), HttpUtils.ENCODING_SCHEME));
+				} else {
 					buffer.append(req.getParameter(paramName));
-				buffer.append("&");
-			} catch (UnsupportedEncodingException ueex) {
+				}
+				buffer.append('&');
+			} catch (UnsupportedEncodingException unsupportedEncodingException) {
+				logger.error(unsupportedEncodingException);
 				buffer.append(paramName + "=" + HttpUtils.UNSUPPORTED_SCHEME);
 			}
 		}

@@ -76,7 +76,7 @@ public class ReplyForumPostController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			ForumPost forumPost = new ForumPost();
 			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
@@ -104,7 +104,7 @@ public class ReplyForumPostController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ReplyForumPostCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		ForumPost firstPostTopicToReply = new ForumPost();
 

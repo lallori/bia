@@ -88,7 +88,7 @@ public class ShowManuscriptViewerController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowManuscriptViewerRequestCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		Image image = null;
 		
 		try {
@@ -107,10 +107,11 @@ public class ShowManuscriptViewerController {
 			model.put("applicationThrowable", applicationThrowable);
 		}
 
-		if (command.getFlashVersion())
+		if (command.getFlashVersion()) {
 			return new ModelAndView("mview/ShowManuscriptViewerFlash", model);
-		else
+		} else { 
 			return new ModelAndView("mview/ShowManuscriptViewerHtml", model);
+		}
 	}
 
 	/**

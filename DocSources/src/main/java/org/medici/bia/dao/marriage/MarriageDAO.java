@@ -52,7 +52,7 @@ public interface MarriageDAO extends Dao<Integer, Marriage> {
 	 * @return A List<Marriage> of a person.
 	 * @throws PersistenceException
 	 */
-	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws PersistenceException;
+	List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws PersistenceException;
 
 	/**
 	 * This method searches the spouse of a person identified by a marriage identifier,
@@ -64,5 +64,5 @@ public interface MarriageDAO extends Dao<Integer, Marriage> {
 	 * @return A Marriage of a person
 	 * @throws PersistenceException
 	 */
-	public Marriage findMarriagePerson(Integer marriageId, Integer personId, Gender gender) throws PersistenceException;
+	Marriage findMarriagePerson(Integer marriageId, Integer personId, Gender gender) throws PersistenceException;
 }

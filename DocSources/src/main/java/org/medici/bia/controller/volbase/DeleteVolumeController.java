@@ -89,7 +89,7 @@ public class DeleteVolumeController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteVolume");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				getVolBaseService().deleteVolume(command.getSummaryId());
@@ -109,7 +109,7 @@ public class DeleteVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") DeleteVolumeCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("volbase/ShowConfirmDeleteVolume", model);
 	}

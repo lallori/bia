@@ -95,7 +95,7 @@ public class CreateNewTitleOrOccupationPersonController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command) {
 
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<RoleCat> roleCats = null;
 		
 		try{

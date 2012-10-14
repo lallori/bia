@@ -46,7 +46,7 @@ public interface SitemapIndexDAO extends Dao<String, SitemapIndex>{
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer deleteSitemapIndex() throws PersistenceException;
+	Integer deleteSitemapIndex() throws PersistenceException;
 
 	/**
 	 * 
@@ -54,13 +54,13 @@ public interface SitemapIndexDAO extends Dao<String, SitemapIndex>{
 	 * @param list
 	 * @throws PersistenceException
 	 */
-	public void generatePage(Integer pageNumber, List<Sitemap> list) throws PersistenceException;
+	void generatePage(Integer pageNumber, List<Sitemap> list) throws PersistenceException;
 
 	/**
 	 * 
 	 * @return
 	 */
-	public List<SitemapIndex> getAllSitemapIndex() throws PersistenceException;
+	List<SitemapIndex> getAllSitemapIndex() throws PersistenceException;
 
 	/**
 	 * 
@@ -68,5 +68,5 @@ public interface SitemapIndexDAO extends Dao<String, SitemapIndex>{
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public SitemapIndex getSitemapIndex(Integer id) throws PersistenceException;
+	SitemapIndex getSitemapIndex(Integer id) throws PersistenceException;
 }

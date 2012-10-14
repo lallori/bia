@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -46,13 +47,13 @@ import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Status;
+import org.medici.bia.domain.Forum.SubType;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.Forum.Status;
-import org.medici.bia.domain.Forum.SubType;
-import org.medici.bia.domain.Forum.Type;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -312,10 +313,10 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         stringBuilder.append(forum.getType());
         stringBuilder.append("' and forumParent ");
 
-        if (forum.getForumId() == null)
+        if (forum.getForumId() == null) {
         	stringBuilder.append(" is null");
-        else {
-        	stringBuilder.append("=");
+        } else {
+        	stringBuilder.append('=');
         	stringBuilder.append(forum.getForumId());
         }
     	
@@ -329,7 +330,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public HashMap<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException {
+	public Map<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException {
 		if (categoriesIds == null){
 			return new HashMap<Integer, List<Forum>>(0);
 		}
@@ -349,7 +350,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         List<Forum> forumResult = (List<Forum>) query.getResultList();
         
-        return ForumUtils.convertToHashMapByCategory(forumResult, categoriesIds);
+        return ForumUtils.convertToMapByCategory(forumResult, categoriesIds);
 	}
 	
 	/**
@@ -427,7 +428,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		}
 
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
@@ -492,7 +493,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public HashMap<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException {
+	public Map<Integer, Date> getActiveForumsInformations(Integer pageNumber, Integer numberOfForumForPage) throws PersistenceException {
 		String jpql = "SELECT forumId, lastUpdate from Forum where logicalDelete = 0 ORDER BY lastUpdate ASC";
 
 		Query query = getEntityManager().createQuery(jpql );
@@ -501,7 +502,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         List<Object> list = (List<Object>) query.getResultList();
         
-        HashMap<Integer, Date> retValue = new HashMap<Integer, Date>(0);
+        Map<Integer, Date> retValue = new HashMap<Integer, Date>(0);
         
         for (int i=0; i<list.size(); i++) {
         	Object[] singleRow = (Object[]) list.get(i);

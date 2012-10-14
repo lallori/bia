@@ -415,7 +415,7 @@ public class Forum implements Serializable {
 		}
 		stringBuilder.append(", description=");
 		stringBuilder.append(getDescription());
-		stringBuilder.append("]");
+		stringBuilder.append(']');
 
 		return stringBuilder.toString();
 	}
@@ -493,7 +493,7 @@ public class Forum implements Serializable {
 	 * @param forumOption the forumOption to set
 	 */
 	public void setOption(ForumOption forumOption) {
-		this.option = forumOption;
+		option = forumOption;
 	}
 
 	/**
@@ -523,7 +523,7 @@ public class Forum implements Serializable {
 		if (getSubType().equals(SubType.DOCUMENT)) {
 			stringBuilder.append("DOCID: #");
 			stringBuilder.append(getDocument().getEntryId());
-			stringBuilder.append(" ");
+			stringBuilder.append(' ');
 			if (getDocument().getSenderPeople() != null) {
 				stringBuilder.append(getDocument().getSenderPeople().getMapNameLf());
 			} else {
@@ -603,8 +603,9 @@ public class Forum implements Serializable {
 
 	    @Override
 	    public String toString(){
-	    	if (status == null)
+	    	if (status == null) {
 	    		return null;
+	    	}
 
 	    	return status.toString();
 	    }

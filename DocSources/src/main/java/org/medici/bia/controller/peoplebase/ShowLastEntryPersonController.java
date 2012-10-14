@@ -60,7 +60,7 @@ public class ShowLastEntryPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 	
 		try {
 			People person = getPeopleBaseService().findLastEntryPerson();

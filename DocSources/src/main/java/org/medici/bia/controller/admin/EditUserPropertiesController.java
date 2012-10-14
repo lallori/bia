@@ -88,10 +88,10 @@ public class EditUserPropertiesController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
+				Map<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("user.expiration.password.months", command.getExpirationPassword());
 				hashMap.put("user.expiration.user.months", command.getExpirationUser());
 				hashMap.put("user.maxBadLogin", command.getMaxBadLogin());
@@ -122,7 +122,7 @@ public class EditUserPropertiesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		command.setExpirationPassword(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months"));
 		command.setExpirationUser(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months"));
 		command.setMaxBadLogin(ApplicationPropertyManager.getApplicationProperty("user.maxBadLogin"));

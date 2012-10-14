@@ -40,8 +40,8 @@ import org.medici.bia.command.peoplebase.ShowDocumentsPersonCommand;
 import org.medici.bia.common.search.AdvancedSearchDocument;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +91,7 @@ public class ShowReferringToDocumentsPersonController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDocumentsPersonCommand command, BindingResult result, HttpSession session) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		People person = new People();
 		
@@ -129,7 +129,7 @@ public class ShowReferringToDocumentsPersonController {
 				searchFilter.setFilterData(advancedSearchDocument);
 				searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 				// we get our map which contains all user's filter used at runtime.
-				HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+				Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 				searchFilterMap.put(searchUUID, searchFilter);
 				session.setAttribute("searchFilterMap", searchFilterMap);
 				

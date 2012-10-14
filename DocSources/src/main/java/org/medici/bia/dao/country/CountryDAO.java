@@ -50,5 +50,5 @@ public interface CountryDAO extends Dao<String, Country> {
 	 *         description
 	 * @throws PersistenceException
 	 */
-	public List<Country> findByDescription(String description) throws PersistenceException;
+	List<Country> findByDescription(String description) throws PersistenceException;
 }

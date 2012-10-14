@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.user;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -43,13 +44,13 @@ import org.medici.bia.exception.TooManyUsersException;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
-public interface UserDAO {
+public interface UserDAO extends Serializable {
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Long countMembersForum();
+	Long countMembersForum();
 
 	/**
 	 * 
@@ -58,7 +59,7 @@ public interface UserDAO {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findForumMembers(String letter, PaginationFilter paginationFilter);
+	Page findForumMembers(String letter, PaginationFilter paginationFilter);
 
 	/**
      * This method finds the user with input account.
@@ -66,7 +67,7 @@ public interface UserDAO {
 	 * @param account a {@link java.lang.String} object.
 	 * @return a {@link org.medici.bia.domain.User} object.
 	 */
-	public User findUser(String account);
+	User findUser(String account);
 
 	/**
      * This method searches a single user with paramter setted in input object.
@@ -77,7 +78,7 @@ public interface UserDAO {
 	 * @throws org.medici.bia.exception.TooManyUsersException if the
 	 *         search find more than one user.
 	 */
-	public User findUser(User user) throws TooManyUsersException;
+	User findUser(User user) throws TooManyUsersException;
 
 	/**
      * This method returns a list of User object that match with input parameter
@@ -85,7 +86,7 @@ public interface UserDAO {
 	 * @param user a {@link org.medici.bia.domain.User} object.
 	 * @return a {@link java.util.List} object containing result of search.
 	 */
-	public List<User> findUsers(User user);
+	List<User> findUsers(User user);
 	
 	/**
 	 * Search method which managed pagination.
@@ -95,7 +96,7 @@ public interface UserDAO {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page findUsers(User user, Integer pageNumber, Integer pageSize);
+	Page findUsers(User user, Integer pageNumber, Integer pageSize);
 
 	/**
 	 * 
@@ -103,20 +104,20 @@ public interface UserDAO {
 	 * @param paginationFilter
 	 * @return
 	 */
-	public Page findUsers(User user,PaginationFilter paginationFilter);
+	Page findUsers(User user,PaginationFilter paginationFilter);
 	
 	/**
 	 * 
 	 * @param text
 	 * @return
 	 */
-	public List<User> findUsers(String text);
+	List<User> findUsers(String text);
 
 	/**
 	 * 
 	 * @return
 	 */
-	public User getNewestMember();
+	User getNewestMember();
 
 	/**
 	 * This method updates the input {@link org.medici.bia.domain.User} 
@@ -124,7 +125,7 @@ public interface UserDAO {
 	 * 
 	 * @param user the {@link org.medici.bia.domain.User} object to update.
 	 */
-	public User merge(User user);
+	User merge(User user);
 
 	/**
 	 * This method persists the input {@link org.medici.bia.domain.User} 
@@ -132,7 +133,7 @@ public interface UserDAO {
 	 * 
 	 * @param user the {@link org.medici.bia.domain.User} object to persist.
 	 */
-	public void persist(User user);
+	void persist(User user);
 
 	/**
 	 * This method associates the input user role to the user identified by
@@ -141,7 +142,7 @@ public interface UserDAO {
 	 * @param account a {@link java.lang.String} object.
 	 * @param user a {@link java.util.List} object
 	 */
-	public void persistUserRoles(String account, List<UserRole> userRole);
+	void persistUserRoles(String account, List<UserRole> userRole);
 
 	/**
 	 * This method removes input {@link org.medici.bia.domain.User} 
@@ -149,7 +150,7 @@ public interface UserDAO {
 	 * 
 	 * @param user {@link org.medici.bia.domain.User} object to remove.
 	 */
-	public void remove(User user);
+	void remove(User user);
 
 	/**
 	 * This method removes all user's role from the specific user identified by 
@@ -157,7 +158,7 @@ public interface UserDAO {
 	 * 
 	 * @param account a {@link java.lang.String} object.
 	 */
-	public void removeAllUserRoles(String account);
+	void removeAllUserRoles(String account);
 
 	/**
 	 * This method removes the list of user's role given in input from the 
@@ -166,5 +167,5 @@ public interface UserDAO {
 	 * @param account a {@link java.lang.String} object.
 	 * @param user a {@link java.util.List} object
 	 */
-	public void removeUserRoles(String account, List<UserRole> userRoles);
+	void removeUserRoles(String account, List<UserRole> userRoles);
 }

@@ -83,17 +83,21 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 
 			User user = getUserDAO().findUser(userDetails.getUsername());
 
-			if (!user.getActive()) 
+			if (!user.getActive()) { 
 				throw new DisabledException("User is not activated");
+			}
 			
-			if (!user.getApproved()) 
+			if (!user.getApproved()) { 
 				throw new AccountNotApprovedException("User is not approved");
+			}
 	
-			if (!user.getExpirationDate().after(new Date())) 
+			if (!user.getExpirationDate().after(new Date())) {
 				throw new AccountExpiredException("User is expired");
+			}
 	
-			if (user.getLocked())
+			if (user.getLocked()) {
 				throw new LockedException("User is locked");
+			}
 			
 			user.setLastLoginDate(user.getCurrentLoginDate());
 			user.setCurrentLoginDate(new Date());
@@ -104,14 +108,17 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 			User user = getUserDAO().findUser(userDetails.getUsername());
 
 			if (user != null) {
-				if (!user.getActive()) 
+				if (!user.getActive()) {
 					throw new DisabledException("User is not activated");
+				}
 				
-				if (!user.getExpirationDate().after(new Date())) 
+				if (!user.getExpirationDate().after(new Date())) { 
 					throw new AccountExpiredException("User is expired");
+				}
 		
-				if (user.getLocked())
+				if (user.getLocked()) {
 					throw new LockedException("User is locked");
+				}
 				
 				user.setBadLogin(user.getBadLogin()+1);
 				
@@ -120,6 +127,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				if (user.getBadLogin() > badLogin) {
 					user.setLocked(true);
 				}
+
 				getUserDAO().merge(user);
 			}
 			

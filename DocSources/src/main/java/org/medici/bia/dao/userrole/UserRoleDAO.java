@@ -48,19 +48,19 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserRole> findUserRoles(String account) throws PersistenceException;
+	List<UserRole> findUserRoles(String account) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param account
 	 * @throws PersistenceException
 	 */
-	public Integer removeAllUserRoles(String account) throws PersistenceException;
+	Integer removeAllUserRoles(String account) throws PersistenceException;
 
 	/**
 	 * 
 	 * @param userRoles
 	 * @throws PersistenceException
 	 */
-	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
+	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
 }

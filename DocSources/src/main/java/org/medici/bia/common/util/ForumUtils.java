@@ -30,6 +30,7 @@ package org.medici.bia.common.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
@@ -50,8 +51,8 @@ public class ForumUtils {
 	 * @param categoriesIds
 	 * @return
 	 */
-	public static HashMap<Integer, List<Forum>> convertToHashMapByCategory(List<Forum> forumResult, List<Integer> categoriesIds) {
-		HashMap<Integer, List<Forum>> hashMap = new HashMap<Integer, List<Forum>>(0);
+	public static Map<Integer, List<Forum>> convertToMapByCategory(List<Forum> forumResult, List<Integer> categoriesIds) {
+		Map<Integer, List<Forum>> hashMap = new HashMap<Integer, List<Forum>>(0);
 
 		if (categoriesIds == null) {
 			return hashMap;
@@ -95,8 +96,10 @@ public class ForumUtils {
 	 * @return
 	 */
 	public static String getSelectForumChronology(Forum forum) {
-		if(forum == null)
+		if(forum == null) {
 			return "";
+		}
+
 		if (forum.getForumParent() == null) {
 			return "<option value='" + HtmlUtils.getShowForumUrl(forum) + "'>" + forum.getTitle() + "</option>"; 
 		}
@@ -130,7 +133,7 @@ public class ForumUtils {
 			return forumPost.getText();
 		}else{
 			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-			StringBuffer returnText = new StringBuffer();
+			StringBuffer returnText = new StringBuffer(0);
 			//For every word we find where is positioned inside the post
 			for(String currentWord : wordArray){
 				Integer indexToBeginResult = forumPost.getText().indexOf(currentWord);
@@ -139,7 +142,7 @@ public class ForumUtils {
 				if(indexToBeginResult > 150){
 					String temp = forumPost.getText().substring(0, indexToBeginResult - 150);
 					//we find a blank space to "cut" the text of the post
-					indexToBeginResult = temp.lastIndexOf(" ");
+					indexToBeginResult = temp.lastIndexOf(' ');
 					if(indexToBeginResult == -1){
 						indexToBeginResult = 0;
 					}
@@ -149,21 +152,22 @@ public class ForumUtils {
 				//if the word isn't at the end of the post 
 				if(indexToBeginResult + 300 < forumPost.getText().length()){
 					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 300);
-					indexToEndResult = temp.lastIndexOf(" ");
+					indexToEndResult = temp.lastIndexOf(' ');
 					if(indexToEndResult == -1){
 						indexToEndResult = indexToBeginResult + 300;
 					}else{
 						indexToEndResult += indexToBeginResult;
 					}
 				}
-				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length())
+				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length()) {
 					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
-				else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length())
+				} else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length()) {
 					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");
-				else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length())
+				} else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length()) {
 					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
-				else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length())
+				} else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length()) {
 					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");					
+				}
 			}
 			return returnText.toString();
 		}

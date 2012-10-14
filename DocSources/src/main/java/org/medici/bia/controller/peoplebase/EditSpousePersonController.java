@@ -35,8 +35,8 @@ import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.peoplebase.EditSpousePersonCommand;
 import org.medici.bia.domain.Marriage;
-import org.medici.bia.domain.People;
 import org.medici.bia.domain.Marriage.MarriageTerm;
+import org.medici.bia.domain.People;
 import org.medici.bia.domain.People.Gender;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
@@ -94,7 +94,7 @@ public class EditSpousePersonController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			Marriage marriage = new Marriage(command.getMarriageId());
 			marriage.setStartYear(command.getStartYear());
@@ -138,7 +138,7 @@ public class EditSpousePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousePersonCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if (command != null) {
 

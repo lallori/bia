@@ -49,5 +49,5 @@ public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequ
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<PasswordChangeRequest> search(PasswordChangeRequest passwordChangeRequest) throws PersistenceException;
+	List<PasswordChangeRequest> search(PasswordChangeRequest passwordChangeRequest) throws PersistenceException;
 }

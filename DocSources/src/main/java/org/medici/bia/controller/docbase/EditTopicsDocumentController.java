@@ -77,7 +77,7 @@ public class EditTopicsDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicsDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		if ((command != null) && (command.getEntryId() > 0)) {
 			try {
 				Document document = getDocBaseService().findDocument(command.getEntryId());

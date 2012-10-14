@@ -71,7 +71,7 @@ public class ShowSameFolioDocumentsController {
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowSameFolioDocumentsCommand command, BindingResult result, HttpSession session) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		List<String> outputFields = new ArrayList<String>(6);
 		outputFields.add("Sender");

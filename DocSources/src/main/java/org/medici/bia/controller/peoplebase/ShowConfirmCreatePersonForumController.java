@@ -73,7 +73,7 @@ public class ShowConfirmCreatePersonForumController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowConfirmCreatePersonForumCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			People person = new People(command.getPersonId());
@@ -94,7 +94,7 @@ public class ShowConfirmCreatePersonForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowConfirmCreatePersonForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("peoplebase/ShowConfirmCreatePersonForumModalWindow", model);
 	}

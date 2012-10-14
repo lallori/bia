@@ -98,13 +98,8 @@ public class ShowUserPhotoController {
 	public void showPhoto(@Valid @ModelAttribute("command") ShowUserPhotoCommand command, BindingResult result, HttpServletResponse response) {
 		getValidator().validate(command, result);
 
-		if (result.hasErrors()) {
-			/**
-			 * @TODO : choice what to render in case of validation error.
-			 *
-			 **/
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+		if (!result.hasErrors()) {
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			try {
 				User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
@@ -113,7 +108,7 @@ public class ShowUserPhotoController {
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 			} catch (IOException aex) {
-				aex.printStackTrace();
+				model.put("applicationThrowable", new ApplicationThrowable(aex));
 			}
 		}
 	}

@@ -156,18 +156,27 @@ public class SerieList implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if (! (obj instanceof SerieList)) {
 			return false;
+		}
+
 		SerieList other = (SerieList) obj;
 		if (seriesRefNum == null) {
-			if (other.seriesRefNum != null)
+			if (other.seriesRefNum != null) {
 				return false;
-		} else if (!seriesRefNum.equals(other.seriesRefNum))
+			}
+		} else if (!seriesRefNum.equals(other.seriesRefNum)) {
 			return false;
+		}
+
 		return true;
 	}
 	
@@ -263,7 +272,7 @@ public class SerieList implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		if (!StringUtils.isEmpty(getTitle())) {
 			stringBuilder.append(getTitle());
 		}

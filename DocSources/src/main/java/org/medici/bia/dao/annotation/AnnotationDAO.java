@@ -48,7 +48,7 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
+	List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
 
 	/**
 	 * 
@@ -56,7 +56,7 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Annotation findById(String id) throws PersistenceException;
+	Annotation findById(String id) throws PersistenceException;
 
 	/**
 	 * 
@@ -64,5 +64,5 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException;
+	Annotation findByAnnotationId(Integer annotationId) throws PersistenceException;
 }

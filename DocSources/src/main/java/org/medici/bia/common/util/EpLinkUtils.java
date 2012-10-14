@@ -50,8 +50,9 @@ public class EpLinkUtils {
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<Integer> getPeopleIdList(List<EpLink> inputList) {
-		if (inputList.size() == 0)
+		if (inputList.size() == 0) {
 			return new ArrayList<Integer>(0);
+		}
 
 		List<Integer> retValue = new ArrayList(inputList.size());
 

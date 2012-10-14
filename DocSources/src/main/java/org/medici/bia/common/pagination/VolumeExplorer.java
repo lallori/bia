@@ -48,13 +48,20 @@ public class VolumeExplorer {
 
 	/**
 	 * 
+	 */
+	public VolumeExplorer() {
+		super();
+	}
+
+	/**
+	 * 
 	 * @param volNum
 	 * @param volLetExt
 	 */
 	public VolumeExplorer(Integer volNum, String volLetExt) {
 		this.volNum = volNum;
 		this.volLetExt = volLetExt;
-		this.summaryId = new Integer(0);
+		summaryId = new Integer(0);
 		total  = new Long(0);
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);
@@ -69,8 +76,8 @@ public class VolumeExplorer {
 	 */
 	public VolumeExplorer(Integer summaryId) {
 		this.summaryId = summaryId;
-		this.volNum = new Integer(0);
-		this.volLetExt = "";
+		volNum = new Integer(0);
+		volLetExt = "";
 		total  = new Long(0);
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);

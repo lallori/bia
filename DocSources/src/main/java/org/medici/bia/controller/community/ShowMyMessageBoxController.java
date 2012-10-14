@@ -66,7 +66,7 @@ public class ShowMyMessageBoxController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowMyMessageBoxCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		PaginationFilter paginationFilter = new PaginationFilter();
 		if (command.getResultsForPage() != null) {
@@ -95,8 +95,9 @@ public class ShowMyMessageBoxController {
 			}else if(command.getCategory().equals("outbox")){
 				userMessageSearch.setUserMessageCategory(UserMessageCategory.OUTBOX);
 			}
-		}else
+		} else {
 			userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
+		}
 		
 		try{
 			page = getCommunityService().searchMessages(userMessageSearch, paginationFilter);

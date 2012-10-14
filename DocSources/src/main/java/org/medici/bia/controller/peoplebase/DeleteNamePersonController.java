@@ -92,7 +92,7 @@ public class DeleteNamePersonController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeleteFatherPerson");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			AltName altName = new AltName(command.getNameId());
 			altName.setPerson(new People(command.getPersonId()));

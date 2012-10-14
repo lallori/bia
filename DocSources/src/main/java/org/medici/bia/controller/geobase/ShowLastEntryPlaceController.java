@@ -59,7 +59,7 @@ public class ShowLastEntryPlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
 			Place place = getGeoBaseService().findLastEntryPlace();
@@ -77,10 +77,11 @@ public class ShowLastEntryPlaceController {
 				model.put("placeNames", getGeoBaseService().findPlaceNames(place.getGeogKey()));
 				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
 	
-				if(place.getPlaceGeographicCoordinates() != null)
+				if(place.getPlaceGeographicCoordinates() != null) {
 					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-				else
+				} else {
 					model.put("linkGoogleMaps", null);
+				}
 				
 				if(getGeoBaseService().ifPlaceAlreadyPresentInMarkedList(place.getPlaceAllId())){
 					model.put("inMarkedList", "true");

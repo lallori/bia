@@ -92,7 +92,7 @@ public class EditContextVolumeController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 			Volume volume = new Volume();
 			volume.setSummaryId(command.getSummaryId());
 			volume.setCcontext(command.getCcontext());
@@ -117,7 +117,7 @@ public class EditContextVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditContextVolumeCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
 			Volume volume = new Volume();

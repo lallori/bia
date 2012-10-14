@@ -128,6 +128,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
+	
 	}
 
 	/**
@@ -189,15 +190,15 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		//DisplayResults
 		if(command.getDisplayResults() != null){
 			if(command.getDisplayResults().equals("Posts")){
-				displayResults = new String("ForumPost");
+				displayResults = "ForumPost";
 			}else if(command.getDisplayResults().equals("Topics")){
-				displayResults = new String("ForumTopic");
+				displayResults = "ForumTopic";
 			}
 		}
 	}
 
 	@Override
-	public Boolean isEmpty() {
+	public Boolean empty() {
 		if ((forumsId.size()>0) || (author != null)) {
 			return Boolean.FALSE;
 		}
@@ -303,7 +304,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 						textQuery.append("%') AND (parentPost.postId IS NULL)");
 					}
 				}
-				textQuery.append(")");
+				textQuery.append(')');
 				if(!textQuery.toString().equals("")){
 					if(jpaQuery.length() > 21){
 						jpaQuery.append(" AND ");
@@ -325,7 +326,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 					forumsQuery.append(".%')");
 				}
 	
-				forumsQuery.append(")");
+				forumsQuery.append(')');
 				if(!forumsQuery.toString().equals("")){
 					if(jpaQuery.length() > 21){
 						jpaQuery.append(" AND ");
@@ -435,7 +436,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 						textQuery.append("%') AND (parentPost.postId IS NULL)))");
 					}
 				}
-				textQuery.append(")");
+				textQuery.append(')');
 				if(!textQuery.toString().equals("")){
 					if(jpaQuery.length() > 22){
 						jpaQuery.append(" AND ");
@@ -458,7 +459,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 						forumsQuery.append(".%')");
 					}
 		
-					forumsQuery.append(")");
+					forumsQuery.append(')');
 					if(!forumsQuery.toString().equals("")){
 						if(jpaQuery.length() > 21){
 							jpaQuery.append(" AND ");
@@ -540,7 +541,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		
 		if(words != null && words.size() > 0){
 			stringBuilder.append("Words: ");
@@ -552,23 +553,27 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 			}
 		}
 		
-		if(stringBuilder.length() > 0)
+		if(stringBuilder.length() > 0) {
 			stringBuilder.append(" - ");
+		}
 		
 		if(author != null && author.length() > 0){
 			stringBuilder.append("Author: ");
 			stringBuilder.append(author);
 		}
 		
-		if(author != null && author.length() > 0)
+		if(author != null && author.length() > 0) {
 			stringBuilder.append(" - ");
+		}
 		
 		if(forumsId != null && forumsId.size() > 0){
-			StringBuilder forums = new StringBuilder();
+			StringBuilder forums = new StringBuilder(0);
 			stringBuilder.append(" in Forum: ");
 			for(int i : forumsId){
-				if(forums.length() > 0)
-					forums.append(",");
+				if(forums.length() > 0) {
+					forums.append(',');
+				}
+
 				switch(i){
 					case 5: 
 						forums.append(" Documents");
@@ -593,6 +598,8 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 						break;
 					case 12:
 						forums.append(" Problems with BIA");
+						break;
+					default:
 						break;
 				}
 			}

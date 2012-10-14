@@ -134,8 +134,9 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		// Set values in predicate's elements  
 		TypedQuery<Volume> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
+		if (!StringUtils.isEmpty(volLetExt)) {
 			typedQuery.setParameter("volLetExt", volLetExt);
+		}
 
 		List<Volume> result = typedQuery.getResultList();
 		
@@ -360,7 +361,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder();
+		StringBuilder orderBySQL = new StringBuilder(0);
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {

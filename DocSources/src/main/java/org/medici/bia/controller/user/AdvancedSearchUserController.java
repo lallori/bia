@@ -104,7 +104,7 @@ public class AdvancedSearchUserController {
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			List<User> searchResults = null;
 

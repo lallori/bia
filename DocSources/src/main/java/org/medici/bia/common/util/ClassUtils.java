@@ -32,6 +32,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * Utility class to work with application class.
  * 
@@ -39,6 +41,7 @@ import java.util.List;
  * 
  */
 public class ClassUtils {
+	public static Logger logger = Logger.getLogger(ListBeanUtils.class);
 
 	/**
 	 * This method convert a class object in string rappresentation.
@@ -48,10 +51,11 @@ public class ClassUtils {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static String toString(Object object) {
-		if (object == null)
+		if (object == null) {
 			return "";
+		}
 
-		ArrayList list = new ArrayList();
+		List list = new ArrayList(0);
 		ClassUtils.toString(object, object.getClass(), list);
 		return object.getClass().getName().concat(list.toString());
 	}
@@ -66,13 +70,13 @@ public class ClassUtils {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void toString(Object object, Class clazz, List list) {
-		Field f[] = clazz.getDeclaredFields();
+		Field[] f = clazz.getDeclaredFields();
 		AccessibleObject.setAccessible(f, true);
 		for (int i = 0; i < f.length; i++) {
 			try {
 				list.add(f[i].getName() + "=" + f[i].get(object));
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+			} catch (IllegalAccessException illegalAccessException) {
+				logger.debug(illegalAccessException);
 			}
 		}
 		if (clazz.getSuperclass().getSuperclass() != null) {

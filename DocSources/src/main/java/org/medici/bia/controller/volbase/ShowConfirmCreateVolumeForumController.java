@@ -72,7 +72,7 @@ public class ShowConfirmCreateVolumeForumController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowConfirmCreateVolumeForumCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			Volume volume = new Volume(command.getSummaryId());
@@ -94,7 +94,7 @@ public class ShowConfirmCreateVolumeForumController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowConfirmCreateVolumeForumCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("volbase/ShowConfirmCreateVolumeForumModalWindow", model);
 	}

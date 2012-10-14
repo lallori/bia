@@ -75,7 +75,7 @@ public class CropPortraitPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView setupForm(@ModelAttribute("command") CropPortraitPersonCommand command){
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			getPeopleBaseService().cropPortraitPerson(command.getPersonId(), command.getX(), command.getY(), command.getX2(), command.getY2(), command.getW(), command.getH());

@@ -27,8 +27,6 @@
  */
 package org.medici.bia.command.community;
 
-import org.medici.bia.domain.UserMessage.UserMessageCategory;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)

@@ -90,7 +90,7 @@ public class CreateSchedoneController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		Schedone schedone = new Schedone();
 		schedone.setSchedoneId(0);

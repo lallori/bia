@@ -97,7 +97,7 @@ public class DeletePersonDocumentController {
 		if (result.hasErrors()) {
 			return new ModelAndView("error/DeletePersonDocument");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
 			EpLink epLink = new EpLink(command.getEpLinkId(), command.getEntryId());
 

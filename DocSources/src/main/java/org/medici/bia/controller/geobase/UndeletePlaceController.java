@@ -92,7 +92,7 @@ public class UndeletePlaceController {
 		if (result.hasErrors()) {
 			return new ModelAndView("response/UndeletePlaceKO");
 		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, Object> model = new HashMap<String, Object>(0);
 	
 			try {
 				getGeoBaseService().undeletePlace(command.getPlaceAllId());
@@ -118,7 +118,7 @@ public class UndeletePlaceController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") UndeletePlaceCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		return new ModelAndView("geobase/ShowConfirmUndeletePlace", model);
 	}
