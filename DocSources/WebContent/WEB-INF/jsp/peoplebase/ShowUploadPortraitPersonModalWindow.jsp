@@ -41,7 +41,7 @@
 		</div>
 		<br>
 		<div>
-			<a id="resetPortrait" href="" class="button_medium">Reset Portrait</a>
+			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium">Reset Portrait</a>
 			<input id="save" type="submit" class="savePortrait"  value="Save" />
 		</div>
 	
@@ -51,7 +51,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#resetPortrait").click(function(){
-				$j.ajax({ type:"POST", url:$j(this).attr("url"), data:$j(this).serialize(), async:false, success:function(html) {
+				$j.ajax({ type:"POST", url:$j(this).attr("href"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#body_left").load('${ShowPersonURL}');
 					$j("#uploadPortraitWindow").dialog("close");
 				}});

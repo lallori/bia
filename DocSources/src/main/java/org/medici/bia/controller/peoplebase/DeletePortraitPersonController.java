@@ -82,7 +82,7 @@ public class DeletePortraitPersonController {
 	 * @param command
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePortraitPersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
