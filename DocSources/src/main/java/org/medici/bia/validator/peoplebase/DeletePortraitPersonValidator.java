@@ -99,13 +99,6 @@ public class DeletePortraitPersonValidator implements Validator {
 				People person = getPeopleBaseService().findPerson(personId); 
 				if (person == null) {
 					errors.reject("personId", "error.personId.notfound");
-				} else {
-					if (person.getRecipientDocuments().size()>0) {
-						errors.reject("personId", "error.deletePerson.recipientDocuments.found");
-					}
-					if (person.getSenderDocuments().size()>0) {
-						errors.reject("personId", "error.deletePerson.senderDocuments.found");
-					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
