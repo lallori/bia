@@ -278,7 +278,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 
         List<Object> list = (List<Object>) query.getResultList();
         
-        HashMap<Integer, List<Object>> retValue = new HashMap<Integer, List<Object>>(0);
+        Map<Integer, List<Object>> retValue = new HashMap<Integer, List<Object>>(0);
         
         for (int i=0; i<list.size(); i++) {
         	Object[] singleRow = (Object[]) list.get(i);

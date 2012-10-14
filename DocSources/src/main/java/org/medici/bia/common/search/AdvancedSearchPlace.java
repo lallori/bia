@@ -588,31 +588,32 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	public String toString(){
-		String toString = new String();
+		StringBuilder stringBuilder = new StringBuilder(0);
 		
 		if(!placesName.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuilder.length() > 0){
+				stringBuilder.append("AND ");
 			}
-			toString += "Places Name: ";
+			stringBuilder.append("Places Name: ");
 			for(int i = 0; i < placesName.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuilder.append("AND ");
 				}
-				toString += placesName.get(i) + " ";
+				stringBuilder.append(placesName.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
 		if(!placeType.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuilder.length() > 0){
+				stringBuilder.append("AND ");
 			}
-			toString += "Place Type: ";
+			stringBuilder.append("Place Type: ");
 			for(int i = 0; i < placeType.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuilder.append("AND ");
 				}
-				toString += placeType.get(i) + " ";
+				stringBuilder.append(placeType.get(i) + " ");
 			}
 		}
 		
@@ -630,19 +631,20 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 //		}
 		
 		if(!linkedToPeople.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
+			if(stringBuilder.length() > 0){
+				stringBuilder.append("AND ");
 			}
-			toString += "Linked to People: ";
+			stringBuilder.append("Linked to People: ");
 			for(int i = 0; i < linkedToPeople.size(); i++){
 				if(i > 0){
-					toString += "AND ";
+					stringBuilder.append("AND ");
 				}
-				toString += linkedToPeople.get(i) + " ";
+				stringBuilder.append(linkedToPeople.get(i));
+				stringBuilder.append(" ");
 			}
 		}
 		
-		return toString;
+		return stringBuilder.toString();
 	}
 }
 

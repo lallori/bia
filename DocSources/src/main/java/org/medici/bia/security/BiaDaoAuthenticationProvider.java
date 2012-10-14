@@ -109,15 +109,15 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 
 			if (user != null) {
 				if (!user.getActive()) {
-					throw new DisabledException("User is not activated");
+					throw new DisabledException("User is not activated",authenticationException);
 				}
 				
 				if (!user.getExpirationDate().after(new Date())) { 
-					throw new AccountExpiredException("User is expired");
+					throw new AccountExpiredException("User is expired", authenticationException);
 				}
 		
 				if (user.getLocked()) {
-					throw new LockedException("User is locked");
+					throw new LockedException("User is locked", authenticationException);
 				}
 				
 				user.setBadLogin(user.getBadLogin()+1);

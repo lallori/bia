@@ -30,18 +30,13 @@ package org.medici.bia.controller.peoplebase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.medici.bia.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
 import org.medici.bia.domain.RoleCat;
-import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
