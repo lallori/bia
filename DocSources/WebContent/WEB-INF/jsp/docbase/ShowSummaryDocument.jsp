@@ -16,7 +16,7 @@
 		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
 	</c:url>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 		<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="flashVersion"   value="false" />
@@ -46,12 +46,13 @@
 	<div id="documentTitle">
 		<c:if test="${not empty image}">
 					<div id="DocumentImageDigitDiv">
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, GUEST_USERS">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 						</security:authorize>
-						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-							<span class="register">To see this Document image  you must register</span>
-							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);">
+						<security:authorize ifAllGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+<!-- 							<span class="register">To see this Document image  you must register</span> -->
+<%-- 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);"> --%>
+								<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="You should register to see the digitized document fullscreen">
 						</security:authorize>
 					</div>
 				</c:if>
@@ -107,10 +108,10 @@
 							<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
 							<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
 						</security:authorize>
-						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-							<span class="register">To see this Document you must register</span>
-							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-						</security:authorize>
+<%-- 						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS"> --%>
+<!-- 							<span class="register">To see this Document you must register</span> -->
+<%-- 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px"> --%>
+<%-- 						</security:authorize> --%>
 				</div>
 			</c:if>
 			<c:if test="${image == null}">
