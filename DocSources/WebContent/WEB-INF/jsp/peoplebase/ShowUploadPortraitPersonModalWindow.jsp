@@ -41,6 +41,7 @@
 		</div>
 		<br>
 		<div>
+			<input type="hidden" value="${person.personId}" />
 			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium">Reset Portrait</a>
 			<input id="save" type="submit" class="savePortrait"  value="Save" />
 		</div>

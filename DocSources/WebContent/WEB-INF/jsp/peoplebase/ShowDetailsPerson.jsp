@@ -112,7 +112,7 @@
 				<p style="text-align:center"><b>Portrait</b></p>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 				<c:if test="${person.personId != 0}">
-					<a id="uploadPortrait" href="#">Upload Portrait</a>
+					<a id="uploadPortrait" href="${UploadPortraitWindowURL}">Upload Portrait</a>
 				</c:if>
 				</security:authorize>
 			</div>	
@@ -178,7 +178,7 @@
 			$j("#EditChildrenPerson").css('visibility', 'visible');
 			$j("#EditSpousesPerson").css('visibility', 'visible');
 	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
-
+	        
 	        var $uploadPortraitWindow = $j('<div id="uploadPortraitWindow" title="UPLOAD PORTRAIT" style="display:none"></div>')
 			.dialog({                                                                                                                                                                   
 				resizable: false,
@@ -188,7 +188,7 @@
 				autoOpen : false,
 				zIndex: 3999,
 				open: function(event, ui) { 
-					$j(this).load('${UploadPortraitWindowURL}');
+					$j(this).load($j("#uploadPortrait").attr('href'));
 				}
 			});                 
 	        
