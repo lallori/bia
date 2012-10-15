@@ -50,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/LinkedDocumentsTopic")
+@RequestMapping("/src/docbase/LinkedDocumentsTopic")
 public class LinkedDocumentsTopicDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;

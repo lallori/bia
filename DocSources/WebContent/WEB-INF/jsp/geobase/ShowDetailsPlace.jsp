@@ -66,9 +66,11 @@
 						</c:if>
 						<c:if test="${linkGoogleMaps == null }">
 							<span>Not attached to Google Maps</span>
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 							<c:if test="${place.prefFlag == 'P'}">
 								<a class="PlaceMap" href="${EditGeographicCoordinatesPlaceURL}">Assign Geo Coordinates</a>
 							</c:if>
+							</security:authorize>	
 						</c:if>
 					</div>
 					<div id="text">

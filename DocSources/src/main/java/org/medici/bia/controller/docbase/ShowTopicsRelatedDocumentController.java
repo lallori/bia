@@ -58,7 +58,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/ShowTopicsRelatedDocument")
+@RequestMapping("/src/docbase/ShowTopicsRelatedDocument")
 public class ShowTopicsRelatedDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;

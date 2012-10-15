@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.json"></c:url>
+	<c:url var="ShowTopicsRelatedDocumentURL" value="/src/docbase/ShowTopicsRelatedDocument.json"></c:url>
 	
 	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
 		<c:param name="searchUUID" value="${UUID}" />

@@ -21,7 +21,7 @@
 		</div>
 		<div class="list">
 		<c:forEach items="${topicsDocument}" var="currentTopicAndPlace">
-			<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.do">
+			<c:url var="ShowTopicsRelatedDocumentURL" value="/src/docbase/ShowTopicsRelatedDocument.do">
 				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
 				<c:param name="topicTitle" value="${currentTopicAndPlace.topic.topicTitle}" />
 			</c:url>

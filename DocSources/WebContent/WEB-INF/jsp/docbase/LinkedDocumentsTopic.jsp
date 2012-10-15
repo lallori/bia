@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="LinkedDocumentsTopicURL" value="/de/docbase/LinkedDocumentsTopic.json"></c:url>
+	<c:url var="LinkedDocumentsTopicURL" value="/src/docbase/LinkedDocumentsTopic.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		<p>Topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>

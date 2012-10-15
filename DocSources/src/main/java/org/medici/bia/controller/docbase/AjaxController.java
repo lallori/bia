@@ -406,7 +406,7 @@ public class AjaxController {
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/docbase/LinkedDocumentsTopic.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/docbase/LinkedDocumentsTopic.json", method = RequestMethod.GET)
 	public ModelAndView showLinkedDocumentsTopic(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -595,7 +595,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
 	public ModelAndView ShowTopicsRelatedDocument(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,

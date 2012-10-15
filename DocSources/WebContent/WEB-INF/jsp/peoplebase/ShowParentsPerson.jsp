@@ -47,7 +47,7 @@
 		</div>
 	</div>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOW, SROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPerson").css('visibility', 'visible');
