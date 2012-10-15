@@ -124,6 +124,12 @@ html version
 	margin:0 auto 0 auto;
 	height: 95%;
 	font-size: 12px;
+	overflow:hidden;
+}
+
+div.hideNavWindow {
+    bottom: 10px;
+    left: 10px;
 }
 
 /* ---------- Title bar --------- */

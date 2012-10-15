@@ -1855,7 +1855,7 @@ div.resetPortrait, div.savePortrait {
 }
 
 #crop { /* Save button on bottom right  */
-	margin:5px auto 10px 0;
+	margin:5px auto 10px 45%;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
