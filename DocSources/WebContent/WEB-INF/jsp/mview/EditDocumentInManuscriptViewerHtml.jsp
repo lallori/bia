@@ -150,11 +150,11 @@
 			.dialog({                                                                                                                                                                   
 				autoOpen: true,
 				resizable: false,
-				width: 140,
-				height: 375, 
-				minWidth: 140,
-				maxWidth: 140,
-				maxHeight: 375,
+				width: 145,
+				height: 380, 
+				minWidth: 145,
+				maxWidth: 145,
+				maxHeight: 380,
 				
 				                                                                                                                                                         
 				//title: 'Page T.',

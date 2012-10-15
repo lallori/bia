@@ -513,21 +513,23 @@ var IIPMooViewer = new Class({
     case 189: // minus
       if(!e.control) this.zoomOut();
       break;
-    case 72: // h
-      this.toggleNavigationWindow();
-      break;
-    case 82: // r
-      if(!e.control){
-	var r = this.view.rotation;
-	if(e.shift) r -= 45 % 360;
-	else r += 45 % 360;
-
-	this.rotate( r );
-	if( IIPMooViewer.sync ){
-	  IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
-	}
-      }
-      break;
+      //MEDICI ARCHIVE PROJECT START
+//    case 72: // h
+//      this.toggleNavigationWindow();
+//      break;
+//    case 82: // r
+//      if(!e.control){
+//	var r = this.view.rotation;
+//	if(e.shift) r -= 45 % 360;
+//	else r += 45 % 360;
+//
+//	this.rotate( r );
+//	if( IIPMooViewer.sync ){
+//	  IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+//	}
+//      }
+//      break;
+      //MEDICI ARCHIVE PROJECT END
     case 65: // a
       if( this.annotations ) this.toggleAnnotations();
       break;
@@ -1303,8 +1305,7 @@ var IIPMooViewer = new Class({
     		  click: function(){_this.toggleNavigationWindow(); }
     		},
     		'styles': {
-    	  		position: 'absolute',
-    	  		display: 'none'
+    	  		position: 'absolute'
     	  	      }
     	      }).inject(this.container);
       //MEDICI ARCHIVE PROJECT END
