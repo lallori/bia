@@ -426,7 +426,7 @@ public class IIPImageServerController {
 								paramBlock.add(resizeFactor); // The yScale
 								paramBlock.add(0.0); // The x translation
 								paramBlock.add(0.0); // The y translation
-								Map qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+								RenderingHints  qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 								thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);
 							} else if (resizeFactor > 1) {
 								thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
