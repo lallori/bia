@@ -112,7 +112,7 @@
 			$j("#EditDetailsVolumeDiv").css('min-height', '260px');
 		}
 
-		$j("#EditDetailsVolume").volumeExplorer( {
+		$j("#EditDetailsVolumeDiv").volumeExplorer( {
 			summaryId				: "${volume.summaryId}",
 			volNum					: "${volume.volNum}",
 			volLetExt				: "${volume.volLetExt}",
