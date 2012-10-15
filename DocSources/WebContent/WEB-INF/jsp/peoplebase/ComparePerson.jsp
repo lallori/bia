@@ -88,17 +88,21 @@
 					(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="View all the documents related to this person">View it</a>)
 				</div>	
 			</c:if>
-		</c:if>
+			<div id="EditPortraitPersonDiv">
+				<c:url var="ShowPortraitPersonURL" value="/src/peoplebase/ShowPortraitPerson.do">
+					<c:param name="personId" value="${person.personId}" />
+					<c:param name="time" value="${time}" />
+				</c:url>
+				<div id="imgPortraitPerson">
+					<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
+				</div>				
+			</div>	
+		</c:if>	
 		</div>
 
 <div id="EditDetailsPersonDiv" class="background">
 	<div class="title">
 		<h5>PERSON DETAILS</h5>
-	</div>
-	
-	<div id="EditPortraitPersonDiv">
-		<div id="imgPortraitPerson"></div>
-		<p style="text-align:center"><b>Portrait</b></p>
 	</div>
 	
 	<div class="listDetails">
