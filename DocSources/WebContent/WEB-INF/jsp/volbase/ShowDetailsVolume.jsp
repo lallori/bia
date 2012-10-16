@@ -32,29 +32,20 @@
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">
 		<div id="volumeTitle">
-			<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
-			<h4>${volume.serieList}</h4>
-			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
-			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-				<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
-			</c:if>
-			<c:if test="${volDocsRelated == 0}">
-				<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
-			</c:if>
-			<c:if test="${volDocsRelated == 1}">
-				<p style="margin:10px 0 8px 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
-			</c:if>
-		</div>
-		</c:if>
-			
-		<div id="EditDetailsVolumeDiv" class="background">
-			<div class="title">
-				<h5>VOLUME DETAILS </h5>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
-				<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
-			</security:authorize>
+			<div id="text">
+				<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+				<h4>${volume.serieList}</h4>
+				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+					<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
+				</c:if>
+				<c:if test="${volDocsRelated == 0}">
+					<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
+				</c:if>
+				<c:if test="${volDocsRelated == 1}">
+					<p style="margin:10px 0 8px 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
+				</c:if>
 			</div>
-			
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<c:if test="${not empty image}">
 				<div id="SpineVolumeDigitDiv">
@@ -84,8 +75,19 @@
 					<span class="register">To see this Volume you must register</span>
 				</div>
 			</security:authorize>
+		</div>
+		</c:if>
 			
-			<div class="listDetails">
+		<div id="EditDetailsVolumeDiv" class="background">
+			<div class="title">
+				<h5>VOLUME DETAILS </h5>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+				<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
+			</security:authorize>
+			</div>
+			
+			
+			<div class="list">
 				<div class="row">
 					<div class="item">Volume/Filza</div>
 					<div class="value">${volume.volNum}${volume.volLetExt}</div>

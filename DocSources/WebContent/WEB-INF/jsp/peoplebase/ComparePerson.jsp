@@ -51,43 +51,45 @@
 		</c:if>
 		<c:if test="${person.personId != 0}">
 		<div id="personTitle">
-			<h3>${person.mapNameLf}</h3>
-			<c:forEach items="${person.poLink}" var="currentPoLink">
-				<c:if test="${currentPoLink.preferredRole}">
-					<h4>${currentPoLink.titleOccList.titleOcc}</h4>
+			<div id="text"> 
+				<h3>${person.mapNameLf}</h3>
+				<c:forEach items="${person.poLink}" var="currentPoLink">
+					<c:if test="${currentPoLink.preferredRole}">
+						<h4>${currentPoLink.titleOccList.titleOcc}</h4>
+					</c:if>
+				</c:forEach>			
+				<c:if test="${person.activeStart != null}">
+					<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
 				</c:if>
-			</c:forEach>			
-			<c:if test="${person.activeStart != null}">
-				<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
-			</c:if>
-			<c:if test="${person.activeStart == null}">
-				<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
-			</c:if>		
-			<c:if test="${person.activeEnd != null}">
-				<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
-			</c:if>
-			<c:if test="${person.activeEnd == null}">
-				<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
-			</c:if>
-			<%-- Documents Related Section --%>
-			<c:if test="${docsRelated != 0 && docsRelated != 1}">
-				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-				<div style="margin:10px 0 0 10px">
-					(<a href="${ShowDocumentsPersonURL}" class="all_docsCompare ${person.personId}" title="View all documents related to this person">View All</a> | 
-					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docsCompare ${person.personId}" title="View the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
-					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docsCompare ${person.personId}" title="View the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
-					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docsCompare ${person.personId}" title="View the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
-				</div>
-			</c:if>
-			<c:if test="${docsRelated == 0}">	
-				<p>Documents related to this person entry: <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
-			</c:if>
-			<c:if test="${docsRelated == 1}">
-				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-				<div style="margin-left:28px">
-					(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="View all the documents related to this person">View it</a>)
-				</div>	
-			</c:if>
+				<c:if test="${person.activeStart == null}">
+					<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
+				</c:if>		
+				<c:if test="${person.activeEnd != null}">
+					<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
+				</c:if>
+				<c:if test="${person.activeEnd == null}">
+					<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
+				</c:if>
+				<%-- Documents Related Section --%>
+				<c:if test="${docsRelated != 0 && docsRelated != 1}">
+					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
+					<div style="margin:10px 0 0 10px">
+						(<a href="${ShowDocumentsPersonURL}" class="all_docsCompare ${person.personId}" title="View all documents related to this person">View All</a> | 
+						<a href="${ShowSenderDocumentsPersonURL}" class="sender_docsCompare ${person.personId}" title="View the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
+						<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docsCompare ${person.personId}" title="View the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
+						<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docsCompare ${person.personId}" title="View the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
+					</div>
+				</c:if>
+				<c:if test="${docsRelated == 0}">	
+					<p>Documents related to this person entry: <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
+				</c:if>
+				<c:if test="${docsRelated == 1}">
+					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
+					<div style="margin-left:28px">
+						(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="View all the documents related to this person">View it</a>)
+					</div>	
+				</c:if>
+			</div>
 			<div id="EditPortraitPersonDiv">
 				<c:url var="ShowPortraitPersonURL" value="/src/peoplebase/ShowPortraitPerson.do">
 					<c:param name="personId" value="${person.personId}" />

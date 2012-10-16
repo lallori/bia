@@ -1421,13 +1421,18 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv {
-    float:right;
-    z-index:1;
-    height:160px;
     width: 120px;
     text-align:center;
 	font-size:10px;
-	margin-right: 23px;
+	display:inline-block;
+    min-height: 160px; 
+}
+
+#volumeTitle #text {
+	width: 325px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 13px; 
 }
 
 #SpineVolumeNotDigitDiv {
@@ -1979,9 +1984,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* -------------------------- ADD NEW VOLUME -------------------------------- */
 
 #showDocumentsRelated { /* Show documents related button */
-	float: right;
-	margin-top: -3px;
-	margin-right: 10px;
+	margin-top: 10px;
+	display:inline-block;
 }
 
 #DeleteThisRecordDiv #showDocumentsRelated, #DeleteThisRecordDiv #showDocumentsRelated span, #DeleteThisRecordDiv .referred_docs, #DeleteThisRecordDiv .sender_docs, #DeleteThisRecordDiv .recipient_docs { /* Show documents related button */
