@@ -49,7 +49,7 @@
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 						</security:authorize>
-						<security:authorize ifAllGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 <!-- 							<span class="register">To see this Document image  you must register</span> -->
 <%-- 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);"> --%>
 								<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="You should register to see the digitized document fullscreen">
