@@ -6,11 +6,12 @@
 
 	<c:url var="editExtractDocumentDialogURL" value="/de/mview/EditExtractDocumentDialog.do"/>
 	
-	<c:url var="ShowSynopsisDialogURL" value="/de/mview/ShowSynopsisDocumentDialog.do" />
+	<c:url var="ShowSynopsisDialogURL" value="/src/mview/ShowSynopsisDocumentDialog.do" />
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 	<div id="ShowExtractDocumentDiv">
 		<div id="content">${docExtract}</div>
-		
+	</security:authorize>	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<input id="editExtract" class="button_medium" type="submit" value="Edit Transcription"/>
 	</security:authorize>

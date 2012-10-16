@@ -49,7 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/ShowSynopsisDocumentDialog")
+@RequestMapping("/src/mview/ShowSynopsisDocumentDialog")
 public class ShowSynopsisDocumentDialogController {
 	@Autowired
 	private DocBaseService docBaseService;

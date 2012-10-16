@@ -100,7 +100,7 @@
 		<c:param name="entryId"   value="${command.entryId}" />
 	</c:url>
 	
-	<c:url var="ShowExtractDialogURL" value="/de/mview/ShowExtractDocumentDialog.do" />
+	<c:url var="ShowExtractDialogURL" value="/src/mview/ShowExtractDocumentDialog.do" />
 
 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" />
 
@@ -130,6 +130,27 @@
 		<!--  This document has a record in the database but it is not transcribed-->
 		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
 		<a id="extractTranscribe" href="#" title="Transcribe extract" class="transcribe" style="visibility: hidden; cursor: pointer;" >Transcribe</a>
+		
+		
+		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
+		<input type="hidden" id="currentImageOrder" value="${command.imageOrder}" />
+    </div>
+	</security:authorize>
+	
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<div id="transcribeDiv">
+	
+		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
+		
+		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
+		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
+		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
+		
+		<!--  This document has a record in the database but it is not transcribed-->
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
 		
 		
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />

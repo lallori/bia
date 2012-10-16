@@ -49,7 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/ShowExtractDocumentDialog")
+@RequestMapping("/src/mview/ShowExtractDocumentDialog")
 public class ShowExtractDocumentDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
