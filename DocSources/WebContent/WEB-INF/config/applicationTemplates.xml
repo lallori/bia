@@ -825,6 +825,10 @@
 	<definition name="peoplebase/EditNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamesPerson.jsp"/>
 	</definition>
+	
+	<definition name="peoplebase/EditOptionPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditOptionPortraitPersonModalWindow.jsp"/>
+	</definition>
 
 	<definition name="peoplebase/EditParentsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditParentsPerson.jsp"/>

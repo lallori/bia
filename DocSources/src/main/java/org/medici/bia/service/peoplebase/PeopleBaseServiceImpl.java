@@ -1067,6 +1067,28 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public People editOptionPortraitPerson(People person) throws ApplicationThrowable {
+		try{
+			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+			personToUpdate.setPortraitAuthor(person.getPortraitAuthor());
+			personToUpdate.setPortraitSubject(person.getPortraitSubject());
+			
+			getPeopleDAO().merge(personToUpdate);
+			
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit option portrait", Action.MODIFY, Category.PEOPLE, person));
+			return personToUpdate;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1962,6 +1984,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			if (person != null) {
 				person.setPortrait(Boolean.FALSE);
 				person.setPortraitImageName(null);
+				person.setPortraitAuthor(null);
+				person.setPortraitSubject(null);
 				getPeopleDAO().merge(person);
 			}
 		} catch (Throwable th) {
@@ -1980,21 +2004,28 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			if (person != null) {
 				String tempPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path.tmp");
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path");
+				File tempFile;
 				
 				String fileName = null;
 				if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
 					fileName =  personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() +  "_" + personPortrait.getFile().getOriginalFilename();
-					File tempFile = new File(tempPath + "/" + fileName);
+					tempFile = new File(tempPath + "/" + fileName);
 					FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
 				}else{
 					fileName = personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-					File tempFile = new File(tempPath + "/" + fileName);
+					String extension = personPortrait.getLink().substring(personPortrait.getLink().lastIndexOf("."), personPortrait.getLink().length());
+					fileName.concat(extension);
+					tempFile = new File(tempPath + "/" + fileName);
 					FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
 				}
 	
-				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.person.path");
 				File portraitFile = new File(portraitPath + "/" + fileName);
-				FileUtils.writeByteArrayToFile(portraitFile, personPortrait.getFile().getBytes());
+				if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
+					FileUtils.writeByteArrayToFile(portraitFile, personPortrait.getFile().getBytes());
+				}else{
+					FileUtils.copyFile(tempFile, portraitFile);
+				}
 			
 				person.setPortrait(Boolean.TRUE);
 				person.setPortraitImageName(fileName);

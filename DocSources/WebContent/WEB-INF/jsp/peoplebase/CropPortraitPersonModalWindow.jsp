@@ -17,6 +17,10 @@
 		<c:param name="personId" value="${command.personId}" />
 	</c:url>
 	
+	<c:url var="EditOptionPortraitWindowURL" value="/de/peoplebase/EditOptionPortraitPerson.do">
+		<c:param name="personId"   value="${command.personId}" />
+	</c:url>
+	
 	<form id="cropPortraitPersonForm" action="${CropPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 		<div>
 <!-- 			<input id="save" type="submit" value="Save" /> -->
@@ -52,10 +56,24 @@
 				$j('#h').val(c.h);
 			};
 			
+			var $optionPortraitWindow = $j('<div class="optionPortraitWindow" title="PORTRAIT" style="display:none"></div>')
+			.dialog({                                                                                                                                                                   
+				resizable: false,
+				width: 450,
+				height: 160, 
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				open: function(event, ui) { 
+					$j(this).load('${EditOptionPortraitWindowURL}');
+				}
+			});
+			
 			$j("#cropPortraitPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#body_left").load('${ShowPersonURL}');
 					$j("#uploadPortraitWindow").dialog("close");
+					$optionPortraitWindow.dialog('open');
 				}});
 				return false;
 			});

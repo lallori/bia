@@ -261,6 +261,14 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public People editOptionPortraitPerson(People person) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param person
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public People editResearchNotesPerson(People person) throws ApplicationThrowable;
 
 	/**

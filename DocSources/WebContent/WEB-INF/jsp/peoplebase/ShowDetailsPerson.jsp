@@ -107,7 +107,18 @@
 					<c:param name="time" value="${time}" />
 				</c:url>
 				<div id="imgPortraitPerson">
-					<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
+					<c:if test="${person.portraitAuthor != null && person.portraitSubject != null}">
+						<img src="${ShowPortraitPersonURL}" width="111" height="145" title="${person.portraitAuthor} - ${person.portraitSubject}"/>
+					</c:if>
+					<c:if test="${person.portraitAuthor != null && person.portraitSubject == null}">
+						<img src="${ShowPortraitPersonURL}" width="111" height="145" title="${person.portraitAuthor}"/>
+					</c:if>
+					<c:if test="${person.portraitAuthor == null && person.portraitSubject != null}">
+						<img src="${ShowPortraitPersonURL}" width="111" height="145" title="${person.portraitSubject}"/>
+					</c:if>
+					<c:if test="${person.portraitAuthor == null && person.portraitSubject == null}">
+						<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
+					</c:if>
 				</div>
 				<br>				
 <!-- 				<p style="text-align:center"><b>Portrait</b></p> -->

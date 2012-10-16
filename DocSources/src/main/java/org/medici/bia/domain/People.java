@@ -313,6 +313,12 @@ public class People implements Serializable {
 	@Column (name="\"portraitImageName\"", length=100)
 	private String portraitImageName;
 	
+	@Column (name="\"portraitAuthor\"", length=100)
+	private String portraitAuthor;
+	
+	@Column (name="\"portraitSubject\"", length=100)
+	private String portraitSubject;
+	
 	@Column (name="\"RESID\"")
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
@@ -950,6 +956,34 @@ public class People implements Serializable {
 
 	public String getPortraitImageName() {
 		return portraitImageName;
+	}
+
+	/**
+	 * @return the portraitAuthor
+	 */
+	public String getPortraitAuthor() {
+		return portraitAuthor;
+	}
+
+	/**
+	 * @param portraitAuthor the portraitAuthor to set
+	 */
+	public void setPortraitAuthor(String portraitAuthor) {
+		this.portraitAuthor = portraitAuthor;
+	}
+
+	/**
+	 * @return the portraitSubject
+	 */
+	public String getPortraitSubject() {
+		return portraitSubject;
+	}
+
+	/**
+	 * @param portraitSubject the portraitSubject to set
+	 */
+	public void setPortraitSubject(String portraitSubject) {
+		this.portraitSubject = portraitSubject;
 	}
 
 	/**

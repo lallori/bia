@@ -226,6 +226,10 @@
         <description>Edit Name Person Validator.</description>
 	</bean>
 	
+	<bean id="editOptionPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.EditOptionPortraitPersonValidator">
+		<description>Edit Option Portrait Person Validator.</description>
+	</bean>
+	
 	<bean id="editParentsPersonValidator" class="org.medici.bia.validator.peoplebase.EditParentsPersonValidator">
 		<description>Edit Parents Person Validator</description>
 	</bean>
