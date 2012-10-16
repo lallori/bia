@@ -31,6 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+
+import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
+import org.joda.time.MutableDateTime;
+import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.user.UserService;
@@ -78,6 +83,18 @@ public class WelcomeController {
 		try {			
 			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(5);
 			model.put("forumStatistics", forumStatistics);
+			
+			LocalDate now = new LocalDate();
+			now.minusMonths(1).toDateMidnight().toDate();
+			
+			Map<String, List<?>> lastLogonDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getLastLogonDate());
+			model.put("lastLogonDBStatistics", lastLogonDBStatistics);
+
+			Map<String, List<?>> currentWeekDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentWeek());
+			model.put("currentWeekDBStatistics", currentWeekDBStatistics);
+
+			Map<String, List<?>> currentMonthDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentMonth());
+			model.put("currentMonthDBStatistics", currentMonthDBStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/Welcome", model);

@@ -115,6 +115,7 @@ public class BiaJpaUserDetailsServiceImpl implements UserDetailsService {
 			userDetails.setFirstName(user.getFirstName());
 			userDetails.setLastName(user.getLastName());
 			userDetails.setInitials(user.getInitials());
+			userDetails.setLastLoginDate(user.getLastLoginDate());
 			
 			userDetails.setAuthorities(getAuthorities(userRoles));
 			userDetails.setSignificantRoleDescription(UserRoleUtils.toDescriptionString(UserRoleUtils.getMostSignificantRole(userRoles)));

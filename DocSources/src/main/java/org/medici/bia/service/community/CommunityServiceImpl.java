@@ -486,6 +486,15 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, List<?>> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
 	 * {@inheritDoc} 
 	 */
 	@Override
@@ -496,7 +505,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -551,27 +560,6 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable {
-		Map<String, List<?>> forumStatistics = new HashMap<String, List<?>>(0);
-		try {
-			List<ForumTopic> topForumTopics = getForumTopicDAO().findTopForumTopics(numberOfElements);
-			forumStatistics.put("TOP DISCUSSIONS", topForumTopics);
-			List<ForumTopic> mostRecentForumTopics = getForumTopicDAO().findMostRecentForumTopics(numberOfElements);
-			forumStatistics.put("MOST RECENT DISCUSSIONS", mostRecentForumTopics);
-		} catch (Throwable th) {
-			if (forumStatistics.get("TOP DISCUSSIONS") == null) {
-				forumStatistics.put("TOP DISCUSSIONS", new ArrayList<ForumTopic>(0));
-			}
-			forumStatistics.put("MOST RECENT DISCUSSIONS", new ArrayList<ForumTopic>(0));
-		}
-
-		return forumStatistics;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable {
 		try {
 			return getForumDAO().getForumsByType(type);
@@ -606,6 +594,27 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable {
+		Map<String, List<?>> forumStatistics = new HashMap<String, List<?>>(0);
+		try {
+			List<ForumTopic> topForumTopics = getForumTopicDAO().findTopForumTopics(numberOfElements);
+			forumStatistics.put("TOP DISCUSSIONS", topForumTopics);
+			List<ForumTopic> mostRecentForumTopics = getForumTopicDAO().findMostRecentForumTopics(numberOfElements);
+			forumStatistics.put("MOST RECENT DISCUSSIONS", mostRecentForumTopics);
+		} catch (Throwable th) {
+			if (forumStatistics.get("TOP DISCUSSIONS") == null) {
+				forumStatistics.put("TOP DISCUSSIONS", new ArrayList<ForumTopic>(0));
+			}
+			forumStatistics.put("MOST RECENT DISCUSSIONS", new ArrayList<ForumTopic>(0));
+		}
+
+		return forumStatistics;
 	}
 
 	/**
@@ -717,7 +726,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public UserRoleDAO getUserRoleDAO() {
 		return userRoleDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -729,7 +738,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -791,7 +800,7 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -828,7 +837,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */

@@ -27,6 +27,7 @@
  */
 package org.medici.bia.service.community;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -169,6 +170,14 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param lastLogonDate
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, List<?>> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 * @throws ApplicationThrowable
@@ -248,7 +257,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param forum
@@ -257,7 +266,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param forum
@@ -265,7 +274,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param integer
@@ -273,7 +282,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param integer
@@ -303,7 +312,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param forumPost
@@ -311,7 +320,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param simpleSearchForumPost

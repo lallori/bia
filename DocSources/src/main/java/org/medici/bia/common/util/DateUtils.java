@@ -32,7 +32,10 @@ import java.util.Date;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.domain.Month;
+import org.medici.bia.security.BiaUserDetailsImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 
@@ -44,6 +47,7 @@ public class DateUtils {
 	public static Integer MAX_DATE = 20121221;
 	public static Integer MIN_DATE = 10101;
 
+	public static Logger logger = Logger.getLogger(DateUtils.class);
 	/**
 	 * 
 	 * @param nextToken
@@ -141,41 +145,35 @@ public class DateUtils {
 	
 	/**
 	 * 
-	 * @param year
-	 * @param month
-	 * @param day
 	 * @return
 	 */
-	public static Integer getIntegerDate(Integer year, Month month, Integer day) {
-		StringBuilder stringBuilder = new StringBuilder("");
-		
-		if (year != null) {
-			stringBuilder.append(year);
-		} else {
-			stringBuilder.append("0000");
-		}
+	public static Date getFirstDayOfCurrentMonth() {
+	    Calendar nowCal = Calendar.getInstance();
+	    int month = nowCal.get(Calendar.MONTH);
+	    int year = nowCal.get(Calendar.YEAR);
 
-		if (!ObjectUtils.toString(month).equals("")) {
-			if (month.getMonthNum()<10) {
-				stringBuilder.append('0');
-			}
-			stringBuilder.append(month.getMonthNum());
-		} else {
-			stringBuilder.append("00");
-		}
-		
-		if (day != null) {
-			if (day<10) {
-				stringBuilder.append('0');
-			}
-			stringBuilder.append(day);
-		} else {
-			stringBuilder.append("00");
-		}
-		
-		return NumberUtils.toInt(stringBuilder.toString());
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.clear();
+	    calendar.set(Calendar.YEAR, year);
+	    calendar.set(Calendar.MONTH, month);
+	    calendar.set(Calendar.DAY_OF_MONTH, 1);
+	    return new Date(calendar.getTimeInMillis());
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date getFirstDayOfCurrentWeek() {
+		// Get calendar set to current date and time
+		Calendar calendar = Calendar.getInstance();
+	
+		// Set the calendar to monday of the current week
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		return new Date(calendar.getTimeInMillis());
+	}
+
 	/**
 	 * 
 	 * @param year
@@ -220,8 +218,53 @@ public class DateUtils {
 	 * @param day
 	 * @return
 	 */
-	public static Integer getNumberDate(Integer year, Integer month, Integer day) {
-		return getLuceneDate(year, month, day);
+	public static Integer getIntegerDate(Integer year, Month month, Integer day) {
+		StringBuilder stringBuilder = new StringBuilder("");
+		
+		if (year != null) {
+			stringBuilder.append(year);
+		} else {
+			stringBuilder.append("0000");
+		}
+
+		if (!ObjectUtils.toString(month).equals("")) {
+			if (month.getMonthNum()<10) {
+				stringBuilder.append('0');
+			}
+			stringBuilder.append(month.getMonthNum());
+		} else {
+			stringBuilder.append("00");
+		}
+		
+		if (day != null) {
+			if (day<10) {
+				stringBuilder.append('0');
+			}
+			stringBuilder.append(day);
+		} else {
+			stringBuilder.append("00");
+		}
+		
+		return NumberUtils.toInt(stringBuilder.toString());
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date getLastLogonDate() {
+		try {
+			Date lastLoginDate = ((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getLastLoginDate();
+			
+			if (lastLoginDate != null) {
+				return lastLoginDate;
+			} else {
+				return ((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getCurrentLoginDate();
+			}
+		} catch (ClassCastException classCastException) {
+			logger.debug(classCastException);
+			return new Date();
+		}
 	}
 
 	/**
@@ -260,7 +303,7 @@ public class DateUtils {
 		
 		return NumberUtils.toInt(stringBuilder.toString());
 	}
-
+	
 	/**
 	 * 
 	 * @param year
@@ -297,6 +340,17 @@ public class DateUtils {
 		
 		return NumberUtils.toInt(stringBuilder.toString());
 	}
+	
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static Integer getNumberDate(Integer year, Integer month, Integer day) {
+		return getLuceneDate(year, month, day);
+	}
 
 	/**
 	 * 
@@ -328,7 +382,7 @@ public class DateUtils {
 		
 		return returnValue.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param year
@@ -359,7 +413,7 @@ public class DateUtils {
 		
 		return returnValue.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param year
@@ -401,36 +455,5 @@ public class DateUtils {
 		}
 		
 		return stringBuilder.toString();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static Date getFirstDayOfCurrentWeek() {
-		// Get calendar set to current date and time
-		Calendar calendar = Calendar.getInstance();
-	
-		// Set the calendar to monday of the current week
-		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-
-		return new Date(calendar.getTimeInMillis());
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static Date getFirstDayOfCurrentMonth() {
-	    Calendar nowCal = Calendar.getInstance();
-	    int month = nowCal.get(Calendar.MONTH);
-	    int year = nowCal.get(Calendar.YEAR);
-
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.clear();
-	    calendar.set(Calendar.YEAR, year);
-	    calendar.set(Calendar.MONTH, month);
-	    calendar.set(Calendar.DAY_OF_MONTH, 1);
-	    return new Date(calendar.getTimeInMillis());
 	}
 }

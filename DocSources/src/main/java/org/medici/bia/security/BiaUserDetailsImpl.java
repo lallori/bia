@@ -52,6 +52,8 @@ public class BiaUserDetailsImpl implements UserDetails {
 	private Collection<GrantedAuthority> authorities;
 	private Date expirationDate;
 	private Date expirationPasswordDate;
+	private Date currentLoginDate;
+	private Date lastLoginDate;
 	private String firstName;
 	private String initials;
 	private String lastName;
@@ -85,6 +87,38 @@ public class BiaUserDetailsImpl implements UserDetails {
 	 */
 	public Date getExpirationPasswordDate() {
 		return expirationPasswordDate;
+	}
+
+	/**
+	 * 
+	 * @param lastLoginDate
+	 */
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	/**
+	 * 
+	 * @param currentLoginDate
+	 */
+	public void setCurrentLoginDate(Date currentLoginDate) {
+		this.currentLoginDate = currentLoginDate;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getCurrentLoginDate() {
+		return currentLoginDate;
 	}
 
 	/**
