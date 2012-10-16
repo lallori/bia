@@ -47,6 +47,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 
 /**
@@ -366,7 +367,38 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			datesMonthBetween = new ArrayList<Integer>(0);
 			datesDayBetween = new ArrayList<Integer>(0);
 		}
-		
+
+		//Date lastUpdate
+		if ((command.getDateLastUpdate() != null) && (command.getDateLastUpdate().size() >0)) {
+			datesLastUpdateTypes = new ArrayList<DateType>(command.getDateLastUpdate().size());
+			datesLastUpdateYear = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateMonth = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateDay = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateYearBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateMonthBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateDayBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			
+			for (String singleWord : command.getDate()) {
+				//e.g. After|1222|01|12|1223|12|12
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesLastUpdateTypes.add(DateType.valueOf(fields[0]));
+				datesLastUpdateYear.add(DateUtils.getDateYearFromString(fields[1]));
+				datesLastUpdateMonth.add(DateUtils.getDateMonthFromString(fields[2]));
+				datesLastUpdateDay.add(DateUtils.getDateDayFromString(fields[3]));
+				datesLastUpdateYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
+				datesLastUpdateMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
+				datesLastUpdateDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
+			}
+		} else {
+			datesLastUpdateTypes = new ArrayList<DateType>(0);
+			datesLastUpdateYear = new ArrayList<Integer>(0);
+			datesLastUpdateMonth = new ArrayList<Integer>(0);
+			datesLastUpdateDay = new ArrayList<Integer>(0);
+			datesLastUpdateYearBetween = new ArrayList<Integer>(0);
+			datesLastUpdateMonthBetween = new ArrayList<Integer>(0);
+			datesLastUpdateDayBetween = new ArrayList<Integer>(0);
+		}
+
 		//Role Categories
 		if((command.getRoleCategory() != null) && (command.getRoleCategory().size() > 0)){
 			roleCategories = new ArrayList<String>(command.getRoleCategory().size());
@@ -549,6 +581,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				(names.size()>0) ||
 				(words.size()>0) ||
 				(datesTypes.size()>0) ||
+				(datesLastUpdateTypes.size()>0) ||
 				(roleCategories.size()>0) ||
 				(titleOccWord.size()>0) ||
 				(titlesOccId.size()>0) ||

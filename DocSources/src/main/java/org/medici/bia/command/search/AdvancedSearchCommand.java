@@ -51,6 +51,7 @@ public class AdvancedSearchCommand {
 	private List<String> volume;
 	private List<String> folio;
 	private List<String> date;
+	private List<String> dateLastUpdate;
 	private List<String> extract;
 	private List<String> synopsis;
 	private List<String> topic;
@@ -245,6 +246,14 @@ public class AdvancedSearchCommand {
 		this.date = date;
 	}
 	
+	public void setDateLastUpdate(List<String> dateLastUpdate) {
+		this.dateLastUpdate = dateLastUpdate;
+	}
+
+	public List<String> getDateLastUpdate() {
+		return dateLastUpdate;
+	}
+
 	/**
 	 * @return the extract
 	 */

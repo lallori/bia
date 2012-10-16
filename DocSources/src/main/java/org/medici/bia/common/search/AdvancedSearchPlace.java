@@ -47,6 +47,8 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
+import org.medici.bia.common.util.DateUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -80,8 +82,6 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		placesName = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
-//		linkedToTopicsId = new ArrayList<Integer>(0);
-//		linkedToTopics = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
 		logicalDelete = null;
 		datesLastUpdateDay = new ArrayList<Integer>(0);
@@ -261,33 +261,6 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			placeType = new ArrayList<String>(0);
 		}
 		
-		//Linked To Topics
-		//MD: Section deleted
-//		if((command.getLinkedToTopics() != null) && (command.getLinkedToTopics().size() > 0)){
-//			linkedToTopicsId = new ArrayList<Integer>(command.getLinkedToTopics().size());
-//			
-//			for(String singleWord: command.getLinkedToTopics()){
-//				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-//				try{
-//					if(stringTokenizer.countTokens() < 2){
-//						continue;
-//					}else if(stringTokenizer.countTokens() == 2){
-//						String singleId = stringTokenizer.nextToken();
-//						String singleText = stringTokenizer.nextToken();
-//						
-//						if(NumberUtils.isNumber(singleId)){
-//							linkedToTopicsId.add(NumberUtils.createInteger(singleId));
-//						}
-//						linkedToTopics.add(URIUtil.decode(singleText, "UTF-8"));
-//					}
-//				}catch(NumberFormatException nex){
-//				}catch(URIException e){
-//				}
-//			}
-//		}else{
-//			linkedToTopicsId = new ArrayList<Integer>(0);
-//		}
-		
 		//Linked To People
 		if((command.getLinkedToPeople() != null) && (command.getLinkedToPeople().size() > 0)){
 			linkedToPeople = new ArrayList<String>(command.getLinkedToPeople().size());
@@ -304,7 +277,38 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		}else{
 			linkedToPeople = new ArrayList<String>(0);
 		}
-		
+
+		//Date lastUpdate
+		if ((command.getDateLastUpdate() != null) && (command.getDateLastUpdate().size() >0)) {
+			datesLastUpdateTypes = new ArrayList<DateType>(command.getDateLastUpdate().size());
+			datesLastUpdateYear = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateMonth = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateDay = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateYearBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateMonthBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdateDayBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			
+			for (String singleWord : command.getDate()) {
+				//e.g. After|1222|01|12|1223|12|12
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesLastUpdateTypes.add(DateType.valueOf(fields[0]));
+				datesLastUpdateYear.add(DateUtils.getDateYearFromString(fields[1]));
+				datesLastUpdateMonth.add(DateUtils.getDateMonthFromString(fields[2]));
+				datesLastUpdateDay.add(DateUtils.getDateDayFromString(fields[3]));
+				datesLastUpdateYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
+				datesLastUpdateMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
+				datesLastUpdateDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
+			}
+		} else {
+			datesLastUpdateTypes = new ArrayList<DateType>(0);
+			datesLastUpdateYear = new ArrayList<Integer>(0);
+			datesLastUpdateMonth = new ArrayList<Integer>(0);
+			datesLastUpdateDay = new ArrayList<Integer>(0);
+			datesLastUpdateYearBetween = new ArrayList<Integer>(0);
+			datesLastUpdateMonthBetween = new ArrayList<Integer>(0);
+			datesLastUpdateDayBetween = new ArrayList<Integer>(0);
+		}
+
 		//LogicalDelete
 		if(command.getLogicalDelete() != null){
 			if(command.getLogicalDelete().equals("true")){
@@ -333,6 +337,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		if (
 				(placesName.size()>0) ||
 				(placeType.size()>0) ||
+				(datesLastUpdateTypes.size()>0) ||
 				(linkedToPeople.size()>0)) {
 			return Boolean.FALSE;
 		}
@@ -423,27 +428,6 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				jpaQuery.append(placeTypeQuery);
 			}
 		}
-		
-		//Linked to topics
-		//MD: Section deleted
-//		if(linkedToTopicsId.size() > 0){
-//			StringBuilder linkedToTopicsIdQuery = new StringBuilder("(");
-//			for(int i = 0; i < linkedToTopicsId.size(); i++){
-//				if(linkedToTopicsIdQuery.length() > 1){
-//					linkedToTopicsIdQuery.append(" AND ");
-//				}
-//				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
-//				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
-//				linkedToTopicsIdQuery.append("))");
-//			}
-//			linkedToTopicsIdQuery.append(')');
-//			if(!linkedToTopicsIdQuery.toString().equals("")){
-//				if(jpaQuery.length() > 17){
-//					jpaQuery.append(" AND ");
-//				}
-//				jpaQuery.append(linkedToTopicsIdQuery);
-//			}
-//		}
 		
 		//Linked to people
 		if(linkedToPeople.size() > 0){
@@ -544,21 +528,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				luceneQuery.add(placeTypeQuery, Occur.MUST);
 			}
 		}
-		
-		//Linked To Topics
-//		if(linkedToTopicsId.size() > 0){
-//			BooleanQuery linkedToTopicsIdQuery = new BooleanQuery();
-//			for(int i = 0; i < linkedToTopicsId.size(); i++){
-//				BooleanQuery singleLinkedToTopicsIdQuery = new BooleanQuery();
-//				BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLinks.topic.topicId", linkedToTopicsId.get(i).toString())), Occur.MUST);
-//				singleLinkedToTopicsIdQuery.add(booleanClause);
-//				linkedToTopicsIdQuery.add(singleLinkedToTopicsIdQuery, Occur.MUST);
-//			}
-//			if(!linkedToTopicsIdQuery.toString().equals("")){
-//				luceneQuery.add(linkedToTopicsIdQuery, Occur.MUST);
-//			}
-//		}
-		
+
 		//TODO
 		//Linked To People
 		if(linkedToPeople.size() > 0){
