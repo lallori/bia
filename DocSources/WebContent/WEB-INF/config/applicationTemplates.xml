@@ -284,6 +284,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/EraseMyMarkedList.jsp"/>
     </definition>
     
+    <definition name="user/ErasePersonalNotesUser" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ErasePersonalNotesUser.jsp"/>
+    </definition>
+    
      <definition name="user/PrintElementsMyMarkedList" extends="template.printMarkedListDOM">
      	<put-attribute name="main" value="/WEB-INF/jsp/user/PrintElementsMarkedList.jsp" />
      </definition>
@@ -302,6 +306,10 @@
     
     <definition name="user/ShowConfirmEraseMyMarkedListModalWindow" extends="template.partialDOM">
     	<put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyMarkedListModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowConfirmErasePersonalNotesUserModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmErasePersonalNotesUserModalWindow.jsp"/>
     </definition>
 
 	<definition name="user/ShowMyHistoryModalWindow" extends="template.partialDOM">
