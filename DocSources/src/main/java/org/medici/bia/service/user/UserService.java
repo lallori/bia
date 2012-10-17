@@ -114,6 +114,12 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteMyHistory(Category category) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void deletePersonalNotes() throws ApplicationThrowable;
 
 	/**
 	 * Removes specified user from persistent layer.

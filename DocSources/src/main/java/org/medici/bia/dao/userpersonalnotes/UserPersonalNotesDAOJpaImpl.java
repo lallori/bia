@@ -41,6 +41,7 @@ import org.springframework.stereotype.Repository;
  * <b>UserPersonalNotesDAOJpaImpl</b> is a default implementation of <b>UserPersonalNotesDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.UserPersonalNotes
  */
@@ -66,6 +67,14 @@ public class UserPersonalNotesDAOJpaImpl extends JpaDao<Integer, UserPersonalNot
 	 */
 	private static final long serialVersionUID = 4515725678978290250L;
 
+	@Override
+	public Integer deletePersonalNotesUser(User user) throws PersistenceException {
+		Query query = getEntityManager().createQuery("DELETE FROM UserPersonalNotes WHERE user=:username");
+		query.setParameter("username", user);
+		
+		return query.executeUpdate();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

@@ -6,7 +6,7 @@
 
 	<c:url var="EditPersonalNotesUserURL" value="/user/EditPersonalNotesUser.do" />
 	
-	<c:url var="DeletePersonalNotesUserURL" value="/user/DeletePersonalNotesUser.do" />
+	<c:url var="ShowConfirmErasePersonalNotesUserURL" value="/user/ShowConfirmErasePersonalNotesUser.do" />
 	
 	<c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 	
@@ -20,7 +20,7 @@
 	
 		<div id="editCleanClose">
 			<a id="edit" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
-			<a id="cleanAll" href="${DeletePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
+			<a id="cleanAll" href="${ShowConfirmErasePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
 			<a id="close" href="#" title="Close this window">Close</a>
 			<a id="goBack" href="${ShowUserProfileURL}" title="Go Back to My Profile">Go back</a>
 		</div>
@@ -35,7 +35,9 @@
 				return false;
 			});
 			$j("#cleanAll").click(function(){
-				//$j("#EditPersonalNotes").load($j(this).attr("href"));
+				if('${userPersonalNotes.personalNotes}' != ""){
+					Modalbox.show($j(this).attr('href'), {title: "ERASE PRSONAL NOTES", width: 330, height: 120});
+				}
 				return false;
 			});
 			$j("#goBack").click(function(){

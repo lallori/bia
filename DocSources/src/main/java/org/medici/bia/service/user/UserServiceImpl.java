@@ -256,6 +256,23 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deletePersonalNotes() throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			getUserPersonalNotesDAO().deletePersonalNotesUser(user);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
