@@ -6,6 +6,8 @@
 
 	<c:url var="editPersonalNotesForm" value="/src/mview/EditPersonalNotesDialog.do?"/>
 
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 	<form:form id="EditPersonalNotesForm" action="${editPersonalNotesForm}" method="post" cssClass="edit">
 		<form:textarea id="personalNotes" path="personalNotes" rows="16" style="width: 98%; height: 90%;"/>
 		<input type="submit" value="Save Notes"  id="saveNotes">
@@ -15,6 +17,10 @@
 	<div id="clearNotes" title="ALERT" style="display:none"> 
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you want to clear the Personal Notes window?</p> 
 	</div>
+	
+	<div id="saveNotesSuccess" title="Alert" style="display:none">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your personal notes has been saved!</p>
+	</div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -22,9 +28,13 @@
 			$j(close).find(".ui-dialog-titlebar-close").css("display", "inline");
 			
 			$j("#saveNotes").click(function (){
+				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+				$j("#loadingDiv").css('width', $j("#loadingDiv").parent().width());
+	        	$j("#loadingDiv").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j("#EditPersonalNotesForm").serialize(), async:false, success:function(html) { 
 						$j("#DialogPersonalNotes").html(html);
 						personalNotesChanged=false;
+						$j("#saveNotesSuccess").dialog("open");
 					} 
 				});
 				return false;
@@ -56,6 +66,24 @@
 					},
 					NO: function() {
 						$j(this).dialog('close');
+					}
+				}
+			});
+			
+			$j("#saveNotesSuccess").dialog({
+				resizable: false,
+				height:150,
+				modal: true,
+				autoOpen : false,
+				title: 'PERSONAL NOTES SAVED',
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					OK : function() {
+						$j(this).dialog('close');
+						$j("#loadingDiv").css('visibility', 'hidden');
 					}
 				}
 			});
