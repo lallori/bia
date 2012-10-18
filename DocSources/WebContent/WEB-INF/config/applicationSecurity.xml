@@ -20,6 +20,12 @@
         <security:intercept-url pattern="/user/ResetUserPassword.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserActivationCode.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserPasswordReset.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/EraseElementsMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowConfirmEraseMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/PrintElementsMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/EditUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowForum.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowTopicForum.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
