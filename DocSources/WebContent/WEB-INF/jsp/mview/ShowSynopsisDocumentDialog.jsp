@@ -21,17 +21,17 @@
 		$j(document).ready(function() {
 			$j("#ShowSynopsisDocumentDiv").dialog("option" , "position" , ['center', 'middle']);
 			
-			$j("#exitSynopsis").click(function(){
-				if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
-					$j("#ShowSynopsisDocumentDiv").dialog("close");
-					return false;
-				}else{
-					$j('#showTranscription').css('visibility','visible');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#ShowSynopsisDocumentDiv").dialog("close");
-					return false;
-				}
-			});
+// 			$j("#exitSynopsis").click(function(){
+// 				if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+// 					$j("#ShowSynopsisDocumentDiv").dialog("close");
+// 					return false;
+// 				}else{
+// 					$j('#showTranscription').css('visibility','visible');
+// 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+// 					$j("#ShowSynopsisDocumentDiv").dialog("close");
+// 					return false;
+// 				}
+// 			});
 			
 			$j("#ui-dialog-title-ShowSynopsisDocumentDiv").text("SYNOPSIS / Start Folio: ${folioNum} - MDP: ${volNum}");
 			

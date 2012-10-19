@@ -26,6 +26,8 @@
 		<c:param name="imageName" value="${image}" />
 		<c:param name="imageType" value="${image.imageType}" />
 	</c:url>
+	
+	<c:url var="GetLinkedDocumentURLTest" value="/src/mview/GetLinkedDocument.json" />
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -442,6 +444,7 @@
 			});
 			
 			
+			
 			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
 				// We set currentImage
 				currentImage = data.imageId;
@@ -686,5 +689,153 @@
 				
 				return false;
 			});
+			
+					
+			$j("#exitExtract").live('click', function(){
+				if($j("#ShowSynopsisDocumentDiv").length != 0){
+					$j("#ShowExtractDocumentDiv").dialog("close");
+					return false;
+				}else{
+					$j("#ShowExtractDocumentDiv").dialog("close");
+					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLTest}", async:false,  data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
+						// We set currentImage
+						currentImage = data.imageId;
+						$j("#currentImageOrder").val(data.imageOrder);
+						if (data.error == 'wrongType' || data.imageType == 'R') {
+							$j("#unvailableTranscribe").css('visibility', 'visible');
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#showTranscription").css('visibility', 'hidden');
+							$j("#transcribeAnyway").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						} else if (data.linkedDocument == 'true') {
+							if(data.isExtract == 'false'){
+								$j("#notExtract").css('visibility', 'visible');
+								$j("#extractTranscribe").css('visibility', 'visible');
+								$j("#currentEntryId").val(data.entryId);
+								$j("#alreadyTranscribe").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+								$j("#showTranscription").css('visibility', 'hidden');
+								$j("#transcribeAnyway").css('visibility', 'hidden');
+								$j("#unvailableTranscribe").css('visibility', 'hidden');
+								$j("#readyToTranscribe").css('visibility', 'hidden');
+								$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							}else{
+								if(data.countAlreadyEntered == 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+									$j("#currentEntryId").val(data.entryId);
+									if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+										if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+											$j("#showTranscription").css('visibility', 'hidden');
+											$j("#showAlreadyTranscribed").css('visibility', 'visible');
+										}
+									}
+								}else if(data.countAlreadyEntered > 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+								}
+							}
+						}}});
+					return false;
+				}
+			});
+			
+			$j("#exitSynopsis").live('click', function(){
+				if($j("#ShowExtractDocumentDiv").length != 0){
+					$j("#ShowSynopsisDocumentDiv").dialog("close");
+					return false;
+				}else{
+					$j("#ShowSynopsisDocumentDiv").dialog("close");
+					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLTest}", async:false, data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
+						// We set currentImage
+						currentImage = data.imageId;
+						$j("#currentImageOrder").val(data.imageOrder);
+						if (data.error == 'wrongType' || data.imageType == 'R') {
+							$j("#unvailableTranscribe").css('visibility', 'visible');
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+							$j("#showTranscription").css('visibility', 'hidden');
+							$j("#transcribeAnyway").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						} else if (data.linkedDocument == 'true') {
+							if(data.isExtract == 'false'){
+								$j("#notExtract").css('visibility', 'visible');
+								$j("#extractTranscribe").css('visibility', 'visible');
+								$j("#currentEntryId").val(data.entryId);
+								$j("#alreadyTranscribe").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+								$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+								$j("#showTranscription").css('visibility', 'hidden');
+								$j("#transcribeAnyway").css('visibility', 'hidden');
+								$j("#unvailableTranscribe").css('visibility', 'hidden');
+								$j("#readyToTranscribe").css('visibility', 'hidden');
+								$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							}else{
+								if(data.countAlreadyEntered == 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'hidden');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+									$j("#currentEntryId").val(data.entryId);
+									if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
+										if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
+											$j("#showTranscription").css('visibility', 'hidden');
+											$j("#showAlreadyTranscribed").css('visibility', 'visible');
+										}
+									}
+								}else if(data.countAlreadyEntered > 1){
+									$j("#alreadyTranscribe").css('visibility', 'visible');
+									$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").css('visibility', 'visible');
+									$j("#showTranscription").css('visibility', 'hidden');
+									$j("#transcribeAnyway").css('visibility', 'visible');
+									$j("#notExtract").css('visibility', 'hidden');
+									$j("#extractTranscribe").css('visibility', 'hidden');
+									$j("#unvailableTranscribe").css('visibility', 'hidden');
+									$j("#readyToTranscribe").css('visibility', 'hidden');
+									$j("#choiceThisFolioStart").css('visibility', 'hidden');
+									$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+								}
+							}
+						}}});
+					return false;
+				}
+			});
+			
 		});
 	</script>

@@ -25,17 +25,17 @@
 		$j(document).ready(function() {
 			$j("#ShowExtractDocumentDiv").dialog("option" , "position" , ['center', 'middle']);
 			
-			$j("#exitExtract").click(function(){
-				if($j("#ShowSynopsisDocumentDiv").dialog("isOpen")){
-					$j("#ShowExtractDocumentDiv").dialog("close");
-					return false;
-				}else{
-					$j('#showTranscription').css('visibility','visible');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#ShowExtractDocumentDiv").dialog("close");
-					return false;
-				}
-			});
+// 			$j("#exitExtract").click(function(){
+// 				if($j("#ShowSynopsisDocumentDiv").dialog("isOpen")){
+// 					$j("#ShowExtractDocumentDiv").dialog("close");
+// 					return false;
+// 				}else{
+// 					$j('#showTranscription').css('visibility','visible');
+// 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+// 					$j("#ShowExtractDocumentDiv").dialog("close");
+// 					return false;
+// 				}
+// 			});
 			
 			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("TRANSCRIPTION / Start Folio: ${folioNum} - MDP: ${volNum}");
 			
