@@ -106,6 +106,7 @@ public class ShowMyForumPostController {
 
 			AdvancedSearchForum advancedSearchForum = new AdvancedSearchForum();
 			advancedSearchForum.setAuthor(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			advancedSearchForum.setDisplayResults("ForumPost");
 
 			Page postsPage  = getCommunityService().searchForumPosts(advancedSearchForum, paginationFilter);
 			model.put("postsPage", postsPage);

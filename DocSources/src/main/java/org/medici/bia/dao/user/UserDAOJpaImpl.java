@@ -28,14 +28,17 @@
 package org.medici.bia.dao.user;
 
 import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.PaginationFilter.Order;
 import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
@@ -78,10 +81,43 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page findForumMembers(String letter, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		return null;
+		String queryString;
+		if(letter.equals("All")){
+			queryString = "FROM User WHERE forumJoinedDate IS NOT NULL ORDER BY account";
+		}else{
+			queryString = "FROM User WHERE forumJoinedDate IS NOT NULL AND account LIKE '" + letter + "%' ORDER BY account";
+			
+		}
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		Query query = null;
+			
+		// We set size of result.
+		if (paginationFilter.getPageTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+			
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(paginationFilter.getPageTotal());
+		}
+		
+		query = getEntityManager().createQuery(queryString);
+		
+		// We set pagination  
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+		// We manage sorting (this manages sorting on multiple fields)
+		List<User> list = (List<User>) query.getResultList();
+		// We set search result on return method
+		page.setList(list);
+			
+		return page;
 	}
 
 	/**
