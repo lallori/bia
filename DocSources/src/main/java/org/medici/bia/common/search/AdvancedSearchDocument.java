@@ -28,6 +28,7 @@
 package org.medici.bia.common.search;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -70,12 +71,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<DateType> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
-	private List<Integer> datesLastUpdateDay;
-	private List<Integer> datesLastUpdateDayBetween;
-	private List<Integer> datesLastUpdateMonth;
-	private List<Integer> datesLastUpdateMonthBetween;
-	private List<Integer> datesLastUpdateYear;
-	private List<Integer> datesLastUpdateYearBetween;
+	private List<Date> datesLastUpdate;
+	private List<Date> datesLastUpdateBetween;
 	private List<DateType> datesLastUpdateTypes;
 	private List<String> docIds;
 	private List<String> extract;
@@ -145,12 +142,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		datesYearBetween = new ArrayList<Integer>(0);
 		datesMonthBetween = new ArrayList<Integer>(0);
 		datesDayBetween = new ArrayList<Integer>(0);
-		datesLastUpdateDay = new ArrayList<Integer>(0);
-		datesLastUpdateDayBetween = new ArrayList<Integer>(0);
-		datesLastUpdateMonth = new ArrayList<Integer>(0);
-		datesLastUpdateMonthBetween = new ArrayList<Integer>(0);
-		datesLastUpdateYear = new ArrayList<Integer>(0);
-		datesLastUpdateYearBetween = new ArrayList<Integer>(0);
+		datesLastUpdate = new ArrayList<Date>(0);
+		datesLastUpdateBetween = new ArrayList<Date>(0);
 		datesLastUpdateTypes = new ArrayList<DateType>(0);
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
@@ -918,32 +911,20 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		//Date lastUpdate
 		if ((command.getDateLastUpdate() != null) && (command.getDateLastUpdate().size() >0)) {
 			datesLastUpdateTypes = new ArrayList<DateType>(command.getDateLastUpdate().size());
-			datesLastUpdateYear = new ArrayList<Integer>(command.getDateLastUpdate().size());
-			datesLastUpdateMonth = new ArrayList<Integer>(command.getDateLastUpdate().size());
-			datesLastUpdateDay = new ArrayList<Integer>(command.getDateLastUpdate().size());
-			datesLastUpdateYearBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
-			datesLastUpdateMonthBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
-			datesLastUpdateDayBetween = new ArrayList<Integer>(command.getDateLastUpdate().size());
+			datesLastUpdate = new ArrayList<Date>(command.getDateLastUpdate().size());
+			datesLastUpdateBetween = new ArrayList<Date>(command.getDateLastUpdate().size());
 			
-			for (String singleWord : command.getDate()) {
-				//e.g. After|1222|01|12|1223|12|12
+			for (String singleWord : command.getDateLastUpdate()) {
+				//e.g. After|20120112|20120112
 				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
 				datesLastUpdateTypes.add(DateType.valueOf(fields[0]));
-				datesLastUpdateYear.add(DateUtils.getDateYearFromString(fields[1]));
-				datesLastUpdateMonth.add(DateUtils.getDateMonthFromString(fields[2]));
-				datesLastUpdateDay.add(DateUtils.getDateDayFromString(fields[3]));
-				datesLastUpdateYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
-				datesLastUpdateMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
-				datesLastUpdateDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
+				datesLastUpdate.add(DateUtils.getDateFromString(fields[1]));
+				datesLastUpdateBetween.add(DateUtils.getDateFromString(fields[2]));
 			}
 		} else {
 			datesLastUpdateTypes = new ArrayList<DateType>(0);
-			datesLastUpdateYear = new ArrayList<Integer>(0);
-			datesLastUpdateMonth = new ArrayList<Integer>(0);
-			datesLastUpdateDay = new ArrayList<Integer>(0);
-			datesLastUpdateYearBetween = new ArrayList<Integer>(0);
-			datesLastUpdateMonthBetween = new ArrayList<Integer>(0);
-			datesLastUpdateDayBetween = new ArrayList<Integer>(0);
+			datesLastUpdate = new ArrayList<Date>(0);
+			datesLastUpdateBetween = new ArrayList<Date>(0);
 		}
 		
 		//Volume
@@ -1325,90 +1306,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public void setWordsTypes(List<WordType> wordsTypes) {
 		this.wordsTypes = wordsTypes;
 	}
-	
-	/**
-	 * @return the datesLastUpdateDay
-	 */
-	public List<Integer> getDatesLastUpdateDay() {
-		return datesLastUpdateDay;
-	}
-
-	/**
-	 * @param datesLastUpdateDay the datesLastUpdateDay to set
-	 */
-	public void setDatesLastUpdateDay(List<Integer> datesLastUpdateDay) {
-		this.datesLastUpdateDay = datesLastUpdateDay;
-	}
-
-	/**
-	 * @return the datesLastUpdateDayBetween
-	 */
-	public List<Integer> getDatesLastUpdateDayBetween() {
-		return datesLastUpdateDayBetween;
-	}
-
-	/**
-	 * @param datesLastUpdateDayBetween the datesLastUpdateDayBetween to set
-	 */
-	public void setDatesLastUpdateDayBetween(List<Integer> datesLastUpdateDayBetween) {
-		this.datesLastUpdateDayBetween = datesLastUpdateDayBetween;
-	}
-
-	/**
-	 * @return the datesLastUpdateMonth
-	 */
-	public List<Integer> getDatesLastUpdateMonth() {
-		return datesLastUpdateMonth;
-	}
-
-	/**
-	 * @param datesLastUpdateMonth the datesLastUpdateMonth to set
-	 */
-	public void setDatesLastUpdateMonth(List<Integer> datesLastUpdateMonth) {
-		this.datesLastUpdateMonth = datesLastUpdateMonth;
-	}
-
-	/**
-	 * @return the datesLastUpdateMonthBetween
-	 */
-	public List<Integer> getDatesLastUpdateMonthBetween() {
-		return datesLastUpdateMonthBetween;
-	}
-
-	/**
-	 * @param datesLastUpdateMonthBetween the datesLastUpdateMonthBetween to set
-	 */
-	public void setDatesLastUpdateMonthBetween(List<Integer> datesLastUpdateMonthBetween) {
-		this.datesLastUpdateMonthBetween = datesLastUpdateMonthBetween;
-	}
-
-	/**
-	 * @return the datesLastUpdateYear
-	 */
-	public List<Integer> getDatesLastUpdateYear() {
-		return datesLastUpdateYear;
-	}
-
-	/**
-	 * @param datesLastUpdateYear the datesLastUpdateYear to set
-	 */
-	public void setDatesLastUpdateYear(List<Integer> datesLastUpdateYear) {
-		this.datesLastUpdateYear = datesLastUpdateYear;
-	}
-
-	/**
-	 * @return the datesLastUpdateYearBetween
-	 */
-	public List<Integer> getDatesLastUpdateYearBetween() {
-		return datesLastUpdateYearBetween;
-	}
-
-	/**
-	 * @param datesLastUpdateYearBetween the datesLastUpdateYearBetween to set
-	 */
-	public void setDatesLastUpdateYearBetween(List<Integer> datesLastUpdateYearBetween) {
-		this.datesLastUpdateYearBetween = datesLastUpdateYearBetween;
-	}
 
 	/**
 	 * @return the datesLastUpdateTypes
@@ -1422,6 +1319,34 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
 		this.datesLastUpdateTypes = datesLastUpdateTypes;
+	}
+
+	/**
+	 * @return the datesLastUpdate
+	 */
+	public List<Date> getDatesLastUpdate() {
+		return datesLastUpdate;
+	}
+
+	/**
+	 * @param datesLastUpdate the datesLastUpdate to set
+	 */
+	public void setDatesLastUpdate(List<Date> datesLastUpdate) {
+		this.datesLastUpdate = datesLastUpdate;
+	}
+
+	/**
+	 * @return the datesLastUpdateBetween
+	 */
+	public List<Date> getDatesLastUpdateBetween() {
+		return datesLastUpdateBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateBetween the datesLastUpdateBetween to set
+	 */
+	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
+		this.datesLastUpdateBetween = datesLastUpdateBetween;
 	}
 
 	/**
@@ -2025,7 +1950,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 
 				if (datesTypes.get(i).equals(DateType.From)) {
-					//datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
 					datesQuery.append("(sortableDateInt >=");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(')');
@@ -2059,27 +1983,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						datesQuery.append("(docDay =");
 						datesQuery.append(datesDay.get(i) + " )");
 					}
-					
-					
-					//Old version without the sortableDate
-//					if(datesYear.get(i) != null){
-//						datesQuery.append("(docYear =");
-//						datesQuery.append(datesYear.get(i) + " )");
-//						if(datesMonth.get(i) != null || datesDay.get(i) != null){
-//							datesQuery.append(" AND ");
-//						}
-//					}
-//					if(datesMonth.get(i) != null){
-//						datesQuery.append("(docMonthNum =");
-//						datesQuery.append(datesMonth.get(i) + " )");
-//						if(datesDay.get(i) != null){
-//							datesQuery.append(" AND ");
-//						}
-//					}
-//					if(datesDay.get(i) != null){
-//						datesQuery.append("(docDay =");
-//						datesQuery.append(datesDay.get(i) + " )");
-//					}
 				}
 			}
 			datesQuery.append(')');
@@ -2088,6 +1991,45 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(datesQuery);
+			}
+		}
+
+		// Last update
+		if (datesLastUpdateTypes.size()>0) {
+			StringBuilder datesLastUpdateQuery = new StringBuilder("(");
+			for (int i=0; i<datesLastUpdateTypes.size(); i++) {
+				if (datesLastUpdateTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (datesLastUpdateQuery.length()>1) {
+					datesLastUpdateQuery.append(" AND ");
+				}
+
+				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
+					datesLastUpdateQuery.append("(lastUpdate >=");
+					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
+					datesLastUpdateQuery.append(')');
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
+					datesLastUpdateQuery.append("(lastUpdate <=");
+					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
+					datesLastUpdateQuery.append(')');
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
+					datesLastUpdateQuery.append("(lastUpdate between '");
+					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
+					datesLastUpdateQuery.append("' AND '");
+					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)));
+					datesLastUpdateQuery.append("')");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+			datesLastUpdateQuery.append(')');
+			if (!datesLastUpdateQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesLastUpdateQuery);
 			}
 		}
 
@@ -2209,7 +2151,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				jpaQuery.append(logicalDeleteQuery);
 			}
 		}else{
-			jpaQuery.append(" AND logicalDelete = false");
+			if(jpaQuery.length() > 20){
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append(" logicalDelete = false");
 		}
 
 		return jpaQuery.toString();

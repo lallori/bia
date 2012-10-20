@@ -174,7 +174,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<String, List<?>> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable;
+	public Map<String, Long> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable;
 
 	/**
 	 * 

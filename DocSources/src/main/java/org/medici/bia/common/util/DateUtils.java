@@ -27,6 +27,7 @@
  */
 package org.medici.bia.common.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,10 +45,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
  *
  */
 public class DateUtils {
-	public static Integer MAX_DATE = 20121221;
-	public static Integer MIN_DATE = 10101;
-
 	public static Logger logger = Logger.getLogger(DateUtils.class);
+	public static Integer MAX_DATE = 20121221;
+
+	public static Integer MIN_DATE = 10101;
 	/**
 	 * 
 	 * @param nextToken
@@ -110,6 +111,11 @@ public class DateUtils {
 		return stringBuilder.toString();
 	}
 
+	public static Date getDateFromString(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * 
 	 * @param nextToken
@@ -125,7 +131,7 @@ public class DateUtils {
 		
 		return NumberUtils.createInteger(nextToken);
 	}
-
+	
 	/**
 	 * 
 	 * @param nextToken
@@ -159,7 +165,7 @@ public class DateUtils {
 	    calendar.set(Calendar.DAY_OF_MONTH, 1);
 	    return new Date(calendar.getTimeInMillis());
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -266,7 +272,7 @@ public class DateUtils {
 			return new Date();
 		}
 	}
-
+	
 	/**
 	 * 
 	 * @param year
@@ -340,7 +346,7 @@ public class DateUtils {
 		
 		return NumberUtils.toInt(stringBuilder.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param year
@@ -455,5 +461,20 @@ public class DateUtils {
 		}
 		
 		return stringBuilder.toString();
+	}
+
+	/**
+	 * 
+	 * @param datesLastUpdate
+	 * @return
+	 */
+	public static String getMYSQLDate(Date inputDate) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if (inputDate == null) {
+			inputDate = Calendar.getInstance().getTime();
+		}
+		
+		return simpleDateFormat.format(inputDate);
 	}
 }

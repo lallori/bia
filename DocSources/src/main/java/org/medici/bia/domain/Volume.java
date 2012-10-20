@@ -158,6 +158,12 @@ public class Volume implements Serializable {
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 	
+	@Column (name="\"LASTUPDATE\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
+	private Date lastUpdate;
+	
 	@Column (name="\"VOLTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -1127,6 +1133,14 @@ public class Volume implements Serializable {
 	 */
 	public Boolean getDigitized() {
 		return digitized;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
 	}
 
 	/**

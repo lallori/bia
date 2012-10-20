@@ -143,6 +143,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			//Setting fields that are defined as nullable = false
 			volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			volume.setDateCreated(new Date());
+			volume.setLastUpdate(new Date());
 			volume.setVolTobeVetted(true);
 			volume.setVolTobeVettedDate(new Date());
 			volume.setVolVetted(false);
@@ -323,6 +324,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
+		volumeToDelete.setLastUpdate(new Date());
 		volumeToDelete.setLogicalDelete(Boolean.TRUE);
 
 		try {
@@ -353,6 +355,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		volumeToUpdate.setCcontext(volume.getCcontext());
 		volumeToUpdate.setInventarioSommarioDescription(volume.getInventarioSommarioDescription());
+		volumeToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
@@ -381,6 +384,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		volumeToUpdate.setRecips(volume.getRecips());
 		volumeToUpdate.setSenders(volume.getSenders());
+		volumeToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
@@ -425,6 +429,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setOtherLang(volume.getOtherLang());
 		volumeToUpdate.setCipher(volume.getCipher());
 		volumeToUpdate.setCipherNotes(volume.getCipherNotes());
+		volumeToUpdate.setLastUpdate(new Date());
 
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
@@ -488,6 +493,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setEndDate(DateUtils.getLuceneDate(volumeToUpdate.getEndYear(), volumeToUpdate.getEndMonthNum(), volumeToUpdate.getEndDay()));
 
 		volumeToUpdate.setDateNotes(volume.getDateNotes());
+		volumeToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
@@ -639,14 +645,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 					volumeSummary.setMissingFolios(foliosInformations.getMissingNumberingFolios());
 					volumeSummary.setMisnumberedFolios(foliosInformations.getMisnumberedFolios());
 				}
-				
-//				Schedone catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
-//				if (catalog != null) {
-//					volumeSummary.setCartulazione(catalog.getCartulazione());
-//					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
-//					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
-//					//volumeSummary.setWidth(catalog.getNumeroTotaleImmagini());
-//				}
 			}
 			
 			return volumeSummary;

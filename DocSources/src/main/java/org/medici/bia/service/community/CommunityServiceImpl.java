@@ -28,6 +28,7 @@
 package org.medici.bia.service.community;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,17 +36,27 @@ import java.util.Map;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.AdvancedSearchAbstract;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
+import org.medici.bia.common.search.AdvancedSearchDocument;
+import org.medici.bia.common.search.AdvancedSearchPeople;
+import org.medici.bia.common.search.AdvancedSearchPlace;
+import org.medici.bia.common.search.AdvancedSearchVolume;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.dao.annotation.AnnotationDAO;
+import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
+import org.medici.bia.dao.people.PeopleDAO;
+import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
+import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
@@ -76,12 +87,76 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private AnnotationDAO annotationDAO;
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+
+	@Autowired
+	private DocumentDAO documentDAO;
 	@Autowired
 	private ForumDAO forumDAO;   
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;   
+	@Autowired
+	private PeopleDAO peopleDAO;
+	@Autowired
+	private PlaceDAO placeDAO;
+	@Autowired
+	private VolumeDAO volumeDAO;
 	@Autowired
 	private UserDAO userDAO;
 	@Autowired
@@ -489,9 +564,47 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<?>> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Long> getDatabaseStatistics(Date fromDate) throws ApplicationThrowable {
+		Map<String, Long> retValue = new HashMap<String, Long>(0);
+		
+		try {
+			List<DateType> datesLastUpdateTypes = new ArrayList<AdvancedSearchAbstract.DateType>(0);
+			datesLastUpdateTypes.add(DateType.Between);
+			
+			List<Date> fromDatesLastUpdate = new ArrayList<Date>();
+			fromDatesLastUpdate.add(fromDate);
+			List<Date> toDatesLastUpdate = new ArrayList<Date>();
+			toDatesLastUpdate.add(Calendar.getInstance().getTime());
+
+			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+			advancedSearchDocument.setDatesLastUpdateTypes(datesLastUpdateTypes);
+			advancedSearchDocument.setDatesLastUpdate(fromDatesLastUpdate);
+			advancedSearchDocument.setDatesLastUpdateBetween(toDatesLastUpdate);
+				
+			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
+			advancedSearchPeople.setDatesLastUpdateTypes(datesLastUpdateTypes);
+			advancedSearchPeople.setDatesLastUpdate(fromDatesLastUpdate);
+			advancedSearchPeople.setDatesLastUpdateBetween(toDatesLastUpdate);
+			
+			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
+			advancedSearchPlace.setDatesLastUpdateTypes(datesLastUpdateTypes);
+			advancedSearchPlace.setDatesLastUpdate(fromDatesLastUpdate);
+			advancedSearchPlace.setDatesLastUpdateBetween(toDatesLastUpdate);
+			
+			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
+			advancedSearchVolume.setDatesLastUpdateTypes(datesLastUpdateTypes);
+			advancedSearchVolume.setDatesLastUpdate(fromDatesLastUpdate);
+			advancedSearchVolume.setDatesLastUpdateBetween(toDatesLastUpdate);
+			
+			retValue.put("DOCUMENT", getDocumentDAO().countSearchMYSQL(advancedSearchDocument));
+			retValue.put("PEOPLE", getPeopleDAO().countSearchMYSQL(advancedSearchPeople));
+			retValue.put("PLACE", getPlaceDAO().countSearchMYSQL(advancedSearchPlace));
+			retValue.put("VOLUME", getVolumeDAO().countSearchMYSQL(advancedSearchVolume));
+		}catch(Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+
+		return retValue;
 	}
 	
 	/**

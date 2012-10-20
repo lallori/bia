@@ -32,9 +32,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
-import org.joda.time.MutableDateTime;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
@@ -87,13 +85,13 @@ public class WelcomeController {
 			LocalDate now = new LocalDate();
 			now.minusMonths(1).toDateMidnight().toDate();
 			
-			Map<String, List<?>> lastLogonDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getLastLogonDate());
+			Map<String, Long> lastLogonDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getLastLogonDate());
 			model.put("lastLogonDBStatistics", lastLogonDBStatistics);
 
-			Map<String, List<?>> currentWeekDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentWeek());
+			Map<String, Long> currentWeekDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentWeek());
 			model.put("currentWeekDBStatistics", currentWeekDBStatistics);
 
-			Map<String, List<?>> currentMonthDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentMonth());
+			Map<String, Long> currentMonthDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentMonth());
 			model.put("currentMonthDBStatistics", currentMonthDBStatistics);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

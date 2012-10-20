@@ -248,6 +248,9 @@ update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 0;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
 
+-- lastUpdate cannot be null, we update this to dateCreated
+update docsources.tblVolumes set lastUpdate = dateCreated where lastUpdate is null;
+
 -- PlaceType
 delete from docsources.tblPlaceType;
 insert into docsources.tblPlaceType (description) select distinct(plType) from docsources.tblPlaces order by 1 asc;
