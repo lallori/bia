@@ -44,90 +44,65 @@
 	    </c:forEach>
     </div>
         
-    <%--
+    
     <h5>ACTIVITY IN THE DATABASE</h5>
     
     <div id="lastLogOnDiv">
     	<h1>FROM YOUR LAST LOG ON</h1>
         <div>
-        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
+        	<a href="#" class="databaseActivity">Document </a> 
+            <span>${lastLogonDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Volumes</a>
-            <span>0</span>
+            <span>${lastLogonDBStatistics['VOLUME']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">People</a>
-            <span>0</span>
+            <span>${lastLogonDBStatistics['PEOPLE']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Places</a>
-            <span>0</span>
+            <span>${lastLogonDBStatistics['PLACE']}</span>
         </div>
     </div>
-    
+
     <div id="thisWeekDiv">
     	<h1>THIS WEEK</h1>
         <div>
-        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
+        	<a href="#" class="databaseActivity">Document</a>
+            <span>${currentWeekDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Volumes</a>
-            <span>0</span>
+            <span>${currentWeekDBStatistics['VOLUME']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">People</a>
-            <span>0</span>
+            <span>${currentWeekDBStatistics['PEOPLE']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Places</a>
-            <span>0</span>
+            <span>${currentWeekDBStatistics['PLACE']}</span>
         </div>
     </div>
     
     <div id="thisMonthDiv">
     	<h1>THIS MONTH</h1>
-        <div>
-        	<a href="#" class="databaseActivity">Document Transcriptions</a> 
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
-        </div>
-        <div>
-        	<a href="#" class="databaseActivity">Document Synopsis</a>
-            <span>0</span>
+         <div>
+        	<a href="#" class="databaseActivity">Document</a>
+            <span>${currentMonthDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Volumes</a>
-            <span>0</span>
+            <span>${currentMonthDBStatistics['VOLUME']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">People</a>
-            <span>0</span>
+            <span>${currentMonthDBStatistics['PEOPLE']}</span>
         </div>
         <div>
         	<a href="#" class="databaseActivity">Places</a>
-            <span>0</span>
-        </div>    
+            <span>${currentMonthDBStatistics['PLACE']}</span>
+        </div>
     </div>
- --%>
