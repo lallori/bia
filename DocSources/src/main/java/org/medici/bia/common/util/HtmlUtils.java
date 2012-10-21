@@ -96,9 +96,9 @@ public class HtmlUtils {
 		stringBuilder.append("&dateLastUpdate=");
 		stringBuilder.append(DateType.Between.toString());
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append(DateUtils.getStringDate(inputDate));
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append(DateUtils.getStringDate(Calendar.getInstance().getTime()));
 		stringBuilder.append("&searchUUID=");
 		stringBuilder.append(UUID.randomUUID());
 		retValue.put("PEOPLE", stringBuilder.toString());
@@ -110,9 +110,9 @@ public class HtmlUtils {
 		stringBuilder.append("&dateLastUpdate=");
 		stringBuilder.append(DateType.Between.toString());
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append(DateUtils.getStringDate(inputDate));
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append(DateUtils.getStringDate(Calendar.getInstance().getTime()));
 		stringBuilder.append("&searchUUID=");
 		stringBuilder.append(UUID.randomUUID());
 		retValue.put("PLACE", stringBuilder.toString());
@@ -124,9 +124,9 @@ public class HtmlUtils {
 		stringBuilder.append("&dateLastUpdate=");
 		stringBuilder.append(DateType.Between.toString());
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append(DateUtils.getStringDate(inputDate));
 		stringBuilder.append('|');
-		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append(DateUtils.getStringDate(Calendar.getInstance().getTime()));
 		stringBuilder.append("&searchUUID=");
 		stringBuilder.append(UUID.randomUUID());
 		retValue.put("VOLUME", stringBuilder.toString());
