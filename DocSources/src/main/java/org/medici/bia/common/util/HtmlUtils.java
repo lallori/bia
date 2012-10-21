@@ -1274,4 +1274,15 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getImageDigitized() {
+		StringBuilder stringBuilder = new StringBuilder("<img src=\"");
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/images/1024/img_digitized_small_document.png\">");
+		return stringBuilder.toString();
+	}
 }

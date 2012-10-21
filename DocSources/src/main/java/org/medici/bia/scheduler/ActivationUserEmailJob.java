@@ -51,7 +51,7 @@ import org.springframework.transaction.annotation.Transactional;
  * The link also contains the ID of the request. The link will be something like 
  * this:<p>
  *  
- *    http://www.medici.org/DocSources/user/ActivateUser.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
+ *    http://host:port/contextPath/user/ActivateUser.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *

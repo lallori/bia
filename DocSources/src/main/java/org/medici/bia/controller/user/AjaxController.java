@@ -189,18 +189,7 @@ public class AjaxController {
 		model.put("aaData", resultList);
 		return new ModelAndView("responseOK", model);
 	}
-/*	{
-		"iTotalDisplayRecords":89,
-		"iEcho":"1",
-		"iTotalRecords":89,
-		"aaData":[
-		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Document Extracts</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">2408</a>" ],
-		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Document Synopses</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">1573</a>" ],
-		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Volumes</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">1</a>" ],
-		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Peoples</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">0</a>" ],
-		["<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">Places</a>","<a href=\"/DocSources/src/docbase/ShowDocument.do?entryId=5984\">13</a>" ]
-		]}
-	*/
+
 	/**
 	 * 
 	 * @param sortingColumnNumber

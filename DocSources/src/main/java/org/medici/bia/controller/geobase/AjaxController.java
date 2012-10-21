@@ -694,7 +694,7 @@ public class AjaxController {
 			
 			if (currentDocument.getMDPAndFolio() != null){
 				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
 				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}					
@@ -814,7 +814,7 @@ public class AjaxController {
 			
 			if (currentDocument.getMDPAndFolio() != null){
 				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp;<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
 				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}			
