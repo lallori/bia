@@ -110,30 +110,35 @@ public class SimpleSearchPlace extends SimpleSearch {
 	public String toJPAQuery() {
 		StringBuilder jpaQuery = new StringBuilder("FROM Place ");
 		
-		//MD: We need to re-convert the alias
-		alias = alias.replace("\\\"", "\"");
+		if (!empty()) {
+			//MD: We need to re-convert the alias
+			alias = alias.replace("\\\"", "\"");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		
-		if(words.length > 0){
-			jpaQuery.append(" WHERE ");
-		}
-		
-		for(int i = 0; i < words.length; i++){
-			jpaQuery.append("((placeNameFull like '%");
-			jpaQuery.append(words[i]);
-			jpaQuery.append("%') OR termAccent like '%");
-			jpaQuery.append(words[i]);
-			jpaQuery.append("%')");
-			if(i < words.length-1){
-				jpaQuery.append(" AND ");
+			String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+			
+			if(words.length > 0){
+				jpaQuery.append(" WHERE ");
 			}
+			
+			for(int i = 0; i < words.length; i++){
+				jpaQuery.append("((placeNameFull like '%");
+				jpaQuery.append(words[i]);
+				jpaQuery.append("%') OR termAccent like '%");
+				jpaQuery.append(words[i]);
+				jpaQuery.append("%')");
+				if(i < words.length-1){
+					jpaQuery.append(" AND ");
+				}
+			}
+			
+			//To discard record deleted
+			if(jpaQuery.indexOf("WHERE") != -1){
+				jpaQuery.append(" AND logicalDelete = false");
+			}
+		} else {
+			jpaQuery.append(" WHERE logicalDelete = false");
 		}
 		
-		//To discard record deleted
-		if(jpaQuery.indexOf("WHERE") != -1){
-			jpaQuery.append(" AND logicalDelete = false");
-		}
 		
 		return jpaQuery.toString();
 	}

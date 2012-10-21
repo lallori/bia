@@ -110,55 +110,59 @@ public class SimpleSearchVolume extends SimpleSearch {
 	public String toJPAQuery() {
 		StringBuilder jpaQuery = new StringBuilder("FROM Volume ");
 		
-		//MD: We need to re-convert the alias
-		alias = alias.replace("\\\"", "\"");
+		if (!empty()) {
+			//MD: We need to re-convert the alias
+			alias = alias.replace("\\\"", "\"");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		
-		if(words.length > 0){
-			jpaQuery.append(" WHERE ");
-		}
-		
-		for(int i = 0; i < words.length; i++){
-			if(NumberUtils.isNumber(words[0])){
-				jpaQuery.append("(volNum = ");
-				jpaQuery.append(words[0]);
-				jpaQuery.append(')');
-			}else{
-				if(words[0].length() == 1){
-					jpaQuery.append("(volLetExt like '");
-					jpaQuery.append(words[0]);
-					jpaQuery.append("')");
-				}else{
-					jpaQuery.append("(ccondition like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(ccontext like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(orgNotes like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(recips like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(senders like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(serieList.title like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(serieList.subTitle1 like '%");
-					jpaQuery.append(words[i] + "%') OR ");
-					jpaQuery.append("(serieList.subTitle2 like '%");
-					jpaQuery.append(words[i] + "%')");
-				}
-			}
-			if(i < (words.length - 1)){
-				jpaQuery.append(" AND ");
+			String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+			
+			if(words.length > 0){
+				jpaQuery.append(" WHERE ");
 			}
 			
+			for(int i = 0; i < words.length; i++){
+				if(NumberUtils.isNumber(words[0])){
+					jpaQuery.append("(volNum = ");
+					jpaQuery.append(words[0]);
+					jpaQuery.append(')');
+				}else{
+					if(words[0].length() == 1){
+						jpaQuery.append("(volLetExt like '");
+						jpaQuery.append(words[0]);
+						jpaQuery.append("')");
+					}else{
+						jpaQuery.append("(ccondition like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(ccontext like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(orgNotes like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(recips like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(senders like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(serieList.title like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(serieList.subTitle1 like '%");
+						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append("(serieList.subTitle2 like '%");
+						jpaQuery.append(words[i] + "%')");
+					}
+				}
+				if(i < (words.length - 1)){
+					jpaQuery.append(" AND ");
+				}
+				
+			}
+			
+			//To discard record deleted
+			if(jpaQuery.indexOf("WHERE") != -1){
+				jpaQuery.append(" AND logicalDelete = false");
+			}
+		} else {
+			jpaQuery.append(" WHERE logicalDelete = false");
 		}
-		
-		//To discard record deleted
-		if(jpaQuery.indexOf("WHERE") != -1){
-			jpaQuery.append(" AND logicalDelete = false");
-		}
-		
+
 		return jpaQuery.toString();
 	}
 
