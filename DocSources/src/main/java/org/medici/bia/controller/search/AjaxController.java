@@ -793,7 +793,7 @@ public class AjaxController {
 			
 			if (currentDocument.getMDPAndFolio() != null){
 				if(currentDocument.getVolume().getDigitized()){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
 				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}
