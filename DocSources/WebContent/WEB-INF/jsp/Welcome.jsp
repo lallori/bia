@@ -50,19 +50,19 @@
     <div id="lastLogOnDiv">
     	<h1>FROM YOUR LAST LOG ON</h1>
         <div>
-        	<a href="#" class="databaseActivity">Document </a> 
+        	<a href="${lastLogonUrls['DOCUMENT']}" class="databaseActivity">Document </a> 
             <span>${lastLogonDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Volumes</a>
+        	<a href="${lastLogonUrls['VOLUME']}" class="databaseActivity">Volumes</a>
             <span>${lastLogonDBStatistics['VOLUME']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">People</a>
+        	<a href="${lastLogonUrls['PEOPLE']}" class="databaseActivity">People</a>
             <span>${lastLogonDBStatistics['PEOPLE']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Places</a>
+        	<a href="${lastLogonUrls['PLACE']}" class="databaseActivity">Places</a>
             <span>${lastLogonDBStatistics['PLACE']}</span>
         </div>
     </div>
@@ -70,19 +70,19 @@
     <div id="thisWeekDiv">
     	<h1>THIS WEEK</h1>
         <div>
-        	<a href="#" class="databaseActivity">Document</a>
+        	<a href="${currentWeekUrls['DOCUMENT']}" class="databaseActivity">Document</a>
             <span>${currentWeekDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Volumes</a>
+        	<a href="${currentWeekUrls['VOLUME']}" class="databaseActivity">Volumes</a>
             <span>${currentWeekDBStatistics['VOLUME']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">People</a>
+        	<a href="${currentWeekUrls['PEOPLE']}" class="databaseActivity">People</a>
             <span>${currentWeekDBStatistics['PEOPLE']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Places</a>
+        	<a href="${currentWeekUrls['PLACE']}" class="databaseActivity">Places</a>
             <span>${currentWeekDBStatistics['PLACE']}</span>
         </div>
     </div>
@@ -90,19 +90,44 @@
     <div id="thisMonthDiv">
     	<h1>THIS MONTH</h1>
          <div>
-        	<a href="#" class="databaseActivity">Document</a>
+        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Document</a>
             <span>${currentMonthDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Volumes</a>
+        	<a href="${currentMonthUrls['VOLUME']}" class="databaseActivity">Volumes</a>
             <span>${currentMonthDBStatistics['VOLUME']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">People</a>
+        	<a href="${currentMonthUrls['PEOPLE']}" class="databaseActivity">People</a>
             <span>${currentMonthDBStatistics['PEOPLE']}</span>
         </div>
         <div>
-        	<a href="#" class="databaseActivity">Places</a>
+        	<a href="${currentMonthUrls['PLACE']}" class="databaseActivity">Places</a>
             <span>${currentMonthDBStatistics['PLACE']}</span>
         </div>
     </div>
+
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j(".databaseActivity").click(function() {
+				// this is search url form 
+				var formSubmitURL = $j(this).attr("href");
+
+				// If we found refine button of this search, user is in refine.
+				if ($j('#tabs').find("#refine${command.searchUUID}").length==1) {
+					// calculate tab position
+					var index =$j("#tabs ul li").index($j("li:has(a[href='#" + $j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"));
+					$j("#tabs").tabs("url", index, formSubmitURL);
+					$j("#tabs").tabs("select", index);
+					$j("#tabs").tabs("load" , index);
+					window.close()
+				} else {
+					//otherwise it's in a new search so we add a new tab.
+					$j("#tabs").tabs("add", formSubmitURL, "Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					window.close();
+				}
+				return false;
+			});
+		});
+	</script>

@@ -119,154 +119,6 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		researchNotes = new ArrayList<String>(0);
 		gender = new ArrayList<AdvancedSearchAbstract.Gender>(0);
 	}
-
-	/**
-	 * @return the datesDay
-	 */
-	public List<Integer> getDatesDay() {
-		return datesDay;
-	}
-	
-	/**
-	 * @return the datesDayBetween
-	 */
-	public List<Integer> getDatesDayBetween() {
-		return datesDayBetween;
-	}
-	
-	/**
-	 * @return the datesMonth
-	 */
-	public List<Integer> getDatesMonth() {
-		return datesMonth;
-	}
-
-	/**
-	 * @return the datesMonthBetween
-	 */
-	public List<Integer> getDatesMonthBetween() {
-		return datesMonthBetween;
-	}
-
-	/**
-	 * @return the datesTypes
-	 */
-	public List<String> getDatesTypes() {
-		return datesTypes;
-	}
-
-	/**
-	 * @return the datesYear
-	 */
-	public List<Integer> getDatesYear() {
-		return datesYear;
-	}
-
-	/**
-	 * @return the datesYearBetween
-	 */
-	public List<Integer> getDatesYearBetween() {
-		return datesYearBetween;
-	}
-
-	/**
-	 * @return the gender
-	 */
-	public List<Gender> getGender() {
-		return gender;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
-	/**
-	 * @return the names
-	 */
-	public List<String> getNames() {
-		return names;
-	}
-
-	/**
-	 * @return the namesTypes
-	 */
-	public List<NameType> getNamesTypes() {
-		return namesTypes;
-	}
-
-	/**
-	 * @return the place
-	 */
-	public List<String> getPlace() {
-		return place;
-	}
-
-	/**
-	 * @return the placeId
-	 */
-	public List<Integer> getPlaceId() {
-		return placeId;
-	}
-
-	/**
-	 * @return the placeType
-	 */
-	public List<String> getPlaceType() {
-		return placeType;
-	}
-
-	/**
-	 * @return the researchNotes
-	 */
-	public List<String> getResearchNotes() {
-		return researchNotes;
-	}
-
-	/**
-	 * @return the roleCategories
-	 */
-	public List<String> getRoleCategories() {
-		return roleCategories;
-	}
-
-	/**
-	 * @return the titleOccWord
-	 */
-	public List<String> getTitleOccWord() {
-		return titleOccWord;
-	}
-
-	/**
-	 * @return the occupations
-	 */
-	public List<String> getTitlesOcc() {
-		return titlesOcc;
-	}
-
-	/**
-	 * @return the titleOccId
-	 */
-	public List<Integer> getTitlesOccId() {
-		return titlesOccId;
-	}
-
-	/**
-	 * @return the words
-	 */
-	public List<String> getWords() {
-		return words;
-	}
-
-	/**
-	 * @return the wordsTypes
-	 */
-	public List<WordType> getWordsTypes() {
-		return wordsTypes;
-	}
-
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -572,196 +424,6 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		}
 		
 		return Boolean.TRUE;
-	}
-
-	/**
-	 * @param datesDay the datesDay to set
-	 */
-	public void setDatesDay(List<Integer> datesDay) {
-		this.datesDay = datesDay;
-	}
-
-	/**
-	 * @param datesDayBetween the datesDayBetween to set
-	 */
-	public void setDatesDayBetween(List<Integer> datesDayBetween) {
-		this.datesDayBetween = datesDayBetween;
-	}
-
-	/**
-	 * @param datesMonth the datesMonth to set
-	 */
-	public void setDatesMonth(List<Integer> datesMonth) {
-		this.datesMonth = datesMonth;
-	}
-
-	/**
-	 * @param datesMonthBetween the datesMonthBetween to set
-	 */
-	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
-		this.datesMonthBetween = datesMonthBetween;
-	}
-
-	/**
-	 * @param datesTypes the datesTypes to set
-	 */
-	public void setDatesTypes(List<String> datesTypes) {
-		this.datesTypes = datesTypes;
-	}
-
-	/**
-	 * @param datesYear the datesYear to set
-	 */
-	public void setDatesYear(List<Integer> datesYear) {
-		this.datesYear = datesYear;
-	}
-
-	/**
-	 * @param datesYearBetween the datesYearBetween to set
-	 */
-	public void setDatesYearBetween(List<Integer> datesYearBetween) {
-		this.datesYearBetween = datesYearBetween;
-	}
-
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(List<Gender> gender) {
-		this.gender = gender;
-	}
-
-	/**
-	 * @param logicalDelete the logicalDelete to set
-	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
-		this.logicalDelete = logicalDelete;
-	}
-
-	/**
-	 * @param names the names to set
-	 */
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	/**
-	 * @param namesTypes the namesTypes to set
-	 */
-	public void setNamesTypes(List<NameType> namesTypes) {
-		this.namesTypes = namesTypes;
-	}
-
-	/**
-	 * @param place the place to set
-	 */
-	public void setPlace(List<String> place) {
-		this.place = place;
-	}
-
-	/**
-	 * @param placeId the placeId to set
-	 */
-	public void setPlaceId(List<Integer> placeId) {
-		this.placeId = placeId;
-	}
-
-	/**
-	 * @param placeType the placeType to set
-	 */
-	public void setPlaceType(List<String> placeType) {
-		this.placeType = placeType;
-	}
-
-	/**
-	 * @param researchNotes the researchNotes to set
-	 */
-	public void setResearchNotes(List<String> researchNotes) {
-		this.researchNotes = researchNotes;
-	}
-
-	/**
-	 * @param roleCategories the roleCategories to set
-	 */
-	public void setRoleCategories(List<String> roleCategories) {
-		this.roleCategories = roleCategories;
-	}
-
-	/**
-	 * @param titleOccWord the titleOccWord to set
-	 */
-	public void setTitleOccWord(List<String> titleOccWord) {
-		this.titleOccWord = titleOccWord;
-	}
-
-	/**
-	 * @param occupations the occupations to set
-	 */
-	public void setTitlesOcc(List<String> titlesOcc) {
-		this.titlesOcc = titlesOcc;
-	}
-
-	/**
-	 * @param titleOccId the titleOccId to set
-	 */
-	public void setTitlesOccId(List<Integer> titlesOccId) {
-		this.titlesOccId = titlesOccId;
-	}
-
-	/**
-	 * @param words the words to set
-	 */
-	public void setWords(List<String> words) {
-		this.words = words;
-	}
-
-	/**
-	 * @param wordsTypes the wordsTypes to set
-	 */
-	public void setWordsTypes(List<WordType> wordsTypes) {
-		this.wordsTypes = wordsTypes;
-	}
-	
-
-	/**
-	 * @return the datesLastUpdateTypes
-	 */
-	public List<DateType> getDatesLastUpdateTypes() {
-		return datesLastUpdateTypes;
-	}
-
-	/**
-	 * @param datesLastUpdateTypes the datesLastUpdateTypes to set
-	 */
-	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
-		this.datesLastUpdateTypes = datesLastUpdateTypes;
-	}
-
-	/**
-	 * @return the datesLastUpdate
-	 */
-	public List<Date> getDatesLastUpdate() {
-		return datesLastUpdate;
-	}
-
-	/**
-	 * @param datesLastUpdate the datesLastUpdate to set
-	 */
-	public void setDatesLastUpdate(List<Date> datesLastUpdate) {
-		this.datesLastUpdate = datesLastUpdate;
-	}
-
-	/**
-	 * @return the datesLastUpdateBetween
-	 */
-	public List<Date> getDatesLastUpdateBetween() {
-		return datesLastUpdateBetween;
-	}
-
-	/**
-	 * @param datesLastUpdateBetween the datesLastUpdateBetween to set
-	 */
-	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
-		this.datesLastUpdateBetween = datesLastUpdateBetween;
 	}
 
 	/**
@@ -1523,5 +1185,342 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			}
 		}
 		return toString.toString();
+	}
+
+	/**
+	 * @return the datesDay
+	 */
+	public List<Integer> getDatesDay() {
+		return datesDay;
+	}
+	
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+	
+	/**
+	 * @return the datesMonth
+	 */
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+
+	/**
+	 * @return the datesTypes
+	 */
+	public List<String> getDatesTypes() {
+		return datesTypes;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public List<Gender> getGender() {
+		return gender;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @return the names
+	 */
+	public List<String> getNames() {
+		return names;
+	}
+
+	/**
+	 * @return the namesTypes
+	 */
+	public List<NameType> getNamesTypes() {
+		return namesTypes;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public List<String> getPlaceType() {
+		return placeType;
+	}
+
+	/**
+	 * @return the researchNotes
+	 */
+	public List<String> getResearchNotes() {
+		return researchNotes;
+	}
+
+	/**
+	 * @return the roleCategories
+	 */
+	public List<String> getRoleCategories() {
+		return roleCategories;
+	}
+
+	/**
+	 * @return the titleOccWord
+	 */
+	public List<String> getTitleOccWord() {
+		return titleOccWord;
+	}
+
+	/**
+	 * @return the occupations
+	 */
+	public List<String> getTitlesOcc() {
+		return titlesOcc;
+	}
+
+	/**
+	 * @return the titleOccId
+	 */
+	public List<Integer> getTitlesOccId() {
+		return titlesOccId;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
+	}
+
+	/**
+	 * @param datesDay the datesDay to set
+	 */
+	public void setDatesDay(List<Integer> datesDay) {
+		this.datesDay = datesDay;
+	}
+
+	/**
+	 * @param datesDayBetween the datesDayBetween to set
+	 */
+	public void setDatesDayBetween(List<Integer> datesDayBetween) {
+		this.datesDayBetween = datesDayBetween;
+	}
+
+	/**
+	 * @param datesMonth the datesMonth to set
+	 */
+	public void setDatesMonth(List<Integer> datesMonth) {
+		this.datesMonth = datesMonth;
+	}
+
+	/**
+	 * @param datesMonthBetween the datesMonthBetween to set
+	 */
+	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
+		this.datesMonthBetween = datesMonthBetween;
+	}
+
+	/**
+	 * @param datesTypes the datesTypes to set
+	 */
+	public void setDatesTypes(List<String> datesTypes) {
+		this.datesTypes = datesTypes;
+	}
+
+	/**
+	 * @param datesYear the datesYear to set
+	 */
+	public void setDatesYear(List<Integer> datesYear) {
+		this.datesYear = datesYear;
+	}
+
+	/**
+	 * @param datesYearBetween the datesYearBetween to set
+	 */
+	public void setDatesYearBetween(List<Integer> datesYearBetween) {
+		this.datesYearBetween = datesYearBetween;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(List<Gender> gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @param names the names to set
+	 */
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	/**
+	 * @param namesTypes the namesTypes to set
+	 */
+	public void setNamesTypes(List<NameType> namesTypes) {
+		this.namesTypes = namesTypes;
+	}
+
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(List<String> place) {
+		this.place = place;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
+	}
+
+	/**
+	 * @param placeType the placeType to set
+	 */
+	public void setPlaceType(List<String> placeType) {
+		this.placeType = placeType;
+	}
+
+	/**
+	 * @param researchNotes the researchNotes to set
+	 */
+	public void setResearchNotes(List<String> researchNotes) {
+		this.researchNotes = researchNotes;
+	}
+
+	/**
+	 * @param roleCategories the roleCategories to set
+	 */
+	public void setRoleCategories(List<String> roleCategories) {
+		this.roleCategories = roleCategories;
+	}
+
+	/**
+	 * @param titleOccWord the titleOccWord to set
+	 */
+	public void setTitleOccWord(List<String> titleOccWord) {
+		this.titleOccWord = titleOccWord;
+	}
+
+	/**
+	 * @param occupations the occupations to set
+	 */
+	public void setTitlesOcc(List<String> titlesOcc) {
+		this.titlesOcc = titlesOcc;
+	}
+
+	/**
+	 * @param titleOccId the titleOccId to set
+	 */
+	public void setTitlesOccId(List<Integer> titlesOccId) {
+		this.titlesOccId = titlesOccId;
+	}
+
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(List<String> words) {
+		this.words = words;
+	}
+
+	/**
+	 * @param wordsTypes the wordsTypes to set
+	 */
+	public void setWordsTypes(List<WordType> wordsTypes) {
+		this.wordsTypes = wordsTypes;
+	}
+	
+
+	/**
+	 * @return the datesLastUpdateTypes
+	 */
+	public List<DateType> getDatesLastUpdateTypes() {
+		return datesLastUpdateTypes;
+	}
+
+	/**
+	 * @param datesLastUpdateTypes the datesLastUpdateTypes to set
+	 */
+	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
+		this.datesLastUpdateTypes = datesLastUpdateTypes;
+	}
+
+	/**
+	 * @return the datesLastUpdate
+	 */
+	public List<Date> getDatesLastUpdate() {
+		return datesLastUpdate;
+	}
+
+	/**
+	 * @param datesLastUpdate the datesLastUpdate to set
+	 */
+	public void setDatesLastUpdate(List<Date> datesLastUpdate) {
+		this.datesLastUpdate = datesLastUpdate;
+	}
+
+	/**
+	 * @return the datesLastUpdateBetween
+	 */
+	public List<Date> getDatesLastUpdateBetween() {
+		return datesLastUpdateBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateBetween the datesLastUpdateBetween to set
+	 */
+	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
+		this.datesLastUpdateBetween = datesLastUpdateBetween;
 	}
 }

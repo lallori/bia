@@ -28,10 +28,16 @@
 package org.medici.bia.common.util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.domain.Digitization;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
@@ -55,31 +61,110 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param lastLogonDate
+	 * @return
+	 */
+	public static Map<String, String> generateAdvancedSearchLinks(Date inputDate) {
+		Map<String, String> retValue = new HashMap<String, String>();
+		retValue.put("DOCUMENT", "");
+		retValue.put("PLACE", "");
+		retValue.put("PEOPLE", "");
+		retValue.put("VOLUME", "");
+		
+		if (inputDate == null) {
+			return retValue;
+		}
+
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/src/AdvancedSearch.do?searchType=");
+		stringBuilder.append(SearchType.DOCUMENT);
+		stringBuilder.append("&dateLastUpdate=");
+		stringBuilder.append(DateType.Between.toString());
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getStringDate(inputDate));
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getStringDate(Calendar.getInstance().getTime()));
+		stringBuilder.append("&searchUUID=");
+		stringBuilder.append(UUID.randomUUID());
+		retValue.put("DOCUMENT", stringBuilder.toString());
+		
+		stringBuilder = new StringBuilder();
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/src/AdvancedSearch.do?searchType=");
+		stringBuilder.append(SearchType.PEOPLE);
+		stringBuilder.append("&dateLastUpdate=");
+		stringBuilder.append(DateType.Between.toString());
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append("&searchUUID=");
+		stringBuilder.append(UUID.randomUUID());
+		retValue.put("PEOPLE", stringBuilder.toString());
+
+		stringBuilder = new StringBuilder();
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/src/AdvancedSearch.do?searchType=");
+		stringBuilder.append(SearchType.PLACE);
+		stringBuilder.append("&dateLastUpdate=");
+		stringBuilder.append(DateType.Between.toString());
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append("&searchUUID=");
+		stringBuilder.append(UUID.randomUUID());
+		retValue.put("PLACE", stringBuilder.toString());
+
+		stringBuilder = new StringBuilder();
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/src/AdvancedSearch.do?searchType=");
+		stringBuilder.append(SearchType.VOLUME);
+		stringBuilder.append("&dateLastUpdate=");
+		stringBuilder.append(DateType.Between.toString());
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(inputDate));
+		stringBuilder.append('|');
+		stringBuilder.append(DateUtils.getMYSQLDate(Calendar.getInstance().getTime()));
+		stringBuilder.append("&searchUUID=");
+		stringBuilder.append(UUID.randomUUID());
+		retValue.put("VOLUME", stringBuilder.toString());
+
+		return retValue;
+	}
+	
+	/**
+	 * 
 	 * @param placeGeographicCoordinates
 	 * @return
 	 */
 	public static String generateLinkGoogleMaps(PlaceGeographicCoordinates placeGeographicCoordinates){
-		String link = "http://maps.google.com/maps?q=";
+		StringBuilder stringBuilder = new StringBuilder("http://maps.google.com/maps?q=");
 		Double latitude = placeGeographicCoordinates.getMinuteLatitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLatitude().doubleValue();
 		latitude = latitude / 3600;
 		latitude = placeGeographicCoordinates.getDegreeLatitude().doubleValue() + latitude;
-		if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("N")){
-			link += "+" + latitude.toString();
-		}else if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("S")){
-			link += "-" + latitude.toString();
+		if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("N")) {
+			stringBuilder.append("+");
+			stringBuilder.append(latitude.toString());
+		} else if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("S")) {
+			stringBuilder.append("-");
+			stringBuilder.append(latitude.toString());
 		}
-		link += ",";
+		stringBuilder.append(",");
 		Double longitude = placeGeographicCoordinates.getMinuteLongitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLongitude().doubleValue();
 		longitude = longitude / 3600;
 		longitude = placeGeographicCoordinates.getDegreeLongitude().doubleValue() + longitude;
 		if(placeGeographicCoordinates.getDirectionLongitude().toUpperCase().equals("E")){
-			link += "+" + longitude.toString();
+			stringBuilder.append("+");
+			stringBuilder.append(longitude.toString());
 		}else if(placeGeographicCoordinates.getDirectionLongitude().toUpperCase().equals("W")){
-			link += "-" + longitude.toString();
+			stringBuilder.append("-");
+			stringBuilder.append(longitude.toString());
 		}
-		return link;
+		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param documentExplorer
@@ -238,7 +323,6 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
 	/**
 	 * 
 	 * @return
@@ -259,6 +343,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
+
 	/**
 	 * 
 	 * @return
@@ -282,7 +367,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param forum
@@ -298,7 +383,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param forumTopic
@@ -320,7 +405,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * Urls must be encoded.
 	 * 
@@ -352,7 +437,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param integer
@@ -373,7 +458,7 @@ public class HtmlUtils {
 		
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param pageNumber
@@ -392,7 +477,7 @@ public class HtmlUtils {
 		
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -413,7 +498,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-
+	
 	/**
 	 * 
 	 * @param placeAllId
@@ -455,7 +540,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -502,7 +587,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -573,7 +658,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param entryId
@@ -642,7 +727,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-
+	
 	/**
 	 * 
 	 * @param summaryId
@@ -660,7 +745,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param messageId
@@ -675,7 +760,7 @@ public class HtmlUtils {
 		anchor.append("\">text</a>");
 
 		return anchor.toString();	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -704,7 +789,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	public static List<String> showPeopleRelated(List<String> inputList, Integer personId){
 		if (inputList == null)
 			return null;
@@ -729,7 +814,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param singleRow
@@ -770,7 +855,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param singleRow

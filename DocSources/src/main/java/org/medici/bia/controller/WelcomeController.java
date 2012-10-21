@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.LocalDate;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.user.UserService;
@@ -87,12 +88,18 @@ public class WelcomeController {
 			
 			Map<String, Long> lastLogonDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getLastLogonDate());
 			model.put("lastLogonDBStatistics", lastLogonDBStatistics);
+			Map<String, String> lastLogonUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getLastLogonDate());
+			model.put("lastLogonUrls", lastLogonUrls);
 
 			Map<String, Long> currentWeekDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentWeek());
 			model.put("currentWeekDBStatistics", currentWeekDBStatistics);
+			Map<String, String> currentWeekUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getLastLogonDate());
+			model.put("currentWeekUrls", currentWeekUrls);
 
 			Map<String, Long> currentMonthDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentMonth());
 			model.put("currentMonthDBStatistics", currentMonthDBStatistics);
+			Map<String, String> currentMonthUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getLastLogonDate());
+			model.put("currentMonthUrls", currentMonthUrls);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/Welcome", model);

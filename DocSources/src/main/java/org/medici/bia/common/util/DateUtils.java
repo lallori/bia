@@ -27,6 +27,7 @@
  */
 package org.medici.bia.common.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -111,9 +112,22 @@ public class DateUtils {
 		return stringBuilder.toString();
 	}
 
-	public static Date getDateFromString(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static Date getDateFromString(String dateString) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+		
+		try {
+			return simpleDateFormat.parse(dateString);
+		} catch (ParseException parseException) {
+			logger.error(parseException);
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(0, 0, 0);
+			return calendar.getTime();
+		}
 	}
 
 	/**
@@ -389,6 +403,23 @@ public class DateUtils {
 		return returnValue.toString();
 	}
 
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static String getStringDate(Date inputDate) {
+		if (inputDate == null) {
+			inputDate = new Date(0);
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+
+		return simpleDateFormat.format(inputDate);
+	}
+	
 	/**
 	 * 
 	 * @param year
