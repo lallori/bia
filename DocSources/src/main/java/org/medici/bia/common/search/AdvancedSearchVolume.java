@@ -902,11 +902,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				}
 
 				if (datesCreatedTypes.get(i).equals(DateType.From)) {
-					datesCreatedQuery.append("(dateCreated >=");
+					datesCreatedQuery.append("(dateCreated >= '");
 					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
 					datesCreatedQuery.append(')');
 				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
-					datesCreatedQuery.append("(dateCreated <=");
+					datesCreatedQuery.append("(dateCreated <= '");
 					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
 					datesCreatedQuery.append(')');
 				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
@@ -941,11 +941,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				}
 
 				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
-					datesLastUpdateQuery.append("(lastUpdate >=");
+					datesLastUpdateQuery.append("(lastUpdate >= '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
 					datesLastUpdateQuery.append(')');
 				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
-					datesLastUpdateQuery.append("(lastUpdate <=");
+					datesLastUpdateQuery.append("(lastUpdate <= '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
 					datesLastUpdateQuery.append(')');
 				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
