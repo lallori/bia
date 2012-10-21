@@ -71,6 +71,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<DateType> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
+	private List<Date> datesCreated;
+	private List<Date> datesCreatedBetween;
+	private List<DateType> datesCreatedTypes;
 	private List<Date> datesLastUpdate;
 	private List<Date> datesLastUpdateBetween;
 	private List<DateType> datesLastUpdateTypes;
@@ -145,6 +148,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		datesLastUpdate = new ArrayList<Date>(0);
 		datesLastUpdateBetween = new ArrayList<Date>(0);
 		datesLastUpdateTypes = new ArrayList<DateType>(0);
+		datesCreated = new ArrayList<Date>(0);
+		datesCreatedBetween = new ArrayList<Date>(0);
+		datesCreatedTypes = new ArrayList<DateType>(0);
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
@@ -153,265 +159,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(0);
 		docIds = new ArrayList<String>(0);
 		logicalDelete = null;
-	}
-
-	/**
-	 * @return the datesDay
-	 */
-	public List<Integer> getDatesDay() {
-		return datesDay;
-	}
-
-	/**
-	 * @return the datesDayBetween
-	 */
-	public List<Integer> getDatesDayBetween() {
-		return datesDayBetween;
-	}
-	
-	/**
-	 * @return the datesMonth
-	 */
-	public List<Integer> getDatesMonth() {
-		return datesMonth;
-	}
-
-	/**
-	 * @return the datesMonthBetween
-	 */
-	public List<Integer> getDatesMonthBetween() {
-		return datesMonthBetween;
-	}
-
-	/**
-	 * @return the datesType
-	 */
-	public List<DateType> getDatesTypes() {
-		return datesTypes;
-	}
-
-	/**
-	 * @return the datesYear
-	 */
-	public List<Integer> getDatesYear() {
-		return datesYear;
-	}
-
-	/**
-	 * @return the datesYearBetween
-	 */
-	public List<Integer> getDatesYearBetween() {
-		return datesYearBetween;
-	}
-
-	/**
-	 * @return the docIds
-	 */
-	public List<String> getDocIds() {
-		return docIds;
-	}
-
-	/**
-	 * @return the extract
-	 */
-	public List<String> getExtract() {
-		return extract;
-	}
-
-	/**
-	 * @return the folios
-	 */
-	public List<String> getFolios() {
-		return folios;
-	}
-
-	/**
-	 * @return the foliosBetween
-	 */
-	public List<String> getFoliosBetween() {
-		return foliosBetween;
-	}
-
-	/**
-	 * @return the foliosTypes
-	 */
-	public List<FolioType> getFoliosTypes() {
-		return foliosTypes;
-	}
-
-	/**
-	 * @return the from
-	 */
-	public List<String> getFrom() {
-		return from;
-	}
-
-	/**
-	 * @return the fromId
-	 */
-	public List<Integer> getFromId() {
-		return fromId;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
-	/**
-	 * @return the person
-	 */
-	public List<String> getPerson() {
-		return person;
-	}
-
-	/**
-	 * @return the personId
-	 */
-	public List<Integer> getPersonId() {
-		return personId;
-	}
-
-	/**
-	 * @return the place
-	 */
-	public List<String> getPlace() {
-		return place;
-	}
-
-	/**
-	 * @return the placeId
-	 */
-	public List<Integer> getPlaceId() {
-		return placeId;
-	}
-
-	/**
-	 * @return the recipient
-	 */
-	public List<String> getRecipient() {
-		return recipient;
-	}
-
-	/**
-	 * @return the recipientId
-	 */
-	public List<Integer> getRecipientId() {
-		return recipientId;
-	}
-
-	/**
-	 * @return the refersTo
-	 */
-	public List<String> getRefersTo() {
-		return refersTo;
-	}
-
-	/**
-	 * @return the refersToId
-	 */
-	public List<Integer> getRefersToId() {
-		return refersToId;
-	}
-
-	/**
-	 * @return the sender
-	 */
-	public List<String> getSender() {
-		return sender;
-	}
-
-	/**
-	 * @return the senderId
-	 */
-	public List<Integer> getSenderId() {
-		return senderId;
-	}
-	
-	/**
-	 * @return the synopsis
-	 */
-	public List<String> getSynopsis() {
-		return synopsis;
-	}
-	
-	/**
-	 * @return the to
-	 */
-	public List<String> getTo() {
-		return to;
-	}
-	
-	/**
-	 * @return the toId
-	 */
-	public List<Integer> getToId() {
-		return toId;
-	}
-	
-	/**
-	 * @return the topics
-	 */
-	public List<String> getTopics() {
-		return topics;
-	}
-	
-	/**
-	 * @return the topicsId
-	 */
-	public List<Integer> getTopicsId() {
-		return topicsId;
-	}
-
-	/**
-	 * @return the topicsPlace
-	 */
-	public List<String> getTopicsPlace() {
-		return topicsPlace;
-	}
-
-	/**
-	 * @return the topicsPlaceId
-	 */
-	public List<Integer> getTopicsPlaceId() {
-		return topicsPlaceId;
-	}
-
-	/**
-	 * @return the volumes
-	 */
-	public List<String> getVolumes() {
-		return volumes;
-	}
-
-	/**
-	 * @return the volumesBetween
-	 */
-	public List<String> getVolumesBetween() {
-		return volumesBetween;
-	}
-
-	/**
-	 * @return the volumesType
-	 */
-	public List<VolumeType> getVolumesTypes() {
-		return volumesTypes;
-	}
-
-	/**
-	 * @return the words
-	 */
-	public List<String> getWords() {
-		return words;
-	}
-
-	/**
-	 * @return the wordsTypes
-	 */
-	public List<WordType> getWordsTypes() {
-		return wordsTypes;
 	}
 
 	/**
@@ -907,7 +654,26 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			datesMonthBetween = new ArrayList<Integer>(0);
 			datesDayBetween = new ArrayList<Integer>(0);
 		}
-		
+
+		//Date Created
+		if ((command.getDateCreated() != null) && (command.getDateCreated().size() >0)) {
+			datesCreatedTypes = new ArrayList<DateType>(command.getDateCreated().size());
+			datesCreated = new ArrayList<Date>(command.getDateCreated().size());
+			datesCreatedBetween = new ArrayList<Date>(command.getDateCreated().size());
+			
+			for (String singleWord : command.getDateCreated()) {
+				//e.g. After|20120112|20120112
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesCreatedTypes.add(DateType.valueOf(fields[0]));
+				datesCreated.add(DateUtils.getDateFromString(fields[1]));
+				datesCreatedBetween.add(DateUtils.getDateFromString(fields[2]));
+			}
+		} else {
+			datesCreatedTypes = new ArrayList<DateType>(0);
+			datesCreated = new ArrayList<Date>(0);
+			datesCreatedBetween = new ArrayList<Date>(0);
+		}
+
 		//Date lastUpdate
 		if ((command.getDateLastUpdate() != null) && (command.getDateLastUpdate().size() >0)) {
 			datesLastUpdateTypes = new ArrayList<DateType>(command.getDateLastUpdate().size());
@@ -1046,6 +812,266 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		}
 
 		return Boolean.TRUE;
+	}
+
+
+	/**
+	 * @return the datesDay
+	 */
+	public List<Integer> getDatesDay() {
+		return datesDay;
+	}
+
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+	
+	/**
+	 * @return the datesMonth
+	 */
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+
+	/**
+	 * @return the datesType
+	 */
+	public List<DateType> getDatesTypes() {
+		return datesTypes;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+
+	/**
+	 * @return the docIds
+	 */
+	public List<String> getDocIds() {
+		return docIds;
+	}
+
+	/**
+	 * @return the extract
+	 */
+	public List<String> getExtract() {
+		return extract;
+	}
+
+	/**
+	 * @return the folios
+	 */
+	public List<String> getFolios() {
+		return folios;
+	}
+
+	/**
+	 * @return the foliosBetween
+	 */
+	public List<String> getFoliosBetween() {
+		return foliosBetween;
+	}
+
+	/**
+	 * @return the foliosTypes
+	 */
+	public List<FolioType> getFoliosTypes() {
+		return foliosTypes;
+	}
+
+	/**
+	 * @return the from
+	 */
+	public List<String> getFrom() {
+		return from;
+	}
+
+	/**
+	 * @return the fromId
+	 */
+	public List<Integer> getFromId() {
+		return fromId;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @return the person
+	 */
+	public List<String> getPerson() {
+		return person;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public List<Integer> getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @return the recipient
+	 */
+	public List<String> getRecipient() {
+		return recipient;
+	}
+
+	/**
+	 * @return the recipientId
+	 */
+	public List<Integer> getRecipientId() {
+		return recipientId;
+	}
+
+	/**
+	 * @return the refersTo
+	 */
+	public List<String> getRefersTo() {
+		return refersTo;
+	}
+
+	/**
+	 * @return the refersToId
+	 */
+	public List<Integer> getRefersToId() {
+		return refersToId;
+	}
+
+	/**
+	 * @return the sender
+	 */
+	public List<String> getSender() {
+		return sender;
+	}
+
+	/**
+	 * @return the senderId
+	 */
+	public List<Integer> getSenderId() {
+		return senderId;
+	}
+	
+	/**
+	 * @return the synopsis
+	 */
+	public List<String> getSynopsis() {
+		return synopsis;
+	}
+	
+	/**
+	 * @return the to
+	 */
+	public List<String> getTo() {
+		return to;
+	}
+	
+	/**
+	 * @return the toId
+	 */
+	public List<Integer> getToId() {
+		return toId;
+	}
+	
+	/**
+	 * @return the topics
+	 */
+	public List<String> getTopics() {
+		return topics;
+	}
+	
+	/**
+	 * @return the topicsId
+	 */
+	public List<Integer> getTopicsId() {
+		return topicsId;
+	}
+
+	/**
+	 * @return the topicsPlace
+	 */
+	public List<String> getTopicsPlace() {
+		return topicsPlace;
+	}
+
+	/**
+	 * @return the topicsPlaceId
+	 */
+	public List<Integer> getTopicsPlaceId() {
+		return topicsPlaceId;
+	}
+
+	/**
+	 * @return the volumes
+	 */
+	public List<String> getVolumes() {
+		return volumes;
+	}
+
+	/**
+	 * @return the volumesBetween
+	 */
+	public List<String> getVolumesBetween() {
+		return volumesBetween;
+	}
+
+	/**
+	 * @return the volumesType
+	 */
+	public List<VolumeType> getVolumesTypes() {
+		return volumesTypes;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
 	}
 
 	/**
@@ -1347,6 +1373,42 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
 		this.datesLastUpdateBetween = datesLastUpdateBetween;
+	}
+
+	public void setDatesCreated(List<Date> datesCreated) {
+		this.datesCreated = datesCreated;
+	}
+
+	public List<Date> getDatesCreated() {
+		return datesCreated;
+	}
+
+	/**
+	 * @return the datesCreatedBetween
+	 */
+	public List<Date> getDatesCreatedBetween() {
+		return datesCreatedBetween;
+	}
+
+	/**
+	 * @param datesCreatedBetween the datesCreatedBetween to set
+	 */
+	public void setDatesCreatedBetween(List<Date> datesCreatedBetween) {
+		this.datesCreatedBetween = datesCreatedBetween;
+	}
+
+	/**
+	 * @return the datesCreatedTypes
+	 */
+	public List<DateType> getDatesCreatedTypes() {
+		return datesCreatedTypes;
+	}
+
+	/**
+	 * @param datesCreatedTypes the datesCreatedTypes to set
+	 */
+	public void setDatesCreatedTypes(List<DateType> datesCreatedTypes) {
+		this.datesCreatedTypes = datesCreatedTypes;
 	}
 
 	/**
@@ -2030,6 +2092,45 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(datesLastUpdateQuery);
+			}
+		}
+
+		// date created
+		if (datesCreatedTypes.size()>0) {
+			StringBuilder datesCreatedQuery = new StringBuilder("(");
+			for (int i=0; i<datesCreatedTypes.size(); i++) {
+				if (datesCreatedTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (datesCreatedQuery.length()>1) {
+					datesCreatedQuery.append(" AND ");
+				}
+
+				if (datesCreatedTypes.get(i).equals(DateType.From)) {
+					datesCreatedQuery.append("(dateCreated >=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
+					datesCreatedQuery.append("(dateCreated <=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
+					datesCreatedQuery.append("(dateCreated between '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append("' AND '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)));
+					datesCreatedQuery.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+			datesCreatedQuery.append(')');
+			if (!datesCreatedQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesCreatedQuery);
 			}
 		}
 

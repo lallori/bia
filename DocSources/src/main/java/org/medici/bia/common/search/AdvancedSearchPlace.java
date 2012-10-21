@@ -48,6 +48,7 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 /**
  * 
@@ -67,6 +68,9 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private List<Date> datesLastUpdate;
 	private List<Date> datesLastUpdateBetween;
 	private List<DateType> datesLastUpdateTypes;
+	private List<Date> datesCreated;
+	private List<Date> datesCreatedBetween;
+	private List<DateType> datesCreatedTypes;
 
 	private Logger logger = Logger.getLogger(this.getClass());
 
@@ -83,78 +87,10 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		datesLastUpdate = new ArrayList<Date>(0);
 		datesLastUpdateBetween = new ArrayList<Date>(0);
 		datesLastUpdateTypes = new ArrayList<DateType>(0);
+		datesCreated = new ArrayList<Date>(0);
+		datesCreatedBetween = new ArrayList<Date>(0);
+		datesCreatedTypes = new ArrayList<DateType>(0);
 	}
-
-	/**
-	 * @return the linkedToPeople
-	 */
-	public List<String> getLinkedToPeople() {
-		return linkedToPeople;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
-	/**
-	 * @return the placesName
-	 */
-	public List<String> getPlacesName() {
-		return placesName;
-	}
-
-	/**
-	 * @return the placeType
-	 */
-	public List<String> getPlaceType() {
-		return placeType;
-	}
-
-	/**
-	 * @return the datesLastUpdateTypes
-	 */
-	public List<DateType> getDatesLastUpdateTypes() {
-		return datesLastUpdateTypes;
-	}
-
-	/**
-	 * @param datesLastUpdateTypes the datesLastUpdateTypes to set
-	 */
-	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
-		this.datesLastUpdateTypes = datesLastUpdateTypes;
-	}
-
-	/**
-	 * @return the datesLastUpdate
-	 */
-	public List<Date> getDatesLastUpdate() {
-		return datesLastUpdate;
-	}
-
-	/**
-	 * @param datesLastUpdate the datesLastUpdate to set
-	 */
-	public void setDatesLastUpdate(List<Date> datesLastUpdate) {
-		this.datesLastUpdate = datesLastUpdate;
-	}
-
-	/**
-	 * @return the datesLastUpdateBetween
-	 */
-	public List<Date> getDatesLastUpdateBetween() {
-		return datesLastUpdateBetween;
-	}
-
-	/**
-	 * @param datesLastUpdateBetween the datesLastUpdateBetween to set
-	 */
-	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
-		this.datesLastUpdateBetween = datesLastUpdateBetween;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -233,6 +169,25 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			datesLastUpdateBetween = new ArrayList<Date>(0);
 		}
 
+		//Date Created
+		if ((command.getDateCreated() != null) && (command.getDateCreated().size() >0)) {
+			datesCreatedTypes = new ArrayList<DateType>(command.getDateCreated().size());
+			datesCreated = new ArrayList<Date>(command.getDateCreated().size());
+			datesCreatedBetween = new ArrayList<Date>(command.getDateCreated().size());
+			
+			for (String singleWord : command.getDateCreated()) {
+				//e.g. After|20120112|20120112
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesCreatedTypes.add(DateType.valueOf(fields[0]));
+				datesCreated.add(DateUtils.getDateFromString(fields[1]));
+				datesCreatedBetween.add(DateUtils.getDateFromString(fields[2]));
+			}
+		} else {
+			datesCreatedTypes = new ArrayList<DateType>(0);
+			datesCreated = new ArrayList<Date>(0);
+			datesCreatedBetween = new ArrayList<Date>(0);
+		}
+		
 		//LogicalDelete
 		if(command.getLogicalDelete() != null){
 			if(command.getLogicalDelete().equals("true")){
@@ -266,6 +221,119 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
+	}
+
+
+	/**
+	 * @return the linkedToPeople
+	 */
+	public List<String> getLinkedToPeople() {
+		return linkedToPeople;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @return the placesName
+	 */
+	public List<String> getPlacesName() {
+		return placesName;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public List<String> getPlaceType() {
+		return placeType;
+	}
+
+	/**
+	 * @return the datesLastUpdateTypes
+	 */
+	public List<DateType> getDatesLastUpdateTypes() {
+		return datesLastUpdateTypes;
+	}
+
+	/**
+	 * @param datesLastUpdateTypes the datesLastUpdateTypes to set
+	 */
+	public void setDatesLastUpdateTypes(List<DateType> datesLastUpdateTypes) {
+		this.datesLastUpdateTypes = datesLastUpdateTypes;
+	}
+
+	/**
+	 * @return the datesLastUpdate
+	 */
+	public List<Date> getDatesLastUpdate() {
+		return datesLastUpdate;
+	}
+
+	/**
+	 * @param datesLastUpdate the datesLastUpdate to set
+	 */
+	public void setDatesLastUpdate(List<Date> datesLastUpdate) {
+		this.datesLastUpdate = datesLastUpdate;
+	}
+
+	/**
+	 * @return the datesLastUpdateBetween
+	 */
+	public List<Date> getDatesLastUpdateBetween() {
+		return datesLastUpdateBetween;
+	}
+
+	/**
+	 * @param datesLastUpdateBetween the datesLastUpdateBetween to set
+	 */
+	public void setDatesLastUpdateBetween(List<Date> datesLastUpdateBetween) {
+		this.datesLastUpdateBetween = datesLastUpdateBetween;
+	}
+
+	/**
+	 * @return the datesCreated
+	 */
+	public List<Date> getDatesCreated() {
+		return datesCreated;
+	}
+
+	/**
+	 * @param datesCreated the datesCreated to set
+	 */
+	public void setDatesCreated(List<Date> datesCreated) {
+		this.datesCreated = datesCreated;
+	}
+
+	/**
+	 * @return the datesCreatedBetween
+	 */
+	public List<Date> getDatesCreatedBetween() {
+		return datesCreatedBetween;
+	}
+
+	/**
+	 * @param datesCreatedBetween the datesCreatedBetween to set
+	 */
+	public void setDatesCreatedBetween(List<Date> datesCreatedBetween) {
+		this.datesCreatedBetween = datesCreatedBetween;
+	}
+
+	/**
+	 * @return the datesCreatedTypes
+	 */
+	public List<DateType> getDatesCreatedTypes() {
+		return datesCreatedTypes;
+	}
+
+	/**
+	 * @param datesCreatedTypes the datesCreatedTypes to set
+	 */
+	public void setDatesCreatedTypes(List<DateType> datesCreatedTypes) {
+		this.datesCreatedTypes = datesCreatedTypes;
 	}
 
 	/**
@@ -382,6 +450,45 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			}
 		}
 		
+		// date created
+		if (datesCreatedTypes.size()>0) {
+			StringBuilder datesCreatedQuery = new StringBuilder("(");
+			for (int i=0; i<datesCreatedTypes.size(); i++) {
+				if (datesCreatedTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (datesCreatedQuery.length()>1) {
+					datesCreatedQuery.append(" AND ");
+				}
+
+				if (datesCreatedTypes.get(i).equals(DateType.From)) {
+					datesCreatedQuery.append("(dateCreated >=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
+					datesCreatedQuery.append("(dateCreated <=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
+					datesCreatedQuery.append("(dateCreated between '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append("' AND '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)));
+					datesCreatedQuery.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+			datesCreatedQuery.append(')');
+			if (!datesCreatedQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesCreatedQuery);
+			}
+		}
+
 		// Last update
 		if (datesLastUpdateTypes.size()>0) {
 			StringBuilder datesLastUpdateQuery = new StringBuilder("(");

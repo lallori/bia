@@ -52,6 +52,7 @@ public class AdvancedSearchCommand {
 	private List<String> folio;
 	private List<String> date;
 	private List<String> dateLastUpdate;
+	private List<String> dateCreated;
 	private List<String> extract;
 	private List<String> synopsis;
 	private List<String> topic;
@@ -252,6 +253,14 @@ public class AdvancedSearchCommand {
 
 	public List<String> getDateLastUpdate() {
 		return dateLastUpdate;
+	}
+
+	public void setDateCreated(List<String> dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public List<String> getDateCreated() {
+		return dateCreated;
 	}
 
 	/**

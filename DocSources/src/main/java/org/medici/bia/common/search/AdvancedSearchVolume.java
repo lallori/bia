@@ -48,6 +48,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
+import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.VolumeUtils;
 
@@ -75,6 +76,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<Date> datesLastUpdate;
 	private List<Date> datesLastUpdateBetween;
 	private List<DateType> datesLastUpdateTypes;
+	private List<Date> datesCreated;
+	private List<Date> datesCreatedBetween;
+	private List<DateType> datesCreatedTypes;
 	private List<VolumeType> volumesTypes;
 	private List<String> volumes;
 	private List<String> volumesBetween;
@@ -106,6 +110,12 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		datesYearBetween = new ArrayList<Integer>(0);
 		datesMonthBetween = new ArrayList<Integer>(0);
 		datesDayBetween = new ArrayList<Integer>(0);
+		datesLastUpdate = new ArrayList<Date>(0);
+		datesLastUpdateBetween = new ArrayList<Date>(0);
+		datesLastUpdateTypes = new ArrayList<DateType>(0);
+		datesCreated = new ArrayList<Date>(0);
+		datesCreatedBetween = new ArrayList<Date>(0);
+		datesCreatedTypes = new ArrayList<DateType>(0);
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
@@ -119,152 +129,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		context = new ArrayList<String>(0);
 		inventario = new ArrayList<String>(0);
 		logicalDelete = null;
-		datesLastUpdate = new ArrayList<Date>(0);
-		datesLastUpdateBetween = new ArrayList<Date>(0);
-		datesLastUpdateTypes = new ArrayList<DateType>(0);
 	}
 	
-
-	/**
-	 * @return the digitized
-	 */
-	public Boolean getDigitized() {
-		return digitized;
-	}
-
-	/**
-	 * @param digitized the digitized to set
-	 */
-	public void setDigitized(Boolean digitized) {
-		this.digitized = digitized;
-	}
-
-	/**
-	 * @return the languages
-	 */
-	public List<String> getLanguages() {
-		return languages;
-	}
-
-	/**
-	 * @param languages the languages to set
-	 */
-	public void setLanguages(List<String> languages) {
-		this.languages = languages;
-	}
-
-	/**
-	 * @param otherLang the otherLang to set
-	 */
-	public void setOtherLang(List<String> otherLang) {
-		this.otherLang = otherLang;
-	}
-
-	/**
-	 * @return the otherLang
-	 */
-	public List<String> getOtherLang() {
-		return otherLang;
-	}
-
-	/**
-	 * @return the cipher
-	 */
-	public String getCipher() {
-		return cipher;
-	}
-
-	/**
-	 * @param cipher the cipher to set
-	 */
-	public void setCipher(String cipher) {
-		this.cipher = cipher;
-	}
-
-	/**
-	 * @return the index
-	 */
-	public String getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index the index to set
-	 */
-	public void setIndex(String index) {
-		this.index = index;
-	}
-
-	/**
-	 * @return the fromVolume
-	 */
-	public List<String> getFromVolume() {
-		return fromVolume;
-	}
-
-	/**
-	 * @param fromVolume the fromVolume to set
-	 */
-	public void setFromVolume(List<String> fromVolume) {
-		this.fromVolume = fromVolume;
-	}
-
-	/**
-	 * @return the toVolume
-	 */
-	public List<String> getToVolume() {
-		return toVolume;
-	}
-
-	/**
-	 * @param toVolume the toVolume to set
-	 */
-	public void setToVolume(List<String> toVolume) {
-		this.toVolume = toVolume;
-	}
-
-	/**
-	 * @return the context
-	 */
-	public List<String> getContext() {
-		return context;
-	}
-
-	/**
-	 * @param context the context to set
-	 */
-	public void setContext(List<String> context) {
-		this.context = context;
-	}
-
-	/**
-	 * @return the inventario
-	 */
-	public List<String> getInventario() {
-		return inventario;
-	}
-
-	/**
-	 * @param inventario the inventario to set
-	 */
-	public void setInventario(List<String> inventario) {
-		this.inventario = inventario;
-	}
-
-	/**
-	 * @param logicalDelete the logicalDelete to set
-	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
-		this.logicalDelete = logicalDelete;
-	}
-
-	/**
-	 * @return the logicalDelete
-	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -342,6 +208,26 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			datesLastUpdateTypes = new ArrayList<DateType>(0);
 			datesLastUpdate = new ArrayList<Date>(0);
 			datesLastUpdateBetween = new ArrayList<Date>(0);
+		}
+
+
+		//Date Created
+		if ((command.getDateCreated() != null) && (command.getDateCreated().size() >0)) {
+			datesCreatedTypes = new ArrayList<DateType>(command.getDateCreated().size());
+			datesCreated = new ArrayList<Date>(command.getDateCreated().size());
+			datesCreatedBetween = new ArrayList<Date>(command.getDateCreated().size());
+			
+			for (String singleWord : command.getDateCreated()) {
+				//e.g. After|20120112|20120112
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesCreatedTypes.add(DateType.valueOf(fields[0]));
+				datesCreated.add(DateUtils.getDateFromString(fields[1]));
+				datesCreatedBetween.add(DateUtils.getDateFromString(fields[2]));
+			}
+		} else {
+			datesCreatedTypes = new ArrayList<DateType>(0);
+			datesCreated = new ArrayList<Date>(0);
+			datesCreatedBetween = new ArrayList<Date>(0);
 		}
 
 		//Volume
@@ -505,7 +391,6 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -514,6 +399,146 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 //		wordsTypes.add(WordType.TitlesAndNotes);
 //		words.add(command.getText());
 		context.add(command.getText());
+	}
+
+	/**
+	 * @return the digitized
+	 */
+	public Boolean getDigitized() {
+		return digitized;
+	}
+
+	/**
+	 * @param digitized the digitized to set
+	 */
+	public void setDigitized(Boolean digitized) {
+		this.digitized = digitized;
+	}
+
+	/**
+	 * @return the languages
+	 */
+	public List<String> getLanguages() {
+		return languages;
+	}
+
+	/**
+	 * @param languages the languages to set
+	 */
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+
+	/**
+	 * @param otherLang the otherLang to set
+	 */
+	public void setOtherLang(List<String> otherLang) {
+		this.otherLang = otherLang;
+	}
+
+	/**
+	 * @return the otherLang
+	 */
+	public List<String> getOtherLang() {
+		return otherLang;
+	}
+
+	/**
+	 * @return the cipher
+	 */
+	public String getCipher() {
+		return cipher;
+	}
+
+	/**
+	 * @param cipher the cipher to set
+	 */
+	public void setCipher(String cipher) {
+		this.cipher = cipher;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * @param index the index to set
+	 */
+	public void setIndex(String index) {
+		this.index = index;
+	}
+
+	/**
+	 * @return the fromVolume
+	 */
+	public List<String> getFromVolume() {
+		return fromVolume;
+	}
+
+	/**
+	 * @param fromVolume the fromVolume to set
+	 */
+	public void setFromVolume(List<String> fromVolume) {
+		this.fromVolume = fromVolume;
+	}
+
+	/**
+	 * @return the toVolume
+	 */
+	public List<String> getToVolume() {
+		return toVolume;
+	}
+
+	/**
+	 * @param toVolume the toVolume to set
+	 */
+	public void setToVolume(List<String> toVolume) {
+		this.toVolume = toVolume;
+	}
+
+	/**
+	 * @return the context
+	 */
+	public List<String> getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(List<String> context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the inventario
+	 */
+	public List<String> getInventario() {
+		return inventario;
+	}
+
+	/**
+	 * @param inventario the inventario to set
+	 */
+	public void setInventario(List<String> inventario) {
+		this.inventario = inventario;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**
@@ -731,6 +756,54 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 
 
 	/**
+	 * @return the datesCreated
+	 */
+	public List<Date> getDatesCreated() {
+		return datesCreated;
+	}
+
+
+	/**
+	 * @param datesCreated the datesCreated to set
+	 */
+	public void setDatesCreated(List<Date> datesCreated) {
+		this.datesCreated = datesCreated;
+	}
+
+
+	/**
+	 * @return the datesCreatedBetween
+	 */
+	public List<Date> getDatesCreatedBetween() {
+		return datesCreatedBetween;
+	}
+
+
+	/**
+	 * @param datesCreatedBetween the datesCreatedBetween to set
+	 */
+	public void setDatesCreatedBetween(List<Date> datesCreatedBetween) {
+		this.datesCreatedBetween = datesCreatedBetween;
+	}
+
+
+	/**
+	 * @return the datesCreatedTypes
+	 */
+	public List<DateType> getDatesCreatedTypes() {
+		return datesCreatedTypes;
+	}
+
+
+	/**
+	 * @param datesCreatedTypes the datesCreatedTypes to set
+	 */
+	public void setDatesCreatedTypes(List<DateType> datesCreatedTypes) {
+		this.datesCreatedTypes = datesCreatedTypes;
+	}
+
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -815,6 +888,46 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}
 		}
 		
+
+		// date created
+		if (datesCreatedTypes.size()>0) {
+			StringBuilder datesCreatedQuery = new StringBuilder("(");
+			for (int i=0; i<datesCreatedTypes.size(); i++) {
+				if (datesCreatedTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (datesCreatedQuery.length()>1) {
+					datesCreatedQuery.append(" AND ");
+				}
+
+				if (datesCreatedTypes.get(i).equals(DateType.From)) {
+					datesCreatedQuery.append("(dateCreated >=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
+					datesCreatedQuery.append("(dateCreated <=");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append(')');
+				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
+					datesCreatedQuery.append("(dateCreated between '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
+					datesCreatedQuery.append("' AND '");
+					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)));
+					datesCreatedQuery.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+			datesCreatedQuery.append(')');
+			if (!datesCreatedQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesCreatedQuery);
+			}
+		}
+
 		// Last update
 		if (datesLastUpdateTypes.size()>0) {
 			StringBuilder datesLastUpdateQuery = new StringBuilder("(");
