@@ -50,7 +50,7 @@
     <div id="lastLogOnDiv">
     	<h1>FROM YOUR LAST LOG ON</h1>
         <div>
-        	<a href="${lastLogonUrls['DOCUMENT']}" class="databaseActivity">Document </a> 
+        	<a href="${lastLogonUrls['DOCUMENT']}" class="databaseActivity">Documents </a> 
             <span>${lastLogonDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
@@ -70,7 +70,7 @@
     <div id="thisWeekDiv">
     	<h1>THIS WEEK</h1>
         <div>
-        	<a href="${currentWeekUrls['DOCUMENT']}" class="databaseActivity">Document</a>
+        	<a href="${currentWeekUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
             <span>${currentWeekDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
@@ -90,7 +90,7 @@
     <div id="thisMonthDiv">
     	<h1>THIS MONTH</h1>
          <div>
-        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Document</a>
+        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Documenst</a>
             <span>${currentMonthDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
