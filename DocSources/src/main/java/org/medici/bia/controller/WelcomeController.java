@@ -93,12 +93,12 @@ public class WelcomeController {
 
 			Map<String, Long> currentWeekDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentWeek());
 			model.put("currentWeekDBStatistics", currentWeekDBStatistics);
-			Map<String, String> currentWeekUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getLastLogonDate());
+			Map<String, String> currentWeekUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getFirstDayOfCurrentWeek());
 			model.put("currentWeekUrls", currentWeekUrls);
 
 			Map<String, Long> currentMonthDBStatistics = getCommunityService().getDatabaseStatistics(DateUtils.getFirstDayOfCurrentMonth());
 			model.put("currentMonthDBStatistics", currentMonthDBStatistics);
-			Map<String, String> currentMonthUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getLastLogonDate());
+			Map<String, String> currentMonthUrls = HtmlUtils.generateAdvancedSearchLinks(DateUtils.getFirstDayOfCurrentMonth());
 			model.put("currentMonthUrls", currentMonthUrls);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
