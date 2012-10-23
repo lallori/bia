@@ -121,14 +121,20 @@ public class SimpleSearchVolume extends SimpleSearch {
 			}
 			
 			for(int i = 0; i < words.length; i++){
-				if(NumberUtils.isNumber(words[0])){
+				if(NumberUtils.isNumber(words[i])){
 					jpaQuery.append("(volNum = ");
-					jpaQuery.append(words[0]);
+					jpaQuery.append(words[i]);
 					jpaQuery.append(')');
 				}else{
-					if(words[0].length() == 1){
+					if(words[i].length() == 1){
 						jpaQuery.append("(volLetExt like '");
-						jpaQuery.append(words[0]);
+						jpaQuery.append(words[i]);
+						jpaQuery.append("')");
+					}else if(words[i].matches("^\\d{1,5}[a-zA-Z]{1}")){
+						jpaQuery.append("(volNum = ");
+						jpaQuery.append(words[i].substring(0, words[i].length() - 1));
+						jpaQuery.append(" AND volLetExt LIKE '");
+						jpaQuery.append(words[i].charAt(words[i].length() - 1));
 						jpaQuery.append("')");
 					}else{
 						jpaQuery.append("(ccondition like '%");

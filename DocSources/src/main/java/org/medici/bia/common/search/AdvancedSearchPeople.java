@@ -855,13 +855,20 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		//ResearchNotes
 		if(researchNotes.size() > 0){
 			StringBuilder researchNotesQuery = new StringBuilder("(");
+			
 			for(int i = 0; i < researchNotes.size(); i++){
+				String[] wordsSingleResearchNotes = StringUtils.split(researchNotes.get(i), " ");
 				if(researchNotesQuery.length() > 1){
 					researchNotesQuery.append(" AND ");
 				}
-				researchNotesQuery.append("(bioNotes like '%");
-				researchNotesQuery.append(researchNotes.get(i).toLowerCase().replace("'", "''"));
-				researchNotesQuery.append("%')");
+				for(int j = 0; j < wordsSingleResearchNotes.length; j++){
+					researchNotesQuery.append("(bioNotes like '%");
+					researchNotesQuery.append(wordsSingleResearchNotes[j].toLowerCase().replace("'", "''"));
+					researchNotesQuery.append("%')");
+					if(j < (wordsSingleResearchNotes.length - 1)){
+						researchNotesQuery.append(" AND ");
+					}
+				}
 			}
 			researchNotesQuery.append(')');
 			if(!researchNotesQuery.toString().equals("")){
