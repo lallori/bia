@@ -66,6 +66,7 @@ import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -276,6 +277,25 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			return forumPost;
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserMessage changeStatusMessage(UserMessage userMessage, RecipientStatus status) throws ApplicationThrowable {
+		try{
+			UserMessage userMessageToUpdate = getUserMessageDAO().find(userMessage.getMessageId());
+			userMessageToUpdate.setRecipientStatus(status);
+			if(status.equals(RecipientStatus.READ) && userMessageToUpdate.getReadedDate() == null){
+				userMessageToUpdate.setReadedDate(new Date());
+			}
+			
+			getUserMessageDAO().merge(userMessageToUpdate);
+			return userMessageToUpdate;
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

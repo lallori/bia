@@ -15,8 +15,8 @@
 
 				<script type="text/javascript">
 					$j(document).ready(function() {
-						$j('#profile').submit(function (){
-							$j("#mainContent").load($j(this).attr("href"));
+						$j('#profile').click(function (){
+							$j("#main").load($j(this).attr("href"));
 							return false;
 						});
 

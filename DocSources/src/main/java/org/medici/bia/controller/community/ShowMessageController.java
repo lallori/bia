@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.medici.bia.command.community.ShowMessageCommand;
 import org.medici.bia.domain.UserMessage;
+import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +70,11 @@ public class ShowMessageController {
 		if(command.getMessageId() != null){
 			try{
 				UserMessage userMessage = getCommunityService().findUserMessage(command.getMessageId());
-				if(userMessage.getSender().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())){
+				if(userMessage.getUser().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())){
 					model.put("userMessage", userMessage);
+					if(userMessage.getRecipient().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()) && userMessage.getRecipientStatus().equals(RecipientStatus.NOT_READ)){
+						getCommunityService().changeStatusMessage(userMessage, RecipientStatus.READ);
+					}
 				}else{
 					return new ModelAndView("error/ShowMessage");
 				}

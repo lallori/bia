@@ -461,7 +461,7 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		
 					forumsQuery.append(')');
 					if(!forumsQuery.toString().equals("")){
-						if(jpaQuery.length() > 21){
+						if(jpaQuery.length() > 22){
 							jpaQuery.append(" AND ");
 						}
 						jpaQuery.append(forumsQuery);

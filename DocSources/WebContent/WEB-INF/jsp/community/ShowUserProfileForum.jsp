@@ -27,7 +27,7 @@
             </div>
             <div class="row">
                 <div class="item">Email</div> 
-                <div class="value">>${userProfile.mail}</div> 
+                <div class="value">${userProfile.mail}</div> 
             </div>
             <div class="row">
                 <div class="item">Address</div>
@@ -69,15 +69,15 @@
         <div class="list">
             <div class="row">
                 <div class="firstItem">Joined</div> 
-                <div class="firstValue">Tue Mar 02, 2010 12:31 pm</div> 
+                <div class="firstValue">${userProfile.forumJoinedDate}</div> 
             </div>
             <div class="row">
                 <div class="item">Last visited</div>
-                <div class="value">Mon Apr 02, 2012 7:53 am</div>
+                <div class="value">${userProfile.lastLoginDate}</div>
             </div>
             <div class="row">
                 <div class="item">Total posts</div>
-                <div class="value">1 | <a href="#">Search user's posts</a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
+                <div class="value">${userProfile.forumNumberOfPost} | <a href="<c:url value="/community/ShowMyForumPost.do"/>" id="userPost">Search user's posts</a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
             </div>
             <div class="row">
                 <div class="item">Most active forum</div>
@@ -122,6 +122,11 @@
 
 <script>
 	$j(document).ready(function() {
+		$j("#userPost").click(function(){
+			$j("#main").load($j(this).attr('href'));
+			return false;
+		});
+		
 		$j(".forum").click(
 			function(){
 				$j("#mainContent").load($j(this).attr("href"));

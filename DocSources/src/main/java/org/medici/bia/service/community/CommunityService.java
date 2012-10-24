@@ -41,6 +41,7 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -67,6 +68,15 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userMessage
+	 * @param status
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserMessage changeStatusMessage(UserMessage userMessage, RecipientStatus status) throws ApplicationThrowable;
 
 	/**
 	 * 
