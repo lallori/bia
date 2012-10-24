@@ -123,7 +123,7 @@
 					window.close()
 				} else {
 					//otherwise it's in a new search so we add a new tab.
-					$j("#tabs").tabs("add", formSubmitURL, "Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("add", formSubmitURL,  $j(this).text() + " Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					window.close();
 				}
