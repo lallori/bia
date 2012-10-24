@@ -270,8 +270,16 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	@Override
 	public List<Volume> searchVolumes(String query) throws PersistenceException {
 		StringBuilder stringBuilder = new StringBuilder("FROM Volume WHERE (CONVERT(volNum, CHAR)) LIKE '");
-		stringBuilder.append(query.toLowerCase());
-		stringBuilder.append("%' ORDER BY volNum");
+		if(query.matches("^\\d{1,5}[a-zA-Z]{1}")){
+			//In this case we have for ex. '1a' or '418b'
+			stringBuilder.append(query.toLowerCase().substring(0, query.length() - 1));
+			stringBuilder.append("' AND volLetExt LIKE '");
+			stringBuilder.append(query.toLowerCase().charAt(query.length() - 1));
+			stringBuilder.append("' ORDER BY volNum");
+		}else{
+			stringBuilder.append(query.toLowerCase());
+			stringBuilder.append("%' ORDER BY volNum");
+		}
 		Query result = getEntityManager().createQuery(stringBuilder.toString());
 		if(result.getResultList().size() == 0){
 			return null;

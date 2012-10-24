@@ -90,7 +90,7 @@
     <div id="thisMonthDiv">
     	<h1>THIS MONTH</h1>
          <div>
-        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Documenst</a>
+        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
             <span>${currentMonthDBStatistics['DOCUMENT']}</span>
         </div>
         <div>
