@@ -15,15 +15,15 @@
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Expiration password, number of months :</div> 
+			<div class="item">Password expires (months):</div> 
 			<div class="value60">${fn2:getApplicationProperty("user.expiration.password.months")}</div>
 		</div>
 		<div class="row">
-			<div class="item">Expiration user, number of  months :</div> 
+			<div class="item">User expires (months):</div> 
 			<div class="value60">${fn2:getApplicationProperty("user.expiration.user.months")}</div>
 		</div>
         <div class="row">
-			<div class="item">Max Bad Login</div> 
+			<div class="item">Max Bad Logins</div> 
 			<div class="value60">${fn2:getApplicationProperty('user.maxBadLogin')}</div>
 		</div>
 	</div>

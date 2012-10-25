@@ -26,7 +26,7 @@
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="maxBadLogin" for="maxBadLogin" id="maxBadLoginLabel">Max Bad Login</form:label></div>
+				<div class="col_l"><form:label path="maxBadLogin" for="maxBadLogin" id="maxBadLoginLabel">Max Bad Logins</form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:input type="text" path="maxBadLogin" for="maxBadLogin" id="maxBadLogin" cssClass="input_24c"/></div>
