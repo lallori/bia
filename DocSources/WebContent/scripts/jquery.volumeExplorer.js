@@ -55,6 +55,7 @@
             			var numTab = 0;
             			//Verify if a tab with same title already exist
         				$j("#tabs ul li a").each(function(){
+        					var sameId = $j(this).find("span").find("span");
         					var toTest = "";
         					toTest += this.text;
         					if(!tabExist){
@@ -62,7 +63,7 @@
         							numTab++;
         						}
         					}
-        					if(this.text == tabName || toTest.indexOf("Explore Volume " + data.volNum + data.volLetExt) != -1){
+        					if(this.text == tabName || $j(sameId).attr("id") == "titleTab" + data.volNum + data.volLetExt){
         						tabExist = true;
         					}
         				});

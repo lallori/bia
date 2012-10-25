@@ -54,10 +54,10 @@
 								<div class="two"></div>
 							</c:if>
 							<c:if test="${currentCategory.dispositionOrder == 1}">
-								<div class="two">${currentForum.topicsNumber}</div>
+								<div class="two">${currentForum.subForumsNumber}</div>
 							</c:if>
 <%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
-							<div class="three">${currentForum.postsNumber}</div>
+							<div class="three">${currentForum.topicsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
 							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>

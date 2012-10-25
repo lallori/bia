@@ -150,6 +150,7 @@
 				var numTab = 0;
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
+					var sameId = $j(this).find("span").find("span");
 					//MD: Declare variable toTest for fix problem with IE
 					var toTest = "";
 					toTest += this.text;
@@ -158,7 +159,7 @@
 							numTab++;
 						}
 					}
-					if(toTest == tabName || toTest.indexOf("Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
+					if(toTest == tabName || $j(sameId).attr("id") == "titleTab${document.volume.volNum}${document.volume.volLetExt}"){
 						tabExist = true;
 					}
 				});

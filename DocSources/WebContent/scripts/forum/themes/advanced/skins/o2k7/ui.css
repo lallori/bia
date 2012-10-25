@@ -230,3 +230,7 @@
 .mceToolbarEnd.mceToolbarEndButton.mceLast {
     display: none;
 }
+
+#htmlbox_tbl {
+    margin: 10px;
+}
