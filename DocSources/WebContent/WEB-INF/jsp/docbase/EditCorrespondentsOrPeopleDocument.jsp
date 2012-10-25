@@ -47,7 +47,7 @@
 						<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure"/>
 					</div>
 					<div class="col_l">
-						<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
+						<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198 && command.document.senderPeople.personId != null}">
 							<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
 						</c:if>
 						<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198 || command.document.senderPeople.personId == null}">
