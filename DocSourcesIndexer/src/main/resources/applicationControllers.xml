@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <context:component-scan base-package="org.medici.bia.controller"/>
+    
+	<mvc:annotation-driven/>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id ="openEntityManagerInViewInterceptor" name="openEntityManagerInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+				<property name="entityManagerFactory" ref="entityManagerFactory" />
+			</bean>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/Home**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/LoginUser**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/digitization/**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/community/**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/de/**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+					
+		<mvc:interceptor>
+			<mvc:mapping path="/src/**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**"/>
+	       	<bean class="org.medici.bia.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+
+	    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	        <description>Interceptor to change locale on single request.</description>
+	        <property name="paramName" value="locale"/>
+	    </bean>
+		
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<description>HTTP/1.1 Cache-Control headers</description>
+			<property name="cacheSeconds" value="0"/>
+			<property name="useExpiresHeader" value="true"/>
+			<property name="useCacheControlHeader" value="true"/>
+			<property name="useCacheControlNoStore" value="true"/>
+		</bean>
+	</mvc:interceptors>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html"/>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+				</bean>
+				
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<constructor-arg>
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultContentType" ref="htmlMediaType" />
+		<property name="ignoreAcceptHeader" value="true" />
+	</bean>
+
+	<bean id="viewResolver"  class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>  
+	</bean>  
+
+	<bean id="jsonMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="application/json" />
+	</bean>
+	
+	<bean id="htmlMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="text/html" />
+	</bean>
+
+	<bean id="xmlMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="text/xml" />
+	</bean>
+
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+    
+    <bean id="uploadProgressListener" class="org.medici.bia.common.ajax.UploadProgressListener">
+    	<description>Common bean for manage progress bar in upload functions.</description>
+    </bean>
+
+	<bean id="multipartResolver" class="org.medici.bia.common.ajax.AjaxMultipartResolver">
+		<description>Resolver for multipart form</description>
+		<property name="maxInMemorySize">
+			<description>Max in memory 10kbytes </description>		
+    	    <value>100000240</value>
+		</property>
+		<property name="maxUploadSize">
+        	<description>10 MB Max upload size</description>
+        	<value>1024000000</value>
+		</property>
+		<property name="uploadProgressListener">
+        	<ref bean="uploadProgressListener" />
+ 		</property>
+    </bean>
+</beans>

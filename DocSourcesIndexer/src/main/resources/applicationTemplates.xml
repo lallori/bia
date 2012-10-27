@@ -1,0 +1,1270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    
+	<definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp"/>
+
+	<definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
+
+	<definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
+		<put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
+
+	<definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
+
+	<definition name="template.documentNew" template="/WEB-INF/templates/documentNew.jsp"/>
+	
+	<definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
+
+	<definition name="template.forum" template="/WEB-INF/templates/forumDOM.jsp">
+		<put-attribute name="search" value="/WEB-INF/jsp/community/fragments/searchForum.jsp"/>
+		<put-attribute name="chronology" value="/WEB-INF/jsp/community/fragments/chronologyForum.jsp"/>
+		<put-attribute name="user" value="/WEB-INF/jsp/community/fragments/userForum.jsp"/>
+		<put-attribute name="members" value="/WEB-INF/jsp/community/fragments/membersForum.jsp"/>
+		<put-attribute name="whoIsOnline" value="/WEB-INF/jsp/community/fragments/whoIsOnlineForum.jsp"/>
+		<put-attribute name="statistics" value="/WEB-INF/jsp/community/fragments/statisticsForum.jsp"/>
+	</definition>
+
+	<definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
+	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
+
+	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
+		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp" />
+		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp" />
+		<put-attribute name="advancedSearchMenu" value="/WEB-INF/jsp/menu/AdvancedSearch.jsp" />
+		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp" />
+		<put-attribute name="communityForumsMenu" value="/WEB-INF/jsp/menu/CommunityForums.jsp" />
+		<put-attribute name="historyMenu" value="/WEB-INF/jsp/menu/MyHistory.jsp" />
+		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/MyProfile.jsp" />
+		<put-attribute name="markedListMenu" value="/WEB-INF/jsp/menu/MyMarkedList.jsp" />
+		<put-attribute name="helpMenu" value="/WEB-INF/jsp/menu/Help.jsp" />
+		<put-attribute name="logoutMenu" value="/WEB-INF/jsp/menu/Logout.jsp" />
+		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
+		<put-attribute name="digitizationMenu" value="/WEB-INF/jsp/menu/Digitization.jsp" />
+		<put-attribute name="messagesMenu" value="/WEB-INF/jsp/menu/Messages.jsp" />
+		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />
+	</definition>
+
+	<definition name="template.manuscriptViewerFlash" template="/WEB-INF/templates/manuscriptViewerFlash.jsp" />
+
+	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp" />
+
+	<definition name="template.manuscriptViewerHtmlSimple" template="/WEB-INF/templates/manuscriptViewerHtmlSimple.jsp" />
+
+	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
+
+	<definition name="template.person" template="/WEB-INF/templates/person.jsp" />
+
+	<definition name="template.place" template="/WEB-INF/templates/place.jsp" />
+
+	<definition name="template.properties" template="/WEB-INF/templates/properties.jsp" />
+
+	<definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
+		<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
+	</definition>
+	
+	<definition name="template.printMarkedListDOM" template="/WEB-INF/templates/printMarkedListDOM.jsp" />
+
+	<definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
+	  <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
+
+	<definition name="template.searchTitlesOrOccupations" template="/WEB-INF/templates/searchTitlesOrOccupations.jsp" />
+
+	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
+
+	<definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
+
+	<definition name="template.titleOrOccupation" template="/WEB-INF/templates/titleOrOccupation.jsp" />
+
+	<definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
+
+	<definition name="template.user" template="/WEB-INF/templates/user.jsp" />
+
+	<!-- Various definitions -->
+	<definition name="empty" extends="template.emptyDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/Empty.jsp"/>
+    </definition>
+
+   	<definition name="error/ActivateUser" extends="template.registerDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
+    </definition>
+
+    <definition name="error/ResetUserPassword" extends="template.completeDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword"/>
+	</definition>
+
+    <definition name="menu/ShowAdvancedSearchMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowAdvancedSearchMenuModalWindow.jsp"/>
+	</definition>
+
+	<definition name="menu/ShowCreatePersonMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowCreatePersonMenuModalWindow.jsp"/>
+	</definition>
+	
+    <definition name="menu/ShowEntryMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowEntryMenuModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="menu/ShowHelpModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowHelpModalWindow.jsp" />
+	</definition>
+
+	<definition name="menu/ShowTitlesOrOccupationsMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowTitlesOrOccupationsMenuModalWindow.jsp"/>
+	</definition>
+
+    <definition name="menu/ShowVetMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowVetMenuModalWindow.jsp"/>
+	</definition>
+
+	<!-- Authentication Module BEGIN -->
+    <definition name="LoginUser" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
+    </definition>
+    
+    <definition name="Home" extends="template.main">
+    	<put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
+    </definition>
+
+    <definition name="Welcome" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/Welcome.jsp"/>
+    </definition>
+
+    <definition name="user/ActivateUserSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ActivateUserSuccess.jsp"/>
+    </definition>
+
+    <definition name="user/RegisterUser" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
+    </definition>
+
+    <definition name="user/ChangeExpiratedUserPassword" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPassword.jsp"/>
+    </definition>
+
+    <definition name="user/EditPasswordUser" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUser.jsp"/>
+    </definition>
+
+    <definition name="user/EditPasswordUserSuccess" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUserSuccess.jsp"/>
+    </definition>
+    
+    <definition name="user/RegisterUserSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
+    </definition>
+
+	<definition name="user/ResetUserPassword" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
+    </definition>
+    
+    <definition name="user/ResetUserPasswordSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPasswordSuccess.jsp"/>
+    </definition>
+    
+	<definition name="user/SendUserActivationCode" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCode.jsp"/>
+	</definition>
+
+	<definition name="user/SendUserActivationCodeSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCodeSuccess.jsp"/>
+	</definition>
+
+	<definition name="user/SendUserPasswordReset" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordReset.jsp"/>
+	</definition>
+	
+	<definition name="user/SendUserPasswordResetSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
+	</definition>
+    <!-- Authentication Module END -->
+    
+	<!-- Administrator Module BEGIN -->
+	<definition name="admin/EditGeneralProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditGeneralProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/EditEmailProperties" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditEmailProperties.jsp"/>
+	</definition>
+
+	<definition name="admin/EditRecaptchaProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditRecaptchaProperties.jsp"/>
+	</definition>
+
+	<definition name="admin/EditIIPImageProperties" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditIIPImageProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/EditSchedoneProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditSchedoneProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/EditUserProperties" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/EditUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserControl.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAdministrationModuleModalWindow.jsp" />
+	</definition>	
+
+	<definition name="admin/ShowApplicationProperties" extends="template.properties">
+ 		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailProperties.jsp"/>
+ 		<put-attribute name="forum" value="/WEB-INF/jsp/adm/ShowForumProperties.jsp"/>
+		<put-attribute name="general" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
+ 		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
+		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
+ 		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
+ 		<put-attribute name="user" value="/WEB-INF/jsp/adm/ShowUserProperties.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">
+ 		<put-attribute name="email" value="/WEB-INF/jsp/admin/ShowEmailProperties.jsp"/>
+	</definition>
+	<definition name="admin/ShowRecaptchaProperties" extends="template.partialDOM">
+		<put-attribute name="recaptcha" value="/WEB-INF/jsp/admin/ShowRecaptchaProperties.jsp"/>
+	</definition>
+	<definition name="admin/ShowIIPImageProperties" extends="template.partialDOM">
+ 		<put-attribute name="iip" value="/WEB-INF/jsp/admin/ShowIIPImageProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowSchedoneProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowUser" extends="template.user">
+		<put-attribute name="control" value="/WEB-INF/jsp/adm/ShowUserControl.jsp"/>
+		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailControl.jsp" />		
+	</definition>
+	
+	<definition name="admin/ShowUserManagementModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
+	</definition>
+	
+	<definition name="admin/UserSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/UserSearch.jsp"/>
+	</definition>
+	
+	<definition name="admin/UserSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserSearchResult.jsp"/>	
+	</definition>
+
+	<definition name="user/DeleteUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>
+    </definition>
+
+	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
+    </definition>
+
+    <definition name="user/EditPersonalNotesUser" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditPersonalNotesUser.jsp"></put-attribute>
+    </definition>
+
+    <definition name="user/EditUserProfile" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditUserProfile.jsp"></put-attribute>
+    </definition>
+
+	<definition name="user/EraseMyHistory" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EraseMyHistory.jsp"/>
+    </definition>
+    
+    <definition name="user/EraseMyMarkedList" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EraseMyMarkedList.jsp"/>
+    </definition>
+    
+    <definition name="user/ErasePersonalNotesUser" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ErasePersonalNotesUser.jsp"/>
+    </definition>
+    
+     <definition name="user/PrintElementsMyMarkedList" extends="template.printMarkedListDOM">
+     	<put-attribute name="main" value="/WEB-INF/jsp/user/PrintElementsMarkedList.jsp" />
+     </definition>
+
+   	<definition name="user/SearchUserResult" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUserResult.jsp"/>
+    </definition>
+    
+   	<definition name="user/SearchUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUser.jsp"/>
+    </definition>
+
+	<definition name="user/ShowConfirmEraseMyHistoryModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyHistoryModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowConfirmEraseMyMarkedListModalWindow" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmEraseMyMarkedListModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowConfirmErasePersonalNotesUserModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowConfirmErasePersonalNotesUserModalWindow.jsp"/>
+    </definition>
+
+	<definition name="user/ShowMyHistoryModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryModalWindow.jsp"/>
+    </definition>
+	
+	<definition name="user/ShowMyHistoryReportModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryReportModalWindow.jsp"/>
+    </definition>
+
+	<definition name="user/ShowMyHistoryByCategoryModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryByCategoryModalWindow.jsp"/>
+    </definition>
+    
+    <definition name="user/ShowMyMarkedListModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyMarkedListModalWindow.jsp"/>
+    </definition>
+    
+	<definition name="user/ShowPersonalNotesUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/ShowPersonalNotesUser.jsp"/>
+	</definition>
+
+    <definition name="user/ShowUserProfile" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowUserProfile.jsp"/>
+    </definition>
+
+    <definition name="user/UpdateUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUser.jsp"/>
+    </definition>
+    
+	<definition name="user/UploadUserPhoto" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/UploadUserPhoto.jsp"/>
+	</definition>
+	<!-- Administration Module END -->
+
+	<!-- Community Module BEGIN -->
+	<definition name="community/ComposeMessage" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ComposeMessage.jsp"/>
+	</definition>
+	
+	<definition name="community/EditForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMembersForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMembersForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMessage" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessage.jsp"/>
+	</definition>
+	
+	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMessagesByCategoryCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMyMessageBox" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyMessageBox.jsp"/>
+	</definition>
+
+	<definition name="community/ShowMyMessageBoxCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMyMessageBox.jsp"/>
+	</definition>
+
+	<definition name="community/ShowAdvancedSearchForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowAdvancedSearchForumPost.jsp"/>
+	</definition>
+	
+	<definition name="community/AdvancedSearchResultForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchResultForumPost.jsp"/>
+	</definition>
+	
+	<definition name="community/AdvancedSearchResultForumTopic" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/AdvancedSearchResultForumTopic.jsp"/>
+	</definition>
+
+	<definition name="community/SearchResultForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/SearchResultForumPost.jsp"/>
+	</definition>
+
+	<definition name="community/ShowForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowForumCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowPreviewForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowPreviewForumPost.jsp"/>
+	</definition>
+	
+	<definition name="community/ShowTopicForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
+	</definition>
+	
+	<definition name="community/ShowTopicForumCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowUserProfileForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
+	</definition>
+
+	<!-- Community Module END -->
+
+    <!-- Digitization Module BEGIN -->
+    <definition name="digitization/BrowseActivatedVolumes" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseActivatedVolumes.jsp"/>
+    </definition>
+    
+	<definition name="digitization/BrowseDigitizedVolumes" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseDigitizedVolumes.jsp"/>
+    </definition>
+
+	<definition name="digitization/EditDetailsSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditDetailsSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditJpegImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditJpegImagesSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditPdfImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditPdfImagesSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditTiffImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditTiffImagesSchedone.jsp"/>
+	</definition>
+	
+	<definition name="digitization/ShowActivateVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowActivateVolumeModalWindow.jsp" />
+	</definition>
+	
+	<definition name="digitization/ShowDeactivateVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDeactivateVolumeModalWindow.jsp" />
+	</definition>
+	
+	<definition name="digitization/ShowSearchActivatedVolumes" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchActivatedVolumes.jsp"/>
+	</definition>
+	
+	<definition name="digitization/ShowSearchDigitizedVolumes" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchDigitizedVolumes.jsp"/>
+	</definition>
+    <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
+	</definition>
+
+	<definition name="digitization/ShowSchedone" extends="template.schedone">
+		<put-attribute name="menu" value="/WEB-INF/jsp/digitization/ShowMenuSchedone.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/digitization/ShowDetailsSchedone.jsp"/>
+		<put-attribute name="tiffImages" value="/WEB-INF/jsp/digitization/ShowTiffImagesSchedone.jsp"/>
+		<put-attribute name="jpegImages" value="/WEB-INF/jsp/digitization/ShowJpegImagesSchedone.jsp"/>
+		<put-attribute name="pdfImages" value="/WEB-INF/jsp/digitization/ShowPdfImagesSchedone.jsp"/>
+	</definition>
+	<!-- Digitization Module END -->
+
+	<!-- DocBase Module START -->
+	<definition name="docbase/ChoiceStartFolioModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ChoiceStartFolioModalWindow.jsp"/>
+	</definition>
+
+	<definition name="docbase/CreatedDocumentForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/CreatedDocumentForumModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="docbase/CompareDocument" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/CompareDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/EditCorrespondentsOrPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditCorrespondentsOrPeopleDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditDetailsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditExtractOrSynopsisDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditExtractOrSynopsisDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocumentModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditFactCheckDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditPersonDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditPersonDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditTopicDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
+	</definition>
+	
+	<definition name="docbase/LinkedDocumentsTopic" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/LinkedDocumentsTopic.jsp"/>
+	</definition>
+	
+	<definition name="docbase/PrintDocument" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/PrintDocument.jsp"/>	
+	</definition>
+
+	<definition name="docbase/ShareDocument" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShareDocument.jsp"/>	
+	</definition>
+
+	<definition name="docbase/ShowConfirmCreateDocumentForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmCreateDocumentForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowConfirmDeleteDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmDeleteDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowConfirmUndeleteDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmUndeleteDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowDocument" extends="template.document">
+		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="summary" value="/WEB-INF/jsp/docbase/ShowSummaryDocument.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowDocumentNew" extends="template.documentNew">
+		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="summary" value="/WEB-INF/jsp/docbase/ShowSummaryDocument.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowExplorerDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowExplorerDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocumentModalWindow.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowFactCheckDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowSameFolioDocuments" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowSameFolioDocuments.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowTopicsRelatedDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsRelatedDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowTopicDescriptionModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicDescriptionModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowVettingChronologyDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowVettingChronologyDocumentModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.documentNew">
+		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
+		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	<!-- DocBase Module END -->
+
+	<!-- GeoBase Module START -->
+	<definition name="geobase/ComparePlace" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ComparePlace.jsp"/>
+	</definition>
+	
+	<definition name="geobase/CreatePlaceMenuModal" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatePlaceMenuModal.jsp"/>
+	</definition>
+	
+	<definition name="geobase/CreatedPlaceForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatedPlaceForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="geobase/EditDetailsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditDetailsPlace.jsp"/>
+	</definition>
+	
+	<definition name="geobase/EditExternalLinksPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinksPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditGeographicCoordinatesPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditGeographicCoordinatesPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditExternalLinkPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinkPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditExternalLinksPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinksPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditNamesOrNameVariantsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditNamesOrNameVariantsPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditNameOrNameVariantPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditNameOrNameVariantPlace.jsp" />
+	</definition>
+
+	<definition name="geobase/PrintPlace" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/PrintPlace.jsp"/>	
+	</definition>
+
+	<definition name="geobase/SharePlace" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/SharePlace.jsp"/>	
+	</definition>
+	
+	<definition name="geobase/ShowConfirmDeletePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmDeletePlace.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowConfirmUndeletePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmUndeletePlace.jsp"/>
+	</definition>
+	
+	<definition name="geobase/ShowGoogleMapsGeoCoorPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGoogleMapsGeoCoorPlace.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowPlace" extends="template.place">
+		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
+		<put-attribute name="namesOrNamesVariants" value="/WEB-INF/jsp/geobase/ShowNamesOrNamesVariantsPlace.jsp"/>
+		<put-attribute name="sendersAndRecipients" value="/WEB-INF/jsp/geobase/ShowSendersAndRecipientsPlace.jsp"/>
+		<put-attribute name="topicsList" value="/WEB-INF/jsp/geobase/ShowTopicsListPlace.jsp"/>
+		<put-attribute name="birthAndDeath" value="/WEB-INF/jsp/geobase/ShowBirthAndDeathPlace.jsp"/>
+		<put-attribute name="geographicCoordinates" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp"/>
+		<put-attribute name="externalLinks" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp"/>
+		<put-attribute name="hierarchy" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />		
+	</definition>
+	
+	<definition name="geobase/ShowActiveStartPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowActiveStartPeoplePlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowActiveEndPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowActiveEndPeoplePlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowBirthPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowBirthPeoplePlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowConfirmCreatePlaceForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmCreatePlaceForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowDeathPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowDeathPeoplePlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowDetailsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
+	</definition>
+	
+	<definition name="geobase/ShowHierarchyPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowGeographicCoordinatesPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowExternalLinksPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowRecipientDocumentsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowRecipientDocumentsPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowSenderDocumentsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowSenderDocumentsPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowTopicsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowTopicsPlace.jsp" />
+	</definition>
+
+	<definition name="geobase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
+	</definition>
+	
+	<!-- GeoBase Module END -->
+	
+	<!--  Manuscript Viewer START -->
+	<definition name="mview/EditExtractDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditExtractDocumentDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/EditPersonalNotesDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditPersonalNotesDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/EditSynopsisDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditSynopsisDocumentDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/EditDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/EditDocumentInManuscriptViewerHtml.jsp"/>
+	</definition>
+
+	<definition name="mview/PageTurnerDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/PageTurnerDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowExtractDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowExtractDocumentDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerFlash.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtmlSimple">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerHtml.jsp"/>
+	</definition>
+	
+	<definition name="mview/ShowSynopsisDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSynopsisDocumentDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowSummaryVolumeDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSummaryVolumeDialog.jsp"/>
+	</definition>
+	<!--  Manuscript Viewer END -->
+
+	<!-- PeopleBase Module START -->
+	<definition name="peoplebase/CreateNewTitleOrOccupationPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreateNewTitleOrOccupationPerson.jsp" />
+	</definition>
+
+	<definition name="peoplebase/CreatedPersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatedPersonForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ComparePerson" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/CropPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CropPortraitPersonModalWindow.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditChildPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/EditChildrenPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditChildrenPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditFatherPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditFatherPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditMotherPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditMotherPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditNamePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditNamesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamesPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/EditOptionPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditOptionPortraitPersonModalWindow.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditParentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditParentsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditResearchNotesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditResearchNotesPerson.jsp"/>	
+	</definition>
+	
+	<definition name="peoplebase/EditSpousePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/EditSpousesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditTitleOrOccupation" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitleOrOccupation.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditTitleOrOccupationPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitleOrOccupationPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditTitlesOrOccupationsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/PrintPerson" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/PrintPerson.jsp"/>	
+	</definition>
+
+	<definition name="peoplebase/SharePerson" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
+	</definition>
+
+	<definition name="peoplebase/ShowConfirmCreatePersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmCreatePersonForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowChildrenPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowConfirmDeletePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmDeletePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowConfirmUndeletePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmUndeletePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowDetailsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDocumentsPerson.jsp" />
+	</definition>
+	
+	<definition name="peoplebase/ShowFamilyPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowFamilyPerson.jsp" />
+	</definition>
+
+	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowParentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowPerson" extends="template.person">
+		<put-attribute name="menu" value="/WEB-INF/jsp/peoplebase/ShowMenuPerson.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
+		<put-attribute name="titlesOrOccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+		<put-attribute name="parents" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
+		<put-attribute name="children" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
+		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPortraitPersonModalWindow.jsp" />
+	</definition>
+
+	<definition name="peoplebase/ShowRecipientDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRecipientDocumentsPerson.jsp" />
+	</definition>
+	
+	<definition name="peoplebase/ShowReferringToDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowReferringToDocumentsPerson.jsp" />
+	</definition>
+
+	<definition name="peoplebase/ShowRoleCatPeoplePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRoleCatPeoplePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowSenderDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSenderDocumentsPerson.jsp" />
+	</definition>
+	
+	<definition name="peoplebase/ShowResearchNotesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>	
+	</definition>
+
+	<definition name="peoplebase/ShowSearchResultTitlesOrOccupations" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSearchResultTitlesOrOccupations.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowSearchTitlesOrOccupations" extends="template.searchTitlesOrOccupations">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSearchTitlesOrOccupations.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowSpousesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.titlesOrOccupation">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowTitlesOrOccupationsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowTitlesOrOccupationsPeoplePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPeoplePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowVettingChronologyPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowVettingChronologyPersonModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowUploadPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowUploadPortraitPersonModalWindow.jsp"/>
+	</definition>
+
+	<!-- PeopleBase Module END -->
+
+	<!-- Search Module START -->
+	<definition name="search/ChoiceAdvancedSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/ChoiceAdvancedSearchModalWindow.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResult.jsp"/>	
+	</definition>
+
+	<definition name="search/AdvancedSearchDocuments" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchDocuments.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchDocumentsFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchPeople" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPeople.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPeopleFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPlaces.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
+	</definition>
+
+	<definition name="search/SaveUserSearchFilterModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SaveUserSearchFilterModalWindow.jsp"/>	
+	</definition>
+
+	<definition name="search/ShowUserSearchFiltersModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/ShowUserSearchFiltersModalWindow.jsp"/>	
+	</definition>
+
+	<definition name="search/ShowUserSearchFiltersModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/ShowUserSearchFiltersModalWindow.jsp"/>	
+	</definition>
+	
+	<definition name="search/SimpleSearchModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchModalWindow.jsp" />
+	</definition>
+
+	<definition name="search/SimpleSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResult.jsp"/>	
+	</definition>
+
+	<!-- Search Module END -->
+
+	<!-- VolBase Module START -->
+	<definition name="volbase/CompareVolume" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/CompareVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/CreatedVolumeForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/CreatedVolumeForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/EditCorrespondentsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditCorrespondentsVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/EditDescriptionVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDescriptionVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/PrintVolume" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/PrintVolume.jsp"/>	
+	</definition>
+
+	<definition name="volbase/ShareVolume" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShareVolume.jsp"/>	
+	</definition>
+	
+	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowConfirmCreateVolumeForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmCreateVolumeForumModalWindow.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowConfirmDeleteVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmDeleteVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowConfirmUndeleteVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmUndeleteVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowCorrespondentsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowCorrespondentsVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowDescriptionVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDescriptionVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowDetailsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
+	</definition>
+	
+	<definition name="volbase/ShowDocumentsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDocumentsVolume.jsp" />
+	</definition>
+
+	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowVolume" extends="template.volume">
+		<put-attribute name="menu" value="/WEB-INF/jsp/volbase/ShowMenuVolume.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
+		<put-attribute name="description" value="/WEB-INF/jsp/volbase/ShowDescriptionVolume.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/volbase/ShowCorrespondentsVolume.jsp"/>
+		<put-attribute name="context" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
+	</definition>
+	<!-- VolBase Module END -->
+
+	<!-- Generic Response START -->
+	<definition name="response/ActivateVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ActivateVolumeOK.jsp"/>
+	</definition>
+	
+	<definition name="response/ActivateVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ActivateVolumeKO.jsp"/>
+	</definition>
+	
+	<definition name="response/DeactivateVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeactivateVolumeOK.jsp"/>
+	</definition>
+	
+	<definition name="response/DeactivateVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeactivateVolumeKO.jsp"/>
+	</definition>
+	
+	<definition name="response/EditPasswordUserOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/EditPasswordUserOK.jsp"/>
+	</definition>
+
+	<definition name="response/EditPasswordUserKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/EditPasswordUserKO.jsp"/>
+	</definition>
+
+	<definition name="response/OK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/OK.jsp"/>
+	</definition>
+
+	<definition name="response/KO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/KO.jsp"/>
+	</definition>
+
+	<definition name="response/ForumPostMessageOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ForumPostMessageOK.jsp"></put-attribute>
+	</definition>
+
+	<definition name="response/ForumPostMessageKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ForumPostMessageKO.jsp"></put-attribute>
+	</definition>
+
+	<definition name="response/DeleteDocumentOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeleteDocumentKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentKO.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePlaceOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePlaceKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceKO.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePortraitPersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitPersonOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePortraitPersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitPersonKO.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonKO.jsp"/>
+	</definition>
+
+	<definition name="response/DeleteVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeleteVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeKO.jsp"/>
+	</definition>
+	
+	<definition name="response/MarkedListOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListOK.jsp"/>
+	</definition>
+
+	<definition name="response/MarkeListKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListKO.jsp"/>
+	</definition>
+
+	<definition name="response/UndeleteDocumentOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteDocumentOK.jsp"/>
+	</definition>
+	<definition name="response/UndeleteDocumentKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteDocumentKO.jsp"/>
+	</definition>
+	<definition name="response/UndeletePlaceOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePlaceOK.jsp"/>
+	</definition>
+	<definition name="response/UndeletePlaceKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePlaceKO.jsp"/>
+	</definition>
+	<definition name="response/UndeletePersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePersonOK.jsp"/>
+	</definition>
+	<definition name="response/UndeletePersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePersonKO.jsp"/>
+	</definition>
+	<definition name="response/UndeleteVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteVolumeOK.jsp"/>
+	</definition>
+	<definition name="response/UndeleteVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteVolumeKO.jsp"/>
+	</definition>
+	
+	<definition name="response/SaveSearchFilterOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/SaveSearchFilterOK.jsp"/>
+	</definition>
+	<definition name="response/SaveSearchFilterKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/SaveSearchFilterKO.jsp"/>
+	</definition>
+	<!-- Generic Response END -->
+
+	<!-- Errors START -->
+    <definition name="403" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/403.jsp"/>
+    </definition>
+    
+    <definition name="404" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/404.jsp"/>
+    </definition>
+
+    <definition name="500" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/500.jsp"/>
+    </definition>
+
+	<definition name="error/DeleteDocument" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeleteDocument.jsp"/>
+    </definition>
+
+	<definition name="error/DeletePlace" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeletePlace.jsp"/>
+    </definition>
+
+	<definition name="error/deletePerson" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeletePerson.jsp"/>
+    </definition>
+
+	<definition name="error/DeleteVolume" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeleteVolume.jsp"/>
+    </definition>
+	<!-- Errors END -->
+</tiles-definitions>

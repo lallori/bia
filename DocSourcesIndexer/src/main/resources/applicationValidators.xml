@@ -29,11 +29,20 @@
 	</bean>
 
 	<!-- Community base Validator -->
+	<bean id="composeMessageValidator" class="org.medici.bia.validator.community.ComposeMessageValidator">
+		<description>Compose Message Validator.</description>
+	</bean>
+	
 	<bean id="editForumPostValidator" class="org.medici.bia.validator.community.EditForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>
+
+	<bean id="replyForumPostValidator" class="org.medici.bia.validator.community.ReplyForumPostValidator">
+		<description>Edit Forum Post Validator.</description>
+	</bean>
+
 	<!-- Digitization base Validator -->
-	<bean id="editDetailsSchedoneValitor" class="org.medici.bia.validator.digitization.EditDetailsSchedoneValidator">
+	<bean id="editDetailsSchedoneValidator" class="org.medici.bia.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>
 	</bean>
 	
@@ -48,8 +57,20 @@
 	<bean id="editTiffImagesSchedoneValidator" class="org.medici.bia.validator.digitization.EditTiffImagesSchedoneValidator">
         <description>Edit Tiff Images Schedone Validator.</description>
 	</bean>
+	
+	<bean id="showSearchActivatedVolumesValidator" class="org.medici.bia.validator.digitization.ShowSearchActivatedVolumesValidator">
+		<description>Show Search Activated Volumes Validator</description>
+	</bean>
+	
+	<bean id="showSearchDigitizedVolumesValidator" class="org.medici.bia.validator.digitization.ShowSearchDigitizedVolumesValidator">
+		<description>Show Search Digitized Volumes Validator</description>
+	</bean>
 
 	<!-- Document base Validator -->
+	<bean id="addMarkedListDocumentValidator" class="org.medici.bia.validator.docbase.AddMarkedListDocumentValidator">
+		<description>Add Marked List Document Validator.</description>
+	</bean>
+	
 	<bean id="deleteDocumentValidator" class="org.medici.bia.validator.docbase.DeleteDocumentValidator">
         <description>Delete a Document Validator.</description>
 	</bean>
@@ -94,6 +115,10 @@
         <description>Show Document Explorer Validator.</description> 
 	</bean>
 	
+	<bean id="undeleteDocumentValidator" class="org.medici.bia.validator.docbase.UndeleteDocumentValidator">
+        <description>Undelete a Document Validator.</description> 
+	</bean>
+	
 	<!-- Manuscript Viewer Validators -->
 	<bean id="editExtractDocumentDialogValidator" class="org.medici.bia.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
         <description>Edit Extract Document Dialog Validator.</description>
@@ -104,6 +129,10 @@
 	</bean>
 	
 	<!-- Geo base Validators -->
+	<bean id="addMarkedListPlaceValidator" class="org.medici.bia.validator.geobase.AddMarkedListPlaceValidator">
+		<description>Add Marked List Place Validator.</description>
+	</bean>
+	
 	<bean id="deletePlaceValidator" class="org.medici.bia.validator.geobase.DeletePlaceValidator">
         <description>Delete a Place Validator.</description>
 	</bean>
@@ -132,7 +161,15 @@
 		<description>Edit Name Or Name Variant Place Validator.</description>
 	</bean>
 
+	<bean id="undeletePlaceValidator" class="org.medici.bia.validator.geobase.UndeletePlaceValidator">
+        <description>Undelete a Place Validator.</description>
+	</bean>
+
 	<!-- People base validator -->
+	<bean id="addMarkedListPersonValidator" class="org.medici.bia.validator.peoplebase.AddMarkedListPersonValidator">
+		<description>Add Marked List Person Validator.</description>
+	</bean>
+	
 	<bean id="createNewTitleOrOccupationPersonValidator" class="org.medici.bia.validator.peoplebase.CreateNewTitleOrOccupationPersonValidator">
 		<description>Create New Title Or Occupation Person Validator</description>
 	</bean>
@@ -155,6 +192,10 @@
 
 	<bean id="deletePersonValidator" class="org.medici.bia.validator.peoplebase.DeletePersonValidator">
         <description>Delete a Person Validator.</description>
+	</bean>
+
+	<bean id="deletePortraitPersonValidator" class="org.medici.bia.validator.peoplebase.DeletePortraitPersonValidator">
+        <description>Delete a Portrait Person Validator.</description>
 	</bean>
 
 	<bean id="deleteSpousePersonValidator" class="org.medici.bia.validator.peoplebase.DeleteSpousePersonValidator">
@@ -185,6 +226,10 @@
         <description>Edit Name Person Validator.</description>
 	</bean>
 	
+	<bean id="editOptionPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.EditOptionPortraitPersonValidator">
+		<description>Edit Option Portrait Person Validator.</description>
+	</bean>
+	
 	<bean id="editParentsPersonValidator" class="org.medici.bia.validator.peoplebase.EditParentsPersonValidator">
 		<description>Edit Parents Person Validator</description>
 	</bean>
@@ -201,11 +246,23 @@
         <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
+	<bean id="EditTitleOrOccupationValidator" class="org.medici.bia.validator.peoplebase.EditTitleOrOccupationValidator">
+        <description>Edit Title Or Occupation Validator.</description>
+	</bean>
+	
+	<bean id="undeletePersonValidator" class="org.medici.bia.validator.peoplebase.UndeletePersonValidator">
+        <description>Undelete a Person Validator.</description>
+	</bean>
+
 	<bean id="uploadPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.UploadPortraitPersonValidator">
         <description>Upload Portrait Person Validator.</description>
 	</bean>
 
 	<!-- Volume base Validators-->
+	<bean id="addMarkedListVolumeValidator" class="org.medici.bia.validator.volbase.AddMarkedListVolumeValidator">
+		<description>Add Marked List Volume Validator.</description>
+	</bean>
+	
 	<bean id="deleteVolumeValidator" class="org.medici.bia.validator.volbase.DeleteVolumeValidator">
         <description>Delete a Volume Validator.</description>
 	</bean>
@@ -230,6 +287,9 @@
         <description>Show Volume Explorer Validator.</description> 
 	</bean>
 	
+	<bean id="undeleteVolumeValidator" class="org.medici.bia.validator.volbase.UndeleteVolumeValidator">
+        <description>Undelete a Volume Validator.</description>
+	</bean>
 	<!-- Search Validators -->
 	<bean id="saveUserSearchFilterValidator" class="org.medici.bia.validator.search.SaveUserSearchFilterValidator">
 	    <description>Save Search Validator.</description>
@@ -246,6 +306,18 @@
     
     <bean id="createUserValidator" class="org.medici.bia.validator.user.CreateUserValidator">
         <description>User create validator (administration console component).</description>
+    </bean>
+    
+    <bean id="changeExpiratedUserPasswordValidator" class="org.medici.bia.validator.user.ChangeExpiratedUserPasswordValidator">
+        <description>Change expirated user password validator.</description>
+    </bean>
+    
+    <bean id="editPasswordUserValidator" class="org.medici.bia.validator.user.EditPasswordUserValidator">
+        <description>Edit user password validator.</description>
+    </bean>
+    
+    <bean id="editPersonalNotesUserValidator" class="org.medici.bia.validator.user.EditPersonalNotesUserValidator">
+    	<description>Edit personal notes user validator</description>
     </bean>
     
     <bean id="editUserProfileValidator" class="org.medici.bia.validator.user.EditUserProfileValidator">
@@ -294,9 +366,5 @@
 
     <bean id="updateUserValidator" class="org.medici.bia.validator.user.UpdateUserValidator">
         <description>User update validator.</description>
-    </bean>
-
-    <bean id="updateUserPasswordValidator" class="org.medici.bia.validator.user.UpdateUserPasswordValidator">
-        <description>User password update validator.</description>
     </bean>
 </beans>
