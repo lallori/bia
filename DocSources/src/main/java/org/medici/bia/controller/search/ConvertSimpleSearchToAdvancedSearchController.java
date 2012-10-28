@@ -40,7 +40,9 @@ import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.search.AdvancedSearch;
 import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.bia.domain.Month;
+import org.medici.bia.domain.PlaceType;
 import org.medici.bia.domain.SearchFilter;
+import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.search.SearchService;
@@ -75,6 +77,8 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		SearchFilter searchFilter = null;  
 		List<Month> months = null;
+		List<PlaceType> placeTypes = null;
+		List<TopicList> topicsList = null;
 
 		try {
 			months = getSearchService().getMonths();
@@ -107,10 +111,26 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		model.put("command", advancedSearchCommand);
 
 		if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
+			try{
+				topicsList = getSearchService().getTopicsList();
+				model.put("topicsList", topicsList);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ConvertSimpleSearchToAdvancedSearch", model);
+			}
+
 			return new ModelAndView("search/AdvancedSearchDocuments", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
 			return new ModelAndView("search/AdvancedSearchPeople", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
+			try {
+				placeTypes = getSearchService().getPlaceTypes();
+				model.put("placeTypes", placeTypes);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/ConvertSimpleSearchToAdvancedSearch", model);
+			}
+
 			return new ModelAndView("search/AdvancedSearchPlaces", model);
 		} else {
 			return new ModelAndView("search/AdvancedSearchVolumes", model);
