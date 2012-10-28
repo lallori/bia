@@ -182,12 +182,12 @@ public class AdvancedSearchController {
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/AdvancedSearchDocuments", model);
-			}			
+			}
 			return new ModelAndView("search/AdvancedSearchDocuments", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
 			return new ModelAndView("search/AdvancedSearchPeople", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
-			try{
+			try {
 				placeTypes = getSearchService().getPlaceTypes();
 				model.put("placeTypes", placeTypes);
 			} catch (ApplicationThrowable applicationThrowable) {
