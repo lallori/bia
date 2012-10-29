@@ -274,7 +274,8 @@
 				</c:url>
 				<c:if test="${forum.title == 'Documents' }">
 					<div id="searchDocument">
-   						<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+   						<p>In this forum you will find the community discussions related to the documents already transcribed in the BIA database. 
+Use the textbox below to search this forum.</p>
     					<div id="topicActions">
         					<div id="searchThisForumFormDiv">
             					<form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
