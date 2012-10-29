@@ -433,6 +433,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person = getPeopleDAO().find(person.getPersonId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
 				forum = getForumDAO().addNewPersonForum(parentForum, person);
+				
+				// we need to set new FullPath for recursive functions...
+				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
+				getForumDAO().merge(forum);
 
 				ForumOption forumOption = new ForumOption(forum);
 				forumOption.setGroupBySubForum(Boolean.TRUE);
