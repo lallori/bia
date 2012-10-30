@@ -70,7 +70,7 @@ public class ShowMessageController {
 		if(command.getMessageId() != null){
 			try{
 				UserMessage userMessage = getCommunityService().findUserMessage(command.getMessageId());
-				if(userMessage.getUser().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())){
+				if(userMessage.getUser().getAccount().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())){
 					model.put("userMessage", userMessage);
 					if(userMessage.getRecipient().equals(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()) && userMessage.getRecipientStatus().equals(RecipientStatus.NOT_READ)){
 						getCommunityService().changeStatusMessage(userMessage, RecipientStatus.READ);

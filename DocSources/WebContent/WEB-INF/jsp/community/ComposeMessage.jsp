@@ -164,7 +164,7 @@
 	        	$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 				//MD: In variable 'text' i control if the user has inserted no words in the textarea
 				var text = $j("#htmlbox").val();
-	        	if($j("#subject").val() != '' && $j(text).text() != ''){
+	        	if($j("#subject").val() != '' && $j(text).text() != '' && $j("#account").val() != ''){
 	        		$j.ajax({ type:"POST", url:"${ComposeMessageURL}", data:$j(this).serialize(), async:false, success:function(html) {
 	        			$j("#messageSent").css('display','inherit');
 						$j("#messageSent").dialog({
@@ -183,7 +183,7 @@
 						$j("#messageSent").dialog('open');
 	        		}});
 	        		return false;
-	        	}else{
+	        	}else if($j("#subject").val() == '' || $j(text).text() == ''){
 	        		$j("#messageNotValid").css('display','inherit');
 					$j("#messageNotValid").dialog({
 						  autoOpen : false,

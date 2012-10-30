@@ -511,7 +511,7 @@ public class AjaxController {
 			model.put("data", ListBeanUtils.transformList(users, "account"));
 			List<String> names = new ArrayList<String>();
 			for(User currentUser : users){
-				names.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+				names.add(currentUser.getFirstName() + " " + currentUser.getLastName() + " - " + currentUser.getAccount());
 			}
 			model.put("suggestions", names);
 		}catch(ApplicationThrowable aex){

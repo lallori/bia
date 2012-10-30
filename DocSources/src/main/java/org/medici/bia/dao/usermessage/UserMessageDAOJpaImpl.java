@@ -105,11 +105,12 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	 */
 	@Override
 	public Long findNumberOfNewMessages() throws PersistenceException {
-        String queryString = "SELECT COUNT(messageId) FROM UserMessage WHERE recipient=:recipient and recipientStatus=:recipientStatus ORDER BY messageSendedDate DESC";
+        String queryString = "SELECT COUNT(messageId) FROM UserMessage WHERE recipient=:recipient and recipientStatus=:recipientStatus and user.account=:account ORDER BY messageSendedDate DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
         query.setParameter("recipient", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("recipientStatus", RecipientStatus.NOT_READ); 
 
 		return (Long) query.getSingleResult();

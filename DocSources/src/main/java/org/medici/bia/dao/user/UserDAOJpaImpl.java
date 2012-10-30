@@ -363,6 +363,10 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		try {
 			StringBuilder toQuery = new StringBuilder("FROM User WHERE account LIKE '%");
 			toQuery.append(text);
+			toQuery.append("%' OR firstName LIKE '%");
+			toQuery.append(text);
+			toQuery.append("%' OR lastName LIKE '%");
+			toQuery.append(text);
 			toQuery.append("%'");
 			Query query = getEntityManager().createQuery(toQuery.toString());
 			

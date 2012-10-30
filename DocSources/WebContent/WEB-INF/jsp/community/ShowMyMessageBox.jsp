@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	
-	<a href="#" class="deleteMessages" class="buttonSmall">Delete</a>
+	<a href="#" class="deleteMessages buttonSmall">Delete</a>
 
 <div id="forumPaginate">
     <c:set var="paginationData">
