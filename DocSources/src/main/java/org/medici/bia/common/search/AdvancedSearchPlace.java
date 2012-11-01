@@ -369,7 +369,6 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		// TODO Auto-generated method stub
 		StringBuilder jpaQuery = new StringBuilder("FROM Place WHERE ");
 		
 		//Place Name
