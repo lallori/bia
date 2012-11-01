@@ -13,6 +13,11 @@
 		<name>paginationForum</name>
 		<path>/WEB-INF/tags/bia/paginationForum.tag</path>
 	</tag-file>
+	
+	<tag-file>
+		<name>textFormatter</name>
+		<path>/WEB-INF/tags/bia/textFormatter.tag</path>
+	</tag-file>
 
     <function>
         <name>encode</name>
@@ -26,6 +31,12 @@
         <function-signature>java.lang.String getApplicationProperty(java.lang.String)</function-signature>
     </function>
 
+    <function>
+        <name>substring</name>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
+        <function-signature>java.lang.String substring(java.lang.String, java.lang.Integer, java.lang.Integer)</function-signature>
+    </function>
+    
     <function>
         <name>toString</name>
         <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>

@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="page" required="true" type="org.medici.bia.common.pagination.Page" %>
 <c:set var="pageCountToDiplay" value="5"/>

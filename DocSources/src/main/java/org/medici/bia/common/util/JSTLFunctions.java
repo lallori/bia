@@ -31,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.Forum;
@@ -63,7 +64,22 @@ public final class JSTLFunctions {
     		return "unsupportedEncodingException";
     	}
      }
-     
+
+    /**
+     * 
+     * @param inputString
+     * @param start
+     * @param end
+     * @return
+     */
+    public static String substring(String inputString, Integer start, Integer end) {
+    	if ((start == null) || (end == null)) {
+    		return inputString;
+    	}
+
+    	return StringUtils.substring(inputString, start, end);
+    }
+
     /**
      * This method encodes a string in UTF-8 charset.
      * 

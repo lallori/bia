@@ -1,3 +1,4 @@
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -20,7 +21,7 @@
     	</c:url>
      	<div class="discussion">
             <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
-            <a href="${forumURL}" class="forumHref" target="_blank">${discussion.subject}</a> 
+            <a href="${forumURL}" class="forumHref" target="_blank"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a> 
             <span>(${discussion.totalReplies} replies)</span>
             <span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         </div>
