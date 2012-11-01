@@ -108,7 +108,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<String> words;
 	private List<WordType> wordsTypes;
 
-	private Logger logger = Logger.getLogger(this.getClass());
+	private static Logger logger = Logger.getLogger(AdvancedSearchDocument.class);
 	
 	/**
 	 * 

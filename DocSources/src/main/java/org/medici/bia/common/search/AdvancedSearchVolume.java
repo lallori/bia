@@ -93,7 +93,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> inventario;
 	private Boolean logicalDelete;
 
-	private Logger logger = Logger.getLogger(this.getClass());
+	private static Logger logger = Logger.getLogger(AdvancedSearchVolume.class);
 	
 	/**
 	 * 

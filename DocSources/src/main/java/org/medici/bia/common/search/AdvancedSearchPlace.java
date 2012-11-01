@@ -72,7 +72,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private List<Date> datesCreatedBetween;
 	private List<DateType> datesCreatedTypes;
 
-	private Logger logger = Logger.getLogger(this.getClass());
+	private static Logger logger = Logger.getLogger(AdvancedSearchPlace.class);
 
 	/**
 	 * 
