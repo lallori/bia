@@ -107,7 +107,7 @@
 		<h5>PERSON DETAILS</h5>
 	</div>
 	
-	<div class="listDetails">
+	<div class="list">
 		<div class="row">
 			<div class="item">Name</div> <div class="value">${person.mapNameLf}</div>
 		</div>
