@@ -29,7 +29,10 @@ package org.medici.bia.common.util;
 
 import java.util.Collection;
 
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Utility class to work on GrantedAuthority object (spring security).
@@ -38,7 +41,24 @@ import org.springframework.security.core.GrantedAuthority;
  * 
  */
 public class GrantedAuthorityUtils {
-	
+
+	/**
+	 * 
+	 * @param authority
+	 * @return
+	 */
+	public static Boolean isGranted(Authority authority) {
+		Collection<GrantedAuthority> grantedAuthorities = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
+		
+		for (GrantedAuthority grantedAuthority : grantedAuthorities) {
+			if (grantedAuthority.getAuthority().indexOf("ROLE_" + authority.toString()) ==0) {
+				return Boolean.TRUE;
+			}
+		}
+
+		return Boolean.FALSE;
+	}
+
 	/**
 	 * This method convert an array of GrantedAuthority in a string
 	 * rappresentation.

@@ -1,3 +1,4 @@
+<%@ taglib prefix="biasecurity" uri="http://bia.medici.org/jsp:jstl_security" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -73,9 +74,9 @@
         <div class="row">
             <div class="col_l">
             	<ul>
-		            <c:forEach var="userRoles" items="${authorities}" varStatus="iterator">		  			
+		            <c:forEach var="currentAuthority" items="${authorities}" varStatus="iterator">	
   						<li>
-							<input id="groupPolicies" name="userRoles" type="checkbox" value="${authorities[iterator.index].authority}">
+  							<biasecurity:checkbox id="groupPolicies" name="userRoles" cssClass="" value="${currentAuthority.authority}" />
 							<label for="groupPolicies">${authorities[iterator.index].description}</label>
 						</li>			
 		 			</c:forEach>
