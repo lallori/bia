@@ -51,12 +51,12 @@
 			      <td width="15%">Sender</td>
 			      <td width="40%" class="value">${currentElement.document.senderPeople.mapNameLf}</td>
 			      <td width="15%">From</td>
-			      <td width="40%" class="value">$currentElement.{document.senderPlace.placeNameFull}</td>
+			      <td width="40%" class="value">${currentElement.document.senderPlace.placeNameFull}</td>
 			    </tr>
 			
 			    <tr> 
 			      <td width="15%">Recipient</td>
-			      <td width="40%" class="value">$currentElement.{document.recipientPeople.mapNameLf}</td>
+			      <td width="40%" class="value">${currentElement.document.recipientPeople.mapNameLf}</td>
 			      <td width="15%">To</td>
 			      <td width="40%" class="value">${currentElement.document.recipientPlace.placeNameFull}</td>
 			    </tr>

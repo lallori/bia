@@ -8,11 +8,11 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />	
 </c:url>
 
-<c:url var="ShowSenderDocumentsPlaceURL" value="/de/geobase/ShowSenderDocumentsPlace.do">
+<c:url var="ShowSenderDocumentsPlaceURL" value="/src/geobase/ShowSenderDocumentsPlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowRecipientDocumentsPlaceURL" value="/de/geobase/ShowRecipientDocumentsPlace.do">
+<c:url var="ShowRecipientDocumentsPlaceURL" value="/src/geobase/ShowRecipientDocumentsPlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
@@ -20,19 +20,19 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowBirthPeoplePlaceURL" value="/de/geobase/ShowBirthPeoplePlace.do">
+<c:url var="ShowBirthPeoplePlaceURL" value="/src/geobase/ShowBirthPeoplePlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowDeathPeoplePlaceURL" value="/de/geobase/ShowDeathPeoplePlace.do">
+<c:url var="ShowDeathPeoplePlaceURL" value="/src/geobase/ShowDeathPeoplePlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowActiveStartPeoplePlaceURL" value="/de/geobase/ShowActiveStartPeoplePlace.do">
+<c:url var="ShowActiveStartPeoplePlaceURL" value="/src/geobase/ShowActiveStartPeoplePlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<c:url var="ShowActiveEndPeoplePlaceURL" value="/de/geobase/ShowActiveEndPeoplePlace.do">
+<c:url var="ShowActiveEndPeoplePlaceURL" value="/src/geobase/ShowActiveEndPeoplePlace.do">
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
