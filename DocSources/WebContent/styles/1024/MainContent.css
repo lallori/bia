@@ -24,18 +24,18 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	display: inline;
 }
 
-h3.place { /* AlreadyPresent....html */
-	padding:0 0 5px 30px;
-	font-size:14px;
-	font-style:italic;
-	color:#009;
-}
-
 h3.details { /* AlreadyPresent....html */
 	padding:0 0 15px 30px;
 	font-size:11px;
 	font-weight:normal;
 	color:#006;
+}
+
+h3.place { /* AlreadyPresent....html */
+	padding:0 0 5px 30px;
+	font-size:14px;
+	font-style:italic;
+	color:#009;
 }
 
 h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
@@ -196,18 +196,6 @@ span.h7 {
 	text-align: center;
 }
 
-#vettingHistory { /* Actions Menu Button */
-	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
-	font-size: 11px;
-	padding:2px 0 0 0;
-	width:102px;
-	height:17px;
-	position:absolute;
-	text-decoration:none;
-	right: 202px;
-	text-align:center;
-}
-
 #comments { /* Actions Menu Button */
 	background: url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size: 11px;
@@ -217,6 +205,18 @@ span.h7 {
 	position:absolute;
 	text-decoration:none;
 	right: 308px;
+	text-align:center;
+}
+
+#vettingHistory { /* Actions Menu Button */
+	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
+	font-size: 11px;
+	padding:2px 0 0 0;
+	width:102px;
+	height:17px;
+	position:absolute;
+	text-decoration:none;
+	right: 202px;
 	text-align:center;
 }
 
@@ -243,7 +243,6 @@ span.h7 {
 }
 
 /* -------------------------- */
-/*
 /*
 /* --------------------- DELETE ----------------------------------- */
 
@@ -289,7 +288,7 @@ span.h7 {
 }
 
 
-/* ----------------------------------------------------- */ 
+/* ----------------------------------------------------------- */ 
 /*
 /* --------------- DATA ENTRY DISPLAY ELEMENTS ----------------------- */ 
 
@@ -1075,7 +1074,7 @@ select {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.selectform_long{ /* dropdown menu class */
+.selectform_long { /* dropdown menu class */
 	width:100px;
 	border: 1px solid #DCC0BA;
 	background-color: #fbf7f4;
@@ -1083,7 +1082,7 @@ select {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.selectform_Mlong{ /* dropdown menu class */
+.selectform_Mlong { /* dropdown menu class */
 	width:120px;
 	border: 1px solid #DCC0BA;
 	background-color: #fbf7f4;
@@ -1091,7 +1090,7 @@ select {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.selectform_Llong{ 
+.selectform_Llong { 
 	width:135px;
 }
 
@@ -1103,7 +1102,7 @@ select {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.selectform_MXlong{ /* dropdown menu class */
+.selectform_MXlong { /* dropdown menu class */
 	width:140px;
 	border: 1px solid #DCC0BA;
 	background-color: #fbf7f4;
@@ -1111,7 +1110,7 @@ select {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.selectform_LXlong{ /* dropdown menu class */
+.selectform_LXlong { /* dropdown menu class */
 	width:152px;
 	border: 1px solid #DCC0BA;
 	background-color: #fbf7f4;
@@ -5060,6 +5059,10 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 
 #addNewTitleOccupationDiv #topBodyLeftMenuDiv #deleteAction { /* Actions Menu Button */
 	right: 0;
+}
+
+#addNewTitleOccupationDiv #personTitle {
+	margin: 10px 0 20px 5px;
 }
 
 #addNewTitleOccupationDiv #personTitle {

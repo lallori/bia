@@ -136,7 +136,6 @@ h2.title {
 	width: 1000px;
 	height: auto;
 	margin-bottom: 45px;
-	margin-top: 65px;
 }
 
 /* ------------------------------------------------- CONTENT ------------------------------------------------- */ 
@@ -646,6 +645,7 @@ a.returnTo {
 	width: 250px;
 	height: 20px;
 	display: inline-block;
+	float: right;
 }
 
 #jumpToDiv {
@@ -1128,7 +1128,7 @@ ul.abc li {
 	height:35px;
 }
 
-#messagesTable .list a  { /* Other column width */
+#messagesTable .list a  { 
 	margin:0;
 	color:#000;
 }
@@ -1154,12 +1154,12 @@ input[type="checkbox"] {
 	padding-top: 4px;
 }
 
-.subject {
-	color: black;
-}
-
 .message {
 	color: #666;
+}
+
+.subject {
+	color: black;
 }
 
 /* ---------- Message table ---------- */ 
