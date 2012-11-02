@@ -29,6 +29,7 @@
     <a href="#" id="preview" class="buttonSmall">Preview</a>
     
     <form:hidden path="account"/>
+    <form:hidden path="parentMessageId"/>
 </form:form>
 
 <div id="messageSent" title="Sent Message" style="display:none"> 

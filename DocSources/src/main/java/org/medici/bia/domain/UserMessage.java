@@ -85,6 +85,22 @@ public class UserMessage implements Serializable{
 	private User user;
 
 	/**
+	 * Default constructor
+	 */
+	public UserMessage(){
+		super();
+	}
+	
+	/**
+	 * 
+	 * @param messageId
+	 */
+	public UserMessage(Integer messageId){
+		super();
+		setMessageId(messageId);
+	}
+	
+	/**
 	 * @return the messageId
 	 */
 	public Integer getMessageId() {

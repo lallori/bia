@@ -51,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/community/ShowUserProfileForum")
@@ -71,7 +72,12 @@ public class ShowUserProfileForumController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = null;
+			if(command.getAccount() == null){
+				user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			}else{
+				user = getUserService().findUser(command.getAccount());
+			}
 
 			if (user != null) {
 				if (user.getForumJoinedDate() == null) {

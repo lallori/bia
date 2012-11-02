@@ -89,6 +89,9 @@ public class ComposeMessageController {
 			userMessage.setBody(command.getText());
 			userMessage.setSendedDate(new Date());
 			userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
+//			if(command.getParentMessageId() != null){
+//				userMessage.setParentMessage(new UserMessage(command.getParentMessageId()));
+//			}
 
 			try {
 				userMessage = getCommunityService().createNewMessage(userMessage);
@@ -112,8 +115,22 @@ public class ComposeMessageController {
 	public ModelAndView setupForm(@ModelAttribute("command") ComposeMessageCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		command.setSubject("");
-		command.setText("");
+		try{
+			if(command.getParentMessageId() == null){
+				command.setSubject("");
+				command.setText("");
+			}else{
+				UserMessage parentMessage = getCommunityService().findUserMessage(command.getParentMessageId());
+				command.setParentMessageId(parentMessage.getMessageId());
+				command.setSubject("RE: " + parentMessage.getSubject());
+				command.setText("<blockquote>" + parentMessage.getBody() + "</blockquote><br />");
+				command.setAccount(parentMessage.getSender());
+				command.setAccountDescription(parentMessage.getSender());				
+			}
+		}catch(ApplicationThrowable ath){
+			model.put("applicationThrowable", ath);
+			return new ModelAndView("error/ComposeMessage", model);
+		}
 		
 		return new ModelAndView("community/ComposeMessage", model);
 	}

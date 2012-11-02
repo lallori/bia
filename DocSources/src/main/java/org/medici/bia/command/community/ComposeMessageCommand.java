@@ -1,5 +1,5 @@
 /*
- * EditForumPostCommand.java
+ * ComposeMessageCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -36,6 +36,7 @@ package org.medici.bia.command.community;
 public class ComposeMessageCommand {
 	private String account;
 	private String accountDescription;
+	private Integer parentMessageId;
 	private String subject;
 	private String text;
 	
@@ -65,6 +66,20 @@ public class ComposeMessageCommand {
 	 */
 	public void setAccountDescription(String accountDescription) {
 		this.accountDescription = accountDescription;
+	}
+
+	/**
+	 * @return the parentMessageId
+	 */
+	public Integer getParentMessageId() {
+		return parentMessageId;
+	}
+
+	/**
+	 * @param parentMessageId the parentMessageId to set
+	 */
+	public void setParentMessageId(Integer parentMessageId) {
+		this.parentMessageId = parentMessageId;
 	}
 
 	/**

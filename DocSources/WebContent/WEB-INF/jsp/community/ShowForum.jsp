@@ -47,7 +47,7 @@
 						<div class="one">
 							<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
 							<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
-								<span>${currentForum.description}</span>
+								<span>${currentForum.forumHelpText}</span>
 							</div>
 							<!-- MD: Hide the second column if the category hasn't threads -->
 							<c:if test="${currentCategory.dispositionOrder != 1}">

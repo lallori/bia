@@ -109,15 +109,24 @@ public class ReplyForumPostController {
 		ForumPost firstPostTopicToReply = new ForumPost();
 
 		try {
-			firstPostTopicToReply = getCommunityService().findFirstPostTopic(command.getTopicId());
+			if(command.getParentPostId() == null){
+				firstPostTopicToReply = getCommunityService().findFirstPostTopic(command.getTopicId());
+			}else{
+				firstPostTopicToReply = getCommunityService().findPost(command.getParentPostId());
+			}
 		} catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/EditPostForum", model);
 			
 		}
 		//command.setParentPostId(postToReply.getParentPost().getId());
-		command.setParentPostId(firstPostTopicToReply.getPostId());
-		command.setSubject("RE: " + firstPostTopicToReply.getSubject());
-		command.setText("");
+		if(command.getParentPostId() == null){
+			command.setParentPostId(firstPostTopicToReply.getPostId());
+			command.setSubject("RE: " + firstPostTopicToReply.getSubject());
+			command.setText("");
+		}else{
+			command.setSubject("RE: " + firstPostTopicToReply.getSubject());
+			command.setText("<blockquote>" + firstPostTopicToReply.getText() + "</blockquote><br />");
+		}
 
 		return new ModelAndView("community/EditForumPost", model);
 	}

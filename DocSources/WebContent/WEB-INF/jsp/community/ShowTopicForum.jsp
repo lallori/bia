@@ -88,8 +88,9 @@
 		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
 	</c:url>
 
-	<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReportForumPost.do">
-		<c:param name="postId" value="${currentPost.postId}"/>
+	<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReplyForumPost.do">
+		<c:param name="postId" value="0"/>
+		<c:param name="parentPostId" value="${currentPost.postId}"/>
 		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
 		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
 	</c:url>
@@ -122,9 +123,13 @@
     </div>
     <div id="post">
 		<%-- In this case we enter in "my posts page" --%>
+		<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+			<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+			<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
+		</c:url>
     	<c:choose>
     		<c:when test="${topic.topicId == null}">
-    			<h2>${currentPost.subject} <i>in</i> ${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</h2>
+    			<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
     		</c:when>
     		<c:otherwise>
         		<h2>${currentPost.subject}</h2>
@@ -226,15 +231,26 @@
 // 				return false;
 // 			});
 
-			$j('.quotePost').die();
-			$j('.quotePost').click(function (){
-				$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-				return false;
-			});
+// 			$j('.quotePost').die();
+// 			$j('.quotePost').click(function (){
+// 				$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 				return false;
+// 			});
 
 			$j('#postReply').click(function (){
 				$j("#main").load($j(this).attr("href"));
 				$j("#prevUrl").val($j(".paginateActive").attr("href"));
+				return false;
+			});
+			
+			$j('.quotePost').click(function (){
+				$j("#main").load($j(this).attr("href"));
+				$j("#prevUrl").val($j(".paginateActive").attr("href"));
+				return false;
+			});
+			
+			$j('.linkTopic').click(function(){
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			

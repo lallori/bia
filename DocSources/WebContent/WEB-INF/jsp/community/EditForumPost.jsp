@@ -75,7 +75,7 @@
 		$j(document).ready(function() {
 			$j('#submit').click(function(){
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
-				//MD: In variable 'text' i control if the user has inserted no words in the textarea
+				//MD: In variable 'text' I control if the user has inserted no words in the textarea
 				var text = $j("#htmlbox").val();
 				if($j("#subject").val() != '' && $j(text).text() != ''){
 					$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {

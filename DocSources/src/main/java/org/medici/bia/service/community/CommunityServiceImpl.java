@@ -331,6 +331,10 @@ public class CommunityServiceImpl implements CommunityService {
 			outBoxMessage.setSendedDate(userMessage.getSendedDate());
 			outBoxMessage.setRecipientStatus(userMessage.getRecipientStatus());
 			outBoxMessage.setMessageId(null);
+			//If the message is a reply
+			if(userMessage.getParentMessage() != null){
+				outBoxMessage.setParentMessage(getUserMessageDAO().find(userMessage.getParentMessage().getMessageId()));
+			}
 			outBoxMessage.setUser(outBoxUser);
 			getUserMessageDAO().persist(outBoxMessage);
 			
@@ -342,6 +346,10 @@ public class CommunityServiceImpl implements CommunityService {
 			inBoxMessage.setSendedDate(userMessage.getSendedDate());
 			inBoxMessage.setRecipientStatus(userMessage.getRecipientStatus());
 			inBoxMessage.setMessageId(null);
+			//If the message is a reply
+			if(userMessage.getParentMessage() != null){
+				inBoxMessage.setParentMessage(getUserMessageDAO().find(userMessage.getParentMessage().getMessageId()));
+			}
 			inBoxMessage.setUser(inBoxUser);
 			getUserMessageDAO().persist(inBoxMessage);
 			

@@ -42,14 +42,23 @@
 		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
 	</c:url>
 	
+	<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+	</c:url>
+	
+	<c:url var="ShowForumURL" value="/community/ShowForum.do">
+		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+	</c:url>
+	
 	<div id="postTable">
 	<div id="topicIcons">
         <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
         <a href="${ReplyWithQuoteForumPostURL}" id="quotePost" title="Reply with quote"></a>
     </div>
     <div id="post">
-        <h2>${currentPost.topic.subject}</h2>
-        <p> in ${currentPost.forum.title} - ${currentPost.forum.subType}</p>
+        <h2><a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.subject}</a></h2>
+        <p> in <a href="${ShowForumURL}" class="linkForum">${currentPost.forum.title} - ${currentPost.forum.subType}</a></p>
         <div>
         	<p>${currentPost.subject} by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         	<p class="textPost">${bia:searchTextResultPost(currentPost, yourSearch)}</p>
@@ -131,6 +140,16 @@
 			});
 
 			$j('#postReply').click(function (){
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j('.linkTopic').click(function(){
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j('.linkForum').click(function(){
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});

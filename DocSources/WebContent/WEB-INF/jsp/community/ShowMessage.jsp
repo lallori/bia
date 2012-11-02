@@ -6,11 +6,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-		<c:param name="postId" value="0"/>
-		<c:param name="forumId" value="${topic.forum.forumId}"/>
-		<c:param name="topicId" value="${topic.topicId}"/>
+	<c:url var="ReplyMessageURL" value="/community/ComposeMessage.do">
+		<c:param name="parentMessageId" value="${userMessage.messageId}"/>
 	</c:url>
+
+<%-- 	<c:url var="ReplyMessageURL" value="/community/ShowMessagesByCategory.do" /> --%>
 	
 	<c:if test="${userMessage.user.account == account}">
 	<div id="message">
@@ -30,7 +30,9 @@
         	</div>
 		</div>
 	</div>
-</c:if>
+	</c:if>
+	
+	<a id="reply" class="buttonSmall" href="${ReplyMessageURL}">Reply</a>
 
 					
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
@@ -77,5 +79,11 @@
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
+			
+			$j('#reply').die();
+			$j('#reply').live('click', function(){
+				$j("#main").load($j(this).attr('href'));
+				return false;
+			})
 		});
 	</script>

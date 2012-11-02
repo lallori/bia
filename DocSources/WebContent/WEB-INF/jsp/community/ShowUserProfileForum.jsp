@@ -7,6 +7,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="SendMessageURL" value="/community/ComposeMessage.do">
+	<c:param name="account" value="${userProfile.account}"/>
+	<c:param name="accountDescription" value="${userProfile.firstName} ${userProfile.lastName}"/>
+</c:url>
 
 <div id="profileTable">
 	<div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
@@ -93,8 +97,10 @@
     <div id="contact">
         <h3>Contact</h3>
         <ul>
-            <li><img src="/DocSources/images/forum/button_email.png" alt="email" /> <a href="mailto:lisakaborycha@gmail.com">Send E-mail to <span>Lisa Kaborycha</span></a></li>
-            <li><img src="/DocSources/images/forum/button_privateMessage.png" alt="private message" /> <a href="#">Send private message</a></li><!-- Linka al compose message con la voce "To" già compilata -->
+        	<c:if test="${userProfile.mail != null && userProfile.mail != ''}">
+            	<li><img src="/DocSources/images/forum/button_email.png" alt="email" /> <a href="mailto:${userProfile.mail}">Send E-mail to <span>${userProfile.firstName} ${userProfile.lastName}</span></a></li>
+            </c:if>
+            <li><img src="/DocSources/images/forum/button_privateMessage.png" alt="private message" /> <a href="${SendMessageURL}" id="sendMessage">Send private message</a></li>
         </ul>
     </div>
 </div>
@@ -158,6 +164,11 @@
 				$j("#mainContent").load($j(this).attr("href"));
 				$j("#whoIsOnlineDiv").css('display','inherit');
 				return false;});
+		
+		$j("#sendMessage").click(function(){
+			$j("#main").load($j(this).attr("href"));
+			return false;
+		});
 	});
 </script>
 
