@@ -38,52 +38,165 @@ public class EditEmailPropertiesCommand {
 	private String activationText;
 	private String resetUserPasswordSubject;
 	private String resetUserPasswordText;
+	private String mailServerHost;
+	private Integer mailServerPort;
+	private String mailServerUsername;
+	private String mailServerPassword;
+	private String mailSmtpAuth;
+	private String mailSmtpStarttlsEnable;
+	private String mailTransportProtocol;
+
 	/**
 	 * @return the activationSubject
 	 */
 	public String getActivationSubject() {
 		return activationSubject;
 	}
+
 	/**
 	 * @param activationSubject the activationSubject to set
 	 */
 	public void setActivationSubject(String activationSubject) {
 		this.activationSubject = activationSubject;
 	}
+
 	/**
 	 * @return the activationText
 	 */
 	public String getActivationText() {
 		return activationText;
 	}
+
 	/**
 	 * @param activationText the activationText to set
 	 */
 	public void setActivationText(String activationText) {
 		this.activationText = activationText;
 	}
+
 	/**
 	 * @return the resetUserPasswordSubject
 	 */
 	public String getResetUserPasswordSubject() {
 		return resetUserPasswordSubject;
 	}
+
 	/**
 	 * @param resetUserPasswordSubject the resetUserPasswordSubject to set
 	 */
 	public void setResetUserPasswordSubject(String resetUserPasswordSubject) {
 		this.resetUserPasswordSubject = resetUserPasswordSubject;
 	}
+
 	/**
 	 * @return the resetUserPasswordText
 	 */
 	public String getResetUserPasswordText() {
 		return resetUserPasswordText;
 	}
+
 	/**
 	 * @param resetUserPasswordText the resetUserPasswordText to set
 	 */
 	public void setResetUserPasswordText(String resetUserPasswordText) {
 		this.resetUserPasswordText = resetUserPasswordText;
+	}
+
+	/**
+	 * @return the mailServerHost
+	 */
+	public String getMailServerHost() {
+		return mailServerHost;
+	}
+
+	/**
+	 * @param mailServerHost the mailServerHost to set
+	 */
+	public void setMailServerHost(String mailServerHost) {
+		this.mailServerHost = mailServerHost;
+	}
+
+	/**
+	 * @return the mailServerPort
+	 */
+	public Integer getMailServerPort() {
+		return mailServerPort;
+	}
+
+	/**
+	 * @param mailServerPort the mailServerPort to set
+	 */
+	public void setMailServerPort(Integer mailServerPort) {
+		this.mailServerPort = mailServerPort;
+	}
+
+	/**
+	 * @return the mailServerUsername
+	 */
+	public String getMailServerUsername() {
+		return mailServerUsername;
+	}
+
+	/**
+	 * @param mailServerUsername the mailServerUsername to set
+	 */
+	public void setMailServerUsername(String mailServerUsername) {
+		this.mailServerUsername = mailServerUsername;
+	}
+
+	/**
+	 * @return the mailServerPassword
+	 */
+	public String getMailServerPassword() {
+		return mailServerPassword;
+	}
+
+	/**
+	 * @param mailServerPassword the mailServerPassword to set
+	 */
+	public void setMailServerPassword(String mailServerPassword) {
+		this.mailServerPassword = mailServerPassword;
+	}
+
+	/**
+	 * @return the mailSmtpAuth
+	 */
+	public String getMailSmtpAuth() {
+		return mailSmtpAuth;
+	}
+
+	/**
+	 * @param mailSmtpAuth the mailSmtpAuth to set
+	 */
+	public void setMailSmtpAuth(String mailSmtpAuth) {
+		this.mailSmtpAuth = mailSmtpAuth;
+	}
+
+	/**
+	 * @return the mailSmtpStarttlsEnable
+	 */
+	public String getMailSmtpStarttlsEnable() {
+		return mailSmtpStarttlsEnable;
+	}
+
+	/**
+	 * @param mailSmtpStarttlsEnable the mailSmtpStarttlsEnable to set
+	 */
+	public void setMailSmtpStarttlsEnable(String mailSmtpStarttlsEnable) {
+		this.mailSmtpStarttlsEnable = mailSmtpStarttlsEnable;
+	}
+
+	/**
+	 * @return the mailTransportProtocol
+	 */
+	public String getMailTransportProtocol() {
+		return mailTransportProtocol;
+	}
+
+	/**
+	 * @param mailTransportProtocol the mailTransportProtocol to set
+	 */
+	public void setMailTransportProtocol(String mailTransportProtocol) {
+		this.mailTransportProtocol = mailTransportProtocol;
 	}
 }

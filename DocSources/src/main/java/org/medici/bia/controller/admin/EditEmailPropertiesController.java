@@ -96,7 +96,14 @@ public class EditEmailPropertiesController {
 				hashMap.put("mail.activationUser.text", command.getActivationText());
 				hashMap.put("mail.resetUserPassword.subject", command.getResetUserPasswordSubject());
 				hashMap.put("mail.resetUserPassword.text", command.getResetUserPasswordText());
-
+				/*hashMap.put("mail.server.host", command.getMailServerHost());
+				hashMap.put("mail.server.port", command.getMailServerPort().toString());
+				hashMap.put("mail.server.username", command.getMailServerUsername());
+				hashMap.put("mail.server.password", command.getMailServerPassword());
+				hashMap.put("mail.smtp.auth", command.getMailSmtpAuth());
+				hashMap.put("mail.smtp.starttls.enable", command.getMailSmtpStarttlsEnable());
+				hashMap.put("mail.transport.protocol", command.getMailTransportProtocol());
+*/
 				getAdminService().updateApplicationProperties(hashMap);
 
 				// We need to refresh ApplicationPropertyManager...
