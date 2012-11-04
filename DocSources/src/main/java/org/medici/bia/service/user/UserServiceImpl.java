@@ -871,6 +871,8 @@ public class UserServiceImpl implements UserService {
 			user.setApproved(false);
 			user.setLocked(false);
 			user.setForumNumberOfPost(new Long(0));
+			user.setMailHide(Boolean.TRUE);
+			user.setMailNotification(Boolean.FALSE);
 
 			getUserDAO().persist(user);
 
