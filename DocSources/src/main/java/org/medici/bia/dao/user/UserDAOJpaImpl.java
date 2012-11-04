@@ -391,6 +391,9 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 					paginationFilter.addSortingCriteria("city", paginationFilter.getSortingDirection());
 					break;
 				case 3:
+					paginationFilter.addSortingCriteria("country", paginationFilter.getSortingDirection());
+					break;
+				case 4:
 					paginationFilter.addSortingCriteria("lastLoginDate", paginationFilter.getSortingDirection());
 					break;
 				default:
