@@ -1,5 +1,5 @@
 /*
- * ShowUserCommand.java
+ * EditUserCommand.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * Command bean for action "show user".
+ * Command bean for action "Edit User".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)

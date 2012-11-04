@@ -65,7 +65,14 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User editUser(User user) throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @param user
+	 * @throws ApplicationThrowable
+	 */
+	User editUserMail(User user) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param account
@@ -73,7 +80,7 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User findUser(String account) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param user
@@ -81,7 +88,7 @@ public interface AdminService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	List<User> findUsers(User user) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user

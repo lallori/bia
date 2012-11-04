@@ -217,6 +217,28 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public User editUserMail(User user) throws ApplicationThrowable {
+		try{
+			User userToUpdate = getUserDAO().findUser(user.getAccount());
+			
+			if (userToUpdate != null) {
+				userToUpdate.setMail(user.getMail());
+				userToUpdate.setMailHide(user.getMailHide());
+				userToUpdate.setMailNotification(user.getMailNotification());
+				
+				getUserDAO().merge(userToUpdate);
+			}
+			
+			return userToUpdate;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User findUser(String account) throws ApplicationThrowable {
 		try{
 			return getUserDAO().findUser(account);
@@ -224,7 +246,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -236,7 +258,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -249,7 +271,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * This method will generate the user inital. The format of the returned string is :
 	 * - First Letter of field First Name;

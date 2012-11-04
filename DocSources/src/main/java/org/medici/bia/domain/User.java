@@ -107,6 +107,10 @@ public class User implements Serializable {
 	private Boolean locked;
 	@Column (name="\" mail\"", length=50, nullable=false)
 	private String mail;
+	@Column (name="\"mailHide\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean mailHide;
+	@Column (name="\"mailNotification\"", nullable=false, columnDefinition="BIT default 0")
+	private Boolean mailNotification;
 	@Column (name="\"organization\"", length=50, nullable=false)
 	private String organization;
 	@Column (name="\"password\"", length=64, nullable=false)
@@ -140,6 +144,10 @@ public class User implements Serializable {
 		setAccount(newAccount);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getAccount() {
 		return account;
 	}
@@ -535,6 +543,22 @@ public class User implements Serializable {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public void setMailHide(Boolean mailHide) {
+		this.mailHide = mailHide;
+	}
+
+	public Boolean getMailHide() {
+		return mailHide;
+	}
+
+	public void setMailNotification(Boolean mailNotification) {
+		this.mailNotification = mailNotification;
+	}
+
+	public Boolean getMailNotification() {
+		return mailNotification;
 	}
 
 	/**

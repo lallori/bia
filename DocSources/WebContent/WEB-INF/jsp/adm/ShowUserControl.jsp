@@ -15,7 +15,7 @@
 	<div id="EditUserControlDiv" class="background">
 	<div class="title">
 		<h5>USER CONTROL</h5>
-		<a id="EditUserControl" class="editButton" href="${EditUserControlURL}" title="Edit User Control"></a>
+		<a id="EditUserControl" class="editButton" href="${EditUserControlURL}" title="Edit User Control"></a><span id="loading"/>
 	</div>
 	
 	<div class="list">

@@ -223,9 +223,9 @@ public class EditUserController {
 			
 			try {
 				if(getAdminService().findUser(command.getAccount()) != null){
-					getAdminService().editUser(user);
+					user = getAdminService().editUser(user);
 				}else{
-					getAdminService().addNewUser(user);
+					user = getAdminService().addNewUser(user);
 				}
 				
 				model.put("user", user);

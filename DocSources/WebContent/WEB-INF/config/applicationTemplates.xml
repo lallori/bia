@@ -211,6 +211,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserControl.jsp"/>
 	</definition>
 	
+	<definition name="admin/EditUserEmail" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserEmail.jsp"/>
+	</definition>
+	
 	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAdministrationModuleModalWindow.jsp" />
 	</definition>	
@@ -245,7 +249,7 @@
 	
 	<definition name="admin/ShowUser" extends="template.user">
 		<put-attribute name="control" value="/WEB-INF/jsp/adm/ShowUserControl.jsp"/>
-		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailControl.jsp" />		
+		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowUserEmail.jsp" />		
 	</definition>
 	
 	<definition name="admin/ShowUserManagementModalWindow" extends="template.partialDOM">
