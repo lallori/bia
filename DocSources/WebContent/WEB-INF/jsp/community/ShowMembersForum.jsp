@@ -54,7 +54,7 @@
         <c:forEach items="${membersPage.list}" var="currentMember" varStatus="status">
         <div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
         	<div class="one">
-        		<a class="username" href="#">${currentMember.account} - ${currentMemebr.firstName} ${currentMember.lastName}</a>
+        		<a class="username" href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentMember.account}">${currentMember.account} - ${currentMemebr.firstName} ${currentMember.lastName}</a>
         	</div>
         	<div class="two">${currentMember.forumNumberOfPost}</div>
         	<div class="three"></div>
@@ -70,6 +70,12 @@
 <script>
 	$j(document).ready(function() {
 		$j(".abc > li a").click(function(){
+			$j("#main").load($j(this).attr('href'));
+			return false;
+		});
+		
+		$j(".username").die();
+		$j(".username").live('click', function(){
 			$j("#main").load($j(this).attr('href'));
 			return false;
 		});

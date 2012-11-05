@@ -59,7 +59,7 @@
 <%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
 							<div class="three">${currentForum.topicsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
-							<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+							<div class="four">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>
 							<c:if test="${empty currentForum.lastPost}">
 							<div class="four">empty forum</div>
@@ -209,7 +209,7 @@
 						<div class="two">${currentForum.topicsNumber}</div>
 			            <div class="three">0</div>
 					<c:if test="${not empty currentForum.lastPost}">
-			            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+			            <div class="four">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 			        </c:if>
 					<c:if test="${empty currentForum.lastPost}">
 			            <div class="four"></div>
@@ -278,9 +278,14 @@
 Use the textbox below to search this forum.</p>
     					<div id="topicActions">
         					<div id="searchThisForumFormDiv">
-            					<form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
+            					<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
                 					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
-                					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall"/>
+                					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall" disabled="disabled"/>
+                					<input type="hidden" name="displayResults" value="Topics"/>
+                					<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
+                					<input type="hidden" name="newSearch" value="true"/>
+                					<input type="hidden" name="sortResults" value="POST_TIME"/>
+                					<input type="hidden" name="order" value="asc"/>
                 				</form>
                 			</div>
                 		</div>
@@ -336,7 +341,7 @@ Use the textbox below to search this forum.</p>
 						            <div class="three">${currentTopic.totalReplies}</div>
 						            <div class="four">-</div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -449,9 +454,14 @@ Use the textbox below to search this forum.</p>
    					<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
     				<div id="topicActions">
         				<div id="searchThisForumFormDiv">
-            				<form id="SearchForumThis" action="/DocSources/src/SimpleSearch.do" method="post">
+            				<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
                					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
-               					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall"/>
+               					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall" disabled="disabled"/>
+               					<input type="hidden" name="displayResults" value="Topics"/>
+                				<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
+                				<input type="hidden" name="newSearch" value="true"/>
+                				<input type="hidden" name="sortResults" value="POST_TIME"/>
+                				<input type="hidden" name="order" value="asc"/>
                				</form>
                			</div>
                		</div>
@@ -508,7 +518,7 @@ Use the textbox below to search this forum.</p>
 						            <div class="three">${currentTopic.totalReplies}</div>
 						            <div class="four">-</div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -623,6 +633,19 @@ Use the textbox below to search this forum.</p>
 					$j("#chronologyDiv .arrowForum").css('display','');
 					$j("#chronologyDiv .forum").css('display','');
     			}});
+				
+				$j('#searchForumThisText').die();
+				$j('#searchForumThisText').live('click',function(){
+					$j(this).val('');
+					$j("#searchDocuments").removeAttr('disabled');
+					return false;
+				});
+				
+				$j('#SearchForumThis').submit(function(){
+					var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+					$j("#main").load(formSubmitURL);
+	 				return false;
+				});
 
 				$j('.forumHref').die();
 				$j('.forumHref').live('click', function() {
@@ -656,6 +679,12 @@ Use the textbox below to search this forum.</p>
 				
 				$j('.forum').die();
 				$j('.forum').live('click', function() {
+					$j("#main").load($j(this).attr("href"));
+					return false;
+				});
+				
+				$j(".link").die();
+				$j(".link").live('click', function(){
 					$j("#main").load($j(this).attr("href"));
 					return false;
 				});

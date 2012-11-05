@@ -27,13 +27,16 @@
  */
 package org.medici.bia.controller.community;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.medici.bia.command.community.ShowUserProfileForumCommand;
+import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.user.UserService;
@@ -79,13 +82,14 @@ public class ShowUserProfileForumController {
 				user = getUserService().findUser(command.getAccount());
 			}
 
-			if (user != null) {
-				if (user.getForumJoinedDate() == null) {
-					user = getCommunityService().joinUserOnForum();
-				}
-			}
+//			if (user != null) {
+//				if (user.getForumJoinedDate() == null) {
+//					user = getCommunityService().joinUserOnForum();
+//				}
+//			}
 
 			model.put("userProfile", user);
+			model.put("userGroup", UserRoleUtils.getMostSignificantRole(new ArrayList<UserRole>(user.getUserRoles())));
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowUserProfileForum", model);

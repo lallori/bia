@@ -43,7 +43,8 @@
             </div>
             <div class="row">
                 <div class="item">Group</div>
-                <div class="value"><security:authentication property="principal.significantRoleDescription"/></div>
+<%--                 <div class="value"><security:authentication property="principal.significantRoleDescription"/></div> --%>
+				<div class="value">${userGroup}</div>
             </div>
             <div class="row">
                 <div class="item">Title</div> 

@@ -184,7 +184,7 @@
 // 					$j("#main").html(html);
 //    				});
 				return false;
-			})
+			});
 
 		});
 	</script>
