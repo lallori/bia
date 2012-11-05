@@ -372,6 +372,26 @@
 				</tr>
 			</table>
 			
+			<c:if test="${peopleValues.get(currentElement.id).get(0) > 0}">
+				<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
+	
+				<h5>Documents Related</h5>
+				<table>
+					<tr>
+						<td width="240">Documents Related to this person entry</td><td class="value">${peopleValues.get(currentElement.id).get(0)}</td>
+					</tr>
+					<tr>
+						<td width="240">Sender</td><td class="value">${peopleValues.get(currentElement.id).get(1)}</td>
+					</tr>
+					<tr>
+						<td width="240">Recipient</td><td class="value">${peopleValues.get(currentElement.id).get(2)}</td>
+					</tr>
+					<tr>
+						<td width="240">Referring To</td><td class="value">${peopleValues.get(currentElement.id).get(3)}</td>
+					</tr>			
+				</table>
+			</c:if>
+			
 			<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
 			
 			<h5>Names</h5>

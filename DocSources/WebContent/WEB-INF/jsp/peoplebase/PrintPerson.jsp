@@ -31,6 +31,26 @@
 		</tr>
 	</table>
 	
+	<c:if test="${docsRelated != 0}">
+		<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
+	
+		<h5>Documents Related</h5>
+		<table>
+			<tr>
+				<td width="240">Documents Related to this person entry</td><td class="value">${docsRelated}</td>
+			</tr>
+			<tr>
+				<td width="240">Sender</td><td class="value">${senderDocsRelated}</td>
+			</tr>
+			<tr>
+				<td width="240">Recipient</td><td class="value">${recipientDocsRelated}</td>
+			</tr>
+			<tr>
+				<td width="240">Referring To</td><td class="value">${referringDocsRelated}</td>
+			</tr>			
+		</table>
+	</c:if>
+	
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
 	
 	<h5>Names</h5>

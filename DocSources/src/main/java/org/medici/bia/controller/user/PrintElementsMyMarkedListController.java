@@ -101,6 +101,7 @@ public class PrintElementsMyMarkedListController {
 				//Person print values
 				Map<Integer, List<Marriage>> peopleMarriageValues = new HashMap<Integer, List<Marriage>>();
 				Map<Integer, List<People>> peopleChildrenValues = new HashMap<Integer, List<People>>();
+				Map<Integer, List<Integer>> peopleValuesToPrint = new HashMap<Integer, List<Integer>>();
 				
 				for(UserMarkedListElement currentElement : elementsToPrint){
 					if(currentElement.getPlace() != null){
@@ -119,12 +120,22 @@ public class PrintElementsMyMarkedListController {
 					if(currentElement.getPerson() != null){
 						peopleMarriageValues.put(currentElement.getId(), getPeopleBaseService().findMarriagesPerson(currentElement.getPerson().getPersonId(), currentElement.getPerson().getGender()));
 						peopleChildrenValues.put(currentElement.getId(), getPeopleBaseService().findChildrenPerson(currentElement.getPerson().getPersonId()));
+						List<Integer> values = new ArrayList<Integer>();
+						Integer senderDocs = getPeopleBaseService().findNumberOfSenderDocumentsRelated(currentElement.getPerson().getPersonId());
+						Integer recipientDocs = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(currentElement.getPerson().getPersonId());
+						Integer referringDocs = getPeopleBaseService().findNumberOfReferringDocumentsRelated(currentElement.getPerson().getPersonId());
+						values.add(senderDocs + recipientDocs + referringDocs);
+						values.add(senderDocs);
+						values.add(recipientDocs);
+						values.add(referringDocs);
+						peopleValuesToPrint.put(currentElement.getId(), values);
 					}
 				}
 				model.put("placesValues", placesValuesToPrint);
 				model.put("placeNamesValues", placeNamesValuesToPrint);
 				model.put("peopleMarriageValues", peopleMarriageValues);
 				model.put("peopleChildrenValues", peopleChildrenValues);
+				model.put("peopleValues", peopleValuesToPrint);
 				
 			}	
 		}catch(ApplicationThrowable ath){

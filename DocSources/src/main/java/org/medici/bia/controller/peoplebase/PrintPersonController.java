@@ -51,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Print Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/peoplebase/PrintPerson")
@@ -94,6 +95,14 @@ public class PrintPersonController {
 				model.put("marriages", marriages);
 				List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
 				model.put("children", children);
+				Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(person.getPersonId());
+				model.put("senderDocsRelated", senderDocsRelated);
+				Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(person.getPersonId());
+				model.put("recipientDocsRelated", recipientDocsRelated);
+				Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(person.getPersonId());
+				model.put("referringDocsRelated", referringDocsRelated);
+				Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
+				model.put("docsRelated", docsRelated);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				new ModelAndView("error/PrintPerson", model);
