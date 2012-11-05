@@ -40,6 +40,7 @@ import org.medici.bia.domain.ForumPost;
 /**
   * Utility class to provides custom jstl functions.
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public final class JSTLFunctions {
@@ -77,7 +78,7 @@ public final class JSTLFunctions {
     		return inputString;
     	}
 
-    	return StringUtils.substring(inputString, start, end);
+    	return StringUtils.abbreviate(inputString, start, end);
     }
 
     /**
