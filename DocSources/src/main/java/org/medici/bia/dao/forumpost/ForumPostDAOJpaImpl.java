@@ -47,6 +47,7 @@ import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -351,5 +352,53 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Forum getMostActiveForumByUser(User user) throws PersistenceException {
+		String jpql = "SELECT p.forum FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.forum ORDER BY count(*) DESC";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("account", user.getAccount());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<Forum> list = (List<Forum>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException {
+		String jpql = "SELECT p.topic FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.topic ORDER BY count(*) DESC";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("account", user.getAccount());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
 	}
 }

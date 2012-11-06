@@ -12,6 +12,14 @@
 	<c:param name="accountDescription" value="${userProfile.firstName} ${userProfile.lastName}"/>
 </c:url>
 
+<c:url var="ShowForumURL" value="/community/ShowForum.do">
+	<c:param name="forumId" value="${mostActiveForum.forumId}"/>
+</c:url>
+
+<c:url var="ShowTopicURL" value="/community/ShowTopicForum.do">
+	<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
+</c:url>
+
 <div id="profileTable">
 	<div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
     
@@ -86,11 +94,11 @@
             </div>
             <div class="row">
                 <div class="item">Most active forum</div>
-                <div class="value"><a href="/DocSources/forum/viewForums.html" class="activeForum">People</a></div>
+                <div class="value"><a href="${ShowForumURL}" class="activeForum">${mostActiveForum.description}</a></div>
             </div>
             <div class="row">
                 <div class="item">Most active Discussion</div> 
-                <div class="value"><a href="/DocSources/forum/viewThreads.html" class="activeTopic">Cosimo I</a></div>
+                <div class="value"><a href="${ShowTopicURL}" class="activeTopic">${mostActiveDiscussion.subject}</a></div>
             </div>
         </div>
     </div>
@@ -155,16 +163,16 @@
 				$j("#mainContent").load($j(this).attr("href"));
 				$j("#whoIsOnlineDiv").css('display','none');
 				return false;});
-		$j(".activeForum").click(
-			function(){
-				$j("#mainContent").load($j(this).attr("href"));
-				$j("#whoIsOnlineDiv").css('display','inherit');
-				return false;});
-		$j(".activeTopic").click(
-			function(){
-				$j("#mainContent").load($j(this).attr("href"));
-				$j("#whoIsOnlineDiv").css('display','inherit');
-				return false;});
+		
+		$j(".activeForum").click(function(){
+			$j("#main").load($j(this).attr("href"));
+			return false;
+		});
+		
+		$j(".activeTopic").click(function(){
+			$j("#main").load($j(this).attr("href"));
+			return false;
+		});
 		
 		$j("#sendMessage").click(function(){
 			$j("#main").load($j(this).attr("href"));

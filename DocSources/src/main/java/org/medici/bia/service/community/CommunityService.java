@@ -276,6 +276,22 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getMostActiveForumByUser(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumTopic getMostActiveTopicByUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

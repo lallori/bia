@@ -803,6 +803,30 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getMostActiveForumByUser(User user) throws ApplicationThrowable {
+		try{
+			return getForumPostDAO().getMostActiveForumByUser(user);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumTopic getMostActiveTopicByUser(User user) throws ApplicationThrowable {
+		try{
+			return getForumPostDAO().getMostActiveTopicByUser(user);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

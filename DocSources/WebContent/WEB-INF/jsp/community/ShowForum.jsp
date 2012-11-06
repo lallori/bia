@@ -285,7 +285,7 @@ Use the textbox below to search this forum.</p>
                 					<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
                 					<input type="hidden" name="newSearch" value="true"/>
                 					<input type="hidden" name="sortResults" value="POST_TIME"/>
-                					<input type="hidden" name="order" value="asc"/>
+                					<input type="hidden" name="order" value="desc"/>
                 				</form>
                 			</div>
                 		</div>
@@ -461,7 +461,7 @@ Use the textbox below to search this forum.</p>
                 				<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
                 				<input type="hidden" name="newSearch" value="true"/>
                 				<input type="hidden" name="sortResults" value="POST_TIME"/>
-                				<input type="hidden" name="order" value="asc"/>
+                				<input type="hidden" name="order" value="desc"/>
                				</form>
                			</div>
                		</div>

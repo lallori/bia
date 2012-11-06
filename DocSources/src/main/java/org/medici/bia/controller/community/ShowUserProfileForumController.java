@@ -87,6 +87,9 @@ public class ShowUserProfileForumController {
 //					user = getCommunityService().joinUserOnForum();
 //				}
 //			}
+			
+			model.put("mostActiveForum", getCommunityService().getMostActiveForumByUser(user));
+			model.put("mostActiveDiscussion", getCommunityService().getMostActiveTopicByUser(user));
 
 			model.put("userProfile", user);
 			model.put("userGroup", UserRoleUtils.getMostSignificantRole(new ArrayList<UserRole>(user.getUserRoles())));

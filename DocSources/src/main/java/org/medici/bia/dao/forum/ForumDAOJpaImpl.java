@@ -672,7 +672,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException {
-		String queryString = "SELECT sum(topicsNumber), sum(postsNumber) FROM Forum";
+		String queryString = "SELECT topicsNumber, postsNumber FROM Forum WHERE forumParent IS NULL";
 
         Query query = getEntityManager().createQuery(queryString);
 
@@ -680,8 +680,8 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         
         HashMap<String, Long> retValue = new HashMap<String, Long>(0);
 
-        retValue.put("topicsNumber", (Long) statisticsResult[0]);
-        retValue.put("postsNumber", (Long) statisticsResult[1]);
+        retValue.put("topicsNumber", new Long((Integer) statisticsResult[0]));
+        retValue.put("postsNumber", new Long ((Integer)statisticsResult[1]));
 
         return retValue;
 	}

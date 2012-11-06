@@ -27,7 +27,6 @@
  */
 package org.medici.bia.dao.forumpost;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +38,7 @@ import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.User;
 
 /**
  * ForumPost DAO.
@@ -112,4 +112,20 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Forum getMostActiveForumByUser(User user) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PersistenceException
+	 */
+	ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException;
 }

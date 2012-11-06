@@ -92,8 +92,10 @@ public class ShowMyMessageBoxController {
 		if(command.getCategory() != null){
 			if(command.getCategory().equals("inbox")){
 				userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
+				paginationFilter.addSortingCriteria("messageSendedDate", "desc");
 			}else if(command.getCategory().equals("outbox")){
 				userMessageSearch.setUserMessageCategory(UserMessageCategory.OUTBOX);
+				paginationFilter.addSortingCriteria("messageSendedDate", "desc");
 			}
 		} else {
 			userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
