@@ -1,42 +1,21 @@
-/*
-   modalbox.css
-   
-   Modalbox project
-   
-   Created by Andrew Okonetchnikov.
-   Copyright 2006-2010 okonet.ru. All rights reserved.
-   
-   Licensed under MIT license.
-*/
-
 #MB_overlay {
 	position: absolute;
 	margin: auto;
 	top: 0;	left: 0;
 	width: 100%; height: 100%;
 	z-index: 9999;
-	border: 0;
 	background-color: #000!important;
 }
 #MB_overlay[id] { position: fixed; }
 
-#MB_windowwrapper {
-	position:absolute;
-	top:0;
-	width:100%;
-}
-
 #MB_window {
-	position:relative;
-	margin-left:auto;
-	margin-right:auto;
-	top:0;
-	left:0;
+	position: absolute;
+	top: 0;
 	border: 0 solid;
 	text-align: left;
 	z-index: 10000;
 }
-#MB_window[id] { position: relative; }
+#MB_window[id] { position: fixed!important; }
 
 #MB_frame {
 	position: relative;
@@ -50,7 +29,6 @@
 }
 
 #MB_content {
-	position: relative;
 	padding: 6px .75em;
 	overflow: auto;
 }
@@ -91,6 +69,7 @@ a#MB_close span {
 #MB_loading {
 	padding: 1.5em;
 	text-indent: -10000px;
+	background: transparent 50% 0 no-repeat;
 }
 
 #MB_window span, #modalBox span{
@@ -99,28 +78,6 @@ a#MB_close span {
 	text-align:center;
 	cursor:default;
 }
-
-/* Color scheme */
-#MB_window {
-	background-color: #EFEFEF;
-	color: #000;
-	
-	-webkit-box-shadow: 0 0 64px #000; 
-	-moz-box-shadow: #000 0 0 64px; 
-	box-shadow: 0 0 64px #000;
-}
-	#MB_frame {
-		padding-bottom: 4px;
-		
-		-webkit-border-bottom-left-radius: 4px;
-		-webkit-border-bottom-right-radius: 4px;
-
-		-moz-border-radius-bottomleft: 4px;
-		-moz-border-radius-bottomright: 4px;
-
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
 
 .modalBox-close{
 	background-color: #e6d0c6;
@@ -146,7 +103,6 @@ a#MB_close span {
 	height:80px;
 }
 
-	
 
 /* Color scheme */
 #MB_frame {
@@ -165,15 +121,14 @@ a#MB_close span {
 	-moz-border-radius: 7px;
 	border-radius: 7px;
 }
-	#MB_content { border-top: 1px solid #F9F9F9; }
-
-	#MB_header {
+#MB_content { border-top: 1px solid #F9F9F9; }
+#MB_header {
   background-color: #f6edec;
   border-bottom:1px solid #e6d0c6;
-	}
+}
 #MB_caption { color: #6d5c4d }
 #MB_close { color: #6d5c4d }
-		#MB_close:hover { color: #000 }
+#MB_close:hover { color: #000 }
 
 
 /* Alert message */
