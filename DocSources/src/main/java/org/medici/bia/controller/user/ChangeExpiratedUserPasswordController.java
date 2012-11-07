@@ -43,6 +43,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +67,19 @@ public class ChangeExpiratedUserPasswordController {
 	@Qualifier("changeExpiratedUserPasswordValidator")
 	private Validator validator;
 
+	/**
+	 * 
+	 * @param binder
+	 * @param request
+	 */
+	@InitBinder("command")
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
+		// Don't allow user to override the
+		binder.setDisallowedFields("remoteAddr"); 
+		// value
+		((ChangeExpiratedUserPasswordCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
+	}
+	
 	/**
 	 * 
 	 * @param request
@@ -105,10 +120,10 @@ public class ChangeExpiratedUserPasswordController {
 				getUserService().updateUserPassword(command.getPassword());
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/ChangeExiparedUserPassword", model);
+				return new ModelAndView("error/ChangeExpiratedUserPassword", model);
 			}
 
-			return new ModelAndView("user/ChangeExiparedUserPasswordSuccess", model);
+			return new ModelAndView("user/ChangeExpiratedUserPasswordSuccess", model);
 		}
 	}
 	
@@ -126,18 +141,34 @@ public class ChangeExpiratedUserPasswordController {
 		return userService;
 	}
 
+	/**
+	 * 
+	 * @param reCaptchaService
+	 */
 	public void setReCaptchaService(ReCaptchaService reCaptchaService) {
 		this.reCaptchaService = reCaptchaService;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public ReCaptchaService getReCaptchaService() {
 		return reCaptchaService;
 	}
 
+	/**
+	 * 
+	 * @param validator
+	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Validator getValidator() {
 		return validator;
 	}

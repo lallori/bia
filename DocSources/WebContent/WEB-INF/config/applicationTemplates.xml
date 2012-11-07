@@ -145,6 +145,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPassword.jsp"/>
     </definition>
 
+    <definition name="user/ChangeExpiratedUserPasswordSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPasswordSuccess.jsp"/>
+    </definition>
+    
     <definition name="user/EditPasswordUser" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUser.jsp"/>
     </definition>

@@ -1199,8 +1199,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUserPassword(String newPassword) throws ApplicationThrowable {
 		try {
+			Calendar expirationPasswordDate = Calendar.getInstance();
+			expirationPasswordDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months")));
+
 			User userToUpdate = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			userToUpdate.setPassword(getPasswordEncoder().encodePassword(newPassword, null));
+			userToUpdate.setExpirationPasswordDate(expirationPasswordDate.getTime());
 			getUserDAO().merge(userToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
