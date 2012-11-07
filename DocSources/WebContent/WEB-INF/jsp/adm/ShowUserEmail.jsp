@@ -25,7 +25,7 @@
 				<div class="value">${user.mailHide ? 'Hide my email from everyone' : 'Allow others to see my email'}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Recive notification by email</div> 
+				<div class="item37">Receive notification by email</div> 
 				<div class="value">${user.mailNotification ? 'Activated' : 'Deactivated'}</div>
 			</div>
 		</div>

@@ -27,7 +27,7 @@
 		            </div>
 		        </div>
 		        <div class="row">
-		            <div class="col_l"><form:label for="reciveNotifEmail" path="receiveNotificationByMail">Recive notification by email</form:label></div>
+		            <div class="col_l"><form:label for="reciveNotifEmail" path="receiveNotificationByMail">Receive notification by email</form:label></div>
 		            <div class="col_l">
 		            	<form:select path="receiveNotificationByMail" items="${mailNotification}" cssClass="selectform_Mlong" />
 		            </div>
