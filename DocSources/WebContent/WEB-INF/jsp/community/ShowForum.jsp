@@ -168,6 +168,7 @@
 				<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 			</c:if>
 			</security:authorize>
+			
 			<c:if test="${forum.option.canHaveTopics}">
 				<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
@@ -175,7 +176,11 @@
 				</div>
 				</security:authorize>
 			</c:if>
-
+		<c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
+					<div id="searchDocument">
+   						<p>${forum.forumHelpText}</p>
+    				</div>
+        </c:if>
 		<c:if test="${forum.option.canHaveSubForum}">
 		<c:choose>
       		<c:when test="${forum.option.groupBySubForum=='true'}">
@@ -467,6 +472,11 @@ Use the textbox below to search this forum.</p>
                		</div>
             	</div>
             </c:if>
+            <c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
+					<div id="searchDocument">
+   						<p>${forum.forumHelpText}</p>
+    				</div>
+            	</c:if>
 			<c:choose>
 				<c:when test="${forum.subType == 'DOCUMENT'}">
 					<div id="documentTable">

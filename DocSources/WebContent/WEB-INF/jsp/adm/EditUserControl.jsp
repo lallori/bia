@@ -76,7 +76,7 @@
             	<ul>
 		            <c:forEach var="currentAuthority" items="${authorities}" varStatus="iterator">	
   						<li>
-  							<biasecurity:checkbox id="groupPolicies" name="userRoles" cssClass="" value="${currentAuthority.authority}" />
+  							<biasecurity:checkbox id="groupPolicies" name="userRoles" cssClass="" value="${currentAuthority.authority}" userAuthorities="${command.getUserRoles()}" />
 							<label for="groupPolicies">${authorities[iterator.index].description}</label>
 						</li>			
 		 			</c:forEach>
@@ -133,15 +133,15 @@
 		});
 		
 		//MD: Code for check the roles (Beta)
-		var allRoles = $j("#roles").val();
-		var roles = allRoles.substring(1, allRoles.length - 1).split(", ");
-		for(var i = 0; i < roles.length; i++){
-			$j(":checkbox").each(function(){
-				if($j(this).val() == roles[i]){
-					$j(this).attr("checked", "checked");
-				}
-			});
-		}
+// 		var allRoles = $j("#roles").val();
+// 		var roles = allRoles.substring(1, allRoles.length - 1).split(", ");
+// 		for(var i = 0; i < roles.length; i++){
+// 			$j(":checkbox").each(function(){
+// 				if($j(this).val() == roles[i]){
+// 					$j(this).attr("checked", "checked");
+// 				}
+// 			});
+// 		}
 		
 		$j("#EditUserControlForm").submit(function (){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {

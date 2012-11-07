@@ -4,6 +4,7 @@
 <%@ attribute name="name" required="true" type="java.lang.String"%>
 <%@ attribute name="cssClass" required="false" type="java.lang.String"%>
 <%@ attribute name="value" required="true" type="org.medici.bia.domain.UserAuthority.Authority"%>
+<%@ attribute name="userAuthorities" required="true" type="java.util.List" %>
 <%
 	StringBuilder stringBuilder = new StringBuilder("<input type=\"checkbox\" ");
 
@@ -30,7 +31,7 @@
 		stringBuilder.append("\"");
 	}
 
-	if (GrantedAuthorityUtils.isGranted(value)) {
+	if (GrantedAuthorityUtils.isGranted(value, userAuthorities)) {
 		stringBuilder.append("checked");
 	}
 
