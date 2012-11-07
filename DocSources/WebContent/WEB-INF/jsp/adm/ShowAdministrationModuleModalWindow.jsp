@@ -14,9 +14,10 @@
         <a id="userManagement" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
 	</div>
     
-<!--     <div id="reportsRevisionsDiv"> -->
-<!--         <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html">Reports and Revisions</a> -->
-<!--     </div> -->
+	<div id="memoryUsageDiv">
+        <a id="memoryUsage" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
+	</div>
+
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
@@ -26,22 +27,21 @@
 			$j("#body_left").load($j(this).attr("href"));
 			Modalbox.hide();
 			return false;
-			}
-		);
+		});
 		$j("#userManagement").click(function(){
-				Modalbox.show($j(this).attr("href"), {title: "USER MANAGEMENT", width: 270, height: 190});
-				return false;
-			}
-		);
-		$j("#ReportsRevisions").click(
-			function(){
-				$j("#body_right").load($j(this).attr("href"));
-				Modalbox.hide(); return false;}
-				);
-		$j("#close").click(
-			function(){
-					Modalbox.hide(); return false;
-						});
+			Modalbox.show($j(this).attr("href"), {title: "USER MANAGEMENT", width: 270, height: 190});
+			return false;
+		});
+		$j("#memoryUsage").click(function(){
+			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide();
+			return false;
+		});
+		
+		$j("#close").click(function(){
+			Modalbox.hide();
+			return false;
+		});
 	});
 </script>
 	</security:authorize>

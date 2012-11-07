@@ -4430,7 +4430,7 @@ ul#network a {
 	margin-left: 98px;
 }
 
-#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide{
+#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4440,7 +4440,7 @@ ul#network a {
 	margin:-5px 0 0 10px;
 }
 
-#systemWide p, #userManagement p, #reportsRevisions p {
+#systemWide p, #userManagement p, #reportsRevisions p, #memoryUsage p {
 	margin: 0px;
 }
 
@@ -4453,6 +4453,12 @@ ul#network a {
 #administrationModalDiv #userManagementDiv {
 	width:200px;
 	margin:50px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #memoryUsageDiv {
+	width:200px;
+	margin:85px 0 0 25px;
 	position:absolute;
 }
 

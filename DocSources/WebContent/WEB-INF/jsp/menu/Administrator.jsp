@@ -4,9 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 			
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a></li>
-			</security:authorize>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a></li>
 			
 			<script type="text/javascript">
 			$j(document).ready(function(){
@@ -17,3 +16,4 @@
 				);
 			});
 			</script>
+		</security:authorize>			

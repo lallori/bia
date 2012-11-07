@@ -232,21 +232,27 @@
  		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
  		<put-attribute name="user" value="/WEB-INF/jsp/adm/ShowUserProperties.jsp"/>
 	</definition>
+	
+	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">
+ 		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailProperties.jsp"/>
+	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
 	</definition>
-	
-	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">
- 		<put-attribute name="email" value="/WEB-INF/jsp/admin/ShowEmailProperties.jsp"/>
-	</definition>
+
 	<definition name="admin/ShowRecaptchaProperties" extends="template.partialDOM">
-		<put-attribute name="recaptcha" value="/WEB-INF/jsp/admin/ShowRecaptchaProperties.jsp"/>
+		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
 	</definition>
+
 	<definition name="admin/ShowIIPImageProperties" extends="template.partialDOM">
- 		<put-attribute name="iip" value="/WEB-INF/jsp/admin/ShowIIPImageProperties.jsp"/>
+ 		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
 	</definition>
 	
+	<definition name="admin/ShowMemoryUsage" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowMemoryUsage.jsp"/>
+	</definition>
+
 	<definition name="admin/ShowSchedoneProperties" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
