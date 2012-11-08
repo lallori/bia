@@ -47,7 +47,7 @@
 						<div class="one">
 							<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
 							<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
-								<span>${currentForum.forumHelpText}</span>
+								<span>${currentForum.description}</span>
 							</div>
 							<!-- MD: Hide the second column if the category hasn't threads -->
 							<c:if test="${currentCategory.dispositionOrder != 1}">
@@ -178,6 +178,7 @@
 			</c:if>
 		<c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
 					<div id="searchDocument">
+   						<p>${forum.description}</p>
    						<p>${forum.forumHelpText}</p>
     				</div>
         </c:if>
@@ -474,6 +475,7 @@ Use the textbox below to search this forum.</p>
             </c:if>
             <c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
 					<div id="searchDocument">
+   						<p>${forum.description}</p>
    						<p>${forum.forumHelpText}</p>
     				</div>
             	</c:if>
