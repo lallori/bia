@@ -23,26 +23,27 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#addNew").click(
-				function(){
-					$j("#body_left").load($j(this).attr("href"));
-					Modalbox.hide(); return false;}
-					);
+		$j("#addNew").click(function(){
+			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide();
+			return false;
+		});
 		$j("#editOrShow").click(function(){
 			$j("#body_left").load($j(this).attr("href"));
 			Modalbox.hide(); 
 			return false;
-			}
-		);
-			$j("#globalProperties").click(
-				function(){
-					$j("#body_left").load($j(this).attr("href"));
-					Modalbox.hide(); return false;}
-					);
-			$j("#close").click(
-				function(){
-						Modalbox.hide(); return false;
-							});
+		});
+		
+		$j("#globalProperties").click(function(){
+			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide();
+			return false;
+		});
+		
+		$j("#close").click(function(){
+			Modalbox.hide(); 
+			return false;
+		});
 	});
 </script>
 	</security:authorize>

@@ -309,6 +309,16 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @return
+	 */
+	public static String getImageDigitized() {
+		StringBuilder stringBuilder = new StringBuilder("<img src=\"");
+		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuilder.append("/images/1024/img_digitized_small_document.png\">");
+		return stringBuilder.toString();
+	}
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 */
@@ -323,6 +333,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
+
 	/**
 	 * 
 	 * @return
@@ -343,7 +354,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @return
@@ -367,7 +378,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param forum
@@ -383,7 +394,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param forumTopic
@@ -405,7 +416,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * Urls must be encoded.
 	 * 
@@ -437,7 +448,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param integer
@@ -458,7 +469,7 @@ public class HtmlUtils {
 		
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param pageNumber
@@ -480,6 +491,33 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param singleRow
+	 * @param idAccessLog
+	 * @return
+	 */
+	public static Object showAccessLog(List inputList, Integer idAccessLog) {
+		if (inputList == null) {
+			return null;
+		}
+
+		List<String> retValue = new ArrayList<String>(inputList.size());
+		
+		String anchorBegin = "<a class=\"searchResult\" href=\"";
+		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchorBegin += "/admin/ShowAccessLog.do?idAccessLog=";
+		anchorBegin += idAccessLog;
+		anchorBegin += "\">";
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
 	 * @param placeAllId
 	 * @param numberOfActiveEndInPlace
 	 * @param description
@@ -498,7 +536,7 @@ public class HtmlUtils {
 
 		return anchor.toString();	
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -519,7 +557,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param placeAllId
@@ -540,7 +578,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param placeAllId
@@ -561,7 +599,7 @@ public class HtmlUtils {
 		
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -613,7 +651,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -631,7 +669,7 @@ public class HtmlUtils {
 
 		return url;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -673,7 +711,7 @@ public class HtmlUtils {
 				
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -814,7 +852,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param singleRow
@@ -1273,16 +1311,5 @@ public class HtmlUtils {
 		}
 		
 		return retValue;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static String getImageDigitized() {
-		StringBuilder stringBuilder = new StringBuilder("<img src=\"");
-		stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuilder.append("/images/1024/img_digitized_small_document.png\">");
-		return stringBuilder.toString();
 	}
 }

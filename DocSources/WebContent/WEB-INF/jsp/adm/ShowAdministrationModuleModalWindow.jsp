@@ -18,6 +18,10 @@
         <a id="memoryUsage" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
 	</div>
 
+	<div id="accessLogDiv">
+        <a id="accessLog" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
+	</div>
+	
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
@@ -28,11 +32,19 @@
 			Modalbox.hide();
 			return false;
 		});
+
 		$j("#userManagement").click(function(){
 			Modalbox.show($j(this).attr("href"), {title: "USER MANAGEMENT", width: 270, height: 190});
 			return false;
 		});
+
 		$j("#memoryUsage").click(function(){
+			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide();
+			return false;
+		});
+		
+		$j("#accessLog").click(function(){
 			$j("#body_left").load($j(this).attr("href"));
 			Modalbox.hide();
 			return false;

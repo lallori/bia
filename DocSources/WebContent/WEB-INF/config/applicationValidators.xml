@@ -353,6 +353,10 @@
         <description>Validator for action "Send user passowrd reset by mail".</description>
     </bean>
 
+	<bean id="showAccessLogSearchValidator" class="org.medici.bia.validator.admin.ShowAccessLogSearchValidator">
+		<description>Access Log Validator</description>
+	</bean>
+
   	<bean id="showUserPhotoValidator" class="org.medici.bia.validator.user.ShowUserPhotoValidator">
         <description>User registration validator.</description>
 	</bean>

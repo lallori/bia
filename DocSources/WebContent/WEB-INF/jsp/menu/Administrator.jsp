@@ -10,7 +10,7 @@
 			<script type="text/javascript">
 			$j(document).ready(function(){
 				$j("#administrationModule").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "ADMINISTRATION MODULE", width: 270, height: 190});
+					Modalbox.show($j(this).attr("href"), {title: "ADMINISTRATION MODULE", width: 270, height: 240});
 					return false;
 				}						
 				);

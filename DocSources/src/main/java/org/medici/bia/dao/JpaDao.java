@@ -510,6 +510,26 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						break;
 				}
 			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.ACCESS_LOG)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("action", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("httpMethod", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("username", paginationFilter.getSortingDirection());
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("dateAndTime", paginationFilter.getSortingDirection());
+						break;
+					default:
+						paginationFilter.addSortingCriteria("dateAndTime", "asc");
+						break;
+				}
+			}
 		}
 
 		return paginationFilter;

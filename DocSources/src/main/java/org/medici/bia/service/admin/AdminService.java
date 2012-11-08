@@ -32,6 +32,8 @@ import java.util.Map;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.AccessLogSearch;
+import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
@@ -76,12 +78,20 @@ public interface AdminService {
 
 	/**
 	 * 
+	 * @param idAccessLog
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	AccessLog findAccessLog(Integer idAccessLog) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	User findUser(String account) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user
@@ -121,6 +131,15 @@ public interface AdminService {
 	 * 
 	 */
 	List<Month> getMonths() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param accessLogSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Page searchAccessLog(AccessLogSearch accessLogSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -59,8 +59,8 @@ public class AccessLog implements Serializable {
 	private Date dateAndTime;
 	@Column (name="\"ipAddress\"", length=50, nullable=false)
 	private String ipAddress;
-	@Column (name="\"username\"", length=50, nullable=false)
-	private String username;
+	@Column (name="\"account\"", length=50, nullable=false)
+	private String account;
 	@Column (name="\"authorities\"", length=500)
 	private String authorities;
 	@Column (name="\"httpMethod\"", length=8, nullable=false)
@@ -117,17 +117,17 @@ public class AccessLog implements Serializable {
 	}
 	
 	/**
-	 * @return the username
+	 * @return the account
 	 */
-	public String getUsername() {
-		return username;
+	public String getAccount() {
+		return account;
 	}
 	
 	/**
-	 * @param username the username to set
+	 * @param account the account to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class AccessLog implements Serializable {
 		stringBuilder.append(" - ");
 		stringBuilder.append(getIpAddress());
 		stringBuilder.append(" - ");
-		stringBuilder.append(getUsername());
+		stringBuilder.append(getAccount());
 		stringBuilder.append(" - ");
 		stringBuilder.append(getAuthorities());
 		stringBuilder.append(" - ");

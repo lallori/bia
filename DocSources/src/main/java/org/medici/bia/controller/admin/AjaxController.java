@@ -35,8 +35,11 @@ import java.util.Map;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +76,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/admin/ShowUserSearchResult.json", method = RequestMethod.GET)
-	public ModelAndView searchPagination(@RequestParam(value="fullName") String fullName,
+	@RequestMapping(value = "/admin/SearchUser.json", method = RequestMethod.GET)
+	public ModelAndView searchUser(@RequestParam(value="fullName") String fullName,
 								@RequestParam(value="userName") String userName,
 								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -118,6 +121,53 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
+		}
+
+		model.put("iEcho", 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK",model);
+	}
+
+	/**
+	 * 
+	 * @param alias
+	 * @param model
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/admin/SearchAccessLog.json", method = RequestMethod.GET)
+	public ModelAndView searchAccessLog(@RequestParam(value="account", required=false) String account,
+								@RequestParam(value="action", required=false) String action,
+								@RequestParam(value="fromDate", required=false) String fromDate,
+								@RequestParam(value="toDate", required=false) String toDate,
+								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+					   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Page page = null;
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.ACCESS_LOG);
+
+		try {
+			AccessLogSearch accessLogSearch = new AccessLogSearch(account, action, fromDate, toDate);
+
+			// Paging results...
+			page = getAdminService().searchAccessLog(accessLogSearch, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList(0);
+		for(AccessLog currentAccessLog : (List<AccessLog>) page.getList()){
+			List singleRow = new ArrayList(0);
+			singleRow.add(currentAccessLog.getAction());
+			singleRow.add(currentAccessLog.getHttpMethod());
+			singleRow.add(currentAccessLog.getAccount());
+			singleRow.add(currentAccessLog.getDateAndTime());
+			resultList.add(HtmlUtils.showAccessLog(singleRow, currentAccessLog.getIdAccessLog()));
 		}
 
 		model.put("iEcho", 1);

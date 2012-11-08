@@ -218,7 +218,19 @@
 	<definition name="admin/EditUserEmail" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserEmail.jsp"/>
 	</definition>
-	
+
+	<definition name="admin/ShowAccessLogSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearch.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowAccessLogSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearch.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowAccessLogSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearchResult.jsp"/>
+	</definition>
+
 	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAdministrationModuleModalWindow.jsp" />
 	</definition>	
@@ -266,8 +278,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
 	</definition>
 	
-	<definition name="admin/UserSearch" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/adm/UserSearch.jsp"/>
+	<definition name="admin/ShowUserSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserSearch.jsp"/>
 	</definition>
 	
 	<definition name="admin/UserSearchResult" extends="template.partialDOM">

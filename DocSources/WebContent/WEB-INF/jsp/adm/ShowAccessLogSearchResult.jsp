@@ -5,17 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowUserSearchResultURL" value="/admin/SearchUser.json">
-		<c:param name="fullName" value="${command.fullName}" />
-		<c:param name="userName" value="${command.userName}" />
+	<c:url var="ShowAccessLogSearchResultURL" value="/admin/SearchAccessLog.json">
+		<c:param name="account" value="${command.account}" />
+		<c:param name="action" value="${command.action}" />
+		<c:param name="fromDate" value="${command.fromDate}" />
+		<c:param name="toDate" value="${command.toDate}" />
 	</c:url>
 	
-<!-- 	<div class="yourSearchDiv"> -->
-<%-- 		<p> <font color="red" style="margin-left:5px"></font></p> --%>
-<%-- 		<p>Total records found: <span id="" class="recordsNum"></span></p> --%>
-<!-- 	</div> -->
-	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="accessLogSearchTable">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -31,9 +28,9 @@
 			
 			
 			//dynamic field management
-			$j("#userSearchTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#accessLogSearchTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#userSearchTable').dataTable( {
+			$j('#accessLogSearchTable').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
@@ -42,7 +39,7 @@
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
 				"oSearch": {"sSearch": ""},
-				"sAjaxSource": "${ShowUserSearchResultURL}",
+				"sAjaxSource": "${ShowAccessLogSearchResultURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
@@ -73,12 +70,11 @@
 				}
 			});
 			
-			$j("#userSearchTable_length").css('margin', '0 0 0 0');
-			$j("#userSearchTable_filter").remove();
+			$j("#accessLogSearchTable_length").css('margin', '0 0 0 0');
+			$j("#accessLogSearchTable_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();
-			 
 			
 			$j(".searchResult").live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));

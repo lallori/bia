@@ -41,7 +41,9 @@ import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.common.util.RegExUtils;
+import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
@@ -50,6 +52,7 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
+import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
@@ -75,11 +78,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
 	@Autowired
+	private AccessLogDAO accessLogDAO;
+
+	@Autowired
 	private AccessLogStatisticsDAO accessLogStatisticsDAO;
 
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
-	
+
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
 
@@ -87,9 +93,11 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private MonthDAO monthDAO;
+
 	@Autowired
 	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
 	@Autowired(required = false)
@@ -99,7 +107,6 @@ public class AdminServiceImpl implements AdminService {
 	private UserMessageDAO userMessageDAO;
 	@Autowired
 	private UserRoleDAO userRoleDAO;
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -144,7 +151,6 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -245,7 +251,19 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AccessLog findAccessLog(Integer idAccessLog) throws ApplicationThrowable {
+		try {
+			return getAccessLogDAO().find(idAccessLog);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -257,7 +275,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -269,7 +287,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -281,7 +299,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -336,6 +354,13 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @return the accessLogDAO
+	 */
+	public AccessLogDAO getAccessLogDAO() {
+		return accessLogDAO;
 	}
 
 	/**
@@ -436,6 +461,18 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchAccessLog(AccessLogSearch accessLogSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getAccessLogDAO().searchMYSQL(accessLogSearch, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void sendApprovationMessage(List<ApprovationUser> approvationUsers) throws ApplicationThrowable {
 		try {
 			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
@@ -472,6 +509,13 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(throwable);
 		}
 		
+	}
+
+	/**
+	 * @param accessLogDAO the accessLogDAO to set
+	 */
+	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
+		this.accessLogDAO = accessLogDAO;
 	}
 
 	/**

@@ -260,7 +260,7 @@ public class SearchFilter implements Serializable {
 	 *
 	 */
 	public static enum SearchType implements Serializable {
-		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE"), FORUM("FORUM");
+		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE"), FORUM("FORUM"), ACCESS_LOG("ACCESS_LOG");
 		
 		private final String searchType;
 

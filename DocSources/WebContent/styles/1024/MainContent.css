@@ -4426,11 +4426,11 @@ ul#network a {
 
 #administrationModalDiv #close {
 	position:absolute;
-	margin-top: 120px;
+	margin-top: 150px;
 	margin-left: 98px;
 }
 
-#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage {
+#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage, #administrationModalDiv #accessLog {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4440,7 +4440,7 @@ ul#network a {
 	margin:-5px 0 0 10px;
 }
 
-#systemWide p, #userManagement p, #reportsRevisions p, #memoryUsage p {
+#systemWide p, #userManagement p, #reportsRevisions p, #memoryUsage p, #accessLog p {
 	margin: 0px;
 }
 
@@ -4462,9 +4462,15 @@ ul#network a {
 	position:absolute;
 }
 
+#administrationModalDiv #accessLogDiv {
+	width:200px;
+	margin:120px 0 0 25px;
+	position:absolute;
+}
+
 #administrationModalDiv #reportsRevisionsDiv {
 	width:200px;
-	margin:85px 0 0 25px;
+	margin:155px 0 0 25px;
 	position:absolute;
 }
 
@@ -4554,7 +4560,7 @@ ul#network a {
 	margin: 0 0 7px 0;
 }
 
-h3.userSearch {
+h3.userSearch h3.accessLogSearch {
 	padding: 10px 5px 10px 10px;
 	font-style: normal;
 	font-size: 14px;

@@ -1,5 +1,5 @@
 /*
- * ShowUserSearchController.java
+ * ShowAccessLogSearchController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -34,7 +34,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.bia.command.admin.ShowUserSearchCommand;
+import org.medici.bia.command.admin.ShowAccessLogSearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -52,12 +52,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/admin/ShowUserSearch")
-public class ShowUserSearchController {
+@RequestMapping("/admin/ShowAccessLogSearch")
+public class ShowAccessLogSearchController {
 	@Autowired
-	@Qualifier("showUserSearchValidator")
+	@Qualifier("showAccessLogSearchValidator")
 	private Validator validator;
-
 
 	/**
 	 * @return the validator
@@ -67,7 +66,7 @@ public class ShowUserSearchController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowUserSearchCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowAccessLogSearchCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -79,7 +78,7 @@ public class ShowUserSearchController {
 			List<String> outputFields = getOutputFields();
 			model.put("outputFields", outputFields);
 
-			return new ModelAndView("admin/UserSearchResult", model);
+			return new ModelAndView("admin/ShowAccessLogSearchResult", model);
 		}
 	}
 	
@@ -90,20 +89,19 @@ public class ShowUserSearchController {
 	 */
 	private List<String> getOutputFields() {
 		List<String> outputFields = new ArrayList<String>(5);
-		outputFields.add("First/Last Name");
-		outputFields.add("Email Address");
-		outputFields.add("City/Town");
-		outputFields.add("Country");
-		outputFields.add("Last access");
+		outputFields.add("Action");
+		outputFields.add("Http Method");
+		outputFields.add("Username");
+		outputFields.add("Date");
 		
 		return outputFields;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowUserSearchCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowAccessLogSearchCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		return new ModelAndView("admin/ShowUserSearch", model);
+		return new ModelAndView("admin/ShowAccessLogSearch", model);
 	}
 
 	/**

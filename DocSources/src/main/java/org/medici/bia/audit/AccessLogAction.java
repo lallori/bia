@@ -91,7 +91,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		} else if (event instanceof AuthenticationSuccessEvent) {
 			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event.getSource());
 			AccessLog accessLog = new AccessLog();
-			accessLog.setUsername(userNamePasswordAuthenticationToken.getCredentials().toString());
+			accessLog.setAccount(userNamePasswordAuthenticationToken.getCredentials().toString());
 			accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
 			accessLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
 			accessLog.setAction("/loginProcess");
@@ -103,7 +103,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 				logger.debug(applicationThrowable);
 			}
 
-			MDC.put("username", accessLog.getUsername());
+			MDC.put("account", accessLog.getAccount());
 			logger.info(" Authentication OK");
 		}
 	}
@@ -179,21 +179,21 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("AnonymousAuthenticationToken")) {
-				accessLog.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+				accessLog.setAccount(SecurityContextHolder.getContext().getAuthentication().getName());
 			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("UsernamePasswordAuthenticationToken")) {
 				UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-				accessLog.setUsername(userNamePasswordAuthenticationToken.getName());
+				accessLog.setAccount(userNamePasswordAuthenticationToken.getName());
 				accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
 			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("RememberMeAuthenticationToken")) {
 				RememberMeAuthenticationToken rememberMeAuthenticationToken = (RememberMeAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-				accessLog.setUsername(rememberMeAuthenticationToken.getName());
+				accessLog.setAccount(rememberMeAuthenticationToken.getName());
 				accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) rememberMeAuthenticationToken.getPrincipal()).getAuthorities()));
 			}
 		} else {
-			accessLog.setUsername("");
+			accessLog.setAccount("");
 			accessLog.setInformations("");
 		}
-		MDC.put("username", accessLog.getUsername());
+		MDC.put("username", accessLog.getAccount());
 
 		accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		accessLog.setIpAddress(request.getRemoteAddr());
