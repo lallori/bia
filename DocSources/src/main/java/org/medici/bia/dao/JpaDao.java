@@ -64,7 +64,6 @@ import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 /**
  * @param <K>

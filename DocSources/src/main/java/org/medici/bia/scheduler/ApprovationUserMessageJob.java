@@ -1,5 +1,5 @@
 /*
- * ActivationUserEmailJob.java
+ * ApprovationUserMessageJob.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -30,18 +30,17 @@ package org.medici.bia.scheduler;
 import java.util.List;
 
 import org.apache.log4j.MDC;
-import org.medici.bia.domain.ActivationUser;
+import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.service.mail.MailService;
-import org.medici.bia.service.user.UserService;
+import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * This class implements the scheduler to perform send mail to all users
- * that aren't in active state.<br>
+ * This class implements the scheduler to perform send message to all admin users
+ * to inform new users to be approved.<br>
  * There are two tasks performed :<br>
  * - extracting list of users that needs to be activated.<br>
  * - for every user in this list, job will send the activation mail.<p>
@@ -57,11 +56,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Transactional(readOnly=true)
-public class ActivationUserEmailJob {
+public class ApprovationUserMessageJob {
 	@Autowired
-	private MailService mailService;
-	@Autowired
-	private UserService userService;
+	private AdminService adminService;
 	
 	/**
 	 * 
@@ -69,43 +66,31 @@ public class ActivationUserEmailJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=300000)
 	public void execute() {
-		MDC.put("username", "threadactivationuser");
+		MDC.put("username", "threadapprovationuser");
 		try {
-			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();
+			List<ApprovationUser> approvationUsers = getAdminService().findUsersToApprove();
 
-			for(ActivationUser currentActivation:usersToActivate) {
-				getMailService().sendActivationMail(currentActivation, currentActivation.getUser());
-			}
+			getAdminService().sendApprovationMessage(approvationUsers);
 		} catch (ApplicationThrowable ath) {
 			
 		}
 	}
 
 	/**
-	 * @param mailService the mailService to set
+	 * 
+	 * @param adminService
 	 */
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 
 	/**
-	 * @return the mailService
+	 * 
+	 * @return
 	 */
-	public MailService getMailService() {
-		return mailService;
+	public AdminService getAdminService() {
+		return adminService;
 	}
 
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
-	}
 }

@@ -81,13 +81,20 @@ public interface UserDAO extends Serializable {
 	User findUser(User user) throws TooManyUsersException;
 
 	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
+	List<User> findUsers(String text);
+	
+	/**
      * This method returns a list of User object that match with input parameter
 	 * 
 	 * @param user a {@link org.medici.bia.domain.User} object.
 	 * @return a {@link java.util.List} object containing result of search.
 	 */
 	List<User> findUsers(User user);
-	
+
 	/**
 	 * Search method which managed pagination.
 	 * 
@@ -97,7 +104,7 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	Page findUsers(User user, Integer pageNumber, Integer pageSize);
-
+	
 	/**
 	 * 
 	 * @param user
@@ -105,13 +112,6 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	Page findUsers(User user,PaginationFilter paginationFilter);
-	
-	/**
-	 * 
-	 * @param text
-	 * @return
-	 */
-	List<User> findUsers(String text);
 
 	/**
 	 * 

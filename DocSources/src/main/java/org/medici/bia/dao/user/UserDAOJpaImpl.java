@@ -215,6 +215,29 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsers(String text) {
+		try {
+			StringBuilder toQuery = new StringBuilder("FROM User WHERE account LIKE '%");
+			toQuery.append(text);
+			toQuery.append("%' OR firstName LIKE '%");
+			toQuery.append(text);
+			toQuery.append("%' OR lastName LIKE '%");
+			toQuery.append(text);
+			toQuery.append("%'");
+			Query query = getEntityManager().createQuery(toQuery.toString());
+			
+			return (List<User>) query.getResultList();
+		} catch (PersistenceException persistenceException) {
+			
+			return null;
+		}
+	}
+
+	/**
 	 * Search for all users matching the supplied filter on following fields : -
 	 * account - first name - last name - organization - mail address
 	 * 
@@ -300,19 +323,6 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	public User merge(User user) throws PersistenceException {
-		if (user != null) {
-			return getEntityManager().merge(user);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Page findUsers(User user, PaginationFilter paginationFilter) {
 		Page page = new Page(paginationFilter);
 		Query query = null;
@@ -355,28 +365,8 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * 
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<User> findUsers(String text) {
-		try {
-			StringBuilder toQuery = new StringBuilder("FROM User WHERE account LIKE '%");
-			toQuery.append(text);
-			toQuery.append("%' OR firstName LIKE '%");
-			toQuery.append(text);
-			toQuery.append("%' OR lastName LIKE '%");
-			toQuery.append(text);
-			toQuery.append("%'");
-			Query query = getEntityManager().createQuery(toQuery.toString());
-			
-			return (List<User>) query.getResultList();
-		} catch (PersistenceException persistenceException) {
-			
-			return null;
-		}
-	}
-
 	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
 		if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
 			switch (paginationFilter.getSortingColumn()) {
@@ -491,6 +481,19 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public User merge(User user) throws PersistenceException {
+		if (user != null) {
+			return getEntityManager().merge(user);
+		}
+		
+		return null;
+	}
+
+	/**
 	 * 
 	 * @param account
 	 * @param userRole
@@ -508,7 +511,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeUserRoles(String account, List<UserRole> userRoles) {

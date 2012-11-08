@@ -33,23 +33,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.persistence.PersistenceException;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
+import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.month.MonthDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
+import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.ApplicationProperty;
+import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -71,23 +79,24 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
+	
+	@Autowired
+	private ApprovationUserDAO approvationUserDAO;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private MonthDAO monthDAO;
-	
 	@Autowired
 	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
-	
 	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
-
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
-	
+	@Autowired
+	private UserMessageDAO userMessageDAO;
 	@Autowired
 	private UserRoleDAO userRoleDAO;
 
@@ -266,10 +275,21 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Override
 	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
+		try {
 			return getUserDAO().findUsers(user, paginationFilter);
-			
-		}catch(Throwable th){
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ApprovationUser> findUsersToApprove() throws ApplicationThrowable {
+		try {
+			return getApprovationUserDAO().searchUsersToApprove();
+		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}	
 	}
@@ -333,6 +353,14 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public ApprovationUserDAO getApprovationUserDAO() {
+		return approvationUserDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -367,6 +395,10 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}
@@ -385,8 +417,61 @@ public class AdminServiceImpl implements AdminService {
 		return userDAO;
 	}
 
+	/**
+	 * @return the userMessageDAO
+	 */
+	public UserMessageDAO getUserMessageDAO() {
+		return userMessageDAO;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public UserRoleDAO getUserRoleDAO() {
 		return userRoleDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void sendApprovationMessage(List<ApprovationUser> approvationUsers) throws ApplicationThrowable {
+		try {
+			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
+
+			for (ApprovationUser currentApprovationUser : approvationUsers) {
+				for (User currentAdministator : administratorUsers) {
+					try {
+						UserMessage userMessage = new UserMessage();
+						userMessage.setSender(currentApprovationUser.getUser().getAccount());
+						userMessage.setRecipient(currentAdministator.getAccount());
+						userMessage.setUser(currentAdministator);
+						userMessage.setParentMessage(null);
+						userMessage.setReadedDate(null);
+						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject"));
+						userMessage.setBody(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.text",
+											new String[]{
+												currentAdministator.getFirstName(), 
+												currentApprovationUser.getUser().getAccount(),
+												currentApprovationUser.getUser().getFirstName(), 
+												currentApprovationUser.getUser().getLastName()},
+											"{", "}"));
+	
+						getUserMessageDAO().persist(userMessage);
+					} catch (PersistenceException persistenceException) {
+						logger.error(persistenceException);
+					}
+				}					
+
+				currentApprovationUser.setMessageSended(Boolean.TRUE);
+				currentApprovationUser.setMessageSendedDate(new Date());
+				getApprovationUserDAO().merge(currentApprovationUser);
+			}
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+		
 	}
 
 	/**
@@ -405,12 +490,24 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * 
+	 * @param approvationUserDAO
+	 */
+	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
+		this.approvationUserDAO = approvationUserDAO;
+	}
+
+	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
 
+	/**
+	 * 
+	 * @param passwordEncoder
+	 */
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -427,6 +524,13 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userMessageDAO the userMessageDAO to set
+	 */
+	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
+		this.userMessageDAO = userMessageDAO;
 	}
 
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
@@ -450,7 +554,5 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-		// TODO Auto-generated method stub
-
 	}
 }

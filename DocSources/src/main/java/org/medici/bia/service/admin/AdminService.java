@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
@@ -102,6 +103,13 @@ public interface AdminService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	List<ApprovationUser> findUsersToApprove() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	List<UserAuthority> getAuthorities() throws ApplicationThrowable;
 
 	/**
@@ -116,8 +124,16 @@ public interface AdminService {
 
 	/**
 	 * 
+	 * @param usersToApprove
+	 * @throws ApplicationThrowable
+	 */
+	void sendApprovationMessage(List<ApprovationUser> usersToApprove) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param hashMap
 	 * @throws ApplicationThrowable
 	 */
 	void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable;
+
 }

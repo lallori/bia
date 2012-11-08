@@ -34,6 +34,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.medici.bia.dao.JpaDao;
+import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserRole;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +55,7 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRole> findUserRoles(String account) throws PersistenceException {
 		Query query = getEntityManager().createQuery("FROM UserRole WHERE account=:account order by userAuthority.priority asc ");
@@ -83,4 +86,18 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 			getEntityManager().persist(userRole);
 		}
     }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsers(UserAuthority userAuthority) throws PersistenceException {
+		String jpql = "SELECT u.user FROM UserRole u WHERE u.userAuthority=:userAuthority";
+
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("userAuthority", userAuthority);
+		
+		return query.getResultList();
+	}
 }

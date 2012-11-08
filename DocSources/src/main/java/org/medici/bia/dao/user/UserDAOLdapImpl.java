@@ -277,6 +277,15 @@ public class UserDAOLdapImpl implements UserDAO {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> findUsers(String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
 	 * Search for all users matching the supplied filter on following fields : -
 	 * account - first name - last name - organization - mail address
 	 * 
@@ -617,11 +626,5 @@ public class UserDAOLdapImpl implements UserDAO {
 	 */
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
-	}
-
-	@Override
-	public List<User> findUsers(String text) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -47,6 +47,7 @@ import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
+import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.country.CountryDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
@@ -61,6 +62,7 @@ import org.medici.bia.dao.userpersonalnotes.UserPersonalNotesDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.ActivationUser;
+import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Country;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.UserPersonalNotes;
@@ -100,6 +102,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
+	@Autowired
+	private ApprovationUserDAO approvationUserDAO;
 	@Autowired
 	private CountryDAO countryDAO;
 	@Autowired
@@ -159,6 +163,11 @@ public class UserServiceImpl implements UserService {
 			activationUser.setActivationDate(new Date());
 			activationUser.setActivationIPAddress(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRemoteAddr());
 			getActivationUserDAO().merge(activationUser);
+			
+			ApprovationUser approvationUser = new ApprovationUser(UUID.randomUUID().toString());
+			approvationUser.setUser(user);
+			approvationUser.setMessageSended(Boolean.FALSE);
+			getApprovationUserDAO().persist(approvationUser);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1159,6 +1168,20 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
+	}
+
+	/**
+	 * @return the approvationUserDAO
+	 */
+	public ApprovationUserDAO getApprovationUserDAO() {
+		return approvationUserDAO;
+	}
+
+	/**
+	 * @param approvationUserDAO the approvationUserDAO to set
+	 */
+	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
+		this.approvationUserDAO = approvationUserDAO;
 	}
 
 	/**

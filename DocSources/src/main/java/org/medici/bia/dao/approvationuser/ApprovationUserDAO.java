@@ -1,5 +1,5 @@
 /*
- * UserRoleDAO.java
+ * ApprovationUserDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,46 +25,29 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.userrole;
+package org.medici.bia.dao.approvationuser;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
-import org.medici.bia.domain.User;
-import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.ApprovationUser;
 
 /**
- * User Role DAO.
+ * Approvation User Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface UserRoleDAO extends Dao<Integer, UserRole> {
+public interface ApprovationUserDAO extends Dao<String, ApprovationUser> {
 
 	/**
+	 * This method searches users that need to be approved
 	 * 
-	 * @param account
+	 * @param activationUser
 	 * @return
 	 * @throws PersistenceException
 	 */
-	List<UserRole> findUserRoles(String account) throws PersistenceException;
+	List<ApprovationUser> searchUsersToApprove() throws PersistenceException;
 
-	/**
-	 * 
-	 * @param account
-	 * @throws PersistenceException
-	 */
-	Integer removeAllUserRoles(String account) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param userRoles
-	 * @throws PersistenceException
-	 */
-	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
-
-	List<User> findUsers(UserAuthority userAuthority) throws PersistenceException;
 }
