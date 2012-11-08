@@ -105,9 +105,9 @@
 				} );                                                                                              
 																												  
 				// We need to remove any previous live function                                                   
-				$j('.searchResult').die();                                                                        
+				$j('#researchHistoryTable').find('.searchResult').die();                                                                        
 				// Result links have a specific class style on which we attach click live.                        
-				$j('.searchResult').live('click', function() {                                                    
+				$j('#researchHistoryTable').find('.searchResult').live('click', function() {                                                    
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;

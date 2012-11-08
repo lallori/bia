@@ -540,7 +540,155 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		queryString.append(" AND idUserHistory > ");
 		queryString.append(idUserHistory);        
 
-        queryString.append(" ORDER BY idUserHistory ASC LIMIT 1");
+        queryString.append(" AND logicalDelete = false ORDER BY idUserHistory ASC LIMIT 1");
+	
+	    Query query = getEntityManager().createQuery(queryString.toString());	
+        query.setMaxResults(1);
+
+        List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+	
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findNextHistoryCursorFromDocument(User user, Integer idUserHistory, Integer entryId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory > ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (document IS NULL OR document.entryId !=");
+		queryString.append(entryId);
+
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory ASC LIMIT 1");
+	
+	    Query query = getEntityManager().createQuery(queryString.toString());	
+        query.setMaxResults(1);
+
+        List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+	
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findNextHistoryCursorFromPerson(User user, Integer idUserHistory, Integer personId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory > ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (person IS NULL OR person.personId !=");
+		queryString.append(personId);
+
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory ASC LIMIT 1");
+	
+	    Query query = getEntityManager().createQuery(queryString.toString());	
+        query.setMaxResults(1);
+
+        List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+	
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findNextHistoryCursorFromPlace(User user, Integer idUserHistory, Integer placeAllId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory > ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (place IS NULL OR place.placeAllId !=");
+		queryString.append(placeAllId);
+
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory ASC LIMIT 1");
+	
+	    Query query = getEntityManager().createQuery(queryString.toString());	
+        query.setMaxResults(1);
+
+        List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+	
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findNextHistoryCursorFromVolume(User user, Integer idUserHistory, Integer summaryId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory > ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (volume IS NULL OR volume.summaryId !=");
+		queryString.append(summaryId);
+
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory ASC LIMIT 1");
 	
 	    Query query = getEntityManager().createQuery(queryString.toString());	
         query.setMaxResults(1);
@@ -628,7 +776,155 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		queryString.append(" AND idUserHistory < ");
 		queryString.append(idUserHistory);
         
-        queryString.append(" ORDER BY idUserHistory DESC LIMIT 1");
+        queryString.append(" AND logicalDelete = false ORDER BY idUserHistory DESC LIMIT 1");
+
+        Query query = getEntityManager().createQuery(queryString.toString());
+        query.setMaxResults(1);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findPreviousHistoryCursorFromDocument(User user, Integer idUserHistory, Integer entryId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory < ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (document IS NULL OR document.entryId != ");
+		queryString.append(entryId);
+        
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory DESC LIMIT 1");
+
+        Query query = getEntityManager().createQuery(queryString.toString());
+        query.setMaxResults(1);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findPreviousHistoryCursorFromPerson(User user, Integer idUserHistory, Integer personId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory < ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (person IS NULL OR person.personId != ");
+		queryString.append(personId);
+        
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory DESC LIMIT 1");
+
+        Query query = getEntityManager().createQuery(queryString.toString());
+        query.setMaxResults(1);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findPreviousHistoryCursorFromPlace(User user, Integer idUserHistory, Integer placeAllId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory < ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (place IS NULL OR place.placeAllId != ");
+		queryString.append(placeAllId);
+        
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory DESC LIMIT 1");
+
+        Query query = getEntityManager().createQuery(queryString.toString());
+        query.setMaxResults(1);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findPreviousHistoryCursorFromVolume(User user, Integer idUserHistory, Integer summaryId) throws PersistenceException {
+		StringBuilder queryString = new StringBuilder("FROM UserHistory WHERE user.account='");
+		queryString.append(user.getAccount());
+		queryString.append('\'');
+		queryString.append(" AND (category NOT LIKE '");
+		queryString.append(Category.FORUM.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_TOPIC.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.FORUM_POST.name());
+		queryString.append("' AND category NOT LIKE '");
+		queryString.append(Category.MARKED_LIST.name());
+		queryString.append("')");
+		queryString.append(" AND idUserHistory < ");
+		queryString.append(idUserHistory);
+		queryString.append(" AND (volume IS NULL OR volume.summaryId != ");
+		queryString.append(summaryId);
+        
+        queryString.append(") AND logicalDelete = false ORDER BY idUserHistory DESC LIMIT 1");
 
         Query query = getEntityManager().createQuery(queryString.toString());
         query.setMaxResults(1);

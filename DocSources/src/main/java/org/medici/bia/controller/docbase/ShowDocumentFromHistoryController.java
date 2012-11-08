@@ -89,7 +89,7 @@ public class ShowDocumentFromHistoryController {
 				// Details
 				document = getDocBaseService().findDocumentFromHistory(command.getIdUserHistory());
 
-				historyNavigator = getDocBaseService().getHistoryNavigator(command.getIdUserHistory());
+				historyNavigator = getDocBaseService().getHistoryNavigator(command.getIdUserHistory(), document);
 				
 				List<EplToLink> topicsDocument = getDocBaseService().findTopicsDocument(document.getEntryId());
 				model.put("topicsDocument", topicsDocument);

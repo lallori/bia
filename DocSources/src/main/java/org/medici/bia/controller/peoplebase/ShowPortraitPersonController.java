@@ -93,7 +93,7 @@ public class ShowPortraitPersonController {
 
 		if(command.getPersonId() > 0){
 			try {
-				person = getPeopleBaseService().findPerson(command.getPersonId());
+				person = getPeopleBaseService().findPersonForPortrait(command.getPersonId());
 				
 				if (person.getPortrait()) {
 					BufferedImage bufferedImage = getPeopleBaseService().getPortraitPerson(person.getPortraitImageName());

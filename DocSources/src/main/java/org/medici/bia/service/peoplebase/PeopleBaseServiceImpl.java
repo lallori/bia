@@ -1427,6 +1427,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public People findPersonForPortrait(Integer personId)  throws ApplicationThrowable {
+		try {
+			People people = getPeopleDAO().find(personId);
+
+			return people;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public People findPersonFromHistory(Integer idUserHistory) throws ApplicationThrowable {
 		try{
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
@@ -1717,13 +1731,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * 
 	 */
 	@Override
-	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable {
+	public Object getHistoryNavigator(Integer idUserHistory, People person) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromPerson(userHistory.getUser(), userHistory.getIdUserHistory(), person.getPersonId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromPerson(userHistory.getUser(), userHistory.getIdUserHistory(), person.getPersonId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1747,8 +1761,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.PEOPLE, person.getPersonId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromPerson(user, userHistory.getIdUserHistory(), person.getPersonId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromPerson(user, userHistory.getIdUserHistory(), person.getPersonId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

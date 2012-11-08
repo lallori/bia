@@ -181,7 +181,47 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	UserHistory findNextHistoryCursor(User user, Integer idUserHisotry) throws PersistenceException;
+	UserHistory findNextHistoryCursor(User user, Integer idUserHistory) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHisotry
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findNextHistoryCursorFromDocument(User user, Integer idUserHistory, Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHisotry
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findNextHistoryCursorFromPerson(User user, Integer idUserHistory, Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHisotry
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findNextHistoryCursorFromPlace(User user, Integer idUserHistory, Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHisotry
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findNextHistoryCursorFromVolume(User user, Integer idUserHistory, Integer summaryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -199,7 +239,47 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	UserHistory findPreviousHistoryCursor(User user, Integer idUserHistory) throws PersistenceException;
-
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHistory
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findPreviousHistoryCursorFromDocument(User user, Integer idUserHistory, Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHistory
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findPreviousHistoryCursorFromPerson(User user, Integer idUserHistory, Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHistory
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findPreviousHistoryCursorFromPlace(User user, Integer idUserHistory, Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idUserHistory
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	UserHistory findPreviousHistoryCursorFromVolume(User user, Integer idUserHistory, Integer summaryId) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @return

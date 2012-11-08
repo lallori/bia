@@ -17,6 +17,9 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#lastRecord").css('visibility', 'hidden');
+			$j("#nextRecord").css('visibility', 'hidden');
+						
 			$j(".close").click(function(){
 				Modalbox.hide();
 				return false;

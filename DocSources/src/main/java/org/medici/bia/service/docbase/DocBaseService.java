@@ -488,7 +488,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HistoryNavigator getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
+	public HistoryNavigator getHistoryNavigator(Integer idUserHistory, Document document) throws ApplicationThrowable;
 
 	/**
 	 * 

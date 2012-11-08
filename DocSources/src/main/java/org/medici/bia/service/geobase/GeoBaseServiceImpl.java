@@ -835,13 +835,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable {
+	public Object getHistoryNavigator(Integer idUserHistory, Place place) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromPlace(userHistory.getUser(), userHistory.getIdUserHistory(), place.getPlaceAllId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromPlace(userHistory.getUser(), userHistory.getIdUserHistory(), place.getPlaceAllId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -865,8 +865,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.PLACE, place.getPlaceAllId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromPlace(user, userHistory.getIdUserHistory(), place.getPlaceAllId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromPlace(user, userHistory.getIdUserHistory(), place.getPlaceAllId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

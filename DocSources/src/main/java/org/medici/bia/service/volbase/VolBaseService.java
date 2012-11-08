@@ -292,7 +292,7 @@ public interface VolBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HistoryNavigator getHistoryNavigator(Integer historyId) throws ApplicationThrowable;
+	public HistoryNavigator getHistoryNavigator(Integer historyId, Volume volume) throws ApplicationThrowable;
 	
 	/**
 	 * 

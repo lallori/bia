@@ -764,13 +764,13 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HistoryNavigator getHistoryNavigator(Integer historyId) throws ApplicationThrowable {
+	public HistoryNavigator getHistoryNavigator(Integer historyId, Volume volume) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(historyId);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromVolume(userHistory.getUser(), userHistory.getIdUserHistory(), volume.getSummaryId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromVolume(userHistory.getUser(), userHistory.getIdUserHistory(), volume.getSummaryId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -794,8 +794,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.VOLUME, volume.getSummaryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromVolume(user, userHistory.getIdUserHistory(), volume.getSummaryId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromVolume(user, userHistory.getIdUserHistory(), volume.getSummaryId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

@@ -367,7 +367,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
+	public Object getHistoryNavigator(Integer idUserHistory, Place place) throws ApplicationThrowable;
 	
 	/**
 	 * 

@@ -1284,8 +1284,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.DOCUMENT, document.getEntryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(user, userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(user, userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromDocument(user, userHistory.getIdUserHistory(), document.getEntryId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromDocument(user, userHistory.getIdUserHistory(), document.getEntryId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1300,13 +1300,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HistoryNavigator getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable {
+	public HistoryNavigator getHistoryNavigator(Integer idUserHistory, Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getUser(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursorFromDocument(userHistory.getUser(), userHistory.getIdUserHistory(), document.getEntryId());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursorFromDocument(userHistory.getUser(), userHistory.getIdUserHistory(), document.getEntryId());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

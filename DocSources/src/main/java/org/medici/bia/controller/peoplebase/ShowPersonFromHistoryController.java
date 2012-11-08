@@ -103,7 +103,7 @@ public class ShowPersonFromHistoryController {
 				Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
 				model.put("docsRelated", docsRelated);
 				
-				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(command.getIdUserHistory()));
+				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(command.getIdUserHistory(), person));
 				
 				if(getPeopleBaseService().ifPersonALreadyPresentInMarkedList(person.getPersonId())){
 					model.put("inMarkedList", "true");

@@ -89,7 +89,7 @@ public class ShowVolumeFromHistoryController {
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
-				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(command.getIdUserHistory()));
+				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(command.getIdUserHistory(), volume));
 				
 				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
 					model.put("inMarkedList", "true");
