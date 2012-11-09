@@ -12,6 +12,61 @@
 		<legend><b>EMAIL SYSTEM PROPERTIES</b></legend>
 		<div class="listForm">
 			<div class="row">
+				<div class="col_l"><form:label path="mailServerHost" for="mailServerHost" id="smtpServerHostLabel">Smtp Server Host</form:label></div>
+				<div class="col_r"><form:input id="smtpServerHost" for="mailServerHost" cssClass="input_28c" type="text" path="mailServerHost"/></div>
+			    </div>
+            <div class="row">
+                <div class="col_l"><form:label for="mailServerPort" id="smtpServerPortLabel" path="mailServerPort">Smtp Server Port</form:label></div>
+                <div class="col_r"><form:input id="smtpServerPort" for="mailServerPort" cssClass="input_28c" type="text" path="mailServerPort"/></div>
+            </div>
+            <div class="row">
+                <div class="col_l"><form:label for="mailTransportProtocol" id="mailTransportProtocolLabel" path="mailTransportProtocol">Mail Transport Protocol</form:label></div>
+                <div class="col_r">
+                <form:select id="mailTransportProtocol" for="mailTransportProtocol" cssClass="selectform_XXXlong" path="mailTransportProtocol">
+                     <!-- In atesa di sapere il contenuto definitivo -->
+                     	<form:option path="mailTransportProtocol" value="smtp"></form:option>
+<!--                         <option value="" selected="selected"></option> -->
+<!--                         <option value="1">January</option> -->
+<!--                         <option value="2">February</option> -->
+<!--                         <option value="3">March</option> -->
+<!--                         <option value="4">April</option> -->
+<!--                         <option value="5">May</option> -->
+<!--                         <option value="6">June</option> -->
+<!--                         <option value="7">July</option> -->
+<!--                         <option value="8">August</option> -->
+<!--                         <option value="9">September</option> -->
+<!--                         <option value="10">October</option> -->
+<!--                         <option value="11">November</option> -->
+<!--                         <option value="12">December</option> -->
+<!--                         <option value="13"></option> -->
+                    </form:select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col_l"></div>
+                <div class="col_r">
+                <form:label for="mailSmtpAuth" id="smtpAuthLabel" path="mailSmtpAuth">Smtp Auth</form:label>
+                    <form:checkbox for="mailSmtpAuth" cssClass="checkboxPers1" path="mailSmtpAuth" id="mailSmtpAuth"/><!-- se cliccato abilita quelli sotto che altrimenti sono oscurati -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col_l"></div>
+                <div class="col_r">
+                <form:label for="mailSmtpStarttlsEnable" id="smtpStarttlsLabel" path="mailSmtpStarttlsEnable">Smtp Starttls</form:label>
+                    <form:checkbox for="mailSmtpStarttlsEnable" cssClass="checkboxPers1" path="mailSmtpStarttlsEnable" id="mailSmtpStarttlsEnable"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col_l"><form:label for="mailServerUsername" id="smtpServerUsernameLabel" path="mailServerUsername">Smtp Server Username</form:label></div>
+                <div class="col_r"><form:input id="smtpServerUsername" for="smtpServerUsername" cssClass="input_28c" type="text" path="mailServerUsername"/></div>
+            </div>
+            <div class="row">
+                <div class="col_l"><form:label for="mailServerPassword" id="smtpServerPasswordLabel" path="mailServerPassword">Smtp Server Password</form:label></div>
+                <div class="col_r"><form:input id="smtpServerPassword" for="mailServerPassword" cssClass="input_28c" type="password" path="mailServerPassword"/></div>
+     		</div>
+   		</div>  
+		<div class="listForm">
+			<div class="row">
 				<div class="col_l"><form:label path="activationSubject" for="activationSubject" id="activationMessageSubjectLabel">Activation message subject</form:label></div>
 			</div>
 			<div class="row">
@@ -58,11 +113,44 @@
 		$j("#EditIipImageProperties").css('visibility', 'hidden');
 		$j("#EditSchedoneProperties").css('visibility', 'hidden');
 		$j("#EditUserSystemProperties").css('visibility', 'hidden');
-
+		
 		$j("#EditEmailSystemPropertiesForm :input").change(function(){
 			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 			return false;
 		});
+		
+		var authChange = function(){
+			if($j("#mailSmtpAuth:checked").length == 0){
+				$j("#mailSmtpStarttlsEnable").attr("disabled", "true");
+				$j("#smtpServerUsername").attr("disabled", "disabled");
+				$j("#smtpServerUsername").removeClass("input_28c");
+				$j("#smtpServerUsername").addClass("input_28c_disabled");
+				$j("#smtpServerPassword").removeClass("input_28c");
+				$j("#smtpServerPassword").addClass("input_28c_disabled");
+				$j("#smtpServerPassword").attr("disabled", "disabled");
+				return false;
+			}else{
+				$j("#mailSmtpStarttlsEnable").removeAttr("disabled");
+				$j("#smtpServerUsername").removeAttr("disabled");
+				$j("#smtpServerPassword").removeAttr("disabled");
+				$j("#smtpServerUsername").addClass("input_28c");
+				$j("#smtpServerUsername").removeClass("input_28c_disabled");
+				$j("#smtpServerPassword").addClass("input_28c");
+				$j("#smtpServerPassword").removeClass("input_28c_disabled");
+			}
+		}
+		
+		if($j("#mailSmtpAuth:checked").length == 0){
+			$j("#mailSmtpStarttlsEnable").attr("disabled", "true");
+			$j("#smtpServerUsername").attr("disabled", "disabled");
+			$j("#smtpServerUsername").removeClass("input_28c");
+			$j("#smtpServerUsername").addClass("input_28c_disabled");
+			$j("#smtpServerPassword").removeClass("input_28c");
+			$j("#smtpServerPassword").addClass("input_28c_disabled");
+			$j("#smtpServerPassword").attr("disabled", "disabled");
+		}
+		
+		$j("#mailSmtpAuth").change(authChange);
 		
 		$j("#save").click(function(){
 	       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());

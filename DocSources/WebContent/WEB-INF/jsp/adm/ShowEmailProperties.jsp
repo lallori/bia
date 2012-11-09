@@ -15,6 +15,34 @@
 	</div>
 	<div class="list">
 		<div class="row">
+			<div class="item">Smtp Server host</div>
+			<div class="value60">${fn2:getApplicationProperty('mail.server.host')}</div>
+		</div>
+		<div class="row">
+			<div class="item">Smtp Server Port</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.server.port')}</div> 
+		</div>
+		<div class="row">
+			<div class="item">Mail Transport Protocol</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.transport.protocol')}</div> 
+		</div>
+		<div class="row">
+			<div class="item">Smtp Auth</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.smtp.auth')}</div> 
+		</div>
+		<div class="row">
+			<div class="item">Smtp Starttls</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.smtp.starttls.enable')}</div> 
+		</div>
+		<div class="row">
+			<div class="item">Smtp Server Username</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.server.username')}</div> 
+		</div>
+		<div class="row">
+			<div class="item">Smtp Server Password</div> 
+			<div class="value60">${fn2:getApplicationProperty('mail.server.password')}</div> 
+		</div>
+		<div class="row">
 			<div class="item">Activation message subject</div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.activationUser.subject')}</div>
 		</div>

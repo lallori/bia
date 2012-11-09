@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.command.admin.EditEmailPropertiesCommand;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -96,14 +97,23 @@ public class EditEmailPropertiesController {
 				hashMap.put("mail.activationUser.text", command.getActivationText());
 				hashMap.put("mail.resetUserPassword.subject", command.getResetUserPasswordSubject());
 				hashMap.put("mail.resetUserPassword.text", command.getResetUserPasswordText());
-				/*hashMap.put("mail.server.host", command.getMailServerHost());
+				hashMap.put("mail.server.host", command.getMailServerHost());
 				hashMap.put("mail.server.port", command.getMailServerPort().toString());
-				hashMap.put("mail.server.username", command.getMailServerUsername());
-				hashMap.put("mail.server.password", command.getMailServerPassword());
-				hashMap.put("mail.smtp.auth", command.getMailSmtpAuth());
-				hashMap.put("mail.smtp.starttls.enable", command.getMailSmtpStarttlsEnable());
+				if(command.getMailSmtpAuth()){
+					hashMap.put("mail.smtp.auth", "true");
+					if(command.getMailSmtpStarttlsEnable())
+						hashMap.put("mail.smtp.starttls.enable", "true");
+					else
+						hashMap.put("mail.smtp.starttls.enable", "false");
+					hashMap.put("mail.server.username", command.getMailServerUsername());
+					hashMap.put("mail.server.password", command.getMailServerPassword());
+				}
+				else{
+					hashMap.put("mail.smtp.auth", "false");
+					hashMap.put("mail.smtp.starttls.enable", "false");
+				}
 				hashMap.put("mail.transport.protocol", command.getMailTransportProtocol());
-*/
+
 				getAdminService().updateApplicationProperties(hashMap);
 
 				// We need to refresh ApplicationPropertyManager...
@@ -133,6 +143,19 @@ public class EditEmailPropertiesController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditEmailPropertiesCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
+		command.setMailServerHost(ApplicationPropertyManager.getApplicationProperty("mail.server.host"));
+		command.setMailServerPort(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("mail.server.port")));
+		command.setMailTransportProtocol(ApplicationPropertyManager.getApplicationProperty("mail.transport.protocol"));
+		if(ApplicationPropertyManager.getApplicationProperty("mail.smtp.auth").equals("true"))
+			command.setMailSmtpAuth(true);
+		else
+			command.setMailSmtpAuth(false);
+		if(ApplicationPropertyManager.getApplicationProperty("mail.smtp.starttls.enable").equals("true"))
+			command.setMailSmtpStarttlsEnable(true);
+		else
+			command.setMailSmtpStarttlsEnable(false);
+		command.setMailServerUsername(ApplicationPropertyManager.getApplicationProperty("mail.server.username"));
+		command.setMailServerPassword(ApplicationPropertyManager.getApplicationProperty("mail.server.password"));
 		command.setActivationSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
 		command.setActivationText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text"));
 		command.setResetUserPasswordSubject(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.subject"));

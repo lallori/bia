@@ -42,8 +42,8 @@ public class EditEmailPropertiesCommand {
 	private Integer mailServerPort;
 	private String mailServerUsername;
 	private String mailServerPassword;
-	private String mailSmtpAuth;
-	private String mailSmtpStarttlsEnable;
+	private Boolean mailSmtpAuth;
+	private Boolean mailSmtpStarttlsEnable;
 	private String mailTransportProtocol;
 
 	/**
@@ -161,28 +161,28 @@ public class EditEmailPropertiesCommand {
 	/**
 	 * @return the mailSmtpAuth
 	 */
-	public String getMailSmtpAuth() {
+	public Boolean getMailSmtpAuth() {
 		return mailSmtpAuth;
 	}
 
 	/**
 	 * @param mailSmtpAuth the mailSmtpAuth to set
 	 */
-	public void setMailSmtpAuth(String mailSmtpAuth) {
+	public void setMailSmtpAuth(Boolean mailSmtpAuth) {
 		this.mailSmtpAuth = mailSmtpAuth;
 	}
 
 	/**
 	 * @return the mailSmtpStarttlsEnable
 	 */
-	public String getMailSmtpStarttlsEnable() {
+	public Boolean getMailSmtpStarttlsEnable() {
 		return mailSmtpStarttlsEnable;
 	}
 
 	/**
 	 * @param mailSmtpStarttlsEnable the mailSmtpStarttlsEnable to set
 	 */
-	public void setMailSmtpStarttlsEnable(String mailSmtpStarttlsEnable) {
+	public void setMailSmtpStarttlsEnable(Boolean mailSmtpStarttlsEnable) {
 		this.mailSmtpStarttlsEnable = mailSmtpStarttlsEnable;
 	}
 
