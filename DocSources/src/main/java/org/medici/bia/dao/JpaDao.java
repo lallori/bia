@@ -668,8 +668,9 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		}
 
 		String objectsQuery = searchContainer.toJPAQuery();
+
+		// We manage sorting (this manages sorting on multiple fields)
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuilder orderBySQL = new StringBuilder(0);
 		if (sortingCriterias.size() > 0) {
@@ -689,8 +690,6 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		// We set pagination  
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
-
-		// We manage sorting (this manages sorting on multiple fields)
 
 		// We set search result on return method
 		page.setList(query.getResultList());

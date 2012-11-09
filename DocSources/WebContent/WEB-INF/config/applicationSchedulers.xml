@@ -39,6 +39,10 @@
     	<constructor-arg value="${mail.from}"/>
     </bean>
 
+	<bean id="accessLogStatisticsJob" class="org.medici.bia.scheduler.AccessLogStatisticsJob"/>
+
+	<bean id="accessLogStatisticsRecoveryJob" class="org.medici.bia.scheduler.AccessLogStatisticsRecoveryJob"/>
+
 	<bean id="activationUserEmailJob" class="org.medici.bia.scheduler.ActivationUserEmailJob"/>
 
 	<bean id="approvationUserMessageJob" class="org.medici.bia.scheduler.ApprovationUserMessageJob"/>

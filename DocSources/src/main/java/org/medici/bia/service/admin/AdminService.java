@@ -27,6 +27,7 @@
  */
 package org.medici.bia.service.admin;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,13 +55,14 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User addNewUser(User user) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
+	 * @param currentDate
 	 * @throws ApplicationThrowable
 	 */
-	void createAccessLogDailyStatistics() throws ApplicationThrowable;
-	
+	void createAccessLogDailyStatistics(Date currentDate) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param user
@@ -75,7 +77,7 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User editUserMail(User user) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param idAccessLog
@@ -83,7 +85,15 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	AccessLog findAccessLog(Integer idAccessLog) throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @param numberMaxOfDay
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param account

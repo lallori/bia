@@ -27,85 +27,60 @@
  */
 package org.medici.bia.scheduler;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
-import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.service.mail.MailService;
-import org.medici.bia.service.user.UserService;
+import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * This class implements the scheduler to perform send mail to all users
- * that aren't in active state.<br>
- * There are two tasks performed :<br>
- * - extracting list of users that needs to be activated.<br>
- * - for every user in this list, job will send the activation mail.<p>
- *
- * The system sends an email to the user which contains a link in it.<p>
- *    
- * The link also contains the ID of the request. The link will be something like 
- * this:<p>
- *  
- *    http://host:port/contextPath/user/ActivateUser.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 @Transactional(readOnly=true)
-public class ActivationUserEmailJob {
+public class AccessLogStatisticsRecoveryJob {
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	@Autowired
-	private MailService mailService;
-	@Autowired
-	private UserService userService;
-	
+	private AdminService adminService;
+
 	/**
-	 * {@inheritDoc}
+	 * Scheduled task ad 00:30 every day @Scheduled(cron="0 30 0 * * ?")
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(fixedRate=300000)
+	@Scheduled(cron="0 05 3 * * ?")
 	public void execute() {
-		MDC.put("username", "threadactivationuser");
+		MDC.put("username", "threadstatistics");
 		try {
-			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();
+			List<Date> missingStatisticsDate = getAdminService().findMissingStatisticsDate(100);
 
-			for(ActivationUser currentActivation:usersToActivate) {
-				getMailService().sendActivationMail(currentActivation, currentActivation.getUser());
+			for(Date currentDate:missingStatisticsDate) {
+				getAdminService().createAccessLogDailyStatistics(currentDate);
 			}
 		} catch (ApplicationThrowable ath) {
-			
+			logger.error("Error during creating statistics");
 		}
 	}
 
+	
 	/**
-	 * @param mailService the mailService to set
+	 * @return the adminService
 	 */
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
+	public AdminService getAdminService() {
+		return adminService;
 	}
 
 	/**
-	 * @return the mailService
+	 * @param adminService the adminService to set
 	 */
-	public MailService getMailService() {
-		return mailService;
-	}
-
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 }

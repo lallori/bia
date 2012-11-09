@@ -28,6 +28,7 @@
 package org.medici.bia.dao.accesslogstatistics;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.PersistenceException;
 
@@ -47,6 +48,14 @@ public interface AccessLogStatisticsDAO extends Dao<Integer, AccessLogStatistics
 	 * @throws PersistenceException
 	 */
 	Integer deleteStatisticsOnDay(Date date) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param numberMaxOfDay
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws PersistenceException;
 
 	/**
 	 * 

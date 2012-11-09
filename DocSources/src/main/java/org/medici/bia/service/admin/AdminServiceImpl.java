@@ -37,7 +37,6 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
@@ -156,8 +155,7 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void createAccessLogDailyStatistics() throws ApplicationThrowable {
-		Date dateSelected = new DateTime().minusDays(1).toDate();
+	public void createAccessLogDailyStatistics(Date dateSelected) throws ApplicationThrowable {
 
 		try {
 			Integer statisticsDeleted = getAccessLogStatisticsDAO().deleteStatisticsOnDay(dateSelected);
@@ -186,9 +184,6 @@ public class AdminServiceImpl implements AdminService {
 	public User editUser(User user) throws ApplicationThrowable {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount()); 
-			//userToUpdate.setAddress(user.getAddress());
-			//userToUpdate.setCity(user.getCity());
-			//userToUpdate.setCountry(user.getCountry());
 
 			if (user.getPassword() != null) {
 				if (!user.getPassword().equals(userToUpdate.getPassword())){
@@ -268,6 +263,18 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws ApplicationThrowable {
+		try{
+			return getAccessLogStatisticsDAO().findMissingStatisticsDate(numberMaxOfDay);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User findUser(String account) throws ApplicationThrowable {
 		try{
 			return getUserDAO().findUser(account);
@@ -275,7 +282,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -287,7 +294,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -299,7 +306,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -580,7 +587,6 @@ public class AdminServiceImpl implements AdminService {
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */

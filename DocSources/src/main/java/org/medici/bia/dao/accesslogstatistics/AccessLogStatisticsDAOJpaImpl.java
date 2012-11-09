@@ -27,12 +27,18 @@
  */
 package org.medici.bia.dao.accesslogstatistics;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.AccessLogStatistics;
 import org.springframework.stereotype.Repository;
@@ -65,11 +71,16 @@ public class AccessLogStatisticsDAOJpaImpl extends JpaDao<Integer, AccessLogStat
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = -8437267572130386899L;
+	private static final long serialVersionUID = -3579212220653601715L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Integer deleteStatisticsOnDay(Date date) throws PersistenceException {
-		String jpql = "DELETE FROM AccessLogStatistics WHERE primaryKey.dateAndTime=:date";
+		String jpql = "DELETE FROM AccessLogStatistics WHERE date=:date";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("date", date);
@@ -86,20 +97,62 @@ public class AccessLogStatisticsDAOJpaImpl extends JpaDao<Integer, AccessLogStat
 		// select date_format(dateAndTime, '%Y/%m/%d'), action, httpMethod, count(idAccessLog), max(executionTime), min(executionTime)  from tblAccessLog where date_format(dateAndTime, '%Y/%m/%d') = date_format('2012/08/03', '%Y/%m/%d') 
 		// group by action, httpMethod
 
-		String jpql = "SELECT dateAndTime, action, httpMethod, COUNT(idAccessLog), MAX(executionTime), MIN(executionTime) " +
-		"FROM AccessLog WHERE dateAndTime=:dateAndTime GROUP BY action, httpMethod";
+		String jpql = "SELECT action, httpMethod, COUNT(idAccessLog), MAX(executionTime), MIN(executionTime) " +
+		"FROM AccessLog WHERE DATE_FORMAT(dateAndTime, '%Y-%m-%d')=:dateAndTime GROUP BY action, httpMethod";
 
 		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("date", date);
-		List<List<Object>> list = query.getResultList();
+		query.setParameter("dateAndTime", DateUtils.getMYSQLDate(date));
+		List<Object[]> result = query.getResultList();
 		
-		for (List<Object> singleRow : list) {
-			AccessLogStatistics accessLogStatistics = new AccessLogStatistics((Date)singleRow.get(0), (String)singleRow.get(1), (String)singleRow.get(2));
-			
-			getEntityManager().persist(accessLogStatistics);
-		}
+		if (result.size() > 0) {
+		
+			// We set new partial-total values 
+			for (int i=0; i<result.size(); i++) {
+				// This is an array defined as [ImageType, Count by ImageType]
+				Object[] singleGroup = result.get(i);
+				AccessLogStatistics accessLogStatistics = new AccessLogStatistics();
+				accessLogStatistics.setDate(date);
+				accessLogStatistics.setAction(singleGroup[0].toString());
+				accessLogStatistics.setHttpMethod(singleGroup[1].toString());
+				accessLogStatistics.setCount(new Integer(singleGroup[2].toString()));
+				accessLogStatistics.setWorstAccessTime(new Long(singleGroup[3].toString()));
+				accessLogStatistics.setBestAccessTime(new Long(singleGroup[4].toString()));
+				
+				getEntityManager().persist(accessLogStatistics);
+			}
+		}		
 		
 		return Boolean.TRUE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws PersistenceException {
+		List<Date> returnValue = new ArrayList<Date>(0); 
+		// SELECT distinct(DATE_FORMAT(dateAndTime, '%Y-%m-%d')) from AccessLog where DATE_FORMAT(dateAndTime, '%Y-%m-%d') not in (select distinct(date) from AccessLogStatistics)
+		String jpql = "SELECT distinct(DATE_FORMAT(dateAndTime, '%Y-%m-%d')) from AccessLog where DATE_FORMAT(dateAndTime, '%Y-%m-%d') not in (select distinct(date) from AccessLogStatistics)";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setFirstResult(0);
+		query.setMaxResults(numberMaxOfDay);
+
+		List<String> result = query.getResultList();
+		
+		if (result.size() > 0) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			for (int i=0; i<result.size(); i++) {
+				try {
+					returnValue.add(dateFormat.parse(result.get(i)));
+				} catch (ParseException parseException) {
+					logger.error(parseException);
+				}
+			}
+		}
+		
+		return returnValue;
 	}
 
 }

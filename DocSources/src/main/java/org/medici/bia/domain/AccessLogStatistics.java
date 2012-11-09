@@ -36,6 +36,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * AccessLogStatistics entity.
@@ -55,8 +57,9 @@ public class AccessLogStatistics implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column (name="\"accessLogStatisticsId\"", length=10, nullable=false)
 	private Integer accessLogStatisticsId;
-	@Column (name="\"dateAndTime\"", nullable=false)
-	private Date dateAndTime;
+	@Temporal(TemporalType.DATE)
+	@Column (name="\"date\"", nullable=false)
+	private Date date;
 	@Column (name="\"action\"", length=2000, nullable=false)
 	private String action;
 	@Column (name="\"httpMethod\"", length=8, nullable=false)
@@ -65,7 +68,7 @@ public class AccessLogStatistics implements Serializable {
 	private Integer count;
 	@Column(name="\"bestAccessTime\"", nullable=false)
 	private Long bestAccessTime;
-	@Column(name="\"worstAccessLog\"", nullable=false)
+	@Column(name="\"worstAccessTime\"", nullable=false)
 	private Long worstAccessTime;
 
 	/**
@@ -84,7 +87,7 @@ public class AccessLogStatistics implements Serializable {
 	public AccessLogStatistics(Date dateAndTime, String action, String httpMethod) {
 		super();
 
-		setDateAndTime(dateAndTime);
+		setDate(dateAndTime);
 		setAction(action);
 		setHttpMethod(httpMethod);
 	}
@@ -106,15 +109,15 @@ public class AccessLogStatistics implements Serializable {
 	/**
 	 * @return the dateAndTime
 	 */
-	public Date getDateAndTime() {
-		return dateAndTime;
+	public Date getDate() {
+		return date;
 	}
 
 	/**
-	 * @param dateAndTime the dateAndTime to set
+	 * @param date the date to set
 	 */
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	/**
@@ -204,8 +207,8 @@ public class AccessLogStatistics implements Serializable {
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("[id=");
 		stringBuilder.append(getAccessLogStatisticsId());
-		stringBuilder.append("dateAndTime=");
-		stringBuilder.append(getDateAndTime());
+		stringBuilder.append("date=");
+		stringBuilder.append(getDate());
 		stringBuilder.append(",action=");
 		stringBuilder.append(getAction());
 		stringBuilder.append(", best=");

@@ -27,8 +27,11 @@
  */
 package org.medici.bia.scheduler;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
+import org.joda.time.DateTime;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +40,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * This class implements the scheduler to perform send mail to all users
- * that aren't in active state.<br>
- * There are two tasks performed :<br>
- * - extracting list of users that needs to be activated.<br>
- * - for every user in this list, job will send the activation mail.<p>
- *
- * The system sends an email to the user which contains a link in it.<p>
- *    
- * The link also contains the ID of the request. The link will be something like 
- * this:<p>
- *  
- *    http://host:port/contextPath/user/ActivateUser.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
- * 
+ * This class implements the scheduler to perform tracing statistics on previous
+ * day.
+ *   
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
@@ -64,11 +57,13 @@ public class AccessLogStatisticsJob {
 	 * Scheduled task ad 00:30 every day @Scheduled(cron="0 30 0 * * ?")
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(cron="0 0/20 * * * ?")
+	@Scheduled(cron="0 05 0 * * ?")
 	public void execute() {
 		MDC.put("username", "threadstatistics");
 		try {
-			getAdminService().createAccessLogDailyStatistics();
+			Date dateSelected = new DateTime().minusDays(1).toDate();
+
+			getAdminService().createAccessLogDailyStatistics(dateSelected);
 		} catch (ApplicationThrowable ath) {
 			logger.error("Error during creating statistics");
 		}
