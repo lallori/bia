@@ -58,6 +58,7 @@ public class AccessLogStatisticsJob {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(cron="0 05 0 * * ?")
+	// @Scheduled(fixedRate=300000)
 	public void execute() {
 		MDC.put("username", "threadstatistics");
 		try {

@@ -66,10 +66,12 @@ public class AccessLogStatistics implements Serializable {
 	private String httpMethod;
 	@Column (name="\"count\"", nullable=false)
 	private Integer count;
-	@Column(name="\"bestAccessTime\"", nullable=false)
-	private Long bestAccessTime;
-	@Column(name="\"worstAccessTime\"", nullable=false)
-	private Long worstAccessTime;
+	@Column(name="\"averageTime\"", nullable=false)
+	private Double averageTime;
+	@Column(name="\"bestTime\"", nullable=false)
+	private Long bestTime;
+	@Column(name="\"worstTime\"", nullable=false)
+	private Long worstTime;
 
 	/**
 	 * Default constructor
@@ -92,18 +94,27 @@ public class AccessLogStatistics implements Serializable {
 		setHttpMethod(httpMethod);
 	}
 
+
 	/**
-	 * @return the accessLogStatisticsId
+	 * @param worstTime the worstTime to set
 	 */
-	public Integer getAccessLogStatisticsId() {
-		return accessLogStatisticsId;
+	public void setWorstTime(Long worstTime) {
+		this.worstTime = worstTime;
 	}
 
 	/**
 	 * @param accessLogStatisticsId the accessLogStatisticsId to set
 	 */
-	public void setIdAccessLogStatisticsId(Integer accessLogStatisticsId) {
+	public void setAccessLogStatisticsId(Integer accessLogStatisticsId) {
 		this.accessLogStatisticsId = accessLogStatisticsId;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getAccessLogStatisticsId() {
+		return accessLogStatisticsId;
 	}
 
 	/**
@@ -164,40 +175,39 @@ public class AccessLogStatistics implements Serializable {
 		return count;
 	}
 
-
-
 	/**
-	 * @return the bestAccessTime
+	 * @return the averageTime
 	 */
-	public Long getBestAccessTime() {
-		return bestAccessTime;
+	public Double getAverageTime() {
+		return averageTime;
 	}
 
-
-
 	/**
-	 * @param bestAccessTime the bestAccessTime to set
+	 * @param averageTime the averageTime to set
 	 */
-	public void setBestAccessTime(Long bestAccessTime) {
-		this.bestAccessTime = bestAccessTime;
+	public void setAverageTime(Double averageTime) {
+		this.averageTime = averageTime;
 	}
 
-
-
 	/**
-	 * @return the worstAccessTime
+	 * @return the bestTime
 	 */
-	public Long getWorstAccessTime() {
-		return worstAccessTime;
+	public Long getBestTime() {
+		return bestTime;
 	}
 
-
+	/**
+	 * @param bestTime the bestTime to set
+	 */
+	public void setBestTime(Long bestTime) {
+		this.bestTime = bestTime;
+	}
 
 	/**
-	 * @param worstAccessTime the worstAccessTime to set
+	 * @return the worstTime
 	 */
-	public void setWorstAccessTime(Long worstAccessTime) {
-		this.worstAccessTime = worstAccessTime;
+	public Long getWorstTime() {
+		return worstTime;
 	}
 
 	/**
@@ -211,10 +221,12 @@ public class AccessLogStatistics implements Serializable {
 		stringBuilder.append(getDate());
 		stringBuilder.append(",action=");
 		stringBuilder.append(getAction());
+		stringBuilder.append(", average=");
+		stringBuilder.append(getAverageTime());
 		stringBuilder.append(", best=");
-		stringBuilder.append(getBestAccessTime());
+		stringBuilder.append(getBestTime());
 		stringBuilder.append(", worst=");
-		stringBuilder.append(getWorstAccessTime());
+		stringBuilder.append(getWorstTime());
 		stringBuilder.append(" ]");
 		return stringBuilder.toString();
 	}

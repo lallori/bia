@@ -94,10 +94,10 @@ public class AccessLogStatisticsDAOJpaImpl extends JpaDao<Integer, AccessLogStat
 	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean generateStatisticsOnDay(Date date) throws PersistenceException {
-		// select date_format(dateAndTime, '%Y/%m/%d'), action, httpMethod, count(idAccessLog), max(executionTime), min(executionTime)  from tblAccessLog where date_format(dateAndTime, '%Y/%m/%d') = date_format('2012/08/03', '%Y/%m/%d') 
+		// select date_format(dateAndTime, '%Y/%m/%d'), action, httpMethod, count(idAccessLog), avg(executionTime), min(executionTime), max(executionTime) from tblAccessLog where date_format(dateAndTime, '%Y/%m/%d') = date_format('2012/08/03', '%Y/%m/%d') 
 		// group by action, httpMethod
 
-		String jpql = "SELECT action, httpMethod, COUNT(idAccessLog), MAX(executionTime), MIN(executionTime) " +
+		String jpql = "SELECT action, httpMethod, COUNT(idAccessLog), AVG(executionTime), MIN(executionTime), MAX(executionTime) " +
 		"FROM AccessLog WHERE DATE_FORMAT(dateAndTime, '%Y-%m-%d')=:dateAndTime GROUP BY action, httpMethod";
 
 		Query query = getEntityManager().createQuery(jpql);
@@ -115,8 +115,9 @@ public class AccessLogStatisticsDAOJpaImpl extends JpaDao<Integer, AccessLogStat
 				accessLogStatistics.setAction(singleGroup[0].toString());
 				accessLogStatistics.setHttpMethod(singleGroup[1].toString());
 				accessLogStatistics.setCount(new Integer(singleGroup[2].toString()));
-				accessLogStatistics.setWorstAccessTime(new Long(singleGroup[3].toString()));
-				accessLogStatistics.setBestAccessTime(new Long(singleGroup[4].toString()));
+				accessLogStatistics.setAverageTime(new Double(singleGroup[3].toString()));
+				accessLogStatistics.setBestTime(new Long(singleGroup[4].toString()));
+				accessLogStatistics.setWorstTime(new Long(singleGroup[5].toString()));
 				
 				getEntityManager().persist(accessLogStatistics);
 			}
