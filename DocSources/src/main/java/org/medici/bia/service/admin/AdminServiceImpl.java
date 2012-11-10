@@ -349,7 +349,7 @@ public class AdminServiceImpl implements AdminService {
 
 			// We try to search user with these inital, if we find one, we increment letters in initial  
 			for (int i=1; i<surname.length(); i++) {
-				String initialChoiced = initialLetterOfName + surname.substring(0, i);
+				String initialChoiced = initialLetterOfName + surname.substring(i-1, i);
 				User userToSearch = new User();
 				userToSearch.setInitials(initialChoiced);
 				if (getUserDAO().findUser(userToSearch) == null)
