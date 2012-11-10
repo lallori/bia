@@ -73,7 +73,7 @@ public class ResetUserPasswordEmailJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=300000)
 	public void execute() {
-		MDC.put("username", "threademail");
+		MDC.put("account", "threademail");
 		try {
 			List<PasswordChangeRequest> passwordChangeRequests = getUserService().findPasswordResetRequests();
 

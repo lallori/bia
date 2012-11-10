@@ -66,7 +66,7 @@ public class ApprovationUserMessageJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=300000)
 	public void execute() {
-		MDC.put("username", "threadapprovationuser");
+		MDC.put("account", "threadapprovationuser");
 		try {
 			List<ApprovationUser> approvationUsers = getAdminService().findUsersToApprove();
 

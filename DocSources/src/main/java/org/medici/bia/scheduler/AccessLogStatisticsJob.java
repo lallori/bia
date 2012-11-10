@@ -60,7 +60,7 @@ public class AccessLogStatisticsJob {
 	@Scheduled(cron="0 05 0 * * ?")
 	// @Scheduled(fixedRate=300000)
 	public void execute() {
-		MDC.put("username", "threadstatistics");
+		MDC.put("account", "threadstatistics");
 		try {
 			Date dateSelected = new DateTime().minusDays(1).toDate();
 

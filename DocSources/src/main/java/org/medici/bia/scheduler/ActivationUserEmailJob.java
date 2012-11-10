@@ -69,7 +69,7 @@ public class ActivationUserEmailJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=300000)
 	public void execute() {
-		MDC.put("username", "threadactivationuser");
+		MDC.put("account", "threadactivationuser");
 		try {
 			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();
 

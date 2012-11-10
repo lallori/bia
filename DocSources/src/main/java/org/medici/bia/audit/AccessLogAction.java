@@ -193,7 +193,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			accessLog.setAccount("");
 			accessLog.setInformations("");
 		}
-		MDC.put("username", accessLog.getAccount());
+		MDC.put("account", accessLog.getAccount());
 
 		accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		accessLog.setIpAddress(request.getRemoteAddr());

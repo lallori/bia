@@ -55,7 +55,7 @@ public class CheckDigitizedVolumeJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=600000)
 	public void execute() {
-		MDC.put("username", "threademail");
+		MDC.put("account", "threademail");
 		try {
 			List<Integer> summaryIds = getVolBaseService().findNewDigitizedVolumes();
 

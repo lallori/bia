@@ -57,7 +57,7 @@ public class AccessLogStatisticsRecoveryJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(cron="0 05 3 * * ?")
 	public void execute() {
-		MDC.put("username", "threadstatistics");
+		MDC.put("account", "threadstatistics");
 		try {
 			List<Date> missingStatisticsDate = getAdminService().findMissingStatisticsDate(100);
 

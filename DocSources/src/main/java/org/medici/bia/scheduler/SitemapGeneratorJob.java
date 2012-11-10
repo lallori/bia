@@ -55,7 +55,7 @@ public class SitemapGeneratorJob {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(cron="0 0/20 * * * ?")
 	public void execute() {
-		MDC.put("username", "threadsitemap");
+		MDC.put("account", "threadsitemap");
 		try {
 			getSitemapService().deleteSitemapIndex();
 			getSitemapService().deleteSitemap();
