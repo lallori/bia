@@ -27,7 +27,6 @@
  */
 package org.medici.bia.validator.peoplebase;
 
-import org.medici.bia.command.peoplebase.EditFatherPersonCommand;
 import org.medici.bia.command.peoplebase.EditParentsPersonCommand;
 import org.medici.bia.domain.Parent;
 import org.medici.bia.exception.ApplicationThrowable;

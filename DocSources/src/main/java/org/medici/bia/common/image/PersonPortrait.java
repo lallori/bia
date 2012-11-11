@@ -49,10 +49,10 @@ public class PersonPortrait {
 	 * @param browse
 	 * @param link
 	 */
-	public PersonPortrait(Integer personId, CommonsMultipartFile browse, String link) {
-		this.personId = personId;
-		file = browse;	
-		this.link = link;
+	public PersonPortrait(Integer personId, CommonsMultipartFile commonsMultipartFile, String link) {
+		setPersonId(personId);
+		setFile(commonsMultipartFile);	
+		setLink(link);
 	}
 
 	/**

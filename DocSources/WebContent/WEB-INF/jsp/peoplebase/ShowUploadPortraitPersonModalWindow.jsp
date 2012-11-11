@@ -4,8 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-	<c:url var="UploadPortraitPersonURL" value="/de/peoplebase/UploadPortraitPerson.do">
-		<c:param name="personId" value="${person.personId }" />
+	<c:url var="ShowUploadPortraitPersonURL" value="/de/peoplebase/ShowUploadPortraitPerson.do">
 	</c:url>
 	
 	<c:url var="DeletePortraitPersonURL" value="/de/peoplebase/DeletePortraitPerson.do">
@@ -20,7 +19,7 @@
 		<c:param name="personId" value="${person.personId }" />
 	</c:url>
 
-	<form id="uploadPortraitPersonForm" action="${UploadPortraitPersonURL}"	method="post" class="edit" enctype="multipart/form-data">
+	<form id="uploadPortraitPersonForm" action="${ShowUploadPortraitPersonURL}"	method="post" class="edit" enctype="multipart/form-data">
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
@@ -41,7 +40,7 @@
 		</div>
 		<br>
 		<div>
-			<input type="hidden" value="${person.personId}" />
+			<input type="hidden" name="personId" value="${person.personId}" />
 			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium">Reset Portrait</a>
 			<input id="save" type="submit" class="savePortrait"  value="Save" />
 		</div>

@@ -1,5 +1,5 @@
 /*
- * UploadPortraitPersonValidator.java
+ * ShowUploadPortraitPersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,8 +27,13 @@
  */
 package org.medici.bia.validator.peoplebase;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.UnknownHostException;
+
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.bia.command.peoplebase.UploadPortraitPersonCommand;
+import org.medici.bia.command.peoplebase.ShowUploadPortraitPersonCommand;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +44,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a
+ *         href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
-public class UploadPortraitPersonValidator implements Validator {
+public class ShowUploadPortraitPersonValidator implements Validator {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
@@ -73,7 +80,7 @@ public class UploadPortraitPersonValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(UploadPortraitPersonCommand.class);
+		return givenClass.equals(ShowUploadPortraitPersonCommand.class);
 	}
 
 	/**
@@ -82,14 +89,16 @@ public class UploadPortraitPersonValidator implements Validator {
 	 * supplied errors instance can be used to report any resulting validation
 	 * errors.
 	 * 
-	 * @param object the object that is to be validated (can be null)
-	 * @param errors contextual state about the validation process (never null)
+	 * @param object
+	 *            the object that is to be validated (can be null)
+	 * @param errors
+	 *            contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		UploadPortraitPersonCommand uploadPortraitPersonCommand = (UploadPortraitPersonCommand) object;
-		validatePersonId(uploadPortraitPersonCommand.getPersonId(), errors);
-		validateRemoteUrl(uploadPortraitPersonCommand.getLink(), errors);
-		validateImageToLoad(uploadPortraitPersonCommand.getBrowse(), errors);
+		ShowUploadPortraitPersonCommand showUploadPortraitPersonCommand = (ShowUploadPortraitPersonCommand) object;
+		validatePersonId(showUploadPortraitPersonCommand.getPersonId(), errors);
+		validateRemoteUrl(showUploadPortraitPersonCommand.getLink(), errors);
+		validateImageToLoad(showUploadPortraitPersonCommand.getBrowse(), errors);
 	}
 
 	/**
@@ -98,16 +107,16 @@ public class UploadPortraitPersonValidator implements Validator {
 	 * @param errors
 	 */
 	private void validateImageToLoad(CommonsMultipartFile browse, Errors errors) {
-		if(browse != null && browse.getSize() > 0){
-			if(!browse.getContentType().equals("image/jpeg") && !browse.getContentType().equals("image/png")){
+		if (browse != null && browse.getSize() > 0) {
+			if (!browse.getContentType().equals("image/jpeg") && !browse.getContentType().equals("image/png")) {
 				errors.reject("browse", "error.browse.invalidImage");
 			}
-			//MD: Verify if the upload file is too big
-			if(browse.getSize() > 15000000){
+			// MD: Verify if the upload file is too big
+			if (browse.getSize() > 15000000) {
 				errors.reject("browse", "error.browse.fileDimension");
 			}
 		}
-		
+
 	}
 
 	/**
@@ -117,7 +126,19 @@ public class UploadPortraitPersonValidator implements Validator {
 	 */
 	private void validateRemoteUrl(String link, Errors errors) {
 		if (!ObjectUtils.toString(link).equals("")) {
-			// We need to validate remote url image with an url connection to get image...
+			try {
+				URL url = new URL(link);
+				HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+				int responseCode = huc.getResponseCode();
+
+				if (responseCode != HttpURLConnection.HTTP_OK) {
+					errors.reject("link", "error.link.notFound");
+				}
+			} catch (UnknownHostException uhe) {
+				errors.reject("link", "error.link.notFound");
+			} catch (IOException ioException) {
+				errors.reject("link", "error.link.notFound");
+			}
 		}
 	}
 
@@ -136,10 +157,10 @@ public class UploadPortraitPersonValidator implements Validator {
 						errors.reject("peopleId", "error.peopleId.notfound");
 					}
 				} catch (ApplicationThrowable ath) {
-					
+
 				}
 			}
 		}
 	}
-	
+
 }

@@ -255,12 +255,12 @@
         <description>Edit Title Or Occupation Validator.</description>
 	</bean>
 	
-	<bean id="undeletePersonValidator" class="org.medici.bia.validator.peoplebase.UndeletePersonValidator">
-        <description>Undelete a Person Validator.</description>
+	<bean id="showUploadPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.ShowUploadPortraitPersonValidator">
+        <description>Upload Portrait Person Validator.</description>
 	</bean>
 
-	<bean id="uploadPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.UploadPortraitPersonValidator">
-        <description>Upload Portrait Person Validator.</description>
+	<bean id="undeletePersonValidator" class="org.medici.bia.validator.peoplebase.UndeletePersonValidator">
+        <description>Undelete a Person Validator.</description>
 	</bean>
 
 	<!-- Volume base Validators-->

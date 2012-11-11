@@ -29,6 +29,8 @@ package org.medici.bia.command.peoplebase;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -37,6 +39,37 @@ import javax.validation.constraints.NotNull;
 public class ShowUploadPortraitPersonCommand {
 	@NotNull
 	private Integer personId;
+	private CommonsMultipartFile browse;
+	private String link;
+	
+	/**
+	 * @return the browse
+	 */
+	public CommonsMultipartFile getBrowse() {
+		return browse;
+	}
+
+	/**
+	 * @param browse the browse to set
+	 */
+	public void setBrowse(CommonsMultipartFile browse) {
+		this.browse = browse;
+	}
+
+	/**
+	 * @return the link
+	 */
+	public String getLink() {
+		return link;
+	}
+
+	/**
+	 * @param link the link to set
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
+
 
 	/**
 	 * @param personId the personId to set

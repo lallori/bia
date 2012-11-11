@@ -2033,7 +2033,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				}else{
 					fileName = personPortrait.getPersonId() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 					String extension = personPortrait.getLink().substring(personPortrait.getLink().lastIndexOf("."), personPortrait.getLink().length());
-					fileName.concat(extension);
+					fileName = fileName.concat(extension);
 					tempFile = new File(tempPath + "/" + fileName);
 					FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
 				}

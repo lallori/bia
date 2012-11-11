@@ -27,19 +27,30 @@
  */
 package org.medici.bia.controller.peoplebase;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.medici.bia.command.peoplebase.ShowUploadPortraitPersonCommand;
+import org.medici.bia.common.ajax.MultipartFileUploadEditor;
+import org.medici.bia.common.image.PersonPortrait;
 import org.medici.bia.domain.People;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -52,6 +63,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowUploadPortraitPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
+	@Autowired(required = false)
+	@Qualifier("showUploadPortraitPersonValidator")
+	private Validator validator;
 
 	/**
 	 * 
@@ -76,7 +90,7 @@ public class ShowUploadPortraitPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
+	public ModelAndView setupForm(@ModelAttribute("command") ShowUploadPortraitPersonCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		if(command.getPersonId() > 0){
 			try{
@@ -90,5 +104,60 @@ public class ShowUploadPortraitPersonController {
 			}
 		}
 		return new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);		
+	}
+
+	/**
+	 * 
+	 * @param peopleId
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processRequest(@Valid @ModelAttribute("command") ShowUploadPortraitPersonCommand command, BindingResult result){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		getValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			setupForm(command, result);
+		} else {
+			PersonPortrait personPortrait = new PersonPortrait(command.getPersonId(), command.getBrowse(), command.getLink());
+	
+			try {
+				BufferedImage bufferedImage = getPeopleBaseService().savePortaitPerson(personPortrait);
+				
+				model.put("portraitWidth", bufferedImage.getWidth());
+				model.put("portraitHeight", bufferedImage.getHeight());
+				model.put("time", System.currentTimeMillis());
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				new ModelAndView("error/UploadPortraitPerson", model);
+			}
+		}
+
+		return new ModelAndView("peoplebase/CropPortraitPersonModalWindow", model);
+	}
+	
+	/**
+	 * 
+	 * @param binder
+	 */
+	@InitBinder("command")
+    public void initBinder(WebDataBinder binder, HttpServletRequest request) throws ServletException {
+        binder.registerCustomEditor(CommonsMultipartFile.class, new MultipartFileUploadEditor());
+    }
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }

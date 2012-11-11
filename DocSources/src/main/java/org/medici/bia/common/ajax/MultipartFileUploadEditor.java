@@ -1,5 +1,5 @@
 /*
- * UploadPortraitPersonCommand.java
+ * Multipart.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,8 +25,9 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.command.peoplebase;
+package org.medici.bia.common.ajax;
 
+import java.beans.PropertyEditorSupport;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
@@ -34,50 +35,20 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class UploadPortraitPersonCommand {
-	private Integer personId;
-	private CommonsMultipartFile browse;
-	private String link;
-
-	/**
-	 * @param personId the personId to set
-	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+public class MultipartFileUploadEditor extends PropertyEditorSupport {
+	
+	@Override
+	public String getAsText() {
+		if (getValue() != null) {
+			CommonsMultipartFile multipart = (CommonsMultipartFile) getValue();
+			return multipart.getOriginalFilename();
+		}
+		return "";
 	}
 
-	/**
-	 * @return the personId
-	 */
-	public Integer getPersonId() {
-		return personId;
-	}
-
-	/**
-	 * @param browse the browse to set
-	 */
-	public void setBrowse(CommonsMultipartFile browse) {
-		this.browse = browse;
-	}
-
-	/**
-	 * @return the browse
-	 */
-	public CommonsMultipartFile getBrowse() {
-		return browse;
-	}
-
-	/**
-	 * @param link the link to set
-	 */
-	public void setLink(String link) {
-		this.link = link;
-	}
-
-	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		// cannot convert to Multipart
+		setValue(null);
 	}
 }
