@@ -200,8 +200,10 @@ public class EditUserController {
 			List<String> inputRoles = command.getUserRoles();
 			Set<UserRole> userRole = new HashSet<UserRole>();
 			
-			for (String singleRole : inputRoles) {
-				userRole.add(new UserRole(user, new UserAuthority(Authority.valueOf(singleRole))));
+			if (inputRoles != null) { 
+				for (String singleRole : inputRoles) {
+					userRole.add(new UserRole(user, new UserAuthority(Authority.valueOf(singleRole))));
+				}
 			}
 			user.setUserRoles(userRole);
 
