@@ -177,7 +177,11 @@ public class AjaxController {
 			}
 			
 			//Schedone
-			Schedone currentSchedone = ifSchedone.get(currentDigitization.getVolNum() + currentDigitization.getVolLetExt());
+			Schedone currentSchedone;
+			if(currentDigitization.getVolLetExt() != null)
+				currentSchedone = ifSchedone.get(currentDigitization.getVolNum() + currentDigitization.getVolLetExt());
+			else
+				currentSchedone = ifSchedone.get(currentDigitization.getVolNum().toString());
 			if(currentSchedone != null && currentSchedone.getSchedoneId() != 0){
 				singleRow.add("YES");
 			}else{

@@ -1166,6 +1166,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws ApplicationThrowable {
 		try {
+			//TODO: Insert record in tblDigitization to activate/deactivate a volume
 			return getVolumeDAO().updateNewDigitizedVolume(summaryIds);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
