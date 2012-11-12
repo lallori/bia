@@ -91,7 +91,7 @@ a#MB_close span {
 #MB_loading {
 	padding: 1.5em;
 	text-indent: -10000px;
-	background: transparent url(/DocSources/images/loading.gif) 50% 0 no-repeat;
+	background: transparent 50% 0 no-repeat;
 }
 
 #MB_window span, #modalBox span{

@@ -34,7 +34,7 @@
 		});
 
 		$j("#userManagement").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "USER MANAGEMENT", width: 270, height: 190});
+			Modalbox.show($j(this).attr("href"), {title: "USER MANAGEMENT", width: 270, height: 210});
 			return false;
 		});
 

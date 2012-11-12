@@ -61,6 +61,16 @@ h5{ /* Data Entry main fields Title */
 	color:#6d5c4d;
 }
 
+h5.subtitle{ /* Data Entry main fields Title */
+	margin: 0 7px 10px 30px;
+	position:relative;
+	color:#6d5c4d;
+	display:block;
+	font-weight:normal;
+	text-decoration:underline;
+	
+}
+
 #geoTitle h5 {
 	display: block;
 	position: relative;
@@ -317,6 +327,14 @@ span.h7 {
 	width:90%; 
 	font-size: 12px;
 	line-height: 18px;
+}
+
+.listMemory { /* Whole display list */
+	display: table;
+	margin: 5px 0 0 60px;
+	width:90%; 
+	font-size: 12px;
+	line-height: 18px; 
 }
 
 .listDetails { /* Display list in Details section (the first one) */
@@ -4425,62 +4443,34 @@ ul#network a {
 /* ---------------- Modal Window ------------- */
 
 #administrationModalDiv #close {
-	position:absolute;
-	margin-top: 150px;
-	margin-left: 98px;
+    margin-left: 95px; 
 }
 
 #administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage, #administrationModalDiv #accessLog {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
-	position:absolute;
 	width:182px;
 	height:22px;
 	margin:-5px 0 0 10px;
+	display:block;
 }
 
-#systemWide p, #userManagement p, #reportsRevisions p, #memoryUsage p, #accessLog p {
+#systemWide p, #userManagement p, #reportsRevisions p {
 	margin: 0px;
 }
 
-#administrationModalDiv #systemWideDiv {
-	width:200px;
-	margin:15px 0 0 25px;
-	position:absolute;
+#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv {
+	width: 215px;
+	margin: 15px 0 0 20px;
 }
 
-#administrationModalDiv #userManagementDiv {
-	width:200px;
-	margin:50px 0 0 25px;
-	position:absolute;
-}
-
-#administrationModalDiv #memoryUsageDiv {
-	width:200px;
-	margin:85px 0 0 25px;
-	position:absolute;
-}
-
-#administrationModalDiv #accessLogDiv {
-	width:200px;
-	margin:120px 0 0 25px;
-	position:absolute;
-}
-
-#administrationModalDiv #reportsRevisionsDiv {
-	width:200px;
-	margin:155px 0 0 25px;
-	position:absolute;
-}
 
 /* ---------------- User Management ------------- */
 
 /* Modal */
 #userManagementDiv #close {
-	position:absolute;
-	margin-top: 120px;
-	margin-left: 98px;
+	margin-left: 75px;
 }
 
 #userManagementDiv p {
@@ -4491,29 +4481,19 @@ ul#network a {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
-	position:absolute;
+	display:block;
 	width:182px;
 	height:22px;
-	margin:-5px 0 0 10px;
 }
 
-#userManagementDiv #addNewDiv {
+#userManagementDiv #addNewDiv, #userManagementDiv #editOrShowDiv, #userManagementDiv #globalPropertiesDiv {
 	width:200px;
-	margin:15px 0 0 25px;
-	position:absolute;
+	margin:10px 0 0 10px; 
 }
 
-#userManagementDiv #editOrShowDiv {
-	width:200px;
-	margin:50px 0 0 25px;
-	position:absolute;
-}
 
-#userManagementDiv #globalPropertiesDiv {
-	width:200px;
-	margin:85px 0 0 25px;
-	position:absolute;
-}
+
+
 
 
 /* Add New User */
@@ -4560,7 +4540,7 @@ ul#network a {
 	margin: 0 0 7px 0;
 }
 
-h3.userSearch h3.accessLogSearch {
+h3.userSearch, h3.accessLogSearch{
 	padding: 10px 5px 10px 10px;
 	font-style: normal;
 	font-size: 14px;

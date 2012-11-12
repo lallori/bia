@@ -7,7 +7,7 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<c:url var="ShowAccessLogSearchURL" 	value="/admin/ShowAccessLogSearch.do" />
 
-<h3 class="accessLogSearch">ACCESS LOG SEARCH</h3>
+<h3 class="accessLogSearch">Access Log Search</h3>
 
 <form:form id="accessLogSearchForm" method="post" cssClass="edit" action="${ShowAccessLogSearchURL}">
 	<fieldset>
@@ -69,6 +69,9 @@
 				return false;
 			}
 		});
+		
+		$j( "#fromDate" ).datepicker(); 
+		$j( "#toDate" ).datepicker();
 	});
 </script>
 </security:authorize>
