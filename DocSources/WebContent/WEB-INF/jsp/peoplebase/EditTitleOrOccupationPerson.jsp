@@ -90,6 +90,11 @@
 			<form:hidden path="personId" />
 			<form:hidden path="prfLinkId" />
 			
+			<form:errors path="startYear" cssClass="inputerrors" htmlEscape="false" />
+			<form:errors path="startDay" cssClass="inputerrors" htmlEscape="false" />
+			<form:errors path="endYear" cssClass="inputerrors" htmlEscape="false" />
+			<form:errors path="endDay" cssClass="inputerrors" htmlEscape="false" />
+			
 			<div>
 				<input id="closeTitle" type="submit" value="Close" title="do not save changes" class="button" />
 				<input type="submit" value="Save" id="save">
@@ -153,7 +158,11 @@
 
 			$j("#EditTitleOrOccupationPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
+					if($j(html).find('.inputerrors').length > 0){
+						$j("#EditTitleOrOccupationPersonDiv").html(html);
+					}else{
+						$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
+					}
 				}})
 				return false;
 			});

@@ -6,13 +6,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
-		<c:param name="forumId" value="${topic.forum.forumId}"/>
-	</c:url>
-	
-	<c:url var="ShowTopicRefreshURL" value="/community/ShowTopicForum.do">
-		<c:param name="topicId" value="${topic.topicId}"/>
-	</c:url>
+<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+	<c:param name="forumId" value="${topic.forum.forumId}"/>
+</c:url>
+
+<c:url var="ShowTopicRefreshURL" value="/community/ShowTopicForum.do">
+	<c:param name="topicId" value="${topic.topicId}"/>
+</c:url>
 
 <div id="urlActions">
 	<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
@@ -135,12 +135,12 @@
         		<h2>${currentPost.subject}</h2>
         	</c:otherwise>
         </c:choose>
-        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        <p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         <p>${currentPost.text}</p>
     </div>
     <div id="postProfile">
     	<ul>
-        	<li><a href="#" id="userName" class="link">${currentPost.user.account}</a></li>
+        	<li><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a></li>
             <li>Community User</li>
             <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
             <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
@@ -250,6 +250,11 @@
 			});
 			
 			$j('.linkTopic').click(function(){
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".link").click(function(){
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
