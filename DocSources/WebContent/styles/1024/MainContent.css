@@ -68,7 +68,16 @@ h5.subtitle{ /* Data Entry main fields Title */
 	display:block;
 	font-weight:normal;
 	text-decoration:underline;
-	
+}
+
+h5.title{ /* Data Entry main fields Title */
+	margin: 0 7px 10px 30px;
+	position:relative;
+	color:#666EA4;
+	display:block;
+	font-weight:bold;
+	text-decoration:underline;
+	height: 15px;
 }
 
 #geoTitle h5 {
@@ -437,7 +446,7 @@ item a{
 }
 
 /* Bottom Div Containers */
-#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv, #EditPdfImagesSchedoneDiv, #EditSchedonePropertiesDiv, #EditEmailControlDiv {
+#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv, #EditPdfImagesSchedoneDiv, #EditSchedonePropertiesDiv, #EditEmailControlDiv, #MemoryPoolMxBeanDiv {
 	margin-bottom:30px;!important
 	min-height:100px;!important
 }
