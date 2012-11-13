@@ -8,7 +8,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
-		<p>Total records found: <span id="linkedDocumentsTopic${placeAllId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="linkedDocumentsTopic${UUID}${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showLinkedDocumentTopic${UUID}${placeAllId}">
@@ -48,7 +48,7 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
-					$j("#linkedDocumentsTopic${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("#linkedDocumentsTopic${UUID}${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					
 					$j("tr.odd").mouseover(
 							function(){
@@ -89,23 +89,37 @@
 			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
+				var id = $j(this).attr("id");
 				
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					//Check if exist a tab with the same name or with the same name without id
+					if(this.text == tabName || this.text == "DocId#" + id.substring(5, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+						if($j(this).find("input").val() == id){
+							tabExist = true;
+						}else{
+							if(this.text.indexOf("#") == -1){
+								$j(this).find("span").text("DocId#" + $j(this).find("input").val().substring(5, $j(this).find("input").val().length) + " - " + this.text);
+							}
+							if(tabName.indexOf("#") == -1){
+								tabName = "DocId#" + id.substring(5, id.length) + " - " + tabName;		
+							}
+						}
 					}
 				});
 				
 				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + $j(this).attr("id") + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
-					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
 			});

@@ -728,8 +728,8 @@ public class HtmlUtils {
 		if(!inputList.get(inputList.size() - 1).contains("NNF"))
 			anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
 		else
-			anchorBegin.append("#" + entryId + " " + inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
-		anchorBegin.append("\" class=\"showResult\" href=\"");
+			anchorBegin.append("DocId#" + entryId + " - " + inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
+		anchorBegin.append("\" class=\"showResult\" id=\"docId" + entryId + "\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
 		anchorBegin.append(entryId);
@@ -836,7 +836,7 @@ public class HtmlUtils {
 		
 		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(0));
-		anchorBegin.append("\" class=\"showResult\" href=\"");
+		anchorBegin.append("\" class=\"showResult\" id=\"peopleId" + personId + "\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/peoplebase/ComparePerson.do?personId=");
 		anchorBegin.append(personId);
@@ -1186,8 +1186,11 @@ public class HtmlUtils {
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
-		anchorBegin.append(inputList.get(0));
-		anchorBegin.append("\" class=\"showResult\" href=\"");
+		if(!inputList.get(inputList.size() - 1).contains("NNF"))
+			anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
+		else
+			anchorBegin.append("DocId#" + entryId + " - " + inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
+		anchorBegin.append("\" class=\"showResult\" id=\"docId" + entryId + "\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
 		anchorBegin.append(entryId);
