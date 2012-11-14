@@ -501,15 +501,15 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				}
 
 				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
-					datesLastUpdateQuery.append("(lastUpdate >= '");
+					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') >= '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
 					datesLastUpdateQuery.append(')');
 				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
-					datesLastUpdateQuery.append("(lastUpdate <= '");
+					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') <= '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
 					datesLastUpdateQuery.append(')');
 				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
-					datesLastUpdateQuery.append("(lastUpdate between '");
+					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') between '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
 					datesLastUpdateQuery.append("' AND '");
 					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)));
