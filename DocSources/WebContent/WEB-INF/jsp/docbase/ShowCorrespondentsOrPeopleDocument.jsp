@@ -41,7 +41,7 @@
 			<div class="row">
 <!-- 				Entries like "person name lost" or "to be entered" should be not clickable -->
 				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905 && document.senderPeople.personId != 198}">
-					<div class="item37">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a> ${document.senderPeopleUnsure ? '(Unsure)':'' }</div>
+					<div class="item37">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.senderPeople.personId}" /></a> ${document.senderPeopleUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905 || document.senderPeople.personId == 198}">
 					<div class="item37">Sender</div> <div class="value80">${document.senderPeople.mapNameLf} ${document.senderPeopleUnsure ? '(Unsure)':'' }</div>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905 && document.recipientPeople.personId != 198}">
-					<div class="item37">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a> ${document.recipientPeopleUnsure ? '(Unsure)':'' }</div>
+					<div class="item37">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.recipientPeople.personId}" /></a> ${document.recipientPeopleUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.recipientPeople.personId == 9285 || document.recipientPeople.personId == 3905 || document.recipientPeople.personId == 198}">
 					<div class="item37">Recipient</div> <div class="value80">${document.recipientPeople.mapNameLf} ${document.senderPeopleUnsure ? '(Unsure)':'' }</div>
@@ -88,7 +88,7 @@
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
 					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905 && currentPeople.person.personId != 198}">
-					<div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
+					<div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentPeople.person.personId}" /></a></div>
 					</c:if>
 					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905 || currentPeople.person.personId == 198}">
 					<div class="value80">${currentPeople.person.mapNameLf}</div>
@@ -124,6 +124,7 @@
 			$j(".linkPeople").click(function() {
 				var tabName = $j(this).text();
 				var numTab = 0;
+				var id = $j(this).find(".tabId").val();
 				
 				if(tabName.length > 20){
 					tabName = tabName.substring(0,17) + "...";
@@ -137,13 +138,23 @@
 							numTab++;
 						}
 					}
-					if(this.text == tabName){
-						tabExist = true;
+					if(this.text == tabName || this.text == "PersonId#" + id.substring(8, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+						if($j(this).find("input").val() == id){
+							tabExist = true;
+						}else{
+							//To change name of the tab
+							if(this.text.indexOf("#") == -1){
+								$j(this).find("span").text("PersonId#" + $j(this).find("input").val().substring(8, $j(this).find("input").val().length) + " - " + this.text);
+							}
+							if(tabName.indexOf("#") == -1){
+								tabName = "PersonId#" + id.substring(8, id.length) + " - " + tabName;		
+							}
+						}
 					}
 				});
 				
 				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{

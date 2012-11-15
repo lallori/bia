@@ -86,10 +86,10 @@
 			$j("#showTopicsPlaceAllId${placeAllId}_paginate").remove();
 
 			// We need to remove any previous live function
-			$j('.showResult').die();
+			$j('.showResultTopicsDoc').die();
 			 
 			
-			$j(".showResult").live('click', function() {
+			$j(".showResultTopicsDoc").live('click', function() {
 				var tabName = $j(this).attr("title") + "- ${placeName}";
 				var numTab = 0;
 				

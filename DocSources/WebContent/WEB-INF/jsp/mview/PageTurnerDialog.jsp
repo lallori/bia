@@ -335,9 +335,10 @@
 			var $dialogShowExtract = $j('<div id="ShowExtractDocumentDiv"></div>')
 			.dialog({                                                                                                                                                                   
 				autoOpen: false,
-				width: 352,
-				minWidth: 350,
-				minHeight: 200,                                                                                                                                                         
+				width: 370,
+				minWidth: 370,
+				minHeight: 200, 
+				maxHeight: 500,
 				title: 'TRANSCRIPTION',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
@@ -692,7 +693,7 @@
 			
 					
 			$j("#exitExtract").live('click', function(){
-				if($j("#ShowSynopsisDocumentDiv").length != 0){
+				if($j("#ShowSynopsisDocumentDiv").length != 0 && $j("#ShowSynopsisDocumentDiv").dialog("isOpen")){
 					$j("#ShowExtractDocumentDiv").dialog("close");
 					return false;
 				}else{
@@ -765,7 +766,7 @@
 			});
 			
 			$j("#exitSynopsis").live('click', function(){
-				if($j("#ShowExtractDocumentDiv").length != 0){
+				if($j("#ShowExtractDocumentDiv").length != 0 && $j("#ShowExtractDocumentDiv").dialog("isOpen")){
 					$j("#ShowSynopsisDocumentDiv").dialog("close");
 					return false;
 				}else{

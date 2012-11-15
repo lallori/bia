@@ -854,6 +854,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	-moz-border-radius: 4px;
 }
 
+#ShowSynopsisDocumentDiv, #ShowExtractDocumentDiv {
+    max-height: 485px;
+}
+
 
 
 /* Modified elements from the original jquery-ui-1.8.9.custos.css */

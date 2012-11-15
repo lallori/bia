@@ -43,7 +43,7 @@
 					<div class="col_l"><input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_40c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" /></div>
 					<div class="col_r"><a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a></div>
 					<div class="col_r"><a class="editValue" class="editValue" href="${EditChildPersonURL}" title="Edit this entry"></a></div>
-					<div class="col_r"><a href="${ComparePersonURL }" class="personIcon" title="Show this person record"></a></div>
+					<div class="col_r"><a href="${ComparePersonURL }" class="personIcon" title="Show this person record"><input type="hidden" style="display:none;" class="tabId" value="peopleId${currentChild.child.personId}" /></a></div>
 				</div>
 			</div>
 
@@ -139,10 +139,11 @@
 			});
 
 			$j(".personIcon").click(function(){
-				var tabName = $j(this).parent();
+				var tabName = $j(this).parent().parent();
 				tabName = $j(tabName).find('.input_40c_disabled');
 				tabName = $j(tabName).val();
 				var numTab = 0;
+				var id = $j(this).find(".tabId").val();
 				
 				if(tabName.length > 20){
 					tabName = tabName.substring(0,17) + "...";
@@ -156,13 +157,23 @@
 							numTab++;
 						}
 					}
-					if(this.text == tabName){
-						tabExist = true;
+					if(this.text == tabName || this.text == "PersonId#" + id.substring(8, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+						if($j(this).find("input").val() == id){
+							tabExist = true;
+						}else{
+							//To change name of the tab
+							if(this.text.indexOf("#") == -1){
+								$j(this).find("span").text("PersonId#" + $j(this).find("input").val().substring(8, $j(this).find("input").val().length) + " - " + this.text);
+							}
+							if(tabName.indexOf("#") == -1){
+								tabName = "PersonId#" + id.substring(8, id.length) + " - " + tabName;		
+							}
+						}
 					}
 				});
 				
 				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{

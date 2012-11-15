@@ -11,7 +11,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css" />" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui.css" />" />
         
         
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAHbLtT8No8RIf-7pzQOcnfOeWP0TPYHG4&sensor=false"></script>

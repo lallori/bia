@@ -176,12 +176,12 @@
 				</div>
 				</security:authorize>
 			</c:if>
-		<c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
-					<div id="searchDocument">
-   						<p>${forum.description}</p>
-   						<p>${forum.forumHelpText}</p>
-    				</div>
-        </c:if>
+			<c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
+				<div id="searchDocument">
+   					<p>${forum.description}</p>
+   					<p>${forum.forumHelpText}</p>
+   				</div>
+   		    </c:if>
 		<c:if test="${forum.option.canHaveSubForum}">
 		<c:choose>
       		<c:when test="${forum.option.groupBySubForum=='true'}">
@@ -473,12 +473,12 @@ Use the textbox below to search this forum.</p>
                		</div>
             	</div>
             </c:if>
-            <c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}">
-					<div id="searchDocument">
-   						<p>${forum.description}</p>
-   						<p>${forum.forumHelpText}</p>
-    				</div>
-            	</c:if>
+<%--             <c:if test="${forum.hierarchyLevel == 3 &&  forum.title != 'Documents'}"> --%>
+<!-- 					<div id="searchDocument"> -->
+<%--    						<p>${forum.description}</p> --%>
+<%--    						<p>${forum.forumHelpText}</p> --%>
+<!--     				</div> -->
+<%--             	</c:if> --%>
 			<c:choose>
 				<c:when test="${forum.subType == 'DOCUMENT'}">
 					<div id="documentTable">

@@ -1218,7 +1218,7 @@ public class HtmlUtils {
 		
 		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
 		anchorBegin.append(inputList.get(0));
-		anchorBegin.append("\" class=\"showResult\" href=\"");
+		anchorBegin.append("\" class=\"showResultTopicsDoc\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/LinkedDocumentsTopic.do?placeAllId=");
 		anchorBegin.append(place + "&topicTitle=");

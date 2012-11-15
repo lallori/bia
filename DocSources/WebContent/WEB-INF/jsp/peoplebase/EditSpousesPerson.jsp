@@ -60,13 +60,15 @@
 							<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 								<c:param name="personId"   value="${currentMarriage.wife.personId}" />
 							</c:url>
+							<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"><input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.wife.personId}" /></a>
 						</c:if> 
 						<c:if test="${command.personId == currentMarriage.wife.personId}">
 		      				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 								<c:param name="personId"   value="${currentMarriage.husband.personId}" />
 							</c:url>
+							<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"><input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.husband.personId}" /></a>
 						</c:if> 
-						<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
+						
 					</div>
 				</div>
 			</div>
@@ -158,11 +160,12 @@
 				});
 
 				$j(".personIcon").click(function(){
-					var tabName = $j(this).parent();
+					var tabName = $j(this).parent().parent();
 					tabName = $j(tabName).find('.input_40c_disabled');
 					tabName = $j(tabName).val();
-					tabName = tabName.substring(0,tabName.indexOf("-"));
+					tabName = tabName.substring(0,tabName.indexOf(" - "));
 					var numTab = 0;
+					var id = $j(this).find(".tabId").val();
 					
 					if(tabName.length > 20){
 						tabName = tabName.substring(0,17) + "...";
@@ -176,13 +179,23 @@
 								numTab++;
 							}
 						}
-						if(this.text == tabName){
-							tabExist = true;
+						if(this.text == tabName || this.text == "PersonId#" + id.substring(8, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+							if($j(this).find("input").val() == id){
+								tabExist = true;
+							}else{
+								//To change name of the tab
+								if(this.text.indexOf("#") == -1){
+									$j(this).find("span").text("PersonId#" + $j(this).find("input").val().substring(8, $j(this).find("input").val().length) + " - " + this.text);
+								}
+								if(tabName.indexOf("#") == -1){
+									tabName = "PersonId#" + id.substring(8, id.length) + " - " + tabName;		
+								}
+							}
 						}
 					});
 					
 					if(!tabExist){
-						$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+						$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 						$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 						return false;
 					}else{

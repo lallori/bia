@@ -64,7 +64,7 @@
 </security:authorize>
 
 <div id="topicActions">
-	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 		<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
 			<c:param name="postId" value="0"/>
 			<c:param name="forumId" value="${topic.forum.forumId}"/>
@@ -82,7 +82,7 @@
 </div>
 
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
-	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.do">
+	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
 		<c:param name="postId" value="${currentPost.postId}"/>
 		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
 		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
