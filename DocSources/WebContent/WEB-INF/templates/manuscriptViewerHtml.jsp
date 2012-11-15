@@ -30,7 +30,7 @@ Joana Amill <joana.amill@gmail.com>
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
 		<![endif]-->
  		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                               
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" /> 
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		<title>BIA Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>

@@ -12,6 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css" />"/>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
         <style type="text/css">
 			
 			@media print {
@@ -41,9 +42,14 @@
 				}
 			}
 		</style>
+		<script type="text/javascript">
+			var $j = jQuery.noConflict();
+		</script>
 	</head>
 	
 	<body>
 		<tiles:insertAttribute name="main"/>
 	</body>
 </html>
+
+

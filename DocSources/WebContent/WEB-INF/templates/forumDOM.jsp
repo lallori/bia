@@ -10,7 +10,7 @@
         
         <link rel="shortcut icon" type="image/x-icon" href="/DocSources/images/favicon_medici.png" />
         <link rel="stylesheet" type="text/css" href="/DocSources/styles/forum/forum.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/DocSources/styles/1024/js/jquery-ui-1.8.13.custom.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="/DocSources/styles/1024/js/jquery-ui.css" />
         
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>	

@@ -30,8 +30,8 @@
         </div>
         <div class="list">
         	<div class="row">
-                <div class="firstItem">Username</div> 
-                <div class="firstValue">${userProfile.firstName} ${userProfile.lastName}</div> 
+                <div class="item">Username</div> 
+                <div class="value">${userProfile.firstName} ${userProfile.lastName}</div> 
             </div>
             <div class="row">
                 <div class="item">Rank</div> 

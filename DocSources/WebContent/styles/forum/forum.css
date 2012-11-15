@@ -615,7 +615,6 @@ a.returnTo {
 /* ---------- Topic Actions ---------- */
 
 #topicActions {
-	width: 1000px;
 	height: 20px;
 	margin: 15px 0 20px 0;
 }
@@ -1057,7 +1056,12 @@ ul.abc li {
 /* Contact */
 
 #contact {
-	margin-top: 70px;
+	display:inline-block;
+	height:120px;
+}
+
+#profileTable #contact h3{
+	margin:20px 0 15px 0; 
 }
 
 #profileTable #contact ul {

@@ -130,6 +130,7 @@ html version
 div.hideNavWindow {
     bottom: 40px;
     left: 10px;
+	cursor:pointer;
 }
 
 /* ---------- Title bar --------- */
@@ -739,7 +740,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 #EditExtractDocumentDiv #editSynopsis {
 	float: right;
-	margin-right:10px
+	margin-right:6px
 }
 
 #EditExtractDocumentDiv #saveAndExit {
@@ -875,10 +876,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-family:Georgia, "Times New Roman", Times, serif; 
 	font-size: 12px;
 	color: #6F6B69; 
-}
-
-.ui-button-text {
-	background-image:url(/DocSources/images/mview/saveExtract.png);
 }
 
 .ui-widget-content { 
