@@ -28,7 +28,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/mootools-core-1.3-full-compat-compressed.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mootools-more-1.3-full-compat-compressed.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/iipmooviewer-1.1-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
@@ -37,8 +37,6 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js" />"></script>
