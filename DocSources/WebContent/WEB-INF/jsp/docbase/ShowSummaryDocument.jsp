@@ -68,9 +68,12 @@
 			</c:if>
 		<div id="text">
 			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+<!-- 		Checking if folio is inside inserts or inserts with parts -->
+<!-- 		1) folio is not inside inserts-->
 			<c:if test="${document.insertNum == null}">
 				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
 			</c:if>
+<!-- 		2) folio is inside inserts with no parts -->
 			<c:if test="${document.insertNum != null} && ${document.insertLet  == null}">
 				<br>
 				<br>
@@ -78,6 +81,7 @@
 				<br>
 				<br>
 			</c:if>
+<!-- 		3) folio is inside inserts with parts -->
 			<c:if test="${document.insertLet  != null}">
 				<br>
 				<br>
