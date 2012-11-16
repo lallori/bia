@@ -93,27 +93,6 @@
 					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 					annotations: annotations
 				});
-
-// 				var $pageTurner = $j('<div>PageTurnerHorizontalDiv</div>')
-// 				.dialog({                                                                                                                                                                   
-// 					autoOpen: true,
-// 					resizable: false,
-// 					width: 475,
-// 					height: 112,
-// 					minWidth: 475,
-// 					minHeight: 112,                                                                                                                                                         
-// 					title: 'Page Turner',
-// 					position: ['left','middle'],                                                                                                                                                       
-// 					closeOnEscape: false,
-// 					maximized:false,
-					
-// 					open: function(event, ui) { 
-// 						$j(".ui-dialog-titlebar-close").hide(); 
-//                 		$(this).load('${PageTurnerDialogUrl}');
-//                		},
-// 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-// 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-// 				}).dialogExtend({"minimize" : true}); 
 				
 				var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>')
 				.dialog({                                                                                                                                                                   
@@ -138,6 +117,16 @@
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 				}).dialogExtend({"minimize" : true}); 
+				
+				//To manage the form of the annotation
+				$j("input[name=category]:radio").die();
+				$j("input[name=category]:radio").live('change', function(){
+					if($j("input[name=category]:checked").val() == 'personal'){
+						$j("#annotationTextarea").css("display", "inherit");
+					}else{
+						$j("#annotationTextarea").css("display", "none");
+					}
+				});
 
 			});
 		</script> 
