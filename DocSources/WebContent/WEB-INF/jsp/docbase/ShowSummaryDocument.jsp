@@ -68,7 +68,23 @@
 			</c:if>
 		<div id="text">
 			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
-			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			<c:if test="${document.insertNum == null}">
+				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			</c:if>
+			<c:if test="${document.insertNum != null} && ${document.insertLet  == null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
+			<c:if test="${document.insertLet  != null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
 			<c:choose>
 				<%-- Recipient empty --%>
 				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
