@@ -82,7 +82,27 @@
 			</c:if>
 			<div id="text">
 				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+				<!-- 		Checking if folio is inside inserts or inserts with parts -->
+<!-- 		1) folio is not inside inserts-->
+			<c:if test="${document.insertNum == null}">
 				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			</c:if>
+<!-- 		2) folio is inside inserts with no parts -->
+			<c:if test="${document.insertNum != null} && ${document.insertLet  == null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
+<!-- 		3) folio is inside inserts with parts -->
+			<c:if test="${document.insertLet  != null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
 				<c:choose>
 					<%-- Recipient empty --%>
 					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
