@@ -76,7 +76,7 @@
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	border: 1px solid #dcc0ba; 
-	background: #dcc0ba url(/DocSources/images/forum/jquery-ui/ui-state-default-bg.png) 50% 50% repeat-x;
+	background: #dcc0ba url(/DocSources/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #654c47; 
 }
@@ -88,7 +88,7 @@
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
 	border: 1px solid #dcc0ba; 
-	background: #f6edec url(/DocSources/images/forum/jquery-ui/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #f6edec url(/DocSources/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: #654c47; 
 	color: #212121; 
 }
@@ -100,7 +100,7 @@
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { 
 	border: 1px solid #dcc0ba;
-	background: #f6edec url(/DocSources/images/forum/jquery-ui/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #f6edec url(/DocSources/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #654c47; 
 }
@@ -164,36 +164,36 @@
 .ui-icon { 
 	width: 16px; 
 	height: 16px; 
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_222222_256x240.png); 
+	background-image: url(images/ui-icons_222222_256x240.png); 
 }
 
 .ui-widget-content .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_222222_256x240.png); 
+	background-image: url(images/ui-icons_222222_256x240.png); 
 }
 
 .ui-widget-header .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_222222_256x240.png); 
+	background-image: url(images/ui-icons_222222_256x240.png); 
 }
 
 .ui-state-default .ui-icon { 
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_888888_256x240.png); 
+	background-image: url(images/ui-icons_888888_256x240.png); 
 }
 
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_454545_256x240.png); 
+	background-image: url(images/ui-icons_454545_256x240.png); 
 	cursor: pointer;
 }
 
 .ui-state-active .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_454545_256x240.png); 
+	background-image: url(images/ui-icons_454545_256x240.png); 
 }
 
 .ui-state-highlight .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_2e83ff_256x240.png); 
+	background-image: url(images/ui-icons_2e83ff_256x240.png); 
 }
 
 .ui-state-error .ui-icon, .ui-state-error-text .ui-icon {
-	background-image: url(/DocSources/images/forum/jquery-ui/ui-icons_cd0a0a_256x240.png); 
+	background-image: url(images/ui-icons_cd0a0a_256x240.png); 
 }
 
 /* positioning */
@@ -535,7 +535,7 @@
 
 /* Overlays */
 .ui-widget-overlay { 
-	background: #aaaaaa url(/DocSources/images/forum/jquery-ui/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
+	background: #aaaaaa url(/DocSources/styles/1024/js/images/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
 	opacity: .20;
 	filter:Alpha(Opacity=20); 
 }
@@ -606,6 +606,12 @@
  */
 /* IE/Win - Fix animation bug - #4615 */
 .ui-accordion { width: 100%; }
+
+.ui-accordion h1 a{ 
+    margin-left:20px
+}
+
+
 .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
 .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
@@ -920,130 +926,3 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
 
-
-/*
- * Added by Joana Amill Luzondo
- */
- 
-.refine { /* Refine this search button on Search Results Tab */
- 	float: right;
-	margin: 20px 0 0 10px;
-	width: 122px;
-	height: 22px;
-	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
-	text-align: center;
-}
-
-.print {
-	float: left;
-	margin: 15px 0 0 0;
-	width: 122px;
-	height: 22px;
-	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
-	text-align: center;
-}
- 
-.refine:hover, .print:hover {
-	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
-}
- 
-.yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
-	margin: 15px 0 10px 7px;
-	font-size: 11px;
-	text-align: left;
-	line-height: 22px;
-	border: 1px solid #DCC0BA;
-	border-radius: 4px;
-	background-color: #EFE0DE;
-	padding-left: 10px;
-}
-
-.yourSearchDiv p {
-	margin-left: 10px;
-}
-
-.tabLink { /* The word used on the research */
-	 margin-left:8px;
-	 color:#B7958F;
-	 text-decoration:underline;
-}
- 
-.recordsNum { /* The number of records on the research */
-	 color:#009;
-	 margin: 5px 0 0 5px;
-}
-
-/* Discard Changes? message */
-
-.blockOverlay {
-	z-index: 1000;
-	border-top-style: none;
-	border-right-style: none;
-	border-bottom-style: none;
-	border-left-style: none;
-	border-width: initial;
-	border-color: initial;
-	border-image: initial;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	width: 100%;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-	background-color: #999;
-	cursor: wait;
-	position: absolute;
-	opacity: 0.6;
-	border-radius: 5px;
-}
-
-.blockElement {
-	z-index: 1001;
-	position: absolute;
-	padding-top: 4px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	width: 30%;
-	text-align: center;
-	color: black;
-	background-color: #F6EDEC;
-	cursor: wait;
-	left: 167px;
-	top: 213px;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	box-shadow: 1px 1px 10px #666;
-	-webkit-box-shadow: 1px 1px 10px #666;
-	border: none;
-}
-
-#question h1 {
-	margin-bottom:5px;
-}
-
-#yes, #no {
-	margin: 0;
-	width: 52px;
-	height: 22px;
-	background-image: url(/DocSources/images/1024/button_small.png);
-	font-size: 11px;
-	padding: 0 0 0 2px;
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-}
