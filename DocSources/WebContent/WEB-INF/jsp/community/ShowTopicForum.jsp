@@ -195,10 +195,26 @@
 	<input type="hidden" value="" id="deleteUrl"/>
 </div>
 
+<div id="reportPostModal" title="Report post" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Are you sure you want to report this post?
+	</p>
+	
+	<input type="hidden" value="" id="reportUrl"/>
+</div>
+
 <div id="notDeletePost" title="Delete post" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 		Not deleted
+	</p>
+</div>
+
+<div id="notReportPost" title="Report post" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Not reported
 	</p>
 </div>
 
@@ -301,11 +317,54 @@
 				return false;
 			});
 			
+			$j('.reportPost').click(function(){
+				$j('#reportPostModal').dialog('open');
+				$j('#reportUrl').val($j(this).attr('href'));
+				return false;
+			});
+			
 			$j('.deletePost').click(function(){
 				$j('#deletePostModal').dialog('open');
 				$j('#deleteUrl').val($j(this).attr('href') + '&topicId=${topic.topicId}');
 				return false;
 			});
+			
+			$j( "#reportPostModal" ).dialog({
+				  autoOpen : false,
+				  modal: true,
+				  resizable: false,
+				  width: 300,
+				  height: 130, 
+				  buttons: {
+					  Yes: function() {
+						  $j.ajax({ type:"POST", url:$j("#reportUrl").val(), async:false, success:function(json) {
+				 			    if (json.operation == 'OK') {
+				 					  $j( "#reportPostModal" ).dialog('close');
+									 return false;
+				 				} else {
+				 					$j( "#reportPostModal" ).dialog('close');
+									$j("#notReportPost").dialog({
+										  autoOpen : false,
+										  modal: true,
+										  resizable: false,
+										  width: 300,
+										  height: 130, 
+										  buttons: {
+											  Ok: function() {
+												  $j(this).dialog("close");
+											  }
+										  }
+									  });
+									$j("#notReportPost").dialog('open');
+				 				}
+							}});
+							return false;
+					  },
+					  No: function() {
+						  $j( "#reportPostModal" ).dialog('close');
+					  }
+				  }
+			  });
 			
 			$j( "#deletePostModal" ).dialog({
 				  autoOpen : false,

@@ -38,6 +38,7 @@ import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
@@ -346,6 +347,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param postId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ReportedForumPost reportForumPost(Integer postId) throws ApplicationThrowable;
 
 	/**
 	 * 

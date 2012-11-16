@@ -30,6 +30,7 @@
 
 	<script type="text/javascript" charset="utf-8">
 
+		document.title= "My Messages";
 		$j(document).ready(function() {
 			$j( "#tabs" ).tabs({
 				ajaxOptions: {

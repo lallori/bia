@@ -247,6 +247,29 @@ public class AjaxController {
 			return new ModelAndView("responseKO", model);		
 		}
 	}
+	
+	@RequestMapping(value = "/community/ReportForumPost", method = RequestMethod.POST)
+	public ModelAndView reportForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
+										@RequestParam(value="forumId", required=false) Integer forumId,
+										@RequestParam(value="topicId", required=false) Integer topicId,
+										HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			if (!postId.equals(0)) {
+				getCommunityService().reportForumPost(postId);
+				model.put("operation", "OK");
+				return new ModelAndView("responseOK", model);
+			} else {
+				model.put("operation", "KO");
+				return new ModelAndView("responseKO", model);
+			}		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
+	
 	/**
 	 * 
 	 * @param httpSession

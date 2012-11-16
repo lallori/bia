@@ -52,6 +52,7 @@ import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
+import org.medici.bia.dao.reportedforumpost.ReportedForumPostDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
@@ -60,6 +61,7 @@ import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMessage;
@@ -156,6 +158,8 @@ public class CommunityServiceImpl implements CommunityService {
 	private PeopleDAO peopleDAO;
 	@Autowired
 	private PlaceDAO placeDAO;
+	@Autowired
+	private ReportedForumPostDAO reportedForumPostDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 	@Autowired
@@ -1002,6 +1006,29 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ReportedForumPost reportForumPost(Integer postId) throws ApplicationThrowable {
+		try{
+			ForumPost forumPost = getForumPostDAO().find(postId);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			ReportedForumPost reportForumPost = new ReportedForumPost();
+			reportForumPost.setId(null);
+			reportForumPost.setForumPost(forumPost);
+			reportForumPost.setMessageSended(false);
+			reportForumPost.setUser(user);
+			
+			getReportedForumPostDAO().persist(reportForumPost);
+			
+			return reportForumPost;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc} 
@@ -1065,6 +1092,20 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
 		this.forumTopicDAO = forumTopicDAO;
+	}
+
+	/**
+	 * @return the reportedForumPostDAO
+	 */
+	public ReportedForumPostDAO getReportedForumPostDAO() {
+		return reportedForumPostDAO;
+	}
+
+	/**
+	 * @param reportedForumPostDAO the reportedForumPostDAO to set
+	 */
+	public void setReportedForumPostDAO(ReportedForumPostDAO reportedForumPostDAO) {
+		this.reportedForumPostDAO = reportedForumPostDAO;
 	}
 
 	/**
