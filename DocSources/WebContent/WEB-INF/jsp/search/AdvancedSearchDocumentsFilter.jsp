@@ -277,13 +277,18 @@
 				if (window.opener.$j('#tabs').find("#refine${command.searchUUID}").length==1) {
 					// calculate tab position
 					var index = window.opener.$j("#tabs ul li").index(window.opener.$j("li:has(a[href='#" + window.opener.$j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"));
-					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
-					window.opener.$j("#tabs").tabs("select", index);
+					window.opener.$j('#tabs ul li').eq(index).data('loaded', false).find('a').attr('href', formSubmitURL);
+					window.opener.$j("#tabs").tabs("option", "active", index);
 					window.opener.$j("#tabs").tabs("load" , index);
+					//MD: Fix problem with title of tab (if it already exist, it still display "Loading...")
+					window.opener.$j('#tabs ul li').eq(index).find('a').empty();
+					window.opener.$j('#tabs ul li').eq(index).find('a').append("<span>Document Search</span>");
 					window.close()
 				} else {
 					//otherwise it's in a new search so we add a new tab.
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+// 					window.opener.$j( "<li><a href='" + formSubmitURL + "'><span>Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab</span></li>" ).appendTo( "#tabs .ui-tabs-nav" );
+// 					window.opener.$j( "#tabs" ).tabs( "refresh" );
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 					window.close();
 				}

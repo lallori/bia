@@ -504,7 +504,7 @@
 					window.opener.$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				}else{
 					window.opener.$j("#tabs").tabs("select", numTab-1);
-					window.opener.$j("#tabs").tabs("url", numTab-1, urlToExplore);
+					$j('#tabs ul li').eq(numTab-1).data('loaded', false).find('a').attr('href', urlToExplore);
 					window.opener.$j("#tabs").tabs("load", numTab-1);
 				}
 				window.blur();

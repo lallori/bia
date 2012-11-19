@@ -149,7 +149,7 @@
 				return false;
 			}else{
 				$j("#tabs").tabs("select", numTab);
-				$j("#tabs").tabs("url", numTab, $j(this).attr("href"));
+				$j('#tabs ul li').eq(numTab).data('loaded', false).find('a').attr('href', $j(this).attr('href'));
 				$j("#tabs").tabs("load", numTab);
 				return false;
 			}

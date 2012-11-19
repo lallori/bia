@@ -239,40 +239,71 @@
 
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 
-					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					
+					//New Script for jQuery 1.9 tabs
+					var href = $j(this).attr("href");
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
+					$j('#tabs').tabs('load', active);
+					
 					return false;
 				});
 				
 				$j(".nextPage").click(function(){
 					// we change selected tab url 
-					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					
+					//New Script for jQuery 1.9 tabs
+					var href = $j(this).attr("href");
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
+					$j('#tabs').tabs('load', active);
+					
 					return false;
 				});
 				
 				$j(".refreshVolumeExplorer").click(function(){
 					// we change selected tab url
-					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					
+					//New Script for jQuery 1.9 tabs
+					var href = $j(this).attr("href");
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
+					$j('#tabs').tabs('load', active);
 					return false;
 				});
 
 				$j(".indexNames").click(function (){
-		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href")); 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href")); 
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+
+					//New Script for jQuery 1.9 tabs
+					var href = $j(this).attr("href");
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
+					$j('#tabs').tabs('load', active);
 					return false;
 				});
 		        
 				$j(".editMoveToFolioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	// we change selected tab url
-		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+// 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 		        	// we force tab reload 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+		        	
+		        	//New Script for jQuery 1.9 tabs
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', formSubmitURL);
+					$j('#tabs').tabs('load', active);
 					return false;
 				});
 
@@ -299,9 +330,15 @@
 				});
 
 				$j("#indexNames").click(function(){
-					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					
+					//New Script for jQuery 1.9 tabs
+					var href = $j(this).attr("href");
+					var active = $j("#tabs").tabs("option", "active");
+					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
+					$j('#tabs').tabs('load', active);
 					return false;
 				});
 

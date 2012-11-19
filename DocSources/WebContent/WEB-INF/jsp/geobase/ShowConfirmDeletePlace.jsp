@@ -280,7 +280,7 @@
 						}
 				
 					} else {
-						$j.ajax({ type:"POST", url:$j(this).attr("href"), data:$j(this).serialize(), async:false, success:function(html) {
+						$j.ajax({ type:"POST", url:'${DeletePlaceURL}', data:$j(this).serialize(), async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").load(html);
 							$j("#body_left").load('${ShowPlaceURL}');
 						}})

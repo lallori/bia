@@ -48,7 +48,16 @@
 						"Couldn't load this tab. We'll try to fix this as soon as possible. " );
 				}
 			},
-			cache: true // load only once or with every click
+			beforeLoad: function( event, ui ) {
+		        if ( ui.tab.data( "loaded" ) ) {
+		            event.preventDefault();
+		            return;
+		        }
+		 
+		        ui.jqXHR.success(function() {
+		            ui.tab.data( "loaded", true );
+		        });
+		    }
 		});
 
 		$j("#tabs span.ui-icon-close" ).live("click", function() {

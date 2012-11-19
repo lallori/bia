@@ -54,7 +54,7 @@
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 			</security:authorize>
-			<a id="comments" href="#">Comments</a>
+			<a id="comments" href="#">Discussions</a>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!place.logicalDelete}">
 				<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>

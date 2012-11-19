@@ -51,7 +51,7 @@
 				return false;
 			} else {
 				$j("#tabs").tabs("select", numTab-2);
-				$j("#tabs").tabs("url", numTab-2, formSubmitURL);
+				$j('#tabs ul li').eq(numTab-2).data('loaded', false).find('a').attr('href', formSubmitURL);
 
 				console.log(" tabs ->" + (numTab-1) + " url ->" + formSubmitURL);
 

@@ -662,7 +662,7 @@
 						window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 					}else{
 						window.opener.$j("#tabs").tabs("select", numTab);
-						window.opener.$j("#tabs").tabs("url", numTab, urlToExplore);
+						window.opener.$j('#tabs ul li').eq(numTab).data('loaded', false).find('a').attr('href', urlToExplore);
 						window.opener.$j("#tabs").tabs("load", numTab);
 					}
 					window.blur();

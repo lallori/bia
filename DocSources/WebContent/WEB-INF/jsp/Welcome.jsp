@@ -118,7 +118,7 @@
 				if ($j('#tabs').find("#refine${command.searchUUID}").length==1) {
 					// calculate tab position
 					var index =$j("#tabs ul li").index($j("li:has(a[href='#" + $j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"));
-					$j("#tabs").tabs("url", index, formSubmitURL);
+					$j('#tabs ul li').eq(index).data('loaded', false).find('a').attr('href', formSubmitURL);
 					$j("#tabs").tabs("select", index);
 					$j("#tabs").tabs("load" , index);
 					window.close()
