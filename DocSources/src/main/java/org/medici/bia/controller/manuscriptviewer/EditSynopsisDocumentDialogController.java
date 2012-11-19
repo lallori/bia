@@ -33,6 +33,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.bia.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
+import org.medici.bia.common.util.BiaTextUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.SynExtract;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -95,7 +96,7 @@ public class EditSynopsisDocumentDialogController {
 
 			SynExtract synExtract = new SynExtract(command.getSynExtrId());
 			synExtract.setDocument(new Document(command.getEntryId()));
-			synExtract.setSynopsis(command.getSynopsis());
+			synExtract.setSynopsis(BiaTextUtils.normalize(command.getSynopsis()));
 
 			try {
 				Document document = null;
