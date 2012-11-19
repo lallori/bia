@@ -174,7 +174,7 @@ public class AjaxController {
 			   } else {
 				   singleRow.add(placeNameAndParent.substring(0, 37) + "...");
 			   }
-			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
+			   resultList.add(HtmlUtils.showPlaceMarkedList(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   singleRow.add(currentUserHistory.getAction().toString());
