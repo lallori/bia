@@ -417,7 +417,7 @@
 	</definition>
 
 	<definition name="community/SearchResultForumPost" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/SearchResultForumPost.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/community/TextSearchResultForumPost.jsp"/>
 	</definition>
 
 	<definition name="community/ShowForum" extends="template.partialDOM">

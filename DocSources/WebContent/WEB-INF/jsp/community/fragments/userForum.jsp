@@ -4,6 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+ 				<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+					<c:param name="forumId" value="1"/>
+				</c:url>
+ 				
  				<c:url var="CheckNewMessagesURL" value="/community/CheckNewMessages.json"/>
  				
  				<div id="userDiv">
@@ -19,6 +23,12 @@
 					$j(document).ready(function() {
 						$j('#profile').click(function (){
 							$j("#main").load($j(this).attr("href"));
+							$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
+			    				$j("#chronologyDiv").html(json.chronology);
+								$j("#selectForum").append(json.selectChronology);
+								$j("#chronologyDiv .arrowForum").css('display','');
+								$j("#chronologyDiv .forum").css('display','');
+			    			}});
 							return false;
 						});
 
