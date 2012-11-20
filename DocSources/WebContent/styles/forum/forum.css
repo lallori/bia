@@ -59,11 +59,16 @@ h1 {
 	color: #6D5C4D;
 }
 
-h2 {
+h2, h2 a {
 	font-size: 16px;
 	color: #6D5C4D;
 	width: 620px;
 	display: inline-block;
+}
+
+h2 a:hover {
+	color: #6D5C4D;
+	text-decoration:none;
 }
 
 h2.title {
@@ -88,6 +93,19 @@ h2.title {
 	border-radius:2px;
 	margin: 0 5px 0 5px;
 	box-shadow: 0 0 6px #B7958F;
+}
+
+#postTable p a.linkForum{
+	color:#666EA4;
+}
+
+blockquote p {
+    background-color: #F6EDEC;
+   padding: 5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #DCC0BA;
 }
 
 /* ------------------------------------------------- STRUCTURE ------------------------------------------------- */ 
@@ -200,9 +218,6 @@ h2.title {
 a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:hover {
 	text-decoration:none;
 	color:#6F6B69;
-	opacity: 0.5;
-	-moz-opacity: 0.5;
-	filter: alpha(opacity=50);
 }
 
 #advancedSearchButton { /* Advanced Search button position */
@@ -492,21 +507,18 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 .list .row .one span, .list .rowLast .one span, .list .row .two span {
 	display: block;
 	margin-left: 30px;
-	opacity: 0.6;
 	font-size: 11px;
 }
 
 .list .row .two span,  .list .rowLast .two span {
 	display: block;
 	margin-left: 0;
-	opacity: 0.6;
 	font-size: 11px;
 }
 
 #postTable span.date {
 	display: inline;
 	margin-left: 0px;
-	opacity: 0.6;
 	font-size: 11px;
 }
 
@@ -540,7 +552,6 @@ a.returnTo {
 .date { /* Date format */
 	font-style:italic;
 	display:block;
-	opacity: 0.7;
 	font-size: 11px;
 }
 
@@ -693,12 +704,6 @@ a.returnTo {
 	margin: 0 0 0 650px;
 }
 
-#postTable a:hover  {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
-}
-
 #topicIcons .editPost {
 	background-image:url(/DocSources/images/forum/button_edit.png);
 	width:20px;
@@ -811,9 +816,6 @@ a.returnTo {
 
 input[type="submit"]:hover {
 	cursor:pointer;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #register {
@@ -874,9 +876,6 @@ input[type="submit"]:hover {
 #preview:hover, #save:hover {
 	text-decoration:none;
 	color:#6F6B69;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #save {
@@ -912,9 +911,6 @@ input[type="submit"]:hover {
 #cancel:hover {
 	text-decoration:none;
 	color:#6F6B69;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #notify1 {
@@ -1125,7 +1121,6 @@ ul.abc li {
 	text-align:right;
 	padding-right: 10px;
 	font-style: italic;
-	opacity: 0.7;
 }
 
 #messagesTable .row, #messagesTable .rowLast {
@@ -1221,7 +1216,6 @@ span.highlighted, #postTable span.highlighted{
     margin-left: 0;
     display: inline;
     margin-left: 0;
-    opacity: 1;
     font-size: 13px;
 }
 
@@ -1231,7 +1225,6 @@ span.highlighted, #postTable span.highlighted{
     margin-left: 0;
     display: inline;
     margin-left: 0;
-    opacity: 1;
 }
 
 span.search {

@@ -1561,13 +1561,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #DocumentImageDigitDiv { /* Document image digitized or to be digitized */ 
-    margin: 0 10px 0 0;
-    z-index:1;
-    height:160px;
+    height: 215px;
     width:120px;
     text-align:center;
-    position: absolute;
-    margin-left: 345px;
+    display:inline-block;
 }
 
 #DocumentImageDigitDiv span {
@@ -1599,7 +1596,10 @@ p.notDigitized {
 }
 
 #documentTitle #text, #geoTitle #text {
-	width: 290px;
+	width: 322px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 15px;
 }
 
 #personTitle #text {
@@ -1647,7 +1647,7 @@ div#text div#icons {
 	height:55px;
 	background:url(/DocSources/images/1024/button_openVolExplorer.png) bottom no-repeat;
 	cursor:pointer;
-	position: absolute;
+	float: left;
 }
 
 #ShowDocumentInVolumeExplorer { /* Bottom right icon  */
@@ -1655,8 +1655,7 @@ div#text div#icons {
 	height:55px;
 	background:url(/DocSources/images/1024/button_showManuscViewer.png) bottom no-repeat;
 	cursor:pointer;
-	margin-left: 55px;
-	position: absolute;
+	float: right;
 }
 
 #CompareDocument { /* Bottom right icon  */

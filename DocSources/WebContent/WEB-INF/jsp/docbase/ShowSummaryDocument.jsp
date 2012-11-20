@@ -44,26 +44,6 @@
 	<%-- Editing Document Record --%>
 	<c:if test="${document.volume != null}">
 	<div id="documentTitle">
-		<c:if test="${not empty image}">
-			<div id="DocumentImageDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="You should register to see the digitized document fullscreen">
-				</security:authorize>
-			</div>
-		</c:if>
-		<c:if test="${empty image}">
-			<div id="DocumentImageNotDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span>To be digitized</span>
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span class="register">To be digitized</span>
-				</security:authorize>
-			</div>
-		</c:if>
 		<div id="text">
 			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
 <!-- 		Checking if folio is inside inserts or inserts with parts -->
@@ -115,24 +95,33 @@
 				<c:when test="${document.yearModern != null}">
 					<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
 				</c:when>
-				<c:otherwise>
-					<br />
-					<br />
-				</c:otherwise>
 			</c:choose>
-			<c:if test="${not empty image}">
-				<div id="icons">
+			
+		</div>
+		<c:if test="${not empty image}">
+			<div id="DocumentImageDigitDiv">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+				</security:authorize>
+				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="You should register to see the digitized document fullscreen">
+				</security:authorize>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
 					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
 					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
 				</security:authorize>
-				</div>
-			</c:if>
-			<c:if test="${image == null}">
-				<br>
-        		<p class="notDigitized">This document is not digitized yet</p>
-         	</c:if>
-		</div>
+			</div>
+		</c:if>
+		<c:if test="${empty image}">
+			<div id="DocumentImageNotDigitDiv">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<span>To be digitized</span>
+				</security:authorize>
+				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<span class="register">To be digitized</span>
+				</security:authorize>
+			</div>
+		</c:if>
 			
 		</c:if>
 			
