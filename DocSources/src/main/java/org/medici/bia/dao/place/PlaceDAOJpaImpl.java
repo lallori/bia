@@ -35,6 +35,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
@@ -42,6 +43,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
@@ -189,6 +191,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -203,6 +207,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -268,6 +274,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -282,6 +290,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -347,6 +357,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -361,6 +373,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -425,6 +439,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -439,6 +455,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -546,6 +564,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -560,6 +580,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -624,6 +646,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -638,6 +662,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else { 
@@ -702,6 +728,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase()), BooleanClause.Occur.SHOULD));
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0) {
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	} else {
@@ -716,6 +743,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        	text.add(new BooleanClause(parserPlaceName.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 //	        	text.add(new BooleanClause(parserPlaceNameFull.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
 	        	text.add(new BooleanClause(parserTermAccent.parse(singleWord.toLowerCase() + "*"), BooleanClause.Occur.SHOULD));
+	        	booleanQuery.add(new BooleanClause(new TermQuery(new Term("logicalDelete", "false")), BooleanClause.Occur.MUST));
 	        	if(i == 0)
 	        		booleanQuery.add(new BooleanClause(text, Occur.MUST));
 	        	else
