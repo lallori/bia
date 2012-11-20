@@ -317,6 +317,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param forumId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Long getSubForumsNumberWithTopics(Integer forumId) throws ApplicationThrowable;
 
 	/**
 	 * 

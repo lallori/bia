@@ -867,6 +867,18 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getSubForumsNumberWithTopics(Integer forumId) throws ApplicationThrowable {
+		try{
+			return getForumDAO().getSubForumsNumberWithTopics(forumId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the userDAO

@@ -53,8 +53,11 @@
 							<c:if test="${currentCategory.dispositionOrder != 1}">
 								<div class="two"></div>
 							</c:if>
-							<c:if test="${currentCategory.dispositionOrder == 1}">
+							<c:if test="${currentCategory.dispositionOrder == 1 && currentForum.forumId != bia:getApplicationProperty('forum.identifier.document')}">
 								<div class="two">${currentForum.subForumsNumber}</div>
+							</c:if>
+							<c:if test="${currentCategory.dispositionOrder == 1 && currentForum.forumId == bia:getApplicationProperty('forum.identifier.document')}">
+								<div class="two">${documentSubForumsWithTopics}</div>
 							</c:if>
 <%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
 							<div class="three">${currentForum.topicsNumber}</div>

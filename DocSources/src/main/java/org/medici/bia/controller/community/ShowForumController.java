@@ -116,6 +116,9 @@ public class ShowForumController {
 
 					Map<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
 					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
+					//MD: To show the number of subforums that have one or more topics for the document forum
+					model.put("documentSubForumsWithTopics", getCommunityService().getSubForumsNumberWithTopics(5));
+					
 					model.put("forumsBySubCategories", forumsHashMap);
 					
 					if (forum.getOption().getCanHaveSubForum()) {

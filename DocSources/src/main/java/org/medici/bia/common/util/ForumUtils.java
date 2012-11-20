@@ -136,13 +136,16 @@ public class ForumUtils {
 			StringBuffer returnText = new StringBuffer(0);
 			//For every word we find where is positioned inside the post
 			for(String currentWord : wordArray){
-				Integer indexToBeginResult = forumPost.getText().indexOf(currentWord);
+				Integer indexToBeginResult = forumPost.getText().toLowerCase().indexOf(currentWord);
 				Integer indexToEndResult = forumPost.getText().length();
 				//If the word isn't at the begin of the post
 				if(indexToBeginResult > 150){
 					String temp = forumPost.getText().substring(0, indexToBeginResult - 150);
 					//we find a blank space to "cut" the text of the post
 					indexToBeginResult = temp.lastIndexOf(' ');
+					if(forumPost.getText().substring(indexToBeginResult).contains(">")){
+						indexToBeginResult = forumPost.getText().substring(0, indexToBeginResult).lastIndexOf("<");
+					}
 					if(indexToBeginResult == -1){
 						indexToBeginResult = 0;
 					}

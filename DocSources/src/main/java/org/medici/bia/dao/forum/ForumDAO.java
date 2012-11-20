@@ -239,6 +239,14 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	
 	/**
 	 * 
+	 * @param forumId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Long getSubForumsNumberWithTopics(Integer forumId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */

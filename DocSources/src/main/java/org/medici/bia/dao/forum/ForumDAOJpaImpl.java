@@ -666,6 +666,19 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getSubForumsNumberWithTopics(Integer forumId) throws PersistenceException {
+		String countQuery = "SELECT COUNT(*) from Forum where forumId=:forumId AND topicsNumber != 0 AND logicalDelete=0";
+        
+		Query query = getEntityManager().createQuery(countQuery);
+		query.setParameter("forumId", forumId);
+		
+		return (Long) query.getSingleResult();
+	}
 
 	/**
 	 * {@inheritDoc}
