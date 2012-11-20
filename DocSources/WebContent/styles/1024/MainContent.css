@@ -1538,8 +1538,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #DocumentImageNotDigitDiv { /* Document image digitized or to be digitized */
-    float:right; 
-    margin: 2px 15px 0 0;
+    display: inline-block; 
     z-index:1;
     height:160px;
     width:120px;
