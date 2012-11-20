@@ -53,6 +53,7 @@ import org.medici.bia.common.util.DateUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class AdvancedSearchPlace extends AdvancedSearchAbstract {
@@ -375,10 +376,46 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		if(placesName.size() > 0){
 			StringBuilder placesNameQuery = new StringBuilder("(");
 			for(int i = 0; i < placesName.size(); i++){
-				String[] wordsSinglePlaceNames = StringUtils.split(placesName.get(i), " ");
+				String currentWords = placesName.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
 				if(placesNameQuery.length() > 1){
 					placesNameQuery.append(" AND ");
 				}
+				
+				//MD: This code is to identify the words between double quotes
+				while(currentWords.contains("\"")){
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if(to != -1){
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					}else{
+						currentWords = currentWords.replace("\"", " ");
+					}
+				}
+				
+				String[] wordsSinglePlaceNames = StringUtils.split(currentWords, " ");
+				
+				for(int j = 0; j < exactWords.size(); j++){
+					placesNameQuery.append("((placeNameFull LIKE '%");
+					placesNameQuery.append(exactWords.get(j).replace("'", "''"));
+					placesNameQuery.append("%') OR (termAccent LIKE '%");
+					placesNameQuery.append(exactWords.get(j).replace("'", "''"));
+					placesNameQuery.append("%'))");
+					if(j < (exactWords.size() - 1)){
+						placesNameQuery.append(" AND ");
+					}
+				}
+				
+				if(exactWords.size() > 0 && wordsSinglePlaceNames.length > 0){
+					placesNameQuery.append(" AND ");
+				}
+				
 				for(int j = 0; j < wordsSinglePlaceNames.length; j++){
 					placesNameQuery.append("((placeNameFull like '%");
 					placesNameQuery.append(wordsSinglePlaceNames[j].toLowerCase().replace("'", "''"));
