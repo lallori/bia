@@ -88,7 +88,7 @@
 				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
 			</c:if>
 <!-- 		2) folio is inside inserts with no parts -->
-			<c:if test="${document.insertNum != null} && ${document.insertLet  == null}">
+			<c:if test="${document.insertNum != null && document.insertLet  == null}">
 				<br>
 				<br>
 				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
