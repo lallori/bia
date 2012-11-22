@@ -132,20 +132,19 @@ public class ForumUtils {
 			//MD: In this case we return all the text
 			return forumPost.getText();
 		}else{
+			//MD: This is to remove html tags
+			String postText = forumPost.getText().replaceAll("\\<.*?>","");			
 			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 			StringBuffer returnText = new StringBuffer(0);
 			//For every word we find where is positioned inside the post
 			for(String currentWord : wordArray){
-				Integer indexToBeginResult = forumPost.getText().toLowerCase().indexOf(currentWord);
-				Integer indexToEndResult = forumPost.getText().length();
+				Integer indexToBeginResult = postText.toLowerCase().indexOf(currentWord);
+				Integer indexToEndResult = postText.length();
 				//If the word isn't at the begin of the post
 				if(indexToBeginResult > 150){
-					String temp = forumPost.getText().substring(0, indexToBeginResult - 150);
+					String temp = postText.substring(0, indexToBeginResult - 150);
 					//we find a blank space to "cut" the text of the post
 					indexToBeginResult = temp.lastIndexOf(' ');
-					if(forumPost.getText().substring(indexToBeginResult).contains(">")){
-						indexToBeginResult = forumPost.getText().substring(0, indexToBeginResult).lastIndexOf("<");
-					}
 					if(indexToBeginResult == -1){
 						indexToBeginResult = 0;
 					}
@@ -153,8 +152,8 @@ public class ForumUtils {
 					indexToBeginResult = 0;
 				}
 				//if the word isn't at the end of the post 
-				if(indexToBeginResult + 300 < forumPost.getText().length()){
-					String temp = forumPost.getText().substring(indexToBeginResult, indexToBeginResult + 300);
+				if(indexToBeginResult + 300 < postText.length()){
+					String temp = postText.substring(indexToBeginResult, indexToBeginResult + 300);
 					indexToEndResult = temp.lastIndexOf(' ');
 					if(indexToEndResult == -1){
 						indexToEndResult = indexToBeginResult + 300;
@@ -162,14 +161,14 @@ public class ForumUtils {
 						indexToEndResult += indexToBeginResult;
 					}
 				}
-				if(indexToBeginResult > 0 && indexToEndResult < forumPost.getText().length()) {
-					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
-				} else if(indexToBeginResult > 0 && indexToEndResult >= forumPost.getText().length()) {
-					returnText.append("[...]" + forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");
-				} else if(indexToBeginResult <= 0 && indexToEndResult < forumPost.getText().length()) {
-					returnText.append(forumPost.getText().substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
-				} else if(indexToBeginResult <= 0 && indexToEndResult >= forumPost.getText().length()) {
-					returnText.append(forumPost.getText().substring(indexToBeginResult, forumPost.getText().length()) + "<br />");					
+				if(indexToBeginResult > 0 && indexToEndResult < postText.length()) {
+					returnText.append("[...]" + postText.substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
+				} else if(indexToBeginResult > 0 && indexToEndResult >= postText.length()) {
+					returnText.append("[...]" + postText.substring(indexToBeginResult, postText.length()) + "<br />");
+				} else if(indexToBeginResult <= 0 && indexToEndResult < postText.length()) {
+					returnText.append(postText.substring(indexToBeginResult, indexToEndResult) + " [...]<br />");
+				} else if(indexToBeginResult <= 0 && indexToEndResult >= postText.length()) {
+					returnText.append(postText.substring(indexToBeginResult, postText.length()) + "<br />");					
 				}
 			}
 			return returnText.toString();
