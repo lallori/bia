@@ -1598,7 +1598,7 @@ p.notDigitized {
 	width: 322px;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 15px;
+	margin-right:10px;
 }
 
 #personTitle #text {
@@ -2790,8 +2790,7 @@ a.refreshVolumeExplorer {
 }
 
 #placeImageDiv { /* Place map */
-    float:right; 
-    margin-right: 20px;
+    display: inline-block; 
     z-index:1;
     height:160px;
     width:120px;

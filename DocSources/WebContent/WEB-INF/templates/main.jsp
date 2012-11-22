@@ -123,6 +123,10 @@
 		<div id="layout">
 
 			<div id="map"></div>
+			<!-- POINTER DIVS -->
+            <div id="searchFormPointer"></div>
+            <div id="advancedSearchPointer"></div>
+            <div id="communityForumsPointer"></div>
 			<div id="top_top">
 <tiles:insertAttribute name="searchForm"/>
 <tiles:insertAttribute name="lastEntryMenu" />

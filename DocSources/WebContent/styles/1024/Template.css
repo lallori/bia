@@ -76,7 +76,7 @@ a {
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
 	width:750px;
 	height:95px;
-	margin-left:250px;
+	margin-left: 247px;
 	position:absolute;
 }
 
@@ -152,10 +152,39 @@ a {
 /* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
 #searchForm { /* Search Form Container */
-	width: 250px;
+	width: 307px; 
 	height:80px;
-	margin: 17px 0 0 2px;
+	margin: 17px 0 0 0;
 	position:absolute;
+	padding-left: 4px; 
+}
+
+#searchFormPointer, #advancedSearchPointer, #communityForumsPointer { /* Search Form Container Pointer  */
+	display:none;
+	position:absolute;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border:1px solid #900;
+	background:rgba(153, 0, 0, 0.1);
+}
+
+#searchFormPointer { /* Search Form Container Pointer  */
+	width: 307px; 
+	height:70px;
+	margin: 17px 0 0 248px;
+}
+
+#advancedSearchPointer{ /* Advanced Search Button Pointer  */
+	width: 150px; 
+	height: 59px;
+	margin: 97px 0 0 248px;
+}
+
+#communityForumsPointer{ /* Community Forums Button Pointer  */
+	width: 178px; 
+	height: 59px;
+	margin: 97px 0 0 525px;
 }
 
 .input_search { /* Input Text class */
@@ -417,14 +446,21 @@ a {
 	width: 480px;
 }
 
-.welcome_list h1{
-        font-size:12px;
-        margin-left:20px;
+.welcome_list p{
+	width:400px;
+	margin-left:50px
 }
 
-.welcome_list .discussion {
-    margin-left: 18px;
+.welcome_list p span.simpleSearch, .welcome_list p span.advancedSearch, .welcome_list p span.communityForums{
+	font-weight:bold;
+	cursor:pointer;
 }
+
+.welcome_list h1{
+     font-size:12px;
+     margin-left: 10px;
+     padding-left: 25px;
+} 
 
 .welcome_list h3{
 	padding:0;
@@ -436,9 +472,9 @@ a {
 .welcome_list h5{
 	position:relative;
 	display:block;
-	margin:10px;
+	margin: 10px 0 10px 0;
 	border-bottom:1px solid #DCC0BA;
-	width:470px;
+	width: 455px;
 }
 
 .welcome_list .forumHref {
@@ -453,17 +489,12 @@ a {
 	margin-left:5px;
 }
 
-#lastLogOnDiv, #thisWeekDiv, #thisMonthDiv {
-    width: 300px;
-    height: 200px; 
-}
 
 #lastLogOnDiv div, #thisWeekDiv div, #thisMonthDiv div {
-    padding-left:25px;
+    padding-left: 20px;
     padding-right:20px;
     padding-top:3px;
-    margin-left:20px;
-    width: 415px;
+    width: 415px; 
     height: 22px;
     cursor:pointer;
 }
@@ -498,15 +529,15 @@ a {
 	text-decoration:underline;
 	font-size:11px;
 	color:#B7958F;
-}*/
+}
 
 
 #body_left a:hover, #body_right a:hover{ 
-	opacity:0.75; /* FireFox, Chrome, Safari */
+	opacity:0.75; 
 	-moz-opacity: 0.7;
-	filter:alpha(opacity=70); /* IE */ !important
+	filter:alpha(opacity=70); 
 }
-
+*/
 /* ------------------------------------------------------------------------------------------------------- */
 /*
 /*
