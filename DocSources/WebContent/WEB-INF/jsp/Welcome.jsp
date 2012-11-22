@@ -9,107 +9,115 @@
 	<div class="welcome_list">
 		<h3>Welcome back <security:authentication property="principal.firstName"/>. <br /></h3>
 
-	  <h5>ACTIVITY IN FORUMS</h5>
+	  <div id="accordion">
+	  	<h1>ACTIVITY IN FORUMS</h1>
     
-    <div id="topDiscussions">
-        <h1>TOP DISCUSSIONS</h1>
-    <c:forEach var="discussion" items="${forumStatistics['TOP DISCUSSIONS']}">
-    	<c:url var="forumURL" value="/community/ShowTopicForum.do">
-    		<c:param name="forumId" value="${discussion.forum.forumId}"/>
-    		<c:param name="topicId" value="${discussion.topicId}"/>
-    		<c:param name="completeDOM" value="true"/>
-    	</c:url>
-     	<div class="discussion">
-            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
-            <a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a> 
-            <span>(${discussion.totalReplies} replies)</span>
-            <span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
-        </div>
-    </c:forEach>
-    </div>
-    
-    <div id="mostRecentDiscussions">
-        <h1>MOST RECENT DISCUSSIONS</h1>
-	<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
-    	<c:url var="forumURL" value="/community/ShowTopicForum.do">
-    		<c:param name="forumId" value="${discussion.forum.forumId}"/>
-    		<c:param name="topicId" value="${discussion.topicId}"/>
-    		<c:param name="completeDOM" value="true"/>
-    	</c:url>
-       	<div class="discussion">
-            <img src="/DocSources/images/forum/img_forum.png" alt="entry" />
-            <a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a>
-            <span>(${discussion.totalReplies} replies)</span>
-            <span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
-        </div>
-	    </c:forEach>
-    </div>
+   		<div id="topDiscussions">
+        	<h5>TOP DISCUSSIONS</h5>
+    		<c:forEach var="discussion" items="${forumStatistics['TOP DISCUSSIONS']}">
+    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
+    			<c:param name="forumId" value="${discussion.forum.forumId}"/>
+    			<c:param name="topicId" value="${discussion.topicId}"/>
+    			<c:param name="completeDOM" value="true"/>
+    		</c:url>
+     		<div class="discussion">
+            	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a> 
+            	<span>(${discussion.totalReplies} replies)</span>
+            	<span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+        	</div>
+    		</c:forEach>
+    		
+    		<br />
+    		
+        	<h5>MOST RECENT DISCUSSIONS</h5>
+			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
+    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
+    			<c:param name="forumId" value="${discussion.forum.forumId}"/>
+    			<c:param name="topicId" value="${discussion.topicId}"/>
+    			<c:param name="completeDOM" value="true"/>
+    		</c:url>
+       		<div class="discussion">
+            	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a>
+            	<span>(${discussion.totalReplies} replies)</span>
+            	<span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+        	</div>
+	    	</c:forEach>
+    	</div>
         
     
-    <h5>ACTIVITY IN THE DATABASE</h5>
+    	<h1>ACTIVITY IN THE DATABASE</h1>
     
-    <div id="lastLogOnDiv">
-    	<h1>FROM YOUR LAST LOG ON</h1>
-        <div>
-        	<a href="${lastLogonUrls['DOCUMENT']}" class="databaseActivity">Documents </a> 
-            <span>${lastLogonDBStatistics['DOCUMENT']}</span>
-        </div>
-        <div>
-        	<a href="${lastLogonUrls['VOLUME']}" class="databaseActivity">Volumes</a>
-            <span>${lastLogonDBStatistics['VOLUME']}</span>
-        </div>
-        <div>
-        	<a href="${lastLogonUrls['PEOPLE']}" class="databaseActivity">People</a>
-            <span>${lastLogonDBStatistics['PEOPLE']}</span>
-        </div>
-        <div>
-        	<a href="${lastLogonUrls['PLACE']}" class="databaseActivity">Places</a>
-            <span>${lastLogonDBStatistics['PLACE']}</span>
-        </div>
-    </div>
-
-    <div id="thisWeekDiv">
-    	<h1>THIS WEEK</h1>
-        <div>
-        	<a href="${currentWeekUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
-            <span>${currentWeekDBStatistics['DOCUMENT']}</span>
-        </div>
-        <div>
-        	<a href="${currentWeekUrls['VOLUME']}" class="databaseActivity">Volumes</a>
-            <span>${currentWeekDBStatistics['VOLUME']}</span>
-        </div>
-        <div>
-        	<a href="${currentWeekUrls['PEOPLE']}" class="databaseActivity">People</a>
-            <span>${currentWeekDBStatistics['PEOPLE']}</span>
-        </div>
-        <div>
-        	<a href="${currentWeekUrls['PLACE']}" class="databaseActivity">Places</a>
-            <span>${currentWeekDBStatistics['PLACE']}</span>
-        </div>
-    </div>
-    
-    <div id="thisMonthDiv">
-    	<h1>THIS MONTH</h1>
-         <div>
-        	<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
-            <span>${currentMonthDBStatistics['DOCUMENT']}</span>
-        </div>
-        <div>
-        	<a href="${currentMonthUrls['VOLUME']}" class="databaseActivity">Volumes</a>
-            <span>${currentMonthDBStatistics['VOLUME']}</span>
-        </div>
-        <div>
-        	<a href="${currentMonthUrls['PEOPLE']}" class="databaseActivity">People</a>
-            <span>${currentMonthDBStatistics['PEOPLE']}</span>
-        </div>
-        <div>
-        	<a href="${currentMonthUrls['PLACE']}" class="databaseActivity">Places</a>
-            <span>${currentMonthDBStatistics['PLACE']}</span>
-        </div>
+    	<div id="lastLogOnDiv">
+    		<h5>FROM YOUR LAST LOG ON</h5>
+        	<div>
+        		<a href="${lastLogonUrls['DOCUMENT']}" class="databaseActivity">Documents </a> 
+            	<span>${lastLogonDBStatistics['DOCUMENT']}</span>
+        	</div>
+        	<div>
+        		<a href="${lastLogonUrls['VOLUME']}" class="databaseActivity">Volumes</a>
+        	    <span>${lastLogonDBStatistics['VOLUME']}</span>
+        	</div>
+        	<div>
+        		<a href="${lastLogonUrls['PEOPLE']}" class="databaseActivity">People</a>
+        	    <span>${lastLogonDBStatistics['PEOPLE']}</span>
+        	</div>
+        	<div>
+        		<a href="${lastLogonUrls['PLACE']}" class="databaseActivity">Places</a>
+        	    <span>${lastLogonDBStatistics['PLACE']}</span>
+        	</div>
+		
+			<br />
+		      
+    		<h5>THIS WEEK</h5>
+        	<div>
+        		<a href="${currentWeekUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
+        	    <span>${currentWeekDBStatistics['DOCUMENT']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentWeekUrls['VOLUME']}" class="databaseActivity">Volumes</a>
+        	    <span>${currentWeekDBStatistics['VOLUME']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentWeekUrls['PEOPLE']}" class="databaseActivity">People</a>
+        	    <span>${currentWeekDBStatistics['PEOPLE']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentWeekUrls['PLACE']}" class="databaseActivity">Places</a>
+        	    <span>${currentWeekDBStatistics['PLACE']}</span>
+        	</div>
+			
+			<br />
+			    
+    		<h5>THIS MONTH</h5>
+         	<div>
+        		<a href="${currentMonthUrls['DOCUMENT']}" class="databaseActivity">Documents</a>
+            	<span>${currentMonthDBStatistics['DOCUMENT']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentMonthUrls['VOLUME']}" class="databaseActivity">Volumes</a>
+        	    <span>${currentMonthDBStatistics['VOLUME']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentMonthUrls['PEOPLE']}" class="databaseActivity">People</a>
+        	    <span>${currentMonthDBStatistics['PEOPLE']}</span>
+        	</div>
+        	<div>
+        		<a href="${currentMonthUrls['PLACE']}" class="databaseActivity">Places</a>
+        	    <span>${currentMonthDBStatistics['PLACE']}</span>
+        	</div>
+    	</div>
     </div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j('#accordion').accordion({
+				active: 0, 
+				autoHeight: false,
+				collapsible: true
+			});
+			
 			$j(".databaseActivity").click(function() {
 				// this is search url form 
 				var formSubmitURL = $j(this).attr("href");

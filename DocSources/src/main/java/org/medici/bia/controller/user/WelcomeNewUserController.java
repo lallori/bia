@@ -1,5 +1,5 @@
 /*
- * HomeController.java
+ * ShowUserProfileController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,16 +25,11 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller;
+package org.medici.bia.controller.user;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.medici.bia.command.HomeCommand;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
@@ -42,59 +37,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Home". 
- * This is the entry point after login.
- *  
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * Controller to permit user update profile action.
+ * It manages View and request's elaboration process.
  * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/Home")
-public class HomeController {
+@RequestMapping("/user/WelcomeNewUser")
+public class WelcomeNewUserController {
 	@Autowired
 	private UserService userService;
 	
+
 	/**
 	 * 
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") HomeCommand command, HttpSession httpSession) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		// We need genders enumeration to populate relative combo-box
-		model.put("searchTypes", SearchType.values());		
-
-		try {			
-			Map<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
-			httpSession.setAttribute("userStatistics", userStatistics);
-			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			model.put("user", user);
-			
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			return new ModelAndView("error/Welcome", model);
-		}
-
-		return new ModelAndView("Home", model);
+	public UserService getUserService() {
+		return userService;
 	}
 
 	/**
-	 * @param userService the userService to set
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm() {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		User user = null;
+		try {
+			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("applicationThrowable", applicationThrowable);
+			user = new User();
+		}
+		model.put("user", user);		
+
+		return new ModelAndView("user/WelcomeNewUser", model);
+	}
+
+	/**
+	 * 
+	 * @param userService
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
 	}
 }

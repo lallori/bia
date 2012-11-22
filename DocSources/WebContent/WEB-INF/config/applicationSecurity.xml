@@ -26,6 +26,7 @@
         <security:intercept-url pattern="/user/PrintElementsMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/EditUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ShowUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/WelcomeNewUser.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowForum.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowTopicForum.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />

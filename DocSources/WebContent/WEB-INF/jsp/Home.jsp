@@ -19,6 +19,8 @@
 	<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId" value="${command.summaryId}"/>
 	</c:url>
+	
+	<c:url var="WelcomeNewUserURL" value="/user/WelcomeNewUser.do" />
 
 	<div id="DocSourcesContent">
 		<div id="body_left">
@@ -91,6 +93,9 @@
 		});
 
 	<c:choose>
+		<c:when test="${empty user.lastLoginDate}">
+		$j("#body_left").load('${WelcomeNewUserURL}');
+		</c:when>
 		<c:when test="${not empty command.entryId}">
 		$j("#body_left").load('${ShowDocumentURL}');
 		</c:when>

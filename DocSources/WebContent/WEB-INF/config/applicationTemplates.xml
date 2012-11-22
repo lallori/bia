@@ -184,6 +184,10 @@
 	<definition name="user/SendUserPasswordResetSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
 	</definition>
+	
+	<definition name="user/WelcomeNewUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/WelcomeNewUser.jsp" />
+	</definition>
     <!-- Authentication Module END -->
     
 	<!-- Administrator Module BEGIN -->
