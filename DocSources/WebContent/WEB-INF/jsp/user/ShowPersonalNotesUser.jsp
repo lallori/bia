@@ -35,7 +35,7 @@
 				return false;
 			});
 			$j("#cleanAll").click(function(){
-				if('${userPersonalNotes.personalNotes}' != ""){
+				if('${empty userPersonalNotes.personalNotes}' != 'true'){
 					Modalbox.show($j(this).attr('href'), {title: "ERASE PRSONAL NOTES", width: 330, height: 120});
 				}
 				return false;

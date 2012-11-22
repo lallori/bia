@@ -125,7 +125,7 @@ public class ShowUploadPortraitPersonValidator implements Validator {
 	 * @param errors
 	 */
 	private void validateRemoteUrl(String link, Errors errors) {
-		if (!ObjectUtils.toString(link).equals("")) {
+		if (!ObjectUtils.toString(link).equals("") && !ObjectUtils.toString(link).equals("http://")) {
 			try {
 				URL url = new URL(link);
 				HttpURLConnection huc = (HttpURLConnection) url.openConnection();

@@ -13,6 +13,13 @@
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 		<c:param name="flashVersion" value="false" />
 	</c:url>
+	
+	<c:url var="ShowVolumeInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+		<c:param name="summaryId"	value="${volume.summaryId}" />
+		<c:param name="volNum"	value="${volume.volNum}" />
+		<c:param name="volLetExt" value="${volume.volLetExt}" />
+		<c:param name="flashVersion"	value="false" />
+	</c:url>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 		<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
@@ -51,6 +58,7 @@
 				<div id="SpineVolumeDigitDiv">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 					<b>Volume Spine</b>
+					<a id="ShowVolumeInManuscriptViewer" title="Show in Manuscript Viewer" title="Show in Manuscript Viewer" href="${ShowVolumeInManuscriptViewerURL}"></a>
 					<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
 				</div>
 				</c:if>
@@ -122,6 +130,8 @@
 			showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
 			target 					: $j("#body_right") 
 		});  
+		
+		$j("#ShowVolumeInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 
 		//For check if already exsist a tab with volume explorer
 		$j("#ShowVolumeInVolumeExplorer").click(function(){
