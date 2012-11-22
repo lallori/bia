@@ -415,6 +415,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 					case 5:
 						paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection());
 						paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("insertNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("insertLet", paginationFilter.getSortingDirection());
 						paginationFilter.addSortingCriteria("folioNum", paginationFilter.getSortingDirection());
 						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection());
 						break;

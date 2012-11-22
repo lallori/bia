@@ -317,6 +317,7 @@ public class HtmlUtils {
 		stringBuilder.append("/images/1024/img_digitized_small_document.png\">");
 		return stringBuilder.toString();
 	}
+	
 	/**
 	 * 
 	 * @param forum
@@ -692,6 +693,41 @@ public class HtmlUtils {
 		
 		for (int i=0; i<inputList.size(); i++) {
 			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @param titleLastRow
+	 * @return
+	 */
+	public static List<String> showDocument(List<String> inputList, Integer entryId, String titleLastRow) {
+		if (inputList == null) {
+			return null;
+		}
+
+		List<String> retValue = new ArrayList<String>(inputList.size());
+		
+		String anchorBegin = "<a class=\"searchResult\" href=\"";
+		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchorBegin += "/src/docbase/ShowDocument.do?entryId=";
+		anchorBegin += entryId;
+		anchorBegin += "\"";
+		String anchorBeginEnd = ">";
+		String title = "title=\"";
+		title += titleLastRow;
+		title += "\"";
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			if(i < inputList.size() - 1)
+				retValue.add(anchorBegin  + anchorBeginEnd + inputList.get(i) + hrefEnd);
+			else
+				retValue.add(anchorBegin + title + anchorBeginEnd + inputList.get(i) + hrefEnd);
 		}
 		
 		return retValue;
