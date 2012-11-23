@@ -89,7 +89,7 @@
 			 
 			
 			$j(".showResult").live('click', function() {
-				var tabName = $j(this).attr("title");
+				var tabName = $j(this).parent().parent().find(".tabTitle").attr("title");
 				var numTab = 0;
 				var id = $j(this).attr("id");
 												

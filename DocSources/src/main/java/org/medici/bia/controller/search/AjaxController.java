@@ -139,7 +139,6 @@ public class AjaxController {
 		Page page = null;
 		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
-		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 
@@ -152,8 +151,6 @@ public class AjaxController {
 				folioNums.add(currentDocument.getFolioNum());
 				folioMods.add(currentDocument.getFolioMod());
 			}
-			
-			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -207,50 +204,50 @@ public class AjaxController {
 				singleRow.add("");
 			}
 
-			StringBuilder titleLastRow = new StringBuilder();
+			StringBuilder titleLastColumn = new StringBuilder();
 			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastRow = new StringBuilder();
-				lastRow.append("<b>" + currentDocument.getVolume().getMDP());
-				lastRow.append("</b><br />");
-				titleLastRow.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastRow.append("(");
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
 				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastRow.append(currentDocument.getInsertNum() + "/");
-					titleLastRow.append("Insert " + currentDocument.getInsertNum() + ", ");
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
 					if(currentDocument.getInsertLet() != null){
-						lastRow.append(currentDocument.getInsertLet());
-						titleLastRow.append("Part " + currentDocument.getInsertLet() + ", ");
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
 					}else{
-						lastRow.append("-");
+						lastColumn.append("-");
 					}					
 				}else{
-					lastRow.append("-/-");
+					lastColumn.append("-/-");
 				}
-				lastRow.append(")<br />");
-				lastRow.append("<b>");
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
 				if(currentDocument.getFolioNum() != null){
-					lastRow.append(currentDocument.getFolioNum());
-					titleLastRow.append("Folio " + currentDocument.getFolioNum());
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
 					if(currentDocument.getFolioMod() != null){
-						lastRow.append(currentDocument.getFolioMod());
-						titleLastRow.append(currentDocument.getFolioMod());
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
 					}
 				}
 				else{
-					lastRow.append("NNF");
-					titleLastRow.append("Folio NNF");
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
 				}
-				lastRow.append("</b>");
+				lastColumn.append("</b>");
 				if(currentDocument.getVolume().getDigitized()){
-					lastRow.append("&nbsp;" + HtmlUtils.getImageDigitized());
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
 				}
-				singleRow.add(lastRow.toString());
+				singleRow.add(lastColumn.toString());
 				
 			} else {
 				singleRow.add("");
 			}
 
-			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastRow.toString()));
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastColumn.toString()));
 		}
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
@@ -823,49 +820,49 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			StringBuilder titleLastRow = new StringBuilder();
+			StringBuilder titleLastColumn = new StringBuilder();
 			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastRow = new StringBuilder();
-				lastRow.append("<b>" + currentDocument.getVolume().getMDP());
-				lastRow.append("</b><br />");
-				titleLastRow.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastRow.append("(");
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
 				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastRow.append(currentDocument.getInsertNum() + "/");
-					titleLastRow.append("Insert " + currentDocument.getInsertNum() + ", ");
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
 					if(currentDocument.getInsertLet() != null){
-						lastRow.append(currentDocument.getInsertLet());
-						titleLastRow.append("Part " + currentDocument.getInsertLet() + ", ");
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
 					}else{
-						lastRow.append("-");
+						lastColumn.append("-");
 					}					
 				}else{
-					lastRow.append("-/-");
+					lastColumn.append("-/-");
 				}
-				lastRow.append(")<br />");
-				lastRow.append("<b>");
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
 				if(currentDocument.getFolioNum() != null){
-					lastRow.append(currentDocument.getFolioNum());
-					titleLastRow.append("Folio " + currentDocument.getFolioNum());
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
 					if(currentDocument.getFolioMod() != null){
-						lastRow.append(currentDocument.getFolioMod());
-						titleLastRow.append(currentDocument.getFolioMod());
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
 					}
 				}
 				else{
-					lastRow.append("NNF");
-					titleLastRow.append("Folio NNF");
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
 				}
-				lastRow.append("</b>");
+				lastColumn.append("</b>");
 				if(currentDocument.getVolume().getDigitized()){
-					lastRow.append("&nbsp;" + HtmlUtils.getImageDigitized());
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
 				}
-				singleRow.add(lastRow.toString());
+				singleRow.add(lastColumn.toString());
 			}
 			else
 				singleRow.add("");
 
-			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastRow.toString()));
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastColumn.toString()));
 		}
 
 		model.put("iEcho", "1");

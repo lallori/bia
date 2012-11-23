@@ -765,7 +765,7 @@ public class HtmlUtils {
 			anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
 		else
 			anchorBegin.append("DocId#" + entryId + " - " + inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
-		anchorBegin.append("\" class=\"showResult\" id=\"docId" + entryId + "\" href=\"");
+		anchorBegin.append("\" class=\"showResult tabTitle\" id=\"docId" + entryId + "\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
 		anchorBegin.append(entryId);
@@ -774,6 +774,48 @@ public class HtmlUtils {
 		
 		for (int i=0; i<inputList.size(); i++) {
 			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @param titleLastRow
+	 * @return
+	 */
+	public static List<String> showDocumentRelated(List<String> inputList, Integer entryId, String MDPAndFolio, String titleLastRow) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
+		if(!MDPAndFolio.contains("NNF"))
+			anchorBegin.append(MDPAndFolio);
+		else
+			anchorBegin.append("DocId#" + entryId + " - " + MDPAndFolio);
+		anchorBegin.append("\" class=\"showResult tabTitle\" id=\"docId" + entryId + "\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
+		anchorBegin.append(entryId);
+		anchorBegin.append("\">");
+		StringBuilder anchorBeginLastColumn = new StringBuilder("<a title=\"");
+		anchorBeginLastColumn.append(titleLastRow);
+		anchorBeginLastColumn.append("\" class=\"showResult\" id=\"docId" + entryId + "\" href=\"");
+		anchorBeginLastColumn.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBeginLastColumn.append("/src/docbase/CompareDocument.do?entryId=");
+		anchorBeginLastColumn.append(entryId);
+		anchorBeginLastColumn.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			if(i < inputList.size() - 1)
+				retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+			else
+				retValue.add(anchorBeginLastColumn + inputList.get(i) + hrefEnd);
 		}
 		
 		return retValue;

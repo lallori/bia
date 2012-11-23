@@ -380,17 +380,50 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
+			StringBuilder titleLastColumn = new StringBuilder();
 			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp" + HtmlUtils.getImageDigitized());
-				} else {
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-				}				
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
+				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+					if(currentDocument.getInsertLet() != null){
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+					}else{
+						lastColumn.append("-");
+					}					
+				}else{
+					lastColumn.append("-/-");
+				}
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
+				if(currentDocument.getFolioNum() != null){
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+					if(currentDocument.getFolioMod() != null){
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
+					}
+				}
+				else{
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
+				}
+				lastColumn.append("</b>");
+				if(currentDocument.getVolume().getDigitized()){
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+				}
+				singleRow.add(lastColumn.toString());
+				
 			} else {
 				singleRow.add("");
 			}
 
-			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), currentDocument.getMDPAndFolio(), titleLastColumn.toString()));
 		}
 
 		model.put("iEcho", "1");
