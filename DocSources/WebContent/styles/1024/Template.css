@@ -159,7 +159,7 @@ a {
 	padding-left: 4px; 
 }
 
-#searchFormPointer, #advancedSearchPointer, #communityForumsPointer { /* Search Form Container Pointer  */
+#searchFormPointer, #advancedSearchPointer, #communityForumsPointer, #communityForumsPointer_guest { /* Search Form Container Pointer  */
 	display:none;
 	position:absolute;
 	border-radius:4px;
@@ -185,6 +185,12 @@ a {
 	width: 178px; 
 	height: 59px;
 	margin: 97px 0 0 525px;
+}
+
+#communityForumsPointer_guest{ /* Community Forums Button Pointer for guests and Community users  */
+	width: 178px; 
+	height: 59px;
+	margin: 97px 0 0 395px;
 }
 
 .input_search { /* Input Text class */

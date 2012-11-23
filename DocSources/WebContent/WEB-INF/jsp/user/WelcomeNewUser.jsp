@@ -11,6 +11,8 @@
     <p>To access the Scholarly Discussions just click on the <span class="communityForums">Community Forums</span> button.</p>
 </div>
 
+<input type="hidden" id="userGroup" value="${userGroup}"/>
+
 <script type="text/javascript">
 	$j(document).ready(function(){
 		$j(".simpleSearch").mouseover(function(){
@@ -30,11 +32,17 @@
 		});
 
 		$j(".communityForums").mouseover(function(){
-          	$j('#communityForumsPointer').fadeIn("slow");
+			if($j("#userGroup").val() != 'COMMUNITY_USERS')
+          		$j('#communityForumsPointer').fadeIn("slow");
+			else
+				$j('#communityForumsPointer_guest').fadeIn("slow");
  		});
 
 		$j(".communityForums").mouseleave(function(){
-          	$j('#communityForumsPointer').fadeOut("slow");
+			if($j("#userGroup").val() != 'COMMUNITY_USERS')
+          		$j('#communityForumsPointer').fadeOut("slow");
+			else
+				$j('#communityForumsPointer_guest').fadeOut("slow");
  		});
 	})
 </script>

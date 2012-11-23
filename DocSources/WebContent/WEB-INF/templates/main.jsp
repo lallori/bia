@@ -127,6 +127,7 @@
             <div id="searchFormPointer"></div>
             <div id="advancedSearchPointer"></div>
             <div id="communityForumsPointer"></div>
+            <div id="communityForumsPointer_guest"></div>
 			<div id="top_top">
 <tiles:insertAttribute name="searchForm"/>
 <tiles:insertAttribute name="lastEntryMenu" />
