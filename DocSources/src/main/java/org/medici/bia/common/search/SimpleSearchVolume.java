@@ -137,7 +137,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 						jpaQuery.append(words[i].charAt(words[i].length() - 1));
 						jpaQuery.append("')");
 					}else{
-						jpaQuery.append("(ccondition like '%");
+						jpaQuery.append("((ccondition like '%");
 						jpaQuery.append(words[i] + "%') OR ");
 						jpaQuery.append("(ccontext like '%");
 						jpaQuery.append(words[i] + "%') OR ");
@@ -152,7 +152,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 						jpaQuery.append("(serieList.subTitle1 like '%");
 						jpaQuery.append(words[i] + "%') OR ");
 						jpaQuery.append("(serieList.subTitle2 like '%");
-						jpaQuery.append(words[i] + "%')");
+						jpaQuery.append(words[i] + "%'))");
 					}
 				}
 				if(i < (words.length - 1)){
