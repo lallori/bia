@@ -64,6 +64,9 @@ public class ApprovationUser implements Serializable {
 	private Date messageSendedDate;
 	@Column (name="\"approved\"", nullable=false)
 	private Boolean approved;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="\"approvedDate\"")
+	private Date approvedDate;
 	@Column (name="\"mailSended\"", nullable=false)
 	private Boolean mailSended;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -169,5 +172,19 @@ public class ApprovationUser implements Serializable {
 	 */
 	public Date getMailSendedDate() {
 		return mailSendedDate;
+	}
+
+	/**
+	 * @param approvedDate the approvedDate to set
+	 */
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	/**
+	 * @return the approvedDate
+	 */
+	public Date getApprovedDate() {
+		return approvedDate;
 	}
 }

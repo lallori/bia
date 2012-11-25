@@ -174,6 +174,7 @@ public class AdminServiceImpl implements AdminService {
 				approvationUser.setMessageSended(Boolean.TRUE);
 				approvationUser.setMessageSendedDate(new Date());
 				approvationUser.setApproved(Boolean.TRUE);
+				approvationUser.setApprovedDate(new Date());
 			} else {
 				approvationUser.setMessageSended(Boolean.FALSE);
 				approvationUser.setMessageSendedDate(null);
@@ -268,6 +269,9 @@ public class AdminServiceImpl implements AdminService {
 					
 					if (approvationUser != null) {
 						approvationUser.setApproved(Boolean.TRUE);
+						approvationUser.setApprovedDate(new Date());
+						
+						getApprovationUserDAO().merge(approvationUser);
 					}
 				}
 			}
