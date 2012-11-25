@@ -5,6 +5,10 @@
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
 	<!-- Admin base Validator -->
+	<bean id="approveUserValidator" class="org.medici.bia.validator.admin.ApproveUserValidator">
+        <description>Approve User Validator.</description>
+	</bean>
+
 	<bean id="editRecaptchaPropertiesValidator" class="org.medici.bia.validator.admin.EditRecaptchaPropertiesValidator">
         <description>Edit Recaptcha Properties Validator.</description>
 	</bean>

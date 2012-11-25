@@ -627,4 +627,5 @@ public class UserDAOLdapImpl implements UserDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+
 }

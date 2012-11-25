@@ -54,8 +54,6 @@ public class ApprovationUser implements Serializable {
 	private static final long serialVersionUID = -2084201619215125604L;
 
 	@Id
-	@Column (name="\"UUID\"", length=50, nullable=false)
-	private String uuid;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"account\"", nullable=true)
 	private User user;
@@ -64,15 +62,22 @@ public class ApprovationUser implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="\"messageSendedDate\"")
 	private Date messageSendedDate;
-
+	@Column (name="\"approved\"", nullable=false)
+	private Boolean approved;
+	@Column (name="\"mailSended\"", nullable=false)
+	private Boolean mailSended;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="\"mailSendedDate\"")
+	private Date mailSendedDate;
+	
 	/**
 	 * 
 	 * @param string
 	 */
-	public ApprovationUser(String uuid) {
+	public ApprovationUser(User user) {
 		super();
 		
-		setUuid(uuid);
+		setUser(user);
 	}
 
 	/**
@@ -80,20 +85,6 @@ public class ApprovationUser implements Serializable {
 	 */
 	public ApprovationUser() {
 		super();
-	}
-
-	/**
-	 * @return the uuid
-	 */
-	public String getUuid() {
-		return uuid;
-	}
-
-	/**
-	 * @param uuid the uuid to set
-	 */
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
 	}
 
 	/**
@@ -136,5 +127,47 @@ public class ApprovationUser implements Serializable {
 	 */
 	public void setMessageSendedDate(Date messageSendedDate) {
 		this.messageSendedDate = messageSendedDate;
+	}
+
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
+
+	/**
+	 * @return the approved
+	 */
+	public Boolean getApproved() {
+		return approved;
+	}
+
+	/**
+	 * @param mailSended the mailSended to set
+	 */
+	public void setMailSended(Boolean mailSended) {
+		this.mailSended = mailSended;
+	}
+
+	/**
+	 * @return the mailSended
+	 */
+	public Boolean getMailSended() {
+		return mailSended;
+	}
+
+	/**
+	 * @param mailSendedDate the mailSendedDate to set
+	 */
+	public void setMailSendedDate(Date mailSendedDate) {
+		this.mailSendedDate = mailSendedDate;
+	}
+
+	/**
+	 * @return the mailSendedDate
+	 */
+	public Date getMailSendedDate() {
+		return mailSendedDate;
 	}
 }

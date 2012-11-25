@@ -651,6 +651,9 @@ INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.sm
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.smtp.starttls.enable', 'Enable smtp starttls', 'true');
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('mail.transport.protocol', 'Mail Transport protocol', 'smtp');
 
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('message.approvationUser.text', '', 'This user needs to be approved:\r\n\r\n${0}\r\n\r\nName: ${1} ${2} ${3}\r\nOrganization: ${4}\r\nEmail: ${5}\r\n\r\n<a href="${6}://${7}/${8}user/ShowUser.do?account=${0}" class="lnkLeft">Show User ${0}</a>');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('message.approvationUser.subject', '', 'User ${0} to be approved');
+
 INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('path.tmpdir', '', '/data/');
 
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.person.path', '', '/data/portrait/person');

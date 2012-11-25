@@ -28,6 +28,10 @@
 			<div class="value">${user.firstName}</div>
 		</div>
 		<div class="row">
+			<div class="item37">Middle Name</div>
+			<div class="value">${user.middleName}</div>
+		</div>
+		<div class="row">
 			<div class="item37">Last Name</div>
             <div class="value">${user.lastName}</div>
 		</div>

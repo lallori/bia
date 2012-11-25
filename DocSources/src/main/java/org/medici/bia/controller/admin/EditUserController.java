@@ -114,6 +114,7 @@ public class EditUserController {
 				if(user != null){
 					command.setAccount(user.getAccount());
 					command.setFirstName(user.getFirstName());
+					command.setMiddleName(user.getMiddleName());
 					command.setLastName(user.getLastName());
 					command.setPassword(user.getPassword());
 					Iterator<UserRole> iterator = user.getUserRoles().iterator();
@@ -195,8 +196,8 @@ public class EditUserController {
 				user.setPassword(command.getPassword());
 			}
 			user.setFirstName(command.getFirstName());
+			user.setMiddleName(command.getMiddleName());
 			user.setLastName(command.getLastName());
-			user.setInitials(command.getFirstName().charAt(0) + "" + command.getLastName().charAt(0));
 			List<String> inputRoles = command.getUserRoles();
 			Set<UserRole> userRole = new HashSet<UserRole>();
 			

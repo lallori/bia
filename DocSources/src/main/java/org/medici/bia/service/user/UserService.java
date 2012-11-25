@@ -174,15 +174,6 @@ public interface UserService {
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable;
 
 	/**
-	 * This method searchs for user to be activated. The condition is composed
-	 * of "active" flag equals false and "mail sended" flag equals false.
-	 *
-	 * @return The {@link java.util.List} of users that needs to be activated 
-	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
-	 */
-	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
-
-	/**
 	 * This method returns a list of country object which match description
 	 * field with inpurt parameter description. 
 	 * 

@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.approvationuser;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -65,7 +66,46 @@ public class ApprovationUserDAOJpaImpl extends JpaDao<String, ApprovationUser> i
 	private static final long serialVersionUID = 5529128433028462384L;
 
 	/**
-	 * 
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ApprovationUser findByAccount(String account) throws PersistenceException {
+		String jpql = "FROM ApprovationUser WHERE user.account=:account";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("account", Boolean.TRUE);
+
+		List<ApprovationUser> result = query.getResultList();
+		
+		if (result.size() ==1) {
+			return result.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ApprovationUser> searchUsersApprovedNotMailed() throws PersistenceException {
+		String jpql = "FROM ApprovationUser WHERE approved=:approved AND mailSended=:mailSended";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("approved", Boolean.TRUE);
+		query.setParameter("mailSended", Boolean.FALSE);
+
+		List<ApprovationUser> result = query.getResultList();
+		
+		if (result.size() ==0) {
+			return new ArrayList<ApprovationUser>(0);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ApprovationUser> searchUsersToApprove() throws PersistenceException {

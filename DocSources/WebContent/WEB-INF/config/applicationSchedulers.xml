@@ -47,6 +47,8 @@
 
 	<bean id="approvationUserMessageJob" class="org.medici.bia.scheduler.ApprovationUserMessageJob"/>
 
+	<bean id="approvedUserMailJob" class="org.medici.bia.scheduler.ApprovedUserMailJob"/>
+
 	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
 
 	<bean id="checkDigitizedVolumeJob" class="org.medici.bia.scheduler.CheckDigitizedVolumeJob"/>

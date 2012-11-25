@@ -164,8 +164,7 @@ public class UserServiceImpl implements UserService {
 			activationUser.setActivationIPAddress(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRemoteAddr());
 			getActivationUserDAO().merge(activationUser);
 			
-			ApprovationUser approvationUser = new ApprovationUser(UUID.randomUUID().toString());
-			approvationUser.setUser(user);
+			ApprovationUser approvationUser = new ApprovationUser(user);
 			approvationUser.setMessageSended(Boolean.FALSE);
 			getApprovationUserDAO().persist(approvationUser);
 		} catch (Throwable th) {
@@ -391,21 +390,6 @@ public class UserServiceImpl implements UserService {
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable {
 		try {
 			return getActivationUserDAO().find(uuid.toString());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable {
-		try {
-			ActivationUser activationUser = new ActivationUser();
-			activationUser.setActive(Boolean.FALSE);
-			activationUser.setMailSended(Boolean.FALSE);
-			return getActivationUserDAO().searchUsersToActivate(activationUser);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -44,6 +44,7 @@ import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
+import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.month.MonthDAO;
@@ -52,6 +53,7 @@ import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.AccessLog;
+import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
@@ -64,6 +66,8 @@ import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +87,9 @@ public class AdminServiceImpl implements AdminService {
 	private AccessLogStatisticsDAO accessLogStatisticsDAO;
 
 	@Autowired
+	private ActivationUserDAO activationUserDAO;
+
+	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
 
 	@Autowired
@@ -99,13 +106,17 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
+
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
+	
 	@Autowired
 	private UserMessageDAO userMessageDAO;
+	
 	@Autowired
 	private UserRoleDAO userRoleDAO;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -115,17 +126,30 @@ public class AdminServiceImpl implements AdminService {
 		try{
 			User userToCreate = user;
 			userToCreate.setInitials(generateInitials(userToCreate));
-			userToCreate.setAddress("");
-			userToCreate.setCity("");
-			userToCreate.setCountry("");
-			userToCreate.setMail("");
-			userToCreate.setOrganization("");
-
+			if (userToCreate.getAddress() == null) {
+				userToCreate.setAddress("");
+			}
+			if (userToCreate.getCity() == null) {
+				userToCreate.setCity("");
+			}
+			if (userToCreate.getCountry() == null) {
+				userToCreate.setCountry("");
+			}
+			if (userToCreate.getMail() == null) {
+				userToCreate.setMail("");
+			}
+			if (userToCreate.getOrganization() == null) {
+				userToCreate.setOrganization("");
+			}
 			userToCreate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
 			userToCreate.setBadLogin(new Integer(0));
 			userToCreate.setForumNumberOfPost(new Long(0));
 			userToCreate.setMailHide(false);
 			userToCreate.setMailNotification(false);
+			if (userToCreate.getApproved()) {
+				User approvedBy = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				userToCreate.setApprovedBy(approvedBy);
+			}
 
 			userToCreate.setRegistrationDate(new Date());
 			if (user.getActive()){ 
@@ -145,7 +169,39 @@ public class AdminServiceImpl implements AdminService {
 
 			userToCreate.setUserRoles(user.getUserRoles());
 			
+			ApprovationUser approvationUser = new ApprovationUser(user);
+			if (user.getActive()) {
+				approvationUser.setMessageSended(Boolean.TRUE);
+				approvationUser.setMessageSendedDate(new Date());
+				approvationUser.setApproved(Boolean.TRUE);
+			} else {
+				approvationUser.setMessageSended(Boolean.FALSE);
+				approvationUser.setMessageSendedDate(null);
+				approvationUser.setApproved(Boolean.FALSE);
+			}
+			approvationUser.setMailSended(Boolean.FALSE);
+			approvationUser.setMailSended(Boolean.FALSE);
+			getApprovationUserDAO().persist(approvationUser);
+
 			return userToCreate;
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User approveUser(User user) throws ApplicationThrowable {
+		try{
+			User userToUpdate = getUserDAO().findUser(user.getAccount());
+			userToUpdate.setApproved(user.getApproved());
+			getUserDAO().merge(userToUpdate);
+			
+			// TODO; Here we insert code to send mail to user...
+			
+			return userToUpdate;
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -193,7 +249,8 @@ public class AdminServiceImpl implements AdminService {
 			}
 
 			userToUpdate.setFirstName(user.getFirstName());
-			userToUpdate.setInitials(user.getInitials());
+			userToUpdate.setMiddleName(user.getMiddleName());
+			userToUpdate.setInitials(generateInitials(user));
 			userToUpdate.setInterests(user.getInterests());
 			userToUpdate.setLastName(user.getLastName());
 			
@@ -202,6 +259,17 @@ public class AdminServiceImpl implements AdminService {
 			userToUpdate.setActive(user.getActive());
 			if (!userToUpdate.getApproved().equals(user.getApproved())) {
 				userToUpdate.setApproved(user.getApproved());
+
+				if (userToUpdate.getApproved()) {
+					User approvedBy = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+					userToUpdate.setApprovedBy(approvedBy);
+					
+					ApprovationUser approvationUser = getApprovationUserDAO().findByAccount(userToUpdate.getAccount());
+					
+					if (approvationUser != null) {
+						approvationUser.setApproved(Boolean.TRUE);
+					}
+				}
 			}
 			userToUpdate.setLocked(user.getLocked());
 						
@@ -258,6 +326,20 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable {
+		try {
+			ActivationUser activationUser = new ActivationUser();
+			activationUser.setActive(Boolean.FALSE);
+			activationUser.setMailSended(Boolean.FALSE);
+			return getActivationUserDAO().searchUsersToActivate(activationUser);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -305,6 +387,18 @@ public class AdminServiceImpl implements AdminService {
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ApprovationUser> findUsersApprovedNotMailed() throws ApplicationThrowable {
+		try {
+			return getApprovationUserDAO().searchUsersApprovedNotMailed();
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -493,13 +587,20 @@ public class AdminServiceImpl implements AdminService {
 						userMessage.setUser(currentAdministator);
 						userMessage.setParentMessage(null);
 						userMessage.setReadedDate(null);
-						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject"));
+						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject",
+												new String[]{
+												currentApprovationUser.getUser().getAccount()},"{", "}"));
 						userMessage.setBody(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.text",
 											new String[]{
-												currentAdministator.getFirstName(), 
-												currentApprovationUser.getUser().getAccount(),
-												currentApprovationUser.getUser().getFirstName(), 
-												currentApprovationUser.getUser().getLastName()},
+												currentApprovationUser.getUser().getAccount(), 
+												currentApprovationUser.getUser().getFirstName(),
+												currentApprovationUser.getUser().getMiddleName(),
+												currentApprovationUser.getUser().getLastName(), 
+												currentApprovationUser.getUser().getOrganization(),
+												currentApprovationUser.getUser().getMail(), 
+												ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+												ApplicationPropertyManager.getApplicationProperty("website.domain")
+											},
 											"{", "}"));
 	
 						getUserMessageDAO().persist(userMessage);
@@ -530,6 +631,20 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public void setAccessLogStatisticsDAO(AccessLogStatisticsDAO accessLogStatisticsDAO) {
 		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
+	}
+
+	/**
+	 * @param activationUserDAO the activationUserDAO to set
+	 */
+	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
+		this.activationUserDAO = activationUserDAO;
+	}
+
+	/**
+	 * @return the activationUserDAO
+	 */
+	public ActivationUserDAO getActivationUserDAO() {
+		return activationUserDAO;
 	}
 
 	/**
@@ -569,24 +684,24 @@ public class AdminServiceImpl implements AdminService {
 	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
 		this.userAuthorityDAO = userAuthorityDAO;
 	}
-
 	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
+	
 	/**
 	 * @param userMessageDAO the userMessageDAO to set
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
 	}
-
+	
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

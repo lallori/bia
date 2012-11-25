@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.user;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -525,4 +526,5 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+
 }

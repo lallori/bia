@@ -36,7 +36,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -64,6 +66,9 @@ public class User implements Serializable {
 	private String address;
 	@Column (name="\"approved\"", nullable=false, columnDefinition="BIT default 0")
 	private Boolean approved;
+	@ManyToOne
+	@JoinColumn(name="\"approvedBy\"")
+	private User approvedBy;
 	@Column (name="\"badLogin\"", nullable=false, columnDefinition="INT default '0'")
 	private Integer badLogin;
 	@Column (name="\"city\"", length=50, nullable=true)
@@ -111,6 +116,8 @@ public class User implements Serializable {
 	private Boolean mailHide;
 	@Column (name="\"mailNotification\"", nullable=false, columnDefinition="BIT default 0")
 	private Boolean mailNotification;
+	@Column (name="\"middleName\"", length=20, nullable=false)
+	private String middleName;
 	@Column (name="\"organization\"", length=50, nullable=false)
 	private String organization;
 	@Column (name="\"password\"", length=64, nullable=false)
@@ -177,6 +184,20 @@ public class User implements Serializable {
 	 */
 	public Boolean getApproved() {
 		return approved;
+	}
+
+	/**
+	 * @param approvedBy the approvedBy to set
+	 */
+	public void setApprovedBy(User approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	/**
+	 * @return the approvedBy
+	 */
+	public User getApprovedBy() {
+		return approvedBy;
 	}
 
 	/**
@@ -507,10 +528,18 @@ public class User implements Serializable {
 		this.lastLoginDate = lastLoginDate;
 	}
 
+	/**
+	 * 
+	 * @param lastLogoutDate
+	 */
 	public void setLastLogoutDate(Date lastLogoutDate) {
 		this.lastLogoutDate = lastLogoutDate;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Date getLastLogoutDate() {
 		return lastLogoutDate;
 	}
@@ -559,6 +588,20 @@ public class User implements Serializable {
 
 	public Boolean getMailNotification() {
 		return mailNotification;
+	}
+
+	/**
+	 * @param middleName the middleName to set
+	 */
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	/**
+	 * @return the middleName
+	 */
+	public String getMiddleName() {
+		return middleName;
 	}
 
 	/**

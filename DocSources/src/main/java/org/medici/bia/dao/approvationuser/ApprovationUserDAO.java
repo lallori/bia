@@ -42,6 +42,21 @@ import org.medici.bia.domain.ApprovationUser;
 public interface ApprovationUserDAO extends Dao<String, ApprovationUser> {
 
 	/**
+	 * 
+	 * @param account
+	 * @return
+	 * @throws PersistenceException
+	 */
+	ApprovationUser findByAccount(String account) throws PersistenceException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<ApprovationUser> searchUsersApprovedNotMailed() throws PersistenceException;
+
+	/**
 	 * This method searches users that need to be approved
 	 * 
 	 * @param activationUser

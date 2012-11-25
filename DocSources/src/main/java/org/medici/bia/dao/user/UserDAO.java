@@ -168,4 +168,5 @@ public interface UserDAO extends Serializable {
 	 * @param user a {@link java.util.List} object
 	 */
 	void removeUserRoles(String account, List<UserRole> userRoles);
+
 }

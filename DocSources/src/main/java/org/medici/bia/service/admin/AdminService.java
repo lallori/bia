@@ -35,6 +35,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.domain.AccessLog;
+import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.User;
@@ -58,6 +59,14 @@ public interface AdminService {
 	
 	/**
 	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	User approveUser(User user) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param currentDate
 	 * @throws ApplicationThrowable
 	 */
@@ -70,14 +79,14 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User editUser(User user) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param user
 	 * @throws ApplicationThrowable
 	 */
 	User editUserMail(User user) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param idAccessLog
@@ -85,6 +94,16 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	AccessLog findAccessLog(Integer idAccessLog) throws ApplicationThrowable;
+
+
+	/**
+	 * This method searchs for user to be activated. The condition is composed
+	 * of "active" flag equals false and "mail sended" flag equals false.
+	 *
+	 * @return The {@link java.util.List} of users that needs to be activated 
+	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -117,6 +136,13 @@ public interface AdminService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<ApprovationUser> findUsersApprovedNotMailed() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -164,5 +190,4 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable;
-
 }

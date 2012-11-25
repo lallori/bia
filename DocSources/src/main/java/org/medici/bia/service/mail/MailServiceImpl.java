@@ -30,10 +30,14 @@ package org.medici.bia.service.mail;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
+import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.domain.ActivationUser;
+import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +64,19 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
 	@Autowired
+	private ApprovationUserDAO approvationUserDAO;
+	@Autowired
 	private JavaMailSender javaMailSender; 
 	@Autowired
-	private PasswordChangeRequestDAO passwordChangeRequestDAO;
+	private String mailFrom;
 	@Autowired
 	@Qualifier("messageSource")
 	private MessageSource messageSource;
 	@Autowired
-	private String mailFrom; 
+	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	/**
 	 * @return the activationUserDAO
 	 */
@@ -127,14 +135,46 @@ public class MailServiceImpl implements MailService {
 			activationUser.setMailSendedDate(new Date());
 			getActivationUserDAO().merge(activationUser);
 			return Boolean.TRUE;
-		} catch (Throwable th) {
-			th.printStackTrace();
+		} catch (Throwable throwable) {
+			logger.error(throwable);
 			return Boolean.FALSE;
 		}
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean sendApprovedMail(ApprovationUser approvationUser) {
+		try {
+			if (!StringUtils.isBlank(approvationUser.getUser().getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(approvationUser.getUser().getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.approvedUser.subject"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.approvedUser.text", 
+								new String[]{approvationUser.getUser().getFirstName(),
+											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+											 ApplicationPropertyManager.getApplicationProperty("website.domain"),
+											 ApplicationPropertyManager.getApplicationProperty("website.contextPath"),
+											 approvationUser.getUser().getAccount()},
+											 "{", "}"));
+				getJavaMailSender().send(message);
+	
+				approvationUser.setMailSended(Boolean.TRUE);
+				approvationUser.setMailSendedDate(new Date());
+				getApprovationUserDAO().merge(approvationUser);
+			}
+			return Boolean.TRUE;
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
@@ -156,8 +196,8 @@ public class MailServiceImpl implements MailService {
 			passwordChangeRequest.setMailSendedDate(new Date());
 			getPasswordChangeRequestDAO().merge(passwordChangeRequest);
 			return Boolean.TRUE;
-		} catch (Throwable th) {
-			th.printStackTrace();
+		} catch (Throwable throwable) {
+			logger.error(throwable);
 			return Boolean.FALSE;
 		}
 	}
@@ -198,5 +238,19 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
+	}
+
+	/**
+	 * @param approvationUserDAO the approvationUserDAO to set
+	 */
+	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
+		this.approvationUserDAO = approvationUserDAO;
+	}
+
+	/**
+	 * @return the approvationUserDAO
+	 */
+	public ApprovationUserDAO getApprovationUserDAO() {
+		return approvationUserDAO;
 	}
 }
