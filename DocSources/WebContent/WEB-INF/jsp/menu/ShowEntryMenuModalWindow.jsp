@@ -38,7 +38,7 @@
 					return false;
 				});
 				$j("#AddNewPlace").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 750, height: 450});
+					Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 780, height: 480});
 					return false;
 				});
 
