@@ -9,7 +9,7 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1>This person has no forum linked. Do you want to create a forum record?</h1>
+		<h1>This person record is not linked to a forum discussion. Do you want to create a new forum discussion?</h1>
 		
 		<a id="yes" href="${ShowConfirmCreatePersonForumURL}" class="button_small">YES</a>
 	
