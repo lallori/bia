@@ -6,7 +6,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div class="welcome_list">
-    <h3>Welcome ${user.firstName}!</h3>
+    <h2><i>the</i> MEDICI ARCHIVE PROJECT SCHOLARY COMMUNITY</h2>
     <p>Please use the <span class="simpleSearch">Simple Search</span> tool to perform your search or the <span class="advancedSearch">Advanced Search</span> tool if you are an experienced user.</p>
     <p>To access the Scholarly Discussions just click on the <span class="communityForums">Community Forums</span> button.</p>
 </div>

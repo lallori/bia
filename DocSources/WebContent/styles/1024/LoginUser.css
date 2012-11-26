@@ -144,6 +144,15 @@ input.submit {
 	position:absolute;
 }
 
+#baseOn {
+    position: absolute;
+    margin: 500px 0 0 585px;
+}
+
+#baseOn img{
+    vertical-align:middle;
+}
+
 #register {
 	background-image:url(/DocSources/images/1024/button_guest.jpg);
 	width:228px;

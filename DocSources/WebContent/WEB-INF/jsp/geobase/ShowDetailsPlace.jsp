@@ -60,20 +60,7 @@
 			<div id="geoDiv">
 			<c:if test="${place.placeAllId != 0}">
 				<div id="geoTitle">
-					<div id="placeImageDiv">
-						<c:if test="${linkGoogleMaps != null}">
-							<a href="${linkGoogleMaps}" target="_blank" title="Show on Google Maps"><img src="<c:url value="/images/1024/img_googleMap.jpg"/>" alt="Place" class="shadow"></a>
-						</c:if>
-						<c:if test="${linkGoogleMaps == null }">
-							<span>Not attached to Google Maps</span>
-							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-							<c:if test="${place.prefFlag == 'P'}">
-								<a class="PlaceMap" href="${EditGeographicCoordinatesPlaceURL}">Assign Geo Coordinates</a>
-							</c:if>
-							</security:authorize>	
-						</c:if>
-					</div>
-					<div id="text">
+				<div id="text">
         				<h3>${place.placeName}</h3>
 						<h4>${place.parentPlace.placeNameFull}</h4>
 						<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
@@ -147,6 +134,20 @@
 							</div>
 						</c:if>
 					</div>
+					<div id="placeImageDiv">
+						<c:if test="${linkGoogleMaps != null}">
+							<a href="${linkGoogleMaps}" target="_blank" title="Show on Google Maps"><img src="<c:url value="/images/1024/img_googleMap.jpg"/>" alt="Place" class="shadow"></a>
+						</c:if>
+						<c:if test="${linkGoogleMaps == null }">
+							<span>Not attached to Google Maps</span>
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							<c:if test="${place.prefFlag == 'P'}">
+								<a class="PlaceMap" href="${EditGeographicCoordinatesPlaceURL}">Assign Geo Coordinates</a>
+							</c:if>
+							</security:authorize>	
+						</c:if>
+					</div>
+					
 				</div>
 			</c:if>
 		

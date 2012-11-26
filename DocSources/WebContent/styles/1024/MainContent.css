@@ -1368,10 +1368,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
-#EditDetailsVolumeDiv {
-	min-height: 220px;!important
-}
-
 #CreateNewPersonRecordForm, #CreateNewTitlesOccupationsForm {
 	padding:7px 5px 5px 5px;
 }
@@ -2032,6 +2028,17 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /*
 /* ---------------- Volume Explorer ---------------- */
+
+#ShowVolumeExplorerDiv #baseOn {
+    position: absolute;
+    margin: 0 0 0 405px;
+}
+ 
+
+#ShowVolumeExplorerDiv #baseOn img{
+    vertical-align:middle;
+}
+
 /*
 /* -------- iFrame -------- */
 

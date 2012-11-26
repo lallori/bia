@@ -25,7 +25,7 @@ body {
 	margin:0 !important; 
 	padding:0 !important; 
 	font-size: 12px;
-	color:#6F6B69;
+	color: #6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -159,7 +159,7 @@ a {
 	padding-left: 4px; 
 }
 
-#searchFormPointer, #advancedSearchPointer, #communityForumsPointer, #communityForumsPointer_guest { /* Search Form Container Pointer  */
+#searchFormPointer, #advancedSearchPointer, #communityForumsPointer { /* Search Form Container Pointer  */
 	display:none;
 	position:absolute;
 	border-radius:4px;
@@ -185,12 +185,6 @@ a {
 	width: 178px; 
 	height: 59px;
 	margin: 97px 0 0 525px;
-}
-
-#communityForumsPointer_guest{ /* Community Forums Button Pointer for guests and Community users  */
-	width: 178px; 
-	height: 59px;
-	margin: 97px 0 0 395px;
 }
 
 .input_search { /* Input Text class */
@@ -454,13 +448,22 @@ a {
 
 .welcome_list p{
 	width:400px;
-	margin-left:50px
+	margin-left:50px;
+	margin-top: 34px;
+	font-size: 13px;
 }
 
 .welcome_list p span.simpleSearch, .welcome_list p span.advancedSearch, .welcome_list p span.communityForums{
 	font-weight:bold;
 	cursor:pointer;
+	text-decoration: underline;
 }
+
+.welcome_list h2{
+     font-size:14px;
+     padding-left: 10px;
+     color: #6F6B69;
+} 
 
 .welcome_list h1{
      font-size:12px;
