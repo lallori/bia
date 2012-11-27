@@ -185,6 +185,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
 	</definition>
 	
+	<definition name="user/ShowUploadPortraitUserModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/ShowUploadPortraitUserModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="user/WelcomeNewUser" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/user/WelcomeNewUser.jsp" />
 	</definition>
@@ -297,6 +301,10 @@
 	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
     </definition>
+    
+    <definition name="user/CropPortraitUserModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/CropPortraitUserModalWindow.jsp"/>
+	</definition>
 
     <definition name="user/EditPersonalNotesUser" extends="template.partialDOM">
     	<put-attribute name="main" value="/WEB-INF/jsp/user/EditPersonalNotesUser.jsp"></put-attribute>
@@ -445,6 +453,10 @@
 	</definition>
 
 	<definition name="community/ShowUserProfileForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
+	</definition>
+	
+	<definition name="community/ShowUserProfileForumCompleteDOM" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
 	</definition>
 

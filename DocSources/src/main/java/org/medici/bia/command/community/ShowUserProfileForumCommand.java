@@ -36,6 +36,7 @@ package org.medici.bia.command.community;
 public class ShowUserProfileForumCommand {
 	
 	private String account;
+	private Boolean completeDOM;
 
 	/**
 	 * @return the account
@@ -49,5 +50,19 @@ public class ShowUserProfileForumCommand {
 	 */
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	/**
+	 * @return the completeDOM
+	 */
+	public Boolean getCompleteDOM() {
+		return completeDOM;
+	}
+
+	/**
+	 * @param completeDOM the completeDOM to set
+	 */
+	public void setCompleteDOM(Boolean completeDOM) {
+		this.completeDOM = completeDOM;
 	}
 }

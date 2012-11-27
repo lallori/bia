@@ -33,6 +33,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowUserProfileForumCommand;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.domain.User;
@@ -98,7 +99,11 @@ public class ShowUserProfileForumController {
 			return new ModelAndView("error/ShowUserProfileForum", model);
 		}
 
-		return new ModelAndView("community/ShowUserProfileForum", model);
+		if(command.getCompleteDOM() != null && ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())){
+			return new ModelAndView("community/ShowUserProfileForumCompleteDOM", model);
+		}else{
+			return new ModelAndView("community/ShowUserProfileForum", model);
+		}
 	}
 
 	/**
