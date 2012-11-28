@@ -205,7 +205,7 @@
 	</div>
 	
 	
-	<a id="volumeSummary" href="#" onClick="$j('#volumeSummaryWindow').dialog('open');" title="Volume Summary"></a>
+	<a id="volumeSummary" href="#" title="Volume Summary"></a>
     
     <c:if test="${command.totalRubricario > 0}">
         <a id="indexNames" href="${indexOfNamesURL}" title="Index of Names" style="cursor: pointer;"></a>

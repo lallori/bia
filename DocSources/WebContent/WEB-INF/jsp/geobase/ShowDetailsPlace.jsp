@@ -79,56 +79,61 @@
 						<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
 						<p style="margin:20px 0 5px 10px">To compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 						</c:if>
-						<div id="linked">
-							<p>Linked to this place entry:</p>
-							<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
-								<a id="linkSearch" class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a>
-							</c:if>
-							<c:if test="${topicsPlace == 1}">
-								<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a>
-							</c:if>
-							<c:if test="${docInTopics == 1 && topicsPlace != 1}">
-								<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a>
-							</c:if>
-							<c:if test="${topicsPlace == 0 || topicsPlace == null}">
-								0 Documents on 0 Topics
-							</c:if>
-							<hr />
-							<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-								<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
-							</c:if>
-							<c:if test="${senderPlace == 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-								<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
-							</c:if>
-							<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace == 1}">
-								<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
-							</c:if>
-							<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-								0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
-							</c:if>
-							<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace == 1}">
-								0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
-							</c:if>
-							<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && (recipientPlace == 0 || recipientPlace == null)}">
-								<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and 0 Recipient
-							</c:if>
-							<c:if test="${senderPlace == 1 && (recipientPlace == 0 || recipientPlace == null)}">
-								<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and 0 Recipient
-							</c:if>
-							<c:if test="${(senderPlace == 0 || senderPlace == null) && (recipientPlace == 0 || recipientPlace == null)}">
-								0 Sender and 0 Recipient
-							</c:if>
-							<hr />
-							<c:if test="${birthPlace != 0}"><a class="birth placeText_left" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Births</a></c:if><c:if test="${birthPlace == 0}">0 Births</c:if> and <c:if test="${activeStartPlace != 0}"><a class="activeStart placeText" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Starts</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if>
-							<br />
-							<c:if test="${deathPlace != 0}"><a class="death placeText_left" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Deaths</a></c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if> and <c:if test="${activeEndPlace != 0}"><a class="activeEnd placeText" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active Ends</a></c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if>
-						</div>							
+						<c:if test="${place.prefFlag != 'V'}">
+							<div id="linked">
+								<p>Linked to this place entry:</p>
+								<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
+									<a id="linkSearch" class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a>
+								</c:if>
+								<c:if test="${topicsPlace == 1}">
+									<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a>
+								</c:if>
+								<c:if test="${docInTopics == 1 && topicsPlace != 1}">
+									<a class="topics placeText_left" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a>
+								</c:if>
+								<c:if test="${topicsPlace == 0 || topicsPlace == null}">
+									0 Documents on 0 Topics
+								</c:if>
+								<hr />
+								<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+									<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+								</c:if>
+								<c:if test="${senderPlace == 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+									<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+								</c:if>
+								<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace == 1}">
+									<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
+								</c:if>
+								<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+									0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a>
+								</c:if>
+								<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace == 1}">
+									0 Senders and <a id="linkSearch" class="recipient placeText" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a>
+								</c:if>
+								<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && (recipientPlace == 0 || recipientPlace == null)}">
+									<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a> and 0 Recipient
+								</c:if>
+								<c:if test="${senderPlace == 1 && (recipientPlace == 0 || recipientPlace == null)}">
+									<a class="sender placeText_left" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a> and 0 Recipient
+								</c:if>
+								<c:if test="${(senderPlace == 0 || senderPlace == null) && (recipientPlace == 0 || recipientPlace == null)}">
+									0 Sender and 0 Recipient
+								</c:if>
+								<hr />
+								<c:if test="${birthPlace != 0}"><a class="birth placeText_left" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Births</a></c:if><c:if test="${birthPlace == 0}">0 Births</c:if> and <c:if test="${activeStartPlace != 0}"><a class="activeStart placeText" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Starts</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if>
+								<br />
+								<c:if test="${deathPlace != 0}"><a class="death placeText_left" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Deaths</a></c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if> and <c:if test="${activeEndPlace != 0}"><a class="activeEnd placeText" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active Ends</a></c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if>
+							</div>	
+						</c:if>						
 						<c:if test="${place.prefFlag == 'V'}">
 							<br />
 							<div style="margin-left:8px">
 									<c:forEach items="${placeNames}" var="currentName">
 										<c:if test="${currentName.prefFlag == 'P'}">
-											<p style="margin:0"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+											<c:url var="ShowPrincipalPlaceURL" value="/src/geobase/ShowPlace.do">
+												<c:param name="placeAllId"	value="${currentName.placeAllId}"/>
+											</c:url>
+											<p style="margin:0"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click here to visualize <a class="linkPlace" href="${ShowPrincipalPlaceURL}">${currentName.placeName}</a> and all the values and fields connected to it.</font></p>
 										</c:if>
 									</c:forEach>
 							</div>

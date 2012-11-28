@@ -1903,7 +1903,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-
 	}
 
 	/**
