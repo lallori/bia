@@ -207,7 +207,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Integer findNumberOfDocumentsRelatedVolume(Integer summaryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE summaryId =:summaryId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE summaryId =:summaryId and logicalDelete = false");
 		query.setParameter("summaryId", summaryId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -219,7 +219,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Integer findNumberOfRecipientDocumentsPerson(Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPeople.personId =:personId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPeople.personId =:personId and logicalDelete = false");
 		query.setParameter("personId", personId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -231,7 +231,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId and logicalDelete = false");
 		query.setParameter("placeAllId", placeAllId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -243,7 +243,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Integer findNumberOfSenderDocumentsPerson(Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPeople.personId =:personId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPeople.personId =:personId and logicalDelete = false");
 		query.setParameter("personId", personId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -255,7 +255,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId and logicalDelete = false");
 		query.setParameter("placeAllId", placeAllId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -440,7 +440,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=" + personToSearch + ")");
+		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=" + personToSearch + ") AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -482,7 +482,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE volume.summaryId=" + volumeToSearch);
+		String toSearch = new String("FROM Document WHERE volume.summaryId=" + volumeToSearch + " AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -525,7 +525,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if (topicToSearch != null) {
 			toSearch += " AND topic.topicTitle LIKE '" + topicToSearch + "'";
 		}
-		toSearch+=")";
+		toSearch+=") AND logicalDelete=false";
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -566,7 +566,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE (recipientPeople.personId=" + personToSearch + ")");
+		String toSearch = new String("FROM Document WHERE recipientPeople.personId=" + personToSearch + " AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -607,7 +607,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE (recipientPlace.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM Document WHERE recipientPlace.placeAllId=" + placeToSearch + " AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -648,7 +648,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=" + personToSearch + " AND docRole is null)");
+		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=" + personToSearch + " AND docRole is null) AND logicalDelete=false ");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -689,7 +689,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE (senderPeople.personId=" + personToSearch + ")");
+		String toSearch = new String("FROM Document WHERE senderPeople.personId=" + personToSearch + " AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -730,7 +730,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE (senderPlace.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM Document WHERE senderPlace.placeAllId=" + placeToSearch + " AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
