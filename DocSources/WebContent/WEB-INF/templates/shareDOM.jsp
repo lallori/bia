@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-    	<title>the MEDICI ARCHIVE PROJECT - Print Document Report</title>
+    	<title>the MEDICI ARCHIVE PROJECT - Document Report</title>
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
@@ -13,6 +13,11 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css" />"/>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
+		
+		<script type="text/javascript">var switchTo5x=true;</script>
+		<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+		<script type="text/javascript">stLight.options({publisher: "01c07551-45ac-4943-9792-a10bb7dc089a"});</script>
+		
         <style type="text/css">
 			
 			@media print {

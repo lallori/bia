@@ -13,9 +13,9 @@
 	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
 	
 	<ul id="network">
-		<li><a id="googlePlus" href="#" title="Share it on Google+"></a></li>
-		<li><a id="twitter" href="#" title="Share it on Twitter"></a></li>
-           <li><a id="facebook" href="#" title="Share it on Facebook"></a></li>
+       <span class='st_facebook_large' displayText='Facebook'></span>
+       <span class='st_twitter_large' displayText='Tweet'></span>
+       <span class='st_googleplus_large' displayText='Google +'></span>
 	</ul>
 	
 	<div id="personDiv">
