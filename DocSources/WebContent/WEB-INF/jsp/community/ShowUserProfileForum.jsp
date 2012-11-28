@@ -20,6 +20,10 @@
 	<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
 </c:url>
 
+<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+	<c:param name="forumId" value="1"/>
+</c:url>
+
 <div id="profileTable">
 	<div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
     
@@ -137,6 +141,14 @@
 
 <script>
 	$j(document).ready(function() {
+		$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
+			$j("#chronologyDiv").html(json.chronology);
+			$j("#selectForum").append(json.selectChronology);
+			$j("#chronologyDiv .arrowForum").css('display','');
+			$j("#chronologyDiv .forum").css('display','');
+			return false;
+		}});
+		
 		$j("#userPost").click(function(){
 			$j("#main").load($j(this).attr('href'));
 			return false;

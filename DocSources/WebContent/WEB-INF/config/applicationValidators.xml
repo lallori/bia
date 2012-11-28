@@ -321,6 +321,10 @@
         <description>Change expirated user password validator.</description>
     </bean>
     
+    <bean id="deletePortraitUserValidator" class="org.medici.bia.validator.user.DeletePortraitUserValidator">
+    	<description>Delete portrait user validator.</description>
+    </bean>
+    
     <bean id="editPasswordUserValidator" class="org.medici.bia.validator.user.EditPasswordUserValidator">
         <description>Edit user password validator.</description>
     </bean>
@@ -359,6 +363,10 @@
 
 	<bean id="showAccessLogSearchValidator" class="org.medici.bia.validator.admin.ShowAccessLogSearchValidator">
 		<description>Access Log Validator</description>
+	</bean>
+	
+	<bean id="showUploadPortraitUserValidator" class="org.medici.bia.validator.user.ShowUploadPortraitUserValidator">
+        <description>Upload Portrait User Validator.</description>
 	</bean>
 
   	<bean id="showUserPhotoValidator" class="org.medici.bia.validator.user.ShowUserPhotoValidator">

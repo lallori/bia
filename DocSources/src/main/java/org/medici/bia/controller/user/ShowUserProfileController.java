@@ -46,6 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/user/ShowUserProfile")
@@ -78,7 +79,8 @@ public class ShowUserProfileController {
 			model.put("applicationThrowable", applicationThrowable);
 			user = new User();
 		}
-		model.put("userProfile", user);		
+		model.put("userProfile", user);	
+		model.put("time", System.currentTimeMillis());
 
 		return new ModelAndView("user/ShowUserProfile", model);
 	}

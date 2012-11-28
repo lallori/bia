@@ -42,6 +42,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
+
 /**
  * User entity.
  * 
@@ -125,6 +128,13 @@ public class User implements Serializable {
 	@Column (name="\"photo\"", nullable=true)
 	@Lob
 	private BufferedImage photo;
+	
+	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean portrait;
+	
+	@Column (name="\"portraitImageName\"", length=100)
+	private String portraitImageName;
 
 	@Column (name="\"registrationDate\"", nullable=false)
 	private Date registrationDate;
@@ -357,6 +367,20 @@ public class User implements Serializable {
 	 */
 	public BufferedImage getPhoto() {
 		return photo;
+	}
+	
+	/**
+	 * @return the portrait
+	 */
+	public Boolean getPortrait() {
+		return portrait;
+	}
+
+	/**
+	 * @return the portraitImageName
+	 */
+	public String getPortraitImageName() {
+		return portraitImageName;
 	}
 
 	/**
@@ -622,6 +646,20 @@ public class User implements Serializable {
 	 */
 	public void setPhoto(BufferedImage photo) {
 		this.photo = photo;
+	}
+	
+	/**
+	 * @param portrait the portrait to set
+	 */
+	public void setPortrait(Boolean portrait) {
+		this.portrait = portrait;
+	}
+
+	/**
+	 * @param portraitImageName the portraitImageName to set
+	 */
+	public void setPortraitImageName(String portraitImageName) {
+		this.portraitImageName = portraitImageName;
 	}
 
 	/**

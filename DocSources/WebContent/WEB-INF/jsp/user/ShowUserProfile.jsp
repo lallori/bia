@@ -10,15 +10,29 @@
 
 <c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 
+<c:url var="UploadPortraitWindowURL" value="/user/ShowUploadPortraitUser.do">
+	<c:param name="account"   value="${userProfile.account}" />
+</c:url>
+
 <div id="myProfile">
 	<div id="userProfile">
 		<h3>${userProfile.firstName} ${userProfile.lastName}</h3>
 		
 		<div id="bgImgUserProfile">
+			<c:if test="${userProfile.portrait}">
+				<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+					<c:param name="account" value="${userProfile.account}" />
+					<c:param name="time" value="${time}" />
+				</c:url>
+				<img src="${ShowPortraitUserURL}" width="111" height="145"/>
+			</c:if>
+			<c:if test="${!userProfile.portrait}">
 			<div id="imgUserProfile"></div>
+			</c:if>
 			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
 			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
+			<a id="UploadPortraitUser" href="${UploadPortraitWindowURL}">Upload Portrait</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>
 		</div>
 		
@@ -87,6 +101,28 @@
 					$j("#EditUserProfileDiv").load($j(this).attr("href"));
 					return false;
 				});
+				
+				var $uploadPortraitUserWindow = $j('<div id="uploadPortraitUserWindow" title="UPLOAD PORTRAIT" style="display:none"></div>')
+				.dialog({                                                                                                                                                                   
+					resizable: false,
+					width: 450,
+					height: 160, 
+					modal: true,
+					autoOpen : false,
+					zIndex: 3999,
+					open: function(event, ui) { 
+						$j(this).load($j("#UploadPortraitUser").attr('href'));
+					}
+				});                 
+		        
+		        $j('#UploadPortraitUser').click(function(){
+		        	Modalbox.hide();
+		        	$j("#uploadPortraitUserWindow").dialog("option", "width", 450);
+		 			$j("#uploadPortraitUserWindow").dialog("option", "height", 160);
+		 			
+					$j('#uploadPortraitUserWindow').dialog('open');
+					return false;
+				});			
 
 				$j("#EditTitleProfile").click(function(){$j("#EditTitleProfileDiv").load($j(this).attr("href"));return false;});
 				$j("#EditOrgProfile").click(function(){$j("#EditOrgProfileDiv").load($j(this).attr("href"));return false;});

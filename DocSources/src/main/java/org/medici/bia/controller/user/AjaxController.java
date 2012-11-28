@@ -27,6 +27,7 @@
  */
 package org.medici.bia.controller.user;
 
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,7 @@ import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Country;
+import org.medici.bia.domain.People;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Category;
@@ -86,6 +88,38 @@ public class AjaxController {
 		} catch (ApplicationThrowable aex) {
 			return Boolean.FALSE.toString();
 		}
+	}
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/user/GetPortraitUserInformation", method = RequestMethod.GET) 
+	public ModelAndView getPortraitUserInformation(@RequestParam(value="account") String account) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			User user = getUserService().findUser(account);
+			if (user != null) {
+				if (user.getPortrait()) {
+					BufferedImage bufferedImage = getUserService().getPortraitUser(user.getPortraitImageName());
+
+					model.put("portraitWidth", bufferedImage.getWidth());
+					model.put("portraitHeight", bufferedImage.getHeight());
+				} else {
+					model.put("portraitWidth", new Integer(0));
+					model.put("portraitHeight", new Integer(0));
+				}
+			} else {
+				model.put("portraitWidth", new Integer(0));
+				model.put("portraitHeight", new Integer(0));
+			}
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
 	}
 
 	/**

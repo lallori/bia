@@ -149,6 +149,14 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPasswordSuccess.jsp"/>
     </definition>
     
+    <definition name="response/DeletePortraitUserOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitUserOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePortraitUserKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitUserKO.jsp"/>
+	</definition>
+    
     <definition name="user/EditPasswordUser" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUser.jsp"/>
     </definition>

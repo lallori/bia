@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.medici.bia.common.image.UserPortrait;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.SearchFromLast;
@@ -101,6 +102,19 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean checkUserPassword(String inputPassword) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param account
+	 * @param x
+	 * @param y
+	 * @param x2
+	 * @param y2
+	 * @param width
+	 * @param height
+	 * @throws ApplicationThrowable
+	 */
+	public void cropPortraitUser(String account, Double x, Double y, Double x2, Double y2, Double width, Double height) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -289,6 +303,21 @@ public interface UserService {
 	
 	/**
 	 * 
+	 * @param portraitImageName
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public BufferedImage getPortraitUser(String portraitImageName) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public BufferedImage getPortraitUserDefault() throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
@@ -332,6 +361,13 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void registerUser(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param account
+	 * @throws ApplicationThrowable
+	 */
+	public void removePortraitUser(String account) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -360,6 +396,14 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param userPortrait
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public BufferedImage savePortaitUser(UserPortrait userPortrait) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -1,5 +1,5 @@
 /*
- * ShowUserProfileController.java
+ * ShowPortraitUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,72 +27,90 @@
  */
 package org.medici.bia.controller.user;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-import org.medici.bia.common.util.UserRoleUtils;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.medici.bia.command.user.ShowPortraitUserCommand;
 import org.medici.bia.domain.User;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to permit user update profile action.
- * It manages View and request's elaboration process.
+ * Controller for action "Show Portrait User".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/user/WelcomeNewUser")
-public class WelcomeNewUserController {
+@RequestMapping("/user/ShowPortraitUser")
+public class ShowPortraitUserController {
 	@Autowired
 	private UserService userService;
-	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
-	 * 
-	 * @return
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @return the userService
 	 */
 	public UserService getUserService() {
 		return userService;
 	}
 
-	/**
-	 * 
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		User user = null;
-		try {
-			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		} catch (ApplicationThrowable applicationThrowable) {
-			model.put("applicationThrowable", applicationThrowable);
-			user = new User();
-		}
-		model.put("user", user);
-		model.put("userGroup", UserRoleUtils.getMostSignificantRole(new ArrayList<UserRole>(user.getUserRoles())));
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 
-		return new ModelAndView("user/WelcomeNewUser", model);
+	public Logger getLogger() {
+		return logger;
 	}
 
 	/**
 	 * 
-	 * @param userService
+	 * 
+	 * @param volumeId
+	 * @return
 	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	@RequestMapping(method = RequestMethod.GET)
+	public void setupForm(@ModelAttribute("command") ShowPortraitUserCommand command, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+		User user = null;
+
+		if(command.getAccount() != null){
+			try {
+				user = getUserService().findUser(command.getAccount());
+				
+				if (user.getPortrait()) {
+					BufferedImage bufferedImage = getUserService().getPortraitUser(user.getPortraitImageName());
+				    httpServletResponse.setContentType("image/jpeg");
+					ImageIO.write(bufferedImage, "jpg", httpServletResponse.getOutputStream());
+
+					httpServletResponse.getOutputStream().flush();
+				} else {
+					BufferedImage bufferedImage = getUserService().getPortraitUserDefault();
+				    httpServletResponse.setContentType("image/jpeg");
+					ImageIO.write(bufferedImage, "jpg", httpServletResponse.getOutputStream());				
+				}
+			} catch (IOException ioException){
+				getLogger().error("error on reading image", ioException);
+				// need to return default image error
+			} catch (ApplicationThrowable applicationThrowable){
+				getLogger().error("error on reading image", applicationThrowable);
+			}
+		}
 	}
 }

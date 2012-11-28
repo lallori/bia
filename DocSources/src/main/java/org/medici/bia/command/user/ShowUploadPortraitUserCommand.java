@@ -1,7 +1,7 @@
 /*
- * EditUserProfileCommand.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowUploadPortraitUserCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -27,111 +27,62 @@
  */
 package org.medici.bia.command.user;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
- * Command bean for action "edit user profile".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
- * 
- * @see org.merdici.docsources.controller.user.UpdateUserController
+ *
  */
-public class EditUserProfileCommand {
-	/** User's account **/
+public class ShowUploadPortraitUserCommand {
+	@NotNull
 	private String account;
-	/** User's email **/
-	private String mail;
-	/** User's address **/
-	private String address;
-	/** User's country **/
-	private String country;
-	/** User's title **/
-	private String title;
-	/** User's organization **/
-	private String organization;
-	/** User's location **/
-	private String location;
-	/** User's interests **/
-	private String interests;
 	private CommonsMultipartFile browse;
 	private String link;
 	
-	
-	public void setAccount(String account) {
-		this.account = account;
-	}
-	public String getAccount() {
-		return account;
-	}
-	public String getMail() {
-		return mail;
-	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getOrganization() {
-		return organization;
-	}
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getInterests() {
-		return interests;
-	}
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
 	/**
 	 * @return the browse
 	 */
 	public CommonsMultipartFile getBrowse() {
 		return browse;
 	}
+
 	/**
 	 * @param browse the browse to set
 	 */
 	public void setBrowse(CommonsMultipartFile browse) {
 		this.browse = browse;
 	}
+
 	/**
 	 * @return the link
 	 */
 	public String getLink() {
 		return link;
 	}
+
 	/**
 	 * @param link the link to set
 	 */
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
-	
-	
-	
+
+
+	/**
+	 * @param account the account to set
+	 */
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	/**
+	 * @return the account
+	 */
+	public String getAccount() {
+		return account;
+	}
 }

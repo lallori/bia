@@ -1,5 +1,5 @@
 /*
- * ShowUserProfileController.java
+ * CropPortraitUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,72 +27,68 @@
  */
 package org.medici.bia.controller.user;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.bia.common.util.UserRoleUtils;
-import org.medici.bia.domain.User;
-import org.medici.bia.domain.UserRole;
+import org.medici.bia.command.user.CropPortraitUserCommand;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to permit user update profile action.
- * It manages View and request's elaboration process.
+ * Controller for action "Crop Portrait User".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/user/WelcomeNewUser")
-public class WelcomeNewUserController {
+@RequestMapping("/user/CropPortraitUser")
+public class CropPortraitUserController {
 	@Autowired
 	private UserService userService;
+
 	
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 
 	/**
-	 * 
-	 * @return
+	 * @return the userService
 	 */
 	public UserService getUserService() {
 		return userService;
 	}
 
+
 	/**
 	 * 
-	 * @param request
-	 * @param model
+	 * @param peopleId
+	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView setupForm(@ModelAttribute("command") CropPortraitUserCommand command){
 		Map<String, Object> model = new HashMap<String, Object>(0);
-		User user = null;
+		
 		try {
-			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			getUserService().cropPortraitUser(command.getAccount(), command.getX(), command.getY(), command.getX2(), command.getY2(), command.getW(), command.getH());
+			
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
-			user = new User();
+			new ModelAndView("error/CropPortraitUserModalWindow", model);
 		}
-		model.put("user", user);
-		model.put("userGroup", UserRoleUtils.getMostSignificantRole(new ArrayList<UserRole>(user.getUserRoles())));
 
-		return new ModelAndView("user/WelcomeNewUser", model);
-	}
+		model.put("time", System.currentTimeMillis());
 
-	/**
-	 * 
-	 * @param userService
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+		return new ModelAndView("user/CropPortraitUserModalWindow", model);
 	}
 }

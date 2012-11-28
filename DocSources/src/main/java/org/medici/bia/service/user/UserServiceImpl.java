@@ -28,15 +28,21 @@
 package org.medici.bia.service.user;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.medici.bia.common.image.UserPortrait;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
@@ -65,13 +71,13 @@ import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Country;
 import org.medici.bia.domain.PasswordChangeRequest;
-import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserPersonalNotes;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -233,6 +239,28 @@ public class UserServiceImpl implements UserService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void cropPortraitUser(String account, Double x, Double y, Double x2, Double y2, Double width, Double height) throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser(account);
+			
+			if ((user != null) && (user.getPortrait())) {
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.user.path");
+				File portraitFile = new File(portraitPath + "/" + user.getPortraitImageName());
+				BufferedImage bufferedImage = ImageIO.read(portraitFile);
+				//here code for cropping... TO BE TESTED...
+				BufferedImage croppedBufferedImage = bufferedImage.getSubimage(x.intValue(), y.intValue(), width.intValue(), height.intValue());
+				ImageIO.write(croppedBufferedImage, "jpg", portraitFile);
+			}
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
 	}
 
 	/**
@@ -730,6 +758,34 @@ public class UserServiceImpl implements UserService {
 	public PlaceDAO getPlaceDAO() {
 		return placeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BufferedImage getPortraitUser(String portraitImageName) throws ApplicationThrowable {
+		try {
+			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("portrait.user.path") + "/" + portraitImageName);
+			
+			return ImageIO.read(imageFile);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BufferedImage getPortraitUserDefault() throws ApplicationThrowable {
+		try{
+			File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("portrait.user.default"));
+			
+			return ImageIO.read(imageFile);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	public UserAuthorityDAO getUserAuthorityDAO() {
 		return userAuthorityDAO;
@@ -898,6 +954,24 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public void removePortraitUser(String account) throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser(account);
+			
+			if(user != null){
+				user.setPortrait(Boolean.FALSE);
+				user.setPortraitImageName(null);
+				getUserDAO().merge(user);
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void restoreMyHistory() throws ApplicationThrowable {
@@ -951,6 +1025,54 @@ public class UserServiceImpl implements UserService {
 
 			getUserHistoryDAO().restoreUserHistory(user, category);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BufferedImage savePortaitUser(UserPortrait userPortrait) throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			if(user != null){
+				String tempPath = ApplicationPropertyManager.getApplicationProperty("portrait.user.path.tmp");
+				String portraitPath = ApplicationPropertyManager.getApplicationProperty("portrait.user.path");
+				File tempFile;
+				
+				String fileName = null;
+				if(userPortrait.getFile() != null && userPortrait.getFile().getSize() > 0){
+					fileName =  userPortrait.getAccount() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() +  "_" + userPortrait.getFile().getOriginalFilename();
+					tempFile = new File(tempPath + "/" + fileName);
+					FileUtils.writeByteArrayToFile(tempFile, userPortrait.getFile().getBytes());
+				}else{
+					fileName = userPortrait.getAccount() + "_" + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+					String extension = userPortrait.getLink().substring(userPortrait.getLink().lastIndexOf("."), userPortrait.getLink().length());
+					fileName = fileName.concat(extension);
+					tempFile = new File(tempPath + "/" + fileName);
+					FileUtils.copyURLToFile(new URL(userPortrait.getLink()), tempFile);
+				}
+	
+				File portraitFile = new File(portraitPath + "/" + fileName);
+				if(userPortrait.getFile() != null && userPortrait.getFile().getSize() > 0){
+					FileUtils.writeByteArrayToFile(portraitFile, userPortrait.getFile().getBytes());
+				}else{
+					FileUtils.copyFile(tempFile, portraitFile);
+				}
+			
+				user.setPortrait(true);
+				user.setPortraitImageName(fileName);
+				getUserDAO().merge(user);
+				
+				BufferedImage bufferedImage = ImageIO.read(portraitFile);
+				return bufferedImage;
+			}
+			else{
+				return null;
+			}
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
