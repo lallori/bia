@@ -19,6 +19,7 @@
 		<h3>${userProfile.firstName} ${userProfile.lastName}</h3>
 		
 		<div id="bgImgUserProfile">
+			<div id="imgUserProfile">
 			<c:if test="${userProfile.portrait}">
 				<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
 					<c:param name="account" value="${userProfile.account}" />
@@ -27,8 +28,9 @@
 				<img src="${ShowPortraitUserURL}" width="111" height="145"/>
 			</c:if>
 			<c:if test="${!userProfile.portrait}">
-			<div id="imgUserProfile"></div>
+				<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
 			</c:if>
+			</div>
 			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
 			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>

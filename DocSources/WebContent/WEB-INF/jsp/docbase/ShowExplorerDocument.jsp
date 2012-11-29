@@ -126,6 +126,8 @@
 			<p>Exploring Volume: <font color="red" style="margin-left:5px; font-size:15px">${documentExplorer.volNum}${documentExplorer.volLetExt}</font></p>
 		</div>
 		
+		<div id="baseOn">Based on <img src="<c:url value="/images/1024/img_iip.png"/>" width="30" /></div>
+		
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">

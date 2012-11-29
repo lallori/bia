@@ -127,16 +127,18 @@
 						</c:if>						
 						<c:if test="${place.prefFlag == 'V'}">
 							<br />
-							<div style="margin-left:8px">
+							
 									<c:forEach items="${placeNames}" var="currentName">
 										<c:if test="${currentName.prefFlag == 'P'}">
 											<c:url var="ShowPrincipalPlaceURL" value="/src/geobase/ShowPlace.do">
 												<c:param name="placeAllId"	value="${currentName.placeAllId}"/>
 											</c:url>
-											<p style="margin:0"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click here to visualize <a class="linkPlace" href="${ShowPrincipalPlaceURL}">${currentName.placeName}</a> and all the values and fields connected to it.</font></p>
+											<p class="textPrincipalName">'${place.placeName}' is a Variant Name for '${currentName.placeName}'.</p>
+											<a href="${ShowPrincipalPlaceURL}" class="button_medium" id="buttonPrincipalName">Click here</a>
+											<p class="textPrincipalName">to visualize <b>${currentName.placeName}</b> and all the values and fields connected to it.</font></p>
 										</c:if>
 									</c:forEach>
-							</div>
+							
 						</c:if>
 					</div>
 					<div id="placeImageDiv">
@@ -206,6 +208,11 @@
 			$j("#EditNamePlace").css('visibility', 'visible');
 	        $j("#EditGeoCoorPlace").css('visibility', 'visible'); 
 			$j("#EditExtLinkPlace").css('visibility', 'visible');
+			
+			$j("#buttonPrincipalName").click(function(){
+				$j("#body_left").load($j(this).attr('href'));
+				return false;
+			});
 			
 			$j(".PlaceMap").click(function(){
 				$j("#EditGeoCoorPlaceDiv").load($j(this).attr("href"));

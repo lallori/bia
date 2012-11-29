@@ -2029,13 +2029,14 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /* ---------------- Volume Explorer ---------------- */
 
-#ShowVolumeExplorerDiv #baseOn {
+#ShowVolumeExplorerDiv #baseOn, #ShowVolumeExplorer #baseOn, #ShowDocumentExplorer #baseOn {
     position: absolute;
     margin: 0 0 0 405px;
+	width:90px;
 }
  
 
-#ShowVolumeExplorerDiv #baseOn img{
+#ShowVolumeExplorerDiv #baseOn img, #ShowVolumeExplorer #baseOn img, #ShowDocumentExplorer #baseOn img{
     vertical-align:middle;
 }
 
@@ -2808,8 +2809,14 @@ a.refreshVolumeExplorer {
 	background-position-y:10px;
 }
 
-#geoTitle p {
-    margin:53px 0 5px 10px
+p.textPrincipalName {
+    color:#900;
+	margin-left: 10px;
+}
+
+#buttonPrincipalName {
+	display: inline-block;
+	margin-left: 10px;
 }
 
 #placeImageDiv .PlaceMap {
@@ -2950,7 +2957,7 @@ a.refreshVolumeExplorer {
 
 #imgUserProfile { /* User image profile */
 	margin: 7px 0 0 9px;
-	background-image:url(/DocSources/images/1024/img_user.jpg);
+	
 	width:111px;
 	height:145px;
 }
@@ -4216,7 +4223,7 @@ ul#network {
 	list-style-type: none;
 	height: 30px;
 	width: 140px;
-	margin:10px 0 0 310px;
+	margin:10px 0 0 325px;
 }
 
 ul#network a {
