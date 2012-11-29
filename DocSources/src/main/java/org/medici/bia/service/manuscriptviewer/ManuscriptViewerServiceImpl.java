@@ -327,8 +327,10 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try {
 			if (document != null) {
 				// We extract only image based on folioNum 
-				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0)) {
+				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0) && (document.getFolioMod() == null)) {
 					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
+				}else if((document.getFolioNum() != null) && (document.getFolioNum() > 0) && (document.getFolioMod() != null)){
+					return getImageDAO().findDocumentImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
 				}
 			}
 			
