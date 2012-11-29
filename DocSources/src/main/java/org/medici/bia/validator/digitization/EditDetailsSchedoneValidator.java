@@ -97,6 +97,9 @@ public class EditDetailsSchedoneValidator implements Validator {
 	 */
 	public void validateSchedone(Integer schedoneId, Integer volNum, String volLetExt, Errors errors){
 		if(!errors.hasErrors()){
+			if(volNum == null){
+				errors.rejectValue("numeroUnita", "error.numeroUnita.notfound");
+			}
 			if(schedoneId > 0){
 				try{
 					if(getDigitizationService().findSchedone(schedoneId) == null){
