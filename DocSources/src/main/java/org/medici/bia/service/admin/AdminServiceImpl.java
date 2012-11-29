@@ -146,6 +146,8 @@ public class AdminServiceImpl implements AdminService {
 			userToCreate.setForumNumberOfPost(new Long(0));
 			userToCreate.setMailHide(false);
 			userToCreate.setMailNotification(false);
+			userToCreate.setPortrait(false);
+			userToCreate.setPortraitImageName(null);
 			if (userToCreate.getApproved()) {
 				User approvedBy = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 				userToCreate.setApprovedBy(approvedBy);
