@@ -272,6 +272,7 @@
 			
 			$j(".link").click(function(){
 				$j("#main").load($j(this).attr("href"));
+				$j("#prevUrl").val($j(".paginateActive").attr('href'));
 				return false;
 			});
 			

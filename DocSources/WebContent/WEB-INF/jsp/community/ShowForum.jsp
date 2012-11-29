@@ -697,6 +697,10 @@ Use the textbox below to search this forum.</p>
 				$j(".link").die();
 				$j(".link").live('click', function(){
 					$j("#main").load($j(this).attr("href"));
+					if($j(".paginateActive").length > 0)
+						$j("#prevUrl").val($j(".paginateActive").attr('href'));
+					else
+						$j("#prevUrl").val("${ShowForumURL}");
 					return false;
 				});
 

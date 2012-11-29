@@ -357,8 +357,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	text-align: left;
 	color: #6d5c4d;
 	padding: 7px 5px 3px 10px;
-	border-bottom:1px solid #DCC0BA
-}
+	border-bottom: 1px solid #DCC0BA;}
 
 .one { /* First column width */
 	width: 40%;
@@ -507,13 +506,13 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 .list .row .one span, .list .rowLast .one span, .list .row .two span {
 	display: block;
 	margin-left: 30px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .list .row .two span,  .list .rowLast .two span {
-	display: block;
+	display: inline-block;
 	margin-left: 0;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 #postTable span.date {
@@ -979,7 +978,6 @@ ul.abc li {
 
 #imgUserProfile { /* User image */
 	margin: 9px 0 0 10px;
-	background-image: url(/DocSources/images/forum/img_user.jpg);
 	width: 110px;
 	height: 145px;
 }
@@ -1109,6 +1107,7 @@ ul.abc li {
 #messagesTable .list .one{
 	width: 18%;
 	text-align:left;
+	border-right: 1px solid #DCC0BA;
 }
 
 #messagesTable .list .two  { /* Other column width */
@@ -1116,15 +1115,20 @@ ul.abc li {
 	text-align:left;
 }
 
-#messagesTable .row .three, #messagesTable .rowLast .three{
+#messagesTable .row .three, #messagesTable .rowLast .three, #messagesTable .rowNew .three{
 	width: 20%;
 	text-align:right;
 	padding-right: 10px;
-	font-style: italic;
+	font-style: italic; 
 }
 
 #messagesTable .row, #messagesTable .rowLast {
 	height:35px;
+}
+
+#messagesTable .rowNew {
+	height:35px;
+	background-color:#EFE0DE;
 }
 
 #messagesTable .list a  { 
@@ -1243,7 +1247,7 @@ span.search {
 	line-height: 18px;
 }
 
-.row { /* Single row */
+.row, .rowNew { /* Single row */
 	display: table-row;
 }
 

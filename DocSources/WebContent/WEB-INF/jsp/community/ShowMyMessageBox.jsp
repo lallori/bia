@@ -39,13 +39,18 @@
 <!-- </div> -->
 
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
-			<div class="row">
-				<c:if test="${command.category == 'inbox'}">
+			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus != 'READ'}">
+				<div class="rowNew">
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
-				</c:if>
-				<c:if test="${command.category == 'outbox'}">
+			</c:if>
+			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus == 'READ'}">
+				<div class="row">
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
+			</c:if>
+			<c:if test="${command.category == 'outbox'}">
+				<div class="row">	
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
-				</c:if>
+			</c:if>
 				<div class="two"><span class="subject">${currentMessage.subject}</span> - <span class="message">${currentMessage.body}</span></div>
 				<div class="three">${currentMessage.sendedDate}</div>
 			</div>

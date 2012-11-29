@@ -37,6 +37,7 @@ public class ShowUserProfileForumCommand {
 	
 	private String account;
 	private Boolean completeDOM;
+	private String prevUrl;
 
 	/**
 	 * @return the account
@@ -64,5 +65,19 @@ public class ShowUserProfileForumCommand {
 	 */
 	public void setCompleteDOM(Boolean completeDOM) {
 		this.completeDOM = completeDOM;
+	}
+
+	/**
+	 * @return the prevUrl
+	 */
+	public String getPrevUrl() {
+		return prevUrl;
+	}
+
+	/**
+	 * @param prevUrl the prevUrl to set
+	 */
+	public void setPrevUrl(String prevUrl) {
+		this.prevUrl = prevUrl;
 	}
 }

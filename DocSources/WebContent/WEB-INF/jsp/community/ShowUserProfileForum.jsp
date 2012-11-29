@@ -30,7 +30,18 @@
     <div id="profile">
     	<h3>Profile</h3>
         <div id="bgImgUserProfile">
-			<div id="imgUserProfile"></div>
+			<div id="imgUserProfile">
+				<c:if test="${userProfile.portrait}">
+					<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+						<c:param name="account" value="${userProfile.account}" />
+						<c:param name="time" value="${time}" />
+					</c:url>
+					<img src="${ShowPortraitUserURL}" width="111" height="145"/>
+				</c:if>
+				<c:if test="${!userProfile.portrait}">
+					<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+				</c:if>
+			</div>
         </div>
         <div class="list">
         	<div class="row">
@@ -118,17 +129,16 @@
     </div>
 </div>
 
-
-
 <div id="topicActions">    
     <div id="jumpToDiv">
-    	Jump to:
-        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
-            <select id="selectForum" name="selectForum" selected"" class="selectform_long">
-                <option value="" selected="selected">Select a Forum</option>
-            </select>
-            <input id="go" type="submit" title="go" value="Go" class="buttonMini"/>
-        </form>
+    	<input id="goBackTo" class="button_medium" value="Go Back" type="submit" />
+<!--     	Jump to: -->
+<%--         <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post"> --%>
+<!--             <select id="selectForum" name="selectForum" selected"" class="selectform_long"> -->
+<!--                 <option value="" selected="selected">Select a Forum</option> -->
+<!--             </select> -->
+<!--             <input id="go" type="submit" title="go" value="Go" class="buttonMini"/> -->
+<%--         </form> --%>
     </div>
 </div>
 
@@ -146,8 +156,16 @@
 			$j("#selectForum").append(json.selectChronology);
 			$j("#chronologyDiv .arrowForum").css('display','');
 			$j("#chronologyDiv .forum").css('display','');
+			if($j("#prevUrl").val() != "")
+				$j("#chronologyDiv").append("<span class='arrowForum'>&rarr; <a href='" + $j("#prevUrl").val() + "' class='forum'>Go Back</a></span>");
+			else
+				$j("#goBackTo").css("display","none");
 			return false;
 		}});
+		
+		$j("#goBackTo").click(function(){
+			$j("#main").load($j("#prevUrl").val());
+		});
 		
 		$j("#userPost").click(function(){
 			$j("#main").load($j(this).attr('href'));
