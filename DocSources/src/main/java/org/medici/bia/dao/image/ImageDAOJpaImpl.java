@@ -118,7 +118,10 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         }
 
     	stringBuilder.append(" and imageName like '%_C_");
-    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+//    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+    	stringBuilder.append(folioNum.toString());
+    	if(folioMod != null)
+    		stringBuilder.append("_" + folioMod);
     	stringBuilder.append("_R.tif'");
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
