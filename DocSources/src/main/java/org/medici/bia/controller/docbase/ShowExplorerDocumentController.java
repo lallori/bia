@@ -35,6 +35,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.BooleanUtils;
 import org.medici.bia.command.docbase.ShowExplorerDocumentCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
@@ -82,22 +83,33 @@ public class ShowExplorerDocumentController {
 			return setupForm(command, result);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>(0);
-			
-			DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
-			documentExplorer.setImage(new Image());
-			documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
-			documentExplorer.getImage().setImageOrder(command.getImageOrder());
-			documentExplorer.getImage().setImageType(command.getImageType());
-			documentExplorer.setTotal(command.getTotal());
-			documentExplorer.setTotalRubricario(command.getTotalRubricario());
-			documentExplorer.setTotalCarta(command.getTotalCarta());
-			documentExplorer.setTotalAppendix(command.getTotalAppendix());
-			documentExplorer.setTotalOther(command.getTotalOther());
-			documentExplorer.setTotalGuardia(command.getTotalGuardia());
-	
-			try {
+			try{
+				Document document = new Document();
+				if(command.getEntryId() != null){
+					document = getDocBaseService().findDocument(command.getEntryId());
+				}
+				
+				DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+				if(document.getFolioNum() != null){
+					documentExplorer.setFolioNum(document.getFolioNum());
+				}
+				if(document.getFolioMod() != null){
+					documentExplorer.setFolioMod(document.getFolioMod());
+				}
+				documentExplorer.setImage(new Image());
+				documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+				documentExplorer.getImage().setImageOrder(command.getImageOrder());
+				documentExplorer.getImage().setImageType(command.getImageType());
+				documentExplorer.setTotal(command.getTotal());
+				documentExplorer.setTotalRubricario(command.getTotalRubricario());
+				documentExplorer.setTotalCarta(command.getTotalCarta());
+				documentExplorer.setTotalAppendix(command.getTotalAppendix());
+				documentExplorer.setTotalOther(command.getTotalOther());
+				documentExplorer.setTotalGuardia(command.getTotalGuardia());
+		
+				
 				documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-	
+		
 				model.put("documentExplorer", documentExplorer);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

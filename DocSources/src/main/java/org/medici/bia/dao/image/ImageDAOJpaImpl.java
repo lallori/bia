@@ -118,8 +118,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         }
 
     	stringBuilder.append(" and imageName like '%_C_");
-//    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
-    	stringBuilder.append(folioNum.toString());
+    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+//    	stringBuilder.append(folioNum.toString());
     	if(folioMod != null)
     		stringBuilder.append("_" + folioMod);
     	stringBuilder.append("_R.tif'");
@@ -276,6 +276,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuilder.append(" and imageOrder=:imageOrder");
         } else {
         	stringBuilder.append(" and imageOrder = 1");
+        }
+        if(documentExplorer.getFolioMod() != null){
+        	stringBuilder.append(" and imageName like '%" + documentExplorer.getFolioMod() + "%'");
         }
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());

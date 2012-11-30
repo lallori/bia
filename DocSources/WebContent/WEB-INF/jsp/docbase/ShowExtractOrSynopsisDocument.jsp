@@ -64,7 +64,7 @@
 				return false;
 			});
 			
-			$j("#EditDocumentInManuscriptTranscriber").open({width: screen.width, height: screen.height, scrollbars: false});
+			$j("#EditDocumentInManuscriptTranscriber").open({windowName: "EditDocumentInManuscriptTranscriber", width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#EditDocumentInModal").click(function(){
 				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 850, height:550}); 

@@ -121,7 +121,5 @@
 					$j(this).attr({"style": 'display:none'});
 				}});
 			});
-
-			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 		});
 	</script>

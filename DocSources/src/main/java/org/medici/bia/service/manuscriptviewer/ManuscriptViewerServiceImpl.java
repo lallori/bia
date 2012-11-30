@@ -532,6 +532,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				Document document = getDocumentDAO().find(documentExplorer.getEntryId());
 				documentExplorer.setVolNum(document.getVolume().getVolNum());
 				documentExplorer.setVolLetExt(document.getVolume().getVolLetExt());
+				if(document.getFolioMod() != null){
+					documentExplorer.setFolioMod(document.getFolioMod());
+				}
 				if ((documentExplorer.getImage().getImageOrder()==null) && (documentExplorer.getImage().getImageProgTypeNum()==null) && (documentExplorer.getImage().getImageName() ==null)) {
 					if (document.getFolioNum() != null) {
 						if (document.getFolioNum() > 0) {

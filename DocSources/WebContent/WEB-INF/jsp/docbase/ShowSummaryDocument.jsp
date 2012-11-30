@@ -148,7 +148,7 @@
 				}});
 			});
 
-			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
+			$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
 				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Volume ${document.volume.volNum}${document.volume.volLetExt} - Folio ${document.folioNum}</span>";
