@@ -173,6 +173,7 @@ public class UserServiceImpl implements UserService {
 			ApprovationUser approvationUser = new ApprovationUser(user);
 			approvationUser.setMessageSended(Boolean.FALSE);
 			approvationUser.setApproved(Boolean.FALSE);
+			approvationUser.setMailSended(Boolean.FALSE);
 			getApprovationUserDAO().persist(approvationUser);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
