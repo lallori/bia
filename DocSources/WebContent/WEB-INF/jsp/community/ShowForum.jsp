@@ -793,7 +793,7 @@ Use the textbox below to search this forum.</p>
 							  }
 						  },
 						  open: function(event, ui) { 
-							  $j("#linkToCopy").val('${bia:getApplicationProperty("website.domain")}${ShowForumRefreshURL}' + '&completeDOM=true');
+							  $j("#linkToCopy").val('http://${bia:getApplicationProperty("website.domain")}${ShowForumRefreshURL}' + '&completeDOM=true');
 							  $j("#linkToCopy").select();
 							  return false;
 						  },

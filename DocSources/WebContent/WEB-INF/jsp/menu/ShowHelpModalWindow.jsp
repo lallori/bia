@@ -13,9 +13,13 @@
         	<h1>HELP SYSTEM</h1>
         </div>
         <ul>
-        	<li><a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br /></li>
-            <li><a href="#">Download Manual (PDF)</a></li>
-            <li><a href="#">Help Videos</a></li>
+<%--         	<li><a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br /></li> --%>
+<!--             <li><a href="#">Download Manual (PDF)</a></li> -->
+<!--             <li><a href="#">Help Videos</a></li> -->
+<!-- 			MD: Changed at the moment -->
+			<li><a target="_blank" title="Soon available" style="cursor:pointer;">User Manual (HTML version)</a><br /></li>
+            <li><a title="Soon available" style="cursor:pointer;">Download Manual (PDF)</a></li>
+            <li><a title="Soon available" style="cursor:pointer;">Help Videos</a></li>
         </ul>
     </div>
     

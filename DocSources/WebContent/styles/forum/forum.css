@@ -77,6 +77,7 @@ h2.title {
 
 #postTable h2 {
 	margin-left: 10px;
+	margin-bottom: 0;
 }
 
 #postTable span {
@@ -89,10 +90,21 @@ h2.title {
 	line-height: 17px;
 }
 
+#postTable p.by {
+	margin-bottom:25px;
+}
+
 #postTable img {
 	border-radius:2px;
 	margin: 0 5px 0 5px;
 	box-shadow: 0 0 6px #B7958F;
+}
+
+#postTable img.avatar{
+	vertical-align:middle;
+	border: 1px solid #B7958F;
+	margin-left: 0;
+	height:55px;
 }
 
 #postTable p a.linkForum{
@@ -319,6 +331,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	border-radius:4px;
 	margin-bottom: 20px;
 	position: relative;
+	min-height: 130px;
 }
 
 /* Table structure */
@@ -684,6 +697,7 @@ a.returnTo {
 	width: 770px;
 	border-right: 1px solid #DCC0BA;
 	display: inline-table;
+	height: 130px;
 }
 
 #postTable #postProfile {

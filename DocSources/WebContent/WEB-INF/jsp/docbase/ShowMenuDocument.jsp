@@ -47,6 +47,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<%-- 			<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a> --%>
 		</security:authorize>
+		<span id="commentsOn"></span>
 		<a id="comments" href="#">Discussions</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!document.logicalDelete}">
@@ -68,10 +69,26 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#commentsOn").stop();
+		clearInterval($timerId);
+		
+		var animazione = function animazioneOn(){
+			$j("#commentsOn").animate({ opacity: 0.6 }, 3000, animazioneOff());
+			return false;
+		}
+		
+		function animazioneOff(){
+			$j("#commentsOn").animate({ opacity: 0 }, 3000);
+			return false;
+		}
+		
 		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
 			if (json.isPresent == 'true') {
 				$j("#comments").attr('href', json.forumUrlCompleteDOM);
 				$j("#comments").attr('target', '_blank');
+				$j("#comments").css('color', 'red');
+				$timerId = setInterval(animazione, 2000);
+				
 				return false;
 			}
 		}});

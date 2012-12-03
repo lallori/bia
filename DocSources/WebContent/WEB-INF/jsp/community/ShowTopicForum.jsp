@@ -135,12 +135,24 @@
         		<h2>${currentPost.subject}</h2>
         	</c:otherwise>
         </c:choose>
-        <p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
         <p>${currentPost.text}</p>
     </div>
     <div id="postProfile">
     	<ul>
-        	<li><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a></li>
+        	<li>
+        		<c:if test="${currentPost.user.portrait}">
+        			<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+						<c:param name="account" value="${currentPost.user.account}" />
+						<c:param name="time" value="${time}" />
+					</c:url>
+        			<img src="${ShowPortraitUserURL}" class="avatar"/>
+        		</c:if>
+        		<c:if test="${!currentPost.user.portrait}">
+        			<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+        		</c:if>
+        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
+        	</li>
             <li>Community User</li>
             <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
             <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
@@ -468,7 +480,7 @@
 						  }
 					  },
 					  open: function(event, ui) { 
-						  $j("#linkToCopy").val('${bia:getApplicationProperty("website.domain")}' + $j(".paginateActive").attr('href') + '&completeDOM=true');
+						  $j("#linkToCopy").val('http://${bia:getApplicationProperty("website.domain")}' + $j(".paginateActive").attr('href') + '&completeDOM=true');
 						  $j("#linkToCopy").select();
 						  return false;
 					  }
