@@ -32,10 +32,18 @@
 		</c:url>
 		
 		<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
-	
+		
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+		</c:url>
+		
+		
+		
 		<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
 		<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
-								
+		
+		<p>${topic.forum.description}</p>
+		<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>
 		<div id="prevNextButtons" class="thread">
 	    	<c:if test="${documentExplorer.image.imageOrder == 1}">
 	    		<div id="previousPage">
@@ -61,6 +69,28 @@
 				
 		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 	</c:if>
+	<c:if test="${topic.forum.place != null}">
+		<p></p>
+		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+			<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
+		</c:url>
+		<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord">Show record</a>
+	</c:if>
+	<c:if test="${topic.forum.person != null}">
+		<p></p>
+		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+			<c:param name="personId" value="${topic.forum.person.personId}"/>
+		</c:url>
+		<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord">Show record</a>
+	</c:if>
+	<c:if test="${topic.forum.volume != null}">
+		<p></p>
+		<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
+			<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
+		</c:url>
+		<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord">Show record</a>
+	</c:if>
+		
 </security:authorize>
 
 <div id="topicActions">
@@ -251,6 +281,12 @@
 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
+			
+			$j("#showRecord").click(function(){
+				window.opener.$j("#body_left").load($j(this).attr('href'));
+				window.opener.focus();
+				return false;
+			})
 			
 // 			$j('.boardIndex').die();
 // 			Result links have a specific class style on which we attach click live. 

@@ -93,8 +93,10 @@
 			if (json.isPresent == 'true') {
 				$j("#comments").attr('href', json.forumUrlCompleteDOM);
 				$j("#comments").attr('target', '_blank');
-				$j("#comments").css('color', 'red');
-				$timerId = setInterval(animazione, 6000);
+				if(json.discussions > 0){
+					$j("#comments").css('color', 'red');
+					$timerId = setInterval(animazione, 6000);
+				}
 				
 				return false;
 			}

@@ -115,6 +115,7 @@ public class AjaxController {
 				model.put("isPresent", Boolean.TRUE.toString());
 				model.put("forumId", forum.getForumId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+				model.put("discussions", forum.getTopicsNumber());
 				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
 				model.put("logicalDelete", forum.getLogicalDelete().toString());
 			} else {

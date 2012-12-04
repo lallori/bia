@@ -31,10 +31,10 @@
 				<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
 			</c:if>
 			</div>
-			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
+			<a id="UploadPortraitUser" href="${UploadPortraitWindowURL}">Upload Portrait</a>
 			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
-			<a id="UploadPortraitUser" href="${UploadPortraitWindowURL}">Upload Portrait</a>
+			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>
 		</div>
 		

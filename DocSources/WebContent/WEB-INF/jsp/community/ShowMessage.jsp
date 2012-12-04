@@ -84,6 +84,14 @@
 			$j('#reply').live('click', function(){
 				$j("#main").load($j(this).attr('href'));
 				return false;
-			})
+			});
+						
+			$j(".lnkLeft").die();
+			$j(".lnkLeft").live('click', function(){
+				var win = window.opener;
+				window.opener.$j("#body_left").load($j(this).attr('href'));
+				win.focus();
+				return false;
+			});
 		});
 	</script>

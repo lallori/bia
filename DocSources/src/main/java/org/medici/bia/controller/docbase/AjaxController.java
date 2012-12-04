@@ -289,6 +289,7 @@ public class AjaxController {
 				model.put("isPresent", Boolean.TRUE.toString());
 				model.put("forumId", forum.getForumId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+				model.put("discussions", forum.getTopicsNumber());
 				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
 			} else {
 				model.put("isPresent", Boolean.FALSE.toString());

@@ -62,6 +62,7 @@ import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -593,6 +594,7 @@ public class AdminServiceImpl implements AdminService {
 						userMessage.setUser(currentAdministator);
 						userMessage.setParentMessage(null);
 						userMessage.setReadedDate(null);
+						userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
 						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject",
 												new String[]{
 												currentApprovationUser.getUser().getAccount()},"{", "}"));
@@ -605,7 +607,8 @@ public class AdminServiceImpl implements AdminService {
 												currentApprovationUser.getUser().getOrganization(),
 												currentApprovationUser.getUser().getMail(), 
 												ApplicationPropertyManager.getApplicationProperty("website.protocol"),
-												ApplicationPropertyManager.getApplicationProperty("website.domain")
+												ApplicationPropertyManager.getApplicationProperty("website.domain"),
+												ApplicationPropertyManager.getApplicationProperty("website.contextPath")
 											},
 											"{", "}"));
 	
