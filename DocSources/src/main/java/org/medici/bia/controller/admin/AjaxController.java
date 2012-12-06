@@ -71,6 +71,34 @@ public class AjaxController {
 	
 	/**
 	 * 
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/ApproveNewUser.json", method = RequestMethod.POST)
+	public ModelAndView searchUser(@RequestParam(value="account") String account){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		if(account != null && account != ""){
+			User user = new User(account);
+			user.setApproved(Boolean.TRUE);
+		
+			try {
+				user = getAdminService().approveNewUser(user);
+				model.put("operation", "OK");
+				
+				return new ModelAndView("responseOK", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				model.put("operation", "KO");
+				return new ModelAndView("responseKO", model);
+			}
+		}
+		model.put("operation", "KO");
+		return new ModelAndView("responseKO", model);
+	}
+	
+	/**
+	 * 
 	 * @param alias
 	 * @param model
 	 * @return

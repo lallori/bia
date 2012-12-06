@@ -255,7 +255,7 @@
         <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
-	<bean id="EditTitleOrOccupationValidator" class="org.medici.bia.validator.peoplebase.EditTitleOrOccupationValidator">
+	<bean id="editTitleOrOccupationValidator" class="org.medici.bia.validator.peoplebase.EditTitleOrOccupationValidator">
         <description>Edit Title Or Occupation Validator.</description>
 	</bean>
 	

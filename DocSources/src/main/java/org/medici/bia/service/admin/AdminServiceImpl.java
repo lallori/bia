@@ -210,6 +210,26 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User approveNewUser(User user) throws ApplicationThrowable {
+		try{
+			User userToUpdate = getUserDAO().findUser(user.getAccount());
+			userToUpdate.setApproved(user.getApproved());
+			getUserDAO().merge(userToUpdate);
+			
+			//Delete All new user's messages for other admin
+			getUserMessageDAO().removeApprovationMessages(userToUpdate);			
+			
+			return userToUpdate;
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

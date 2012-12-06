@@ -9,6 +9,10 @@
 	<c:url var="ReplyMessageURL" value="/community/ComposeMessage.do">
 		<c:param name="parentMessageId" value="${userMessage.messageId}"/>
 	</c:url>
+	
+	<c:url var="InboxURL" value="/community/ShowMessagesByCategory.do">
+		<c:param name="userMessageCategory"	value="INBOX"/>
+	</c:url>
 
 <%-- 	<c:url var="ReplyMessageURL" value="/community/ShowMessagesByCategory.do" /> --%>
 	
@@ -36,6 +40,22 @@
 
 					
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+
+<div id="approveModal" title="Approve User" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Are you sure you want to approve this user?
+	</p>
+	
+	<input type="hidden" value="" id="approveUrl"/>
+</div>
+
+<div id="notApproved" title="Approve User" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Error: Not approved
+	</p>
+</div>
 
 
 <!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->
@@ -88,9 +108,53 @@
 						
 			$j(".lnkLeft").die();
 			$j(".lnkLeft").live('click', function(){
-				var win = window.opener;
 				window.opener.$j("#body_left").load($j(this).attr('href'));
-				win.focus();
+				window.opener.alert("ok");
+				return false;
+			});
+			
+			$j( "#approveModal" ).dialog({
+				  autoOpen : false,
+				  modal: true,
+				  resizable: false,
+				  width: 300,
+				  height: 130, 
+				  buttons: {
+					  Yes: function() {
+						  $j.ajax({ type:"POST", url:$j("#approveUrl").val(), async:false, success:function(json) {
+				 			   	if (json.operation == 'OK') {
+				 					 $j("#main").load('${InboxURL}');
+									 $j( "#approveModal" ).dialog('close');
+									 return false;
+				 				} else {
+				 					$j( "#approveModal" ).dialog('close');
+									$j("#notApproved").dialog({
+										  autoOpen : false,
+										  modal: true,
+										  resizable: false,
+										  width: 300,
+										  height: 130, 
+										  buttons: {
+											  Ok: function() {
+												  $j(this).dialog("close");
+											  }
+										  }
+									  });
+									$j("#notApproved").dialog('open');
+				 				}
+							}});
+							return false;
+					  },
+					  No: function() {
+						  $j( "#approveModal" ).dialog('close');
+					  }
+				  }
+			  });
+			
+			$j(".lnkApprove").die();
+			$j(".lnkApprove").live('click', function(){
+				$j("#approveUrl").val($j(this).attr('href'));
+				$j('#approveModal').dialog('open');
 				return false;
 			});
 		});

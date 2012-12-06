@@ -556,6 +556,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
 	</definition>
 	
+	<definition name="docbase/EditPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditPeopleDocument.jsp"/>
+	</definition>
+	
 	<definition name="docbase/EditPersonDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditPersonDocument.jsp"/>
 	</definition>

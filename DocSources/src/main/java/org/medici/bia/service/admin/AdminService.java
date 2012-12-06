@@ -64,6 +64,14 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	User approveUser(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	User approveNewUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

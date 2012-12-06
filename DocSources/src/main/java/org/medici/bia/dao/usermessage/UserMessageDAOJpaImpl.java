@@ -182,6 +182,19 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer removeApprovationMessages(User user) throws PersistenceException {
+		String queryString = new String("DELETE FROM UserMessage WHERE sender LIKE ':account'");
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("account", user.getAccount());
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException {
 		StringBuilder query = new StringBuilder("DELETE FROM UserMessage WHERE user.account=:account AND (");
 		for(int i = 0; i < idElements.size(); i++){
