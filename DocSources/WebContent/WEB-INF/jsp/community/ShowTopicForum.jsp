@@ -284,9 +284,9 @@
 			
 			$j("#showRecord").click(function(){
 				window.opener.$j("#body_left").load($j(this).attr('href'));
-				window.opener.focus();
+				window.opener.alert("ok");
 				return false;
-			})
+			});
 			
 // 			$j('.boardIndex').die();
 // 			Result links have a specific class style on which we attach click live. 

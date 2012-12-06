@@ -20,33 +20,89 @@
 	
 	<div id="geoDiv">
 		<div id="geoTitle">
+			<div id="text">
+        		<h3>${place.placeName}</h3>
+				<h4>${place.parentPlace.placeNameFull}</h4>
+				<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
+            	<h5>TGN Place record</h5>
+            	</c:if>
+        		<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
+        			<h5>TGN Place record (updated by MAP)</h5>
+        		</c:if>
+        		<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
+					<h5>MAP Place record</h5>
+				</c:if>
+        		<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+					<h5>MAP Site or Subsite record</h5>
+				</c:if>
+				<h7>${place.plType}</h7>
+				<c:if test="${place.prefFlag != 'V'}">
+					<div id="linked">
+						<p>Linked to this place entry:</p>
+						<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
+							${docInTopics} Documents on ${topicsPlace} Topics
+						</c:if>
+						<c:if test="${topicsPlace == 1}">
+							${docInTopics} Document on ${topicsPlace} Topic
+						</c:if>
+						<c:if test="${docInTopics == 1 && topicsPlace != 1}">
+							${docInTopics} Document on ${topicsPlace} Topics
+						</c:if>
+						<c:if test="${topicsPlace == 0 || topicsPlace == null}">
+							0 Documents on 0 Topics
+						</c:if>
+						<hr />
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							${senderPlace} Senders and ${recipientPlace} Recipients
+						</c:if>
+						<c:if test="${senderPlace == 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							${senderPlace} Sender and ${recipientPlace} Recipients
+						</c:if>
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace == 1}">
+							${senderPlace} Senders and ${recipientPlace} Recipient
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
+							0 Senders and ${recipientPlace} Recipients
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace == 1}">
+							0 Senders and ${recipientPlace} Recipient
+						</c:if>
+						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && (recipientPlace == 0 || recipientPlace == null)}">
+							${senderPlace} Senders and 0 Recipient
+						</c:if>
+						<c:if test="${senderPlace == 1 && (recipientPlace == 0 || recipientPlace == null)}">
+							${senderPlace} Sender and 0 Recipient
+						</c:if>
+						<c:if test="${(senderPlace == 0 || senderPlace == null) && (recipientPlace == 0 || recipientPlace == null)}">
+							0 Sender and 0 Recipient
+						</c:if>
+						<hr />
+						<c:if test="${birthPlace != 0}">${birthPlace} Births</c:if><c:if test="${birthPlace == 0}">0 Births</c:if> and <c:if test="${activeStartPlace != 0}">${activeStartPlace} Active Starts</c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if>
+						<br />
+						<c:if test="${deathPlace != 0}">${deathPlace} Deaths</c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if> and <c:if test="${activeEndPlace != 0}">${activeEndPlace} Active Ends</c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if>
+					</div>	
+				</c:if>						
+				<c:if test="${place.prefFlag == 'V'}">
+					<br />
+					<c:forEach items="${placeNames}" var="currentName">
+						<c:if test="${currentName.prefFlag == 'P'}">
+							<c:url var="ShowPrincipalPlaceURL" value="/src/geobase/ShowPlace.do">
+								<c:param name="placeAllId"	value="${currentName.placeAllId}"/>
+							</c:url>
+							<p class="textPrincipalName">'${place.placeName}' is a Variant Name for '${currentName.placeName}'.</p>
+<%-- 							<a href="${ShowPrincipalPlaceURL}" class="button_medium" id="buttonPrincipalName">Click here</a> --%>
+<%-- 							<p class="textPrincipalName">to visualize <b>${currentName.placeName}</b> and all the values and fields connected to it.</font></p> --%>
+						</c:if>
+					</c:forEach>
+				</c:if>
+			</div>
 			<div id="placeImageDiv">
 				<c:if test="${linkGoogleMaps != null}">
 					<a href="${linkGoogleMaps}" target="_blank" title="Show on Google Maps"><img src="<c:url value="/images/1024/img_googleMap.jpg"/>" alt="Place" class="shadow"></a>
 				</c:if>
 				<c:if test="${linkGoogleMaps == null }">
-					<span>Not attached to Google Maps</span>
-					<c:if test="${place.prefFlag == 'P'}">
-						<a class="PlaceMap" href="#">Assign Geo Coordinates</a>
-					</c:if>
+					<span>Not attached to Google Maps</span>	
 				</c:if>
-			</div>
-			<div id="text">
-				<h3>${place.placeName}</h3>
-				<h4>${place.parentPlace.placeNameFull}</h4>
-				<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-	            	<h5>TGN Place record</h5>
-	        	</c:if>
-	        	<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-	        		<h5>TGN Place record (updated by MAP)</h5>
-	        	</c:if>
-	        	<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-					<h5>MAP Place record</h5>
-				</c:if>
-	        	<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-					<h5>MAP Site or Subsite record</h5>
-				</c:if>
-				<h7>${place.plType}</h7>
 			</div>
 		</div>
 		

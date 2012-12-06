@@ -9,8 +9,12 @@
 				margin:10px 0 20px 5px;
 			}
      </style>
+     
+    <c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
 	
-	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
+	<a href="#" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database">More info</a>
 		<ul id="network">
 			<li><a id="googlePlus" href="#" title="Share it on Google+"></a></li>
 			<li><a id="twitter" href="#" title="Share it on Twitter"></a></li>
@@ -19,6 +23,59 @@
 	
 	
 	<div id="documentTitle">
+		<div id="text">
+			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+<!-- 		Checking if folio is inside inserts or inserts with parts -->
+<!-- 		1) folio is not inside inserts-->
+			<c:if test="${document.insertNum == null}">
+				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			</c:if>
+<!-- 		2) folio is inside inserts with no parts -->
+			<c:if test="${document.insertNum != null && document.insertLet  == null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
+<!-- 		3) folio is inside inserts with parts -->
+			<c:if test="${document.insertLet  != null}">
+				<br>
+				<br>
+				<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<br>
+				<br>
+			</c:if>
+			<c:choose>
+				<%-- Recipient empty --%>
+				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
+			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+				</c:when>
+				<%-- Sender empty --%>
+				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+			 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+				</c:when>
+				<%-- Sender and Recipient filled in --%>
+				<c:otherwise>
+			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
+			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${document.yearModern == null && (document.docYear != null || document.docMonthNum != null || document.docDay != null)}">
+					<h5>${document.docYear} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+				</c:when>
+				<c:when test="${document.yearModern != null}">
+					<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+				</c:when>
+			</c:choose>
+		</div>
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -31,38 +88,6 @@
 				<span>To be digitized</span>
 			</div>
 		</c:if>
-		<div id="text">
-			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
-			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-			<c:choose>
-				<%-- Recipient empty --%>
-				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-					<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-					<h4>TO: <span class="h4">(Not Entered)</span></h4>
-				</c:when>
-				<%-- Sender empty --%>
-				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-					<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-					<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
-				</c:when>
-				<%-- Sender and Recipient filled in --%>
-				<c:otherwise>
-					<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
-					<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-					<h5>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h5>
-				</c:otherwise>
-			</c:choose>
-			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
-			<div id="icons">
-				<c:if test="${not empty image}">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
-					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
-				</c:if>
-			</div>
-		</div>
 	</div>
 	
 	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
@@ -232,3 +257,17 @@
 		</c:forEach>
 	</div>
 	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#moreInfoButton").click(function(e){
+				if(window.opener.$j("#body_left").length > 0)
+					window.opener.$j("#body_left").load('${ShowDocumentURL}');
+				else{
+// 					TODO: If there isn't BIA window
+				}
+				return false;
+			});
+		});
+	</script>
+	

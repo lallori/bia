@@ -1,5 +1,5 @@
 /*
- * ShowVolumeController.java
+ * EditPeopleDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,85 +25,77 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller.volbase;
+package org.medici.bia.controller.docbase;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
-import org.medici.bia.command.volbase.ShareVolumeRequestCommand;
-import org.medici.bia.domain.Volume;
+import org.medici.bia.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
+import org.medici.bia.domain.Document;
+import org.medici.bia.domain.EpLink;
 import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.security.BiaUserDetailsImpl;
-import org.medici.bia.service.volbase.VolBaseService;
+import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Share volume".
+ * Controller for action "Edit People Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/volbase/ShareVolume")
-public class ShareVolumeController {
+@RequestMapping("/de/docbase/EditPeopleDocument")
+public class EditPeopleDocumentController {
 	@Autowired
-	private VolBaseService volBaseService;
-
+	private DocBaseService docBaseService;
+	
 	/**
-	 * 
-	 * @return
+	 * @return the docBaseService
 	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 
 	/**
- 	 * This method extracts volume identified by param command.summaryId,
- 	 * and invoke view ShowVolume to render Volume information on client.
- 	 * 
-	 * @param command Object containing input parameters
-	 * @param result
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * 
+	 * @param command
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShareVolumeRequestCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditCorrespondentsOrPeopleDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-		Volume volume = new Volume();
-		
-		if (command.getSummaryId() > 0) {
+
+		if ((command != null) && (command.getEntryId() > 0)) {
+			Document document = new Document();
+
 			try {
-				volume = getVolBaseService().findVolume(command.getSummaryId());
-				
-				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
+				document = getDocBaseService().findDocument(command.getEntryId());
+				command.setDocument(document);
+
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/ShareVolume", model);
+				return new ModelAndView("error/EditPeopleDocument", model);
 			}
 		} else {
-			//SummaryId equals to zero is 'New Volume'
-			volume.setSummaryId(command.getSummaryId());
-			volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			volume.setDateCreated(new Date());
+			// On Document creation, linked peoples to document are empty
+			Document document = new Document(command.getEntryId());
+			document.setEpLink(new HashSet<EpLink>());
+			command.setDocument(document);
 		}
 
-		model.put("volume", volume);
-
-		return new ModelAndView("volbase/ShareVolume", model);
-	}
-
-	/**
-	 * 
-	 * @param volBaseService
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
+		return new ModelAndView("docbase/EditPeopleDocument", model);
 	}
 }

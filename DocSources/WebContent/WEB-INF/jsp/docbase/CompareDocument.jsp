@@ -59,6 +59,60 @@
 		<%-- Comparing Document Record --%>
 		<c:if test="${document.volume != null}">
 		<div id="documentTitle">
+			<div id="text">
+				<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+	<!-- 		Checking if folio is inside inserts or inserts with parts -->
+	<!-- 		1) folio is not inside inserts-->
+				<c:if test="${document.insertNum == null}">
+					<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				</c:if>
+	<!-- 		2) folio is inside inserts with no parts -->
+				<c:if test="${document.insertNum != null && document.insertLet  == null}">
+					<br>
+					<br>
+					<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+					<br>
+					<br>
+				</c:if>
+	<!-- 		3) folio is inside inserts with parts -->
+				<c:if test="${document.insertLet  != null}">
+					<br>
+					<br>
+					<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+					<br>
+					<br>
+				</c:if>
+				<c:choose>
+					<%-- Recipient empty --%>
+					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
+				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+					</c:when>
+					<%-- Sender empty --%>
+					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+					</c:when>
+					<%-- Sender and Recipient filled in --%>
+					<c:otherwise>
+				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
+				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+						<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${document.yearModern == null && (document.docYear != null || document.docMonthNum != null || document.docDay != null)}">
+						<h5>${document.docYear} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+					</c:when>
+					<c:when test="${document.yearModern != null}">
+						<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+					</c:when>
+				</c:choose>
+			
+			</div>
 			<c:if test="${not empty image}">
 					<div id="DocumentImageDigitDiv">
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
@@ -80,54 +134,6 @@
 					</security:authorize>
 				</div>
 			</c:if>
-			<div id="text">
-				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
-				<!-- 		Checking if folio is inside inserts or inserts with parts -->
-<!-- 		1) folio is not inside inserts-->
-			<c:if test="${document.insertNum == null}">
-				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-			</c:if>
-<!-- 		2) folio is inside inserts with no parts -->
-			<c:if test="${document.insertNum != null && document.insertLet  == null}">
-				<br>
-				<br>
-				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-				<br>
-				<br>
-			</c:if>
-<!-- 		3) folio is inside inserts with parts -->
-			<c:if test="${document.insertLet  != null}">
-				<br>
-				<br>
-				<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-				<br>
-				<br>
-			</c:if>
-				<c:choose>
-					<%-- Recipient empty --%>
-					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
-					</c:when>
-					<%-- Sender empty --%>
-					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-					</c:when>
-					<%-- Sender and Recipient filled in --%>
-					<c:otherwise>
-				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-					</c:otherwise>
-				</c:choose>
-				<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
-				<c:if test="${not empty image}">
-			</c:if>
-			<c:if test="${image == null}">
-				<br>
-        		<p class="notDigitized">This document is not digitized yet</p>
-         	</c:if>
-			</div>
 		</div>
 		</c:if>
 	
@@ -211,7 +217,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.senderPlace.placeAllId != 53384 && document.senderPlace.placeAllId != 55627 && document.senderPlace.placeAllId != 54332}">
-					<div class="item">From</div> <div class="value80"><a class="linkPeopleCompare" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+					<div class="item">From</div> <div class="value80"><a class="linkPlaceCompare" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
 				</c:if>
 				<c:if test="${document.senderPlace.placeAllId == 53384 || document.senderPlace.placeAllId == 55627 || document.senderPlace.placeAllId == 54332 }">
 					<div class="item">From</div> <div class="value80">${document.senderPlace.placeNameFull} </div>
@@ -227,7 +233,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPlace.placeAllId != 53384 && document.recipientPlace.placeAllId != 55627 && document.recipientPlace.placeAllId != 54332}">
-					<div class="item">To</div> <div class="value80"><a class="linkPeopleCompare" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+					<div class="item">To</div> <div class="value80"><a class="linkPlaceCompare" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
 				</c:if>
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
 					<div class="item">To</div> <div class="value80">${document.recipientPlace.placeNameFull}</div>
@@ -342,6 +348,37 @@
 								tabName = "PersonId#" + id.substring(8, id.length) + " - " + tabName;		
 							}
 						}
+					}
+				});
+				
+				$j(".linkPlaceCompare").click(function() {
+					var tabName = $j(this).text();
+					var numTab = 0;
+					
+					if(tabName.length > 20){
+						tabName = tabName.substring(0,17) + "...";
+					}
+					
+					//Check if already exist a tab with this person
+					var tabExist = false;
+					$j("#tabs ul li a").each(function(){
+						if(!tabExist){
+							if(this.text != ""){
+								numTab++;
+							}
+						}
+						if(this.text == tabName){
+							tabExist = true;
+						}
+					});
+					
+					if(!tabExist){
+						$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+						$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+						return false;
+					}else{
+						$j("#tabs").tabs("select", numTab);
+						return false;
 					}
 				});
 				

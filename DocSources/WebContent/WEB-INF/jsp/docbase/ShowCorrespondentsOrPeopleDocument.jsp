@@ -49,7 +49,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.senderPlace.placeAllId != 53384 && document.senderPlace.placeAllId != 55627 && document.senderPlace.placeAllId != 54332}">
-					<div class="item37">Sender Location</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a> ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item37">Sender Location</div> <div class="value80"><a class="linkPlace" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a> ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.senderPlace.placeAllId == 53384 || document.senderPlace.placeAllId == 55627 || document.senderPlace.placeAllId == 54332 }">
 					<div class="item37">Sender Location</div> <div class="value80">${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPlace.placeAllId != 53384 && document.recipientPlace.placeAllId != 55627 && document.recipientPlace.placeAllId != 54332}">
-					<div class="item37">Recipient Location</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a> ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item37">Recipient Location</div> <div class="value80"><a class="linkPlace" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a> ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
 					<div class="item37">Recipient Location</div> <div class="value80">${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
@@ -155,6 +155,37 @@
 				
 				if(!tabExist){
 					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
+			
+			$j(".linkPlace").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{

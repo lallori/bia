@@ -1974,9 +1974,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					topicsPlaceIdQuery.append(" AND ");
 				}
 				if(topicsPlaceId.get(i) > 0){
-					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeAllId=");
+					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
-					topicsPlaceIdQuery.append(')');
+					topicsPlaceIdQuery.append("))");
 				}else{
 					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
 					topicsPlaceQuery.append(topicsPlace.get(i));

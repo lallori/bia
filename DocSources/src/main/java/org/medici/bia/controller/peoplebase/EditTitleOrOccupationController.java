@@ -52,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit single Title Or Occupation".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/peoplebase/EditTitleOrOccupation")
@@ -101,15 +102,15 @@ public class EditTitleOrOccupationController {
 
 			try {
 				if (command.getTitleOccId().equals(0)) {
-					getPeopleBaseService().addNewTitleOrOccupation(titleOccsList);
+					titleOccsList = getPeopleBaseService().addNewTitleOrOccupation(titleOccsList);
 				} else {
-					getPeopleBaseService().editTitleOrOccupation(titleOccsList);
+					titleOccsList = getPeopleBaseService().editTitleOrOccupation(titleOccsList);
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowPerson", model);
 			}
-
+			model.put("titleOccsList", titleOccsList);
 			return new ModelAndView("peoplebase/ShowTitleOrOccupation", model);
 		}
 
@@ -136,6 +137,14 @@ public class EditTitleOrOccupationController {
 			command.setTitleOcc(null);
 			command.setTitleVariants(null);
 			command.setRoleCatId(null);
+			
+			try{
+				List<RoleCat> roleCats = getPeopleBaseService().getRoleCat();
+				model.put("roleCat", roleCats);
+			}catch(ApplicationThrowable applicationThrowable){
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/EditTitleOrOccupation", model);
+			}
 		} else {
 			try {
 				TitleOccsList titleOccsList = getPeopleBaseService().findTitleOrOccupation(command.getTitleOccId());

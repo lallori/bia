@@ -20,10 +20,11 @@
 	</ul>
 	
 	<div id="volumeTitle">
-		<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
-		<h4>${volume.serieList}</h4>
-		<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
-		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+		<div id="text">
+			<h3>Mediceo del Principato Volume ${volume.volNum}${volume.volLetExt}</h3>
+			<h4>${volume.serieList}</h4>
+			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
 				<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
@@ -32,30 +33,43 @@
 			<c:if test="${volDocsRelated == 1}">
 				<p style="margin:10px 0 8px 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font></p>
 			</c:if>
+		</div>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+			<c:if test="${not empty image}">
+			<div id="SpineVolumeDigitDiv">
+				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+				<b>Volume Spine</b>
+				<a id="ShowVolumeInManuscriptViewer" title="Show in Manuscript Viewer" title="Show in Manuscript Viewer" href="${ShowVolumeInManuscriptViewerURL}"></a>
+				<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
+			</div>
+			</c:if>
+			<c:if test="${empty image && volume.digitized == false}">
+				<div id="SpineVolumeNotDigitDiv">
+					<span>To be digitized</span>
+				</div>
+			</c:if>
+			<c:if test="${empty image && volume.digitized == true}">
+				<div id="SpineVolumeNotDigitDiv">
+					<span>Spine not available</span>						
+				</div>
+			</c:if>
+		</security:authorize>
+				<!-- <div id="SpineVolumeDiv">
+				<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
+				<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
+				</div> -->
+			
+		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+			<div id="SpineVolumeNotDigitDiv">
+				<span class="register">To see this Volume you must register</span>
+			</div>
+		</security:authorize>
 	</div>
 	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
 			<h5>VOLUME DETAILS</h5>
 		</div>
-		
-		<c:if test="${not empty image}">
-			<div id="SpineVolumeDigitDiv">
-				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-				<b>Volume Spine</b>
-				<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
-			</div>
-		</c:if>
-		<c:if test="${empty image && volume.digitized == false}">
-			<div id="SpineVolumeNotDigitDiv">
-				<span>To be digitized</span>
-			</div>
-		</c:if>
-		<c:if test="${empty image && volume.digitized == true}">
-			<div id="SpineVolumeNotDigitDiv">
-				<span>Spine not available</span>
-			</div>
-		</c:if>
 		
 		<div class="listDetails">
 			<div class="row">

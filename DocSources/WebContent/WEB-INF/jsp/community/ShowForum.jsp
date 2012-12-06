@@ -482,6 +482,13 @@ Use the textbox below to search this forum.</p>
 <%--             	</c:if> --%>
 			<c:choose>
 				<c:when test="${forum.subType == 'DOCUMENT'}">
+					<c:if test="${forum.document != null}">
+						<p></p>
+						<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+							<c:param name="entryId" value="${forum.document.entryId}"/>
+						</c:url>
+						<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>
+					</c:if>
 					<div id="documentTable">
 						<div class="list">
 							<div class="rowFirst">
@@ -496,6 +503,28 @@ Use the textbox below to search this forum.</p>
 							</div>						
 				</c:when>
 				<c:otherwise>
+<!-- 				MD: Inserted the button to view the record on bia -->
+					<c:if test="${forum.place != null}">
+						<p></p>
+						<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+							<c:param name="placeAllId" value="${forum.place.placeAllId}"/>
+						</c:url>
+						<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord">Show record</a>
+					</c:if>
+					<c:if test="${forum.person != null}">
+						<p></p>
+						<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+							<c:param name="personId" value="${forum.person.personId}"/>
+						</c:url>
+						<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord">Show record</a>
+					</c:if>
+					<c:if test="${forum.volume != null}">
+						<p></p>
+						<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
+							<c:param name="summaryId" value="${forum.volume.summaryId}"/>
+						</c:url>
+						<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord">Show record</a>
+					</c:if>
 					<div id="forumTable">
 			    		<div class="list">
 			        		<div class="rowFirst">
@@ -846,6 +875,12 @@ Use the textbox below to search this forum.</p>
 						  }
 					  });
 					$j('#deleteModal').dialog('open');
+					return false;
+				});
+				
+				$j("#showRecord").click(function(){
+					window.opener.$j("#body_left").load($j(this).attr('href'));
+					window.opener.alert("ok");
 					return false;
 				});
 				

@@ -38,6 +38,7 @@ import org.springframework.validation.Validator;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class EditTitleOrOccupationValidator implements Validator {
@@ -114,8 +115,10 @@ public class EditTitleOrOccupationValidator implements Validator {
 		
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findTitleOccList(titleOccId) == null) {
-					errors.reject("personId", "error.titleOccId.notfound");
+				if(titleOccId != null && titleOccId != 0){
+					if (getPeopleBaseService().findTitleOccList(titleOccId) == null) {
+						errors.reject("personId", "error.titleOccId.notfound");
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				

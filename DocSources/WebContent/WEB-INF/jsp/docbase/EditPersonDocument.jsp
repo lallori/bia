@@ -8,6 +8,10 @@
 		<c:url var="EditCorrespondentsOrPeopleDocumentURL" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
+		
+		<c:url var="EditPeopleDocumentURL" value="/de/docbase/EditPeopleDocument.do">
+			<c:param name="entryId" value="${command.entryId}" />
+		</c:url>
 	</security:authorize>
 	<br>
 <%-- Loading div when saving the form  --%>
@@ -92,10 +96,30 @@
 			$j("#EditPersonDocumentForm").submit(function (){
 				$j("#loadingDiv2").css('height', $j("#loadingDiv2").parent().height());
 	        	$j("#loadingDiv2").css('visibility', 'visible');
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+	        	//If the section of correspondents is modified (BETA)
+// 				if($j("#modify").val() == 1){
+// 					if($j("#senderPeopleId, #recipientPeopleId").val() != "" && $j("#senderPeopleId").val() == $j("#recipientPeopleId").val()){
+// 						$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.questionSendRecip') });
+// 						return false;
+// 					}
+// 					if($j("#senderPlacePrefered").val() == 'V' || $j("#recipientPlacePrefered").val() == 'V'){
+// 						$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.notPrincipal') });
+// 						return false;
+// 					}else{
+// 						$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+// 			        	$j("#loadingDiv").css('visibility', 'visible');
+// 		 				$j.ajax({ type:"POST", url:'${EditCorrespondentsOrPeopleDocumentURL}', data:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
+// 								$j("#body_left").html(html);
+// 						}});
+// 		 				return false;
+// 					}
+// 				}
+	        	$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#fromPersonForm").val(1);
-					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
-				}})
+// 					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
+					$j("#EditPersonDocumentDiv").empty();
+					$j("#PeopleCorrespondentsDocumentDiv").load('${EditPeopleDocumentURL}');
+				}});
 				return false;
 			});
 		});					  

@@ -23,10 +23,10 @@
                 <div class="listForm">
                     <div class="row">
                         <div class="col_l">
-                            <label for="titleOcc" id="titleOccupationNameLabel">Title/Occupation Name</label>
+                            <form:label for="titleOcc" id="titleOccupationNameLabel" path="titleOcc">Title/Occupation Name</form:label>
                         </div>
                         <div class="col_r">
-                            <input id="titleOccupationName" name="titleOcc" class="input_33c" type="text" value="">
+                            <form:input id="titleOccupationName" name="titleOcc" path="titleOcc" class="input_33c" type="text" value="" />
                         </div>
                    </div>
                 	<div class="row">
@@ -81,7 +81,7 @@
 
 			$j("#EditTitleOrOccupationForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditTitleOccupationDiv").load('${EditTitleOrOccupationURL}');
+					$j("#EditTitleOccupationDiv").html(html)
 				}})
 				return false;
 			});
