@@ -9,8 +9,8 @@
 			<div id="usersuccess">
 					<h1>CONGRATULATIONS!</h1>
 					<p class="activsuccess">Your account has been created and awaits approval by an Administrator.<br/><br/>
-					You will be able to log as soon as you will receive the approvation by email. <br/><br/>
-					Thanks you!
+					You will be able to log on as soon as you will receive <br/>an approval response by email. <br/><br/>
+					Thank you!
 <%-- 					<a href="<c:url value="/"/>"><img src="<c:url value="/images/button_login.jpg"/>" alt="Login"/></a></p> --%>
 			</div>
 
