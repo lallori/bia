@@ -21,8 +21,8 @@
 		<h3>Message</h3>
 		<div class="list">
         	<div class="row">
-            	<div class="firstItem">From</div> 
-            	<div class="firstValue">${userMessage.sender}</div> 
+            	<div class="item">From</div> 
+            	<div class="value">${userMessage.sender}</div> 
        		</div>
         	<div class="row">
             	<div class="item">Subject</div> 
