@@ -27,6 +27,8 @@
  */
 package org.medici.bia.controller.user;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +51,9 @@ public class LoginUserController {
 	 * @return ModelAndView object pointing to LoginUser View
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
+	public ModelAndView setupForm(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("persistentAccessLogDisabled", Boolean.TRUE);
+
 		return new ModelAndView("LoginUser");
 	}
 }

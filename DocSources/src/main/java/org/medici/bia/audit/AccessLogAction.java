@@ -113,8 +113,8 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		AccessLog accessLog = (AccessLog) request.getAttribute("accessLog");
+	public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		AccessLog accessLog = (AccessLog) httpServletRequest.getAttribute("accessLog");
 
 		if (modelAndView != null) {
 			if (modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command") != null) {
@@ -140,10 +140,12 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 
 		accessLog.setExecutionTime(System.currentTimeMillis() - accessLog.getExecutionTime());
 
-		try {
-			getLogService().traceAccessLog(accessLog);
-		} catch (ApplicationThrowable applicationThrowable) {
-			logger.debug(applicationThrowable);
+		if (httpServletRequest.getAttribute("persistentAccessLogDisabled") == null) {
+			try {
+				getLogService().traceAccessLog(accessLog);
+			} catch (ApplicationThrowable applicationThrowable) {
+				logger.debug(applicationThrowable);
+			}
 		}
 
 		StringBuilder stringBuilder = new StringBuilder(10);
@@ -164,7 +166,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			logger.info(stringBuilder.toString());
 		}
 		
-		super.postHandle(request, response, handler, modelAndView);
+		super.postHandle(httpServletRequest, response, handler, modelAndView);
 	}
 
 	/**

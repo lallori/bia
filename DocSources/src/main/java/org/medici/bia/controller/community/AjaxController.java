@@ -81,8 +81,9 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/community/CheckNewMessages", method = RequestMethod.GET)
-	public ModelAndView checkNewMessages() {
+	public ModelAndView checkNewMessages(HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
+		httpServletRequest.setAttribute("persistentAccessLogDisabled", Boolean.TRUE);
 		
 		try{
 			Long numberOfNewMessages = getCommunityService().checkNewMessages();
