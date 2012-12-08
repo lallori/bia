@@ -100,7 +100,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			try {
 				getLogService().traceAccessLog(accessLog);
 			} catch (ApplicationThrowable applicationThrowable) {
-				logger.debug(applicationThrowable);
+				logger.error(applicationThrowable);
 			}
 
 			MDC.put("account", accessLog.getAccount());
