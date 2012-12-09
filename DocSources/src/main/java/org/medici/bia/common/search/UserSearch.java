@@ -1,5 +1,5 @@
 /*
- * UserMessageSearch.java
+ * UserSearch.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -29,8 +29,8 @@ package org.medici.bia.common.search;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.joda.time.DateTime;
+import org.medici.bia.common.util.DateUtils;
 
 /**
  * 
@@ -105,7 +105,12 @@ public class UserSearch implements GenericSearch {
 			jpaQuery.append("WHERE ");
 
 			if (getOnline() != null) {
-				jpaQuery.append(" (dateAndTime > (NOW() - INTERVAL 5 MINUTE) ) ");
+				DateTime dateTime = new DateTime(System.currentTimeMillis());
+				dateTime = dateTime.minusMinutes(5);
+				
+				jpaQuery.append(" (dateAndTime > '");
+				jpaQuery.append(DateUtils.getMYSQLDateTime(dateTime));
+				jpaQuery.append("')");
 			}
 		}
 		
