@@ -39,7 +39,6 @@ import javax.validation.constraints.Size;
  */
 public class RegisterUserCommand {
 	private String address;
-	@NotNull
 	private Boolean agree;
 	@NotNull
 	private String city;
