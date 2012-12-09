@@ -111,7 +111,7 @@ public class RegisterUserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") RegisterUserCommand command, HttpServletRequest httpServletRequest, BindingResult result) {
+	public ModelAndView processSubmit(HttpServletRequest httpServletRequest, @Valid @ModelAttribute("command") RegisterUserCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
