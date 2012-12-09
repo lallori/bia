@@ -16,12 +16,17 @@
 	<bean id="logValidatorAdvice" class="org.medici.bia.audit.LogValidatorAdvice" />
 
     <aop:config>
+        <!--  
         <aop:pointcut id="daoOperation" expression="execution(* org.medici.bia.dao..*DAO*.*(..))"/>
+		<aop:advisor pointcut-ref="daoOperation" advice-ref="logDAOAdvice" /> 
+		-->
+
         <aop:pointcut id="serviceOperation" expression="execution(* org.medici.bia.service..*Service*.*(..))"/>
-        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.bia.scheduler..*Job.*(..))"/>
-       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.bia.validator..*Validator.validate(..))"/>
-		<aop:advisor pointcut-ref="daoOperation" advice-ref="logDAOAdvice" />
 		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />
+
+        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.bia.scheduler..*Job.*(..))"/>
 		<aop:advisor pointcut-ref="validatorOperation" advice-ref="logValidatorAdvice" />
+
+       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.bia.validator..*Validator.validate(..))"/>
     </aop:config>
 </beans>

@@ -203,8 +203,16 @@ public class AdminServiceImpl implements AdminService {
 			userToUpdate.setApproved(user.getApproved());
 			getUserDAO().merge(userToUpdate);
 			
-			// TODO; Here we insert code to send mail to user...
+			// We need to set approved on ApprovationUser entity to send automatic user mail 
+			ApprovationUser approvationUser = getApprovationUserDAO().findByAccount(userToUpdate.getAccount());
 			
+			if (approvationUser != null) {
+				approvationUser.setApproved(Boolean.TRUE);
+				approvationUser.setApprovedDate(new Date());
+				
+				getApprovationUserDAO().merge(approvationUser);
+			}
+
 			return userToUpdate;
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -223,7 +231,16 @@ public class AdminServiceImpl implements AdminService {
 			
 			//Delete All new user's messages for other admin
 			getUserMessageDAO().removeApprovationMessages(userToUpdate);			
-			
+
+			// We need to set approved on ApprovationUser entity to send automatic user mail 
+			ApprovationUser approvationUser = getApprovationUserDAO().findByAccount(userToUpdate.getAccount());
+			if (approvationUser != null) {
+				approvationUser.setApproved(Boolean.TRUE);
+				approvationUser.setApprovedDate(new Date());
+				
+				getApprovationUserDAO().merge(approvationUser);
+			}
+
 			return userToUpdate;
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);

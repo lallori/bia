@@ -41,6 +41,7 @@ import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.log.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -79,33 +80,6 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 	 */
 	public LogService getLogService() {
 		return logService;
-	}
-
-	/**
-	 * 
-	 * @param event
-	 */
-	public void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof AuthorizationFailureEvent) {
-			logger.info("User not authenticated. ");
-		} else if (event instanceof AuthenticationSuccessEvent) {
-			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event.getSource());
-			AccessLog accessLog = new AccessLog();
-			accessLog.setAccount(userNamePasswordAuthenticationToken.getCredentials().toString());
-			accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
-			accessLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
-			accessLog.setAction("/loginProcess");
-			accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
-
-			try {
-				getLogService().traceAccessLog(accessLog);
-			} catch (ApplicationThrowable applicationThrowable) {
-				logger.error(applicationThrowable);
-			}
-
-			MDC.put("account", accessLog.getAccount());
-			logger.info(" Authentication OK");
-		}
 	}
 
 	/**

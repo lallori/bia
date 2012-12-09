@@ -31,9 +31,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.MDC;
 import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.util.GrantedAuthorityUtils;
+import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.User;
+import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.log.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -42,6 +48,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +68,23 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	@Autowired
 	private UserDAO userDAO;
 
+	@Autowired
+	private LogService logService;
+
+	/**
+	 * @return the logService
+	 */
+	public LogService getLogService() {
+		return logService;
+	}
+
+	/**
+	 * @param logService the logService to set
+	 */
+	public void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+
 	/**
 	 * @return the userDAO
 	 */
@@ -77,9 +101,9 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
 		try {
-			super.additionalAuthenticationChecks(userDetails, authentication);
+			super.additionalAuthenticationChecks(userDetails, usernamePasswordAuthenticationToken);
 
 			User user = getUserDAO().findUser(userDetails.getUsername());
 
@@ -104,6 +128,22 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 			user.setBadLogin(0);
 		
 			getUserDAO().merge(user);
+
+			AccessLog accessLog = new AccessLog();
+			accessLog.setAccount(userDetails.getUsername());
+			accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
+			accessLog.setIpAddress(((WebAuthenticationDetails) usernamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
+			accessLog.setAction("/loginProcess");
+			
+			accessLog.setAuthorities(UserRoleUtils.toString(user.getUserRoles()));
+
+			try {
+				getLogService().traceAccessLog(accessLog);
+			} catch (ApplicationThrowable applicationThrowable) {
+				logger.error(applicationThrowable);
+			}
+
+			logger.info(" Authentication OK");
 		} catch (AuthenticationException authenticationException) {
 			User user = getUserDAO().findUser(userDetails.getUsername());
 

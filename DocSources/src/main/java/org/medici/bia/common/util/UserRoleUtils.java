@@ -28,6 +28,8 @@
 package org.medici.bia.common.util;
 
 import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.lang.WordUtils;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserRole;
@@ -40,26 +42,6 @@ import org.medici.bia.domain.UserRole;
  *
  */
 public class UserRoleUtils {
-	/**
-	 * Give an email address in input it checks the correct email format.
-	 * 
-	 * @param input Email address to check.
-	 * @return true if the input parameter is in email format, false otherwise.
-	 */
-	public static String toDescriptionString(UserRole userRole) {
-		if (userRole == null) {
-			return "";
-		}
-
-		String descriptionString =  WordUtils.capitalize(userRole.toString().replaceAll("[_]", " ").toLowerCase());
-		
-		if (descriptionString.endsWith("s")) {
-			descriptionString = descriptionString.substring(0, descriptionString.length()-1); 
-		}
-		
-		return descriptionString;
-	}
-
 	/**
 	 * This method will return the most significant role present in input
 	 * parameter userRoles.
@@ -100,5 +82,41 @@ public class UserRoleUtils {
 		}
 		
 		return mostSignificantRole;
+	}
+
+	/**
+	 * Give an email address in input it checks the correct email format.
+	 * 
+	 * @param input Email address to check.
+	 * @return true if the input parameter is in email format, false otherwise.
+	 */
+	public static String toDescriptionString(UserRole userRole) {
+		if (userRole == null) {
+			return "";
+		}
+
+		String descriptionString =  WordUtils.capitalize(userRole.toString().replaceAll("[_]", " ").toLowerCase());
+		
+		if (descriptionString.endsWith("s")) {
+			descriptionString = descriptionString.substring(0, descriptionString.length()-1); 
+		}
+		
+		return descriptionString;
+	}
+
+	/**
+	 * 
+	 * @param userRoles
+	 * @return
+	 */
+	public static String toString(Set<UserRole> userRoles) {
+		StringBuilder stringBuilder = new StringBuilder("[");
+		for (UserRole userRole : userRoles) {
+			stringBuilder.append(userRole.getUserAuthority().toString());
+			stringBuilder.append(',');
+		}
+		stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(), "]");
+
+		return stringBuilder.toString();
 	}
 }
