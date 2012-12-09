@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.SearchFromLast;
@@ -82,7 +84,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/user/ajax/IsAccountAvailable", method = RequestMethod.GET)
-	public @ResponseBody String checkAccount(@RequestParam("account") String account) {
+	public @ResponseBody String checkAccount(HttpServletRequest httpServletRequest, @RequestParam("account") String account) {
 		try {
 			return (getUserService().isAccountAvailable(account)).toString();
 		} catch (ApplicationThrowable aex) {
@@ -467,8 +469,9 @@ public class AjaxController {
 	 * @return ModelAndView containing country result list.
 	 */
 	@RequestMapping(value = "/user/ajax/FindCountries", method = RequestMethod.GET)
-	public ModelAndView searchCountries(@RequestParam("query") String name) {
+	public ModelAndView searchCountries(@RequestParam("query") String name, HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
+		httpServletRequest.setAttribute("persistentAccessLogDisabled", Boolean.TRUE);
 
 		try {
 			List<Country> countries = getUserService().findCountries(name);

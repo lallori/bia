@@ -111,11 +111,11 @@ public class RegisterUserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") RegisterUserCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") RegisterUserCommand command, HttpServletRequest httpServletRequest, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return setupForm(command);
+			return setupForm(httpServletRequest, command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>(0);
 
@@ -149,8 +149,9 @@ public class RegisterUserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(RegisterUserCommand command) {
+	public ModelAndView setupForm(HttpServletRequest httpServletRequest, RegisterUserCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
+		httpServletRequest.setAttribute("persistentAccessLogDisabled", Boolean.TRUE);
 
 		model.put("command", command);
 		model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
