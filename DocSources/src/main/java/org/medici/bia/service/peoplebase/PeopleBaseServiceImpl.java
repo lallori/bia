@@ -76,6 +76,7 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
+import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.AltName;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
@@ -94,6 +95,7 @@ import org.medici.bia.domain.AltName.NameType;
 import org.medici.bia.domain.People.Gender;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,6 +172,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -188,6 +193,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new alternative name", Action.MODIFY, Category.PEOPLE, altNameToPersist.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new alternative name", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, altNameToPersist.getPerson()));
 
 			return altNameToPersist.getPerson();
 		} catch (Throwable th) {
@@ -211,6 +217,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add children", Action.MODIFY, Category.PEOPLE, parent.getParent()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add children", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -234,6 +241,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add father", Action.MODIFY, Category.PEOPLE, parent.getParent()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add father", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -259,6 +267,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add marriage", Action.MODIFY, Category.PEOPLE, marriage.getHusband()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add marriage", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, marriage.getHusband()));
 
 			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
 			return marriage.getHusband();
@@ -283,6 +292,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add mother", Action.MODIFY, Category.PEOPLE, parent.getParent()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add mother", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -412,6 +422,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add person", Action.CREATE, Category.PEOPLE, person));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add person", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, person));
 
 			return person;
 		} catch (Throwable th) {
@@ -459,6 +470,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, forum));
 			}else if(forum.getLogicalDelete()){
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
 				
@@ -472,7 +484,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
-
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, forum));
 			}
 
 			return forum;
@@ -559,6 +571,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new title or occupation", Action.MODIFY, Category.PEOPLE, poLinkToCreate.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new title or occupation", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, poLinkToCreate.getPerson()));
 
 			return poLinkToCreate.getPerson();
 		} catch (Throwable th) {
@@ -623,6 +636,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete child", Action.MODIFY, Category.PEOPLE, childToDelete.getParent()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete child", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, childToDelete.getParent()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -645,6 +659,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete father", Action.MODIFY, Category.PEOPLE, parentToDelete.getChild()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete father", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parentToDelete.getParent()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -667,6 +682,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete mother", Action.MODIFY, Category.PEOPLE, parentToDelete.getChild()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete mother", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parentToDelete.getParent()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -688,6 +704,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete alternative name", Action.MODIFY, Category.PEOPLE, altName.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete alternative name", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, altName.getPerson()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -714,6 +731,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Deleted person", Action.DELETE, Category.PEOPLE, personToDelete));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, personToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -738,6 +756,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete spouse", Action.MODIFY, Category.PEOPLE, marriageToDelete.getHusband()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete spouse", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, marriageToDelete.getHusband()));
 			
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -760,6 +779,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete title or occupation", Action.MODIFY, Category.PEOPLE, poLinkToDelete.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete title or occupation", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, poLinkToDelete.getPerson()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -786,6 +806,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit child", Action.MODIFY, Category.PEOPLE, parent.getChild()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit child", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getChild()));
 
 			return parentToUpdate;
 		} catch (Throwable th) {
@@ -945,6 +966,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details", Action.MODIFY,Category.PEOPLE, personToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, personToUpdate));
 
 			return personToUpdate;
 		} catch (Throwable th) {
@@ -973,6 +995,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit father", Action.MODIFY, Category.PEOPLE, parent.getChild()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit father", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getChild()));
 			return parentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1009,6 +1032,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit marriage", Action.MODIFY, Category.PEOPLE, marriageToUpdate.getHusband()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit marriage", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, marriageToUpdate.getHusband()));
 
 			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
 			return marriage;
@@ -1038,6 +1062,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit mother", Action.MODIFY, Category.PEOPLE, parent.getChild()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit mother", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, parent.getChild()));
 
 			return parentToUpdate;
 		} catch (Throwable th) {
@@ -1066,6 +1091,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit alternative name", Action.MODIFY, Category.PEOPLE, altName.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit alternative name", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, altName.getPerson()));
 			return altName.getPerson();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1088,6 +1114,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit option portrait", Action.MODIFY, Category.PEOPLE, person));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit option portrait", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, person));
 			return personToUpdate;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -1110,6 +1137,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit researh notes", Action.MODIFY, Category.PEOPLE, person));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit researh notes", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, person));
 			return personToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1202,6 +1230,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit title or occupation", Action.MODIFY, Category.PEOPLE, poLink.getPerson()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit title or occupation", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, poLink.getPerson()));
 
 			return poLinkToUpdate.getPerson();
 		} catch (Throwable th) {
@@ -1903,6 +1932,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
+
 	}
 
 	/**
@@ -2419,6 +2449,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public void setUserMarkedListElementDAO(
 			UserMarkedListElementDAO userMarkedListElementDAO) {
 		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
 	}
 
 	/**
