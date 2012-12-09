@@ -109,7 +109,7 @@ public class UserRoleUtils {
 	 * @param userRoles
 	 * @return
 	 */
-	public static String toString(Set<UserRole> userRoles) {
+	public static String toString(List<UserRole> userRoles) {
 		StringBuilder stringBuilder = new StringBuilder("[");
 		for (UserRole userRole : userRoles) {
 			stringBuilder.append(userRole.getUserAuthority().toString());

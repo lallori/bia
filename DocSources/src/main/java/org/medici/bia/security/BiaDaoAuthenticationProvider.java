@@ -29,6 +29,7 @@ package org.medici.bia.security;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.MDC;
@@ -36,11 +37,14 @@ import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.GrantedAuthorityUtils;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.log.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -67,6 +71,23 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 
 	@Autowired
 	private UserDAO userDAO;
+
+	@Autowired
+	private UserRoleDAO userRoleDAO;
+	
+	/**
+	 * @return the userRoleDAO
+	 */
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+
+	/**
+	 * @param userRoleDAO the userRoleDAO to set
+	 */
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
 
 	@Autowired
 	private LogService logService;
@@ -103,6 +124,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
 		try {
+			Long startTime = System.currentTimeMillis();
 			super.additionalAuthenticationChecks(userDetails, usernamePasswordAuthenticationToken);
 
 			User user = getUserDAO().findUser(userDetails.getUsername());
@@ -135,7 +157,10 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 			accessLog.setIpAddress(((WebAuthenticationDetails) usernamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
 			accessLog.setAction("/loginProcess");
 			
-			accessLog.setAuthorities(UserRoleUtils.toString(user.getUserRoles()));
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(user.getAccount());
+			accessLog.setAuthorities(UserRoleUtils.toString(userRoles));
+			accessLog.setExecutionTime(System.currentTimeMillis() - startTime);
+			accessLog.setHttpMethod(HttpMethod.POST.toString());
 
 			try {
 				getLogService().traceAccessLog(accessLog);
