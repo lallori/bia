@@ -62,6 +62,7 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
+import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
@@ -79,6 +80,7 @@ import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMarkedList;
 import org.medici.bia.domain.UserMarkedListElement;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -130,14 +132,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private UserDAO userDAO;
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
-
 	@Autowired
 	private UserMarkedListDAO userMarkedListDAO;
-
 	@Autowired
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -198,6 +201,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create document", Action.CREATE, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Create document", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
 			return document;
 		} catch (Throwable th) {
@@ -240,6 +244,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
 
 			return forum;
@@ -267,6 +272,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new extract", Action.MODIFY, Category.DOCUMENT, synExtract.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtract.getDocument()));
 
 			return synExtract.getDocument();
 		} catch (Throwable th) {
@@ -289,6 +295,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new fact checks", Action.MODIFY, Category.DOCUMENT, factChecks.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, factChecks.getDocument()));
 
 			// We need to refresh linked document entity state, otherwise factChecks property will be null
 			getDocumentDAO().refresh(factChecks.getDocument());
@@ -317,6 +324,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new person", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLink.getDocument()));
 
 			return epLink.getDocument();
 		} catch (Throwable th) {
@@ -358,6 +366,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLink.getDocument()));
 
 			return eplToLink.getDocument();
 		} catch (Throwable th) {
@@ -458,6 +467,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Deleted document", Action.DELETE, Category.DOCUMENT, documentToDelete));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Deleted document", org.medici.bia.domain.VettingHistory.Action.DELETE, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -481,6 +491,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -503,6 +514,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Unlink topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -549,7 +561,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkToDelete.getPerson().setEpLink(null);
 						getEpLinkDAO().remove(epLinkToDelete);
 
-						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+						getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToDelete.getDocument()));
 					}
 					documentToUpdate.setSenderPeople(null);
 					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
@@ -605,6 +618,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 						getEpLinkDAO().remove(epLinkToDelete);
 
 						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+						getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToDelete.getDocument()));
 					}
 					documentToUpdate.setRecipientPeople(null);
 					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
@@ -632,6 +646,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 		
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit Correspondents", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToUpdate));
 
 			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
@@ -733,7 +748,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit Details", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
-			
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit Details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToUpdate));
+		
 			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -763,6 +779,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -792,6 +809,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract or synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -814,6 +832,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit fact checks", Action.MODIFY, Category.DOCUMENT, factChecksToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, factChecksToUpdate.getDocument()));
 
 			return factChecksToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -840,6 +859,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit person linked", Action.MODIFY, Category.DOCUMENT, epLinkToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit person linked", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToUpdate.getDocument()));
 
 			return epLinkToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -868,6 +888,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
 
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -907,6 +928,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit topic linked", Action.MODIFY, Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit topic linked", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
 
 			return eplToLinkToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -1445,6 +1467,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return volumeDAO;
 	}
 
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
 	/**
 	 * {@inheritDoc}
 	 */
