@@ -170,11 +170,19 @@ public class UserServiceImpl implements UserService {
 			activationUser.setActivationIPAddress(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRemoteAddr());
 			getActivationUserDAO().merge(activationUser);
 			
-			ApprovationUser approvationUser = new ApprovationUser(user);
-			approvationUser.setMessageSended(Boolean.FALSE);
-			approvationUser.setApproved(Boolean.FALSE);
-			approvationUser.setMailSended(Boolean.FALSE);
-			getApprovationUserDAO().persist(approvationUser);
+			ApprovationUser approvationUser = getApprovationUserDAO().find(user.getAccount());
+			if (approvationUser != null) {
+				approvationUser.setMessageSended(Boolean.FALSE);
+				approvationUser.setApproved(Boolean.FALSE);
+				approvationUser.setMailSended(Boolean.FALSE);
+				getApprovationUserDAO().merge(approvationUser);
+			} else {
+				approvationUser = new ApprovationUser(user);
+				approvationUser.setMessageSended(Boolean.FALSE);
+				approvationUser.setApproved(Boolean.FALSE);
+				approvationUser.setMailSended(Boolean.FALSE);
+				getApprovationUserDAO().persist(approvationUser);
+			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
