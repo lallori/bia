@@ -43,6 +43,7 @@ import javax.naming.Name;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.LdapUtils;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
@@ -603,6 +604,15 @@ public class UserDAOLdapImpl implements UserDAO {
 		for (UserRole singleRole : userRoles) {
 			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchMYSQL(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

@@ -34,6 +34,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.TooManyUsersException;
@@ -168,5 +169,13 @@ public interface UserDAO extends Serializable {
 	 * @param user a {@link java.util.List} object
 	 */
 	void removeUserRoles(String account, List<UserRole> userRoles);
+
+	/**
+	 * 
+	 * @param userSearch
+	 * @param paginationFilter
+	 * @return
+	 */
+	Page searchMYSQL(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter);
 
 }

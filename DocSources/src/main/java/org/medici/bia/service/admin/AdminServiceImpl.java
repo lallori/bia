@@ -41,6 +41,8 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.AccessLogSearch;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
@@ -197,15 +199,17 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User approveUser(User user) throws ApplicationThrowable {
+	public User approveNewUser(User user) throws ApplicationThrowable {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount());
 			userToUpdate.setApproved(user.getApproved());
 			getUserDAO().merge(userToUpdate);
 			
+			//Delete All new user's messages for other admin
+			getUserMessageDAO().removeApprovationMessages(userToUpdate);			
+
 			// We need to set approved on ApprovationUser entity to send automatic user mail 
 			ApprovationUser approvationUser = getApprovationUserDAO().findByAccount(userToUpdate.getAccount());
-			
 			if (approvationUser != null) {
 				approvationUser.setApproved(Boolean.TRUE);
 				approvationUser.setApprovedDate(new Date());
@@ -223,17 +227,15 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User approveNewUser(User user) throws ApplicationThrowable {
+	public User approveUser(User user) throws ApplicationThrowable {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount());
 			userToUpdate.setApproved(user.getApproved());
 			getUserDAO().merge(userToUpdate);
 			
-			//Delete All new user's messages for other admin
-			getUserMessageDAO().removeApprovationMessages(userToUpdate);			
-
 			// We need to set approved on ApprovationUser entity to send automatic user mail 
 			ApprovationUser approvationUser = getApprovationUserDAO().findByAccount(userToUpdate.getAccount());
+			
 			if (approvationUser != null) {
 				approvationUser.setApproved(Boolean.TRUE);
 				approvationUser.setApprovedDate(new Date());
@@ -516,6 +518,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the activationUserDAO
+	 */
+	public ActivationUserDAO getActivationUserDAO() {
+		return activationUserDAO;
+	}
+
+	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
@@ -618,6 +627,18 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchUser(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserDAO().searchMYSQL(searchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void sendApprovationMessage(List<ApprovationUser> approvationUsers) throws ApplicationThrowable {
 		try {
 			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
@@ -687,13 +708,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @return the activationUserDAO
-	 */
-	public ActivationUserDAO getActivationUserDAO() {
-		return activationUserDAO;
-	}
-
-	/**
 	 * @param applicationPropertyDAO
 	 *            the applicationPropertyDAO to set
 	 */
@@ -723,13 +737,13 @@ public class AdminServiceImpl implements AdminService {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
-
 	/**
 	 * @param userAuthorityDAO the userAuthorityDAO to set
 	 */
 	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
 		this.userAuthorityDAO = userAuthorityDAO;
 	}
+	
 	/**
 	 * @param userDAO the userDAO to set
 	 */
@@ -747,7 +761,7 @@ public class AdminServiceImpl implements AdminService {
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

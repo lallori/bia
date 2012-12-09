@@ -36,6 +36,7 @@ import java.util.Map;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AccessLogSearch;
+import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.User;
@@ -71,6 +72,53 @@ public class AjaxController {
 	
 	/**
 	 * 
+	 * @param alias
+	 * @param model
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/admin/SearchAccessLog.json", method = RequestMethod.GET)
+	public ModelAndView searchAccessLog(@RequestParam(value="account", required=false) String account,
+								@RequestParam(value="action", required=false) String action,
+								@RequestParam(value="fromDate", required=false) String fromDate,
+								@RequestParam(value="toDate", required=false) String toDate,
+								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+					   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Page page = null;
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.ACCESS_LOG);
+
+		try {
+			AccessLogSearch accessLogSearch = new AccessLogSearch(account, action, fromDate, toDate);
+
+			// Paging results...
+			page = getAdminService().searchAccessLog(accessLogSearch, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList(0);
+		for(AccessLog currentAccessLog : (List<AccessLog>) page.getList()){
+			List singleRow = new ArrayList(0);
+			singleRow.add(currentAccessLog.getAction());
+			singleRow.add(currentAccessLog.getHttpMethod());
+			singleRow.add(currentAccessLog.getAccount());
+			singleRow.add(currentAccessLog.getDateAndTime());
+			resultList.add(HtmlUtils.showAccessLog(singleRow, currentAccessLog.getIdAccessLog()));
+		}
+
+		model.put("iEcho", 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK",model);
+	}
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 */
@@ -95,6 +143,60 @@ public class AjaxController {
 		}
 		model.put("operation", "KO");
 		return new ModelAndView("responseKO", model);
+	}
+
+	/**
+	 * 
+	 * @param alias
+	 * @param model
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/admin/WhoIsOnline.json", method = RequestMethod.GET)
+	public ModelAndView whoIsOnline(@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+					   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Page page = null;
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		UserSearch userSearch = new UserSearch();
+		userSearch.setOnline(Boolean.TRUE);
+
+		try {
+			// Paging results...
+			page = getAdminService().searchUser(userSearch, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		// Ordering results... 
+		// LP : la gestione dell'ordinamento va spostata nel blocco metodo del dao invocato nel service
+		PropertyComparator.sort(page.getList(), new MutableSortDefinition("firstName", true, true));
+		page.setList(Collections.unmodifiableList(page.getList()));
+
+		List resultList = new ArrayList(0);
+		for(User currentUser : (List<User>) page.getList()){
+			List singleRow = new ArrayList(0);
+			singleRow.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+			singleRow.add(currentUser.getMail());
+			singleRow.add(currentUser.getCity());
+			singleRow.add(currentUser.getCountry());
+			if (currentUser.getLastLoginDate() != null) {
+				singleRow.add(currentUser.getLastLoginDate().toString());
+			} else {
+				singleRow.add("");
+			}
+			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
+		}
+
+		model.put("iEcho", 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK",model);
 	}
 	
 	/**
@@ -149,53 +251,6 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
-		}
-
-		model.put("iEcho", 1);
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-
-		return new ModelAndView("responseOK",model);
-	}
-
-	/**
-	 * 
-	 * @param alias
-	 * @param model
-	 * @return
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/admin/SearchAccessLog.json", method = RequestMethod.GET)
-	public ModelAndView searchAccessLog(@RequestParam(value="account", required=false) String account,
-								@RequestParam(value="action", required=false) String action,
-								@RequestParam(value="fromDate", required=false) String fromDate,
-								@RequestParam(value="toDate", required=false) String toDate,
-								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
-					   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		Page page = null;
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.ACCESS_LOG);
-
-		try {
-			AccessLogSearch accessLogSearch = new AccessLogSearch(account, action, fromDate, toDate);
-
-			// Paging results...
-			page = getAdminService().searchAccessLog(accessLogSearch, paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List resultList = new ArrayList(0);
-		for(AccessLog currentAccessLog : (List<AccessLog>) page.getList()){
-			List singleRow = new ArrayList(0);
-			singleRow.add(currentAccessLog.getAction());
-			singleRow.add(currentAccessLog.getHttpMethod());
-			singleRow.add(currentAccessLog.getAccount());
-			singleRow.add(currentAccessLog.getDateAndTime());
-			resultList.add(HtmlUtils.showAccessLog(singleRow, currentAccessLog.getIdAccessLog()));
 		}
 
 		model.put("iEcho", 1);

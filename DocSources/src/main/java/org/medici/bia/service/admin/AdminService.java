@@ -34,6 +34,8 @@ import java.util.Map;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AccessLogSearch;
+import org.medici.bia.common.search.Search;
+import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
@@ -63,7 +65,7 @@ public interface AdminService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	User approveUser(User user) throws ApplicationThrowable;
+	User approveNewUser(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -71,7 +73,7 @@ public interface AdminService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	User approveNewUser(User user) throws ApplicationThrowable;
+	User approveUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -184,6 +186,15 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	Page searchAccessLog(AccessLogSearch accessLogSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Page searchUser(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
