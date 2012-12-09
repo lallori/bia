@@ -60,7 +60,7 @@ public class ShowWhoIsOnlineController {
 		return validator;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit() {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
