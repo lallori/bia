@@ -162,12 +162,9 @@ public class AjaxController {
 		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
-		UserSearch userSearch = new UserSearch();
-		userSearch.setOnline(Boolean.TRUE);
-
 		try {
 			// Paging results...
-			page = getAdminService().searchUser(userSearch, paginationFilter);
+			page = getAdminService().searchWhoIsOnline(paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 

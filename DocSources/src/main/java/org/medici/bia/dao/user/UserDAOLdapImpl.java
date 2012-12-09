@@ -616,6 +616,15 @@ public class UserDAOLdapImpl implements UserDAO {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchWhoIsOnline(PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
 	 * @param ldapConfiguration
 	 *            the ldapConfiguration to set
 	 */

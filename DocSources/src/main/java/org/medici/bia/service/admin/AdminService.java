@@ -209,4 +209,6 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable;
+
+	Page searchWhoIsOnline(PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

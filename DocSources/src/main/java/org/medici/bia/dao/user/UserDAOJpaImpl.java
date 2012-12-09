@@ -27,7 +27,6 @@
  */
 package org.medici.bia.dao.user;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -36,11 +35,13 @@ import javax.persistence.Query;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.PaginationFilter.Order;
 import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.search.UserSearch;
+import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.User;
@@ -67,12 +68,12 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 */
 	private static final long serialVersionUID = 7451782750559737877L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
+	
 	@Autowired
 	@Qualifier("passwordEncoder")
 	private PasswordEncoder passwordEncoder;
-
-	
-	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * {@inheritDoc}
@@ -560,6 +561,57 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		}
 		
 		String jpql = objectsQuery + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		// We set pagination  
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchWhoIsOnline(PaginationFilter paginationFilter) {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+
+		String baseQuery  = " FROM User user, AccessLog accessLog WHERE user.account = accessLog.account and (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "')";
+	
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(DISTINCT user) " + baseQuery;
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		// We manage sorting (this manages sorting on multiple fields)
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append("user.");
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(" ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = "SELECT DISTINCT(user) " +baseQuery + orderBySQL.toString();
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  

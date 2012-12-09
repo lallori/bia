@@ -178,4 +178,6 @@ public interface UserDAO extends Serializable {
 	 */
 	Page searchMYSQL(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter);
 
+	Page searchWhoIsOnline(PaginationFilter paginationFilter);
+
 }

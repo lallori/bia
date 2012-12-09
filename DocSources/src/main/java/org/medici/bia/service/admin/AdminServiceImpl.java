@@ -639,6 +639,18 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchWhoIsOnline(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserDAO().searchWhoIsOnline(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void sendApprovationMessage(List<ApprovationUser> approvationUsers) throws ApplicationThrowable {
 		try {
 			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
@@ -729,7 +741,6 @@ public class AdminServiceImpl implements AdminService {
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
-
 	/**
 	 * 
 	 * @param passwordEncoder
@@ -737,6 +748,7 @@ public class AdminServiceImpl implements AdminService {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+	
 	/**
 	 * @param userAuthorityDAO the userAuthorityDAO to set
 	 */
@@ -757,7 +769,7 @@ public class AdminServiceImpl implements AdminService {
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
 	}
-	
+
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
 	}

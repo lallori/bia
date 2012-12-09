@@ -49,6 +49,7 @@ public class AccessLogSearch implements Search {
 	private Date toDate;
 	private String account;
 	private String action;
+	private Boolean online;
 
 	private static Logger logger = Logger.getLogger(AccessLogSearch.class);
 	
@@ -144,13 +145,27 @@ public class AccessLogSearch implements Search {
 		return action;
 	}
 
+	/**
+	 * @param online the online to set
+	 */
+	public void setOnline(Boolean online) {
+		this.online = online;
+	}
+
+	/**
+	 * @return the online
+	 */
+	public Boolean getOnline() {
+		return online;
+	}
+
 	@Override
 	public Boolean empty() {
 		if ((StringUtils.isNotEmpty(account)) || 
 			(StringUtils.isNotEmpty(action)) ||
 			(fromDate != null) || 
-			(toDate != null)
-			) {
+			(toDate != null) ||
+			(online != null)) {
 			return Boolean.FALSE;
 		}
 

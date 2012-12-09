@@ -54,7 +54,37 @@
 			return false;
 		});
 		$j("#whoIsOnline").click(function(){
-			$j("#body_right").load($j(this).attr("href"));
+			var tabN = $j(this).text();
+			tabName = 'Who is Online' 
+			tabName += tabN;
+			var numTab = 0;
+			
+			if(tabName.length > 20){
+				tabName = tabName.substring(0,17) + "...";
+			}
+			
+			//Check if already exist a tab with this Volume
+			var tabExist = false;
+			$j("#tabs ul li a").each(function(){
+				if(!tabExist){
+					if(this.text != ""){
+						numTab++;
+					}
+				}
+				if(this.text == tabName){
+					tabExist = true;
+				}
+			});
+			
+			if(!tabExist){
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			}else{
+				$j("#tabs").tabs("select", numTab);
+				return false;
+			}
+
 			Modalbox.hide();
 			return false;
 		});
