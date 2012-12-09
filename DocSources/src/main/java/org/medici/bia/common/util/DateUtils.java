@@ -35,6 +35,7 @@ import java.util.Date;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.medici.bia.domain.Month;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -507,5 +508,18 @@ public class DateUtils {
 		}
 		
 		return simpleDateFormat.format(inputDate);
+	}
+
+	/**
+	 * 
+	 * @param datesLastUpdate
+	 * @return
+	 */
+	public static String getMYSQLDateTime(DateTime dateTime) {
+		if (dateTime == null) {
+			dateTime = new DateTime();
+		}
+
+		return dateTime.toString("yyyy-MM-dd HH:mm:ss");
 	}
 }
