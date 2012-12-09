@@ -294,6 +294,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
 	</definition>
 	
+	<definition name="admin/ShowWhoIsOnline" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowWhoIsOnline.jsp"/>
+	</definition>
+	
 	<definition name="admin/ShowUserSearch" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserSearch.jsp"/>
 	</definition>

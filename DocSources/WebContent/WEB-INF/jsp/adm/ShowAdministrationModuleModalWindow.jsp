@@ -22,6 +22,10 @@
         <a id="accessLog" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
 	</div>
 	
+	<div id="accessLogDiv">
+        <a id="whoIsOnline" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is online</a>
+	</div>
+
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
@@ -46,6 +50,11 @@
 		
 		$j("#accessLog").click(function(){
 			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide();
+			return false;
+		});
+		$j("#whoIsOnline").click(function(){
+			$j("#body_right").load($j(this).attr("href"));
 			Modalbox.hide();
 			return false;
 		});
