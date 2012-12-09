@@ -57,6 +57,7 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
+import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
@@ -68,6 +69,7 @@ import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMarkedList;
 import org.medici.bia.domain.UserMarkedListElement;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
@@ -120,7 +122,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
-
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -188,6 +192,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create volume", Action.CREATE, Category.VOLUME, volume));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Create volume", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.VOLUME, volume));
 			
 			return volume;
 		} catch (Throwable th) {
@@ -233,6 +238,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
 
 			return forum;
@@ -333,6 +339,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete volume", Action.DELETE, Category.VOLUME, volumeToDelete));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete volume", org.medici.bia.domain.VettingHistory.Action.DELETE, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -363,6 +370,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit context", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit context", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -392,6 +400,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit correspondents", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit correspondents", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -437,6 +446,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit description", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit description", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -501,6 +511,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details", Action.MODIFY, Category.VOLUME, volumeToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -890,6 +901,20 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return volumeDAO;
 	}
 
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
 
 	/**
 	 * {@inheritDoc}
