@@ -165,6 +165,8 @@ public class MailServiceImpl implements MailService {
 				approvationUser.setMailSended(Boolean.TRUE);
 				approvationUser.setMailSendedDate(new Date());
 				getApprovationUserDAO().merge(approvationUser);
+			} else {
+				logger.error("Mail approved not sended for user " + approvationUser.getUser() + ". Check mail field on tblUser for account " + approvationUser.getUser());
 			}
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
