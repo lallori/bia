@@ -47,6 +47,26 @@ public class ForumUtils {
 
 	/**
 	 * 
+	 * @param messageBody
+	 * @return
+	 */
+	public static String abbreviateMessage(String messageBody){
+		Integer start;
+		Integer end;
+		StringBuffer cutBody = new StringBuffer("");
+		while(messageBody.contains("<blockquote>") && messageBody.contains("</blockquote>")){
+			start = messageBody.indexOf("<blockquote>");
+			end = messageBody.indexOf("</blockquote>");
+			cutBody.append(messageBody.substring(0, start));
+			cutBody.append(messageBody.substring(end + 13, messageBody.length()));
+			messageBody = cutBody.toString();
+		}
+		messageBody = messageBody.replaceAll("\\<.*?>","");
+		return messageBody;
+	}
+	
+	/**
+	 * 
 	 * @param forumResult
 	 * @param categoriesIds
 	 * @return

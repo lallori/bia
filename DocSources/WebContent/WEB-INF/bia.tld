@@ -54,4 +54,10 @@
         <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String searchTextResultPost(org.medici.bia.domain.ForumPost, java.lang.String)</function-signature>
     </function>
+    
+    <function>
+    	<name>abbreviateMessage</name>
+    	<function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
+    	<function-signature>java.lang.String abbreviateMessage(java.lang.String)</function-signature>
+    </function>
 </taglib>

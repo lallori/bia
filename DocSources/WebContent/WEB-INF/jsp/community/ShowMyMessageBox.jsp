@@ -51,8 +51,8 @@
 				<div class="row">	
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
 			</c:if>
-				<div class="two"><span class="subject">${currentMessage.subject}</span> - <span class="message">${currentMessage.body}</span></div>
-				<div class="three">${currentMessage.sendedDate}</div>
+				<div class="two"><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>"><span class="subject">${currentMessage.subject}</span> - <span class="message">${bia:abbreviateMessage(currentMessage.body)}</span></a></div>
+				<div class="three"><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sendedDate}</a></div>
 			</div>
 			</c:forEach>
 		</div>

@@ -125,4 +125,8 @@ public final class JSTLFunctions {
     public static String searchTextResultPost(ForumPost forumPost, String searchText){
     	return ForumUtils.searchTextResultPost(forumPost, searchText);
     }
+    
+    public static String abbreviateMessage(String messageBody){
+    	return ForumUtils.abbreviateMessage(messageBody);
+    }
 }

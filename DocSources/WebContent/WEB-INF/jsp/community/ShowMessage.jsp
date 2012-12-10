@@ -30,7 +30,7 @@
         	</div>
         	<div class="row">
         	    <div class="item">Message</div> 
-        	    <div class="value">${userMessage.body}</div> 
+        	    <div class="value" id="messageBody">${userMessage.body}</div> 
         	</div>
 		</div>
 	</div>
@@ -73,6 +73,11 @@
 // 				$j(".arrowForum").css('visibility','visible');
 // 				$j(".forum").css('visibility','visible');
 //    			}});
+
+			var block = $j("#messageBody").find("blockquote");
+			$j("#messageBody > blockquote").remove();
+			$j("#messageBody").append("<blockquote><p>" + $j(block).text() + "</p></blockquote>");
+			
 
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 
