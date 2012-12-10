@@ -4482,7 +4482,7 @@ ul#network a {
     margin-left: 95px; 
 }
 
-#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage, #administrationModalDiv #accessLog {
+#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage, #administrationModalDiv #accessLog, #administrationModalDiv #whoIsOnline {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4496,7 +4496,7 @@ ul#network a {
 	margin: 0px;
 }
 
-#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv {
+#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnline{
 	width: 215px;
 	margin: 15px 0 0 20px;
 }

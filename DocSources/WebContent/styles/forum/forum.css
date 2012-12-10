@@ -365,6 +365,16 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	background-color:#EFE0DE;
 }
 
+.col_r{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:right;
+}
+
+.col_l{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:left;
+}
+
 .one, .two, .three, .four, .five, .six { /* Columns */
 	display: table-cell;
 	text-align: left;
@@ -431,6 +441,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 #documentTable .list .six a img {
     float:left;
+	border:none;
 }
 
 /* Paleography Table */ 
@@ -856,10 +867,6 @@ input[type="submit"]:hover {
 	width: 237px;
 }
 
-#subjectLabel {
-	margin: 14px;
-}
-
 #topicLabel {
 	position: absolute;
 	margin: 75px 0 0 26px;
@@ -1086,11 +1093,6 @@ ul.abc li {
 	margin-top:10px;
 }
 
-#toLabel {
-	margin-left: 41px;
-	margin-right: 16px;
-}
-
 #messageLabel {
 	position: absolute;
 	margin: 75px 0 0 8px;
@@ -1177,6 +1179,11 @@ input[type="checkbox"] {
 
 .subject {
 	color: black;
+}
+
+.listMessages {
+	display: table;
+	margin-left:20px;
 }
 
 /* ---------- Message table ---------- */ 

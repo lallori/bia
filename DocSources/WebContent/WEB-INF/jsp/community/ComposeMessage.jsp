@@ -14,20 +14,29 @@
 <c:url var="MyInboxURL" value="/community/ShowMessagesByCategory.do?userMessageCategory=INBOX"/>
 
 <form:form id="composeMessageForm">
-	<div>
-        <form:label path="accountDescription" for="to" id="toLabel">To</form:label>
-        <form:input path="accountDescription" id="to" name="subject" class="input_25c" type="text" value=""/><!-- Autocompleter members -->
+	<div class="listMessages">
+		<div class="row">
+			<div class="col_r">
+	        	<form:label path="accountDescription" for="to" id="toLabel">To</form:label>
+	        </div>
+	        <div class="col_l">
+	        	<form:input path="accountDescription" id="to" name="subject" class="input_25c" type="text" value=""/><!-- Autocompleter members -->
+	        </div>
+	    </div>
+		<div class="row">
+			<div class="col_r">
+	        	<form:label path="subject" for="subject" id="subjectLabel">Subject</form:label>
+	        </div>
+	        <div class="col_l">
+	        	<form:input path="subject" id="subject" name="subject" class="input_25c" type="text" value=""/>
+	    	</div>
+	    </div>
+	    <div>
+			<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
+	    </div>
+    	<input type="submit" value="Send" class="buttonSmall" id="send">
+    	<a href="#" id="preview" class="buttonSmall">Preview</a>
     </div>
-	<div>
-        <form:label path="subject" for="subject" id="subjectLabel">Subject</form:label>
-        <form:input path="subject" id="subject" name="subject" class="input_25c" type="text" value=""/>
-    </div>
-    <div>
-		<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
-    </div>
-    <input type="submit" value="Send" class="buttonSmall" id="send">
-    <a href="#" id="preview" class="buttonSmall">Preview</a>
-    
     <form:hidden path="account"/>
     <form:hidden path="parentMessageId"/>
 </form:form>

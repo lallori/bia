@@ -22,8 +22,8 @@
         <a id="accessLog" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
 	</div>
 	
-	<div id="accessLogDiv">
-        <a id="whoIsOnline" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is online</a>
+	<div id="whoIsOnlineDiv">
+        <a id="whoIsOnline" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
 	</div>
 
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
