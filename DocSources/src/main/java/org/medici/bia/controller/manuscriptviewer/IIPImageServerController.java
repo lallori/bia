@@ -335,14 +335,16 @@ public class IIPImageServerController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public void iipServer(HttpServletRequest httpServletRequest, HttpServletResponse response) {
+	public void iipServer(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		String[] objs = httpServletRequest.getParameterValues("obj");
+
+		httpServletRequest.setAttribute("persistentAccessLogDisabled", Boolean.TRUE);
 
 		// if user specify IIP
 		if (ArrayUtils.contains(objs, "IIP,1.0")) {
-			generateInformationsTiledImage(httpServletRequest, response);
+			generateInformationsTiledImage(httpServletRequest, httpServletResponse);
 		} else if (httpServletRequest.getParameter("full") != null) {
-			generateFullImage(httpServletRequest, response);
+			generateFullImage(httpServletRequest, httpServletResponse);
 		} else if (httpServletRequest.getParameter("JTL") != null) {
 			String imageName = httpServletRequest.getParameter("FIF");
 			Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
@@ -353,7 +355,7 @@ public class IIPImageServerController {
 			Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
 			Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
 
-			generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
+			generateTiledImage(imageName, pageImage, tileNumber, x, y, httpServletResponse);
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
 			String imageName = httpServletRequest.getParameter("FIF");
@@ -365,7 +367,7 @@ public class IIPImageServerController {
 			if (thumbnailFormat == null) {
 				thumbnailFormat = "jpeg";
 			}
-			generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
+			generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, httpServletResponse);
 		}
 	}
 
