@@ -42,6 +42,7 @@ import org.springframework.validation.Validator;
  * 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public abstract class AbstractUserValidator implements Validator {
@@ -133,8 +134,8 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 
-		if (!StringUtils.isAlpha(lastName))
-			errors.rejectValue("firstName", "error.lastName.onlyalphacharacters");
+		if(!lastName.matches("[a-zA-z]+([ '][a-zA-Z]+)*"))
+			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
 	}
 
 	/**
