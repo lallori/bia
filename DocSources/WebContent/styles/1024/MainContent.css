@@ -459,6 +459,7 @@ item a{
 	width:40%;
 	color:#999;
 	padding:3px 10px 3px 0; 
+	font-size:11px;
 }
 
 /* Bottom Div Containers */
@@ -4496,7 +4497,7 @@ ul#network a {
 	margin: 0px;
 }
 
-#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnline{
+#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnlineDiv {
 	width: 215px;
 	margin: 15px 0 0 20px;
 }
