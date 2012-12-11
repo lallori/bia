@@ -134,7 +134,7 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 
-		if(!lastName.matches("[a-zA-z]+([ '][[:alpha:]]+)*"))
+		if(!lastName.matches("[a-zA-z]+([ '][ÉÈÊËÜÛÎÔÄÏÖÄÅÇéèëêüûçîôâïöäåòùìÁ-Úá-úa-zA-Z]+)*"))
 			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
 	}
 
