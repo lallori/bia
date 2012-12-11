@@ -41,15 +41,15 @@
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
 			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus != 'READ'}">
 				<div class="rowNew">
-					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus == 'READ'}">
 				<div class="row">
-					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}</a></div>
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 			<c:if test="${command.category == 'outbox'}">
 				<div class="row">	
-					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}</a></div>
+					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 				<div class="two"><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>"><span class="subject">${currentMessage.subject}</span> - <span class="message">${bia:abbreviateMessage(currentMessage.body)}</span></a></div>
 				<div class="three"><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sendedDate}</a></div>
@@ -115,7 +115,11 @@
 			});
 			
 			$j(".messageLink").click(function(){
-				$j("#main").load($j(this).attr("href"));
+// 				$j( "<li><a href=" + $j(this).attr('href') + "'>Message</a></li>" ).appendTo( "#tabs .ui-tabs-nav" );
+// 				$j( "#tabs" ).tabs( "refresh" );
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).find(".subject").text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("option", "active", $j("#tabs").tabs("length")-1);
+// 				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			

@@ -41,8 +41,13 @@
 				}
 			});
 			$j( "#tabs span.ui-icon-close" ).live( "click", function() {
-				var index = $j( "li", this ).index( $j( this ).parent() );
-				$j( "#tabs" ).tabs( "remove", index );
+// 				var index = $j( "li", this ).index( $j( this ).parent() );
+// 				$j( "#tabs" ).tabs( "remove", index );
+				var tab = $j( this ).parent().remove();
+				var panelId = tab.attr( "aria-controls" );
+				$j( "#" + panelId ).remove();
+				$j( "tabs" ).tabs( "refresh" );
+				$j("#tabs").tabs("option", "active", 0);
 			});
 			
 			/*

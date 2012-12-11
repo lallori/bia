@@ -26,7 +26,7 @@
        		</div>
         	<div class="row">
             	<div class="item">Subject</div> 
-            	<div class="value">${userMessage.subject}</div> 
+            	<div class="value" id="subject">${userMessage.subject}</div> 
         	</div>
         	<div class="row">
         	    <div class="item">Message</div> 
@@ -76,7 +76,8 @@
 
 			var block = $j("#messageBody").find("blockquote");
 			$j("#messageBody > blockquote").remove();
-			$j("#messageBody").append("<blockquote><p>" + $j(block).text() + "</p></blockquote>");
+			if($j(block).text() != "")
+				$j("#messageBody").append("<blockquote><p>" + $j(block).text() + "</p></blockquote>");
 			
 
 			$j('.pageHref').die();

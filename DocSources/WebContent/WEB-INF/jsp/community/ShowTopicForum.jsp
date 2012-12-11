@@ -301,6 +301,12 @@
 // 				return false;
 // 			});
 
+			$j('.forum').die();
+			$j('.forum').live('click', function() {
+				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+
 			$j('#postReply').click(function (){
 				$j("#main").load($j(this).attr("href"));
 				$j("#prevUrl").val($j(".paginateActive").attr("href"));
