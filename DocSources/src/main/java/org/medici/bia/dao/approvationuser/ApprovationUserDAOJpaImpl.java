@@ -73,7 +73,7 @@ public class ApprovationUserDAOJpaImpl extends JpaDao<String, ApprovationUser> i
 	public ApprovationUser findByAccount(String account) throws PersistenceException {
 		String jpql = "FROM ApprovationUser WHERE user.account=:account";
 		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("account", Boolean.TRUE);
+		query.setParameter("account", account);
 
 		List<ApprovationUser> result = query.getResultList();
 		
