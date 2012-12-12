@@ -127,6 +127,12 @@ html version
 	overflow:hidden;
 }
 
+div.hideAnnotation {
+    bottom: 85px;
+    left: 10px;
+	cursor:pointer;
+}
+
 div.hideNavWindow {
     bottom: 40px;
     left: 10px;

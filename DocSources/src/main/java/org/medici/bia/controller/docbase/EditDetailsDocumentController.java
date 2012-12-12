@@ -34,6 +34,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.docbase.EditDetailsDocumentCommand;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.domain.Document;
@@ -108,9 +109,17 @@ public class EditDetailsDocumentController {
 			Document document = new Document(command.getEntryId());
 			document.setResearcher(command.getResearcher());
 			document.setVolume(new Volume(command.getVolume()));
-			// Insert/Part: 
-			document.setInsertNum(command.getInsertNum());
-			document.setInsertLet(command.getInsertLet());
+			// Insert/Part:
+			if(ObjectUtils.toString(command.getInsertNum()).equals("")){
+				document.setInsertNum(null);
+			}else{
+				document.setInsertNum(command.getInsertNum());
+			}
+			if(ObjectUtils.toString(command.getInsertNum()).equals(null)){
+				document.setInsertLet(null);
+			}else{
+				document.setInsertLet(command.getInsertLet());
+			}
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
 			document.setFolioMod(command.getFolioMod());

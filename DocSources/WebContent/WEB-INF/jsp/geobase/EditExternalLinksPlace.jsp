@@ -44,7 +44,7 @@
 		
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<input id="AddNewValue" value="Add" title="Add new Name" />
+			<input id="AddNewValue" value="Add" title="Add new Name" type="submit"/>
 		</div>
 		
 		</fieldset>
@@ -76,7 +76,7 @@
 			});
 			
 			$j("#AddNewValue").click(function(){
-				$j("#EditExternalLinkDiv").load($j(this).attr("${AddExternalLink}"));
+				$j("#EditExternalLinkDiv").load("${AddExternalLink}");
 				return false;
 			});
 
