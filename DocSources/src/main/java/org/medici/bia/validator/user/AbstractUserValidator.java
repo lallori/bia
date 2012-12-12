@@ -28,7 +28,7 @@
 package org.medici.bia.validator.user;
 
 import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.apache.commons.lang.StringUtils;
+
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.recaptcha.ReCaptchaService;
@@ -121,7 +121,7 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 		
-		if (!StringUtils.isAlpha(firstName))
+		if (!firstName.matches("[a-zA-zָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשל]+(([ '][a-zA-z]+))*"))
 			errors.rejectValue("firstName", "error.firstName.onlyalphacharacters");
 	}
 	
@@ -133,8 +133,8 @@ public abstract class AbstractUserValidator implements Validator {
 	public void validateLastName(String lastName, Errors errors) {
 		if (errors.hasErrors())
 			return;
-
-		if(!lastName.matches("[a-zA-z]+([ '][ָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשלֱ-Úב-תa-zA-Z]+)*"))
+		
+		if(!lastName.matches("[a-zA-zָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשל]+(([ '][a-zA-z]+))*"))
 			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
 	}
 

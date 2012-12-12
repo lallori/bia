@@ -9,7 +9,7 @@
 			<link rel="stylesheet" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
 			<div id="registrationForm">
-				<form:form method="post">
+				<form:form method="post" accept-charset="UTF-8">
 					<table class="registrationForm" cellpadding="3">
 						<tr>
 							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<font color="#990000">*</font></b></form:label></td>
