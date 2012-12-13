@@ -163,12 +163,25 @@ IIPMooViewer.implement({
       'submit': function(e){
         e.stop();
 		_this.updateShape(this.getParent());
-		_this.annotations[id].category = e.target['category'].value;
+		var categoryArray = e.target['category'];
+		var selectedCategory;
+		for(var i = 0; i < categoryArray.length; i++){
+			if(categoryArray[i].checked == true){
+				selectedCategory = categoryArray[i].value;
+			}
+		}
+		_this.annotations[id].category = selectedCategory;
 		_this.annotations[id].title = e.target['title'].value;
 		_this.annotations[id].text = e.target['text'].value;
 		delete _this.annotations[id].edit;
+		//MEDICI ARCHIVE PROJECT START
 		_this.updateAnnotations();
 		_this.fireEvent('annotationChange', _this.annotations);
+		// MEDICI ARCHIVE PROJECT START
+		_this.stopZoom = false;
+		_this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity=1;
+		_this.container.getElement('div.navbuttons').getElement('img.zoomOut').style.opacity=1;
+		// MEDICI ARCHIVE PROJECT END
 	 },
       'reset': function(){
 		delete _this.annotations[id].edit;

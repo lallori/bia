@@ -128,6 +128,8 @@ var IIPMooViewer = new Class({
 
     //MEDICI ARCHIVE PROJECT START
     this.initialZoom = options.zoom || 1;
+    //To disable the zoom when a user create an annotation
+    this.stopZoom = false;
     //MEDICI ARCHIVE PROJECT END
 
     // Navigation window options
@@ -172,18 +174,18 @@ var IIPMooViewer = new Class({
 	this.updateAnnotationsUrl= options.updateAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
 
 	if (typeof(this.newAnnotation)=="function") {
-	    window.addEvent('keydown', function(e){
-	    	if( e.key == 'n' ) {
-	    		// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
-		    	if (typeof(e.target.form)=='undefined') {
-		    		if (typeof(window.iip.newAnnotation)=="function") {
-		    			window.iip.newAnnotation();
-		    		} else {
-		    	    	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
-		    		}
-		    	}
-	    	}
-	    });
+//	    window.addEvent('keydown', function(e){
+//	    	if( e.key == 'n' ) {
+//	    		// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
+//		    	if (typeof(e.target.form)=='undefined') {
+//		    		if (typeof(window.iip.newAnnotation)=="function") {
+//		    			window.iip.newAnnotation();
+//		    		} else {
+//		    	    	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
+//		    		}
+//		    	}
+//	    	}
+//	    });
 	    
 	    this.addEvent('annotationChange', function(e){
 	    	var queryParameter = "imageName=" + this.images[0].src + "&" + IIPMooViewer.annotationsAsQueryParameterString(this.annotations);
@@ -529,10 +531,11 @@ var IIPMooViewer = new Class({
 //	}
 //      }
 //      break;
-      //MEDICI ARCHIVE PROJECT END
-    case 65: // a
-      if( this.annotations ) this.toggleAnnotations();
-      break;
+      
+//    case 65: // a
+//      if( this.annotations ) this.toggleAnnotations();
+//      break;
+    //MEDICI ARCHIVE PROJECT END
     case 27: // esc
       if( this.fullscreen && this.fullscreen.isFullscreen ) if(!IIPMooViewer.sync) this.toggleFullScreen();
       this.container.getElement('div.info').fade('out');
@@ -794,56 +797,62 @@ var IIPMooViewer = new Class({
     // Set z to +1 if zooming in and -1 if zooming out
     var z = 1;
 
-    // For mouse scrolls
-    if( event.wheel && event.wheel < 0 ) z = -1;
-    // For double clicks
-    else if( event.shift ) z = -1;
-    else z = 1;
-
-    // Bail out if at zoom limits
-    if( (z==1) && (this.view.res >= this.num_resolutions-1) ) return;
-    if( (z==-1) && (this.view.res <= 0) ) return;
-
-    if( event.target ){
-      var pos, xmove, ymove;
-      var cc = event.target.get('class');
-
-      if( cc != "zone" & cc != 'navimage' ){
-	pos = this.canvas.getPosition();
-
-	// Center our zooming on the mouse position when over the main target window
-	this.view.x = event.page.x - pos.x - Math.floor(this.view.w/2);
-	this.view.y = event.page.y - pos.y - Math.floor(this.view.h/2);
-      }
-      else{
-	// For zooms with the mouse over the navigation window
-	pos = this.zone.getParent().getPosition();
-	var n_size = this.zone.getParent().getSize();
-	var z_size = this.zone.getSize();
-	this.view.x = Math.round( (event.page.x - pos.x - z_size.x/2) * this.wid/n_size.x );
-	this.view.y = Math.round( (event.page.y - pos.y - z_size.y/2) * this.hei/n_size.y );
-      }
-
-      if( IIPMooViewer.sync ){
-	var _x = this.view.x;
-	var _y = this.view.y;
-	IIPMooViewer.windows(this).each( function(el){
-	  el.view.x = _x;
-	  el.view.y = _y;
-        });
-      }
+    // MEDICI ARCHIVE PROJECT START
+    if(!this.stopZoom){
+    //MEDICI ARCHIVE PROJECT END
+	    // For mouse scrolls
+	    if( event.wheel && event.wheel < 0 ) z = -1;
+	    // For double clicks
+	    else if( event.shift ) z = -1;
+	    else z = 1;
+	
+	    // Bail out if at zoom limits
+	    if( (z==1) && (this.view.res >= this.num_resolutions-1) ) return;
+	    if( (z==-1) && (this.view.res <= 0) ) return;
+	
+	    if( event.target ){
+	      var pos, xmove, ymove;
+	      var cc = event.target.get('class');
+	
+	      if( cc != "zone" & cc != 'navimage' ){
+		pos = this.canvas.getPosition();
+	
+		// Center our zooming on the mouse position when over the main target window
+		this.view.x = event.page.x - pos.x - Math.floor(this.view.w/2);
+		this.view.y = event.page.y - pos.y - Math.floor(this.view.h/2);
+	      }
+	      else{
+		// For zooms with the mouse over the navigation window
+		pos = this.zone.getParent().getPosition();
+		var n_size = this.zone.getParent().getSize();
+		var z_size = this.zone.getSize();
+		this.view.x = Math.round( (event.page.x - pos.x - z_size.x/2) * this.wid/n_size.x );
+		this.view.y = Math.round( (event.page.y - pos.y - z_size.y/2) * this.hei/n_size.y );
+	      }
+	
+	      if( IIPMooViewer.sync ){
+		var _x = this.view.x;
+		var _y = this.view.y;
+		IIPMooViewer.windows(this).each( function(el){
+		  el.view.x = _x;
+		  el.view.y = _y;
+	        });
+	      }
+	    }
+	
+	    // Now do our actual zoom
+	    if( z == -1 ) this.zoomOut();
+	    else this.zoomIn();
+	
+	    if( IIPMooViewer.sync ){
+	      IIPMooViewer.windows(this).each( function(el){
+		if( z==-1) el.zoomOut();
+		else el.zoomIn();
+	      });
+	    }
+	// MEDICI ARCHIV PROJECT START
     }
-
-    // Now do our actual zoom
-    if( z == -1 ) this.zoomOut();
-    else this.zoomIn();
-
-    if( IIPMooViewer.sync ){
-      IIPMooViewer.windows(this).each( function(el){
-	if( z==-1) el.zoomOut();
-	else el.zoomIn();
-      });
-    }
+    // MEDICI ARCHIVE PROJECT END
 
   },
 
@@ -1307,7 +1316,8 @@ var IIPMooViewer = new Class({
   				  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'disableAnnotation.svg';
   				  _this.toggleAnnotations();
   		  	  }else{
-  		  		  _this.container.getElement('div.message').style.visibility="hidden"; 
+  		  		  if(_this.container.getElement('div.message') != null)
+  		  			  _this.container.getElement('div.message').style.visibility="hidden"; 
   		  		  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'enableAnnotation.svg';
 				  _this.toggleAnnotations();
   		  	  }
@@ -1618,13 +1628,17 @@ var IIPMooViewer = new Class({
       
       // Add events to our buttons
       navbuttons.getElement('img.zoomIn').addEvent( 'click', function(){
-	IIPMooViewer.windows(this).each( function(el){ el.zoomIn(); });
-	this.zoomIn();
+    	  if(!this.stopZoom){
+    		  IIPMooViewer.windows(this).each( function(el){ el.zoomIn(); });
+    		  this.zoomIn();
+    	  }
       }.bind(this) );
 
       navbuttons.getElement('img.zoomOut').addEvent( 'click', function(){
-	IIPMooViewer.windows(this).each( function(el){ el.zoomOut(); });
-	this.zoomOut();
+    	  if(!this.stopZoom){
+    		  IIPMooViewer.windows(this).each( function(el){ el.zoomOut(); });
+    		  this.zoomOut();
+    	  }
       }.bind(this) );
 
       navbuttons.getElement('img.reset').addEvent( 'click', function(){
@@ -1651,6 +1665,9 @@ var IIPMooViewer = new Class({
     	  navbuttons.getElement('img.drawAnnotation').addEvent( 'click', function(){
     		// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
 		    	if (typeof(window.iip.newAnnotation)=="function") {
+		    		this.stopZoom = true;
+		    		navbuttons.getElement('img.zoomIn').style.opacity=0.5;
+		    		navbuttons.getElement('img.zoomOut').style.opacity=0.5;
 		    		window.iip.newAnnotation();
 		    	} else {
 		    	   	console.log("IIPMoviewer script must be assigned in page to a variable called iip");

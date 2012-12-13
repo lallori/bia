@@ -209,12 +209,46 @@ div.navcontainer div.navbuttons img.corner { float: right;right: 0px; vertical-a
 
 /* DISPLAY */
 /* General */
+/* MEDICI ARCHIVE PROJECT START */
 div.iipmooviewer div.canvas div.annotation {
   position: absolute;
   overflow: visible;
   z-index: 2;
   border: 1px solid yellow;
   background-color: rgba(255, 255, 0, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+div.iipmooviewer div.canvas div.general {
+  position: absolute;
+  overflow: visible;
+  z-index: 2;
+  border: 1px solid yellow;
+  background-color: rgba(255, 255, 0, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+div.iipmooviewer div.canvas div.paleography {
+  position: absolute;
+  overflow: visible;
+  z-index: 2;
+  border: 1px solid orange;
+  background-color: rgba(255, 130, 0, 0.2);
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+div.iipmooviewer div.canvas div.personal {
+  position: absolute;
+  overflow: visible;
+  z-index: 2;
+  border: 1px solid purple;
+  background-color: rgba(180, 0, 255, 0.2);
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -248,7 +282,7 @@ div.iipmooviewer div.canvas div.annotation {
 /* HOVER */
 /* General */
 div.iipmooviewer div.canvas div.annotation:hover{ 
-    border-color: yellow; 
+    border-color: white; 
 }
 
 /* Personal 
