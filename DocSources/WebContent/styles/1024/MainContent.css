@@ -1891,7 +1891,7 @@ div.resetPortrait, div.savePortrait {
 }
 
 #crop { /* Save button on bottom right  */
-	margin:5px auto 10px 45%;
+	margin:5px auto 10px 0;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -2968,14 +2968,18 @@ p.textPrincipalName {
 
 #imgUserProfile { /* User image profile */
 	margin: 7px 0 0 9px;
-	
 	width:111px;
 	height:145px;
 }
 
+#imgUserProfile img{ /* User image profile */
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+}
+
 #EditUserProfileDiv { 
 	width:600px;
-	
  	margin: 25px 0 0 120px;
 }
 

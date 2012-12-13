@@ -365,6 +365,10 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	background-color:#EFE0DE;
 }
 
+.listMessages .row:hover, .rowLast:hover {
+	background-color:transparent;
+}
+
 .col_r{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:right;
@@ -623,6 +627,15 @@ a.returnTo {
     height: 50px;
 }
 
+#forumPaginate a{
+    font-size: 10px;
+}
+
+#forumPaginate a:hover{
+    text-decoration:none;
+    color:#654C47;
+}
+
 #firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
     border: 1px solid #DCC0BA;
 	border-radius:5px;
@@ -864,7 +877,7 @@ input[type="submit"]:hover {
 /* ---------- New Topic / New Post ---------- */
 
 .input_25c { /* input for 15 characters approx. */ 
-	width: 237px;
+	 width: 237px;
 }
 
 #topicLabel {
@@ -1001,6 +1014,12 @@ ul.abc li {
 	margin: 9px 0 0 10px;
 	width: 110px;
 	height: 145px;
+}
+
+#imgUserProfile img{ 
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
 }
 
 #profile .list { /* Profile display list */
