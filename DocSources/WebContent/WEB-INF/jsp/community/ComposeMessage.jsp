@@ -31,13 +31,13 @@
 	        	<form:input path="subject" id="subject" name="subject" class="input_25c" type="text" value=""/>
 	    	</div>
 	    </div>
-	    <div>
-			<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
-	    </div>
-    	<input type="submit" value="Send" class="buttonSmall" id="send">
-    	<a href="#" id="preview" class="buttonSmall">Preview</a>
-    </div>
-    <form:hidden path="account"/>
+	</div>
+	<div>
+		<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
+	</div>
+    <input type="submit" value="Send" class="buttonSmall" id="send">
+    <a href="#" id="preview" class="buttonSmall">Preview</a>
+	<form:hidden path="account"/>
     <form:hidden path="parentMessageId"/>
 </form:form>
 
@@ -118,6 +118,11 @@
 // 				$j(".arrowForum").css('visibility','visible');
 // 				$j(".forum").css('visibility','visible');
 //    			}});
+
+			//This is for reset the url of the tab
+// 			var tab = $j( "#tabs" ).find( ".ui-tabs-nav li:eq(2)" );
+// 			var panelId = tab.attr( "aria-controls" );
+// 			$j( "#" + $j("#" + panelId).attr("aria-labelledby") ).attr("href", "${ComposeMessageURL}");
 
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 

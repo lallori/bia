@@ -7,6 +7,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="ShowMessagesURL" value="/community/ShowMessagesByCategory.do">
+	<c:param name="userMessageCategory" value="INBOX" />
+</c:url>
+
 <c:url var="SendMessageURL" value="/community/ComposeMessage.do">
 	<c:param name="account" value="${userProfile.account}"/>
 	<c:param name="accountDescription" value="${userProfile.firstName} ${userProfile.lastName}"/>
@@ -205,7 +209,17 @@
 		});
 		
 		$j("#sendMessage").click(function(){
-			$j("#main").load($j(this).attr("href"));
+			var newHref = $j(this).attr("href");
+			$j("#main").load("${ShowMessagesURL}", function(){
+				$j("#tabs").tabs("option", "active", 2);
+				var tab = $j( "#tabs" ).find( ".ui-tabs-nav li:eq(2)" );
+				var panelId = tab.attr( "aria-controls" );
+				$j( "#" + $j("#" + panelId).attr("aria-labelledby") ).attr("href", newHref);
+				$j( "#tabs" ).tabs( "load", 2 );
+				return false;
+			});
+			
+// 			$j("#main").load($j(this).attr("href"));
 			return false;
 		});
 	});
