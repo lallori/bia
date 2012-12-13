@@ -83,8 +83,10 @@
 	           window.onbeforeunload = function() {
 	               return "If you leave this page you will exit the Software Platform";
 	           };
+	           
+	          
+
 		</script>
-		
 
 
 		<script type="text/javascript">
@@ -92,6 +94,7 @@
 
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
+				
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
 					cache: false,
@@ -105,8 +108,8 @@
 					error: function(xhr, status, err) {
 						console.log(err);
 				    }
-				});
-
+				});		
+				
 			});
 			
 			
@@ -116,6 +119,7 @@
 			 if (navigator.appVersion.indexOf("X11")!=-1)
 				 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">');
 			var $timerId;
+			
 		</script>
 	</head>
 	

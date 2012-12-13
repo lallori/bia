@@ -4491,7 +4491,7 @@ ul#network a {
 	margin: 0px;
 }
 
-#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnline{
+#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnlineDiv{
 	width: 215px;
 	margin: 15px 0 0 20px;
 }
@@ -4521,6 +4521,9 @@ ul#network a {
 	width:200px;
 	margin:10px 0 0 10px; 
 }
+
+
+
 
 
 
@@ -5087,4 +5090,38 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 
 #addNewTitleOccupationDiv #personTitle {
 	margin: 10px 0 20px 5px;
+}
+
+
+
+/* To Top */
+
+#toTop {
+	display:none;
+	text-decoration:none;
+	position:fixed;
+	bottom:10px;
+	right:10px;
+	overflow:hidden;
+	width:51px;
+	height:51px;
+	border:none;
+	text-indent:100%;
+	background:url(/DocSources/images/1024/ui.totop.png) no-repeat left top;
+}
+
+#toTopHover {
+	background:url(/DocSources/images/1024/ui.totop.png) no-repeat left -51px;
+	width:51px;
+	height:51px;
+	display:block;
+	overflow:hidden;
+	float:left;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity=0);
+}
+
+#toTop:active, #toTop:focus {
+	outline:none;
 }

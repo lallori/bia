@@ -16,7 +16,7 @@
 <!-- 	</div> -->
 
 	<div id="editOrShowDiv">
-        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />"><p>Edit or Show Existing User</p></a>
+        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />" class="showOrEditCompare">Back to User Search</a>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">
