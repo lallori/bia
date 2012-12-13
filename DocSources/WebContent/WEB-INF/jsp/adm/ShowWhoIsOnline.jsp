@@ -8,7 +8,7 @@
 	<c:url var="ShowUserSearchResultURL" value="/admin/WhoIsOnline.json">
 	</c:url>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="whoIsOnlineTable">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -24,9 +24,9 @@
 			
 			
 			//dynamic field management
-			$j("#userSearchTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#whoIsOnlineTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#userSearchTable').dataTable( {
+			$j('#whoIsOnlineTable').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
@@ -66,8 +66,8 @@
 				}
 			});
 			
-			$j("#userSearchTable_length").css('margin', '0 0 0 0');
-			$j("#userSearchTable_filter").remove();
+			$j("#whoIsOnline_length").css('margin', '0 0 0 0');
+			$j("#whoIsOnline_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();

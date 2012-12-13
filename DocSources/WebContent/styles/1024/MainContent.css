@@ -459,7 +459,6 @@ item a{
 	width:40%;
 	color:#999;
 	padding:3px 10px 3px 0; 
-	font-size:11px;
 }
 
 /* Bottom Div Containers */
@@ -491,10 +490,6 @@ item a{
 
 #geoTitle {
 	min-height: 170px;
-}
-
-#personTitle {
-	min-height: 200px;
 }
 
 .extractText {
@@ -1439,7 +1434,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditPortraitPersonDiv {
 	width:128px;
-	height:160px;
 	display: inline-block;
 	color:#6F6B69;
 }
@@ -1939,8 +1933,8 @@ div.resetPortrait, div.savePortrait {
 	padding: 4px 0 0 0;
 	cursor: pointer;
 	text-align: center;
-	float: left;
-	margin: 0 0 20px 4px;
+	display: block;
+	margin: 0 0 0 4px;
 }
 
 #uploadPortrait:hover {
@@ -4497,7 +4491,7 @@ ul#network a {
 	margin: 0px;
 }
 
-#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnlineDiv {
+#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnline{
 	width: 215px;
 	margin: 15px 0 0 20px;
 }
@@ -4527,9 +4521,6 @@ ul#network a {
 	width:200px;
 	margin:10px 0 0 10px; 
 }
-
-
-
 
 
 

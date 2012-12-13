@@ -63,7 +63,7 @@
 				tabName = tabName.substring(0,17) + "...";
 			}
 			
-			//Check if already exist a tab with this Volume
+			//Check if already exist a tab with this name
 			var tabExist = false;
 			$j("#tabs ul li a").each(function(){
 				if(!tabExist){

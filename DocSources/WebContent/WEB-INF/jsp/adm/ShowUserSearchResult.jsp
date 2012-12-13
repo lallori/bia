@@ -14,6 +14,10 @@
 <%-- 		<p> <font color="red" style="margin-left:5px"></font></p> --%>
 <%-- 		<p>Total records found: <span id="" class="recordsNum"></span></p> --%>
 <!-- 	</div> -->
+
+	<div id="editOrShowDiv">
+        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />"><p>Edit or Show Existing User</p></a>
+	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">
 		<thead>
@@ -29,6 +33,10 @@
 
 		$j(document).ready(function() {
 			
+			$j("#editOrShow").click(function(){
+				$j("#body_left").load($j(this).attr("href")); 
+				return false;
+			});
 			
 			//dynamic field management
 			$j("#userSearchTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
