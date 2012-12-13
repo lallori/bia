@@ -77,7 +77,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>
-		<script type="text/javascript" src="/DocSources/scripts/jquery.expander.js"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.expander.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/scrolltopcontrol.js"/>"></script>
 		
 		<script type="text/javascript">
 	           window.onbeforeunload = function() {
