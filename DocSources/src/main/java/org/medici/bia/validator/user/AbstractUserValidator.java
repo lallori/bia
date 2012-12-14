@@ -138,7 +138,7 @@ public abstract class AbstractUserValidator implements Validator {
 			return;
 		
 		logger.info("Last Name |" + lastName + "|");
-		if(!lastName.matches("[^\\p{L}\\p{N}]")) {
+		if (!lastName.matches("[a-zA-zָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשל]+(([ '][a-zA-z]+))*")) {
 			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
 		}
 	}
