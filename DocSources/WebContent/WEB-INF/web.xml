@@ -52,7 +52,11 @@
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
-	</filter>
+	    <init-param>
+	        <param-name>forceEncoding</param-name>
+	        <param-value>true</param-value>
+	    </init-param>
+   	</filter>
 	<filter-mapping>
 		<filter-name>encoding-filter</filter-name>
 		<url-pattern>/*</url-pattern>
