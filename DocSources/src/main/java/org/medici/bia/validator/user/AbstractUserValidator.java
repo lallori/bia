@@ -29,6 +29,7 @@ package org.medici.bia.validator.user;
 
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
+import org.apache.log4j.Logger;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.recaptcha.ReCaptchaService;
@@ -50,6 +51,8 @@ public abstract class AbstractUserValidator implements Validator {
 	private ReCaptchaService reCaptchaService;
 	@Autowired
 	private UserService userService;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * @return the reCaptchaService
@@ -134,8 +137,10 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 		
-		if(!lastName.matches("[a-zA-zָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשל]+(([ '][a-zA-z]+))*"))
+		logger.info("Last Name |" + lastName + "|");
+		if(!lastName.matches("[^\\p{L}\\p{N}]")) {
 			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
+		}
 	}
 
 	/**
