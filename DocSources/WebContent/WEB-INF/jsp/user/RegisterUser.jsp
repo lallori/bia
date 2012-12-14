@@ -17,7 +17,7 @@
 							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password:<font color="#990000">*</font></b></form:label></td>
 							<td><form:password path="password" cssClass="registerInput" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
 							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password:<font color="#990000">*</font></b></form:label></td>       
-							<td><input id="confirmPassword" name="confirmPassword" type="password"class="registerInput" value=""/></td>
+							<td><input id="confirmPassword" name="confirmPassword" type="password" class="registerInput" value=""/></td>
 						</tr>    	
 						<tr>        		
 							<td align="right"><form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error"><b>Last Name:<font color="#990000">*</font></b></form:label></td>
