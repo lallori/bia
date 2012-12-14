@@ -42,10 +42,6 @@
 		<location>/WEB-INF/templates/503.jsp</location>
 	</error-page>
 	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter>
 		<filter-name>encoding-filter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
@@ -57,6 +53,10 @@
 	        <param-value>true</param-value>
 	    </init-param>
    	</filter>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
 	<filter-mapping>
 		<filter-name>encoding-filter</filter-name>
 		<url-pattern>/*</url-pattern>
