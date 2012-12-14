@@ -27,12 +27,8 @@
  */
 package org.medici.bia.validator.user;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -140,14 +136,7 @@ public abstract class AbstractUserValidator implements Validator {
 	public void validateLastName(String lastName, Errors errors) {
 		if (errors.hasErrors())
 			return;
-		try {
-			logger.info("Last Name |" + lastName + "|" + URLDecoder.decode(lastName, "UTF-8"));
-			if (!URLDecoder.decode(lastName, "UTF-8").matches("[a-zA-zָֹÊֻÜÛ־װִֿײִֵַיטכךüûחמפגןצהועשל]+(([ '][a-zA-z]+))*")) {
-				errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
-			}
-		} catch (UnsupportedEncodingException unsupportedEncodingException) {
-			logger.error(unsupportedEncodingException);
-		}
+		
 	}
 
 	/**
