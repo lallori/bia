@@ -130,8 +130,13 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 		
-		if (!firstName.matches("[a-zA-zÉÈÊËÜÛÎÔÄÏÖÄÅÇéèëêüûçîôâïöäåòùì]+(([ '][a-zA-z]+))*"))
+		String paramString = "(?=.*[\\p{L}])|(?=.*['])";
+		Pattern localPattern = Pattern.compile(paramString, Pattern.UNICODE_CASE);
+		Matcher localMatcher = localPattern.matcher(firstName);
+
+	    if (!localMatcher.find()) {
 			errors.rejectValue("firstName", "error.firstName.onlyalphacharacters");
+		}
 	}
 	
 	/**
@@ -143,10 +148,11 @@ public abstract class AbstractUserValidator implements Validator {
 		if (errors.hasErrors())
 			return;
 		
-		Pattern localPattern = Pattern.compile("(\\d)|([\\p{Punct}])", Pattern.UNICODE_CASE);
-	    Matcher localMatcher = localPattern.matcher(lastName);
-	    
-	    if (localMatcher.find()) {
+		String paramString = "(?=.*[\\p{L}])|(?=.*['])";
+		Pattern localPattern = Pattern.compile(paramString, Pattern.UNICODE_CASE);
+		Matcher localMatcher = localPattern.matcher(lastName);
+
+	    if (!localMatcher.find()) {
 			errors.rejectValue("lastName", "error.lastName.onlyalphacharacters");
 		}
 	}
