@@ -14,6 +14,14 @@
 				</div>
 				<script type="text/javascript">
 					$j(document).ready(function() {
+						<c:choose>
+							<c:when test="${user.account=='guest'}">
+								$j("#ShowLastEntryDocument").attr('href', '#');
+								$j("#ShowLastEntryVolume").attr('href', '#');
+								$j("#ShowLastEntryPerson").attr('href', '#');
+								$j("#ShowLastEntryPlace").attr('href', '#');
+							</c:when>
+						</c:choose>
 						$j("#ShowLastEntryDocument").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
 						$j("#ShowLastEntryVolume").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
 						$j("#ShowLastEntryPerson").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});

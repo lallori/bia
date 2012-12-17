@@ -1622,7 +1622,8 @@ var IIPMooViewer = new Class({
       navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
       navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
       navbuttons.getElement('img.reset').set('title', 'Refresh Image');
-      navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
+      if(this.view.w > 1000)
+    	  navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
       
       // MEDICI ARCHIVE PROJECT
       

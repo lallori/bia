@@ -111,6 +111,7 @@
 <!--     <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print discussion</span></a> -->
 </div>
 
+<c:if test="${postsPage.list != null && postsPage.total > 0}">
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
 	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
 		<c:param name="postId" value="${currentPost.postId}"/>
@@ -192,6 +193,7 @@
 </div>
 </c:forEach>
 
+
 <!-- <div id="topicActions"> -->
 <%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
 <%-- 	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do"> --%>
@@ -219,6 +221,11 @@
 	${paginationData}
  
 </div>
+
+</c:if>
+<c:if test="${postsPage.total == 0 && topic.topicId == null}">
+	<p>You have no posts.</p>
+</c:if>
 					
 
 

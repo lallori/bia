@@ -669,6 +669,24 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumDAO getForumDAO() {
 		return forumDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getForumForView(Integer id) throws ApplicationThrowable {
+		try{
+			Forum forum = getForumDAO().find(id);
+			if(forum.getTotalViews() == null){
+				forum.setTotalViews(1);
+			}else{
+				forum.setTotalViews(forum.getTotalViews() + 1);
+			}
+			return forum;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -782,6 +800,25 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public ForumTopicDAO getForumTopicDAO() {
 		return forumTopicDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumTopic getForumTopicForView(ForumTopic forumTopic)throws ApplicationThrowable {
+		try{
+			ForumTopic topic = getForumTopicDAO().findForumTopic(forumTopic);
+			if(topic.getTotalViews() == null){
+				topic.setTotalViews(1);
+			}else{
+				topic.setTotalViews(topic.getTotalViews() + 1);
+			}
+			getForumTopicDAO().merge(topic);
+			return topic;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

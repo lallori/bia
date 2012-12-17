@@ -202,6 +202,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public Forum getForum(Integer id) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getForumForView(Integer id) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -259,6 +267,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param forumTopic
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumTopic getForumTopicForView(ForumTopic forumTopic) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -100,8 +100,8 @@
         <h3>Statistics</h3>
         <div class="list">
             <div class="row">
-                <div class="firstItem">Joined</div> 
-                <div class="firstValue">${userProfile.forumJoinedDate}</div> 
+                <div class="item">Joined</div> 
+                <div class="value">${userProfile.forumJoinedDate}</div> 
             </div>
             <div class="row">
                 <div class="item">Last visited</div>

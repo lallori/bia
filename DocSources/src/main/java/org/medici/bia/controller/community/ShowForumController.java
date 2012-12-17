@@ -96,7 +96,7 @@ public class ShowForumController {
 			if (command.getForumId() == null){
 				forum = getCommunityService().getFirstCategory();
 			} else {
-				forum = getCommunityService().getForum(command.getForumId());
+				forum = getCommunityService().getForumForView(command.getForumId());
 			}
 
 			if (forum.getType().equals(Type.CATEGORY)) {

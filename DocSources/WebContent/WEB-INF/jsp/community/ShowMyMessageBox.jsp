@@ -39,16 +39,17 @@
 <!-- </div> -->
 
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
+			
 			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus != 'READ'}">
-				<div class="rowNew">
+				<div class="<c:if test="${not status.last}">rowNew</c:if><c:if test="${status.last}">rowLastNew</c:if>">
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus == 'READ'}">
-				<div class="row">
+				<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 			<c:if test="${command.category == 'outbox'}">
-				<div class="row">	
+				<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">	
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
 				<div class="two"><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>"><span class="subject">${currentMessage.subject}</span> - <span class="message">${bia:abbreviateMessage(currentMessage.body)}</span></a></div>

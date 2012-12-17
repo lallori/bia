@@ -93,7 +93,7 @@
 		});
 
 	<c:choose>
-		<c:when test="${empty user.lastLoginDate}">
+		<c:when test="${empty user.lastLoginDate || user.account=='guest'}">
 		$j("#body_left").load('${WelcomeNewUserURL}');
 		</c:when>
 		<c:when test="${not empty command.entryId}">

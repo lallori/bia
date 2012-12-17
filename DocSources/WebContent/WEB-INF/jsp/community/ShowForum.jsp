@@ -216,7 +216,7 @@
 			            </div>
 <%-- 			            <div class="two">${fn:length(currentForum.forumTopics)}</div> --%>
 						<div class="two">${currentForum.topicsNumber}</div>
-			            <div class="three">0</div>
+			            <div class="three"><c:if test="${currentForum.totalViews == null}">0</c:if><c:if test="${currentForum.totalViews != null}">${currentForum.totalViews}</c:if></div>
 					<c:if test="${not empty currentForum.lastPost}">
 			            <div class="four">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 			        </c:if>
@@ -347,7 +347,7 @@ Use the textbox below to search this forum.</p>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
-						            <div class="four">-</div>
+						            <div class="four">${currentTopic.totalViews}</div>
 								<c:if test="${not empty currentTopic.lastPost}">
 						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
@@ -366,7 +366,7 @@ Use the textbox below to search this forum.</p>
 						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
-						            <div class="three">-</div>
+						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
 						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
@@ -557,7 +557,7 @@ Use the textbox below to search this forum.</p>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
-						            <div class="four">-</div>
+						            <div class="four"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
 						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
@@ -576,7 +576,7 @@ Use the textbox below to search this forum.</p>
 						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
-						            <div class="three">-</div>
+						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
 						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>

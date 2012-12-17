@@ -105,6 +105,8 @@ public class Forum implements Serializable {
 	private Integer dispositionOrder;
 	@Column (name="\"forumHelpText\"", columnDefinition="LONGTEXT")
 	private String forumHelpText;
+	@Column(name = "totalViews")
+	private Integer totalViews;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"entryId\"", nullable=true)
@@ -515,6 +517,20 @@ public class Forum implements Serializable {
 	 */
 	public List<ForumTopic> getForumTopics() {
 		return forumTopics;
+	}
+
+	/**
+	 * @return the totalViews
+	 */
+	public Integer getTotalViews() {
+		return totalViews;
+	}
+
+	/**
+	 * @param totalViews the totalViews to set
+	 */
+	public void setTotalViews(Integer totalViews) {
+		this.totalViews = totalViews;
 	}
 
 	@Transient

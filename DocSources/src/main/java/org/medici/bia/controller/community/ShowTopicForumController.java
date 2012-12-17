@@ -117,7 +117,7 @@ public class ShowTopicForumController {
 			}
 			paginationFilterTopic.addSortingCriteria("postId", "asc");
 
-			ForumTopic forumTopic = getCommunityService().getForumTopic(new ForumTopic(command.getTopicId()));
+			ForumTopic forumTopic = getCommunityService().getForumTopicForView(new ForumTopic(command.getTopicId()));
 			model.put("topic", forumTopic);
 			
 			if(forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null){
