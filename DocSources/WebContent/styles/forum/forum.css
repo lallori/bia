@@ -1011,7 +1011,7 @@ ul.abc li {
 }
 
 #imgUserProfile { /* User image */
-	margin: 9px 0 0 10px;
+	margin: 9px 0 0 9px;
 	width: 110px;
 	height: 145px;
 }
@@ -1164,6 +1164,11 @@ ul.abc li {
 #messagesTable .rowNew {
 	height:35px;
 	background-color:#EFE0DE;
+}
+
+#messagesTable .rowLastNew {
+	background-color:#EFE0DE;
+	border-bottom:none;
 }
 
 #messagesTable .list a  { 
