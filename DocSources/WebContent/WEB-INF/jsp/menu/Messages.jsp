@@ -12,7 +12,7 @@
 			<c:param name="completeDOM" value="true"/>
 		</c:url>
 		
-		<li><a id="messagesMenu" href="${ShowMessagesURL}" target="_blank">My Messages</a><span id="messagesCount">(0)</span></li>
+		<li><a id="messagesMenu" href="${ShowMessagesURL}" target="_blank">My Messages</a><span id="messagesCount">(${numberOfNewMessages})</span></li>
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {					   	
