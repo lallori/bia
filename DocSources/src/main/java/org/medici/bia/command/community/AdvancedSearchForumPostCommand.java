@@ -39,7 +39,7 @@ public class AdvancedSearchForumPostCommand {
 
 	private String text;
 	private String textAuthor;
-	private Boolean allTerms;
+	private String allTerms;
 	private List<Integer> forumsId;
 	private Boolean searchSubForums;
 	private String wordsType;
@@ -129,14 +129,14 @@ public class AdvancedSearchForumPostCommand {
 	/**
 	 * @return the allTerms
 	 */
-	public Boolean getAllTerms() {
+	public String getAllTerms() {
 		return allTerms;
 	}
 	
 	/**
 	 * @param allTerms the allTerms to set
 	 */
-	public void setAllTerms(Boolean allTerms) {
+	public void setAllTerms(String allTerms) {
 		this.allTerms = allTerms;
 	}
 

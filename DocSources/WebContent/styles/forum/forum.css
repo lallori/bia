@@ -216,7 +216,7 @@ blockquote p {
 	text-align:center;
 }
 
-.buttonLarge { /* Button medium class */
+.buttonLarge, .list a.lnkApprove{ /* Button medium class */
 	width: 182px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_large.png);
@@ -225,6 +225,9 @@ blockquote p {
 	cursor: pointer;
 	text-align: center;
 	display: inline-block;
+	font-size:12px;
+	line-height: 15px;
+	margin:0;
 }
 
 a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:hover {

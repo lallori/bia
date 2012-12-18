@@ -343,13 +343,13 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
 						            <div class="four">${currentTopic.totalViews}</div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -363,12 +363,12 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
 						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="four">Last post by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="four"></div>
@@ -553,13 +553,13 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
 						            <div class="four"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -573,12 +573,12 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
 						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+						            <div class="four">Last post by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="four"></div>

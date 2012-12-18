@@ -111,7 +111,7 @@
 <!--     <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print discussion</span></a> -->
 </div>
 
-<c:if test="${postsPage.list != null && postsPage.total > 0}">
+<c:if test="${isEmpty == null}">
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
 	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
 		<c:param name="postId" value="${currentPost.postId}"/>
@@ -223,7 +223,7 @@
 </div>
 
 </c:if>
-<c:if test="${postsPage.total == 0 && topic.topicId == null}">
+<c:if test="${isEmpty != null && topic.topicId == null}">
 	<p>You have no posts.</p>
 </c:if>
 					
@@ -291,7 +291,7 @@
 			
 			$j("#showRecord").click(function(){
 				window.opener.$j("#body_left").load($j(this).attr('href'));
-				window.opener.alert("ok");
+				window.opener.alert("Record showed");
 				return false;
 			});
 			

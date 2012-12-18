@@ -133,6 +133,12 @@
 				$j(".list > .row > .one > input:checked").each(function(){
 					$toRemove += $j(this).attr("id") + "+";
 				});
+				$j(".list > .rowNew > .one > input:checked").each(function(){
+					$toRemove += $j(this).attr("id") + "+";
+				});
+				$j(".list > .rowLastNew > .one > input:checked").each(function(){
+					$toRemove += $j(this).attr("id") + "+";
+				});
 				if($toRemove != ''){
 					$j( "#deleteMessagesModal" ).dialog({
 						  autoOpen : false,

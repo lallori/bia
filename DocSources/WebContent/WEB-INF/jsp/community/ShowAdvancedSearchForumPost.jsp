@@ -12,19 +12,22 @@
 		<c:param name="topicId" value="${topic.topicId}"/>
 	</c:url>
 	
+	<c:url var="ShowAdvancedSearchForumPostURL" value="/community/ShowAdvancedSearchForumPost.do"/>
+	<c:url var="AdvancedSearchForumURL" value="/community/AdvancedSearchForumPost.do"/>
+	
 	<h2>Advanced Search</h2>
-	<form id="advancedSearchForm" method="post" action="<c:url value="/community/AdvancedSearchForumPost.do"/>">
+	<form:form id="advancedSearchForm" method="post" action="${AdvancedSearchForumURL}">
 		<div id="searchQueryDiv">
 			<h1>SEARCH QUERY</h1>
 			<p><b>Search for keywords:</b><br />
 			<!-- Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p> -->
     	
-    		<input id="text" name="text" class="input_50c" type="text" value="" />
-    		<label for="allTerms" id="allTermsLabel"><input type="radio" name="allTerms" id="allTerms" value="true" checked="checked">Search for all terms or use query as entered</label>
-        	<label for="anyTerms" id="anyTermsLabel"><input type="radio" name="allTerms" id="anyTerms" value="false">Search for any terms</label>
+    		<form:input id="text" name="text" class="input_50c" type="text" value="" path="text"/>
+    		<form:label for="allTerms" id="allTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="allTerms" value="true" path="allTerms" />Search for all terms or use query as entered</form:label>
+        	<form:label for="anyTerms" id="anyTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="anyTerms" value="false" path="allTerms" />Search for any terms</form:label>
         	<p><b>Search for author:</b><br />
 			<!-- Use * as a wildcard for partial matches.</p> -->
-    		<input id="textAuthor" name="textAuthor" class="input_50c" type="text" value=""/>
+    		<form:input id="textAuthor" name="textAuthor" class="input_50c" type="text" path="textAuthor"/>
 		
 		
 		
@@ -48,10 +51,10 @@
 		            </div>
 		            <div class="value">
 		                <ul>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="sw_1" value="SUBJECT_TEXT" checked="checked"> User post subjects and text</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swMessage" value="TEXT"> User posts only</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swTopicTitles" value="TITLE"> Discussion titles only</label></li>
-		                    <li><label for="searchWithin"><input type="radio" name="wordsType" id="swFirstPost" value="FIRST_POST"> First post of topics only</label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="sw_1" value="SUBJECT_TEXT" /> User post subjects and text</form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swMessage" value="TEXT" /> User posts only</form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swTopicTitles" value="TITLE" /> Discussion titles only</form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swFirstPost" value="FIRST_POST" /> First post of topics only</form:label></li>
 		                </ul>
 		            </div>
 		        </div>
@@ -61,67 +64,67 @@
 		                <label for="displayResults" id="displayResultsLabel">Display results as:</label>
 		             </div>
 		             <div class="value">
-		                <label for="drPosts"><input type="radio" name="displayResults" id="drPosts" value="Posts"> Posts</label> 
-		                <label for="drTopics"><input type="radio" name="displayResults" id="drTopics" value="Topics" checked="checked"> Discussions</label> 
+		                <form:label for="drPosts" path="displayResults"><form:radiobutton name="displayResults" id="drPosts" value="Posts" path="displayResults" /> Posts</form:label> 
+		                <form:label for="drTopics" path="displayResults"><form:radiobutton name="displayResults" id="drTopics" value="Topics" path="displayResults" /> Discussions</form:label> 
 		             </div>
 				</div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <label for="sortResults" id="sortResultsLabel">Sort results by:</label>	
+		                <form:label for="sortResults" id="sortResultsLabel" path="sortResults">Sort results by:</form:label>	
 		             </div>
 		             <div class="value">
-		                <select name="sortResults" id="sortResults">
-		                    <option value="AUTHOR">Author</option>
-		                    <option value="POST_TIME" selected="selected">Post time</option>
-		                    <option value="FORUM">Forum</option>
-		                    <option value="TOPIC_TITLE">Discussion title</option>
-		                    <option value="POST_SUBJECT">Post subject</option>
-		                </select>
-		                <label for="ascending"><input type="radio" name="order" id="ascending" value="asc" checked="checked"> Ascending</label> 
-		                <label for="descending"><input type="radio" name="order" id="descending" value="desc"> Descending</label> 
+		                <form:select name="sortResults" id="sortResults" path="sortResults">
+		                    <form:option value="AUTHOR">Author</form:option>
+		                    <form:option value="POST_TIME">Post time</form:option>
+		                    <form:option value="FORUM">Forum</form:option>
+		                    <form:option value="TOPIC_TITLE">Discussion title</form:option>
+		                    <form:option value="POST_SUBJECT">Post subject</form:option>
+		                </form:select>
+		                <form:label for="ascending" path="order"><form:radiobutton name="order" id="ascending" value="asc" path="order" /> Ascending</form:label> 
+		                <form:label for="descending" path="order"><form:radiobutton name="order" id="descending" value="desc" path="order" /> Descending</form:label> 
 		             </div>
 		        </div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <label for="limitResults" id="limitResultsLabel">Limit results to previous:</label>	
+		                <form:label for="limitResults" id="limitResultsLabel" path="limitResults">Limit results to previous:</form:label>	
 		             </div>
 		             <div class="value">
-		                <select name="limitResults" id="limitResults">
-		                    <option value="0" selected="selected">All results</option>
-		                    <option value="1">1 day</option>
-		                    <option value="7">7 days</option>
-		                    <option value="14">2 weeks</option>
-		                    <option value="30">1 month</option>
-		                    <option value="90">3 months</option>
-		                    <option value="180">6 months</option>
-		                    <option value="365">1 year</option>
-		                 </select>
+		                <form:select name="limitResults" id="limitResults" path="limitResults">
+		                    <form:option value="0">All results</form:option>
+		                    <form:option value="1">1 day</form:option>
+		                    <form:option value="7">7 days</form:option>
+		                    <form:option value="14">2 weeks</form:option>
+		                    <form:option value="30">1 month</form:option>
+		                    <form:option value="90">3 months</form:option>
+		                    <form:option value="180">6 months</form:option>
+		                    <form:option value="365">1 year</form:option>
+		                 </form:select>
 		             </div>
 		        </div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <label for="returnFirst" id="returnFirstLabel">Return first:</label>	
+		                <form:label for="returnFirst" id="returnFirstLabel" path="returnFirst">Return first:</form:label>	
 		             </div>
 		             <div class="value">
-		                <select name="returnFirst" title="Return first">
-		                    <option value="-1">All available</option>
-		                    <option value="0">0</option>
-		                    <option value="25">25</option>
-		                    <option value="50">50</option>
-		                    <option value="100">100</option>
-		                    <option value="200">200</option>
-		                    <option value="300" selected="selected">300</option>
-		                    <option value="400">400</option>
-		                    <option value="500">500</option>
-		                    <option value="600">600</option>
-		                    <option value="700">700</option>
-		                    <option value="800">800</option>
-		                    <option value="900">900</option>
-		                    <option value="1000">1000</option>
-		                </select>
+		                <form:select name="returnFirst" title="Return first" path="returnFirst">
+		                    <form:option value="-1">All available</form:option>
+		                    <form:option value="0">0</form:option>
+		                    <form:option value="25">25</form:option>
+		                    <form:option value="50">50</form:option>
+		                    <form:option value="100">100</form:option>
+		                    <form:option value="200">200</form:option>
+		                    <form:option value="300">300</form:option>
+		                    <form:option value="400">400</form:option>
+		                    <form:option value="500">500</form:option>
+		                    <form:option value="600">600</form:option>
+		                    <form:option value="700">700</form:option>
+		                    <form:option value="800">800</form:option>
+		                    <form:option value="900">900</form:option>
+		                    <form:option value="1000">1000</form:option>
+		                </form:select>
 		                characters of posts
 		             </div>
 		        </div>
@@ -135,7 +138,7 @@
 				<input type="hidden" name="newSearch" value="${command.newSearch}">
     		</div>
     	</div>
-	</form>
+	</form:form>
 
 
 
@@ -179,6 +182,8 @@
 			
 			$j('#advancedSearchForm').submit(function(){
 				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+				var formPreviousURL = "${ShowAdvancedSearchForumPostURL}" + '?' + $j(this).serialize();
+				$j("#prevUrl").val(formPreviousURL);
 				$j("#main").load(formSubmitURL);
 // 				$j.post(formSubmitURL, function(html) {
 // 					$j("#main").html(html);

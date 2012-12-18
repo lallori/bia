@@ -1,4 +1,4 @@
-update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -79,13 +79,14 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 	${paginationData}
 	
 	<div id="jumpToDiv">
-    	Jump to:
-        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
-            <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
-                <option value="" selected="selected">Select a Forum</option>
-            </select>
-            <input id="go" type="submit" title="go" value="Go" class="buttonMini">
-        </form>
+		<input id="goBackTo" class="button_medium" value="Go Back" type="submit" />
+<!--     	Jump to: -->
+<%--         <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post"> --%>
+<!--             <select id="selectForum" name="selectForum" selected""="" class="selectform_long"> -->
+<!--                 <option value="" selected="selected">Select a Forum</option> -->
+<!--             </select> -->
+<!--             <input id="go" type="submit" title="go" value="Go" class="buttonMini"> -->
+<%--         </form> --%>
     </div>
     
     <input type="hidden" name="searchUUID" value="${command.searchUUID}">
@@ -139,6 +140,11 @@ update <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 			
 			$j('.returnTo').click(function(){
 				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j("#goBackTo").click(function(){
+				$j("#main").load($j("#prevUrl").val());
 				return false;
 			});
 			

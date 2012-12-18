@@ -62,6 +62,9 @@ public class ForumUtils {
 			messageBody = cutBody.toString();
 		}
 		messageBody = messageBody.replaceAll("\\<.*?>","");
+		if(messageBody.length() > 90){
+			messageBody = messageBody.substring(0, 87) + "...";
+		}
 		return messageBody;
 	}
 	

@@ -110,6 +110,9 @@ public class ShowMyForumPostController {
 
 			Page postsPage  = getCommunityService().searchForumPosts(advancedSearchForum, paginationFilter);
 			model.put("postsPage", postsPage);
+			if(postsPage.getList().size() == 0){
+				model.put("isEmpty", true);
+			}
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowTopicForum", model);

@@ -163,8 +163,8 @@ public class AdvancedSearchForum extends AdvancedSearchAbstract {
 		}
 		
 		//AllTerms
-		if(command.getAllTerms() != null){
-			allTerms = command.getAllTerms();
+		if(command.getAllTerms() != null && command.getAllTerms().equals("true")){
+			allTerms = Boolean.TRUE;
 		}else{
 			allTerms = Boolean.FALSE;
 		}

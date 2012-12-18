@@ -117,6 +117,27 @@ public class ShowAdvancedSearchForumPostController {
 		Map<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 		command.setSearchUUID(UUID.randomUUID().toString());
 		command.setNewSearch(Boolean.TRUE);
+		if(command.getAllTerms() == null){
+			command.setAllTerms("true");
+		}
+		if(command.getWordsType() == null){
+			command.setWordsType("SUBJECT_TEXT");
+		}
+		if(command.getDisplayResults() == null){
+			command.setDisplayResults("Topics");
+		}
+		if(command.getSortResults() == null){
+			command.setSortResults("POST_TIME");
+		}
+		if(command.getOrder() == null){
+			command.setOrder("asc");
+		}
+		if(command.getLimitResults() == null){
+			command.setLimitResults(0);
+		}
+		if(command.getReturnFirst() == null){
+			command.setReturnFirst(300);
+		}
 		searchFilter = new SearchFilter(0, SearchType.FORUM);
 		searchFilter.setDateCreated(new Date());
 		searchFilter.setDateUpdated(new Date());
