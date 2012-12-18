@@ -37,6 +37,7 @@ import org.medici.bia.command.HomeCommand;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,7 +60,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private CommunityService communityService;
+
 	/**
 	 * 
 	 * @return
@@ -76,6 +79,8 @@ public class HomeController {
 			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			model.put("user", user);
 			
+			Long numberOfNewMessages = getCommunityService().checkNewMessages();
+			model.put("numberOfNewMessages", numberOfNewMessages);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/Welcome", model);
@@ -96,5 +101,19 @@ public class HomeController {
 	 */
 	public UserService getUserService() {
 		return userService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
 	}
 }
