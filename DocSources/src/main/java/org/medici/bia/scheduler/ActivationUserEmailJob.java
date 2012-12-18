@@ -74,7 +74,7 @@ public class ActivationUserEmailJob {
 			List<ActivationUser> usersToActivate = getAdminService().findActivationUsers();
 
 			for(ActivationUser currentActivation:usersToActivate) {
-				getMailService().sendActivationMail(currentActivation, currentActivation.getUser());
+				getMailService().sendActivationMail(currentActivation);
 			}
 		} catch (ApplicationThrowable ath) {
 			

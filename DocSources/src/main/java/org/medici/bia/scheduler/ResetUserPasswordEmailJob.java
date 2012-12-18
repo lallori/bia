@@ -78,7 +78,7 @@ public class ResetUserPasswordEmailJob {
 			List<PasswordChangeRequest> passwordChangeRequests = getUserService().findPasswordResetRequests();
 
 			for(PasswordChangeRequest currentPasswordChange:passwordChangeRequests) {
-				getMailService().sendUserPasswordResetMail(currentPasswordChange, currentPasswordChange.getUser());
+				getMailService().sendUserPasswordResetMail(currentPasswordChange);
 			}
 			
 		} catch (Throwable th) {

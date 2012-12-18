@@ -54,7 +54,7 @@ public interface MailService {
 	 * @param activationUser Entity representing the activation
 	 * @param user User entity that contains email address
 	 */
-	Boolean sendActivationMail(ActivationUser activationUser, User user);
+	Boolean sendActivationMail(ActivationUser activationUser);
 
 	/**
 	 * This method will send an mail for password recovery , and update the state
@@ -63,5 +63,5 @@ public interface MailService {
 	 * @param passwordChangeRequest Entity representing the request for password change
 	 * @param user User entity that contains email address
 	 */
-	Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest, User user);
+	Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest);
 }

@@ -117,23 +117,27 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Boolean sendActivationMail(ActivationUser activationUser, User user) {
+	public Boolean sendActivationMail(ActivationUser activationUser) {
 		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom(getMailFrom());
-			message.setTo(user.getMail());
-			message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
-			message.setText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text", 
-							new String[]{user.getFirstName(), 
-										 user.getAccount(), 
-										 URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8"), 
-										 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
-										 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
-			getJavaMailSender().send(message);
-			
-			activationUser.setMailSended(Boolean.TRUE);
-			activationUser.setMailSendedDate(new Date());
-			getActivationUserDAO().merge(activationUser);
+			if (!StringUtils.isBlank(activationUser.getUser().getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(activationUser.getUser().getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text", 
+								new String[]{activationUser.getUser().getFirstName(), 
+						activationUser.getUser().getAccount(), 
+											 URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8"), 
+											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+											 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
+				getJavaMailSender().send(message);
+				
+				activationUser.setMailSended(Boolean.TRUE);
+				activationUser.setMailSendedDate(new Date());
+				getActivationUserDAO().merge(activationUser);
+			} else {
+				logger.error("Mail activation user not sended for user " + activationUser.getUser().getAccount() + ". Check mail field on tblUser for account " + activationUser.getUser().getAccount());
+			}
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
 			logger.error(throwable);
@@ -180,23 +184,27 @@ public class MailServiceImpl implements MailService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest, User user) {
+	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest) {
 		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setFrom(getMailFrom());
-			message.setTo(user.getMail());
-			message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.subject"));
-			message.setText(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.text", 
-							new String[]{user.getFirstName(), 
-										 user.getAccount(), 
-										 URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8"), 
-										 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
-										 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
-			getJavaMailSender().send(message);
-
-			passwordChangeRequest.setMailSended(Boolean.TRUE);
-			passwordChangeRequest.setMailSendedDate(new Date());
-			getPasswordChangeRequestDAO().merge(passwordChangeRequest);
+			if (!StringUtils.isBlank(passwordChangeRequest.getUser().getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(passwordChangeRequest.getUser().getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.subject"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.text", 
+								new String[]{passwordChangeRequest.getUser().getFirstName(), 
+											 passwordChangeRequest.getUser().getAccount(), 
+											 URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8"), 
+											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+											 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
+				getJavaMailSender().send(message);
+	
+				passwordChangeRequest.setMailSended(Boolean.TRUE);
+				passwordChangeRequest.setMailSendedDate(new Date());
+				getPasswordChangeRequestDAO().merge(passwordChangeRequest);
+			} else {
+				logger.error("Mail password reset not sended for user " + passwordChangeRequest.getUser().getAccount() + ". Check mail field on tblUser for account " + passwordChangeRequest.getUser().getAccount());
+			}
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
 			logger.error(throwable);
