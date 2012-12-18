@@ -9,6 +9,8 @@
 			<link rel="stylesheet" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
 			<div id="registrationForm">
+				<h1>REGISTRATION FORM </h1> 
+				<p class="title">The fields with <font color="#990000">*</font> are compulsory</p>
 				<form:form method="post" acceptCharset="UTF-8">
 					<table class="registrationForm" cellpadding="3">
 						<tr>
@@ -44,7 +46,7 @@
 <!-- 							</td> -->
 						</tr>
 						<tr>
-							<td colspan="6"><input id="create" type="image" src="<c:url value="/images/1024/button_register.jpg"/>" alt="submit" title="submit form" style="margin:12px 0px 0px 670px"/></td>
+							<td colspan="6"><input id="create" type="submit" title="submit form" value="Register" style="margin:12px 0px 0px 690px" class="button_medium"/></td>
 						</tr>
 						<tr>
 							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in</a></b></p></td>

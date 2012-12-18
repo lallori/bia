@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 			<div id="activationcode">
-				<h1>PASSWORD RECOVERY</h1>
+				<h1>ACTIVATION CODE RECOVERY</h1>
 				<p>Did you not receive Activation code?<br/>Enter here your E-mail adress to get a new one:</p><br/>  		
 				<form:form method="post" cssClass="recovery">
 					<form:errors path="mail" />
@@ -13,7 +13,7 @@
 					<div id="captcha_recovery">
 						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
 					</div>
-					<input name="submit" type="image" src="<c:url value="/images/1024/button_submit.jpg"/>" alt="submit" title="submit" style="margin:10px 0px 0px 170px"/>
+					<input name="submit" type="submit" style="margin:10px 0px 0px 160px" title="submit" class="button_medium" value="Submit"/>
 				</form:form>  
 			</div>
 			

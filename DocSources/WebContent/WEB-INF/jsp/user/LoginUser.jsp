@@ -30,11 +30,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparentLogin.png"/>" alt="Log_in" title="send the module" style="margin-left:48px" class="button_login"/>
+							<td align="right"><input name="Login" class="button_medium" style="margin:10px 0 0 48px" type="submit" value="Login" title="send the module" style="margin-left:48px" class="button_medium"/>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="_spring_security_remember_me" value="yes" style="margin:11px 0px 0px 60px"/><p class="remember">Remember me</p>
+							<td><input type="checkbox" name="_spring_security_remember_me" value="yes"/><p class="remember">Remember me</p>
 							</td>
 						</tr>
 						<tr>

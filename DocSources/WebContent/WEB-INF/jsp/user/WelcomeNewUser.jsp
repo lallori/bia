@@ -32,14 +32,14 @@
 		});
 
 		$j(".communityForums").mouseover(function(){
-			if($j("#userGroup").val() != 'COMMUNITY_USERS')
+			if($j("#userGroup").val() != 'COMMUNITY_USERS' && $j("#userGroup").val() != 'GUESTS')
           		$j('#communityForumsPointer').fadeIn("slow");
 			else
 				$j('#communityForumsPointer_guest').fadeIn("slow");
  		});
 
 		$j(".communityForums").mouseleave(function(){
-			if($j("#userGroup").val() != 'COMMUNITY_USERS')
+			if($j("#userGroup").val() != 'COMMUNITY_USERS' && $j("#userGroup").val() != 'GUESTS')
           		$j('#communityForumsPointer').fadeOut("slow");
 			else
 				$j('#communityForumsPointer_guest').fadeOut("slow");

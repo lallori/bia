@@ -21,6 +21,8 @@
 	</c:url>
 	
 	<c:url var="WelcomeNewUserURL" value="/user/WelcomeNewUser.do" />
+	
+	<c:url var="CheckNewMessagesURL" value="/community/CheckNewMessages.json"/>
 
 	<div id="DocSourcesContent">
 		<div id="body_left">
@@ -129,6 +131,15 @@
 			});
 		</c:otherwise>
 	</c:choose>
+	
+	$j.ajax({ type:"GET", url:"${CheckNewMessagesURL}", async:false, success:function(data) {
+		if(data.newMessages == 'true'){
+			$j("#messagesCount").html('(' + data.numberOfNewMessages + ')');
+		}else{
+			$j("#messagesCount").html('(0)');
+		}
+	}});
+	
 	});
 </script>
 

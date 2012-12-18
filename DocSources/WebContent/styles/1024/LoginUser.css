@@ -62,6 +62,7 @@ body {
 	position:absolute;
 	border:1px solid #AEAEAE;
 	border-right:none;
+	border-radius:4px 0 0 4px;
 }
 
 /*  Log in - Form */
@@ -82,8 +83,18 @@ body {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.button_login {
-	background-image:url(/DocSources/images/1024/button_login.jpg);
+.button_login, .button_medium {
+	width: 127px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
+	text-align: center;
+	background-color:transparent; 
+	display:block;
+	font-size:12px;
+	padding:1px 0 0 0;
+	line-height:18px;
 }
 
 .fyp { /* Forgot your password class */
@@ -98,16 +109,9 @@ body {
 
 input {
 	font-family: Georgia, "Times New Roman", Times, serif;
-	margin-top:7px;
 	border:none;
 	color:#60584d;
-	float:left;
-}
-
-input.submit {
-	margin: 35px 0 0 170px;
-}
-
+} 
 
 .loginInput, .registerInput { /* INPUT text */
 	font-size:12px;
@@ -124,7 +128,15 @@ input.submit {
 
 .remember { /* Remember me class */
 	 font-size: 11px;
-	 margin-left: 77px;
+	 margin-left: 5px;
+	 display: inline-block;
+	 vertical-align: middle;
+}
+
+.loginform input[type=checkbox] {
+    display:inline-block;
+    vertical-align:middle;
+    margin-left: 60px;
 }
 
 /* buttonons */
@@ -133,8 +145,8 @@ input.submit {
 	margin-top:220px;
 	margin-left:585px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/button_registerhere.jpg);
-	width:228px;
+	background-image:url(/DocSources/images/1024/button_registerHere.png);
+	width:230px;
 	height:65px;
 }
 
@@ -154,8 +166,8 @@ input.submit {
 }
 
 #register {
-	background-image:url(/DocSources/images/1024/button_guest.jpg);
-	width:228px;
+	background-image:url(/DocSources/images/1024/button_loginGuest.png);
+	width:230px;
 	height:65px;
 }
 
@@ -175,6 +187,9 @@ input.submit {
 	border-right:none;
 	background-repeat:no-repeat;
 	z-index:1;
+	border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
 }
 
 #registrationForm h1 {
@@ -238,7 +253,6 @@ input.submit {
 
 .already a { /* Already have an account? Links */
 	font-family:Georgia, "Times New Roman", Times, serif;
-	color:#642221;
 	font-size: 11px;
 }
 
@@ -316,7 +330,7 @@ input.submit {
 
 #captcha_recovery{
 	width: 450px;
-	height: 155px;
+	height: 120px;
 	margin-left: 10px;
 }
 
@@ -350,6 +364,9 @@ input.submit {
 	position:absolute;
 	border:1px solid #AEAEAE;
 	border-right:none;
+	border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
 }
 
 #activationcode h1 {
@@ -375,6 +392,9 @@ input.submit {
 	position:absolute;
 	border:1px solid #AEAEAE;
 	border-right:none;
+	border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
 }
 
 #usersuccess h1 {
@@ -384,8 +404,12 @@ input.submit {
 	text-align:center;
 }
 
+#usersuccess a{ /* Div content */
+	margin-left: 135px;	
+}
+
 .usersuccess {  /* p class */
-	margin-top:60px;
+	margin-top: 40px;
 	margin-left:25px;
 	height:50px;
 	width:345px;
@@ -399,9 +423,7 @@ input.submit {
 	margin-top:65px;
 	height:50px;
 	width: 395px;
-	position:absolute;
 	text-align:center;
-	line-height:30px;
 }
 
 
@@ -415,6 +437,9 @@ input.submit {
 	position:absolute;
 	border:1px solid #AEAEAE;
 	border-right:none;
+	border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
 }
 
 #reset h1 {

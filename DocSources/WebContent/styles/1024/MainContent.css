@@ -1632,6 +1632,7 @@ p.notDigitized {
 div#text a.linkVolume {
     font-size: 16px;
     color: #666EA4;
+	text-decoration: underline;
 }
 
 div#text a.placeText {
