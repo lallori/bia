@@ -162,19 +162,44 @@
 			
 			$j("#refine${command.searchUUID}").open({width: 960, height: 350, scrollbars: "yes"});
 			
-			$j("#tabLink").open({width: 960, height: 350, scrollbars: "yes"});			
+			$j(".tabLink").open({width: 960, height: 350, scrollbars: "yes"});	
+			
+			$j("#yourSearch").click(function(){
+				$j("#yourSearchDialog").dialog({
+					  autoOpen : false,
+					  modal: true,
+					  resizable: false,
+					  width: 300,
+					  height: 130, 
+					  buttons: {
+						  Ok: function() {
+							  $j(this).dialog("close");
+							  $j("#yourSearchDialog").dialog('destroy');
+							  $j("#yourSearchDialog").appendTo("#yourSearchDiv").css("display", "none");
+						  }
+					  }
+				  });
+				$j("#yourSearchDialog").dialog('open');
+				return false;
+			});
 		});
 	</script>
 	
 	<div class="yourSearchDiv">
 		Your search:
 		<c:if test="${yourSearch.length() > 45}">
-			<a class="tabLink" id="tabLink" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a>
+			<a id="yourSearch" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
 			<font color="red">${yourSearch}</font>
 		</c:if>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
+		
+		<div id="yourSearchDialog" title="Your search" style="display:none"> 
+			<p>
+				${yourSearch}
+			</p>
+		</div>
 	</div>
 	
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
