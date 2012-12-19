@@ -1100,6 +1100,7 @@ public class AjaxController {
 			singleRow.add(currentFilter.getTotalResult());
 			singleRow.add(currentFilter.getSearchType());
 			singleRow.add(DateFormatUtils.format(currentFilter.getDateUpdated(), "MM/dd/yyyy"));
+			singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentFilter.getId() + "\" >");
 
 			resultList.add(HtmlUtils.showUserSearchFilter(singleRow, currentFilter.getId(), currentFilter.getSearchType()));
 		}

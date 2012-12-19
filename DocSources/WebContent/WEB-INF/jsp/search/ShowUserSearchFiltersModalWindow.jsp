@@ -17,9 +17,10 @@
 				"bAutoWidth" : false,
 				"aoColumns" : [
 				{ sWidth : "200px" },
-				{ sWidth : "50px" },
-				{ sWidth : "90px" },
+				{ sWidth : "30px" },
 				{ sWidth : "70px" },
+				{ sWidth : "70px" },
+				{ sWidth : "40px" }
 				], 
 				"bLengthChange": false,
 				"bDestroy" : true,
@@ -67,6 +68,8 @@
 								return false;
 							}
 					);
+					
+					$j('.searchResult > input:checkbox').unwrap();
 				}
 			} );
 
@@ -98,6 +101,7 @@
 					<th>RESULTS</th>
 					<th>RECORD TYPES</th>
 					<th>DATE</th>
+					<th>SELECT</th>
 				</tr>
 			</thead>
 			<tbody>
