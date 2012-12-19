@@ -61,6 +61,8 @@
 					} );
 				},
 				"fnDrawCallback" : function(){
+					var idTabTitle;
+					var titleString
 					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					$j("tr.odd").mouseover(function(){
 						$j(this).find("td.sorting_1").css('background-color','#b0addd');
@@ -82,6 +84,40 @@
 						$j(this).find("td a.searchResult").css('color','#6F6B69');
 						return false;
 					});
+					<c:choose>
+					<c:when test="${command.searchType.toString() == 'PEOPLE'}">
+						idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
+						titleString = $j("#" + idTabTitle).find("span").text();
+						if(titleString.charAt(titleString.length - 1) != parseInt($j("#personSearchTabNumber").val() - 1)){
+							$j("#" + idTabTitle).find("span").append(" " + $j("#personSearchTabNumber").val());
+							$j("#personSearchTabNumber").val(parseInt($j("#personSearchTabNumber").val()) + 1);
+						}
+					</c:when>			
+					<c:when test="${command.searchType.toString() == 'DOCUMENT'}">
+						idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
+						titleString = $j("#" + idTabTitle).find("span").text();
+						if(titleString.charAt(titleString.length - 1) != parseInt($j("#documentSearchTabNumber").val() - 1)){
+							$j("#" + idTabTitle).find("span").append(" " + $j("#documentSearchTabNumber").val());
+							$j("#documentSearchTabNumber").val(parseInt($j("#documentSearchTabNumber").val()) + 1);
+						}
+					</c:when>
+					<c:when test="${command.searchType.toString() == 'VOLUME'}">
+						idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
+						titleString = $j("#" + idTabTitle).find("span").text();
+						if(titleString.charAt(titleString.length - 1) != parseInt($j("#volumeSearchTabNumber").val() - 1)){
+							$j("#" + idTabTitle).find("span").append(" " + $j("#volumeSearchTabNumber").val());
+							$j("#volumeSearchTabNumber").val(parseInt($j("#volumeSearchTabNumber").val()) + 1);
+						}
+					</c:when>
+					<c:when test="${command.searchType.toString() == 'PLACE'}">
+						idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
+						titleString = $j("#" + idTabTitle).find("span").text();
+						if(titleString.charAt(titleString.length - 1) != parseInt($j("#placeSearchTabNumber").val() - 1)){
+							$j("#" + idTabTitle).find("span").append(" " + $j("#placeSearchTabNumber").val());
+							$j("#placeSearchTabNumber").val(parseInt($j("#placeSearchTabNumber").val()) + 1);
+						}
+					</c:when>
+				</c:choose>
 				}
 			});
 
@@ -182,6 +218,10 @@
 				$j("#yourSearchDialog").dialog('open');
 				return false;
 			});
+			
+			/*var idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
+			$j("#" + idTabTitle).find("span").append(" " + $j("#documentSearchTabNumber").val());
+			$j("#documentSearchTabNumber").val(parseInt($j("#documentSearchTabNumber").val()) + 1);*/
 		});
 	</script>
 	

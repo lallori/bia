@@ -141,12 +141,13 @@
 				if (window.opener.$j('#tabs').find("#refine${command.searchUUID}").length==1) {
 					// calculate tab position
 					var index = window.opener.$j("#tabs ul li").index(window.opener.$j("li:has(a[href='#" + window.opener.$j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"));
+					var title = window.opener.$j('#tabs ul li').eq(index).find('a').text();
 					window.opener.$j('#tabs ul li').eq(index).data('loaded', false).find('a').attr('href', formSubmitURL);
 					window.opener.$j("#tabs").tabs("option", "active", index);
 					window.opener.$j("#tabs").tabs("load" , index);
 					//MD: Fix problem with title of tab (if it already exist, it still display "Loading...")
 					window.opener.$j('#tabs ul li').eq(index).find('a').empty();
-					window.opener.$j('#tabs ul li').eq(index).find('a').append("<span>Place Search</span>");
+					window.opener.$j('#tabs ul li').eq(index).find('a').append("<span>" + title + "</span>");
 					window.close();
 				} else {
 					//otherwise it's in a new search so we add a new tab.
