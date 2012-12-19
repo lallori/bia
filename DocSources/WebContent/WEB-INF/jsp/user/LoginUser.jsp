@@ -26,11 +26,11 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="password" name="j_password" class="loginInput" style="margin-left:30px"/><br/><br/>
+								<input type="password" name="j_password" class="loginInput" style="margin-left:30px"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Login" class="button_medium" style="margin:10px 0 0 48px" type="submit" value="Login" title="send the module" style="margin-left:48px" class="button_medium"/>
+							<td><input name="Login" class="button_medium" style="margin-left:48px" type="submit" value="Login" title="send the module" class="button_medium"/>
 							</td>
 						</tr>
 						<tr>
@@ -52,6 +52,8 @@
 			<div id="guest">
 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
 			</div>
+			
+			<div id="baseOn">Based on <img src="<c:url value="/images/1024/img_iip.png" />" width="30" /></div>
 						
 			<div id="footer">
 				<a href="http://www.mellon.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/img_mellon.png"/>" alt="The Andrew W. Mellon Foundation" /></a>
