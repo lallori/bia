@@ -41,6 +41,13 @@
 	</div>
 	
 	<c:url var="LastEntryUserURL" value="/user/LastEntryUser.json" />
+	
+	<div style="display:none">
+		<input type="hidden" id="documentSearchTabNumber" value="1">
+		<input type="hidden" id="volumeSearchTabNumber" value="1">
+		<input type="hidden" id="personSearchTabNumber" value="1">
+		<input type="hidden" id="placeSearchTabNumber" value="1">
+	</div>
 
 <script>
 	$j(function() {
@@ -175,6 +182,10 @@
 			$j("#body_right").append($j("#removeTabs"));
 			$j(".blockUI").remove();
 			$j( "#tabs" ).tabs( "add" , "#removeTabsURL", "<a href='#' title='Close all visible tabs' style='cursor:pointer;' id='removeAllTabs'><img src='<c:url value='/images/1024/button_deleteTabs.png'/>' /></a><span class='ui-icon ui-icon-close' title='Close Tab' style='display:none;'>", 0);
+			$j("#documentSearchTabNumber").val(1);
+			$j("#personSearchTabNumber").val(1);
+			$j("#volumeSearchTabNumber").val(1);
+			$j("#placeSearchTabNumber").val(1);
 			return false; 
 		}); 
      	

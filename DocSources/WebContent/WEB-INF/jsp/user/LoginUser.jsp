@@ -48,11 +48,11 @@
 			</div>
       
 			<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
-  
-			<div id="guest">
-				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
-			</div>
 			
+<!-- 			<div id="guest"> -->
+<%-- 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form> --%>
+<!-- 			</div> -->
+  
 			<div id="baseOn">Based on <img src="<c:url value="/images/1024/img_iip.png" />" width="30" /></div>
 						
 			<div id="footer">
