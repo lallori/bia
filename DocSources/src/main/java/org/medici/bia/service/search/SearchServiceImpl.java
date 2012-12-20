@@ -320,6 +320,20 @@ public class SearchServiceImpl implements SearchService {
 	}
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeSearchFiltersUser(List<Integer> idElements) throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			return getSearchFilterDAO().removeSearchFiltersUser(user, idElements);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * 
 	 */
 	@Override

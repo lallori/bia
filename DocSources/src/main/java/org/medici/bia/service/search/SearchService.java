@@ -54,6 +54,7 @@ import org.medici.bia.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public interface SearchService {
@@ -125,6 +126,14 @@ public interface SearchService {
 	 */
 	public Page getUserSearchFilters(PaginationFilter paginationFilter, SearchType searchType) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param idElements
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer removeSearchFiltersUser(List<Integer> idElements) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param searchFilter

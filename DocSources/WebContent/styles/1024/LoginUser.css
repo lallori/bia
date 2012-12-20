@@ -65,6 +65,14 @@ body {
 	border-radius:4px 0 0 4px;
 }
 
+div.buttons {
+    position:absolute;
+    width:300px;
+    height:400px;
+    margin-left: 555px;
+    margin-top: 220px;
+}
+
 /*  Log in - Form */
 
 #login h1 {
@@ -142,18 +150,22 @@ input {
 /* buttonons */
 
 #register_here{
-	margin-top:220px;
-	margin-left:585px;
-	position:absolute;
 	background-image:url(/DocSources/images/1024/button_registerHere.png);
 	width:230px;
 	height:65px;
+	display: block;
+}
+
+#onlineCourses{
+	background-image:url(/DocSources/images/1024/button_onlineCourses.png);
+	width:230px;
+	height:65px;
+	display: block;
+	margin-top:10px
 }
 
 #guest {
-	margin-top:300px;
-	margin-left:585px;
-	position:absolute;
+	margin-top:10px;
 }
 
 #baseOn {

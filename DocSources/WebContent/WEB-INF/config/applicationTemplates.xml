@@ -4,6 +4,8 @@
 <tiles-definitions>
     
 	<definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp"/>
+	
+	<definition name="template.expandResultsSearch" template="/WEB-INF/templates/expandResultsSearch.jsp"/>
 
 	<definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
 
@@ -1068,6 +1070,10 @@
 	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
+	</definition>
+	
+	<definition name="search/ExpandSimpleSearchResult" extends="template.expandResultsSearch">
+		<put-attribute name="expandResultsSearch" value="/WEB-INF/jsp/search/ExpandSimpleSearchResult.jsp"/>	
 	</definition>
 
 	<definition name="search/SaveUserSearchFilterModalWindow" extends="template.partialDOM">

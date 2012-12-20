@@ -47,14 +47,16 @@
 				
 			</div>
       
-			<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
+			<div class="buttons">
+				<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
+				
+				<a href="http://courses.medici.org/" id="onlineCourses"></a><!-- MAP online COURSES -->
+			</div>
 			
 <!-- 			<div id="guest"> -->
 <%-- 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form> --%>
 <!-- 			</div> -->
   
-			<div id="baseOn">Based on <img src="<c:url value="/images/1024/img_iip.png" />" width="30" /></div>
-						
 			<div id="footer">
 				<a href="http://www.mellon.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/img_mellon.png"/>" alt="The Andrew W. Mellon Foundation" /></a>
 				<a href="http://www.archivi.beniculturali.it" target="_blank" class="dga"><img src="<c:url value="/images/1024/img_dga.png"/>" alt="DGA" /></a>

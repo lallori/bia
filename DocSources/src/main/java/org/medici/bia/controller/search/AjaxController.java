@@ -452,6 +452,144 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 	}
+	
+	/**
+	 * 
+	 * @param simpleSearchPerimeter
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/src/ExpandResultsSimpleSearch.json", method = RequestMethod.GET)
+	public ModelAndView expandResultsSimpleSearch(@RequestParam(value="simpleSearchPerimeter") SimpleSearchPerimeter simpleSearchPerimeter, 
+								   		 @RequestParam(value="sSearch") String alias,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, simpleSearchPerimeter);
+		
+		Page page = null;
+		
+		try {
+			alias = new String(alias.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+
+		try {
+			page = getSearchService().searchDocuments(new SimpleSearchDocument(simpleSearchPerimeter, alias), paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			StringBuilder titleLastColumn = new StringBuilder();
+			if (currentDocument.getMDPAndFolio() != null){
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
+				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+					if(currentDocument.getInsertLet() != null){
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+					}else{
+						lastColumn.append("-");
+					}					
+				}else{
+					lastColumn.append("-/-");
+				}
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
+				if(currentDocument.getFolioNum() != null){
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+					if(currentDocument.getFolioMod() != null){
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
+					}
+				}
+				else{
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
+				}
+				lastColumn.append("</b>");
+				if(currentDocument.getVolume().getDigitized()){
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+				}
+				singleRow.add(lastColumn.toString());
+			}
+			else
+				singleRow.add("");
+			if(currentDocument.getSynExtract().getDocExtract() != null){
+				singleRow.add(currentDocument.getSynExtract().getDocExtract().substring(0, 30));
+			}else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 

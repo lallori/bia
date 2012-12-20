@@ -88,19 +88,19 @@
 }
 
 .paginate_disabled_previous {
-    background-image: url('./images/1024/back_disabled.jpg');
+    background-image: url('../images/1024/back_disabled.jpg');
 }
 
 .paginate_enabled_previous {
-    background-image: url('./images/1024/back_enabled.jpg');
+    background-image: url('../images/1024/back_enabled.jpg');
 }
 
 .paginate_disabled_next {
-    background-image: url('./images/1024/forward_disabled.jpg');
+    background-image: url('../images/1024/forward_disabled.jpg');
 }
 
 .paginate_enabled_next {
-    background-image: url('./images/1024/forward_enabled.jpg');
+    background-image: url('../images/1024/forward_enabled.jpg');
 }
 
 
@@ -126,6 +126,13 @@ table.display {
      * then filling in the gaps with other borders.
      */
 }
+
+
+table.display#ExpandResults{
+    width: 790px;
+	margin:0;
+}
+
 
 .searchResult {
     font-size: 12px;

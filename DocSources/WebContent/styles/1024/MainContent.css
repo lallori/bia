@@ -583,6 +583,11 @@ item a{
 	text-align: center;
 }
 
+.button_medium.expand{
+	float:left;
+	margin: 15px 0 0 40px;
+}
+
 .button_large {
 	width: 182px;
 	height: 22px;
@@ -3402,7 +3407,7 @@ form#EditUserProfileForm span{
 }
 
 #advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
-	margin: 210px 0 0 340px;
+	margin: 209px 0 0 340px;
 	position:absolute;
 }
 
@@ -3888,7 +3893,7 @@ table#savedSearchFiltersForm.display {
 #savedFiltersButtons {
 	width:120px;
 	height:22px;
-	margin:10px 0 0 310px;
+	margin:10px 0 0 0;
 }
 
 #goBackToAdvancedSearch {

@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="SimpleSearchPaginationURL" value="/src/SimpleSearchPagination.json">
+	<c:url var="ExpandResultsSimpleSearchURL" value="/src/ExpandResultsSimpleSearch.json">
 		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
 	</c:url>
 	
@@ -12,11 +12,11 @@
 		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
 	</c:url>
 
-	<c:url var="AdvancedSearchRefineURL" value="/src/ConvertSimpleSearchToAdvancedSearch.do">
-		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
-		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
-		<c:param name="text" value="${command.text}" />
-	</c:url>
+<%-- 	<c:url var="AdvancedSearchRefineURL" value="/src/ConvertSimpleSearchToAdvancedSearch.do"> --%>
+<%-- 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param> --%>
+<%-- 		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" /> --%>
+<%-- 		<c:param name="text" value="${command.text}" /> --%>
+<%-- 	</c:url> --%>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 
@@ -25,7 +25,7 @@
 
 		$j(document).ready(function() {
 			//dynamic field management
-			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#ExpandResults > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 			var test;
 			var colsort;
 			<c:choose>
@@ -34,8 +34,8 @@
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}];
 				</c:when>			
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
-					test = [[2, "asc"]];
-					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
+					test = [[parseInt('${command.iSortCol_0}'), "${command.sSortDir_0}"]];
+					colsort = [ { "sWidth": "100%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'VOLUME'}">
 					test = [[1, "asc"]];
@@ -47,16 +47,28 @@
 				</c:when>
 			</c:choose>
 			
-			var table = $j('#${command.searchUUID}').dataTable( {
+			var table = $j('#ExpandResults').dataTable( {
 				"aoColumnDefs": colsort,
+				"aoColumns" : [
+								{ sWidth : "40px" },
+								{ sWidth : "40px" },
+								{ sWidth : "40px" },
+								{ sWidth : "40px" },
+								{ sWidth : "40px" },
+								{ sWidth : "40px" },
+								{ sWidth : "350px" }
+								],      
 				"aaSorting": test,
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
-				"iDisplayLength": 20,
-				"iDisplayStart": 0,
-				"oSearch": {"sSearch": "${command.text}"},
-				"sAjaxSource": "${SimpleSearchPaginationURL}",
+				"iDisplayLength": "${command.iDisplayLength}",
+				"iDisplayStart": "${command.iDisplayStart}",
+				"iSortingCols": "${command.iSortingCols}",
+// 				"iSortCol_0": "${command.iSortCol_0}",
+// 				"sSortDir_0": "${command.sSortDir_0}",
+				"oSearch": {"sSearch": "${command.sSearch}"},
+				"sAjaxSource": "${ExpandResultsSimpleSearchURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
@@ -68,7 +80,7 @@
 					}); 					
 				},
 				"fnDrawCallback" : function(){
-					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
+// 					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');
@@ -99,14 +111,6 @@
 								return false;
 							}
 					);
-					var href = '${ExpandResultsURL}';
-					href += "&iDisplayStart=" + this.fnSettings()._iDisplayStart;
-					href += "&iDisplayLength=" + this.fnSettings()._iDisplayLength;
-					href += "&sSearch=" + '${command.text}';
-					href += "&iSortingCols=" + this.fnSettings()._iSortingCols;
-					href += "&iSortCol_0=" + this.fnSettings().aaSorting[0][0];
-					href += "&sSortDir_0=" + this.fnSettings().aaSorting[0][1];
-					$j("#expand${command.searchUUID}").attr("href", href);
 				}
 			});
 			
@@ -120,13 +124,13 @@
 				$j("#body_left").load($j(this).attr("href"));
 				
 				if(!$j(this).parent().parent().hasClass("selected")){
-					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
-					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
-					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
-					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
+					$j("#ExpandResults tbody").find("tr.selected td.selected").addClass("sorting_1");
+					$j("#ExpandResults tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
+					$j("#ExpandResults tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+					$j("#ExpandResults tbody").find("tr.selected td.selected").removeClass("selected");
 				
 					
-					$j("#${command.searchUUID} tbody").find("tr.selected").removeClass("selected");
+					$j("#ExpandResults tbody").find("tr.selected").removeClass("selected");
 					var tr = $j(this).parent().parent();
 					$j(tr).addClass("selected");
 					
@@ -141,17 +145,17 @@
 			}); 
 			
 			//MD: This code is for click in any space inside a row
-			$j("#${command.searchUUID} tbody tr").live('click', function(){
+			$j("#ExpandResults tbody tr").live('click', function(){
 				$j("#body_left").load($j(this).children().children().attr("href"));
 				
 				if(!$j(this).hasClass("selected")){
-					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
-					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
-					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
-					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
+					$j("#ExpandResults tbody").find("tr.selected td.selected").addClass("sorting_1");
+					$j("#ExpandResults tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
+					$j("#ExpandResults tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+					$j("#ExpandResults tbody").find("tr.selected td.selected").removeClass("selected");
 				
 					
-					$j("#${command.searchUUID} tbody").find("tr.selected").removeClass("selected");
+					$j("#ExpandResults tbody").find("tr.selected").removeClass("selected");
 				
 					$j(this).addClass("selected");
 				
@@ -165,57 +169,55 @@
 				return false;
 			});
 
-			$j('.tabResult').die();
-			$j('.tabResult').live('click', function(){
-				var tabName = "Topics " + $j(this).parent().parent().children().first().text();
-				var numTab = 0;
+// 			$j('.tabResult').die();
+// 			$j('.tabResult').live('click', function(){
+// 				var tabName = "Topics " + $j(this).parent().parent().children().first().text();
+// 				var numTab = 0;
 				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
+// 				//Check if already exist a tab with this person
+// 				var tabExist = false;
+// 				$j("#tabs ul li a").each(function(){
+// 					if(!tabExist)
+// 						numTab++;
+// 					if(this.text == tabName){
+// 						tabExist = true;
+// 					}
+// 				});
 				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
-			});
+// 				if(!tabExist){
+// 					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+// 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+// 					return false;
+// 				}else{
+// 					$j("#tabs").tabs("select", numTab-1);
+// 					return false;
+// 				}
+// 			});
 
-			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
+// 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 			
 			$j(".dataTables_filter").css('display', 'none');
-			
-			$j("#expand${command.searchUUID}").open({width: 800, height: 600, scrollbars: "yes"});
 
 		} );
 	</script>
 	
-	<div class="yourSearchDiv">
-		<p>Your search:
-		<font color="red" style="margin-left:5px">${yourSearch}</font></p>
-		<p>Total records found:
-		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
-		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}">Print Records</a>
+<!-- 	<div class="yourSearchDiv"> -->
+<!-- 		<p>Your search: -->
+<%-- 		<font color="red" style="margin-left:5px">${yourSearch}</font></p> --%>
+<!-- 		<p>Total records found: -->
+<%-- 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p> --%>
+<%-- 		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a> --%>
+<%-- 		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}">Print Records</a> --%>
 <%-- 		<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a> --%>
-	</div>
+<!-- 	</div> -->
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="ExpandResults">
 		<thead>
 			<tr></tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				<td colspan="7" class="dataTables_empty">Loading data from server</td>
 			</tr>
 		</tbody>
 	</table>

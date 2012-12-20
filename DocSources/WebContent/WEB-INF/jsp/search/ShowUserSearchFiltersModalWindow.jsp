@@ -9,10 +9,12 @@
 	</c:url>
 	
 	<c:url var="ChoiceAdvancedSearchURL" value="/src/ChoiceAdvancedSearch.do"/>
+	
+	<c:url var="EraseSearchFiltersURL" value="/src/EraseSearchFilters.do" />
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
-			$j('#savedSearchFiltersForm').dataTable( {
+			var $searchFilterTable = $j('#savedSearchFiltersForm').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }],
 				"bAutoWidth" : false,
 				"aoColumns" : [
@@ -89,6 +91,53 @@
 			$j("#goBackToAdvancedSearch").click(function(){
 				Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 325});return false;
 			});
+			
+			var $toRemove = "";
+			
+			$j("#removeSelected").click(function(){
+				$toRemove = "";
+				$j('#savedSearchFiltersForm > tbody > tr > td > input:checked').each(function(){
+					$toRemove += $j(this).attr("idElement") + "+";
+				});
+				if($toRemove != ""){
+					$j("#savedSearchFiltersTableDiv").block({ message: $j('#questionRemoveFilter'), 
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+					return false;
+				}else{
+					return false;
+				}
+			});
+			
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionRemoveFilter").hide();
+				// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+				$j("#savedSearchFiltersTableDiv").parent().append($j("#questionRemoveFilter"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${EraseSearchFiltersURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
+// 	 				$j("#body_left").html(html);
+					$searchFilterTable.fnDraw();
+	 			}});
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionRemoveFilter").hide();
+				// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+				$j("#savedSearchFiltersTableDiv").parent().append($j("#questionRemoveFilter"));
+				$j(".blockUI").remove();						
+				return false; 
+			}); 
 		} );
 	</script>
 
@@ -115,6 +164,13 @@
 	<div id="savedFiltersButtons">
 		<a id="closeSavedFilters" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
 		<a id="goBackToAdvancedSearch" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}">Go back</a>
+		<a id="removeSelected" href="#">Remove selected</a>
 	</div>
 	
+</div>
+
+<div id="questionRemoveFilter" style="display:none; cursor: default"> 
+	<h1>Are you sure?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
 </div>

@@ -43,6 +43,7 @@ import org.medici.bia.domain.User;
  * Search Filter DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 
@@ -85,4 +86,13 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @throws PersistenceException
 	 */
 	Page findUserSearchFilters(User user, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param idElements
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer removeSearchFiltersUser(User user, List<Integer> idElements) throws PersistenceException;
 }

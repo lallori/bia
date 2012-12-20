@@ -1153,7 +1153,7 @@ ul.abc li {
 	text-align:left;
 }
 
-#messagesTable .row .three, #messagesTable .rowLast .three, #messagesTable .rowNew .three{
+#messagesTable .row .three, #messagesTable .rowLast .three, #messagesTable .rowNew .three, #messagesTable .rowLast .three{
 	width: 20%;
 	text-align:right;
 	padding-right: 10px;
@@ -1172,6 +1172,7 @@ ul.abc li {
 #messagesTable .rowLastNew {
 	background-color:#EFE0DE;
 	border-bottom:none;
+	display:table-row;
 }
 
 #messagesTable .list a  { 

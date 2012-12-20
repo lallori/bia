@@ -44,6 +44,7 @@ import org.springframework.stereotype.Repository;
  * <b>SearchFilterDAOJpaImpl</b> is a default implementation of <b>SearchFilterDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.SearchFilter
  */
@@ -170,5 +171,25 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeSearchFiltersUser(User user, List<Integer> idElements) throws PersistenceException {
+		StringBuilder query = new StringBuilder("DELETE FROM SearchFilter WHERE user.account = '");
+		query.append(user.getAccount());
+		query.append("' AND (");
+		for(int i = 0; i < idElements.size(); i++){
+			query.append("id=" + idElements.get(i));
+			if(i != idElements.size()-1){
+				query.append(" OR ");
+			}
+		}
+		query.append(")");
+		Query toQuery = getEntityManager().createQuery(query.toString());
+		
+		return toQuery.executeUpdate();
 	}
 }
