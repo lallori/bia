@@ -44,34 +44,34 @@
 		<div id="id">Place ID ${place.placeAllId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
-				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
+				<a id="lastRecord" title="<fmt:message key="menu.record.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
 			</c:if>
 			<c:if test="${(not empty historyNavigator.nextHistoryUrl)}"> 
-				<a id="nextRecord" title="Go back to the next Record" href="${historyNavigator.nextHistoryUrl}"></a>
+				<a id="nextRecord" title="<fmt:message key="menu.record.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
 		<c:if test="${place.placeAllId != 0}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-<%-- 			<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a> --%>
+<%-- 			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a> --%>
 			</security:authorize>
 			<span id="commentsOn"></span>
-			<a id="comments" href="#">Discussions</a>
+			<a id="comments" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!place.logicalDelete}">
-				<a id="deleteAction" href="${DeletePlaceURL}">Delete</a>
+				<a id="deleteAction" title="<fmt:message key="menu.record.delete"></fmt:message>" href="${DeletePlaceURL}">Delete</a>
 			</c:if>	
 			<c:if test="${place.logicalDelete}">
-				<a id="undeleteAction" href="${UndeletePlaceURL}">Undelete</a>
+				<a id="undeleteAction" title="<fmt:message key="menu.record.undelete"></fmt:message>" href="${UndeletePlaceURL}">Undelete</a>
 			</c:if>	
 			</security:authorize>
-			<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
+			<a id="buttonPrint" title="<fmt:message key="menu.record.print"></fmt:message>"  href="${PrintPlaceURL}"></a>
 			<c:if test="${inMarkedList == 'false'}">
-				<a id="buttonMarkedList" href="${AddMarkedListPlaceURL}" title="Add this record to Marked List"></a>
+				<a id="buttonMarkedList" href="${AddMarkedListPlaceURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
 			</c:if>
 			<c:if test="${inMarkedList == 'true'}">
-				<a id="buttonMarkedList" href="#" title="Already added to Marked List" style="opacity:0.5;"></a>
+				<a id="buttonMarkedList" href="#" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
 			</c:if>
-			<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
+			<a id="buttonShareLink" href="${SharePlaceURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
 		</c:if>
 	</div>
 </c:if>	
@@ -104,6 +104,7 @@
 			}
 		}});
 
+		$j('#comments').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#comments").click(function() {
 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
@@ -124,9 +125,14 @@
 			window.open($j(this).attr("href"),'SHARE PLACE','width=510,height=550,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 		});
 	
+		
+		$j('#buttonPrint').tooltip({track: true, fade: 350, showURL: false });
+
 		$j("#buttonPrint").click(function() {	
 			window.open($j(this).attr("href"),'PRINT PLACE','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 		});
+		
+		$j('#buttonMarkedList').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#buttonMarkedList").click(function() {	
 			if($j(this).attr("href") != '#'){
@@ -162,22 +168,33 @@
 			return false;
 		});
 		
+		$j('#deleteAction').tooltip({track: true, fade: 350, showURL: false });
+		
 		$j("#deleteAction").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "DELETE PLACE", width: 400, height: 120});return false;
 		});	
+		
+		$j('#undeleteAction').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#undeleteAction").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "UNDELETE PLACE", width: 400, height: 120});return false;
 		});	
 
+		$j('#lastRecord').tooltip({track: true, fade: 350, showURL: false });
+
 		$j('#lastRecord').click(function() {
 			$j("#body_left").load($j(this).attr("href"));
 			return false;
 		});
+
+		$j('#nextRecord').tooltip({track: true, fade: 350, showURL: false });
+
 		$j('#nextRecord').click(function() {
 			$j("#body_left").load($j(this).attr("href"));
 			return false;
 		});
+		
+		$j('#vettingHistory').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#vettingHistory").click(function() {	
 			Modalbox.show($j(this).attr("href"), {title: "VETTING HISTORY", width: 760, height: 415});

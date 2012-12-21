@@ -54,9 +54,10 @@ input[type=radio] {
 h1 {
 	font-size: 12px;
 	border-bottom: 1px solid #DCC0BA;
-	margin-left: 2px;
 	font-weight: normal;
 	color: #6D5C4D;
+	padding-left: 20px;
+	padding-bottom: 10px;
 }
 
 h2, h2 a {
@@ -206,7 +207,7 @@ blockquote p {
 	margin: 0;
 }
 
-.buttonMedium { /* Button medium class */
+.buttonMedium, .button_medium { /* Button medium class */
 	width:122px;
 	height:22px;
 	display: inline-block;
@@ -214,6 +215,8 @@ blockquote p {
 	background-repeat:no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
+	border:none;
+	background-color:transparent;
 }
 
 .buttonLarge, .list a.lnkApprove{ /* Button medium class */
@@ -1130,12 +1133,15 @@ ul.abc li {
 #messagePreview {
 	border: 1px solid #DCC0BA;
 	background-color: #F2E6E5;
-	width: 980px;
+	width: 960px;
 	height: auto;
 	border-radius: 4px;
-	margin: 20px 0 20px 0;
+	margin: 20px 0 20px 15px;
 	position: relative;
-	padding: 0 0 0 14px;
+}
+
+#messagePreview h2, #messagePreview p{
+	padding-left:20px;
 }
 
 #messagesTable {
@@ -1173,6 +1179,10 @@ ul.abc li {
 	background-color:#EFE0DE;
 	border-bottom:none;
 	display:table-row;
+}
+
+#messagesTable .rowLastNew .three, #messagesTable .rowLastNew .two, #messagesTable .rowLastNew .one{
+	border-bottom:none;
 }
 
 #messagesTable .list a  { 

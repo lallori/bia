@@ -27,7 +27,7 @@
 	</div>
 	
 	<script type="text/javascript">
-		$j(document).ready(function() {
+		$j(document).ready(function() {			
 	        $j("#EditCorrespondentsDocument").css('visibility', 'visible');
 	        $j("#EditDetailsDocument").css('visibility', 'visible'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'visible');
@@ -41,6 +41,11 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));
 				return false;
+			});
+	        
+	        $j('.helpIcon').tooltip({ 
+				track: true, 
+				fade: 350 
 			});
 		});
 	</script>

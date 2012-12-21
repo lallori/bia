@@ -19,7 +19,7 @@
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
 			<div class="listForm">
-				<div class="row"><a class="helpIcon" title="Text goes here">?</a></div>
+				<div class="row"><a class="helpIcon" title="<fmt:message key="peoplebase.edit.researchnotes"></fmt:message>">?</a></div>
 				<div class="row"><form:textarea id="bioNotes" path="bioNotes" class="txtarea_big" /></div>
 			</div>
 			
@@ -89,6 +89,12 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		
+		$j('.helpIcon').tooltip({ 
+			track: true, 
+			fade: 350 
+		});
+		
 		$j.scrollTo("#EditResearchNotesPersonForm");
 		
 		$j('#no').click(function() { 

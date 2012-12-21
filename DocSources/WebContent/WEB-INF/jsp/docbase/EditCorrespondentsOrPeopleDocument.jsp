@@ -609,6 +609,12 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		
+		$j('.helpIcon').tooltip({ 
+			track: true, 
+			fade: 350 
+		});
+		
 		$j('#no').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");

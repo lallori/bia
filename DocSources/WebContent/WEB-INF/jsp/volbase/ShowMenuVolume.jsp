@@ -43,33 +43,33 @@
 		<div id="id">Vol ID ${volume.summaryId}</div>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
-				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
+				<a id="lastRecord" title="<fmt:message key="menu.record.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
 			</c:if>
 			<c:if test="${(not empty historyNavigator.nextHistoryUrl)}"> 
-				<a id="nextRecord" title="Go back to the next Record" href="${historyNavigator.nextHistoryUrl}"></a>
+				<a id="nextRecord" title="<fmt:message key="menu.record.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-<%-- 			<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a> --%>
+<%-- 			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyVolumeURL}">Vetting History</a> --%>
 		</security:authorize>
 		<span id="commentsOn"></span>
-		<a id="comments" href="#">Discussions</a>
+		<a id="comments" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:if test="${!volume.logicalDelete}">
-			<a id="deleteAction" href="${DeleteVolumeURL}">Delete</a>
-		</c:if>	
-		<c:if test="${volume.logicalDelete}">
-			<a id="undeleteAction" href="${UndeleteVolumeURL}">Undelete</a>
-		</c:if>	
+			<c:if test="${!volume.logicalDelete}">
+				<a id="deleteAction" title="<fmt:message key="menu.record.delete"></fmt:message>" href="${DeleteVolumeURL}">Delete</a>
+			</c:if>	
+			<c:if test="${volume.logicalDelete}">
+				<a id="undeleteAction" title="<fmt:message key="menu.record.undelete"></fmt:message>" href="${UndeleteVolumeURL}">Undelete</a>
+			</c:if>	
 		</security:authorize>
-		<a id="buttonPrint" href="${PrintVolumeURL}" title="Print this record"></a>
+		<a id="buttonPrint" href="${PrintVolumeURL}" title="<fmt:message key="menu.record.print"></fmt:message>"></a>
 		<c:if test="${inMarkedList == 'false'}">
-			<a id="buttonMarkedList" href="${AddMarkedListVolumeURL}" title="Add this record to Marked List"></a>
+			<a id="buttonMarkedList" href="${AddMarkedListVolumeURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
 		</c:if>
 		<c:if test="${inMarkedList == 'true'}">
-			<a id="buttonMarkedList" href="#" title="Already added to Marked List" style="opacity:0.5;"></a>
+			<a id="buttonMarkedList" href="#" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
 		</c:if>
-		<a id="buttonShareLink" href="${ShareVolumeURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
+		<a id="buttonShareLink" href="${ShareVolumeURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
 	</div>
 	
 	</c:if>	
@@ -102,6 +102,8 @@
 			}
 		}});
 		
+		$j('#comments').tooltip({track: true, fade: 350, showURL: false });
+		
 		$j("#comments").click(function() {
 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
 				if (json.isPresent == 'true') {
@@ -120,9 +122,15 @@
 			window.open($j(this).attr("href"),'SHARE VOLUME','width=510,height=550,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 			return false;
 		});
+		
+		$j("#buttonPrint").tooltip({track: true, fade: 350, showURL: false });
+		
 		$j("#buttonPrint").click(function() {
 			window.open($j(this).attr("href"),'PRINT VOLUME','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 		});
+		
+		
+		$j("#buttonMarkedList").tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#buttonMarkedList").click(function() {	
 			if($j(this).attr("href") != '#'){
@@ -158,18 +166,28 @@
 				
 		});
 		
+		$j('#deleteAction').tooltip({track: true, fade: 350, showURL: false });
+		
 		$j("#deleteAction").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "DELETE VOLUME", width: 400, height: 120});return false;
 		});	
+		
+		$j('#undeleteAction').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#undeleteAction").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "UNDELETE VOLUME", width: 450, height: 120});return false;
 		});	
 
+		
+		$j('#lastRecord').tooltip({track: true, fade: 350, showURL: false });
+		
 		$j('#lastRecord').click(function() {
 			$j("#body_left").load($j(this).attr("href"));
 			return false;
 		});
+		
+		$j('#nextRecord').tooltip({track: true, fade: 350, showURL: false });
+		
 		$j('#nextRecord').click(function() {
 			$j("#body_left").load($j(this).attr("href"));
 			return false;
