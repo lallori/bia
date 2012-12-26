@@ -60,6 +60,6 @@ public class ReportedForumPostDAOJpaImpl extends JpaDao<Integer, ReportedForumPo
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	 private static final long serialVersionUID = 6578947708435437064L;
+	private static final long serialVersionUID = 6578947708435437064L;
 
 }
