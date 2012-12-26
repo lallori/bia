@@ -112,4 +112,18 @@ public class RegExUtils {
 
 		return matcher.matches();
 	}
+	
+	public static void main(String[] args) {
+		String lastName = "pe'r";
+		String paramString = "(?=.*[\\p{L}])|(?=.*['])";
+		//String paramString = "(\\d)|([\\p{Punct}])";
+		Pattern localPattern = Pattern.compile(paramString, Pattern.UNICODE_CASE);
+	    Matcher localMatcher = localPattern.matcher(lastName);
+	    
+	    if (localMatcher.find()) {
+			System.out.println("OK");
+		} else {
+			System.out.println("Contiene un carattere non valido");
+		}
+	}
 }
