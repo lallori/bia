@@ -632,3 +632,9 @@ a:hover {
 tr.selected, td.selected{
     background-color: #b0addd;
 }
+
+span.highlighted{
+    background-color: #F3BFCC;
+    color: #BC2A4D;
+    margin-left: 0;
+}
