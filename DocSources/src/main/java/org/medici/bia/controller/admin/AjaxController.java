@@ -33,14 +33,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AccessLogSearch;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.domain.AccessLog;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.SearchFilter.SearchType;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +127,12 @@ public class AjaxController {
 	public ModelAndView searchUser(@RequestParam(value="account") String account){
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
+		try {
+			account = URIUtil.decode(account, "UTF-8");
+		} catch (URIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(account != null && account != ""){
 			User user = new User(account);
 			user.setApproved(Boolean.TRUE);

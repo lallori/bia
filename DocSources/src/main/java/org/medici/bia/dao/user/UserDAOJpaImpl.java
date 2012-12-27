@@ -175,7 +175,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 				if (conditionBuffer.length() >0) {
 					conditionBuffer.append(" AND ");
 				}
-				conditionBuffer.append("organization:organization");
+				conditionBuffer.append("organization=:organization");
 			}
 			if (user.getMail() != null) {
 				if (conditionBuffer.length() >0) {

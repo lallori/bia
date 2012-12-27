@@ -4,22 +4,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-		<form:form method="post">
-		  	<fieldset>		
-				<legend>Change User Password</legend>
-				<p>
-					<form:label	id="passwordLabel" for="password" path="password" cssErrorClass="error">Password*</form:label><br/>
-					<form:password path="password" cssClass="registerInput"/><form:errors path="password" />
-				</p>
-				<p>
-					<form:label	id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error">Confirm Password*</form:label><br/>
-					<form:password path="confirmPassword" cssClass="registerInput"/><form:errors path="confirmPassword" />
-				</p>
-				<p>
+		<div id="reset">
+			<h1>RESET PASSWORD</h1>
+			<form:form method="post">
+		  		<table width="400px" cellpadding="5px">
+					<tr>
+						<td width="50%" align="right"><form:label	id="passwordLabel" for="password" path="password" cssErrorClass="error">Password*</form:label></td>
+						<td><form:password path="password" cssClass="registerInput"/><form:errors path="password" /></td>
+					</tr>
+					<tr>
+						<td width="50%" align="right"><form:label	id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error">Confirm Password*</form:label></td>
+						<td><form:password path="confirmPassword" cssClass="registerInput"/><form:errors path="confirmPassword" /></td>
+					</tr>
+				</table>
+				<div id="captcha_reset">
 					<c:out value="${reCaptchaHTML}" escapeXml="false"/>
-				</p>
-				<p>	
-					<input id="update" type="submit" value="Update" />
-				</p>
-			</fieldset>
-		</form:form>
+				</div>
+				<input id="update" type="submit" value="Update" style="margin:10px 0px 0px 170px" class="button_medium"/>
+				
+			
+			</form:form>
+		</div>

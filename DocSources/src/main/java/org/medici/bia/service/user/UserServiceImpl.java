@@ -1365,7 +1365,7 @@ public class UserServiceImpl implements UserService {
 			PasswordChangeRequest passwordChangeRequest = getPasswordChangeRequestDAO().find(uuid.toString());
 
 			User user = passwordChangeRequest.getUser();
-			user.setPassword(password);
+			user.setPassword(getPasswordEncoder().encodePassword(password, null));
 			getUserDAO().merge(user);
 			passwordChangeRequest.setReset(Boolean.TRUE);
 			passwordChangeRequest.setResetDate(new Date());
