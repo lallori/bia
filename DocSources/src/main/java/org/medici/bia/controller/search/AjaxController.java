@@ -48,6 +48,7 @@ import org.medici.bia.common.search.SimpleSearchPlace;
 import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.bia.common.search.SimpleSearchVolume;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Document;
@@ -575,12 +576,20 @@ public class AjaxController {
 			}
 			else
 				singleRow.add("");
-			if(currentDocument.getSynExtract().getDocExtract() != null){
-				singleRow.add(currentDocument.getSynExtract().getDocExtract().substring(0, 30));
+			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
+				if(currentDocument.getSynExtract().getDocExtract() != null){
+					singleRow.add(DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), alias));
+				}else
+					singleRow.add("");
+			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
+				if(currentDocument.getSynExtract().getSynopsis() != null){
+					singleRow.add(DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getSynopsis(), alias));
+				}else
+					singleRow.add("");
 			}else
 				singleRow.add("");
 
-			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+			resultList.add(HtmlUtils.showDocumentExpand(singleRow, currentDocument.getEntryId()));
 		}
 
 		model.put("iEcho", "1");

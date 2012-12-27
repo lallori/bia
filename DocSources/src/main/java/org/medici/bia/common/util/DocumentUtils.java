@@ -67,4 +67,59 @@ public class DocumentUtils {
 		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * @param textDocument
+	 * @param searchText
+	 * @return
+	 */
+	public static String searchTextResultExpand(String textDocument, String searchText){
+		//The length of the text to return is about 300 characters
+		if(textDocument.length() < 200){
+			//MD: In this case we return all the text
+			return textDocument;
+		}else{
+			//MD: This is to remove html tags
+			String postText = textDocument;			
+			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+			StringBuffer returnText = new StringBuffer(0);
+			//For every word we find where is positioned inside the post
+			for(String currentWord : wordArray){
+				Integer indexToBeginResult = postText.toLowerCase().indexOf(currentWord);
+				Integer indexToEndResult = postText.length();
+				//If the word isn't at the begin of the post
+				if(indexToBeginResult > 100){
+					String temp = postText.substring(0, indexToBeginResult - 100);
+					//we find a blank space to "cut" the text of the post
+					indexToBeginResult = temp.lastIndexOf(' ');
+					if(indexToBeginResult == -1){
+						indexToBeginResult = 0;
+					}
+				}else{
+					indexToBeginResult = 0;
+				}
+				//if the word isn't at the end of the post 
+				if(indexToBeginResult + 200 < postText.length()){
+					String temp = postText.substring(indexToBeginResult, indexToBeginResult + 200);
+					indexToEndResult = temp.lastIndexOf(' ');
+					if(indexToEndResult == -1){
+						indexToEndResult = indexToBeginResult + 200;
+					}else{
+						indexToEndResult += indexToBeginResult;
+					}
+				}
+				if(indexToBeginResult > 0 && indexToEndResult < postText.length()) {
+					returnText.append("[...]" + postText.substring(indexToBeginResult, indexToEndResult) + " [...]");
+				} else if(indexToBeginResult > 0 && indexToEndResult >= postText.length()) {
+					returnText.append("[...]" + postText.substring(indexToBeginResult, postText.length()) + "");
+				} else if(indexToBeginResult <= 0 && indexToEndResult < postText.length()) {
+					returnText.append(postText.substring(indexToBeginResult, indexToEndResult) + " [...]");
+				} else if(indexToBeginResult <= 0 && indexToEndResult >= postText.length()) {
+					returnText.append(postText.substring(indexToBeginResult, postText.length()));					
+				}
+			}
+			return returnText.toString();
+		}
+	}
+	
 }

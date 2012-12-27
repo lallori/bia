@@ -194,7 +194,7 @@
 			
 			$j(".dataTables_filter").css('display', 'none');
 			
-			$j("#expand${command.searchUUID}").open({width: 800, height: 600, scrollbars: "yes"});
+			$j("#expand${command.searchUUID}").open({width: 850, height: 600, scrollbars: "yes"});
 
 		} );
 	</script>
@@ -206,7 +206,9 @@
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
 		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}">Print Records</a>
-<%-- 		<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a> --%>
+		<c:if test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
+			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
+		</c:if>
 	</div>
 
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">

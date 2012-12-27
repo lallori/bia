@@ -22,33 +22,18 @@
 
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
+		$j.extend($j.expr[":"], {
+		  "containsIgnoreCase": function(elem, i, match, array) {
+		     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		}}); 
 
 		$j(document).ready(function() {
 			//dynamic field management
 			$j("#ExpandResults > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
-			var test;
-			var colsort;
-			<c:choose>
-				<c:when test="${command.simpleSearchPerimeter.toString() == 'PEOPLE'}">
-					test = [[0, "asc"]];
-					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}];
-				</c:when>			
-				<c:when test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
-					test = [[parseInt('${command.iSortCol_0}'), "${command.sSortDir_0}"]];
-					colsort = [ { "sWidth": "100%", "aTargets": [ "_all" ] }];
-				</c:when>
-				<c:when test="${command.simpleSearchPerimeter.toString() == 'VOLUME'}">
-					test = [[1, "asc"]];
-					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
-				</c:when>
-				<c:when test="${command.simpleSearchPerimeter.toString() == 'PLACE'}">
-					test = [[0, "asc"]];
-					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3,4] }];
-				</c:when>
-			</c:choose>
-			
+									
 			var table = $j('#ExpandResults').dataTable( {
-				"aoColumnDefs": colsort,
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [6] }],
+				"bAutoWidth" : false,
 				"aoColumns" : [
 								{ sWidth : "40px" },
 								{ sWidth : "40px" },
@@ -58,7 +43,7 @@
 								{ sWidth : "40px" },
 								{ sWidth : "350px" }
 								],      
-				"aaSorting": test,
+				"aaSorting": [[parseInt('${command.iSortCol_0}'), "${command.sSortDir_0}"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
@@ -111,6 +96,20 @@
 								return false;
 							}
 					);
+					
+					var test = [];
+					test = $j('#textSearch').val().split(" ");
+					
+					$j(".textDoc").each(function(){
+						var newText = $j(this).text().split(" ").join("</span> <span class='toRemove'>");
+					  	newText = "<span class='toRemove'>" + newText + "</span>";
+					  	for(var i = 0; i < test.length; i++){
+					  		$j(this).html(newText).find('span').end().find(":containsIgnoreCase('" + test[i] + "')").wrap("<span class='highlighted' />");
+					  		newText = $j(this).html();
+					  	}
+						$j(".toRemove").contents().unwrap();
+
+					});
 				}
 			});
 			
@@ -121,7 +120,8 @@
 			
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
-				$j("#body_left").load($j(this).attr("href"));
+				window.opener.$j("#body_left").load($j(this).attr("href"));
+				window.opener.focus();
 				
 				if(!$j(this).parent().parent().hasClass("selected")){
 					$j("#ExpandResults tbody").find("tr.selected td.selected").addClass("sorting_1");
@@ -140,13 +140,14 @@
 				}
 				
 				
-				$j.scrollTo("#body_left");
+				window.opener.$j.scrollTo("#body_left");
 				return false;
 			}); 
 			
 			//MD: This code is for click in any space inside a row
 			$j("#ExpandResults tbody tr").live('click', function(){
-				$j("#body_left").load($j(this).children().children().attr("href"));
+				window.opener.$j("#body_left").load($j(this).children().children().attr("href"));
+				window.opener.focus();
 				
 				if(!$j(this).hasClass("selected")){
 					$j("#ExpandResults tbody").find("tr.selected td.selected").addClass("sorting_1");
@@ -165,7 +166,7 @@
 					//$j(this).css('background-color','#b0addd');
 				}
 				
-				$j.scrollTo("#body_left");
+				window.opener.$j.scrollTo("#body_left");
 				return false;
 			});
 
@@ -221,3 +222,5 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<input id="textSearch" type="hidden" value="${command.sSearch}" />

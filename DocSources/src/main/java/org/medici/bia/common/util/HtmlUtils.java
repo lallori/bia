@@ -732,6 +732,37 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showDocumentExpand(List<String> inputList, Integer entryId) {
+		if (inputList == null) {
+			return null;
+		}
+
+		List<String> retValue = new ArrayList<String>(inputList.size());
+		
+		String anchorBegin = "<a class=\"searchResult\" href=\"";
+		String anchorBeginText = "<a class=\"searchResult textDoc\" href=\"";
+		String anchor = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchor += "/src/docbase/ShowDocument.do?entryId=";
+		anchor += entryId;
+		anchor += "\">";
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			if(i < inputList.size() - 1)
+				retValue.add(anchorBegin + anchor + inputList.get(i) + hrefEnd);
+			else
+				retValue.add(anchorBeginText + anchor + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
 
 	/**
 	 * 
