@@ -415,8 +415,14 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public UserMarkedList removeDocumentFromMarkedList(UserMarkedList userMarkedList, Document document) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findDocumentInMarkedList(userMarkedList.getIdMarkedList(), document.getEntryId());
+			getUserMarkedListElementDAO().remove(userMarkedListElement);
+			return userMarkedList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -439,8 +445,14 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public UserMarkedList removePersonFromMarkedList(UserMarkedList userMarkedList, People people) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPersonInMarkedList(userMarkedList.getIdMarkedList(), people.getPersonId());
+			getUserMarkedListElementDAO().remove(userMarkedListElement);
+			return userMarkedList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -449,8 +461,14 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public UserMarkedList removePlaceFromMarkedList(UserMarkedList userMarkedList, Place place) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findPlaceInMarkedList(userMarkedList.getIdMarkedList(), place.getPlaceAllId());
+			getUserMarkedListElementDAO().remove(userMarkedListElement);
+			return userMarkedList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -459,8 +477,14 @@ public class UserMarkedListServiceImpl implements UserMarkedListService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public UserMarkedList removeVolumeFromMarkedList(UserMarkedList userMarkedList, Volume volume) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			userMarkedList = getUserMarkedListDAO().find(userMarkedList.getIdMarkedList());
+			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findVolumeInMarkedList(userMarkedList.getIdMarkedList(), volume.getSummaryId());
+			getUserMarkedListElementDAO().remove(userMarkedListElement);
+			return userMarkedList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

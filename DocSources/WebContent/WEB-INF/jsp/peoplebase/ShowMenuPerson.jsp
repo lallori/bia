@@ -25,7 +25,14 @@
 	<c:url var="ShowVettingChronologyPersonURL" value="/de/peoplebase/ShowVettingChronologyPerson.do">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	
 	<c:url var="AddMarkedListPersonURL" value="/src/peoplebase/AddMarkedListPerson.do">
+		<c:param name="personId"	  value="${person.personId}" />
+	</c:url>
+	<c:url var="RemoveMarkedListPersonURL" value="/src/peoplebase/RemoveMarkedListPerson.do">
 		<c:param name="personId"	  value="${person.personId}" />
 	</c:url>
 	
@@ -41,6 +48,7 @@
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
 		<div id="id">Person ID ${person.personId}</div>
+		<input type="hidden" id="currentUrl" value="${ShowPersonURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
 				<a id="lastRecord" title="<fmt:message key="menu.record.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
@@ -64,10 +72,10 @@
 		</security:authorize>
 		<a id="buttonPrint" title="<fmt:message key="menu.record.print"></fmt:message>" href="${PrintPersonURL}"></a>
 		<c:if test="${inMarkedList == 'false'}">
-			<a id="buttonMarkedList" href="${AddMarkedListPersonURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
+			<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListPersonURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
 		</c:if>
 		<c:if test="${inMarkedList == 'true'}">
-			<a id="buttonMarkedList" href="#" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5"></a>
+			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListPersonURL}" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5"></a>
 		</c:if>
 		<a id="buttonShareLink" href="${SharePersonURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
 	</div>
@@ -145,7 +153,7 @@
 
 		$j('#buttonMarkedList').tooltip({track: true, fade: 350, showURL: false });
 		
-		$j("#buttonMarkedList").click(function() {	
+		$j(".addMarkedList").click(function() {	
 			if($j(this).attr("href") != '#'){
 				if ($j("#DialogMarkedList").length > 0) {
 					$j("#DialogMarkedList").dialog("close");
@@ -169,10 +177,51 @@
 								} 
 							});
 			       		},
+			       		close: function(event, ui) {
+			       			$j("#body_left").load("${ShowPersonURL}");
+			       			return false;
+			       		},
 						dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 						dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 					});
 					$dialogMarkedList.dialog("open");
+				}
+			}
+			return false;
+		});
+		
+		$j(".removeMarkedList").click(function() {	
+			if($j(this).attr("href") != '#'){
+				if ($j("#DialogMarkedListRemove").length > 0) {
+					$j("#DialogMarkedListRemove").dialog("close");
+					return false;
+				} else {
+					var $dialogMarkedListRemove = $j('<div id="DialogMarkedListRemove"></div>').dialog({
+						autoOpen: false,
+						width: 250,
+						height: 130,
+						modal: true,
+						zIndex: 3999,
+						overlay: {
+							backgroundColor: '#000',
+							opacity: 0.5
+						},
+						position: ['center',250],
+						open: function(event, ui) { 
+			        		$j.ajax({ type:"GET", url: '${RemoveMarkedListPersonURL}', cache:false, success:function(html) { 
+								$j("#DialogMarkedListRemove").focus();
+								$j("#DialogMarkedListRemove").html(html);
+								} 
+							});
+			       		},
+			       		close: function(event, ui) {
+			       			$j("#body_left").load("${ShowPersonURL}");
+			       			return false;
+			       		},
+						dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+						dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+					});
+					$dialogMarkedListRemove.dialog("open");
 				}
 			}
 			return false;

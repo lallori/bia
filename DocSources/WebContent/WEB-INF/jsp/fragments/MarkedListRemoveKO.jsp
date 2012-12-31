@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="DeleteThisRecordDiv">
-		<h1>The ${category} has been saved in your marked list.</h1>
+		<h1>The ${category} hasn't been removed in your marked list.</h1>
 		
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:20px 0 0 90px;"/>
 	</div>
@@ -13,8 +13,8 @@
 	<script>
 		$j(document).ready(function() {
 			$j("#close").click(function(){
-				$j("#DialogMarkedList").dialog("close");
-				$j("#DialogMarkedList").remove();
+				$j("#DialogMarkedListRemove").dialog("close");
+				$j("#DialogMarkedListRemove").remove();
 				return false;
 			});
 		});

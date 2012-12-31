@@ -12,6 +12,8 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#body_left").load($j("#currentUrl").val());
+			
 			$j(".close").click(function(){
 				Modalbox.hide();
 				return false;

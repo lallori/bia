@@ -165,6 +165,7 @@
 					$j.ajax({ url: '${EraseElementsMyMarkedListURL}', cache: false, data: {"idToErase" : $toRemove} ,success:function(html) { 
 //	 	 				$j("#body_left").html(html);
 						$markedTable.fnDraw();
+						$j("#body_left").load($j("#currentUrl").val());
 		 			}});
 					$j.unblockUI();
 					$j(".blockUI").fadeOut("slow");

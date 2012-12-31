@@ -25,9 +25,16 @@
 	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
 
 	<c:url var="AddMarkedListDocumentURL" value="/src/docbase/AddMarkedListDocument.do">
 		<c:param name="entryId"	  value="${document.entryId}" />
+	</c:url>
+	
+	<c:url var="RemoveMarkedListDocumentURL" value="/src/docbase/RemoveMarkedListDocument.do">
+		<c:param name="entryId" value="${document.entryId}" />
 	</c:url>
 
 		
@@ -35,6 +42,7 @@
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
 		<c:if test="${document.entryId != 0}">
 			<div id="id">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
+			<input type="hidden" id="currentUrl" value="${ShowDocumentURL}" />
 		</c:if>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
@@ -59,10 +67,10 @@
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="<fmt:message key="menu.record.print"></fmt:message>"></a>
 		<c:if test="${inMarkedList == 'false'}">
-			<a id="buttonMarkedList" href="${AddMarkedListDocumentURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
+			<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListDocumentURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
 		</c:if>
 		<c:if test="${inMarkedList == 'true'}">
-			<a id="buttonMarkedList" href="#" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity: 0.5;"></a>
+			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListDocumentURL}" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity: 0.5;"></a>
 		</c:if>
 		<a id="buttonShareLink" href="${ShareDocumentURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
 	</div>
@@ -113,7 +121,7 @@
 		
 		$j('#buttonMarkedList').tooltip({track: true, fade: 350, showURL: false });
 		
-		$j("#buttonMarkedList").click(function() {	
+		$j(".addMarkedList").click(function() {	
 			if($j(this).attr('href') != '#'){
 				if ($j("#DialogMarkedList").length > 0) {
 					$j("#DialogMarkedList").dialog("close");
@@ -137,10 +145,52 @@
 								} 
 							});
 			       		},
+			       		close: function(event, ui){
+			       			$j("#body_left").load("${ShowDocumentURL}");
+			       			return false;
+			       		},
 						dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 						dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 					});
 					$dialogMarkedList.dialog("open");
+					return false;
+				}
+			}
+			return false;
+		});
+		
+		$j(".removeMarkedList").click(function() {	
+			if($j(this).attr('href') != '#'){
+				if ($j("#DialogMarkedListRemove").length > 0) {
+					$j("#DialogMarkedListRemove").dialog("close");
+					return false;
+				} else {
+					var $dialogMarkedListRemove = $j('<div id="DialogMarkedListRemove"></div>').dialog({
+						autoOpen: false,
+						width: 250,
+						height: 130,
+						modal: true,
+						zIndex: 3999,
+						overlay: {
+							backgroundColor: '#000',
+							opacity: 0.5
+						},
+						position: ['center',250],
+						open: function(event, ui) { 
+			        		$j.ajax({ type:"GET", url: '${RemoveMarkedListDocumentURL}', cache:false, success:function(html) { 
+								$j("#DialogMarkedListRemove").focus();
+								$j("#DialogMarkedListRemove").html(html);
+								} 
+							});
+			       		},
+			       		close: function(event, ui){
+			       			$j("#body_left").load("${ShowDocumentURL}");
+			       			return false;
+			       		},
+						dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+						dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+					});
+					$dialogMarkedListRemove.dialog("open");
 					return false;
 				}
 			}

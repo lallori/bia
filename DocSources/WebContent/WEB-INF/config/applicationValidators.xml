@@ -116,6 +116,10 @@
         <description>Edit Topic Document Validator.</description>
 	</bean>
 	
+	<bean id="removeMarkedListDocumentValidator" class="org.medici.bia.validator.docbase.RemoveMarkedListDocumentValidator">
+		<description>Remove Marked List Document Validator.</description>
+	</bean>
+	
 	<bean id="searchDocumentValidator" class="org.medici.bia.validator.docbase.SearchDocumentValidator">
         <description>Search Document Validator.</description>
 	</bean>
@@ -168,6 +172,10 @@
 	
 	<bean id="editNameOrNameVariantPlaceValidator" class="org.medici.bia.validator.geobase.EditNameOrNameVariantPlaceValidator">
 		<description>Edit Name Or Name Variant Place Validator.</description>
+	</bean>
+	
+	<bean id="removeMarkedListPlaceValidator" class="org.medici.bia.validator.geobase.RemoveMarkedListPlaceValidator">
+		<description>Remove Marked List Place Validator.</description>
 	</bean>
 
 	<bean id="undeletePlaceValidator" class="org.medici.bia.validator.geobase.UndeletePlaceValidator">
@@ -259,6 +267,10 @@
         <description>Edit Title Or Occupation Validator.</description>
 	</bean>
 	
+	<bean id="removeMarkedListPersonValidator" class="org.medici.bia.validator.peoplebase.RemoveMarkedListPersonValidator">
+		<description>Remove Marked List Person Validator.</description>
+	</bean>
+	
 	<bean id="showUploadPortraitPersonValidator" class="org.medici.bia.validator.peoplebase.ShowUploadPortraitPersonValidator">
         <description>Upload Portrait Person Validator.</description>
 	</bean>
@@ -290,6 +302,10 @@
 
 	<bean id="editDetailsVolumeValidator" class="org.medici.bia.validator.volbase.EditDetailsVolumeValidator">
         <description>Edit Details Volume Validator.</description> 
+	</bean>
+	
+	<bean id="removeMarkedListVolumeValidator" class="org.medici.bia.validator.volbase.RemoveMarkedListVolumeValidator">
+		<description>Remove Marked List Volume Validator.</description>
 	</bean>
 
 	<bean id="showExplorerVolumeValidator" class="org.medici.bia.validator.volbase.ShowExplorerVolumeValidator">
