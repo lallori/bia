@@ -57,8 +57,8 @@
 
 <div id="messagePreview" style="display:none">
 	<h1>PREVIEW</h1>
-    <h2>Subject example</h2>
-    <p>This is an example of a message preview.</p>
+    <h2 id="previewSubject"></h2>
+    <p id="previewText"></p>
 </div>
 					
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
@@ -151,8 +151,14 @@
 			});
 			
 			$j('#preview').click(function(){
+				$j("#previewSubject").text($j("#subject").val());
+				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
+				//MD: In variable 'text' I control if the user has inserted no words in the textarea
+				var text = $j("#htmlbox").val();
+				$j("#previewText").html($j(text).html());
 				$j('#messagePreview').css('display','inherit');
 				$j.scrollTo({top:'250px',left:'0px'}, 800 );
+				return false;
 	         });
 			
 			var $usersAutoComplete = $j('#to').autocompleteGeneral({ 

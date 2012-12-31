@@ -28,6 +28,10 @@
 		<c:param name="flashVersion"   value="true" />
 	</c:url>
 	
+	<c:url var="CompareVolumeURL" value="/src/volbase/CompareVolume.do">
+		<c:param name="summaryId"   value="${document.volume.summaryId}" />
+	</c:url>
+	
 	<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.senderPeople.personId}" />
 	</c:url>
@@ -60,7 +64,7 @@
 		<c:if test="${document.volume != null}">
 		<div id="documentTitle">
 			<div id="text">
-				<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+				<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolumeCompare${document.entryId}" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
 	<!-- 		Checking if folio is inside inserts or inserts with parts -->
 	<!-- 		1) folio is not inside inserts-->
 				<c:if test="${document.insertNum == null}">
@@ -318,6 +322,39 @@
 			});
 			
 // 			$j("#tabs ul li.ui-tabs-selected a").addClass("docId${document.entryId}");
+
+			$j(".linkVolumeCompare${document.entryId}").click(function() {
+				var tabN = $j(this).text();
+				tabName = 'Volume  ' 
+				tabName += tabN;
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				//Check if already exist a tab with this Volume
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+			});
 			
 			$j(".linkPeopleCompare").click(function() {
 				var tabName = $j(this).text();
