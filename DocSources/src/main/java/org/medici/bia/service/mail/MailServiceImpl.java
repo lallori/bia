@@ -36,8 +36,11 @@ import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +69,8 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
 	@Autowired
+	private ForumPostNotifiedDAO ForumPostNotifiedDAO;
+	@Autowired
 	private JavaMailSender javaMailSender; 
 	@Autowired
 	private String mailFrom;
@@ -82,6 +87,27 @@ public class MailServiceImpl implements MailService {
 	 */
 	public ActivationUserDAO getActivationUserDAO() {
 		return activationUserDAO;
+	}
+
+	/**
+	 * @return the approvationUserDAO
+	 */
+	public ApprovationUserDAO getApprovationUserDAO() {
+		return approvationUserDAO;
+	}
+
+	/**
+	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 */
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		ForumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+
+	/**
+	 * @return the forumPostNotifiedDAO
+	 */
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return ForumPostNotifiedDAO;
 	}
 
 	/**
@@ -125,11 +151,13 @@ public class MailServiceImpl implements MailService {
 				message.setTo(activationUser.getUser().getMail());
 				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
 				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text", 
-								new String[]{activationUser.getUser().getFirstName(), 
-						activationUser.getUser().getAccount(), 
-											 URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8"), 
-											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
-											 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
+								new String[]{
+									activationUser.getUser().getFirstName(), 
+									activationUser.getUser().getAccount(), 
+									URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8"), 
+									ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+									ApplicationPropertyManager.getApplicationProperty("website.domain"),
+				 					ApplicationPropertyManager.getApplicationProperty("website.contextPath")}, "{", "}"));
 				getJavaMailSender().send(message);
 				
 				activationUser.setMailSended(Boolean.TRUE);
@@ -182,6 +210,47 @@ public class MailServiceImpl implements MailService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Boolean sendForumPostReplyNotificationMail(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser) {
+		try {
+			if (!StringUtils.isBlank(currentUser.getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(currentUser.getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.forumPostReplyNotification.subject",
+								   new String[]{forumPost.getUser().getFirstName(),
+												forumPost.getUser().getLastName(),
+												forumPost.getParentPost().getSubject()},
+												"{", "}"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.forumPostReplyNotification.text", 
+								new String[]{forumPost.getUser().getFirstName(),
+											 forumPost.getUser().getLastName(),
+											 forumPost.getParentPost().getSubject(),
+											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+											 ApplicationPropertyManager.getApplicationProperty("website.domain"),
+											 ApplicationPropertyManager.getApplicationProperty("website.contextPath"),
+											 forumPost.getForum().getForumId().toString(),
+											 forumPost.getTopic().getTopicId().toString()
+											 },
+											 "{", "}"));
+				getJavaMailSender().send(message);
+	
+				forumPostReplied.setMailSended(Boolean.TRUE);
+				forumPostReplied.setMailSendedDate(new Date());
+				getForumPostNotifiedDAO().merge(forumPostReplied);
+			} else {
+				logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
+			}
+			return Boolean.TRUE;
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest) {
@@ -196,7 +265,8 @@ public class MailServiceImpl implements MailService {
 											 passwordChangeRequest.getUser().getAccount(), 
 											 URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8"), 
 											 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
-											 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
+											 ApplicationPropertyManager.getApplicationProperty("website.domain"),
+											 ApplicationPropertyManager.getApplicationProperty("website.contextPath")}, "{", "}"));
 				getJavaMailSender().send(message);
 	
 				passwordChangeRequest.setMailSended(Boolean.TRUE);
@@ -217,6 +287,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
 		this.activationUserDAO = activationUserDAO;
+	}
+
+	/**
+	 * @param approvationUserDAO the approvationUserDAO to set
+	 */
+	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
+		this.approvationUserDAO = approvationUserDAO;
 	}
 
 	/**
@@ -248,19 +325,5 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
-	}
-
-	/**
-	 * @param approvationUserDAO the approvationUserDAO to set
-	 */
-	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
-		this.approvationUserDAO = approvationUserDAO;
-	}
-
-	/**
-	 * @return the approvationUserDAO
-	 */
-	public ApprovationUserDAO getApprovationUserDAO() {
-		return approvationUserDAO;
 	}
 }

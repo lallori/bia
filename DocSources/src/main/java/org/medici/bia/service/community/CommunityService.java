@@ -60,7 +60,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable;
+	Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -68,7 +68,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable;
+	ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -77,14 +77,14 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserMessage changeStatusMessage(UserMessage userMessage, RecipientStatus status) throws ApplicationThrowable;
+	UserMessage changeStatusMessage(UserMessage userMessage, RecipientStatus status) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Long checkNewMessages() throws ApplicationThrowable;
+	Long checkNewMessages() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -92,28 +92,28 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
+	UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @param forumId
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteForum(Integer forumId) throws ApplicationThrowable;
+	void deleteForum(Integer forumId) throws ApplicationThrowable;
 	
 	/**
 	 * 
 	 * @param postId
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteForumPost(Integer postId) throws ApplicationThrowable;
+	void deleteForumPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
 	 * 
 	 * @param topicId
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteForumTopic(Integer topicId) throws ApplicationThrowable;
+	void deleteForumTopic(Integer topicId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -121,14 +121,14 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable;
+	void deleteMessage(Integer userMessageId) throws ApplicationThrowable;
 	
 	/**
 	 * 
 	 * @param idElementsToRemove
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteMessages(List<Integer> idElementsToRemove) throws ApplicationThrowable;
+	void deleteMessages(List<Integer> idElementsToRemove) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -136,7 +136,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable;
+	ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -144,7 +144,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost findFirstPostTopic(Integer topicId) throws ApplicationThrowable;
+	ForumPost findFirstPostTopic(Integer topicId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -152,7 +152,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost findPost(Integer postId) throws ApplicationThrowable;
+	ForumPost findPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
 	 * Given in input user account, this method returns the user object.
@@ -161,7 +161,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
-	public User findUser(String account) throws ApplicationThrowable;
+	User findUser(String account) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -169,7 +169,15 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserMessage findUserMessage(Integer messageId) throws ApplicationThrowable;
+	UserMessage findUserMessage(Integer messageId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forumPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<User> findUsersToBeNotified(Integer postId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -177,7 +185,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum getCategory(Forum category) throws ApplicationThrowable;
+	Forum getCategory(Forum category) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -185,7 +193,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<String, Long> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable;
+	Map<String, Long> getDatabaseStatistics(Date lastLogonDate) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -193,15 +201,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum getFirstCategory() throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Forum getForum(Integer id) throws ApplicationThrowable;
+	Forum getFirstCategory() throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -209,7 +209,15 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum getForumForView(Integer id) throws ApplicationThrowable;
+	Forum getForum(Integer id) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Forum getForumForView(Integer id) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -218,7 +226,14 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param postId
+	 * @throws ApplicationThrowable
+	 */
+	ForumPost getForumPost(Integer postId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -227,7 +242,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+	Page getForumPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -235,7 +250,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable;
+	List<Forum> getForumsByType(Type type) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -243,22 +258,22 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable;
+	Map<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<String, Object> getForumsStatistics() throws ApplicationThrowable;
-
+	Map<String, Object> getForumsStatistics() throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param numberOfElements
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
+	Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -266,7 +281,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable;
+	ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -274,8 +289,8 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumTopic getForumTopicForView(ForumTopic forumTopic) throws ApplicationThrowable;
-
+	ForumTopic getForumTopicForView(ForumTopic forumTopic) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param forum
@@ -283,7 +298,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
+	Page getForumTopics(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -292,7 +307,15 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
+	Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Forum getMostActiveForumByUser(User user) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -300,15 +323,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Forum getMostActiveForumByUser(User user) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ForumTopic getMostActiveTopicByUser(User user) throws ApplicationThrowable;
+	ForumTopic getMostActiveTopicByUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -316,7 +331,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
+	List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -324,7 +339,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
+	List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -332,15 +347,15 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+	Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param forumId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Long getSubForumsNumberWithTopics(Integer forumId) throws ApplicationThrowable;
+	Long getSubForumsNumberWithTopics(Integer forumId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -348,37 +363,37 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable;
-
+	Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
-	public User joinUserOnForum()throws ApplicationThrowable;
-
+	User joinUserOnForum()throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param userComment
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
-	
+	UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param forumPost
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
-	
+	ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param postId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ReportedForumPost reportForumPost(Integer postId) throws ApplicationThrowable;
+	ReportedForumPost reportForumPost(Integer postId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -386,7 +401,7 @@ public interface CommunityService {
 	 * @param paginationFilter
 	 * @return
 	 */
-	public Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	Page searchForumPosts(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -394,7 +409,7 @@ public interface CommunityService {
 	 * @param paginationFilter
 	 * @return
 	 */
-	public Page searchForumTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	Page searchForumTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -403,6 +418,28 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param forumTopicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Boolean subscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Boolean unsubscribeAllForumTopic() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forumTopicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Boolean unsubscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable;
 }

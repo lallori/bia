@@ -105,7 +105,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @return
@@ -115,12 +115,20 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	
 	/**
 	 * 
+	 * @param postId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	ForumPost getForumPost(Integer postId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param user
 	 * @return
 	 * @throws PersistenceException
 	 */
 	Forum getMostActiveForumByUser(User user) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param user

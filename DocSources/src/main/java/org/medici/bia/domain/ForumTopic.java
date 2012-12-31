@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,6 +45,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * This class represents entity ForumTopic.
@@ -122,6 +125,10 @@ public class ForumTopic implements Serializable {
 	@JoinColumn(name="topic", nullable=true)
 	private List<ForumPost> posts;
 
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="topic", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@IndexedEmbedded
+	private List<ForumTopicWatch> topicWatch;
+	
 	/**
 	 * 
 	 */
@@ -457,13 +464,35 @@ public class ForumTopic implements Serializable {
 		return stringBuilder.toString();
 	}
 
-
+	/**
+	 * 
+	 * @param logicalDelete
+	 */
 	public void setLogicalDelete(Boolean logicalDelete) {
 		this.logicalDelete = logicalDelete;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean getLogicalDelete() {
 		return logicalDelete;
+	}
+
+
+	/**
+	 * @param topicWatch the topicWatch to set
+	 */
+	public void setTopicWatch(List<ForumTopicWatch> topicWatch) {
+		this.topicWatch = topicWatch;
+	}
+
+	/**
+	 * @return the topicWatch
+	 */
+	public List<ForumTopicWatch> getTopicWatch() {
+		return topicWatch;
 	}
 
 

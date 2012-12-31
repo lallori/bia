@@ -49,9 +49,11 @@
 
 	<bean id="approvedUserMailJob" class="org.medici.bia.scheduler.ApprovedUserMailJob"/>
 
-	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
-
 	<bean id="checkDigitizedVolumeJob" class="org.medici.bia.scheduler.CheckDigitizedVolumeJob"/>
+	
+	<bean id="forumPostReplyMailJob" class="org.medici.bia.scheduler.ForumPostReplyMailJob"/>
+
+	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
 
 	<bean id="sitemapGeneratorJob" class="org.medici.bia.scheduler.SitemapGeneratorJob"/>
 </beans>

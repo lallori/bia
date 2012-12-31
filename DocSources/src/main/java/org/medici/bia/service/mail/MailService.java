@@ -29,6 +29,8 @@ package org.medici.bia.service.mail;
 
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
 
@@ -43,11 +45,6 @@ import org.medici.bia.domain.User;
 public interface MailService {
 
 	/**
-	 * {@inheritDoc}
-	 */
-	Boolean sendApprovedMail(ApprovationUser approvationUser);
-
-	/**
 	 * This method will send an activation mail to user, and update the state
 	 * of entity activationUser.
 	 *  
@@ -55,6 +52,19 @@ public interface MailService {
 	 * @param user User entity that contains email address
 	 */
 	Boolean sendActivationMail(ActivationUser activationUser);
+
+	/**
+	 * 
+	 * @param approvationUser
+	 * @return
+	 */
+	Boolean sendApprovedMail(ApprovationUser approvationUser);
+
+	/**
+	 * 
+	 * @param currentUser
+	 */
+	Boolean sendForumPostReplyNotificationMail(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser);
 
 	/**
 	 * This method will send an mail for password recovery , and update the state

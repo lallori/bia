@@ -49,7 +49,9 @@ import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
+import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
+import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
 import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.reportedforumpost.ReportedForumPostDAO;
@@ -60,7 +62,9 @@ import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
@@ -90,86 +94,47 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private AnnotationDAO annotationDAO;
-	/**
-	 * @return the documentDAO
-	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @return the volumeDAO
-	 */
-	public VolumeDAO getVolumeDAO() {
-		return volumeDAO;
-	}
-
-	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
-	}
-
 	@Autowired
 	private DocumentDAO documentDAO;
+
 	@Autowired
-	private ForumDAO forumDAO;   
+	private ForumDAO forumDAO;
+
 	@Autowired
-	private ForumPostDAO forumPostDAO;   
+	private ForumPostDAO forumPostDAO;
+	
 	@Autowired
-	private ForumTopicDAO forumTopicDAO;   
+	private ForumPostNotifiedDAO forumPostNotifiedDAO;
+
+	@Autowired
+	private ForumTopicDAO forumTopicDAO;
+
+	@Autowired
+	private ForumTopicWatchDAO forumTopicWatchDAO;
+
 	@Autowired
 	private PeopleDAO peopleDAO;
+
 	@Autowired
 	private PlaceDAO placeDAO;
+
 	@Autowired
 	private ReportedForumPostDAO reportedForumPostDAO;
+
 	@Autowired
 	private VolumeDAO volumeDAO;
+
 	@Autowired
 	private UserDAO userDAO;
+
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;   
+
 	@Autowired
-	private UserMessageDAO userMessageDAO;
+	private UserMessageDAO userMessageDAO;   
+
 	@Autowired
-	private UserRoleDAO userRoleDAO;
+	private UserRoleDAO userRoleDAO;   
 
 	/**
 	 * {@inheritDoc}
@@ -202,7 +167,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -250,6 +214,11 @@ public class CommunityServiceImpl implements CommunityService {
 				
 				//Increment the topicsNumber in forum
 				getForumDAO().recursiveIncreaseTopicsNumber(forum);
+
+				if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+					ForumTopicWatch forumTopicWatch = new ForumTopicWatch(forumTopic, user);
+					getForumTopicWatchDAO().persist(forumTopicWatch);
+				}
 			} else {
 				forumPost.setTopic(getForumTopicDAO().find(forumPost.getTopic().getTopicId()));
 				//To set the parent post Id
@@ -261,12 +230,17 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setLastUpdate(new Date());
 			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			getForumPostDAO().persist(forumPost);
+			
+			if (forumPost.getParentPost() != null) {
+				ForumPostNotified forumPostNotified = new ForumPostNotified(forumPost.getPostId());
+				forumPostNotified.setMailSended(Boolean.FALSE);
+				
+				getForumPostNotifiedDAO().persist(forumPostNotified);
+			}
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
 
 			recursiveSetLastPost(forum, forumPost);
-//			forum.setLastPost(forumPost);
-//			getForumDAO().merge(forum);
 			
 			forumPost.getTopic().setLastPost(forumPost);
 			forumPost.getTopic().setLastUpdate(new Date());
@@ -275,6 +249,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 			// Update number of post 
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
+			user.setLastActiveForumDate(new Date());
+			user.setLastForumPostDate(new Date());
 			getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
@@ -284,7 +260,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -303,7 +278,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -315,7 +289,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -362,7 +335,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -396,8 +368,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 		
-	}
-
+	}   
 	/**
 	 * {@inheritDoc}
 	 */
@@ -422,6 +393,11 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumDAO().merge(forum);
 			
 			recursiveSetLastPost(forum);
+
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			user.setLastActiveForumDate(new Date());
+			user.setLastForumPostDate(new Date());
+			getUserDAO().merge(user);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -439,12 +415,17 @@ public class CommunityServiceImpl implements CommunityService {
 				
 			getForumTopicDAO().merge(forumTopic);
 			getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
+
 			Forum forum = forumTopic.getForum();
 			recursiveSetLastPost(forum);
 			getForumDAO().recursiveDecreasePostsNumber(forum, forumTopic.getTotalReplies());
 			getForumDAO().recursiveDecreaseTopicsNumber(forum);
 //			forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
 			getForumDAO().merge(forum);				
+
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			user.setLastActiveForumDate(new Date());
+			getUserDAO().merge(user);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -460,7 +441,7 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -475,7 +456,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -502,7 +483,10 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumPostDAO().merge(forumPostToUpdate);
 
 			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			
+			user.setLastActiveForumDate(new Date());
+			user.setLastForumPostDate(new Date());
+			getUserDAO().merge(user);
+
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
 			
 			return forumPostToUpdate;
@@ -560,7 +544,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -572,6 +556,23 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> findUsersToBeNotified(Integer postId) throws ApplicationThrowable {
+		try {
+			ForumPost forumPost = getForumPostDAO().find(postId);
+
+			if (forumPost.getTopic() == null) {
+				return new ArrayList<User>(0);
+			}
+
+			return getForumTopicWatchDAO().findUsersSubscribedOnForumTopic(forumPost.getTopic());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the annotationDAO
@@ -579,7 +580,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public AnnotationDAO getAnnotationDAO() {
 		return annotationDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -638,7 +639,14 @@ public class CommunityServiceImpl implements CommunityService {
 
 		return retValue;
 	}
-	
+
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -650,7 +658,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -662,14 +670,14 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the forumDAO
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -701,10 +709,29 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getForumPost(Integer postId) throws ApplicationThrowable {
+		try {
+			return getForumPostDAO().getForumPost(postId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * @return the forumPostDAO
 	 */
 	public ForumPostDAO getForumPostDAO() {
 		return forumPostDAO;
+	}
+
+	/**
+	 * @return the forumPostNotifiedDAO
+	 */
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
 	}
 
 	/**
@@ -718,7 +745,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -801,7 +828,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumTopicDAO getForumTopicDAO() {
 		return forumTopicDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -844,6 +871,13 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	/**
+	 * @return the forumTopicWatchDAO
+	 */
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -856,7 +890,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -867,6 +901,27 @@ public class CommunityServiceImpl implements CommunityService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+	
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+	
+	/**
+	 * @return the reportedForumPostDAO
+	 */
+	public ReportedForumPostDAO getReportedForumPostDAO() {
+		return reportedForumPostDAO;
 	}
 
 	/**
@@ -946,6 +1001,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1009,7 +1071,7 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		recursiveSetLastPost(forum.getForumParent(), forumPost);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1046,6 +1108,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 			// Update number of post 
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
+			user.setLastActiveForumDate(new Date());
+			user.setLastForumPostDate(new Date());
 			getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
@@ -1055,7 +1119,7 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1123,17 +1187,29 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
 	 * @param forumDAO the forumDAO to set
 	 */
 	public void setForumDAO(ForumDAO forumDAO) {
 		this.forumDAO = forumDAO;
 	}
-
 	/**
 	 * @param forumPostDAO the forumPostDAO to set
 	 */
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
 		this.forumPostDAO = forumPostDAO;
+	}
+	/**
+	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 */
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
 	}
 
 	/**
@@ -1142,12 +1218,24 @@ public class CommunityServiceImpl implements CommunityService {
 	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
 		this.forumTopicDAO = forumTopicDAO;
 	}
+	/**
+	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
+	 */
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
 
 	/**
-	 * @return the reportedForumPostDAO
+	 * @param placeDAO the placeDAO to set
 	 */
-	public ReportedForumPostDAO getReportedForumPostDAO() {
-		return reportedForumPostDAO;
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
 	}
 
 	/**
@@ -1183,5 +1271,76 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
+	}
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean subscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable {
+		try {
+			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			
+			if (forumTopic != null) {
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				ForumTopicWatch forumTopicWatch = new ForumTopicWatch();
+				forumTopicWatch.setTopic(forumTopic);
+				forumTopicWatch.setUser(user);
+				
+				getForumTopicWatchDAO().persist(forumTopicWatch);
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean unsubscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable {
+		try {
+			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			
+			if (forumTopic != null) {
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				ForumTopicWatch forumTopicWatch = getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic);
+				
+				if (forumTopicWatch != null) {
+					getForumTopicWatchDAO().remove(forumTopicWatch);
+				}
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean unsubscribeAllForumTopic() throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getForumTopicWatchDAO().removeUserSubscribes(user);
+			
+			return Boolean.TRUE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 }

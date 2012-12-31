@@ -95,59 +95,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);		
 	}
 	
-	@RequestMapping(value="/community/EraseMessages", method = RequestMethod.POST)
-	public ModelAndView eraseMessages(@RequestParam("idToErase") String idToErase) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		try{
-			if(!idToErase.equals("")){
-				StringTokenizer stringTokenizer = new StringTokenizer(idToErase, "+");
-				List<Integer> idElements = new ArrayList<Integer>();
-				while(stringTokenizer.hasMoreTokens()){
-					String current = stringTokenizer.nextToken();
-					if(NumberUtils.isNumber(current)){
-						idElements.add(NumberUtils.createInteger(current));
-					}
-				}
-				
-				getCommunityService().deleteMessages(idElements);
-			}
-		}catch(ApplicationThrowable ath){
-			model.put("operation", "KO");
-			return new ModelAndView("responseKO", model);
-		}
-		model.put("operation", "OK");
-		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/community/GetForumChronology", method = RequestMethod.GET)
-	public ModelAndView showForumChronology(@RequestParam(value="forumId", required=false) Integer forumId) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		Forum forum = new Forum();
-		
-		try{
-			if (forumId != null ) {
-				forum = getCommunityService().getForum(forumId);
-			} else {
-				forum = getCommunityService().getFirstCategory();
-			}
-
-			model.put("forumId", forum.getForumId().toString());
-			model.put("title", forum.getTitle());
-			model.put("chronology", ForumUtils.getForumChronology(forum));
-			model.put("selectChronology", ForumUtils.getSelectForumChronology(forum.getForumParent()));
-		}catch(ApplicationThrowable th){
-			model.put("error", th.getMessage());
-		}
-
-		return new ModelAndView("responseOK", model);		
-	}
-	
 	/**
 	 * 
 	 * @param forumId
@@ -168,7 +115,7 @@ public class AjaxController {
 			return new ModelAndView("responseKO", model);		
 		}
 	}
-	
+
 	@RequestMapping(value = "/community/DeletePost", method = RequestMethod.POST)
 	public ModelAndView deleteForumPost(@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="topicId", required=false) Integer topicId,
@@ -212,7 +159,7 @@ public class AjaxController {
 			return new ModelAndView("responseKO", model);		
 		}
 	}
-
+	
 	@RequestMapping(value = "/community/EditPost", method = RequestMethod.POST)
 	public ModelAndView editForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="forumId", required=false) Integer forumId,
@@ -247,6 +194,45 @@ public class AjaxController {
 		}
 	}
 	
+	@RequestMapping(value="/community/EraseMessages", method = RequestMethod.POST)
+	public ModelAndView eraseMessages(@RequestParam("idToErase") String idToErase) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try{
+			if(!idToErase.equals("")){
+				StringTokenizer stringTokenizer = new StringTokenizer(idToErase, "+");
+				List<Integer> idElements = new ArrayList<Integer>();
+				while(stringTokenizer.hasMoreTokens()){
+					String current = stringTokenizer.nextToken();
+					if(NumberUtils.isNumber(current)){
+						idElements.add(NumberUtils.createInteger(current));
+					}
+				}
+				
+				getCommunityService().deleteMessages(idElements);
+			}
+		}catch(ApplicationThrowable ath){
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);
+		}
+		model.put("operation", "OK");
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+	
 	@RequestMapping(value = "/community/ReportForumPost", method = RequestMethod.POST)
 	public ModelAndView reportForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="forumId", required=false) Integer forumId,
@@ -269,6 +255,48 @@ public class AjaxController {
 		}
 	}
 	
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/community/GetForumChronology", method = RequestMethod.GET)
+	public ModelAndView getForumChronology(@RequestParam(value="forumId", required=false) Integer forumId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Forum forum = new Forum();
+		
+		try{
+			if (forumId != null ) {
+				forum = getCommunityService().getForum(forumId);
+			} else {
+				forum = getCommunityService().getFirstCategory();
+			}
+
+			model.put("forumId", forum.getForumId().toString());
+			model.put("title", forum.getTitle());
+			model.put("chronology", ForumUtils.getForumChronology(forum));
+			model.put("selectChronology", ForumUtils.getSelectForumChronology(forum.getForumParent()));
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
+
+		return new ModelAndView("responseOK", model);		
+	}
+
 	/**
 	 * 
 	 * @param httpSession
@@ -320,32 +348,48 @@ public class AjaxController {
 		
 		return new ModelAndView("responseOK", model);		
 	}
-	
+
 	/**
-	 * @param communityService the communityService to set
+	 * 
+	 * @param id
+	 * @return
 	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
+	@RequestMapping(value = "/community/SubscribeForumTopic.json", method = RequestMethod.GET)
+	public ModelAndView subscribeForumTopic(@RequestParam(value="forumTopicId", required=false) Integer forumTopicId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Boolean subscription = Boolean.FALSE;
+		
+		try {
+			subscription = getCommunityService().subscribeForumTopic(forumTopicId);
+
+			model.put("forumTopicId", forumTopicId);
+			model.put("subscription", subscription);
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
+
+		return new ModelAndView("responseOK", model);		
 	}
 
 	/**
-	 * @return the communityService
+	 * 
+	 * @param id
+	 * @return
 	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
+	@RequestMapping(value = "/community/UnsubscribeForumTopic.json", method = RequestMethod.GET)
+	public ModelAndView unsubscribeForumTopic(@RequestParam(value="forumTopicId", required=false) Integer forumTopicId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Boolean unsubscription = Boolean.FALSE;
+		
+		try {
+			unsubscription = getCommunityService().unsubscribeForumTopic(forumTopicId);
 
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+			model.put("forumTopicId", forumTopicId);
+			model.put("subscription", unsubscription);
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
 
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
+		return new ModelAndView("responseOK", model);		
 	}
 }

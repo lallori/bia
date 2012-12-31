@@ -8,25 +8,25 @@
     <security:global-method-security secured-annotations="enabled"/>
 
     <security:http auto-config="true">
-        <security:intercept-url pattern="/login*" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/LoginUser" 						filters="none" />
-        <security:intercept-url pattern="/LogoutUser" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/css/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/images/**" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/scripts/**" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/swf/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/login*" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/LoginUser" 							filters="none" />
+        <security:intercept-url pattern="/LogoutUser" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/css/**" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/images/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/scripts/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/swf/**" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ActivateUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ResetUserPassword.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserActivationCode.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserPasswordReset.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ShowMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/EraseElementsMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ShowConfirmEraseMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/PrintElementsMyMarkedList.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/EditUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ShowUserProfile.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/WelcomeNewUser.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowMyMarkedList.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/EraseElementsMyMarkedList.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowConfirmEraseMyMarkedList.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/PrintElementsMyMarkedList.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/EditUserProfile.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ShowUserProfile.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/WelcomeNewUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowForum.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/ShowTopicForum.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -37,36 +37,36 @@
         <security:intercept-url pattern="/sitemap/SiteMap*"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/sitemap/SiteMapIndex.do"				access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-        <security:intercept-url pattern="/adm/**"   				access="ROLE_ADMINISTRATORS" />
-        <security:intercept-url pattern="/de/ShowEntryMenu**" 		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/de/volbase/**" 			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/de/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
-        <security:intercept-url pattern="/digitization/**"   		access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/community/**"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/src/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/mview/**" 				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/**.do"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/**.json"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/**.**"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/user/ChangeExpiratedUserPassword.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/UpdateUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowUserPhoto.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowMyHistory.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/MyHistoryPagination.json"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowMyHistoryReport.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/adm/**"   							access="ROLE_ADMINISTRATORS" />
+        <security:intercept-url pattern="/de/ShowEntryMenu**" 					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/de/volbase/**" 						access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/de/**"    							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
+        <security:intercept-url pattern="/digitization/**"   					access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/community/**"							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/src/**"   							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/mview/**" 							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.do"								access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.json"								access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.**"								access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/user/ChangeExpiratedUserPassword.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/UpdateUser.do"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowUserPhoto.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowMyHistory.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/MyHistoryPagination.json"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowMyHistoryReport.do"			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowConfirmEraseMyHistory.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/MyHistoryByCategoryPagination.json"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/MyHistoryFirstFourElementsByCategoryPagination.json"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowMyHistoryReportByCategory.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowPersonalNotesUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/EditPersonalNotesUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/EditPasswordUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowPersonalNotesUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/EditPersonalNotesUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/EditPasswordUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowConfirmErasePersonalNotesUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ErasePersonalNotesUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowUploadPortraitUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/DeletePortraitUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/CropPortraitUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
-        <security:intercept-url pattern="/user/ShowPortraitUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ErasePersonalNotesUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowUploadPortraitUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/DeletePortraitUser.do"			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/CropPortraitUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/ShowPortraitUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
 
 		<security:intercept-url pattern="/user/**.do" 			access="ROLE_ADMINISTRATORS" />
 

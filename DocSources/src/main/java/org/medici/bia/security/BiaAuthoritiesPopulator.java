@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.medici.bia.common.util.UserRoleUtils;
 import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,7 +50,6 @@ import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopul
 public class BiaAuthoritiesPopulator extends DefaultLdapAuthoritiesPopulator {
 
     private Boolean convertToUpperCase;
-    private String rolePrefix = "ROLE_";
     private String userAttributeForRole;
 
     /**
@@ -77,7 +77,7 @@ public class BiaAuthoritiesPopulator extends DefaultLdapAuthoritiesPopulator {
             String role = (String) it.next();
             role = role.toUpperCase();
             role = role.substring(3,role.length());
-            authorities.add(new GrantedAuthorityImpl(rolePrefix + role));
+            authorities.add(new GrantedAuthorityImpl(UserRoleUtils.getRolePrefix() + role));
         }
         return authorities;
     }
@@ -87,13 +87,6 @@ public class BiaAuthoritiesPopulator extends DefaultLdapAuthoritiesPopulator {
 	 */
 	public Boolean getConvertToUpperCase() {
 		return convertToUpperCase;
-	}
-
-	/**
-	 * @return the rolePrefix
-	 */
-	public String getRolePrefix() {
-		return rolePrefix;
 	}
 
 	/**
@@ -108,13 +101,6 @@ public class BiaAuthoritiesPopulator extends DefaultLdapAuthoritiesPopulator {
 	 */
 	public void setConvertToUpperCase(Boolean convertToUpperCase) {
 		this.convertToUpperCase = convertToUpperCase;
-	}
-
-	/**
-	 * @param rolePrefix the rolePrefix to set
-	 */
-	public void setRolePrefix(String rolePrefix) {
-		this.rolePrefix = rolePrefix;
 	}
 
     /**

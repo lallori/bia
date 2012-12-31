@@ -77,6 +77,7 @@ public class HomeController {
 			Map<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
 			httpSession.setAttribute("userStatistics", userStatistics);
 			User user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			httpSession.setAttribute("user", user);
 			model.put("user", user);
 			
 			Long numberOfNewMessages = getCommunityService().checkNewMessages();

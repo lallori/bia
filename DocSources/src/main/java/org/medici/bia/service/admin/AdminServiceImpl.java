@@ -42,13 +42,13 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.common.search.Search;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
+import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.month.MonthDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
@@ -59,6 +59,7 @@ import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserMessage;
@@ -98,8 +99,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
 
-	private final Logger logger = Logger.getLogger(this.getClass());
-	
+	@Autowired
+	private ForumPostNotifiedDAO forumPostNotifiedDAO;
+
 	@Autowired
 	private MonthDAO monthDAO;
 
@@ -119,6 +121,8 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private UserRoleDAO userRoleDAO;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * {@inheritDoc}
@@ -147,9 +151,10 @@ public class AdminServiceImpl implements AdminService {
 			userToCreate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
 			userToCreate.setBadLogin(new Integer(0));
 			userToCreate.setForumNumberOfPost(new Long(0));
-			userToCreate.setMailHide(false);
-			userToCreate.setMailNotification(false);
-			userToCreate.setPortrait(false);
+			userToCreate.setMailHide(Boolean.FALSE);
+			userToCreate.setMailNotification(Boolean.FALSE);
+			userToCreate.setForumTopicSubscription(Boolean.TRUE);
+			userToCreate.setPortrait(Boolean.FALSE);
 			userToCreate.setPortraitImageName(null);
 			if (userToCreate.getApproved()) {
 				User approvedBy = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
@@ -351,6 +356,7 @@ public class AdminServiceImpl implements AdminService {
 				userToUpdate.setMail(user.getMail());
 				userToUpdate.setMailHide(user.getMailHide());
 				userToUpdate.setMailNotification(user.getMailNotification());
+				userToUpdate.setForumTopicSubscription(user.getForumTopicSubscription());
 				
 				getUserDAO().merge(userToUpdate);
 			}
@@ -388,6 +394,19 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForumPostNotified> findForumPostRepliedNotNotified() throws ApplicationThrowable {
+		try{
+			return getForumPostNotifiedDAO().findForumPostRepliedNotNotified();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -398,7 +417,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -410,7 +429,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -422,7 +441,7 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -612,6 +631,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 */
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+
+	/**
+	 * @return the forumPostNotifiedDAO
+	 */
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -665,6 +698,7 @@ public class AdminServiceImpl implements AdminService {
 						userMessage.setParentMessage(null);
 						userMessage.setReadedDate(null);
 						userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
+						userMessage.setSendedDate(null);
 						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject",
 												new String[]{
 												currentApprovationUser.getUser().getAccount()},"{", "}"));
@@ -734,13 +768,13 @@ public class AdminServiceImpl implements AdminService {
 	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
 		this.approvationUserDAO = approvationUserDAO;
 	}
-
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
+	
 	/**
 	 * 
 	 * @param passwordEncoder
@@ -762,7 +796,7 @@ public class AdminServiceImpl implements AdminService {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-	
+
 	/**
 	 * @param userMessageDAO the userMessageDAO to set
 	 */

@@ -35,11 +35,11 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AccessLogSearch;
 import org.medici.bia.common.search.Search;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.Month;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -114,6 +114,13 @@ public interface AdminService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<ForumPostNotified> findForumPostRepliedNotNotified() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -198,6 +205,14 @@ public interface AdminService {
 
 	/**
 	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Page searchWhoIsOnline(PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param usersToApprove
 	 * @throws ApplicationThrowable
 	 */
@@ -209,6 +224,4 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	void updateApplicationProperties(Map<String, String> hashMap) throws ApplicationThrowable;
-
-	Page searchWhoIsOnline(PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

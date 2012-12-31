@@ -119,6 +119,8 @@ public class User implements Serializable {
 	private Boolean mailHide;
 	@Column (name="\"mailNotification\"", nullable=false, columnDefinition="BIT default 0")
 	private Boolean mailNotification;
+	@Column (name="\"forumTopicSubscription\"", nullable=false, columnDefinition="BIT default 1")
+	private Boolean forumTopicSubscription;
 	@Column (name="\"middleName\"", length=20, nullable=false)
 	private String middleName;
 	@Column (name="\"organization\"", length=50, nullable=false)
@@ -161,6 +163,48 @@ public class User implements Serializable {
 		setAccount(newAccount);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+		
+		if (! (obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (account == null) {
+			if (other.account != null) {
+				return false;
+			}
+		} else if (!account.equals(other.account)) {
+			return false;
+		}
+	
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("[");
+		stringBuilder.append("account=");
+		stringBuilder.append(getAccount());
+		stringBuilder.append(", firstName=");
+		stringBuilder.append(getFirstName());
+
+		stringBuilder.append(", lastName=");
+		stringBuilder.append(getLastName());
+		stringBuilder.append(']');
+
+		return stringBuilder.toString();
+	}
 	/**
 	 * 
 	 * @return
@@ -515,6 +559,20 @@ public class User implements Serializable {
 	 */
 	public void setForumTopics(Set<ForumTopic> forumTopics) {
 		this.forumTopics = forumTopics;
+	}
+
+	/**
+	 * @param forumTopicSubscription the forumTopicSubscription to set
+	 */
+	public void setForumTopicSubscription(Boolean forumTopicSubscription) {
+		this.forumTopicSubscription = forumTopicSubscription;
+	}
+
+	/**
+	 * @return the forumTopicSubscription
+	 */
+	public Boolean getForumTopicSubscription() {
+		return forumTopicSubscription;
 	}
 
 	/**

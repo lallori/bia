@@ -1,5 +1,5 @@
 /*
- * ForumTopicWatch.java
+ * ForumPostNotified.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -28,102 +28,99 @@
 package org.medici.bia.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
+ * This class represents entity ForumPostNotified.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
+ *
  */
 @Entity
-@Table(name = "\"tblForumTopicWatch\"")
-public class ForumTopicWatch implements Serializable {
+@Table ( name = "\"tblForumPostNotified\"" ) 
+public class ForumPostNotified implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -192731279584289026L;
+	private static final long serialVersionUID = 5946251120972534286L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "topicWwatchId")
-	private Integer topicWwatchId;
+	@Column (name="\"postId\"", length=10, nullable=false)
+	private Integer postId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "topicId")
-	private ForumTopic topic;
+	@Column (name="\"mailSended\"", nullable=false)
+	private Boolean mailSended;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="\"account\"", nullable=true)
-	private User user;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="\"mailSendedDate\"")
+	private Date mailSendedDate;
 
 	/**
-	 * 
+	 * Default constructor
 	 */
-	public ForumTopicWatch() {
+	public ForumPostNotified() {
 		super();
 	}
 
 	/**
 	 * 
-	 * @param forumTopic
-	 * @param user2
+	 * @param postId
 	 */
-	public ForumTopicWatch(ForumTopic topic, User user2) {
+	public ForumPostNotified(Integer postId) {
 		super();
 		
-		setTopic(topic);
-		setUser(user2);
+		setPostId(postId);
 	}
 
 	/**
-	 * @return the topicWwatchId
+	 * @param postId the postId to set
 	 */
-	public Integer getTopicWwatchId() {
-		return topicWwatchId;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
 	/**
-	 * @param topicWwatchId the topicWwatchId to set
+	 * @return the postId
 	 */
-	public void setTopicWwatchId(Integer topicWwatchId) {
-		this.topicWwatchId = topicWwatchId;
+	public Integer getPostId() {
+		return postId;
 	}
 
 	/**
-	 * @return the topic
+	 * @param mailSended the mailSended to set
 	 */
-	public ForumTopic getTopic() {
-		return topic;
+	public void setMailSended(Boolean mailSended) {
+		this.mailSended = mailSended;
 	}
 
 	/**
-	 * @param topic the topic to set
+	 * @return the mailSended
 	 */
-	public void setTopic(ForumTopic topic) {
-		this.topic = topic;
+	public Boolean getMailSended() {
+		return mailSended;
 	}
 
 	/**
-	 * @return the user
+	 * @param mailSendedDate the mailSendedDate to set
 	 */
-	public User getUser() {
-		return user;
+	public void setMailSendedDate(Date mailSendedDate) {
+		this.mailSendedDate = mailSendedDate;
 	}
 
 	/**
-	 * @param user the user to set
+	 * @return the mailSendedDate
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public Date getMailSendedDate() {
+		return mailSendedDate;
 	}
+
 
 }

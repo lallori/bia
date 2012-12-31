@@ -140,6 +140,35 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public ForumPost getForumPost(Integer postId) throws PersistenceException {
+		if (postId == null) {
+			return null;
+		}
+		
+		String jpql = "FROM ForumPost WHERE postId=:postId";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("postId", postId);
+		logger.debug("JPQL Query : " + jpql);
+
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException {
@@ -295,6 +324,54 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Forum getMostActiveForumByUser(User user) throws PersistenceException {
+		String jpql = "SELECT p.forum FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.forum ORDER BY count(*) DESC";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("account", user.getAccount());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<Forum> list = (List<Forum>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException {
+		String jpql = "SELECT p.topic FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.topic ORDER BY count(*) DESC";
+
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("account", user.getAccount());
+
+        // We set pagination to obtain first post...  
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+
+		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
+
+		if (list.size() == 1) {
+			return list.get(0);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
@@ -352,53 +429,5 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		page.setList(query.getResultList());
 		
 		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Forum getMostActiveForumByUser(User user) throws PersistenceException {
-		String jpql = "SELECT p.forum FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.forum ORDER BY count(*) DESC";
-
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("account", user.getAccount());
-
-        // We set pagination to obtain first post...  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		List<Forum> list = (List<Forum>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException {
-		String jpql = "SELECT p.topic FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.topic ORDER BY count(*) DESC";
-
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("account", user.getAccount());
-
-        // We set pagination to obtain first post...  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
 	}
 }
