@@ -1634,7 +1634,7 @@ p.notDigitized {
 	width:190px;
 }
 
-div#text a.linkVolume {
+div#documentTitle div#text h3 a{
     font-size: 16px;
     color: #666EA4;
 	text-decoration: underline;
