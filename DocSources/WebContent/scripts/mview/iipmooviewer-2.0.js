@@ -1621,7 +1621,7 @@ var IIPMooViewer = new Class({
       navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
       navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
       navbuttons.getElement('img.reset').set('title', 'Refresh Image');
-      if(this.view.w > 1000)
+//      if(this.view.w > 1000)
     	  //Disable annotation button
 //    	  navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
       
