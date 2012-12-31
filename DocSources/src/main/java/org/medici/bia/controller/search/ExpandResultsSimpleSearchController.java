@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 import org.apache.commons.httpclient.URIException;
@@ -116,7 +117,23 @@ public class ExpandResultsSimpleSearchController {
 			tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
 			command.setsSearch(tempString.toString());			
 		}
-//		model.put("yourSearch", command.getText());
+		//This code is for highlight the correct words
+		StringBuffer yourSearch = new StringBuffer();
+		if(command.getsSearch().contains("\"")){
+			StringTokenizer stringTokenizer = new StringTokenizer(command.getsSearch().replace('"', ' '), " ");
+			while(stringTokenizer.hasMoreTokens()){
+				String currentToken = stringTokenizer.nextToken();
+				if(currentToken.length() > 0 && currentToken != ""){
+					if(yourSearch.toString().length() > 0)
+						yourSearch.append(" " + currentToken);
+					else
+						yourSearch.append(currentToken);					
+				}
+			}
+		}else{
+			yourSearch.append(command.getsSearch());
+		}
+		model.put("yourSearch", yourSearch.toString());
 		
 		if(command.getsSearch().contains("\"")){
 			command.setsSearch(command.getsSearch().replace("\"", "\\\""));
@@ -159,6 +176,7 @@ public class ExpandResultsSimpleSearchController {
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
 			outputFields.add("Volume <br /> (Ins/Pa) <br /> Folio");
+			outputFields.add("Document Synopsis");
 		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");

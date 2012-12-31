@@ -223,4 +223,4 @@
 		</tbody>
 	</table>
 	
-	<input id="textSearch" type="hidden" value="${command.sSearch}" />
+	<input id="textSearch" type="hidden" value="${yourSearch}" />
