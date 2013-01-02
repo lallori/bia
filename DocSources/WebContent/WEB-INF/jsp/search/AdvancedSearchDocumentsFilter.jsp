@@ -287,6 +287,25 @@
 					window.close()
 				} else {
 					//otherwise it's in a new search so we add a new tab.
+					var numTab = 0;
+					var tabExist = false;
+					var regEx = new RegExp("(Document Search)+");
+					window.opener.$j("#tabs ul li a").each(function(){
+						//MD: Declare variable toTest for fix problem with IE
+						var toTest = "";
+						toTest += this.text;
+						if(!tabExist){
+							if(toTest != ""){
+								numTab++;
+							}
+							if(regEx.test(toTest)){
+								tabExist = true;
+							}
+						}
+					});
+					if(!tabExist){
+						window.opener.$j("#documentSearchTabNumber").val(1);
+					}
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 // 					window.opener.$j( "<li><a href='" + formSubmitURL + "'><span>Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab</span></li>" ).appendTo( "#tabs .ui-tabs-nav" );
 // 					window.opener.$j( "#tabs" ).tabs( "refresh" );

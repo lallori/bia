@@ -235,6 +235,25 @@
 					window.close();
 				} else {
 					//otherwise it's in a new search so we add a new tab.
+					var numTab = 0;
+					var tabExist = false;
+					var regEx = new RegExp("(Volume Search)+");
+					window.opener.$j("#tabs ul li a").each(function(){
+						//MD: Declare variable toTest for fix problem with IE
+						var toTest = "";
+						toTest += this.text;
+						if(!tabExist){
+							if(toTest != ""){
+								numTab++;
+							}
+							if(regEx.test(toTest)){
+								tabExist = true;
+							}
+						}
+					});
+					if(!tabExist){
+						window.opener.$j("#volumeSearchTabNumber").val(1);
+					}
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Volume Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 					window.close();

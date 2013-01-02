@@ -14,6 +14,8 @@
 	<c:param name="topicId" value="${topic.topicId}"/>
 </c:url>
 
+<c:url var="BIAHomeURL" value="/Home.do" />
+
 <div id="urlActions">
 	<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
 	<a href="#" class="buttonMedium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
@@ -289,9 +291,24 @@
 				return false;
 			});
 			
-			$j("#showRecord").click(function(){
-				window.opener.$j("#body_left").load($j(this).attr('href'));
-				window.opener.alert("Record showed");
+			var delay = (function(){
+				  var timer = 0;
+				  return function(callback, ms){
+				    clearTimeout (timer);
+				    timer = setTimeout(callback, ms);
+				  };
+				})();
+			
+			$j("#showRecord").die();
+			$j("#showRecord").live('click', function(e){
+				e.preventDefault();
+				if(window.opener != null){
+					window.opener.$j("#body_left").load($j(this).attr('href'));
+					window.opener.alert("Record showed");
+				}else{
+					//TODO: If the main window is closed
+// 					window.opener = window.open("${BIAHomeURL}", "_blank");
+				}
 				return false;
 			});
 			
