@@ -61,6 +61,14 @@ public interface UserDAO extends Serializable {
 	 * @throws PersistenceException
 	 */
 	Page findForumMembers(String letter, PaginationFilter paginationFilter);
+	
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 */
+	Page findForumMembersByText(String text, PaginationFilter paginationFilter);
 
 	/**
      * This method finds the user with input account.

@@ -126,6 +126,43 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			
 		return page;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page findForumMembersByText(String text, PaginationFilter paginationFilter) {
+		String queryString = "FROM User WHERE forumJoinedDate IS NOT NULL AND account LIKE '%" + text + "%' ORDER BY account";
+				
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		Query query = null;
+			
+		// We set size of result.
+		if (paginationFilter.getPageTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+			
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(paginationFilter.getPageTotal());
+		}
+		
+		query = getEntityManager().createQuery(queryString);
+				
+		// We set pagination  
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+		// We manage sorting (this manages sorting on multiple fields)
+		List<User> list = (List<User>) query.getResultList();
+		// We set search result on return method
+		page.setList(list);
+			
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -630,5 +667,4 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
-
 }

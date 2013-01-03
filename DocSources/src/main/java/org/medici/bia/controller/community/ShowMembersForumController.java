@@ -47,6 +47,7 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/community/ShowMembersForum"})
@@ -85,7 +86,11 @@ public class ShowMembersForumController {
 			}
 			paginationFilter.addSortingCriteria("username", "asc");
 
-			Page membersPage = getCommunityService().getForumMembers(command.getLetter(), paginationFilter);
+			Page membersPage;
+			if(command.getMember() == null)
+				membersPage = getCommunityService().getForumMembers(command.getLetter(), paginationFilter);
+			else
+				membersPage = getCommunityService().getForumMembersByText(command.getMember(), paginationFilter);
 			model.put("membersPage", membersPage);
 
 		} catch (ApplicationThrowable applicationThrowable) {

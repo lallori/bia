@@ -572,6 +572,15 @@ a.link {  /* "Last post by" user name */
 	margin: 0;
 }
 
+#post a {  /* Link inside post */
+	text-decoration: underline;
+	color: #B7958F;
+	display: inline;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+}
+
 a.returnTo {
 	color: #B7958F;
 	margin-bottom: 20px;

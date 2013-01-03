@@ -214,7 +214,7 @@
 	
 	<div id="jumpToDiv">
     	Jump to:
-        <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
+        <select id="selectForum" name="selectForum" class="selectform_long">
         	<option value="" selected="selected">Select a Forum</option>
         </select>
         <input id="go" title="go" value="Go" class="buttonMini">

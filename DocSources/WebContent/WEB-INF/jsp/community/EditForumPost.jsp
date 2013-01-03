@@ -9,6 +9,38 @@
 	<c:url var="EditForumPostURL" value="/community/EditPost.json"/>
 	
 	<c:url var="ShowPreviewForumPostURL" value="/community/ShowPreviewForumPost.do"/>
+	
+	<!-- Post to reply -->
+	<c:if test="${not empty postToReply}">
+	<div id="postTable">
+		<div id="post">
+			<h2>${postToReply.subject}</h2>
+            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> » <span class="date">${postToReply.lastUpdate}</span></p>
+        	<p>${postToReply.text}</p>
+    	</div>
+    	<div id="postProfile">
+    		<ul>
+        		<li>
+        			<c:if test="${postToReply.user.portrait}">
+        				<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+							<c:param name="account" value="${postToReply.user.account}" />
+							<c:param name="time" value="${time}" />
+						</c:url>
+        				<img src="${ShowPortraitUserURL}" class="avatar"/>
+        			</c:if>
+        			<c:if test="${!postToReply.user.portrait}">
+        				<img class="avatar" src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+        			</c:if>
+        			<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a>
+        		</li>
+            	<li>Community User</li>
+            	<li>Posts: <span>${postToReply.user.forumNumberOfPost}</span></li>
+            	<li>Joined: <span>${postToReply.user.forumJoinedDate}</span></li>
+        	</ul>
+    	</div>
+    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+	</div>
+	</c:if>
 
 	<c:if test="${command.topicId == '0'}">
 	<h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
@@ -143,10 +175,10 @@
 			$j('#preview').click(function(){
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 	 			$j.ajax({ type:"POST", url:"${ShowPreviewForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(html) {
-	 				$j("#postTable").html(html);
+	 				$j("#postTablePreview").html(html);
 				}});
 
-	 			$j('#postTable').css('display','inherit');
+	 			$j('#postTablePreview').css('display','inherit');
 				$j.scrollTo({top:'300px',left:'0px'}, 800 );
 				return false;
 			});
@@ -169,7 +201,7 @@
 		});
 </script>
 
-	<div id="postTable" title="Post" style="display:none; margin-top:45px">
+	<div id="postTablePreview" title="Post" style="display:none; margin-top:45px">
 	</div>
 
 	<div id="messagePosted" title="Post" style="display:none"> 
@@ -216,4 +248,4 @@
 		}); 
      
 	});
-</script>
+	</script>

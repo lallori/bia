@@ -203,6 +203,12 @@ public class UserDAOLdapImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Page findForumMembersByText(String text, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * This method find an unique user searching on ldap server.
@@ -646,5 +652,4 @@ public class UserDAOLdapImpl implements UserDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
-
 }

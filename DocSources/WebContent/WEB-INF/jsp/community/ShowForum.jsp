@@ -34,7 +34,7 @@
 								<div class="two">THREADS</div>
 							</c:if>
 							<div class="three">DISCUSSIONS</div>
-							<div class="four">LAST DISCUSSION</div>
+							<div class="four">LAST POST</div>
 						</div>
 
 					<c:set var="forums" value="${forumsBySubCategories[currentCategory.forumId]}"/>
@@ -62,7 +62,7 @@
 <%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
 							<div class="three">${currentForum.topicsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
-							<div class="four">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+							<div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>
 							<c:if test="${empty currentForum.lastPost}">
 							<div class="four">empty forum</div>
@@ -194,7 +194,7 @@
 			            <div class="one">THREAD</div>
 			            <div class="two">DISCUSSIONS</div>
 			            <div class="three">VIEWS</div>
-			            <div class="four">LAST DISCUSSION</div>
+			            <div class="four">LAST POST</div>
 			            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 			            	<div class="five">DEL</div>
 			            </security:authorize>
@@ -218,7 +218,7 @@
 						<div class="two">${currentForum.topicsNumber}</div>
 			            <div class="three"><c:if test="${currentForum.totalViews == null}">0</c:if><c:if test="${currentForum.totalViews != null}">${currentForum.totalViews}</c:if></div>
 					<c:if test="${not empty currentForum.lastPost}">
-			            <div class="four">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+			            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 			        </c:if>
 					<c:if test="${empty currentForum.lastPost}">
 			            <div class="four"></div>
@@ -322,7 +322,7 @@ Use the textbox below to search this forum.</p>
 				        	   		<div class="one">DISCUSSIONS</div>
 				            		<div class="two">REPLIES</div>
 				            		<div class="three">VIEWS</div>
-				            		<div class="four">LAST DISCUSSION</div>
+				            		<div class="four">LAST POST</div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 			            				<div class="five">DEL</div>
 			            			</security:authorize>

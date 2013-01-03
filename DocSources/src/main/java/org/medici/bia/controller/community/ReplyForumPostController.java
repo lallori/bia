@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import org.medici.bia.command.community.ReplyForumPostCommand;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,13 @@ public class ReplyForumPostController {
 			}else{
 				firstPostTopicToReply = getCommunityService().findPost(command.getParentPostId());
 			}
+			//To load the last post
+			if(command.getParentPostId() == null && command.getTopicId() != null){
+				ForumTopic topic = getCommunityService().getForumTopicForView(new ForumTopic(command.getTopicId()));
+				model.put("postToReply", topic.getLastPost());
+			}else if(command.getParentPostId() != null){
+				model.put("postToReply", firstPostTopicToReply);
+			}			
 		} catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/EditPostForum", model);
 			
@@ -127,6 +135,7 @@ public class ReplyForumPostController {
 			command.setSubject("RE: " + firstPostTopicToReply.getSubject());
 			command.setText("<blockquote>" + firstPostTopicToReply.getText() + "</blockquote><br />");
 		}
+		
 
 		return new ModelAndView("community/EditForumPost", model);
 	}

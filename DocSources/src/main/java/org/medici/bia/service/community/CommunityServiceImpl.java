@@ -707,6 +707,18 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getForumMembersByText(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getUserDAO().findForumMembersByText(text, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -136,6 +136,9 @@
 				$j(".list > .rowNew > .one > input:checked").each(function(){
 					$toRemove += $j(this).attr("id") + "+";
 				});
+				$j(".list > .rowLast > .one > input:checked").each(function(){
+					$toRemove += $j(this).attr("id") + "+";
+				});
 				$j(".list > .rowLastNew > .one > input:checked").each(function(){
 					$toRemove += $j(this).attr("id") + "+";
 				});

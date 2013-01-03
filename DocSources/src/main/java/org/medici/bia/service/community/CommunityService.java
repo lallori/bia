@@ -227,6 +227,15 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	Page getForumMembers(String letter, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Page getForumMembersByText(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

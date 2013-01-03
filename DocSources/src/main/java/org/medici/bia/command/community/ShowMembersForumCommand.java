@@ -34,6 +34,7 @@ package org.medici.bia.command.community;
  */
 public class ShowMembersForumCommand {
 	private String letter;
+	private String member;
 
 	private Integer memberPageNumber;
 	private Integer memberPageTotal;
@@ -53,6 +54,20 @@ public class ShowMembersForumCommand {
 		this.letter = letter;
 	}
 	
+	/**
+	 * @return the member
+	 */
+	public String getMember() {
+		return member;
+	}
+
+	/**
+	 * @param member the member to set
+	 */
+	public void setMember(String member) {
+		this.member = member;
+	}
+
 	/**
 	 * @return the memberPageNumber
 	 */
