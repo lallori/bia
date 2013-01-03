@@ -59,27 +59,12 @@ public class UserRoleUtils {
 		UserRole mostSignificantRole = null;
 		
 		for (UserRole currentRole : userRoles) {
-			if (currentRole.containsAuthority(UserAuthority.Authority.ADMINISTRATORS)) {
-				mostSignificantRole = currentRole;
-				break;
-			} else if (currentRole.containsAuthority(UserAuthority.Authority.ONSITE_FELLOWS)) {
-				mostSignificantRole = currentRole;
-				break;
-			} else if (currentRole.containsAuthority(UserAuthority.Authority.SENIOR_DISTANCE_FELLOWS)) {
-				mostSignificantRole = currentRole;
-				break;
-			} else if (currentRole.containsAuthority(UserAuthority.Authority.DISTANCE_FELLOWS)) {
-				mostSignificantRole = currentRole;
-				break;
-			} else if (currentRole.containsAuthority(UserAuthority.Authority.DIGITIZATION_TECHNICIANS)) {
-				mostSignificantRole = currentRole;
-				break;
-			} else if (currentRole.containsAuthority(UserAuthority.Authority.COMMUNITY_USERS)) {
-				mostSignificantRole = currentRole;
-				break;
+			if (mostSignificantRole != null) {
+				if (currentRole.getUserAuthority().getPriority() < mostSignificantRole.getUserAuthority().getPriority()) {
+					mostSignificantRole = currentRole;
+				}
 			} else {
 				mostSignificantRole = currentRole;
-				break;
 			}
 		}
 		
