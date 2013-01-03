@@ -3891,9 +3891,9 @@ table#savedSearchFiltersForm.display {
 }
 
 #savedFiltersButtons {
-	width:120px;
+	width:255px;
 	height:22px;
-	margin:10px 0 0 0;
+	margin:10px 0 0 230px;
 }
 
 #goBackToAdvancedSearch {
