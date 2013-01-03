@@ -21,14 +21,14 @@
     			<c:param name="completeDOM" value="true"/>
     		</c:url>
     		<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
-    			<c:param name="account" value="${discussion.user.account}"/>
+    			<c:param name="account" value="${discussion.lastPost.user.account}"/>
     			<c:param name="completeDOM" value="true"/>
     		</c:url>
      		<div class="discussion">
             	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a> 
             	<span>(${discussion.totalReplies - 1} replies)</span>
-            	<span>by <a href="${showUserProfileURL}" target="_blank" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+            	<span>Last post by <a href="${showUserProfileURL}" target="_blank" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
     		</c:forEach>
     		
@@ -41,11 +41,15 @@
     			<c:param name="topicId" value="${discussion.topicId}"/>
     			<c:param name="completeDOM" value="true"/>
     		</c:url>
+    		<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
+    			<c:param name="account" value="${discussion.lastPost.user.account}"/>
+    			<c:param name="completeDOM" value="true"/>
+    		</c:url>
        		<div class="discussion">
             	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a>
             	<span>(${discussion.totalReplies - 1} replies)</span>
-            	<span>by <a href="#" id="userName" class="link">${discussion.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+            	<span>Last post by <a href="${showUserProfileURL}" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
 	    	</c:forEach>
     	</div>
