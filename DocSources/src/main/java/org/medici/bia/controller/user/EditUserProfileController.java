@@ -52,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/user/EditUserProfile")
@@ -95,7 +96,7 @@ public class EditUserProfileController {
 
 			user.setMail(command.getMail());
 			user.setAddress(command.getAddress());
-			user.setCountry(command.getCountry());
+			user.setCountry(command.getCountryCode());
 			user.setInterests(command.getInterests());
 			user.setOrganization(command.getOrganization());
 			user.setTitle(command.getTitle());

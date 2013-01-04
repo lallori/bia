@@ -27,7 +27,6 @@
  */
 package org.medici.bia.command.user;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * Command bean for action "edit user profile".
@@ -46,6 +45,7 @@ public class EditUserProfileCommand {
 	private String address;
 	/** User's country **/
 	private String country;
+	private String countryCode;
 	/** User's title **/
 	private String title;
 	/** User's organization **/
@@ -54,8 +54,6 @@ public class EditUserProfileCommand {
 	private String location;
 	/** User's interests **/
 	private String interests;
-	private CommonsMultipartFile browse;
-	private String link;
 	
 	
 	public void setAccount(String account) {
@@ -82,6 +80,18 @@ public class EditUserProfileCommand {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	/**
+	 * @return the countryCode
+	 */
+	public String getCountryCode() {
+		return countryCode;
+	}
+	/**
+	 * @param countryCode the countryCode to set
+	 */
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -105,33 +115,5 @@ public class EditUserProfileCommand {
 	}
 	public void setInterests(String interests) {
 		this.interests = interests;
-	}
-	/**
-	 * @return the browse
-	 */
-	public CommonsMultipartFile getBrowse() {
-		return browse;
-	}
-	/**
-	 * @param browse the browse to set
-	 */
-	public void setBrowse(CommonsMultipartFile browse) {
-		this.browse = browse;
-	}
-	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
-	}
-	/**
-	 * @param link the link to set
-	 */
-	public void setLink(String link) {
-		this.link = link;
-	}
-	
-	
-	
-	
+	}	
 }

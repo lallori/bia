@@ -6,6 +6,7 @@
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
 
+<c:url var="findCountryUrl" value="/user/ajax/FindCountries.json"/>
 
 <c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do" />
 
@@ -15,16 +16,6 @@
 		<div class="row">
 			<div class="col_l"><form:label id="emailLabel" for="mail" path="mail">Email</form:label></div>
 			<div class="col_l"><form:input id="email" path="mail" cssClass="input_29c" /><form:errors path="mail" /></div>
-		</div>
-		<div class="row">
-			<div class="col_l"><label for="link" id="linkLabel">Link</label></div>
-			<div class="col_l"><input id="link" name="link" class="input_43c" type="text" value="http://" /></div>
-			<div class="col_l"><span>(Portrait image)</span></div>
-		</div>
-		<div class="row">
-			<div class="col_l"><label for="browse" id="browseLabel">Browse</label></div>
-			<div class="col_l"><input id="browse" name="browse" class="input_43c" type="file" value="" size="24"/></div>
-			<div class="col_l"><span>(Portrait image)</span></div>
 		</div>
 		<div class="row">
 			<div class="col_l"><form:label id="addressLabel" for="address" path="address">Address</form:label></div>
@@ -64,6 +55,8 @@
 		</div>
 	</div>
 	
+	<form:hidden id="countryCode" path="countryCode" />
+	
 	<div>
 		<input id="close" type="submit" value="Close" title="Do not save changes" />
 		<input id="save" type="submit" value="Save" />
@@ -87,6 +80,18 @@
 					Modalbox.hide();
 					return false;
 				});
+				
+				var a = $j('#country').autocomplete({ 
+				    serviceUrl:'${findCountryUrl}',
+				    minChars:1, 
+				    delimiter: /(,|;)\s*/, // regex or character
+				    maxHeight:400,
+				    width:300,
+				    zIndex: 9999,
+				    deferRequestBy: 0, //miliseconds
+				    noCache: true, //default is false, set to true to disable caching
+				    onSelect: function(value, data){ $j('#countryCode').val(data); }
+				  });
 
 				$j("#EditUserProfileForm").submit(function(){
 					$j.ajax({type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
