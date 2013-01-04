@@ -354,7 +354,7 @@ public class AjaxController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/community/SubscribeForumTopic.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/community/SubscribeForumTopic.json", method = RequestMethod.POST)
 	public ModelAndView subscribeForumTopic(@RequestParam(value="forumTopicId", required=false) Integer forumTopicId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		Boolean subscription = Boolean.FALSE;
@@ -376,7 +376,7 @@ public class AjaxController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/community/UnsubscribeForumTopic.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/community/UnsubscribeForumTopic.json", method = RequestMethod.POST)
 	public ModelAndView unsubscribeForumTopic(@RequestParam(value="forumTopicId", required=false) Integer forumTopicId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		Boolean unsubscription = Boolean.FALSE;

@@ -698,6 +698,11 @@ a.returnTo {
     padding-left: 25px;
 }
 
+#followTopic { /* Button to subscribe/unsubscribe */
+	display: inline-block;
+	float: right;
+	margin: -40px 0 0 0;
+}
 
 
 #searchThisForumFormDiv { /* Search Form Container */

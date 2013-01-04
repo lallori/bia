@@ -1328,7 +1328,7 @@ public class UserServiceImpl implements UserService {
 				userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
 			}
 			
-			getUserDAO().merge(user);
+			getUserDAO().merge(userToUpdate);
 
 //			getUserDAO().removeAllUserRoles(user.getAccount());
 //			getUserDAO().persistUserRoles(user.getAccount(), userToUpdate.getUserRoles());

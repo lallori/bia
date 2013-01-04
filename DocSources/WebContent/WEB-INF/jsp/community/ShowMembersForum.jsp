@@ -76,6 +76,18 @@
 
 <script>
 	$j(document).ready(function() {
+		$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
+			$j("#chronologyDiv").html(json.chronology);
+			$j("#selectForum").append(json.selectChronology);
+			$j("#chronologyDiv .arrowForum").css('display','');
+			$j("#chronologyDiv .forum").css('display','');
+			if($j("#prevUrl").val() != "")
+				$j("#chronologyDiv").append("<span class='arrowForum'>&rarr; <a href='" + $j("#prevUrl").val() + "' class='forum'>Go Back</a></span>");
+			else
+				$j("#goBackTo").css("display","none");
+			return false;
+		}});
+		
 		$j(".abc > li a.letter").click(function(){
 			$j("#main").load($j(this).attr('href'));
 			return false;

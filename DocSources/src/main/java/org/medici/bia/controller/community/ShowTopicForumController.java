@@ -120,6 +120,8 @@ public class ShowTopicForumController {
 			ForumTopic forumTopic = getCommunityService().getForumTopicForView(new ForumTopic(command.getTopicId()));
 			model.put("topic", forumTopic);
 			
+			model.put("subscribed", getCommunityService().ifTopicSubscribed(forumTopic.getTopicId()));
+			
 			if(forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null){
 				//MD: Prepare the Manuscript Viewer
 				Document document = forumTopic.getForum().getDocument();

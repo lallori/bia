@@ -49,6 +49,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  * User entity.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Entity
 @Table ( name = "\"tblUser\"" ) 
@@ -95,6 +96,8 @@ public class User implements Serializable {
 	private Set<ForumPost> forumPosts;
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<ForumTopic> forumTopics;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<ForumTopicWatch> forumTopicsWatch;
 	@Column (name="\"initials\"", length=5, nullable=false)
 	private String initials;
 	@Column (name="\"interests\"", length=500)
@@ -333,6 +336,13 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the forumTopicsWatch
+	 */
+	public Set<ForumTopicWatch> getForumTopicsWatch() {
+		return forumTopicsWatch;
+	}
+
+	/**
 	 * @return the initials
 	 */
 	public String getInitials() {
@@ -559,6 +569,13 @@ public class User implements Serializable {
 	 */
 	public void setForumTopics(Set<ForumTopic> forumTopics) {
 		this.forumTopics = forumTopics;
+	}
+
+	/**
+	 * @param forumTopicsWatch the forumTopicsWatch to set
+	 */
+	public void setForumTopicsWatch(Set<ForumTopicWatch> forumTopicsWatch) {
+		this.forumTopicsWatch = forumTopicsWatch;
 	}
 
 	/**

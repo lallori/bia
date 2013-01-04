@@ -42,6 +42,7 @@ import javax.persistence.Table;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Entity
@@ -54,8 +55,8 @@ public class ForumTopicWatch implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "topicWwatchId")
-	private Integer topicWwatchId;
+	@Column(name = "topicWatchId")
+	private Integer topicWatchId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "topicId")
@@ -85,17 +86,17 @@ public class ForumTopicWatch implements Serializable {
 	}
 
 	/**
-	 * @return the topicWwatchId
+	 * @return the topicWatchId
 	 */
-	public Integer getTopicWwatchId() {
-		return topicWwatchId;
+	public Integer getTopicWatchId() {
+		return topicWatchId;
 	}
 
 	/**
-	 * @param topicWwatchId the topicWwatchId to set
+	 * @param topicWatchId the topicWatchId to set
 	 */
-	public void setTopicWwatchId(Integer topicWwatchId) {
-		this.topicWwatchId = topicWwatchId;
+	public void setTopicWatchId(Integer topicWatchId) {
+		this.topicWatchId = topicWatchId;
 	}
 
 	/**

@@ -376,6 +376,14 @@ public interface CommunityService {
 	
 	/**
 	 * 
+	 * @param forumTopicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Boolean ifTopicSubscribed(Integer forumTopicId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	User joinUserOnForum()throws ApplicationThrowable;

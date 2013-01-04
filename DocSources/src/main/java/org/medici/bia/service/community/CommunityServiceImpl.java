@@ -1030,6 +1030,26 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean ifTopicSubscribed(Integer forumTopicId) throws ApplicationThrowable {
+		try{
+			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			
+			if (forumTopic != null) {
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				if(getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic) != null){
+					return true;
+				}
+			}
+			return false;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

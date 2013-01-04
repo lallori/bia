@@ -102,10 +102,22 @@
 			<c:param name="forumId" value="${topic.forum.forumId}"/>
 			<c:param name="topicId" value="${topic.topicId}"/>
 		</c:url>
+		<c:if test="${!subscribed}">
+			<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
+				<c:param name="forumTopicId" value="${topic.topicId}"/>
+			</c:url>
+			<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe" id="followTopic"><span>Subscribe</span></a>
+		</c:if>
+		<c:if test="${subscribed}">
+			<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
+				<c:param name="forumTopicId" value="${topic.topicId}"/>
+			</c:url>
+			<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe" id="followTopic"><span>Unsubscribe</span></a>
+		</c:if>
 		<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 	</security:authorize>
     <div id="searchThisForumFormDiv">
-        <form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
+    	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
             <input id="searchForumThisText" name="searchInForum" type="text" value="Search this forum...">
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
@@ -253,6 +265,18 @@
 	</p>
 	
 	<input type="hidden" value="" id="reportUrl"/>
+</div>
+
+<div id="subscribeModal" title="Subscribe topic" style="display:none"> 
+	<p>
+		Subsciription OK
+	</p>
+</div>
+
+<div id="unsubscribeModal" title="Unsubscribe topic" style="display:none"> 
+	<p>
+		Unsubsciription OK
+	</p>
 </div>
 
 <div id="notDeletePost" title="Delete post" style="display:none"> 
@@ -405,6 +429,53 @@
 			$j('.deletePost').click(function(){
 				$j('#deletePostModal').dialog('open');
 				$j('#deleteUrl').val($j(this).attr('href') + '&topicId=${topic.topicId}');
+				return false;
+			});
+			
+			$j(".subscribe").click(function(){
+				$j.ajax({ type:"POST", url:$j(this).attr('href'), async:false, success:function(json) {
+					if(json.subscription){
+						$j("#subscribeModal").dialog({
+							  autoOpen : false,
+							  modal: true,
+							  resizable: false,
+							  width: 300,
+							  height: 130, 
+							  buttons: {
+								  Ok: function() {
+									  $j(this).dialog("close");
+									  $j("#main").load($j(".paginateActive").attr('href'));
+									  return false;
+								  }
+							  }
+						  });
+						$j("#subscribeModal").dialog('open');
+					}
+				}});
+				return false;
+			});
+			
+			$j(".unsubscribe").click(function(){
+				$j.ajax({ type:"POST", url:$j(this).attr('href'), async:false, success:function(json) {
+					if(json.subscription){
+						$j("#unsubscribeModal").dialog({
+							  autoOpen : false,
+							  modal: true,
+							  resizable: false,
+							  width: 300,
+							  height: 130, 
+							  buttons: {
+								  Ok: function() {
+									  $j(this).dialog("close");
+									  $j("#main").load($j(".paginateActive").attr('href'));
+									  return false;
+								  }
+							  }
+						  });
+						$j("#unsubscribeModal").dialog('open');
+						
+					}
+				}});
 				return false;
 			});
 			
