@@ -505,6 +505,10 @@ public class AdminServiceImpl implements AdminService {
 			}
 			
 			String initialLetterOfName = name.substring(0, 1).toUpperCase();
+			
+			//In this case we edit a user
+			if(getUserDAO().findUser(user.getAccount()) != null)
+				return getUserDAO().findUser(user.getAccount()).getInitials();
 
 			// We try to search user with these inital, if we find one, we increment letters in initial  
 			for (int i=1; i<surname.length(); i++) {
