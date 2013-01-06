@@ -27,6 +27,8 @@
  */
 package org.medici.bia.dao.vettinghistory;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.VettingHistory;
 
@@ -38,4 +40,12 @@ import org.medici.bia.domain.VettingHistory;
  */
 public interface VettingHistoryDAO extends Dao<Integer, VettingHistory> {
 
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

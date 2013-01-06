@@ -210,6 +210,45 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE UserMessage SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameRecipient(String originalAccount, String newAccount) {
+		String jpql = "UPDATE UserMessage SET recipient=:newAccount WHERE recipient=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameSender(String originalAccount, String newAccount) {
+		String jpql = "UPDATE UserMessage SET sender=:newAccount WHERE sender=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
+
+	/**
 	 * 
 	 */
 	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException {

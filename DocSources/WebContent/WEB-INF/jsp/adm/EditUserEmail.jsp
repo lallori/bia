@@ -32,6 +32,12 @@
 		            	<form:select path="receiveNotificationByMail" items="${mailNotification}" cssClass="selectform_Mlong" />
 		            </div>
 		        </div>
+		        <div class="row">
+		            <div class="col_l"><form:label for="forumTopicSubscription" path="forumTopicSubscription">Subscribe to Forum Topic</form:label></div>
+		            <div class="col_l">
+		            	<form:select path="forumTopicSubscription" items="${forumTopicSubscription}" cssClass="selectform_Mlong" />
+		            </div>
+		        </div>
 		    </div>
 		    
 		    <div>

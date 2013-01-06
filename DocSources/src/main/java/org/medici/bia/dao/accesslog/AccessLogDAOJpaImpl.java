@@ -27,6 +27,9 @@
  */
 package org.medici.bia.dao.accesslog;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.AccessLog;
 import org.springframework.stereotype.Repository;
@@ -61,4 +64,17 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE AccessLog SET account=:newAccount WHERE account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
 }

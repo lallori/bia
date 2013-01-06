@@ -87,6 +87,7 @@ public class EditUserEmailController {
 				command.setMail(user.getMail());
 				command.setMailHide(user.getMailHide());
 				command.setReceiveNotificationByMail(user.getMailNotification());
+				command.setForumTopicSubscription(user.getForumTopicSubscription());
 			}
 
 			Map<Boolean, String> hideMail = new HashMap<Boolean, String>();
@@ -97,8 +98,14 @@ public class EditUserEmailController {
 			Map<Boolean, String> mailNotification = new HashMap<Boolean, String>();
 			mailNotification.put(Boolean.TRUE, "Activated");
 			mailNotification.put(Boolean.FALSE, "Deactivated");
-			
+		
 			model.put("mailNotification", mailNotification);
+
+			Map<Boolean, String> forumTopicSubscription = new HashMap<Boolean, String>();
+			forumTopicSubscription.put(Boolean.TRUE, "Activated");
+			forumTopicSubscription.put(Boolean.FALSE, "Deactivated");
+			
+			model.put("forumTopicSubscription", mailNotification);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/EditUserEmail", model);
@@ -128,6 +135,7 @@ public class EditUserEmailController {
 				user.setMail(command.getMail());
 				user.setMailHide(command.getMailHide());
 				user.setMailNotification(command.getReceiveNotificationByMail());
+				user.setForumTopicSubscription(command.getForumTopicSubscription());
 				user = getAdminService().editUserMail(user);
 
 				model.put("user", user);

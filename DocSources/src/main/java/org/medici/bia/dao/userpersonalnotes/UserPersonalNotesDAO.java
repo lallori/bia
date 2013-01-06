@@ -56,4 +56,13 @@ public interface UserPersonalNotesDAO extends Dao<Integer, UserPersonalNotes> {
 	 * @throws PersistenceException
 	 */
 	UserPersonalNotes getPersonalNotes(User user) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

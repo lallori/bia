@@ -279,6 +279,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	UserHistory findPreviousHistoryCursorFromVolume(User user, Integer idUserHistory, Integer summaryId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 	
 	/**
 	 * 

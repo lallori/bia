@@ -88,7 +88,7 @@ public interface AdminService {
 	 * @param userInformation
 	 * @throws ApplicationThrowable
 	 */
-	User editUser(User user) throws ApplicationThrowable;
+	User editUser(User user, String originalAccount) throws ApplicationThrowable;
 	
 	/**
 	 * 

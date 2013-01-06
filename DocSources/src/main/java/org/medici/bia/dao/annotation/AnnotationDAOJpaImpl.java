@@ -69,6 +69,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException {
 		String jpql = "FROM Annotation WHERE image.imageName=:imageName order by annotationId desc";
@@ -82,6 +83,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Annotation findById(String id) throws PersistenceException {
 		String jpql = "FROM Annotation WHERE id=:id";
@@ -101,6 +103,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException {
 		String jpql = "FROM Annotation WHERE annotationId=:annotationId";
@@ -117,4 +120,17 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		return null;
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE Annotation SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
 }

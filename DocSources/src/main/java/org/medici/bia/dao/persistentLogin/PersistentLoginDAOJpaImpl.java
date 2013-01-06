@@ -1,5 +1,5 @@
 /*
- * ApprovationUserDAOJpaImpl.java
+ * PersistentLoginDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,26 +25,26 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.dao.approvationuser;
+package org.medici.bia.dao.persistentLogin;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
 import org.medici.bia.dao.JpaDao;
-import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.PersistentLogin;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>ApprovationUserDAOJpaImpl</b> is a default implementation of <b>ApprovationUserDAO</b>.
+ * <b>PersistentLoginDAOJpaImpl</b> is a default implementation of <b>PersistentLoginDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
- * @see org.medici.bia.domain.ActivationUser
+ * @see org.medici.bia.domain.PersistentLogin
  */
 @Repository
-public class ApprovationUserDAOJpaImpl extends JpaDao<String, ApprovationUser> implements ApprovationUserDAO {
-
+public class PersistentLoginDAOJpaImpl extends JpaDao<String, PersistentLogin> implements PersistentLoginDAO {
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -63,65 +63,16 @@ public class ApprovationUserDAOJpaImpl extends JpaDao<String, ApprovationUser> i
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 5529128433028462384L;
+	private static final long serialVersionUID = -3234532510862542816L;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ApprovationUser findByAccount(String account) throws PersistenceException {
-		String jpql = "FROM ApprovationUser WHERE user.account=:account";
-		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("account", account);
-
-		List<ApprovationUser> result = query.getResultList();
-		
-		if (result.size() ==1) {
-			return result.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ApprovationUser> searchUsersApprovedNotMailed() throws PersistenceException {
-		String jpql = "FROM ApprovationUser WHERE approved=:approved AND mailSended=:mailSended";
-		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("approved", Boolean.TRUE);
-		query.setParameter("mailSended", Boolean.FALSE);
-
-		List<ApprovationUser> result = query.getResultList();
-		
-		if (result.size() ==0) {
-			return new ArrayList<ApprovationUser>(0);
-		}
-		
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	public List<ApprovationUser> searchUsersToApprove() throws PersistenceException {
-		String jpql = "FROM ApprovationUser WHERE messageSended=:messageSended";
-		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("messageSended", Boolean.FALSE);
-
-		return query.getResultList();
-	}
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
-		String jpql = "UPDATE ApprovationUser SET user.account=:newAccount WHERE user.account=:originalAccount";
+		String jpql = "UPDATE PersistentLogin SET username=:newAccount WHERE username=:originalAccount";
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("newAccount", newAccount);
 		query.setParameter("originalAccount", originalAccount);

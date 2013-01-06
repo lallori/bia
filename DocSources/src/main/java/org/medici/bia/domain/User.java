@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,7 +54,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  */
 @Entity
 @Table ( name = "\"tblUser\"" ) 
-public class User implements Serializable {
+public class User implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -92,12 +93,6 @@ public class User implements Serializable {
 
 	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
 	private Long forumNumberOfPost;
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<ForumPost> forumPosts;
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<ForumTopic> forumTopics;
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<ForumTopicWatch> forumTopicsWatch;
 	@Column (name="\"initials\"", length=5, nullable=false)
 	private String initials;
 	@Column (name="\"interests\"", length=500)
@@ -147,8 +142,38 @@ public class User implements Serializable {
 	@Column (name="\"title\"", length=50, nullable=true)
 	private String title;
 
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
 	private Set<UserRole> userRoles;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<ActivationUser> activationsUser;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<ApprovationUser> approvationsUser;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<ForumTopic> forumTopics;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<ForumPost> forumPosts;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<ForumTopicWatch> forumTopicsWatch;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<UserHistory> userHistory;
+
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<UserMarkedList> userMarkedList;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<UserPersonalNotes> userPersonalNotes;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<UserMessage> userMessage;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<VettingHistory> vettingHistory;
 
 	/**
 	 * Default constructor.
@@ -194,6 +219,15 @@ public class User implements Serializable {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		User clone=(User)super.clone();
+		return clone;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("[");
@@ -208,6 +242,7 @@ public class User implements Serializable {
 
 		return stringBuilder.toString();
 	}
+
 	/**
 	 * 
 	 * @return
@@ -758,5 +793,103 @@ public class User implements Serializable {
 	 */
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
+	}
+
+	/**
+	 * @return the activationsUser
+	 */
+	public Set<ActivationUser> getActivationsUser() {
+		return activationsUser;
+	}
+
+	/**
+	 * @param activationsUser the activationsUser to set
+	 */
+	public void setActivationsUser(Set<ActivationUser> activationsUser) {
+		this.activationsUser = activationsUser;
+	}
+
+	/**
+	 * @return the approvationsUser
+	 */
+	public Set<ApprovationUser> getApprovationsUser() {
+		return approvationsUser;
+	}
+
+	/**
+	 * @param approvationsUser the approvationsUser to set
+	 */
+	public void setApprovationsUser(Set<ApprovationUser> approvationsUser) {
+		this.approvationsUser = approvationsUser;
+	}
+
+	/**
+	 * @return the userMarkedList
+	 */
+	public Set<UserMarkedList> getUserMarkedList() {
+		return userMarkedList;
+	}
+
+	/**
+	 * @param userHistory the userHistory to set
+	 */
+	public void setUserHistory(Set<UserHistory> userHistory) {
+		this.userHistory = userHistory;
+	}
+
+	/**
+	 * @return the userHistory
+	 */
+	public Set<UserHistory> getUserHistory() {
+		return userHistory;
+	}
+
+	/**
+	 * @param userMarkedList the userMarkedList to set
+	 */
+	public void setUserMarkedList(Set<UserMarkedList> userMarkedList) {
+		this.userMarkedList = userMarkedList;
+	}
+
+	/**
+	 * @return the userPersonalNotes
+	 */
+	public Set<UserPersonalNotes> getUserPersonalNotes() {
+		return userPersonalNotes;
+	}
+
+	/**
+	 * @param userPersonalNotes the userPersonalNotes to set
+	 */
+	public void setUserPersonalNotes(Set<UserPersonalNotes> userPersonalNotes) {
+		this.userPersonalNotes = userPersonalNotes;
+	}
+
+	/**
+	 * @return the userMessage
+	 */
+	public Set<UserMessage> getUserMessage() {
+		return userMessage;
+	}
+
+	/**
+	 * @param userMessage the userMessage to set
+	 */
+	public void setUserMessage(Set<UserMessage> userMessage) {
+		this.userMessage = userMessage;
+	}
+
+	/**
+	 * @return the vettingHistory
+	 */
+	public Set<VettingHistory> getVettingHistory() {
+		return vettingHistory;
+	}
+
+	/**
+	 * @param vettingHistory the vettingHistory to set
+	 */
+	public void setVettingHistory(Set<VettingHistory> vettingHistory) {
+		this.vettingHistory = vettingHistory;
 	}
 }

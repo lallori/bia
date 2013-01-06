@@ -34,7 +34,6 @@ import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.TooManyUsersException;
@@ -154,6 +153,24 @@ public interface UserDAO extends Serializable {
 	void persistUserRoles(String account, List<UserRole> userRole);
 
 	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameApprovedBy(String originalAccount, String newAccount) throws PersistenceException;
+
+	/**
 	 * This method removes input {@link org.medici.bia.domain.User} 
 	 * object from the persistence layer. 
 	 * 
@@ -186,6 +203,11 @@ public interface UserDAO extends Serializable {
 	 */
 	Page searchMYSQL(org.medici.bia.common.search.Search searchContainer, PaginationFilter paginationFilter);
 
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 */
 	Page searchWhoIsOnline(PaginationFilter paginationFilter);
 
 }

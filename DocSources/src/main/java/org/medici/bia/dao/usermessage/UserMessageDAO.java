@@ -87,6 +87,31 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 
 	/**
 	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 */
+	Integer renameRecipient(String originalAccount, String newAccount);
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 */
+	Integer renameSender(String originalAccount, String newAccount);
+
+	/**
+	 * 
 	 * @param userMessageSearch
 	 * @param paginationFilter
 	 * @return

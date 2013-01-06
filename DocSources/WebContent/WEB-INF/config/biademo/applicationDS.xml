@@ -10,9 +10,9 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/docsources?autoReconnect=true" />
-        <property name="user" value="docsources" />
-        <property name="password" value="docsources" />
+        <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/biademo?autoReconnect=true" />
+        <property name="user" value="biademo"/>
+        <property name="password" value="r3w8ywen3"/>
         <property name="initialPoolSize" value="15" />
         <property name="minPoolSize" value="10" />
         <property name="maxPoolSize" value="30" />
@@ -26,7 +26,7 @@
                 <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
             </bean>
         </property>
-        <property name="persistenceUnitName" value="BiaPU" />
+        <property name="persistenceUnitName" value="BiaDemoPU" />
         <property name="dataSource" ref="dataSource" />
         <property name="loadTimeWeaver">
 			<bean

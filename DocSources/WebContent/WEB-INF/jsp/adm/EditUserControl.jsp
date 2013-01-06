@@ -120,8 +120,9 @@
 		<input id="close" type="submit" value="Close" title="Do not save changes" />
 		<input id="save" class="save" type="submit" value="Save" />
 	</div>
-	<input type="hidden" value="" id="modify" />
-	<input type="hidden" value="${command.userRoles}" id="roles" />
+	<input type="hidden" id="modify" value="" />
+	<input type="hidden" id="roles" value="${command.userRoles}" />
+	<form:hidden id="originalAccount" path="originalAccount"/>
 </fieldset>	
 </form:form>
 

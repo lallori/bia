@@ -430,4 +430,18 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		
 		return page;
 	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE ForumPost SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
 }

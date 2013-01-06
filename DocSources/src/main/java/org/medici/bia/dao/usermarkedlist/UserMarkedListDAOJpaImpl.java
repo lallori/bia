@@ -32,7 +32,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserMarkedList;
@@ -88,5 +87,18 @@ public class UserMarkedListDAOJpaImpl extends JpaDao<Integer, UserMarkedList> im
 		}
 
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE UserMarkedList SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 }

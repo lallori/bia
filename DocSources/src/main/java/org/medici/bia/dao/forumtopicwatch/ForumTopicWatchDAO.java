@@ -32,7 +32,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
-import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.User;
@@ -71,4 +70,13 @@ public interface ForumTopicWatchDAO extends Dao<Integer, ForumTopicWatch> {
 	 * @throws PersistenceException
 	 */
 	Integer removeUserSubscribes(User user) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

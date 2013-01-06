@@ -3,15 +3,15 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<display-name>Doc Sources Project</display-name>
+	<display-name>Bia Project</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
+            /WEB-INF/config/applicationProvider.xml,
             /WEB-INF/config/applicationAOP.xml,
             /WEB-INF/config/applicationCaptcha.xml,
-            /WEB-INF/config/applicationDS.xml,
+            /WEB-INF/config/${customer}/applicationDS.xml,
             /WEB-INF/config/applicationI18n.xml,
-            /WEB-INF/config/applicationProvider.xml,
             /WEB-INF/config/applicationSchedulers.xml,
             /WEB-INF/config/applicationSecurity.xml,
             /WEB-INF/config/applicationServices.xml,

@@ -28,6 +28,10 @@
 				<div class="item37">Receive notification by email</div> 
 				<div class="value">${user.mailNotification ? 'Activated' : 'Deactivated'}</div>
 			</div>
+			<div class="row">
+				<div class="item37">Subscribe to Forum Topic</div> 
+				<div class="value">${user.forumTopicSubscription ? 'Activated' : 'Deactivated'}</div>
+			</div>
 		</div>
 	</div>
 	

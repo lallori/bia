@@ -27,6 +27,8 @@
  */
 package org.medici.bia.dao.accesslog;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.AccessLog;
 
@@ -37,4 +39,12 @@ import org.medici.bia.domain.AccessLog;
  */
 public interface AccessLogDAO extends Dao<Integer, AccessLog> {
 
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

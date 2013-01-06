@@ -50,4 +50,13 @@ public interface ActivationUserDAO extends Dao<String, ActivationUser> {
 	 */
 	List<ActivationUser> searchUsersToActivate(ActivationUser activationUser) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
 }

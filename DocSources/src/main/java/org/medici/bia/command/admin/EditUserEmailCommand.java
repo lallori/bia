@@ -42,6 +42,7 @@ public class EditUserEmailCommand {
 	private String mail;
 	private Boolean mailHide;
 	private Boolean receiveNotificationByMail;
+	private Boolean forumTopicSubscription;
 
 	/**
 	 * @return the account
@@ -49,41 +50,70 @@ public class EditUserEmailCommand {
 	public String getAccount() {
 		return account;
 	}
+	
 	/**
 	 * @param account the account to set
 	 */
 	public void setAccount(String account) {
 		this.account = account;
 	}
+	
 	/**
 	 * @return the mail
 	 */
 	public String getMail() {
 		return mail;
 	}
+	
 	/**
 	 * @param mail the mail to set
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
 	/**
 	 * @return the mailHide
 	 */
 	public Boolean getMailHide() {
 		return mailHide;
 	}
+	
 	/**
 	 * @param mailHide the mailHide to set
 	 */
 	public void setMailHide(Boolean mailHide) {
 		this.mailHide = mailHide;
 	}
+	
+	/**
+	 * 
+	 * @param receiveNotificationByMail
+	 */
 	public void setReceiveNotificationByMail(Boolean receiveNotificationByMail) {
 		this.receiveNotificationByMail = receiveNotificationByMail;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean getReceiveNotificationByMail() {
 		return receiveNotificationByMail;
+	}
+	
+	/**
+	 * @param forumTopicSubscription the forumTopicSubscription to set
+	 */
+	public void setForumTopicSubscription(Boolean forumTopicSubscription) {
+		this.forumTopicSubscription = forumTopicSubscription;
+	}
+	
+	/**
+	 * @return the forumTopicSubscription
+	 */
+	public Boolean getForumTopicSubscription() {
+		return forumTopicSubscription;
 	}
 
 }

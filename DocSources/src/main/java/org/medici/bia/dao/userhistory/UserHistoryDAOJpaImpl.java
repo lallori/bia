@@ -154,6 +154,54 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public UserHistory findCategoryHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException {
+		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE user=:user AND category=:category ");
+        
+        switch (category) {
+			case DOCUMENT:
+				stringBuilder.append(" AND document.entryId=:primaryKeyId");
+				break;
+			case PEOPLE:
+				stringBuilder.append(" AND person.personId=:primaryKeyId");
+				break;
+			case PLACE:
+				stringBuilder.append(" AND place.placeAllId=:primaryKeyId");
+				break;
+			case VOLUME:
+				stringBuilder.append(" AND volume.summaryId=:primaryKeyId");
+				break;
+			case FORUM:
+				stringBuilder.append(" AND forum.id=:primaryKeyId");
+				break;
+			case FORUM_POST:
+				stringBuilder.append(" AND forumPost.id=:primaryKeyId");
+				break;
+			default:
+				break;
+		}
+
+        stringBuilder.append(" ORDER BY idUserHistory DESC");
+
+        Query query = getEntityManager().createQuery(stringBuilder.toString());
+
+        query.setParameter("user", user);
+        query.setParameter("category", category);
+        query.setParameter("primaryKeyId", primaryKeyId);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size() >0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<UserHistory> findHistory(User user, Category category, Integer resultSize) throws PersistenceException {
         String queryString = "FROM UserHistory WHERE user=:user and category=:category and logicalDelete=false ORDER BY dateAndTime DESC";
 
@@ -304,54 +352,6 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		page.setList(query.getResultList());
 
 		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public UserHistory findCategoryHistoryFromEntity(User user, Category category, Integer primaryKeyId) throws PersistenceException {
-		StringBuilder stringBuilder = new StringBuilder("FROM UserHistory WHERE user=:user AND category=:category ");
-        
-        switch (category) {
-			case DOCUMENT:
-				stringBuilder.append(" AND document.entryId=:primaryKeyId");
-				break;
-			case PEOPLE:
-				stringBuilder.append(" AND person.personId=:primaryKeyId");
-				break;
-			case PLACE:
-				stringBuilder.append(" AND place.placeAllId=:primaryKeyId");
-				break;
-			case VOLUME:
-				stringBuilder.append(" AND volume.summaryId=:primaryKeyId");
-				break;
-			case FORUM:
-				stringBuilder.append(" AND forum.id=:primaryKeyId");
-				break;
-			case FORUM_POST:
-				stringBuilder.append(" AND forumPost.id=:primaryKeyId");
-				break;
-			default:
-				break;
-		}
-
-        stringBuilder.append(" ORDER BY idUserHistory DESC");
-
-        Query query = getEntityManager().createQuery(stringBuilder.toString());
-
-        query.setParameter("user", user);
-        query.setParameter("category", category);
-        query.setParameter("primaryKeyId", primaryKeyId);
-
-		List<UserHistory> result = query.getResultList();
-		
-		if (result.size() >0) {
-			return result.get(0);
-		} 
-
-		return null;
 	}
 	
 	/**
@@ -1252,6 +1252,19 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		} catch (PersistenceException persistenceException) {
 			logger.error("Exception during persisting history", persistenceException);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE UserHistory SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 
 	/**

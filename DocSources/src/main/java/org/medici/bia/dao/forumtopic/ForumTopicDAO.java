@@ -103,4 +103,13 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 */
 	Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

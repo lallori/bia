@@ -28,6 +28,8 @@
 package org.medici.bia.validator.admin;
 
 import org.medici.bia.command.admin.EditUserCommand;
+import org.medici.bia.domain.User;
+import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -81,6 +83,44 @@ public class EditUserValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditUserCommand editUserCommand = (EditUserCommand) object;
-		// TODO : implement validation logic
+		validateAccount(editUserCommand.getOriginalAccount(), editUserCommand.getAccount(), errors);
+	}
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param account
+	 * @param errors
+	 */
+	public void validateAccount(String originalAccount, String account, Errors errors) {
+		if(originalAccount == null){
+			errors.reject("originalAccount", "error.account.null");
+			return;
+		}
+
+		if(account == null){
+			errors.reject("account", "error.account.null");
+			return;
+		}
+
+		try {
+			User user =  getAdminService().findUser(originalAccount);
+			
+			if (user != null) {
+				if (!originalAccount.equals(account)) {
+					try {
+						if (getAdminService().findUser(account) != null) {
+							errors.rejectValue("account", "error.account.alreadypresent");
+						}
+					} catch(ApplicationThrowable ath) {
+						errors.rejectValue("account", "error.account.notfound");
+					}
+				}
+			} else {
+				errors.rejectValue("originalAccount", "error.originalAccount.notfound");
+			}
+		} catch(ApplicationThrowable ath) {
+			errors.rejectValue("originalAccount", "error.originalAccount.notfound");
+		}
 	}
 }

@@ -39,6 +39,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.naming.Name;
+import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
@@ -610,6 +611,20 @@ public class UserDAOLdapImpl implements UserDAO {
 		for (UserRole singleRole : userRoles) {
 			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
+	}
+
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount)
+			throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer renameApprovedBy(String originalAccount, String newAccount)
+			throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

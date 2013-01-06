@@ -48,4 +48,13 @@ public interface UserMarkedListDAO extends Dao<Integer, UserMarkedList> {
 	 * @throws PersistenceException
 	 */
 	UserMarkedList getMyMarkedList(User user) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
 }

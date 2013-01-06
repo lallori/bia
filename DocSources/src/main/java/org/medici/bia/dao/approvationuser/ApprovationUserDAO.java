@@ -51,6 +51,15 @@ public interface ApprovationUserDAO extends Dao<String, ApprovationUser> {
 
 	/**
 	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
+	/**
+	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
@@ -64,5 +73,4 @@ public interface ApprovationUserDAO extends Dao<String, ApprovationUser> {
 	 * @throws PersistenceException
 	 */
 	List<ApprovationUser> searchUsersToApprove() throws PersistenceException;
-
 }

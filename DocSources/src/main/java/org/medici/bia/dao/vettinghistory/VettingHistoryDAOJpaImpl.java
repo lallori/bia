@@ -27,6 +27,9 @@
  */
 package org.medici.bia.dao.vettinghistory;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.people.PeopleDAO;
@@ -102,6 +105,19 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE UserHistory SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 
 	/**

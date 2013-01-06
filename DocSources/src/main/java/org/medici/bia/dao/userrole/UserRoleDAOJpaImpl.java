@@ -55,12 +55,36 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException {
+		for (UserRole userRole : userRoles) {
+			getEntityManager().persist(userRole);
+		}
+    }
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRole> findUserRoles(String account) throws PersistenceException {
 		Query query = getEntityManager().createQuery("FROM UserRole WHERE account=:account order by userAuthority.priority asc ");
 		query.setParameter("account", account);
 
+		return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findUsers(UserAuthority userAuthority) throws PersistenceException {
+		String jpql = "SELECT u.user FROM UserRole u WHERE u.userAuthority=:userAuthority";
+
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("userAuthority", userAuthority);
+		
 		return query.getResultList();
 	}
 
@@ -81,23 +105,12 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException {
-		for (UserRole userRole : userRoles) {
-			getEntityManager().persist(userRole);
-		}
-    }
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<User> findUsers(UserAuthority userAuthority) throws PersistenceException {
-		String jpql = "SELECT u.user FROM UserRole u WHERE u.userAuthority=:userAuthority";
-
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE UserRole SET user.account=:newAccount WHERE user.account=:originalAccount";
 		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("userAuthority", userAuthority);
-		
-		return query.getResultList();
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 }

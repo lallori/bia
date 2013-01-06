@@ -40,6 +40,7 @@ import java.util.List;
  */
 public class EditUserCommand {
 	/** User's Account **/
+	private String originalAccount;
 	private String account;
 	
 	private String firstName;
@@ -58,6 +59,18 @@ public class EditUserCommand {
 	private Boolean locked;
 	private Boolean approved;
 	private List<String> userRoles;
+	/**
+	 * @param originalAccount the originalAccount to set
+	 */
+	public void setOriginalAccount(String originalAccount) {
+		this.originalAccount = originalAccount;
+	}
+	/**
+	 * @return the originalAccount
+	 */
+	public String getOriginalAccount() {
+		return originalAccount;
+	}
 	/**
 	 * @return the account
 	 */

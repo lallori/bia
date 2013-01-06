@@ -103,6 +103,7 @@ public class UserHistory implements Serializable {
 	private Search searchData;
 	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean logicalDelete;
+
 	/**
 	 * Default Constructor
 	 */

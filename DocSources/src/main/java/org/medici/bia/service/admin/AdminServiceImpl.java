@@ -46,14 +46,23 @@ import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.accesslogstatistics.AccessLogStatisticsDAO;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
+import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
+import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
+import org.medici.bia.dao.forumtopic.ForumTopicDAO;
+import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
 import org.medici.bia.dao.month.MonthDAO;
+import org.medici.bia.dao.persistentLogin.PersistentLoginDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
+import org.medici.bia.dao.userhistory.UserHistoryDAO;
+import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
+import org.medici.bia.dao.userpersonalnotes.UserPersonalNotesDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
+import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
@@ -92,12 +101,24 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
+	
+	@Autowired
+	private AnnotationDAO annotationDAO;
 
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
 
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
+	
+	@Autowired
+	private ForumTopicDAO forumTopicDAO;
+	
+	@Autowired
+	private ForumTopicWatchDAO forumTopicWatchDAO;
+
+	@Autowired
+	private ForumPostDAO forumPostDAO;
 
 	@Autowired
 	private ForumPostNotifiedDAO forumPostNotifiedDAO;
@@ -110,18 +131,33 @@ public class AdminServiceImpl implements AdminService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
+	private PersistentLoginDAO persistentLoginDAO;
+	
+	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
 
 	@Autowired(required = false)
 	@Qualifier("userDAOJpaImpl")
 	private UserDAO userDAO;
+
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
+
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
 	
 	@Autowired
 	private UserMessageDAO userMessageDAO;
 	
 	@Autowired
+	private UserPersonalNotesDAO userPersonalNotesDAO;
+	
+	@Autowired
 	private UserRoleDAO userRoleDAO;
 
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
+	
 	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
@@ -285,10 +321,10 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public User editUser(User user) throws ApplicationThrowable {
+	public User editUser(User user, String originalAccount) throws ApplicationThrowable {
 		try{
-			User userToUpdate = getUserDAO().findUser(user.getAccount()); 
-
+			User userToUpdate = getUserDAO().findUser(originalAccount);
+			
 			if (user.getPassword() != null) {
 				if (!user.getPassword().equals(userToUpdate.getPassword())){
 					userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
@@ -334,10 +370,24 @@ public class AdminServiceImpl implements AdminService {
 				getUserRoleDAO().addAllUserRoles(user.getUserRoles());
 			}
 			
-			
 			userToUpdate.setUserRoles(user.getUserRoles());
+
 			getUserDAO().merge(userToUpdate);
 			
+			// in case of "account rename", we need to update every entity containing account field. 
+			if (!userToUpdate.getAccount().equals(user.getAccount())) {
+				getUserDAO().renameAccount(originalAccount, user.getAccount());
+
+				userToUpdate=getUserDAO().findUser(user.getAccount());
+				userToUpdate.setInitials(generateInitials(user));
+				getUserDAO().merge(userToUpdate);
+
+				getAccessLogDAO().renameAccount(originalAccount, user.getAccount());
+				getUserMessageDAO().renameAccount(originalAccount, user.getAccount());
+				getUserMessageDAO().renameRecipient(originalAccount, user.getAccount());
+				getUserMessageDAO().renameSender(originalAccount, user.getAccount());
+			}
+
 			return userToUpdate;
 		} catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -548,6 +598,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
@@ -572,6 +629,41 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @return the forumPostNotifiedDAO
+	 */
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
+	}
+
+	/**
+	 * @return the forumTopicDAO
+	 */
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
+	}
+
+	/**
+	 * @return the forumTopicWatchDAO
+	 */
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
+
+	/**
+	 * @param forumPostDAO the forumPostDAO to set
+	 */
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+
+	/**
+	 * @return the forumPostDAO
+	 */
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
 	}
 
 	/**
@@ -620,10 +712,31 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
 	 * @return the userMessageDAO
 	 */
 	public UserMessageDAO getUserMessageDAO() {
 		return userMessageDAO;
+	}
+
+	/**
+	 * @return the userPersonalNotesDAO
+	 */
+	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
+		return userPersonalNotesDAO;
 	}
 
 	/**
@@ -635,17 +748,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 * @return the vettingHistoryDAO
 	 */
-	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
-		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
-	}
-
-	/**
-	 * @return the forumPostNotifiedDAO
-	 */
-	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
-		return forumPostNotifiedDAO;
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
 	}
 
 	/**
@@ -758,6 +864,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	/**
 	 * @param applicationPropertyDAO
 	 *            the applicationPropertyDAO to set
 	 */
@@ -772,13 +885,35 @@ public class AdminServiceImpl implements AdminService {
 	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
 		this.approvationUserDAO = approvationUserDAO;
 	}
+
+	/**
+	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 */
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+
+	/**
+	 * @param forumTopicDAO the forumTopicDAO to set
+	 */
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+
+	/**
+	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
+	 */
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
-	
+
 	/**
 	 * 
 	 * @param passwordEncoder
@@ -786,30 +921,71 @@ public class AdminServiceImpl implements AdminService {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
-	
+
+	/**
+	 * @param persistentLoginDAO the persistentLoginDAO to set
+	 */
+	public void setPersistentLoginDAO(PersistentLoginDAO persistentLoginDAO) {
+		this.persistentLoginDAO = persistentLoginDAO;
+	}
+
+	/**
+	 * @return the persistentLoginDAO
+	 */
+	public PersistentLoginDAO getPersistentLoginDAO() {
+		return persistentLoginDAO;
+	}
+
 	/**
 	 * @param userAuthorityDAO the userAuthorityDAO to set
 	 */
 	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
 		this.userAuthorityDAO = userAuthorityDAO;
 	}
-	
+
 	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+	
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+	
 	/**
 	 * @param userMessageDAO the userMessageDAO to set
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
 	}
+	
+	/**
+	 * @param userPersonalNotesDAO the userPersonalNotesDAO to set
+	 */
+	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
+		this.userPersonalNotesDAO = userPersonalNotesDAO;
+	}
 
 	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
 		this.userRoleDAO = userRoleDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
 	}
 
 	/**

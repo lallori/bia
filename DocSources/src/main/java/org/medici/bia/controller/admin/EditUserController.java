@@ -113,6 +113,7 @@ public class EditUserController {
 
 				if(user != null){
 					command.setAccount(user.getAccount());
+					command.setOriginalAccount(user.getAccount());
 					command.setFirstName(user.getFirstName());
 					command.setMiddleName(user.getMiddleName());
 					command.setLastName(user.getLastName());
@@ -225,8 +226,8 @@ public class EditUserController {
 			user.setLocked(command.getLocked());
 			
 			try {
-				if(getAdminService().findUser(command.getAccount()) != null){
-					user = getAdminService().editUser(user);
+				if(getAdminService().findUser(command.getOriginalAccount()) != null){
+					user = getAdminService().editUser(user, command.getOriginalAccount());
 				}else{
 					user = getAdminService().addNewUser(user);
 				}

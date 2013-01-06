@@ -538,6 +538,17 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public void persist(User user) throws PersistenceException {
+		if (user != null) {
+			getEntityManager().persist(user);
+		}
+	}
+
+	/**
 	 * 
 	 * @param account
 	 * @param userRole
@@ -666,5 +677,31 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 */
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE User SET account=:newAccount WHERE account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameApprovedBy(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE User SET approvedBy.account=:newAccount WHERE approvedBy.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 }
