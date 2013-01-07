@@ -73,6 +73,29 @@ public class AjaxController {
 	
 	/**
 	 * 
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/FindUser.json", method = RequestMethod.POST)
+	public ModelAndView findUser(@RequestParam(value="account") String account){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			if(getAdminService().findUser(account) == null){
+				model.put("available", "OK");
+			}else{
+				model.put("available", "KO");
+			}
+		}catch(ApplicationThrowable ath){
+			model.put("applicationThrowable", ath);
+			model.put("available", "KO");
+			return new ModelAndView("responseKO", model);
+		}
+		
+		return new ModelAndView("responseKO", model);
+	}
+	
+	/**
+	 * 
 	 * @param alias
 	 * @param model
 	 * @return

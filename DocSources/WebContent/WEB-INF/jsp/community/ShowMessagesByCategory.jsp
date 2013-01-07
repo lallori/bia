@@ -9,11 +9,11 @@
 	</c:url>
 	
 	<c:url var="ShowMyInboxURL" value="/community/ShowMyMessageBox.do">
-		<c:param name="category" value="inbox"/>
+		<c:param name="category" value="INBOX"/>
 	</c:url>
 	
 	<c:url var="ShowMyOutboxURL" value="/community/ShowMyMessageBox.do">
-		<c:param name="category" value="outbox"/>
+		<c:param name="category" value="OUTBOX"/>
 	</c:url>
 	
 	<h2>Messages</h2>

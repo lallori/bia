@@ -10,14 +10,14 @@
 	
 	<div id="messagesTable">
 		<div class="list">
-        	<c:if test="${command.category == 'inbox'}">
+        	<c:if test="${command.category == 'INBOX'}">
 	        	<div class="rowFirst">
 	           		<div class="one">FROM</div>
 	            	<div class="two">MESSAGE</div>
 	            	<div class="three">DATE</div>
 	        	</div>
         	</c:if>
-        	<c:if test="${command.category == 'outbox'}">
+        	<c:if test="${command.category == 'OUTBOX'}">
         		<div class="rowFirst">
         			<div class="one">TO</div>
         			<div class="two">MESSAGE</div>
@@ -40,15 +40,15 @@
 
 			<c:forEach items="${messageboxPage.list}" var="currentMessage" varStatus="status">
 			
-			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus != 'READ'}">
+			<c:if test="${command.category == 'INBOX' && currentMessage.recipientStatus != 'READ'}">
 				<div class="<c:if test="${not status.last}">rowNew</c:if><c:if test="${status.last}">rowLastNew</c:if>">
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
-			<c:if test="${command.category == 'inbox' && currentMessage.recipientStatus == 'READ'}">
+			<c:if test="${command.category == 'INBOX' && currentMessage.recipientStatus == 'READ'}">
 				<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.sender}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
-			<c:if test="${command.category == 'outbox'}">
+			<c:if test="${command.category == 'OUTBOX'}">
 				<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">	
 					<div class="one"><input type="checkbox" name="css" value="css" id="${currentMessage.messageId}"/><a class="messageLink" href="<c:url value="/community/ShowMessage.do?messageId=${currentMessage.messageId}"/>">${currentMessage.recipient}<span class="subject" style="display:none">${currentMessage.subject}</span></a></div>
 			</c:if>
@@ -92,7 +92,12 @@
 			$j('.pageHref').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.pageHref').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
+				var active = $j( "#tabs" ).tabs( "option", "active" );
+				var tab = $j( "#tabs" ).find( ".ui-tabs-nav li:eq(" + active + ")" );
+				$j("#" + $j(tab).attr("aria-labelledby")).attr("href", $j(this).attr("href"));
+				$j( "#tabs" ).tabs( "refresh" );
+				$j("#tabs").tabs("load", active);
+// 				$j("#ui-tabs-1").load($j(this).attr("href"));
 				return false;
 			});
 			
@@ -111,7 +116,12 @@
 			$j('.paginateForumButton').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.paginateForumButton').live('click', function() {
-				$j("#main").load($j(this).attr("href"));
+// 				$j("#ui-tabs-1").load($j(this).attr("href"));
+				var active = $j( "#tabs" ).tabs( "option", "active" );
+				var tab = $j( "#tabs" ).find( ".ui-tabs-nav li:eq(" + active + ")" );
+				$j("#" + $j(tab).attr("aria-labelledby")).attr("href", $j(this).attr("href"));
+				$j( "#tabs" ).tabs( "refresh" );
+				$j("#tabs").tabs("load", active);
 				return false;
 			});
 			

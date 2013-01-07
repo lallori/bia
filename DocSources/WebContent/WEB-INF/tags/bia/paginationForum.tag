@@ -37,6 +37,11 @@
 			<c:set var="firstArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=1&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>
 			<c:set var="prevArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.thisPage - 1}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
 		</c:if>
+		<c:if test="${not empty messageboxPage}">
+			<c:url var="baseUrl" value="/community/ShowMyMessageBox.do"/>
+			<c:set var="firstArgs">?category=${category}&messagePageNumber=1&messagePageTotal=${page.totalPages}&messageForPage=${command.resultsForPage}</c:set>
+			<c:set var="prevArgs">?category=${category}&messagePageNumber=${page.thisPage - 1}&messagePageTotal=${page.totalPages}&messageForPage=${command.resultsForPage}</c:set>
+		</c:if>
 		<span id="firstPaginateButton"><a href="${baseUrl}${firstArgs}" class="paginateForumButton">First</a></span>
 		<span id="previousPaginateButton"><a href="${baseUrl}${prevArgs}" class="paginateForumButton">Previous</a></span>
 	</c:when>
@@ -101,6 +106,11 @@
 			<c:url var="baseUrl" value="/community/ShowTopicForum.do"/>
 			<c:set var="nextArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.thisPage + 1}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>
 			<c:set var="lastArgs">?forumId=${forum.forumId}&topicId=${topic.topicId}&postPageNumber=${page.totalPages}&postPageTotal=${page.totalPages}&postsForPage=${command.postsForPage}</c:set>	
+		</c:if>
+		<c:if test="${not empty messageboxPage}">
+			<c:url var="baseUrl" value="/community/ShowMyMessageBox.do"/>
+			<c:set var="nextArgs">?category=${category}&resultPageNumber=${page.thisPage + 1}&resultPageTotal=${page.totalPages}&resultsForPage=${command.resultsForPage}</c:set>
+			<c:set var="lastArgs">?category=${category}&resultPageNumber=${page.totalPages}&resultPageTotal=${page.totalPages}&resultsForPage=${command.resultsForPage}</c:set>
 		</c:if>
 		<span id="nextPaginateButton"><a href="${baseUrl}${nextArgs}" class="paginateForumButton">Next</a></span>
 		<span id="lastPaginateButton"><a href="${baseUrl}${lastArgs}" class="paginateForumButton">Last</a></span>

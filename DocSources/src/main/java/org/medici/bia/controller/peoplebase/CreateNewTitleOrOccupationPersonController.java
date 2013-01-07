@@ -30,13 +30,18 @@ package org.medici.bia.controller.peoplebase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.medici.bia.command.peoplebase.CreateNewTitleOrOccupationPersonCommand;
 import org.medici.bia.domain.RoleCat;
+import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit single Title Or Occupation Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/peoplebase/CreateNewTitleOrOccupationPerson")
@@ -72,6 +78,31 @@ public class CreateNewTitleOrOccupationPersonController {
 	 */
 	public Validator getValidator() {
 		return validator;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") CreateNewTitleOrOccupationPersonCommand command, BindingResult result) {
+		getValidator().validate(command, result);
+		
+		if(result.hasErrors()){
+			return setupForm(command);
+		}else{
+			Map<String, Object> model = new HashMap<String, Object>();
+			TitleOccsList titleOccsList = new TitleOccsList(0);
+			titleOccsList.setTitleOcc(command.getTitleOcc());
+			titleOccsList.setRoleCat(new RoleCat(command.getRoleCatId()));
+			
+			try{
+				getPeopleBaseService().addNewTitleOrOccupation(titleOccsList);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("error/CreateNewTitleOrOccupationPerson", model);
+			}
+			
+			return new ModelAndView("response/OK", model);
+		}
+		
+		
 	}
 
 	/**

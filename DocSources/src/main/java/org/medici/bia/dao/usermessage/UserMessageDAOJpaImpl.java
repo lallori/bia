@@ -262,6 +262,7 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	        
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
 		String objectsQuery = userMessageSearch.toJPAQuery();

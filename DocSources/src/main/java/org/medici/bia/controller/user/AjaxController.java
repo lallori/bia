@@ -462,6 +462,27 @@ public class AjaxController {
 		return getUserService().ratePassword(password);
 	}
 	
+	/**
+	 * This method will search Country entity by name field. 
+	 * @param name Description field of the country
+	 * @return ModelAndView containing country result list.
+	 */
+	@RequestMapping(value = "/user/FindCountries", method = RequestMethod.GET)
+	public ModelAndView searchCountries(@RequestParam("query") String name) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			List<Country> countries = getUserService().findCountries(name);
+			model.put("query", name);
+			model.put("suggestions", ListBeanUtils.transformList(countries, "name"));
+			model.put("data", ListBeanUtils.transformList(countries, "code"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	
 	/**
 	 * This method will search Country entity by name field. 

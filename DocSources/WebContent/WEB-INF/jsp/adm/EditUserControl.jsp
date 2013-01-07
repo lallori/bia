@@ -11,6 +11,8 @@
 	</c:url>
 	
 	<c:url var="EditUserURL" value="/admin/EditUserControl.do" />
+	
+	<c:url var="FindUserURL" value="/admin/FindUser.json" />
 
 	<form:form id="EditUserControlForm" method="post" class="edit" action="${EditUserURL}">
 	<fieldset>
@@ -143,6 +145,19 @@
 // 				}
 // 			});
 // 		}
+
+		$j("#account").keyup(function(){
+			$j.ajax({ type:"POST", url:"${FindUserURL}" + '?account=' + $j("#account").val(), async:false, success:function(json) {
+				if(json.available == 'OK' || $j("#account").val() == $j("#originalAccount").val()){
+					$j("#account").css("border", "1px solid");
+					$j("#account").css("border-color", "green");
+				}else{
+					$j("#account").css("border", "1px solid");
+					$j("#account").css("border-color", "red");
+				}
+			}});
+			return false;
+		})
 		
 		$j("#EditUserControlForm").submit(function (){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {

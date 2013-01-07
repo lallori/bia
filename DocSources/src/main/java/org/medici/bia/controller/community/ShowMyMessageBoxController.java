@@ -73,11 +73,13 @@ public class ShowMyMessageBoxController {
 			paginationFilter.setElementsForPage(command.getResultsForPage());
 		} else {
 			paginationFilter.setElementsForPage(new Integer(10));
+			command.setResultsForPage(new Integer(10));
 		}
 		if (command.getResultPageNumber() != null) {
 			paginationFilter.setThisPage(command.getResultPageNumber());
 		} else {
 			paginationFilter.setThisPage(new Integer(1));
+			command.setResultPageNumber(paginationFilter.getThisPage());
 		}
 		if (command.getResultPageTotal() != null) {
 			paginationFilter.setPageTotal(command.getResultPageTotal());
@@ -90,10 +92,10 @@ public class ShowMyMessageBoxController {
 		UserMessageSearch userMessageSearch = new UserMessageSearch();
 //		userMessageSearch.setRecipient(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		if(command.getCategory() != null){
-			if(command.getCategory().equals("inbox")){
+			if(command.getCategory().equalsIgnoreCase("inbox")){
 				userMessageSearch.setUserMessageCategory(UserMessageCategory.INBOX);
 				paginationFilter.addSortingCriteria("messageSendedDate", "desc");
-			}else if(command.getCategory().equals("outbox")){
+			}else if(command.getCategory().equalsIgnoreCase("outbox")){
 				userMessageSearch.setUserMessageCategory(UserMessageCategory.OUTBOX);
 				paginationFilter.addSortingCriteria("messageSendedDate", "desc");
 			}
@@ -109,6 +111,7 @@ public class ShowMyMessageBoxController {
 		}
 		
 		model.put("messageboxPage", page);
+		model.put("category", userMessageSearch.getUserMessageCategory());
 
 		if (ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())) {
 			return new ModelAndView("community/ShowMyMessageBoxCompleteDOM", model);

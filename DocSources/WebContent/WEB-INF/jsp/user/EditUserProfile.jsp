@@ -6,7 +6,7 @@
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
 
-<c:url var="findCountryUrl" value="/user/ajax/FindCountries.json"/>
+<c:url var="findCountryUrl" value="/user/FindCountries.json"/>
 
 <c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do" />
 
@@ -81,13 +81,13 @@
 					return false;
 				});
 				
-				var a = $j('#country').autocomplete({ 
+				var a = $j('#country').autocompleteGeneral({ 
 				    serviceUrl:'${findCountryUrl}',
 				    minChars:1, 
 				    delimiter: /(,|;)\s*/, // regex or character
 				    maxHeight:400,
 				    width:300,
-				    zIndex: 9999,
+				    zIndex: 10000,
 				    deferRequestBy: 0, //miliseconds
 				    noCache: true, //default is false, set to true to disable caching
 				    onSelect: function(value, data){ $j('#countryCode').val(data); }

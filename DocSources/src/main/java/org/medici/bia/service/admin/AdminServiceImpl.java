@@ -334,7 +334,10 @@ public class AdminServiceImpl implements AdminService {
 
 			userToUpdate.setFirstName(user.getFirstName());
 			userToUpdate.setMiddleName(user.getMiddleName());
-			userToUpdate.setInitials(generateInitials(user));
+			//In this case if the first and the last names are the same, we don't generate another initials
+			if(!userToUpdate.getFirstName().equalsIgnoreCase(user.getFirstName()) || !userToUpdate.getLastName().equalsIgnoreCase(user.getLastName())){
+				userToUpdate.setInitials(generateInitials(user));
+			}			
 			userToUpdate.setInterests(user.getInterests());
 			userToUpdate.setLastName(user.getLastName());
 			

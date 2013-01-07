@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 import org.medici.bia.command.user.EditUserProfileCommand;
+import org.medici.bia.domain.Country;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
@@ -127,8 +128,10 @@ public class EditUserProfileController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserProfileCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		User user = null;
+		Country country = null;
 		try {
 			user= getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			country = getUserService().findCountry(user.getCountry());
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			user = new User();
@@ -136,7 +139,10 @@ public class EditUserProfileController {
 
 		command.setMail(user.getMail());
 		command.setAddress(user.getAddress());
-		command.setCountry(user.getCountry());
+		if(country != null){		
+			command.setCountry(country.getName());
+			command.setCountryCode(country.getCode());
+		}
 		command.setInterests(user.getInterests());
 		command.setOrganization(user.getOrganization());
 		command.setTitle(user.getTitle());
