@@ -847,17 +847,23 @@ public class AjaxController {
 		try {
 			List<Volume> volumes = getSearchService().searchVolumes(query, new PaginationFilter(0, Integer.MAX_VALUE));
 			model.put("query", query);
-			model.put("count", volumes.size());
-			model.put("data", ListBeanUtils.transformList(volumes, "volNum"));
-			List<String> suggestions = new ArrayList<String>();
-			for(Volume currentVolume : volumes){
-				if(currentVolume.getVolLetExt() != null){
-					suggestions.add(currentVolume.getVolNum().toString() + currentVolume.getVolLetExt());
-				}else{
-					suggestions.add(currentVolume.getVolNum().toString());
+			if(volumes != null){
+				model.put("count", volumes.size());
+				model.put("data", ListBeanUtils.transformList(volumes, "volNum"));
+				List<String> suggestions = new ArrayList<String>();
+				for(Volume currentVolume : volumes){
+					if(currentVolume.getVolLetExt() != null){
+						suggestions.add(currentVolume.getVolNum().toString() + currentVolume.getVolLetExt());
+					}else{
+						suggestions.add(currentVolume.getVolNum().toString());
+					}
 				}
+				model.put("suggestions", suggestions);
+			}else{
+				model.put("count", 0);
+				model.put("data", null);
+				model.put("suggestions", "");
 			}
-			model.put("suggestions", suggestions);
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
