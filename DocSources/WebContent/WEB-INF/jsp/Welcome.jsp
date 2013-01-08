@@ -26,8 +26,9 @@
     		</c:url>
      		<div class="discussion">
             	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
-            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a> 
-            	<span>(${discussion.totalReplies - 1} replies)</span>
+            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a> 
+            	<br />
+            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} replies)</span>
             	<span>Last post by <a href="${showUserProfileURL}" target="_blank" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
     		</c:forEach>
@@ -47,8 +48,9 @@
     		</c:url>
        		<div class="discussion">
             	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
-            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="34"/></a>
-            	<span>(${discussion.totalReplies - 1} replies)</span>
+            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
+            	<br />
+            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} replies)</span>
             	<span>Last post by <a href="${showUserProfileURL}" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
 	    	</c:forEach>

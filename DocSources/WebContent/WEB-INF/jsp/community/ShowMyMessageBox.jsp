@@ -60,6 +60,7 @@
 	</div>
 	
 	<a href="#" class="deleteMessages buttonSmall">Delete</a>
+	<input type="hidden" id="idToErase" value=""/>
 
 <div id="forumPaginate">
     <c:set var="paginationData">
@@ -161,20 +162,23 @@
 						  height: 150, 
 						  buttons: {
 							  Yes: function() {
-								  $j.ajax({type: 'POST', url: '${EraseMessagesURL}', async: false, data: {"idToErase" : $toRemove}, success: function(json){
+								  $j.ajax({type: 'POST', url: '${EraseMessagesURL}', async: false, data: {"idToErase" : $j("#idToErase").val()}, success: function(json){
 									 if(json.operation == 'OK'){
 										 $j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 									 }
 								  }});
 								  $j(this).dialog('close');
+								  $j("#idToErase").val('');
 								  return false;
 							  },
 							  No: function() {
 								  $j(this).dialog('close');
+								  $j("#idToErase").val('');
 								  return false;
 							  }
 						  }
 					  });
+					$j("#idToErase").val($toRemove);
 					$j("#deleteMessagesModal").dialog("open");
 					return false;
 				}

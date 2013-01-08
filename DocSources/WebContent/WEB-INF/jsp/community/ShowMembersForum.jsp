@@ -9,6 +9,10 @@
 
 <c:url var="ShowMembersForumURL" value="/community/ShowMembersForum.do"/>
 
+<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+	<c:param name="forumId" value="1"/>
+</c:url>
+
 <div id="findMember">
 	<ul class="abc">
     	<li><a href="#" id="findMember">Find a member</a></li>

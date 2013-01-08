@@ -12,10 +12,10 @@
 
 <script type="text/javascript">
 $j(document).ready(function() {
-	$j("#members").click(function(){
-		$j("#main").load($j(this).attr('href'));
-		return false;
-	});
+// 	$j("#members").click(function(){
+// 		$j("#main").load($j(this).attr('href'));
+// 		return false;
+// 	});
 });
 </script>
 

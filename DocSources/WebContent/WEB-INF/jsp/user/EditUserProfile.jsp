@@ -32,7 +32,7 @@
 	<div class="listFormProfile">
 		<div class="row">
 			<div class="col_l"><label for="group" id="groupLabel">Group</label><!-- Autocomplete or DropdownMenu --></div>
-			<div class="col_l"><input id="group" name="group" class="input_20c" type="text" disabled="disabled" value=<security:authentication property="principal.significantRoleDescription"/> /></div>
+			<div class="col_l"><input id="group" name="group" class="input_20c_disabled" type="text" disabled="disabled" value=<security:authentication property="principal.significantRoleDescription"/> style="width:164px;"/></div>
 			<div class="col_r"><form:label for="title" id="titleLabel" path="title">Title</form:label></div>
 			<div class="col_r"><form:input id="title" path="title" cssClass="input_20c" /><form:errors path="title" /></div>
 		</div>

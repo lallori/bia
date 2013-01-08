@@ -378,6 +378,12 @@
 				return false;
 			});
 			
+			$j("#members").click(function(){
+				$j("#main").load($j(this).attr('href'));
+				$j("#prevUrl").val($j(".paginateActive").attr('href'));
+				return false;
+			});
+			
 			$j('.editPost').die();
 			$j('.editPost').click(function(){
 				$j("#main").load($j(this).attr("href"));

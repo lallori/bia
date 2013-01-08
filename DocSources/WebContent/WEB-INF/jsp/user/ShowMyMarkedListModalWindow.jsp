@@ -15,6 +15,17 @@
 	
 		
 <div id="researchHistoryTableDiv">
+	<div id="markedListTable_length">
+		<label>
+			Show
+			<select id="table_length" size="1" aria-controls="markedList">
+				<option value="10" selected="selected">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+			</select> 
+			entries
+		</label>
+	</div>
 	<table cellpadding="0" cellspacing="0" border="0" class="display" id="researchHistoryTable">
 	    <thead>
 	        <tr>
@@ -60,7 +71,7 @@
 						],                           
 					"bDestroy" : true,  
 					"bFilter" : false,
-					"bLengthChange": false,                                                                          
+					"bLengthChange": false,
 					"bProcessing": true,                                                                          
 					"bServerSide": true,                                                                          
 					"iDisplayLength": 10,                                                                         
@@ -196,6 +207,12 @@
 	 				}else{
 	 					return false;
 	 				}
+				});
+				
+				$j("#table_length").change(function(){
+					$markedTable.fnSettings()._iDisplayLength = $j("#table_length").val();
+					$markedTable.fnDraw();
+					return false;
 				});
 			} );                                                                                                  
 	</script>
