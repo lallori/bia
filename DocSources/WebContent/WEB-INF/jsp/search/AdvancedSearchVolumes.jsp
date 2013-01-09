@@ -275,6 +275,24 @@
 				        </div>
 			         </div>
 			         
+			         <h1 id="volumeIdSearch"><a>Volume ID</a></h1>
+					 <div>
+						<div class="listAdvSearch">
+							<form id="volumeIdSearchForm" method="post" class="edit">
+								<div class="row">
+									<div class="col_l">
+										<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volumeid"></fmt:message>">?</a>
+										<input id="volumeId" name="volumeId" class="input_7c" type="text" maxlength="5" />
+									</div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="hidden" id="category" value="Volume Id">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+			         
 			         <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 			         <h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
 			         <div class="volumes">
@@ -363,6 +381,7 @@
 		$j("#toVolumeSearchForm").advancedSearchForm();
 		$j("#contextSearchForm").advancedSearchForm();
 		$j("#inventarioSearchForm").advancedSearchForm();
+		$j("#volumeIdSearchForm").advancedSearchForm();
 		$j("#logicalDeleteSearchForm").advancedSearchForm();
 		
 		$j('#accordion').accordion({
@@ -383,6 +402,11 @@
 		$j('#coorCont').click(function(){
 			$j.scrollTo({top:'140px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
+			return false;
+		});
+		$j('#volumeIdSearch').click(function(){
+			$j.scrollTo({top:'168px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "125px"}, "slow");
 			return false;
 		});
 		

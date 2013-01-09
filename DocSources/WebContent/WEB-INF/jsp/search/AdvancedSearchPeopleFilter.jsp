@@ -109,7 +109,17 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.titleOccWord) || (not empty searchFilter.filterData.gender) || (not empty searchFilter.filterData.researchNotes)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.peopleId) &&  ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.titleOccWord) || (not empty searchFilter.filterData.gender) || (not empty searchFilter.filterData.researchNotes)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="personIdSearchDiv">
+			<c:forEach items="${searchFilter.filterData.peopleId}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="catogorySearch">Person ID:</span><span class="wordSearch">${searchFilter.filterData.peopleId[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.peopleId[iterator.index]}" name="personId">
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>	
+			</div>
+			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.titleOccWord) || (not empty searchFilter.filterData.gender) || (not empty searchFilter.filterData.researchNotes) || (not empty searchFilter.filterData.peopleId)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">

@@ -80,6 +80,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private Boolean logicalDelete;
 	private List<String> names;
 	private List<NameType> namesTypes;
+	private List<String> peopleId;
 	private List<String> place;
 	private List<Integer> placeId;
 	private List<String> placeType;
@@ -116,6 +117,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		datesCreated = new ArrayList<Date>(0);
 		datesCreatedBetween = new ArrayList<Date>(0);
 		datesCreatedTypes = new ArrayList<DateType>(0);
+		peopleId = new ArrayList<String>(0);
 		placeId = new ArrayList<Integer>(0);
 		place = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
@@ -412,6 +414,23 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			researchNotes = new ArrayList<String>(0);
 		}
 		
+		//PersonId
+		if((command.getPersonId() != null) && (command.getPersonId().size() > 0)){
+			peopleId = new ArrayList<String>(command.getPersonId().size());
+			
+			for(String singleWord : command.getPersonId()){
+				try{
+					peopleId.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
+				}
+			}
+		}else{
+			peopleId = new ArrayList<String>(0);
+		}
+		
 		//Logical Delete
 		if(command.getLogicalDelete() != null){
 			if(command.getLogicalDelete().equals("true")){
@@ -446,7 +465,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				(titlesOccId.size()>0) ||
 				(gender.size()>0) ||
 				(placeId.size()>0) ||
-				(researchNotes.size()>0)) {
+				(researchNotes.size()>0) ||
+				(peopleId.size()>0)) {
 			return Boolean.FALSE;
 		}
 		
@@ -880,6 +900,30 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			}
 		}
 		
+		//PersonId
+		if(peopleId.size() > 0){
+			StringBuilder peopleIdQuery = new StringBuilder("(");
+			for(int i = 0; i < peopleId.size(); i++){
+				if(StringUtils.isNumeric(peopleId.get(i))){
+					if(peopleIdQuery.length() > 1){
+						peopleIdQuery.append(" OR ");
+					}
+					peopleIdQuery.append("(personId=");
+					peopleIdQuery.append(peopleId.get(i));
+					peopleIdQuery.append(")");
+				}else{
+					continue;
+				}
+			}
+			peopleIdQuery.append(")");
+			if(!peopleIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(peopleIdQuery);
+			}
+		}
+		
 		//LogicalDelete
 		if(!ObjectUtils.toString(logicalDelete).equals("")){
 			StringBuilder logicalDeleteQuery = new StringBuilder("(");
@@ -1258,6 +1302,19 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				toString.append(place.get(i) + " ");
 			}
 		}
+		if(!peopleId.isEmpty()){
+			if(toString.length()>0){
+				toString.append("AND ");
+			}
+			toString.append("Person ID: ");
+			for(int i = 0; i < peopleId.size(); i++){
+				if(i > 0){
+					toString.append("AND ");
+				}
+				toString.append(peopleId.get(i));
+				toString.append(' ');
+			}
+		}
 		return toString.toString();
 	}
 
@@ -1338,6 +1395,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		return namesTypes;
 	}
 
+	/**
+	 * @return the peopleId
+	 */
+	public List<String> getPeopleId() {
+		return peopleId;
+	}
 	/**
 	 * @return the place
 	 */
@@ -1485,6 +1548,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		this.namesTypes = namesTypes;
 	}
 
+	/**
+	 * @param peopleId the peopleId to set
+	 */
+	public void setPeopleId(List<String> peopleId) {
+		this.peopleId = peopleId;
+	}
 	/**
 	 * @param place the place to set
 	 */

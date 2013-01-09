@@ -44,6 +44,16 @@
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
 		</div>
+		<c:if test="${(not empty searchFilter.filterData.placesId) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<div id="placeIdSearchDiv">
+		<c:forEach items="${searchFilter.filterData.placesId}" varStatus="iterator">
+			<div class="searchFilterDiv">
+				<span class="catogorySearch">Place ID:</span><span class="wordSearch">${searchFilter.filterData.placesId[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<input type="hidden" value="${searchFilter.filterData.placesId[iterator.index]}" name="placeId">
+			</div>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+		</c:forEach>	
+		</div>
 		<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 		<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">

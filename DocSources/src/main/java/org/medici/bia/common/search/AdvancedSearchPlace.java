@@ -64,6 +64,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 
 	private List<String> linkedToPeople;
 	private Boolean logicalDelete;
+	private List<String> placesId;
 	private List<String> placesName;
 	private List<String> placeType;
 	private List<Date> datesLastUpdate;
@@ -81,6 +82,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	public AdvancedSearchPlace() {
 		super();
 		
+		placesId = new ArrayList<String>(0);
 		placesName = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
@@ -189,6 +191,23 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			datesCreatedBetween = new ArrayList<Date>(0);
 		}
 		
+		//PlaceAllId
+		if((command.getPlaceId() != null) && (command.getPlaceId().size() > 0)){
+			placesId = new ArrayList<String>(command.getPlaceId().size());
+			
+			for(String singleWord : command.getPlaceId()){
+				try{
+					placesId.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (NumberFormatException numberFormatException) {
+					logger.debug(numberFormatException);
+				} catch (URIException uriException) {
+					logger.debug(uriException);
+				}
+			}
+		}else{
+			placesId = new ArrayList<String>(0);
+		}
+		
 		//LogicalDelete
 		if(command.getLogicalDelete() != null){
 			if(command.getLogicalDelete().equals("true")){
@@ -218,7 +237,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				(placesName.size()>0) ||
 				(placeType.size()>0) ||
 				(datesLastUpdateTypes.size()>0) ||
-				(linkedToPeople.size()>0)) {
+				(linkedToPeople.size()>0) ||
+				(placesId.size()>0)) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
@@ -239,6 +259,12 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		return logicalDelete;
 	}
 
+	/**
+	 * @return the placesId
+	 */
+	public List<String> getPlacesId() {
+		return placesId;
+	}
 	/**
 	 * @return the placesName
 	 */
@@ -351,6 +377,12 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		this.logicalDelete = logicalDelete;
 	}
 
+	/**
+	 * @param placesId the placesId to set
+	 */
+	public void setPlacesId(List<String> placesId) {
+		this.placesId = placesId;
+	}
 	/**
 	 * @param placesName the placesName to set
 	 */
@@ -563,6 +595,30 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				jpaQuery.append(datesLastUpdateQuery);
 			}
 		}
+		
+		//PlaceAllId
+		if(placesId.size() > 0){
+			StringBuilder placesIdQuery = new StringBuilder("(");
+			for(int i = 0; i < placesId.size(); i++){
+				if(StringUtils.isNumeric(placesId.get(i))){
+					if(placesIdQuery.length() > 1){
+						placesIdQuery.append(" OR ");
+					}
+					placesIdQuery.append("(placeAllId=");
+					placesIdQuery.append(placesId.get(i));
+					placesIdQuery.append(")");
+				}else{
+					continue;
+				}
+			}
+			placesIdQuery.append(")");
+			if(!placesIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(placesIdQuery);
+			}
+		}
 
 		//LogicalDelete
 		if(!ObjectUtils.toString(logicalDelete).equals("")){
@@ -720,6 +776,20 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				}
 				stringBuilder.append(linkedToPeople.get(i));
 				stringBuilder.append(" ");
+			}
+		}
+		
+		if(!placesId.isEmpty()){
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append("Place ID: ");
+			for(int i = 0; i < placesId.size(); i++){
+				if(i > 0){
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(placesId.get(i));
+				stringBuilder.append(' ');
 			}
 		}
 		

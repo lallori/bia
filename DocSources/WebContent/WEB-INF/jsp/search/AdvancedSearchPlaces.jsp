@@ -81,6 +81,24 @@
 				        </div> 
 					</div>
 					
+					<h1 id="placeIdSearch"><a>Place ID</a></h1>
+					<div>
+						<div class="listAdvSearch">
+							<form id="placeIdSearchForm" method="post" class="edit">
+								<div class="row">
+									<div class="col_l">
+										<a class="helpIcon" title="<fmt:message key="advsearch.places.placeid"></fmt:message>">?</a>
+										<input id="placeId" name="placeId" class="input_7c" type="text" maxlength="5" />
+									</div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="hidden" id="category" value="Place Id">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					<h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
 					<div>
@@ -110,7 +128,8 @@
 		$j('#placeNameSearchForm').advancedSearchForm();
 		$j('#placeTypeSearchForm').advancedSearchForm();
 		$j('#linkedToTopicsSearchForm').advancedSearchForm();
-		$j('#linkedToPeopleSearchForm').advancedSearchForm(); 
+		$j('#linkedToPeopleSearchForm').advancedSearchForm();
+		$j("#placeIdSearchForm").advancedSearchForm();
 		$j('#logicalDeleteSearchForm').advancedSearchForm();
 		
 		$j('#accordion').accordion({
@@ -148,6 +167,11 @@
 		$j('#linkedPeopleH1').click(function(){
 			$j.scrollTo({top:'168px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "125px"}, "slow");
+			return false;
+		});
+		$j('#placeIdSearch').click(function(){
+			$j.scrollTo({top:'195px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "150px"}, "slow");
 			return false;
 		});
 	});

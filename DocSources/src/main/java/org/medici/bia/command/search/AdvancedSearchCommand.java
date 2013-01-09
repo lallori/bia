@@ -70,6 +70,7 @@ public class AdvancedSearchCommand {
 	private List<String> placeType;
 	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
+	private List<String> placeId;
 	private String searchUUID;
 	
 	private String digitized;
@@ -81,6 +82,7 @@ public class AdvancedSearchCommand {
 	private List<String> inventario;
 	private String cipher;
 	private String index;
+	private List<String> volumeId;
 	
 	private List<String> nameParts;
 	private List<String> roleCategory;
@@ -88,6 +90,7 @@ public class AdvancedSearchCommand {
 	private List<String> occupation;
 	private List<String> researchNotes;
 	private List<String> gender;
+	private List<String> personId;
 
 	private String logicalDelete;
 	
@@ -516,6 +519,20 @@ public class AdvancedSearchCommand {
 	}
 
 	/**
+	 * @return the placeId
+	 */
+	public List<String> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<String> placeId) {
+		this.placeId = placeId;
+	}
+
+	/**
 	 * @param digitized the digitized to set
 	 */
 	public void setDigitized(String digitized) {
@@ -642,6 +659,20 @@ public class AdvancedSearchCommand {
 	}
 
 	/**
+	 * @return the volumeId
+	 */
+	public List<String> getVolumeId() {
+		return volumeId;
+	}
+
+	/**
+	 * @param volumeId the volumeId to set
+	 */
+	public void setVolumeId(List<String> volumeId) {
+		this.volumeId = volumeId;
+	}
+
+	/**
 	 * @param namePerson the namePerson to set
 	 */
 	public void setNameParts(List<String> nameParts) {
@@ -681,6 +712,20 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getOccupationWord() {
 		return occupationWord;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public List<String> getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(List<String> personId) {
+		this.personId = personId;
 	}
 
 	/**

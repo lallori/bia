@@ -75,7 +75,7 @@ public class SaveUserSearchFilterCommand {
 	private List<Integer> datesYearBetween;
 	private List<String> names;
 	private List<NameType> namesTypes;
-	private List<Integer> placeId;
+	private List<String> placeId;
 	private List<String> roleCategory;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
@@ -94,6 +94,8 @@ public class SaveUserSearchFilterCommand {
 	private List<String> occupation;
 	private List<String> researchNotes;
 	private List<String> gender;
+	private List<String> personId;
+	private List<String> volumeId;
 
 	private Boolean logicalDelete;
 
@@ -478,14 +480,14 @@ public class SaveUserSearchFilterCommand {
 	/**
 	 * @return the placeId
 	 */
-	public List<Integer> getPlaceId() {
+	public List<String> getPlaceId() {
 		return placeId;
 	}
 
 	/**
 	 * @param placeId the placeId to set
 	 */
-	public void setPlaceId(List<Integer> placeId) {
+	public void setPlaceId(List<String> placeId) {
 		this.placeId = placeId;
 	}
 
@@ -865,6 +867,34 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public List<String> getDocId() {
 		return docId;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public List<String> getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(List<String> personId) {
+		this.personId = personId;
+	}
+
+	/**
+	 * @return the volumeId
+	 */
+	public List<String> getVolumeId() {
+		return volumeId;
+	}
+
+	/**
+	 * @param volumeId the volumeId to set
+	 */
+	public void setVolumeId(List<String> volumeId) {
+		this.volumeId = volumeId;
 	}
 
 	/**

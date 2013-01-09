@@ -131,7 +131,17 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.volumesId) &&  ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="volumeIdSearchDiv">
+			<c:forEach items="${searchFilter.filterData.volumesId}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="catogorySearch">Volume ID:</span><span class="wordSearch">${searchFilter.filterData.volumesId[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.volumesId[iterator.index]}" name="volumeId">
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>	
+			</div>
+			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario) || (not empty searchFilter.filterData.volumesId))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">
