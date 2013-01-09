@@ -4,6 +4,8 @@
 <tiles-definitions>
     
 	<definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp"/>
+	
+	<definition name="template.expandResultsSearch" template="/WEB-INF/templates/expandResultsSearch.jsp"/>
 
 	<definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
 
@@ -145,6 +147,18 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPassword.jsp"/>
     </definition>
 
+    <definition name="user/ChangeExpiratedUserPasswordSuccess" extends="template.registerDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ChangeExpiratedUserPasswordSuccess.jsp"/>
+    </definition>
+    
+    <definition name="response/DeletePortraitUserOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitUserOK.jsp"/>
+	</definition>
+
+	<definition name="response/DeletePortraitUserKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePortraitUserKO.jsp"/>
+	</definition>
+    
     <definition name="user/EditPasswordUser" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/EditPasswordUser.jsp"/>
     </definition>
@@ -180,6 +194,14 @@
 	<definition name="user/SendUserPasswordResetSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
 	</definition>
+	
+	<definition name="user/ShowUploadPortraitUserModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/ShowUploadPortraitUserModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="user/WelcomeNewUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/WelcomeNewUser.jsp" />
+	</definition>
     <!-- Authentication Module END -->
     
 	<!-- Administrator Module BEGIN -->
@@ -211,6 +233,22 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserControl.jsp"/>
 	</definition>
 	
+	<definition name="admin/EditUserEmail" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditUserEmail.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowAccessLogSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearch.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowAccessLogSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearch.jsp"/>
+	</definition>
+
+	<definition name="admin/ShowAccessLogSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAccessLogSearchResult.jsp"/>
+	</definition>
+
 	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAdministrationModuleModalWindow.jsp" />
 	</definition>	
@@ -224,36 +262,46 @@
  		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
  		<put-attribute name="user" value="/WEB-INF/jsp/adm/ShowUserProperties.jsp"/>
 	</definition>
+	
+	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">
+ 		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailProperties.jsp"/>
+	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
 	</definition>
-	
-	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">
- 		<put-attribute name="email" value="/WEB-INF/jsp/admin/ShowEmailProperties.jsp"/>
-	</definition>
+
 	<definition name="admin/ShowRecaptchaProperties" extends="template.partialDOM">
-		<put-attribute name="recaptcha" value="/WEB-INF/jsp/admin/ShowRecaptchaProperties.jsp"/>
+		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
 	</definition>
+
 	<definition name="admin/ShowIIPImageProperties" extends="template.partialDOM">
- 		<put-attribute name="iip" value="/WEB-INF/jsp/admin/ShowIIPImageProperties.jsp"/>
+ 		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
 	</definition>
 	
+	<definition name="admin/ShowMemoryUsage" extends="template.partialDOM">
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowMemoryUsage.jsp"/>
+	</definition>
+
 	<definition name="admin/ShowSchedoneProperties" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
 	
 	<definition name="admin/ShowUser" extends="template.user">
 		<put-attribute name="control" value="/WEB-INF/jsp/adm/ShowUserControl.jsp"/>
-		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailControl.jsp" />		
+		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowUserEmail.jsp" />		
 	</definition>
 	
 	<definition name="admin/ShowUserManagementModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
 	</definition>
 	
-	<definition name="admin/UserSearch" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/adm/UserSearch.jsp"/>
+	<definition name="admin/ShowWhoIsOnline" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowWhoIsOnline.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowUserSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserSearch.jsp"/>
 	</definition>
 	
 	<definition name="admin/UserSearchResult" extends="template.partialDOM">
@@ -267,6 +315,10 @@
 	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
     </definition>
+    
+    <definition name="user/CropPortraitUserModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/CropPortraitUserModalWindow.jsp"/>
+	</definition>
 
     <definition name="user/EditPersonalNotesUser" extends="template.partialDOM">
     	<put-attribute name="main" value="/WEB-INF/jsp/user/EditPersonalNotesUser.jsp"></put-attribute>
@@ -391,7 +443,7 @@
 	</definition>
 
 	<definition name="community/SearchResultForumPost" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/SearchResultForumPost.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/community/TextSearchResultForumPost.jsp"/>
 	</definition>
 
 	<definition name="community/ShowForum" extends="template.partialDOM">
@@ -415,6 +467,10 @@
 	</definition>
 
 	<definition name="community/ShowUserProfileForum" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
+	</definition>
+	
+	<definition name="community/ShowUserProfileForumCompleteDOM" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowUserProfileForum.jsp"/>
 	</definition>
 
@@ -504,6 +560,10 @@
 	
 	<definition name="docbase/EditFactCheckDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/EditPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditPeopleDocument.jsp"/>
 	</definition>
 	
 	<definition name="docbase/EditPersonDocument" extends="template.partialDOM">
@@ -1011,6 +1071,10 @@
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
 	</definition>
+	
+	<definition name="search/ExpandSimpleSearchResult" extends="template.expandResultsSearch">
+		<put-attribute name="expandResultsSearch" value="/WEB-INF/jsp/search/ExpandSimpleSearchResult.jsp"/>	
+	</definition>
 
 	<definition name="search/SaveUserSearchFilterModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/SaveUserSearchFilterModalWindow.jsp"/>	
@@ -1203,6 +1267,14 @@
 
 	<definition name="response/MarkeListKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListKO.jsp"/>
+	</definition>
+	
+	<definition name="response/MarkedListRemoveOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListRemoveOK.jsp"/>
+	</definition>
+
+	<definition name="response/MarkeListRemoveKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/MarkedListRemoveKO.jsp"/>
 	</definition>
 
 	<definition name="response/UndeleteDocumentOK" extends="template.partialDOM">

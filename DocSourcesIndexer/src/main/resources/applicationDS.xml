@@ -10,9 +10,9 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/docsources?autoReconnect=true" />
-        <property name="user" value="docsources" />
-        <property name="password" value="docsources" />
+        <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/bia?autoReconnect=true" />
+        <property name="user" value="bia"/>
+        <property name="password" value="Aim9Sdw"/>
         <property name="initialPoolSize" value="15" />
         <property name="minPoolSize" value="10" />
         <property name="maxPoolSize" value="30" />
@@ -48,11 +48,6 @@
                 <prop key="hibernate.cache.use_query_cache">true</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.generate_statistics">true</prop>
-                <!-- <prop key="hibernate.search.default.exclusive_index_use">true</prop> 
-				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
-				<prop key="org.hibernate.search.store.LockFactoryFactor">"single</prop>
-				<prop key="hibernate.search.default.indexBase">/data/indexes</prop>--> 
-                
             </props>
         </property>
 	</bean>

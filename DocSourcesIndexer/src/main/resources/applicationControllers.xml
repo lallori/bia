@@ -14,69 +14,25 @@
 	<mvc:annotation-driven/>
 	
 	<mvc:interceptors>
+		<!-- DATABASE SESSION INJECTION BEGIN -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean id ="openEntityManagerInViewInterceptor" name="openEntityManagerInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+
+			<bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
 				<property name="entityManagerFactory" ref="entityManagerFactory" />
 			</bean>
 		</mvc:interceptor>
 
-		<mvc:interceptor>
-			<mvc:mapping path="/Home**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-			
-		<mvc:interceptor>
-			<mvc:mapping path="/LoginUser**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-			
-		<mvc:interceptor>
-			<mvc:mapping path="/digitization/**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
+		<!-- DATABASE SESSION INJECTION END -->
 
 		<mvc:interceptor>
-			<mvc:mapping path="/community/**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-		
-		<mvc:interceptor>
-			<mvc:mapping path="/de/**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-					
-		<mvc:interceptor>
-			<mvc:mapping path="/src/**"/>
+			<mvc:mapping path="/**"/>
 	       	<bean class="org.medici.bia.audit.AccessLogAction">
 				<description>Access Log Module.</description>
 				<property name="logService" ref="logService" />
 	       	</bean>
 		</mvc:interceptor>
 			
-		<mvc:interceptor>
-			<mvc:mapping path="/user/**"/>
-	       	<bean class="org.medici.bia.audit.AccessLogAction">
-				<description>Access Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-
 	    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 	        <description>Interceptor to change locale on single request.</description>
 	        <property name="paramName" value="locale"/>
