@@ -8,6 +8,7 @@
 	<c:url var="ShowUserSearchResultURL" value="/admin/WhoIsOnline.json">
 	</c:url>
 
+	<a href="#" class="button_medium expand" id="refreshWhoIsOnline" style="float:right;">Refresh</a>
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="whoIsOnlineTable">
 		<thead>
 			<tr></tr>
@@ -26,7 +27,7 @@
 			//dynamic field management
 			$j("#whoIsOnlineTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#whoIsOnlineTable').dataTable( {
+			var $whoIsOnlineTable = $j('#whoIsOnlineTable').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
@@ -66,8 +67,8 @@
 				}
 			});
 			
-			$j("#whoIsOnline_length").css('margin', '0 0 0 0');
-			$j("#whoIsOnline_filter").remove();
+// 			$j("#whoIsOnlineTable_length").css('margin', '0 0 0 0');
+			$j("#whoIsOnlineTable_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();
@@ -75,6 +76,11 @@
 			
 			$j(".searchResult").live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j("#refreshWhoIsOnline").click(function(){
+				$whoIsOnlineTable.fnDraw();
 				return false;
 			});
 

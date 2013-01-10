@@ -54,9 +54,7 @@
 			return false;
 		});
 		$j("#whoIsOnline").click(function(){
-			var tabN = $j(this).text();
-			tabName = 'Who is Online' 
-			tabName += tabN;
+			var tabName = 'Who is Online' 
 			var numTab = 0;
 			
 			if(tabName.length > 20){
@@ -79,10 +77,8 @@
 			if(!tabExist){
 				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-				return false;
 			}else{
 				$j("#tabs").tabs("select", numTab);
-				return false;
 			}
 
 			Modalbox.hide();

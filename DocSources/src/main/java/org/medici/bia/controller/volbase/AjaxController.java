@@ -131,7 +131,10 @@ public class AjaxController {
 					model.put("isDeletable", Boolean.TRUE.toString());
 				}
 				model.put("summaryId", summaryId.toString());
-				model.put("volNum", volume.getVolNum().toString());
+				if(volume.getVolNum() != null)
+					model.put("volNum", volume.getVolNum().toString());
+				else
+					model.put("volNum", "");
 				model.put("volLetExt", ObjectUtils.toString(volume.getVolLetExt()));
 			} else {
 				model.put("isDeletable", Boolean.FALSE.toString());

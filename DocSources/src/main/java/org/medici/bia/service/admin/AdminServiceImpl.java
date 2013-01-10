@@ -811,7 +811,7 @@ public class AdminServiceImpl implements AdminService {
 						userMessage.setParentMessage(null);
 						userMessage.setReadedDate(null);
 						userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
-						userMessage.setSendedDate(null);
+						userMessage.setSendedDate(new Date());
 						userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.approvationUser.subject",
 												new String[]{
 												currentApprovationUser.getUser().getAccount()},"{", "}"));
