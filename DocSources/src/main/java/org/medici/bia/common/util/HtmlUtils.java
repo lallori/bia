@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
@@ -488,6 +489,75 @@ public class HtmlUtils {
 		}
 		
 		return stringBuilder.toString();
+	}
+	
+	/**
+	 * 
+	 * @param text
+	 * @param searchWord
+	 * @return
+	 */
+	public static String highlightText(String text, String searchWord){
+		StringBuffer returnText = new StringBuffer(text);
+		Integer indexWord = new Integer(0);
+		List<String> exactWords = new ArrayList<String>();
+		String toSearch = searchWord;
+		//MD: This code is to identify the words between double quotes
+		while(toSearch.contains("\"")){
+			//First double quote
+			int from = toSearch.indexOf('\"');
+			//Second double quote
+			int to = toSearch.indexOf('\"', from + 1);
+			//If there is the second double quote or not
+			if(to != -1){
+				//Add the exact words to the list and remove them from the string
+				exactWords.add(toSearch.substring(from + 1, to));
+				toSearch = toSearch.substring(0, from) + toSearch.substring(to + 1, toSearch.length());
+			}else{
+				toSearch = toSearch.replace("\"", " ");
+			}
+		}
+		String [] words = RegExUtils.splitPunctuationAndSpaceChars(searchWord);
+		if(exactWords.size() == 0){
+			for(String currentWord : words){
+				indexWord = returnText.toString().indexOf(currentWord);
+				while(indexWord != -1){
+					while(indexWord >= 0 && returnText.charAt(indexWord) != ' '){
+						indexWord--;
+					}
+					Integer beginWord = indexWord + 1; 
+					returnText.insert(beginWord, "<span class='highlighted'>");
+					Integer endWord = beginWord + 26;
+					while(endWord < returnText.length() && returnText.charAt(endWord) != ' '){
+						endWord++;
+					}
+					returnText.insert(endWord, "</span>");
+					Integer nextWord = returnText.substring(endWord).indexOf(currentWord);
+					if(nextWord != -1){
+						indexWord = endWord + nextWord;
+					}else{
+						indexWord = nextWord;
+					}
+				}
+			}
+		}else{
+			for(String currentWord : exactWords){
+				indexWord = returnText.toString().indexOf(currentWord);
+				while(indexWord != -1){
+					Integer beginWord = indexWord; 
+					returnText.insert(beginWord, "<span class='highlighted'>");
+					Integer endWord = beginWord + 26 + currentWord.length();					
+					returnText.insert(endWord, "</span>");
+					Integer nextWord = returnText.substring(endWord).indexOf(currentWord);
+					if(nextWord != -1){
+						indexWord = endWord + nextWord;
+					}else{
+						indexWord = nextWord;
+					}
+				}
+			}
+		}
+		return returnText.toString();
 	}
 
 	/**

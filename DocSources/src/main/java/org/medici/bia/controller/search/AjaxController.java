@@ -578,12 +578,14 @@ public class AjaxController {
 				singleRow.add("");
 			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
 				if(currentDocument.getSynExtract().getDocExtract() != null){
-					singleRow.add(DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), alias));
+					String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), alias);
+					singleRow.add(HtmlUtils.highlightText(text, alias));
 				}else
 					singleRow.add("");
 			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
 				if(currentDocument.getSynExtract().getSynopsis() != null){
-					singleRow.add(DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getSynopsis(), alias));
+					String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getSynopsis(), alias);
+					singleRow.add(HtmlUtils.highlightText(text, alias));
 				}else
 					singleRow.add("");
 			}else

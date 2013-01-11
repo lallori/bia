@@ -27,6 +27,9 @@
  */
 package org.medici.bia.common.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -81,7 +84,8 @@ public class DocumentUtils {
 			return textDocument;
 		}else{
 			//MD: This is to remove html tags
-			String postText = textDocument;			
+			String postText = textDocument;
+			
 			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 			StringBuffer returnText = new StringBuffer(0);
 			//For every word we find where is positioned inside the post

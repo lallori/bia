@@ -100,16 +100,16 @@
 					var test = [];
 					test = $j('#textSearch').val().split(" ");
 					
-					$j(".textDoc").each(function(){
-						var newText = $j(this).text().split(" ").join("</span> <span class='toRemove'>");
-					  	newText = "<span class='toRemove'>" + newText + "</span>";
-					  	for(var i = 0; i < test.length; i++){
-					  		$j(this).html(newText).find('span').end().find(":containsIgnoreCase('" + test[i] + "')").wrap("<span class='highlighted' />");
-					  		newText = $j(this).html();
-					  	}
-						$j(".toRemove").contents().unwrap();
+// 					$j(".textDoc").each(function(){
+// 						var newText = $j(this).text().split(" ").join("</span> <span class='toRemove'>");
+// 					  	newText = "<span class='toRemove'>" + newText + "</span>";
+// 					  	for(var i = 0; i < test.length; i++){
+// 					  		$j(this).html(newText).find('span').end().find(":containsIgnoreCase('" + test[i] + "')").wrap("<span class='highlighted' />");
+// 					  		newText = $j(this).html();
+// 					  	}
+// 						$j(".toRemove").contents().unwrap();
 
-					});
+// 					});
 				}
 			});
 			
