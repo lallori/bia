@@ -29,7 +29,11 @@ package org.medici.bia.dao.vettinghistory;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.Document;
+import org.medici.bia.domain.Place;
 import org.medici.bia.domain.VettingHistory;
 
 /**
@@ -40,6 +44,22 @@ import org.medici.bia.domain.VettingHistory;
  */
 public interface VettingHistoryDAO extends Dao<Integer, VettingHistory> {
 
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page getVettingHistoryDocument(Document document, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page getVettingHistoryPlace(Place place, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param originalAccount

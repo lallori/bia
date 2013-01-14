@@ -568,6 +568,15 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param entryId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchVettingHistoryDocument(Integer entryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method mark a {@link org.medici.bia.domain.Document} as available.

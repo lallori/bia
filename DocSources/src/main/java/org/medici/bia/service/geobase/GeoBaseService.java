@@ -492,6 +492,15 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchVettingHistoryPlace(Integer placeAllId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

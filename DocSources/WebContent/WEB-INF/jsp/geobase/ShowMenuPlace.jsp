@@ -25,7 +25,7 @@
 	<c:url var="ShowMenuCommentsPlaceURL" value="/src/geobase/ShowMenuCommentsPlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
-	<c:url var="ShowVettingChronologyPlaceURL" value="/de/peoplebase/ShowVettingChronologyPlace.do">
+	<c:url var="ShowVettingChronologyPlaceURL" value="/de/geobase/ShowVettingChronologyPlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
 	<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
@@ -60,7 +60,7 @@
 		</security:authorize>
 		<c:if test="${place.placeAllId != 0}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-<%-- 			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a> --%>
+				<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 			</security:authorize>
 			<span id="commentsOn"></span>
 			<a id="comments" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>

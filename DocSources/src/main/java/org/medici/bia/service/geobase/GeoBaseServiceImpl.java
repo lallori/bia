@@ -54,6 +54,7 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
+import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Place;
@@ -66,6 +67,7 @@ import org.medici.bia.domain.UserMarkedList;
 import org.medici.bia.domain.UserMarkedListElement;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +116,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private UserMarkedListDAO userMarkedListDAO;
 	@Autowired
 	private UserMarkedListElementDAO userMarkedListElementDAO;
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -158,6 +162,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new place", Action.CREATE, Category.PLACE, place));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Create place", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -182,6 +187,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add external link", Action.MODIFY, Category.PLACE, placeExternalLinks.getPlace()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add external link", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, placeExternalLinks.getPlace()));
 
 			return placeExternalLinks.getPlace();
 		}catch(Throwable th){
@@ -226,6 +232,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
 
 			return forum;
@@ -260,6 +267,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add geographic coordinates", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
 
 			return placeGeographicCoordinatesToPersist.getPlace();
 		}catch(Throwable th){
@@ -278,6 +286,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Compare place", Action.COMPARE, Category.PLACE, place));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Compare place", org.medici.bia.domain.VettingHistory.Action.COMPARE, org.medici.bia.domain.VettingHistory.Category.PLACE, place));
 
 			return place;
 		} catch (Throwable th) {
@@ -306,6 +315,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Deleted place", Action.DELETE, Category.PLACE, placeToDelete));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Deleted place", org.medici.bia.domain.VettingHistory.Action.DELETE, org.medici.bia.domain.VettingHistory.Category.PLACE, placeToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -328,6 +338,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete external link ", Action.MODIFY, Category.PLACE, placeExternalLinksToDelete.getPlace()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Delete external link", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, placeExternalLinksToDelete.getPlace()));
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -381,6 +392,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details ", Action.MODIFY, Category.PLACE, placeToUpdate));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, placeToUpdate));
 
 			return placeToUpdate;
 		}catch(Throwable th){
@@ -407,6 +419,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit external links", Action.MODIFY, Category.PLACE, place));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit external links", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -439,6 +452,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit geographic coordinates", Action.MODIFY, Category.PLACE, place));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit geographic coordinates", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, place));
 
 			return place;
 		}catch(Throwable th){
@@ -959,6 +973,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1146,6 +1167,19 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVettingHistoryPlace(Integer placeAllId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			Place place = getPlaceDAO().find(placeAllId);
+			return getVettingHistoryDAO().getVettingHistoryPlace(place, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @param documentDAO the documentDAO to set
@@ -1242,6 +1276,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public void setUserMarkedListElementDAO(
 			UserMarkedListElementDAO userMarkedListElementDAO) {
 		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
 	}
 
 	/**

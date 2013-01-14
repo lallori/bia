@@ -27,14 +27,22 @@
  */
 package org.medici.bia.dao.vettinghistory;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter.Order;
+import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
+import org.medici.bia.domain.Document;
+import org.medici.bia.domain.Place;
 import org.medici.bia.domain.VettingHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -78,6 +86,25 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 	private PlaceDAO placeDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		switch (paginationFilter.getSortingColumn()) {
+			case 0:
+				paginationFilter.addSortingCriteria("dateAndTime", paginationFilter.getSortingDirection());
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("action", paginationFilter.getSortingDirection());
+				break;
+			case 2:
+				paginationFilter.addSortingCriteria("user.account", paginationFilter.getSortingDirection());
+				break;
+			default:
+				paginationFilter.addSortingCriteria("dateAndTime", paginationFilter.getSortingDirection());
+				break;
+		}
+
+		return paginationFilter;
+	}
 
 	/**
 	 * @return the documentDAO
@@ -98,6 +125,86 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 	 */
 	public PlaceDAO getPlaceDAO() {
 		return placeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getVettingHistoryDocument(Document document, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM VettingHistory WHERE document.entryId=" + document.getEntryId());
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getVettingHistoryPlace(Place place, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM VettingHistory WHERE place.placeAllId=" + place.getPlaceAllId());
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 
 	/**

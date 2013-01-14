@@ -28,6 +28,7 @@
 package org.medici.bia.controller.geobase;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.geobase.GeoBaseService;
@@ -901,6 +903,44 @@ public class AjaxController {
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", result.size());
 		model.put("iTotalRecords", result.size());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/src/geobase/ShowVettingHistoryPlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowVettingHistoryDocument(@RequestParam(value="placeAllId") Integer placeAllId,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		
+		try{
+			page = getGeoBaseService().searchVettingHistoryPlace(placeAllId, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (VettingHistory currentVettingHistory : (List<VettingHistory>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(simpleDateFormat.format(currentVettingHistory.getDateAndTime()));
+			singleRow.add(currentVettingHistory.getAction().toString());
+			singleRow.add(currentVettingHistory.getUser().getAccount());
+			
+			
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 
 		return new ModelAndView("responseOK", model);

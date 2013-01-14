@@ -28,7 +28,15 @@
  */
 package org.medici.bia.controller.geobase;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.medici.bia.command.geobase.ShowVettingChronologyPlaceCommand;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Chronology Vetting on Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/geobase/ShowVettingChronologyPlace")
@@ -47,8 +56,12 @@ public class ShowVettingChronologyPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(){
-		return new ModelAndView("geobase/ShowVettingChronologyPlace");
+	public ModelAndView setupPage(@ModelAttribute("command") ShowVettingChronologyPlaceCommand command, BindingResult result, HttpSession session){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		model.put("placeAllId", command.getPlaceAllId());
+		
+		return new ModelAndView("geobase/ShowVettingChronologyPlaceModalWindow", model);
 	}
 
 }

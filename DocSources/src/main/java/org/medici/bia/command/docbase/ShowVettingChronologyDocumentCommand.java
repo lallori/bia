@@ -1,7 +1,7 @@
 /*
- * ShowVettingChronologyDocumentController.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowVettingChronologyDocumentCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -24,43 +24,29 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
- * 
  */
-package org.medici.bia.controller.docbase;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
-import org.medici.bia.command.docbase.ShowVettingChronologyDocumentCommand;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+package org.medici.bia.command.docbase;
 
 /**
- * Controller for action "Show Chronology Vetting on Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ *
  */
-@Controller
-@RequestMapping("/de/docbase/ShowVettingChronologyDocument")
-public class ShowVettingChronologyDocumentController {
+public class ShowVettingChronologyDocumentCommand {
+	private Integer entryId;
+
 	/**
-	 * 
-	 * @param volumeId
-	 * @return
+	 * @param entryId the entryId to set
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(@ModelAttribute("command") ShowVettingChronologyDocumentCommand command, BindingResult result, HttpSession session){
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		model.put("entryId", command.getEntryId());
-		return new ModelAndView("docbase/ShowVettingChronologyDocumentModalWindow", model);
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
 	}
 
+	/**
+	 * @return the entryId
+	 */
+	public Integer getEntryId() {
+		return entryId;
+	}
 }

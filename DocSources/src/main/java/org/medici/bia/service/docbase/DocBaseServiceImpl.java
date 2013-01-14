@@ -1580,6 +1580,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVettingHistoryDocument(Integer entryId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			Document document = getDocumentDAO().find(entryId);
+			return getVettingHistoryDAO().getVettingHistoryDocument(document, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @param documentDAO the documentDAO to set
