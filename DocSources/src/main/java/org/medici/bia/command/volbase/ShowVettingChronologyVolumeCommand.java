@@ -1,7 +1,7 @@
 /*
- * ShowVettingChronologyVolumeController.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowVettingChronologyVolumeCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -24,44 +24,33 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
- * 
  */
-package org.medici.bia.controller.volbase;
+package org.medici.bia.command.volbase;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
-import org.medici.bia.command.volbase.ShowVettingChronologyVolumeCommand;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import javax.validation.constraints.NotNull;
 
 /**
- * Controller for action "Show Chronology Vetting on Volume".
+ * Command bean for action "Show Vetting Chronology Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * 
  */
-@Controller
-@RequestMapping("/de/volbase/ShowVettingChronologyVolume")
-public class ShowVettingChronologyVolumeController {
+public class ShowVettingChronologyVolumeCommand {
+	@NotNull
+	private Integer summaryId;
+	
 	/**
-	 * 
-	 * @param volumeId
-	 * @return
+	 * @return the summaryId
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(@ModelAttribute("command") ShowVettingChronologyVolumeCommand command, BindingResult result, HttpSession session){
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		model.put("summaryId", command.getSummaryId());
-		
-		return new ModelAndView("volbase/ShowVettingChronologyVolumeModalWindow", model);
+	public Integer getSummaryId() {
+		return summaryId;
 	}
-
+	
+	/**
+	 * @param summaryId the summaryId to set
+	 */
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
 }

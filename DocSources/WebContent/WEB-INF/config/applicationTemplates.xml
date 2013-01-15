@@ -405,6 +405,10 @@
 	<definition name="community/EditForumPost" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
 	</definition>
+	
+	<definition name="community/EmailMessage" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/EmailMessage.jsp"/>
+	</definition>
 
 	<definition name="community/ShowMembersForum" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMembersForum.jsp"/>
@@ -1169,6 +1173,10 @@
 
 	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="volbase/ShowVettingChronologyVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowVettingChronologyVolumeModalWindow.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">

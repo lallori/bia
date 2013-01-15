@@ -1039,6 +1039,16 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	@Override
+	public Page searchVettingHistoryVolume(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			Volume volume = getVolumeDAO().find(summaryId);
+			return getVettingHistoryDAO().getVettingHistoryVolume(volume, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 
 	/**

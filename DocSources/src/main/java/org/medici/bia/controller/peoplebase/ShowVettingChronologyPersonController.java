@@ -28,7 +28,15 @@
  */
 package org.medici.bia.controller.peoplebase;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.medici.bia.command.peoplebase.ShowVettingChronologyPersonCommand;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,18 +45,26 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Chronology Vetting on Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/peoplebase/ShowVettingChronologyPerson")
 public class ShowVettingChronologyPersonController {
+	
 	/**
 	 * 
-	 * @param volumeId
+	 * @param command
+	 * @param result
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(){
-		return new ModelAndView("personbase/ShowVettingChronologyPerson");
+	public ModelAndView setupPage(@ModelAttribute("command")ShowVettingChronologyPersonCommand command, BindingResult result, HttpSession session){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		model.put("personId", command.getPersonId());
+		
+		return new ModelAndView("peoplebase/ShowVettingChronologyPersonModalWindow", model);
 	}
 
 }

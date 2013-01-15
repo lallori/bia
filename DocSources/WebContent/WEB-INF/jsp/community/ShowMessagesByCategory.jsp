@@ -23,6 +23,9 @@
 			<li><a href="${ShowMyInboxURL}">Inbox</a></li>
 			<li><a href="${ShowMyOutboxURL}">Outbox</a></li>
 			<li><a href="<c:url value="/community/ComposeMessage.do"/>">Compose message</a></li>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+				<li><a href="<c:url value="/community/EmailMessage.do"/>">Email message</a></li>
+			</security:authorize>
 		</ul>
 	</div>
 

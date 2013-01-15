@@ -639,6 +639,46 @@ public class UserServiceImpl implements UserService {
 					return initialChoiced;
 			}
 			
+			//In this case all the letters of the surname are busy
+			//We try to insert the first letter of the second name if it is present
+			if(name.contains(" ")){
+				String middleName = name.substring(name.indexOf(" "), name.length());
+				if(middleName.length() > 1 && middleName.charAt(1) != ' '){
+					User userToSearch = new User();
+					String initialChoiced = initialLetterOfName + middleName.charAt(1) + surname.charAt(0);
+					userToSearch.setInitials(initialChoiced);
+					if(getUserDAO().findUser(userToSearch) == null)
+						return initialChoiced;
+				}
+			}
+			//In this case we add another letter from the surname
+			for (int i=2; i<surname.length(); i++) {
+				String initialChoiced = initialLetterOfName + surname.charAt(0) + surname.substring(i-1, i);
+				User userToSearch = new User();
+				userToSearch.setInitials(initialChoiced);
+				if (getUserDAO().findUser(userToSearch) == null)
+					return initialChoiced;
+			}
+			
+			//In this case we add another letter from the surname
+			for (int i=3; i<surname.length(); i++) {
+				String initialChoiced = initialLetterOfName + surname.charAt(0) + surname.charAt(1) + surname.substring(i-1, i);
+				User userToSearch = new User();
+				userToSearch.setInitials(initialChoiced);
+				if (getUserDAO().findUser(userToSearch) == null)
+					return initialChoiced;
+			}
+			
+			//In this case we add another letter from the surname
+			for (int i=4; i<surname.length(); i++) {
+				String initialChoiced = initialLetterOfName + surname.charAt(0) + surname.charAt(1) + surname.charAt(2) + surname.substring(i-1, i);
+				User userToSearch = new User();
+				userToSearch.setInitials(initialChoiced);
+				if (getUserDAO().findUser(userToSearch) == null)
+					return initialChoiced;
+			}
+			
+			
 			// unreachable statement, we always find unused initial, but we need to insert this code beacuse the method must always return a value.
 			return null;
 		} catch (Throwable th) {

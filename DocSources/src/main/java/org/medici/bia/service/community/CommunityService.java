@@ -35,11 +35,13 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
+import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
@@ -86,6 +88,14 @@ public interface CommunityService {
 	 */
 	Long checkNewMessages() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param userRole
+	 * @param emailMessageUser
+	 * @throws ApplicationThrowable
+	 */
+	void createNewEmailMessageUserFromUserRole(List<String> userRole, EmailMessageUser emailMessageUser) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param userComment
@@ -178,6 +188,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	List<User> findUsersToBeNotified(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<UserAuthority> getAuthorities() throws ApplicationThrowable;
 
 	/**
 	 * 

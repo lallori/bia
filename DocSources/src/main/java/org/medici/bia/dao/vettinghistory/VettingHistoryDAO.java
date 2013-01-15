@@ -33,8 +33,10 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.VettingHistory;
+import org.medici.bia.domain.Volume;
 
 /**
  * VettingHistory Dao.
@@ -54,11 +56,29 @@ public interface VettingHistoryDAO extends Dao<Integer, VettingHistory> {
 	
 	/**
 	 * 
+	 * @param person
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page getVettingHistoryPerson(People person, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param place
 	 * @return
 	 * @throws PersistenceException
 	 */
 	Page getVettingHistoryPlace(Place place, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param volume
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page getVettingHistoryVolume(Volume volume, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 

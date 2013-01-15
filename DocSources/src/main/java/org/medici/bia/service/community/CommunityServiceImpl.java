@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.aspectj.weaver.NewMethodTypeMunger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AdvancedSearchAbstract;
@@ -47,6 +49,7 @@ import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.document.DocumentDAO;
+import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
@@ -56,10 +59,12 @@ import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.reportedforumpost.ReportedForumPostDAO;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
+import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumPostNotified;
@@ -67,6 +72,7 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.Forum.Type;
@@ -96,6 +102,9 @@ public class CommunityServiceImpl implements CommunityService {
 	private AnnotationDAO annotationDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
+	
+	@Autowired
+	private EmailMessageUserDAO emailMessageUserDAO;
 
 	@Autowired
 	private ForumDAO forumDAO;
@@ -126,6 +135,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
 
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;   
@@ -289,6 +301,41 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void createNewEmailMessageUserFromUserRole(List<String> userRole, EmailMessageUser emailMessageUser) throws ApplicationThrowable {
+		try{
+			List<UserAuthority> authorities = getUserAuthorityDAO().getAuthorities();
+			List<User> usersToSendMail = new ArrayList<User>();
+			for(UserAuthority currentAuthority : authorities){
+				String role = currentAuthority.getAuthority().getValue();
+				if(userRole.contains(role)){
+					List<User> users = getUserRoleDAO().findUsers(currentAuthority);
+					for(User currentUser : users){
+						if(!usersToSendMail.contains(currentUser)){
+							usersToSendMail.add(currentUser);
+						}
+					}
+				}
+			}
+			for(User currentUser : usersToSendMail){
+				EmailMessageUser newEmail = new EmailMessageUser();
+				newEmail.setSubject(emailMessageUser.getSubject());
+				newEmail.setBody(emailMessageUser.getBody());
+				newEmail.setUser(currentUser);
+				newEmail.setMailSended(false);
+				getEmailMessageUserDAO().persist(newEmail);						
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -585,6 +632,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<UserAuthority> getAuthorities() throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getAuthorities();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Forum getCategory(Forum category) throws ApplicationThrowable {
 		try {
 			return getForumDAO().getCategory(category);
@@ -647,6 +706,12 @@ public class CommunityServiceImpl implements CommunityService {
 		return documentDAO;
 	}
 
+	/**
+	 * @return the emailMessageUserDAO
+	 */
+	public EmailMessageUserDAO getEmailMessageUserDAO() {
+		return emailMessageUserDAO;
+	}
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -992,6 +1057,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @return the userAuthorityDAO
+	 */
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+	/**
 	 * @return the userHistoryDAO
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
@@ -1226,6 +1297,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @param emailMessageUserDAO the emailMessageUserDAO to set
+	 */
+	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
+		this.emailMessageUserDAO = emailMessageUserDAO;
+	}
+	/**
 	 * @param forumDAO the forumDAO to set
 	 */
 	public void setForumDAO(ForumDAO forumDAO) {
@@ -1284,6 +1361,12 @@ public class CommunityServiceImpl implements CommunityService {
 		this.userDAO = userDAO;
 	}
 
+	/**
+	 * @param userAuthorityDAO the userAuthorityDAO to set
+	 */
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
 	/**
 	 * @param userHistoryDAO the userHistoryDAO to set
 	 */

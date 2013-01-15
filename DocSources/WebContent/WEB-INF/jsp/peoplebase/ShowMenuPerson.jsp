@@ -58,7 +58,7 @@
 			</c:if>
 		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-<%-- 			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPersonURL}">Vetting History</a> --%>
+			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		</security:authorize>
 		<span id="commentsOn"></span>
 		<a id="comments" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>

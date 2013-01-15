@@ -371,6 +371,15 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchVettingHistoryVolume(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method searches for existing {@link org.medici.bia.domain.Volume}

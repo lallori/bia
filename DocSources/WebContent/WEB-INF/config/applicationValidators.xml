@@ -45,6 +45,10 @@
 	<bean id="editForumPostValidator" class="org.medici.bia.validator.community.EditForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>
+	
+	<bean id="emailMessageValidator" class="org.medici.bia.validator.community.EmailMessageValidator">
+		<description>Email Message Validator.</description>
+	</bean>
 
 	<bean id="replyForumPostValidator" class="org.medici.bia.validator.community.ReplyForumPostValidator">
 		<description>Edit Forum Post Validator.</description>

@@ -908,9 +908,18 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowVettingHistoryPlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowVettingHistoryDocument(@RequestParam(value="placeAllId") Integer placeAllId,
+	public ModelAndView ShowVettingHistoryPlace(@RequestParam(value="placeAllId") Integer placeAllId,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,

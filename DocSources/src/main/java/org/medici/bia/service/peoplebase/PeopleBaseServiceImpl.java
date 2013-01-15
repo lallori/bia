@@ -78,23 +78,23 @@ import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.AltName;
+import org.medici.bia.domain.AltName.NameType;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Marriage;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.Parent;
 import org.medici.bia.domain.People;
+import org.medici.bia.domain.People.Gender;
 import org.medici.bia.domain.PoLink;
 import org.medici.bia.domain.RoleCat;
 import org.medici.bia.domain.TitleOccsList;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.UserMarkedList;
-import org.medici.bia.domain.UserMarkedListElement;
-import org.medici.bia.domain.AltName.NameType;
-import org.medici.bia.domain.People.Gender;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserMarkedList;
+import org.medici.bia.domain.UserMarkedListElement;
 import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.security.BiaUserDetailsImpl;
@@ -2301,6 +2301,19 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
 			return getPeopleDAO().searchTitlesOrOccupationsPeople(titleOccToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVettingHistoryPerson(Integer personId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			People person = getPeopleDAO().find(personId);
+			return getVettingHistoryDAO().getVettingHistoryPerson(person, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

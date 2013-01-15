@@ -784,6 +784,15 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchVettingHistoryPerson(Integer personId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method mark a {@link org.medici.bia.domain.People} as available.
