@@ -102,7 +102,7 @@
 					var href = '${ExpandResultsURL}';
 					href += "&iDisplayStart=" + this.fnSettings()._iDisplayStart;
 					href += "&iDisplayLength=" + this.fnSettings()._iDisplayLength;
-					href += "&sSearch=" + '${command.text}';
+					href += "&sSearch=" + "${command.text}";
 					href += "&iSortingCols=" + this.fnSettings()._iSortingCols;
 					href += "&iSortCol_0=" + this.fnSettings().aaSorting[0][0];
 					href += "&sSortDir_0=" + this.fnSettings().aaSorting[0][1];
