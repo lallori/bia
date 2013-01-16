@@ -104,20 +104,22 @@ public class EditUserValidator implements Validator {
 		}
 
 		try {
-			User user =  getAdminService().findUser(originalAccount);
-			
-			if (user != null) {
-				if (!originalAccount.equals(account)) {
-					try {
-						if (getAdminService().findUser(account) != null) {
-							errors.rejectValue("account", "error.account.alreadypresent");
+			if(!originalAccount.equals("")){
+				User user =  getAdminService().findUser(originalAccount);
+				
+				if (user != null) {
+					if (!originalAccount.equals(account)) {
+						try {
+							if (getAdminService().findUser(account) != null) {
+								errors.rejectValue("account", "error.account.alreadypresent");
+							}
+						} catch(ApplicationThrowable ath) {
+							errors.rejectValue("account", "error.account.notfound");
 						}
-					} catch(ApplicationThrowable ath) {
-						errors.rejectValue("account", "error.account.notfound");
 					}
+				} else {
+					errors.rejectValue("originalAccount", "error.originalAccount.notfound");
 				}
-			} else {
-				errors.rejectValue("originalAccount", "error.originalAccount.notfound");
 			}
 		} catch(ApplicationThrowable ath) {
 			errors.rejectValue("originalAccount", "error.originalAccount.notfound");
