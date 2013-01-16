@@ -49,6 +49,7 @@ import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
+import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
@@ -67,6 +68,7 @@ import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
@@ -110,6 +112,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
+	
+	@Autowired
+	private EmailMessageUserDAO emailMessageUserDAO;
 	
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;
@@ -431,6 +436,21 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<EmailMessageUser> findEmailMessageUserToSend() throws ApplicationThrowable {
+		try{
+			EmailMessageUser emailMessageUser = new EmailMessageUser();
+			emailMessageUser.setMailSended(false);
+			return getEmailMessageUserDAO().searchEmailMessageUserToSend(emailMessageUser);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -632,6 +652,13 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @return the emailMessageUserDAO
+	 */
+	public EmailMessageUserDAO getEmailMessageUserDAO() {
+		return emailMessageUserDAO;
 	}
 
 	/**
@@ -887,6 +914,13 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
 		this.approvationUserDAO = approvationUserDAO;
+	}
+
+	/**
+	 * @param emailMessageUserDAO the emailMessageUserDAO to set
+	 */
+	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
+		this.emailMessageUserDAO = emailMessageUserDAO;
 	}
 
 	/**

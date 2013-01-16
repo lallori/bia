@@ -21,20 +21,27 @@
 	        	<form:label path="userRoles" for="to" id="toLabel">To</form:label>
 	        </div>
 	        <div class="col_l">
-	        	<ul style="list-style:none outside none;">
+	        	<div>
+	        	<ul style="list-style:none outside none;;height:130px;overflow:hidden;width:450px;">
 	        	<c:forEach var="currentAuthority" items="${authorities}" varStatus="iterator">	
-  						<li>
-  							<form:checkbox id="groupPolicies" name="userRoles" cssClass="" value="${currentAuthority.authority.value}" path="userRoles" />
+  						<li style="width:220px;float:left;">
+  							<form:checkbox id="groupPolicies" name="userRoles" cssClass="userRoles" value="${currentAuthority.authority.value}" path="userRoles" />
 							<label for="groupPolicies">${authorities[iterator.index].description}</label>
 						</li>			
-						<br />
 		 		</c:forEach>
-		 			<li>
-		 				<form:checkbox id="allUser" name="selectAll" cssClass="" value="All" path="userRoles" />
+		 			<li style="width:220px;float:left;">
+		 				<form:checkbox id="allUser" name="selectAll" cssClass="" value="All" path="userRoles"/>
 		 				<label for="allUser">All Users</label>
 		 			</li>
 		 		</ul>
-		 		Or select a user <br /> 
+		 		</div>
+		 	</div>
+		 </div>
+		 <div class="row">
+		 	<div class="col_r">
+		 		Or select a user
+		 	</div>
+		 	<div class="col_l"> 
 		 		<form:input path="accountDescription" id="to" name="subject" class="input_25c" type="text" value=""/><!-- Autocompleter members -->
 	        </div>
 	    </div>
@@ -167,6 +174,14 @@
 				return false;
 			});
 			
+			$j("#allUser").click(function(){
+				if($j(this).is(":checked")){
+					$j(".userRoles").attr("disabled", true);
+				}else{
+					$j(".userRoles").removeAttr("disabled");
+				}
+			});
+			
 			$j('#preview').click(function(){
 				$j("#previewSubject").text($j("#subject").val());
 				$j("#htmlboxEmail").text(tinyMCE.get('htmlboxEmail').getContent());
@@ -189,6 +204,8 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){
 				   $j("#account").val(data);
+				   $j(".userRoles").attr("disabled", true);
+				   $j("#allUser").attr("disabled", true);
 			    }			    
 			  });
 	        
@@ -197,6 +214,13 @@
 	        	$usersAutoComplete.killSuggestions();
 	        	return false;
 	        });
+			
+			$j("#to").change(function(){
+				if($j(this).val() == ''){
+					$j(".userRoles").removeAttr("disabled");
+					$j("#allUser").removeAttr("disabled");
+				}
+			});
 			
 			$j("#emailMessageForm").submit(function (){
 	        	$j("#htmlboxEmail").text(tinyMCE.get('htmlboxEmail').getContent());

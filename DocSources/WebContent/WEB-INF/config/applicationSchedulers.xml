@@ -54,6 +54,8 @@
 	<bean id="forumPostReplyMailJob" class="org.medici.bia.scheduler.ForumPostReplyMailJob"/>
 
 	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
+	
+	<bean id="sendEmailMessageUserJob" class="org.medici.bia.scheduler.SendEmailMessageUserJob"/>
 
 	<bean id="sitemapGeneratorJob" class="org.medici.bia.scheduler.SitemapGeneratorJob"/>
 </beans>

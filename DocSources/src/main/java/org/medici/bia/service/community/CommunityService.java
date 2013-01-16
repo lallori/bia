@@ -90,6 +90,20 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param emailMessageUser
+	 * @throws ApplicationThrowable
+	 */
+	void createNewEmailMessage(EmailMessageUser emailMessageUser, List<String> accounts) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param emailMessageUser
+	 * @throws ApplicationThrowable
+	 */
+	void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param userRole
 	 * @param emailMessageUser
 	 * @throws ApplicationThrowable

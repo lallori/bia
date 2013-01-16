@@ -27,6 +27,7 @@
  */
 package org.medici.bia.controller.community;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,11 +82,19 @@ public class EmailMessageController {
 
 			try{
 			
+				EmailMessageUser emailMessageUser = new EmailMessageUser();
+				emailMessageUser.setSubject(command.getSubject());
+				emailMessageUser.setBody(command.getText());
 				if(command.getAccount() == null || command.getAccount().equals("")){
-					EmailMessageUser emailMessageUser = new EmailMessageUser();
-					emailMessageUser.setSubject(command.getSubject());
-					emailMessageUser.setBody(command.getText());
-					getCommunityService().createNewEmailMessageUserFromUserRole(command.getUserRoles(), emailMessageUser);
+					if(!command.getUserRoles().contains("All")){
+						getCommunityService().createNewEmailMessageUserFromUserRole(command.getUserRoles(), emailMessageUser);
+					}else{
+						getCommunityService().createNewEmailMessageUserForAll(emailMessageUser);
+					}
+				}else{
+					List<String> accounts = new ArrayList<String>();
+					accounts.add(command.getAccount());
+					getCommunityService().createNewEmailMessage(emailMessageUser, accounts);
 				}
 
 

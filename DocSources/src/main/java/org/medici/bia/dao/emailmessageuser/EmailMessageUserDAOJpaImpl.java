@@ -27,6 +27,18 @@
  */
 package org.medici.bia.dao.emailmessageuser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.EmailMessageUser;
 import org.springframework.stereotype.Repository;
@@ -63,4 +75,57 @@ public class EmailMessageUserDAOJpaImpl extends JpaDao<Integer, EmailMessageUser
 	 */
 	private static final long serialVersionUID = -6486175825234611824L;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws PersistenceException {
+		StringBuilder query = new StringBuilder("INSERT INTO tblemailmessageuser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tbluser.account FROM tbluser");
+		Query nativeQuery = getEntityManager().createNativeQuery(query.toString());
+		nativeQuery.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void createNewEmailMessageUserFormUserRoles(List<String> userRoles, EmailMessageUser emailMessageUser) throws PersistenceException {
+		StringBuilder query = new StringBuilder("INSERT INTO tblemailmessageuser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tbluserRole.account FROM tbluserRole WHERE ");
+		for(int i = 0; i < userRoles.size(); i++){
+			query.append("authority = '");
+			query.append(userRoles.get(i));
+			query.append("' ");
+			if(i < userRoles.size() - 1){
+				query.append(" OR ");
+			}else{
+				query.append(";");
+			}
+		}
+		Query nativeQuery = getEntityManager().createNativeQuery(query.toString());
+		nativeQuery.executeUpdate();		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<EmailMessageUser> searchEmailMessageUserToSend(EmailMessageUser emailMessageUser) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<EmailMessageUser> criteriaQuery = criteriaBuilder.createQuery(EmailMessageUser.class);
+		Root<EmailMessageUser> root = criteriaQuery.from(EmailMessageUser.class);
+
+		// Define predicate's elements
+		List<Predicate> criteria = new ArrayList<Predicate>();
+		ParameterExpression<Boolean> parameterMailSended = criteriaBuilder.parameter(Boolean.class, "mailSended");
+		criteria.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("mailSended"), parameterMailSended)));
+		criteriaQuery.where(criteria.get(0));
+
+		// Set values in predicate's elements  
+		TypedQuery<EmailMessageUser> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("mailSended", emailMessageUser.getMailSended());
+
+		//Execute query
+		return typedQuery.getResultList();
+	}
 }

@@ -38,6 +38,7 @@ import org.medici.bia.common.search.Search;
 import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
@@ -115,6 +116,13 @@ public interface AdminService {
 	 */
 	List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<EmailMessageUser> findEmailMessageUserToSend() throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @return

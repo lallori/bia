@@ -27,6 +27,10 @@
  */
 package org.medici.bia.dao.emailmessageuser;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.EmailMessageUser;
 
@@ -39,5 +43,28 @@ import org.medici.bia.domain.EmailMessageUser;
  * 
  */
 public interface EmailMessageUserDAO extends Dao<Integer, EmailMessageUser> {
+	
+	/**
+	 * 
+	 * @param emailMessageUser
+	 * @throws PersistenceException
+	 */
+	void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param userRoles
+	 * @param emailMessageUser
+	 * @throws PersistenceException
+	 */
+	void createNewEmailMessageUserFormUserRoles(List<String> userRoles, EmailMessageUser emailMessageUser) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param emailMessageUser
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<EmailMessageUser> searchEmailMessageUserToSend(EmailMessageUser emailMessageUser) throws PersistenceException;
 
 }

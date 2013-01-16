@@ -34,8 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.aspectj.weaver.NewMethodTypeMunger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AdvancedSearchAbstract;
@@ -66,6 +64,7 @@ import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.ForumTopic;
@@ -74,10 +73,9 @@ import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.UserMessage;
-import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,31 +303,65 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public void createNewEmailMessage(EmailMessageUser emailMessageUser, List<String> accounts) throws ApplicationThrowable {
+		try{
+			for(String account : accounts){
+				User user = getUserDAO().findUser(account);
+				if(user != null){
+					emailMessageUser.setUser(user);
+					emailMessageUser.setMailSended(false);
+					getEmailMessageUserDAO().persist(emailMessageUser);
+				}
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws ApplicationThrowable {
+		try{
+			getEmailMessageUserDAO().createNewEmailMessageUserForAll(emailMessageUser);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void createNewEmailMessageUserFromUserRole(List<String> userRole, EmailMessageUser emailMessageUser) throws ApplicationThrowable {
 		try{
-			List<UserAuthority> authorities = getUserAuthorityDAO().getAuthorities();
-			List<User> usersToSendMail = new ArrayList<User>();
-			for(UserAuthority currentAuthority : authorities){
-				String role = currentAuthority.getAuthority().getValue();
-				if(userRole.contains(role)){
-					List<User> users = getUserRoleDAO().findUsers(currentAuthority);
-					for(User currentUser : users){
-						if(!usersToSendMail.contains(currentUser)){
-							usersToSendMail.add(currentUser);
-						}
-					}
-				}
-			}
-			for(User currentUser : usersToSendMail){
-				EmailMessageUser newEmail = new EmailMessageUser();
-				newEmail.setSubject(emailMessageUser.getSubject());
-				newEmail.setBody(emailMessageUser.getBody());
-				newEmail.setUser(currentUser);
-				newEmail.setMailSended(false);
-				getEmailMessageUserDAO().persist(newEmail);						
-			}
+//			List<UserAuthority> authorities = getUserAuthorityDAO().getAuthorities();
+//			List<User> usersToSendMail = new ArrayList<User>();
+//			for(UserAuthority currentAuthority : authorities){
+//				String role = currentAuthority.getAuthority().getValue();
+//				if(userRole.contains(role)){
+//					List<User> users = getUserRoleDAO().findUsers(currentAuthority);
+//					for(User currentUser : users){
+//						if(!usersToSendMail.contains(currentUser)){
+//							usersToSendMail.add(currentUser);
+//						}
+//					}
+//				}
+//			}
+//			for(User currentUser : usersToSendMail){
+//				EmailMessageUser newEmail = new EmailMessageUser();
+//				newEmail.setSubject(emailMessageUser.getSubject());
+//				newEmail.setBody(emailMessageUser.getBody());
+//				newEmail.setUser(currentUser);
+//				newEmail.setMailSended(false);
+//				getEmailMessageUserDAO().persist(newEmail);						
+//			}
+			getEmailMessageUserDAO().createNewEmailMessageUserFormUserRoles(userRole, emailMessageUser);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -1458,4 +1490,5 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 }

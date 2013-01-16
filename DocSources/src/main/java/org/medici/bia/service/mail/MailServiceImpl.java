@@ -30,15 +30,21 @@ package org.medici.bia.service.mail;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
-import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
+import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.PasswordChangeRequest;
@@ -48,6 +54,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +66,7 @@ import org.springframework.transaction.annotation.Transactional;
  * text as application message), and send mail.
  *   
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Service
@@ -68,6 +76,8 @@ public class MailServiceImpl implements MailService {
 	private ActivationUserDAO activationUserDAO;
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
+	@Autowired
+	private EmailMessageUserDAO emailMessageUserDAO;
 	@Autowired
 	private ForumPostNotifiedDAO ForumPostNotifiedDAO;
 	@Autowired
@@ -94,6 +104,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	public ApprovationUserDAO getApprovationUserDAO() {
 		return approvationUserDAO;
+	}
+
+	/**
+	 * @return the emailMessageUserDAO
+	 */
+	public EmailMessageUserDAO getEmailMessageUserDAO() {
+		return emailMessageUserDAO;
 	}
 
 	/**
@@ -206,6 +223,44 @@ public class MailServiceImpl implements MailService {
 			return Boolean.FALSE;
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean sendEmailMessageUser(final EmailMessageUser emailMessageUser) {
+		try{
+			if(!StringUtils.isBlank(emailMessageUser.getUser().getMail())){
+//				SimpleMailMessage message = new SimpleMailMessage();
+//				message.setFrom(getMailFrom());
+//				message.setTo(emailMessageUser.getUser().getMail());
+//				message.setSubject(emailMessageUser.getSubject());
+//				message.setText(emailMessageUser.getBody());
+				
+				MimeMessagePreparator preparator = new MimeMessagePreparator() {
+					
+					@Override
+					public void prepare(MimeMessage mimeMessage) throws Exception {
+						mimeMessage.setFrom(new InternetAddress(getMailFrom()));
+						mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(emailMessageUser.getUser().getMail()));
+						mimeMessage.setSubject(emailMessageUser.getSubject());
+						mimeMessage.setText(emailMessageUser.getBody(), "utf-8", "html");
+					}
+				};
+				
+				getJavaMailSender().send(preparator);
+				emailMessageUser.setMailSended(Boolean.TRUE);
+				emailMessageUser.setMailSendedDate(new Date());
+				getEmailMessageUserDAO().merge(emailMessageUser);
+			}else{
+				logger.error("Email message not sended for user " + emailMessageUser.getUser().getAccount() + ". Check mail field on tblUser for account " + emailMessageUser.getUser().getAccount());
+			}
+			return Boolean.TRUE;
+		}catch(Throwable throwable){
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -294,6 +349,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
 		this.approvationUserDAO = approvationUserDAO;
+	}
+
+	/**
+	 * @param emailMessageUserDAO the emailMessageUserDAO to set
+	 */
+	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
+		this.emailMessageUserDAO = emailMessageUserDAO;
 	}
 
 	/**
