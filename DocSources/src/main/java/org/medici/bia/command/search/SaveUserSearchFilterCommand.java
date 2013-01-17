@@ -49,6 +49,7 @@ public class SaveUserSearchFilterCommand {
 	private List<String> word;
 	private List<String> volume;
 	private List<String> folio;
+	private List<String> folioMod;
 	private List<String> date;
 	private List<String> extract;
 	private List<String> synopsis;
@@ -685,6 +686,20 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public void setFolio(List<String> folio) {
 		this.folio = folio;
+	}
+
+	/**
+	 * @return the folioMod
+	 */
+	public List<String> getFolioMod() {
+		return folioMod;
+	}
+
+	/**
+	 * @param folioMod the folioMod to set
+	 */
+	public void setFolioMod(List<String> folioMod) {
+		this.folioMod = folioMod;
 	}
 
 	/**

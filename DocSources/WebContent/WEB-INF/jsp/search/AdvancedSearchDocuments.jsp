@@ -328,6 +328,33 @@
 					               	</div>
 					            </div>
 				            </form>
+				            
+				            
+							<form id="folioModSearchForm" method="post" class="edit">
+					           	<div class="row">
+					               	<div class="col_l">
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.foliomod"></fmt:message>">?</a>
+			                			<label for="folioMod" id="folioModLabel">Folio Mod</label> 
+					               	</div>
+					               	<div class="col_l" style="width:60px;">
+					               		<label for="bis" id="bisLabel"><i>Bis</i></label>
+			                			<input type="checkbox" name="bis" value="bis"\/>
+					               	</div>
+					               	<div class="col_l">
+					               		<label for="ter" id="terLabel"><i>Ter</i></label>
+			                			<input type="checkbox" name="ter" value="ter"\/>
+					               	</div>
+					               	<div class="col_l">
+					               		<label for="Other" id="otherLabel"><i>Other</i></label>
+			                			<input type="checkbox" name="other" value="other"\/>
+					               	</div>
+					               	<div class="col_r">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="hidden" id="category" value="folioMod">
+					               	</div>
+					            </div>
+					   		</form>
+				        
 				        </div>
 					</div>
 					
@@ -398,9 +425,11 @@
                 if(this.options[1].selected) {
                     $j('#folioBetween').css('visibility','visible'); 
                     $j('.invisibleFol').css('visibility','visible'); 
+                    $j("#folioModSearchForm").css('display', 'none');
                 } else { 
                     $j('#folioBetween').css('visibility','hidden');
                     $j('.invisibleFol').css('visibility','hidden');
+                    $j("#folioModSearchForm").css('display', 'table-row-group');
                 }
             });
 
@@ -457,6 +486,7 @@
 			$j("#dateSearchForm").advancedSearchForm();
 			$j("#volumeSearchForm").advancedSearchForm();
 			$j("#folioSearchForm").advancedSearchForm();
+			$j("#folioModSearchForm").advancedSearchForm();
 			$j("#docIdSearchForm").advancedSearchForm();
 			$j("#logicalDeleteSearchForm").advancedSearchForm();
 

@@ -128,31 +128,31 @@ public class SimpleSearchVolume extends SimpleSearch {
 				}else{
 					if(words[i].length() == 1){
 						jpaQuery.append("(volLetExt like '");
-						jpaQuery.append(words[i]);
+						jpaQuery.append(words[i].replace("'", "''"));
 						jpaQuery.append("')");
 					}else if(words[i].matches("^\\d{1,5}[a-zA-Z]{1}")){
 						jpaQuery.append("(volNum = ");
-						jpaQuery.append(words[i].substring(0, words[i].length() - 1));
+						jpaQuery.append(words[i].substring(0, words[i].length() - 1).replace("'", "''"));
 						jpaQuery.append(" AND volLetExt LIKE '");
 						jpaQuery.append(words[i].charAt(words[i].length() - 1));
 						jpaQuery.append("')");
 					}else{
 						jpaQuery.append("((ccondition like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(ccontext like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(orgNotes like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(recips like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(senders like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(serieList.title like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(serieList.subTitle1 like '%");
-						jpaQuery.append(words[i] + "%') OR ");
+						jpaQuery.append(words[i].replace("'", "''") + "%') OR ");
 						jpaQuery.append("(serieList.subTitle2 like '%");
-						jpaQuery.append(words[i] + "%'))");
+						jpaQuery.append(words[i].replace("'", "''") + "%'))");
 					}
 				}
 				if(i < (words.length - 1)){

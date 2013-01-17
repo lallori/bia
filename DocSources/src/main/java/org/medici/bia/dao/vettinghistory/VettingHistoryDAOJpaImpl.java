@@ -95,7 +95,7 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 				paginationFilter.addSortingCriteria("dateAndTime", paginationFilter.getSortingDirection());
 				break;
 			case 1:
-				paginationFilter.addSortingCriteria("action", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("description", paginationFilter.getSortingDirection());
 				break;
 			case 2:
 				paginationFilter.addSortingCriteria("user.account", paginationFilter.getSortingDirection());

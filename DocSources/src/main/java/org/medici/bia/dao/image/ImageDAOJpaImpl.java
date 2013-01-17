@@ -272,13 +272,13 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuilder.append(" and imageType=:imageType");
         	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
+        	if(documentExplorer.getFolioMod() != null){
+            	stringBuilder.append(" and imageName like '%" + documentExplorer.getFolioMod() + "%'");
+            }
         } else if (documentExplorer.getImage().getImageOrder() != null) {
         	stringBuilder.append(" and imageOrder=:imageOrder");
         } else {
         	stringBuilder.append(" and imageOrder = 1");
-        }
-        if(documentExplorer.getFolioMod() != null){
-        	stringBuilder.append(" and imageName like '%" + documentExplorer.getFolioMod() + "%'");
         }
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());

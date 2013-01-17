@@ -37,6 +37,7 @@ import org.medici.bia.common.util.SimpleSearchUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SimpleSearchPeople extends SimpleSearch {
@@ -120,7 +121,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 			
 			for(int i = 0; i < words.length; i++){
 				jpaQuery.append("((mapNameLf like '%");
-				jpaQuery.append(words[i]);
+				jpaQuery.append(words[i].replace("'", "''"));
 				jpaQuery.append("%') OR personId IN(SELECT person FROM org.medici.bia.domain.AltName WHERE altName like '%");
 				jpaQuery.append(words[i]);
 				jpaQuery.append("%'))");

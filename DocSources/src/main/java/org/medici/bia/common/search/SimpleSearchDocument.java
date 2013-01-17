@@ -40,6 +40,7 @@ import org.medici.bia.common.util.SimpleSearchUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SimpleSearchDocument extends SimpleSearch {
@@ -171,7 +172,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 				}
 				for(int i = 0; i < words.length; i++){
 					jpaQuery.append("(synExtract.docExtract like '%");
-					jpaQuery.append(words[i]);
+					jpaQuery.append(words[i].replace("'", "''"));
 					jpaQuery.append("%')");
 					if(i < words.length-1){
 						jpaQuery.append(" AND ");
@@ -188,7 +189,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 				}		
 				for(int i = 0; i < words.length; i++){
 					jpaQuery.append("(synExtract.synopsis like '%");
-					jpaQuery.append(words[i]);
+					jpaQuery.append(words[i].replace("'", "''"));
 					jpaQuery.append("%')");
 					if(i < words.length-1){
 						jpaQuery.append(" AND ");

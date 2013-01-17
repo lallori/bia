@@ -79,6 +79,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<DateType> datesLastUpdateTypes;
 	private List<String> docIds;
 	private List<String> extract;
+	private List<String> folioMods;
 	private List<String> folios;
 	private List<String> foliosBetween;
 	private List<FolioType> foliosTypes;
@@ -157,6 +158,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		folios = new ArrayList<String>(0);
 		foliosBetween = new ArrayList<String>(0);
 		foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(0);
+		folioMods = new ArrayList<String>(0);
 		docIds = new ArrayList<String>(0);
 		logicalDelete = null;
 	}
@@ -747,6 +749,14 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			foliosBetween = new ArrayList<String>(0);
 		}
 		
+		//FolioMod
+		if(command.getFolioMod() != null && command.getFolioMod().size() > 0){
+			folioMods = new ArrayList<String>(command.getFolioMod().size());
+			folioMods.addAll(command.getFolioMod());
+		}else{
+			folioMods = new ArrayList<String>(0);
+		}
+		
 		//EntryId
 		if((command.getDocId() != null) && (command.getDocId().size() > 0)){
 			docIds = new ArrayList<String>(command.getDocId().size());
@@ -807,6 +817,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				(datesLastUpdateTypes.size()>0) ||
 				(volumes.size()>0) ||
 				(folios.size()>0) ||
+				(folioMods.size()>0) ||
 				(docIds.size()>0)) {
 			return Boolean.FALSE;
 		}
@@ -876,6 +887,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public List<String> getExtract() {
 		return extract;
+	}
+
+	/**
+	 * @return the folioMods
+	 */
+	public List<String> getFolioMods() {
+		return folioMods;
 	}
 
 	/**
@@ -1135,6 +1153,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public void setExtract(List<String> extract) {
 		this.extract = extract;
+	}
+
+	/**
+	 * @param folioMods the folioMods to set
+	 */
+	public void setFolioMods(List<String> folioMods) {
+		this.folioMods = folioMods;
 	}
 
 	/**
@@ -2211,6 +2236,38 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 		}
 		
+		//FolioMod
+		if(folioMods.size() > 0){
+			StringBuilder folioModsQuery = new StringBuilder("(");
+			for(int i = 0; i < folioMods.size(); i++){
+				if(folioModsQuery.length() > 1){
+					folioModsQuery.append(" AND ");
+				}
+				String[] wordsFolioMods = StringUtils.split(folioMods.get(i), " ");
+				for(int j = 0; j < wordsFolioMods.length; j++){
+					if(j > 0){
+						folioModsQuery.append(" AND ");
+					}
+					if(wordsFolioMods[j].equalsIgnoreCase("bis")){
+						folioModsQuery.append("(folioMod LIKE 'bis')");
+					}
+					if(wordsFolioMods[j].equalsIgnoreCase("ter")){
+						folioModsQuery.append("(folioMod LIKE 'ter')");
+					}
+					if(wordsFolioMods[j].equalsIgnoreCase("other")){
+						folioModsQuery.append("(folioMod IS NOT NULL AND folioMod NOT LIKE 'bis' AND folioMod NOT LIKE 'ter')");
+					}
+				}
+			}
+			folioModsQuery.append(")");
+			if(folioModsQuery.length() > 2){
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(folioModsQuery);
+			}
+		}
+		
 		//EntryId
 		if(docIds.size() > 0){
 			StringBuilder docIdQuery = new StringBuilder("(");
@@ -2923,6 +2980,19 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(foliosBetween.get(i));
+				stringBuilder.append(' ');
+			}
+		}
+		if(!folioMods.isEmpty()){
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append("Folio Mod: ");
+			for(int i = 0; i < folioMods.size(); i++){
+				if(i > 0){
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(folioMods.get(i));
 				stringBuilder.append(' ');
 			}
 		}

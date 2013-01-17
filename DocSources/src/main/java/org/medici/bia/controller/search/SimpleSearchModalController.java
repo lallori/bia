@@ -113,6 +113,7 @@ public class SimpleSearchModalController {
 		}
 		
 		model.put("yourSearch", command.getText());
+		model.put("textSearch", command.getText().replace("'", "%27"));
 		
 		return new ModelAndView("search/SimpleSearchModalWindow",model);
 	}

@@ -159,9 +159,9 @@ public class SimpleSearchPlace extends SimpleSearch {
 			
 			for(int i = 0; i < words.length; i++){
 				jpaQuery.append("((placeNameFull like '%");
-				jpaQuery.append(words[i]);
+				jpaQuery.append(words[i].replace("'", "''"));
 				jpaQuery.append("%') OR termAccent like '%");
-				jpaQuery.append(words[i]);
+				jpaQuery.append(words[i].replace("'", "''"));
 				jpaQuery.append("%')");
 				if(i < words.length-1){
 					jpaQuery.append(" AND ");

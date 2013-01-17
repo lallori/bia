@@ -940,7 +940,7 @@ public class AjaxController {
 		for (VettingHistory currentVettingHistory : (List<VettingHistory>)page.getList()) {
 			List singleRow = new ArrayList();
 			singleRow.add(simpleDateFormat.format(currentVettingHistory.getDateAndTime()));
-			singleRow.add(currentVettingHistory.getAction().toString());
+			singleRow.add(currentVettingHistory.getDescription());
 			singleRow.add(currentVettingHistory.getUser().getAccount());
 			
 			

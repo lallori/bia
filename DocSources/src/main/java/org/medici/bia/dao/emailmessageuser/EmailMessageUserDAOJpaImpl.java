@@ -80,7 +80,7 @@ public class EmailMessageUserDAOJpaImpl extends JpaDao<Integer, EmailMessageUser
 	 */
 	@Override
 	public void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws PersistenceException {
-		StringBuilder query = new StringBuilder("INSERT INTO tblemailmessageuser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tbluser.account FROM tbluser");
+		StringBuilder query = new StringBuilder("INSERT INTO tblEmailMessageUser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tblUser.account FROM tblUser");
 		Query nativeQuery = getEntityManager().createNativeQuery(query.toString());
 		nativeQuery.executeUpdate();
 	}
@@ -90,7 +90,7 @@ public class EmailMessageUserDAOJpaImpl extends JpaDao<Integer, EmailMessageUser
 	 */
 	@Override
 	public void createNewEmailMessageUserFormUserRoles(List<String> userRoles, EmailMessageUser emailMessageUser) throws PersistenceException {
-		StringBuilder query = new StringBuilder("INSERT INTO tblemailmessageuser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tbluserRole.account FROM tbluserRole WHERE ");
+		StringBuilder query = new StringBuilder("INSERT INTO tblEmailMessageUser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tblUserRole.account FROM tblUserRole WHERE ");
 		for(int i = 0; i < userRoles.size(); i++){
 			query.append("authority = '");
 			query.append(userRoles.get(i));
