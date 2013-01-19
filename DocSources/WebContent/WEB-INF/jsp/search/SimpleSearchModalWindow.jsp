@@ -90,35 +90,35 @@
 			$j(".dataTables_filter").css('display', 'none');
 			
 			$j(".SYNOPSIS").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "&simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Synopsis Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Synopsis Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
 			});
 			
 			$j(".EXTRACT").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "&simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Extract Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Extract Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
 			});
 			
 			$j(".VOLUME").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "&simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Volume Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Volume Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
 			});
 			
 			$j(".PEOPLE").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "&simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "People Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "People Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
 			});
 			
 			$j(".PLACE").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "&simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Place Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Place Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
@@ -126,7 +126,7 @@
 			
 			$j(".rowModalSearch").click(function(){
 				var link = $j(this).children().children();
-				$j( "#tabs" ).tabs( "add" , $j(link).attr("href") + "&simpleSearchPerimeter=" + $j(link).attr("class") + "&text=" + $j("#textSearch").val(), $j(this).attr("id") + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(link).attr("href") + "?simpleSearchPerimeter=" + $j(link).attr("class") + "&text=" + $j("#textSearch").val(), $j(this).attr("id") + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;
