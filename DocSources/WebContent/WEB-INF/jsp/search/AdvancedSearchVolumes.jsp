@@ -4,6 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
+	</c:url>
+
 	<body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR VOLUMES</div>
@@ -370,19 +373,45 @@
 			}
 		});
 
-		$j("#volumeSearchForm").advancedSearchForm();
-		$j("#dateSearchForm").advancedSearchForm();
-		$j("#digitizedSearchForm").advancedSearchForm();
-		$j("#languagesSearchForm").advancedSearchForm();
-		$j("#otherLangSearchForm").advancedSearchForm();
-		$j("#cipherSearchForm").advancedSearchForm();
-		$j("#indexSearchForm").advancedSearchForm();
-		$j("#fromVolumeSearchForm").advancedSearchForm();
-		$j("#toVolumeSearchForm").advancedSearchForm();
-		$j("#contextSearchForm").advancedSearchForm();
-		$j("#inventarioSearchForm").advancedSearchForm();
-		$j("#volumeIdSearchForm").advancedSearchForm();
-		$j("#logicalDeleteSearchForm").advancedSearchForm();
+		$j("#volumeSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#dateSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#digitizedSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#languagesSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#otherLangSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#cipherSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#indexSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#fromVolumeSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#toVolumeSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#contextSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#inventarioSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#volumeIdSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#logicalDeleteSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
 		
 		$j('#accordion').accordion({
 			active: false, 

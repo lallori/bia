@@ -4,6 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
+	</c:url>
+
 <body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR PEOPLE</div>
@@ -342,17 +345,39 @@
 		$j("#dateMonthBetween option:eq(0)").text("mm");
 		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
 
-		$j('#namePartsSearchForm').advancedSearchForm();
-		$j('#wordSearchForm').advancedSearchForm();
-		$j('#dateSearchForm').advancedSearchForm();
-		$j('#roleCategorySearchForm').advancedSearchForm();
-		$j('#occupationWordSearchForm').advancedSearchForm();
-		$j('#occupationSearchForm').advancedSearchForm();
-		$j('#genderSearchForm').advancedSearchForm();
-		$j('#placeSearchForm').advancedSearchForm();	
-		$j('#researchNotesSearchForm').advancedSearchForm();
-		$j("#personIdSearchForm").advancedSearchForm();
-		$j("#logicalDeleteSearchForm").advancedSearchForm();
+		$j('#namePartsSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#wordSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#dateSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#roleCategorySearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#occupationWordSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#occupationSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#genderSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#placeSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});	
+		$j('#researchNotesSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#personIdSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#logicalDeleteSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
 		
 		$j('#accordion').accordion({
 			active: false, 

@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
+	</c:url>
 
 <body>
 	<div id="advancedSearch">
@@ -125,12 +127,24 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {								
-		$j('#placeNameSearchForm').advancedSearchForm();
-		$j('#placeTypeSearchForm').advancedSearchForm();
-		$j('#linkedToTopicsSearchForm').advancedSearchForm();
-		$j('#linkedToPeopleSearchForm').advancedSearchForm();
-		$j("#placeIdSearchForm").advancedSearchForm();
-		$j('#logicalDeleteSearchForm').advancedSearchForm();
+		$j('#placeNameSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#placeTypeSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#linkedToTopicsSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#linkedToPeopleSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j("#placeIdSearchForm").advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
+		$j('#logicalDeleteSearchForm').advancedSearchForm({
+			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+		});
 		
 		$j('#accordion').accordion({
 			active: false, 

@@ -3,13 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<!-- 
-		    	<div class="listAdvSearch">
-		           	<div class="row">
-		               	<div class="col_l"></div>
-		            </div>
-		        </div> 
-		    -->
+
+	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
+	</c:url>
+
 <body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR DOCUMENTS</div>
@@ -471,24 +468,60 @@
 				}
 			});
 
-			$j("#wordSearchForm").advancedSearchForm();
-			$j("#personSearchForm").advancedSearchForm();
-			$j("#placeSearchForm").advancedSearchForm();
-			$j("#senderSearchForm").advancedSearchForm();
-			$j("#fromSearchForm").advancedSearchForm();
-			$j("#recipientSearchForm").advancedSearchForm();
-			$j("#toSearchForm").advancedSearchForm();
-			$j("#refersToSearchForm").advancedSearchForm();
-			$j("#extractSearchForm").advancedSearchForm();
-			$j("#synopsisSearchForm").advancedSearchForm();
-			$j("#topicSearchForm").advancedSearchForm();
-			$j("#topicPlaceSearchForm").advancedSearchForm();
-			$j("#dateSearchForm").advancedSearchForm();
-			$j("#volumeSearchForm").advancedSearchForm();
-			$j("#folioSearchForm").advancedSearchForm();
-			$j("#folioModSearchForm").advancedSearchForm();
-			$j("#docIdSearchForm").advancedSearchForm();
-			$j("#logicalDeleteSearchForm").advancedSearchForm();
+			$j("#wordSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#personSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#placeSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#senderSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#fromSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#recipientSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#toSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#refersToSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#extractSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#synopsisSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#topicSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#topicPlaceSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#dateSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#volumeSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#folioSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#folioModSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#docIdSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
+			$j("#logicalDeleteSearchForm").advancedSearchForm({
+				"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			});
 
 			$j('#accordion').accordion({
 				active: false, 
@@ -587,18 +620,6 @@
 				return false;
 			});
 			
-// 			$j("#person").blur(function(){
-//				MD: This fix is for Chrome
-// 				if($j(".peoplePlaces").children().css('display') != "block"){
-// 					$personAutocomplete.killSuggestions();
-// 				}
-// 			});
-			
-// 			$j("#person").keyup(function(){
-// 				if($j("#personId").val() != '')
-// 					$j(".personAdd").attr("disabled","disabled");
-// 			});
-			
 			$j("#personSearchForm").submit(function(e){
 				$j("#personId").val("");
 				$j(".personAdd").attr("disabled","disabled");
@@ -622,11 +643,6 @@
 				}
 			});	
 			
-// 			$j("#place").blur(function(){
-// 				$placeAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
 			$j("#place").keyup(function(){
 				if($j("#placeId").val() != '')
 					$j(".placeAdd").attr("disabled","disabled");
@@ -647,22 +663,9 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-// 					$j(".senderAdd").removeAttr("disabled");
 					$j('#senderId').val(data);
-// 					$j(".senderAdd").attr("disabled");
-// 					$j(".senderAdd").prop("disabled", false);
 				}
 			});
-			
-// 			$j("#sender").blur(function(){
-// 				$senderAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
-// 			$j("#sender").keyup(function(){
-// 				if($j("#senderId").val() != '')
-// 					$j(".senderAdd").attr("disabled","disabled");
-// 			});
 			
 			$j("#senderSearchForm").submit(function(){
 				$j("#senderId").val("");
@@ -686,11 +689,6 @@
 				}
 			});
 			
-// 			$j("#from").blur(function(){
-// 				$fromAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
 			$j("#from").keyup(function(){
 				if($j("#fromId").val() != '')
 					$j(".fromAdd").attr("disabled","disabled");
@@ -711,26 +709,12 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-// 					$j(".recipientAdd").removeAttr("disabled");
 					$j('#recipientId').val(data);
-// 					$j(".recipientAdd").attr("disabled");
-// 					$j(".recipientAdd").prop("disabled", false);
 				}
 			});
-			
-// 			$j("#recipient").blur(function(){
-// 				$recipientAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
-// 			$j("#recipient").keyup(function(){
-// 				if($j("#recipientId").val() != '')
-// 					$j(".recipientAdd").attr("disabled","disabled");
-// 			});
-			
+
 			$j("#recipientSearchForm").submit(function(){
 				$j("#recipientId").val("");
-// 				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
 			var $toAutocomplete = $j("#to").autocompletePlace({
@@ -749,12 +733,7 @@
 					$j(".toAdd").prop("disabled", false);
 				}
 			});	
-			
-// 			$j("#to").blur(function(){
-// 				$toAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
+
 			$j("#to").keyup(function(){
 				if($j("#toId").val() != '')
 					$j(".toAdd").attr("disabled","disabled");
@@ -775,26 +754,12 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-// 					$j(".refersToAdd").removeAttr("disabled");
 					$j('#refersToId').val(data);
-// 					$j(".refersToAdd").attr("disabled");
-// 					$j(".refersToAdd").prop("disabled", false);
 				}
 			});
 			
-// 			$j("#refersTo").blur(function(){
-// 				$refersToAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
-// 			$j("#refersTo").keyup(function(){
-// 				if($j("#refersToId").val() != '')
-// 					$j(".refersToAdd").attr("disabled","disabled");
-// 			});
-			
 			$j("#refersToSearchForm").submit(function(){
 				$j("#refersToId").val("");
-// 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
 			$j("#topicSelect").change(function(){
@@ -808,33 +773,6 @@
 				 }
 				 return false;
 			 });
-			
-// 			var $topicAutocomplete = $j("#topic").autocompleteGeneral({
-// 				serviceUrl: '${searchTopicURL}',
-// 				minChars: 1,
-// 				delimiter: null,
-// 				maxHeight: 400,
-// 				width: 200,
-// 				zIndex: 9999,
-// 				deferRequestBy: 0,
-// 				noCache: true,
-// 				onSelect: function(value, data){
-// 					$j(".topicAdd").removeAttr("disabled");
-// 					$j('#topicId').val(data);
-// 					$j(".topicAdd").attr("disabled");
-// 					$j(".topicAdd").prop("disabled", false);
-// 				}
-// 			});	
-			
-// 			$j("#topic").blur(function(){
-// 				$topicAutocomplete.killSuggestions();
-// 				return false;
-// 			});
-			
-// 			$j("#topicSearchForm").submit(function(){
-// 				$j("#topicId").val("");
-// 				$j(".topicAdd").attr("disabled","disabled");
-// 			});
 
 			var $topicPlaceAutocomplete = $j("#topicPlace").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
@@ -852,11 +790,6 @@
 					$j(".topicPlaceAdd").prop("disabled", false);
 				}
 			});	
-			
-// 			$j("#topicPlace").blur(function(){
-// 				$topicPlaceAutocomplete.killSuggestions();
-// 				return false;
-// 			});
 			
 			$j("#topicPlace").keyup(function(){
 				if($j("#topicPlaceId").val() != '')
