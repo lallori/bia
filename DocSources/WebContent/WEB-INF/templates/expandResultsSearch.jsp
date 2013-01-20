@@ -1,5 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
+<c:url var="MainContentMacURL" value="/styles/1024/MainContent_mac.css"/>
+
+<c:url var="MainContentLinuxURL" value="/styles/1024/MainContent_linux.css"/>
+
+<c:url var="TemplateLinuxURL" value="/styles/1024/Template_linux.css"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -44,13 +51,13 @@
 		
 		<script type="text/javascript">
 			if (navigator.appVersion.indexOf("Mac")!=-1)
-				document.write('<link href="/DocSources/styles/1024/MainContent_mac.css" rel="stylesheet" type="text/css">');
+				document.write('<link href="${MainContentMacURL}" rel="stylesheet" type="text/css">');
 			
 			if (navigator.appVersion.indexOf("Linux")!=-1)
-				document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
+				document.write('<link href="${MainContentLinuxURL}" rel="stylesheet" type="text/css">','<link href="${TemplateLinuxURL}" rel="stylesheet" type="text/css">');
 			 
 			 if (navigator.appVersion.indexOf("X11")!=-1)
-				 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
+				 document.write('<link href="${MainContentLinuxURL}" rel="stylesheet" type="text/css">','<link href="${TemplateLinuxURL}" rel="stylesheet" type="text/css">');
 
 			var $j = jQuery.noConflict();
 

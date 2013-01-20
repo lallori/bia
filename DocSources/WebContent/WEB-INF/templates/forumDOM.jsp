@@ -1,4 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -8,9 +13,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Bia - Forums</title>
         
-        <link rel="shortcut icon" type="image/x-icon" href="/DocSources/images/favicon_medici.png" />
-        <link rel="stylesheet" type="text/css" href="/DocSources/styles/forum/forum.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="/DocSources/styles/1024/js/jquery-ui.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/styles/forum/forum.css"/>" />
+        <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" />
         
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>	
