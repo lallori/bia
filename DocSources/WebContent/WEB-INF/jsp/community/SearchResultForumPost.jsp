@@ -60,7 +60,7 @@
 	
 	<div id="jumpToDiv">
     	Jump to:
-        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
+        <form id="jumpToForm" action="/src/SimpleSearch.do" method="post">
             <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
                 <option value="" selected="selected">Select a Forum</option>
             </select>

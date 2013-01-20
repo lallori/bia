@@ -130,7 +130,7 @@
 		        </div>
 		     </div>
 			 <div id="buttons">
-				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> <a href="/DocSources/forum/viewThreads.html" id="cancel" class="buttonSmall">Reset</a> 
+				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> <a href="<c:url value="/forum/viewThreads.html"/>" id="cancel" class="buttonSmall">Reset</a> 
 			</div>
 		
 			<div>

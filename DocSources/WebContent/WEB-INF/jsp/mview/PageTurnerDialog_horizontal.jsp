@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ContextPathURL" value="/"/>
+	
 	<c:url var="PageTurnerDialogURL" value="/src/mview/PageTurnerDialog.do"/>
 
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
@@ -471,7 +473,8 @@
 				$j("#choiceThisFolioStart").css('visibility', 'visible');
 				$j("#readyToTranscribe").css('visibility', 'hidden');
 				imageDocumentFolioStart=currentImage;
-				var urlToTranscribe = "/DocSources/de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
+				var contextPath ="${ContextPathURL}";
+				var urlToTranscribe = contextPath + "de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
 				var urlToExplore;
 				var volLetExt;
 				if("${command.volLetExt}" == ""){
@@ -480,7 +483,7 @@
 				else{
 					volLetExt = "${command.volLetExt}";
 				}
-				urlToExplore = "/DocSources/src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
+				urlToExplore = contextPath + "src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
 				window.opener.$j("#body_left").load(urlToTranscribe);
 				$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				//To open volume explorer in a tab

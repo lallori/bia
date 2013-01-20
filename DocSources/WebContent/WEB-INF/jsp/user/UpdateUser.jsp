@@ -21,7 +21,7 @@
 		
 		<br/>
 	
-		<img src="/DocSources/images/default_user.jpg" alt="default image" id="imgProfile"/>
+		<img src="<c:url value="/images/default_user.jpg"/>" alt="default image" id="imgProfile"/>
 	
 		<div id="EditGroupProfileDiv">
 			<b>Group:</b> Community User
@@ -29,25 +29,25 @@
 
 		
 		<div id="EditTitleProfileDiv">
-			<b>Title:</b> Curator <a id="EditTitleProfile" href="/DocSources/EditTitleProfile.html">edit</a>
+			<b>Title:</b> Curator <a id="EditTitleProfile" href="<c:url value="/EditTitleProfile.html"/>">edit</a>
 		</div>
 		
 		<div id="EditOrgProfileDiv">
-			<b>Organization:</b> Naples Museum of Art <a id="EditOrgProfile" href="/DocSources/EditOrgProfile.html">edit</a>
+			<b>Organization:</b> Naples Museum of Art <a id="EditOrgProfile" href="<c:url value="/EditOrgProfile.html"/>">edit</a>
 
 		</div>
 		
 		<div id="EditLocationProfileDiv">
-			<b>Location:</b> Italy, Florence <a id="EditLocationProfile" href="/DocSources/EditLocationProfile.html">edit</a>
+			<b>Location:</b> Italy, Florence <a id="EditLocationProfile" href="<c:url value="/EditLocationProfile.html"/>">edit</a>
 		</div>
 		
 		<div id="EditInterestsProfileDiv">
-			<b>Interests:</b> Salvador Rosa, ecc. <a id="EditInterestsProfile" href="/DocSources/EditInterestsProfile.html">edit</a>
+			<b>Interests:</b> Salvador Rosa, ecc. <a id="EditInterestsProfile" href="<c:url value="/EditInterestsProfile.html"/>">edit</a>
 
 		</div>
 		
 		<div id="EditResumeProfileDiv">
-			<b>Resume:</b> no. <a id="EditResumeProfile" href="/DocSources/EditResumeProfile.html">add/modify resume</a>
+			<b>Resume:</b> no. <a id="EditResumeProfile" href="<c:url value="/EditResumeProfile.html"/>">add/modify resume</a>
 		</div>
 	</div>
 	
@@ -61,7 +61,7 @@
 		</ul>
 	</div>
 	
-	<a href="http://courses.medici.org/" target="_blank"><img src="/DocSources/images/button_courses.jpg" alt="MAP courses" id="coursesProfile"/></a>
+	<a href="http://courses.medici.org/" target="_blank"><img src="<c:url value="/images/button_courses.jpg"/>" alt="MAP courses" id="coursesProfile"/></a>
 
 </div>
 

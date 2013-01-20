@@ -4,11 +4,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ServerURL" value="/mview/ReverseProxyIIPImage.do"></c:url>
 	<c:url var="iipZoom" value="/swf/IIPZoom.swf" />
 	<c:url var="expressInstall" value="/swf/expressInstall.swf" />
 
 		<script type="text/javascript">
-			var server = "/DocSources/mview/ReverseProxyIIPImage.do";
+			var server = "${ServerURL}";
 			var image = "${image}";
 			var credit = "${image}";
 			var flashvars = {

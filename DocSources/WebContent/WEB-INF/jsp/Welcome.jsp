@@ -25,7 +25,7 @@
     			<c:param name="completeDOM" value="true"/>
     		</c:url>
      		<div class="discussion">
-            	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a> 
             	<br />
             	<span style="margin-left:23px;">(${discussion.totalReplies - 1} replies)</span>
@@ -47,7 +47,7 @@
     			<c:param name="completeDOM" value="true"/>
     		</c:url>
        		<div class="discussion">
-            	<img src="/DocSources/images/forum/img_forum.png" alt="entry" />
+            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
             	<br />
             	<span style="margin-left:23px;">(${discussion.totalReplies - 1} replies)</span>

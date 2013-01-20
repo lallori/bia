@@ -21,12 +21,12 @@
 <!-- <div id="topicActions"> -->
 <%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><img src="<c:url value="/images/forum/img_reply.png"/>" alt="post a reply" width="17" height="15" /><span class="button_text">Post a <b>reply</b></span></a> --%>
 <!--     <div id="searchThisForumFormDiv"> -->
-<%--         <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post"> --%>
+<%--         <form id="SearchForm" action="/src/SimpleSearch.do" method="post"> --%>
 <!--             <input id="text" name="text" type="text" value="Search this forum..."> -->
 <!--             <input id="search" type="submit" title="Search" value="Search"/> -->
 <%--         </form> --%>
 <!--     </div> -->
-<!--     <a href="#" id="printButton" class="buttonMedium"><img src="/DocSources/images/forum/img_print.png" alt="Print discussion" width="17" height="15" /><span class="button_text">Print discussion</span></a> -->
+<!--     <a href="#" id="printButton" class="buttonMedium"><img src="/images/forum/img_print.png" alt="Print discussion" width="17" height="15" /><span class="button_text">Print discussion</span></a> -->
 <!-- </div> -->
 
 <c:forEach items="${searchResultPage.list}" var="currentPost" varStatus="status">
@@ -73,7 +73,7 @@
 	
 	<div id="jumpToDiv">
     	Jump to:
-        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
+        <form id="jumpToForm" action="/src/SimpleSearch.do" method="post">
             <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
                 <option value="" selected="selected">Select a Forum</option>
             </select>
