@@ -128,22 +128,28 @@
 <script type="text/javascript">
 	$j(document).ready(function() {								
 		$j('#placeNameSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j('#placeTypeSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j('#linkedToTopicsSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j('#linkedToPeopleSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#placeIdSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j('#logicalDeleteSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		
 		$j('#accordion').accordion({

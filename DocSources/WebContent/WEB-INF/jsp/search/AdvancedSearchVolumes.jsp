@@ -374,43 +374,56 @@
 		});
 
 		$j("#volumeSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#dateSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#digitizedSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#languagesSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#otherLangSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#cipherSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#indexSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#fromVolumeSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#toVolumeSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#contextSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#inventarioSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#volumeIdSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j("#logicalDeleteSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		
 		$j('#accordion').accordion({

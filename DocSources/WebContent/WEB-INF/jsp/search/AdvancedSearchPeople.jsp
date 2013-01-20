@@ -346,37 +346,57 @@
 		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
 
 		$j('#namePartsSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#wordSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#dateSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#roleCategorySearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#occupationWordSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		$j('#occupationSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#genderSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j('#placeSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});	
+
 		$j('#researchNotesSearchForm').advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j("#personIdSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
+
 		$j("#logicalDeleteSearchForm").advancedSearchForm({
-			"AdvancedSearchCountURL" : "${AdvancedSearchCountURL}"
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
 		});
 		
 		$j('#accordion').accordion({

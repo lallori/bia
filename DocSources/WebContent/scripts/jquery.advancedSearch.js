@@ -36,8 +36,8 @@
 	$.advancedSearchForm = {};
 
 	$.advancedSearchForm.defaults = {
-		"AdvancedSearchCountURL" : "/DocSources/src/AdvancedSearchCount.json"
-
+		AdvancedSearchCountURL : "",
+		consoleLog : true
 	};
 
 	$.fn.advancedSearchForm = function (options) {
@@ -57,9 +57,11 @@
 			var searchCategory = getSearchCategory(formName, fieldName);
 			var searchType = getSearchType(formName, fieldName);
 
-			console.log("AdvancedSearchForm started. Form Name : " + formName);
-			console.log("Field Name : " + fieldName);
-			console.log("Search Category : " + searchCategory);
+			if (options["consoleLog"] == true) {
+				console.log("AdvancedSearchForm started. Form Name : " + formName);
+				console.log("Field Name : " + fieldName);
+				console.log("Search Category : " + searchCategory);
+			}
 
 			var searchWord = "";
 			var hiddenValue = "";
@@ -123,11 +125,12 @@
 				resetCheckboxField(formName, fieldName);
 			}
 			
-			//hiddenValue = unescape(hiddenValue);
 			//MD: This is for ignore the apostrophe because the link generated is wrong if it's present.
 			//hiddenValue = hiddenValue.replace("'", "")
-			console.log("Searching : " + searchWord);
-			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
+			if (options["consoleLog"] == true) {
+				console.log("Searching : " + searchWord);
+				console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
+			}
 
 			// If the searchWord is null, can't be inserted to the filter
 			if(searchWord == null || searchWord == ""){
@@ -162,11 +165,15 @@
 			// We append new block at the end of "field" SearchDiv 
 			$("#" + fieldName + "SearchDiv").append(searchFilterDiv);
 
-			console.log("AdvancedSearchForm " + formName + " completed.");
+			if (options["consoleLog"] == true) {
+				console.log("AdvancedSearchForm " + formName + " completed.");
+			}
 			
  			$j.ajax({ type:"POST", url:options["AdvancedSearchCountURL"], data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
  				// At this point we have count of total result. Review output page and put the total...
- 				console.log("Advanced search result " + json.totalResult);
+ 				if (options["consoleLog"] == true) {
+ 					console.log("Advanced search result " + json.totalResult);
+ 				}
  				$j(".recordsNum").text(json.totalResult);
 			}});
  			
