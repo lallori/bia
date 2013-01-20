@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="ContextPathURL" value="/"/>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -175,12 +177,13 @@
 				$j('#lng').val(marker.getPosition().lng().toFixed(4));
 				calcdeg();
 			}
-						
+
 			$j("#latlongForm").submit(function(){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){
 					}else{
-						var urlToShowPlace = "/DocSources/src/geobase/ShowPlace.do?placeAllId=${command.placeAllId}";
+						var contextPath = "${ContextPathURL}";
+						var urlToShowPlace = contextPath + "src/geobase/ShowPlace.do?placeAllId=${command.placeAllId}";
 						window.opener.$j("#body_left").load(urlToShowPlace);
 						window.blur();
 						window.opener.focus();
@@ -219,15 +222,7 @@
         <div id="coordinatesDiv">
             <form:form id="latlongForm" method="post" class="edit">
             	<div class="listForm">
-                   <%-- <div class="row">
-                            <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
-                            <div class="col_l"><input type="text" id="lat" name="lat" value="" class="input_20c"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col_l"><label for="lat_degLabel" id="lat_degLabel">Deg/min/sec</label></div>
-                            <div class="col_l"><input type="text" name="lat_deg" id="lat_deg" value="" class="input_20c"></div>
-                        </div> --%>
-                        
+                       
                          <div class="row">
                             <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
                             <div class="col_l"><input type="hidden" id="lat" name="lat" value="" class="input_20c"></div>
@@ -236,15 +231,6 @@
                         
                         <br/>    
            
-                   <%-- <div class="row">
-                            <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
-                            <div class="col_l"><input type="text" id="lng" name="lng" value="" class="input_20c"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col_l"><label for="long_degLabel" id="long_degLabel">Deg/min/sec</label></div>
-                            <div class="col_l"><input type="text" name="long_deg" id="long_deg" value="" class="input_20c"></div>
-                        </div> --%>
-                        
                         <div class="row">
                             <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
                             <div class="col_l"><input type="hidden" id="lng" name="lng" value="" class="input_20c"></div>

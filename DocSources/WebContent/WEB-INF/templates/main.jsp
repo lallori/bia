@@ -1,5 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
+<c:url var="MainContentMacURL" value="/styles/1024/MainContent_mac.css"/>
+
+<c:url var="MainContentLinuxURL" value="/styles/1024/MainContent_linux.css"/>
+
+<c:url var="TemplateLinuxURL" value="/styles/1024/Template_linux.css"/>
+			
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
@@ -49,8 +56,8 @@
 		<![endif]-->
 		
 <!-- 
-		<script src="/DocSources/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js" type="text/javascript"></script>
-		<script src="/DocSources/scripts/mview/mootools-more-1.3.2.1.js" type="text/javascript"></script>
+		<script src="<c:url value="/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js"/>" type="text/javascript"></script>
+		<script src="<c:url value="/scripts/mview/mootools-more-1.3.2.1.js"/>" type="text/javascript"></script>
 -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>
@@ -113,12 +120,11 @@
 				
 			});
 			
-			
 			if (navigator.appVersion.indexOf("Linux")!=-1)
-				document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">');
+				document.write('<link href="${MainContentLinuxURL}" rel="stylesheet" type="text/css">');
 			 
 			 if (navigator.appVersion.indexOf("X11")!=-1)
-				 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">');
+				 document.write('<link href="${MainContentLinuxURL}" rel="stylesheet" type="text/css">');
 			var $timerId;
 			
 		</script>

@@ -40,13 +40,15 @@
 		
 	</div>
 		
+	<c:url var="menuActionsGeoURL" value="/de/geobase/menuActionsGeo.html"/>
+	
 	<script>
 		$j(document).ready(function() {
 			$j("#AddNewTgnPlace").click(
 				function(){
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide(); 
-					$j("#menu_actions").load("/DocSources/de/geobase/menuActionsGeo.html");
+					$j("#menu_actions").load("${menuActionsGeoURL}");
 					return false;
 				}
 			);
@@ -55,7 +57,7 @@
 				function(){
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide(); 
-					$j("#menu_actions").load("/DocSources/de/geobase/menuActionsGeo.html");
+					$j("#menu_actions").load("${menuActionsGeoURL}");
 					return false;
 				}
 			);
@@ -64,7 +66,7 @@
 				function(){
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide(); 
-					$j("#menu_actions").load("/DocSources/de/geobase/menuActionsGeo.html");
+					$j("#menu_actions").load("${menuActionsGeoURL}");
 					return false;
 				}
 			);

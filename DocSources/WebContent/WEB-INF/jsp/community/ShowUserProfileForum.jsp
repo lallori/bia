@@ -126,9 +126,9 @@
         <h3>Contact</h3>
         <ul>
         	<c:if test="${userProfile.mail != null && userProfile.mail != ''}">
-            	<li><img src="/DocSources/images/forum/button_email.png" alt="email" /> <a href="mailto:${userProfile.mail}">Send E-mail to <span>${userProfile.firstName} ${userProfile.lastName}</span></a></li>
+            	<li><img src="<c:url value="/images/forum/button_email.png"/>" alt="email" /> <a href="mailto:${userProfile.mail}">Send E-mail to <span>${userProfile.firstName} ${userProfile.lastName}</span></a></li>
             </c:if>
-            <li><img src="/DocSources/images/forum/button_privateMessage.png" alt="private message" /> <a href="${SendMessageURL}" id="sendMessage">Send private message</a></li>
+            <li><img src="<c:url value="/images/forum/button_privateMessage.png"/>" alt="private message" /> <a href="${SendMessageURL}" id="sendMessage">Send private message</a></li>
         </ul>
     </div>
 </div>
@@ -137,7 +137,7 @@
     <div id="jumpToDiv">
     	<input id="goBackTo" class="button_medium" value="Go Back" type="submit" />
 <!--     	Jump to: -->
-<%--         <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post"> --%>
+<%--         <form id="jumpToForm" action="/src/SimpleSearch.do" method="post"> --%>
 <!--             <select id="selectForum" name="selectForum" selected"" class="selectform_long"> -->
 <!--                 <option value="" selected="selected">Select a Forum</option> -->
 <!--             </select> -->

@@ -8,6 +8,8 @@
 	<c:param name="entryId" value="${entryId}"/>
 </c:url>
 
+<c:url var="GoBackURL" value="/src/advancedSearchModal.html"/>
+
 <div id="vettingHistoryTableDiv">
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="vettingHistoryTable">
         <thead>
@@ -95,7 +97,7 @@
 					);
 			$j("#goBack").click(
 				function(){
-						Modalbox.show("/DocSources/src/advancedSearchModal.html", {title: "ENTRY MENU", width: 750, height: 380});return false;}
+						Modalbox.show("${GoBackURL}", {title: "ENTRY MENU", width: 750, height: 380});return false;}
 						);
 		});
 	</script>

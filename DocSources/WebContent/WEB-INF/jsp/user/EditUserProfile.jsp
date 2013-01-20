@@ -70,7 +70,7 @@
 	
 	
 	
-	<!--  <a href="http://courses.medici.org/" target="_blank"><img src="/DocSources/images/button_courses.jpg" alt="MAP courses" id="coursesProfile"/></a>-->
+	<!--  <a href="http://courses.medici.org/" target="_blank"><img src="<c:url value="/images/button_courses.jpg"/>" alt="MAP courses" id="coursesProfile"/></a>-->
 
 
 	

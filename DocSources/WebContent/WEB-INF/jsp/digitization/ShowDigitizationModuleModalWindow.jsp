@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="menuDigitizationURL" value="menuDigitization.html"/>
+ 
 <div id="digitizationModalDiv">
 	<div id="CreateSchedoneDiv">
         <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.createschedoni"></fmt:message>">?</a>
@@ -27,41 +29,10 @@
 	$j(document).ready(function() {
 		$j("#CreateSchedone").click(function(){
 			$j("#body_left").load($j(this).attr("href"));
-			$j("#menu_actions").load("/DocSources/dm/menuDigitization.html");
+			$j("#menu_actions").load("${menuDigitizationURL}");
 			Modalbox.hide(); 
 			return false;
 		});
-// 		$j("#AddNewFilza").click(function(){
-// 			$j("#body_left").load($j(this).attr("href"));
-// 			Modalbox.hide(); 
-// 			return false;
-// 		});
-// 		$j("#BrowseFilze").click(function(){
-// 			$j("#body_right").load($j(this).attr("href"));
-// 			var tabTitle = "Browse Digitized Volumes";
-// 			var numTab = 0;
-// 			var tabExist = false;
-// 			$j("#tabs ul li a").each(function(){
-// 				var toTest = "";
-// 				toTest += this.text;
-// 				if(!tabExist)
-// 					numTab++;
-// 				if(toTest == tabTitle){
-// 					tabExist = true;
-// 				}
-// 			});
-			
-// 			if(!tabExist){
-// 				$j( "#tabs" ).tabs("add", $j(this).attr("href"), tabTitle + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-// 				$j("#tabs").tabs("select", $j("#tabs").tabs("length") - 1);
-// 				Modalbox.hide();
-// 				return false;
-// 			}else{
-// 				$j("#tabs").tabs("select", numTab - 1);
-// 				Modalbox.hide();
-// 				return false;
-// 			}
-// 		});
 
 		$j("#BrowseFilze").open({width: 500, height: 130, scrollbars: "yes"});
 		$j("#BrowseFilze").click(function(){

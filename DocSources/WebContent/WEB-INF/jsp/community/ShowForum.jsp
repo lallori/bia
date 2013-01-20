@@ -250,7 +250,7 @@
 			<c:if test="${empty subForumsPage.list}">
 					<div class="rowLast">						            
 						<div class="one">
-			            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
+			            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
 			                <a id="viewTopic">No forums available</a>
 			                <span>${currentForum.description}</span>
 			            </div>
