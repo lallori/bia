@@ -7,6 +7,8 @@
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
 	</c:url>
 
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 <body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR PEOPLE</div>
@@ -512,6 +514,7 @@
 		 
 		 var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -545,6 +548,7 @@
 		 
 		var $occupationAutocomplete = $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:3, 
 			    delimiter: null, // /(,|;)\s*/, // regex or character
 			    maxHeight:400,

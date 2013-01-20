@@ -7,6 +7,8 @@
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
 	</c:url>
 
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 <body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR DOCUMENTS</div>
@@ -592,6 +594,7 @@
 			var $personValue = '';
 			var $personAutocomplete = $j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -644,6 +647,7 @@
 			
 			var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -671,6 +675,7 @@
 			
 			var $senderAutocomplete = $j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -690,6 +695,7 @@
 			
 			var $fromAutocomplete = $j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -717,6 +723,7 @@
 			
 			var $recipientAutocomplete = $j("#recipient").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -735,6 +742,7 @@
 			
 			var $toAutocomplete = $j("#to").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -762,6 +770,7 @@
 			
 			var $refersToAutocomplete = $j("#refersTo").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 350,
@@ -792,6 +801,7 @@
 
 			var $topicPlaceAutocomplete = $j("#topicPlace").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -819,6 +829,7 @@
 			
 			var $volumeAutocomplete = $j("#volume").autocompleteGeneral({
 				serviceUrl: '${searchVolumeURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 1,
 				delimiter: null,
 				maxHeight: 400,
@@ -852,6 +863,7 @@
 			
 			var $volumeBetweenAutocomplete = $j("#volumeBetween").autocompleteGeneral({
 				serviceUrl: '${searchVolumeURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 1,
 				delimiter: null,
 				maxHeight: 400,

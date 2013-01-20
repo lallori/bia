@@ -33,6 +33,7 @@
     this.onChangeInterval = null;
     this.ignoreValueChange = false;
     this.serviceUrl = options.serviceUrl;
+    this.loadingImageUrl = options.loadingImageUrl;
     this.isLocal = false;
     this.options = {
       autoSubmit: false,
@@ -201,7 +202,7 @@
       if (q === '' || q.length < this.options.minChars) {
         this.hide();
       } else {
-        this.getSuggestions(q);
+        this.getSuggestions(q, this.loadingImageUrl);
       }
     },
 
@@ -229,7 +230,7 @@
       return ret;
     },
     
-    getSuggestions: function(q) {
+    getSuggestions: function(q, loadingImageUrl) {
       var cr, me;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
       if (cr && $.isArray(cr.suggestions)) {
@@ -240,7 +241,7 @@
         me = this;
         me.options.params.query = q;
         // we attach loading image...
-        $(this.el).css('background-image', 'url(/DocSources/images/loading_autocomplete.gif)').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
+        $(this.el).css('background-image', 'url('+loadingImageUrl+'').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
         $.get(this.serviceUrl, me.options.params, function(txt) { me.processResponse(txt); }, 'text');
       }
     },

@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
 		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
@@ -182,6 +184,7 @@
 
 			var a = $j('#seriesRefDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

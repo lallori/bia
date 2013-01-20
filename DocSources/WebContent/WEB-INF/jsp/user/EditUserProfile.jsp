@@ -10,6 +10,8 @@
 
 <c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do" />
 
+<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 <form:form id="EditUserProfileForm" action="${EditUserProfileURL}" method="post" cssClass="edit">
 	<fieldset>
 	<div class="listFormProfile">
@@ -83,6 +85,7 @@
 				
 				var a = $j('#country').autocompleteGeneral({ 
 				    serviceUrl:'${findCountryUrl}',
+				    loadingImageUrl:'${LoadingImageURL}',
 				    minChars:1, 
 				    delimiter: /(,|;)\s*/, // regex or character
 				    maxHeight:400,

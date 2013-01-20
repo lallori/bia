@@ -7,7 +7,8 @@
 	<c:url var="findCountryUrl" value="/user/ajax/FindCountry.json"/>
 	<c:url var="tickIcon" value="/images/tick.png"/>
 	<c:url var="busyIcon" value="/images/busy_icon.gif"/>
-		
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+	
 		<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
 		<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
 		<script type='text/javascript' src='<c:url value="/scripts/jqModal.js"/>'></script>
@@ -137,6 +138,7 @@
 
 			var a = $('#countryAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findCountryUrl}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

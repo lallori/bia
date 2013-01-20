@@ -7,6 +7,8 @@
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
 	</c:url>
 
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 	<body>
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR VOLUMES</div>
@@ -497,6 +499,7 @@
 		
 		var $volumeAutocomplete = $j("#volume").autocompleteGeneral({
 			serviceUrl: '${searchVolumeURL}',
+		    loadingImageUrl:'${LoadingImageURL}',
 			minChars: 1,
 			delimiter: null,
 			maxHeight: 400,
@@ -529,6 +532,7 @@
 		
 // 		var $volBetweenAutocomplete = $j("#volumeBetween").autocompleteGeneral({
 // 			serviceUrl: '${searchVolumeURL}',
+//		    loadingImageUrl:'${LoadingImageURL}',
 // 			minChars: 1,
 // 			delimiter: null,
 // 			maxHeight: 400,
@@ -548,6 +552,7 @@
 		
 		var $otherLangAutocomplete = $j("#otherLang").autocompleteGeneral({
 			serviceUrl: '${searchOtherLangURL}',
+		    loadingImageUrl:'${LoadingImageURL}',
 			minChars: 1,
 			delimiter: null,
 			maxHeight: 400,

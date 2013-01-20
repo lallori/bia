@@ -6,6 +6,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+
+			<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 			<link rel="stylesheet" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
 			<div id="registrationForm">
@@ -68,6 +71,7 @@
 		$j(document).ready(function() {
 			var a = $j('#countryAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findCountryUrl}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

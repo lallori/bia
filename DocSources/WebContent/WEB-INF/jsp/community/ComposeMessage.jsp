@@ -11,6 +11,8 @@
 
 <c:url var="ComposeMessageURL" value="/community/ComposeMessage.do"/>
 
+<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 <c:url var="MyInboxURL" value="/community/ShowMessagesByCategory.do?userMessageCategory=INBOX"/>
 
 <form:form id="composeMessageForm">
@@ -163,6 +165,7 @@
 			
 			var $usersAutoComplete = $j('#to').autocompleteGeneral({ 
 			    serviceUrl:'${searchUsersURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,

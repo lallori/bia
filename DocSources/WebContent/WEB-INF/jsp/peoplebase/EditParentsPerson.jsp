@@ -5,6 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do" />
 			
@@ -150,6 +152,7 @@
 			
 			var fatherDescription = $j('#fatherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchFatherLinkableToPersonURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

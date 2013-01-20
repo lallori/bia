@@ -8,9 +8,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.general.js"/>"></script>
+
 <link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 
 <c:url var="EmailMessageURL" value="/community/EmailMessage.do"/>
+
+<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
 
 <c:url var="MyInboxURL" value="/community/ShowMessagesByCategory.do?userMessageCategory=INBOX"/>
 
@@ -195,6 +198,7 @@
 			
 			var $usersAutoComplete = $j('#to').autocompleteGeneral({ 
 			    serviceUrl:'${searchUsersURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,

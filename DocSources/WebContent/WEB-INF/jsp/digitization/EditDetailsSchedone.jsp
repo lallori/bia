@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_COORDINATORS, DIGITIZATION_TECHNICIANS">
 		<c:url var="EditDetailsSchedoneURL" value="/digitization/EditDetailsSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
@@ -251,6 +253,7 @@
 	        
 	        var a = $j('#serie').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
+			    loadingImageUrl:'${LoadingImageURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
