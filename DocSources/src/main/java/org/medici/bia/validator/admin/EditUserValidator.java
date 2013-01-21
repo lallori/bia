@@ -84,6 +84,7 @@ public class EditUserValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditUserCommand editUserCommand = (EditUserCommand) object;
 		validateAccount(editUserCommand.getOriginalAccount(), editUserCommand.getAccount(), errors);
+		validateConfirmPassword(editUserCommand.getPassword(), editUserCommand.getConfirmPassword(), errors);
 	}
 
 	/**
@@ -124,5 +125,23 @@ public class EditUserValidator implements Validator {
 		} catch(ApplicationThrowable ath) {
 			errors.rejectValue("originalAccount", "error.originalAccount.notfound");
 		}
+	}
+	
+	public void validateConfirmPassword(String password, String confirmPassword, Errors errors){
+		if(password == null || password.equals("")){
+			errors.rejectValue("password", "error.password.null");
+			return;
+		}
+		
+		if(confirmPassword == null || confirmPassword.equals("")){
+			errors.rejectValue("confirmPassword", "error.confirmPassword.null");
+			return;
+		}
+		
+		if(!password.equals(confirmPassword)){
+			errors.rejectValue("password", "error.password.invalid");
+			return;
+		}
+		return;
 	}
 }

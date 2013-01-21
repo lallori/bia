@@ -118,6 +118,10 @@
 			</ul>
          </div>
     </div>
+    
+    <form:errors path="password" cssClass="inputerrors" htmlEscape="false"/>
+    <form:errors path="confirmPassword" cssClass="inputerrors" htmlEscape="false"/>
+    
     <div>
 		<input id="close" type="submit" value="Close" title="Do not save changes" />
 		<input id="save" class="save" type="submit" value="Save" />
@@ -161,7 +165,11 @@
 		
 		$j("#EditUserControlForm").submit(function (){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-				$j("#body_left").html(html);
+				if ($j(html).find(".inputerrors").length > 0){
+					$j("#EditUserControlDiv").html(html);
+				} else {
+					$j("#body_left").html(html);
+				}
 			}});
 			return false;
 		});
