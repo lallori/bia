@@ -111,7 +111,7 @@ public class User implements Serializable, Cloneable {
 	private Date lastPasswordChangeDate;
 	@Column (name="\"locked\"", nullable=false, columnDefinition="BIT default 0")
 	private Boolean locked;
-	@Column (name="\" mail\"", length=50, nullable=false)
+	@Column (name="\"mail\"", length=50, nullable=false)
 	private String mail;
 	@Column (name="\"mailHide\"", nullable=false, columnDefinition="BIT default 0")
 	private Boolean mailHide;
