@@ -86,7 +86,7 @@ public class DocumentUtils {
 			//MD: This is to remove html tags
 			String postText = textDocument;
 			
-			String [] wordArray = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+			String [] wordArray = StringUtils.split(searchText, " ");
 			StringBuffer returnText = new StringBuffer(0);
 			//For every word we find where is positioned inside the post
 			for(String currentWord : wordArray){

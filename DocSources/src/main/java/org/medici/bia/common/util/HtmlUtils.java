@@ -511,16 +511,16 @@ public class HtmlUtils {
 			//If there is the second double quote or not
 			if(to != -1){
 				//Add the exact words to the list and remove them from the string
-				exactWords.add(toSearch.substring(from + 1, to));
+				exactWords.add(toSearch.substring(from + 1, to).toLowerCase());
 				toSearch = toSearch.substring(0, from) + toSearch.substring(to + 1, toSearch.length());
 			}else{
 				toSearch = toSearch.replace("\"", " ");
 			}
 		}
-		String [] words = RegExUtils.splitPunctuationAndSpaceChars(searchWord);
+		String [] words = StringUtils.split(searchWord.toLowerCase(), " ");
 		if(exactWords.size() == 0){
 			for(String currentWord : words){
-				indexWord = returnText.toString().indexOf(currentWord);
+				indexWord = returnText.toString().toLowerCase().indexOf(currentWord);
 				while(indexWord != -1){
 					while(indexWord >= 0 && returnText.charAt(indexWord) != ' '){
 						indexWord--;
@@ -532,7 +532,7 @@ public class HtmlUtils {
 						endWord++;
 					}
 					returnText.insert(endWord, "</span>");
-					Integer nextWord = returnText.substring(endWord).indexOf(currentWord);
+					Integer nextWord = returnText.substring(endWord).toLowerCase().indexOf(currentWord);
 					if(nextWord != -1){
 						indexWord = endWord + nextWord;
 					}else{
@@ -542,13 +542,13 @@ public class HtmlUtils {
 			}
 		}else{
 			for(String currentWord : exactWords){
-				indexWord = returnText.toString().indexOf(currentWord);
+				indexWord = returnText.toString().toLowerCase().indexOf(currentWord);
 				while(indexWord != -1){
 					Integer beginWord = indexWord; 
 					returnText.insert(beginWord, "<span class='highlighted'>");
 					Integer endWord = beginWord + 26 + currentWord.length();					
 					returnText.insert(endWord, "</span>");
-					Integer nextWord = returnText.substring(endWord).indexOf(currentWord);
+					Integer nextWord = returnText.substring(endWord).toLowerCase().indexOf(currentWord);
 					if(nextWord != -1){
 						indexWord = endWord + nextWord;
 					}else{
