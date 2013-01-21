@@ -512,40 +512,46 @@
 			return false;
 		});
 		 
-		 var $placeAutocomplete = $j("#place").autocompletePlace({
-				serviceUrl: '${searchPlaceURL}',
-			    loadingImageUrl:'${LoadingImageURL}',
-				minChars: 3,
-				delimiter: null,
-				maxHeight: 400,
-				width: 450,
-				zIndex: 9999,
-				deferRequestBy: 0,
-				noCache: true,
-				onSelect: function(value, data){
-					$j(".placeAdd").removeAttr("disabled");
-					$j('#placeId').val(data);
-					$j(".placeAdd").attr("disabled");
-					$j(".placeAdd").prop("disabled", false);
-				}
-			});	
+		var $placeValue = '';
+		var $placeAutocomplete = $j("#place").autocompletePlace({
+			serviceUrl: '${searchPlaceURL}',
+		    loadingImageUrl:'${LoadingImageURL}',
+			minChars: 3,
+			delimiter: null,
+			maxHeight: 400,
+			width: 450,
+			zIndex: 9999,
+			deferRequestBy: 0,
+			noCache: true,
+			onSelect: function(value, data){
+				$j(".placeAdd").die();
+				$j(".placeAdd").removeAttr("disabled");
+				$j('#placeId').val(data);
+				$j(".placeAdd").attr("disabled");
+				$j(".placeAdd").prop("disabled", false);
+				$placeValue = $j("#place").val();
+				$j("#place").live('keyup', function(){
+					if($j("#place").val() != $placeValue){
+						$j(".placeAdd").attr("disabled","disabled");
+						$j("#placeId").val("");
+					}
+					return false;
+				});
+				$j("#place").live('keypress', function(e){
+					if(e.keyCode == 13 && $j("#place").val() != $placeValue){
+						e.stopPropagation();
+						return false;
+					}
+				});
+			}
+		});	
 		 
-// 		 $j("#place").blur(function(){
-// 			$placeAutocomplete.killSuggestions();
-// 			return false;
-// 		 });
-		 
-		$j("#place").keyup(function(){
-			if($j("#placeId").val() != '')
-				$j(".placeAdd").attr("disabled","disabled");
-		});
-			
 		$j("#placeSearchForm").submit(function(){
 			$j("#placeId").val("");
-			$j("#place").val("");
 			$j(".placeAdd").attr("disabled","disabled");
 		});
 		 
+		var $occupationValue = '';
 		var $occupationAutocomplete = $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -557,21 +563,26 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
+			    	$j(".occupationAdd").die();
 			    	$j(".occupationAdd").removeAttr("disabled");
 			    	$j('#occupationId').val(data);
 			    	$j(".occupationAdd").attr("disabled");
 			    	$j(".occupationAdd").prop("disabled", false);
+			    	$occupationValue = $j("#occupation").val();
+					$j("#occupation").live('keyup', function(){
+						if($j("#occupation").val() != $occupationValue){
+							$j(".occupationAdd").attr("disabled","disabled");
+							$j("#occupationId").val("");
+						}
+						return false;
+					});
+					$j("#occupation").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#occupation").val() != $occupationValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 			    }
-		});
-		
-// 		$j("#occupation").blur(function(){
-// 			$occupationAutocomplete.killSuggestions();
-// 			return false;
-// 		});
-		
-		$j("#occupation").keyup(function(){
-			if($j("#occupationId").val() != '')
-				$j(".occupationAdd").attr("disabled","disabled");
 		});
 		
 		$j("#occupationSearchForm").submit(function(){

@@ -97,7 +97,7 @@
 			});
 			
 			$j(".EXTRACT").click(function(){
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Extract Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href") + "?simpleSearchPerimeter=" + $j(this).attr("class") + "&text=" + $j("#textSearch").val(), "Document Transcriptions Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				Modalbox.hide();
 				return false;

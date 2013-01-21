@@ -644,7 +644,7 @@
 				$j(".personAdd").attr("disabled","disabled");
 			});
 			
-			
+			var $placeValue = '';
 			var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -656,23 +656,34 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".placeAdd").die();
 					$j(".placeAdd").removeAttr("disabled");
 					$j('#placeId').val(data);
 					$j(".placeAdd").attr("disabled");
 					$j(".placeAdd").prop("disabled", false);
+					$placeValue = $j("#place").val();
+					$j("#place").live('keyup', function(){
+						if($j("#place").val() != $placeValue){
+							$j(".placeAdd").attr("disabled","disabled");
+							$j("#placeId").val("");
+						}
+						return false;
+					});
+					$j("#place").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#place").val() != $placeValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
 			});	
-			
-			$j("#place").keyup(function(){
-				if($j("#placeId").val() != '')
-					$j(".placeAdd").attr("disabled","disabled");
-			});
 			
 			$j("#placeSearchForm").submit(function(){
 				$j("#placeId").val("");
 				$j(".placeAdd").attr("disabled","disabled");
 			});
 			
+			var $senderValue = '';
 			var $senderAutocomplete = $j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -684,15 +695,34 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".senderAdd").die();
+					$j(".senderAdd").removeAttr("disabled");
 					$j('#senderId').val(data);
+					$j(".senderAdd").attr("disabled");
+					$j(".senderAdd").prop("disabled", false);
+					$senderValue = $j("#sender").val();
+					$j("#sender").live('keyup', function(){
+						if($j("#sender").val() != $senderValue){
+							$j(".senderAdd").attr("disabled","disabled");
+							$j("#senderId").val("");
+						}
+						return false;
+					});
+					$j("#sender").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#sender").val() != $senderValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
 			});
 			
 			$j("#senderSearchForm").submit(function(){
 				$j("#senderId").val("");
-// 				$j(".senderAdd").attr("disabled","disabled");
+				$j(".senderAdd").attr("disabled","disabled");
 			});		
 			
+			var $fromValue = '';
 			var $fromAutocomplete = $j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -704,16 +734,26 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".fromAdd").die();
 					$j(".fromAdd").removeAttr("disabled");
 					$j('#fromId').val(data);
 					$j(".fromAdd").attr("disabled");
 					$j(".fromAdd").prop("disabled", false);
+					$fromValue = $j("#from").val();
+					$j("#from").live('keyup', function(){
+						if($j("#from").val() != $fromValue){
+							$j(".fromAdd").attr("disabled","disabled");
+							$j("#fromId").val("");
+						}
+						return false;
+					});
+					$j("#from").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#from").val() != $fromValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
-			});
-			
-			$j("#from").keyup(function(){
-				if($j("#fromId").val() != '')
-					$j(".fromAdd").attr("disabled","disabled");
 			});
 			
 			$j("#fromSearchForm").submit(function(){
@@ -721,6 +761,7 @@
 				$j(".fromAdd").attr("disabled","disabled");
 			});
 			
+			var $recipientValue = '';
 			var $recipientAutocomplete = $j("#recipient").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -732,14 +773,34 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".recipientAdd").die();
+					$j(".recipientAdd").removeAttr("disabled");
 					$j('#recipientId').val(data);
+					$j(".recipientAdd").attr("disabled");
+					$j(".recipientAdd").prop("disabled", false);
+					$recipientValue = $j("#recipient").val();
+					$j("#recipient").live('keyup', function(){
+						if($j("#recipient").val() != $recipientValue){
+							$j(".recipientAdd").attr("disabled","disabled");
+							$j("#recipientId").val("");
+						}
+						return false;
+					});
+					$j("#recipient").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#recipient").val() != $recipientValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
 			});
 
 			$j("#recipientSearchForm").submit(function(){
 				$j("#recipientId").val("");
+				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
+			var $toValue = '';
 			var $toAutocomplete = $j("#to").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -751,16 +812,26 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".toAdd").die();
 					$j(".toAdd").removeAttr("disabled");
 					$j('#toId').val(data);
 					$j(".toAdd").attr("disabled");
 					$j(".toAdd").prop("disabled", false);
+					$toValue = $j("#to").val();
+					$j("#to").live('keyup', function(){
+						if($j("#to").val() != $toValue){
+							$j(".toAdd").attr("disabled","disabled");
+							$j("#toId").val("");
+						}
+						return false;
+					});
+					$j("#to").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#to").val() != $toValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
-			});	
-
-			$j("#to").keyup(function(){
-				if($j("#toId").val() != '')
-					$j(".toAdd").attr("disabled","disabled");
 			});
 			
 			$j("#toSearchForm").submit(function(){
@@ -768,6 +839,7 @@
 				$j(".toAdd").attr("disabled","disabled");
 			});
 			
+			var $refersToValue = '';
 			var $refersToAutocomplete = $j("#refersTo").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -779,12 +851,31 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".refersToAdd").die();
+					$j(".refersToAdd").removeAttr("disabled");
 					$j('#refersToId').val(data);
+					$j(".refersToAdd").attr("disabled");
+					$j(".refersToAdd").prop("disabled", false);
+					$refersToValue = $j("#refersTo").val();
+					$j("#refersTo").live('keyup', function(){
+						if($j("#refersTo").val() != $refersToValue){
+							$j(".refersToAdd").attr("disabled","disabled");
+							$j("#refersToId").val("");
+						}
+						return false;
+					});
+					$j("#refersTo").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#refersTo").val() != $refersToValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
 			});
 			
 			$j("#refersToSearchForm").submit(function(){
 				$j("#refersToId").val("");
+				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
 			$j("#topicSelect").change(function(){
@@ -799,6 +890,7 @@
 				 return false;
 			 });
 
+			var $topicPlaceValue = '';
 			var $topicPlaceAutocomplete = $j("#topicPlace").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
@@ -810,17 +902,27 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".topicPlaceAdd").die();
 					$j(".topicPlaceAdd").removeAttr("disabled");
 					$j('#topicPlaceId').val(data);
 					$j(".topicPlaceAdd").attr("disabled");
 					$j(".topicPlaceAdd").prop("disabled", false);
+					$topicPlaceValue = $j("#topicPlace").val();
+					$j("#topicPlace").live('keyup', function(){
+						if($j("#topicPlace").val() != $topicPlaceValue){
+							$j(".topicPlaceAdd").attr("disabled","disabled");
+							$j("#topicPlaceId").val("");
+						}
+						return false;
+					});
+					$j("#topicPlace").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#topicPlace").val() != $topicPlaceValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
 				}
 			});	
-			
-			$j("#topicPlace").keyup(function(){
-				if($j("#topicPlaceId").val() != '')
-					$j(".topicPlaceAdd").attr("disabled","disabled");
-			});
 			
 			$j("#topicPlaceSearchForm").submit(function(){
 				$j("#topicPlaceId").val("");

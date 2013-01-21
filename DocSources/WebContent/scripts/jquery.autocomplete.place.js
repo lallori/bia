@@ -153,12 +153,14 @@
           break;
         case 9: //KEY_TAB:
         case 13: //KEY_RETURN:
-          if (this.selectedIndex === -1) {
-            this.hide();
-            return;
+        	var selectedNow = this.selectedIndex
+        	if(selectedNow !== -1){
+        		this.select(selectedNow);        		
+        		if(e.keyCode === 9){ return; }
+        	}else{
+        		this.hide();
+        		return;
           }
-          this.select(this.selectedIndex);
-          if(e.keyCode === 9){ return; }
           break;
         case 38: //KEY_UP:
           this.moveUp();
