@@ -28,6 +28,13 @@
 			</security:authorize>
 		</ul>
 	</div>
+	
+	<div id="deleteMessagesModal" title="Delete" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Are you sure you want to delete this/these message/s?
+	</p>
+	</div>  
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 

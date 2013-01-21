@@ -332,6 +332,7 @@
 				}else{
 					//TODO: If the main window is closed
 // 					window.opener = window.open("${BIAHomeURL}", "_blank");
+					window.alert("Please open BIA application window and reload the forum");
 				}
 				return false;
 			});

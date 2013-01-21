@@ -131,5 +131,12 @@
 			$j("#findMemberModal").dialog('open');
 			return false;
 		});
+		
+		$j("#findMemberForm").submit(function(){
+			$j("#findMemberModal").dialog("close");
+			var formSubmitUrl = '${ShowMembersForumURL}' + '?' + $j("#findMemberForm").serialize();
+			$j("#main").load(formSubmitUrl);
+			return false;
+		});
 	});
 </script>

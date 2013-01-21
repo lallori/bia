@@ -74,14 +74,6 @@
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
 
 
-<div id="deleteMessagesModal" title="Delete" style="display:none"> 
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to delete this/these message/s?
-	</p>
-</div>  
-
-
 	<script type="text/javascript">
 		$j(document).ready(function() {
 // 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
