@@ -80,7 +80,7 @@ public class EmailMessageUserDAOJpaImpl extends JpaDao<Integer, EmailMessageUser
 	 */
 	@Override
 	public void createNewEmailMessageUserForAll(EmailMessageUser emailMessageUser) throws PersistenceException {
-		StringBuilder query = new StringBuilder("INSERT INTO tblEmailMessageUser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tblUser.account FROM tblUser");
+		StringBuilder query = new StringBuilder("INSERT INTO tblEmailMessageUser (messageBody, messageSubject, mailSended, account) SELECT DISTINCT '" + emailMessageUser.getBody() + "', '" + emailMessageUser.getSubject() + "', 0, tblUser.account FROM tblUser WHERE approved = true");
 		Query nativeQuery = getEntityManager().createNativeQuery(query.toString());
 		nativeQuery.executeUpdate();
 	}
