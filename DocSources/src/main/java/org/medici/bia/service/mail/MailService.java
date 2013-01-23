@@ -76,6 +76,13 @@ public interface MailService {
 	Boolean sendForumPostReplyNotificationMail(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser);
 
 	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	Boolean sendMailLockedUser(User user);
+	
+	/**
 	 * This method will send an mail for password recovery , and update the state
 	 * of entity passwordChangeRequest.
 	 * 

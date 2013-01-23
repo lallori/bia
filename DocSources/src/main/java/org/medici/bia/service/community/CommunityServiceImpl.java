@@ -1143,8 +1143,12 @@ public class CommunityServiceImpl implements CommunityService {
 			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
 			
 			if (forumTopic != null) {
+				//This control is for anonymous user that look a topic 
+				if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String){
+					return false;
+				}
 				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-				if(getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic) != null){
+				if(user != null && getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic) != null){
 					return true;
 				}
 			}

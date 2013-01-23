@@ -302,6 +302,41 @@ public class MailServiceImpl implements MailService {
 			return Boolean.FALSE;
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean sendMailLockedUser(User user) {
+		try {
+			if (!StringUtils.isBlank(user.getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(user.getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.subject"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.text", 
+								new String[]{user.getAccount()
+											 },
+											 "{", "}"));
+				getJavaMailSender().send(message);
+				SimpleMailMessage messageToAdmin = new SimpleMailMessage();
+				messageToAdmin.setFrom(getMailFrom());
+				messageToAdmin.setTo(ApplicationPropertyManager.getApplicationProperty("mail.admin.to"));
+				messageToAdmin.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.lockedUserToAdmin.subject"));
+				messageToAdmin.setText(ApplicationPropertyManager.getApplicationProperty("mail.lockedUserToAdmin.text",
+								new String[]{user.getAccount()
+											},
+											"{", "}"));
+				getJavaMailSender().send(messageToAdmin);
+			} else {
+				logger.error("Mail locked not sended for user " + user.getAccount() + ". Check mail field on tblUser for account " + user.getAccount());
+			}
+			return Boolean.TRUE;
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

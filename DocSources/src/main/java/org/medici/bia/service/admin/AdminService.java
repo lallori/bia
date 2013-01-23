@@ -225,6 +225,13 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	void sendApprovationMessage(List<ApprovationUser> usersToApprove) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @throws ApplicationThrowable
+	 */
+	void sendLockedMessage(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

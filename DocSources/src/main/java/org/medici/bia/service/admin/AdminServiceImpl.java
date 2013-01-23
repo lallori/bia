@@ -871,6 +871,41 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 	}
+	
+	@Override
+	public void sendLockedMessage(User user) throws ApplicationThrowable {
+		try{
+			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
+
+			for (User currentAdministator : administratorUsers) {
+				try {
+					UserMessage userMessage = new UserMessage();
+					userMessage.setSender(user.getAccount());
+					userMessage.setRecipient(currentAdministator.getAccount());
+					userMessage.setUser(currentAdministator);
+					userMessage.setParentMessage(null);
+					userMessage.setReadedDate(null);
+					userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
+					userMessage.setSendedDate(new Date());
+					userMessage.setSubject(ApplicationPropertyManager.getApplicationProperty("message.lockedUser.subject",
+											new String[]{
+											user.getAccount()},"{", "}"));
+					userMessage.setBody(ApplicationPropertyManager.getApplicationProperty("message.lockedUser.text",
+										new String[]{
+											user.getAccount()
+										},
+										"{", "}"));
+					getUserMessageDAO().persist(userMessage);
+				} catch (PersistenceException persistenceException) {
+					logger.error(persistenceException);
+				}
+			}
+			
+		}catch(Throwable throwable){
+			throw new ApplicationThrowable(throwable);
+		}
+		
+	}
 
 	/**
 	 * @param accessLogDAO the accessLogDAO to set

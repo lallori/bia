@@ -862,7 +862,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 							volumesQuery.append(')');
 						}else{
 							volumesQuery.append("(volNum=");
-							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)));
 							volumesQuery.append(" AND volLetExt='");
 							volumesQuery.append(VolumeUtils.extractVolLetExt(volumes.get(i)));
 							volumesQuery.append("')");

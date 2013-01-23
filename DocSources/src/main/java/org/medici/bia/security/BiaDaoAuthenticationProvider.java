@@ -42,7 +42,9 @@ import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.admin.AdminService;
 import org.medici.bia.service.log.LogService;
+import org.medici.bia.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -90,7 +92,27 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	}
 
 	@Autowired
+	private AdminService adminService;
+	
+	@Autowired
 	private LogService logService;
+	
+	@Autowired
+	private MailService mailService;
+
+	/**
+	 * @return the adminService
+	 */
+	public AdminService getAdminService() {
+		return adminService;
+	}
+
+	/**
+	 * @param adminService the adminService to set
+	 */
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
+	}
 
 	/**
 	 * @return the logService
@@ -104,6 +126,20 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	 */
 	public void setLogService(LogService logService) {
 		this.logService = logService;
+	}
+
+	/**
+	 * @return the mailService
+	 */
+	public MailService getMailService() {
+		return mailService;
+	}
+
+	/**
+	 * @param mailService the mailService to set
+	 */
+	public void setMailService(MailService mailService) {
+		this.mailService = mailService;
 	}
 
 	/**
@@ -134,7 +170,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 			}
 			
 			if (!user.getApproved()) { 
-				throw new AccountNotApprovedException("User is not approved");
+				throw new AccountNotApprovedException("User has not been approved yet. Wait for an approvation email before logging");
 			}
 	
 			if (!user.getExpirationDate().after(new Date())) {
@@ -191,6 +227,14 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				
 				if (user.getBadLogin() > badLogin) {
 					user.setLocked(true);
+					//Send email to locked user
+					getMailService().sendMailLockedUser(user);
+					try {
+						//Send message to all Administrators
+						getAdminService().sendLockedMessage(user);
+					} catch (ApplicationThrowable ath) {
+						
+					}
 				}
 
 				getUserDAO().merge(user);

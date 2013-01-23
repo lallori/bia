@@ -2176,9 +2176,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							volumesQuery.append(')');
 						} else {
 							volumesQuery.append("(volume.volNum=");
-							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)));
 							volumesQuery.append(" AND volume.volLetExt='");
-							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)).toString());
+							volumesQuery.append(VolumeUtils.extractVolLetExt(volumes.get(i)));
 							volumesQuery.append("')");
 						}
 					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
