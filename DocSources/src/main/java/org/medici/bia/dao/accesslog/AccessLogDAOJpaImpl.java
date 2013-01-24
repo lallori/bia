@@ -30,6 +30,8 @@ package org.medici.bia.dao.accesslog;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.joda.time.DateTime;
+import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.AccessLog;
 import org.springframework.stereotype.Repository;
@@ -65,6 +67,17 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countGuestsForum() {
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT ipAddress) FROM AccessLog WHERE account = 'anonymousUser' AND action LIKE '%community%' AND (dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "')");
+		query.setMaxResults(1);
+		return (Long) query.getSingleResult();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

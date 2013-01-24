@@ -314,6 +314,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	Map<String, Object> getForumWhoIsOnline() throws ApplicationThrowable;
 
 	/**
 	 * 

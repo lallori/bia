@@ -392,4 +392,24 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/community/WhoIsOnlineForum.json", method = RequestMethod.GET)
+	public ModelAndView whoIsOnlineForum(){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try{
+			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();
+			model.put("countOnlineUsers", ((List<String>) whoIsOnlineHashMap.get("onlineUsers")).size());
+			model.put("countGuestUsers", whoIsOnlineHashMap.get("guestUsers"));
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
+		
+		return new ModelAndView("responseOK", model);
+	}
 }

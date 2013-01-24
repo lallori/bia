@@ -41,6 +41,12 @@ public interface AccessLogDAO extends Dao<Integer, AccessLog> {
 
 	/**
 	 * 
+	 * @return
+	 */
+	Long countGuestsForum();
+	
+	/**
+	 * 
 	 * @param originalAccount
 	 * @param newAccount
 	 * @return

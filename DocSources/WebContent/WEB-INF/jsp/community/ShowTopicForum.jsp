@@ -203,7 +203,12 @@
             <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>
-    <div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+    <c:if test="${onlineUsers.contains(currentPost.user.account)}">
+    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+    </c:if>
+    <c:if test="${!onlineUsers.contains(currentPost.user.account)}">
+    	<div id="online"></div>
+    </c:if>
 </div>
 </c:forEach>
 

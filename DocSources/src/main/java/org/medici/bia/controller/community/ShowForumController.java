@@ -277,6 +277,9 @@ public class ShowForumController {
 
 			Map<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 			model.put("statisticsHashMap", statisticsHashMap);
+			
+			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();
+			model.put("whoIsOnlineHashMap", whoIsOnlineHashMap);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowForum", model);

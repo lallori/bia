@@ -45,6 +45,7 @@ import org.medici.bia.common.search.AdvancedSearchVolume;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.ApplicationError;
+import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
@@ -96,6 +97,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class CommunityServiceImpl implements CommunityService {
+	@Autowired
+	private AccessLogDAO accessLogDAO;
+	
 	@Autowired
 	private AnnotationDAO annotationDAO;
 	@Autowired
@@ -654,6 +658,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @return the accessLogDAO
+	 */
+	public AccessLogDAO getAccessLogDAO() {
+		return accessLogDAO;
+	}
+	/**
 	 * @return the annotationDAO
 	 */
 	public AnnotationDAO getAnnotationDAO() {
@@ -992,6 +1002,21 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Map<String, Object> getForumWhoIsOnline() throws ApplicationThrowable {
+		try {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>(0);
+			hashMap.put("onlineUsers", getUserDAO().whoIsOnlineForum());
+			hashMap.put("guestUsers", getAccessLogDAO().countGuestsForum());
+			return hashMap;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Forum getMostActiveForumByUser(User user) throws ApplicationThrowable {
 		try{
 			return getForumPostDAO().getMostActiveForumByUser(user);
@@ -1319,6 +1344,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @param accessLogDAO the accessLogDAO to set
+	 */
+	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
+		this.accessLogDAO = accessLogDAO;
+	}
+	/**
 	 * @param annotationDAO the annotationDAO to set
 	 */
 	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
@@ -1493,6 +1524,5 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-	
+	}	
 }

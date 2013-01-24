@@ -11,16 +11,18 @@
  				<c:url var="CheckNewMessagesURL" value="/community/CheckNewMessages.json"/>
  				
  				<div id="userDiv">
+ 					<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS">
 					<img src="<c:url value="/images/forum/img_user.png"/>" alt="User" />
 					<a href="<c:url value="/community/ShowUserProfileForum.do"/>" id="profile">User Profile</a>
 					<a href="<c:url value="/community/ShowMessagesByCategory.do"/>?userMessageCategory=INBOX" id="userMessages">(<span id="messagesCount">0</span> new messages)</a>
 					<a href="<c:url value="/community/ShowMyForumPost.do"/>" id="viewYourPosts">View your posts</a>
-					
+					</security:authorize>
 					<input type="hidden" value="" id="prevUrl" />
 				</div>
 
 				<script type="text/javascript">
 					$j(document).ready(function() {
+						<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS">
 						$j('#profile').click(function (){
 							$j("#main").load($j(this).attr("href"));
 							$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
@@ -51,5 +53,7 @@
 								}
 							}});
 						}, 60000); //every 1 minute...
+						
+						</security:authorize>
 					});
 				</script>

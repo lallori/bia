@@ -84,6 +84,17 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		query.setMaxResults(1);
 		return (Long) query.getSingleResult();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countWhoIsOnlineForum() {
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT user.account) FROM User user, AccessLog accessLog WHERE user.account = accessLog.account AND user.forumJoinedDate IS NOT NULL AND (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "')");
+		query.setMaxResults(1);
+		return (Long) query.getSingleResult();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -703,5 +714,16 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		query.setParameter("originalAccount", originalAccount);
 
 		return query.executeUpdate();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> whoIsOnlineForum() {
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		Query query = getEntityManager().createQuery("SELECT DISTINCT user.account FROM User user, AccessLog accessLog WHERE user.forumJoinedDate IS NOT NULL AND user.account = accessLog.account AND (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "') AND accessLog.action LIKE '%community%'");
+		return query.getResultList();
 	}
 }

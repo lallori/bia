@@ -34,6 +34,7 @@
         <security:intercept-url pattern="/community/AdvancedSearchForumPost.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/SimpleSearchForumPost.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/GetForumChronology.json"	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/community/WhoIsOnlineFOrum.json"		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/sitemap/SiteMap*"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/sitemap/SiteMapIndex.do"				access="IS_AUTHENTICATED_ANONYMOUSLY" />
 

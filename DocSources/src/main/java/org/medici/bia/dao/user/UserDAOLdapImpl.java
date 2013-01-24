@@ -198,6 +198,12 @@ public class UserDAOLdapImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Long countWhoIsOnlineForum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Page findForumMembers(String letter, PaginationFilter paginationFilter) {
@@ -666,5 +672,11 @@ public class UserDAOLdapImpl implements UserDAO {
 	 */
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	public List<String> whoIsOnlineForum() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

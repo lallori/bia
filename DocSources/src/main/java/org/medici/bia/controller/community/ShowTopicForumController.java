@@ -28,6 +28,7 @@
 package org.medici.bia.controller.community;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -147,6 +148,10 @@ public class ShowTopicForumController {
 			
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
 			model.put("postsPage", postsPage);
+			
+			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();
+			List<String> onlineUsers = (List<String>) whoIsOnlineHashMap.get("onlineUsers");
+			model.put("onlineUsers",onlineUsers);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowTopicForum", model);

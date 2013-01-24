@@ -51,6 +51,12 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	Long countMembersForum();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Long countWhoIsOnlineForum();
 
 	/**
 	 * 
@@ -209,5 +215,11 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	Page searchWhoIsOnline(PaginationFilter paginationFilter);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	List<String> whoIsOnlineForum();
 
 }
