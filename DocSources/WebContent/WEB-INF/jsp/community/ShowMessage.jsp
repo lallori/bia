@@ -57,6 +57,22 @@
 	</p>
 </div>
 
+<div id="unlockModal" title="Unlock User" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Are you sure you want to unlock this user?
+	</p>
+	
+	<input type="hidden" value="" id="unlockUrl"/>
+</div>
+
+<div id="notUnlocked" title="Unlock User" style="display:none"> 
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		Error: Not unlocked
+	</p>
+</div>
+
 
 <!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->
 <!-- 	<p> -->
@@ -161,6 +177,51 @@
 			$j(".lnkApprove").live('click', function(){
 				$j("#approveUrl").val($j(this).attr('href'));
 				$j('#approveModal').dialog('open');
+				return false;
+			});
+			
+			$j( "#unlockModal" ).dialog({
+				  autoOpen : false,
+				  modal: true,
+				  resizable: false,
+				  width: 300,
+				  height: 130, 
+				  buttons: {
+					  Yes: function() {
+						  $j.ajax({ type:"POST", url:$j("#unlockUrl").val(), async:false, success:function(json) {
+				 			   	if (json.operation == 'OK') {
+				 					 $j("#main").load('${InboxURL}');
+									 $j( "#unlockModal" ).dialog('close');
+									 return false;
+				 				} else {
+				 					$j( "#unlockModal" ).dialog('close');
+									$j("#notUnlocked").dialog({
+										  autoOpen : false,
+										  modal: true,
+										  resizable: false,
+										  width: 300,
+										  height: 130, 
+										  buttons: {
+											  Ok: function() {
+												  $j(this).dialog("close");
+											  }
+										  }
+									  });
+									$j("#notUnlocked").dialog('open');
+				 				}
+							}});
+							return false;
+					  },
+					  No: function() {
+						  $j( "#unlockModal" ).dialog('close');
+					  }
+				  }
+			  });
+			
+			$j(".lnkUnlock").die();
+			$j(".lnkUnlock").live('click', function(){
+				$j("#unlockUrl").val($j(this).attr('href'));
+				$j('#unlockModal').dialog('open');
 				return false;
 			});
 		});

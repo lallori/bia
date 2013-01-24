@@ -232,6 +232,14 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	void sendLockedMessage(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	User unlockUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

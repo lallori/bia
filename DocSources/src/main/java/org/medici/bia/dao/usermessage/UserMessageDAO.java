@@ -84,6 +84,14 @@ public interface UserMessageDAO extends Dao<Integer, UserMessage> {
 	 * @throws PersistenceException
 	 */
 	Integer removeMessages(User user, List<Integer> idElements) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer removeUnlockedMessages(User user) throws PersistenceException;
 
 	/**
 	 * 

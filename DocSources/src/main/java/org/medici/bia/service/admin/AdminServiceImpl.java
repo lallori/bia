@@ -872,6 +872,9 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void sendLockedMessage(User user) throws ApplicationThrowable {
 		try{
@@ -892,7 +895,10 @@ public class AdminServiceImpl implements AdminService {
 											user.getAccount()},"{", "}"));
 					userMessage.setBody(ApplicationPropertyManager.getApplicationProperty("message.lockedUser.text",
 										new String[]{
-											user.getAccount()
+											user.getAccount(),
+											ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+											ApplicationPropertyManager.getApplicationProperty("website.domain"),
+											ApplicationPropertyManager.getApplicationProperty("website.contextPath")
 										},
 										"{", "}"));
 					getUserMessageDAO().persist(userMessage);
@@ -1058,6 +1064,25 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
 		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User unlockUser(User user) throws ApplicationThrowable {
+		try{
+			User userToUpdate = getUserDAO().findUser(user.getAccount());
+			userToUpdate.setLocked(user.getLocked());
+			getUserDAO().merge(userToUpdate);
+			
+			//Delete All user's locked messages for other admin
+			getUserMessageDAO().removeUnlockedMessages(userToUpdate);			
+
+			return userToUpdate;
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

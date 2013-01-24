@@ -39,6 +39,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.PaginationFilter.Order;
 import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
@@ -207,6 +208,21 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		toQuery.setParameter("account", user.getAccount());
 		
 		return toQuery.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeUnlockedMessages(User user) throws PersistenceException {
+		String queryString = new String("DELETE FROM UserMessage WHERE sender LIKE :account AND messageSubject = '" + ApplicationPropertyManager.getApplicationProperty("message.lockedUser.subject",
+				new String[]{
+				user.getAccount()},"{", "}") + "'");
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("account", user.getAccount());
+		
+		return query.executeUpdate();
 	}
 
 	/**

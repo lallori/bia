@@ -295,5 +295,39 @@ public class AjaxController {
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
 	}
+	
+	/**
+	 * 
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/UnlockUser.json", method = RequestMethod.POST)
+	public ModelAndView unlockUser(@RequestParam(value="account") String account){
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			account = URIUtil.decode(account, "UTF-8");
+		} catch (URIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(account != null && account != ""){
+			User user = new User(account);
+			user.setLocked(false);
+		
+			try {
+				user = getAdminService().unlockUser(user);
+				model.put("operation", "OK");
+				
+				return new ModelAndView("responseOK", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				model.put("operation", "KO");
+				return new ModelAndView("responseKO", model);
+			}
+		}
+		model.put("operation", "KO");
+		return new ModelAndView("responseKO", model);
+	}
 
 }
