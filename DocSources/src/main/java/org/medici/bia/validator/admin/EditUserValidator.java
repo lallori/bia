@@ -128,16 +128,6 @@ public class EditUserValidator implements Validator {
 	}
 	
 	public void validateConfirmPassword(String password, String confirmPassword, Errors errors){
-		if(password == null || password.equals("")){
-			errors.rejectValue("password", "error.password.null");
-			return;
-		}
-		
-		if(confirmPassword == null || confirmPassword.equals("")){
-			errors.rejectValue("confirmPassword", "error.confirmPassword.null");
-			return;
-		}
-		
 		if(!password.equals(confirmPassword)){
 			errors.rejectValue("password", "error.password.invalid");
 			return;
