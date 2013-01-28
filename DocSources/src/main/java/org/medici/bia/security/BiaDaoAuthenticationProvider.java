@@ -36,9 +36,11 @@ import org.apache.log4j.MDC;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.GrantedAuthorityUtils;
 import org.medici.bia.common.util.UserRoleUtils;
+import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.AccessLog;
+import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -71,6 +73,9 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	 */
 	private static final long serialVersionUID = 5824046280716934036L;
 
+	@Autowired
+	private LockedUserDAO lockedUserDAO;
+	
 	@Autowired
 	private UserDAO userDAO;
 
@@ -140,6 +145,20 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	 */
 	public void setMailService(MailService mailService) {
 		this.mailService = mailService;
+	}
+
+	/**
+	 * @return the lockedUserDAO
+	 */
+	public LockedUserDAO getLockedUserDAO() {
+		return lockedUserDAO;
+	}
+
+	/**
+	 * @param lockedUserDAO the lockedUserDAO to set
+	 */
+	public void setLockedUserDAO(LockedUserDAO lockedUserDAO) {
+		this.lockedUserDAO = lockedUserDAO;
 	}
 
 	/**
@@ -213,6 +232,10 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 					throw new DisabledException("User is not activated",authenticationException);
 				}
 				
+				if (!user.getApproved()) { 
+					throw new AccountNotApprovedException("User has not been approved yet. Wait for an approvation email before logging");
+				}
+				
 				if (!user.getExpirationDate().after(new Date())) { 
 					throw new AccountExpiredException("User is expired", authenticationException);
 				}
@@ -227,6 +250,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				
 				if (user.getBadLogin() > badLogin) {
 					user.setLocked(true);
+					getUserDAO().merge(user);
 					//Send email to locked user
 					getMailService().sendMailLockedUser(user);
 					try {

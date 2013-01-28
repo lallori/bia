@@ -38,6 +38,7 @@ import org.springframework.validation.Validator;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class SendUserPasswordResetValidator extends AbstractUserValidator implements Validator {
@@ -84,6 +85,7 @@ public class SendUserPasswordResetValidator extends AbstractUserValidator implem
 
 		validateReCaptcha(sendUserOrPasswordCommand.getRemoteAddress(), sendUserOrPasswordCommand.getRecaptcha_challenge_field(), sendUserOrPasswordCommand.getRecaptcha_response_field(), errors);
 		validateMail(sendUserOrPasswordCommand.getMail(), errors);
+		validateUserNotApproved(sendUserOrPasswordCommand.getMail(), errors);
 	}
 
 	/**
@@ -100,6 +102,27 @@ public class SendUserPasswordResetValidator extends AbstractUserValidator implem
 				errors.rejectValue("mail", "error.mail.notfound");
 			}
 		} catch(ApplicationThrowable ath) {
+			errors.rejectValue("mail", "error.mail.notfound");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param mail
+	 * @param errors
+	 */
+	public void validateUserNotApproved(String mail, Errors errors) {
+		if(errors.hasErrors())
+			return;
+		
+		try{
+			User user = new User();
+			user.setMail(mail);
+			user = getUserService().findUser(user);
+			if(user != null && !user.getApproved()){
+				errors.rejectValue("mail", "error.mail.notApproved");
+			}
+		}catch(ApplicationThrowable ath){
 			errors.rejectValue("mail", "error.mail.notfound");
 		}
 	}

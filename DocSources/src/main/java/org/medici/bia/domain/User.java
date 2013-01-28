@@ -159,6 +159,9 @@ public class User implements Serializable, Cloneable {
 
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
 	private Set<ForumTopicWatch> forumTopicsWatch;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
+	private Set<LockedUser> lockedsUser;
 
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade={CascadeType.MERGE } )
 	private Set<UserHistory> userHistory;
@@ -434,6 +437,13 @@ public class User implements Serializable, Cloneable {
 	}
 
 	/**
+	 * @return the lockedsUser
+	 */
+	public Set<LockedUser> getLockedsUser() {
+		return lockedsUser;
+	}
+
+	/**
 	 * @return the mail
 	 */
 	public String getMail() {
@@ -698,6 +708,13 @@ public class User implements Serializable, Cloneable {
 	 */
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
+	}
+
+	/**
+	 * @param lockedsUser the lockedsUser to set
+	 */
+	public void setLockedsUser(Set<LockedUser> lockedsUser) {
+		this.lockedsUser = lockedsUser;
 	}
 
 	/**

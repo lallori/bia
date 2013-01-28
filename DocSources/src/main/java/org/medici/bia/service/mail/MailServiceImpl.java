@@ -315,7 +315,8 @@ public class MailServiceImpl implements MailService {
 				message.setTo(user.getMail());
 				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.subject"));
 				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.text", 
-								new String[]{user.getAccount()
+								new String[]{user.getAccount(),
+											ApplicationPropertyManager.getApplicationProperty("mail.admin.to"),
 											 },
 											 "{", "}"));
 				getJavaMailSender().send(message);
