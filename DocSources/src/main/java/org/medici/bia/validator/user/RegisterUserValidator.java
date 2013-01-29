@@ -31,6 +31,7 @@ import org.medici.bia.command.user.RegisterUserCommand;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -39,6 +40,7 @@ import org.springframework.validation.Validator;
  * Recaptcha.  
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class RegisterUserValidator extends AbstractUserValidator implements Validator {
@@ -111,5 +113,10 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 	private void validateOrganization(String organization, Errors errors) {
 		if (errors.hasErrors())
 			return;
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "organization", "error.organization.null");
+		
+		if(organization == null){
+			errors.rejectValue("organization", "error.organization.null");
+		}
 	}
 }

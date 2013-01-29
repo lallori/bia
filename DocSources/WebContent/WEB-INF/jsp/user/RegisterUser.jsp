@@ -29,7 +29,7 @@
 							<td><form:input id="lastName" path="lastName" cssClass="registerInput"/><form:errors path="lastName" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error"><b>Country:<font color="#990000">*</font></b></form:label></td>
 							<td><form:input id="countryAutoCompleter" path="countryDescription" cssClass="registerInput"/><form:errors path="countryDescription" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error"><b>Organization or University Affiliation:</b></form:label></td>
+							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error"><b>Organization or University Affiliation:<font color="#990000">*</font></b></form:label></td>
 							<td><form:input id="organization" path="organization" cssClass="registerInput"/><form:errors path="organization" cssClass="inputerrors"/></td>
 						</tr>	
 						<tr>
