@@ -32,6 +32,7 @@ import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumPostNotified;
+import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
 
@@ -80,7 +81,14 @@ public interface MailService {
 	 * @param user
 	 * @return
 	 */
-	Boolean sendMailLockedUser(User user);
+	Boolean sendMailLockedUser(LockedUser lockedUser);
+	
+	/**
+	 * 
+	 * @param lockedUser
+	 * @return
+	 */
+	Boolean sendMailUnlockedUser(LockedUser lockedUser);
 	
 	/**
 	 * This method will send an mail for password recovery , and update the state

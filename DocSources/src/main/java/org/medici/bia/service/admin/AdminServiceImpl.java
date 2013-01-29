@@ -54,7 +54,9 @@ import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
+import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.month.MonthDAO;
+import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.dao.persistentLogin.PersistentLoginDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
@@ -69,6 +71,7 @@ import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.EmailMessageUser;
+import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
@@ -127,9 +130,15 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private ForumPostNotifiedDAO forumPostNotifiedDAO;
+	
+	@Autowired
+	private LockedUserDAO lockedUserDAO;
 
 	@Autowired
 	private MonthDAO monthDAO;
+	
+	@Autowired
+	private PasswordChangeRequestDAO passwordChangeRequestDAO;
 
 	@Autowired
 	@Qualifier("passwordEncoder")
@@ -164,6 +173,22 @@ public class AdminServiceImpl implements AdminService {
 	private VettingHistoryDAO vettingHistoryDAO;
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
+	
+	@Override
+	public LockedUser addLockedUser(User user) throws ApplicationThrowable {
+		try{
+			User userToLock = getUserDAO().findUser(user.getAccount());
+			LockedUser lockedUser = new LockedUser(userToLock);
+			lockedUser.setId(null);
+			lockedUser.setMailSended(false);
+			lockedUser.setMailUnlockSended(false);
+			lockedUser.setUnlocked(false);
+			getLockedUserDAO().persist(lockedUser);
+			return lockedUser;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -366,6 +391,9 @@ public class AdminServiceImpl implements AdminService {
 					}
 				}
 			}
+			if(userToUpdate.getLocked() && !user.getLocked()){
+				userToUpdate.setBadLogin(0);
+			}
 			userToUpdate.setLocked(user.getLocked());
 						
 			getUserRoleDAO().removeAllUserRoles(userToUpdate.getAccount());
@@ -394,6 +422,7 @@ public class AdminServiceImpl implements AdminService {
 				getUserMessageDAO().renameAccount(originalAccount, user.getAccount());
 				getUserMessageDAO().renameRecipient(originalAccount, user.getAccount());
 				getUserMessageDAO().renameSender(originalAccount, user.getAccount());
+				getPasswordChangeRequestDAO().renameAccount(originalAccount, user.getAccount());
 			}
 
 			return userToUpdate;
@@ -483,9 +512,41 @@ public class AdminServiceImpl implements AdminService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<LockedUser> findLockedUsers() throws ApplicationThrowable {
+		try{
+			LockedUser lockedUser = new LockedUser();
+			lockedUser.setUnlocked(Boolean.FALSE);
+			lockedUser.setMailSended(Boolean.FALSE);
+			lockedUser.setMailUnlockSended(Boolean.FALSE);
+			return getLockedUserDAO().searchLockedUsers(lockedUser);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws ApplicationThrowable {
 		try{
 			return getAccessLogStatisticsDAO().findMissingStatisticsDate(numberMaxOfDay);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<LockedUser> findUnlockedUsers() throws ApplicationThrowable {
+		try{
+			LockedUser lockedUser = new LockedUser();
+			lockedUser.setUnlocked(Boolean.TRUE);
+			lockedUser.setMailSended(Boolean.TRUE);
+			lockedUser.setMailUnlockSended(Boolean.FALSE);
+			return getLockedUserDAO().searchLockedUsers(lockedUser);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -697,6 +758,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the lockedUserDAO
+	 */
+	public LockedUserDAO getLockedUserDAO() {
+		return lockedUserDAO;
+	}
+
+	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
@@ -717,6 +785,13 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @return the passwordChangeRequestDAO
+	 */
+	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
+		return passwordChangeRequestDAO;
 	}
 
 	/**
@@ -877,7 +952,7 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	@Override
 	public void sendLockedMessage(User user) throws ApplicationThrowable {
-		try{
+		try{			
 			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
 
 			for (User currentAdministator : administratorUsers) {
@@ -986,10 +1061,25 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @param lockedUserDAO the lockedUserDAO to set
+	 */
+	public void setLockedUserDAO(LockedUserDAO lockedUserDAO) {
+		this.lockedUserDAO = lockedUserDAO;
+	}
+
+	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param passwordChangeRequestDAO the passwordChangeRequestDAO to set
+	 */
+	public void setPasswordChangeRequestDAO(
+			PasswordChangeRequestDAO passwordChangeRequestDAO) {
+		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
 	}
 
 	/**
@@ -1074,10 +1164,18 @@ public class AdminServiceImpl implements AdminService {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount());
 			userToUpdate.setLocked(user.getLocked());
+			userToUpdate.setBadLogin(0);
 			getUserDAO().merge(userToUpdate);
 			
 			//Delete All user's locked messages for other admin
-			getUserMessageDAO().removeUnlockedMessages(userToUpdate);			
+			getUserMessageDAO().removeUnlockedMessages(userToUpdate);
+			
+			LockedUser lockedUser = getLockedUserDAO().findByAccount(userToUpdate.getAccount());
+			if(lockedUser != null){
+				lockedUser.setUnlocked(true);
+				lockedUser.setUnlockedBy((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				getLockedUserDAO().merge(lockedUser);
+			}
 
 			return userToUpdate;
 		} catch(Throwable th){

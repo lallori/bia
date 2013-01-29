@@ -40,7 +40,6 @@ import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.AccessLog;
-import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -251,11 +250,9 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				if (user.getBadLogin() > badLogin) {
 					user.setLocked(true);
 					getUserDAO().merge(user);
-					//Send email to locked user
-					getMailService().sendMailLockedUser(user);
 					try {
-						//Send message to all Administrators
-						getAdminService().sendLockedMessage(user);
+						getAdminService().addLockedUser(user);
+						
 					} catch (ApplicationThrowable ath) {
 						
 					}

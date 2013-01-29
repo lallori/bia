@@ -68,6 +68,11 @@ public class LockedUser implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="\"mailSendedDate\"")
 	private Date mailSendedDate;
+	@Column (name="\"mailUnlockSended\"", nullable=false)
+	private Boolean mailUnlockSended;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="\"mailUnlockSendedDate\"")
+	private Date mailUnlockSendedDate;
 	@Column (name="\"unlocked\"", nullable=false)
 	private Boolean unlocked;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -147,6 +152,34 @@ public class LockedUser implements Serializable {
 	 */
 	public Date getMailSendedDate() {
 		return mailSendedDate;
+	}
+
+	/**
+	 * @return the mailUnlockSended
+	 */
+	public Boolean getMailUnlockSended() {
+		return mailUnlockSended;
+	}
+
+	/**
+	 * @param mailUnlockSended the mailUnlockSended to set
+	 */
+	public void setMailUnlockSended(Boolean mailUnlockSended) {
+		this.mailUnlockSended = mailUnlockSended;
+	}
+
+	/**
+	 * @return the mailUnlockSendedDate
+	 */
+	public Date getMailUnlockSendedDate() {
+		return mailUnlockSendedDate;
+	}
+
+	/**
+	 * @param mailUnlockSendedDate the mailUnlockSendedDate to set
+	 */
+	public void setMailUnlockSendedDate(Date mailUnlockSendedDate) {
+		this.mailUnlockSendedDate = mailUnlockSendedDate;
 	}
 
 	/**

@@ -52,6 +52,10 @@
 	<bean id="checkDigitizedVolumeJob" class="org.medici.bia.scheduler.CheckDigitizedVolumeJob"/>
 	
 	<bean id="forumPostReplyMailJob" class="org.medici.bia.scheduler.ForumPostReplyMailJob"/>
+	
+	<bean id="lockedUserEmailJob" class="org.medici.bia.scheduler.LockedUserEmailJob"/>
+	
+	<bean id="lockedUserEmailUnlockedJob" class="org.medici.bia.scheduler.LockedUserEmailUnlockedJob"/>
 
 	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
 	

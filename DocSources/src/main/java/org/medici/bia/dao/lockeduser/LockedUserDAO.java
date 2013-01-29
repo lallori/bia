@@ -27,6 +27,10 @@
  */
 package org.medici.bia.dao.lockeduser;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.LockedUser;
 
@@ -39,5 +43,21 @@ import org.medici.bia.domain.LockedUser;
  * 
  */
 public interface LockedUserDAO extends Dao<Integer, LockedUser> {
+	
+	/**
+	 * 
+	 * @param account
+	 * @return
+	 * @throws PersistenceException
+	 */
+	LockedUser findByAccount(String account) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param lockedUser
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<LockedUser> searchLockedUsers(LockedUser lockedUser) throws PersistenceException;
 
 }

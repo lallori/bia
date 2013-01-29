@@ -39,6 +39,7 @@ import org.medici.bia.domain.AccessLog;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.EmailMessageUser;
+import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
@@ -52,6 +53,8 @@ import org.medici.bia.exception.ApplicationThrowable;
  */
 public interface AdminService {
 
+	LockedUser addLockedUser(User user) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param user
@@ -129,6 +132,13 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	List<ForumPostNotified> findForumPostRepliedNotNotified() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<LockedUser> findLockedUsers() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -137,6 +147,13 @@ public interface AdminService {
 	 * @throws ApplicationThrowable
 	 */
 	List<Date> findMissingStatisticsDate(Integer numberMaxOfDay) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	List<LockedUser> findUnlockedUsers() throws ApplicationThrowable;
 
 	/**
 	 * 

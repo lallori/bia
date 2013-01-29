@@ -43,6 +43,15 @@ import org.medici.bia.domain.PasswordChangeRequest;
 public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequest> {
 
 	/**
+	 * 
+	 * @param originalAccount
+	 * @param newAccount
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+	
+	/**
 	 * This method returns a list of password change request.
 	 * 
 	 * @param passwordChangeRequest

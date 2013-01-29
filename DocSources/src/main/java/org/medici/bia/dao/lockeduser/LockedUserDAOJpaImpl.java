@@ -27,6 +27,18 @@
  */
 package org.medici.bia.dao.lockeduser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.LockedUser;
 import org.springframework.stereotype.Repository;
@@ -62,5 +74,52 @@ public class LockedUserDAOJpaImpl extends JpaDao<Integer, LockedUser> implements
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -240582362854135368L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public LockedUser findByAccount(String account) throws PersistenceException {
+		String jpql = "FROM LockedUser WHERE user.account=:account";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("account", account);
+
+		List<LockedUser> result = query.getResultList();
+		
+		if (result.size() ==1) {
+			return result.get(0);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<LockedUser> searchLockedUsers(LockedUser lockedUser) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<LockedUser> criteriaQuery = criteriaBuilder.createQuery(LockedUser.class);
+		Root<LockedUser> root = criteriaQuery.from(LockedUser.class);
+
+		// Define predicate's elements
+		List<Predicate> criteria = new ArrayList<Predicate>();
+		ParameterExpression<Boolean> parameterActive = criteriaBuilder.parameter(Boolean.class, "unlocked");
+		ParameterExpression<Boolean> parameterMailSended = criteriaBuilder.parameter(Boolean.class, "mailSended");
+		ParameterExpression<Boolean> parameterMailUnlockSended = criteriaBuilder.parameter(Boolean.class, "mailUnlockSended");
+		criteria.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("unlocked"), parameterActive), criteriaBuilder.equal(root.get("mailSended"), parameterMailSended), criteriaBuilder.equal(root.get("mailUnlockSended"), parameterMailUnlockSended)));
+		criteriaQuery.where(criteria.get(0));
+
+		// Set values in predicate's elements  
+		TypedQuery<LockedUser> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("unlocked", lockedUser.getUnlocked());
+		typedQuery.setParameter("mailSended", lockedUser.getMailSended());
+		typedQuery.setParameter("mailUnlockSended", lockedUser.getMailUnlockSended());
+
+		//Execute query
+		return typedQuery.getResultList();
+	}
 
 }

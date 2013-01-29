@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -71,6 +72,19 @@ public class PasswordChangeRequestDAOJpaImpl extends JpaDao<String, PasswordChan
 	 */
 	private static final long serialVersionUID = 8582736566153311653L;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE PasswordChangeRequest SET user.account=:newAccount WHERE user.account=:originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
+	
 	/**
 	 * 
 	 */

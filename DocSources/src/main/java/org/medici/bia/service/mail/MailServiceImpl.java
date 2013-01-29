@@ -41,12 +41,14 @@ import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
+import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumPostNotified;
+import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +84,8 @@ public class MailServiceImpl implements MailService {
 	private ForumPostNotifiedDAO ForumPostNotifiedDAO;
 	@Autowired
 	private JavaMailSender javaMailSender; 
+	@Autowired
+	private LockedUserDAO lockedUserDAO;
 	@Autowired
 	private String mailFrom;
 	@Autowired
@@ -132,6 +136,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	public JavaMailSender getJavaMailSender() {
 		return javaMailSender;
+	}
+
+	/**
+	 * @return the lockedUserDAO
+	 */
+	public LockedUserDAO getLockedUserDAO() {
+		return lockedUserDAO;
 	}
 
 	/**
@@ -307,15 +318,15 @@ public class MailServiceImpl implements MailService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean sendMailLockedUser(User user) {
+	public Boolean sendMailLockedUser(LockedUser lockedUser) {
 		try {
-			if (!StringUtils.isBlank(user.getMail())) { 
+			if (!StringUtils.isBlank(lockedUser.getUser().getMail())) { 
 				SimpleMailMessage message = new SimpleMailMessage();
 				message.setFrom(getMailFrom());
-				message.setTo(user.getMail());
+				message.setTo(lockedUser.getUser().getMail());
 				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.subject"));
 				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.lockedUser.text", 
-								new String[]{user.getAccount(),
+								new String[]{lockedUser.getUser().getAccount(),
 											ApplicationPropertyManager.getApplicationProperty("mail.admin.to"),
 											 },
 											 "{", "}"));
@@ -325,12 +336,42 @@ public class MailServiceImpl implements MailService {
 				messageToAdmin.setTo(ApplicationPropertyManager.getApplicationProperty("mail.admin.to"));
 				messageToAdmin.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.lockedUserToAdmin.subject"));
 				messageToAdmin.setText(ApplicationPropertyManager.getApplicationProperty("mail.lockedUserToAdmin.text",
-								new String[]{user.getAccount()
+								new String[]{lockedUser.getUser().getAccount()
 											},
 											"{", "}"));
 				getJavaMailSender().send(messageToAdmin);
+				lockedUser.setMailSended(Boolean.TRUE);
+				lockedUser.setMailSendedDate(new Date());
+				getLockedUserDAO().merge(lockedUser);
 			} else {
-				logger.error("Mail locked not sended for user " + user.getAccount() + ". Check mail field on tblUser for account " + user.getAccount());
+				logger.error("Mail locked not sended for user " + lockedUser.getUser().getAccount() + ". Check mail field on tblUser for account " + lockedUser.getUser().getAccount());
+			}
+			return Boolean.TRUE;
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean sendMailUnlockedUser(LockedUser lockedUser) {
+		try {
+			if (!StringUtils.isBlank(lockedUser.getUser().getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(lockedUser.getUser().getMail());
+				message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.unlockedUser.subject"));
+				message.setText(ApplicationPropertyManager.getApplicationProperty("mail.unlockedUser.text"));
+				getJavaMailSender().send(message);
+				
+				lockedUser.setMailUnlockSended(Boolean.TRUE);
+				lockedUser.setMailUnlockSendedDate(new Date());
+				getLockedUserDAO().merge(lockedUser);
+			} else {
+				logger.error("Mail locked not sended for user " + lockedUser.getUser().getAccount() + ". Check mail field on tblUser for account " + lockedUser.getUser().getAccount());
 			}
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
@@ -400,6 +441,13 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setJavaMailSender(JavaMailSender javaMailSender) {
 		this.javaMailSender = javaMailSender;
+	}
+
+	/**
+	 * @param lockedUserDAO the lockedUserDAO to set
+	 */
+	public void setLockedUserDAO(LockedUserDAO lockedUserDAO) {
+		this.lockedUserDAO = lockedUserDAO;
 	}
 
 	/**
