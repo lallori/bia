@@ -124,13 +124,13 @@
 	        
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="Notes to the Cartulazione in Italian">?</a>
+					<a class="helpIcon" title="Numeration Notes in Italian">?</a>
 	            	<form:label for="noteCartulazione" path="noteCartulazione" id ="noteCartulazioneLabel" cssErrorClass="error" title="cartulazione">Note alla Cartulazione</form:label>
 				</div>
 				<div class="row"><form:textarea id="noteCartulazione" path="noteCartulazione" cssClass="txtarea"></form:textarea></div>
 				<div class="row">
 					<a class="helpIcon" title="English translation for Note alla Cartulazione">?</a>
-	            	<form:label for="noteCartulazioneEng" path="noteCartulazioneEng" id ="noteCartulazioneEngLabel" cssErrorClass="error" title="Notes for Cartulation">Notes for the Cartulazione</form:label>
+	            	<form:label for="noteCartulazioneEng" path="noteCartulazioneEng" id ="noteCartulazioneEngLabel" cssErrorClass="error" title="Notes for Cartulation">Numeration Notes</form:label>
 				</div>
 				<div class="row"><form:textarea id="noteCartulazioneEng" path="noteCartulazioneEng" cssClass="txtarea"></form:textarea></div>
 				<div class="row">

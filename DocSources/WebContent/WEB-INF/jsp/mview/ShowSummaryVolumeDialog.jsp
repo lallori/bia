@@ -48,11 +48,11 @@
 			</div>
 			
 			<div class="row">
-				<div class="item">Cartulazione</div> 
+				<div class="item">Numeration</div> 
 				<div class="value">${volumeSummary.cartulazione}</div> 
 			</div>
 			<div class="row">
-				<div class="item">Note alla Cartulazione</div> 
+				<div class="item">Numeration Notes</div> 
 				<div class="value">${volumeSummary.noteCartulazioneEng}</div> 
 			</div>
 			<div class="row">

@@ -61,7 +61,7 @@
 			<div class="value60">${schedone.noteCartulazione}</div>
 		</div>
 		<div class="row">
-			<div class="item">Notes for the Cartulazione</div>
+			<div class="item">Numeration Notes</div>
 			<div class="value60">${schedone.noteCartulazioneEng}</div>
 		</div>
 		<div class="row">

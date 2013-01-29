@@ -28,7 +28,7 @@
 			</div>
 			<c:if test="${schedone != null && schedone.noteCartulazione != null}">
 				<div class="row">
-					<div class="item">Note alla cartulazione</div>
+					<div class="item">Numeration Notes</div>
 					<div class="value">${schedone.noteCartulazione}<br />${schedone.noteCartulazioneEng}</div>
 				</div>
 			</c:if>
