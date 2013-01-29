@@ -150,7 +150,12 @@
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
-			<input type="hidden" value="" id="modify" />
+			<c:if test="${fromTranscribe == null || !fromTranscribe}">
+				<input type="hidden" value="" id="modify" />
+			</c:if>
+			<c:if test="${fromTranscribe != null && fromTranscribe}">
+				<input type="hidden" value="1" id="modify" />
+			</c:if>
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
 		<input type="hidden" id="folioNumStored" value=""/>
