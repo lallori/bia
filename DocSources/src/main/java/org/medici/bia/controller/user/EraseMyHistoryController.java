@@ -1,5 +1,5 @@
 /*
-ù * EraseMyHistoryController.java
+ * EraseMyHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
