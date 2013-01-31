@@ -1,5 +1,5 @@
 /*
-ù * ShowMyHistoryController.java
+ * ShowMyHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
