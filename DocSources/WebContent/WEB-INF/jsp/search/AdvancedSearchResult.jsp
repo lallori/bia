@@ -12,6 +12,10 @@
 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
 		<c:param name="searchType" value="${command.searchType}" />
 	</c:url>
+	
+	<c:url var="ExpandResultsURL" value="/src/ExpandResultsAdvancedSearch.do">
+		<c:param name="searchUUID" value="${command.searchUUID}" />
+	</c:url>
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
@@ -100,6 +104,12 @@
 							$j("#" + idTabTitle).find("span").append(" " + $j("#documentSearchTabNumber").val());
 							$j("#documentSearchTabNumber").val(parseInt($j("#documentSearchTabNumber").val()) + 1);
 						}
+						var href = '${ExpandResultsURL}';
+						href += "&iDisplayStart=" + this.fnSettings()._iDisplayStart;
+						href += "&iDisplayLength=" + this.fnSettings()._iDisplayLength;
+						href += "&iSortCol_0=" + this.fnSettings().aaSorting[0][0];
+						href += "&sSortDir_0=" + this.fnSettings().aaSorting[0][1];
+						$j("#expand${command.searchUUID}").attr("href", href);
 					</c:when>
 					<c:when test="${command.searchType.toString() == 'VOLUME'}">
 						idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
@@ -198,10 +208,12 @@
 			
 			$j("#refine${command.searchUUID}").open({width: 960, height: 350, scrollbars: "yes"});
 			
+			$j("#expand${command.searchUUID}").open({width: 850, height: 600, scrollbars: "yes"});
+			
 			$j(".tabLink").open({width: 960, height: 350, scrollbars: "yes"});	
 			
-			$j("#yourSearch").click(function(){
-				$j("#yourSearchDialog").dialog({
+			$j("#yourSearch${command.searchUUID}").click(function(){
+				$j("#yourSearchDialog${command.searchUUID}").dialog({
 					  autoOpen : false,
 					  modal: true,
 					  resizable: false,
@@ -210,12 +222,12 @@
 					  buttons: {
 						  Ok: function() {
 							  $j(this).dialog("close");
-							  $j("#yourSearchDialog").dialog('destroy');
-							  $j("#yourSearchDialog").appendTo("#yourSearchDiv").css("display", "none");
+							  $j("#yourSearchDialog${command.searchUUID}").dialog('destroy');
+							  $j("#yourSearchDialog${command.searchUUID}").appendTo("#yourSearchDiv").css("display", "none");
 						  }
 					  }
 				  });
-				$j("#yourSearchDialog").dialog('open');
+				$j("#yourSearchDialog${command.searchUUID}").dialog('open');
 				return false;
 			});
 			
@@ -226,23 +238,29 @@
 	</script>
 	
 	<div class="yourSearchDiv">
-		Your search:
+		<p>Your search:
 		<c:if test="${yourSearch.length() > 45}">
-			<a id="yourSearch" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a>
+			<a id="yourSearch${command.searchUUID}" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a></p>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
-			<font color="red">${yourSearch}</font>
+			<font color="red" style="margin-left:5px">${yourSearch}</font></p>
 		</c:if>
-		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
+		<p>Total records found:
+		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
+		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
+		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
+		<c:if test="${command.searchType.toString() == 'DOCUMENT'}">
+			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
+		</c:if>
 		
-		<div id="yourSearchDialog" title="Your search" style="display:none"> 
+		<div id="yourSearchDialog${command.searchUUID}" title="Your search" style="display:none"> 
 			<p>
 				${yourSearch}
 			</p>
 		</div>
 	</div>
 	
-	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
+	
 
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>

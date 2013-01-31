@@ -1876,9 +1876,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					extractQuery.append(" AND ");
 				}
 				for (int j=0; j<wordsSingleExtract.length; j++) {
-					extractQuery.append("(synExtract.docExtract like '% ");
+					extractQuery.append("(synExtract.docExtract like '%");
 					extractQuery.append(wordsSingleExtract[j].replace("'", "''"));
-					extractQuery.append(" %')");
+					extractQuery.append("%')");
 					if (j< (wordsSingleExtract.length-1)) {
 						extractQuery.append(" AND ");
 					}

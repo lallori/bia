@@ -32,8 +32,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.common.pagination.Page;
@@ -42,6 +45,7 @@ import org.medici.bia.common.search.AdvancedSearch;
 import org.medici.bia.common.search.AdvancedSearchFactory;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.bia.common.search.AdvancedSearchDocument;
 import org.medici.bia.common.search.SimpleSearchDocument;
 import org.medici.bia.common.search.SimpleSearchPeople;
 import org.medici.bia.common.search.SimpleSearchPlace;
@@ -452,6 +456,229 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
+	}
+	
+	/**
+	 * 
+	 * @param simpleSearchPerimeter
+	 * @param uuid
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@RequestMapping(value = "/src/ExpandResultsAdvancedSearch.json", method = RequestMethod.GET)
+	public ModelAndView expandResultsAdvancedSearch(HttpSession httpSession,
+										 @RequestParam(value="simpleSearchPerimeter") SimpleSearchPerimeter simpleSearchPerimeter, 
+								   		 @RequestParam(value="sSearch") String uuid,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		SearchFilter searchFilter = searchFilterMap.get(uuid);
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, simpleSearchPerimeter);
+		
+		Page page = null;
+		
+		
+
+		try {
+			page = getSearchService().searchAdvancedDocuments(searchFilter.getFilterData(), paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			StringBuilder titleLastColumn = new StringBuilder();
+			if (currentDocument.getMDPAndFolio() != null){
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
+				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+					if(currentDocument.getInsertLet() != null){
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+					}else{
+						lastColumn.append("-");
+					}					
+				}else{
+					lastColumn.append("-/-");
+				}
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
+				if(currentDocument.getFolioNum() != null){
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+					if(currentDocument.getFolioMod() != null){
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
+					}
+				}
+				else{
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
+				}
+				lastColumn.append("</b>");
+				if(currentDocument.getVolume().getDigitized()){
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+				}
+				singleRow.add(lastColumn.toString());
+			}
+			else
+				singleRow.add("");
+			AdvancedSearchDocument advancedSearchDocument = (AdvancedSearchDocument) searchFilter.getFilterData();
+			StringBuffer yourSearch = new StringBuffer();
+			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
+				if(advancedSearchDocument.getExtract() != null){
+					for(String currentExtract : advancedSearchDocument.getExtract()){
+						if(StringUtils.countMatches(currentExtract, "\"")%2 != 0){
+							StringBuffer tempString = new StringBuffer(currentExtract);
+							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
+							currentExtract = tempString.toString();
+						}
+						//This code is for highlight the correct words
+						if(currentExtract.contains("\"")){
+							StringTokenizer stringTokenizer = new StringTokenizer(currentExtract.replace('"', ' '), " ");
+							while(stringTokenizer.hasMoreTokens()){
+								String currentToken = stringTokenizer.nextToken();
+								if(currentToken.length() > 0 && currentToken != ""){
+									if(yourSearch.toString().length() > 0)
+										yourSearch.append(" " + currentToken);
+									else
+										yourSearch.append(currentToken);					
+								}
+							}
+						}else{
+							if(yourSearch.toString().length() > 0)
+								yourSearch.append(" " + currentExtract);
+							else
+								yourSearch.append(currentExtract);
+						}
+						
+					}
+				}
+				if(currentDocument.getSynExtract().getDocExtract() != null){
+					if(yourSearch.length() != 0){
+						String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), yourSearch.toString());
+						singleRow.add(HtmlUtils.highlightText(text, yourSearch.toString()));
+					}else{
+						if(currentDocument.getSynExtract().getDocExtract().length() > 200){
+							String text = currentDocument.getSynExtract().getDocExtract().substring(0, 197);
+							singleRow.add(text.substring(0, text.lastIndexOf(" ")) + " ...");
+						}else{
+							singleRow.add(currentDocument.getSynExtract().getDocExtract());
+						}
+					}
+				}else
+					singleRow.add("");
+			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
+				if(advancedSearchDocument.getSynopsis() != null){
+					for(String currentSynopsis : advancedSearchDocument.getSynopsis()){
+						if(StringUtils.countMatches(currentSynopsis, "\"")%2 != 0){
+							StringBuffer tempString = new StringBuffer(currentSynopsis);
+							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
+							currentSynopsis = tempString.toString();
+						}
+						//This code is for highlight the correct words
+						if(currentSynopsis.contains("\"")){
+							StringTokenizer stringTokenizer = new StringTokenizer(currentSynopsis.replace('"', ' '), " ");
+							while(stringTokenizer.hasMoreTokens()){
+								String currentToken = stringTokenizer.nextToken();
+								if(currentToken.length() > 0 && currentToken != ""){
+									if(yourSearch.toString().length() > 0)
+										yourSearch.append(" " + currentToken);
+									else
+										yourSearch.append(currentToken);					
+								}
+							}
+						}else{
+							if(yourSearch.toString().length() > 0)
+								yourSearch.append(" " + currentSynopsis);
+							else
+								yourSearch.append(currentSynopsis);
+						}
+						
+					}
+				}
+				if(currentDocument.getSynExtract().getSynopsis() != null){
+					if(yourSearch.length() != 0){
+						String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getSynopsis(), yourSearch.toString());
+						singleRow.add(HtmlUtils.highlightText(text, yourSearch.toString()));
+					}else{
+						if(currentDocument.getSynExtract().getSynopsis().length() > 200){
+							String text = currentDocument.getSynExtract().getSynopsis().substring(0, 197);
+							singleRow.add(text.substring(0, text.lastIndexOf(" ")) + " ...");
+						}else{
+							singleRow.add(currentDocument.getSynExtract().getSynopsis());
+						}
+					}
+				}else
+					singleRow.add("");
+			}else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentExpand(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
 	}
 	
 	/**

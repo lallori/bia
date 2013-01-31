@@ -79,7 +79,7 @@ public class DocumentUtils {
 	 */
 	public static String searchTextResultExpand(String textDocument, String searchText){
 		//The length of the text to return is about 300 characters
-		if(textDocument.length() < 200){
+		if(textDocument.length() < 200 || searchText == null || searchText.length() == 0){
 			//MD: In this case we return all the text
 			return textDocument;
 		}else{

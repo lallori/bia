@@ -1076,6 +1076,10 @@
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
 	</definition>
 	
+	<definition name="search/ExpandAdvancedSearchResult" extends="template.expandResultsSearch">
+		<put-attribute name="expandResultsSearch" value="/WEB-INF/jsp/search/ExpandAdvancedSearchResult.jsp"/>	
+	</definition>
+	
 	<definition name="search/ExpandSimpleSearchResult" extends="template.expandResultsSearch">
 		<put-attribute name="expandResultsSearch" value="/WEB-INF/jsp/search/ExpandSimpleSearchResult.jsp"/>	
 	</definition>
