@@ -219,7 +219,7 @@ blockquote p {
 	background-color:transparent;
 }
 
-.buttonLarge, .list a.lnkApprove{ /* Button medium class */
+.buttonLarge, .list a.lnkApprove, .list a.lnkUnlock{ /* Button medium class */
 	width: 182px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_large.png);
