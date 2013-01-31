@@ -155,6 +155,18 @@
 			</c:if>
 			<c:if test="${fromTranscribe != null && fromTranscribe}">
 				<input type="hidden" value="1" id="modify" />
+				<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+					<c:param name="volNum"	value="${document.volume.volNum}" />
+					<c:param name="volLetExt"	value="${document.volume.volLetExt}" />
+					<c:param name="imageOrder"	value="${command.imageOrder}" />
+					<c:param name="total"	value="${command.total}" />
+					<c:param name="totalRubricario"	value="${command.totalRubricario}" />
+					<c:param name="totalCarta"	value="${command.totalCarta}" />
+					<c:param name="totalAppendix"	value="${command.totalAppendix}" />
+					<c:param name="totalGuardia"	value="${command.totalGuardia}" />
+					<c:param name="totalOther"	value="${command.totalOther}" />
+				</c:url>
+				<input type="hidden" id="returnToManuscriptViewer" value="${ShowDocumentInManuscriptViewerURL}" />
 			</c:if>
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
@@ -523,10 +535,13 @@
 		}); 
         
 		$j('#yes').click(function() { 
+			if($j("#returnToManuscriptViewer").length > 0){
+				window.open($j("#returnToManuscriptViewer").val(),'BIA Manuscript Viewer', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+			}
 			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
-				
+							
 			return false; 
 		}); 
      	

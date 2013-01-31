@@ -40,6 +40,15 @@ public class TranscribeAndContextualizeDocumentCommand extends EditDetailsDocume
 	private Integer imageDocumentToCreate;
 	/** This is the correspondents folioNum */
 	private Integer imageDocumentFolioStart;
+	
+	//To return in Manuscript Viewer if discard
+	private Integer imageOrder;
+	private Integer total;
+	private Integer totalRubricario;
+	private Integer totalCarta;
+	private Integer totalAppendix;
+	private Integer totalGuardia;
+	private Integer totalOther;
 
 	/**
 	 * @return the imageDocumentToCreate
@@ -67,6 +76,104 @@ public class TranscribeAndContextualizeDocumentCommand extends EditDetailsDocume
 	 */
 	public void setImageDocumentFolioStart(Integer imageDocumentFolioStart) {
 		this.imageDocumentFolioStart = imageDocumentFolioStart;
+	}
+
+	/**
+	 * @return the imageOrder
+	 */
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
+	/**
+	 * @param imageOrder the imageOrder to set
+	 */
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
+	}
+
+	/**
+	 * @return the total
+	 */
+	public Integer getTotal() {
+		return total;
+	}
+
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	/**
+	 * @return the totalRubricario
+	 */
+	public Integer getTotalRubricario() {
+		return totalRubricario;
+	}
+
+	/**
+	 * @param totalRubricario the totalRubricario to set
+	 */
+	public void setTotalRubricario(Integer totalRubricario) {
+		this.totalRubricario = totalRubricario;
+	}
+
+	/**
+	 * @return the totalCarta
+	 */
+	public Integer getTotalCarta() {
+		return totalCarta;
+	}
+
+	/**
+	 * @param totalCarta the totalCarta to set
+	 */
+	public void setTotalCarta(Integer totalCarta) {
+		this.totalCarta = totalCarta;
+	}
+
+	/**
+	 * @return the totalAppendix
+	 */
+	public Integer getTotalAppendix() {
+		return totalAppendix;
+	}
+
+	/**
+	 * @param totalAppendix the totalAppendix to set
+	 */
+	public void setTotalAppendix(Integer totalAppendix) {
+		this.totalAppendix = totalAppendix;
+	}
+
+	/**
+	 * @return the totalGuardia
+	 */
+	public Integer getTotalGuardia() {
+		return totalGuardia;
+	}
+
+	/**
+	 * @param totalGuardia the totalGuardia to set
+	 */
+	public void setTotalGuardia(Integer totalGuardia) {
+		this.totalGuardia = totalGuardia;
+	}
+
+	/**
+	 * @return the totalOther
+	 */
+	public Integer getTotalOther() {
+		return totalOther;
+	}
+
+	/**
+	 * @param totalOther the totalOther to set
+	 */
+	public void setTotalOther(Integer totalOther) {
+		this.totalOther = totalOther;
 	}
 	
 }

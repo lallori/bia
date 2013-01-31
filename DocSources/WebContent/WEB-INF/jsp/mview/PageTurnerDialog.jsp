@@ -622,7 +622,6 @@
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					imageDocumentFolioStart=currentImage;
 					var contextPath ="${ContextPathURL}";
-					var urlToTranscribe = contextPath + "de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
 					var urlToExplore;
 					var volLetExt;
 					if("${command.volLetExt}" == ""){
@@ -632,6 +631,7 @@
 						volLetExt = "${command.volLetExt}";
 					}
 					urlToExplore = contextPath + "src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
+					var urlToTranscribe = contextPath + "de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia};
 					window.opener.$j("#body_left").load(urlToTranscribe);
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 					//To open volume explorer in a tab
