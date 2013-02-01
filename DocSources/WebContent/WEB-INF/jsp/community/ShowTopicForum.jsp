@@ -333,7 +333,7 @@
 				e.preventDefault();
 				if(window.opener != null){
 					window.opener.$j("#body_left").load($j(this).attr('href'));
-					window.opener.alert("Record showed");
+					window.opener.alert("Close this window to access the record");
 				}else{
 					//TODO: If the main window is closed
 // 					window.opener = window.open("${BIAHomeURL}", "_blank");
