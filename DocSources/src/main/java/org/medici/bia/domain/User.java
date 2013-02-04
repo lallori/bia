@@ -93,7 +93,7 @@ public class User implements Serializable, Cloneable {
 
 	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
 	private Long forumNumberOfPost;
-	@Column (name="\"initials\"", length=5, nullable=false)
+	@Column (name="\"initials\"", length=5)
 	private String initials;
 	@Column (name="\"interests\"", length=500)
 	private String interests;
