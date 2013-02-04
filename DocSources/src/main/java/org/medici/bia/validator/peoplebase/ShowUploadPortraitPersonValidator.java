@@ -109,11 +109,11 @@ public class ShowUploadPortraitPersonValidator implements Validator {
 	private void validateImageToLoad(CommonsMultipartFile browse, Errors errors) {
 		if (browse != null && browse.getSize() > 0) {
 			if (!browse.getContentType().equals("image/jpeg") && !browse.getContentType().equals("image/png")) {
-				errors.reject("browse", "error.browse.invalidImage");
+				errors.rejectValue("browse", "error.browse.invalidImage");
 			}
 			// MD: Verify if the upload file is too big
 			if (browse.getSize() > 15000000) {
-				errors.reject("browse", "error.browse.fileDimension");
+				errors.rejectValue("browse", "error.browse.fileDimension");
 			}
 		}
 
