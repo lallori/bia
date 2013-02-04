@@ -33,12 +33,14 @@ import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Annotation;
+import org.medici.bia.domain.User;
 
 /**
  * Annotation Dao.
  * 
  * @author Lorenzo Pasquinelli (<a
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *         @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface AnnotationDAO extends Dao<Integer, Annotation> {
 
@@ -49,6 +51,15 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @throws PersistenceException
 	 */
 	List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param imageName
+	 * @param user
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException;
 
 	/**
 	 * 

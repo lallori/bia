@@ -87,7 +87,7 @@ public class AjaxController {
 			annotation.setWidth(w);
 			annotation.setHeight(h);
 			annotation.setType(Annotation.Type.valueOf(category));
-			annotation.setCategory(title);
+			annotation.setTitle(title);
 			annotation.setText(text);
 			Image image = new Image();
 			image.setImageType(Image.ImageType.valueOf(imageType));
@@ -131,13 +131,11 @@ public class AjaxController {
 			for (Annotation currentAnnotation : annotations) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
 				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
-				singleRow.put("id", currentAnnotation.getId());
 				singleRow.put("x", currentAnnotation.getX());
 				singleRow.put("y", currentAnnotation.getY());
 				singleRow.put("w", currentAnnotation.getWidth());
 				singleRow.put("h", currentAnnotation.getHeight());
 				singleRow.put("type", currentAnnotation.getType());
-				singleRow.put("category", currentAnnotation.getCategory());
 				singleRow.put("title", currentAnnotation.getTitle());
 				singleRow.put("text", currentAnnotation.getText());
 				resultList.add(singleRow);
@@ -168,13 +166,11 @@ public class AjaxController {
 					String[] splitted = StringUtils.splitPreserveAllTokens(string, ",");
 					Annotation annotation = new Annotation();
 					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
-					annotation.setId(splitted[1]);
 					annotation.setX(NumberUtils.toDouble(splitted[2]));
 					annotation.setY(NumberUtils.toDouble(splitted[3]));
 					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
 					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
-					annotation.setType(Annotation.Type.valueOf(splitted[6]));
-					annotation.setCategory(splitted[7]);
+					annotation.setType(Annotation.Type.valueOf(splitted[7].toUpperCase()));
 					annotation.setTitle(splitted[8]);
 					annotation.setText(splitted[9]);
 					annotationsList.add(annotation);

@@ -171,7 +171,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					forumTopic.setAnnotation(annotation);
 					
 					forumTopic.setUser(user);
-					forumTopic.setSubject(annotation.getCategory());
+					forumTopic.setSubject(annotation.getTitle());
 					forumTopic.setTotalReplies(new Integer(0));
 					forumTopic.setTotalViews(new Integer(0));
 					forumTopic.setLastPost(null);
@@ -180,7 +180,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					getForumTopicDAO().persist(forumTopic);
 					
 					ForumPost forumPost = new ForumPost();
-					forumPost.setSubject(annotation.getCategory());
+					forumPost.setSubject(annotation.getTitle());
 					forumPost.setText(annotation.getText());
 					forumPost.setTopic(forumTopic);
 					forumPost.setDateCreated(new Date());
@@ -209,7 +209,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				forumTopic.setAnnotation(annotation);
 				
 				forumTopic.setUser(user);
-				forumTopic.setSubject(annotation.getCategory());
+				forumTopic.setSubject(annotation.getTitle());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
 				forumTopic.setLastPost(null);
@@ -218,7 +218,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				getForumTopicDAO().persist(forumTopic);
 				
 				ForumPost forumPost = new ForumPost();
-				forumPost.setSubject(annotation.getCategory());
+				forumPost.setSubject(annotation.getTitle());
 				forumPost.setText(annotation.getText());
 				forumPost.setTopic(forumTopic);
 				forumPost.setDateCreated(new Date());
@@ -597,7 +597,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public List<Annotation> getImageAnnotations(String imageName) throws ApplicationThrowable {
 		try {
-			return getAnnotationDAO().findAnnotationsByImage(imageName);
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			return getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
 		} catch(Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -743,6 +744,35 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Annotation updateAnnotation(Integer imageId, Annotation annotation) throws ApplicationThrowable {
+		try {
+			Image image = getImageDAO().findImageByImageId(imageId);
+			if (image == null) {
+				return null;
+			}
+
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			annotation.setUser(user);
+			annotation.setImage(image);
+			if(annotation.getAnnotationId() == 0){
+				annotation.setAnnotationId(null);
+				annotation.setDateCreated(new Date());
+				annotation.setLastUpdate(new Date());
+				if (annotation.getType() == null) {
+					annotation.setType(Annotation.Type.GENERAL);
+				}
+				getAnnotationDAO().persist(annotation);
+			}
+			return annotation;
+		} catch (Throwable throwable){
+			throw new ApplicationThrowable(throwable);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -763,6 +793,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 
 				Annotation persistedAnnotation = getAnnotationDAO().findByAnnotationId(annotation.getAnnotationId());
 				if (persistedAnnotation == null) {
+					annotation.setAnnotationId(null);
 					annotation.setDateCreated(new Date());
 					annotation.setLastUpdate(new Date());
 					if (annotation.getType() == null) {
@@ -771,7 +802,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					getAnnotationDAO().persist(annotation);
 				} else {
 					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
-					annotation.setId(persistedAnnotation.getId());
+					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
 					annotation.setLastUpdate(new Date());
 					getAnnotationDAO().merge(annotation);
 				}

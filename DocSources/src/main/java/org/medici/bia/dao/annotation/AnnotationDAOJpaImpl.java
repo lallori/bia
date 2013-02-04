@@ -34,12 +34,14 @@ import javax.persistence.Query;
 
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Annotation;
+import org.medici.bia.domain.User;
 import org.springframework.stereotype.Repository;
 
 /**
  * <b>AnnotationDAOJpaImpl</b> is a default implementation of <b>AnnotationDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.Annotation
  */
@@ -72,10 +74,24 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName=:imageName order by annotationId desc";
+		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account) order by annotationId desc";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("imageName", imageName);
+
+		return (List<Annotation>) query.getResultList();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account) order by annotationId desc";
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("imageName", imageName);
+        query.setParameter("account", user.getAccount());
 
 		return (List<Annotation>) query.getResultList();
 	}

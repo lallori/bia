@@ -262,6 +262,14 @@ public interface ManuscriptViewerService {
 	/**
 	 * 
 	 * @param imageId
+	 * @param annotation
+	 * @throws ApplicationThrowable
+	 */
+	public Annotation updateAnnotation(Integer imageId, Annotation annotation) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param imageId
 	 * @param annotationsList
 	 * @throws ApplicationThrowable
 	 */

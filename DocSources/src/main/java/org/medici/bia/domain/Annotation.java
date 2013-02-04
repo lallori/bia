@@ -48,6 +48,7 @@ import javax.persistence.TemporalType;
  * This class represents entity Annotation.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Entity
@@ -81,8 +82,6 @@ public class Annotation implements Serializable {
 	@JoinColumn(name="\"account\"")
 	private User user;
 	
-	@Column (name="\"id\"", nullable=false) 
-	private String id;
 	@Column (name="\"x\"", nullable=false)
 	private Double x;
 	@Column (name="\"y\"", nullable=false)
@@ -91,8 +90,6 @@ public class Annotation implements Serializable {
 	private Double width;
 	@Column (name="\"h\"", nullable=false)
 	private Double height;
-	@Column (name="\"category\"", nullable=false) 
-	private String category;
 	@Column (name="\"title\"", nullable=true) 
 	private String title;
 	@Column (name="\"text\"", nullable=true) 
@@ -160,20 +157,6 @@ public class Annotation implements Serializable {
 	 */
 	public void setHeight(Double height) {
 		this.height = height;
-	}
-
-	/**
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	/**
@@ -247,20 +230,6 @@ public class Annotation implements Serializable {
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**
