@@ -14,23 +14,19 @@ AbstractUserDetailsAuthenticationProvider.disabled=Your account is disabled, ple
 
 # Appplication errors : Please put in alphabetical order
 error.firstName.onlyalphacharacters.command.firstName=You should enter only alphabetic characters (not numbers or other characters) 
-error.lastName.onlyalphacharacters.command.lastName=You should enter only alphabetic characters (not numbers or other characters) 
+error.lastName.onlyalphacharacters.command.firstName=You should enter only alphabetic characters (not numbers or other characters) 
 error.account.null=Field Account is empty or null
 error.account.notfound=Your account is not valid. Please contact out support center
 error.account.notapproved=Your account is in approving by out center
-error.account.alreadyactive.requestCommand.uuid=This account has already been activated.
 error.confirmPassword.null=Field Second Password is empty or null
-error.confirmPassword.mismatch=Field Second Password mismatch
+error.confirmPassword.mismatch=Field Second Passowrd mismatch
 error.firstPassword.null=Field First Password is empty or null
 error.mail.alreadypresent.command.mail=This email has already been registered: try to recover your password
-error.mail.notApproved=Your account is not approved.
-error.organization.null=Field Organization is empty or null
-error.password.invalid=field password mismatch
 error.password.null=Field First Password is empty or null
 error.password.mismatch=field password mismatch
 error.sessionId.null=Field SessionId is empty or null
 error.secondPassword.null=Field Second Password is empty or null
-error.secondPassword.mismatch=Field Second Password mismatch
+error.secondPassword.mismatch=Field Second Passowrd mismatch
 error.uuid.notfound=The request to reset your password was invalid. To resubmit the request, please use this form
 error.uuid.notvalid=The request to reset your password was made more than 24 hours ago, so it has expired. To resubmit the request, please use this form
 
@@ -102,8 +98,6 @@ basicsearch.volumes=Search for a specific volume (enter a volume number)
 basicsearch.people=Search for people by name 
 basicsearch.places=Search for places by name
 
-advsearch.documents.wordType.Extract=Document Transcription
-advsearch.documents.wordType.Synopsis=Document Synopsis
 advsearch.documents.wordType.SynopsisAndExtract=Synopsis and Transcription
 advsearch.documents.wordsearch=Search for words that appear in document transcriptions and/or synopses
 advsearch.documents.peopleandplaces.person=General person search for individuals referenced in, or sending/receiving documents
@@ -120,12 +114,6 @@ advsearch.documents.daterange=Limit search to documents written FROM or BEFORE a
 advsearch.documents.volumeorfolio.volume=Limit search to documents that are part of a specific volume (EXACTLY) or are included BETWEEN a range of volumes
 advsearch.documents.volumeorfolio.folio=Limit search to a specific folio number (EXACTLY) or included within a range of folios (BETWEEN)
 advsearch.documents.docid=Search for the document using his DOCID, an unique number assigned automatically to every document entered into the database (searching more than one DOCIDs results in a boolean OR search: Ex. 12342 OR 1324 OR 5421)
-advsearch.documents.volumeType.Exactly=Exactly
-advsearch.documents.volumeType.Between=Between
-advsearch.documents.dateType.From=Written From
-advsearch.documents.dateType.Before=Written Before
-advsearch.documents.dateType.Between=Written Between
-advsearch.documents.dateType.InOn=Written In/On
 
 advsearch.volumes.volume.exactlyorbetween=Limit search to a specific volume (exactly), or a specific range of volumes (between) 
 advsearch.volumes.volume.writtenwhen=Limit search to volumes containing documents written FROM or written BEFORE a certain date, or BETWEEN certain dates 
@@ -152,20 +140,6 @@ advsearch.places.placename=Search place by name
 advsearch.places.placetype.selectaplacetype=Limit search to one of the place types assigned to geographical place names in the Getty Thesaurus of Geographic Names
 advsearch.places.linkedtotopics.selectatopic=Search for places related to one of the 42 Topic Categories
 advsearch.places.linkedtopeople.selectalinktype.senderlocation=Search by sender location or recipient location, by birth place or death place
-
-
-# Records menu (applies to a document,volume,person, or place record) - menu at top of the record page
-menu.record.goback=Go back to last record
-menu.record.gonext=Go back to next record
-menu.record.discussions=Show or create discussions for this record
-menu.record.vettinghistory=Show vetting history for this record
-menu.record.delete=Delete this record
-menu.record.undelete=Undelete this record
-menu.record.sharelink=Use this to share this content or record across annotation clients and collections applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.
-menu.record.print=Print this record
-menu.record.markedlist=Add this record to Marked List
-menu.record.alreadymarkedlist=Remove this record from your Marked List
-
 
 ## DocBase help tooltips
 
@@ -229,32 +203,27 @@ peoplebase.details.edit.deathbc= Check here if date of death is prior to the Chr
 peoplebase.details.edit.activeend=When there is no available date of death, enter the date of the individual's last known activity   
 peoplebase.titlesandoccupations.edit=Select title/occupation from the drop-down menu which autocompletes while you are typing
 peoplebase.titlesandoccupations.edit.preferredrole=Check this box if the title/occupation you entered is the primary title/occupation related to this person record
-peoplebase.names.add=Type in a name specifying which type of name it is using the combobox below
 peoplebase.parents.edit.fathername=Choose a name from the drop-down menu which autocompletes while you are typing
 peoplebase.parents.edit.mothername=Choose a name from the drop-down menu which autocompletes while you are typing
 peoplebase.addchild.edit.childname=Choose a name from the drop-down menu which autocompletes while you are typing
 peoplebase.addspouse.edit.spousename=Choose a name from the drop-down menu which autocompletes while you are typing
-peoplebase.researchnotes.edit=Help not yet entered
-
 
 #implementare geobase!! manca
 
 ##Geobase help tooltips
 
-geobase.details.edit.placeid=Unique key for all places, TGN and MAP 
-geobase.details.edit.geogkey=Getty TGN with 7-digit GEOGKEY numbers 
+geobase.details.edit.placeid=Unique key for all places, TGN and MAP NEED TO REVIEW
+geobase.details.edit.geogkey=Getty TGN with 7-digit GEOGKEY numbers NEED TO REVIEW
 geobase.details.edit.tgntermid=Unique key for this name (Ref. TGN Data Dictionary), necessarily missing for entries added by MAP NEED TO REVIEW
-geobase.details.edit.placenamenoaccents=Insert place name in original language with NO accented characters
+geobase.details.edit.placenamenoaccents=Insert place name in original language with no accented characters
 geobase.details.edit.placenamewithaccents=Insert place name in original language with accented characters
 geobase.details.edit.placetype=Enter villages, towns, and cities as "inhabited place"; for all other place types use drop-down menu
 geobase.details.edit.placeparent=To identify larger area in which place is located, begin typing and select from drop-down menu
 geobase.details.edit.placenotes=Memo field for researchers' notes
 
 geobase.namevariants.edit=Insert variant form(s) of principal place name 
-#WE DO NOT KNOW WHAT THIS MEANS!!
-geobase.namevariants.show=Principal place name in original language, with variant forms listed below 
-
-#ADD ANOTHER GEOBASE HELP BUTTON FOR: NAME OR NAME VARIANTS/ ADD NEW NAME: Insert place name in variant spellings, in other language(s), archaic forms, etc...
+geobase.namevariants.show=geobase.namevariants.show=Principal place name in original language, with variant forms listed below
+ADD ANOTHER GEOBASE HELP BUTTON FOR: NAME OR NAME VARIANTS/ ADD NEW NAME: Insert place name in variant spellings, in other language(s), archaic forms, etc...
 
 geobase.sendersandrecipients.show=All letters sent to and/or received from this place
 
@@ -282,5 +251,4 @@ geobase.hierarchy.show.geokey=
 digitization.modalmenu.createschedoni="Create a new catalog decription for a digitized volume or for a volume that is in the process of digitization"
 digitization.modalmenu.searchschedoni="Look for a catalog description of a digitized volume"
 digitization.modalmenu.activatedeactivatedigitizedvolume="Activate or Deactivate a digitized volume images"
-error.numeroUnita.notfound=Please insert Numero Unita'
 
