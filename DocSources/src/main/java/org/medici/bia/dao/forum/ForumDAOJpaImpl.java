@@ -672,7 +672,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public Long getSubForumsNumberWithTopics(Integer forumId) throws PersistenceException {
-		String countQuery = "SELECT COUNT(*) from Forum where forumId=:forumId AND topicsNumber != 0 AND logicalDelete=0";
+		String countQuery = "SELECT COUNT(*) from Forum where forumParent.forumId=:forumId AND topicsNumber != 0 AND logicalDelete=0";
         
 		Query query = getEntityManager().createQuery(countQuery);
 		query.setParameter("forumId", forumId);
