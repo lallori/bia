@@ -19,33 +19,34 @@
 		<c:param name="personId" value="${person.personId }" />
 	</c:url>
 
-	<form id="uploadPortraitPersonForm" action="${ShowUploadPortraitPersonURL}"	method="post" class="edit" enctype="multipart/form-data">
+	<form:form id="uploadPortraitPersonForm" action="${ShowUploadPortraitPersonURL}"	method="post" class="edit" enctype="multipart/form-data">
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
-					<label for="link" id="linkLabel">Link</label>
+					<form:label for="link" id="linkLabel" path="link">Link</form:label>
 				</div>
 				<div class="col_l">
-					<input id="link" name="link" class="input_40c" type="text" value="http://" />
+					<form:input id="link" name="link" class="input_40c" type="text" path="link"/>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col_l">
-					<label for="browse" id="browseLabel">Browse</label>
+					<form:label for="browse" id="browseLabel" path="browse">Browse</form:label>
 				</div>
 				<div class="col_l">
-					<input id="browse" name="browse" class="input_28c" type="file" value="" size="30" />
+					<form:input id="browse" name="browse" class="input_28c" type="file" value="" size="30" path="browse"/>
 				</div>
 			</div>
 		</div>
 		<br>
+		<form:errors path="browse" cssClass="inputerrors" htmlEscape="false"/>
 		<div>
 			<input type="hidden" name="personId" value="${person.personId}" />
 			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium">Reset Portrait</a>
 			<input id="save" type="submit" class="savePortrait"  value="Save" />
 		</div>
 	
-	</form>
+	</form:form>
 
 	<div id="output"></div>
 	<script type="text/javascript">

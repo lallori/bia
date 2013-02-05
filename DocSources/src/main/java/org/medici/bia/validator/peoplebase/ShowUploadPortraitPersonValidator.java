@@ -125,19 +125,21 @@ public class ShowUploadPortraitPersonValidator implements Validator {
 	 * @param errors
 	 */
 	private void validateRemoteUrl(String link, Errors errors) {
-		if (!ObjectUtils.toString(link).equals("") && !ObjectUtils.toString(link).equals("http://")) {
-			try {
-				URL url = new URL(link);
-				HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-				int responseCode = huc.getResponseCode();
-
-				if (responseCode != HttpURLConnection.HTTP_OK) {
+		if(errors.hasErrors()){
+			if (!ObjectUtils.toString(link).equals("") && !ObjectUtils.toString(link).equals("http://")) {
+				try {
+					URL url = new URL(link);
+					HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+					int responseCode = huc.getResponseCode();
+	
+					if (responseCode != HttpURLConnection.HTTP_OK) {
+						errors.reject("link", "error.link.notFound");
+					}
+				} catch (UnknownHostException uhe) {
+					errors.reject("link", "error.link.notFound");
+				} catch (IOException ioException) {
 					errors.reject("link", "error.link.notFound");
 				}
-			} catch (UnknownHostException uhe) {
-				errors.reject("link", "error.link.notFound");
-			} catch (IOException ioException) {
-				errors.reject("link", "error.link.notFound");
 			}
 		}
 	}
@@ -148,16 +150,18 @@ public class ShowUploadPortraitPersonValidator implements Validator {
 	 * @param errors
 	 */
 	public void validatePersonId(Integer personId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
-
-		if (!errors.hasErrors()) {
-			if (personId > 0) {
-				try {
-					if (getPeopleBaseService().findPerson(personId) == null) {
-						errors.reject("peopleId", "error.peopleId.notfound");
+		if(errors.hasErrors()){
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
+	
+			if (!errors.hasErrors()) {
+				if (personId > 0) {
+					try {
+						if (getPeopleBaseService().findPerson(personId) == null) {
+							errors.reject("peopleId", "error.peopleId.notfound");
+						}
+					} catch (ApplicationThrowable ath) {
+	
 					}
-				} catch (ApplicationThrowable ath) {
-
 				}
 			}
 		}

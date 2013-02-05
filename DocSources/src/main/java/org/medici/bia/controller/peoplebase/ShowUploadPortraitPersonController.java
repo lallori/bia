@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.medici.bia.command.peoplebase.ShowUploadPortraitPersonCommand;
 import org.medici.bia.common.ajax.MultipartFileUploadEditor;
 import org.medici.bia.common.image.PersonPortrait;
@@ -57,6 +58,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show Upload Portrait Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/peoplebase/ShowUploadPortraitPerson")
@@ -96,6 +98,7 @@ public class ShowUploadPortraitPersonController {
 			try{
 				People person = getPeopleBaseService().findPerson(command.getPersonId());
 				model.put("person", person);
+				command.setLink("http://");
 			
 				return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
 			} catch (ApplicationThrowable applicationThrowable) {
@@ -119,7 +122,7 @@ public class ShowUploadPortraitPersonController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			setupForm(command, result);
+			return setupForm(command, result);
 		} else {
 			PersonPortrait personPortrait = new PersonPortrait(command.getPersonId(), command.getBrowse(), command.getLink());
 	
