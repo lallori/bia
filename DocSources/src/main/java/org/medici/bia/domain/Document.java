@@ -78,6 +78,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  * Document entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Entity
 @Indexed
@@ -405,6 +406,10 @@ public class Document implements Serializable{
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
 	@IndexedEmbedded
 	private SynExtract synExtract;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "documentFrom", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@IndexedEmbedded
+	private Set<DocReference> docReference;
 
 	/**
 	 * Default constructor.
@@ -1138,6 +1143,20 @@ public class Document implements Serializable{
 	 */
 	public SynExtract getSynExtract() {
 		return synExtract;
+	}
+
+	/**
+	 * @return the docReference
+	 */
+	public Set<DocReference> getDocReference() {
+		return docReference;
+	}
+
+	/**
+	 * @param docReference the docReference to set
+	 */
+	public void setDocReference(Set<DocReference> docReference) {
+		this.docReference = docReference;
 	}
 
 	/**
