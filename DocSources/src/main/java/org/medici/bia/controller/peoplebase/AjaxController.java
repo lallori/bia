@@ -649,7 +649,7 @@ public class AjaxController {
 			resultList.add(singleRow);
 		}
 
-		model.put("iEcho", "" + 1);
+		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);

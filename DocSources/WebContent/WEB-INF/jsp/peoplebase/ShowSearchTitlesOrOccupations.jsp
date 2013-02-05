@@ -60,6 +60,9 @@
 						window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 						window.close();
 					} else{
+						window.opener.$j('#tabs ul li').eq(numTab).data('loaded', false).find('a').attr('href', formSubmitURL);
+						window.opener.$j("#tabs").tabs("option", "active", numTab);
+						window.opener.$j("#tabs").tabs("load" , numTab);
 						window.opener.$j("#tabs").tabs("select", numTab);
 						window.close();
 					}

@@ -171,19 +171,17 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 		// We set size of result.
 		if (paginationFilter.getTotal() == null) {
 			//select  count(*) from ( select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID group by a.titleOccID ) count
-			StringBuilder queryCountBuilder = new StringBuilder("select count(*) from (");
-			queryCountBuilder.append("select count(*) from tblTitleOccsList a left outer join tblPoLink b on b.TitleOccID = a.TitleOccID ");
+			StringBuilder queryCountBuilder = new StringBuilder("");
+			queryCountBuilder.append("select count(*) from tblTitleOccsList a ");
 			if (simpleSearchTitleOrOccupation.getTextSearch() != null) {
 				queryCountBuilder.append(" where a.titleOcc LIKE '%");
-				queryCountBuilder.append(simpleSearchTitleOrOccupation.getRoleCatId());
+				queryCountBuilder.append(simpleSearchTitleOrOccupation.getTextSearch());
 				queryCountBuilder.append("%' ");
 			} else if (simpleSearchTitleOrOccupation.getRoleCatId() != null) {
 				queryCountBuilder.append(" where a.roleCatMinorID=");
 				queryCountBuilder.append(simpleSearchTitleOrOccupation.getRoleCatId());
 			}
-			queryCountBuilder.append(" group by a.titleOccID ");
-			queryCountBuilder.append(") count");
-
+			
 			// In this case we use Native Query!!!
 			Query query = getEntityManager().createNativeQuery(queryCountBuilder.toString());
 			
