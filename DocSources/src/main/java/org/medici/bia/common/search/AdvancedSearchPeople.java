@@ -89,6 +89,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> titleOccWord;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
+	private List<String> exactName;
+	private List<Integer> personId;
 	private List<String> words;
 	private List<WordType> wordsTypes;
 
@@ -102,6 +104,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 
 		names = new ArrayList<String>(0);
 		namesTypes = new ArrayList<AdvancedSearchAbstract.NameType>(0);
+		exactName = new ArrayList<String>(0);
 		words = new ArrayList<String>(0);
 		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
 		datesTypes = new ArrayList<String>(0);
@@ -118,6 +121,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		datesCreatedBetween = new ArrayList<Date>(0);
 		datesCreatedTypes = new ArrayList<DateType>(0);
 		peopleId = new ArrayList<String>(0);
+		personId = new ArrayList<Integer>(0);
 		placeId = new ArrayList<Integer>(0);
 		place = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
@@ -159,6 +163,44 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		}else{
 			namesTypes = new ArrayList<AdvancedSearchAbstract.NameType>(0);
 			names = new ArrayList<String>(0);
+		}
+		
+		//Exact Name
+		if((command.getPerson() != null) && (command.getPerson().size() > 0)){
+			personId = new ArrayList<Integer>(command.getPerson().size());
+			exactName = new ArrayList<String>(command.getPerson().size());
+			
+			for(String singleWord : command.getPerson()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try{
+					if(stringTokenizer.countTokens() == 0){
+						continue;
+					}else if(stringTokenizer.countTokens() == 1){
+						personId.add(new Integer(0));
+						exactName.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					}else if(stringTokenizer.countTokens() == 2){
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						if(NumberUtils.isNumber(singleId)){
+							personId.add(NumberUtils.createInteger(singleId));
+						}else{
+							personId.add(new Integer(0));
+						}
+						exactName.add(URIUtil.decode(singleText, "UTF-8"));
+					}
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch (URIException uriException){
+					logger.debug(uriException);
+					personId.remove(personId.size() - 1);
+				}
+			}
+		}else{
+			exactName = new ArrayList<String>(0);
+			personId = new ArrayList<Integer>(0);
 		}
 		
 		//Words
@@ -457,6 +499,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	public Boolean empty() {
 		if(
 				(names.size()>0) ||
+				(personId.size()>0) ||
 				(words.size()>0) ||
 				(datesTypes.size()>0) ||
 				(datesLastUpdateTypes.size()>0) ||
@@ -522,6 +565,30 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				jpaQuery.append(namesQuery);
 			}
 			
+		}
+		
+		//Exact Name
+		if (personId.size() >0) {
+			StringBuilder personIdQuery = new StringBuilder("(");
+			for (int i=0; i<personId.size(); i++) {
+				if (personId.get(i) > 0) {
+					if (personIdQuery.length()>1) {
+						personIdQuery.append(" AND ");
+					}
+					
+					personIdQuery.append("(personId=");
+					personIdQuery.append(personId.get(i).toString());
+					personIdQuery.append(")");
+					
+				}
+			}
+			personIdQuery.append(')');
+			if (!personIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(personIdQuery);
+			}
 		}
 		
 		//Words
@@ -1182,6 +1249,18 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				toString.append(' ');
 			}
 		}
+		if(!exactName.isEmpty()){
+			if(toString.length()>0){
+				toString.append("AND ");
+			}
+			toString.append("Name: ");
+			for(int i = 0; i < exactName.size(); i++){
+				if(i > 0){
+					toString.append("AND ");
+				}
+				toString.append(exactName.get(i) + " ");
+			}
+		}
 		if(!words.isEmpty()){
 			if(toString.length()>0){
 				toString.append("AND ");
@@ -1368,6 +1447,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the exactName
+	 */
+	public List<String> getExactName() {
+		return exactName;
+	}
+	/**
 	 * @return the gender
 	 */
 	public List<Gender> getGender() {
@@ -1400,6 +1485,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<String> getPeopleId() {
 		return peopleId;
+	}
+	/**
+	 * @return the personId
+	 */
+	public List<Integer> getPersonId() {
+		return personId;
 	}
 	/**
 	 * @return the place
@@ -1521,6 +1612,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param exactName the exactName to set
+	 */
+	public void setExactName(List<String> exactName) {
+		this.exactName = exactName;
+	}
+	/**
 	 * @param gender the gender to set
 	 */
 	public void setGender(List<Gender> gender) {
@@ -1553,6 +1650,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setPeopleId(List<String> peopleId) {
 		this.peopleId = peopleId;
+	}
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(List<Integer> personId) {
+		this.personId = personId;
 	}
 	/**
 	 * @param place the place to set

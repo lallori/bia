@@ -86,6 +86,7 @@ public class AdvancedSearchCommand {
 	private List<String> volumeId;
 	
 	private List<String> nameParts;
+	private List<String> exactName;
 	private List<String> roleCategory;
 	private List<String> occupationWord;
 	private List<String> occupation;
@@ -461,6 +462,20 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getName() {
 		return name;
+	}
+
+	/**
+	 * @return the exactName
+	 */
+	public List<String> getExactName() {
+		return exactName;
+	}
+
+	/**
+	 * @param exactName the exactName to set
+	 */
+	public void setExactName(List<String> exactName) {
+		this.exactName = exactName;
 	}
 
 	/**

@@ -19,6 +19,9 @@
 				<h1 id="nameParts"><a>Name Parts</a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
+						<div class="row">
+							<div class="col_l">Word search</div>
+						</div>
 						<form id="namePartsSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
@@ -43,6 +46,25 @@
 				               	</div>
 				            </div>
 			            </form>	
+			            <br />
+			            <div class="row">
+			            	<div class="col_l">Match the exact name</div>
+			            </div>
+			            <form id="personSearchForm" method="post" class="edit">
+			            	<div class="row">
+				        		<div class="col_l">
+				        			<a class="helpIcon" title="<fmt:message key="advsearch.people.person"></fmt:message>">?</a>
+									<input id="person" name="person" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
+				        		</div>
+				        		<div class="col_l"></div>
+				        		<div class="col_l"></div>
+				        		<div class="col_r">
+				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="personAdd" disabled="disabled">
+									<input type="hidden" id="category" value="person">
+									<input type="hidden" id="personId" value="">
+				        		</div>
+				        	</div>
+			            </form>
 			        </div>
 				</div>
 				
@@ -338,6 +360,7 @@
 			</div>
 
 <c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
+<c:url var="searchPersonURL" value="/src/SearchPerson.json"/>
 <c:url var="searchTitleOrOccupationURL" value="/src/SearchTitleOrOccupation.json"/>
 
 <script type="text/javascript">
@@ -348,6 +371,11 @@
 		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
 
 		$j('#namePartsSearchForm').advancedSearchForm({
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
+		});
+		
+		$j('#personSearchForm').advancedSearchForm({
 			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 			consoleLog : false
 		});
@@ -510,6 +538,45 @@
 			$placeAutocomplete.killSuggestions();
 			$occupationAutocomplete.killSuggestions();
 			return false;
+		});
+		 
+		var $personValue = '';
+		var $personAutocomplete = $j("#person").autocompletePerson({
+			serviceUrl: '${searchPersonURL}',
+		    loadingImageUrl:'${LoadingImageURL}',
+			minChars: 3,
+			delimiter: null,
+			maxHeight: 400,
+			width: 450,
+			zIndex: 9999,
+			deferRequestBy: 0,
+			noCache: true,
+			onSelect: function(value, data){
+				$j(".personAdd").die();
+				$j(".personAdd").removeAttr("disabled");
+				$j('#personId').val(data);
+				$j(".personAdd").attr("disabled");
+				$j(".personAdd").prop("disabled", false);
+				$personValue = $j("#person").val();
+				$j("#person").live('keyup', function(){
+					if($j("#person").val() != $personValue){
+						$j(".personAdd").attr("disabled","disabled");
+						$j("#personId").val("");
+					}
+					return false;
+				});
+				$j("#person").live('keypress', function(e){
+					if(e.keyCode == 13 && $j("#person").val() != $personValue){
+						e.stopPropagation();
+						return false;
+					}
+				});
+			}
+		});	
+		 
+		$j("#personSearchForm").submit(function(){
+			$j("#personId").val("");
+			$j(".personAdd").attr("disabled","disabled");
 		});
 		 
 		var $placeValue = '';
