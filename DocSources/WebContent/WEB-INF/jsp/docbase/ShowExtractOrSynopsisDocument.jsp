@@ -43,6 +43,20 @@
 				<div class="item">Synopsis</div>
 				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
 			</div>
+			<div class="row">
+				<div class="item">Document referred to</div> 
+				
+			<c:forEach items="${document.docReference}" var="currentDocument">
+			<!-- This is a method to have a value near the item with the text People. -->	
+				<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
+					<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
+				</c:url>
+				<div class="value80"><a class="linkDocument" href="${CompareDocumentURL}" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}">#${currentDocument.documentTo.entryId}<input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a></div>
+				</div>
+				<div class="row">
+					<div class="item">&nbsp</div>
+			</c:forEach>
+			</div>
 		</div>
 	</div>
 	
@@ -84,6 +98,44 @@
 			$j(".read-less").click(function(){
 				$j.scrollTo("#EditExtractOrSynopsisDocumentDiv");
 			});
+			
+			$j(".linkDocument").click(function() {
+				var tabName = $j(this).attr("id");
+				var numTab = 0;
+				var id = $j(this).find(".tabId").val();
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					//Check if exist a tab with the same name or with the same name without id
+					if(this.text == tabName || this.text == "DocId#" + id.substring(5, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+						if($j(this).find("input").val() == id){
+							tabExist = true;
+						}else{
+							if(this.text.indexOf("#") == -1){
+								$j(this).find("span").text("DocId#" + $j(this).find("input").val().substring(5, $j(this).find("input").val().length) + " - " + this.text);
+							}
+							if(tabName.indexOf("#") == -1){
+								tabName = "DocId#" + id.substring(5, id.length) + " - " + tabName;		
+							}
+						}
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+	    	});
 
 		});
 	</script>

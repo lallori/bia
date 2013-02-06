@@ -34,6 +34,7 @@ import java.util.Map;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.EplToLink;
@@ -65,6 +66,14 @@ import org.medici.bia.exception.ApplicationThrowable;
  * 
  */
 public interface DocBaseService {
+	/**
+	 * 
+	 * @param docReference
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document addNewDocReferenceDocument(DocReference docReference) throws ApplicationThrowable;
+	
 	/**
 	 * Adds a new {@link org.medici.bia.domain.Document} entry.
 	 * 
@@ -165,6 +174,13 @@ public interface DocBaseService {
 	 */
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param docReference
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteDocReferenceDocument(DocReference docReference) throws ApplicationThrowable;
+	
 	/**
 	 * This method mark a {@link org.medici.bia.domain.Document} as deleted .
 	 * 
@@ -276,6 +292,15 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param entryIdFrom
+	 * @param docReferenceId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public DocReference findDocReferenceDocument(Integer entryIdFrom, Integer docReferenceId) throws ApplicationThrowable;
 
 	/**
 	 * This method searches an existing document by his unique identifiers.

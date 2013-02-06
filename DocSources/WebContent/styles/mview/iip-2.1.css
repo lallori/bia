@@ -221,7 +221,7 @@ div.iipmooviewer div.canvas div.annotation {
   -webkit-border-radius: 4px;
 }
 
-div.iipmooviewer div.canvas div.general {
+div.iipmooviewer div.canvas div.GENERAL {
   position: absolute;
   overflow: visible;
   z-index: 2;
@@ -232,7 +232,7 @@ div.iipmooviewer div.canvas div.general {
   -webkit-border-radius: 4px;
 }
 
-div.iipmooviewer div.canvas div.paleography {
+div.iipmooviewer div.canvas div.PALEOGRAPHY {
   position: absolute;
   overflow: visible;
   z-index: 2;
@@ -243,7 +243,7 @@ div.iipmooviewer div.canvas div.paleography {
   -webkit-border-radius: 4px;
 }
 
-div.iipmooviewer div.canvas div.personal {
+div.iipmooviewer div.canvas div.PERSONAL {
   position: absolute;
   overflow: visible;
   z-index: 2;

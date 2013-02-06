@@ -84,6 +84,10 @@
 		<description>Add Marked List Document Validator.</description>
 	</bean>
 	
+	<bean id="deleteDocReferenceDocumentValidator" class="org.medici.bia.validator.docbase.DeleteDocReferenceDocumentValidator">
+        <description>Delete Linked Documents to another Document Validator.</description>
+	</bean>
+	
 	<bean id="deleteDocumentValidator" class="org.medici.bia.validator.docbase.DeleteDocumentValidator">
         <description>Delete a Document Validator.</description>
 	</bean>
@@ -102,6 +106,10 @@
 
 	<bean id="editDetailsDocumentValidator" class="org.medici.bia.validator.docbase.EditDetailsDocumentValidator">
         <description>Edit Details Document Validator.</description>
+	</bean>
+	
+	<bean id="editDocReferenceDocumentValidator" class="org.medici.bia.validator.docbase.EditDocReferenceDocumentValidator">
+        <description>Edit DocReference Document Validator.</description>
 	</bean>
 
 	<bean id="editExtractOrSynopsisDocumentValidator" class="org.medici.bia.validator.docbase.EditExtractOrSynopsisDocumentValidator">

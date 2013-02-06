@@ -39,7 +39,7 @@ IIPMooViewer.implement({
       y: (this.hei<this.view.h) ? 0.25 : (this.view.y+this.view.h/4)/this.hei,
       w: (this.wid<this.view.w) ? 0.5 : (this.view.w/(2*this.wid)),
       h: (this.hei<this.view.h) ? 0.5 : (this.view.h/(2*this.hei)),
-      category: '',
+     type: '',
       title: '',
       text: ''
     };
@@ -122,11 +122,20 @@ IIPMooViewer.implement({
     // MEDICI ARCHIVE PROJECT START
     //html += '<tr><td>Annotation Type</td><td><input type="text" name="category"';
     //html += '<tr><td>Annotation Type</td><td><select name="category"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';
-    html += '<tr><td>Annotation Type</td><td><input name="category" type="radio"  value="general" checked="true">General<br><input name="category" type="radio" value="paleography">Paleography<br><input name="category" type="radio" value="personal">Personal';
+    html += '<tr><td>Annotation Type</td><td><input name="category" type="radio"  value="GENERAL"';
+    if( this.annotations[id].type == 'GENERAL' || this.annotations[id].type == '')
+    	html += 'checked="true"';
+    html +=	'>General<br><input name="category" type="radio" value="PALEOGRAPHY"';
+    if( this.annotations[id].type == 'PALEOGRAPHY')
+    	html += 'checked="true"';
+    html +=	'>Paleography<br><input name="category" type="radio" value="PERSONAL"';
+    if( this.annotations[id].type == 'PERSONAL')
+    	html += 'checked="true"';
+    html +=	'>Personal';
     // MEDICI ARCHIVE PROJECT END
     
     // MEDICI ARCHIVE PROJECT START 
-    if( this.annotations[id].category ) html += ' value="' + this.annotations[id].category + '"';
+//    if( this.annotations[id].type ) html += ' value="' + this.annotations[id].type + '"';
     
     //html += '/></td></tr>';
     html += '</td></tr>';
@@ -170,7 +179,8 @@ IIPMooViewer.implement({
 				selectedCategory = categoryArray[i].value;
 			}
 		}
-		_this.annotations[id].category = selectedCategory;
+		
+		_this.annotations[id].type = selectedCategory;
 		_this.annotations[id].title = e.target['title'].value;
 		_this.annotations[id].text = e.target['text'].value;
 		delete _this.annotations[id].edit;

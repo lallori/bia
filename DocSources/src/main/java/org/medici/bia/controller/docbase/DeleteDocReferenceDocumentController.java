@@ -1,5 +1,5 @@
 /*
- * EditDocReferenceDocumentController.java
+ * DeleteDocReferenceDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,12 +32,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.bia.command.docbase.EditDocReferenceDocumentCommand;
-import org.medici.bia.command.docbase.EditPersonDocumentCommand;
+import org.medici.bia.command.docbase.DeleteDocReferenceDocumentCommand;
 import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EpLink;
-import org.medici.bia.domain.People;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,19 +48,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit DocReference Document". This Controller permits
- * link a document to another document (section Edit Transcription/Synopsis). 
+ * Controller for action "Delete DocReference Document". This controller deletes
+ * link between a document and another document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/EditDocReferenceDocument")
-public class EditDocReferenceDocumentController {
+@RequestMapping("/de/docbase/DeleteDocReferenceDocument")
+public class DeleteDocReferenceDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editDocReferenceDocumentValidator")
+	@Qualifier("deleteDocReferenceDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -84,39 +81,6 @@ public class EditDocReferenceDocumentController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditDocReferenceDocumentCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>(0);
-
-			DocReference docReference = new DocReference(command.getDocReferenceId());
-			docReference.setDocumentFrom(new Document(command.getEntryIdFrom()));
-			docReference.setDocumentTo(new Document(command.getEntryIdTo()));
-
-			try {
-				if (command.getDocReferenceId().equals(0)) {
-					getDocBaseService().addNewDocReferenceDocument(docReference);
-				}
-
-			} catch (ApplicationThrowable applicationThrowable) {
-				model.put("applicationThrowable", applicationThrowable);
-				return new ModelAndView("error/ShowDocument", model);
-			}
-
-			return new ModelAndView("docbase/ShowDocument", model);
-		}
-	}
-
-	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
@@ -129,32 +93,26 @@ public class EditDocReferenceDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditDocReferenceDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteDocReferenceDocumentCommand command, BindingResult result) {
+		getValidator().validate(command, result);
 
-		if ((command != null) && (command.getEntryIdFrom() > 0)) {
+		if (result.hasErrors()) {
+			return new ModelAndView("error/DeleteDocReferenceDocument");
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>(0);
 
-			if (command.getDocReferenceId().equals(0)) {
-				command.setEntryIdTo(null);
-				
-			} else {
-				try {
-					DocReference docReference = getDocBaseService().findDocReferenceDocument(command.getEntryIdFrom(), command.getDocReferenceId());
-					
-					command.setDocReferenceId(docReference.getDocReferenceId());
-					command.setEntryIdTo(docReference.getDocumentTo().getEntryId());
-					
-					
-				} catch (ApplicationThrowable applicationThrowable) {
-					model.put("applicationThrowable", applicationThrowable);
-					return new ModelAndView("error/EditDocReferenceDocument", model);
-				}
+			DocReference docReference = new DocReference(command.getDocReferenceId());
+			docReference.setDocumentFrom(new Document(command.getEntryIdFrom()));
+			
+			try {
+				getDocBaseService().deleteDocReferenceDocument(docReference);
+
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable applicationThrowable) {
+				model.put("applicationThrowable", applicationThrowable);
+				return new ModelAndView("response/KO", model);
 			}
-
-			return new ModelAndView("docbase/EditDocReferenceDocument", model);
 		}
-
-		return new ModelAndView("docbase/EditDocReferenceDocument", model);
 	}
 
 	/**

@@ -170,7 +170,7 @@ public class AjaxController {
 					annotation.setY(NumberUtils.toDouble(splitted[3]));
 					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
 					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
-					annotation.setType(Annotation.Type.valueOf(splitted[7].toUpperCase()));
+					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
 					annotation.setTitle(splitted[8]);
 					annotation.setText(splitted[9]);
 					annotationsList.add(annotation);

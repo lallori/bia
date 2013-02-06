@@ -683,7 +683,7 @@ label {
 	color:#6d5c4d;
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeDocReference, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;

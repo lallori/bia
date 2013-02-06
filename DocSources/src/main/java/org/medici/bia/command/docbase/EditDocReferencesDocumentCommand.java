@@ -1,5 +1,5 @@
 /*
- * EditExtractOrSynopsisDocumentCommand.java
+ * EditDocReferencesDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -29,61 +29,32 @@ package org.medici.bia.command.docbase;
 
 import org.medici.bia.domain.Document;
 
-
 /**
- * Command bean for action "Edit Extract Or Synopsis Document".
+ * Command bean for action "Edit DocReferences Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
- * @see org.medici.bia.controller.docbase.EditExtractOrSynopsisDocumentController
+ * @see org.medici.bia.controller.docbase.EditDocReferencesDocumentController
  */
-public class EditExtractOrSynopsisDocumentCommand {
-	private Integer synExtrId;
+public class EditDocReferencesDocumentCommand {
 	private Integer entryId;
-	private String docExtract;
-	private String synopsis;
-	private Boolean modalWindow;
 	private Document document;
-
+	
 	/**
-	 * This method returns entryId property.
-	 * 
 	 * @return the entryId
 	 */
 	public Integer getEntryId() {
 		return entryId;
 	}
-
+	
 	/**
-	 * This method sets document unique id property.
-	 * 
-	 * @param the entryId to set
+	 * @param entryId the entryId to set
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
 	}
-
-	/**
-	 * @param docExtract the docExtract to set
-	 */
-	public void setDocExtract(String docExtract) {
-		this.docExtract = docExtract;
-	}
-
-	/**
-	 * @return the docExtract
-	 */
-	public String getDocExtract() {
-		return docExtract;
-	}
-
-	/**
-	 * @return the document
-	 */
-	public Document getDocument() {
-		return document;
-	}
-
+	
 	/**
 	 * @param document the document to set
 	 */
@@ -92,46 +63,9 @@ public class EditExtractOrSynopsisDocumentCommand {
 	}
 
 	/**
-	 * @param synopsis the synopsis to set
+	 * @return the document
 	 */
-	public void setSynopsis(String synopsis) {
-		this.synopsis = synopsis;
-	}
-
-	/**
-	 * @return the synopsis
-	 */
-	public String getSynopsis() {
-		return synopsis;
-	}
-
-	/**
-	 * @param synExtrId the synExtrId to set
-	 */
-	public void setSynExtrId(Integer synExtrId) {
-		this.synExtrId = synExtrId;
-	}
-
-	/**
-	 * @return the synExtrId
-	 */
-	public Integer getSynExtrId() {
-		return synExtrId;
-	}
-
-	/**
-	 * 
-	 * @param modalWindow the modal window to set
-	 */
-	public void setModalWindow(Boolean modalWindow) {
-		this.modalWindow = modalWindow;
-	}
-
-	/**
-	 * 
-	 * @return the modalWindow
-	 */
-	public Boolean getModalWindow() {
-		return modalWindow;
+	public Document getDocument() {
+		return document;
 	}
 }

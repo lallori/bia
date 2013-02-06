@@ -87,7 +87,7 @@ IIPMooViewer.implement({
 
 	var _this = this;
 	var cl = 'annotation';
-	if( annotation_array[i].category ) cl += ' ' + annotation_array[i].category;
+	if( annotation_array[i].type ) cl += ' ' + annotation_array[i].type;
 	var annotation = new Element('div', {
 	  'id': annotation_array[i].id,
           'class': cl,
@@ -213,7 +213,6 @@ IIPMooViewer.implement({
 							w: responseJSON.annotations[i].w.toFloat(), 
 							h: responseJSON.annotations[i].h.toFloat(),
 							type: responseJSON.annotations[i].type,
-							category: responseJSON.annotations[i].category,
 							title: responseJSON.annotations[i].title,
 							text: responseJSON.annotations[i].text
 						} );

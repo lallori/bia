@@ -46,6 +46,7 @@ import org.medici.bia.common.util.EpLinkUtils;
 import org.medici.bia.common.util.EplToLinkUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ImageUtils;
+import org.medici.bia.dao.docreference.DocReferenceDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.eplink.EpLinkDAO;
 import org.medici.bia.dao.epltolink.EplToLinkDAO;
@@ -64,6 +65,7 @@ import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
+import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.EplToLink;
@@ -106,6 +108,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private DocumentDAO documentDAO;
 
 	@Autowired
+	private DocReferenceDAO docReferenceDAO;
+	@Autowired
 	private EpLinkDAO epLinkDAO;
 	@Autowired
 	private EplToLinkDAO eplToLinkDAO;
@@ -140,6 +144,33 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private VolumeDAO volumeDAO;
 	@Autowired
 	private VettingHistoryDAO vettingHistoryDAO;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document addNewDocReferenceDocument(DocReference docReference) throws ApplicationThrowable {
+		try{
+			docReference.setDocReferenceId(null);
+			docReference.setDateCreated(new Date());
+			docReference.setDocumentFrom(getDocumentDAO().find(docReference.getDocumentFrom().getEntryId()));
+			docReference.setDocumentTo(getDocumentDAO().find(docReference.getDocumentTo().getEntryId()));
+			getDocReferenceDAO().persist(docReference);
+			DocReference docReferenceInverse = new DocReference(null);
+			docReferenceInverse.setDateCreated(new Date());
+			docReferenceInverse.setDocumentFrom(getDocumentDAO().find(docReference.getDocumentTo().getEntryId()));
+			docReferenceInverse.setDocumentTo(getDocumentDAO().find(docReference.getDocumentFrom().getEntryId()));
+			getDocReferenceDAO().persist(docReferenceInverse);
+			
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new Document Reference", Action.MODIFY, Category.DOCUMENT, docReference.getDocumentFrom()));
+			
+			return docReference.getDocumentFrom();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -444,6 +475,36 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteDocReferenceDocument(DocReference docReference) throws ApplicationThrowable {
+		try{
+			DocReference docReferenceToDeleteFirst = getDocReferenceDAO().find(docReference.getDocumentFrom().getEntryId(), docReference.getDocReferenceId());
+			DocReference docReferenceToDeleteSecond = getDocReferenceDAO().findFromDocuments(docReferenceToDeleteFirst.getDocumentTo().getEntryId(), docReferenceToDeleteFirst.getDocumentFrom().getEntryId());
+			
+			docReferenceToDeleteFirst.getDocumentFrom().setDocReference(null);
+			docReferenceToDeleteFirst.getDocumentTo().setDocReference(null);
+			
+			getDocReferenceDAO().remove(docReferenceToDeleteFirst);
+			
+			docReferenceToDeleteSecond.getDocumentFrom().setDocReference(null);
+			docReferenceToDeleteSecond.getDocumentTo().setDocReference(null);
+			
+			getDocReferenceDAO().remove(docReferenceToDeleteSecond);			
+			
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink document ", Action.MODIFY, Category.DOCUMENT, docReferenceToDeleteFirst.getDocumentFrom()));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink document", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, docReferenceToDeleteFirst.getDocumentFrom()));
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+		
 	}
 
 	/**
@@ -947,6 +1008,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DocReference findDocReferenceDocument(Integer entryIdFrom, Integer docReferenceId) throws ApplicationThrowable {
+		try{
+			return getDocReferenceDAO().find(entryIdFrom, docReferenceId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1218,6 +1291,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return historyNavigator;
 	}
 
+	/**
+	 * @return the docReferenceDAO
+	 */
+	public DocReferenceDAO getDocReferenceDAO() {
+		return docReferenceDAO;
+	}
 	/**
 	 * @return the documentDAO
 	 */
@@ -1594,6 +1673,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	/**
+	 * @param docReferenceDAO the docReferenceDAO to set
+	 */
+	public void setDocReferenceDAO(DocReferenceDAO docReferenceDAO) {
+		this.docReferenceDAO = docReferenceDAO;
+	}
 	/**
 	 * @param documentDAO the documentDAO to set
 	 */

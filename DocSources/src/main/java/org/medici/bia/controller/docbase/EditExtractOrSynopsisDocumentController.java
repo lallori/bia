@@ -150,6 +150,7 @@ public class EditExtractOrSynopsisDocumentController {
 					command.setDocExtract(null);
 					command.setSynopsis(null);
 				}
+				command.setDocument(getDocBaseService().findDocument(command.getEntryId()));
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}

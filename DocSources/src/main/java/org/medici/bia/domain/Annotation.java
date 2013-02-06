@@ -68,7 +68,7 @@ public class Annotation implements Serializable {
 	@JoinColumn(name="\"imageId\"")
 	private Image image;
 	
-	@Column (name="\"type\"", length=10, nullable=false)
+	@Column (name="\"type\"", length=11, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	@Column (name="\"dateCreated\"")
