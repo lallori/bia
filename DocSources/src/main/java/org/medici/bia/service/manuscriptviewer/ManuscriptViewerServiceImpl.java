@@ -786,6 +786,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			}
 
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			List<Annotation> annotationSaved = getAnnotationDAO().findAnnotationByImageAndUser(image.getImageName(), user);
 
 			for (Annotation annotation : annotationsList) {
 				annotation.setUser(user);
@@ -805,8 +807,24 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
 					annotation.setLastUpdate(new Date());
 					getAnnotationDAO().merge(annotation);
+					
+					int i = 0;
+					Boolean finded = Boolean.FALSE;
+					while(i < annotationSaved.size() && !finded){
+						if(annotationSaved.get(i).getAnnotationId() == persistedAnnotation.getAnnotationId()){
+							annotationSaved.remove(i);
+							finded = Boolean.TRUE;
+						}
+						i++;
+					}
 				}
 			}
+			
+//			if(!annotationSaved.isEmpty()){
+//				for(Annotation annotation : annotationSaved){
+//					getAnnotationDAO().remove(annotation);
+//				}
+//			}
 			
 			return annotationsList;
 		} catch (Throwable throwable){

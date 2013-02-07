@@ -71,7 +71,10 @@ function init() {
 	if (action == "update") {
 		var href = inst.dom.getAttrib(elm, 'href');
 		var onclick = inst.dom.getAttrib(elm, 'onclick');
-		var linkTarget = inst.dom.getAttrib(elm, 'target') ? inst.dom.getAttrib(elm, 'target') : "_self";
+		//MEDICI ARCHIVE PROJECT START
+//		var linkTarget = inst.dom.getAttrib(elm, 'target') ? inst.dom.getAttrib(elm, 'target') : "_self";
+		var linkTarget = inst.dom.getAttrib(elm, 'target') ? inst.dom.getAttrib(elm, 'target') : "_blank";
+		//MEDICI ARCHIVE PROJECT END
 
 		// Setup form data
 		setFormValue('href', href);
@@ -445,7 +448,7 @@ function setAllAttribs(elm) {
 
 	setAttrib(elm, 'href', href);
 	setAttrib(elm, 'title');
-	setAttrib(elm, 'target', target == '_self' ? '' : target);
+	setAttrib(elm, 'target', target == '_self' ? '_self' : target);
 	setAttrib(elm, 'id');
 	setAttrib(elm, 'style');
 	setAttrib(elm, 'class', getSelectValue(formObj, 'classlist'));
@@ -516,8 +519,8 @@ function getTargetListHTML(elm_id, target_form_element) {
 
 	html += '<select id="' + elm_id + '" name="' + elm_id + '" onchange="this.form.' + target_form_element + '.value=';
 	html += 'this.options[this.selectedIndex].value;">';
-	html += '<option value="_self">' + tinyMCEPopup.getLang('advlink_dlg.target_same') + '</option>';
 	html += '<option value="_blank">' + tinyMCEPopup.getLang('advlink_dlg.target_blank') + ' (_blank)</option>';
+	html += '<option value="_self">' + tinyMCEPopup.getLang('advlink_dlg.target_same') + '</option>';
 	html += '<option value="_parent">' + tinyMCEPopup.getLang('advlink_dlg.target_parent') + ' (_parent)</option>';
 	html += '<option value="_top">' + tinyMCEPopup.getLang('advlink_dlg.target_top') + ' (_top)</option>';
 

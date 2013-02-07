@@ -278,6 +278,7 @@
 
 .iipmooviewer .canvas .annotation.edit {
   border-color: yellow;
+  z-index: 999;
 }
 
 .iipmooviewer .canvas .annotation.handle {

@@ -41,7 +41,10 @@ IIPMooViewer.implement({
       h: (this.hei<this.view.h) ? 0.5 : (this.view.h/(2*this.hei)),
      type: '',
       title: '',
-      text: ''
+      text: '',
+      //MEDICI ARCHIVE PROJECT START
+      del: ''
+      //MEDICI ARCHIVE PROJECT END
     };
 
     // Create an array if we don't have one and push a new annotation to it
@@ -140,7 +143,11 @@ IIPMooViewer.implement({
     //html += '/></td></tr>';
     html += '</td></tr>';
 
-    html += '<tr><td colspan="2"><textarea name="text" rows="5" style="display:none;" id="annotationTextarea">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
+    if( this.annotations[id].type == 'PERSONAL'){
+    	html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
+    }else{
+    	html += '<tr><td colspan="2"><textarea name="text" rows="5" style="display:none;" id="annotationTextarea">' + (this.annotations[id].text||'') + '</textarea></td></tr></table>';
+    }
     // MEDICI ARCHIVE PROJECT START
     html += '<input type="hidden" name="annotationId" value="' + this.annotations[id].annotationId + '">';
     html += '<input type="hidden" name="type" value="' + this.annotations[id].type + '">';
@@ -201,8 +208,8 @@ IIPMooViewer.implement({
 
     // Add a delete event to our annotation
     del.addEvent('click', function(){
-		   delete _this.annotations[id];
-		   _this.updateAnnotations();
+    	   delete _this.annotations[id];
+    	   _this.updateAnnotations();
 		   _this.fireEvent('annotationChange', _this.annotations);
 		 });
 
