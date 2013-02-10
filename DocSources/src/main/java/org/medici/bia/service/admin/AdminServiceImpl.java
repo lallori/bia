@@ -300,8 +300,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public User approveUser(User user) throws ApplicationThrowable {
 		try{
+			User approvedBy = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			User userToUpdate = getUserDAO().findUser(user.getAccount());
 			userToUpdate.setApproved(user.getApproved());
+			userToUpdate.setApprovedBy(approvedBy);
 			getUserDAO().merge(userToUpdate);
 			
 			// We need to set approved on ApprovationUser entity to send automatic user mail 
