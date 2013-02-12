@@ -59,9 +59,9 @@
 				<legend><b>DOCUMENTS REFERRED TO</b></legend>
 				<p>Documents referred to:</p>
 			
-				<div class="listForm">
-					<div class="row">
-						<c:forEach items="${command.document.docReference}" var="currentDocument">
+				<c:forEach items="${command.document.docReference}" var="currentDocument">
+					<div class="listForm">
+						<div class="row">
 							<c:url var="DeleteDocReferenceDocumentURL" value="/de/docbase/DeleteDocReferenceDocument.do" >
 								<c:param name="docReferenceId" value="${currentDocument.docReferenceId}" />
 								<c:param name="entryIdFrom"   value="${currentDocument.documentFrom.entryId}" />
@@ -69,12 +69,13 @@
 							<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
 								<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
 							</c:url>
-							<div class="col_l"><input id="document_${currentDocument.docReferenceId}" name="document" class="input_35c_disabled" type="text" value="${currentDocument.documentTo.entryId}" disabled="disabled"/></div>
+							<div class="col_l"><input id="document_${currentDocument.docReferenceId}" name="document" class="input_35c_disabled" type="text" value="#${currentDocument.documentTo.entryId}" disabled="disabled"/></div>
 							<div class="col_l"><a class="deleteIcon" title="Delete this entry" href="${DeleteDocReferenceDocumentURL}"></a></div>
 							<div class="col_l"><a title="Show this document record" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}" href="${CompareDocumentURL}" class="topicDescription"><input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a></div>
-						</c:forEach>
-					</div>
-				</div>
+						</div>
+					</div>						
+				</c:forEach>
+					
 				<div>
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 					<input id="AddNewValue" type="submit" value="Add" title="Add new Document" />

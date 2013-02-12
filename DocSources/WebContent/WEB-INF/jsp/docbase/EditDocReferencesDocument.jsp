@@ -22,15 +22,24 @@
 			<legend><b>DOCUMENTS REFERRED TO</b></legend>
 			<p>Documents referred to:</p>
 		
-			<div class="row">
-				<c:forEach items="${document.docReference}" var="currentDocument">
-					<c:url var="DeletePersonDocumentURL" value="/de/docbase/DeletePersonDocument.do" >
-						<c:param name="docReferenceId" value="${currentDocument.docReferenceId}" />
-					</c:url>
-					<div class="col_l"><input id="document_${currentDocument.docReferenceId}" name="document" class="input_35c_disabled" type="text" value="${currentDocument.document.entryId}" disabled="disabled"/></div>
-					<div class="col_l"><a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a></div>
+			
+				<c:forEach items="${command.document.docReference}" var="currentDocument">
+					<div class="listForm">
+						<div class="row">
+							<c:url var="DeleteDocReferenceDocumentURL" value="/de/docbase/DeleteDocReferenceDocument.do" >
+								<c:param name="docReferenceId" value="${currentDocument.docReferenceId}" />
+								<c:param name="entryIdFrom"   value="${currentDocument.documentFrom.entryId}" />
+							</c:url>
+							<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
+								<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
+							</c:url>
+							<div class="col_l"><input id="document_${currentDocument.docReferenceId}" name="document" class="input_35c_disabled" type="text" value="#${currentDocument.documentTo.entryId}" disabled="disabled"/></div>
+							<div class="col_l"><a class="deleteIcon" title="Delete this entry" href="${DeleteDocReferenceDocumentURL}"></a></div>
+							<div class="col_l"><a title="Show this document record" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}" href="${CompareDocumentURL}" class="topicDescription"><input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a></div>
+						</div>
+					</div>
 				</c:forEach>
-			</div>
+			
 			<div>
 				<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 				<input id="AddNewValue" type="submit" value="Add" title="Add new Document" />
@@ -107,6 +116,72 @@
 					return false;
 				}
 	    	});
+	    	
+	    	$j(".topicDescription").click(function() {
+				var tabName = $j(this).attr("id");
+				var numTab = 0;
+				var id = $j(this).find(".tabId").val();
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist){
+						if(this.text != ""){
+							numTab++;
+						}
+					}
+					//Check if exist a tab with the same name or with the same name without id
+					if(this.text == tabName || this.text == "DocId#" + id.substring(5, id.length) + " - " + tabName || this.text.substring(this.text.indexOf(" - ") + 3, this.text.length) == tabName){
+						if($j(this).find("input").val() == id){
+							tabExist = true;
+						}else{
+							if(this.text.indexOf("#") == -1){
+								$j(this).find("span").text("DocId#" + $j(this).find("input").val().substring(5, $j(this).find("input").val().length) + " - " + this.text);
+							}
+							if(tabName.indexOf("#") == -1){
+								tabName = "DocId#" + id.substring(5, id.length) + " - " + tabName;		
+							}
+						}
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span><input type=\"hidden\" value=\"" + id + "\" /></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab);
+					return false;
+				}
+	    	});
+	    	
+	    	$j(".deleteIcon").click(function() {
+				var temp = $j(this);
+				$j("#DocReferenceDocumentDiv").block({ message: $j(".questionDocReference")});
+				
+				$j('.docReferenceNo').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j(".questionPerson").hide();
+					$j("#DocReferenceDocumentDiv").append($j(".questionDocReference"));
+					$j(".blockUI").remove();
+					$j("#EditExtractOrSynopsisDocumentDiv").load('${EditExtractOrSynopsisDocumentURL}');
+					return false; 
+				}); 
+
+				$j('.docReferenceYes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditExtractOrSynopsisDocumentDiv").load('${EditExtractOrSynopsisDocumentURL}');
+						return false;
+					}
+					return false;
+		        });
+				});
+				return false;
+			});
 		});					  
 	</script>
 
