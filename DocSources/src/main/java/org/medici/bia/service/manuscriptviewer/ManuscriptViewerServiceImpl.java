@@ -29,7 +29,9 @@ package org.medici.bia.service.manuscriptviewer;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
@@ -38,6 +40,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.ImageUtils;
+import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.bia.dao.annotation.AnnotationDAO;
@@ -51,21 +54,24 @@ import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
 import org.medici.bia.dao.schedone.SchedoneDAO;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Status;
+import org.medici.bia.domain.Forum.SubType;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.Forum.Status;
-import org.medici.bia.domain.Forum.SubType;
-import org.medici.bia.domain.Forum.Type;
-import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -106,6 +112,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	private PlaceDAO placeDAO;
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private UserRoleDAO userRoleDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 
@@ -603,6 +611,30 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(throwable);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName) throws ApplicationThrowable {
+		try {
+			Map<Annotation, Boolean> resultMap = new HashMap<Annotation, Boolean>();
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			List<Annotation> result = getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(user.getAccount());
+			UserRole mostSignificantRole = UserRoleUtils.getMostSignificantRole(userRoles);
+			for(Annotation currentAnnotation : result){
+				if(currentAnnotation.getUser().getAccount().equals(user.getAccount()) || mostSignificantRole.getUserAuthority().getAuthority().equals(UserAuthority.Authority.ADMINISTRATORS)){
+					resultMap.put(currentAnnotation, Boolean.TRUE);
+				}else{
+					resultMap.put(currentAnnotation, Boolean.FALSE);
+				}
+			}
+			return resultMap;
+		} catch(Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
 
 	/**
 	 * @return the imageDAO
@@ -649,6 +681,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		return userDAO;
 	}
 	
+	/**
+	 * @return the userRoleDAO
+	 */
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+
 	/**
 	 * @return the volumeDAO
 	 */
@@ -739,6 +778,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
+	 * @param userRoleDAO the userRoleDAO to set
+	 */
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
@@ -805,8 +851,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				} else {
 					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
 					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
-					annotation.setLastUpdate(new Date());
-					getAnnotationDAO().merge(annotation);
 					
 					int i = 0;
 					Boolean finded = Boolean.FALSE;
@@ -817,14 +861,17 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						}
 						i++;
 					}
+					
+					annotation.setLastUpdate(new Date());
+					getAnnotationDAO().merge(annotation);
 				}
 			}
 			
-//			if(!annotationSaved.isEmpty()){
-//				for(Annotation annotation : annotationSaved){
-//					getAnnotationDAO().remove(annotation);
-//				}
-//			}
+			if(!annotationSaved.isEmpty()){
+				for(Annotation annotation : annotationSaved){
+					getAnnotationDAO().remove(annotation);
+				}
+			}
 			
 			return annotationsList;
 		} catch (Throwable throwable){

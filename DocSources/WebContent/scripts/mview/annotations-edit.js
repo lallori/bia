@@ -42,9 +42,7 @@ IIPMooViewer.implement({
      type: '',
       title: '',
       text: '',
-      //MEDICI ARCHIVE PROJECT START
-      del: ''
-      //MEDICI ARCHIVE PROJECT END
+      deletable: ''
     };
 
     // Create an array if we don't have one and push a new annotation to it
@@ -167,11 +165,15 @@ IIPMooViewer.implement({
       'value': 'cancel'
     }).inject( form );
 
-    var del = new Element( 'input', {
-      'type': 'button',
-      'class': 'button',
-      'value': 'delete'
-    }).inject( form );
+    if( this.annotations[id].deletable){
+	    var del = new Element( 'input', {
+	      'type': 'button',
+	      'class': 'button',
+	      'value': 'delete'
+	    }).inject( form );
+    }else{
+    	var del;
+    }
 
 
     // Add update event for our list of annotations
@@ -207,11 +209,13 @@ IIPMooViewer.implement({
     });
 
     // Add a delete event to our annotation
-    del.addEvent('click', function(){
-    	   delete _this.annotations[id];
-    	   _this.updateAnnotations();
-		   _this.fireEvent('annotationChange', _this.annotations);
-		 });
+    if( this.annotations[id].deletable){
+	    del.addEvent('click', function(){
+	    	   delete _this.annotations[id];
+	    	   _this.updateAnnotations();
+			   _this.fireEvent('annotationChange', _this.annotations);
+			 });
+    }
 
 
     // Make it draggable and resizable, but prevent this interfering with our canvas drag

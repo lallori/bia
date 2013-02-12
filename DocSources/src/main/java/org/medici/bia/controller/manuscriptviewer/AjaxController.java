@@ -45,6 +45,8 @@ import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -126,7 +128,8 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);			
+			String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
@@ -138,6 +141,10 @@ public class AjaxController {
 				singleRow.put("type", currentAnnotation.getType());
 				singleRow.put("title", currentAnnotation.getTitle());
 				singleRow.put("text", currentAnnotation.getText());
+				if(account.equals(currentAnnotation.getUser().getAccount()))
+					singleRow.put("deletable", true);
+				else
+					singleRow.put("deletable", false);
 				resultList.add(singleRow);
 			}
 			model.put("annotations", resultList);
@@ -171,8 +178,8 @@ public class AjaxController {
 					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
 					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
 					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
-					annotation.setTitle(splitted[8]);
-					annotation.setText(splitted[9]);
+					annotation.setTitle(splitted[7]);
+					annotation.setText(splitted[8]);
 					annotationsList.add(annotation);
 				}
 			}

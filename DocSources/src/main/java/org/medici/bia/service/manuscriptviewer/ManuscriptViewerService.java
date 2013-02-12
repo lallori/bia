@@ -28,6 +28,7 @@
 package org.medici.bia.service.manuscriptviewer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
@@ -240,6 +241,14 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Annotation> getImageAnnotations(String imageName)throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param imageName
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName)throws ApplicationThrowable;
 
 	/**
 	 * 

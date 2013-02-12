@@ -214,7 +214,8 @@ IIPMooViewer.implement({
 							h: responseJSON.annotations[i].h.toFloat(),
 							type: responseJSON.annotations[i].type,
 							title: responseJSON.annotations[i].title,
-							text: responseJSON.annotations[i].text
+							text: responseJSON.annotations[i].text,
+							deletable: responseJSON.annotations[i].deletable
 						} );
 					}
 	        	}.bind(this), 
