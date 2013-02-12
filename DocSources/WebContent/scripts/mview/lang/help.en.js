@@ -11,6 +11,6 @@ IIPMooViewer.lang = {
 	'more': 'For more information visit',
 	'exitFullscreen': 'Press "Esc" to exit fullscreen mode',
 	'loading': 'loading',
-	'drag': '* Drag to move<br/>* Double Click to show/hide buttons<br/>* Press h to hide',
+	'drag': '* Drag to move<br/>* Double Click to show/hide buttons',
 	'annotationsDisabled': 'Annotations disabled<br/>Press the annotation button to re-enable'
 };
