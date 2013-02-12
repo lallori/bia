@@ -24,12 +24,12 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip-2.1.css"/>" />
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/iip-2.1.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/iip.css"/>" />
 		<!--[if lt IE 10]> 
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
 		<![endif]-->
- 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                               
+ 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/mview.css"/>" />                                                                               
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		<title>BIA Manuscript Viewer</title>

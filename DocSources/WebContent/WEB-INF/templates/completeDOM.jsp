@@ -13,7 +13,7 @@
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/AdministrationMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />

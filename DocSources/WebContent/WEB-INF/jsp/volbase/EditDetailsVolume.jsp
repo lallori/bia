@@ -270,7 +270,7 @@
 						return false;
 					}
 					if($j("#endMonthNum").val() > 0 && $j("#startMonthNum").val() > 0){
-						if(($j("#endYear").val() == $j("#startYear").val()) && ($j("#endMonthNum").val() < $j("#startMonthNum").val())){
+						if(($j("#endYear").val() == $j("#startYear").val()) && (parseInt($j("#endMonthNum").val()) < parseInt($j("#startMonthNum").val()))){
 							$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate'),
 								css: { 
 									border: 'none', 

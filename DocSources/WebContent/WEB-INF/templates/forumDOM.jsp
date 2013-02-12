@@ -14,7 +14,7 @@
         <title>Bia - Forums</title>
         
         <link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/styles/forum/forum.css"/>" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/forum.css"/>" />
         <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" />
         
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.min.js"/>"></script>

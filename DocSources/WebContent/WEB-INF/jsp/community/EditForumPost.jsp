@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ForumCSSURL" value="/styles/forum/forum.css"/>
+	<c:url var="ForumCSSURL" value="/styles/1024/forum.css"/>
 	
 	<c:url var="EditForumPostURL" value="/community/EditPost.json"/>
 	
