@@ -205,7 +205,7 @@
 		<p>Total records found:
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
 		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}">Print Records</a>
+		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
 		<c:if test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
 			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
 		</c:if>

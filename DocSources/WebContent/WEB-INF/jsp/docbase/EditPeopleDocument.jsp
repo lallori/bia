@@ -111,11 +111,22 @@
 			});
 
 			$j('.closeForm').click(function(){
-				$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-				}});
-					
-				return false; 
+				if($j("#modify").val() == 1){
+					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question'), 
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }
+					}); 
+					return false;
+				}else{
+					$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
+					}});
+				} 
 			});
 
 			$j('.linkPeople').click(function() {

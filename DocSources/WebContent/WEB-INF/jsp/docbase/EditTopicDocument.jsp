@@ -12,9 +12,7 @@
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowTopicDescription" value="/src/docbase/ShowTopicDescription.do">
-		<c:param name="topicId" value="${command.topicId}" />
-	</c:url>
+	<c:url var="ShowTopicDescription" value="/src/docbase/ShowTopicDescription.do" />
 	
 	<br>
 	<%-- Loading div when saving the form --%>
@@ -38,6 +36,9 @@
 						<form:select path="topicId" id="topicId" cssClass="selectform_XXXlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />
 <%-- 						<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" /> --%>
 						<!--<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>-->
+					</div>
+					<div class="col_l">
+						<a class="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
 					</div>
 				</div>
 				<div class="row">
@@ -125,7 +126,10 @@
 			});
 
 			$j(".topicDescription").click(function() {
-				Modalbox.show(this.href, {title: this.title, width: 750});
+				if($j("#topicId").val() != ''){
+					$j(this).attr('href', '${ShowTopicDescription}?topicId=' + $j("#topicId").val());
+					Modalbox.show(this.href, {title: this.title, width: 750});
+				}
 				return false;
 			});
 			
