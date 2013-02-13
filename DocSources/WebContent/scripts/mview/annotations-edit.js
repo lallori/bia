@@ -42,7 +42,7 @@ IIPMooViewer.implement({
      type: '',
       title: '',
       text: '',
-      deletable: ''
+      deletable: true
     };
 
     // Create an array if we don't have one and push a new annotation to it
@@ -168,9 +168,28 @@ IIPMooViewer.implement({
     if( this.annotations[id].deletable){
 	    var del = new Element( 'input', {
 	      'type': 'button',
-	      'class': 'button',
+	      'class': 'button delAnnotation',
 	      'value': 'delete'
 	    }).inject( form );
+	    
+	    var question = new Element( 'div', {
+	    	'id': 'question',
+	    	'style': 'display:none; cursor: default; z-index: 999; ',
+	    	'html': 'Are you sure?'
+	    }).inject(form);
+	    
+	    var yesQuestion = new Element('input', {
+	    	'type': 'button',
+	        'class': 'button',
+	        'value': 'Yes'
+	    }).inject(question);
+	    
+	    var noQuestion = new Element('input', {
+	    	'id':'noQuestion',
+	    	'type': 'button',
+	        'class': 'button',
+	        'value': 'No'
+	    }).inject(question);
     }else{
     	var del;
     }
@@ -208,14 +227,30 @@ IIPMooViewer.implement({
       }
     });
 
+    //MEDICI ARCHIVE PROJECT START
     // Add a delete event to our annotation
+//    del.addEvent('click', function(){
+// 	   delete _this.annotations[id];
+// 	   _this.updateAnnotations();
+//	   _this.fireEvent('annotationChange', _this.annotations);
+//	});
+    
     if( this.annotations[id].deletable){
-	    del.addEvent('click', function(){
-	    	   delete _this.annotations[id];
+//	    del.addEvent('click', function(){
+//	    	   delete _this.annotations[id];
+//	    	   _this.updateAnnotations();
+//			   _this.fireEvent('annotationChange', _this.annotations);
+//			 });
+    	
+    	yesQuestion.addEvent('click', function(){
+    		   delete _this.annotations[id];
 	    	   _this.updateAnnotations();
 			   _this.fireEvent('annotationChange', _this.annotations);
 			 });
     }
+
+    
+    //MEDICI ARCHIVE PROJECT END
 
 
     // Make it draggable and resizable, but prevent this interfering with our canvas drag

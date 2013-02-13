@@ -44,6 +44,7 @@ import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,6 +64,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = {"/src/mview/CreateAnnotation.json", "/de/mview/CreateAnnotation.json"}, method = RequestMethod.GET)
 	public ModelAndView createAnnotation(	@RequestParam(value="volNum", required=true) Integer volNum,
@@ -129,6 +132,7 @@ public class AjaxController {
 
 		try {
 			String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			Boolean administrator = getUserService().isAccountAdministrator(account);
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
@@ -141,7 +145,7 @@ public class AjaxController {
 				singleRow.put("type", currentAnnotation.getType());
 				singleRow.put("title", currentAnnotation.getTitle());
 				singleRow.put("text", currentAnnotation.getText());
-				if(account.equals(currentAnnotation.getUser().getAccount()))
+				if(account.equals(currentAnnotation.getUser().getAccount()) || administrator)
 					singleRow.put("deletable", true);
 				else
 					singleRow.put("deletable", false);
@@ -375,5 +379,19 @@ public class AjaxController {
 	 */
 	public ManuscriptViewerService getManuscriptViewerService() {
 		return manuscriptViewerService;
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

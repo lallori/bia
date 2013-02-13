@@ -46,6 +46,7 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"/></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.blockUI.js"/>"/></script>
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();

@@ -886,6 +886,27 @@ public class UserServiceImpl implements UserService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isAccountAdministrator(String account) throws ApplicationThrowable {
+		try{
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(account);
+			int i = 0;
+			Boolean administrator = Boolean.FALSE;
+			while(i < userRoles.size() && !administrator){
+				if(userRoles.get(i).containsAuthority(Authority.ADMINISTRATORS)){
+					administrator = Boolean.TRUE;
+				}
+				i++;
+			}
+			return administrator;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
