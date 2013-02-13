@@ -27,18 +27,11 @@
  */
 package org.medici.bia.validator.docbase;
 
-import java.util.Set;
-
 import org.medici.bia.command.docbase.EditDocReferenceDocumentCommand;
-import org.medici.bia.command.docbase.EditPersonDocumentCommand;
-import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EpLink;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
-import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -93,7 +86,7 @@ public class EditDocReferenceDocumentValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDocReferenceDocumentCommand editDocReferenceDocumentCommand = (EditDocReferenceDocumentCommand) object;
 		validateEntryIdFrom(editDocReferenceDocumentCommand.getEntryIdFrom(), errors);
-		validateEntryIdTo(editDocReferenceDocumentCommand.getEntryIdTo(), errors);
+		validateEntryIdTo(editDocReferenceDocumentCommand.getEntryIdTo(),editDocReferenceDocumentCommand.getEntryIdFrom(), errors);
 	}
 
 	/**
@@ -116,10 +109,19 @@ public class EditDocReferenceDocumentValidator implements Validator {
 		}
 	}
 
-	private void validateEntryIdTo(Integer entryIdTo, Errors errors) {
+	/**
+	 * 
+	 * @param entryIdTo
+	 * @param entryIdFrom
+	 * @param errors
+	 */
+	private void validateEntryIdTo(Integer entryIdTo, Integer entryIdFrom, Errors errors) {
 		if (!errors.hasErrors()) {
 			// entryId equals zero is 'New Document', it shouldn't be validated  
 			if (entryIdTo > 0) {
+				if(entryIdTo == entryIdFrom){
+					errors.rejectValue("entryIdTo", "error.documentTo.invalid");
+				}
 				try {
 					if (getDocBaseService().findDocument(entryIdTo) == null) {
 						errors.rejectValue("entryIdTo", "error.documentTo.notfound");
