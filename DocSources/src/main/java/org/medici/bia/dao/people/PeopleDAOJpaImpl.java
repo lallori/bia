@@ -667,7 +667,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException {
+	public List<People> searchRecipientsPeople(List<Integer> peopleIdList, String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
@@ -683,6 +683,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	        for (String singleWord:words) {
 	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
 	        }
+	        for (int i=0; i<peopleIdList.size(); i++) {
+				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+			}
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -774,7 +777,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchSendersPeople(String searchText) throws PersistenceException {
+	public List<People> searchSendersPeople(List<Integer> peopleIdList, String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
@@ -790,6 +793,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	        for (String singleWord:words) {
 	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
 	        }
+	        for (int i=0; i<peopleIdList.size(); i++) {
+				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+			}
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.

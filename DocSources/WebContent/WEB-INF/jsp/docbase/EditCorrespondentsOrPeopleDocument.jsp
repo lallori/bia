@@ -194,14 +194,17 @@
 	</div>
 		
 	<div id="EditPersonDocumentDiv"></div>		
-	<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
+	<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json">
+		<c:param name="entryId"	value="${command.document.entryId}" />
+	</c:url>
 	<c:url var="searchSenderPlaceURL" value="/de/geobase/SearchSenderPlace.json"/>
-	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json"/>
+	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json">
+		<c:param name="entryId"	value="${command.document.entryId}" />
+	</c:url>
 	<c:url var="searchRecipientPlaceURL" value="/de/geobase/SearchRecipientPlace.json"/>
 	
 	<c:url var="ShowSenderPlaceDetailsURL" value="/de/geobase/ShowSenderPlaceDetails.json" />
 	<c:url var="ShowRecipientPlaceDetailsURL" value="/de/geobase/ShowRecipientPlaceDetails.json" />
-
 
 	<script type="text/javascript">
 		$j(document).ready(function() {

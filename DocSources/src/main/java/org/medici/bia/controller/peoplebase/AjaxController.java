@@ -337,7 +337,7 @@ public class AjaxController {
 	 * @return ModelAndView containing recipients.
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
-	public ModelAndView searchRecipients(@RequestParam("query") String query) {
+	public ModelAndView searchRecipients(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
@@ -347,7 +347,7 @@ public class AjaxController {
 		}
 
 		try {
-			List<People> people = getPeopleBaseService().searchRecipientsPeople(query);
+			List<People> people = getPeopleBaseService().searchRecipientsPeople(entryId, query);
 			model.put("query", query);
 			model.put("count", people.size());
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
@@ -371,7 +371,7 @@ public class AjaxController {
 	 * @return ModelAndView containing senders.
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
-	public ModelAndView searchSenders(@RequestParam("query") String query) {
+	public ModelAndView searchSenders(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
@@ -383,7 +383,7 @@ public class AjaxController {
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
 
-			List<People> people = getPeopleBaseService().searchSendersPeople(query);
+			List<People> people = getPeopleBaseService().searchSendersPeople(entryId, query);
 			model.put("query", query);
 			model.put("count", people.size());
 			model.put("data", ListBeanUtils.transformList(people, "personId"));

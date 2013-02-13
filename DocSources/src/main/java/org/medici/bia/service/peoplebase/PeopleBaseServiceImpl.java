@@ -53,6 +53,7 @@ import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.DocumentUtils;
+import org.medici.bia.common.util.EpLinkUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.PersonUtils;
 import org.medici.bia.dao.altname.AltNameDAO;
@@ -79,6 +80,7 @@ import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.AltName;
 import org.medici.bia.domain.AltName.NameType;
+import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Marriage;
@@ -2190,9 +2192,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable {
+	public List<People> searchRecipientsPeople(Integer entryId, String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchRecipientsPeople(query);
+			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
+			
+			return getPeopleDAO().searchRecipientsPeople(EpLinkUtils.getPeopleIdList(epLinkList),query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -2238,9 +2242,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchSendersPeople(String query) throws ApplicationThrowable {
+	public List<People> searchSendersPeople(Integer entryId, String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchSendersPeople(query);
+			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
+			
+			return getPeopleDAO().searchSendersPeople(EpLinkUtils.getPeopleIdList(epLinkList), query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

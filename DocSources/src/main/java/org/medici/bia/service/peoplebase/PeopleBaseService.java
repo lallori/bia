@@ -700,11 +700,12 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param entryId
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable;
+	public List<People> searchRecipientsPeople(Integer entryId, String query) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -735,11 +736,12 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param entryId
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchSendersPeople(String query) throws ApplicationThrowable;
+	public List<People> searchSendersPeople(Integer entryId, String query) throws ApplicationThrowable;
 
 	/**
 	 * 

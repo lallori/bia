@@ -43,6 +43,7 @@ import org.medici.bia.domain.People;
  * Person Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface PeopleDAO extends Dao<Integer, People> {
 	
@@ -223,11 +224,12 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for recipients which could be related to a document which contains 
 	 * a text parameter (String searchText).
 	 * 
+	 * @param peopleIdList List of person identifier
 	 * @param searchText Text to be searched
 	 * @return A List<People> of recipients that could be related to a document.
 	 * @throws PersistenceException
 	 */
-	List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
+	List<People> searchRecipientsPeople(List<Integer> peopleIdList, String searchText) throws PersistenceException;
 	
 	/**
 	 * 
@@ -242,11 +244,12 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for senders which could be related to a document which contains 
 	 * a text parameter (String searchText).
 	 * 
+	 * @param peopleIdList List of person identifier
 	 * @param searchText Text to be searched
 	 * @return A List<People> of senders that could be related to a document.
 	 * @throws PersistenceException
 	 */
-	List<People> searchSendersPeople(String searchText) throws PersistenceException;
+	List<People> searchSendersPeople(List<Integer> peopleIdList, String searchText) throws PersistenceException;
 	
 	/**
 	 * This method searches for spouse which could be related to a person which contains
