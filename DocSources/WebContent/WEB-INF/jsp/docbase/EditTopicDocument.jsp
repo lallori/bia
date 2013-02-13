@@ -46,6 +46,7 @@
 					<div class="col_l"><form:input id="placeDescriptionAutoCompleter" path="placeDescription" cssClass="input_39c" /></div>
 				</div>
 			</div> 
+			<form:errors path="topicId" cssClass="inputerrors" htmlEscape="false"/>
 			
 			<div>
 				<input id="closeTopic" type="submit" value="Close" title="do not save changes" class="button" />
@@ -161,7 +162,11 @@
 					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		        	$j("#loadingDiv").css('visibility', 'visible');
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+						if ($j(html).find(".inputerrors").length > 0){
+							$j("#EditTopicDocumentDiv").html(html);
+						}else{
+							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+						}
 					}})
 					return false;
 				}

@@ -44,6 +44,7 @@ import org.springframework.validation.Validator;
  * Validator bean for action "Edit Topic Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class EditTopicDocumentValidator implements Validator {
@@ -134,6 +135,13 @@ public class EditTopicDocumentValidator implements Validator {
 						if (!placeId.equals(0)) {
 							if (getGeoBaseService().findPlace(placeId) == null) {
 								errors.reject("topic", "error.placeId.invalid");
+							}
+						}
+						
+						//if topic already exist
+						for(EplToLink currentEplToLink : linkedTopics){
+							if(currentEplToLink.getTopic().getTopicId() == topicId && currentEplToLink.getPlace().getPlaceAllId() == placeId){
+								errors.rejectValue("topicId", "error.topic.alreadyExist");
 							}
 						}
 					}
