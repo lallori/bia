@@ -121,6 +121,9 @@ public class SimpleSearchController {
 		if(command.getText().contains("\"")){
 			command.setText(command.getText().replace("\"", "\\\""));
 		}
+		if(command.getText().contains("\\")){
+			command.setText(command.getText().replace("\\", "\\\\"));
+		}
 		
 		// This number is used to generate an unique id for new search
 		UUID uuid = UUID.randomUUID();
