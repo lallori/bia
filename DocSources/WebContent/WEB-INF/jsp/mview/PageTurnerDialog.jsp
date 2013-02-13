@@ -220,7 +220,8 @@
     <div id="line2"></div>
     
 	<a id="exitButton" href="#" class="button_small" style="cursor: pointer;">Exit</a>
-	<input type="hidden" id="editModify" value="" />
+	<input type="hidden" id="editExtractModify" value="" />
+	<input type="hidden" id="editSynopsisModify" value="" />
 	
 </div>
 
@@ -402,7 +403,7 @@
 			
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
-				if($j("#editModify").val() == 1){
+				if($j("#editExtractModify").val() == 1 || $j("editSynopsisModify").val() == 1){
 					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?");
 				}else{
 					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer?");

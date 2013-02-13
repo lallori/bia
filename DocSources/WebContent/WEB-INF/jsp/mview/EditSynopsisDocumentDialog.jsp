@@ -31,13 +31,13 @@
 			$j("#EditSynopsisDocumentDiv").dialog("option" , "position" , ["center" , "middle"]);
 			
 			$j("#EditSynopsisDocumentForm :input").change(function(){
-				$j("#editModify").val(1);
+				$j("#editSynopsisModify").val(1);
 				return false;
 			});
 			
 			$j("#saveSynopsis").click(function (){
 				if (synopsisChanged) {
-					$j("#editModify").val(0);
+					$j("#editSynopsisModify").val(0);
 					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 					$j("#loadingDiv").css('width', $j("#loadingDiv").parent().width());
 		        	$j("#loadingDiv").css('visibility', 'visible');
@@ -53,7 +53,14 @@
 			});
 			$j("#saveSynopsisExit").click(function (){
 				if (synopsisChanged) {
-					$j("#editModify").val(0);
+					$j("#editSynopsisModify").val(0);
+					if($j("#editExtractModify").val() == 1){
+						$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
+							$j("#EditExtractDocumentDiv").html(html);
+							extractChanged=false;
+						} 
+					});
+					}
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
 						$j("#EditSynopsisDocumentDiv").html(html);
 						synopsisChanged=false;

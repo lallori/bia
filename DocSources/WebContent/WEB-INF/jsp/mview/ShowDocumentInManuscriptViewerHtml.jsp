@@ -133,6 +133,32 @@
 						$j("#annotationTextarea").css("display", "none");
 					}
 				});
+				
+				$j(".delAnnotation").die()
+				$j(".delAnnotation").live('click',function(e){
+					e.preventDefault();
+									
+					var div = $j(this);
+					$j(this).parent().block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+					
+					$j("#noQuestion").die();
+					$j('#noQuestion').live('click', function() {
+						$j.unblockUI();
+						$j(".blockUI").fadeOut("slow");
+						$j("#question").hide();
+						$j(div).parent().append($j("#question"));
+						$j(".blockUI").remove();
+						return false; 
+					}); 
+				});
 
 			});
 		</script> 

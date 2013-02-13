@@ -39,22 +39,6 @@
 			
 			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("TRANSCRIPTION / Start Folio: ${folioNum} - MDP: ${volNum}");
 			
-			$j('#editExtract').click(function() {
-					$j("#ShowExtractDocumentDiv").dialog("close");
-					$j("#EditExtractDocumentDiv").dialog("open");
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#alreadyTranscribe").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#transcribeAnyway").css('visibility','hidden');
-					$j("#notExtract").css('visibility', 'hidden');
-					$j("#extractTranscribe").css('visibility', 'hidden');
-					$j("#readyToTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					$j("#transcribeDiv").append($j("#transcribeModeFromShow"));
-					$j("#transcribeModeFromShow").css('display', 'inline');
-					return false;
-			});
-						
 			$j("#showSynopsis").click(function(){
 				$j('<div id="ShowSynopsisDocumentDiv"></div>').dialog({                                                                                                                                                                   
 					autoOpen: false,
@@ -79,6 +63,25 @@
 				$j("#ShowExtractDocumentDiv").dialogExtend("minimize");
 				$j("#ShowSynopsisDocumentDiv").dialog("open");
 				return false;
+			});
+			
+			$j('#editExtract').click(function() {
+					$j("#ShowExtractDocumentDiv").dialog("close");
+					if($j("#ShowSynopsisDocumentDiv").length != 0 && $j("#ShowSynopsisDocumentDiv").dialog("isOpen")){
+						$j("#ShowSynopsisDocumentDiv").dialog("close");
+					}
+					$j("#EditExtractDocumentDiv").dialog("open");
+					$j("#unvailableTranscribe").css('visibility', 'hidden');
+					$j("#alreadyTranscribe").css('visibility', 'hidden');
+					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#transcribeAnyway").css('visibility','hidden');
+					$j("#notExtract").css('visibility', 'hidden');
+					$j("#extractTranscribe").css('visibility', 'hidden');
+					$j("#readyToTranscribe").css('visibility', 'hidden');
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					$j("#transcribeDiv").append($j("#transcribeModeFromShow"));
+					$j("#transcribeModeFromShow").css('display', 'inline');
+					return false;
 			});
 		});
 	</script>
