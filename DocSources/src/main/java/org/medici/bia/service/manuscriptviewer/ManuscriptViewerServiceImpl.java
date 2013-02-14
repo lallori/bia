@@ -49,6 +49,7 @@ import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumoption.ForumOptionDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
+import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
 import org.medici.bia.dao.image.ImageDAO;
 import org.medici.bia.dao.people.PeopleDAO;
 import org.medici.bia.dao.place.PlaceDAO;
@@ -67,6 +68,7 @@ import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
@@ -104,6 +106,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	private ForumPostDAO forumPostDAO;
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;
+	@Autowired
+	private ForumTopicWatchDAO forumTopicWatchDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	@Autowired
@@ -600,6 +604,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
+	 * @return the forumTopicWatchDAO
+	 */
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -750,6 +761,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
+	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
+	 */
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+
+	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
@@ -823,8 +841,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList) throws ApplicationThrowable {
+	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable {
 		try {
 			Image image = getImageDAO().findImageByImageId(imageId);
 			if (image == null) {
@@ -848,6 +867,33 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						annotation.setType(Annotation.Type.GENERAL);
 					}
 					getAnnotationDAO().persist(annotation);
+					
+					if (annotation.getType().equals(Annotation.Type.GENERAL)) {
+						Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
+						image = getImageDAO().find(image.getImageId());
+						
+						ForumTopic topicAnnotation = new ForumTopic(null);
+						topicAnnotation.setForum(generalQuestionsForum);
+						topicAnnotation.setDateCreated(new Date());
+						topicAnnotation.setLastUpdate(topicAnnotation.getDateCreated());
+						topicAnnotation.setIpAddress(ipAddress);
+						topicAnnotation.setUser(user);
+						topicAnnotation.setSubject(annotation.getTitle() + " (Annotation)");
+						topicAnnotation.setTotalReplies(new Integer(0));
+						topicAnnotation.setTotalViews(new Integer(0));
+						topicAnnotation.setLastPost(null);
+						topicAnnotation.setFirstPost(null);
+						topicAnnotation.setLogicalDelete(Boolean.FALSE);
+						
+						topicAnnotation.setAnnotation(annotation);
+						getForumTopicDAO().persist(topicAnnotation);
+						
+						getForumDAO().recursiveIncreaseTopicsNumber(generalQuestionsForum);
+						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
+							getForumTopicWatchDAO().persist(forumTopicWatch);
+						}
+					}					
 				} else {
 					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
 					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());

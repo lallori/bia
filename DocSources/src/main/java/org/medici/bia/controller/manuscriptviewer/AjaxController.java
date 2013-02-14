@@ -187,7 +187,7 @@ public class AjaxController {
 					annotationsList.add(annotation);
 				}
 			}
-			getManuscriptViewerService().updateAnnotations(imageId, annotationsList);
+			getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
 		}catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("responseKO", model);
 		}

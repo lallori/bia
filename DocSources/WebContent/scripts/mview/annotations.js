@@ -102,16 +102,30 @@ IIPMooViewer.implement({
 	if( this.annotationsVisible==false ) annotation.addClass('hidden');
 
 	// Add edit events to annotations if we have included the functions
+	//MEDICI ARCHIVE PROJECT START
+//	if( typeof(this.editAnnotation)=="function" ){
+//	  if( annotation_array[i].edit == true ) this.editAnnotation( annotation );
+//	  else{
+//	    var _this = this;
+//	    annotation.addEvent( 'dblclick', function(e){
+//				   var event = new DOMEvent(e); 
+//				   event.stop();
+//				   _this.editAnnotation(this);
+//				 });
+//	  }
+	
 	if( typeof(this.editAnnotation)=="function" ){
-	  if( annotation_array[i].edit == true ) this.editAnnotation( annotation );
-	  else{
-	    var _this = this;
-	    annotation.addEvent( 'dblclick', function(e){
-				   var event = new DOMEvent(e); 
-				   event.stop();
-				   _this.editAnnotation(this);
-				 });
-	  }
+		  if( annotation_array[i].edit == true) this.editAnnotation( annotation );
+		  else{
+		    var _this = this;
+		    if(annotation_array[i].deletable){
+		    annotation.addEvent( 'dblclick', function(e){
+		    			var event = new DOMEvent(e); 
+					   event.stop();
+					   _this.editAnnotation(this);
+					 });
+		  }
+		  }
 	}
 
 	// Add our annotation text
