@@ -236,7 +236,7 @@
 			    	<select id="selectForum" name="selectForum" selected""="" class="selectform_long">
 			        	<option value="" selected="selected">Select a Forum</option>
 			        </select>
-			        <input id="go" title="go" value="Go" class="buttonMini">
+			        <input id="go" type="submit" title="go" value="Go" class="buttonMini">
 			    </div>
 				<c:set var="paginationData">
 				<bia:paginationForum page="${subForumsPage}"/>
@@ -392,7 +392,7 @@ Use the textbox below to search this forum.</p>
 					    	<select id="selectForum" name="selectForum" selected""="" class="selectform_long">
 					        	<option value="" selected="selected">Select a Forum</option>
 					        </select>
-					        <input id="go" title="go" value="Go" class="buttonMini">
+					        <input id="go" type="submit" title="go" value="Go" class="buttonMini">
 					    </div>
 						
 						${paginationData}
@@ -602,7 +602,7 @@ Use the textbox below to search this forum.</p>
 				    	<select id="selectForum" name="selectForum" selected""="" class="selectform_long">
 				        	<option value="" selected="selected">Select a Forum</option>
 				        </select>
-				        <input id="go" title="go" value="Go" class="buttonMini">
+				        <input id="go" type="submit" title="go" value="Go" class="buttonMini">
 				    </div>
 					
 					${paginationData}

@@ -234,7 +234,7 @@
         <select id="selectForum" name="selectForum" class="selectform_long">
         	<option value="" selected="selected">Select a Forum</option>
         </select>
-        <input id="go" title="go" value="Go" class="buttonMini">
+        <input id="go" type="submit" title="go" value="Go" class="buttonMini">
     </div>
 	
 	${paginationData}

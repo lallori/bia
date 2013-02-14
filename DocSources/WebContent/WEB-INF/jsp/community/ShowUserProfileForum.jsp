@@ -28,6 +28,10 @@
 	<c:param name="forumId" value="1"/>
 </c:url>
 
+<c:url var="ShowUserForumPostURL" value="/community/ShowUserForumPost.do">
+	<c:param name="account" value="${userProfile.account}"/>
+</c:url>
+
 <div id="profileTable">
 	<div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
     
@@ -109,7 +113,7 @@
             </div>
             <div class="row">
                 <div class="item">Total posts</div>
-                <div class="value">${userProfile.forumNumberOfPost} | <a href="<c:url value="/community/ShowMyForumPost.do"/>" id="userPost">Search user's posts</a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
+                <div class="value">${userProfile.forumNumberOfPost} | <a href="${ShowUserForumPostURL}" id="userPost">Search user's posts</a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
             </div>
             <div class="row">
                 <div class="item">Most active forum</div>

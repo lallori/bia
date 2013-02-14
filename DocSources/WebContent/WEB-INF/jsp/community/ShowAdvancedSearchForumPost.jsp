@@ -130,7 +130,8 @@
 		        </div>
 		     </div>
 			 <div id="buttons">
-				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> <a href="<c:url value="/forum/viewThreads.html"/>" id="cancel" class="buttonSmall">Reset</a> 
+				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> 
+				<a href="${ShowAdvancedSearchForumPostURL}" id="cancel" class="buttonSmall">Reset</a> 
 			</div>
 		
 			<div>
@@ -188,6 +189,11 @@
 // 				$j.post(formSubmitURL, function(html) {
 // 					$j("#main").html(html);
 //    				});
+				return false;
+			});
+			
+			$j('#cancel').click(function (){
+				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 

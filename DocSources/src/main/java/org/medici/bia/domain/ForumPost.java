@@ -81,7 +81,7 @@ public class ForumPost implements Serializable {
 	private Date lastUpdate;
 	@Column (name="\"ipAddress\"", length=50, nullable=false)
 	private String ipAddress;
-	@Column (name="\"subject\"", length=64, nullable=false)
+	@Column (name="\"subject\"", length=200, nullable=false)
 	private String subject;
 	@Column (name="\"text\"", length=75000)
 	private String text;
