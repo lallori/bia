@@ -4988,7 +4988,7 @@ h3.systemManagement {
     width: 127px;
 }
 
-#eraseHistory, #eraseList, #removeSelected {
+#eraseHistory, #eraseList, #removeSelected, #selectAll {
     background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:left;

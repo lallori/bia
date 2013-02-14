@@ -49,6 +49,7 @@
 <div id="MarketListButtons">
 	<a id="eraseList" href="${ShowConfirmEraseMyMarkedListURL}">Erase List</a>
     <a id="removeSelected" href="#">Remove selected</a>
+    <a id="selectAll" href="#">Select all</a>
     <a id="printAllItems" href="#" target="_blank">Print selected</a>
 </div>
 	
@@ -212,6 +213,13 @@
 				$j("#table_length").change(function(){
 					$markedTable.fnSettings()._iDisplayLength = $j("#table_length").val();
 					$markedTable.fnDraw();
+					return false;
+				});
+				
+				$j("#selectAll").click(function(){
+					$j('#researchHistoryTable > tbody > tr > td > input:checkbox').each(function(){
+						$j(this).prop('checked' ,true);
+					});
 					return false;
 				});
 			} );                                                                                                  
