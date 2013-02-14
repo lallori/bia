@@ -121,20 +121,34 @@ public class EditDetailsPersonValidator implements Validator {
 				if (bornYear > 1750) {
 					errors.rejectValue("bornYear", "error.bornYear.invalid");
 				}
+				if(deathYear != null && bornYear > deathYear){
+					errors.rejectValue("bornYear", "error.bornYear.order");
+				}
 			}
 			if(activeStart != null && NumberUtils.isNumber(activeStart)){
 				if(NumberUtils.createInteger(activeStart) > 1750){
 					errors.rejectValue("activeStart", "error.activeStart.invalid");
+				}
+				if(activeEnd != null && NumberUtils.isNumber(activeEnd)){
+					if(NumberUtils.createInteger(activeStart) > NumberUtils.createInteger(activeEnd)){
+						errors.rejectValue("activeStart", "error.activeStart.order");
+					}
 				}
 			}
 			if (bornMonthNum != null) {
 				if ((bornMonthNum <1) || (bornMonthNum >12)) {
 					errors.rejectValue("bornMonth", "error.bornMonthNum.invalid");
 				}
+				if((deathMonthNum != null && bornYear != null && deathYear != null) && (bornYear.equals(deathYear) && bornMonthNum > deathMonthNum)){
+					errors.rejectValue("bornMonth", "error.bornMonthNum.order");
+				}				
 			}
 			if (bornDay != null) {
 				if ((bornDay < 0) || (bornDay > 31)) {
 					errors.rejectValue("bornDay", "error.bornDay.invalid");
+				}
+				if((deathDay != null && bornYear != null && deathYear != null && bornMonthNum != null && deathMonthNum != null) && (bornYear.equals(deathYear) && bornMonthNum.equals(deathMonthNum) && bornDay > deathDay)){
+					errors.rejectValue("bornDay", "error.bornDay.order");
 				}
 			}
 			if (deathYear != null) {
