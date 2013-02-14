@@ -18,6 +18,8 @@
 
 	<script>
 		$j(document).ready(function() {
+			$j("#MB_content").css("height", "70px");
+			
 			$j("#close").click(function(){
 				Modalbox.hide();
 				return false;

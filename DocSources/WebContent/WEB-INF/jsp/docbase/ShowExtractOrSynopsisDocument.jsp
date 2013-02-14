@@ -45,17 +45,15 @@
 			</div>
 			<div class="row">
 				<div class="item">Document referred to</div> 
-				
+				<div class="value80">
 			<c:forEach items="${document.docReference}" var="currentDocument">
 			<!-- This is a method to have a value near the item with the text People. -->	
 				<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
 					<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
 				</c:url>
-				<div class="value80"><a class="linkDocument" href="${CompareDocumentURL}" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}">#${currentDocument.documentTo.entryId}<input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a></div>
-				</div>
-				<div class="row">
-					<div class="item">&nbsp</div>
+				<a class="linkDocument" href="${CompareDocumentURL}" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}">#${currentDocument.documentTo.entryId}<input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a>
 			</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>

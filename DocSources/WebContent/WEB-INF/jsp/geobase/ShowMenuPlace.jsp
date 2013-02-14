@@ -115,14 +115,18 @@
 		$j('#comments').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#comments").click(function() {
-			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-				if (json.isPresent == 'true') {
-					$j("#comments").attr('href', json.forumUrlCompleteDOM);
-					$j("#comments").open({scrollbars: "yes"});
-				} else {
-					Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 470, height: 100});
-				}
-			}});
+// 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+// 				if (json.isPresent == 'true') {
+// 					$j("#comments").attr('href', json.forumUrlCompleteDOM);
+// 					$j("#comments").open({scrollbars: "yes"});
+// 				} else {
+// 					Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 470, height: 100});
+// 				}
+// 			}});
+			if($j(this).attr('href') == '#'){
+				Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 470, height: 100});
+				return false;
+			}
 
 			return false;
 		});
