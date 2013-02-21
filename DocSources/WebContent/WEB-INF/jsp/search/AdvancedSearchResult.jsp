@@ -16,6 +16,10 @@
 	<c:url var="ExpandResultsURL" value="/src/ExpandResultsAdvancedSearch.do">
 		<c:param name="searchUUID" value="${command.searchUUID}" />
 	</c:url>
+	
+	<c:url var="PrintSearchURL" value="/src/PrintSearch.do">
+		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
+	</c:url>
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
@@ -234,6 +238,11 @@
 			/*var idTabTitle = $j("#refine${command.searchUUID}").parent().attr("aria-labelledby");
 			$j("#" + idTabTitle).find("span").append(" " + $j("#documentSearchTabNumber").val());
 			$j("#documentSearchTabNumber").val(parseInt($j("#documentSearchTabNumber").val()) + 1);*/
+			$j("#print${command.searchUUID}").click(function(){
+				window.open($j(this).attr("href") , 'PRINT ELEMENTS', 'width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
+				return false;
+			});
+			
 		});
 	</script>
 	
@@ -248,7 +257,7 @@
 		<p>Total records found:
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
 		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
+		<a id="print${command.searchUUID}" class="print" href="${PrintSearchURL}" >Print Records</a>
 		<c:if test="${command.searchType.toString() == 'DOCUMENT'}">
 			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
 		</c:if>

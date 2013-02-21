@@ -1091,6 +1091,10 @@
 	<definition name="search/ExpandSimpleSearchResult" extends="template.expandResultsSearch">
 		<put-attribute name="expandResultsSearch" value="/WEB-INF/jsp/search/ExpandSimpleSearchResult.jsp"/>	
 	</definition>
+	
+	<definition name="search/PrintElementsSearch" extends="template.printMarkedListDOM">
+     	<put-attribute name="main" value="/WEB-INF/jsp/search/PrintElementsSearch.jsp" />
+     </definition>
 
 	<definition name="search/SaveUserSearchFilterModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/SaveUserSearchFilterModalWindow.jsp"/>	

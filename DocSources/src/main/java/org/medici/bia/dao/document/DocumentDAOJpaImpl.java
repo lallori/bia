@@ -56,6 +56,7 @@ import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -511,6 +512,40 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Document> searchDocumentsToPrint(Search searchContainer) throws PersistenceException{
+		Query query = null;
+		// We set size of result.
+//		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+	        
+		String objectsQuery = searchContainer.toJPAQuery();
+
+		// We manage sorting (this manages sorting on multiple fields)
+		PaginationFilter paginationFilter = new PaginationFilter(0, 0, 2, "asc", SearchType.DOCUMENT); 
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		
+
+		return query.getResultList();
 	}
 	
 	/**

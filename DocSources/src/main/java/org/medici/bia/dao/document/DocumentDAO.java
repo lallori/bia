@@ -179,6 +179,11 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	Page searchDocumentsRelatedVolume(String volumeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
+	 * Alpha version!
+	 */
+	List<Document> searchDocumentsToPrint(Search searchContainer) throws PersistenceException;
+	
+	/**
 	 * 
 	 * @param placeToSearch
 	 * @param paginationFilter

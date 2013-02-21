@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
@@ -177,6 +178,8 @@ public interface SearchService {
 	 */
 	public Page searchAdvancedVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	public List<Document> searchDocumentsToPrint(Search searchContainer) throws ApplicationThrowable;
+	
 	/**
 	 * This method is used to count a search.
 	 * 

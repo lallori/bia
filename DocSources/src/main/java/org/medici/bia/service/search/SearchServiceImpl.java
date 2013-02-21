@@ -45,6 +45,7 @@ import org.medici.bia.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.bia.dao.topicslist.TopicsListDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
@@ -438,6 +439,14 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	public List<Document> searchDocumentsToPrint(Search searchContainer) throws ApplicationThrowable{
+		try{
+			return getDocumentDAO().searchDocumentsToPrint(searchContainer);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
