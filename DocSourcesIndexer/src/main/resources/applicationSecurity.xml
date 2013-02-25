@@ -34,6 +34,7 @@
         <security:intercept-url pattern="/community/AdvancedSearchForumPost.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/SimpleSearchForumPost.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/community/GetForumChronology.json"	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/community/WhoIsOnlineFOrum.json"		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/sitemap/SiteMap*"						access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/sitemap/SiteMapIndex.do"				access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
@@ -67,6 +68,7 @@
         <security:intercept-url pattern="/user/DeletePortraitUser.do"			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/CropPortraitUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowPortraitUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/FindCountries.json"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
 
 		<security:intercept-url pattern="/user/**.do" 			access="ROLE_ADMINISTRATORS" />
 
@@ -85,9 +87,20 @@
 
 		<security:remember-me key="_spring_security_remember_me" token-validity-seconds="864000" token-repository-ref="tokenRepository" />
 
+		<security:custom-filter position="PRE_AUTH_FILTER" ref="siteminderFilter" />
     </security:http>
- 
- 	<bean id="loginSuccessHandler" class="org.medici.bia.security.BiaAuthenticationSuccessHandler">
+ 	 
+	<security:authentication-manager alias="biaAuthenticationManager">
+		<security:authentication-provider ref="preauthAuthProvider" />
+
+		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
+
+		<security:authentication-provider ref="daoAuthenticationProvider">
+			<security:password-encoder ref="passwordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="loginSuccessHandler" class="org.medici.bia.security.BiaAuthenticationSuccessHandler">
  		<property name="defaultTargetUrl" value="/Home.do"/>
  		<property name="changeExpiratedUserPasswordUrl" value="/user/ChangeExpiratedUserPassword.do"/>
  	</bean>
@@ -123,14 +136,6 @@
 		<description>Encoder for sha1 password stored on ldap server.</description>
 	</bean>
 
-	<security:authentication-manager alias="biaAuthenticationManager">
-		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
-
-		<security:authentication-provider ref="daoAuthenticationProvider">
-			<security:password-encoder ref="passwordEncoder"/>
-		</security:authentication-provider>
-	</security:authentication-manager>
-
 	<bean id="daoAuthenticationProvider" class="org.medici.bia.security.BiaDaoAuthenticationProvider">
 	  <property name="userDetailsService" ref="userDetailsService"/>
 	  <property name="passwordEncoder" ref="passwordEncoder"/>
@@ -138,4 +143,17 @@
 
    	<bean id="userDetailsService" class="org.medici.bia.security.BiaJpaUserDetailsServiceImpl">
    	</bean>
+
+	<bean id="siteminderFilter" class= "org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
+		<property name="principalRequestHeader" value="SM_USER"/>
+		<property name="authenticationManager" ref="biaAuthenticationManager" />
+	</bean>
+
+	<bean id="preauthAuthProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<property name="preAuthenticatedUserDetailsService">
+			<bean id="userDetailsServiceWrapper" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+			<property name="userDetailsService" ref="userDetailsService"/>
+			</bean>
+		</property>
+	</bean>
 </beans>
