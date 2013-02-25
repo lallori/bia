@@ -893,6 +893,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
 							getForumTopicWatchDAO().persist(forumTopicWatch);
 						}
+//						annotation.setText(topicAnnotation.getSubject());
+//						getAnnotationDAO().merge(annotation);
 					}					
 				} else {
 					// we override id value beacause wen you edit an existing annotation, client set id to numeric.

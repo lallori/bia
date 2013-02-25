@@ -60,6 +60,7 @@ IIPMooViewer.implement({
 
     // Convert our annotation object into an array - we'll need this for sorting later
     var annotation_array = new Array();
+    
     for( var a in this.annotations ){
       this.annotations[a].id = a;
       annotation_array.push( this.annotations[a] );
@@ -171,7 +172,6 @@ IIPMooViewer.implement({
         }
       });
     }
-
   },
 
 
@@ -230,6 +230,7 @@ IIPMooViewer.implement({
 							title: responseJSON.annotations[i].title,
 							text: responseJSON.annotations[i].text,
 							deletable: responseJSON.annotations[i].deletable
+							//Add Link To Forum
 						} );
 					}
 	        	}.bind(this), 

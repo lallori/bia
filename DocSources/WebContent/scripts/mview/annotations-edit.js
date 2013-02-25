@@ -215,6 +215,7 @@ IIPMooViewer.implement({
 		//MEDICI ARCHIVE PROJECT START
 		_this.updateAnnotations();
 		_this.fireEvent('annotationChange', _this.annotations);
+	    //MEDICI ARCHIVE PROJECT END
 		// MEDICI ARCHIVE PROJECT START
 		_this.stopZoom = false;
 		_this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity=1;
