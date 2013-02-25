@@ -174,9 +174,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			words = new ArrayList<String>(command.getWord().size());
 			
 			for (String singleWord : command.getWord()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
@@ -208,9 +208,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			person = new ArrayList<String>(command.getPerson().size());
 			
 			for (String singleWord : command.getPerson()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -258,9 +258,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(command.getPlace().size());
 			
 			for (String singleWord : command.getPlace()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -340,9 +340,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			from = new ArrayList<String>(command.getFrom().size());
 			
 			for (String singleWord : command.getFrom()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -422,9 +422,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			to = new ArrayList<String>(command.getTo().size());
 			
 			for (String singleWord : command.getTo()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -503,9 +503,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			extract = new ArrayList<String>(command.getExtract().size());
 			
 			for (String singleWord : command.getExtract()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try {
@@ -526,7 +526,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			
 			for (String singleWord : command.getSynopsis()) {
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try {
@@ -589,9 +589,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			topicsPlace = new ArrayList<String>(command.getTopicPlace().size());
 			
 			for (String singleWord : command.getTopicPlace()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {

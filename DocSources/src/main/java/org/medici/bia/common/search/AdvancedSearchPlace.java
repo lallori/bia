@@ -104,9 +104,9 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			placesName = new ArrayList<String>(command.getPlaceName().size());
 			
 			for(String singleWord : command.getPlaceName()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				try{
 					placesName.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException numberFormatException) {

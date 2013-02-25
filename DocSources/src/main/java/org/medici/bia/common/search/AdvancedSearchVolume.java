@@ -305,9 +305,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getFromVolume() != null && command.getFromVolume().size() > 0){
 			fromVolume = new ArrayList<String>(command.getFromVolume().size());
 			for(String singleWord : command.getFromVolume()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try{
@@ -326,9 +326,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getToVolume() != null && command.getToVolume().size() > 0){
 			toVolume = new ArrayList<String>(command.getToVolume().size());
 			for(String singleWord : command.getToVolume()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try{
@@ -347,9 +347,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getContext() != null && command.getContext().size() > 0){
 			context = new ArrayList<String>(command.getContext().size());
 			for(String singleWord : command.getContext()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try{
@@ -368,9 +368,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getInventario() != null && command.getInventario().size() > 0){
 			inventario = new ArrayList<String>(command.getInventario().size());
 			for(String singleWord : command.getInventario()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
 				try{

@@ -144,9 +144,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			names = new ArrayList<String>(command.getNameParts().size());
 			
 			for(String singleWord: command.getNameParts()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if(stringTokenizer.countTokens() == 2){
@@ -171,9 +171,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			exactName = new ArrayList<String>(command.getPerson().size());
 			
 			for(String singleWord : command.getPerson()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 0){
@@ -321,9 +321,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		if((command.getOccupationWord() != null) && (command.getOccupationWord().size() > 0)){
 			titleOccWord = new ArrayList<String>(command.getOccupationWord().size());
 			for(String singleWord : command.getOccupationWord()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				try{
 					titleOccWord.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (URIException uriException){
@@ -340,9 +340,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			titlesOcc = new ArrayList<String>(command.getOccupation().size());
 			
 			for(String singleWord : command.getOccupation()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 0){
@@ -394,9 +394,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			placeType = new ArrayList<String>(command.getPlace().size());
 			
 			for(String singleWord : command.getPlace()){
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 0){
@@ -442,9 +442,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			researchNotes = new ArrayList<String>(command.getResearchNotes().size());
 			
 			for (String singleWord : command.getResearchNotes()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "ç");
+				singleWord = singleWord.replace("%E7", "\u00E7");
 				try {
 					researchNotes.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch(URIException uriException){
