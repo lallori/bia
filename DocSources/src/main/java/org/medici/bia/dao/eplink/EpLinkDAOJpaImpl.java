@@ -141,7 +141,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	 */
 	@Override
 	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM EpLink WHERE person.personId=:personId))");
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT document.entryId) FROM EpLink WHERE person.personId=:personId  AND document.logicalDelete = false");
 		query.setParameter("personId", personId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -153,7 +153,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	 */
 	@Override
 	public Integer findNumberOfPeopleLinkedOnDocument(Integer entryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT person.personId) FROM EpLink where document.entryId=:entryId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT person.personId) FROM EpLink where document.entryId=:entryId  AND document.logicalDelete = false");
 		query.setParameter("entryId", entryId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -164,7 +164,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	 */
 	@Override
 	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM EpLink WHERE person.personId =:personId AND docRole is null");
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT document.entryId) FROM EpLink WHERE person.personId =:personId AND docRole is null AND document.logicalDelete = false");
 		query.setParameter("personId", personId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -177,7 +177,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
-		StringBuilder stringBuilder = new StringBuilder("SELECT person.personId, COUNT(document.entryId) FROM EpLink WHERE");
+		StringBuilder stringBuilder = new StringBuilder("SELECT person.personId, COUNT(DISTINCT document.entryId) FROM EpLink WHERE");
 		for(int i=0; i < personIds.size(); i++){
 			if(stringBuilder.indexOf("=") != -1){
     			stringBuilder.append(" or ");
@@ -185,7 +185,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 			stringBuilder.append("(person.personId=");
         	stringBuilder.append(personIds.get(i) + ")");
 		}
-		stringBuilder.append(" group by person.personId");
+		stringBuilder.append(" AND document.logicalDelete = false group by person.personId");
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValues;
