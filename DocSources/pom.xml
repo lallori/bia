@@ -291,7 +291,7 @@
 				<configuration>
 					<debuglevel>lines,vars,source</debuglevel>
 					<debug>true</debug>
-					<source>1.5</source>
+					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
    				</configuration>
