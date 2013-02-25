@@ -13,7 +13,7 @@ body {
 }
 
 .print {
-	background-image:url(/DocSources/images/1024/img_print.png);
+	background-image:url(${contextPath}/images/1024/img_print.png);
 	position:absolute;
 	margin: 0 0 0 590px;
 	height:40px;
@@ -21,7 +21,7 @@ body {
 }
 
 .pdf {
-	background-image:url(/DocSources/images/1024/img_pdf.png);
+	background-image:url(${contextPath}/images/1024/img_pdf.png);
 	position:absolute;
 	margin:-10px 0 0 590px;
 	height:40px;
@@ -131,7 +131,7 @@ table tr td {
 
 
 hr {
-	background-image:url(/DocSources/images/1024/img_hr_print.jpg);
+	background-image:url(${contextPath}/images/1024/img_hr_print.jpg);
 	width:400px;
 	height:20px;
 	border:none;

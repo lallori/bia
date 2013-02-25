@@ -174,23 +174,23 @@ table.display td.center {
  */
 
 .sorting_asc {
-    background: url('/DocSources/images/1024/sort_asc.png') no-repeat center right;
+    background: url('${contextPath}/images/1024/sort_asc.png') no-repeat center right;
 }
 
 .sorting_desc {
-    background: url('/DocSources/images/1024/sort_desc.png') no-repeat center right;
+    background: url('${contextPath}/images/1024/sort_desc.png') no-repeat center right;
 }
 
 .sorting {
-    background: url('/DocSources/images/1024/sort_both.png') no-repeat center right;
+    background: url('${contextPath}/images/1024/sort_both.png') no-repeat center right;
 }
 
 .sorting_asc_disabled {
-    background: url('/DocSources/images/1024/sort_asc_disabled.png') no-repeat center right;
+    background: url('${contextPath}/images/1024/sort_asc_disabled.png') no-repeat center right;
 }
 
 .sorting_desc_disabled {
-    background: url('/DocSources/images/1024/sort_desc_disabled.png') no-repeat center right;
+    background: url('${contextPath}/images/1024/sort_desc_disabled.png') no-repeat center right;
 }
 
 

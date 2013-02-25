@@ -10,7 +10,7 @@
             /WEB-INF/config/applicationProvider.xml,
             /WEB-INF/config/applicationAOP.xml,
             /WEB-INF/config/applicationCaptcha.xml,
-            /WEB-INF/config/${customer}/applicationDS.xml,
+            /WEB-INF/config/applicationDS.xml,
             /WEB-INF/config/applicationI18n.xml,
             /WEB-INF/config/applicationSchedulers.xml,
             /WEB-INF/config/applicationSecurity.xml,
@@ -21,7 +21,7 @@
 	</context-param>
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/config/log4j-${environment}.properties</param-value>
+		<param-value>/WEB-INF/config/log4j-${verbose}.properties</param-value>
 	</context-param>
 	<context-param>
 		<param-name>log4jRefreshInterval</param-name>

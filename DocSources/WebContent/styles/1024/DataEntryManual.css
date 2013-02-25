@@ -74,7 +74,7 @@ a.link {
 /* -------------------------------------------------- MANUAL COVER --------------------------------------------------------------- */
 
 #cover { 
-	background-image:url(/DocSources/images/1024/bg.jpg);
+	background-image:url(${contextPath}/images/1024/bg.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 }
@@ -84,7 +84,7 @@ a.link {
 	height:175px;
 	position: relative;
 	margin: 0 auto 0 auto;
-	background:url(/DocSources/images/1024/img_map.png) no-repeat;
+	background:url(${contextPath}/images/1024/img_map.png) no-repeat;
 }
 
 #cover h1{ /* "Documentary Sources for the Arts and Humatities: 1537 - 1743" */
@@ -107,7 +107,7 @@ a.link {
 	position:absolute;
 	margin:70px 0 0 420px;
 	display:inline;
-	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-image:url(${contextPath}/images/1024/button_medium.png);
 	background-repeat:no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;

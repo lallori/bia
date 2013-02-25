@@ -27,7 +27,7 @@
 }
 
 #entryMenu{
-	background-image:url(/DocSources/images/1280/button_entrymenu.png);
+	background-image:url(${contextPath}/images/1280/button_entrymenu.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -37,7 +37,7 @@
 
 
 #vetMenu{
-	background-image:url(/DocSources/images/1280/button_vetmenu.png);
+	background-image:url(${contextPath}/images/1280/button_vetmenu.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -46,7 +46,7 @@
 }
 
 #advsearchMenu{
-	background-image:url(/DocSources/images/1280/button_advsearch.png);
+	background-image:url(${contextPath}/images/1280/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -55,7 +55,7 @@
 }
 
 #chronologyMenu{
-	background-image:url(/DocSources/images/1280/button_chronology.png);
+	background-image:url(${contextPath}/images/1280/button_chronology.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -64,7 +64,7 @@
 }
 
 #myprofileMenu{
-	background-image:url(/DocSources/images/1280/button_myprofile.png);
+	background-image:url(${contextPath}/images/1280/button_myprofile.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -73,7 +73,7 @@
 }
 
 #messagesMenu{
-	background-image:url(/DocSources/images/1280/button_messages.png);
+	background-image:url(${contextPath}/images/1280/button_messages.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;
@@ -82,7 +82,7 @@
 }
 
 #logoutMenu{
-	background-image:url(/DocSources/images/1280/button_logout.png);
+	background-image:url(${contextPath}/images/1280/button_logout.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:125px;

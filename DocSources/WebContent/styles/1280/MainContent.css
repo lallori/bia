@@ -121,7 +121,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1280/button_save.png);
+	background-image:url(${contextPath}/images/1280/button_save.png);
 	width:52px;
 	height:24px;
 	border:none;
@@ -132,7 +132,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1280/button_close.png);
+	background-image:url(${contextPath}/images/1280/button_close.png);
 	width:52px;
 	height:24px;
 	border:none;
@@ -143,7 +143,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1280/button_addnew.png);
+	background-image:url(${contextPath}/images/1280/button_addnew.png);
 	width:67px;
 	height:25px;
 	border:none;
@@ -175,7 +175,7 @@ a#editValue { /* "Edit Value" Button */
 	height:14px;
 	display:inline;
 	margin-left:15px;
-	background-image:url(/DocSources/images/1280/button_person.gif);
+	background-image:url(${contextPath}/images/1280/button_person.gif);
 	cursor:pointer;
 	background-color:transparent;
 	border:none;
@@ -186,7 +186,7 @@ a#editValue { /* "Edit Value" Button */
 	height:14px;
 	display:inline;
 	margin-left:15px;
-	background-image:url(/DocSources/images/1280/button_flag.png);
+	background-image:url(${contextPath}/images/1280/button_flag.png);
 	background-repeat:no-repeat;
 	cursor:pointer;
 	background-color:transparent;
@@ -198,7 +198,7 @@ a#editValue { /* "Edit Value" Button */
 	height:13px;
 	bottom:0px;
 	margin-bottom:0;
-	background-image:url(/DocSources/images/1280/button_delete.png);
+	background-image:url(${contextPath}/images/1280/button_delete.png);
 	background-repeat:no-repeat;
 	cursor:pointer;
 	background-color:transparent;
@@ -729,7 +729,7 @@ opacity:0.5;
 /* --------------- TOPICS --------------- */
 
 #topicDescription { /* "Show Topic Description" Button */
-	background-image:url(/DocSources/images/1280/button_topic.png);
+	background-image:url(${contextPath}/images/1280/button_topic.png);
 	width:16px;
 	height:16px;
 	position:absolute;
@@ -1069,14 +1069,14 @@ iframe{ /* Common for all iFrame */
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background-image:url(/DocSources/images/1280/button_prevfolio.png);
+	background-image:url(${contextPath}/images/1280/button_prevfolio.png);
 	width:93px;
 	height:25px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background-image:url(/DocSources/images/1280/button_nextfolio.png);
+	background-image:url(${contextPath}/images/1280/button_nextfolio.png);
 	width:93px;
 	height:25px;
 }
@@ -1122,7 +1122,7 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 128px;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/1280/button_go.png);
+	background-image:url(${contextPath}/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1171,7 +1171,7 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 128px;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/1280/button_go.png);
+	background-image:url(${contextPath}/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1187,7 +1187,7 @@ iframe{ /* Common for all iFrame */
 	height:25px;
 	position:absolute;
 	display:inline;
-	background-image:url(/DocSources/images/1280/button_fullscreenmode.png);
+	background-image:url(${contextPath}/images/1280/button_fullscreenmode.png);
 }
 
 /* ---------------- */
@@ -1201,7 +1201,7 @@ iframe{ /* Common for all iFrame */
 	width:105px;
 	height:25px;
 	display:inline;
-	background-image:url(/DocSources/images/1280/button_refresh.png);
+	background-image:url(${contextPath}/images/1280/button_refresh.png);
 }
 
 /* ---------------- */
@@ -1254,7 +1254,7 @@ iframe{ /* Common for all iFrame */
 	position:absolute;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/1280/button_go.png);
+	background-image:url(${contextPath}/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1273,7 +1273,7 @@ iframe{ /* Common for all iFrame */
 	position:absolute;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/1280/button_go.png);
+	background-image:url(${contextPath}/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1283,7 +1283,7 @@ iframe{ /* Common for all iFrame */
 #modalBox #transcribe {
 	margin:20px 0 0 50px;
 	position:absolute;
-	background-image:url(/DocSources/images/1280/button_transcribe.png);
+	background-image:url(${contextPath}/images/1280/button_transcribe.png);
 	width:149px;
 	height:25px;
 }
@@ -1306,7 +1306,7 @@ iframe{ /* Common for all iFrame */
 	margin-left:25px;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1280/button_close.png);
+	background-image:url(${contextPath}/images/1280/button_close.png);
 	width:52px;
 	height:24px;
 	border:none;
@@ -1315,7 +1315,7 @@ iframe{ /* Common for all iFrame */
 #choose {
 	margin:5px 0 0 50px;
 	position:absolute;
-	background-image:url(/DocSources/images/1280/button_choose.png);
+	background-image:url(${contextPath}/images/1280/button_choose.png);
 	width:210px;
 	height:25px;
 }
@@ -1323,7 +1323,7 @@ iframe{ /* Common for all iFrame */
 #modalBox #gobackvolume{
 	margin:5px 0 0 500px;
 	position:absolute;
-	background-image:url(/DocSources/images/1280/button_gobackvolume.png);
+	background-image:url(${contextPath}/images/1280/button_gobackvolume.png);
 	width:150px;
 	height:25px;
 }
@@ -1421,7 +1421,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace {
-	background-image:url(/DocSources/images/1280/button_tgnplace.png);
+	background-image:url(${contextPath}/images/1280/button_tgnplace.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1440,7 +1440,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #createPlace #mapPlace #AddNewMapPlace {
-	background-image:url(/DocSources/images/1280/button_mapplace.png);
+	background-image:url(${contextPath}/images/1280/button_mapplace.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1449,7 +1449,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #createPlace #mapSite #AddNewMapSitePlace {
-	background-image:url(/DocSources/images/1280/button_mapsite.png);
+	background-image:url(${contextPath}/images/1280/button_mapsite.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1576,7 +1576,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #PersonalNotes {
-	background-image:url(/DocSources/images/1280/button_perosnalNotes.png);
+	background-image:url(${contextPath}/images/1280/button_perosnalNotes.png);
 	margin:200px 0 0 150px;
 }
 

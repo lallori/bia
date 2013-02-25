@@ -6,11 +6,17 @@
 	<packaging>war</packaging>
 	<name>Bia</name>
 	<version>1.0</version>
-	<url>http://java.net/jira/browse/DOCSOURCES</url>
+	<url>http://bia.medici.org</url>
 	<issueManagement>
 		<system>JIRA</system>
-		<url>https://docsources.dev.java.net/issues/</url>
+		<url>https://java.net/jira/browse/DOCSOURCES</url>
 	</issueManagement>
+	<scm>
+	    <connection>scm:svn:https://svn.java.net/svn/docsources~svn/trunk/DocSources</connection>
+	    <developerConnection>scm:svn:https://svn.java.net/svn/docsources~svn/trunk/DocSources</developerConnection>
+	    <tag>HEAD</tag>
+	    <url>http://java.net/projects/docsources</url>
+	</scm>
 	<developers>
 		<developer>
 			<id>Allori</id>
@@ -97,7 +103,17 @@
 			<name>maven.atlassian.com</name>
 			<url>https://maven.atlassian.com/content/repositories/jboss-releases/</url>
 		</repository>
-	</repositories>
+		<repository>
+			<id>imagej.net</id>
+			<name>imagej.net</name>
+			<url>http://maven.imagej.net/content/repositories/thirdparty/</url>
+		</repository>
+	    <repository>
+	        <id>com.springsource.repository.bundles.external</id>
+	        <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+	        <url>http://repository.springsource.com/maven/bundles/external</url>
+	    </repository>
+   	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>maven2-repository.dev.java.net</id>
@@ -107,6 +123,7 @@
 	</pluginRepositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<customer>medici</customer>
 		<hibernate.version>3.6.10.Final</hibernate.version>
 		<hibernatesearch.version>3.4.1.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
@@ -125,20 +142,131 @@
 		<url>http://www.medici.org</url>
 	</organization>
 	<build>
+	    <finalName>${customer.warname}-${project.version}-r${buildNumber}</finalName>
+		<filters>
+			<filter>WebContent/WEB-INF/config/filter-${customer}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/ehcache.xml</include>
+					<include>**/import.sql</include>
+					<include>**/c3p0.properties</include>
+				</includes>
+			</resource>
+			<!-- filtering resources.. -->
+			<resource>
+				<directory>src/main/java/META-INF</directory>
+				<targetPath>META-INF</targetPath>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<pluginManagement>
+			<plugins>
+			    <!-- Ignore/Execute plugin execution -->
+			    <plugin>
+			        <groupId>org.eclipse.m2e</groupId>
+			        <artifactId>lifecycle-mapping</artifactId>
+			        <version>1.0.0</version>
+			        <configuration>
+			            <lifecycleMappingMetadata>
+			                <pluginExecutions>
+			                    <!-- copy-dependency plugin -->
+			                    <pluginExecution>
+			                        <pluginExecutionFilter>
+			                            <groupId>org.apache.maven.plugins</groupId>
+			                            <artifactId>maven-dependency-plugin</artifactId>
+			                            <versionRange>[1.0.0,)</versionRange>
+			                            <goals>
+			                                <goal>copy-dependencies</goal>
+			                            </goals>
+			                        </pluginExecutionFilter>
+			                        <action>
+			                            <ignore />
+			                        </action>
+			                    </pluginExecution>
+			                </pluginExecutions>
+			            </lifecycleMappingMetadata>
+			        </configuration>
+			    </plugin>
+		   </plugins>
+   		</pluginManagement>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>true</doUpdate>
+				</configuration>
+			</plugin>
+      		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>2.3</version>
 				<configuration>
-					<archive>
-						<manifestFile>WebContent/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
 					<warSourceDirectory>WebContent/</warSourceDirectory>
 					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
-					<warName>DocSources</warName>
 					<attachClasses>true</attachClasses>
-				</configuration>
+					<webResources>
+			            <resource>
+				    		<directory>${basedir}/WebContent/WEB-INF/jsp/custom/${customer}</directory>
+				    		<targetPath>WEB-INF/jsp</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+			            </resource>
+			            <resource>
+				    		<filtering>true</filtering>
+				    		<directory>${basedir}/WebContent/styles</directory>
+				    		<targetPath>styles</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+				    	</resource>
+						<resource>
+				    		<filtering>true</filtering>
+				    		<directory>${basedir}/WebContent/scripts</directory>
+				    		<targetPath>scripts</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+				    	</resource>
+				    	<resource>
+				    		<filtering>true</filtering>
+				    		<directory>${basedir}/WebContent/WEB-INF/config</directory>
+				    		<targetPath>WEB-INF/config</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+				    	</resource>
+				    	<resource>
+				    		<directory>${basedir}/WebContent/WEB-INF</directory>
+				    		<filtering>true</filtering>
+				    		<targetPath>WEB-INF</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+				    	</resource>
+            	    </webResources>
+   				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -164,8 +292,9 @@
 					<debuglevel>lines,vars,source</debuglevel>
 					<debug>true</debug>
 					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+   				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -236,24 +365,23 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/ehcache.xml</include>
-					<include>**/import.sql</include>
-					<include>**/c3p0.properties</include>
-				</includes>
-			</resource>
-		</resources>
 	</build>
+	<profiles>
+		<profile>
+			<id>medici</id>
+		    <properties>
+		      <customer>medici</customer>
+              <customer.warname>DocSources</customer.warname>
+		    </properties>
+    	</profile>
+		<profile>
+			<id>demo</id>
+		    <properties>
+		      <customer>demo</customer>
+              <customer.warname>Biademo</customer.warname>
+		    </properties>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>apache-xerces</groupId>
@@ -557,16 +685,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ldap</groupId>
-			<artifactId>spring-ldap-core</artifactId>
-			<version>${springldap.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ldap</groupId>
-			<artifactId>spring-ldap-core-tiger</artifactId>
-			<version>${springldap.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

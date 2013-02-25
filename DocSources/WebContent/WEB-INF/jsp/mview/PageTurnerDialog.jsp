@@ -14,6 +14,8 @@
 	
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
 
+	<c:url var="GetLinkedDocumentURL" value="/src/mview/GetLinkedDocument.json"/>
+
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
 	<c:url var="PersonalNotesDialogURL" value="/src/mview/EditPersonalNotesDialog.do"/>
@@ -240,6 +242,7 @@
 		$j(document).ready(function() {
 			$j("#moveToFolioForm").pageTurnerForm({
 				searchUrl: '${SearchAjaxURL}', 
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}', 
 				IIPImageServer: '${IIPImageServerURL}', 
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
@@ -250,6 +253,7 @@
 
 			$j("#indexNames").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
@@ -259,6 +263,7 @@
 			});
 			$j("#previous").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
@@ -268,6 +273,7 @@
 			});
 			$j("#next").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',

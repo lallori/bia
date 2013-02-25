@@ -11,6 +11,8 @@
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
+	
+	<c:url var="GetLinkedDocumentURL" value="/src/mview/GetLinkedDocument.json"/>
 
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
@@ -218,6 +220,7 @@
 		$j(document).ready(function() {
 			$j("#moveToFolioForm").pageTurnerForm({
 				searchUrl: '${SearchAjaxURL}', 
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}', 
 				IIPImageServer: '${IIPImageServerURL}', 
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -227,6 +230,7 @@
 
 			$j("#indexNames").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -235,6 +239,7 @@
 			});
 			$j("#previous").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -243,6 +248,7 @@
 			});
 			$j("#next").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
+		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

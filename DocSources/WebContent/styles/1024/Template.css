@@ -68,7 +68,7 @@ a {
 	width: 255px;
 	height:165px;
 	position:absolute;
-	background:url(/DocSources/images/1024/img_map.png) no-repeat;
+	background:url(${contextPath}/images/1024/img_map.png) no-repeat;
 	background-color:transparent;
 	z-index:999;
 }
@@ -86,7 +86,7 @@ a {
 	margin-top:95px;
 	margin-left: 247px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_mainmenu.png);
+	background-image:url(${contextPath}/images/1024/bg_mainmenu.png);
 	background-repeat:no-repeat;
 	z-index:3;
 }
@@ -96,7 +96,7 @@ a {
 	height:23px;
 	margin-top: 158px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_userinterface.png);
+	background-image:url(${contextPath}/images/1024/bg_userinterface.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
@@ -210,7 +210,7 @@ a {
 #search { /* Search button */
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_mini.png);
+	background-image:url(${contextPath}/images/1024/button_mini.png);
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
@@ -282,7 +282,7 @@ a {
 }
 
 #menulastentry #last_doc a {
-	background-image:url(/DocSources/images/1024/button_lastdocumententry.png);
+	background-image:url(${contextPath}/images/1024/button_lastdocumententry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -302,7 +302,7 @@ a {
 }
 
 #menulastentry #last_vol a {
-	background-image:url(/DocSources/images/1024/button_lastvolumeentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastvolumeentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -321,7 +321,7 @@ a {
 }
 
 #menulastentry #last_pers a {
-	background-image:url(/DocSources/images/1024/button_lastpersonentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastpersonentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -340,7 +340,7 @@ a {
 }
 
 #menulastentry #last_pla a {
-	background-image:url(/DocSources/images/1024/button_lastplaceentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastplaceentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -614,7 +614,7 @@ $('.searchResult').live('click', function() {
 }
 
 #advsearchMenu{
-	background-image:url(/DocSources/images/1024/button_advsearch.png);
+	background-image:url(${contextPath}/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
 	width: 150px;
@@ -622,11 +622,11 @@ $('.searchResult').live('click', function() {
 }
 	
 #advsearchMenu:hover{
-	background-image:url(/DocSources/images/1024/button_advsearchRollover.png);
+	background-image:url(${contextPath}/images/1024/button_advsearchRollover.png);
 }
 
 #entryMenu{
-	background-image:url(/DocSources/images/1024/button_entrymenu.png);
+	background-image:url(${contextPath}/images/1024/button_entrymenu.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:128px;
@@ -634,11 +634,11 @@ $('.searchResult').live('click', function() {
 }
 
 #entryMenu:hover{
-	background-image:url(/DocSources/images/1024/button_entrymenuRollover.png);
+	background-image:url(${contextPath}/images/1024/button_entrymenuRollover.png);
 }
 
 #forumsMenu{
-	background-image:url(/DocSources/images/1024/button_forums.png);
+	background-image:url(${contextPath}/images/1024/button_forums.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:178px;
@@ -646,11 +646,11 @@ $('.searchResult').live('click', function() {
 }
 
 #forumsMenu:hover{
-	background-image:url(/DocSources/images/1024/button_forumsRollover.png);
+	background-image:url(${contextPath}/images/1024/button_forumsRollover.png);
 }
 
 #myHistoryMenu{
-	background-image:url(/DocSources/images/1024/button_myHistory.png);
+	background-image:url(${contextPath}/images/1024/button_myHistory.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:120px;
@@ -658,7 +658,7 @@ $('.searchResult').live('click', function() {
 }
 
 #myHistoryMenu:hover{
-	background-image:url(/DocSources/images/1024/button_myHistoryRollover.png);
+	background-image:url(${contextPath}/images/1024/button_myHistoryRollover.png);
 }
 
 .messagesMenu span {
@@ -671,7 +671,7 @@ $('.searchResult').live('click', function() {
 }
 
 #helpMenu{
-	background-image:url(/DocSources/images/1024/button_help.png);
+	background-image:url(${contextPath}/images/1024/button_help.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:75px;
@@ -679,11 +679,11 @@ $('.searchResult').live('click', function() {
 }
 
 #helpMenu:hover{
-	background-image:url(/DocSources/images/1024/button_helpRollover.png);
+	background-image:url(${contextPath}/images/1024/button_helpRollover.png);
 }
 
 #logoutMenu{
-	background-image:url(/DocSources/images/1024/button_logout.png);
+	background-image:url(${contextPath}/images/1024/button_logout.png);
 	background-repeat:no-repeat;
 	display:block;
 	width:86px;
@@ -691,7 +691,7 @@ $('.searchResult').live('click', function() {
 }
 
 #logoutMenu:hover{
-	background-image:url(/DocSources/images/1024/button_logoutRollover.png);
+	background-image:url(${contextPath}/images/1024/button_logoutRollover.png);
 }
 
 
@@ -760,7 +760,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #AddNewDocument{
-	background:url(/DocSources/images/1024/button_addnewdocument.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_addnewdocument.png) no-repeat;
 	position:absolute;
 	margin: 20px 0 5px 101px;
 	width:124px;
@@ -774,7 +774,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #AddNewPerson{
-	background:url(/DocSources/images/1024/button_newperson.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_newperson.png) no-repeat;
 	margin: 20px 0 5px 374px;
 	position:absolute;
 	width:120px;
@@ -788,7 +788,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #AddNewVolume{
-	background:url(/DocSources/images/1024/button_addnewvolume.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_addnewvolume.png) no-repeat;
 	position:absolute;
 	margin: 20px 0 5px 240px;
 	position:absolute;
@@ -803,7 +803,7 @@ $('.searchResult').live('click', function() {
 }
 
 #EntryMenuDiv #AddNewPlace{
-	background:url(/DocSources/images/1024/button_addnewplace.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_addnewplace.png) no-repeat;
 	position:absolute;
 	margin: 20px 0 5px 503px;
 	position:absolute;
@@ -840,7 +840,7 @@ $('.searchResult').live('click', function() {
 /* Add New Person & Menage Titles and Occupations */
 
 #addNewPersonModalDiv #AddNewPerson{
-	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_addnewperson.png) no-repeat;
 	margin: 10px 0 5px 20px;
 	position:absolute;
 	width:120px;
@@ -854,7 +854,7 @@ $('.searchResult').live('click', function() {
 }
 
 #addNewPersonModalDiv #MenageTitlOcc{
-	background:url(/DocSources/images/1024/button_menageTitlOcc.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_menageTitlOcc.png) no-repeat;
 	margin: 10px 0 5px 180px;
 	position:absolute;
 	width:120px;
@@ -864,7 +864,7 @@ $('.searchResult').live('click', function() {
 }
 
 #addNewPersonModalDiv #goBack{
-        background:url(/DocSources/images/1024/button_small.png) no-repeat;
+        background:url(${contextPath}/images/1024/button_small.png) no-repeat;
 	width:52px;
 	height:23px;
 	position:absolute;
@@ -890,7 +890,7 @@ $('.searchResult').live('click', function() {
 }
 
 #menageTitlOccDiv #goBack{
-        background:url(/DocSources/images/1024/button_small.png) no-repeat;
+        background:url(${contextPath}/images/1024/button_small.png) no-repeat;
 	width:52px;
 	height:23px;
 	position:absolute;
@@ -937,7 +937,7 @@ $('.searchResult').live('click', function() {
 
 
 #VetMenuDiv #SetReadtToBeVet {
-	background-image:url(/DocSources/images/1024/button_set.png);
+	background-image:url(${contextPath}/images/1024/button_set.png);
 	margin: 380px 0 5px 150px;
 	position:absolute;
 	width:135px;
@@ -945,7 +945,7 @@ $('.searchResult').live('click', function() {
 }
 
 #VetMenuDiv #VetThisDoc{
-	background-image:url(/DocSources/images/1024/button_vet.png);
+	background-image:url(${contextPath}/images/1024/button_vet.png);
 	margin: 380px 0 5px 300px;
 	position:absolute;
 	width:135px;
@@ -953,7 +953,7 @@ $('.searchResult').live('click', function() {
 }
 
 #VetMenuDiv #UnvetThisDoc{
-	background-image:url(/DocSources/images/1024/button_unvet.png);
+	background-image:url(${contextPath}/images/1024/button_unvet.png);
 	margin: 380px 0 5px 450px;
 	position:absolute;
 	width:135px;
@@ -961,7 +961,7 @@ $('.searchResult').live('click', function() {
 }
 
 #VetMenuDiv #img_vetmenu {
-	background-image:url(/DocSources/images/1024/img_vetmenu.jpg);
+	background-image:url(${contextPath}/images/1024/img_vetmenu.jpg);
 	background-repeat:no-repeat;
 	margin: 15px 0 0 120px;
 	position:absolute;
@@ -979,7 +979,7 @@ $('.searchResult').live('click', function() {
 }
 
 #ActionsMenuDiv #deleteDocBase, #ActionsMenuDiv #deleteVolumeBase, #ActionsMenuDiv #deletePeopleBase, #ActionsMenuDiv #deleteGeoBase{
-	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	margin: 20px 0 5px 120px;
 	text-align:center;
 	padding-top:4px;
@@ -989,7 +989,7 @@ $('.searchResult').live('click', function() {
 }
 
 #ActionsMenuDiv #Action2Docs{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_medium.png) no-repeat;
 	margin: 20px 0 5px 305px;
 	text-align:center;
 	padding-top:4px;
@@ -999,7 +999,7 @@ $('.searchResult').live('click', function() {
 }
 
 #ActionsMenuDiv #Action3Docs{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(${contextPath}/images/1024/button_medium.png) no-repeat;
 	margin: 20px 0 5px 430px;
 	position:absolute;
 	text-align:center;

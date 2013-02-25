@@ -69,7 +69,7 @@ a {
 	width:270px;
 	height:165px;
 	position:absolute;
-	background:url(/DocSources/images/1024/img_map.png) no-repeat;
+	background:url(${contextPath}/images/1024/img_map.png) no-repeat;
 	background-color:transparent;
 	z-index:999;
 }
@@ -87,7 +87,7 @@ a {
 	margin-top:95px;
 	margin-left:255px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_mainmenu.png);
+	background-image:url(${contextPath}/images/1024/bg_mainmenu.png);
 	background-repeat:no-repeat;
 	z-index:3;
 }
@@ -97,7 +97,7 @@ a {
 	height:23px;
 	margin-top:158px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_userinterface.png);
+	background-image:url(${contextPath}/images/1024/bg_userinterface.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
@@ -185,7 +185,7 @@ a {
 	border:none;
 	background-color:transparent;
 	margin-top:-1px;
-	background-image:url(/DocSources/images/1024/button_mini.png);
+	background-image:url(${contextPath}/images/1024/button_mini.png);
 	width:22px;
 	height:22px;
 	cursor:pointer;
@@ -254,7 +254,7 @@ a.helpIcon  {
 }
 
 #menulastentry #last_doc a {
-	background-image:url(/DocSources/images/1024/button_lastdocumententry.png);
+	background-image:url(${contextPath}/images/1024/button_lastdocumententry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -274,7 +274,7 @@ a.helpIcon  {
 }
 
 #menulastentry #last_vol a {
-	background-image:url(/DocSources/images/1024/button_lastvolumeentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastvolumeentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -293,7 +293,7 @@ a.helpIcon  {
 }
 
 #menulastentry #last_pers a {
-	background-image:url(/DocSources/images/1024/button_lastpersonentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastpersonentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -312,7 +312,7 @@ a.helpIcon  {
 }
 
 #menulastentry #last_pla a {
-	background-image:url(/DocSources/images/1024/button_lastplaceentry.png);
+	background-image:url(${contextPath}/images/1024/button_lastplaceentry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
@@ -376,7 +376,7 @@ a.helpIcon  {
 }
 
 #mapcourses { /* Button MAP Courses */
-	background-image:url(/DocSources/images/1024/button_courses.jpg);
+	background-image:url(${contextPath}/images/1024/button_courses.jpg);
 	width:200px;
 	height:65px;
 	position:absolute;
@@ -403,7 +403,7 @@ a.helpIcon  {
 	margin-top:100px;
 	margin-left: 180px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/img_coatofarms.png);
+	background-image:url(${contextPath}/images/1024/img_coatofarms.png);
 }
 
 #button_courses {

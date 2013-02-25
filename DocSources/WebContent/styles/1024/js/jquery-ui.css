@@ -73,7 +73,7 @@
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	border: 1px solid #dcc0ba; 
-	background: #dcc0ba url(/DocSources/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
+	background: #dcc0ba url(${contextPath}/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #654c47; 
 }
@@ -85,7 +85,7 @@
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
 	border: 1px solid #dcc0ba; 
-	background: #f6edec url(/DocSources/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #f6edec url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: #654c47; 
 	color: #212121; 
 }
@@ -97,7 +97,7 @@
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { 
 	border: 1px solid #dcc0ba;
-	background: #f6edec url(/DocSources/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #f6edec url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #654c47; 
 }
@@ -532,7 +532,7 @@
 
 /* Overlays */
 .ui-widget-overlay { 
-	background: #aaaaaa url(/DocSources/styles/1024/js/images/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
+	background: #aaaaaa url(${contextPath}/styles/1024/js/images/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
 	opacity: .20;
 	filter:Alpha(Opacity=20); 
 }

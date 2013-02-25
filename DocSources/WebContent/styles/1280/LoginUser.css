@@ -1,5 +1,5 @@
 body {
-	background-image:url(/DocSources/images/1280/bg.jpg);
+	background-image:url(${contextPath}/images/1280/bg.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -26,7 +26,7 @@ body {
 	height:213px;
 	margin-left:365px;
 	position:absolute;
-	background-image:url(/DocSources/images/1280/img_map.png);
+	background-image:url(${contextPath}/images/1280/img_map.png);
 }
 
 /* DIV Log in */
@@ -37,7 +37,7 @@ body {
 	margin-top:250px;
 	margin-left: 150px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1280/bg_login.png);
+	background-image:url(${contextPath}/images/1280/bg_login.png);
 }
 
 /*  Log in - Form */
@@ -52,7 +52,7 @@ body {
 }
 
 .button_login {
-	background-image:url(/DocSources/images/1280/button_login.jpg);
+	background-image:url(${contextPath}/images/1280/button_login.jpg);
 	width:130px;
 	height:25px;
 }
@@ -75,7 +75,7 @@ input {
 }
 
 .input { /* input text class */
-	background-image:url(/DocSources/images/1280/bg_input.png);
+	background-image:url(${contextPath}/images/1280/bg_input.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -96,7 +96,7 @@ input {
 	margin-top:250px;
 	margin-left:620px;
 	position:absolute;
-	background-image:url(/DocSources/images/1280/button_registerhere.jpg);
+	background-image:url(${contextPath}/images/1280/button_registerhere.jpg);
 	width:235px;
 	height:65px;
 }
@@ -110,7 +110,7 @@ input {
 }
 
 #register {
-	background-image:url(/DocSources/images/1280/button_guest.jpg);
+	background-image:url(${contextPath}/images/1280/button_guest.jpg);
 	width:235px;
 	height:70px;
 	margin-top:50px;
@@ -130,7 +130,7 @@ input {
 	margin-top:190px;
 	margin-left: 75px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1280/button_registerhere.jpg);
+	background-image:url(${contextPath}/images/1280/button_registerhere.jpg);
 	background-repeat:no-repeat;
 	z-index:1;
 }
@@ -206,7 +206,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/recovery_bg.png);
+	background-image:url(${contextPath}/images/recovery_bg.png);
 }
 
 .recovery { /*  Form class */
@@ -229,11 +229,11 @@ input {
 	margin-top:260px;
 	margin-left: 620px;	
 	position:absolute;
-	background-image:url(/DocSources/images/stemma.png);
+	background-image:url(${contextPath}/images/stemma.png);
 }
 
 .input_recovery { /* input text class */
-	background-image:url(/DocSources/images/input_recovery_bg.png);
+	background-image:url(${contextPath}/images/input_recovery_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -280,7 +280,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/activationcode_bg.png);
+	background-image:url(${contextPath}/images/activationcode_bg.png);
 }
 
 #activationcode p {
@@ -297,7 +297,7 @@ input {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/success_bg.png);
+	background-image:url(${contextPath}/images/success_bg.png);
 }
 
 .usersuccess {  /* p class */
@@ -330,7 +330,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/reset_bg.png);
+	background-image:url(${contextPath}/images/reset_bg.png);
 }
 
 .reset { /*  Form class */
