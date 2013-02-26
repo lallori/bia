@@ -27,6 +27,8 @@
  */
 package org.medici.bia.dao.userhistory;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -1153,6 +1155,15 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
 									super.persist(entity);
 								}
+								//If document is the same but the date of last record is old and it is not the last record viewed, we persist action
+								UserHistory lastEntryRecord = findLastEntry(entity.getUser());
+								if(!lastEntryRecord.getCategory().equals(Category.DOCUMENT) || (lastEntryRecord.getCategory().equals(Category.DOCUMENT) && !lastEntryRecord.getDocument().getEntryId().equals(entity.getDocument().getEntryId()))){
+									Calendar today = GregorianCalendar.getInstance();
+									today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE), 0, 0);
+									if(lastUserHistory.getDateAndTime().before(today.getTime())){
+										super.persist(entity);
+									}
+								}
 							}
 							//otherwise we dont' persist
 						}				
@@ -1167,6 +1178,15 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 								// if person is not the same, we persist action
 								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
 									super.persist(entity);
+								}
+								//If person is the same but the date of last record is old and it is not the last record viewed, we persist action
+								UserHistory lastEntryRecord = findLastEntry(entity.getUser());
+								if(!lastEntryRecord.getCategory().equals(Category.PEOPLE) || (lastEntryRecord.getCategory().equals(Category.PEOPLE) && !lastEntryRecord.getPerson().getPersonId().equals(entity.getPerson().getPersonId()))){
+									Calendar today = GregorianCalendar.getInstance();
+									today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE), 0, 0);
+									if(lastUserHistory.getDateAndTime().before(today.getTime())){
+										super.persist(entity);
+									}
 								}
 							}
 							//otherwise we dont' persist
@@ -1183,6 +1203,15 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
 									super.persist(entity);
 								}
+								//If place is the same but the date of last record is old and it is not the last record viewed, we persist action
+								UserHistory lastEntryRecord = findLastEntry(entity.getUser());
+								if(!lastEntryRecord.getCategory().equals(Category.PLACE) || (lastEntryRecord.getCategory().equals(Category.PLACE) && !lastEntryRecord.getPlace().getPlaceAllId().equals(entity.getPlace().getPlaceAllId()))){
+									Calendar today = GregorianCalendar.getInstance();
+									today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE), 0, 0);
+									if(lastUserHistory.getDateAndTime().before(today.getTime())){
+										super.persist(entity);
+									}
+								}
 							}
 							//otherwise we dont' persist
 						}				
@@ -1197,6 +1226,16 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 								// if volume is not the same, we persist action
 								if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
 									super.persist(entity);
+								}else{
+									//If volume is the same but the date of last record is old and it is not the last record viewed, we persist action
+									UserHistory lastEntryRecord = findLastEntry(entity.getUser());
+									if(!lastEntryRecord.getCategory().equals(Category.VOLUME) || (lastEntryRecord.getCategory().equals(Category.VOLUME) && !lastEntryRecord.getVolume().getSummaryId().equals(entity.getVolume().getSummaryId()))){
+										Calendar today = GregorianCalendar.getInstance();
+										today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE), 0, 0);
+										if(lastUserHistory.getDateAndTime().before(today.getTime())){
+											super.persist(entity);
+										}
+									}
 								}
 							}
 							//otherwise we dont' persist

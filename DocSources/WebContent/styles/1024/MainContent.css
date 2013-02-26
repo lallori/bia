@@ -683,7 +683,7 @@ label {
 	color:#6d5c4d;
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeDocReference, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closePeople, #closeDocReference, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -749,7 +749,7 @@ label {
 	margin: 5px auto 7px 310px;
 }
 
-#PeopleCorrespondentsDocumentsForm #close {
+#PeopleCorrespondentsDocumentsForm #closePeople {
 	margin-top: 5px;
 }
 
@@ -4243,8 +4243,8 @@ a.showDigitizedDocument:hover {
 ul#network {
 	list-style-type: none;
 	height: 30px;
-	width: 140px;
-	margin:10px 0 0 325px;
+	width: 160px;
+	margin:10px 0 0 285px;
 }
 
 ul#network a {

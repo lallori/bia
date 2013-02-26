@@ -1430,9 +1430,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			People people = getPeopleDAO().find(personId);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user;
+			if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails){
+				user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Show person", Action.VIEW, Category.PEOPLE, people));
+				getUserHistoryDAO().persist(new UserHistory(user, "Show person", Action.VIEW, Category.PEOPLE, people));
+			}
 
 			return people;
 		} catch (Throwable th) {

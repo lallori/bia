@@ -1372,7 +1372,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void updateUser(User user) throws ApplicationThrowable {
+	public User updateUser(User user) throws ApplicationThrowable {
 		try {
 			User userToUpdate = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
@@ -1389,7 +1389,9 @@ public class UserServiceImpl implements UserService {
 				userToUpdate.setPassword(getPasswordEncoder().encodePassword(user.getPassword(), null));
 			}
 			
-			getUserDAO().merge(userToUpdate);
+			userToUpdate = getUserDAO().merge(userToUpdate);
+			
+			return userToUpdate;
 
 //			getUserDAO().removeAllUserRoles(user.getAccount());
 //			getUserDAO().persistUserRoles(user.getAccount(), userToUpdate.getUserRoles());

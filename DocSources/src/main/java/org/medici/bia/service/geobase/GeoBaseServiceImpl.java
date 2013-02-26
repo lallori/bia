@@ -634,10 +634,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public Place findPlace(Integer placeId) throws ApplicationThrowable {
 		try {
 			Place place = getPlaceDAO().find(placeId);
+			
+			User user;
+			if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails){
+				user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Show place", Action.VIEW, Category.PLACE, place));
+				getUserHistoryDAO().persist(new UserHistory(user, "Show place", Action.VIEW, Category.PLACE, place));
+			}
 
 			return place;
 		} catch (Throwable th) {

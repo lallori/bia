@@ -186,7 +186,7 @@
 		</c:forEach>
 			<br>			
 			<div>
-				<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
+				<input id="closePeople" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 				<input id="AddNewValue" type="submit" value="Add" title="Add new Person" />
 			</div>
 		</fieldset>
@@ -426,7 +426,8 @@
 				}
 			});
 			
-			$j('.closeForm').click(function(){
+			$j("#closePeople").die();
+			$j('#closePeople').live('click', function(){
 				if($j("#modify").val() == 1){
 					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question'), 
 						css: { 

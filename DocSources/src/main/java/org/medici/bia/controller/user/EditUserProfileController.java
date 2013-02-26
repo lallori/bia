@@ -106,12 +106,13 @@ public class EditUserProfileController {
 			user.setCity(command.getLocation());
 			
 			try{
-				getUserService().updateUser(user);
+				user = getUserService().updateUser(user);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 			}
 			
 			model.put("userProfile", user);
+			model.put("time", System.currentTimeMillis());
 			
 			return new ModelAndView("user/ShowUserProfile", model);
 		}

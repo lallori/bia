@@ -22,11 +22,11 @@
 		<div class="list">	
 			<div class="row">
 				<div class="item">Latitude</div>
-				<div class="value">${place.placeGeographicCoordinates.degreeLatitude}° ${place.placeGeographicCoordinates.minuteLatitude}' ${place.placeGeographicCoordinates.secondLatitude}'' ${place.placeGeographicCoordinates.directionLatitude}</div>
+				<div class="value">${place.placeGeographicCoordinates.degreeLatitude}&#xb0 ${place.placeGeographicCoordinates.minuteLatitude}' ${place.placeGeographicCoordinates.secondLatitude}'' ${place.placeGeographicCoordinates.directionLatitude}</div>
 			</div>
 			<div class="row">
 				<div class="item">Longitude</div>
-				<div class="value">${place.placeGeographicCoordinates.degreeLongitude}° ${place.placeGeographicCoordinates.minuteLongitude}' ${place.placeGeographicCoordinates.secondLongitude}'' ${place.placeGeographicCoordinates.directionLongitude}</div>
+				<div class="value">${place.placeGeographicCoordinates.degreeLongitude}&#xb0 ${place.placeGeographicCoordinates.minuteLongitude}' ${place.placeGeographicCoordinates.secondLongitude}'' ${place.placeGeographicCoordinates.directionLongitude}</div>
 			</div>
 		</div>
 	</div>

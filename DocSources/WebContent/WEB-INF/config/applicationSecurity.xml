@@ -15,6 +15,10 @@
         <security:intercept-url pattern="/images/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/scripts/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/swf/**" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/src/docbase/ShareDocument.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/src/volbase/ShareVolume.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/src/peoplebase/SharePerson.do"		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/src/geobase/SharePlace.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ActivateUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ResetUserPassword.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />

@@ -15,11 +15,13 @@
 	</c:url>
 	
 	<a href="#" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database">More info</a>
-		<ul id="network">
-			<li><a id="googlePlus" href="#" title="Share it on Google+"></a></li>
-			<li><a id="twitter" href="#" title="Share it on Twitter"></a></li>
-            <li><a id="facebook" href="#" title="Share it on Facebook"></a></li>
-		</ul>
+	<ul id="network">
+       <span class='st_facebook_large' displayText='Facebook'></span>
+<!--        <span class='st_twitter_large' displayText='Tweet'></span> -->
+	   <a href="https://twitter.com/share" class="twitter-share-button" data-text=" " data-lang="it" data-size="large" data-count="none">Tweet</a>
+	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+       <span class='st_googleplus_large' displayText='Google +'></span>
+	</ul>
 	
 	
 	<div id="documentTitle">
@@ -77,11 +79,16 @@
 			</c:choose>
 		</div>
 		<c:if test="${not empty image}">
-			<div id="DocumentImageDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<div id="DocumentImageDigitDiv">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-				</security:authorize>
-			</div>
+				</div>
+			</security:authorize>
+			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<div id="DocumentImageNotDigitDiv">
+					<span>Document digitized</span>
+				</div>
+			</security:authorize>
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">

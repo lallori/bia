@@ -622,6 +622,9 @@
 			});
 			
 			$j('#transcribeAnyway').click(function() {
+				if($j("#alreadyTranscribe").css('visibility') == 'visible'){
+					$j("#showTranscription").css('visibility','hidden');
+				}
 				$j("#choiceThisFolioStart").css('visibility', 'visible');
 				$j("#transcribeAnyway").css('visibility', 'hidden');
 				transcribing=true;
@@ -630,7 +633,7 @@
 			});
 			
 			$j('#choiceThisFolioStart').click(function() {
-				if($j("#alreadyTranscribe").css('visibility') != 'visible'){
+// 				if($j("#alreadyTranscribe").css('visibility') != 'visible'){
 					$j("#choiceThisFolioStart").css('visibility', 'visible');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					imageDocumentFolioStart=currentImage;
@@ -684,7 +687,7 @@
 					window.blur();
 					window.opener.focus();
 					window.close();
-				}
+// 				}
 				return false;
 			});
 			

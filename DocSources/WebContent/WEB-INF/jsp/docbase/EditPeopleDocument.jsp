@@ -53,7 +53,7 @@
 		</c:forEach>
 			<br>			
 			<div>
-				<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
+				<input id="closePeople" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 				<input id="AddNewValue" type="submit" value="Add" title="Add new Person" />
 			</div>
 		</fieldset>
@@ -110,24 +110,25 @@
 				return false;
 			});
 
-			$j('.closeForm').click(function(){
-				if($j("#modify").val() == 1){
-					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question'), 
-						css: { 
-							border: 'none', 
-							padding: '5px',
-							boxShadow: '1px 1px 10px #666',
-							'-webkit-box-shadow': '1px 1px 10px #666'
-							} ,
-							overlayCSS: { backgroundColor: '#999' }
-					}); 
-					return false;
-				}else{
-					$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
-						$j("#body_left").html(html);
-					}});
-				} 
-			});
+// 			$j("#closePeople").die();
+// 			$j('#closePeople').live('click', function(){
+// 				if($j("#modify").val() == 1){
+// 					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question'), 
+// 						css: { 
+// 							border: 'none', 
+// 							padding: '5px',
+// 							boxShadow: '1px 1px 10px #666',
+// 							'-webkit-box-shadow': '1px 1px 10px #666'
+// 							} ,
+// 							overlayCSS: { backgroundColor: '#999' }
+// 					}); 
+// 					return false;
+// 				}else{
+// 					$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+// 						$j("#body_left").html(html);
+// 					}});
+// 				} 
+// 			});
 
 			$j('.linkPeople').click(function() {
 				var tabName = $j(this).parent().parent();

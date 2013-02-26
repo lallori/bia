@@ -1029,9 +1029,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user;			
+			if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails){
+				user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Show document", Action.VIEW, Category.DOCUMENT, document));
+				getUserHistoryDAO().persist(new UserHistory(user, "Show document", Action.VIEW, Category.DOCUMENT, document));
+			}
 
 			return document;
 		} catch (Throwable th) {

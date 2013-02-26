@@ -14,9 +14,11 @@
 	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
 	
 	<ul id="network">
-		<li><a id="googlePlus" href="#" title="Share it on Google+"></a></li>
-		<li><a id="twitter" href="#" title="Share it on Twitter"></a></li>
-           <li><a id="facebook" href="#" title="Share it on Facebook"></a></li>
+       <span class='st_facebook_large' displayText='Facebook'></span>
+<!--        <span class='st_twitter_large' displayText='Tweet'></span> -->
+	   <a href="https://twitter.com/share" class="twitter-share-button" data-text=" " data-lang="it" data-size="large" data-count="none">Tweet</a>
+	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+       <span class='st_googleplus_large' displayText='Google +'></span>
 	</ul>
 	
 	<div id="volumeTitle">

@@ -571,9 +571,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user;
+			if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails){
+				user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Show volume", Action.VIEW, Category.VOLUME, volume));
+				getUserHistoryDAO().persist(new UserHistory(user, "Show volume", Action.VIEW, Category.VOLUME, volume));
+			}
 
 			return volume;
 		} catch (Throwable th) {
