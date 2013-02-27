@@ -46,7 +46,6 @@ import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Country;
-import org.medici.bia.domain.People;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Category;
@@ -284,6 +283,30 @@ public class AjaxController {
 				singleRow.add("");
 				singleRow.add(currentUserHistory.getPerson().getMapNameLf());
 				resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
+			}else if (currentUserHistory.getCategory().equals(Category.SEARCH_DOCUMENT)){
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showSearch(singleRow, currentUserHistory.getIdUserHistory()));
+			}else if (currentUserHistory.getCategory().equals(Category.SEARCH_PEOPLE)){
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showSearch(singleRow, currentUserHistory.getIdUserHistory()));
+			}else if (currentUserHistory.getCategory().equals(Category.SEARCH_PLACE)){
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showSearch(singleRow, currentUserHistory.getIdUserHistory()));
+			}else if (currentUserHistory.getCategory().equals(Category.SEARCH_VOLUME)){
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				resultList.add(HtmlUtils.showSearch(singleRow, currentUserHistory.getIdUserHistory()));
 			}
 		}
 

@@ -1494,4 +1494,33 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showSearch(List<String> inputList, Integer idUserHistory) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResultUserSearch\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/ShowSearchUserHistory.do?idUserHistory=");
+		anchorBegin.append(idUserHistory);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
+		}
+		
+		return retValue;
+	}
 }
