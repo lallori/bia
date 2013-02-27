@@ -18,6 +18,10 @@
 		<div class="row">
 			<div class="col_l"><form:label id="emailLabel" for="mail" path="mail">Email</form:label></div>
 			<div class="col_l"><form:input id="email" path="mail" cssClass="input_29c" /><form:errors path="mail" /></div>
+			<div class="col_l">	
+				<form:checkbox id="mailHide" path="mailHide"/>
+				<form:label id="mailHideLabel" for="mailHide" path="mailHide" cssErrorClass="error">Hide mail</form:label>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col_l"><form:label id="addressLabel" for="address" path="address">Address</form:label></div>

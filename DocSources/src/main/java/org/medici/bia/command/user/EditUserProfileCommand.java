@@ -41,6 +41,7 @@ public class EditUserProfileCommand {
 	private String account;
 	/** User's email **/
 	private String mail;
+	private Boolean mailHide;
 	/** User's address **/
 	private String address;
 	/** User's country **/
@@ -67,6 +68,18 @@ public class EditUserProfileCommand {
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	/**
+	 * @return the mailHide
+	 */
+	public Boolean getMailHide() {
+		return mailHide;
+	}
+	/**
+	 * @param mailHide the mailHide to set
+	 */
+	public void setMailHide(Boolean mailHide) {
+		this.mailHide = mailHide;
 	}
 	public String getAddress() {
 		return address;

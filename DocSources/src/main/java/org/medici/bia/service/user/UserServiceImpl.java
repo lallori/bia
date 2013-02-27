@@ -1377,6 +1377,7 @@ public class UserServiceImpl implements UserService {
 			User userToUpdate = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
 			userToUpdate.setMail(user.getMail());
+			userToUpdate.setMailHide(user.getMailHide());
 			userToUpdate.setAddress(user.getAddress());
 			userToUpdate.setCountry(user.getCountry());
 			userToUpdate.setInterests(user.getInterests());
@@ -1396,6 +1397,23 @@ public class UserServiceImpl implements UserService {
 //			getUserDAO().removeAllUserRoles(user.getAccount());
 //			getUserDAO().persistUserRoles(user.getAccount(), userToUpdate.getUserRoles());
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public User updateUserAfterLogout(User user) throws ApplicationThrowable {
+		try{
+			User userToUpdate = getUserDAO().findUser(user.getAccount());
+			userToUpdate.setLastLogoutDate(user.getLastLogoutDate());
+			
+			userToUpdate = getUserDAO().merge(userToUpdate);
+			return userToUpdate;
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

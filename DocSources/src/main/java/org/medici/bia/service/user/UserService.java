@@ -475,6 +475,14 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public User updateUser(User user) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public User updateUserAfterLogout(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

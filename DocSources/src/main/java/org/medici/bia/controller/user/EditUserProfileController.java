@@ -96,6 +96,7 @@ public class EditUserProfileController {
 			User user = new User();
 
 			user.setMail(command.getMail());
+			user.setMailHide(command.getMailHide());
 			user.setAddress(command.getAddress());
 			user.setCountry(command.getCountryCode());
 			user.setInterests(command.getInterests());
@@ -139,6 +140,7 @@ public class EditUserProfileController {
 		}
 
 		command.setMail(user.getMail());
+		command.setMailHide(user.getMailHide());
 		command.setAddress(user.getAddress());
 		if(country != null){		
 			command.setCountry(country.getName());
