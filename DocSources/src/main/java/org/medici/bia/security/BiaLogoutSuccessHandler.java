@@ -74,7 +74,7 @@ public class BiaLogoutSuccessHandler implements LogoutSuccessHandler {
 				
 				user.setLastLogoutDate(new Date());
 				
-				getUserService().updateUser(user);
+				getUserService().updateUserAfterLogout(user);
 				
 				response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + getDefaultTargetUrl()));
 				return;

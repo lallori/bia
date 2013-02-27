@@ -16,6 +16,10 @@
 		<c:param name="category" value="OUTBOX"/>
 	</c:url>
 	
+	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+		<c:param name="forumId" value="1"/>
+	</c:url>
+	
 	<h2>Messages</h2>
 	
 	<div id="tabs">

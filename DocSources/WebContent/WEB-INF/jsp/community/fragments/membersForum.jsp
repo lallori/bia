@@ -12,10 +12,16 @@
 
 <script type="text/javascript">
 $j(document).ready(function() {
-// 	$j("#members").click(function(){
-// 		$j("#main").load($j(this).attr('href'));
-// 		return false;
-// 	});
+	$j("#members").die();
+	$j("#members").live('click', function(){
+		$j("#main").load($j(this).attr('href'));
+		alert($j("#messagesTable").length);
+		if($j(".paginateActive").length > 0 && $j("#messagesTable").length == 0)
+			$j("#prevUrl").val($j(".paginateActive").attr('href'));
+		else
+			$j("#prevUrl").val("${ShowForumURL}");
+		return false;
+	});
 });
 </script>
 

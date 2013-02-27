@@ -60,10 +60,12 @@
                 <div class="item">Rank</div> 
                 <div class="value">User</div> 
             </div>
+            <c:if test="${!userProfile.mailHide}">
             <div class="row">
                 <div class="item">Email</div> 
                 <div class="value">${userProfile.mail}</div> 
             </div>
+            </c:if>
             <div class="row">
                 <div class="item">Address</div>
                 <div class="value">${userProfile.address}</div>

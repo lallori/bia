@@ -138,5 +138,11 @@
 			$j("#main").load(formSubmitUrl);
 			return false;
 		});
+		
+		$j('.forum').die();
+		$j('.forum').live('click', function() {
+			$j("#main").load($j(this).attr("href"));
+			return false;
+		});
 	});
 </script>

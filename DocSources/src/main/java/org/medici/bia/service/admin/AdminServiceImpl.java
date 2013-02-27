@@ -274,6 +274,8 @@ public class AdminServiceImpl implements AdminService {
 		try{
 			User userToUpdate = getUserDAO().findUser(user.getAccount());
 			userToUpdate.setApproved(user.getApproved());
+			User admin = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			userToUpdate.setApprovedBy(admin);
 			getUserDAO().merge(userToUpdate);
 			
 			//Delete All new user's messages for other admin
