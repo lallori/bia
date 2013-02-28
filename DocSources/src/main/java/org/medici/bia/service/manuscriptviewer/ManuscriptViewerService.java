@@ -282,5 +282,5 @@ public interface ManuscriptViewerService {
 	 * @param annotationsList
 	 * @throws ApplicationThrowable
 	 */
-	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable;
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable;
 }

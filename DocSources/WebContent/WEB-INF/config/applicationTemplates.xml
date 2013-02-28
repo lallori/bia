@@ -406,6 +406,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
 	</definition>
 	
+	<definition name="community/EditForumPostCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
+	</definition>
+	
 	<definition name="community/EmailMessage" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/EmailMessage.jsp"/>
 	</definition>

@@ -52,6 +52,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -170,6 +172,7 @@ public class AjaxController {
 			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
 			String[] annotations = httpServletRequest.getParameterValues("annotations");
 			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
+			List<Object> resultList = new ArrayList<Object>();
 
 			if (annotations != null) {
 				for (String string : annotations) {
@@ -187,7 +190,15 @@ public class AjaxController {
 					annotationsList.add(annotation);
 				}
 			}
-			getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
+			Map<Annotation, Integer> annotationMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
+			for(Annotation currentAnnotation : annotationMap.keySet()){
+				Map<String, Object> singleRow = new HashMap<String, Object>(0);
+				if(annotationMap.get(currentAnnotation) != 0){
+					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/community/EditForumPostAnnotation.do?topicId=" + annotationMap.get(currentAnnotation));
+					resultList.add(singleRow);
+				}
+			}
+			model.put("links", resultList);
 		}catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("responseKO", model);
 		}

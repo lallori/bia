@@ -843,11 +843,12 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public List<Annotation> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable {
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable {
 		try {
+			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
 			Image image = getImageDAO().findImageByImageId(imageId);
 			if (image == null) {
-				return new ArrayList<Annotation>(0);
+				return new HashMap<Annotation, Integer>(0);
 			}
 
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
@@ -893,6 +894,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
 							getForumTopicWatchDAO().persist(forumTopicWatch);
 						}
+						annotation.setForumTopic(topicAnnotation);
+						getAnnotationDAO().merge(annotation);
+						returnMap.put(annotation, topicAnnotation.getTopicId());
 //						annotation.setText(topicAnnotation.getSubject());
 //						getAnnotationDAO().merge(annotation);
 					}					
@@ -912,19 +916,65 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					
 					annotation.setLastUpdate(new Date());
 					getAnnotationDAO().merge(annotation);
+					returnMap.put(annotation, 0);
 				}
 			}
 			
 			if(!annotationSaved.isEmpty()){
 				for(Annotation annotation : annotationSaved){
+					ForumTopic topicAnnotation = getForumTopicDAO().find(annotation.getForumTopic().getTopicId());
+					topicAnnotation.setLogicalDelete(Boolean.TRUE);
+					topicAnnotation.setAnnotation(null);
+					getForumTopicDAO().merge(topicAnnotation);
+					getForumPostDAO().deleteForumPostsFromForumTopic(topicAnnotation.getTopicId());
+					Forum forum = topicAnnotation.getForum();
+					recursiveSetLastPost(forum);
+					getForumDAO().recursiveDecreasePostsNumber(forum, topicAnnotation.getTotalReplies());
+					getForumDAO().recursiveDecreaseTopicsNumber(forum);
+//					forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
+					getForumDAO().merge(forum);				
+					annotation.setForumTopic(null);
 					getAnnotationDAO().remove(annotation);
 				}
 			}
 			
-			return annotationsList;
+			return returnMap;
 		} catch (Throwable throwable){
 			throw new ApplicationThrowable(throwable);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+
+		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
+		forum.setLastPost(lastPost);
+		//last update must be updated to obtain a correct indexing of forum
+		forum.setLastUpdate(new Date());
+		getForumDAO().merge(forum);
+
+		recursiveSetLastPost(forum.getForumParent(), lastPost);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	private void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws ApplicationThrowable {
+		if(forum.getType().equals(Type.CATEGORY)){
+			return;
+		}
+		
+		forum.setLastPost(forumPost);
+		//last update must be updated to obtain a correct indexing of forum
+		forum.setLastUpdate(new Date());
+		getForumDAO().merge(forum);
+		
+		recursiveSetLastPost(forum.getForumParent(), forumPost);
 	}
 }
 

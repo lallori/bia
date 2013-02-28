@@ -237,7 +237,8 @@ public class CommunityServiceImpl implements CommunityService {
 				forumPost.setTopic(getForumTopicDAO().find(forumPost.getTopic().getTopicId()));
 				//To set the parent post Id
 				ForumPost parentPost = getForumPostDAO().findFirstPostByTopicId(forumPost.getTopic().getTopicId());
-				forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
+				if(parentPost != null)
+					forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
 			}
 			forumPost.setDateCreated(new Date());
 			forumPost.setLogicalDelete(Boolean.FALSE);

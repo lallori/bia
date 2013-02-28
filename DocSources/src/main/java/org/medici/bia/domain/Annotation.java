@@ -43,6 +43,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 
 /**
  * This class represents entity Annotation.
@@ -94,6 +96,11 @@ public class Annotation implements Serializable {
 	private String title;
 	@Column (name="\"text\"", nullable=true) 
 	private String text;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"topicId\"")
+	@IndexedEmbedded
+	private ForumTopic forumTopic;
 	
 	/**
 	 * 
@@ -280,6 +287,20 @@ public class Annotation implements Serializable {
 
 	public User getUser() {
 		return user;
+	}
+
+	/**
+	 * @return the forumTopic
+	 */
+	public ForumTopic getForumTopic() {
+		return forumTopic;
+	}
+
+	/**
+	 * @param forumTopic the forumTopic to set
+	 */
+	public void setForumTopic(ForumTopic forumTopic) {
+		this.forumTopic = forumTopic;
 	}
 
 	/**
