@@ -46,7 +46,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = 483231406964703228L;
 	
-	private String alias; 
+	private String text; 
 
 	/**
 	 * 
@@ -62,15 +62,15 @@ public class SimpleSearchPeople extends SimpleSearch {
 	public SimpleSearchPeople(String text) {
 		super();
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * @return the text
 	 */
-	public String getAlias() {
-		return alias;
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text);
+			setText(text);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	@Override
 	public Boolean empty() {
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return Boolean.TRUE;
 		}
 
@@ -96,10 +96,10 @@ public class SimpleSearchPeople extends SimpleSearch {
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param text the alias to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**
@@ -111,9 +111,9 @@ public class SimpleSearchPeople extends SimpleSearch {
 		
 		if (!empty()) {
 			//MD: We need to re-convert the alias
-			alias = alias.replace("\\\"", "\"");
+			text = text.replace("\\\"", "\"");
 		
-			String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+			String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 			
 			if(words.length > 0){
 				jpaQuery.append(" WHERE ");
@@ -148,7 +148,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
 		
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return booleanQuery;
 		}
 
@@ -157,7 +157,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 			"altName.altName", 
 		};
 
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 
 		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
 		//Query stringQuery2 = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
@@ -194,8 +194,8 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null) {
-			return getAlias();
+		if (text != null) {
+			return getText();
 		}
 
 		return "";

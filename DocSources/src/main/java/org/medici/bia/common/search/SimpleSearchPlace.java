@@ -50,7 +50,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = -1762147253129589644L;
 	
-	private String alias; 
+	private String text; 
 
 	/**
 	 * 
@@ -67,15 +67,15 @@ public class SimpleSearchPlace extends SimpleSearch {
 		super();
 		
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * @return the text
 	 */
-	public String getAlias() {
-		return alias;
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text);
+			setText(text);
 		}
 	}
 
@@ -93,7 +93,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	@Override
 	public Boolean empty() {
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return Boolean.TRUE;
 		}
 
@@ -101,10 +101,10 @@ public class SimpleSearchPlace extends SimpleSearch {
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param text the alias to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class SimpleSearchPlace extends SimpleSearch {
 		
 		if (!empty()) {
 			//MD: We need to re-convert the alias
-			alias = alias.replace("\\\"", "\"");
-			String toSearch = alias;
+			text = text.replace("\\\"", "\"");
+			String toSearch = text;
 			List<String> exactWords = new ArrayList<String>();
 			
 			//MD: This code is to identify the words between double quotes
@@ -187,7 +187,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
 		
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return booleanQuery;
 		}
 
@@ -210,7 +210,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 		String[] dayFields = new String[]{
 		};
 
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 			
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
@@ -242,8 +242,8 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null) {
-			return getAlias();
+		if (text != null) {
+			return getText();
 		}
 
 		return "";

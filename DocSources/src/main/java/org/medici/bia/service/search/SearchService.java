@@ -39,6 +39,7 @@ import org.medici.bia.domain.Place;
 import org.medici.bia.domain.PlaceType;
 import org.medici.bia.domain.SearchFilter;
 import org.medici.bia.domain.TopicList;
+import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -257,6 +258,14 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<TopicList> searchTopics(String query, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserHistory searchUserHistorySearchEntry(Integer idUserHistory) throws ApplicationThrowable;
 	
 	/**
 	 * 

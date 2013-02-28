@@ -1,5 +1,5 @@
 /*
- * SimpleSearchCommand.java
+ * ShowSearchUserHistoryCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,74 +27,56 @@
  */
 package org.medici.bia.command.search;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.medici.bia.common.search.SimpleSearch;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.bia.domain.SearchFilter.SearchType;
+
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>) 
  *
  */
-public class SimpleSearchCommand {
+public class ShowSearchUserHistoryCommand {
+	private Integer idUserHistory;
+	private Integer idSearchFilter;
+	private SearchType searchType;
 	private SimpleSearchPerimeter simpleSearchPerimeter;
-	private String text;
 	private String searchUUID;
-	
+
 	/**
-	 * 
+	 * @return the idSearchFilter
 	 */
-	public SimpleSearchCommand(){
-		super();
-	}
-	
-	/**
-	 * 
-	 * @param simpleSearch
-	 * @param simpleSearchPerimeter
-	 * @param searchUUID
-	 */
-	public SimpleSearchCommand(SimpleSearch simpleSearch, SimpleSearchPerimeter simpleSearchPerimeter, String searchUUID){
-		try{
-			BeanUtils.copyProperties(this, simpleSearch);
-		}catch(IllegalAccessException illegalAccessException){
-			
-		}catch(InvocationTargetException invocationTargetException){
-			
-		}
-		setSimpleSearchPerimeter(simpleSearchPerimeter);
-		setSearchUUID(searchUUID);
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
 	}
 
 	/**
-	 * @param simpleSearchPerimeter the simple search perimeter to set
+	 * @param idSearchFilter the idSearchFilter to set
 	 */
-	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
-		this.simpleSearchPerimeter = simpleSearchPerimeter;
+	public void setIdSearchFilter(Integer idSearchFilter) {
+		this.idSearchFilter = idSearchFilter;
 	}
-	
+
 	/**
-	 * @return the simpleSearchPerimeter
+	 * @return the searchType
 	 */
-	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
-		return simpleSearchPerimeter;
+	public SearchType getSearchType() {
+		return searchType;
 	}
-	
+
 	/**
-	 * @param text the text to set
+	 * @param searchType the searchType to set
 	 */
-	public void setText(String text) {
-		this.text = text;
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
 	}
-	
+
 	/**
-	 * @return the text
+	 * @return the searchUUID
 	 */
-	public String getText() {
-		return text;
+	public String getSearchUUID() {
+		return searchUUID;
 	}
 
 	/**
@@ -105,9 +87,30 @@ public class SimpleSearchCommand {
 	}
 
 	/**
-	 * @return the searchUUID
+	 * @return the simpleSearchPerimeter
 	 */
-	public String getSearchUUID() {
-		return searchUUID;
+	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
+		return simpleSearchPerimeter;
+	}
+
+	/**
+	 * @param simpleSearchPerimeter the simpleSearchPerimeter to set
+	 */
+	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
+		this.simpleSearchPerimeter = simpleSearchPerimeter;
+	}
+
+	/**
+	 * @return the idUserHistory
+	 */
+	public Integer getIdUserHistory() {
+		return idUserHistory;
+	}
+
+	/**
+	 * @param idUserHistory the idUserHistory to set
+	 */
+	public void setIdUserHistory(Integer idUserHistory) {
+		this.idUserHistory = idUserHistory;
 	}
 }

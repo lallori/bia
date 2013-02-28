@@ -44,6 +44,7 @@ import org.medici.bia.dao.searchfilter.SearchFilterDAO;
 import org.medici.bia.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.bia.dao.topicslist.TopicsListDAO;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EplToLink;
@@ -54,6 +55,9 @@ import org.medici.bia.domain.PlaceType;
 import org.medici.bia.domain.SearchFilter;
 import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserHistory;
+import org.medici.bia.domain.UserHistory.Action;
+import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -100,6 +104,9 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
 	
 	@Autowired
 	private VolumeDAO volumeDAO;
@@ -377,6 +384,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchAdvancedDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory test = new UserHistory(user, "Advanced Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
+			getUserHistoryDAO().persist(test);
+			
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -389,6 +400,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchAdvancedPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory test = new UserHistory(user, "Advanced Search People", Action.CREATE, Category.SEARCH_PEOPLE, searchContainer);
+			getUserHistoryDAO().persist(test);
+			
 			return getPeopleDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -401,6 +416,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory test = new UserHistory(user, "Advanced Search Places", Action.CREATE, Category.SEARCH_PLACE, searchContainer);
+			getUserHistoryDAO().persist(test);
+			
 			return getPlaceDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -413,6 +432,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchAdvancedVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory test = new UserHistory(user, "Advanced Search Volumes", Action.CREATE, Category.SEARCH_VOLUME, searchContainer);
+			getUserHistoryDAO().persist(test);
+			
 			return getVolumeDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -437,6 +460,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			UserHistory test = new UserHistory(user, "Simple Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
+			getUserHistoryDAO().persist(test);
+			
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -532,6 +559,19 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserHistory searchUserHistorySearchEntry(Integer idUserHistory) throws ApplicationThrowable {
+		try{
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			return userHistory; 
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -622,5 +662,19 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
+	}
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
 	}
 }

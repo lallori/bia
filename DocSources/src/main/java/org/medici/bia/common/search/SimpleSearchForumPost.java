@@ -44,7 +44,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = 7370430153372138750L;
 
-	private String alias; 
+	private String text; 
 	private Integer topicId;
 
 	/**
@@ -62,7 +62,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		super();
 
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 		topicId = null;
 	}
@@ -76,16 +76,16 @@ public class SimpleSearchForumPost extends SimpleSearch {
 		super();
 
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 		this.topicId = topicId;
 	}
 
 	/**
-	 * @return the alias
+	 * @return the text
 	 */
-	public String getAlias() {
-		return alias;
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 	}
 
@@ -110,7 +110,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	@Override
 	public Boolean empty() {
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return Boolean.TRUE;
 		}
 
@@ -118,10 +118,10 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param text the alias to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	public String toJPAQuery() {
 		StringBuilder jpaQuery = new StringBuilder("FROM ForumPost ");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 		
 		if (words.length >0) {
 			jpaQuery.append(" WHERE logicalDelete = false AND ");
@@ -179,8 +179,8 @@ public class SimpleSearchForumPost extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null) {
-			return getAlias();
+		if (text != null) {
+			return getText();
 		}
 
 		return "";

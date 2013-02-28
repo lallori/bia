@@ -47,7 +47,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = -3768384416633997852L;
 	
-	private String alias; 
+	private String text; 
 
 	/**
 	 * 
@@ -63,15 +63,15 @@ public class SimpleSearchVolume extends SimpleSearch {
 	public SimpleSearchVolume(String text) {
 		super();
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * @return the text
 	 */
-	public String getAlias() {
-		return alias;
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text);
+			setText(text);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	@Override
 	public Boolean empty() {
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return Boolean.TRUE;
 		}
 
@@ -97,10 +97,10 @@ public class SimpleSearchVolume extends SimpleSearch {
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param text the alias to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**
@@ -112,9 +112,9 @@ public class SimpleSearchVolume extends SimpleSearch {
 		
 		if (!empty()) {
 			//MD: We need to re-convert the alias
-			alias = alias.replace("\\\"", "\"");
+			text = text.replace("\\\"", "\"");
 		
-			String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+			String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 			
 			if(words.length > 0){
 				jpaQuery.append(" WHERE ");
@@ -179,7 +179,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
 		
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return booleanQuery;
 		}
 
@@ -214,7 +214,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 			"endDay"		
 		};
 
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
@@ -246,8 +246,8 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null) {
-			return getAlias();
+		if (text != null) {
+			return getText();
 		}
 		
 		return "";

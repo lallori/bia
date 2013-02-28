@@ -111,7 +111,15 @@
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;
-				});                                                                                               
+				}); 
+				// We need to remove any previous live function                                                   
+				$j('#researchHistoryTable').find('.searchResultUserSearch').die();                                                                        
+				// Result links have a specific class style on which we attach click live.                        
+				$j('#researchHistoryTable').find('.searchResultUserSearch').live('click', function() {                                                    
+					window.open($j(this).attr("href"), 'User Search History', 'width=960,height=350,scrollbars=yes');
+					Modalbox.hide();
+					return false;
+				}); 
 			} );                                                                                                  
 	</script>
 		

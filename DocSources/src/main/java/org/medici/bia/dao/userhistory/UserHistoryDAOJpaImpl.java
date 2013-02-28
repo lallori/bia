@@ -1359,6 +1359,10 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 							}
 							//otherwise we dont' persist
 						}				
+					}else if (lastUserHistory.getCategory().equals(Category.SEARCH_DOCUMENT) || lastUserHistory.getCategory().equals(Category.SEARCH_PEOPLE) || lastUserHistory.getCategory().equals(Category.SEARCH_PLACE) || lastUserHistory.getCategory().equals(Category.SEARCH_VOLUME)){
+						// if the entity is a search, we persist
+						if(!lastUserHistory.getSearchData().toString().equals(entity.getSearchData().toString()))
+							super.persist(entity);
 					}
 				}
 					

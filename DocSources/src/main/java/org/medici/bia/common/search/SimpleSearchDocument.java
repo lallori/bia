@@ -49,7 +49,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 	
-	private String alias; 
+	private String text; 
 
 	private SimpleSearchPerimeter simpleSearchPerimeter;
 
@@ -68,15 +68,15 @@ public class SimpleSearchDocument extends SimpleSearch {
 		super();
 		if (!StringUtils.isEmpty(text)) {
 			setSimpleSearchPerimeter(simpleSearchPerimeter);
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * @return the text
 	 */
-	public String getAlias() {
-		return alias;
+	public String getText() {
+		return text;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	public void initFromText(SimpleSearchPerimeter simpleSearchPerimeter, String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			setText(text.toLowerCase());
 			setSimpleSearchPerimeter(simpleSearchPerimeter);
 		}
 	}
@@ -102,7 +102,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	@Override
 	public Boolean empty() {
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return Boolean.TRUE;
 		}
 
@@ -110,10 +110,10 @@ public class SimpleSearchDocument extends SimpleSearch {
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @param text the alias to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class SimpleSearchDocument extends SimpleSearch {
 		
 		if (!empty()) {
 			//MD: We need to re-convert the alias
-			alias = alias.replace("\\\"", "\"");
-			String toSearch = alias;
+			text = text.replace("\\\"", "\"");
+			String toSearch = text;
 			
 			List<String> exactWords = new ArrayList<String>();
 			
@@ -215,7 +215,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
 		
-		if (StringUtils.isEmpty(alias)) {
+		if (StringUtils.isEmpty(text)) {
 			return booleanQuery;
 		}
 
@@ -227,7 +227,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 			"synExtract.synopsis"
 		};
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(text);
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = null;
@@ -249,8 +249,8 @@ public class SimpleSearchDocument extends SimpleSearch {
 	 */
 	@Override
 	public String toString() {
-		if (alias != null) {
-			return getAlias();
+		if (text != null) {
+			return getText();
 		} else {
 			return "";
 		}
