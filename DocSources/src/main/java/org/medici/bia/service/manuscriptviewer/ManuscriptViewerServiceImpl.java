@@ -351,6 +351,19 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(throwable);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findImage(Integer imageId) throws ApplicationThrowable {
+		try{
+			Image image = getImageDAO().find(imageId);
+			return image;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

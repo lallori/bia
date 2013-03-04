@@ -259,7 +259,8 @@ IIPMooViewer.implement({
     var draggable = annotation.makeDraggable({
       stopPropagation: true,
       preventDefault: true,
-      container: this.canvas
+      container: this.canvas,
+//      onDrop: function(){if(this.element.y > window.innerHeight) form.setStyle('top', this.element.x);}
     });
 
     var resizable = annotation.makeResizable({

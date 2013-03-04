@@ -208,6 +208,7 @@ IIPMooViewer.implement({
 	  if (this.annotationsType == 'remote') {
 			this.annotations = new Array();
 
+			if(this.annotationId == null || this.annotationId == ''){
 			new Request.JSON({
 				method: 'get',
 				async: false,
@@ -238,6 +239,38 @@ IIPMooViewer.implement({
 					console.log('error!!!' + text + ' - error : ' + error);
 				}
 		    }).get('');
+			}else{
+				new Request.JSON({
+					method: 'get',
+					async: false,
+					url: this.retrieveAnnotationsUrl + '&annotationId=' + this.annotationId,
+					noCache: true,
+		        	onRequest: function(){
+		            	// show some rotating loader gif...
+		        	},
+		        	
+		        	onSuccess: function(responseJSON, responseText){
+						for (i=0; i<responseJSON.annotations.length; i++) {
+							this.annotations.push( {
+								annotationId: responseJSON.annotations[i].annotationId.toInt(),
+								id: responseJSON.annotations[i].id,
+								x: responseJSON.annotations[i].x.toFloat(), 
+								y: responseJSON.annotations[i].y.toFloat(), 
+								w: responseJSON.annotations[i].w.toFloat(), 
+								h: responseJSON.annotations[i].h.toFloat(),
+								type: responseJSON.annotations[i].type,
+								title: responseJSON.annotations[i].title,
+								text: responseJSON.annotations[i].text,
+								deletable: responseJSON.annotations[i].deletable
+								//Add Link To Forum
+							} );
+						}
+		        	}.bind(this), 
+					onError: function(text, error){
+						console.log('error!!!' + text + ' - error : ' + error);
+					}
+			    }).get('');
+			}
 	  } else if (this.annotationsType == 'local') {
 		  // in case of local annotation, we do nothing
 	  }

@@ -35,6 +35,7 @@ import org.medici.bia.domain.Image.ImageType;
  * Command bean for action "Show Manuscript Viewer".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.docsources.controller.volbase.EditDetailsVolumeController
  */
@@ -53,6 +54,8 @@ public class ShowManuscriptViewerRequestCommand {
 	private Boolean showHelp;
 	private Boolean showThumbnail;
 	private Boolean flashVersion;
+	
+	private Integer annotationId;
 
 	/**
 	 * @param entryId the entryId to set
@@ -234,5 +237,19 @@ public class ShowManuscriptViewerRequestCommand {
 	 */
 	public Boolean getShowThumbnail() {
 		return showThumbnail;
+	}
+
+	/**
+	 * @return the annotationId
+	 */
+	public Integer getAnnotationId() {
+		return annotationId;
+	}
+
+	/**
+	 * @param annotationId the annotationId to set
+	 */
+	public void setAnnotationId(Integer annotationId) {
+		this.annotationId = annotationId;
 	}
 }

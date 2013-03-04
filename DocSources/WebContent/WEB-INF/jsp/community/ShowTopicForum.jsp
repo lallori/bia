@@ -71,6 +71,20 @@
 				
 		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 	</c:if>
+	<c:if test="${topic.annotation != null}">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+			<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+			<c:param name="flashVersion"   value="false" />
+			<c:param name="showHelp" value="true" />
+			<c:param name="showThumbnail" value="true" />
+		</c:url>
+		
+		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+	</c:if>
 	<c:if test="${topic.forum.place != null}">
 		<p></p>
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
@@ -180,7 +194,7 @@
         		<h2>${currentPost.subject}</h2>
         	</c:otherwise>
         </c:choose>
-        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
         <p>${currentPost.text}</p>
     </div>
     <div id="postProfile">

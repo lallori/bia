@@ -27,6 +27,7 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/iip.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/iip-2.1.css"/>" />
 		<!--[if lt IE 10]> 
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
 		<![endif]-->
@@ -36,6 +37,8 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/annotations.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/annotations-edit.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/lang/help.en.js"/>"></script>
 		

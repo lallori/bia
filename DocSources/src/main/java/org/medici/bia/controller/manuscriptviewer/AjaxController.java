@@ -129,7 +129,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName) {
+	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName,
+											@RequestParam(value="annotationId", required=false) Integer annotationId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
@@ -138,20 +139,22 @@ public class AjaxController {
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
-				Map<String, Object> singleRow = new HashMap<String, Object>(0);
-				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
-				singleRow.put("x", currentAnnotation.getX());
-				singleRow.put("y", currentAnnotation.getY());
-				singleRow.put("w", currentAnnotation.getWidth());
-				singleRow.put("h", currentAnnotation.getHeight());
-				singleRow.put("type", currentAnnotation.getType());
-				singleRow.put("title", currentAnnotation.getTitle());
-				singleRow.put("text", currentAnnotation.getText());
-				if(account.equals(currentAnnotation.getUser().getAccount()) || administrator)
-					singleRow.put("deletable", true);
-				else
-					singleRow.put("deletable", false);
-				resultList.add(singleRow);
+				if((annotationId != null && annotationId == currentAnnotation.getAnnotationId()) || annotationId == null){
+					Map<String, Object> singleRow = new HashMap<String, Object>(0);
+					singleRow.put("annotationId", currentAnnotation.getAnnotationId());
+					singleRow.put("x", currentAnnotation.getX());
+					singleRow.put("y", currentAnnotation.getY());
+					singleRow.put("w", currentAnnotation.getWidth());
+					singleRow.put("h", currentAnnotation.getHeight());
+					singleRow.put("type", currentAnnotation.getType());
+					singleRow.put("title", currentAnnotation.getTitle());
+					singleRow.put("text", currentAnnotation.getText());
+					if(account.equals(currentAnnotation.getUser().getAccount()) || administrator)
+						singleRow.put("deletable", true);
+					else
+						singleRow.put("deletable", false);
+					resultList.add(singleRow);
+				}
 			}
 			model.put("annotations", resultList);
 		} catch (ApplicationThrowable ath) {

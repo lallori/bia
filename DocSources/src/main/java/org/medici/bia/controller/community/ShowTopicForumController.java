@@ -38,6 +38,8 @@ import org.medici.bia.command.community.ShowTopicForumCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
@@ -132,7 +134,7 @@ public class ShowTopicForumController {
 					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 					documentExplorer.getImage().setImageType(ImageType.C);
 					documentExplorer.setTotal(null);
-				
+					
 					try {
 						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 		
@@ -143,6 +145,23 @@ public class ShowTopicForumController {
 					}
 				}else{
 					model.put("documentExplorer", null);
+				}
+			}else if(forumTopic.getAnnotation() != null){
+				Annotation annotation = forumTopic.getAnnotation();
+				Image image = new Image();
+				image = getManuscriptViewerService().findImage(annotation.getImage().getImageId());
+				VolumeExplorer volumeExplorer = new VolumeExplorer(image.getVolNum(), image.getVolLetExt());
+				volumeExplorer.setSummaryId(null);
+				volumeExplorer.setImage(new Image());
+				volumeExplorer.getImage().setImageOrder(image.getImageOrder());
+				volumeExplorer.getImage().setStoragePath(image.getStoragePath());
+				try{
+					volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
+					
+					model.put("volumeExplorer", volumeExplorer);
+				}catch (ApplicationThrowable applicationThrowable) {
+					model.put("applicationThrowable", applicationThrowable);
+					return new ModelAndView("error/ShowTopic", model);
 				}
 			}
 			

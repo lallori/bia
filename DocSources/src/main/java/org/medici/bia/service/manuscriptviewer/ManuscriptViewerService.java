@@ -117,6 +117,14 @@ public interface ManuscriptViewerService {
 
 	/**
 	 * 
+	 * @param imageId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findImage(Integer imageId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param summaryId
 	 * @param volNum
 	 * @param volLetExt

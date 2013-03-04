@@ -6,10 +6,20 @@
 
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
+	<c:url var="GetImageAnnotationURL" value="/src/mview/GetImageAnnotation.json">
+		<c:param name="imageId" value="${image.imageId}"></c:param>
+		<c:param name="imageName" value="${image.imageName}"></c:param>
+	</c:url>
+	<c:url var="UpdateAnnotationsURL" value="/src/mview/UpdateAnnotations.json">
+		<c:param name="imageId" value="${image.imageId}"></c:param>
+		<c:param name="imageName" value="${image.imageName}"></c:param>
+	</c:url>
 	
 		<script type="text/javascript">
 			var credit = '';	
 			var imageName = "${image.imageName}";
+			var annotations = new Array();
+			var annotationId = "${annotationId}";
 			if ("${image.imageType}" == 'R') {
 				credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
 			} else if ("${image.imageType}" == 'C') {
@@ -41,19 +51,40 @@
 			if(imageName.indexOf("SPI") != -1){
 				credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
 			}
-
-			iip = new IIPMooViewer( "targetframe", {
-				server: '${IIPImageServerURL}',
-				prefix: '${ImagePrefixURL}',
-				image: '${image}',
-				credit: credit,
-				navigation: true,
-				showNavWindow: true,
-				showNavImage: true, // this property hide navigation image
-				showNavButtons: true,
-				winResize: true,
-				zoom: 2,
-				scale: 0
-			});				
+			
+			if(annotationId != null && annotationId != ''){
+				iip = new IIPMooViewer( "targetframe", {
+					server: '${IIPImageServerURL}',
+					prefix: '${ImagePrefixURL}',
+					image: '${image}',
+					annotationsType: 'remote',
+					retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+					annotations: annotations,
+					annotationId: annotationId,
+					credit: credit,
+					navigation: true,
+					showNavWindow: true,
+					showNavImage: true, // this property hide navigation image
+					showNavButtons: true,
+					winResize: true,
+					zoom: 2,
+					scale: 0
+				});		
+			}else{
+				iip = new IIPMooViewer( "targetframe", {
+					server: '${IIPImageServerURL}',
+					prefix: '${ImagePrefixURL}',
+					image: '${image}',
+					credit: credit,
+					navigation: true,
+					showNavWindow: true,
+					showNavImage: true, // this property hide navigation image
+					showNavButtons: true,
+					winResize: true,
+					zoom: 2,
+					scale: 0
+				});		
+			}
 
 		</script>
