@@ -60,7 +60,7 @@
         <h2><a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.subject}</a></h2>
         <p> in <a href="${ShowForumURL}" class="linkForum">${currentPost.forum.title} - ${currentPost.forum.subType}</a></p>
         <div>
-        	<p>${currentPost.subject} by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        	<p>${currentPost.subject} by <a href="#" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
         	<p class="textPost">${bia:searchTextResultPost(currentPost, yourSearch)}</p>
         </div>
     </div>

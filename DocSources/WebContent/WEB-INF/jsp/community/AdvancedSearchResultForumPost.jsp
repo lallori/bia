@@ -49,7 +49,7 @@
     </div>
     <div id="post">
         <h2>${currentPost.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> » <span class="date">${currentPost.lastUpdate}</span></p>
+        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
         <p class="textPost">${currentPost.text}</p>
     </div>
     <div id="postProfile">

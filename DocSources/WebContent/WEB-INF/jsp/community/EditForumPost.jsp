@@ -15,7 +15,7 @@
 	<div id="postTable">
 		<div id="post">
 			<h2>${postToReply.subject}</h2>
-            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> » <span class="date">${postToReply.lastUpdate}</span></p>
+            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> &#xbb <span class="date">${postToReply.lastUpdate}</span></p>
         	<p>${postToReply.text}</p>
     	</div>
     	<div id="postProfile">
