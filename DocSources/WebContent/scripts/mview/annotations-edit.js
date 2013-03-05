@@ -193,7 +193,13 @@ IIPMooViewer.implement({
     }else{
     	var del;
     }
-
+    
+    //MEDICI ARCHIVE PROJECT START
+    //To position the form
+    if(annotation.getPosition().y + annotation.getSize().y + form.getSize().y > window.innerHeight){
+    	form.setStyle('top',  - form.getSize().y - 3);
+    }
+    //MEDICI ARCHIVE PROJECT END
 
     // Add update event for our list of annotations
     form.addEvents({
@@ -254,6 +260,23 @@ IIPMooViewer.implement({
     //MEDICI ARCHIVE PROJECT END
 
 
+    //MEDICI ARCHIVE PROJECT START
+    // Make it draggable and resizable, but prevent this interfering with our canvas drag
+    // Update on completion of movement
+//     var draggable = annotation.makeDraggable({
+//      stopPropagation: true,
+//      preventDefault: true,
+//      container: this.canvas,
+//    });
+
+//    var resizable = annotation.makeResizable({
+//      handle: handle,
+//      stopPropagation: true,
+//      preventDefault: true,
+//      // Keep our form attached to the annotation
+//      onDrag: function(){ form.setStyle('top', this.element.getSize().y ); }
+//    });
+    
     // Make it draggable and resizable, but prevent this interfering with our canvas drag
     // Update on completion of movement
     var draggable = annotation.makeDraggable({
@@ -261,6 +284,13 @@ IIPMooViewer.implement({
       preventDefault: true,
       container: this.canvas,
 //      onDrop: function(){if(this.element.y > window.innerHeight) form.setStyle('top', this.element.x);}
+      onDrop: function(){
+    	  if(this.element.getPosition().y + this.element.getSize().y + form.getSize().y > window.innerHeight){
+    		  form.setStyle('top',  - form.getSize().y - 3);
+      	  }else{
+      		  form.setStyle('top', this.element.getSize().y);
+      	  }
+      }
     });
 
     var resizable = annotation.makeResizable({
@@ -268,8 +298,17 @@ IIPMooViewer.implement({
       stopPropagation: true,
       preventDefault: true,
       // Keep our form attached to the annotation
-      onDrag: function(){ form.setStyle('top', this.element.getSize().y ); }
+//      onDrag: function(){ form.setStyle('top', this.element.getSize().y ); }
+      onDrag: function(){
+    	  if(this.element.getPosition().y + this.element.getSize().y + form.getSize().y > window.innerHeight){
+    		  form.setStyle('top',  - form.getSize().y - 3);
+      	  }else{
+      		  form.setStyle('top', this.element.getSize().y);
+      	  }
+      }
     });
+    
+    //MEDICI ARCHIVE PROJECT END
 
 
     // Set default focus on textarea

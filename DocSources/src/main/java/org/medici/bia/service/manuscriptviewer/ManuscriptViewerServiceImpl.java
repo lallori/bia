@@ -912,7 +912,35 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						returnMap.put(annotation, topicAnnotation.getTopicId());
 //						annotation.setText(topicAnnotation.getSubject());
 //						getAnnotationDAO().merge(annotation);
-					}					
+					}else if(annotation.getType().equals(Annotation.Type.PALEOGRAPHY)){
+						Forum paleographyForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography")));
+						image = getImageDAO().find(imageId);
+						
+						ForumTopic topicAnnotation = new ForumTopic(null);
+						topicAnnotation.setForum(paleographyForum);
+						topicAnnotation.setDateCreated(new Date());
+						topicAnnotation.setLastUpdate(topicAnnotation.getDateCreated());
+						topicAnnotation.setIpAddress(ipAddress);
+						topicAnnotation.setUser(user);
+						topicAnnotation.setSubject(annotation.getTitle() + " (Annotation)");
+						topicAnnotation.setTotalReplies(new Integer(0));
+						topicAnnotation.setTotalViews(new Integer(0));
+						topicAnnotation.setLastPost(null);
+						topicAnnotation.setFirstPost(null);
+						topicAnnotation.setLogicalDelete(Boolean.FALSE);
+						
+						topicAnnotation.setAnnotation(annotation);
+						getForumTopicDAO().persist(topicAnnotation);
+						
+						getForumDAO().recursiveIncreaseTopicsNumber(paleographyForum);
+						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
+							getForumTopicWatchDAO().persist(forumTopicWatch);
+						}
+						annotation.setForumTopic(topicAnnotation);
+						getAnnotationDAO().merge(annotation);
+						returnMap.put(annotation, topicAnnotation.getTopicId());
+					}
 				} else {
 					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
 					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());

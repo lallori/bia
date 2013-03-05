@@ -139,8 +139,21 @@ public class AjaxController {
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
 			List<Object> resultList = new ArrayList<Object>();
 			for (Annotation currentAnnotation : annotations) {
-				if((annotationId != null && annotationId == currentAnnotation.getAnnotationId()) || annotationId == null){
-					Map<String, Object> singleRow = new HashMap<String, Object>(0);
+				Map<String, Object> singleRow = new HashMap<String, Object>(0);
+				if((annotationId != null && annotationId == currentAnnotation.getAnnotationId())){
+					//In this case we are in annotation forum
+					singleRow.put("annotationId", currentAnnotation.getAnnotationId());
+					singleRow.put("x", currentAnnotation.getX());
+					singleRow.put("y", currentAnnotation.getY());
+					singleRow.put("w", currentAnnotation.getWidth());
+					singleRow.put("h", currentAnnotation.getHeight());
+					singleRow.put("type", currentAnnotation.getType());
+					singleRow.put("title", currentAnnotation.getTitle());
+					singleRow.put("text", currentAnnotation.getText());
+					singleRow.put("deletable", false);
+					resultList.add(singleRow);
+				}else if(annotationId == null){
+					//In this case we are in manuscript viewer
 					singleRow.put("annotationId", currentAnnotation.getAnnotationId());
 					singleRow.put("x", currentAnnotation.getX());
 					singleRow.put("y", currentAnnotation.getY());

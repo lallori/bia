@@ -35,19 +35,40 @@ IIPMooViewer.implement({
     // Use closure for mouseenter and mouseleave events
     var _this = this;
 
+	//MEDICI ARCHIVE PROJECT START
     // Display / hide our annotations if we have any
-    if( this.annotations ){
-      this.canvas.addEvent( 'mouseenter', function(){
-        if( _this.annotationsVisible ){
-	  _this.canvas.getElements('div.annotation').removeClass('hidden');
-	}
-      });
-      this.canvas.addEvent( 'mouseleave', function(){
-	if( _this.annotationsVisible ){
-	  _this.canvas.getElements('div.annotation').addClass('hidden');
-	}
-      });
-    }
+//    if( this.annotations ){
+//      this.canvas.addEvent( 'mouseenter', function(){
+//        if( _this.annotationsVisible ){
+//	  _this.canvas.getElements('div.annotation').removeClass('hidden');
+//	}
+//      });
+//      this.canvas.addEvent( 'mouseleave', function(){
+//	if( _this.annotationsVisible ){
+//	  _this.canvas.getElements('div.annotation').addClass('hidden');
+//	}
+//      });
+//    }
+    
+    if( this.annotations && (this.annotationId == null || this.annotationId == '')){
+        this.canvas.addEvent( 'mouseenter', function(){
+          if( _this.annotationsVisible ){
+  	  _this.canvas.getElements('div.annotation').removeClass('hidden');
+  	}
+        });
+        this.canvas.addEvent( 'mouseleave', function(){
+  	if( _this.annotationsVisible ){
+  	  _this.canvas.getElements('div.annotation').addClass('hidden');
+  	}
+        });
+      }else if(this.annotations){
+    	  this.canvas.addEvent( 'mouseenter', function(){
+              if( _this.annotationsVisible ){
+      	  _this.canvas.getElements('div.annotation').removeClass('hidden');
+      	}
+            });
+      }
+    //MEDICI ARCHIVE PROJECT END
   },
 
 
