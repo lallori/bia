@@ -182,7 +182,10 @@ IIPMooViewer.implement({
 	       this.active = false;
 	       this.fade('out').get('tween').chain( function(){ this.element.setStyle('display','none'); });
 	    },
-	    'mouseenter': function(){ this.active = true; }
+	    //MEDICI ARCHIVE PROJECT START
+//	    'mouseenter': function(){ this.active = true; }
+	    'mouseenter': function(){ this.active = true;  _this.canvas.getElements('div.annotation').removeClass('hidden'); }
+	    //MEDICI ARCHIVE PROJECT END
 	  })
         },
         onHide: function(tip, el){
