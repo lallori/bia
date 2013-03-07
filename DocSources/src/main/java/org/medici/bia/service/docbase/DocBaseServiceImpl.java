@@ -1655,9 +1655,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page searchTopicsRelatedDocument(Integer topicId, Integer placeAllId, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
-			return getEplToLinkDAO().searchTopics(topic, paginationFilter);
+			return getDocumentDAO().searchLinkedDocumentsTopic(topicId, placeAllId, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

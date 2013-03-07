@@ -36,6 +36,8 @@ package org.medici.bia.command.docbase;
 public class ShowTopicsRelatedDocumentCommand {
 	private Integer topicId;
 	private String topicTitle;
+	private Integer placeAllId;
+	private String placeName;
 
 	/**
 	 * @param topicId the entryId to set
@@ -63,5 +65,33 @@ public class ShowTopicsRelatedDocumentCommand {
 	 */
 	public String getTopicTitle() {
 		return topicTitle;
+	}
+
+	/**
+	 * @return the placeAllId
+	 */
+	public Integer getPlaceAllId() {
+		return placeAllId;
+	}
+
+	/**
+	 * @param placeAllId the placeAllId to set
+	 */
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
+	}
+
+	/**
+	 * @return the placeName
+	 */
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	/**
+	 * @param placeName the placeName to set
+	 */
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
 }

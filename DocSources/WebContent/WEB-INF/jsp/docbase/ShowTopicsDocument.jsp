@@ -24,13 +24,15 @@
 			<c:url var="ShowTopicsRelatedDocumentURL" value="/src/docbase/ShowTopicsRelatedDocument.do">
 				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
 				<c:param name="topicTitle" value="${currentTopicAndPlace.topic.topicTitle}" />
+				<c:param name="placeAllId" value="${currentTopicAndPlace.place.placeAllId}" />
+				<c:param name="placeName" value="${currentTopicAndPlace.place.placeName}" />
 			</c:url>
 			<c:url var="ComparePlaceURL" value="/src/geobase/ComparePlace.do">
 				<c:param name="placeAllId" value="${currentTopicAndPlace.place.placeAllId}"/>
 			</c:url>
 			<div class="row">
 				<div class="item">Topic:</div>
-				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic" title="Show documents related to topic: ${currentTopicAndPlace.topic.topicTitle}">${currentTopicAndPlace.topic.topicTitle}</a></div>
+				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic" title="Show documents related to topic: ${currentTopicAndPlace.topic.topicTitle} - ${currentTopicAndPlace.place.placeName}">${currentTopicAndPlace.topic.topicTitle}<input type="hidden" value="${currentTopicAndPlace.place.placeName}" class="placeNameTab" style="display:none;" /></a></div>
 			</div>
 			<div class="row">
 				<div class="item">Topic Place:</div>
@@ -64,7 +66,7 @@
 			});
 	        
 	        $j(".linkTopic").click(function() {
-				var tabName = $j(this).text();
+				var tabName = $j(this).text() + " " + $j(this).find(".placeNameTab").val();
 				var numTab = 0;
 				
 				if(tabName.length > 20){

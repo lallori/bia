@@ -118,23 +118,23 @@
 			<div id="topicSearchDiv">
 			<c:forEach items="${searchFilter.filterData.topics}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Topic: </span><span class="wordSearch">${searchFilter.filterData.topics[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.topicsId[iterator.index]}|${fn2:encode(searchFilter.filterData.topics[iterator.index])}" name="topic">
+					<span class="categorySearch">Topic: </span><span class="wordSearch">${searchFilter.filterData.topics[iterator.index]} <i>${searchFilter.filterData.topicsPlace[iterator.index]}</i></span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.topicsId[iterator.index]}|${fn2:encode(searchFilter.filterData.topics[iterator.index])}|${searchFilter.filterData.topicsPlaceId[iterator.index]}|${fn2:encode(searchFilter.filterData.topicsPlace[iterator.index])}" name="topic">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.topicsPlace) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
-			<div id="topicPlaceSearchDiv">
-			<c:forEach items="${searchFilter.filterData.topicsPlace}" varStatus="iterator">
-				<div class="searchFilterDiv">
-					<span class="categorySearch">Topic Place: </span><span class="wordSearch">${searchFilter.filterData.topicsPlace[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.topicsPlaceId[iterator.index]}|${fn2:encode(searchFilter.filterData.topicsPlace[iterator.index])}" name="topicPlace">
-				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
-			</c:forEach>
-			</div>
-			<c:if test="${(not empty searchFilter.filterData.datesTypes) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+<%-- 			<c:if test="${(not empty searchFilter.filterData.topicsPlace) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if> --%>
+<!-- 			<div id="topicPlaceSearchDiv"> -->
+<%-- 			<c:forEach items="${searchFilter.filterData.topicsPlace}" varStatus="iterator"> --%>
+<!-- 				<div class="searchFilterDiv"> -->
+<%-- 					<span class="categorySearch">Topic Place: </span><span class="wordSearch">${searchFilter.filterData.topicsPlace[iterator.index]}</span><a class="remove" href="#">(remove)</a> --%>
+<%-- 					<input type="hidden" value="${searchFilter.filterData.topicsPlaceId[iterator.index]}|${fn2:encode(searchFilter.filterData.topicsPlace[iterator.index])}" name="topicPlace"> --%>
+<!-- 				</div> -->
+<%-- 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if> --%>
+<%-- 			</c:forEach> --%>
+<!-- 			</div> -->
+			<c:if test="${(not empty searchFilter.filterData.datesTypes) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="dateSearchDiv">
 			<c:forEach items="${searchFilter.filterData.datesTypes}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -148,7 +148,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.volumes) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.volumes) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="volumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.volumes}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -160,7 +160,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.folios) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.folios) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="folioSearchDiv">
 			<c:forEach items="${searchFilter.filterData.folios}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -172,7 +172,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.folioMods) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.folioMods) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="folioModSearchDiv">
 			<c:forEach items="${searchFilter.filterData.folioMods}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -182,7 +182,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.docIds) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.docIds) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="docIdSearchDiv">
 			<c:forEach items="${searchFilter.filterData.docIds}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -192,7 +192,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.topicsPlace) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.docIds) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.docIds) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">

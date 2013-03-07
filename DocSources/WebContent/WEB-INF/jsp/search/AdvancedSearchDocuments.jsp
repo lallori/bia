@@ -200,37 +200,37 @@
 					           	<div class="row">
 					           		<div class="col_l">
 					           			<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics"></fmt:message>">?</a>
-					           			<label for="topicSelect" id="topicSelectLabel">Select a Topic</label>
+					           			<label for="topicType" id="topicSelectLabel">Select a Topic</label>
 					           		</div>
 					               	<div class="col_l">
-										<select id="topicSelect" name="topicSelect" class="selectForm_Xlong">
+										<select id="topicType" name="topicType" class="selectForm_Xlong">
 											<c:forEach items="${topicsList}" var="topicList">
 												<option value="${topicList.topicId}">${topicList}</option>
 											</c:forEach>
 										</select>
 					               	</div>
-					               	<div class="col_r">
-										<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd">
-										<input type="hidden" id="category" value="Topics">
-										<input type="hidden" id="topic" name="topic" type="text" value=""/>
-										<input type="hidden" id="topicId" value=""/>
-					               	</div>
+<!-- 					               	<div class="col_r"> -->
+<!-- 										<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd"> -->
+<!-- 										<input type="hidden" id="category" value="Topics"> -->
+<!-- 										<input type="hidden" id="topicType" name="topic" type="text" value=""/> -->
+<!-- 										<input type="hidden" id="topicId" value=""/> -->
+<!-- 					               	</div> -->
 					            </div>
-				            </form>
+<%-- 				            </form> --%>
 				            
-				            <form id="topicPlaceSearchForm" method="post" class="edit">
+<%-- 				            <form id="topicPlaceSearchForm" method="post" class="edit"> --%>
 					            <div class="row">
 					            	<div class="col_l">
 					            		<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics.place"></fmt:message>">?</a>
-					            		<label for="topicPlace" id="topicPlaceLabel">Related to Place</label>
+					            		<label for="topic" id="topicPlaceLabel">Related to Place</label>
 					            	</div>
 					               	<div class="col_l">
-										<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
+										<input type="text" id="topic" class="input_24c"/><!-- AUTOCOMPLETE -->
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicPlaceAdd" disabled="disabled">
-										<input type="hidden" id="category" value="topic Place">
-										<input type="hidden" id="topicPlaceId" value="">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd">
+										<input type="hidden" id="category" value="topic">
+										<input type="hidden" id="topicId" value="">
 					               	</div>
 					            </div>
 				            </form>
@@ -510,7 +510,7 @@
 			});
 			$j("#topicSearchForm").advancedSearchForm({
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
-				consoleLog : false
+				consoleLog : true
 			});
 			$j("#topicPlaceSearchForm").advancedSearchForm({
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
@@ -878,20 +878,20 @@
 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
-			$j("#topicSelect").change(function(){
-				 if($j(this).val() != "Select a Topic"){
-				 	$j("#topic").val($j(this).find("option:selected").text());
-				 	$j("#topicId").val($j(this).find("option:selected").val());
-				 }
-				 else{
-					 $j("#topic").val("");
-					 $j("#topicId").val("");
-				 }
-				 return false;
-			 });
+// 			$j("#topicSelect").change(function(){
+// 				 if($j(this).val() != "Select a Topic"){
+// 				 	$j("#topicType").val($j(this).find("option:selected").text());
+// // 				 	$j("#topicId").val($j(this).find("option:selected").val());
+// 				 }
+// 				 else{
+// 					 $j("#topicType").val("");
+// // 					 $j("#topicId").val("");
+// 				 }
+// 				 return false;
+// 			 });
 
 			var $topicPlaceValue = '';
-			var $topicPlaceAutocomplete = $j("#topicPlace").autocompletePlace({
+			var $topicPlaceAutocomplete = $j("#topic").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 			    loadingImageUrl:'${LoadingImageURL}',
 				minChars: 3,
@@ -902,21 +902,21 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".topicPlaceAdd").die();
-					$j(".topicPlaceAdd").removeAttr("disabled");
-					$j('#topicPlaceId').val(data);
-					$j(".topicPlaceAdd").attr("disabled");
-					$j(".topicPlaceAdd").prop("disabled", false);
-					$topicPlaceValue = $j("#topicPlace").val();
-					$j("#topicPlace").live('keyup', function(){
-						if($j("#topicPlace").val() != $topicPlaceValue){
-							$j(".topicPlaceAdd").attr("disabled","disabled");
-							$j("#topicPlaceId").val("");
+					$j(".topicAdd").die();
+					$j(".topicAdd").removeAttr("disabled");
+					$j('#topicId').val(data);
+					$j(".topicAdd").attr("disabled");
+					$j(".topicAdd").prop("disabled", false);
+					$topicPlaceValue = $j("#topic").val();
+					$j("#topic").live('keyup', function(){
+						if($j("#topic").val() != $topicPlaceValue){
+							$j(".topicAdd").attr("disabled","disabled");
+							$j("#topicId").val("");
 						}
 						return false;
 					});
-					$j("#topicPlace").live('keypress', function(e){
-						if(e.keyCode == 13 && $j("#topicPlace").val() != $topicPlaceValue){
+					$j("#topic").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#topic").val() != $topicPlaceValue){
 							e.stopPropagation();
 							return false;
 						}
@@ -924,9 +924,16 @@
 				}
 			});	
 			
-			$j("#topicPlaceSearchForm").submit(function(){
-				$j("#topicPlaceId").val("");
-				$j(".topicPlaceAdd").attr("disabled","disabled");
+			$j(".topicAdd").click(function(e){
+				if($j("#topic").val() != '' && $j("#topicId").val() == ''){
+					e.stopPropagation();
+					return false;
+				}
+			});
+			
+			$j("#topicSearchForm").submit(function(){
+				$j("#topicId").val("");
+// 				$j(".topicAdd").attr("disabled","disabled");
 			});
 			
 			var $volumeAutocomplete = $j("#volume").autocompleteGeneral({

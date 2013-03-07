@@ -97,10 +97,19 @@
 				}else if(isAutocompleterForm(formName, fieldName)){
 					//MD: In this case we have a select with an autocompleter field. For example the section "Birth/Death Place" in Person search.
 					//MD: Changed the searchType to have the correct category Search.
-					searchType = $(this).find("option:selected").val();
-					searchWord = getSearchWordForAutocompleterField(formName, fieldName);
-					hiddenValue = $(this).find("option:selected").val() + "|";
-					hiddenValue += getHiddenParameterForAutocompleterField(formName, fieldName);
+					if(isTopicForm(formName)){
+						//Topic FIeld						
+						searchType = "Topic";
+						searchWord = $(this).find("option:selected").text() + " ";
+						searchWord += "<i>" + getSearchWordForAutocompleterField(formName, fieldName) + "</i>";
+						hiddenValue = $(this).find("option:selected").val() + "|" + $(this).find("option:selected").text() + "|";
+						hiddenValue += getHiddenParameterForAutocompleterField(formName, fieldName);
+					}else{
+						searchType = $(this).find("option:selected").val();
+						searchWord = getSearchWordForAutocompleterField(formName, fieldName);
+						hiddenValue = $(this).find("option:selected").val() + "|";
+						hiddenValue += getHiddenParameterForAutocompleterField(formName, fieldName);
+					}
 				}else {
 					searchWord = $('#' + formName).find('#' + fieldName).val();
 					hiddenValue = $(this).find("option:selected").val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
@@ -523,6 +532,16 @@
 	 */
 	function isFolioForm(formName) {
 		if (formName.indexOf("folio") >= 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * This method check if form manage topic.
+	 */
+	function isTopicForm(formName) {
+		if (formName.indexOf("topic") >= 0)
 			return true;
 		else
 			return false;

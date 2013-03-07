@@ -592,7 +592,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchTopicsRelatedDocument(Integer topicId, Integer placeAllId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * 

@@ -4,7 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowTopicsRelatedDocumentURL" value="/src/docbase/ShowTopicsRelatedDocument.json"></c:url>
+	<c:url var="ShowTopicsRelatedDocumentURL" value="/src/docbase/ShowTopicsRelatedDocument.json">
+		<c:param name="topicId" value="${topicId}" />
+		<c:param name="placeAllId"	value="${placeAllId}" />
+	</c:url>
 	
 	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
 		<c:param name="searchUUID" value="${UUID}" />
@@ -12,7 +15,7 @@
 	</c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Documents indexed with topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
+		<p>Documents indexed with topic: <font color="red" style="margin-left:5px">"${topicTitle}" - ${placeName}</font></p>
 		<p>Total records found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
 	</div>
 	
@@ -38,7 +41,7 @@
 
 			$j('#showTopicsId${topicId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
-				"aaSorting": [[3, "asc"]],
+				"aaSorting": [[5, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

@@ -194,6 +194,16 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	
 	/**
 	 * 
+	 * @param topicId
+	 * @param placeAllId
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page searchLinkedDocumentsTopic(Integer topicId, Integer placeAllId, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param personToSearch
 	 * @param paginationFilter
 	 * @return

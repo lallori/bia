@@ -592,6 +592,48 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchLinkedDocumentsTopic(Integer topicId, Integer placeAllId,	PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		
+		String toSearch = "FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = " + placeAllId + ") AND topic.topicId = " + topicId + ") AND logicalDelete=false";
+		
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}

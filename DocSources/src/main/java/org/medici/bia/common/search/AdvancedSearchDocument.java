@@ -545,6 +545,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		if ((command.getTopic() != null) && (command.getTopic().size() >0)) {
 			topicsId = new ArrayList<Integer>(command.getTopic().size());
 			topics = new ArrayList<String>(command.getTopic().size());
+			topicsPlaceId = new ArrayList<Integer>(command.getTopic().size());
+			topicsPlace = new ArrayList<String>(command.getTopic().size());
+			
 			
 			for (String singleWord : command.getTopic()) {
 				singleWord = singleWord.replace("+", "%20");
@@ -554,27 +557,70 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					if (stringTokenizer.countTokens() == 0) {
 						continue;
 					} else if (stringTokenizer.countTokens() == 1) {
-						// string format is |text
-						topicsId.add(new Integer(0));
-						topics.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
-					} else if (stringTokenizer.countTokens() == 2) {
-						// string format is number|text
-						String singleId = stringTokenizer.nextToken();
-						String singleText = stringTokenizer.nextToken();
-						// Check if field is correct
-						if (NumberUtils.isNumber(singleId)) { 
-							topicsId.add(NumberUtils.createInteger(singleId));
+						// string format is number
+						String topicId = stringTokenizer.nextToken();
+						if (NumberUtils.isNumber(topicId)) { 
+							topicsId.add(NumberUtils.createInteger(topicId));
 						} else {
 							//Empty topicsId is equal to 0
 							topicsId.add(new Integer(0));
 						}
-						topics.add(URIUtil.decode(singleText, "UTF-8"));
+//						topics.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
+						String topicId = stringTokenizer.nextToken();
+						String topicText = stringTokenizer.nextToken();
+						// Check if field is correct
+						if (NumberUtils.isNumber(topicId)) { 
+							topicsId.add(NumberUtils.createInteger(topicId));
+						} else {
+							//Empty topicsId is equal to 0
+							topicsId.add(new Integer(0));
+						}
+						topics.add(URIUtil.decode(topicText, "UTF-8"));
+					}else if (stringTokenizer.countTokens() == 3){
+						//string format is number|text|number
+						String singleId = stringTokenizer.nextToken();
+						String topicText = stringTokenizer.nextToken();
+						String placeId = stringTokenizer.nextToken();
+						
+						if(NumberUtils.isNumber(singleId)){
+							topicsId.add(NumberUtils.createInteger(singleId));
+						}else{
+							topicsId.add(new Integer(0));
+						}
+						topics.add(URIUtil.decode(topicText, "UTF-8"));
+						if(NumberUtils.isNumber(placeId)){
+							topicsPlaceId.add(NumberUtils.createInteger(placeId));
+						}else{
+							topicsPlaceId.add(new Integer(0));
+						}
+					}else if (stringTokenizer.countTokens() == 4){
+						//string format is number|text|number|text
+						String singleId = stringTokenizer.nextToken();
+						String topicText = stringTokenizer.nextToken();
+						String placeId = stringTokenizer.nextToken();
+						String placeText = stringTokenizer.nextToken();
+						
+						if(NumberUtils.isNumber(singleId)){
+							topicsId.add(NumberUtils.createInteger(singleId));
+						}else{
+							topicsId.add(new Integer(0));
+						}
+						topics.add(URIUtil.decode(topicText, "UTF-8"));
+						if(NumberUtils.isNumber(placeId)){
+							topicsPlaceId.add(NumberUtils.createInteger(placeId));
+						}else{
+							topicsPlaceId.add(new Integer(0));
+						}
+						topicsPlace.add(URIUtil.decode(placeText, "UTF-8"));
 					}
 				} catch (NumberFormatException numberFormatException) {
 					logger.debug(numberFormatException);
 				} catch (URIException uriException) {
 					logger.debug(uriException);
 					topicsId.remove(topicsId.size()-1);
+					topicsPlaceId.remove(topicsPlaceId.size() - 1);
 				}
 			}
 		} else {
@@ -584,47 +630,47 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		
 		//Topics Place
 		// Place
-		if ((command.getTopicPlace() != null) && (command.getTopicPlace().size() >0)) {
-			topicsPlaceId = new ArrayList<Integer>(command.getTopicPlace().size());
-			topicsPlace = new ArrayList<String>(command.getTopicPlace().size());
-			
-			for (String singleWord : command.getTopicPlace()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
-				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
-				
-				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				try {
-					if (stringTokenizer.countTokens() == 0) {
-						continue;
-					} else if (stringTokenizer.countTokens() == 1) {
-						// string format is |text
-						topicsPlaceId.add(new Integer(0));
-						topicsPlace.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
-					} else if (stringTokenizer.countTokens() == 2) {
-						// string format is number|text
-						String singleId = stringTokenizer.nextToken();
-						String singleText = stringTokenizer.nextToken();
-						// Check if field is correct
-						if (NumberUtils.isNumber(singleId)) { 
-							topicsPlaceId.add(NumberUtils.createInteger(singleId));
-						} else {
-							//Empty placeId is equal to 0
-							topicsPlaceId.add(new Integer(0));
-						}
-						topicsPlace.add(URIUtil.decode(singleText, "UTF-8"));
-					}
-				} catch (NumberFormatException numberFormatException) {
-					logger.debug(numberFormatException);
-				} catch (URIException uriException) {
-					logger.debug(uriException);
-					topicsPlaceId.remove(topicsPlaceId.size()-1);
-				}
-			}
-		} else {
-			topicsPlaceId = new ArrayList<Integer>(0);
-			topicsPlace = new ArrayList<String>(0);
-		}
+//		if ((command.getTopicPlace() != null) && (command.getTopicPlace().size() >0)) {
+//			topicsPlaceId = new ArrayList<Integer>(command.getTopicPlace().size());
+//			topicsPlace = new ArrayList<String>(command.getTopicPlace().size());
+//			
+//			for (String singleWord : command.getTopicPlace()) {
+//				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+//				singleWord = singleWord.replace("+", "%20");
+//				singleWord = singleWord.replace("%E7", "\u00E7");
+//				
+//				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+//				try {
+//					if (stringTokenizer.countTokens() == 0) {
+//						continue;
+//					} else if (stringTokenizer.countTokens() == 1) {
+//						// string format is |text
+//						topicsPlaceId.add(new Integer(0));
+//						topicsPlace.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+//					} else if (stringTokenizer.countTokens() == 2) {
+//						// string format is number|text
+//						String singleId = stringTokenizer.nextToken();
+//						String singleText = stringTokenizer.nextToken();
+//						// Check if field is correct
+//						if (NumberUtils.isNumber(singleId)) { 
+//							topicsPlaceId.add(NumberUtils.createInteger(singleId));
+//						} else {
+//							//Empty placeId is equal to 0
+//							topicsPlaceId.add(new Integer(0));
+//						}
+//						topicsPlace.add(URIUtil.decode(singleText, "UTF-8"));
+//					}
+//				} catch (NumberFormatException numberFormatException) {
+//					logger.debug(numberFormatException);
+//				} catch (URIException uriException) {
+//					logger.debug(uriException);
+//					topicsPlaceId.remove(topicsPlaceId.size()-1);
+//				}
+//			}
+//		} else {
+//			topicsPlaceId = new ArrayList<Integer>(0);
+//			topicsPlace = new ArrayList<String>(0);
+//		}
 
 		//Date
 		if ((command.getDate() != null) && (command.getDate().size() >0)) {
@@ -1954,7 +2000,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		// topics;
 		if (topicsId.size() >0) {
 			StringBuilder topicsIdQuery = new StringBuilder("(");
-			StringBuilder topicsQuery = new StringBuilder("(");
 			for (int i=0; i<topicsId.size(); i++) {
 				if (topicsId.get(i) > 0) {
 					if (topicsIdQuery.length()>1) {
@@ -1963,66 +2008,56 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
 					topicsIdQuery.append(topicsId.get(i).toString());
-					topicsIdQuery.append(')');
-				} else {
-					if (topicsQuery.length()>1) {
-						topicsQuery.append(" AND ");
+					if(topicsPlaceId.size() > 0 && topicsPlaceId.get(i) != 0){
+						topicsIdQuery.append(" AND place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
+						topicsIdQuery.append(topicsPlaceId.get(i).toString());
+						topicsIdQuery.append(')');
 					}
-					
-					topicsQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicTitle like '%");
-					topicsQuery.append(topics.get(i).toLowerCase().replace("'", "''"));
-					topicsQuery.append("%'))");
-				}
+					topicsIdQuery.append(')');
+				} 
 			}
 			topicsIdQuery.append(')');
-			topicsQuery.append(')');
 			if (!topicsIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(topicsIdQuery);
 			}
-			if (!topicsQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(topicsQuery);
-			}
 		}
 		
 		//Topic Place
-		if (topicsPlaceId.size() > 0){
-			StringBuilder topicsPlaceIdQuery = new StringBuilder("(");
-			StringBuilder topicsPlaceQuery = new StringBuilder("(");
-			for(int i = 0;i < topicsPlaceId.size(); i++){
-				if(topicsPlaceIdQuery.length() > 1){
-					topicsPlaceIdQuery.append(" AND ");
-				}
-				if(topicsPlaceId.get(i) > 0){
-					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
-					topicsPlaceIdQuery.append("))");
-				}else{
-					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
-					topicsPlaceQuery.append(topicsPlace.get(i));
-					topicsPlaceQuery.append("%')");
-				}
-			}
-			topicsPlaceIdQuery.append(')');
-			topicsPlaceQuery.append(')');
-			if (!topicsPlaceIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(topicsPlaceIdQuery);
-			}
-			if (!topicsPlaceQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(topicsPlaceQuery);
-			}
-		}
+//		if (topicsPlaceId.size() > 0){
+//			StringBuilder topicsPlaceIdQuery = new StringBuilder("(");
+//			StringBuilder topicsPlaceQuery = new StringBuilder("(");
+//			for(int i = 0;i < topicsPlaceId.size(); i++){
+//				if(topicsPlaceIdQuery.length() > 1){
+//					topicsPlaceIdQuery.append(" AND ");
+//				}
+//				if(topicsPlaceId.get(i) > 0){
+//					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
+//					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
+//					topicsPlaceIdQuery.append("))");
+//				}else{
+//					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
+//					topicsPlaceQuery.append(topicsPlace.get(i));
+//					topicsPlaceQuery.append("%')");
+//				}
+//			}
+//			topicsPlaceIdQuery.append(')');
+//			topicsPlaceQuery.append(')');
+//			if (!topicsPlaceIdQuery.toString().equals("()")) {
+//				if(jpaQuery.length() > 20){
+//					jpaQuery.append(" AND ");
+//				}
+//				jpaQuery.append(topicsPlaceIdQuery);
+//			}
+//			if (!topicsPlaceQuery.toString().equals("()")) {
+//				if(jpaQuery.length() > 20){
+//					jpaQuery.append(" AND ");
+//				}
+//				jpaQuery.append(topicsPlaceQuery);
+//			}
+//		}
 
 		// Date
 		if (datesTypes.size()>0) {

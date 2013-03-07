@@ -90,17 +90,20 @@ public class ShowTopicsRelatedDocumentController {
 
 		if(command.getTopicId() > 0){
 												
-			List<String> outputFields = new ArrayList<String>(5);
-			outputFields.add("Topic Place");
+			List<String> outputFields = new ArrayList<String>(6);
 			outputFields.add("Sender");
 			outputFields.add("Recipient");
 			outputFields.add("Date");
+			outputFields.add("Sender Location");
+			outputFields.add("Recipient Location");
 			outputFields.add("Volume / Folio");
-				
+			
 			model.put("outputFields", outputFields);
 
 			model.put("topicTitle", command.getTopicTitle());
 			model.put("topicId", command.getTopicId());
+			model.put("placeAllId", command.getPlaceAllId());
+			model.put("placeName", command.getPlaceName());
 			
 			//MD: The following code is to refine the search.
 			String searchUUID = UUID.randomUUID().toString();
@@ -116,6 +119,12 @@ public class ShowTopicsRelatedDocumentController {
 			List<String> topic = new ArrayList<String>();
 			topic.add(command.getTopicTitle());
 			advancedSearchDocument.setTopics(topic);
+			List<Integer> placeAllId = new ArrayList<Integer>();
+			placeAllId.add(command.getPlaceAllId());
+			advancedSearchDocument.setTopicsPlaceId(placeAllId);
+			List<String> place = new ArrayList<String>();
+			place.add(command.getPlaceName());
+			advancedSearchDocument.setTopicsPlace(place);
 			searchFilter.setFilterData(advancedSearchDocument);
 			searchFilter.setUser(new User(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()));
 			// we get our map which contains all user's filter used at runtime. 

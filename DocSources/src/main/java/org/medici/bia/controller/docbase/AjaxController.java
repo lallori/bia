@@ -600,6 +600,8 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
 	public ModelAndView ShowTopicsRelatedDocument(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="topicId") Integer topicId,
+										 @RequestParam(value="placeAllId") Integer placeAllId,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -607,50 +609,121 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
-		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
 		try{
-			page = getDocBaseService().searchTopicsRelatedDocument(alias, paginationFilter);
+			page = getDocBaseService().searchTopicsRelatedDocument(topicId, placeAllId, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		}catch(ApplicationThrowable aex){
 			page = new Page(paginationFilter);
 		}
 		
-		List resultList = new ArrayList();
-		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
-			List singleRow = new ArrayList();
-			singleRow.add(currentEplToLink.getPlace().getPlaceName());
-			if (currentEplToLink.getDocument().getSenderPeople() != null){
-				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
-					singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
-				} else{
-					singleRow.add("Person Name Lost");
-				}
-			} else {
-				singleRow.add("");
-			}
-			
-			if (currentEplToLink.getDocument().getRecipientPeople() != null){
-				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
-					singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
+		List resultList = new ArrayList(0);
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList(0);
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
 					singleRow.add("Person Name Lost");
 				}
 			} else {
 				singleRow.add("");
 			}
-
-			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
 			
-			if (currentEplToLink.getDocument().getMDPAndFolio() != null) {
-				singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");				
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				} else {
+					singleRow.add("Person Name Lost");
+				}
 			} else {
 				singleRow.add("");
 			}
 			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
 			
-			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
-		}
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				} else {
+					singleRow.add("Place Name Lost");
+				}
+			} else {
+				singleRow.add("");
+			}
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				} else {
+					singleRow.add("Place Name Lost");
+				}
+			} else {
+				singleRow.add("");
+			}
+			
+			StringBuilder titleLastColumn = new StringBuilder();
+			if (currentDocument.getMDPAndFolio() != null){
+				StringBuilder lastColumn = new StringBuilder();
+				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+				lastColumn.append("</b><br />");
+				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+				lastColumn.append("(");
+				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
+					lastColumn.append(currentDocument.getInsertNum() + "/");
+					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+					if(currentDocument.getInsertLet() != null){
+						lastColumn.append(currentDocument.getInsertLet());
+						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+					}else{
+						lastColumn.append("-");
+					}					
+				}else{
+					lastColumn.append("-/-");
+				}
+				lastColumn.append(")<br />");
+				lastColumn.append("<b>");
+				if(currentDocument.getFolioNum() != null){
+					lastColumn.append(currentDocument.getFolioNum());
+					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+					if(currentDocument.getFolioMod() != null){
+						lastColumn.append(currentDocument.getFolioMod());
+						titleLastColumn.append(currentDocument.getFolioMod());
+					}
+				}
+				else{
+					lastColumn.append("NNF");
+					titleLastColumn.append("Folio NNF");
+				}
+				lastColumn.append("</b>");
+				if(currentDocument.getVolume().getDigitized()){
+					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+				}
+				singleRow.add(lastColumn.toString());
+				
+			} else {
+				singleRow.add("");
+			}
 
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), currentDocument.getMDPAndFolio(), titleLastColumn.toString()));
+		}
+		
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
