@@ -378,7 +378,7 @@
 			<id>demo</id>
 		    <properties>
 		      <customer>demo</customer>
-              <customer.warname>Biademo</customer.warname>
+              <customer.warname>DocSources</customer.warname>
 		    </properties>
 		</profile>
 	</profiles>
