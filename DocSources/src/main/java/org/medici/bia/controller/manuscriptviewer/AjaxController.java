@@ -363,6 +363,7 @@ public class AjaxController {
 				model.put("entryId", documentExplorer.getEntryId());
 				model.put("volNum", documentExplorer.getVolNum());
 				model.put("volLetExt", documentExplorer.getVolLetExt());
+				model.put("imageId", documentExplorer.getImage().getImageId());
 				model.put("imageType", documentExplorer.getImage().getImageType());
 				model.put("imageName", documentExplorer.getImage().getImageName());
 				if (documentExplorer.getImage().getMissedNumbering() != null) { 

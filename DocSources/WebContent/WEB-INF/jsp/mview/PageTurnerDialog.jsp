@@ -33,7 +33,7 @@
 		<c:param name="imageType" value="${image.imageType}" />
 	</c:url>
 	
-	<c:url var="GetLinkedDocumentURLTest" value="/src/mview/GetLinkedDocument.json" />
+	<c:url var="GetLinkedDocumentURLUpdate" value="/src/mview/GetLinkedDocument.json" />
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -115,8 +115,11 @@
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" />
 	
 	<c:url var="ShowDocumentsAlreadyURL" value="/src/docbase/ShowSameFolioDocuments.do" />
-
-
+	
+	<c:url var="GetImageAnnotationURL" value="/src/mview/GetImageAnnotation.json" />
+		
+	<c:url var="UpdateAnnotationsURL" value="/src/mview/UpdateAnnotations.json" />
+		
 <div id="PageTurnerVerticalDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
@@ -240,12 +243,18 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			var annotations = new Array();
+			
 			$j("#moveToFolioForm").pageTurnerForm({
 				searchUrl: '${SearchAjaxURL}', 
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}', 
 				IIPImageServer: '${IIPImageServerURL}', 
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
+				annotationsType: 'remote',
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -257,6 +266,10 @@
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
+				annotationsType: 'remote',
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -267,6 +280,10 @@
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
+				annotationsType: 'remote',
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -277,6 +294,10 @@
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
 				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
+				annotationsType: 'remote',
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -717,7 +738,7 @@
 					return false;
 				}else{
 					$j("#ShowExtractDocumentDiv").dialog("close");
-					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLTest}", async:false,  data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
+					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLUpdate}", async:false,  data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
 						// We set currentImage
 						currentImage = data.imageId;
 						$j("#currentImageOrder").val(data.imageOrder);
@@ -790,7 +811,7 @@
 					return false;
 				}else{
 					$j("#ShowSynopsisDocumentDiv").dialog("close");
-					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLTest}", async:false, data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
+					$j.ajax({ type:"GET", url:"${GetLinkedDocumentURLUpdate}", async:false, data: {volNum: '${command.volNum}', volLetExt: '${command.volLetExt}', imageOrder: $j("#currentImageOrder").val()}, success:function(data) {
 						// We set currentImage
 						currentImage = data.imageId;
 						$j("#currentImageOrder").val(data.imageOrder);

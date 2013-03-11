@@ -38,7 +38,11 @@
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
         "canTranscribe":  "false",
-        "scale": "0"
+        "scale": "0",
+        "annotationsType": "remote",
+        "retrieveAnnotationsUrl": "",
+        "updateAnnotationsUrl": "",
+        "annotations": new Array()
     };
 
     $.fn.pageTurnerForm = function (params) {
@@ -110,7 +114,11 @@
 							showNavButtons: true,
 							winResize: true,
 							zoom: 3,
-							scale: 0
+							scale: 0,
+							annotationsType: functionParams["annotationsType"],
+							retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+							updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+							annotations: functionParams["annotations"]
 						});
 
 						if (data.previousPage == '') {
@@ -283,7 +291,11 @@
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
         "canTranscribe":  "false",
-        "scale": "0"
+        "scale": "0",
+        "annotationsType": "remote",
+        "retrieveAnnotationsUrl": "",
+        "updateAnnotationsUrl": "",
+        "annotations": new Array()
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -348,7 +360,11 @@
 						showNavButtons: true,
 						winResize: true,
 						zoom: 3,
-						scale: 0
+						scale: 0,
+						annotationsType: functionParams["annotationsType"],
+						retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+						updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+						annotations: functionParams["annotations"]
 					});
 					if (data.previousPage == '') {
 						$("#previous").removeAttr('href');

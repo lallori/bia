@@ -88,7 +88,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account) order by annotationId desc";
+		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account)) order by annotationId desc";
 		Query query = getEntityManager().createQuery(jpql);
         query.setParameter("imageName", imageName);
         query.setParameter("account", user.getAccount());
