@@ -4243,8 +4243,8 @@ a.showDigitizedDocument:hover {
 ul#network {
 	list-style-type: none;
 	height: 30px;
-	width: 160px;
-	margin:10px 0 0 285px;
+	width: 278px;
+	margin:10px 0 0 212px;
 }
 
 ul#network a {
@@ -4265,8 +4265,17 @@ ul#network a {
 	background-image: url(/DocSources/images/1024/facebook.png);
 }
 
+.fb_iframe_widget span {
+	height: 23px !important;
+	width: 80px !important;
+}
+
 #twitter {
 	background-image: url(/DocSources/images/1024/twitter.png);
+}
+
+.twitter-share-button{
+	width: 85px !important;
 }
 
 #googlePlus {

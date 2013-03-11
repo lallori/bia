@@ -9,15 +9,30 @@
 			margin:10px 0 20px 5px;
 		}
     </style>
+    
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_EN/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 	
 	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
 	
 	<ul id="network">
-       <span class='st_facebook_large' displayText='Facebook'></span>
-<!--        <span class='st_twitter_large' displayText='Tweet'></span> -->
-	   <a href="https://twitter.com/share" class="twitter-share-button" data-text=" " data-lang="it" data-size="large" data-count="none">Tweet</a>
+       <div class="fb-like" data-send="false" data-layout="button_count" data-width="500" data-show-faces="false" style="display:inline;"></div>
+	   <div style="display:inline;"><a href="https://twitter.com/share" class="twitter-share-button" data-text="">Tweet</a></div>
 	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-       <span class='st_googleplus_large' displayText='Google +'></span>
+	   <div class="g-plusone" data-size="medium" style="display:inline"></div>
+	   <script type="text/javascript">
+  	   	(function() {
+    		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    		po.src = 'https://apis.google.com/js/plusone.js';
+    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  		})();
+		</script>
 	</ul>
 	
 	<div id="personDiv">
