@@ -344,6 +344,9 @@
 					return false;
 				});
 
-				$j("#ShowManuscriptViewer${volumeExplorer.summaryId}").open({width: screen.width, height: screen.height, scrollbars: false});
+				if (navigator.userAgent.indexOf('Chrome') != -1)
+					$j("#ShowManuscriptViewer${volumeExplorer.summaryId}").open({windowName: "ShowDocumentInManuscriptViewer", width: window.innerWidth, height: window.innerHeight});
+				else
+					$j("#ShowManuscriptViewer${volumeExplorer.summaryId}").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height});
 			});
 		</script>

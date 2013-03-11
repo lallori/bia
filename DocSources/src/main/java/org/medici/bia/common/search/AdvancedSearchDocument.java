@@ -2884,6 +2884,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					stringBuilder.append("AND ");
 				}
 				stringBuilder.append(topics.get(i));
+				if(!topicsPlace.isEmpty() && topicsPlace.size() > i){
+					stringBuilder.append(" - " + topicsPlace.get(i));
+				}
 				stringBuilder.append(' ');
 			}
 		}

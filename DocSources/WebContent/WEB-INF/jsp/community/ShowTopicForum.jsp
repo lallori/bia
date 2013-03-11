@@ -71,6 +71,13 @@
 				
 		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 	</c:if>
+	<c:if test="${topic.forum.document != null && empty documentExplorer}">
+		<p></p>
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+		</c:url>
+		<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>		
+	</c:if>
 	<c:if test="${topic.annotation != null}">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>

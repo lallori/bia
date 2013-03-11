@@ -147,8 +147,11 @@
 					$j(this).attr({"style": 'display:none'});
 				}});
 			});
-
-			$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height, scrollbars: false});
+			
+			if (navigator.userAgent.indexOf('Chrome') != -1)
+				$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: window.innerWidth, height: window.innerHeight});
+			else
+				$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
 				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Volume ${document.volume.volNum}${document.volume.volLetExt} - Folio ${document.folioNum}</span>";

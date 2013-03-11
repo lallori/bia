@@ -325,7 +325,10 @@
 					return false;
 				});
 
-				$j("#ShowManuscriptViewer${documentExplorer.entryId}").open({width: screen.width, height: screen.height, scrollbars: false});
+				if (navigator.userAgent.indexOf('Chrome') != -1)
+					$j("#ShowManuscriptViewer${documentExplorer.entryId}").open({windowName: "ShowDocumentInManuscriptViewer", width: window.innerWidth, height: window.innerHeight});
+				else
+					$j("#ShowManuscriptViewer${documentExplorer.entryId}").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height});
 			});
 		</script>
 		
