@@ -239,7 +239,7 @@ public class AjaxController {
 		try {
 			Forum forum = getVolBaseService().getVolumeForum(summaryId);
 			
-			if (forum != null) {
+			if (forum != null && !forum.getLogicalDelete()) {
 				model.put("isPresent", Boolean.TRUE.toString());
 				model.put("forumId", forum.getForumId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));

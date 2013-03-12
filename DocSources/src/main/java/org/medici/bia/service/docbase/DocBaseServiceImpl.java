@@ -276,6 +276,23 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
+			}else if(forum.getLogicalDelete()){
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
+				forum.setLogicalDelete(Boolean.FALSE);
+				forum.setTotalViews(0);
+				forum.setLastUpdate(new Date());
+				getForumDAO().merge(forum);
+				
+				// this method call is mandatory to increment topic number on parent forum
+				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
+				
+				// Increment the number of subforums
+				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
+				
+				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
 
 			return forum;

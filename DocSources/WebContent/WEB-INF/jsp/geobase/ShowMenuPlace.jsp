@@ -127,8 +127,6 @@
 				Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 470, height: 100});
 				return false;
 			}
-
-			return false;
 		});
 
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });

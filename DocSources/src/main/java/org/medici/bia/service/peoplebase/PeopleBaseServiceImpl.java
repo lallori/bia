@@ -476,8 +476,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}else if(forum.getLogicalDelete()){
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
 				
-				//In this case a user restore a forum deleted.				
 				forum.setLogicalDelete(Boolean.FALSE);
+				forum.setTotalViews(0);
+				forum.setLastUpdate(new Date());
 				getForumDAO().merge(forum);
 				
 				// Increment the number of subforums
