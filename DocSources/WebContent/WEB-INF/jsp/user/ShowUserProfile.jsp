@@ -32,7 +32,7 @@
 			</c:if>
 			</div>
 			<a id="UploadPortraitUser" href="${UploadPortraitWindowURL}">Upload Portrait</a>
-			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
+<%-- 			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a> --%>
 			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
 			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
 			<a id="CloseUserProfile" href="#">Close Profile</a>

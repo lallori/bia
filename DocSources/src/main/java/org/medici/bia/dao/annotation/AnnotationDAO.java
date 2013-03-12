@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.User;
@@ -76,6 +78,15 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @throws PersistenceException
 	 */
 	Annotation findByAnnotationId(Integer annotationId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param user
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page findPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 

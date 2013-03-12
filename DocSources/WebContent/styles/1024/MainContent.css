@@ -4716,6 +4716,36 @@ h3.systemManagement {
 /* -------------------------------------------------------------------------- */
 /*
 /*
+/* ------------------------------------------- PERSONAL DIRECTORY ----------------------------------------------------- */
+
+/* ---------------- Modal Window ------------- */
+
+#personalDirectoryModalDiv #close {
+    margin-left: 95px; 
+}
+
+#personalDirectoryModalDiv #markedList, #personalDirectoryModalDiv #personalAnnotations, #personalDirectoryModalDiv #personalNotes {
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+	display:block;
+}
+
+#systemWide p, #userManagement p, #reportsRevisions p {
+	margin: 0px;
+}
+
+#markedListDiv, #personalAnnotationsDiv, #personalNotesDiv{
+	width: 215px;
+	margin: 15px 0 0 20px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
 /* ----------------------------------- YOUR SEARCH (body_right data table) ------------------------------------------------ */
 
 
@@ -4964,7 +4994,7 @@ h3.systemManagement {
     width: 723px;
 }
 
-#closeMyHistory, #closeMarketList {
+#closeMyHistory, #closeMarketList, #closePersonalAnnotations {
 	float:left;
 	cursor:pointer;
 	background-color:transparent;
@@ -5024,12 +5054,12 @@ h3.systemManagement {
 
 /* ------------------- Data Table ----------------- */ 
 
-table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable{
+table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable, table.display#personalAnnotationsTable{
 	margin: 0 0 10px 10px;
 	width:710px;
 }
 
-#researchHistoryTableDiv, #myDocumentsHistoryTableDiv, #myVolumeHistoryTableDiv, #myPlaceHistoryTableDiv, #myPeopleHistoryTableDiv {
+#researchHistoryTableDiv, #myDocumentsHistoryTableDiv, #myVolumeHistoryTableDiv, #myPlaceHistoryTableDiv, #myPeopleHistoryTableDiv, #personalAnnotationsTableDiv {
 	height:320px !important;
 	height /**/: 330px;
 	overflow:auto !important;

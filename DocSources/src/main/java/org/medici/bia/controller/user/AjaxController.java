@@ -45,7 +45,9 @@ import org.medici.bia.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Country;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Category;
@@ -463,6 +465,72 @@ public class AjaxController {
 				singleRow.add("<input type=\"checkbox\" name=\"unpaginated\" idElement=\"" + currentElement.getId() + "\" >");
 				resultList.add(HtmlUtils.showPeople(singleRow, currentElement.getPerson().getPersonId()));
 			}
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * 
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/user/PersonalAnnotationsPagination.json", method = RequestMethod.GET)
+	public ModelAndView personalAnnotationsPagination(@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Page page = null;
+
+
+		try {
+			page = getUserService().searchUserPersonalAnnotations(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (Annotation currentAnnotation : (List<Annotation>)page.getList()) {
+			List<String> singleRow = new ArrayList<String>();
+			singleRow.add(simpleDateFormat.format(currentAnnotation.getLastUpdate()));
+			singleRow.add(currentAnnotation.getTitle());
+			singleRow.add(currentAnnotation.getText());
+			if(currentAnnotation.getImage().getVolLetExt() != null){
+				singleRow.add(currentAnnotation.getImage().getVolNum() + currentAnnotation.getImage().getVolLetExt());
+			}else{
+				singleRow.add(currentAnnotation.getImage().getVolNum().toString());
+			}
+			if(currentAnnotation.getImage().getImageType().equals(ImageType.C)){
+				singleRow.add("Folio");
+			}else if(currentAnnotation.getImage().getImageType().equals(ImageType.R)){
+				singleRow.add("Index of names");
+			}else if(currentAnnotation.getImage().getImageType().equals(ImageType.A)){
+				singleRow.add("Allegato");
+			}else if(currentAnnotation.getImage().getImageType().equals(ImageType.G)){
+				singleRow.add("Guardia");
+			}else if(currentAnnotation.getImage().getImageType().equals(ImageType.O)){
+				singleRow.add("Other Type");
+			}else{
+				singleRow.add("");
+			}
+			singleRow.add(currentAnnotation.getImage().getImageProgTypeNum().toString());
+			
+			resultList.add(HtmlUtils.showPersonalAnnotationsExplorer(singleRow, currentAnnotation.getImage()));
+			
 		}
 
 		model.put("iEcho", "1");

@@ -42,6 +42,7 @@ import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.domain.Digitization;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.PlaceGeographicCoordinates;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.SearchFilter.SearchType;
@@ -1019,6 +1020,41 @@ public class HtmlUtils {
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/peoplebase/ComparePerson.do?personId=");
 		anchorBegin.append(personId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuilder stringBuilder = new StringBuilder(anchorBegin.toString());
+			stringBuilder.append(inputList.get(i));
+			stringBuilder.append(hrefEnd);
+			retValue.add(stringBuilder.toString());
+		}
+		
+		return retValue;
+	}
+	
+	public static List<String> showPersonalAnnotationsExplorer(List<String> inputList, Image image){
+		if(inputList == null){
+			return null;
+		}
+		
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuilder anchorBegin = new StringBuilder("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/volbase/ShowExplorerVolume.do?volNum=");
+		anchorBegin.append(image.getVolNum());
+		anchorBegin.append("&volLetExt=");
+		if(image.getVolLetExt() != null){
+			anchorBegin.append(image.getVolLetExt());
+		}
+		anchorBegin.append("&imageOrder=");
+		anchorBegin.append(image.getImageOrder());
+		anchorBegin.append("&imageType=");
+		anchorBegin.append(image.getImageType());
+		anchorBegin.append("&imageProgTypeNum=");
+		anchorBegin.append(image.getImageProgTypeNum());
+		anchorBegin.append("&flashVersion=false");
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		

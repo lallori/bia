@@ -460,6 +460,14 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserMarkedList(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserPersonalAnnotations(PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -32,6 +32,10 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.pagination.PaginationFilter.Order;
+import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.User;
@@ -135,7 +139,83 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		if(paginationFilter.getTotal() == null){
+			String queryString = "SELECT count(annotationId) FROM Annotation WHERE type = 'Personal' AND user=:user";
+			
+			 Query query = getEntityManager().createQuery(queryString);
+		     query.setParameter("user", user);
+		     page.setTotal(new Long((Long)query.getSingleResult()));
+		}
+		
+		String objectsQuery = "FROM Annotation WHERE type = 'Personal' AND user=:user";
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC "));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
 
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("user", user);
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		page.setList(query.getResultList());
+
+		return page;
+	}
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @param searchType
+	 * @return
+	 */
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		switch (paginationFilter.getSortingColumn()) {
+			case 0:
+				paginationFilter.addSortingCriteria("lastUpdate", paginationFilter.getSortingDirection());
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("title", paginationFilter.getSortingDirection());
+				break;
+			case 2:  
+				paginationFilter.addSortingCriteria("text", paginationFilter.getSortingDirection());
+				break;
+			case 3:
+				paginationFilter.addSortingCriteria("image.volNum", paginationFilter.getSortingDirection());
+				paginationFilter.addSortingCriteria("image.volLetExt", paginationFilter.getSortingDirection());
+				break;
+			case 4:
+				paginationFilter.addSortingCriteria("image.imageType", paginationFilter.getSortingDirection());
+				break;
+			case 5:
+				paginationFilter.addSortingCriteria("image.imageProgTypeNum", paginationFilter.getSortingDirection());
+				break;
+			default:
+				paginationFilter.addSortingCriteria("lastUpdate", paginationFilter.getSortingDirection());
+				break;
+		}
+
+		return paginationFilter;
+	}
 
 	/**
 	 * {@inheritDoc}

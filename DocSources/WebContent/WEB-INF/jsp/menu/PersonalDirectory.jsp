@@ -4,16 +4,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowMyMarkedListURL" value="/user/ShowMyMarkedList.do"/>
+<c:url var="ShowPersonalDirectoryURL" value="/de/ShowPersonalDirectory.do"/>
 
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-<%-- 				<li class="myprofileMenu"><a id="myprofileMenu" href="${ShowUserProfileURL}" title="MY PROFILE"></a></li> --%>
-				<li><a href="${ShowMyMarkedListURL}" id="markedList">Marked List</a></li>
+				<li><a href="${ShowPersonalDirectoryURL}" id="personalDirectory">Personal Directory</a></li>
 			</security:authorize>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
-						$j("#markedList").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "MY MARKED LIST", width: 750, height: 415});return false;
-						});		
+						$j("#personalDirectory").click(function(){
+							Modalbox.show($j(this).attr("href"), {title: "PERSONAL DIRECTORY", width: 270, height: 200});
+							return false;
+						}						
+						);
 					});
 				</script>						

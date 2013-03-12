@@ -53,6 +53,7 @@ import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.RegExUtils;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
+import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
 import org.medici.bia.dao.country.CountryDAO;
 import org.medici.bia.dao.document.DocumentDAO;
@@ -108,6 +109,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
+	@Autowired
+	private AnnotationDAO annotationDAO;
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
 	@Autowired
@@ -711,6 +714,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1237,6 +1247,20 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserPersonalAnnotations(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			
+			return getAnnotationDAO().findPersonalAnnotations(user, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1255,6 +1279,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
 		this.activationUserDAO = activationUserDAO;
+	}
+
+	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
 	}
 
 	/**
