@@ -24,6 +24,16 @@
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
 		</div>
+		<c:if test="${(not empty searchFilter.filterData.exactPlaceName) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<div id="placeSearchDiv">
+		<c:forEach items="${searchFilter.filterData.exactPlaceName}" varStatus="iterator">	
+			<div class="searchFilterDiv">
+				<span class="categorySearch">Exact Name: </span><span class="wordSearch">${searchFilter.filterData.exactPlaceName[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<input type="hidden" value="${searchFilter.filterData.placeId[iterator.index]}|${fn2:encode(searchFilter.filterData.exactPlaceName[iterator.index])}" name="place"/>
+			</div>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+		</c:forEach>
+		</div>
 		<c:if test="${(not empty searchFilter.filterData.placeType) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 		<div id="placeTypeSearchDiv">
 		<c:forEach items="${searchFilter.filterData.placeType}" varStatus="iterator">

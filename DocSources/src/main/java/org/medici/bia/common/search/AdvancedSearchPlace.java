@@ -30,10 +30,13 @@ package org.medici.bia.common.search;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
@@ -66,6 +69,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private Boolean logicalDelete;
 	private List<String> placesId;
 	private List<String> placesName;
+	private List<String> exactPlaceName;
+	private List<Integer> placeId;
 	private List<String> placeType;
 	private List<Date> datesLastUpdate;
 	private List<Date> datesLastUpdateBetween;
@@ -84,6 +89,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		placesId = new ArrayList<String>(0);
 		placesName = new ArrayList<String>(0);
+		exactPlaceName = new ArrayList<String>(0);
+		placeId = new ArrayList<Integer>(0);
 		placeType = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
 		logicalDelete = null;
@@ -117,6 +124,44 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			}
 		}else{
 			placesName = new ArrayList<String>(0);
+		}
+		
+		//Exact Place Name
+		if((command.getPlace() != null) && (command.getPlace().size() > 0)){
+			placeId = new ArrayList<Integer>(command.getPlace().size());
+			exactPlaceName = new ArrayList<String>(command.getPlace().size());
+			
+			for(String singleWord : command.getPlace()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "\u00E7");
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try{
+					if(stringTokenizer.countTokens() == 0){
+						continue;
+					}else if(stringTokenizer.countTokens() == 1){
+						placeId.add(new Integer(0));
+						exactPlaceName.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					}else if(stringTokenizer.countTokens() == 2){
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						if(NumberUtils.isNumber(singleId)){
+							placeId.add(NumberUtils.createInteger(singleId));
+						}else{
+							placeId.add(new Integer(0));
+						}
+						exactPlaceName.add(URIUtil.decode(singleText, "UTF-8"));
+					}
+				} catch(NumberFormatException numberFormatException){
+					logger.debug(numberFormatException);
+				} catch (URIException uriException){
+					logger.debug(uriException);
+					placeId.remove(placeId.size() - 1);
+				}
+			}
+		}else{
+			exactPlaceName = new ArrayList<String>(0);
+			placeId = new ArrayList<Integer>(0);
 		}
 		
 		//Place Type
@@ -235,6 +280,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	public Boolean empty() {
 		if (
 				(placesName.size()>0) ||
+				(placeId.size()>0) ||
 				(placeType.size()>0) ||
 				(datesLastUpdateTypes.size()>0) ||
 				(linkedToPeople.size()>0) ||
@@ -272,6 +318,30 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		return placesName;
 	}
 
+	/**
+	 * @return the exactPlaceName
+	 */
+	public List<String> getExactPlaceName() {
+		return exactPlaceName;
+	}
+	/**
+	 * @param exactPlaceName the exactPlaceName to set
+	 */
+	public void setExactPlaceName(List<String> exactPlaceName) {
+		this.exactPlaceName = exactPlaceName;
+	}
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
+	}
 	/**
 	 * @return the placeType
 	 */
@@ -466,6 +536,30 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(placesNameQuery);
+			}
+		}
+		
+		//Exact Place Name
+		if(placeId.size() > 0){
+			StringBuilder placeIdQuery = new StringBuilder("(");
+			for(int i = 0; i < placeId.size(); i++){
+				if(placeId.get(i) > 0){
+					if(placeIdQuery.length() > 1){
+						placeIdQuery.append(" OR ");
+					}
+					placeIdQuery.append("(placeAllId=");
+					placeIdQuery.append(placeId.get(i));
+					placeIdQuery.append(")");
+				}else{
+					continue;
+				}
+			}
+			placeIdQuery.append(")");
+			if(!placeIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(placeIdQuery);
 			}
 		}
 		
@@ -736,6 +830,19 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 				}
 				stringBuilder.append(placesName.get(i));
 				stringBuilder.append(" ");
+			}
+		}
+		
+		if(!exactPlaceName.isEmpty()){
+			if(stringBuilder.length()>0){
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append("Name: ");
+			for(int i = 0; i < exactPlaceName.size(); i++){
+				if(i > 0){
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(exactPlaceName.get(i) + " ");
 			}
 		}
 		

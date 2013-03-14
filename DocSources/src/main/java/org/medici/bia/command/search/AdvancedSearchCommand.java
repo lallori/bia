@@ -68,6 +68,7 @@ public class AdvancedSearchCommand {
 	private List<String> name;
 	private List<String> role;
 	private List<String> placeName;
+	private List<String> exactPlaceName;
 	private List<String> placeType;
 	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
@@ -504,6 +505,20 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getPlaceName() {
 		return placeName;
+	}
+
+	/**
+	 * @return the exactPlaceName
+	 */
+	public List<String> getExactPlaceName() {
+		return exactPlaceName;
+	}
+
+	/**
+	 * @param exactPlaceName the exactPlaceName to set
+	 */
+	public void setExactPlaceName(List<String> exactPlaceName) {
+		this.exactPlaceName = exactPlaceName;
 	}
 
 	/**

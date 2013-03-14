@@ -385,8 +385,8 @@ public class SearchServiceImpl implements SearchService {
 	public Page searchAdvancedDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			UserHistory test = new UserHistory(user, "Advanced Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
-			getUserHistoryDAO().persist(test);
+			UserHistory userHistory = new UserHistory(user, "Advanced Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
+			getUserHistoryDAO().persist(userHistory);
 			
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
@@ -401,8 +401,8 @@ public class SearchServiceImpl implements SearchService {
 	public Page searchAdvancedPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			UserHistory test = new UserHistory(user, "Advanced Search People", Action.CREATE, Category.SEARCH_PEOPLE, searchContainer);
-			getUserHistoryDAO().persist(test);
+			UserHistory userHistory = new UserHistory(user, "Advanced Search People", Action.CREATE, Category.SEARCH_PEOPLE, searchContainer);
+			getUserHistoryDAO().persist(userHistory);
 			
 			return getPeopleDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
@@ -417,8 +417,8 @@ public class SearchServiceImpl implements SearchService {
 	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			UserHistory test = new UserHistory(user, "Advanced Search Places", Action.CREATE, Category.SEARCH_PLACE, searchContainer);
-			getUserHistoryDAO().persist(test);
+			UserHistory userHistory = new UserHistory(user, "Advanced Search Places", Action.CREATE, Category.SEARCH_PLACE, searchContainer);
+			getUserHistoryDAO().persist(userHistory);
 			
 			return getPlaceDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
@@ -433,8 +433,8 @@ public class SearchServiceImpl implements SearchService {
 	public Page searchAdvancedVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			UserHistory test = new UserHistory(user, "Advanced Search Volumes", Action.CREATE, Category.SEARCH_VOLUME, searchContainer);
-			getUserHistoryDAO().persist(test);
+			UserHistory userHistory = new UserHistory(user, "Advanced Search Volumes", Action.CREATE, Category.SEARCH_VOLUME, searchContainer);
+			getUserHistoryDAO().persist(userHistory);
 			
 			return getVolumeDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
@@ -461,8 +461,8 @@ public class SearchServiceImpl implements SearchService {
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-			UserHistory test = new UserHistory(user, "Simple Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
-			getUserHistoryDAO().persist(test);
+			UserHistory userHistory = new UserHistory(user, "Simple Search Documents", Action.CREATE, Category.SEARCH_DOCUMENT, searchContainer);
+			getUserHistoryDAO().persist(userHistory);
 			
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {

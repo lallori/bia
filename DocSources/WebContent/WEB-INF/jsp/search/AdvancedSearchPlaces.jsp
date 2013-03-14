@@ -6,6 +6,8 @@
 
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json">
 	</c:url>
+	
+	<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
 
 <body>
 	<div id="advancedSearch">
@@ -17,6 +19,9 @@
 					<h1 id="placeNameH1"><a>Place Name</a></h1>
 					<div>
 						<div class="listAdvSearch">
+							<div class="row">
+								<div class="col_l">Word search</div>
+							</div>
 							<form id="placeNameSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
@@ -31,6 +36,23 @@
 					               	</div>
 					            </div>
 				            </form>
+				            <br />
+				            <div class="row">
+				            	<div class="col_l">Match the exact name</div>
+				            </div>
+				            <form id="placeSearchForm" method="post" class="edit">
+			            	<div class="row">
+				        		<div class="col_l">
+				        			<a class="helpIcon" title="<fmt:message key="advsearch.places.place"></fmt:message>">?</a>
+									<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
+				        		</div>
+				        		<div class="col_r">
+				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
+									<input type="hidden" id="category" value="place">
+									<input type="hidden" id="placeId" value="">
+				        		</div>
+				        	</div>
+			            </form>
 				        </div>
 				    </div>
 					
@@ -131,6 +153,10 @@
 			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 			consoleLog : false
 		});
+		$j('#placeSearchForm').advancedSearchForm({
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
+		});
 		$j('#placeTypeSearchForm').advancedSearchForm({
 			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 			consoleLog : false
@@ -193,6 +219,45 @@
 			$j.scrollTo({top:'195px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "150px"}, "slow");
 			return false;
+		});
+		
+		var $placeValue = '';
+		var $placeAutocomplete = $j("#place").autocompletePlace({
+			serviceUrl: '${searchPlaceURL}',
+		    loadingImageUrl:'${LoadingImageURL}',
+			minChars: 3,
+			delimiter: null,
+			maxHeight: 400,
+			width: 450,
+			zIndex: 9999,
+			deferRequestBy: 0,
+			noCache: true,
+			onSelect: function(value, data){
+				$j(".placeAdd").die();
+				$j(".placeAdd").removeAttr("disabled");
+				$j('#placeId').val(data);
+				$j(".placeAdd").attr("disabled");
+				$j(".placeAdd").prop("disabled", false);
+				$placeValue = $j("#place").val();
+				$j("#place").live('keyup', function(){
+					if($j("#place").val() != $placeValue){
+						$j(".placeAdd").attr("disabled","disabled");
+						$j("#placeId").val("");
+					}
+					return false;
+				});
+				$j("#place").live('keypress', function(e){
+					if(e.keyCode == 13 && $j("#place").val() != $placeValue){
+						e.stopPropagation();
+						return false;
+					}
+				});
+			}
+		});	
+		 
+		$j("#placeSearchForm").submit(function(){
+			$j("#placeId").val("");
+			$j(".placeAdd").attr("disabled","disabled");
 		});
 	});
 </script>
