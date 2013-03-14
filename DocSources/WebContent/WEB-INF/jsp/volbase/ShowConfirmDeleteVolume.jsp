@@ -38,9 +38,10 @@
 				$j.ajax({ type:"GET", url: '${CheckVolumeIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
-						$j("#DeleteThisRecordDiv").append('<h1>Please remove from any documents related to this Volume<p>');
+						$j("#DeleteThisRecordDiv").append('<h1>Please remove from any documents related to this Volume</h1>');
 						if (json.documentsVolume>0) {
-							$j("#DeleteThisRecordDiv").append(json.documentsVolumeURL + ' <span class=\"num_docs\"> ' + json.documentsVolume + '</span><p>');
+							$j("#DeleteThisRecordDiv").append(json.documentsVolumeURL)
+							$j("#DeleteThisRecordDiv > #showDocumentsRelated").append(" " + json.documentsVolume);
 
 							$j("#showDocumentsRelated").die();
 							$j("#showDocumentsRelated").live('click', function() {

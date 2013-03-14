@@ -18,6 +18,7 @@
         <security:intercept-url pattern="/src/docbase/ShareDocument.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/src/volbase/ShareVolume.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/src/peoplebase/SharePerson.do"		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/src/peoplebase/ShowPortraitPerson.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/src/geobase/SharePlace.do"			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ActivateUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -68,6 +69,7 @@
         <security:intercept-url pattern="/user/EditPasswordUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowConfirmErasePersonalNotesUser.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ErasePersonalNotesUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/user/EraseMyMarkedList.do"		    access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/ShowUploadPortraitUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/DeletePortraitUser.do"			access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/CropPortraitUser.do"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />

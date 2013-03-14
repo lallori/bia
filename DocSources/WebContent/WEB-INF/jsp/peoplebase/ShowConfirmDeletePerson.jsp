@@ -30,8 +30,6 @@
 			});
 
 			$j("#yes").click(function() {
-				Modalbox.resize("0", "20");
-				$j("#MB_content").css("height", "100px");
 				$j.ajax({ type:"GET", url: '${CheckPersonIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
