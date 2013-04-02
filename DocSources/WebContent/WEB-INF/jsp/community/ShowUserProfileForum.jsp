@@ -217,11 +217,11 @@
 		$j("#sendMessage").click(function(){
 			var newHref = $j(this).attr("href");
 			$j("#main").load("${ShowMessagesURL}", function(){
-				$j("#tabs").tabs("option", "active", 2);
 				var tab = $j( "#tabs" ).find( ".ui-tabs-nav li:eq(2)" );
 				var panelId = tab.attr( "aria-controls" );
 				$j( "#" + $j("#" + panelId).attr("aria-labelledby") ).attr("href", newHref);
-				$j( "#tabs" ).tabs( "load", 2 );
+				$j("#tabs").tabs("option", "active", 2);
+// 				$j( "#tabs" ).tabs( "load", 2 );
 				return false;
 			});
 			
