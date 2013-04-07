@@ -142,7 +142,7 @@
 		<url>http://www.medici.org</url>
 	</organization>
 	<build>
-	    <finalName>${customer.warname}-${project.version}</finalName>
+	    <finalName>${customer.warname}</finalName>
 		<filters>
 			<filter>customers/${customer}/filter-${customer}.properties</filter>
 		</filters>
