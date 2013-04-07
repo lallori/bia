@@ -1,0 +1,41 @@
+.autocomplete-w1 { 
+	position:absolute; 
+	top: -1px; 
+	left:0px; 
+	margin:8px 0 0 6px; /* IE6 fix: */ 
+	_background:none; 
+	_margin:0;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+}
+
+.autocomplete { 
+	border:1px solid #DCC0BA; 
+	background:#F2E6E5; 
+	cursor:default; 
+	text-align:left; 
+	max-height:350px; 
+	overflow:auto; 
+	margin:-6px 6px 6px -6px; /* IE6 specific: */
+	_height:350px;  
+	_margin:0; 
+	_overflow-x:hidden; 
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border-top-left-radius:0px;
+	padding: 5px;
+}
+
+.autocomplete .selected { 
+	background:#FBF7F4; 
+}
+
+.autocomplete div { 
+	padding:5px; 
+	white-space:nowrap; 
+}
+
+.autocomplete strong { 
+	font-weight:normal; 
+	color:#990000; 
+}

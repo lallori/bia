@@ -1,0 +1,926 @@
+
+body {
+	margin: 0;
+	background-color: black;
+}
+
+.button_mini {
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/1024/button_mini.png);
+	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+.button_small {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(${contextPath}/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align: center;
+	padding-top: 4px;
+	background-repeat: no-repeat;
+	border: none;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+.button_medium {
+	width: 126px;
+	height: 22px;
+	background-image: url(${contextPath}/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+input[type=submit].button_medium, input[type=submit].button_small {
+	padding: 1px 0 0 0;
+}
+
+input { /* INPUT text */
+	font-size: 12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 0 5px 5px;
+}
+
+.input_5c { /* input for 5 characters */ 
+	width: 45px;
+}
+
+.list { /* Whole display list */
+	display: table;
+	width:100%; 
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.row { /* Single row */
+	display: table-row;
+}
+
+.list .col_r{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:right;
+}
+
+.list .col_l{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:left;
+}
+
+
+/* 
+
+Manuscript Viewer css
+html version
+*/
+
+#EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	font-size: 12px;
+	color: #000000;
+	width: 98%;
+	height:90%;
+	text-align:justify;
+	resize:none;
+}
+
+#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #PageTurnerHorizontalDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm, #EditTranscriptionForm, #CompareManuscriptDiv, #CompareManuscriptForm, #PageTurnerVerticalDiv {
+	position:relative;
+	margin:0 auto 0 auto;
+	height: 97%;
+	font-size: 12px;
+}
+
+#PageTurnerVerticalDiv {
+	position:relative;
+	margin:0 auto 0 auto;
+	height: 95%;
+	font-size: 12px;
+	overflow:hidden;
+}
+
+div.hideAnnotation {
+    bottom: 85px;
+    left: 10px;
+	cursor:pointer;
+}
+
+div.hideNavWindow {
+    bottom: 40px;
+    left: 10px;
+	cursor:pointer;
+}
+
+/* ---------- Title bar --------- */
+
+#rotateVertical {
+	margin-left: 283px;
+	border: 1px solid transparent;
+}
+
+#rotateHorizontal {
+	border: 1px solid transparent;
+	margin-left: -5px;
+}
+
+#rotateVertical:hover, #rotateHorizontal:hover {
+	cursor: pointer;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	background-color:#f4e9e8;
+}
+
+/* ---------- Buttons --------- */
+/*
+/* Previous / Next */
+
+#PageTurnerHorizontalDiv #prevNextButtons {
+	width: 80px;
+	margin-top:8px;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #prevNextButtons.transcribe {
+	margin: 3px 0 0 215px;
+}
+
+#PageTurnerVerticalDiv #prevNextButtons {
+	width: 90px;
+	margin-top: 130px;
+	margin-left: 15px;
+	position: absolute;
+}
+
+#PageTurnerHorizontalDiv #prevButton img, #PageTurnerHorizontalDiv #nextButton img, #PageTurnerHorizontalDiv #personalNotesDiv img, #PageTurnerHorizontalDiv #exitDiv img{
+	border:none;
+}
+
+#PageTurnerHorizontalDiv #prevButton a,  #PageTurnerVerticalDiv #prevButton a{
+	float:left;
+	background:url(${contextPath}/images/mview/button_lastRecord_pageTurner.png) no-repeat;
+	padding:4px 0 0 4px;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:35px;
+	height:22px;
+	font-size:11px;
+	cursor: pointer;
+}
+
+#PageTurnerHorizontalDiv #nextButton a, #PageTurnerVerticalDiv #nextButton a {
+	float:right;
+	background:url(${contextPath}/images/mview/button_nextRecord_pageTurner.png) no-repeat;
+	width:35px;
+	height:22px;
+	font-size:11px;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+}
+
+
+#exitButton:hover, #personalNotesDiv a:hover, #indexNames:hover, #volumeSummary:hover, #showAlreadyTranscribed:hover, #showTranscription:hover, #nextButton a:hover, #prevButton a:hover, #go:hover{
+	cursor:pointer;
+}
+
+#exitButton, #personalNotesDiv a, #indexNames, #volumeSummary, #showAlreadyTranscribed, #showTranscription, #nextButton, #prevButton a, #go{
+	cursor:pointer;
+}
+
+a.transcribe {
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	margin: 10px 0 0 0;
+	float:left;
+	width:122px;
+	height:22px;
+	cursor:auto;
+	text-decoration: none;
+	color: #6F6B69;
+	position:absolute;
+}
+
+.transcribeMessage:hover {
+	cursor:text;
+}
+
+.transcribeMessage {
+	color:#F00;
+	position:absolute;
+	text-decoration:none;
+	width:182px;
+	height:36px;
+	text-align: center;
+	padding-top: 4px;
+}
+
+#PageTurnerVerticalDiv #transcribeDiv .transcribeMessage {
+	width: 120px;
+}
+
+#PageTurnerVerticalDiv #transcribeDiv #transcribe {
+	position: absolute;
+}
+
+#extractTranscribe {
+	position: absolute;
+}
+
+#PageTurnerVerticalDiv #readyToTranscribe {
+	margin-top: 20px;
+	position: absolute;
+}
+
+#PageTurnerHorizontalDiv #readyToTranscribe {
+	margin: 10px 0 0 30px;
+	position: absolute;
+}
+
+#PageTurnerVerticalDiv #choiceThisFolioStart {
+        margin-top: 75px;
+}
+
+#PageTurnerHorizontalDiv #choiceThisFolioStart {
+        margin: 50px 0 0 30px;
+}
+
+#notExtract {
+	color: green;
+}
+
+#PageTurnerVerticalDiv #showAlreadyTranscribedDocs {
+	margin: 45px 0 0 0;
+	position:absolute;
+}
+
+#PageTurnerVerticalDiv #transcribeAnyway {
+	margin: 75px 0 0 0;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #showAlreadyTranscribedDocs {
+	margin: 25px 0 0 0;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #transcribeAnyway {
+	margin: 55px 0 0 0;
+	position:absolute;
+}
+
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size: 11px;
+	text-align:right;
+	padding:1px 4px 1px 4px;
+	width:auto;
+	border:1px solid #900;
+	float: right;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+#PageTurnerVerticalDiv .inputerrors {
+	margin: 206px 0 0 35px;
+	position: absolute;
+}
+
+#PageTurnerHorizontalDiv .inputerrors {
+	margin: 35px 0 0 226px;
+	position: absolute;
+}	
+
+
+/* ---- Show Allready Transcribed Document ----- */
+
+#showAlreadyTranscribed.transcribe   { /* Volume Summary button on Page Turner Panel */
+	 margin: 53px 0 0 35px;
+}
+
+#PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
+	 margin: 75px 0 0 0px;
+	position: absolute;
+}
+
+#PageTurnerVerticalDiv #extractTranscribe { /* Volume Summary button on Page Turner Vertical Panel */
+	 margin: 65px 0 0 0px;
+	position: absolute;
+}
+
+#PageTurnerHorizontalDiv #extractTranscribe { /* Volume Summary button on Page Turner Horizontal Panel */
+	 margin: 50px 0 0 30px;
+	position: absolute;
+}
+
+/* ---- Trascription ----- */
+
+#showTranscription {
+	margin: 25px 0 0 35px;
+}
+
+#PageTurnerVerticalDiv #showTranscription {
+	margin: 45px 0 0 0;
+}
+
+#showSynopsis {
+	float: left;
+}
+
+#editTranscription {
+	float: right;
+}
+
+#EditTranscriptionForm textarea#transcription[disabled] {
+	border: none;
+	background-color:#F6EDEC;
+}
+
+
+/* ---- Volume Summary ----- */
+
+#volumeSummary { /* Volume Summary button on Page Turner Panel */
+	margin:7px 0 0 37px;
+	position:absolute;
+	background:url(${contextPath}/images/mview/button_volumeSummary.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:35px;
+	height:35px;
+	font-size:11px;
+}
+
+#volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
+	margin: 3px 0 0 329px;
+}
+
+#PageTurnerVerticalDiv #volumeSummary {
+	margin: 227px 0 0 0;
+}
+
+/* Volume Summary dialog Window */
+
+#volumeSummaryWindow {
+	max-height:500px;
+	width:500px;
+}
+
+#volumeSummaryWindow .row {
+	display: table-row;
+}
+
+#volumeSummaryWindow .item {
+	display: table-cell;
+	width:160px;
+	text-align:left;
+	color:#6d5c4d;
+	padding:3px 0 3px 0;
+}
+
+#volumeSummaryWindow .value {
+	display: table-cell;
+	width:340px;
+	text-align:left;
+	color:#8B7563;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow .valueMissingFolios {
+	color:#900;
+	display: table-cell;
+	width:350px;
+	text-align:left;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow hr { /* Horizontal Line used to separate areas inside the Edit Forms */
+	margin:10px 0 10px 0;
+	padding:0;
+	width:480px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
+	font-size:14px;
+	font-style:italic;
+	color:#C18D72;
+	margin:3px 0 15px 0;
+}
+
+h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
+	font-size: 12px;
+	color:#6d5c4d;
+	margin:3px 0 3px 0;
+}
+
+/* ---- Index of Names ----- */
+
+#indexNames { /* Index of Names button on Page Turner Panel */
+	margin:7px 0 0 37px;
+	position:absolute;
+	background:url(${contextPath}/images/mview/button_indexOfNames.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:35px;
+	height:35px;
+	font-size:11px;
+}
+
+#indexNames.transcribe { /* Index of Names button on Page Turner Pannel */
+	margin: 40px 0 0 328px;
+}
+
+#PageTurnerVerticalDiv #indexNames {
+	margin: 227px 0 0 46px;
+}
+
+
+/* ---------------- */
+/*
+/* -- Rubricario -- */
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
+	width:170px;
+	position:absolute;
+	margin:13px 0 0 250px;
+}
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo.transcribe { /* Contains "Rubricario Count" and "Move to rubricario" */
+	margin: 13px 0 0 447px;
+}
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo #moveToRubricarioForm { /* "Move to Rubricario" FORM */
+	width:155px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+	margin:0;
+}
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo .rubricarioLabel { /* "Move to rubricario" <label> class  */
+	font-size:10px;
+	margin:0 0 0 -50px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo .input_4cRucricario { /* "Move to rubricario" <input> ID  */
+	margin:-4px 0 0 100px;
+	position:absolute;
+	width: 30px;
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+}
+
+#PageTurnerHorizontalDiv #rubricarioMoveTo #goR { /* "Move to rubricario" <input> GO button ID  */
+	margin:-5px 0 0 140px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
+	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
+}
+
+/* ---------------- */
+/*
+/* ---- Folio ----- */
+
+
+#PageTurnerHorizontalDiv #folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
+	width:160px;
+	position:absolute;
+	margin:50px 0 0 240px;
+}
+
+#PageTurnerHorizontalDiv #folioMoveTo.transcribe { /* Contains "Folio Count" and "Move to folio" */
+	margin: 58px 0 0 165px;
+}
+
+#PageTurnerHorizontalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM */
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM in VERTICAL MODE */
+	width:120px;
+	color:#6d5c4d;
+	position: absolute;
+	margin: 181px 0 0 2px;
+}
+
+#PageTurnerHorizontalDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
+	font-size: 12px;
+	margin:0 0 0 33px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID in VERTICAL MODE  */
+	font-size: 12px;
+	margin:0;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#PageTurnerHorizontalDiv #folioMoveTo .input_4cFolio { /* "Move to folio" <input> ID  */
+	margin: -4px 0 0 65px;
+	position:absolute;
+	width: 30px;
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo .input_4cFolio { /* "Move to folio" <input> ID in VERTICAL MODE  */
+	margin: -2px 0 0 39px;
+	position:absolute;
+	width: 30px;
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+}
+
+
+#PageTurnerHorizontalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID  */
+	margin: -5px 0 0 110px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
+	font-size: 12px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID in VERTICAL MODE  */
+	margin: -5px 0 0 92px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
+	font-size: 12px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
+}
+
+
+/* ---------------- */
+/*
+/* ---- Personal Notes ----- */
+
+#PageTurnerHorizontalDiv #personalNotesDiv a{
+	margin:8px 0 0 455px;
+	position:absolute;
+	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:32px;
+	height:32px;
+	font-size:11px;
+}
+
+#PageTurnerVerticalDiv a#personalNotesButton{
+	margin: 230px 0 0 91px;
+	position:absolute;
+	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width: 32px;
+	height:32px;
+	font-size:11px;
+	cursor:pointer;
+}
+
+#PageTurnerHorizontalDiv #personalNotesDiv a.transcribe{
+	margin: 7px 0 0 403px;
+}
+
+
+/* ---------------- */
+/*
+/* ---- Exit ----- */
+
+#exitDiv a{
+	margin:47px 0 0 455px;
+	position:absolute;
+	background:url(${contextPath}/images/mview/button_small.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:52px;
+	height:22px;
+	font-size: 12px;
+	text-transform:capitalize;
+}
+
+#PageTurnerHorizontalDiv #exitDiv a.transcribe{
+	margin: 53px 0 0 390px;
+}
+
+#PageTurnerVerticalDiv a#exitButton{
+	margin: 300px 0 0 35px;
+	position:absolute;
+}
+
+/* ---------------- */
+/*
+/* ---- Lines ----- */
+
+#PageTurnerHorizontalDiv #line {
+	width:1px;
+	height:70px;
+	background-color:#E6D0C6;
+	margin:6px 0 0 200px;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #line.transcribe {
+	margin: 6px 0 0 194px;
+}
+
+#PageTurnerHorizontalDiv #line2 {
+	width:1px;
+	height:70px;
+	background-color:#E6D0C6;
+	margin:6px 0 0 441px;
+	position:absolute;
+}
+
+#PageTurnerHorizontalDiv #line2.transcribe {
+	margin: 6px 0 0 375px;
+}
+
+#PageTurnerVerticalDiv #line, #PageTurnerVerticalDiv #line2 {
+	width:120px;
+	height:1px;
+	background-color:#E6D0C6;
+}
+
+#PageTurnerVerticalDiv #line {
+	position:absolute;
+	margin-top: 110px;
+}
+
+#PageTurnerVerticalDiv #line2 {
+	position:absolute;
+	margin-top: 280px;
+}
+
+/* ---------------- */
+/*
+/* ---- Edit Extract ----- */
+
+#EditExtractDocumentDiv #editSynopsis {
+	float: right;
+	margin-right:6px
+}
+
+#EditExtractDocumentDiv #saveAndExit {
+	float: right;
+}
+
+#EditExtractDocumentDiv #saveExtract {
+	float:left;
+	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+}
+
+#EditExtractDocumentDiv #saveAndEditSynopsis {
+	float:right;	
+	display:inline;
+	background:url(${contextPath}/images/mview/button_large.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:182px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+}
+
+/* ---------------- */
+/*
+/* ---- Edit Synopsis ----- */
+
+#EditSynopsisDocumentDiv #saveAndExit {
+	float: right;
+}
+
+#EditSynopsisDocumentDiv #saveSynopsis {
+	float:left;
+	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+}
+
+#EditSynopsisDocumentDiv #saveSynopsisExit {
+	float:right;	
+	display:inline;
+	background:url(${contextPath}/images/mview/button_large.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:182px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+}
+
+/* ---------------- */
+/*
+/* ---- Personal Notes ----- */
+
+#DialogPersonalNotesDiv #saveNotes {
+	float:left;
+	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding:2px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+	cursor:pointer;
+}
+
+#DialogPersonalNotesDiv #cleanNotes {
+	float:right;	
+	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding: 4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+	cursor:pointer;
+}
+
+#loadingDiv { /* Animated Gif that shows up when saving each edit section */
+    background-image:url(${contextPath}/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40); /* IE */
+    width:485px;
+    position:absolute;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+#ShowSynopsisDocumentDiv, #ShowExtractDocumentDiv {
+    max-height: 485px;
+}
+
+
+
+/* Modified elements from the original jquery-ui-1.8.9.custos.css */
+
+/* Component containers
+----------------------------------*/
+
+.ui-widget { 
+	font-family:Georgia, "Times New Roman", Times, serif; 
+	
+ 	font-size: 12px;
+	-moz-box-shadow: 1px 1px 10px #666;
+	-webkit-box-shadow: 1px 1px 10px #666;
+	box-shadow: 1px 1px 10px #666; 
+}
+
+.ui-widget .ui-widget { font-size: 11px; }
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { 
+	font-family:Georgia, "Times New Roman", Times, serif; 
+	font-size: 12px;
+	color: #6F6B69; 
+}
+
+.ui-widget-content { 
+	border: 1px solid #e6d0c6; 
+	background: #f3e7e2 ; 
+	color: #000000; 
+}
+
+
+/* Interaction states
+----------------------------------*/
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(${contextPath}/images/mview/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(${contextPath}/images/mview/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+
+
+/* jQuery UI Dialog 1.8.9 */
+
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative; background-color: #E9D5D1; border: none;}
+.ui-dialog .ui-dialog-title { margin: 5px 0 5px 0; color:#6d5c4d; } 
+.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background-color: #f3e7e2; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { 
+	text-align: left; 
+	border-width: 1px 0 0 0; 
+	margin: .5em 0 0 0; 
+	padding: .3em 1em .5em .4em;
+	
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
+.ui-dialog .ui-dialog-buttonpane button { 
+	margin: .5em .4em .5em 0; 
+	cursor: pointer; 
+	background-color: #e6d0c6;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none; 
+}

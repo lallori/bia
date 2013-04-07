@@ -144,7 +144,7 @@
 	<build>
 	    <finalName>${customer.warname}-${project.version}</finalName>
 		<filters>
-			<filter>WebContent/WEB-INF/config/filter-${customer}.properties</filter>
+			<filter>customers/${customer}/filter-${customer}.properties</filter>
 		</filters>
 		<resources>
 			<resource>
@@ -227,7 +227,7 @@
 					<attachClasses>true</attachClasses>
 					<webResources>
 			            <resource>
-				    		<directory>${basedir}/WebContent/WEB-INF/jsp/custom/${customer}</directory>
+				    		<directory>${basedir}/customers/${customer}/jsp/</directory>
 				    		<targetPath>WEB-INF/jsp</targetPath>
 				    		<includes>
 				    			<include>**/*.*</include>
@@ -235,8 +235,15 @@
 			            </resource>
 			            <resource>
 				    		<filtering>true</filtering>
-				    		<directory>${basedir}/WebContent/styles</directory>
+				    		<directory>${basedir}/customers/${customer}/styles/</directory>
 				    		<targetPath>styles</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+			            </resource>
+			            <resource>
+				    		<directory>${basedir}/customers/${customer}/images/</directory>
+				    		<targetPath>images</targetPath>
 				    		<includes>
 				    			<include>**/*.*</include>
 				    		</includes>
@@ -249,6 +256,13 @@
 				    			<include>**/*.*</include>
 				    		</includes>
 				    	</resource>
+			            <resource>
+				    		<filtering>true</filtering>
+				    		<directory>${basedir}/WebContent/manual</directory>
+				    		<includes>
+				    			<include>**/*.html</include>
+				    		</includes>
+			            </resource>
 				    	<resource>
 				    		<filtering>true</filtering>
 				    		<directory>${basedir}/WebContent/WEB-INF/config</directory>
@@ -379,6 +393,13 @@
 		    <properties>
 		      <customer>demo</customer>
               <customer.warname>biademo</customer.warname>
+		    </properties>
+		</profile>
+		<profile>
+			<id>isabella</id>
+		    <properties>
+		      <customer>isabella</customer>
+              <customer.warname>isabella</customer.warname>
 		    </properties>
 		</profile>
 	</profiles>

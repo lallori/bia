@@ -1,0 +1,81 @@
+.menuadm {
+	padding-left: 15px; /*offset of tabs relative to browser left edge*/
+	z-index:999;
+}
+
+.menuadm ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+/*Top level list items*/
+.menuadm ul li{
+	position: relative;
+	display: inline;
+	float: left;
+}
+
+/*Top level menu link items style*/
+.menuadm ul li a{
+	display: block;
+	padding: 4px 7px 4px 7px;
+	color: #FFFDF5;
+	text-decoration: none;
+	font-size:10px;
+	
+}
+
+	
+/*1st sub level menu*/
+.menuadm ul li ul{
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+	margin-top:-3px;
+	z-index:999;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.menuadm ul li ul li{
+	display: list-item;
+	float: none;
+	z-index:999;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.menuadm ul li ul li ul{
+	top: 3px;
+	z-index:999;
+}
+
+/* Sub level menu links style */
+.menuadm ul li ul li a{
+	width: 125px; /*width of sub menus*/
+	background-color: #BEA088;
+	color: white;
+	padding:0px 5px 3px 5px;
+	z-index:999;
+	
+}
+
+.menuadm ul li ul li a:hover{ /*sub menus hover style*/
+	background: #85705E;
+	color: white;
+	z-index:999;
+}
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+
+.downarrowclass{
+	position: absolute;
+	top: 7px;
+	right: 5px;
+}
+
+.rightarrowclass{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}

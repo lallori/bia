@@ -1,0 +1,184 @@
+/*
+   modalbox.css
+   
+   Modalbox project
+   
+   Created by Andrew Okonetchnikov.
+   Copyright 2006-2010 okonet.ru. All rights reserved.
+   
+   Licensed under MIT license.
+*/
+
+#MB_overlay {
+	position: absolute;
+	margin: auto;
+	top: 0;	left: 0;
+	width: 100%; height: 100%;
+	z-index: 9999;
+	border: 0;
+	background-color: #000!important;
+}
+#MB_overlay[id] { position: fixed; }
+
+#MB_windowwrapper {
+	position: absolute;
+	top: 0;
+	width:100%;
+}
+
+#MB_window {
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	top:0;
+	left:0;
+	border: 0 solid;
+	text-align: left;
+	z-index: 10000;
+}
+#MB_window[id] { position: relative; }
+
+#MB_frame {
+	position: relative;
+	background-color:#f6edec; 
+	height: 100%;
+}
+
+#MB_header {
+	margin: 0;
+	padding: 0;
+}
+
+#MB_content {
+	position: relative;
+	padding: 6px .75em;
+	overflow: auto;
+}
+
+#MB_caption {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#6d5c4d; 
+	padding: .5em 2em .5em .75em;
+	margin: 0;
+	text-align: center;
+}
+
+#MB_close {
+	display: block;
+	position: absolute;
+	right: 5px; top: 4px;
+	padding: 2px 3px;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 13px;
+	cursor:pointer;
+}
+
+a#MB_close span {
+	font-size: 14px;
+	cursor:pointer;
+	font-weight: bold;
+}
+
+
+#MB_close:hover {
+	background: transparent;
+	cursor:pointer;
+}
+
+#MB_loading {
+	padding: 1.5em;
+	text-indent: -10000px;
+	background: transparent 50% 0 no-repeat;
+}
+
+#MB_window span, #modalBox span{
+	color:#6D5C4D;
+	font-size:11px;
+	text-align:center;
+	cursor:default;
+}
+
+/* Color scheme */
+#MB_window {
+	background-color: #EFEFEF;
+	color: #000;
+	
+	-webkit-box-shadow: 0 0 64px #000; 
+	-moz-box-shadow: #000 0 0 64px; 
+	box-shadow: 0 0 64px #000;
+}
+	#MB_frame {
+		padding-bottom: 4px;
+		
+		-webkit-border-bottom-left-radius: 4px;
+		-webkit-border-bottom-right-radius: 4px;
+
+		-moz-border-radius-bottomleft: 4px;
+		-moz-border-radius-bottomright: 4px;
+
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
+	}
+
+.modalBox-close{
+	background-color: #e6d0c6;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:12px;
+	padding:3px 4px 3px 5px;
+	margin:20px auto 5px 33px;
+	cursor:pointer;
+}
+
+#modalBoxCloseDiv{
+	margin:0 auto 15px 288px;
+	position:relative;
+}
+
+
+
+#ShowVolumeExplorerFullScreenCom #modalBoxCloseDiv{
+	margin:0 auto 0 480px;
+	display:inline;
+	height:80px;
+}
+
+
+
+/* Color scheme */
+#MB_frame {
+	padding-bottom: 7px;
+	-webkit-border-radius: 7px; 
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+#MB_window {
+	background-color:#f6edec; 
+	color: #6D5C4D;
+	-webkit-box-shadow: 0 8px 64px #000; 
+	-moz-box-shadow: 0 0 64px #000; 
+	box-shadow: 0 0 64px #000;
+	-webkit-border-radius: 7px; 
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+#MB_content { border-top: 1px solid #F9F9F9; }
+
+#MB_header {
+  background-color: #f6edec;
+  border-bottom:1px solid #e6d0c6;
+}
+#MB_caption { color: #6d5c4d }
+#MB_close { color: #6d5c4d }
+#MB_close:hover { color: #000 }
+
+
+/* Alert message */
+.MB_alert {
+	margin: 10px 0;
+	text-align: center;
+}
