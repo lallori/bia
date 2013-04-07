@@ -4,11 +4,11 @@
 		<!--<base href="/DocSources"></base>-->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>the MEDICI ARCHIVE PROJECT</title>
-        <link rel="shortcut icon" type="image/x-icon" href="/DocSources/images/favicon_medici.png" />
-        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/MainContent.css" />
-        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/Template.css" />
-        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/DataEntryManual.css"/>
-		<link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/js/jquery-ui.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/images/favicon_medici.png" />
+        <link rel="stylesheet" type="text/css" href="${contextPath}/styles/1024/MainContent.css" />
+        <link rel="stylesheet" type="text/css" href="${contextPath}/styles/1024/Template.css" />
+        <link rel="stylesheet" type="text/css" href="${contextPath}/styles/1024/DataEntryManual.css"/>
+		<link rel="stylesheet" type="text/css" href="${contextPath}/styles/1024/js/jquery-ui.css" />
 
         <!--[if lte IE 7]>
         <style type="text/css">
@@ -16,13 +16,13 @@
         </style>
         <![endif]-->
 
-		<script type="text/javascript" src="/DocSources/scripts/jquery.min.js"></script>
-        <script type="text/javascript" src="/DocSources/scripts/jquery.form-2.47.js"></script>
-		<script type="text/javascript" src="/DocSources/scripts/jquery.open.js"></script>
-		<script type='text/javascript' src='/DocSources/scripts/jquery.blockUI.js'></script>
-		<script type="text/javascript" src="/DocSources/scripts/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="/DocSources/scripts/jquery.multi-open-accordion-1.0.1.js"></script>
-        <script type="text/javascript" src="/DocSources/scripts/jquery.scrollTo-min.js"></script>	
+		<script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
+        <script type="text/javascript" src="${contextPath}/scripts/jquery.form-2.47.js"></script>
+		<script type="text/javascript" src="${contextPath}/scripts/jquery.open.js"></script>
+		<script type='text/javascript' src='${contextPath}/scripts/jquery.blockUI.js'></script>
+		<script type="text/javascript" src="${contextPath}/scripts/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="${contextPath}/scripts/jquery.multi-open-accordion-1.0.1.js"></script>
+        <script type="text/javascript" src="${contextPath}/scripts/jquery.scrollTo-min.js"></script>	
 
 
 		<script type="text/javascript">
@@ -256,9 +256,9 @@
             
             <h1 id="interface">Modules' Common Interface</h1>
             <p>This is the common Interface:</p>
-            <img src="/DocSources/images/dataEntryManual/interface.png" alt="MAP Database interface" width="750" height="550" style="margin-left:115px"/>
+            <img src="${contextPath}/images/dataEntryManual/interface.png" alt="MAP Database interface" width="750" height="550" style="margin-left:115px"/>
             <p>It is composed by:</p> 
-            <img src="/DocSources/images/dataEntryManual/interfaceParts.png" alt="MAP Database interface parts" width="857" height="550" style="margin-left:60px"/>
+            <img src="${contextPath}/images/dataEntryManual/interfaceParts.png" alt="MAP Database interface parts" width="857" height="550" style="margin-left:60px"/>
             <ul class="numbers">
             	<li id="basicSearch"><u>Basic Search</u>: is placed at the top left of the <i>Main Menu</i> and permits a "word search" on documents, volumes, people, places, and Community comments. The results are displayed in a list on the Right slipt screen. It's also possible to search through the results obtained from a basic search, but only using the Advanced Search format. </li>
                 <li id="lastEntryMenu"><u>Last entry menu</u>: is placed at the top right of the <i>Main Menu</i> and it consists in four buttons that if clicked take you to the last document, person, volume or place that you most recently edited.</li>
@@ -299,9 +299,9 @@
             
             <h1 id="example">Example of Connections Among Modules</h1>
             <p>Let's take a concrete example of the way the modules are interconnected: a letter from Cosimo I de' Medici to Luca Martini, as it appears in "DocBase."  The document below is indexed to the Sender, the Recipient, and also to the town of Firenze where the Sender wrote it, and to Pisa, where the Recipient received it.</p>
-            <img src="/DocSources/images/dataEntryManual/connectionEx1.png" alt="Example of Connections Among Modules" width="359" height="900" style="margin-left:270px"/>
+            <img src="${contextPath}/images/dataEntryManual/connectionEx1.png" alt="Example of Connections Among Modules" width="359" height="900" style="margin-left:270px"/>
             <p>Note that in Correspondents/People section are wrotten the names of the Sender, Recipient and  a complete list of all the people and documents indexed in the database. If you click, for example, on Martini Luca, the PeopleBase will appear on the right split screen, showing his full biographical record <font color="#FF0000">in display mode</font>:</p>
-            <img src="/DocSources/images/dataEntryManual/connectionEx2.png" alt="Example of Connections Among Modules" width="900" height="1380" style="margin-left:30px"/>
+            <img src="${contextPath}/images/dataEntryManual/connectionEx2.png" alt="Example of Connections Among Modules" width="900" height="1380" style="margin-left:30px"/>
             <p>If you click on the Sender Place (Firenze / Firenze / Toscana / Italia) the GeoBase record of Firenze will be opened in a new tab on the right split screen.</p>
             <p><font color="#FF0000">Manca l'immagine perché su javatuning dice "could not load this tab. We'll try to fix this as soon as possible." PAG. 11</font></p>
         
@@ -365,7 +365,7 @@
 <!-- IV. Volbase Sections -->             
             <h1 id="volbaseSections">Volbase Sections</h1>
             <h4>Volume Details</h4>
-            <img src="/DocSources/images/dataEntryManual/volumeDetails.png" alt="Volume details" width="520" height="355" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/volumeDetails.png" alt="Volume details" width="520" height="355" align="left"/>
             <!-- Foto -->
             <ul class="numbers" >
             	<li><u>Series list, Volume/Filza MDP, Volume extension</u></li>
@@ -377,7 +377,7 @@
             <p>Another example of a Date Note would be, "Letters are generally dated in Roman style but mistakenly filed according to Florentine style." This explanation could save a great deal of time and confusion for a scholar consulting the volume for the first time.</p>
             
             <h4 id="volDescription">Description</h4>
-            <img src="/DocSources/images/dataEntryManual/volumeDescription.png" alt="Volume description" width="520" height="750" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/volumeDescription.png" alt="Volume description" width="520" height="750" align="left"/>
             <ul class="numbers">
             	<li>In the <u>ORGANIZATIONAL CRITERIA field</u>, enter essential information regarding the arrangement of documents within the volume. For example, <i>"A reconstituted filza, combining material formerly in MP 65 and MP 67.  Two separate schemes of pagination and no index."</i> Or (as above), <i>"A very loose series (including material relocated from the Miscellanea Medicea) divided into 5 inserts of varying sizes."</i> Though this is a free-text field, clarity and conciseness is encouraged. The goal is not to offer a definitive description, but rather to help scholars by giving them advance notice of what they will find in the volume.</li>
                 <li><u>CONDITION field</u>: Enter information describing the condition of volume and documents.  For example: "Documents heavily treated and sometimes faint." Here as well, the goal is to help scholars make efficient use of this material, not to offer a full curatorial description.</li>
@@ -391,7 +391,7 @@
             <br /><br /><br /><br />
             
             <h4 id="volCorrespondents">Correspondents</h4>
-            <img src="/DocSources/images/dataEntryManual/volumeCorrespondents.png" alt="Volume Correspondents" width="520" height="340" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/volumeCorrespondents.png" alt="Volume Correspondents" width="520" height="340" align="left"/>
             <ul class="numbers">
             	<li>In the <u>FROM and TO fields</u> type general descriptions of the correspondents who wrote and received the letters in this volume. For example, <i>"From: Tuscan Court (Andrea Cioli; Ferdinando I; Cristina di Lorena)"</i> and <i>"To: Italy and Abroad (Princes; Nobles; Gentlemen.)" Or (as in the example above), "From: Italy (Nobles; Gentlemen; Agents; Administrators)"</i> and <i>"To: Tuscan Court (Cosimo I; Secretary: Cristiano Pagni)"</i>.</li>
                 <p><i>Note: In <b>VolBase</b>, FROM and TO are free text fields. The goal is to give a general impression of the nature or internal logic of the volume, not to compose a complete description of every variable. This differs markedly from our practice in tracking the "Senders" and "Recipients" of individual documents in <b>DocBase</b>, where the names of "People" and "Places" are linked to unique records in "PeopleBase" and "GeoBase".</i></p>
@@ -399,7 +399,7 @@
             <br /><br /><br /><br /><br />
             
             <h4 id="volContext">Context</h4>
-            <img src="/DocSources/images/dataEntryManual/volumeContext.png" alt="Volume Correspondents" width="520" height="340" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/volumeContext.png" alt="Volume Correspondents" width="520" height="340" align="left"/>
             <ul class="numbers">
             	<li><u>CONTEXT field</u></li>
                 <li><u>INVENTARIO SOMMARIO DESCRIPTION field</u></li>
@@ -421,7 +421,7 @@
             <p>The Archivio Mediceo del Principato includes a significant number of anonymous "avvisi" or newsletters. A separate record is created for each of these, as described in Section V, Topics.  In this case, the name of the Sender is usually "Not Relevant", while the Place of the Sender is usually the place where the avviso originated.  The Recipient may or may not be "Relevant" depending on the context; and the recipient place is most often "Firenze".</p>
            
             <h1>Document Details</h1>
-            <img src="/DocSources/images/dataEntryManual/documentDetails.png" alt="Document details" width="520" height="520" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentDetails.png" alt="Document details" width="520" height="520" align="left"/>
             <ul class="numbers">
             	<li><u>VOLUME (MDP) field</u></i></li>
                 <li><u>INSERT/PART:</u> Some volumes are subdivided into distinct parts. (This scheme of division should be clearly explained in the <b>"Volume Summary"</b>, in the "VOLUME ORGANIZATIONAL CRITERIA" field.) For example, if a volume is broken down into 5 folders marked with Roman numerals, insert the Roman numeral of the folder containing the particular document.</li>
@@ -439,13 +439,13 @@
             <p>You have now completed data entry in the DOCUMENT DETAILS portion of the DocBase screen, and can move on to entering information on the DocBase sections.</p>
            
             <h1>Fact Check</h1>
-            <img src="/DocSources/images/dataEntryManual/documentFactCheck.png" alt="Document Fact Check" width="520" height="170" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentFactCheck.png" alt="Document Fact Check" width="520" height="170" align="left"/>
             <p><font color="#FF0000">This section in the DocBase module is intended to store information about pending research questions related to this document. The Fact Check Grid (see below) can be filtered to show all questions entered by a given researcher, and then printed out for handy reference for offsite research at other libraries and archives.</font></p>
             <br />
           
             <h1>Correspondents/People</h1>
             <h4>Correspondents</h4>
-            <img src="/DocSources/images/dataEntryManual/documentCorrespondents.png" alt="Document Correspondents" width="520" height="440" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentCorrespondents.png" alt="Document Correspondents" width="520" height="440" align="left"/>
             <ul class="numbers">
                 <li><u>SENDER and RECIPIENT NAME</u>. To insert a name into the "Sender" and "Recipient" fields:
                       <ul>
@@ -477,7 +477,7 @@
             </ul>
             
             <h4>People</h4>
-            <img src="/DocSources/images/dataEntryManual/documentPeople.png" alt="Document People" width="520" height="240" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentPeople.png" alt="Document People" width="520" height="240" align="left"/>
             <ul class="numbers">
             	<li></li>
                 <li></li>
@@ -488,7 +488,7 @@
             
             <h4>General considerations</h4>
             <p>There are three ways of editing the Extract and Synopsis section:</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynButtons.png" alt="Document Extract Synopsis buttons" width="520" height="58" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynButtons.png" alt="Document Extract Synopsis buttons" width="520" height="58" align="left"/>
             <ul class="numbers">
             	<li>Edit</li>
                 <li>Edit with Split screen</li>
@@ -496,16 +496,16 @@
             </ul>
             
             <h4>Edit</h4>
-            <img src="/DocSources/images/dataEntryManual/documentEditExtSyn.png" alt="Edit Extract/Synopsis" width="520" height="430" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/documentEditExtSyn.png" alt="Edit Extract/Synopsis" width="520" height="430" align="left"/>
             <p style="margin-bottom:350px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             <h4>Edit with Split screen</h4>
             <br />
-            <img src="/DocSources/images/dataEntryManual/documentExtSynSplitScreen.png" alt="Edit Extract/Synopsis with Split screen" width="845" height="520" align="left" style="display:block; float:none"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynSplitScreen.png" alt="Edit Extract/Synopsis with Split screen" width="845" height="520" align="left" style="display:block; float:none"/>
             <p style="margin-bottom:50px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             
             <h4>Edit with Manuscript Transcriber</h4>
             <br />
-            <img src="/DocSources/images/dataEntryManual/documentExtSynManTrans.png" alt="Edit Extract/Synopsis with Split screen" width="800" height="479" align="left" class="editManTrans"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynManTrans.png" alt="Edit Extract/Synopsis with Split screen" width="800" height="479" align="left" class="editManTrans"/>
             <p style="margin-bottom:50px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             
             
@@ -514,25 +514,25 @@
             <p>Ideally, the "English Synopsis" will offer a concise summary of the relevant portion of the document while the "Document Extract" will include crucial terminology in the original language. Though the "Synopsis" and the "Extract" should be mutually supporting, they needn't be mirror images of each other.</p>
             <p>Also, the "English Synopses" should be clear and self-contained. An important consideration in structuring the database is that it be fully navigable in English, until the user reaches the advanced scholarly level of the "Extracts" in the original languages.</p>
             <p>Consider this example, in which the "English Synopsis" is practically a translation.</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx1.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx1.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
             <br /><br />
             <p>In the following case, however, there are some differences.  Here the "Synopsis" is really a summary.</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx2.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="143" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx2.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="143" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
             <br /><br />
             <p>In the following example, the "Synopsis" is part translation and part summary.  The researcher has omitted the colorful (and perhaps untranslatable) language of the original, and added a conjecture concerning the identity of one of the persons mentioned there.</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx3.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx3.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
             <br /><br />
             <p>In the following example, the researcher is certain about the identity of "Benvenuto," so the name appears in brackets in the "Extract" as well.  Note that the expression "various items" stands in for many details in the original.</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx4.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="145" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx4.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="145" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
             <br /><br />
             <p>The same conciseness is evident in the following example.  The expressive human details in the "Extract" are summed up in a few words in this "Synopsis".  This example also shows how the mention of a particularly important object, in this case a "predella" or birthing chair, can tilt the balance in favor of including a document that at first glance might seem marginally relevant to our criteria for inclusion.  The birthing chair clearly links the document to the TOPIC of "Furniture" and it also renders the reference to childbirth practice so concrete as to support an attribution to "Medicine."</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx5.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="171" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx5.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="171" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
             <br /><br />
             <p>Here the "English Synopsis" introduces information that the researcher has deduced from elsewhere in the document or from elsewhere in the correspondence (concerning a book that is being prepared for publication.) In addition to the reference to "Books and Printing", the document is also relevant to the topics "Academies" and "Antiquities and Antiquarianism." </p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx6.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="102" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx6.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="102" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
             <br /><br />
             <p>Sometimes the "Synopsis" will suffice and there will be no need for an "Extract." This is especially the case when a document is so diffuse that the extract cannot give a characteristic impression without running longer than the content warrants. If the original document is too illegible for us to transcribe as fully as we would like, we can also throw the weight of description onto the "English Synopsis."  Consider the following example:</p>
-            <img src="/DocSources/images/dataEntryManual/documentExtSynEx7.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="84" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
+            <img src="${contextPath}/images/dataEntryManual/documentExtSynEx7.png" alt="Edit Extract/Synopsis with Split screen" width="842" height="84" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
             <p>Since there is no single "Right Way" or "Wrong Way" to construct a document entry, w should avoid being over-ingenious in making problems for ourselves. If we can't find an appropriate formula for including a particular bit of information, we should allude to it more generally or leave it out.</p>
             <h1 id="spelling">Spelling conventions in "Document Extracts"</h1>
             <p>Our goal is to keep the criteria for transcription as simple and intuitive as possible, in order to facilitate work on the data entry side. We also need to maximize word-search capability on the data-retrieval side. In dealing with the characteristically irregular spelling in old documents, these two requirements are at seeming odds with each other. Fortunately, we found a compromise solution that comes near to letting us have our cake and eat it too.</p>
@@ -580,7 +580,7 @@
             <p>The conventions of modern punctuation will be used (but sparingly and without forcing interpretations of the text. When in doubt, don't punctuate.)</p>
             
             <h1 id="topics">DocBase Topics</h1>
-            <img src="/DocSources/images/dataEntryManual/documentTopics.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="210" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/documentTopics.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="210" align="left" />
             <ul class="numbers" style="margin-bottom:50px">
 				<li><u>Delete this entry</u>: You can delete a topic assignment by clicking on the red "X" button to the right of the assignment row.  This will not delete the topic itself or the place record; it will only delete the assignment of this topic/place combination to this particular document.</li>
                 <li><u>Edit value</u>:</li>
@@ -640,7 +640,7 @@
             </ul>
             <p>In fact, this list of  TOPICS <font color="#FF0000">(which is discussed more fully under <b>Topic Criteria</b>, below)</font> has a double significance for the Project. Most immediately, it represents a concrete set of indexing terms built into the system. More generally, it serves to define the concept of "Arts and Humanities" as expressed in the "Documentary Sources" database. A useful exercise is to imagine these topics as pins stuck in a map. For our purposes, "Arts and Humanities" is the territory that falls within this perimeter.</p>
             
-            <img src="/DocSources/images/dataEntryManual/documentTopicsList.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="397" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/documentTopicsList.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="397" align="left" />
             <ul class="numbers" style="margin-top:130px; margin-bottom:75px">
             	<li id="indexingTopics"><u>Indexing Topics</u>: The procedure for assigning topics to a document entry is a simple matter of selecting the topic from the pull-down list in the DocBase TOPICS SECTION.</li>
                 <li><u>"?" icon</u>:</li>
@@ -708,7 +708,7 @@
 
 <!-- Person Details -->            
             <h4 id="peoplebaseSection">Person Details</h4>
-            <img src="/DocSources/images/dataEntryManual/personDetails.png" alt="Perosn Details" width="520" height="608" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/personDetails.png" alt="Perosn Details" width="520" height="608" align="left" />
             <ul class="numbers">
             	<p>We are tracking, organizing and storing biographical information relevant to every person added to PeopleBase. These "Person Details" are intended to serve two functions: (1) to assist Project Researchers in identifying references in documents, and (2) to enhance the usefulness of PeopleBase as a biographical research tool.</p>
             	<li><u>FIRST NAME</u>  If there is more than one given name (e.g. Giovanni Battista) put both names in the "First Name" field.  Prefer the modern version of a given name.  For example prefer Bartolomeo to Bartolommeo, Roberto to Ruberto, Leonardo to Lionardo.  Prefer Iacopo to Jacopo.</li>
@@ -724,7 +724,7 @@
 
 <!-- Names -->              
             <h4 id="peopleNames">Names</h4>
-            <img src="/DocSources/images/dataEntryManual/personNames.png" alt="Perosn Names" width="520" height="420" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/personNames.png" alt="Perosn Names" width="520" height="420" align="left" />
             <p>Clicking the edit button on the NAMES section in PeopleBase allows us to record and classify the wide range of names that often occur for a single individual. All significant components of a person's names (including variants) can thus be entered by the Project Researcher and retrieved by the database user. <font color="#FF0000">As you see in the column to the far right of the "Names" Tab page, every name component is directly linked to that person's unique "ID Number" (pag.56).</font></p>
             <p>Each name part is entered separately under the NAME section and categorized by one of six available NAME TYPES selected from a pull-down list. Note that prepositions are not used as name parts. The "Name Types" are:</p>
             <ul style="list-style:none;">
@@ -743,29 +743,29 @@
             <ul  style="padding-left:15px;">
                 <li>
                     <p>You should include any <b>Appellatives</b> that occur in the documents or are widely acknowledged in secondary sources (for example "Pater Patriae" for Cosimo il Vecchio de' Medici.)</p>
-                    <img src="/DocSources/images/dataEntryManual/personNamesEx1.png" alt="Maria Magdalena Names" width="520" height="161" align="left" />
+                    <img src="${contextPath}/images/dataEntryManual/personNamesEx1.png" alt="Maria Magdalena Names" width="520" height="161" align="left" />
                     <p style="margin-top:40px">Peculiar or specialized forms can be explained in the note field (like Madama Serenissima for Cristina di Lorena and Serenissima Arciduchessa for Maria Maddalena d'Austria, which were the principal names by they were known in the context of their public careers.)</p>
                 </li>
                 <li>
                     <p style="margin-top:80px;">When the <b>Appellative</b> is part of the person's commonly used name (for example "di Castellina" in "Medici di Castellina"), it is included in the ID name, but it also appears as an Appellative in the context of "Name Forms":</p>
-                    <img src="/DocSources/images/dataEntryManual/personNamesEx2.png" alt="Lorenzo di Raffaello Names" width="520" height="200" align="left" />
+                    <img src="${contextPath}/images/dataEntryManual/personNamesEx2.png" alt="Lorenzo di Raffaello Names" width="520" height="200" align="left" />
                     <p style="margin-top:45px;">Be sure that <b>prefixes</b> are placed at the end of a name form, e.g. "Raffaelo, di" as opposed to "di Raffaelo".  This is important for alphabetizing and to ensure successful searching.</p>
                     <p>An Appellative that is merely a standard polite form of the person's name ("Signor Lorenzo"), does not need to be included.</p>
                 </li>
                 <li>
                     <p style="margin-top:70px;">When there are several known and used versions of a name, include all of them:</p>
-                    <img src="/DocSources/images/dataEntryManual/personNamesEx3.png" alt="Lorraine de' Medici Names" width="520" height="212" align="left" />
+                    <img src="${contextPath}/images/dataEntryManual/personNamesEx3.png" alt="Lorraine de' Medici Names" width="520" height="212" align="left" />
                 </li>
                 <li>
                 	<p style="margin-top:240px;">Papal names are considered Appellatives:</p>
-                    <img src="/DocSources/images/dataEntryManual/personNamesEx4.png" alt="Giovanni di Lorenzo Names" width="520" height="179" align="left" />
+                    <img src="${contextPath}/images/dataEntryManual/personNamesEx4.png" alt="Giovanni di Lorenzo Names" width="520" height="179" align="left" />
                 </li>
             </ul>
             
 <!-- Titles and Occupations -->            
             <h4 style="margin-top:200px;" id="peopleTitles">Titles and Occupations</h4>
             <p>This is a searchable, non-hierarchical, free-hand system that allows Project Researchers to record titles, occupations and other relevant descriptive formulas. It is expected that this system will eventually come to include many tens of thousands of terms, including now obscure historical usages that occur in the original documents.</p>
-            <img src="/DocSources/images/dataEntryManual/personTitles.png" alt="Titles and Occupations" width="520" height="148"/>
+            <img src="${contextPath}/images/dataEntryManual/personTitles.png" alt="Titles and Occupations" width="520" height="148"/>
             <p>The table below presents the full system of Major and Minor Role Categories, demonstrating their hierarchical relationship.</p>
             <table width="600" style="margin-left:200px" cellspacing="0">
             	<tr>
@@ -1128,8 +1128,8 @@
             </table>
 
             <p>This is a free-hand list of the numerous descriptive terms that were applied to the individuals in PeopleBase with particular regard to their social status and occupational activity. "Titles" and "Occupations" are treated as a single category because they frequently overlapped. (For example, "Abbate", "Segretario" and "Castellano" can be considered as both.) Titles and Occupations are listed in the language in which they occur in the documents, at any level of specificity. ("Colonello" and "Colonello della Fanteria in Pisa" are both valid title/occupations.) Previously entered terms can be taken from the pull-down list and new terms can be added when necessary. Though we wish to compile an extensive compendium of such descriptive terms, it is not necessary to insist on differences without distinctions. For example, "Vicerè di Sicilia" and "Vicerè della Sicilia" do not require separate entries.</p>
-            <img src="/DocSources/images/dataEntryManual/personTitlesEx1.png" alt="Titles and Occupations" width="800" height="320" />
-            <img src="/DocSources/images/dataEntryManual/personTitlesEx2.png" alt="Titles and Occupations" width="520" height="290" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/personTitlesEx1.png" alt="Titles and Occupations" width="800" height="320" />
+            <img src="${contextPath}/images/dataEntryManual/personTitlesEx2.png" alt="Titles and Occupations" width="520" height="290" align="left" />
             <p>For each person in PeopleBase, one Title/Occupation should be checked as "Preferred role", meaning that it could serve as the identifying title for that person on a printed report.</p>
             <p>For instance, Lucrezia di Cosimo I de'Medici-d'Este's preferred Title/Occupation would be "Duchessa di Ferrara" showed has an star icon on the left of the Title/Occupation.</p>
             <h4>Adding a new Title/Occupation</h4>
@@ -1139,7 +1139,7 @@
             <h4 id="peopleParents" style="margin-top:30px">Parents</h4>
             <p>If a person's Parents are already present on the pull-down list of "People" (i.e. if they already have their own PeopleBase record), then the relationship can be assigned directly from the Parents Tab of the child's PeopleBase record. If not, they must first be added to PeopleBase (if this is considered worthwhile.)</p>
             <p>To assign parents to a person, edit the PARENTS section and press "edit value" in either the Father or the Mother row as appropriate. A new form will appear under the Parents one, enter the fullname or select it from the autocomplete list:</p>
-            <img src="/DocSources/images/dataEntryManual/personFather.png" alt="Giovanni di Lorenzo Names" width="720" height="530" align="left" />
+            <img src="${contextPath}/images/dataEntryManual/personFather.png" alt="Giovanni di Lorenzo Names" width="720" height="530" align="left" />
             <p style="margin-top:60px;">Select the name of the person's father and click Save.  You can remove the assignment from the Parents section by clicking the icon with the red "X" on the right.</p>
             <p><i>Note: fathers and mothers must be added separately even for children they share.</i></p>
 
@@ -1167,9 +1167,9 @@
             <h1>Adding New Place or Site</h1>
             <p>In the relatively rare instances when you need to enter a new Place or Site, here is how to proceed:</p>
             <p>In the Main Menu press the "Entry Menu" button. The following screen will appear:</p>
-            <img src="/DocSources/images/dataEntryManual/geoMenu.png" alt="Geo Menu" width="793" height="250" style="margin-left:100px"/>
+            <img src="${contextPath}/images/dataEntryManual/geoMenu.png" alt="Geo Menu" width="793" height="250" style="margin-left:100px"/>
             <p>Once you have pressed the <b>"Add New Place"</b> button this other screen will appear:</p>
-            <img src="/DocSources/images/dataEntryManual/addNewPlace.png" alt="Add New Place Menu" width="793" height="477" style="margin-left:100px"/>
+            <img src="${contextPath}/images/dataEntryManual/addNewPlace.png" alt="Add New Place Menu" width="793" height="477" style="margin-left:100px"/>
             <p>As you see, there are three options for adding data to GeoBase; these will be explained in detail in the following section.</p>
 
 <!-- TGN Place Record -->            
@@ -1201,7 +1201,7 @@
 <!-- Place Details -->
 			<p>All geoBase, TGN Place Record, MAP Place Record and MAP Site or Subsite, are composed by the same sections:</p>            
             <h4>Place Details</h4>
-            <img src="/DocSources/images/dataEntryManual/placeDetails.png" alt="Place details" width="520" height="415" align="left"/>
+            <img src="${contextPath}/images/dataEntryManual/placeDetails.png" alt="Place details" width="520" height="415" align="left"/>
             <ul class="numbers">
             	<li><u>Geog Key:</u> unique 7 digits number</li>
                 <li><u>TGN_TermID:</u></li>
@@ -1216,7 +1216,7 @@
 <!-- Name or Names variants -->            
             <h4 style="margin-top:100px">Name or Names variants</h4>
             <p>While the Preferred Name record for a location is added to GeoBase by way of the "Place Details" section, all Variant Names are added by way of the "Names" section in  GeoBase, which is shown below:</p>
-            <img src="/DocSources/images/dataEntryManual/placeName.png" alt="Place Names" width="520" height="360"/>
+            <img src="${contextPath}/images/dataEntryManual/placeName.png" alt="Place Names" width="520" height="360"/>
             <p>To add another Variant Name, simply click in the "Add" button and type the new name.</p>            
         </div>
 	</body>
