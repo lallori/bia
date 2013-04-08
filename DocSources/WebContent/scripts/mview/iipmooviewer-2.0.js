@@ -172,6 +172,8 @@ var IIPMooViewer = new Class({
 	this.annotationsType = options.annotationsType || 'local';
 	this.retrieveAnnotationsUrl = options.retrieveAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
 	this.updateAnnotationsUrl= options.updateAnnotationsUrl || '/NO_ANNOTATION_URL_SPECIFIED/';
+	this.showTopicUrl = options.showTopicUrl || '/NO_FORUM_URL_SPECIFIED/';
+	this.annotationId = options.annotationId || '';
 
 	if (typeof(this.newAnnotation)=="function") {
 //	    window.addEvent('keydown', function(e){
@@ -186,17 +188,24 @@ var IIPMooViewer = new Class({
 //		    	}
 //	    	}
 //	    });
-	    
-	    this.addEvent('annotationChange', function(e){
+		
+		this.addEvent('annotationChange', function(e){
 	    	var queryParameter = "imageName=" + this.images[0].src + "&" + IIPMooViewer.annotationsAsQueryParameterString(this.annotations);
-	    	var metadata = new Request({
+	    	var forumUrl = this.showTopicUrl;
+	    	var metadata = new Request.JSON({
 	    	  method: 'post',
 	    	  secure: true,
 	    	  encoding: 'utf-8',
 	    	  url: this.updateAnnotationsUrl,
 	    	  data: queryParameter,	
-	    	  onSuccess: function(json){
+	    	  onSuccess: function(responseJSON, responseText){
 	    	    console.log('notified annotation change to server.');
+	    	    for (i=0; i<responseJSON.links.length; i++) {
+//	    	    	var popupWindow = window.opener.open(responseJSON.links[i].forum, "_blank", "scrollbars=yes");
+//	    	    	popupWindow.focus();
+//	    	    	window.close();
+	    	    	window.open(responseJSON.links[i].forum, "_self", "scrollbars=yes");
+	    	    }
 	              }
 	    	}).send();
         });
@@ -1304,26 +1313,26 @@ var IIPMooViewer = new Class({
       
      //MEDICI ARCHIVE PROJECT START
       //Disable button annotation
-//      new Element( 'div', {
-//  		'class': 'hideAnnotation',
-//  		'html': '<img id="hideAnnotation" src="' + this.prefix + 'enableAnnotation.svg" title="Hide/Restore annotations">',
-//  		'events': {
-//  		   click: function(){
-//  			  if(_this.annotationsVisible){
-//  				  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'disableAnnotation.svg';
-//  				  _this.toggleAnnotations();
-//  		  	  }else{
-//  		  		  if(_this.container.getElement('div.message') != null)
-//  		  			  _this.container.getElement('div.message').style.visibility="hidden"; 
-//  		  		  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'enableAnnotation.svg';
-//				  _this.toggleAnnotations();
-//  		  	  }
-//  		  }
-//  		},
-//  		'styles': {
-//  	  		position: 'absolute'
-//  	  	      }
-//  	      }).inject(this.container);
+      new Element( 'div', {
+  		'class': 'hideAnnotation',
+  		'html': '<img id="hideAnnotation" src="' + this.prefix + 'enableAnnotation.svg" title="Hide/Restore annotations">',
+  		'events': {
+  		   click: function(){
+  			  if(_this.annotationsVisible){
+  				  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'disableAnnotation.svg';
+  				  _this.toggleAnnotations();
+  		  	  }else{
+  		  		  if(_this.container.getElement('div.message') != null)
+  		  			  _this.container.getElement('div.message').style.visibility="hidden"; 
+  		  		  _this.container.getElementById('hideAnnotation').src=_this.prefix + 'enableAnnotation.svg';
+				  _this.toggleAnnotations();
+  		  	  }
+  		  }
+  		},
+  		'styles': {
+  	  		position: 'absolute'
+  	  	      }
+  	      }).inject(this.container);
       
       new Element( 'div', {
     		'class': 'hideNavWindow',
@@ -1575,9 +1584,9 @@ var IIPMooViewer = new Class({
       //MEDICI ARCHIVE PROJECT START
       //['reset','zoomIn','zoomOut'].each( function(k){
       //Disable Annotation Button
-      /*if(this.view.w > 1000){
+      if(this.view.w > 1000){
     	
-//    	  ['zoomIn','zoomOut','rotateLeft','rotateRight','reset','drawAnnotation'].each( function(k){
+    	  ['zoomIn','zoomOut','rotateLeft','rotateRight','reset','drawAnnotation'].each( function(k){
       
     		  new Element('img',{
     			  'src': prefix + k + (Browser.buggy?'.png':'.svg'),
@@ -1590,7 +1599,7 @@ var IIPMooViewer = new Class({
     			  }
     		  }).inject(navbuttons);
     	  });
-      }else{*/
+      }else{
     	  ['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each( function(k){
     	      
     		  new Element('img',{
@@ -1604,7 +1613,7 @@ var IIPMooViewer = new Class({
     			  }
     		  }).inject(navbuttons);
     	  });
-//      }
+      }
     //MEDICI ARCHIVE PROJECT END
       
       //navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
@@ -1621,9 +1630,9 @@ var IIPMooViewer = new Class({
       navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
       navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
       navbuttons.getElement('img.reset').set('title', 'Refresh Image');
-//      if(this.view.w > 1000)
+      if(this.view.w > 1000)
     	  //Disable annotation button
-//    	  navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
+    	  navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
       
       // MEDICI ARCHIVE PROJECT
       
@@ -1664,17 +1673,17 @@ var IIPMooViewer = new Class({
       
       if(this.view.w > 1000){
     	  //Disable annotation button
-    	  /*navbuttons.getElement('img.drawAnnotation').addEvent( 'click', function(){
+    	  navbuttons.getElement('img.drawAnnotation').addEvent( 'click', function(){
     		// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
 		    	if (typeof(window.iip.newAnnotation)=="function") {
 		    		this.stopZoom = true;
 		    		navbuttons.getElement('img.zoomIn').style.opacity=0.5;
 		    		navbuttons.getElement('img.zoomOut').style.opacity=0.5;
-		    		window.iip.newAnnotation();
+		    		window.iip.newAnnotation(this.canvas);
 		    	} else {
 		    	   	console.log("IIPMoviewer script must be assigned in page to a variable called iip");
 		    	}
-    	      }.bind(this) );*/
+    	      }.bind(this) );
       }
      //MEDICI ARCHIVE PROJECT END
 
@@ -2160,11 +2169,11 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
 			retValue +=",";
 			retValue +=annotation_array[i].type;
 			retValue +=",";
-			retValue +=annotation_array[i].category;
-			retValue +=",";
 			retValue +=annotation_array[i].title;
 			retValue +=",";
 			retValue +=annotation_array[i].text;
+			retValue +=",";
+			retValue +=annotation_array[i].deletable;
 			retValue +="&";
     	}
 	}
