@@ -10,7 +10,7 @@
 	
 	<c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 	
-	<c:url var="ShowPersonalDirectoryURL" value="/de/ShowPersonalDirectory.do"/>
+	<c:url var="ShowPersonalDirectoryURL" value="/src/ShowPersonalDirectory.do"/>
 
 	<div id="modalBox">
 		<div id="EditPersonalNotes">

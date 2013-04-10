@@ -3,8 +3,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-		
+	
+
+<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>		
 <c:url var="ShowMyMarkedListURL" value="/user/ShowMyMarkedList.do"/>
 
 <c:url var="ShowPersonalAnnotationsUserURL" value="/user/ShowPersonalAnnotationsUser.do" />
@@ -12,8 +13,8 @@
 <c:url var="ShowPersonalNotesUserURL" value="/user/ShowPersonalNotesUser.do" />
 
 <div id="personalDirectoryModalDiv">
-	<div id="markedListDiv">
-        <a id="markedList" href="${ShowMyMarkedListURL}">My Marked List</a>
+	<div id="userProfileDiv">
+        <a id="personalUserProfile" href="${ShowUserProfileURL}">User Preferences</a>
 	</div>
     
 	<div id="personalAnnotationsDiv">
@@ -34,6 +35,11 @@
 			return false;
 		});	
 		
+		$j("#personalUserProfile").click(function() {
+			Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});
+			return false;
+		});	
+		
 		$j("#personalNotes").click(function(){
 			Modalbox.show($j(this).attr("href"), {title: "PERSONAL NOTES", width: 750, height: 415});
 			return false;
@@ -50,4 +56,4 @@
 		});
 	});
 </script>
-	</security:authorize>
+	

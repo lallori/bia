@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-@RequestMapping("/de/ShowPersonalDirectory")
+@RequestMapping("/src/ShowPersonalDirectory")
 public class ShowPersonalDirectoryController {
 	
 	/**

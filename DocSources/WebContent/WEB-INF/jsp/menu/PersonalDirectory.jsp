@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowPersonalDirectoryURL" value="/de/ShowPersonalDirectory.do"/>
+<c:url var="ShowPersonalDirectoryURL" value="/src/ShowPersonalDirectory.do"/>
 
 			<security:authorize ifNotGranted="ROLE_GUESTS">
 				<li><a href="${ShowPersonalDirectoryURL}" id="personalDirectory">Personal Directory</a></li>

@@ -4724,7 +4724,7 @@ h3.systemManagement {
     margin-left: 95px; 
 }
 
-#personalDirectoryModalDiv #markedList, #personalDirectoryModalDiv #personalAnnotations, #personalDirectoryModalDiv #personalNotes {
+#personalDirectoryModalDiv #personalUserProfile, #personalDirectoryModalDiv #personalAnnotations, #personalDirectoryModalDiv #personalNotes {
 	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4738,7 +4738,7 @@ h3.systemManagement {
 	margin: 0px;
 }
 
-#markedListDiv, #personalAnnotationsDiv, #personalNotesDiv{
+#userProfileDiv, #personalAnnotationsDiv, #personalNotesDiv{
 	width: 215px;
 	margin: 15px 0 0 20px;
 }

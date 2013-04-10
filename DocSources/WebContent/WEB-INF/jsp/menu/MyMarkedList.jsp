@@ -6,14 +6,20 @@
 
 			<security:authorize ifNotGranted="ROLE_GUESTS">
 				<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
+				<c:url var="ShowMyMarkedListURL" value="/user/ShowMyMarkedList.do"/>
 
-				<li><a href="${ShowUserProfileURL}" id="myprofileMenu">User Preferences</a></li>
+				<li><a href="${ShowMyMarkedListURL}" id="markedListMenu">My Marked List</a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {
 							Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});return false;}																	
 						);	
 					});
+					
+					$j("#markedListMenu").click(function() {															
+						Modalbox.show($j(this).attr("href"), {title: "MY MARKED LIST", width: 750, height: 415});
+						return false;
+					});	
 				</script>						
 			</security:authorize>
 				
