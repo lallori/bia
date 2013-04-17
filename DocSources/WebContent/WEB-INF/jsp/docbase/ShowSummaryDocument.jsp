@@ -191,7 +191,7 @@
 			});
 			$j(".linkVolume").click(function() {
 				var tabN = $j(this).text();
-				tabName = 'Volume  ' 
+				tabName = 'Volume ' 
 				tabName += tabN;
 				var numTab = 0;
 				
