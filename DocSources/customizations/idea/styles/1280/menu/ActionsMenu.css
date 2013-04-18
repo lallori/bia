@@ -1,0 +1,89 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag from the ACTIONS MENU 
+ */
+
+
+.actionsmenu {
+	padding-left: 15px; /*offset of tabs relative to browser left edge*/
+}
+
+.actionsmenu ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+/*Top level list items*/
+.actionsmenu ul li{
+	position: relative;
+	display: inline;
+	float: left;
+	z-index:1;
+}
+
+/*Top level menu link items style*/
+.actionsmenu ul li a{
+	display: block;
+	padding: 3px 7px 4px 7px;
+	color: #FFFDF5;
+	text-decoration: none;
+	font-size:11px;
+	z-index:1;
+}
+	
+/*1st sub level menu*/
+.actionsmenu ul li ul{
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+	margin-top:5px;
+	z-index:1;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.actionsmenu ul li ul li{
+	display: list-item;
+	float: none;
+	z-index:1;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.actionsmenu ul li ul li ul{
+	top: 0;
+	z-index:1;
+}
+
+/* Sub level menu links style */
+.actionsmenu ul li ul li a{
+	width: 100px; /*width of sub menus*/
+	background-color: #BEA088;
+	color: white;
+	padding: 0px 5px;
+	z-index:1;
+}
+
+.actionsmenu ul li ul li a:hover{ /*sub menus hover style*/
+	background: #85705E;
+	color: white;
+}
+
+/* CSS classes applied to down and right arrow images */
+
+.downarrowclass{ /* NOT USED */
+	position: absolute;
+	top: 7px;
+	right: 5px;
+}
+
+.rightarrowclass{ /* NOT USED */
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}

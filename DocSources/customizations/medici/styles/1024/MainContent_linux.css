@@ -1,0 +1,113 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all variations for the correct display under Linux (from Template.css, MainContent.css and LoginUser.css)
+ */
+ 
+ 
+ /* -------------------------------------------------------------------- LoginUser.css ------------------------------------------------------------------------------- 
+ *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ */
+ 
+.fyp { /* Forgot your password class */
+	line-height:13px;
+}
+
+.registrationForm td, #activationcode p { /*  Form class */
+	font-size:12px;
+}
+
+#registrationForm .title{
+	font-size:11px;
+}
+
+.readThis {
+	font-size:11px;
+}
+
+/*  SendUserActivationCode */
+
+.usersuccess {  /* p class */
+	margin-top:50px;
+	font-size:12px;
+}
+
+.activsuccess {  /* p class */
+	margin-top:60px;
+	margin-left:75px;
+}
+
+td {
+    font-size:13px;
+}
+
+ 
+ /* -------------------------------------------------------------------- Template.css ------------------------------------------------------------------------------- 
+ *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ *
+
+/* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
+
+#search { /* Search button */
+	padding:0;
+}
+
+
+#SearchForm a.helpIcon, a.helpIcon  {
+    -moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px;
+	padding:0 4px;
+	border-radius:10px;
+}
+
+/* -------------------------------------------------------------------- MainContent.css ------------------------------------------------------------------------------- 
+/*  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+/* -------- Custom Search Filter (body_left) --------- */
+
+
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
+	padding:2px 0 0 ;
+    margin-left:32px;
+}
+
+#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon,  #EditTopicsDocumentForm a.helpIcon, #body_left a.helpIcon{ /* Help symbol "?" */	
+	padding-left: 4px; 
+	padding-right: 4px; 
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+}
+
+#yourEasySearchFilterForm, #yourExpertSearchFilterForm {
+	padding:20px 0 0 60px;
+}
+
+.saveButton { /* Save Button */
+	margin: 35px 0 0 112px;	
+    background-color:transparent;
+}
+
+#advsearch { /* Search Button */
+	margin: 35px auto auto 190px;
+	width:52px;
+}
+
+#senderLabel {
+	margin-right:15px;
+}
+
+
+
+/* --------------------------------------------------------------------------- MyHistory.css -------------------------------------------------------------------------------------- 
+ *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+#moreDocs, #morePeople, #moreVolumes, #morePlaces {
+	margin:3px 25px 0 0;
+}
+
+

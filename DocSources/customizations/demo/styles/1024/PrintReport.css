@@ -1,0 +1,154 @@
+body {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:10px;
+	margin:0;
+	padding:0;
+	background-color:#F6EDEC;
+}
+
+#layout {
+	width: 584px;
+	margin:0;
+	padding-top:20px;
+}
+
+.print {
+	background-image:url(${contextPath}/images/1024/img_print.png);
+	position:absolute;
+	margin: 0 0 0 590px;
+	height:40px;
+	width:40px;
+}
+
+.pdf {
+	background-image:url(${contextPath}/images/1024/img_pdf.png);
+	position:absolute;
+	margin:-10px 0 0 590px;
+	height:40px;
+	width:40px;
+}
+
+.print:hover, .pdf:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+#top {
+	height:65px;
+	display: none;
+	width:630px;
+}
+
+
+#notes {
+	display: none;
+	float:right;
+}
+
+#logoMap {
+	width:160px;
+	height:65px;
+	margin:0;
+	float:left;
+	margin-left:30px;
+}
+
+#notes p{
+	margin:0;
+	color:#666;
+	text-align:right;
+}
+
+input {
+	margin:-15px 0 0 600px;
+}
+
+h3 {
+	font-size: 14px;
+	font-style: italic;
+	color: #009;
+	text-align: left;
+	margin: 30px 0 30px 25px;
+}
+
+h4 {
+	font-size:12px;
+	text-align:center;
+	font-weight:normal;
+	margin:40px 0 40px 125px;
+	display: none;
+}
+
+h5 {
+	font-size:12px;
+	text-align:left;
+	font-weight:normal;
+	margin-left:25px;
+	margin-top:0;
+}
+
+h5.first, h3.first {
+	margin-top:40px;
+}
+
+table#catalog {
+	margin: 40px 0 0 0;
+	width: 584px;
+	font-size: 11px;
+	text-align: left;
+}
+
+table {
+	margin-left:80px;
+	text-align:justify;
+	width:550px;
+	font-size:10px;
+}
+
+table#catalog tr td {
+	vertical-align:top;
+	padding: 3px 5px 3px 5px;
+}
+
+table tr td {
+	vertical-align:top;
+}
+
+.value {
+	color: #6F6B69;
+}
+
+.valueRight{
+	text-align:right;
+	color: #6F6B69;
+}
+
+.valueLeft{
+	text-align:left;
+	color: #6F6B69;
+}
+
+
+hr {
+	background-image:url(${contextPath}/images/1024/img_hr_print.jpg);
+	width:400px;
+	height:20px;
+	border:none;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+
+#footer {
+	text-align:center;
+	color:#999;
+	font-size:9px;
+	display: none;
+	margin-left:130px;
+}
+
+#yourSearchDiv p {
+	margin-left: 25px;
+}
+
