@@ -123,7 +123,7 @@
 	</pluginRepositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<customer>medici</customer>
+		<customization>medici</customization>
 		<hibernate.version>3.6.10.Final</hibernate.version>
 		<hibernatesearch.version>3.4.1.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
@@ -142,9 +142,9 @@
 		<url>http://www.medici.org</url>
 	</organization>
 	<build>
-	    <finalName>${customer.warname}</finalName>
+	    <finalName>${customization.warname}</finalName>
 		<filters>
-			<filter>customers/${customer}/filter-${customer}.properties</filter>
+			<filter>customizations/${customization}/filter-${customization}.properties</filter>
 		</filters>
 		<resources>
 			<resource>
@@ -200,23 +200,6 @@
 		   </plugins>
    		</pluginManagement>
 		<plugins>
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>buildnumber-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<doCheck>false</doCheck>
-					<doUpdate>true</doUpdate>
-				</configuration>
-			</plugin>-->
       		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -227,7 +210,7 @@
 					<attachClasses>true</attachClasses>
 					<webResources>
 			            <resource>
-				    		<directory>${basedir}/customers/${customer}/jsp/</directory>
+				    		<directory>${basedir}/customizations/${customization}/jsp/</directory>
 				    		<targetPath>WEB-INF/jsp</targetPath>
 				    		<includes>
 				    			<include>**/*.*</include>
@@ -235,14 +218,14 @@
 			            </resource>
 			            <resource>
 				    		<filtering>true</filtering>
-				    		<directory>${basedir}/customers/${customer}/styles/</directory>
+				    		<directory>${basedir}/customizations/${customization}/styles/</directory>
 				    		<targetPath>styles</targetPath>
 				    		<includes>
 				    			<include>**/*.*</include>
 				    		</includes>
 			            </resource>
 			            <resource>
-				    		<directory>${basedir}/customers/${customer}/images/</directory>
+				    		<directory>${basedir}/customizations/${customization}/images/</directory>
 				    		<targetPath>images</targetPath>
 				    		<includes>
 				    			<include>**/*.*</include>
@@ -259,8 +242,9 @@
 			            <resource>
 				    		<filtering>true</filtering>
 				    		<directory>${basedir}/WebContent/manual</directory>
+				    		<targetPath>manual</targetPath>
 				    		<includes>
-				    			<include>**/*.html</include>
+				    			<include>**/*.*</include>
 				    		</includes>
 			            </resource>
 				    	<resource>
@@ -268,15 +252,14 @@
 				    		<directory>${basedir}/WebContent/WEB-INF/config</directory>
 				    		<targetPath>WEB-INF/config</targetPath>
 				    		<includes>
-				    			<include>**/*.*</include>
+				    			<include>**/*.xml</include>
 				    		</includes>
 				    	</resource>
 				    	<resource>
-				    		<directory>${basedir}/WebContent/WEB-INF</directory>
-				    		<filtering>true</filtering>
-				    		<targetPath>WEB-INF</targetPath>
+				    		<directory>${basedir}/WebContent/WEB-INF/config</directory>
+				    		<targetPath>WEB-INF/config</targetPath>
 				    		<includes>
-				    			<include>**/*.*</include>
+				    			<include>**/*.properties</include>
 				    		</includes>
 				    	</resource>
             	    </webResources>
@@ -384,22 +367,22 @@
 		<profile>
 			<id>medici</id>
 		    <properties>
-		      <customer>medici</customer>
-              <customer.warname>DocSources</customer.warname>
+		      <customization>medici</customization>
+              <customization.warname>DocSources</customization.warname>
 		    </properties>
     	</profile>
 		<profile>
 			<id>demo</id>
 		    <properties>
-		      <customer>demo</customer>
-              <customer.warname>biademo</customer.warname>
+		      <customization>demo</customization>
+              <customization.warname>biademo</customization.warname>
 		    </properties>
 		</profile>
 		<profile>
-			<id>isabella</id>
+			<id>idea</id>
 		    <properties>
-		      <customer>isabella</customer>
-              <customer.warname>isabella</customer.warname>
+		      <customization>idea</customization>
+              <customization.warname>idea</customization.warname>
 		    </properties>
 		</profile>
 	</profiles>
