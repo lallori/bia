@@ -13,43 +13,43 @@
 
 			<div id="registrationForm">
 				<h1>REGISTRATION FORM </h1> 
-				<p class="title">The fields with <font color="#990000">*</font> are compulsory</p>
+				<p class="title">The fields with <span class="compulsory">*</span> are compulsory</p>
 				<form:form method="post" acceptCharset="UTF-8">
 					<table class="registrationForm" cellpadding="3">
 						<tr>
-							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="firstName" path="firstName" cssClass="registerInput"/><form:errors path="firstName" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:password path="password" cssClass="registerInput" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
-							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password:<font color="#990000">*</font></b></form:label></td>       
+							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password:<span class="compulsory">*</span></b></form:label></td>       
 							<td><input id="confirmPassword" name="confirmPassword" type="password" class="registerInput" value=""/></td>
 						</tr>    	
 						<tr>        		
-							<td align="right"><form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error"><b>Last Name:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error"><b>Last Name:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="lastName" path="lastName" cssClass="registerInput"/><form:errors path="lastName" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error"><b>Country:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error"><b>Country:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="countryAutoCompleter" path="countryDescription" cssClass="registerInput"/><form:errors path="countryDescription" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error"><b>Organization or University Affiliation:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error"><b>Organization or University Affiliation:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="organization" path="organization" cssClass="registerInput"/><form:errors path="organization" cssClass="inputerrors"/></td>
 						</tr>	
 						<tr>
-							<td align="right"><form:label id="mailLabel" for="mail" path="mail" cssErrorClass="error"><b>Email:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="mailLabel" for="mail" path="mail" cssErrorClass="error"><b>Email:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="mail" path="mail" cssClass="registerInput"/><form:errors path="mail" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="cityLabel" for="city" path="city" cssErrorClass="error"><b>City:<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="cityLabel" for="city" path="city" cssErrorClass="error"><b>City:<span class="compulsory">*</span></b></form:label></td>
 							<td><form:input id="city" path="city" cssClass="registerInput"/><form:errors path="city" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="titleLabel" for="title" path="title" cssErrorClass="error">Title:</form:label></td>
 							<td><form:input id="tittle" path="title" cssClass="registerInput"/><form:errors path="title" cssClass="inputerrors"/></td>
 						</tr>     
 						<tr>        	        	
-							<td align="right"><b>Verification:<font color="#990000">*</font></b></td>
+							<td align="right"><b>Verification:<span class="compulsory">*</span></b></td>
 							<td><div id="captcha_register"><c:out value="${reCaptchaHTML}" escapeXml="false"/></div></td>
 							<td align="right"></td>
 <!-- 							<td colspan="3"> -->
-<%-- 							<form:checkbox path="agree" cssStyle="margin:10px 0px 0px 220px"/><p class="readThis">I have read and agree to the <b><a href="#">Terms of Use</a></b>.<font color="#990000">*</font></p> --%>
+<%-- 							<form:checkbox path="agree" cssStyle="margin:10px 0px 0px 220px"/><p class="readThis">I have read and agree to the <b><a href="#">Terms of Use</a></b>.<span class="compulsory">*</span></p> --%>
 <!-- 							</td> -->
 						</tr>
 						<tr>
-							<td colspan="6"><input id="create" type="submit" title="submit form" value="Register" style="margin:12px 0px 0px 690px" class="button_medium"/></td>
+							<td colspan="6"><input id="create" type="submit" title="submit form" value="Register" class="button_medium"/></td>
 						</tr>
 						<tr>
 							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in</a></b></p></td>

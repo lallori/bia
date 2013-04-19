@@ -105,6 +105,10 @@ div.buttons {
 	line-height:18px;
 }
 
+.button_login {
+	margin-left:48px;
+}
+
 .fyp { /* Forgot your password class */
 	 font-size: 11px;
 	line-height:17px;
@@ -132,6 +136,10 @@ input {
 	padding:3px;
 	margin: 5px 7px 5px 5px;
 	width:150px;
+}
+
+.loginInput {
+	margin-left:30px;
 }
 
 .remember { /* Remember me class */
@@ -188,6 +196,10 @@ input {
 }
 
 /*  Register - Form */
+
+.compulsory {
+	color: #990000;
+}
 
 #registrationForm  { /*  Form content */
 	width:850px;
@@ -285,6 +297,10 @@ input {
 	max-width:150px;
 }
 
+#create {
+	margin: 12px 0px 0px 690px;
+}
+
 /*  Recovery - Form */
 
 #recovery { /*  Form content */
@@ -364,6 +380,10 @@ input {
 	color: #900;
 	font-size: 11px;
 	margin-left: 56px;
+}
+
+#passwordRecovery {
+	margin: 10px 0px 0px 160px;
 }
 
 /*  SendUserActivationCode */

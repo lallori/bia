@@ -16,21 +16,21 @@
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post" accept-charset="utf-8">
 					<table class="loginform">
 						<tr>
-							<td>Username: </td>
+							<td>Username:</td>
 						</tr>
 						<tr>
-							<td><input type="text" name="j_username" class="loginInput" style="margin-left:30px"/></td>
+							<td><input type="text" name="j_username" class="loginInput"/></td>
 						</tr>
 						<tr>
 							<td>Password:</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="password" name="j_password" class="loginInput" style="margin-left:30px"/>
+								<input type="password" name="j_password" class="loginInput"/>
 							</td>
 						</tr>
 						<tr>
-							<td><input name="Login" class="button_medium" style="margin-left:48px" type="submit" value="Login" title="send the module" class="button_medium"/>
+							<td><input name="Login" class="button_medium" type="submit" value="Login" title="send the module" class="button_medium"/>
 							</td>
 						</tr>
 						<tr>
