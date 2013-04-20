@@ -40,7 +40,7 @@
 
 #MB_frame {
 	position: relative;
-	background-color:#f6edec; 
+	background-color: #0B4F86; 
 	height: 100%;
 }
 
@@ -59,7 +59,7 @@
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:12px;
 	font-weight:bold;
-	color:#6d5c4d; 
+	color: #F5F6F5; 
 	padding: .5em 2em .5em .75em;
 	margin: 0;
 	text-align: center;
@@ -95,7 +95,7 @@ a#MB_close span {
 }
 
 #MB_window span, #modalBox span{
-	color:#6D5C4D;
+	color: #BED3E0;
 	font-size:11px;
 	text-align:center;
 	cursor:default;
@@ -157,8 +157,8 @@ a#MB_close span {
 	border-radius: 7px;
 }
 #MB_window {
-	background-color:#f6edec; 
-	color: #6D5C4D;
+	background-color: #0B4F86; 
+	color: #F5F6F5;
 	-webkit-box-shadow: 0 8px 64px #000; 
 	-moz-box-shadow: 0 0 64px #000; 
 	box-shadow: 0 0 64px #000;
@@ -166,13 +166,12 @@ a#MB_close span {
 	-moz-border-radius: 7px;
 	border-radius: 7px;
 }
-#MB_content { border-top: 1px solid #F9F9F9; }
+#MB_content { border-top: 1px solid #487BA4; }
 
 #MB_header {
-  background-color: #f6edec;
-  border-bottom:1px solid #e6d0c6;
+  background-color: #0B4F86;
 }
-#MB_caption { color: #6d5c4d }
+#MB_caption { color: #BED3E0;}
 #MB_close { color: #6d5c4d }
 #MB_close:hover { color: #000 }
 

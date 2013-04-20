@@ -1,32 +1,42 @@
 body {
-	background-image:url(${contextPath}/images/1024/bg.jpg);
-	background-position:center;
-	background-repeat:no-repeat;
-	background-color:#f6edec;
+	background:url(${contextPath}/images/1024/bg.jpg) repeat-x top center;
+	background-color:#0c4f86;
 	margin:0;
 	padding:0;
 	font-size: 12px;
-	color:#6F6B69;
+	color: #F4EEE8;
 	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* TAG */
+
+input[type="text"], input[type="password"] {
+	background-color: #8da9b7;
+	color: #6d5c4d;
+	padding:5px;
+	margin: 5px 7px 5px 5px;
+	width:130px;
 }
 
 /* Structural Divs */
 
 #layout {
 	width:1000px;
-	height:700px;
 	margin:0px auto 0 auto;
 	padding:0px;
 	top:0px;
 	position:relative;
 }
 
-#map { /* The Medici Archive Project image */
-	width:270px;
-	height:175px;
-	margin-left:365px;
-	position:absolute;
+#map { /* IDEA logo */
+	width: 200px;
+	height:375px;
+	float:left;
 	background:url(${contextPath}/images/1024/img_mapLogin.png) no-repeat;
+}
+
+#map.login {
+	margin-left: 260px;
 }
 
 #footer {
@@ -34,6 +44,7 @@ body {
 	height: 95px;
 	margin: 546px 0 0 211px;
 	position:absolute;
+	display:none;
 }
 
 .mellon {
@@ -57,38 +68,39 @@ body {
 #login {
 	width:305px;
 	height:295px;
-	margin-top:220px;
-	margin-left: 210px;	
-	position:absolute;
-	border:1px solid #AEAEAE;
-	border-right:none;
-	border-radius:4px 0 0 4px;
+	margin-top:20px;
+	margin-right: 230px;	
+	float:right;
+}
+
+#login input[type="text"], #login input[type="password"] {
+	width: 205px;
+	margin-left: 0;
 }
 
 div.buttons {
     position:absolute;
     width:300px;
     height:400px;
-    margin-left: 555px;
-    margin-top: 220px;
+    margin-left: 510px;
+    margin-top: 295px;
 }
 
 /*  Log in - Form */
 
 #login h1 {
 	padding:15px 0 15px 0;
-	border-bottom:1px solid #AEAEAE;
 	margin:0;
 	text-align:center;
+	display: none; 
 }
 
 .loginform{ /*  Form class */
-	width:200px;
+	width: 225px;
 	height:220px;
 	margin-top: 10px;
 	margin-left: 44px;
 	position:absolute;
-	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 .button_login, .button_medium {
@@ -100,43 +112,41 @@ div.buttons {
 	text-align: center;
 	background-color:transparent; 
 	display:block;
-	font-size:12px;
 	padding:1px 0 0 0;
 	line-height:18px;
+	margin: 10px 0 10px 0;
 }
 
 .fyp { /* Forgot your password class */
 	 font-size: 11px;
 	line-height:17px;
- 
-	width: 225px;}
+	width: 213px;
+	margin: 20px 0 0 0;
+	padding: 0;
+	float: left;
+	text-align: left;
+}
 
 .fyp a {
 	font-size:90%;
 }
 
 input {
-	font-family: Georgia, "Times New Roman", Times, serif;
 	border:none;
-	color:#60584d;
+	color:#D6C8AF;
 } 
 
 .loginInput, .registerInput { /* INPUT text */
-	font-size:12px;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #DCC0BA;
-	-moz-border-radius: 4px;
-	border-radius: 4px;	
-	background-color: #fbf7f4;
+	background-color: #8da9b7;
 	color: #6d5c4d;
-	padding:3px;
+	padding:5px;
 	margin: 5px 7px 5px 5px;
 	width:150px;
 }
 
 .remember { /* Remember me class */
 	 font-size: 11px;
-	 margin-left: 5px;
+	 margin:  0;
 	 display: inline-block;
 	 vertical-align: middle;
 }
@@ -144,16 +154,17 @@ input {
 .loginform input[type=checkbox] {
     display:inline-block;
     vertical-align:middle;
-    margin-left: 60px;
+    margin-left: 0;
 }
 
 /* buttonons */
 
 #register_here{
-	background-image:url(${contextPath}/images/1024/button_registerHere.png);
-	width:230px;
-	height:65px;
+	background:url(${contextPath}/images/1024/button_registerHere.png) no-repeat;
+	width:250px;
+	height:55px;
 	display: block;
+	margin-left: 0;
 }
 
 #onlineCourses{
@@ -162,6 +173,8 @@ input {
 	height:65px;
 	display: block;
 	margin-top:10px
+;
+	display: none;
 }
 
 #guest {
@@ -192,39 +205,35 @@ input {
 #registrationForm  { /*  Form content */
 	width:850px;
 	height:420px;
-	margin-top:190px;
+	margin-top: 20px;
 	margin-left: 75px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
+	border:none;
 	border-right:none;
 	background-repeat:no-repeat;
 	z-index:1;
-	border-radius:4px 0 0 4px;
-	-webkit-border-radius:4px 0 0 4px;
-	-moz-border-radius:4px 0 0 4px;
 }
 
 #registrationForm h1 {
-        text-align:center;
-	margin: 5px 0 5px 0;
+    text-align: left;
+	
+    margin: 5px 0 5px 145px;
 }
 
 #registrationForm .title{
-	border-bottom:1px solid #AEAEAE;
-	margin:0 0 5px 0;
+	border-bottom:none;
+	margin: 0 0 5px 145px;
 	font-size:10px;
-	width: 850px;
-	text-align: center;
-        padding-bottom:5px;
+	text-align: left;
+    padding-bottom:5px;
 }
 
 .registrationForm { /*  Form class */
-	width:850px;
+	width: 800px;
 	height:300px;
 	margin-top: 30px;
-	margin-left:20px;
+	margin-left: 130px;
 	position:absolute;
-	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 .registrationFormKO { /*  Form class */
@@ -233,7 +242,6 @@ input {
 	margin-top: 30px;
 	margin-left:20px;
 	position:absolute;
-	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 
@@ -244,7 +252,6 @@ input {
 }
 
 .readThis { /* read this text class */
-	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size: 10px;
 	margin:10px 0px 0px 240px;
 }
@@ -257,21 +264,20 @@ input {
 }
 
 .already { /* Already have an account? */
-	font-family:Georgia, "Times New Roman", Times, serif;
-	color:#886863;
+	color: #F4EEDE;
 	font-size: 11px;
-	margin:0px 0px 0px 660px;
+	margin: 0px 0px 0px 625px;
 }
 
 .already a { /* Already have an account? Links */
-	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size: 11px;
 }
 
 .inputerrors { /* Error Span messages */
-	color:#900;
+	color:#DD3D27;
 	font-size: 11px;
 	float:left;
+	text-shadow:1px 1px #222;
 }
 
 .loginerror { /* Error Span messages */
@@ -285,33 +291,47 @@ input {
 	max-width:150px;
 }
 
+#create {
+	margin-left: 640px;
+}
+
+.compulsory {
+	color:#DD3D27;
+	text-shadow: 1px 1px #333;
+}
+
 /*  Recovery - Form */
 
 #recovery { /*  Form content */
 	width:480px;
 	height:380px;
-	margin-top:200px;
+	margin-top:20px;
 	margin-left: 265px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
 	border-right:none;
 }
 
+#recovery input[type="text"], #recovery input[type="password"] {
+	width:310px;
+	margin:0;
+}
+
+#recovery input[type="submit"] {
+	margin:10px 0 0 0;
+}
+
 #recovery h1 {
-	padding:15px 0 15px 150px;
-	border-bottom:1px solid #AEAEAE;
+	padding: 15px 0 15px 0;
+	border-bottom:none;
 	margin:0;
 }
 
 .recovery { /*  Form class */
-	margin-left:20px;
 	height: 198px;
 	width: 460px;
-	margin-top: 20px;
 }
 
 .recoveryKO { /*  Form KO class */
-	margin-left:20px;
 	height:100px;
 	width:650px;
 	position:absolute;
@@ -326,44 +346,37 @@ input {
 	background-image:url(${contextPath}/images/1024/img_coatofarms.png);
 }
 
-.recoveryInput { /* input text class */
-	font-size:12px;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #DCC0BA;
-	-moz-border-radius: 4px;
-	border-radius: 4px;	
-	background-color: #fbf7f4;
+input.recoveryInput { /* input text class */
+	border: none;
 	color: #6d5c4d;
-	padding:3px;
-	margin: 5px 7px 30px 5px;
 	width:250px;
-	margin-left:90px;
+	margin-left:0;
 }
 
 #captcha_recovery{
 	width: 450px;
 	height: 120px;
-	margin-left: 10px;
+	margin-top:10px
 }
 
 #captcha_recoveryKO{
 	width:250px;
 	height:130px;
-	margin-left: 10px;
 	margin-top:40px;
 	z-index:2;
 }
 
 #recovery p {
-	text-align:center;
+	text-align: left;
 	margin-top:30px;
 	line-height: 20px;
 }
 
 .inputerrors_recovery { /* Error Span messages */
-	color: #900;
+	color:#DD3D27;
 	font-size: 11px;
-	margin-left: 56px;
+	text-shadow: 1px 1px #222;
+	display:block;
 }
 
 /*  SendUserActivationCode */
@@ -371,27 +384,26 @@ input {
 #activationcode { /*  Form content */
 	width:480px;
 	height:380px;
-	margin-top:200px;
+	margin-top:20px;
 	margin-left:265px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
+	border:none;
 	border-right:none;
-	border-radius:4px 0 0 4px;
-	-moz-border-radius:4px 0 0 4px;
-	-webkit-border-radius:4px 0 0 4px;
 }
 
 #activationcode h1 {
 	padding:15px 0 15px 0;
-        text-align:center;
-	border-bottom:1px solid #AEAEAE;
+        
+	text-align: left;
+	border-bottom:none;
 	margin:0;
 }
 
 #activationcode p {
-	text-align:center;
+	text-align: left;
 	margin-top:30px;
 	line-height: 20px;
+	font-size: 13px;
 }
 
 /*  Registration Success */
@@ -399,19 +411,16 @@ input {
 #usersuccess { /* Div content */
 	width:395px;
 	height:275px;
-	margin-top:220px;
+	margin-top: 80px;
 	margin-left: 305px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
+	border:none;
 	border-right:none;
-	border-radius:4px 0 0 4px;
-	-webkit-border-radius:4px 0 0 4px;
-	-moz-border-radius:4px 0 0 4px;
 }
 
 #usersuccess h1 {
 	padding:15px 0 15px 0;
-	border-bottom:1px solid #AEAEAE;
+	border-bottom:none;
 	margin:0;
 	text-align:center;
 }
@@ -428,7 +437,7 @@ input {
 	position:absolute;
 	text-align:center;
 	line-height:20px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .activsuccess {  /* p class */
@@ -444,25 +453,20 @@ input {
 #reset { /*  Form content */
 	width:480px;
 	height:380px;
-	margin-top:200px;
+	margin-top: 20px;
 	margin-left: 265px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
-	border-right:none;
-	border-radius:4px 0 0 4px;
-	-moz-border-radius:4px 0 0 4px;
-	-webkit-border-radius:4px 0 0 4px;
+	border:none;
 }
 
 #reset h1 {
-	padding:15px 0 15px 170px;
-	border-bottom:1px solid #AEAEAE;
+	padding: 15px 0 15px 0;
+	border-bottom:none;
 	margin:0;
 }
 
 .reset { /*  Form class */
 	margin-top:25px;
-	margin-left:20px;
 	height:100px;
 	width:250px;
 	position:absolute;
@@ -472,6 +476,7 @@ input {
 	text-align:center;
 	margin-top:130px;
 	line-height:20px;
+	font-size: 13px;
 }
 
 #reset a{
@@ -505,9 +510,8 @@ input {
 
 
 h1 {
-	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:110%;
-	color:#6F6B69;
+	color: #F4EEDE;
 }
 
 a img, img {
@@ -519,9 +523,9 @@ a:focus {
 }
 
 a {
-	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
-	color:#6F6B69;
+	color: #F4EEDE;
+	margin-left: 5px;
 }
 
 /* ReCaptcha */
@@ -563,7 +567,7 @@ a {
 	margin-top:190px;
 	margin-left: 265px;	
 	position:absolute;
-	border:1px solid #AEAEAE;
+	border:none;
 	border-right:none;
 	background-repeat:no-repeat;
 	z-index:1;
@@ -572,7 +576,7 @@ a {
 #passwordExpirated h1 {
         text-align:center;
 	margin: 5px 0 5px 0;
-        border-bottom: 1px solid #AEAEAE;
+        border-bottom: none;
         padding: 15px 0 15px 0;
 }
 

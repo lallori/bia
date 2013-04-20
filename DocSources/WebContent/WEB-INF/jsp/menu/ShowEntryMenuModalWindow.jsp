@@ -22,7 +22,7 @@
 			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p>Add New Place</p></a>
 		</security:authorize>
 			
-			<input id="close" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
+			<input id="close" class="button_small" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
 		
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">

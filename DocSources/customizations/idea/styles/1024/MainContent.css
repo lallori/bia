@@ -175,15 +175,8 @@ span.h7 {
 }
 
 #buttonShareLink { /* Share/Link Button */
-	background: url(${contextPath}/images/1024/button_bodyleftmenu_xmedium.png) no-repeat;
-	font-size: 11px;
-	padding:2px 0 0 0;
-	width: 86px;
-	height:17px;
 	right: 42px;
 	position:absolute;
-	cursor:pointer;
-	text-align:center;
 }
 
 #buttonPrint {  /* Print this Document Button */
@@ -205,27 +198,14 @@ span.h7 {
 }
 
 #deleteAction, #undeleteAction { /* Actions Menu Button */
-	background:url(${contextPath}/images/1024/button_bodyleftmenu_medium.png) no-repeat;
-	font-size: 11px;
-	padding: 2px 0 0;
-	width:65px;
-	height:17px;
+	
 	position:absolute;
 	right: 133px;
-	text-align: center;
 }
 
-#comments { /* Actions Menu Button */
-	background: url(${contextPath}/images/1024/button_bodyleftmenu_large.png) no-repeat;
-	font-size: 11px;
-	padding:2px 0 0 0;
-	width:102px;
-	height:17px;
-	position:absolute;
-	text-decoration:none;
-	right: 308px;
-	text-align:center;
-	/* color:#900; Change color when there is a forum */ 
+#comments {
+    position:absolute;
+    right:308px;
 }
 
 #commentsOn { /* Actions Menu Button */
@@ -244,15 +224,8 @@ span.h7 {
 
 
 #vettingHistory { /* Actions Menu Button */
-	background:url(${contextPath}/images/1024/button_bodyleftmenu_large.png) no-repeat;
-	font-size: 11px;
-	padding:2px 0 0 0;
-	width:102px;
-	height:17px;
 	position:absolute;
-	text-decoration:none;
 	right: 202px;
-	text-align:center;
 }
 
 #lastRecord {
@@ -527,7 +500,7 @@ item a{
 
 .listSearch { /* Whole display list */
 	display: table;
-	 width: 302px;
+	 width: 360px;
 }
 
 .listAdvSearch { /* Whole display list */
@@ -560,27 +533,27 @@ item a{
 
 /*-----------------------------*/
 
+/* BUTTONS */
+
+.button_mini, .button_small, .button_medium, .button_large, .button_bodyleft_small, .button_bodyleft_medium, .button_bodyleft_medium2, .button_bodyleft_large {
+    background:url(${contextPath}/images/1024/nav_buttons.png) transparent;
+    cursor:pointer;
+    text-align:center;
+    padding-top:3px;
+    border:none;
+    color:#D6C8AF;
+} 
 
 .button_small {
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(${contextPath}/images/1024/button_small.png);
 	width:52px;
 	height:22px;
-	border:none;
-	text-align: center;
-	padding-top: 3px;
-	background-repeat: no-repeat;
+	background-position: -1px -25px;
 }
 
 .button_medium {
 	width: 127px;
 	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_medium.png);
-	background-repeat: no-repeat;
-	padding: 3px 0 0 0;
-	cursor: pointer;
-	text-align: center;
+	background-position: 0 -52px;
 }
 
 .button_medium.expand{
@@ -591,12 +564,45 @@ item a{
 .button_large {
 	width: 182px;
 	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_large.png);
-	background-repeat: no-repeat;
-	padding: 3px 0 0 0;
-	cursor: pointer;
-	text-align: center;
+	background-position: -1px -25px;
 }
+
+.button_bodyleft_small {
+	width:65px;
+	height:17px;
+	font-size:11px;
+	padding-top:2px;
+	background-position: -112px -168px;
+}
+
+.button_bodyleft_medium {
+	width: 102px;
+	height: 17px;
+	font-size:11px;
+	padding-top:2px;
+	background-position: 0 -168px;
+}
+
+.button_bodyleft_medium2 {
+	width: 86px;
+	height: 17px;
+	font-size:11px;
+	padding-top:2px;
+	background-position: 0 -218px;
+}
+
+.button_bodyleft_large {
+	width: 182px;
+	height: 22px;
+	background-position: -1px -25px;
+}
+
+
+/* NAVIGATION ICONS */
+
+
+
+
 
 .showCompare {
 	width: 127px;
@@ -670,11 +676,9 @@ legend { /* FORM TITLE */
 input, select { /* INPUT text */
 	font-size: 12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #DCC0BA;
-	-moz-border-radius: 4px;
-	border-radius: 4px;	
-	background-color: #fbf7f4;
-	color: #6d5c4d;
+	border: none;
+	background-color: #85a4b4;
+	color: #13325F;
 	padding:3px;
 	margin: 5px 0 5px 5px;
 }
@@ -683,7 +687,8 @@ label {
 	color:#6d5c4d;
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closePeople, #closeDocReference, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { /* Close button on bottom left  */
+/*
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closePeople, #closeDocReference, #closeTopic, #closePlace, #closeExternalLink, #closeDialog { 
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -694,6 +699,7 @@ label {
 	border:none;
 	margin-top: 23px;
 }
+/*
 
 #button_transparent { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
@@ -1090,8 +1096,7 @@ input[type="checkbox"] {
 /* ----------------- DROPDOWN MENU -------------------- */
 
 select {
-    color: #6d5c4d;
-	background-color: #fbf7f4;
+    color: #13325F;
 }
 
 .selectform{ /* dropdown menu class */
@@ -3596,18 +3601,20 @@ form#EditUserProfileForm span{
 	line-height:18px;
 }
 
-a.helpIcon{ /* Help symbol "?" */
-	border: 1px solid #6D5C4D;
-	color:  #6D5C4D; 
-	font-size: 12px; 
-	background-color: #DCC0BA; 
-	padding-left: 5px; 
-	padding-right: 4px; 
-	font-weight:bold;
+a.helpIcon{ /* Help symbol "?"*/ 
+	width: 21px;
+	height: 21px;
+	background: url(${contextPath}/images/1024/nav_buttons.png) -471px 0;  
 	text-decoration:none;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
+	display: inline-block;
+	text-align: center;
+	padding-top: 3px;
 	cursor:default;
+}
+
+a.helpIcon:hover{ /* Help symbol "?"*/ 
+	 background-position:-490px 0;  
+	 color:#13325F;
 }
 
 div.title a.helpIcon{ /* Help symbol "?" */
@@ -4724,7 +4731,7 @@ h3.systemManagement {
     margin-left: 95px; 
 }
 
-#personalDirectoryModalDiv #markedList, #personalDirectoryModalDiv #personalAnnotations, #personalDirectoryModalDiv #personalNotes {
+#personalDirectoryModalDiv #personalUserProfile, #personalDirectoryModalDiv #personalAnnotations, #personalDirectoryModalDiv #personalNotes {
 	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4738,7 +4745,7 @@ h3.systemManagement {
 	margin: 0px;
 }
 
-#markedListDiv, #personalAnnotationsDiv, #personalNotesDiv{
+#userProfileDiv, #personalAnnotationsDiv, #personalNotesDiv{
 	width: 215px;
 	margin: 15px 0 0 20px;
 }

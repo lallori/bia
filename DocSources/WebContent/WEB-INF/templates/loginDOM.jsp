@@ -33,7 +33,7 @@
 	<body>
 
 		<div id="layout">
-			<div id="map"></div>
+			<div id="map" class="login"></div>
 <tiles:insertAttribute name="main"/>
 <!--<tiles:insertAttribute name="footer"/>-->
 		</div>

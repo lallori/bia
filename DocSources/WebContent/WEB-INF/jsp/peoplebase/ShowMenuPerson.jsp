@@ -58,16 +58,16 @@
 			</c:if>
 		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="vettingHistory" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
+			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		</security:authorize>
 		<span id="commentsOn"></span>
-		<a id="comments" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:if test="${!person.logicalDelete}">
-			<a id="deleteAction" title="<fmt:message key="menu.record.delete"></fmt:message>" href="${DeletePersonURL}">Delete</a>
+			<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="menu.record.delete"></fmt:message>" href="${DeletePersonURL}">Delete</a>
 		</c:if>	
 		<c:if test="${person.logicalDelete}">
-			<a id="undeleteAction" title="<fmt:message key="menu.record.undelete"></fmt:message>" href="${UndeletePersonURL}">Undelete</a>
+			<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="menu.record.undelete"></fmt:message>" href="${UndeletePersonURL}">Undelete</a>
 		</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" title="<fmt:message key="menu.record.print"></fmt:message>" href="${PrintPersonURL}"></a>
@@ -77,7 +77,7 @@
 		<c:if test="${inMarkedList == 'true'}">
 			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListPersonURL}" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5"></a>
 		</c:if>
-		<a id="buttonShareLink" href="${SharePersonURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
+		<a id="buttonShareLink" class="button_bodyleft_medium2" href="${SharePersonURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
 	</div>
 </c:if>
 	

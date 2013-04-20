@@ -18,10 +18,7 @@ html {
 }
 
 body {
-	background-position:bottom;
-	background-repeat:no-repeat;
-	background-color:#f6edec;
-	background-attachment:fixed;
+    background: url(${contextPath}/images/1024/bg_header.jpg) repeat-x top #F7F2E6;
 	margin:0 !important; 
 	padding:0 !important; 
 	font-size: 12px;
@@ -30,7 +27,6 @@ body {
 }
 
 h1 {
-	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:110%;
 	color:#6F6B69;
 }
@@ -44,9 +40,8 @@ a:focus {
 }
 
 a {
-	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
-	color:#6F6B69;
+	color: #F5F6F5;
 	font-size: 12px;
 }
 
@@ -64,9 +59,9 @@ a {
 	position:relative; 
 }
 
-#map { /* THE MEDICI ARCHIVE PROJECT top left image Container */
-	width: 255px;
-	height:165px;
+#map { /* IDEA top left image Container */
+	width: 140px;
+	height: 195px;
 	position:absolute;
 	background:url(${contextPath}/images/1024/img_map.png) no-repeat;
 	background-color:transparent;
@@ -76,18 +71,16 @@ a {
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
 	width:750px;
 	height:95px;
-	margin-left: 247px;
+	margin-left: 140px;
 	position:absolute;
 }
 
 #top_middle { /* MAIN MENU: Entry Menu - Vet Menu - Advanced Search - Chronology - My Profile - Messages - Log out */
-	width:745px;
+	width: 860px;
 	height:64px;
 	margin-top:95px;
-	margin-left: 247px;
+	margin-left: 130px;
 	position:absolute;
-	background-image:url(${contextPath}/images/1024/bg_mainmenu.png);
-	background-repeat:no-repeat;
 	z-index:3;
 }
 
@@ -96,13 +89,12 @@ a {
 	height:23px;
 	margin-top: 158px;
 	position:absolute;
-	background-image:url(${contextPath}/images/1024/bg_userinterface.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
 	width:1000px;
 	height:auto;	
-	margin-top:181px;
+	margin-top: 179px;
 	position:absolute;
 }
 
@@ -114,6 +106,21 @@ a {
 	z-index:1;
 	bottom:0;
 	margin-top:100%;
+}
+
+/* BUTTONS */
+
+.button_mini {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(${contextPath}/images/1024/nav_buttons.png);
+	width:22px;
+	height:22px;
+	border:none;
+	text-align: center;
+	padding-top: 3px;
+	background-repeat: no-repeat;
+	color:#D6C8AF;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -130,7 +137,7 @@ a {
 	position:absolute;
 	z-index:1;
 	margin-bottom:100px;
-	border-right:1px solid #DCC0BA;
+	border-right:1px solid #594412;
 
 }
 	
@@ -141,7 +148,7 @@ a {
 	float:right;
 	position:absolute;
 	margin-left:500px;
-	border-left:1px solid #DCC0BA;
+	border-left: 1px solid #594412;
 	min-height: 520px;
 
 }
@@ -157,6 +164,7 @@ a {
 	margin: 17px 0 0 0;
 	position:absolute;
 	padding-left: 4px; 
+	color: #F5F6F5;
 }
 
 #searchFormPointer, #advancedSearchPointer, #communityForumsPointer, #communityForumsPointer_guest{ /* Search Form Container Pointer  */
@@ -207,51 +215,19 @@ a {
 	background-color: transparent;
 }
 
-#search { /* Search button */
-	width:22px;
-	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
-	padding:0 0 0 2px;
-	background-repeat:no-repeat;
-	background-color:transparent;
-	border:none;
-	cursor:pointer;
-	margin: 5px 0 0 0;
-}
-
 #SearchForm a.helpIcon { /* Help symbol "?" */
-	border: 1px solid #6D5C4D;
-	color:  #6D5C4D; 
-	background-color: #DCC0BA; 
-	padding-left: 5px; 
-	padding-right: 4px; 
-	font-weight:bold;
-	text-decoration:none;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	cursor:default;
 	margin: 0 0 0 4px;
-}
-
-#SearchForm a:hover.helpIcon { /* Help symbol "?" */
-	border: 1px solid #2e83ff;
-	color:  #363636; 
-	background-color: #ebf3ff; 
-	opacity:0.9; /* Chrome, Safari */
-	-moz-opacity: 0.9; /* FireFox */
-	filter:alpha(opacity=90); /* IE */
-	text-decoration:none;
 }
 
 
 #text {
-	width: 251px;
+	width: 310px;
 	margin: 5px 2px 0 5px;
 }
 
 #simpleSearchPerimeter {
-	width: 179px;
-	margin: 5px 0 5px 0;
+	width: 239px;
+	margin: 5px 0 5px 5px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -260,16 +236,16 @@ a {
 /* --------------------------------------- SHORTCUT MENU (#top_top) --------------------------------------- */
 
 #lastentry { /* Shortcut Menu Container */
-	width:435px;
+	width: 480px;
 	height:90px;
-	margin: 10px 0 0 310px;
+	margin: 0 0 0 400px;
 	position:absolute;
 	list-style:none;
 	float:left;
 }
 
 #menulastentry { /* Shortcut Menu <ul> list */
-	width:450px;
+	width: 480px;
 	height:100px;
 	list-style:none;
 	float:left;
@@ -279,84 +255,31 @@ a {
 
 #menulastentry li{ /* Shortcut Menu <ul> list <li> elements */
 	float:left;
-}
+ margin-right: -1px;}
 
-#menulastentry #last_doc a {
-	background-image:url(${contextPath}/images/1024/button_lastdocumententry.png);
+#menulastentry #last_doc a, #menulastentry #last_vol a, #menulastentry #last_pers a, #menulastentry #last_pla a {
+	background-image:url(${contextPath}/images/1024/nav_lastEntry.png);
 	background-repeat:no-repeat;
 	float:left;
 	display:block;
 	text-decoration:none;
 	width:100px;
-	top:10px;
 	height:85px;
-	padding-left: 10px;
-}
-
-#menulastentry #last_doc a:hover {
-	ms-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
+	padding-left: 20px;
 }
 
 #menulastentry #last_vol a {
-	background-image:url(${contextPath}/images/1024/button_lastvolumeentry.png);
-	background-repeat:no-repeat;
-	float:left;
-	display:block;
-	text-decoration:none;
-	width:100px;
-	height:85px;
-	padding-left:10px;
-}
-
-#menulastentry #last_vol a:hover {
-	ms-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
+    background-position: -115px 0;
 }
 
 #menulastentry #last_pers a {
-	background-image:url(${contextPath}/images/1024/button_lastpersonentry.png);
-	background-repeat:no-repeat;
-	float:left;
-	display:block;
-	text-decoration:none;
-	width:100px;
-	height:85px;
-	padding-left:10px;
-}
-
-#menulastentry #last_pers a:hover {
-	ms-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
+    background-position: -225px 0;
 }
 
 #menulastentry #last_pla a {
-	background-image:url(${contextPath}/images/1024/button_lastplaceentry.png);
-	background-repeat:no-repeat;
-	float:left;
-	display:block;
-	text-decoration:none;
-	width:100px;
-	height:85px;
-	padding-left:10px;
+    background-position: -345px 0;
 }
 
-#menulastentry #last_pla a:hover {
-	ms-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
-}
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -365,33 +288,28 @@ a {
 
 #top_bottom ul {
 	list-style:none;
-	margin: 6px 0 0 10px;
+	margin: 6px 0 0 145px;
 	font-size: 11px;
 	padding: 0;
 }
 
 #top_bottom ul li {
 	float:left;
-	padding-right: 40px;
+	padding-right: 35px;
 	font-size: 11PX;
 }
 
 #top_bottom ul li span{
-	color: #B40404;
+	color: #DD3D27;
 	margin-left:5px;
 	font-weight:bold;
+	text-shadow: 1px 1px #222;
 }
 
 #top_bottom ul li a {
         font-size: 11px;
 }
 
-#top_bottom ul li a:hover { /* Administration Module */
-	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important	
-}
 
 /* --------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
 
@@ -412,6 +330,7 @@ a {
 	float:right;
 	padding-right: 10px;
 	font-size: 11px;
+	color: #aca28a;
 }
 
 #top_bottom p:hover{ 
@@ -613,88 +532,46 @@ $('.searchResult').live('click', function() {
 	font-size:11px;
 }
 
-#advsearchMenu{
-	background-image:url(${contextPath}/images/1024/button_advsearch.png);
-	background-repeat:no-repeat;
+#advsearchMenu, #entryMenu, #forumsMenu, #myHistoryMenu, #helpMenu, #logoutMenu{
+	background:url(${contextPath}/images/1024/nav_header.png) no-repeat;
 	display:block;
-	width: 150px;
-	height:64px;
 }
-	
-#advsearchMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_advsearchRollover.png);
+
+#advsearchMenu{
+	width: 169px;
+	height:64px;
+	background-position:0 -90px;
 }
 
 #entryMenu{
-	background-image:url(${contextPath}/images/1024/button_entrymenu.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:128px;
+	width: 142px;
 	height:64px;
-}
-
-#entryMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_entrymenuRollover.png);
+	background-position:-170px -90px;
 }
 
 #forumsMenu{
-	background-image:url(${contextPath}/images/1024/button_forums.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:178px;
+	width: 204px;
 	height:64px;
-}
-
-#forumsMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_forumsRollover.png);
+	background-position: -312px -90px;
 }
 
 #myHistoryMenu{
-	background-image:url(${contextPath}/images/1024/button_myHistory.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:120px;
+	width: 143px;
 	height:64px;
-}
-
-#myHistoryMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_myHistoryRollover.png);
-}
-
-.messagesMenu span {
-	position: absolute;
-	margin: -24px 0 0 62px;
-	color: #C0272D;
-	font-weight: bold;
-	text-align: right;
-	
+	background-position: -516px -90px;
 }
 
 #helpMenu{
-	background-image:url(${contextPath}/images/1024/button_help.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:75px;
+	width: 109px;
 	height:64px;
-}
-
-#helpMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_helpRollover.png);
+	background-position: -659px -90px;
 }
 
 #logoutMenu{
-	background-image:url(${contextPath}/images/1024/button_logout.png);
-	background-repeat:no-repeat;
-	display:block;
 	width:86px;
 	height:64px;
+	background-position: -768px -90px;
 }
-
-#logoutMenu:hover{
-	background-image:url(${contextPath}/images/1024/button_logoutRollover.png);
-}
-
-
 
 
 /*1st sub level menu*/
@@ -745,6 +622,14 @@ $('.searchResult').live('click', function() {
 	color: #6F6B69;
 }
 
+.messagesMenu span {
+	position: absolute;
+	margin: -24px 0 0 62px;
+	color: #C0272D;
+	font-weight: bold;
+	text-align: right;
+}
+
 
 /* ENTRY MENU - MODAL WINDOW */
 
@@ -752,6 +637,7 @@ $('.searchResult').live('click', function() {
 	text-align:center;
 	font-size: 12px;
 	font-weight:normal;
+	color: #BED3E0;
 }
 
 #EntryMenuDiv #close{
@@ -759,83 +645,40 @@ $('.searchResult').live('click', function() {
 	position:absolute;
 }
 
-#EntryMenuDiv #AddNewDocument{
-	background:url(${contextPath}/images/1024/button_addnewdocument.png) no-repeat;
+#EntryMenuDiv #AddNewDocument, #EntryMenuDiv #AddNewPerson, #EntryMenuDiv #AddNewVolume, #EntryMenuDiv #AddNewPlace{
+	background:url(${contextPath}/images/1024/nav_menuModal.png);
+	padding-top:10px;
 	position:absolute;
-	margin: 20px 0 5px 101px;
-	width:124px;
-	height:75px;
-	background-position:top;
 	text-align:center;
+	width:120px;
+	height:75px;
 }
 
-#EntryMenuDiv #AddNewDocument p{
-	margin-top:60px;
+#EntryMenuDiv #AddNewDocument {
+	margin: 20px 0 5px 101px;
+	background-position:0 0;
 }
 
 #EntryMenuDiv #AddNewPerson{
-	background:url(${contextPath}/images/1024/button_newperson.png) no-repeat;
 	margin: 20px 0 5px 374px;
-	position:absolute;
-	width:120px;
-	height:75px;
-	background-position:top;
-	text-align:center;
-}
-
-#EntryMenuDiv #AddNewPerson p{
-	margin-top:60px;
+	background-position: -230px 0;
 }
 
 #EntryMenuDiv #AddNewVolume{
-	background:url(${contextPath}/images/1024/button_addnewvolume.png) no-repeat;
-	position:absolute;
 	margin: 20px 0 5px 240px;
-	position:absolute;
-	width:120px;
-	height:75px;
-	background-position:top;
-	text-align:center;
-}
-
-#EntryMenuDiv #AddNewVolume p{
-	margin-top:60px;
+	background-position: -115px 0;
 }
 
 #EntryMenuDiv #AddNewPlace{
-	background:url(${contextPath}/images/1024/button_addnewplace.png) no-repeat;
-	position:absolute;
 	margin: 20px 0 5px 503px;
-	position:absolute;
-	width:120px;
-	height:75px;
-	background-position:top;
-	text-align:center;
+	background-position: -345px 0;
 }
 
-#EntryMenuDiv #AddNewPlace p{
+#EntryMenuDiv #AddNewDocument p, #EntryMenuDiv #AddNewPerson p, #EntryMenuDiv #AddNewVolume p, #EntryMenuDiv #AddNewPlace p, 
+#EntryMenuDiv #DeleteThisItem p{
 	margin-top:60px;
 }
 
-#EntryMenuDiv #DeleteThisItem{
-	padding:5px 0 0 14px;
-	position:absolute;
-	margin: 20px 0 5px 560px;
-	position:absolute;
-	width:120px;
-	height:75px;
-}
-
-#EntryMenuDiv #DeleteThisItem p{
-	margin-top:55px;
-}
-
-#EntryMenuDiv a:hover, #VetMenuDiv a:hover{
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
-	text-decoration:none;
-}
 
 /* Add New Person & Menage Titles and Occupations */
 
@@ -864,17 +707,8 @@ $('.searchResult').live('click', function() {
 }
 
 #addNewPersonModalDiv #goBack{
-        background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	width:52px;
-	height:23px;
 	position:absolute;
-	text-decoration:none;
-	color:#6D5C4D;
-	text-align:center;
 	margin:130px 0 0 135px;
-	border:none;
-	cursor:pointer;
-	padding-top:4px;
 }
 
 /* Menage Titles and Occupations Modal */
