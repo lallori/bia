@@ -73,6 +73,13 @@
               <rp.build.warname>BiaDemoIndexer</rp.build.warname>
 		    </properties>
 		</profile>
+		<profile>
+			<id>idea</id>
+		    <properties>
+		      <customer>idea</customer>
+              <rp.build.warname>IdeaIndexer</rp.build.warname>
+		    </properties>
+		</profile>
 	</profiles>
 	
 	<build>
