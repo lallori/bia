@@ -25,8 +25,8 @@
 			</div>
 
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save"/>
+				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
+				<input id="save" class="button_small fr" type="submit" value="Save"/>
 			</div>
 			<form:hidden path="summaryId"/>
 			<input type="hidden" value="" id="modify" />

@@ -34,7 +34,7 @@
 		<br>
 		<div>
 			<input type="hidden" value="${person.personId}" />
-			<input id="save" type="submit" class="savePortrait"  value="Save" />
+			<input id="save" type="submit" class="savePortrait button_small" value="Save" />
 		</div>
 	
 	</form:form>

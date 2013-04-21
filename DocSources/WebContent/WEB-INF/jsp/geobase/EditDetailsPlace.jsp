@@ -93,8 +93,8 @@
 				<form:errors path="parentPlaceAllId" cssClass="inputerrors" htmlEscape="false" />
 
 				<div>
-					<input type="submit" title="Do not save changes" value="Close" id="close">
-					<input type="submit" value="Save" id="save">
+					<input type="submit" title="Do not save changes" value="Close" id="close" class="button_small fl" />
+					<input type="submit" value="Save" id="save" class="button_small fr" />
 				</div>
 				<input type="hidden" value="" id="modify" />
 			</fieldset>	

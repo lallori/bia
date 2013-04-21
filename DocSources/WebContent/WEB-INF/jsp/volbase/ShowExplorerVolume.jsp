@@ -180,10 +180,10 @@
 	
 		<div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode">Show in Fullscreen mode</a>
+				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode button_large">Show in Fullscreen mode</a>
 			</security:authorize>
-			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary" href="#">Volume Summary</a>
-			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
+			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary button_medium" href="#">Volume Summary</a>
+			<a class="refreshVolumeExplorer button_small" href="${currentPage}">Refresh</a>
 			<c:if test="${volumeExplorer.totalRubricario > 0}">
 				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
 			</c:if>
@@ -197,7 +197,7 @@
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
 			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-			<input id="go" type="submit" value="Go" />
+			<input id="go" class="button_mini" type="submit" value="Go" />
 			<form:hidden path="summaryId" />
 			<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 			<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>

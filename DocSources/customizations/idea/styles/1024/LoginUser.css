@@ -16,6 +16,9 @@ input[type="text"], input[type="password"] {
 	padding:5px;
 	margin: 5px 7px 5px 5px;
 	width:130px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
 }
 
 /* Structural Divs */

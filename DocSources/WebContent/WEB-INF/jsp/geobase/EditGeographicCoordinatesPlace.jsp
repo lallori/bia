@@ -72,8 +72,8 @@
 		<form:errors path="directionLongitude" cssClass="inputerrors" htmlEscape="false"/>
 		
 		<div>
-			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<input type="submit" value="Save" id="save">
+			<input id="close" class="button_small fl" type="submit" value="Close" title="Do not save changes"/>
+			<input type="submit" class="button_small fr" value="Save" id="save"/>
 		</div>
 		<input type="hidden" value="" id="modify" />
 		</fieldset>

@@ -98,8 +98,8 @@
 			<form:errors path="endDay" cssClass="inputerrors" htmlEscape="false" />
 			
 			<div>
-				<input id="closeTitle" type="submit" value="Close" title="do not save changes" class="button" />
-				<input type="submit" value="Save" id="save">
+				<input id="closeTitle" class="button_small fl" type="submit" value="Close" title="do not save changes" />
+				<input type="submit" value="Save" id="save" class="button_small fr" />
 			</div>
 			
 			<input type="hidden" value="" id="modify" />

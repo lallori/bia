@@ -22,13 +22,14 @@ body {
 	margin:0 !important; 
 	padding:0 !important; 
 	font-size: 12px;
-	color: #6F6B69;
+	
+    color: #56400D;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 h1 {
-	font-size:110%;
-	color:#6F6B69;
+	font-size:12px;
+	color:#BED3E0;
 }
 
 a img {
@@ -114,7 +115,7 @@ a {
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(${contextPath}/images/1024/nav_buttons.png);
-	width:22px;
+	width: 23px;
 	height:22px;
 	border:none;
 	text-align: center;
@@ -387,7 +388,7 @@ a {
 .welcome_list h2{
      font-size:14px;
      padding-left: 10px;
-     color: #6F6B69;
+     color: #56400D;
 } 
 
 .welcome_list h1{
@@ -407,7 +408,7 @@ a {
 	position:relative;
 	display:block;
 	margin: 10px 0 10px 0;
-	border-bottom:1px solid #DCC0BA;
+	border-bottom: 1px solid #C8B695;
 	width: 455px;
 }
 
@@ -643,6 +644,7 @@ $('.searchResult').live('click', function() {
 #EntryMenuDiv #close{
 	margin: 135px 0 0 335px;
 	position:absolute;
+	padding: 0;
 }
 
 #EntryMenuDiv #AddNewDocument, #EntryMenuDiv #AddNewPerson, #EntryMenuDiv #AddNewVolume, #EntryMenuDiv #AddNewPlace{

@@ -50,8 +50,8 @@
 		</c:forEach>
 			
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="AddNewValue" type="submit" value="Add" title="Add new Topic" />		
+				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
+				<input id="AddNewValue" class="button_small fr" type="submit" value="Add" title="Add new Topic" />		
 			</div>
 			
 		</fieldset>	
