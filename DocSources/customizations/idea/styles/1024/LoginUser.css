@@ -106,14 +106,10 @@ div.buttons {
 .button_login, .button_medium {
 	width: 127px;
 	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_medium.png);
-	background-repeat: no-repeat;
+	background: url(${contextPath}/images/1024/nav_buttons.png) 0 -52px transparent;
 	cursor: pointer;
 	text-align: center;
-	background-color:transparent; 
 	display:block;
-	padding:1px 0 0 0;
-	line-height:18px;
 	margin: 10px 0 10px 0;
 }
 
