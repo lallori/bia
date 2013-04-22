@@ -1,4 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <c:url var="MainContentMacURL" value="/styles/1024/MainContent_mac.css"/>
@@ -12,7 +17,7 @@
 	<head>
 		<base href="${pageContext.request.contextPath}"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>the MEDICI ARCHIVE PROJECT</title>
+		<title>${fn2:getApplicationProperty("project.name")}</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />

@@ -17,7 +17,7 @@
 		<head>
 		<base href="${pageContext.request.contextPath}"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Bia - the MEDICI ARCHIVE PROJECT</title>
+		<title>${fn2:getApplicationProperty("project.name")}</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/AdministrationMenu.css" />" />

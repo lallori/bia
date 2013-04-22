@@ -32,7 +32,7 @@ Joana Amill <joana.amill@gmail.com>
  		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/mview.css"/>" />                                                                               
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-		<title>BIA Manuscript Viewer</title>
+		<title>${fn2:getApplicationProperty("project.name")} - Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"></script>
