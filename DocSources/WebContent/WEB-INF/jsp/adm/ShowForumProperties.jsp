@@ -16,8 +16,7 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Unique identifier for Document forum :</div> 
-			<div class="value60">${fn2:getApplicationProperty("forum.identifier.document");
-})}</div> 
+			<div class="value60">${fn2:getApplicationProperty("forum.identifier.document")}</div> 
 		</div>
         <div class="row">
 			<div class="item">Unique identifier for Place forum :</div> 
