@@ -31,7 +31,7 @@ input[type="text"], input[type="password"] {
 	position:relative;
 }
 
-#map { /* IDEA logo */
+#map { /* Idea logo */
 	width: 200px;
 	height:375px;
 	float:left;
@@ -280,14 +280,15 @@ input {
 }
 
 .loginerror { /* Error Span messages */
-	color:#900;
+	color: #DD3D27;
 	font-size:11px;
-	border:#900 solid 1px;
+	border: #DD3D27 solid 1px;
 	text-align:left;
 	padding:2px;
 	position:absolute;
-	margin: 145px 0 0 210px;
+	margin: 149px 0 0 188px;
 	max-width:150px;
+	text-shadow: 1px 1px #222;
 }
 
 #create {

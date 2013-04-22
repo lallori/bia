@@ -11,10 +11,10 @@
 		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=VOLUME"/>">Volumes</a>
 		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PEOPLE"/>">People</a>
 		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PLACE"/>">Places</a>
-		<a id="savedFilters" href="<c:url value="/src/ShowUserSearchFilters.do"/>">Your saved filters</a>
+		<a id="savedFilters" class="button_large" href="<c:url value="/src/ShowUserSearchFilters.do"/>">Your saved filters</a>
 	
 		<div id="CloseButton">
-			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
+			<input id="close" class="button_small" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
 	</div>
 	

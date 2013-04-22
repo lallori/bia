@@ -301,7 +301,7 @@ span.h7 {
 /* --------------- DATA ENTRY DISPLAY ELEMENTS ----------------------- */ 
 
 .background { /* Background image of each section */
-	background:url(${contextPath}/images/1024/bg_div.png) no-repeat;
+	 background: url(${contextPath}/images/1024/nav_backgrounds.png) 0 0;
 }
 
 .title { /* Title */
@@ -3153,65 +3153,49 @@ form#EditUserProfileForm span{
 	font-weight:normal;
 }
 
-#advancedSearchModal #documentSearch{ /* Documents Advanced Search Button */
-	width:130px;
+#advancedSearchModal #documentSearch, #advancedSearchModal #volumeSearch, #advancedSearchModal #personSearch, #advancedSearchModal #placeSearch{
+    width: 110px;
 	height:40px;
 	float:left;
+	background: url(${contextPath}/images/1024/nav_menuModal.png);
+}
+
+#advancedSearchModal #documentSearch {
+    width: 115px;
+}
+
+
+#advancedSearchModal #documentSearch{ /* Documents Advanced Search Button */
 	margin:35px 0 0 55px;
-	background-image:url(${contextPath}/images/1024/button_advsearchdoc.png);
-	background-repeat:no-repeat;
+	background-position:0 -86px;
 	padding:90px 0 0 17px;
-	font-size:12px;
 }
 
 #advancedSearchModal #volumeSearch{ /* Volumes Advanced Search Button */
-	width:130px;
-	height:40px;
-	float:left;
-	margin:35px 0 0 10px;
-	background-image:url(${contextPath}/images/1024/button_advsearchvol.png);
-	background-repeat:no-repeat;
+	margin: 35px 0 0 30px;
 	padding:90px 0 0 25px;
-	font-size:12px;
+	background-position: -465px -86px;
 }
 
 #advancedSearchModal #personSearch{ /* People Advanced Search Button */
-	width:130px;
-	height:40px;
-	float:left;
-	margin:35px 0 0 10px;
-	background-image:url(${contextPath}/images/1024/button_advsearchpeop.png);
-	background-repeat:no-repeat;
+	margin: 35px 0 0 30px;
 	padding:90px 0 0 30px;
-	font-size:12px;
+	background-position: -160px -86px;
 }
 
 #advancedSearchModal #placeSearch{ /* Place Advanced Search Button */
-	width:130px;
-	height:40px;
-	float:left;
-	margin:35px 0 0 10px;
-	background-image:url(${contextPath}/images/1024/button_advsearchpla.png);
-	background-repeat:no-repeat;
+	margin: 35px 0 0 30px;
 	padding:90px 0 0 32px;
-	font-size:12px;
+	background-position: -305px -86px;
 }
 
 #advancedSearchModal #savedFilters{ /* Saved Filters Advanced Search Button */
-	background: url(${contextPath}/images/1024/button_large.png) no-repeat;
-	width: 192px;
-	height: 50px;
 	float: left;
-	text-decoration: none;
-	color: #6D5C4D;
-	text-align:center;
-	padding: 4px 0 0 0;
 	margin:25px 0 0 275px;
-	background-repeat:no-repeat;
 }
 
 #advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
-	margin: 209px 0 0 340px;
+	margin: 225px 0 0 340px;
 	position:absolute;
 }
 

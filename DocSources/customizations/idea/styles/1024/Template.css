@@ -685,26 +685,24 @@ $('.searchResult').live('click', function() {
 /* Add New Person & Menage Titles and Occupations */
 
 #addNewPersonModalDiv #AddNewPerson{
-	background:url(${contextPath}/images/1024/button_addnewperson.png) no-repeat;
-	margin: 10px 0 5px 20px;
+	background: url(${contextPath}/images/1024/nav_menuModal.png) -247px 0;
+	margin: 10px 0 5px 40px;
 	position:absolute;
-	width:120px;
+	width: 93px;
 	height:75px;
-	background-position:top;
 	text-align:center;
 }
 
 #addNewPersonModalDiv #AddNewPerson p, #addNewPersonModalDiv #MenageTitlOcc p{
-	margin-top:60px;
+	margin-top: 70px;
 }
 
 #addNewPersonModalDiv #MenageTitlOcc{
-	background:url(${contextPath}/images/1024/button_menageTitlOcc.png) no-repeat;
+	background: url(${contextPath}/images/1024/nav_menuModal.png) -456px 0;
 	margin: 10px 0 5px 180px;
 	position:absolute;
 	width:120px;
 	height:75px;
-	background-position:top;
 	text-align:center;
 }
 
