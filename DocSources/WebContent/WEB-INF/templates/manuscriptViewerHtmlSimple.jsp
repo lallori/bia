@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -32,8 +33,7 @@ Joana Amill <joana.amill@gmail.com>
 		<![endif]-->
  		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/mview.css"/>" />                                                                             
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-		<!--<title>${fn2:getApplicationProperty("project.name")} - Manuscript Viewer</title>-->
-		<title>Manuscript Viewer</title>
+		<title>${fn2:getApplicationProperty("project.name")} - Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"></script>
