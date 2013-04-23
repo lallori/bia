@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -41,7 +42,7 @@
 		<div id="volumeTitle">
 			<div id="text">
 				<%--<h3>${schedone.fondo} ${volume.volNum}${volume.volLetExt}</h3>--%>
-				<h3>${volume.volNum}${volume.volLetExt}</h3>
+				<h3>${fn2:getApplicationProperty("schedone.fondo")} - Volume ${volume.volNum}${volume.volLetExt}</h3>
 				<h4>${volume.serieList}</h4>
 				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
