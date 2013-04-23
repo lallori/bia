@@ -40,7 +40,8 @@
 		<c:if test="${volume.summaryId != 0}">
 		<div id="volumeTitle">
 			<div id="text">
-				<h3>${schedone.fondo} ${volume.volNum}${volume.volLetExt}</h3>
+				<%--<h3>${schedone.fondo} ${volume.volNum}${volume.volLetExt}</h3>--%>
+				<h3>${volume.volNum}${volume.volLetExt}</h3>
 				<h4>${volume.serieList}</h4>
 				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
