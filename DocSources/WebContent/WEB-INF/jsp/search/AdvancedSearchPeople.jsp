@@ -9,7 +9,7 @@
 
 	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
 
-<body>
+<body class="search">
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR PEOPLE</div>
 		<div id="body_left">

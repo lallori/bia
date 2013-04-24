@@ -47,7 +47,6 @@ input[type="text"], input[type="password"] {
 	height: 95px;
 	margin: 546px 0 0 211px;
 	position:absolute;
-	display:none;
 }
 
 .mellon {
@@ -58,11 +57,15 @@ input[type="text"], input[type="password"] {
 .dga {
 	position: absolute;
 	margin: 50px 0 0 0;
+	display:none;
+
 }
 
 .archivio {
 	margin: 50px 0 0 270px;
 	position: absolute;
+	display:none;
+
 }
 
 

@@ -9,7 +9,7 @@
 	
 	<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
 
-<body>
+<body class="search">
 	<div id="advancedSearch">
 		<div id="advancedSearch_top">SEARCH FOR PLACES</div>
 		<div id="body_left">

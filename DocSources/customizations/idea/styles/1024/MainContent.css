@@ -42,7 +42,7 @@ h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align: left;
 	font-size: 12px;
 	padding: 10px 0 0 10px;
-	color: #6F6B69;
+	color: #916D2A;
 	width: 320px;
 	margin: 0;
 }
@@ -177,20 +177,23 @@ span.h7 {
 #buttonShareLink { /* Share/Link Button */
 	right: 42px;
 	position:absolute;
+ 
+	color: #0B4F86;}
+
+#buttonPrint, #buttonMarkedList, #lastRecord, #nextRecord, #prevNextButtons #previousPage a, #prevNextButtons #nextPage a {
+    background:url(${contextPath}/images/1024/nav_icons.png);
 }
 
 #buttonPrint {  /* Print this Document Button */
-	background-image:url(${contextPath}/images/1024/button_print.png);
-	background-repeat:no-repeat;
+	background-position:0 0;
 	width: 20px;
 	height: 20px;
 	position:absolute;
-	right: 17px;
+	right: 15px;
 }
 
 #buttonMarkedList {  /* Print this Document Button */
-	background-image:url(${contextPath}/images/1024/button_markedList.png);
-	background-repeat:no-repeat;
+	background-position: -25px 0;
 	width: 25px;
 	height: 20px;
 	position:absolute;
@@ -198,14 +201,15 @@ span.h7 {
 }
 
 #deleteAction, #undeleteAction { /* Actions Menu Button */
-	
 	position:absolute;
 	right: 133px;
-}
+ 
+	color: #0B4F86;}
 
 #comments {
     position:absolute;
     right:308px;
+    color: #0B4F86;
 }
 
 #commentsOn { /* Actions Menu Button */
@@ -226,23 +230,24 @@ span.h7 {
 #vettingHistory { /* Actions Menu Button */
 	position:absolute;
 	right: 202px;
-}
+ 
+	color: #0B4F86;}
 
 #lastRecord {
-	width: 35px;
+	width: 26px;
 	height: 25px;
 	position: absolute;
-	background:url(${contextPath}/images/1024/button_lastRecord.png) no-repeat;
 	margin-top: 1px;
+	background-position: -48px 0;
 }
 
 #nextRecord {
-	width: 35px;
+	width: 25px;
 	height: 25px;
 	position: absolute;
-	margin-left: 28px;
-	background:url(${contextPath}/images/1024/button_nextRecord.png) no-repeat;
+	margin-left: 30px;
 	margin-top: 1px;
+	background-position: -79px 0;
 }
 
 #buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
@@ -300,8 +305,12 @@ span.h7 {
 /*
 /* --------------- DATA ENTRY DISPLAY ELEMENTS ----------------------- */ 
 
+.background, #yourEasySearchFilterForm { /* Backgrounds */
+	 background: url(${contextPath}/images/1024/nav_backgrounds.png);
+}
+
 .background { /* Background image of each section */
-	 background: url(${contextPath}/images/1024/nav_backgrounds.png) 0 0;
+	 background-position: 0 0;
 }
 
 .title { /* Title */
@@ -448,13 +457,13 @@ item a{
 }
 
 #personTitle, #documentTitle, #volumeTitle, #geoTitle {
-	border: 1px solid #BED3E0;
+	border: 1px solid #AD925F;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	margin: 57px 0 20px 5px;
 	padding: 8px 0 8px 0;
 	width: 475px;
-	background-color: #EFF4F7;
+	background-color: #F4E3BF;
 }
 
 #documentTitle {
@@ -572,7 +581,7 @@ item a{
 	height:17px;
 	font-size:11px;
 	padding-top:2px;
-	background-position: -112px -168px;
+	background-position: -112px -288px;
 }
 
 .button_bodyleft_medium {
@@ -580,7 +589,7 @@ item a{
 	height: 17px;
 	font-size:11px;
 	padding-top:2px;
-	background-position: 0 -168px;
+	background-position: 0 -288px;
 }
 
 .button_bodyleft_medium2 {
@@ -588,7 +597,7 @@ item a{
 	height: 17px;
 	font-size:11px;
 	padding-top:2px;
-	background-position: 0 -218px;
+	background-position: 0 -338px;
 }
 
 .button_bodyleft_large {
@@ -1984,16 +1993,16 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background:url(${contextPath}/images/1024/button_lastRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height: 26px;
+	background-position: -103px 0;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background:url(${contextPath}/images/1024/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height: 26px;
+	background-position: -135px 0;
 }
 
 #prevNextButtons #previousPage a:hover, #prevNextButtons #nextPage a:hover {
@@ -3217,7 +3226,6 @@ form#EditUserProfileForm span{
 #advancedSearch {
 	width:auto;
 	height:auto;
-	background-color:#f6edec;
 }
 
 #searchNamePeopleForm {
@@ -3290,7 +3298,7 @@ form#EditUserProfileForm span{
 
 #advancedSearch #body_left a{
 	text-decoration:none;
-	color:#654c47;
+	color: #F7F2E6;
 }
 
 
@@ -3471,11 +3479,12 @@ div.title a.helpIcon{ /* Help symbol "?" */
 }
 
 #yourEasySearchFilterForm {
-	background:url(${contextPath}/images/1024/bg_searchFilter.jpg) no-repeat;
+	background-position: -500px 0;
 	margin: 0;
 	padding: 5px 0 0 58px;
 	width:390px;
 	min-height:450px;
+	background-repeat: no-repeat;
 }
 
 #advancedSearch h2{
