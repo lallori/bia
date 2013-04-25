@@ -41,7 +41,7 @@
 									</select>
 				               	</div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 									<input type="hidden" id="category" value="Name Parts">
 				               	</div>
 				            </div>
@@ -59,7 +59,7 @@
 				        		<div class="col_l"></div>
 				        		<div class="col_l"></div>
 				        		<div class="col_r">
-				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="personAdd" disabled="disabled">
+				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="personAdd button_small" disabled="disabled">
 									<input type="hidden" id="category" value="person">
 									<input type="hidden" id="personId" value="">
 				        		</div>
@@ -164,7 +164,7 @@
 				               	</div>
 				               	<div class="col_r">
 				               		<input type="hidden" id="roleCategory" name="roleCategory" type="text" value=""/>
-						            <input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+						            <input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 									<input type="hidden" id="category" value="Role Category">
 				               	</div>
 				            </div>
@@ -183,7 +183,7 @@
 								<input id="occupationWord" name="occupationWord" class="input_20c" type="text" value=""/>
 			               	</div>
 			               	<div class="col_r">
-			               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 								<input type="hidden" id="category" value="OccupationWord">
 			               	</div>
 			            </div>
@@ -202,7 +202,7 @@
 								<input id="occupation" name="occupation" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        	</div>
 				        	<div class="col_r">
-				        		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="occupationAdd" disabled="disabled">
+				        		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="occupationAdd button_small" disabled="disabled">
 								<input type="hidden" id="category" value="Occupation">
 								<input type="hidden" id="occupationId" value="">
 				        	</div>
@@ -229,7 +229,7 @@
 				               	</div>
 				               	<div class="col_r">
 				               		<input type="hidden" id="gender" name="gender" type="text" value=""/>
-									<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="genderAdd">
+									<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="genderAdd button_small">
 									<input type="hidden" id="category" value="Gender">
 				               	</div>
 				            </div>
@@ -247,7 +247,7 @@
 				               	</div>
 				               	<div class="col_l"><input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
+				               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd button_small" disabled="disabled">
 									<input type="hidden" id="category" value="Place">
 									<input type="hidden" id="placeId" value="">
 				               	</div>
@@ -276,7 +276,7 @@
 									</select>
 				               	</div>
 				               	<div class="col_l"><input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/></div>
-				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="visible"></div>
+				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="visible button_small"></div>
 				            </div>
 				            
 				            <div class="row">
@@ -293,7 +293,7 @@
 						            </select>
 				               	</div>
 				               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2"/></div>
-				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="invisible"></div>
+				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="invisible button_small"></div>
 				            </div>
 			            </form>
 			        </div>
@@ -309,7 +309,7 @@
 									<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 									<input type="hidden" id="category" value="Research Notes">
 				               	</div>
 				            </div>
@@ -327,7 +327,7 @@
 									<input id="personId" name="personId" class="input_7c" type="text" maxlength="5" />
 								</div>
 								<div class="col_r">
-									<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 									<input type="hidden" id="category" value="Person Id">
 								</div>
 							</div>
@@ -347,7 +347,7 @@
 									<input type="checkbox" name="logicalDelete" value="true"/>
 								</div>
 								<div class="col_r">
-									<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 									<input type="hidden" id="category" value="Logical Delete">
 								</div>
 							</div>

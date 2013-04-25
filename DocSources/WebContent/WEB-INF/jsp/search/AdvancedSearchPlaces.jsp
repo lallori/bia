@@ -31,7 +31,7 @@
 							<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 										<input type="hidden" id="category" value="Place Name">
 					               	</div>
 					            </div>
@@ -47,7 +47,7 @@
 									<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        		</div>
 				        		<div class="col_r">
-				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
+				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd button_small" disabled="disabled">
 									<input type="hidden" id="category" value="place">
 									<input type="hidden" id="placeId" value="">
 				        		</div>
@@ -72,7 +72,7 @@
 					               	</div>
 					               	<div class="col_r">
 					               		<input type="hidden" id="placeType" name="placeType" type="text" value=""/>
-										<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 										<input type="hidden" id="category" value="Place Type">
 					               	</div>
 					            </div>
@@ -97,7 +97,7 @@
 					               	</div>
 					               	<div class="col_r">
 					               		<input type="hidden" id="linkedToPeople" name="linkedToPeople" type="text" value=""/>
-										<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
 										<input type="hidden" id="category" value="Linked to People">
 					               	</div>
 					            </div>
@@ -115,7 +115,7 @@
 										<input id="placeId" name="placeId" class="input_7c" type="text" maxlength="5" />
 									</div>
 									<div class="col_r">
-										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 										<input type="hidden" id="category" value="Place Id">
 									</div>
 								</div>
@@ -135,7 +135,7 @@
 										<input type="checkbox" name="logicalDelete" value="true"/>
 									</div>
 									<div class="col_r">
-										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 										<input type="hidden" id="category" value="Logical Delete">
 									</div>
 								</div>

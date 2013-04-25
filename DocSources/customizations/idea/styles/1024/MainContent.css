@@ -180,7 +180,7 @@ span.h7 {
  
 	color: #0B4F86;}
 
-#buttonPrint, #buttonMarkedList, #lastRecord, #nextRecord, #prevNextButtons #previousPage a, #prevNextButtons #nextPage a {
+#buttonPrint, #buttonMarkedList, #lastRecord, #nextRecord, #prevNextButtons #previousPage a, #prevNextButtons #nextPage a, #helpFilesIcon, #aboutMapIcon {
     background:url(${contextPath}/images/1024/nav_icons.png);
 }
 
@@ -551,6 +551,7 @@ item a{
     padding-top: 4px;
     border:none;
     color:#D6C8AF;
+    outline: none;
 } 
 
 .button_small {
@@ -3074,16 +3075,16 @@ form#EditUserProfileForm span{
 #helpFilesTitle,  #aboutMapTitle{
 	width: 170px;
 	height: 80px;
-	background-color:#EFE0DE;
-	border: 1px solid #D3B0A9;
+	background-color: #094473;
+	border: 1px solid #13325F;
 	border-radius: 4px 4px 0 0;
 }
 
 #helpFilesIcon {
 	width: 37px;
 	height: 37px;
-	background-image:url(${contextPath}/images/1024/img_help.png);
 	margin: 10px 0 0 66px;
+	background-position:0 -22px;
 }
 
 #helpFiles h1, #aboutMap h1{
@@ -3092,14 +3093,14 @@ form#EditUserProfileForm span{
 	width: 170px;
 	padding-bottom: 7px;
 	font-size: 14px;
-	color: #87655E;
+	color: #BED3E0;
 }
 
 #aboutMapIcon {
 	width: 37px;
 	height: 37px;
-	background-image:url(${contextPath}/images/1024/img_helpMap.png);
 	margin: 10px 0 0 66px;
+	background-position:-40px -23px
 }
 
 #helpFiles ul, #aboutMap ul {
@@ -3109,9 +3110,9 @@ form#EditUserProfileForm span{
 	color: black;
 	width: 160px;
 	margin: 0;
-	border-left: 1px dashed #D3B0A9;
-	border-right: 1px dashed #D3B0A9;
-	border-bottom: 1px dashed #D3B0A9;
+	border-left: 1px dashed #13325F;
+	border-right: 1px dashed #13325F;
+	border-bottom: 1px dashed #13325F;
 	min-height:90px;
 }
 
@@ -3126,11 +3127,11 @@ form#EditUserProfileForm span{
 	width: 415px;
 	margin-left: 47px;
 	text-align: justify;
-	color: #6F6B69;
+	color: #F5F6F5;
 	font-size: 11px;
 	line-height: 16px;
 	margin-top: 224px;
-	border: 1px solid #D3B0A9;
+	border: 1px solid #13325F;
 	border-radius: 4px;
 	padding: 11px;
 	margin-top: 20px;
@@ -3139,7 +3140,7 @@ form#EditUserProfileForm span{
 #credits p.title {
 	padding-top: 0;
 	margin-top: 0;
-	color: #87655E;
+	color: #BED3E0;
 	font-size: 12px;
 	height: 15px;
 }
@@ -3264,18 +3265,16 @@ form#EditUserProfileForm span{
 	text-align: center;
 }
 
-#customSearchFilterDiv h1.advSearchTitle {
+#customSearchFilterDiv h1.advSearchTitle, #yourSearchFilterDiv h1.advSearchTitle {
     font-size: 14px;
     font-style: italic;
     margin: 20px 0 20px 0;
     text-align: center;
+    color: #916D2A;
 }
 
 #yourSearchFilterDiv h1.advSearchTitle {
-    font-size: 14px;
-    font-style: italic;
     margin: 20px 0 20px 60px;
-    text-align: center;
 }
 
 #advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
@@ -3298,7 +3297,10 @@ form#EditUserProfileForm span{
 
 #advancedSearch #body_left a{
 	text-decoration:none;
-	color: #F7F2E6;
+}
+
+#advancedSearch #body_left h1 a{
+	text-align: left;
 }
 
 
@@ -3321,25 +3323,8 @@ form#EditUserProfileForm span{
 	display: table-row-group;
 }
 
-
-#accordion #addSearchFilter { /* Add button */
-	background: url(${contextPath}/images/1024/button_small.png) no-repeat;
-	width:52px;
-	height:22px;
-	border:none;
-	cursor:pointer;
-}
-
 #occupation {
 	width:241px;
-}
-
-
-#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
-	   padding: 0;
-	background: url(${contextPath}/images/1024/button_small.png) no-repeat;
-	font-size:12px;
-    text-align:center;
 }
 
 #dateYearBetween {
@@ -3499,6 +3484,7 @@ div.title a.helpIcon{ /* Help symbol "?" */
 	margin: 15px 0 5px 0;
 	font-style: normal;
 	padding: 0;
+	text-align: left;
 }
 
 #advancedSearch #body_right p{
@@ -3549,19 +3535,9 @@ span.categorySearch {
 }
 
 .saveButton { /* Save Button */
-	margin: 25px 0 0 0px;
-	position:absolute;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0; 
-	background-repeat:no-repeat;
-	width:52px;
-	height:23px;
-	border:none;
-	outline:none;
-	text-align:center;
-}
+	 margin: 25px 0 0 0; 
+     position: absolute;
+ }
 
 #advsearch { /* Search Button */
 	margin: 25px auto auto 297px;
@@ -3810,15 +3786,6 @@ table#savedSearchFiltersForm.display {
 .txtadvsearch {
 	width: 270px;
 	height:70px;
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #000000;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:11px;
-	padding:5px 10px 5px 10px;
-	margin: 5px 0px 5px 0px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -4792,14 +4759,7 @@ h3.systemManagement {
 
 #closeMyHistory, #closeMarketList, #closePersonalAnnotations {
 	float:left;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	width:52px;
-	height:22px;
 	margin-left: 214px;
-	text-align:center;
 }
 
 #generalHistory {
@@ -4813,25 +4773,13 @@ h3.systemManagement {
 }
 
 #categoryHistory, #printAllItems {
-    background: url(${contextPath}/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
-    cursor: pointer;
 	float:right;
-    height: 22px;
     margin: 0;
-    padding: 4px 0 0;
-    text-align: center;
-    width: 127px;
 }
 
 #eraseHistory, #eraseList, #removeSelected, #selectAll {
-    background: url(${contextPath}/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
-    cursor: pointer;
 	float:left;
-    height: 22px;
     margin-left: 12px;
-    padding: 4px 0 0;
-    text-align: center;
-    width: 127px;
 }
 
 #goBackToMyHistory {

@@ -32,7 +32,7 @@
 					               	<div class="col_l"><input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_l"><input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="volumeAdd" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="volumeAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="Volume">
 					               	</div>
 					            </div>
@@ -62,7 +62,7 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="visible">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="visible button_small">
 										<input type="hidden" id="category" value="Date">
 					               	</div>
 					            </div>
@@ -79,7 +79,7 @@
 					               	</div>
 					               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="invisible">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="invisible button_small">
 					               	</div>
 					            </div>
 					        </form>
@@ -103,7 +103,7 @@
 					                	</select>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 		                				<input type="hidden" id="category" value="Digitized">
 					               	</div>
 					            </div>
@@ -123,7 +123,7 @@
 						                </select>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			               	 			<input type="hidden" id="category" value="Cipher">
 					               	</div>
 					            </div>
@@ -143,7 +143,7 @@
 						                </select>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="Index">
 					               	</div>
 					            </div>
@@ -187,7 +187,7 @@
 			                			<input type="checkbox" name="english" value="English"\/>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="Languages">
 			                		</div>
 					            </div>
@@ -203,7 +203,7 @@
 										<input type="text" id="otherLang" class="input_24c"/><!-- AUTOCOMPLETE -->
 									</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="otherLangAdd" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="otherLangAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="other Lang">
 					               	</div>
 					            </div>
@@ -224,7 +224,7 @@
 					            <div class="row">
 					               	<div class="col_l"><textarea id="fromVolume" name="fromVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="From">
 					               	</div>
 					            </div>
@@ -240,7 +240,7 @@
 					            <div class="row">
 					               	<div class="col_l"><textarea id="toVolume" name="toVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="To">
 					               	</div>
 					            </div>
@@ -256,7 +256,7 @@
 					            <div class="row">
 					               	<div class="col_l"><textarea id="context" name="context" class="txtarea_search"></textarea><!-- no autocompleter but word search --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="Context">
 			                		</div>
 					            </div>
@@ -272,7 +272,7 @@
 					            <div class="row">
 					               	<div class="col_l"><textarea id="inventario" name="inventario" class="txtarea_search"></textarea><!-- no autocompleter but word search --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this date to your search filter">
 			                			<input type="hidden" id="category" value="Inventario">
 					               	</div>
 					            </div>
@@ -290,7 +290,7 @@
 										<input id="volumeId" name="volumeId" class="input_7c" type="text" maxlength="5" />
 									</div>
 									<div class="col_r">
-										<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 										<input type="hidden" id="category" value="Volume Id">
 									</div>
 								</div>
@@ -310,7 +310,7 @@
 			         					<input type="checkbox" name="logicalDelete" value="true"/>
 			         				</div>
 			         				<div class="col_r">
-			         					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			         					<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
 										<input type="hidden" id="category" value="Logical Delete">
 									</div>
 								</div>
