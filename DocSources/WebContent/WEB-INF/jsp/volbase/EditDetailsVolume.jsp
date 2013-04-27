@@ -14,8 +14,8 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.carteggio"></fmt:message>">?</a>
-						<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
+						<a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.carteggio"/>">?</a>
+						<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i><fmt:message key="volbase.editDetailsVolume.carteggio"/></i></form:label>
 					</div>
 					<div class="col_r"><form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_35c" /></div>
 				</div>
@@ -23,9 +23,9 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP)</form:label></div>
+					<div class="col_r"><form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.volume"/></form:label></div>
 					<div class="col_l"><form:input path="volNum" cssClass="input_5c" maxlength="5"/></div>
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.volumeextension"></fmt:message>">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.volumeextension"/>">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
 					<div class="col_r"><form:input path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/></div>
 				</div>
 			</div>
@@ -34,19 +34,19 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year</form:label></div>
+					<div class="col_l"><form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.startYear"/></form:label></div>
 					<div class="col_l"><form:input path="startYear" cssClass="input_4c" maxlength="4"/></div>
-					<div class="col_r"><form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Start month</form:label></div>
+					<div class="col_r"><form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.startMonth"/></form:label></div>
 					<div class="col_l"><form:select path="startMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName" /></div>
-					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Start day</form:label></div>
+					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.startDay"/></form:label></div>
 					<div class="col_r"><form:input path="startDay" cssClass="input_2c" maxlength="2"/></div>
 				</div>
 				<div class="row">
-					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year</form:label></div>
+					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.endYear"/></form:label></div>
 					<div class="col_l"><form:input path="endYear" cssClass="input_4c" maxlength="4"/></div>
-					<div class="col_r"><form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">End month</form:label></div>
+					<div class="col_r"><form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.endMonth"/></form:label></div>
 					<div class="col_l"><form:select path="endMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-					<div class="col_r"><form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day</form:label></div>
+					<div class="col_r"><form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.endDay"/></form:label></div>
 					<div class="col_r"><form:input path="endDay" cssClass="input_2c" maxlength="2"/></div>
 				</div>
 			</div>
@@ -55,8 +55,8 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.datenotes"></fmt:message>">?</a>
-					<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.datenotes"/>">?</a>
+					<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.dateNotes"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea path="dateNotes" cssClass="txtarea"/>

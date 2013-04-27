@@ -7,7 +7,7 @@
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b>CONTEXT</b></legend>
+			<legend><b><fmt:message key="volbase.editContextVolume.title"/></b></legend>
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="volbase.editContextVolume.help.context"/>">?</a>

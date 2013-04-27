@@ -7,19 +7,19 @@
 	<form:form id="EditCorrespondentsVolumeForm" method="post" class="edit">
 		<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b>CORRESPONDENTS</b></legend>
+			<legend><b><fmt:message key="volbase.editCorrespondentsVolume.title"/></b></legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.from"></fmt:message>">?</a>
-					<form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.from"/>">?</a>
+					<form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error"><fmt:message key="volbase.editCorrespondentsVolume.from"/></form:label>
 				</div>
 				<div class="row"><form:textarea path="senders" cssClass="txtarea_medium"/><form:errors path="senders" cssClass="inputerrors"/></div>
 				
 				<br />
 				
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.to"></fmt:message>">?</a>
-					<form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.to"/>">?</a>
+					<form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error"><fmt:message key="volbase.editCorrespondentsVolume.to"/></form:label>
 				</div>
 				<div class="row"><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>
 			

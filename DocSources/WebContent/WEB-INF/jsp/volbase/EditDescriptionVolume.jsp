@@ -8,20 +8,20 @@
 	<form:form id="EditDescriptionVolumeForm" method="post" cssClass="edit">
 		<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b>DESCRIPTION</b></legend>
+			<legend><b><fmt:message key="volbase.editDescriptionVolume.title"></b></legend>
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.organizationalcriteria"></fmt:message>">?</a>
-					<form:label id="orgNotesLabel" for="orgNotes" path="orgNotes" cssErrorClass="error">Organizational Criteria</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.organizationalcriteria"/>">?</a>
+					<form:label id="orgNotesLabel" for="orgNotes" path="orgNotes" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.organizationalcriteria"></form:label>
 				</div>
 				<div class="row">
 					<form:textarea path="orgNotes" cssClass="txtarea_big"/><form:errors path="orgNotes" cssClass="inputerrors"/>
 				</div>
 				<br />
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.condition"></fmt:message>">?</a>
-					<form:label id="conditionLabel" for="ccondition" path="ccondition" cssErrorClass="error">Condition</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.condition"/>">?</a>
+					<form:label id="conditionLabel" for="ccondition" path="ccondition" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.condition"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea path="ccondition" id="condition" cssClass="txtarea"/><form:errors path="ccondition" cssClass="inputerrors"/>
@@ -30,15 +30,15 @@
 	
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="boundLabel" for="bound" path="bound" cssErrorClass="error">Bound</form:label></div>
+					<div class="col_r"><form:label id="boundLabel" for="bound" path="bound" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.bound"/></form:label></div>
 					<div class="col_l"><form:select path="bound" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="bound" cssClass="inputerrors"/></div>
-					<div class="col_r"><form:label id="folsNumbrdLabel" for="folsNumbrd" path="folsNumbrd" cssErrorClass="error">Folios Numbered</form:label></div>
+					<div class="col_r"><form:label id="folsNumbrdLabel" for="folsNumbrd" path="folsNumbrd" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.foliosNumbered"/></form:label></div>
 					<div class="col_r"><form:select path="folsNumbrd" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/></div>
 				</div>
 				<div class="row">
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.foliocount"></fmt:message>">?</a><form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error">Folio Count</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.foliocount"/>">?</a><form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.folioCount"/></form:label></div>
 					<div class="col_l"><form:input path="folioCount" cssClass="input_10c"/><form:errors path="ccondition" cssClass="inputerrors"/></div>
-					<div class="col_r"><form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error">Index of Names</form:label></div>
+					<div class="col_r"><form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.indexOfNames"/></form:label></div>
 					<div class="col_r"><form:select path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/></div>
 				</div>
 			</div>
@@ -48,11 +48,11 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<form:label id="printedMaterialLabel" for="printedMaterial" path="printedMaterial" cssErrorClass="error">Printed material</form:label>
+						<form:label id="printedMaterialLabel" for="printedMaterial" path="printedMaterial" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.printedMaterial"/></form:label>
 						<form:checkbox path="printedMaterial"/><form:errors path="printedMaterial" cssClass="inputerrors"/>
 					</div>
 					<div class="col_r">
-						<form:label id="printedDrawingsLabel" for="printedDrawings" path="printedDrawings"  cssErrorClass="error">Printed drawings</form:label>
+						<form:label id="printedDrawingsLabel" for="printedDrawings" path="printedDrawings"  cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.printedDrawings"/></form:label>
 						<form:checkbox path="printedDrawings"/><form:errors path="printedDrawings" cssClass="inputerrors"/>
 					</div>
 				</div>
@@ -61,34 +61,34 @@
 			<hr />
 				
 			<div>
-				<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.languages"></fmt:message>">?</a><label for="languages" id="languagesLabel" > Languages:</label>
+				<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.languages"/>">?</a><label for="languages" id="languagesLabel"><fmt:message key="volbase.editDescriptionVolume.languages"/>:</label>
 			</div>
 			<div class="listForm">
 				<div class="row">
 					<div class="col_r">
-						<form:label id="italianLabel" for="italian" path="italian" cssErrorClass="error">Italian</form:label>
+						<form:label id="italianLabel" for="italian" path="italian" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.italian"/></form:label>
 						<form:checkbox path="italian" /><form:errors path="italian" cssClass="inputerrors"/>
 					</div>
 					<div class="col_r">
-						<form:label id="frenchLabel" for="french" path="french" cssErrorClass="error">French</form:label>
+						<form:label id="frenchLabel" for="french" path="french" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.french"/></form:label>
 						<form:checkbox path="french" /><form:errors path="french" cssClass="inputerrors"/>
 					</div>
 					<div class="col_r">
-						<form:label id="germanLabel" for="german" path="german" cssErrorClass="error">German</form:label>
+						<form:label id="germanLabel" for="german" path="german" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.german"/></form:label>
 						<form:checkbox path="german" /><form:errors path="german" cssClass="inputerrors"/>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col_r">
-						<form:label id="spanishLabel" for="spanish" path="spanish" cssErrorClass="error">Spanish</form:label>
+						<form:label id="spanishLabel" for="spanish" path="spanish" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.spanish"/></form:label>
 						<form:checkbox path="spanish" /><form:errors path="spanish" cssClass="inputerrors"/>
 					</div>
 					<div class="col_r">
-						<form:label id="latinLabel" for="latin" path="latin" cssErrorClass="error">Latin</form:label>
+						<form:label id="latinLabel" for="latin" path="latin" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.latin"/></form:label>
 						<form:checkbox path="latin" /><form:errors path="latin" cssClass="inputerrors"/>
 					</div>
 					<div class="col_r">
-						<form:label id="englishLabel" for="english" path="english" cssErrorClass="error">English</form:label>
+						<form:label id="englishLabel" for="english" path="english" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.languages.english"/></form:label>
 						<form:checkbox path="english" /><form:errors path="english" cssClass="inputerrors"/>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_r">
-						<form:label id="otherLangLabel" for="otherLang" path="otherLang" cssErrorClass="error">Other languages</form:label>
+						<form:label id="otherLangLabel" for="otherLang" path="otherLang" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.otherLanguages"/></form:label>
 						<form:input path="otherLang" cssClass="input_33c"/><form:errors path="otherLang" cssClass="inputerrors"/>
 					</div>
 				</div>
@@ -108,7 +108,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error">Some Docs in Cipher</form:label>
+						<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.someDocsInCipher"/></form:label>
 						<form:select path="cipher" cssClass="selectform_short">
 							<form:option value="true">Yes</form:option>
 							<form:option value="false">No</form:option>
@@ -121,8 +121,8 @@
 				
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.ciphernotes"></fmt:message>">?</a>
-						<form:label id="cipherNotesLabel" for="cipherNotes" path="cipherNotes" cssErrorClass="error">Cipher Notes</form:label>
+						<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.ciphernotes"/>">?</a>
+						<form:label id="cipherNotesLabel" for="cipherNotes" path="cipherNotes" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.cipherNotes"/></form:label>
 						<form:textarea path="cipherNotes" cssClass="txtarea"/><form:errors path="cipherNotes" cssClass="inputerrors"/>
 					</div>
 				</div>
