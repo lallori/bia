@@ -16,17 +16,17 @@
              <td width="285" class="value">${volume.volNum}${volume.volLetExt}</td>
          </tr>
          <tr>
-             <td width="100"><fmt:message key="volbase.printVolume.startDate"/>Start Date</td>
+             <td width="100"><fmt:message key="volbase.printVolume.startDate"/></td>
 
              <td width="285" class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</td>
          </tr>
          <tr>
-             <td width="100"><fmt:message key="volbase.printVolume.endDate"/>End Date</td>
+             <td width="100"><fmt:message key="volbase.printVolume.endDate"/></td>
              <td width="285" class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</td>
          </tr>
          <tr>
 
-             <td width="100"><fmt:message key="volbase.printVolume.dateNotes"/>Date Notes</td>
+             <td width="100"><fmt:message key="volbase.printVolume.dateNotes"/></td>
              <td width="285" class="value">${volume.dateNotes}</td>
          </tr>
      </table> 
@@ -102,7 +102,7 @@
      <h5><fmt:message key="volbase.printVolume.title.context"/></h5>
      <table>
          <tr> 
-           <td width="70"><fmt:message key="volbase.printVolume.context"/>Context</td>
+           <td width="70"><fmt:message key="volbase.printVolume.context"/></td>
 
            <td class="value">${volume.ccontext}</td>
          </tr>

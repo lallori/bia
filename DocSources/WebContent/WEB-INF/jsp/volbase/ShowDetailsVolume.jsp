@@ -35,43 +35,43 @@
 	<div id="volumeDiv">
 		<%-- Create new Volume Record --%>
 		<c:if test="${volume.summaryId == 0}">
-		<h2 class="addNew">ADD New - Volume Record</h2>
+		<h2 class="addNew"><fmt:message key="volbase.showDetailsVolume.addNew"/></h2>
 		</c:if>	
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">
 		<div id="volumeTitle">
 			<div id="text">
 				<%--<h3>${schedone.fondo} ${volume.volNum}${volume.volLetExt}</h3>--%>
-				<h3>${fn2:getApplicationProperty("schedone.fondo")} - Volume ${volume.volNum}${volume.volLetExt}</h3>
+				<h3>${fn2:getApplicationProperty("schedone.fondo")} - <fmt:message key="volbase.showDetailsVolume.volume2"/> ${volume.volNum}${volume.volLetExt}</h3>
 				<h4>${volume.serieList}</h4>
-				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} <fmt:message key="volbase.showDetailsVolume.to"/> ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-					<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
+					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
 				</c:if>
 				<c:if test="${volDocsRelated == 0}">
-					<p style="margin:10px 0 8px 10px;">Documents related to this Volume record: <font color="#900">0</font></p>
+					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">0</font></p>
 				</c:if>
 				<c:if test="${volDocsRelated == 1}">
-					<p style="margin:10px 0 8px 10px;">Document related to this Volume record: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
+					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
 				</c:if>
 			</div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<c:if test="${not empty image}">
 				<div id="SpineVolumeDigitDiv">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-					<b>Volume Spine</b>
-					<a id="ShowVolumeInManuscriptViewer" title="Show in Manuscript Viewer" title="Show in Manuscript Viewer" href="${ShowVolumeInManuscriptViewerURL}"></a>
-					<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
+					<b><fmt:message key="volbase.showDetailsVolume.volueSpine"/></b>
+					<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
+					<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
 				</div>
 				</c:if>
 				<c:if test="${empty image && volume.digitized == false}">
 					<div id="SpineVolumeNotDigitDiv">
-						<span>To be digitized</span>
+						<span><fmt:message key="volbase.showDetailsVolume.toBeDigitized"/></span>
 					</div>
 				</c:if>
 				<c:if test="${empty image && volume.digitized == true}">
 					<div id="SpineVolumeNotDigitDiv">
-						<span>Spine not available</span>						
+						<span><fmt:message key="volbase.showDetailsVolume.spineNotAvailable"/></span>						
 					</div>
 				</c:if>
 			</security:authorize>
@@ -82,7 +82,7 @@
 			
 			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<div id="SpineVolumeNotDigitDiv">
-					<span class="register">To see this Volume you must register</span>
+					<span class="register"><fmt:message key="volbase.showDetailsVolume.register"/></span>
 				</div>
 			</security:authorize>
 		</div>
@@ -90,7 +90,7 @@
 			
 		<div id="EditDetailsVolumeDiv" class="background">
 			<div class="title">
-				<h5>VOLUME DETAILS </h5>
+				<h5><fmt:message key="volbase.showDetailsVolume.title.details"/> </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 				<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
@@ -99,19 +99,19 @@
 			
 			<div class="list">
 				<div class="row">
-					<div class="item">Volume/Filza</div>
+					<div class="item"><fmt:message key="volbase.showDetailsVolume.volume"/></div>
 					<div class="value">${volume.volNum}${volume.volLetExt}</div>
 				</div>
 				<div class="row">
-					<div class="item">Start Date</div>
+					<div class="item"><fmt:message key="volbase.showDetailsVolume.startDate"/></div>
 					<div class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</div>
 				</div>
 				<div class="row">
-					<div class="item">End Date</div>
+					<div class="item"><fmt:message key="volbase.showDetailsVolume.endDate"/></div>
 					<div class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</div>
 				</div>
 				<div class="row">	
-					<div class="item">Date Notes</div>
+					<div class="item"><fmt:message key="volbase.showDetailsVolume.dateNotes"/></div>
 					<div class="value">${volume.dateNotes}</div>
 				</div>
 			</div>

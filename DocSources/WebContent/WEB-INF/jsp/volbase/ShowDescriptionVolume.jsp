@@ -13,7 +13,7 @@
 
 	<div id="EditDescriptionVolumeDiv" class="background">
 		<div class="title">
-			<h5>DESCRIPTION </h5>
+			<h5><fmt:message key="volbase.showDescriptionVolume.title"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${volume.summaryId > 0}">
 			<a id="EditDescriptionVolume" href="${EditDescriptionVolume}" class="editButton"></a><span id="loading"/>
@@ -23,69 +23,69 @@
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Organizational Criteria</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.organizationalCriteria"/></div>
 				<div class="value">${volume.orgNotes}</div>
 			</div>
 			<c:if test="${schedone != null && schedone.noteCartulazione != null}">
 				<div class="row">
-					<div class="item">Numeration Notes</div>
+					<div class="item"><fmt:message key="volbase.showDescriptionVolume.numerationNotes"/></div>
 					<div class="value">${schedone.noteCartulazione}<br />${schedone.noteCartulazioneEng}</div>
 				</div>
 			</c:if>
 			<div class="row">
-				<div class="item">Condition</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.condition"/></div>
 				<div class="value">${volume.ccondition}</div>
 			</div>
 			<div class="row">
-				<div class="item">Bound</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.bound"/></div>
 				<div class="value">${volume.bound ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Folios Numbered</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.foliosNumbered"/></div>
 				<div class="value">${volume.folsNumbrd ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Folios Count</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.foliosCount"/></div>
 				<div class="value">${volume.folioCount}</div>
 			</div>
 			<div class="row">
-				<div class="item">Missing folios</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.missingFolios"/></div>
 				<div class="value">${fn2:toString(volumeSummary.missingFolios)}</div>
 			</div>
 			<div class="row">
-				<div class="item">Index of Names</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.indexOfNames"/></div>
 				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
 			</div>
 			<c:if test="${schedone != null && (schedone.dimensioniBase != null || schedone.dimensioniAltezza != null)}">
 				<div class="row">
-					<div class="item">Volume height</div>
+					<div class="item"><fmt:message key="volbase.showDescriptionVolume.volumeHeight"/></div>
 					<c:if test="${schedone.dimensioniAltezza == null}">
 						<div class="value">-</div>
 					</c:if>
 					<c:if test="${schedone.dimensioniAltezza != null}">
-						<div class="value">${schedone.dimensioniAltezza} mm</div>
+						<div class="value">${schedone.dimensioniAltezza}<fmt:message key="volbase.showDescriptionVolume.volumeHeight.dimension"/></div>
 					</c:if>
 				</div>
 				<div class="row">
-					<div class="item">Volume width</div>
+					<div class="item"><fmt:message key="volbase.showDescriptionVolume.volumeWidth"/></div>
 					<c:if test="${schedone.dimensioniBase == null}">
 						<div class="value">-</div>
 					</c:if>
 					<c:if test="${schedone.dimensioniBase != null}">
-						<div class="value">${schedone.dimensioniBase} mm</div>
+						<div class="value">${schedone.dimensioniBase} <fmt:message key="volbase.showDescriptionVolume.volumeWidth.dimension"/></div>
 					</c:if>
 				</div>
 			</c:if>
 			<div class="row">
-				<div class="item">Printed material</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.printedMaterial"/></div>
 				<div class="value">${volume.printedMaterial ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Printed drawings</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.printedDrawings"/></div>
 				<div class="value">${volume.printedDrawings ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Languages</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.languages"/></div>
 				<div class="value"> ${volume.italian ? 'Italian;' : '' }
 									${volume.spanish ? 'Spanish;' : ''}
 									${volume.english ? 'English;' : ''}
@@ -96,11 +96,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="item">Some Documents in Cipher</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.cipher"/></div>
 				<div class="value">${volume.cipher ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Cipher Notes</div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.cipherNotes"/></div>
 				<div class="value">${volume.cipherNotes}</div>
 			</div>
 		</div>

@@ -12,7 +12,7 @@
 	
 	<div id="EditCorrespondentsVolumeDiv" class="background">
 		<div class="title">
-			<h5>CORRESPONDENTS</h5>
+			<h5><fmt:message key="volbase.showCorrespondentsVolume.title"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${volume.summaryId > 0}">
 			<a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolumeURL}" class="editButton"></a><span id="loading"/>
@@ -22,10 +22,10 @@
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">From </div><div class="value80"> ${volume.senders}</div>
+				<div class="item"><fmt:message key="volbase.showCorrespondentsVolume.from"/> </div><div class="value80"> ${volume.senders}</div>
 			</div>
 			<div class="row">
-				<div class="item">To </div><div class="value80">${volume.recips}</div>
+				<div class="item"><fmt:message key="volbase.showCorrespondentsVolume.to"/> </div><div class="value80">${volume.recips}</div>
 			</div>
 		</div>
 	</div>

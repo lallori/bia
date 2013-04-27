@@ -12,7 +12,7 @@
 
 	<div id="EditContextVolumeDiv" class="background">
 		<div class="title">
-			<h5>CONTEXT</h5>
+			<h5><fmt:message key="volbase.showContextVolume.title"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${volume.summaryId > 0}">
 			<a id="EditContextVolume" href="${EditContextVolumeURL}" class="editButton"></a><span id="loading"/>
@@ -22,10 +22,10 @@
 
 		<div class="list">
 			<div class="row">
-				<div class="item">Context </div><div class="value80">${volume.ccontext}</div>
+				<div class="item"><fmt:message key="volbase.showContextVolume.context"/></div><div class="value80">${volume.ccontext}</div>
 			</div>
 			<div class="row">
-				<div class="item"> Inventario Sommario Description </div><div class="value80">${volume.inventarioSommarioDescription}</div>
+				<div class="item"> <fmt:message key="volbase.showContextVolume.inventarioSommarioDescription"/> </div><div class="value80">${volume.inventarioSommarioDescription}</div>
 			</div>
 		</div>
 	</div>

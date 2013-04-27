@@ -15,11 +15,11 @@
 	</c:url>
 
 	<div id="DeleteThisRecordDiv">
-		<h1>Are you sure you want to delete this record?</h1>
+		<h1><fmt:message key="volbase.showConfirmDeleteVolume.message"/>?</h1>
 		
-		<a id="yes" href="${DeleteVolumeURL}">YES</a>
+		<a id="yes" href="${DeleteVolumeURL}"><fmt:message key="volbase.showConfirmDeleteVolume.yes"/></a>
 	
-		<a id="no" href="#">NO</a>
+		<a id="no" href="#"><fmt:message key="volbase.showConfirmDeleteVolume.no"/></a>
 	</div>
 
 	<script>
