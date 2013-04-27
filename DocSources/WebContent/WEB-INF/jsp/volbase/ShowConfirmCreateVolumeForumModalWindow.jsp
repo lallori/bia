@@ -9,11 +9,11 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1>This volume record is not linked to a forum discussion. Do you want to create a new forum discussion?</h1>
+		<h1><fmt:message key="volbase.showConfirmCreateVolumeForumModalWindow.message"/>?</h1>
 		
-		<a id="yes" href="${ShowConfirmCreateVolumeForumURL}" class="button_small">YES</a>
+		<a id="yes" href="${ShowConfirmCreateVolumeForumURL}" class="button_small"><fmt:message key="volbase.showConfirmCreateVolumeForumModalWindow.yes"/></a>
 	
-		<a id="no" href="#" class="button_small">NO</a>			
+		<a id="no" href="#" class="button_small"><fmt:message key="volbase.showConfirmCreateVolumeForumModalWindow.no"/></a>
 	</div>
 
 	<script>
