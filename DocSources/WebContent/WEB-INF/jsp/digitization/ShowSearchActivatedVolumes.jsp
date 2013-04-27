@@ -28,7 +28,7 @@
             });
         </script>
 </head>
-<body>
+<body class="search">
 
 <c:url var="SearchActivatedURL" value="/digitization/ShowSearchActivatedVolumes.do"/> 
 
@@ -59,7 +59,7 @@
                             <option value="No">No</option>
                         </form:select></div>
 					<div class="col_r"></div>
-                    <div class="col_r"><input type="submit" id="search" value="Search" title="Search this 'Schedone'"></div>
+                    <div class="col_r"><input type="submit" class="button_small" id="search" value="Search" title="Search this 'Schedone'"></div>
                 </div>
             </form:form>
         </div>

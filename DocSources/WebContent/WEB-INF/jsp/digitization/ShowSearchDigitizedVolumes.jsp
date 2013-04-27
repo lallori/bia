@@ -28,7 +28,7 @@
             });
         </script>
 </head>
-<body>
+<body class="search">
 
 <c:url var="SearchSchedoniURL" value="/digitization/ShowSearchDigitizedVolumes.do"/> 
 
@@ -57,7 +57,7 @@
                     	<form:input id="volExtension" name="volLetExt" class="input_5c" type="text" value="" maxlength="5" path="volLetExt"/>
                     	<form:input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="display:none" path="volNumBetween"/>
                     </div>
-                    <div class="col_r"><input type="submit" id="search" value="Search" title="Search this 'Schedone'"></div>
+                    <div class="col_r"><input type="submit" id="search" class="button_small" value="Search" title="Search this 'Schedone'"></div>
                 </div>
             </form:form>
         </div>

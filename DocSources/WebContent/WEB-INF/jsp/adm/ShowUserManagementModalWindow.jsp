@@ -8,17 +8,17 @@
 
 <div id="userManagementDiv">
 	<div id="addNewDiv">
-        <a id="addNew" href="<c:url value="/admin/CreateUser.do" />">Add New User</a>
+        <a id="addNew" class="button_large" href="<c:url value="/admin/CreateUser.do" />">Add New User</a>
 	</div>
     
 	<div id="editOrShowDiv">
-        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />">Edit or Show Existing User</a>
+        <a id="editOrShow" class="button_large" href="<c:url value="/admin/ShowUserSearch.do" />">Edit or Show Existing User</a>
 	</div>
     
     <div id="globalPropertiesDiv">
         <a id="globalProperties" href="#">Global User Properties</a>
     </div>
-	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
+	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
 <script type="text/javascript">

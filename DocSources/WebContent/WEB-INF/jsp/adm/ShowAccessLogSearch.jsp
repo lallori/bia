@@ -34,7 +34,7 @@
 				<div class="col_r"><form:input path="action" cssClass="input_25c"/></div>	
 			</div>
 		</div>	
-	<input class="search" type="submit" value="Search" />
+	<input class="search" class="button_small fl" type="submit" value="Search" />
 	</fieldset>	
 </form:form>
 

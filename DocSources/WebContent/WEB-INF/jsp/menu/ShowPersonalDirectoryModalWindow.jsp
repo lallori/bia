@@ -14,18 +14,18 @@
 
 <div id="personalDirectoryModalDiv">
 	<div id="userProfileDiv">
-        <a id="personalUserProfile" href="${ShowUserProfileURL}">User Preferences</a>
+        <a id="personalUserProfile" class="button_large" href="${ShowUserProfileURL}">User Preferences</a>
 	</div>
     
 	<div id="personalAnnotationsDiv">
-        <a id="personalAnnotations" href="${ShowPersonalAnnotationsUserURL}">Personal Annotations</a>
+        <a id="personalAnnotations" class="button_large" href="${ShowPersonalAnnotationsUserURL}">Personal Annotations</a>
 	</div>
     
 	<div id="personalNotesDiv">
-        <a id="personalNotes" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
+        <a id="personalNotes" class="button_large" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
 	</div>
 
-	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
+	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
 <script type="text/javascript">

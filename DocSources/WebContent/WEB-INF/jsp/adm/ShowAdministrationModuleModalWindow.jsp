@@ -7,26 +7,26 @@
 		
 <div id="administrationModalDiv">
 	<div id="systemWideDiv">
-        <a id="systemWide" href="<c:url value="/admin/ShowApplicationProperties.do" />">System-Wide Properties</a>
+        <a id="systemWide" class="button_large" href="<c:url value="/admin/ShowApplicationProperties.do" />">System-Wide Properties</a>
 	</div>
     
 	<div id="userManagementDiv">
-        <a id="userManagement" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
+        <a id="userManagement" class="button_large" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
 	</div>
     
 	<div id="memoryUsageDiv">
-        <a id="memoryUsage" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
+        <a id="memoryUsage" class="button_large" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
 	</div>
 
 	<div id="accessLogDiv">
-        <a id="accessLog" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
+        <a id="accessLog" class="button_large" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
 	</div>
 	
 	<div id="whoIsOnlineDiv">
-        <a id="whoIsOnline" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
+        <a id="whoIsOnline" class="button_large" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
 	</div>
 
-	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
+	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
 <script type="text/javascript">

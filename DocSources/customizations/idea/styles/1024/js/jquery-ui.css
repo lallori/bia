@@ -58,7 +58,7 @@
 }
 
 .ui-widget-header { 
-	border: 1px solid transparent; 
+	border-bp: 1px solid transparent; 
 	background: #F7F2E6; 
 	color: #654c47; 
 	font-weight: bold; 
@@ -71,22 +71,22 @@
 /* Interaction states
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
-	border: 1px solid #dcc0ba; 
-	background: #dcc0ba url(${contextPath}/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
+	border: 1px solid #A3B5C0; 
+	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
-	color: #654c47; 
+	color: #56400D; 
 }
 
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { 
-	color: #654c47; 
+	color: #0B4F86; 
 	text-decoration: none; 
 }
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
-	border: 1px solid #dcc0ba; 
-	background: #f6edec url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
-	font-weight: #654c47; 
-	color: #212121; 
+	border: 1px solid #916D2A; 
+	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	font-weight: normal; 
+	color: #0B4F86; 
 }
 
 .ui-state-hover a, .ui-state-hover a:hover { 
@@ -95,14 +95,14 @@
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { 
-	border: 1px solid #dcc0ba;
-	background: #f6edec url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	border: 1px solid #916D2A;
+	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
-	color: #654c47; 
+	color: #56400D; 
 }
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { 
-	color: #212121; 
+	color: #56400D; 
 	text-decoration: none; 
 }
 

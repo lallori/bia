@@ -76,8 +76,8 @@
 	    </div>   
 	        
 	    <div>
-	    	<input id="close" type="submit" value="Close" title="Do not save changes" />
-	        <input id="save" class="save" type="submit" value="Save" />
+	    	<input id="close" class="button_small fl" type="submit" value="Close" title="Do not save changes" />
+	        <input id="save" class="button_small fr" type="submit" value="Save" />
 	    </div>
 	    
 	    <input type="hidden" value="" id="modify" />

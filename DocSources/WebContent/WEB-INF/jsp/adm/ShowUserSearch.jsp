@@ -24,7 +24,7 @@
 			        <div class="col_r"><form:input path="userName" cssClass="input_25c"/></div>
 			</div>
 		</div>	
-	<input class="search" type="submit" value="Search" />
+	<input class="search button_small fl" type="submit" value="Search" />
 	</fieldset>	
 </form:form>
 
