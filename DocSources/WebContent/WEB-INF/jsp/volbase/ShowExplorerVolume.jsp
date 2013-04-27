@@ -240,11 +240,6 @@
 				}});},250);
 
 				$j(".previousPage").click(function(){
-					// we change selected tab url, 
-// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
-					// we force tab reload 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-					
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
