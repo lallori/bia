@@ -130,10 +130,10 @@
 	
 	<div id="ShowVolumeExplorer">
 		<div class="yourSearchDiv">
-			<p>Exploring Volume: <font color="red" style="margin-left:5px; font-size:15px">${volumeExplorer.volNum}${volumeExplorer.volLetExt}</font></p>
+			<p><fmt:message key="volbase.showExplorerVolume.exploring"/>: <font color="red" style="margin-left:5px; font-size:15px">${volumeExplorer.volNum}${volumeExplorer.volLetExt}</font></p>
 		</div>
 		
-		<div id="baseOn">Based on <a target="_blank" href="http://iipimage.sourceforge.net"><img src="<c:url value="/images/1024/img_iip.png"/>" width="30" /></a></div>
+		<div id="baseOn"><fmt:message key="volbase.showExplorerVolume.basedOn"/> <a target="_blank" href="http://iipimage.sourceforge.net"><img src="<c:url value="/images/1024/img_iip.png"/>" width="30" /></a></div>
 	
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -180,18 +180,18 @@
 	
 		<div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode button_large">Show in Fullscreen mode</a>
+				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="volbase.showExplorerVolume.help.manuscriptViewer"/>" class="showFullscreenMode button_large"><fmt:message key="volbase.showExplorerVolume.showInFullscreen"/></a>
 			</security:authorize>
-			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary button_medium" href="#">Volume Summary</a>
-			<a class="refreshVolumeExplorer button_small" href="${currentPage}">Refresh</a>
+			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary button_medium" href="#"><fmt:message key="volbase.showExplorerVolume.volumeSummary"/></a>
+			<a class="refreshVolumeExplorer button_small" href="${currentPage}"><fmt:message key="volbase.showExplorerVolume.refresh"/></a>
 			<c:if test="${volumeExplorer.totalRubricario > 0}">
-				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="<fmt:message key="volbase.showExplorerVolume.help.IndexOfNames"/>" class="transcribe" href="${indexOfNamesURL}" ></a>
 			</c:if>
 		</div>
 		
 		<div id="folioMoveTo">
 			<div id="folioCountForm"> 
-				<b>Total Folios in this Volume:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
+				<b><fmt:message key="volbase.showExplorerVolume.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 		
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
@@ -254,12 +254,7 @@
 					return false;
 				});
 				
-				$j(".nextPage").click(function(){
-					// we change selected tab url 
-// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
-					// we force tab reload 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-					
+				$j(".nextPage").click(function(){					
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -270,11 +265,6 @@
 				});
 				
 				$j(".refreshVolumeExplorer").click(function(){
-					// we change selected tab url
-// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
-					// we force tab reload 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-					
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -284,9 +274,6 @@
 				});
 
 				$j(".indexNames").click(function (){
-// 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href")); 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -297,11 +284,6 @@
 		        
 				$j(".editMoveToFolioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-		        	// we change selected tab url
-// 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
-		        	// we force tab reload 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-		        	
 		        	//New Script for jQuery 1.9 tabs
 					var active = $j("#tabs").tabs("option", "active");
 					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', formSubmitURL);
@@ -332,10 +314,6 @@
 				});
 
 				$j("#indexNames").click(function(){
-// 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
-					// we force tab reload 
-// 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-					
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
