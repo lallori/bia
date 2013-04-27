@@ -27,7 +27,7 @@
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">
 		<div id="volumeTitle">
-			<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+			<h3><fmt:message key="volbase.compareVolume.title.volume"/> ${volume.volNum}</h3>
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
@@ -44,23 +44,23 @@
 
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
-			<h5>VOLUME DETAILS </h5>
+			<h5><fmt:message key="volbase.compareVolume.title.volumeDetails"/></h5>
 		</div>
 		<div class="listDetails">
 			<div class="row">
-				<div class="item">Volume/Filza (MDP)</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.volume"/</div>
 				<div class="value">${volume.volNum}${volume.volLetExt}</div>
 			</div>
 			<div class="row">
-				<div class="item">Start Date</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.start"/></div>
 				<div class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">End Date</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.end"/></div>
 				<div class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</div>
 			</div>
 			<div class="row">	
-				<div class="item">Date Notes</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.notes"/></div>
 				<div class="value">${volume.dateNotes}</div>
 			</div>
 		</div>
@@ -69,44 +69,44 @@
 	<br />
 	<div id="EditDescriptionVolumeDiv" class="background">
 		<div class="title">
-			<h5>DESCRIPTION </h5>
+			<h5><fmt:message key="volbase.compareVolume.title.description"/></h5>
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Organizational Criteria</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.criteria"/></div>
 				<div class="value">${volume.orgNotes}</div>
 			</div>
 			<div class="row">
-				<div class="item">Condition</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.condition"/></div>
 				<div class="value">${volume.ccondition}</div>
 			</div>
 			<div class="row">
-				<div class="item">Bound</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.bound"/></div>
 				<div class="value">${volume.bound ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Folios Numbered</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.foliosNumbered"/></div>
 				<div class="value">${volume.folsNumbrd ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Folios Count</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.foliosCount"/></div>
 				<div class="value">${volume.folioCount}</div>
 			</div>
 			<div class="row">
-				<div class="item">Index of Names</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.indexOfNames"/></div>
 				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Printed material</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.printedMaterial"/></div>
 				<div class="value">${volume.printedMaterial ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Printed drawings</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.printedDrawings"/></div>
 				<div class="value">${volume.printedDrawings ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Languages</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.languages"/></div>
 				<div class="value"> ${volume.italian ? 'Italian' : '' } 
 									${volume.spanish ? 'Spanish' : ''}
 									${volume.english ? 'English' : ''}
@@ -117,11 +117,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="item">Some Documents in Cipher</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.cipher"/></div>
 				<div class="value">${volume.cipher ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Cipher Notes</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.cipherNotes"/></div>
 				<div class="value">${volume.cipherNotes}</div>
 			</div>
 		</div>
@@ -129,30 +129,30 @@
 
 	<div id="EditCorrespondentsVolumeDiv" class="background">
 		<div class="title">
-			<h5>CORRESPONDENTS</h5>
+			<h5><fmt:message key="volbase.compareVolume.title.correspondents"/></h5>
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">From </div><div class="value80"> ${volume.senders}</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.from"/></div><div class="value80"> ${volume.senders}</div>
 			</div>
 			<div class="row">
-				<div class="item">To </div><div class="value80">${volume.recips}</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.to"/></div><div class="value80">${volume.recips}</div>
 			</div>
 		</div>
 	</div>
 	
 	<div id="EditContextVolumeDiv" class="background">
 		<div class="title">
-			<h5>CONTEXT</h5>
+			<h5><fmt:message key="volbase.compareVolume.title.context"/></h5>
 		</div>
 
 		<div class="list">
 			<div class="row">
-				<div class="item">Context </div><div class="value80">${volume.ccontext}</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.context"/></div><div class="value80">${volume.ccontext}</div>
 			</div>
 			<div class="row">
-				<div class="item"> Inventario Sommario Description </div><div class="value80">${volume.inventarioSommarioDescription}</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.inventarioSommarioDescription"/></div><div class="value80">${volume.inventarioSommarioDescription}</div>
 			</div>
 		</div>
 	</div>

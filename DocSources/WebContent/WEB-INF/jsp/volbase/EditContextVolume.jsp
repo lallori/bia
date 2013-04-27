@@ -10,16 +10,16 @@
 			<legend><b>CONTEXT</b></legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editContextVolume.help.context"></fmt:message>">?</a>
-					<form:label for="ccontext" id="ccontextLabel" path="ccontext">Context</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editContextVolume.help.context"/>">?</a>
+					<form:label for="ccontext" id="ccontextLabel" path="ccontext"><fmt:message key="volbase.editContextVolume.context"/></form:label>
 				</div>
 				<div class="row"><form:textarea path="ccontext" cssClass="txtarea_medium"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
 				
 				<br />
 				
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.editContextVolume.help.inventariosommariodescription"></fmt:message>">?</a>
-					<form:label for="inventarioSommarioDescription" id="inventarioSommarioDescriptionLabel" path="inventarioSommarioDescription">Inventario Sommario Description</form:label>
+					<a class="helpIcon" title="<fmt:message key="volbase.editContextVolume.help.inventarioSommarioDescription"/>">?</a>
+					<form:label for="inventarioSommarioDescription" id="inventarioSommarioDescriptionLabel" path="inventarioSommarioDescription"><fmt:message key="volbase.editContextVolume.inventarioSommarioDescription"/></form:label>
 				</div>
 				<div class="row"><form:textarea path="inventarioSommarioDescription" class="txtarea_medium"/></div>
 			</div>

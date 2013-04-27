@@ -10,8 +10,8 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1>A Discussion Forum for this Volume has been created.</h1>
-		<a id="open" href="${ShowForumURL}" target="_blank" class="button_medium">OPEN FORUM</a></li>	
+		<h1><fmt:message key="volbase.createdVolumeForumModalWindow.message"/></h1>
+		<a id="open" href="${ShowForumURL}" target="_blank" class="button_medium"><fmt:message key="volbase.createdVolumeForumModalWindow.openForum"/></a></li>	
 	</div>
 
 	<script>
