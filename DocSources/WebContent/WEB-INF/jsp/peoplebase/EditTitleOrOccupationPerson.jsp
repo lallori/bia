@@ -31,13 +31,13 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.titlesandoccupations.edit"></fmt:message>">?</a><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
+					<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.editTitleOrOccupationPerson.help.edit"></fmt:message>">?</a><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
 					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_29c"/></div>
 				</div>
 				<div class="row">
 					<div class="col_l"></div>
 					<div class="col_r">
-						<a class="helpIcon" title="<fmt:message key="peoplebase.titlesandoccupations.edit.preferredrole"></fmt:message>">?</a>
+						<a class="helpIcon" title="<fmt:message key="peoplebase.editTitleOrOccupationPerson.help.preferredrol"></fmt:message>">?</a>
 						<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role</form:label>
 						<form:checkbox id="preferredRole1" path="preferredRole" />
 					</div>

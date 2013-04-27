@@ -25,7 +25,7 @@
 						<form id="namePartsSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.nameparts"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.nameparts"></fmt:message>">?</a>
 									<input id="nameParts" name="nameParts" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_l">in</div>
@@ -53,7 +53,7 @@
 			            <form id="personSearchForm" method="post" class="edit">
 			            	<div class="row">
 				        		<div class="col_l">
-				        			<a class="helpIcon" title="<fmt:message key="advsearch.people.person"></fmt:message>">?</a>
+				        			<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.person"></fmt:message>">?</a>
 									<input id="person" name="person" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        		</div>
 				        		<div class="col_l"></div>
@@ -74,7 +74,7 @@
 			    		<form id="roleCategorySearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.selectarolecategory"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.titleoccupation.selectarolecategory"></fmt:message>">?</a>
 									<select id="roleCategorySelect" name="roleCategorySelect" class="selectform_XXXlong">
 						                    <option value="Select a Role Category" selected="selected">Select a Role Category</option>
 						                        <optgroup label="ARTISTS and ARTISANS">
@@ -179,7 +179,7 @@
 			        <form id="occupationWordSearchForm" method="post" class="edit">
 			            <div class="row">
 			               	<div class="col_l">
-			               		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.wordsearchintitleoccupation"></fmt:message>">?</a>
+			               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.titleoccupation.wordsearchintitleoccupation"></fmt:message>">?</a>
 								<input id="occupationWord" name="occupationWord" class="input_20c" type="text" value=""/>
 			               	</div>
 			               	<div class="col_r">
@@ -198,7 +198,7 @@
 			        <form id="occupationSearchForm" method="post" class="edit">
 				        <div class="row">
 				        	<div class="col_l">
-				        		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.matchthexatcttitleoccupation"></fmt:message>">?</a>
+				        		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.titleoccupation.matchthexatcttitleoccupation"></fmt:message>">?</a>
 								<input id="occupation" name="occupation" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        	</div>
 				        	<div class="col_r">
@@ -217,7 +217,7 @@
 						<form id="genderSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.gender"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.gender"></fmt:message>">?</a>
 									<label for="gender" id="genderLabel">Gender</label>
 				               	</div>
 				               	<div class="col_l">
@@ -238,7 +238,7 @@
 			           	<form id="placeSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.birthdeathplace"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.birthdeathplace"></fmt:message>">?</a>
 									<select id="placeType" name="placeType" class="selectform_MXlong">
 										<option value="Birth/Death Place" selected="selected">Birth/Death Place</option>
 										<option value="Birth Place">Birth Place</option>
@@ -259,7 +259,7 @@
 			           	<form id="dateSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.bornanddeathdate"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.bornanddeathdate"></fmt:message>">?</a>
 									<select id="dateType" name="dateType" class="selectform_Llong">
 										<option value="Born after" selected="selected" >Born after</option>
 										<option value="Dead by">Dead by</option>
@@ -305,7 +305,7 @@
 						<form id="researchNotesSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.researchnotes"></fmt:message>">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.researchnotes"></fmt:message>">?</a>
 									<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_r">
@@ -323,7 +323,7 @@
 						<form id="personIdSearchForm" method="post" class="edit">
 							<div class="row">
 								<div class="col_l">
-									<a class="helpIcon" title="<fmt:message key="advsearch.people.personid"></fmt:message>">?</a>
+									<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.personid"></fmt:message>">?</a>
 									<input id="personId" name="personId" class="input_7c" type="text" maxlength="5" />
 								</div>
 								<div class="col_r">
@@ -342,7 +342,7 @@
 						<form id="logicalDeleteSearchForm" method="post" class="edit">
 							<div class="row">
 								<div class="col_l">
-									<a class="helpIcon" title="<fmt:message key="advsearch.people.logicaldelete"></fmt:message>">?</a>
+									<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.logicaldelete"></fmt:message>">?</a>
 									<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
 									<input type="checkbox" name="logicalDelete" value="true"/>
 								</div>

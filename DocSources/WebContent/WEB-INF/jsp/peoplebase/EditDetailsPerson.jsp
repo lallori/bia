@@ -26,12 +26,12 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_l">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.firstname"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.firstname"></fmt:message>">?</a>
 							<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error"><u>First Name</u></form:label>
 						</div>
 						<div class="col_l"><form:input path="first" id="first" cssClass="input_14c" /></div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.successnumber"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.successnumber"></fmt:message>">?</a>
 							<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error">Succes. Number</form:label>
 						</div>
 						<div class="col_r"><form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/></div>
@@ -41,36 +41,36 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.prefixpatronimic"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixpatronimic"></fmt:message>">?</a>
 							<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error">Prefix</form:label>
 						</div>
 						<div class="col_l"><form:input path="midPrefix" id="midPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.patronymic"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.patronymic"></fmt:message>">?</a>
 							<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error">Patronymic</form:label>
 						</div>
 						<div class="col_r"><form:input path="middle" id="middle" cssClass="input_20c" /></div>
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.prefixfamilyname"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixfamilyname"></fmt:message>">?</a>
 							<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error">Prefix</form:label>
 						</div>
 						<div class="col_l"><form:input path="lastPrefix" id="lastPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.familyname"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.familyname"></fmt:message>">?</a>
 							<form:label for="last" id="lastLabel" path="last" cssErrorClass="error"><u>Family Name</u></form:label>
 						</div>
 						<div class="col_r"><form:input path="last" id="last" cssClass="input_20c" /></div>
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.prefixappellative"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixappellative"></fmt:message>">?</a>
 							<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error">Prefix</form:label>
 						</div>
 						<div class="col_l"><form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.appellative"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.appellative"></fmt:message>">?</a>
 							<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error">Appellative</form:label>
 						</div>
 						<div class="col_r"><form:input path="postLast" id="postLast" cssClass="input_20c"/></div>
@@ -80,7 +80,7 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_l">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.gender"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.gender"></fmt:message>">?</a>
 							<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
 							<security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
 								<c:if test="${command.personId > 0}">
@@ -118,7 +118,7 @@
 							<form:checkbox path="bornApprox" id="bornApprox1"/>
 						</div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.birthbc"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.birthbc"></fmt:message>">?</a>
 							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="bornDateBc1" path="bornDateBc"/>
 						</div>
@@ -132,7 +132,7 @@
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.activestart"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.activestart"></fmt:message>">?</a>
 							<form:label for="activeStart" id="activeStartLabel" path="activeStart" cssErrorClass="error"></form:label>
 						</div>
 						<div class="col_l"><form:input id="activeStart" path="activeStart" cssClass="input_10c"/></div>
@@ -164,7 +164,7 @@
 							<form:checkbox path="deathApprox" id="deathApprox" />
 						</div>
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.deathbc"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.deathbc"></fmt:message>">?</a>
 							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="deathDateBc" path="deathDateBc"/>
 						</div>
@@ -178,7 +178,7 @@
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="peoplebase.details.edit.activeend"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.activeend"></fmt:message>">?</a>
 							<form:label for="activeEnd" id="activeEndLabel" path="activeEnd" cssErrorClass="error"></form:label>
 						</div>
 						<div class="col_l"><form:input id="activeEnd" path="activeEnd" cssClass="input_10c"/></div>

@@ -25,7 +25,7 @@
 							<form id="placeNameSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.placename"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.placename"></fmt:message>">?</a>
 										<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
 							<!-- 		<label for="stressSense" id="placeNameType">Stress sense</label> -->
 							<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
@@ -43,7 +43,7 @@
 				            <form id="placeSearchForm" method="post" class="edit">
 			            	<div class="row">
 				        		<div class="col_l">
-				        			<a class="helpIcon" title="<fmt:message key="advsearch.places.place"></fmt:message>">?</a>
+				        			<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.place"></fmt:message>">?</a>
 									<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        		</div>
 				        		<div class="col_r">
@@ -62,7 +62,7 @@
 							<form id="placeTypeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.placetype.selectaplacetype"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.placetype.selectaplacetype"></fmt:message>">?</a>
 										<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
 											<option value="Select a Place Type" selected="selected">Select a Place Type</option>
 											<c:forEach items="${placeTypes}" var="placeType">
@@ -86,7 +86,7 @@
 							<form id="linkedToPeopleSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.linkedtopeople.selectalinktype.senderlocation"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.linkedtopeople.selectalinktype.senderlocation"></fmt:message>">?</a>
 										<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
 											<option value="Select a Link Type" selected="selected">Select a Link Type</option>
 											<option value="Sender Location">Sender Location</option>
@@ -111,7 +111,7 @@
 							<form id="placeIdSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
-										<a class="helpIcon" title="<fmt:message key="advsearch.places.placeid"></fmt:message>">?</a>
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.placeid"></fmt:message>">?</a>
 										<input id="placeId" name="placeId" class="input_7c" type="text" maxlength="5" />
 									</div>
 									<div class="col_r">
@@ -130,7 +130,7 @@
 							<form id="logicalDeleteSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
-										<a class="helpIcon" title="<fmt:message key="advsearch.places.logicaldelete"></fmt:message>">?</a>
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.logicaldelete"></fmt:message>">?</a>
 										<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
 										<input type="checkbox" name="logicalDelete" value="true"/>
 									</div>

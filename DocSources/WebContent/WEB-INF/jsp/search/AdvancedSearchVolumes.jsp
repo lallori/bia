@@ -23,7 +23,7 @@
 		    				<form id="volumeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volume.exactlyorbetween"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volume.exactlyorbetween"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
 											<option value="Exactly" selected="selected">Exactly</option>
 											<option value="Between">Between</option>
@@ -45,7 +45,7 @@
 							<form id="dateSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volume.writtenwhen"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volume.writtenwhen"></fmt:message>">?</a>
 										<select id="dateType" name="dateType" class="selectform_Llong">
 											<option value="From">Written from</option>
 											<option value="Before">Written before</option>
@@ -92,7 +92,7 @@
 							<form id="digitizedSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volumedescription.digitized"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volumedescription.digitized"></fmt:message>">?</a>
 										<label for="digitized" id="digitizedLabel">Digitized</label> 
 					               	</div>
 					               	<div class="col_l">
@@ -112,7 +112,7 @@
 				            <form id="cipherSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.cipher"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.cipher"></fmt:message>">?</a>
 			                			<label for="cipher" id="cipherLabel">Cipher</label> 
 					               	</div>
 					               	<div class="col_l">
@@ -154,7 +154,7 @@
 							<form id="languagesSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volumedescription.languages"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volumedescription.languages"></fmt:message>">?</a>
 			                			<label for="languages" id="languagesLabel">Languages</label> 
 					               	</div>
 					               	<div class="col_r">
@@ -198,7 +198,7 @@
 				        	<form id="otherLangSearchForm" method="post" class="edit">
 				        		<div class="row">
 				        			<div class="col_l">
-				        				<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volumedescription.otherlanguages"></fmt:message>">?</a>
+				        				<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volumedescription.otherlanguages"></fmt:message>">?</a>
 				        				<label for="otherLang" id="otherLangLabel">Other Languages</label>
 										<input type="text" id="otherLang" class="input_24c"/><!-- AUTOCOMPLETE -->
 									</div>
@@ -217,7 +217,7 @@
 							<form id="fromVolumeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.correspondentandcontext.from"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.correspondentandcontext.from"></fmt:message>">?</a>
 			                			<label for="fromVolume" id="fromLabel">From</label>
 					               	</div>
 					            </div>
@@ -233,7 +233,7 @@
 				            <form id="toVolumeSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.correspondentandcontext.to"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.correspondentandcontext.to"></fmt:message>">?</a>
 			                			<label for="toVolume" id="toLabel">To</label> 
 					               	</div>
 					            </div>
@@ -249,7 +249,7 @@
 				            <form id="contextSearchForm" method="post" class="edit">
 								<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.correspondentandcontext.context"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.correspondentandcontext.context"></fmt:message>">?</a>
 			                			<label for="context" id="contextLabel">Context</label>
 					               	</div>
 					            </div>
@@ -265,7 +265,7 @@
 				            <form id="inventarioSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.volumes.correspondentandcontext.inventariosommariodescription"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.correspondentandcontext.inventariosommariodescription"></fmt:message>">?</a>
 			                			<label for="inventario" id="inventarioLabel">Inventario Sommario Description (Italian)</label>
 					               	</div>
 					            </div>
@@ -286,7 +286,7 @@
 							<form id="volumeIdSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
-										<a class="helpIcon" title="<fmt:message key="advsearch.volumes.volumeid"></fmt:message>">?</a>
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volumeid"></fmt:message>">?</a>
 										<input id="volumeId" name="volumeId" class="input_7c" type="text" maxlength="5" />
 									</div>
 									<div class="col_r">
@@ -305,7 +305,7 @@
 			         		<form id="logicalDeleteSearchForm" method="post" class="edit">
 			         			<div class="row">
 			         				<div class="col_l">
-			         					<a class="helpIcon" title="<fmt:message key="advsearch.volumes.logicaldelete"></fmt:message>">?</a>
+			         					<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.logicaldelete"></fmt:message>">?</a>
 			         					<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
 			         					<input type="checkbox" name="logicalDelete" value="true"/>
 			         				</div>

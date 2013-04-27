@@ -24,7 +24,7 @@
 			<legend><b>TRANSCRIPTION/SYNOPSIS</b></legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.extract"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.extract"></fmt:message>">?</a>
 					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Transcription</form:label>
 				</div>
 				<div class="row">
@@ -34,7 +34,7 @@
 				<br />
 			
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.synopsis"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.synopsis"></fmt:message>">?</a>
 					<form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label>
 				</div>
 				<div class="row">
@@ -57,7 +57,7 @@
 		<form:form id="DocReferenceDocumentsForm" method="post" cssClass="edit">
 			<fieldset>	
 				<legend><b>DOCUMENTS REFERRED TO</b></legend>
-				<p><a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.documentsreferred"></fmt:message>">?</a> &nbsp Documents referred to:</p>
+				<p><a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.documentsreferred"></fmt:message>">?</a> &nbsp Documents referred to:</p>
 			
 				<c:forEach items="${command.document.docReference}" var="currentDocument">
 					<div class="listForm">

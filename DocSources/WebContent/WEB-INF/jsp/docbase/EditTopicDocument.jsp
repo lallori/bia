@@ -29,7 +29,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="<fmt:message key="docbase.topics.edit"></fmt:message>">?</a>
+						<a class="helpIcon" title="<fmt:message key="docbase.editTopicDocument.help.show"></fmt:message>">?</a>
 						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error">Topic</form:label>
 					</div>
 					<div class="col_l">

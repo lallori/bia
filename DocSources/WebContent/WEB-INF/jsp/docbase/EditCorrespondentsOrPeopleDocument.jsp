@@ -79,7 +79,7 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.correspondents.edit.sendernotes"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.editCorrespondentsOrPeopleDocument.help.sendernotes"></fmt:message>">?</a>
 					<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes">Sender notes</form:label>
 				</div>
 				<div class="row">
@@ -128,7 +128,7 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.correspondents.edit.recipientnotes"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.editCorrespondentsOrPeopleDocument.help.recipientnotes"></fmt:message>">?</a>
 					<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes">Recipient notes</form:label>
 				</div>
 				<div class="row"><form:textarea path="recipNotes" id="recipientNotes" name="recipientNotes" class="txtarea"/></div>

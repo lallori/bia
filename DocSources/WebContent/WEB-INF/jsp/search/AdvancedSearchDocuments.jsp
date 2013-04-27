@@ -22,7 +22,7 @@
 							<form id="wordSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.wordsearch"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.wordsearch"></fmt:message>">?</a>
 										<input type="text" id="word" name="word" class="input_15c" value="" />
 					               	</div>
 					               	<div class="col_l">in</div>
@@ -48,7 +48,7 @@
 				    		<form id="personSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.person"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.person"></fmt:message>">?</a>
 										<label for="person" id="personLabel">Person</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
@@ -63,7 +63,7 @@
 				            <form id="placeSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.place"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.place"></fmt:message>">?</a>
 										<label for="place" id="placeLabel">Place</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE --></div>
@@ -82,7 +82,7 @@
 							<form id="senderSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.sender"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.sender"></fmt:message>">?</a>
 										<label for="sender" id="senderLabel">Sender Name</label> 
 					               	</div>
 					               	<div class="col_l"><input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -97,7 +97,7 @@
 				            <form id="fromSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.from"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.from"></fmt:message>">?</a>
 										<label for="from" id="fromLabel">Place From</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -112,7 +112,7 @@
 							<form id="recipientSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.recipient"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.recipient"></fmt:message>">?</a>
 										<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -127,7 +127,7 @@
 				            <form id="toSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.to"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.to"></fmt:message>">?</a>
 										<label for="to" id="toSearchLabel">Place To</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -142,7 +142,7 @@
 							<form id="refersToSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.refersto"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.refersto"></fmt:message>">?</a>
 										<label for="refersTo" id="refersToLabel">Refers to</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -162,7 +162,7 @@
 							<form id="extractSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.extractorsynopsis.extract"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.extractorsynopsis.extract"></fmt:message>">?</a>
 										<label for="extract" id="extractLabel">Transcription</label>
 					               	</div>
 					            </div>
@@ -178,7 +178,7 @@
 				            <form id="synopsisSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.extractorsynopsis.synopsis"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.extractorsynopsis.synopsis"></fmt:message>">?</a>
 										<label for="synopsis" id="synopsisLabel">Synopsis</label>
 					               	</div>
 					            </div>
@@ -199,7 +199,7 @@
 							<form id="topicSearchForm" method="post" class="edit">
 					           	<div class="row">
 					           		<div class="col_l">
-					           			<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics"></fmt:message>">?</a>
+					           			<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.topics"></fmt:message>">?</a>
 					           			<label for="topicType" id="topicSelectLabel">Select a Topic</label>
 					           		</div>
 					               	<div class="col_l">
@@ -221,7 +221,7 @@
 <%-- 				            <form id="topicPlaceSearchForm" method="post" class="edit"> --%>
 					            <div class="row">
 					            	<div class="col_l">
-					            		<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics.place"></fmt:message>">?</a>
+					            		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.topics.place"></fmt:message>">?</a>
 					            		<label for="topic" id="topicPlaceLabel">Related to Place</label>
 					            	</div>
 					               	<div class="col_l">
@@ -243,7 +243,7 @@
 							<form id="dateSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.daterange"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.daterange"></fmt:message>">?</a>
 										<select id="dateType" name="dateType" class="selectform_Llong">
 											<option value="From">Written from</option>
 											<option value="Before">Written before</option>
@@ -292,7 +292,7 @@
 							<form id="volumeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.volume"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.volume"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
 											<option value="Exactly" selected="selected">Exactly</option>
 											<option value="Between">Between</option>
@@ -312,7 +312,7 @@
 					        <form id="folioSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.folio"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.folio"></fmt:message>">?</a>
 										<select id="folioType" name="folioType" class="selectform_long">
 											<option value="Exactly" selected="selected">Exactly</option>
 											<option value="Between">Between</option>
@@ -332,7 +332,7 @@
 							<form id="folioModSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.foliomod"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.foliomod"></fmt:message>">?</a>
 			                			<label for="folioMod" id="folioModLabel">Folio Mod</label> 
 					               	</div>
 					               	<div class="col_l" style="width:60px;">
@@ -363,7 +363,7 @@
 							<form id="docIdSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.docid"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.docid"></fmt:message>">?</a>
 										<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
 					               	</div>
 					               	<div class="col_r">
@@ -382,7 +382,7 @@
 							<form id="logicalDeleteSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
-										<a class="helpIcon" title="<fmt:message key="advsearch.documents.logicaldelete"></fmt:message>">?</a>
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.logicaldelete"></fmt:message>">?</a>
 										<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
 										<input type="checkbox" name="logicalDelete" value="true"/>
 									</div>

@@ -28,13 +28,13 @@
 				<legend><b>PLACE DETAILS</b></legend>
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.details.edit.placeid"></fmt:message>">?</a><label id="placeIDLabel" for="placeAllId">Place ID: </label></div>
+						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placeid"></fmt:message>">?</a><label id="placeIDLabel" for="placeAllId">Place ID: </label></div>
 						<div class="col_l"><i>Fills in automatically</i></div>
 					</div>
 				
 					<div class="row">
 						<div class="col_l">
-							<a class="helpIcon" title="<fmt:message key="geobase.details.edit.geogkey"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.geogkey"></fmt:message>">?</a>
 							<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 						</div>
 						<c:if test="${command.plSource != 'TGN'}">
@@ -57,14 +57,14 @@
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="geobase.details.edit.placenamenoaccents"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placenamenoaccents"></fmt:message>">?</a>
 							<form:label for="nameNoAccentsLabel" path="placeName" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
 						</div>
 						<div class="col_r"><form:input path="placeName" cssClass="input_25c" id="nameNoAccents" /></div>
 					</div>
 					<div class="row">
 						<div class="col_r">
-							<a class="helpIcon" title="<fmt:message key="geobase.details.edit.placenamewithaccents"></fmt:message>">?</a>
+							<a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placenamewithaccents"></fmt:message>">?</a>
 							<form:label for="nameWithAccentsLabel" path="termAccent" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
 						</div>
 						<div class="col_r"><form:input path="termAccent" cssClass="input_25c" id="nameWithAccents"/></div>
@@ -75,17 +75,17 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.details.edit.placetype"></fmt:message>">?</a><form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label></div>
+						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placetype"></fmt:message>">?</a><form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label></div>
 						<div class="col_l"><form:select path="plType" cssClass="selectform_XXXlong" items="${placeTypes}"/></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.details.edit.placenparents"></fmt:message>">?</a><form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label></div>
+						<div class="col_l"><a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placenparents"></fmt:message>">?</a><form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label></div>
 						<div class="col_l"><form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_30c"/></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
-					<div class="row"><a class="helpIcon" title="<fmt:message key="geobase.details.edit.placenotes"></fmt:message>">?</a><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
+					<div class="row"><a class="helpIcon" title="<fmt:message key="geobase.editDetailsPlace.help.placenotes"></fmt:message>">?</a><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
 					<div class="row"><form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/></div>
 				</div>
 				

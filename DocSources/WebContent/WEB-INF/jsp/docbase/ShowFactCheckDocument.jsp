@@ -12,7 +12,7 @@
 
 	<div id="EditFactCheckDocumentDiv" class="background">
 		<div class="title">
-			<h5>FACT CHECK<a class="helpIcon" title="<fmt:message key="docbase.factcheck.show"></fmt:message>">?</a></h5>
+			<h5>FACT CHECK<a class="helpIcon" title="<fmt:message key="docbase.showFactCheckDocument.help.memo"></fmt:message>">?</a></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
 			<a id="EditFactCheckDocument" href="${EditFactCheckDocumentURL}" class="editButton"></a><span id="loading"/>

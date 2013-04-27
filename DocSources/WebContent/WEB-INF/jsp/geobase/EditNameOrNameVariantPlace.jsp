@@ -27,7 +27,7 @@
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
-					<a class="helpIcon" title="<fmt:message key="geobase.namevariants.edit"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="geobase.editNameOrNameVariantPlace.help.name"></fmt:message>">?</a>
 					<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
 				</div>
 				<div class="col_l"><form:input id="namePlace" path="plName" cssClass="input_30c" type="text" /></div>

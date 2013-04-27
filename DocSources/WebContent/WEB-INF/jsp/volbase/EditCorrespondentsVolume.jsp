@@ -10,7 +10,7 @@
 			<legend><b>CORRESPONDENTS</b></legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.correspondents.edit.from"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.from"></fmt:message>">?</a>
 					<form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From</form:label>
 				</div>
 				<div class="row"><form:textarea path="senders" cssClass="txtarea_medium"/><form:errors path="senders" cssClass="inputerrors"/></div>
@@ -18,7 +18,7 @@
 				<br />
 				
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="volbase.correspondents.edit.to"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="volbase.editCorrespondentsVolume.help.to"></fmt:message>">?</a>
 					<form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To</form:label>
 				</div>
 				<div class="row"><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>

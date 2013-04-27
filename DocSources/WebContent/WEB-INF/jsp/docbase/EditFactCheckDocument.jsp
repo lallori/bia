@@ -12,7 +12,7 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.factcheck.edit"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.editFactCheckDocument.help.memo"></fmt:message>">?</a>
 				</div>
 				<div class="row"><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
 			</div>	

@@ -52,34 +52,34 @@
 		<input type="hidden" id="currentUrl" value="${ShowPlaceURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
-				<a id="lastRecord" title="<fmt:message key="menu.record.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
+				<a id="lastRecord" title="<fmt:message key="geobase.showMenuPlace.help.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
 			</c:if>
 			<c:if test="${(not empty historyNavigator.nextHistoryUrl)}"> 
-				<a id="nextRecord" title="<fmt:message key="menu.record.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
+				<a id="nextRecord" title="<fmt:message key="geobase.showMenuPlace.help.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
 		<c:if test="${place.placeAllId != 0}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-				<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="menu.record.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
+				<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 			</security:authorize>
 			<span id="commentsOn"></span>
-			<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="menu.record.discussions"></fmt:message>" href="#">Discussions</a>
+			<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.discussions"></fmt:message>" href="#">Discussions</a>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!place.logicalDelete}">
-				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="menu.record.delete"></fmt:message>" href="${DeletePlaceURL}">Delete</a>
+				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.delete"></fmt:message>" href="${DeletePlaceURL}">Delete</a>
 			</c:if>	
 			<c:if test="${place.logicalDelete}">
-				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="menu.record.undelete"></fmt:message>" href="${UndeletePlaceURL}">Undelete</a>
+				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.undelete"></fmt:message>" href="${UndeletePlaceURL}">Undelete</a>
 			</c:if>	
 			</security:authorize>
-			<a id="buttonPrint" title="<fmt:message key="menu.record.print"></fmt:message>"  href="${PrintPlaceURL}"></a>
+			<a id="buttonPrint" title="<fmt:message key="geobase.showMenuPlace.help.print"></fmt:message>"  href="${PrintPlaceURL}"></a>
 			<c:if test="${inMarkedList == 'false'}">
-				<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListPlaceURL}" title="<fmt:message key="menu.record.markedlist"></fmt:message>"></a>
+				<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListPlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.markedlist"></fmt:message>"></a>
 			</c:if>
 			<c:if test="${inMarkedList == 'true'}">
-				<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListPlaceURL}" title="<fmt:message key="menu.record.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
+				<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListPlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
 			</c:if>
-			<a id="buttonShareLink" class="button_bodyleft_medium2" href="${SharePlaceURL}" title="<fmt:message key="menu.record.sharelink"></fmt:message>">Share/Link</a>
+			<a id="buttonShareLink" class="button_bodyleft_medium2" href="${SharePlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.sharelink"></fmt:message>">Share/Link</a>
 		</c:if>
 	</div>
 </c:if>	

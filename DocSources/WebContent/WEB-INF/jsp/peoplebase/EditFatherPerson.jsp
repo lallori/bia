@@ -21,7 +21,7 @@
 			<legend>
 				<b>FATHER</b></legend>
 				<div>
-					<a class="helpIcon" title="<fmt:message key="peoplebase.parents.edit.fathername"></fmt:message>">?</a>
+					<a class="helpIcon" title="<fmt:message key="peoplebase.editFatherPerson.help.name"></fmt:message>">?</a>
 					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name:</form:label>
 					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_25c" />
 				</div>

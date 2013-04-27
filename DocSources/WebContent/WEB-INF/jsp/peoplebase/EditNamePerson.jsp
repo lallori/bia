@@ -28,7 +28,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="<fmt:message key="peoplebase.names.add"></fmt:message>">?</a>
+						<a class="helpIcon" title="<fmt:message key="peoplebase.editNamePerson.help.name"></fmt:message>">?</a>
 						<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name</form:label>
 					</div>
 					<div class="col_l"><form:input path="altName" class="input_30c" /></div>
