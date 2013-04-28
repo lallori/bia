@@ -8,12 +8,12 @@
 	<form:form id="EditDescriptionVolumeForm" method="post" cssClass="edit">
 		<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b><fmt:message key="volbase.editDescriptionVolume.title"></b></legend>
+			<legend><b><fmt:message key="volbase.editDescriptionVolume.title"/></b></legend>
 			
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.organizationalcriteria"/>">?</a>
-					<form:label id="orgNotesLabel" for="orgNotes" path="orgNotes" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.organizationalcriteria"></form:label>
+					<form:label id="orgNotesLabel" for="orgNotes" path="orgNotes" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.organizationalcriteria"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea path="orgNotes" cssClass="txtarea_big"/><form:errors path="orgNotes" cssClass="inputerrors"/>
