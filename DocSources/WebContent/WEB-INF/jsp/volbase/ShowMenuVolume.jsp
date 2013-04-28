@@ -39,45 +39,45 @@
 <%-- Create new Volume Record --%>
 <c:if test="${volume.summaryId == 0}">
 	<div id="topBodyLeftMenuDiv">
-			<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+			<div id="createdby"><fmt:message key="volbase.volbase.showMenuVolume.created"/> ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
 	</div>	
 </c:if>	
 
 <%-- Existing Volume Record --%>
 <c:if test="${volume.summaryId != 0}">
 	 <div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
-		<div id="id">Vol ID ${volume.summaryId}</div>
+		<div id="createdby"><fmt:message key="volbase.volbase.showMenuVolume.created"/> ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+		<div id="id"><fmt:message key="volbase.volbase.showMenuVolume.volId"/> ${volume.summaryId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowVolumeURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
-				<a id="lastRecord" title="<fmt:message key="volbase.showMenuVolume.help.goback"></fmt:message>" href="${historyNavigator.previousHistoryUrl}"></a>
+				<a id="lastRecord" title="<fmt:message key="volbase.showMenuVolume.help.goback"/>" href="${historyNavigator.previousHistoryUrl}"></a>
 			</c:if>
 			<c:if test="${(not empty historyNavigator.nextHistoryUrl)}"> 
-				<a id="nextRecord" title="<fmt:message key="volbase.showMenuVolume.help.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
+				<a id="nextRecord" title="<fmt:message key="volbase.showMenuVolume.help.gonext"/>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyVolumeURL}">Vetting History</a>
+			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.vettinghistory"/>" href="${ShowVettingChronologyVolumeURL}"><fmt:message key="volbase.volbase.showMenuVolume.vettingHistory"/></a>
 		</security:authorize>
 		<span id="commentsOn"></span>
-		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.discussions"></fmt:message>" href="#">Discussions</a>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.discussions"/>" href="#"><fmt:message key="volbase.volbase.showMenuVolume.discussions"/></a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!volume.logicalDelete}">
-				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="volbase.showMenuVolume.help.delete"></fmt:message>" href="${DeleteVolumeURL}">Delete</a>
+				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="volbase.showMenuVolume.help.delete"/>" href="${DeleteVolumeURL}"><fmt:message key="volbase.volbase.showMenuVolume.delete"/></a>
 			</c:if>	
 			<c:if test="${volume.logicalDelete}">
-				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="volbase.showMenuVolume.help.undelete"></fmt:message>" href="${UndeleteVolumeURL}">Undelete</a>
+				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="volbase.showMenuVolume.help.undelete"/>" href="${UndeleteVolumeURL}"><fmt:message key="volbase.volbase.showMenuVolume.undelete"/></a>
 			</c:if>	
 		</security:authorize>
-		<a id="buttonPrint" href="${PrintVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.print"></fmt:message>"></a>
+		<a id="buttonPrint" href="${PrintVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.print"/>"></a>
 		<c:if test="${inMarkedList == 'false'}">
-			<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.markedlist"></fmt:message>"></a>
+			<a id="buttonMarkedList" class="addMarkedList" href="${AddMarkedListVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.markedlist"/>"></a>
 		</c:if>
 		<c:if test="${inMarkedList == 'true'}">
-			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
+			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.alreadymarkedlist"/>" style="opacity:0.5;"></a>
 		</c:if>
-		<a id="buttonShareLink" class="button_bodyleft_medium2" href="${ShareVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.sharelink"></fmt:message>">Share/Link</a>
+		<a id="buttonShareLink" class="button_bodyleft_medium2" href="${ShareVolumeURL}" title="<fmt:message key="volbase.showMenuVolume.help.sharelink"/>"><fmt:message key="volbase.volbase.showMenuVolume.share"/></a>
 	</div>
 	
 	</c:if>	

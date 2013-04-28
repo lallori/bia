@@ -14,21 +14,21 @@
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="vettingHistoryTable">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Action</th>
-                <th>Who</th>
+                <th><fmt:message key="volbase.showVettingChronologyVolumeModalWindow.date"/></th>
+                <th><fmt:message key="volbase.showVettingChronologyVolumeModalWindow.action"/></th>
+                <th><fmt:message key="volbase.showVettingChronologyVolumeModalWindow.who"/></th>
             </tr>
         </thead>
         <tbody>
             <tr>                                                                                              
-                <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+                <td colspan="3" class="dataTables_empty"><fmt:message key="volbase.showVettingChronologyVolumeModalWindow.loading"/></td>                        
             </tr> 
         </tbody>
     </table>
 </div>
 
 <div id="vettingHistoryButtons">
-	<a id="close" href="#" title="Close Vetting History window">Close</a>
+	<a id="close" href="#" title="<fmt:message key="volbase.showVettingChronologyVolumeModalWindow.help.close"/>"><fmt:message key="volbase.showVettingChronologyVolumeModalWindow.close"/></a>
 </div>
 
 	<script>

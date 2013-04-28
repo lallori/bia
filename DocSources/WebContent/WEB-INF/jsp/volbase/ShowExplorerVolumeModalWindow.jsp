@@ -76,29 +76,29 @@
 	</c:url>
 	
 	<div id="modalBox">
-		<h6>VOLUME EXPLORER</h6>
+		<h6><fmt:message key="volbase.showExplorerVolumeModalWindow.title.volumeExplorer"/></h6>
 		<div id="prevNextButtons">
 		<c:if test="${volumeExplorer.total > 0}">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.previousFolio"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.previousFolio"/></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.nextFolio"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.nextFolio"/></a>
 			</c:if>
 			</div>
 		</c:if>
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<div id="transcribe">
-				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="<fmt:message key="volbase.showExplorerVolumeModalWindow.help.transcribe"/>"><fmt:message key="volbase.showExplorerVolumeModalWindow.transcribe"/></a>
 			</div>
 		</c:if>
 		</div>
@@ -109,23 +109,23 @@
 			<div id="prevNextButtons">
 				<div id="previousPage">
 				<c:if test="${volumeExplorer.image.imageOrder == 1}">
-					<a id="previousPage">Previous folio</a>
+					<a id="previousPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.previousFolio"/></a>
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
+					<a id="previousPage" href="${previousPage}" class="previousPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.previousFolio"/></a>
 				</c:if>
 				</div>
 				<div id="nextPage">
 				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-					<a id="nextPage">Next folio</a>
+					<a id="nextPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.nextFolio"/></a>
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-					<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
+					<a id="nextPage" href="${nextPage}" class="nextPage"><fmt:message key="volbase.showExplorerVolumeModalWindow.nextFolio"/></a>
 				</c:if>
 				</div>
 				<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 					<div id="transcribe">
-						<a href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+						<a href="${ChoiceStartFolioDocument}" class="transcribe" title="<fmt:message key="volbase.showExplorerVolumeModalWindow.help.transcribe"/>"><fmt:message key="volbase.showExplorerVolumeModalWindow.transcribe"/></a>
 					</div>
 				</c:if>
 				<br />
@@ -142,7 +142,7 @@
 					
 		<div id="rubricarioModalMoveTo">
 			<div id="rubricarioModalCountForm">
-				<b>Index of Names Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
+				<b><fmt:message key="volbase.showExplorerVolumeModalWindow.indexOfNames"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
@@ -172,7 +172,7 @@
 		<div id="folioModalMoveTo">
 
 			<div id="folioModalCountForm"> 
-				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
+				<b><fmt:message key="volbase.showExplorerVolumeModalWindow.folioCount"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
