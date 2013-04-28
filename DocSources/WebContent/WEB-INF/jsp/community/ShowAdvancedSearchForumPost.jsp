@@ -130,8 +130,8 @@
 		        </div>
 		     </div>
 			 <div id="buttons">
-				<input type="submit" value="Search" class="buttonSmall" id="submitSearch"> 
-				<a href="${ShowAdvancedSearchForumPostURL}" id="cancel" class="buttonSmall">Reset</a> 
+				<input type="submit" value="Search" class="buttonSmall button_small" id="submitSearch"> 
+				<a href="${ShowAdvancedSearchForumPostURL}" id="cancel" class="buttonSmall button_small">Reset</a> 
 			</div>
 		
 			<div>

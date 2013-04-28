@@ -11,11 +11,11 @@
 /* ------------------------------------------------- GENERAL TAG ------------------------------------------------- */ 
 
 body {
-	background-color: #F6EDEC;
+	background-color: #F7F2E6;
 	margin: 0 !important;
 	padding: 0 !important;
 	height: 100%;
-	color: #6F6B69;
+	color: #56400D;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
@@ -26,7 +26,7 @@ body, a, input, select {
 a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
-	color:#6F6B69;
+	color: #56400D;
 }
 
 a:hover {
@@ -35,15 +35,17 @@ a:hover {
 }
 
 input, select, textarea { /* INPUT text */
-	font-size:12px;
+	font-size: 12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #DCC0BA;
-	-moz-border-radius: 4px;
-	border-radius: 4px;	
-	background-color: #fbf7f4;
-	color: #6d5c4d;
+	border: none;
 	padding:3px;
-	margin: 0 3px 5px 3px;
+	margin: 5px 0 5px 5px;
+	border: 1px solid #698EA3;
+	background-color: #EFF4F7;
+	color: #13325F;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-border-radius:4px;	
 }
 
 input[type=radio] {
@@ -53,16 +55,14 @@ input[type=radio] {
 
 h1 {
 	font-size: 12px;
-	border-bottom: 1px solid #DCC0BA;
+	border-bottom: 1px solid #A3B5C0;
+	margin-left: 2px;
 	font-weight: normal;
 	color: #6D5C4D;
-	padding-left: 20px;
-	padding-bottom: 10px;
 }
 
 h2, h2 a {
 	font-size: 16px;
-	color: #6D5C4D;
 	width: 620px;
 	display: inline-block;
 }
@@ -98,12 +98,12 @@ h2.title {
 #postTable img {
 	border-radius:2px;
 	margin: 0 5px 0 5px;
-	box-shadow: 0 0 6px #B7958F;
+	box-shadow: 0 0 6px #698EA3;
 }
 
 #postTable img.avatar{
 	vertical-align:middle;
-	border: 1px solid #B7958F;
+	border: 1px solid #698EA3;
 	margin-left: 0;
 	height:55px;
 }
@@ -134,7 +134,7 @@ blockquote p {
 #top_middle {
 	width: 745px;
 	height: 64px;
-	margin-top: 95px;
+	margin-top: 15px;
 	margin-left: 255px;
 	position: absolute;
 	background-repeat: no-repeat;
@@ -145,7 +145,7 @@ blockquote p {
 #top_bottom {
 	width: 1000px;
 	height: 65px;
-	margin-top: 175px;
+	margin-top: 75px;
 	position: absolute;
 	background-image:none;
 }
@@ -153,7 +153,7 @@ blockquote p {
 #main {
 	width: 1000px;
 	height: auto;
-	margin-top: 280px;
+	margin-top: 180px;
 	position: absolute;
 }
 
@@ -176,8 +176,8 @@ blockquote p {
 
 #map { /* The Medici Archive Project image */
 	width:270px;
-	height:175px;
-	margin-left:365px;
+	height: 195px;
+	margin-left: 420px;
 	position:absolute;
 	background:url(${contextPath}/images/forum/img_map.png) no-repeat;
 }
@@ -196,76 +196,14 @@ blockquote p {
 	margin: 0 4px 0 5px;
 }
 
-#search { /* Search button */
-	width: 52px;
-	background-image:url(${contextPath}/images/forum/button_small.png);
-	height: 22px;
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	margin: 0;
-}
-
-.buttonMedium, .button_medium { /* Button medium class */
-	width:122px;
-	height:22px;
-	display: inline-block;
-	background-image:url(${contextPath}/images/forum/button_medium.png);
-	background-repeat:no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
-	border:none;
-	background-color:transparent;
-}
-
-.buttonLarge, .list a.lnkApprove, .list a.lnkUnlock{ /* Button medium class */
-	width: 182px;
-	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_large.png);
-	background-repeat: no-repeat;
-	padding: 4px 0 0 0;
-	cursor: pointer;
-	text-align: center;
-	display: inline-block;
-	font-size:12px;
-	line-height: 15px;
-	margin:0;
-}
-
-a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:hover {
-	text-decoration:none;
-	color:#6F6B69;
+#search {
+    margin:0;
+    padding: 0;
 }
 
 #advancedSearchButton { /* Advanced Search button position */
 	position:absolute;
-	margin: 45px 0 0 625px;
-}
-
-.buttonSmall { /* Button medium class */
-	width:53px;
-	height:22px;
-	display: inline-block;
-	background-image:url(${contextPath}/images/forum/button_small.png);
-	background-repeat:no-repeat;
-	padding-top: 3px;
-	text-align:center;
-	border: none;
-	background-color: transparent;
-	margin: 0;
-}
-
-.buttonMini {
-	width:22px;
-	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
-	background-repeat:no-repeat;
-	background-color:transparent;
-	border:none;
-	cursor:pointer;
-	text-align:center;
-	padding:0;
+	 margin: 45px 0 0 620px;
 }
 
 
@@ -322,7 +260,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 /* ---------- main tables ---------- */
 
 #forumTable, #membersTable, #messagesTable, #forumTablePaleography, #documentTable { /* tables */
-	border: 1px solid #DCC0BA;
+	border: 1px solid #0B4F86;
 	width: 1000px;
 	height: auto;
 	border-radius:4px;
@@ -330,8 +268,8 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 }
 
 #postTable { /* tables */
-	border: 1px solid #DCC0BA;
-	background-color: #F2E6E5;
+	border: 1px solid #698EA3;
+	background-color: #EFF4F7;
 	width: 999px;
 	height: auto;
 	border-radius:4px;
@@ -351,14 +289,14 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 }
 
 .row { /* Row */
-	border-bottom: 1px solid #DCC0BA;
+	border-bottom: 1px solid #0B4F86;
 	height: 45px;
 	display: table-row;
 }
 
 .rowFirst { /* First Row */
 	display: table-row;
-	background-color:#DCC0BA;
+	background-color: #0B4F86;
 	height: 35px;
 }
 
@@ -368,7 +306,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 }
 
 .row:hover, .rowLast:hover {
-	background-color:#EFE0DE;
+	background-color: #BED3E0;
 }
 
 .listMessages .row:hover, .rowLast:hover {
@@ -388,9 +326,14 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 .one, .two, .three, .four, .five, .six { /* Columns */
 	display: table-cell;
 	text-align: left;
-	color: #6d5c4d;
+	color: #56400D;
 	padding: 7px 5px 3px 10px;
-	border-bottom: 1px solid #DCC0BA;}
+	border-bottom: 1px solid #0B4F86;
+}
+
+.rowFirst .one, .rowFirst .two, .rowFirst .three, .rowFirst .four, .rowFirst .five { /* Columns */
+	color: #BED3E0;
+}
 
 .one { /* First column width */
 	width: 40%;
@@ -517,7 +460,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 .list a  { /* First column forum title */
 	text-decoration: none;
-	color: #6F6B69;
+	color: #56400D;
 	margin: 0 0 0 30px;
 	font-size: 13px;
 	display: block;
@@ -534,7 +477,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 
 .list .row .one a:hover, .list .rowLast .one a:hover  { /* First column forum title */
-	color:#000;
+	 color: #0B4F86;
 }
 
 .list .row .one span, .list .rowLast .one span, .list .row .two span {
@@ -565,16 +508,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 a.link {  /* "Last post by" user name */
 	text-decoration: underline;
-	color: #B7958F;
-	display: inline;
-	cursor: pointer;
-	font-size: 12px;
-	margin: 0;
-}
-
-#post a {  /* Link inside post */
-	text-decoration: underline;
-	color: #B7958F;
+	color: #0B4F86;
 	display: inline;
 	cursor: pointer;
 	font-size: 12px;
@@ -582,7 +516,7 @@ a.link {  /* "Last post by" user name */
 }
 
 a.returnTo {
-	color: #B7958F;
+	color: #0B4F86;
 	margin-bottom: 20px;
 	display: block;
 }
@@ -615,7 +549,7 @@ a.returnTo {
 #whoIsOnlineDiv #userOnline, #whoIsOnlineDiv #userRegistered, #whoIsOnlineDiv #userHidden, #whoIsOnlineDiv #userGuest {
 	font-weight:bold;
 	font-size: 13px;
-	color:#B7958F;
+	color: #0B4F86;
 }
 
 /* ---------- Statistics ---------- */
@@ -631,7 +565,7 @@ a.returnTo {
 #statisticsDiv #totalPosts, #statisticsDiv #totalTopics, #statisticsDiv #totalMembers {
 	font-weight:bold;
 	font-size: 13px;
-	color:#B7958F;
+	color: #0B4F86;
 }
 
 /* ---------- Forum Paginate ---------- */
@@ -652,14 +586,15 @@ a.returnTo {
 }
 
 #firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
-    border: 1px solid #DCC0BA;
-	border-radius:5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+    border: 1px solid #698EA3;
+	background-color: #EFF4F7;
+	color: #13325F;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-border-radius:4px;	
     padding: 2px 5px;
     cursor: pointer;
     *cursor: hand;
-    background-color: #EAD9D6;
 }
 
 #firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton {
@@ -671,7 +606,8 @@ a.returnTo {
 }
 
 .paginateActive, #firstPaginateButton:hover, #previousPaginateButton:hover, .paginateActive:hover, .paginateButton:hover, #nextPaginateButton:hover, #lastPaginateButton:hover {
-    background-color: #DCC0BA;
+    background-color: #698EA3;
+    color:#EFF4F7;
 }
 
 /* ---------- Topic Actions ---------- */
@@ -698,11 +634,6 @@ a.returnTo {
     padding-left: 25px;
 }
 
-#followTopic { /* Button to subscribe/unsubscribe */
-	display: inline-block;
-	float: right;
-	margin: -40px 0 0 0;
-}
 
 
 #searchThisForumFormDiv { /* Search Form Container */
@@ -727,19 +658,28 @@ a.returnTo {
 	width: 170px;
 }
 
+#postReply {
+    float: left;
+}
+
 #printButton {
 	float: right;
 }
 
+#showRecord {
+    display:inline-block;
+}
+
 #fullscreenButton {
-    margin-left: 268px;
+    margin-left: 263px;
+    display:inline-block;
 }
 
 /* ---------- Post Table ---------- */
 
 #postTable #post {
 	width: 770px;
-	border-right: 1px solid #DCC0BA;
+	border-right: 1px solid #698EA3;
 	display: inline-table;
 	height: 130px;
 }
@@ -1005,8 +945,8 @@ ul.abc li {
 /* ---------- My Profile ---------- */
 
 #profileTable { /* Content Div */
-	border: 1px solid #DCC0BA;
-	background-color: #F2E6E5;
+	border: 1px solid #698EA3;
+	background-color: #EFF4F7;
 	width: 999px;
 	height: auto;
 	border-radius: 4px;
@@ -1018,7 +958,7 @@ ul.abc li {
 /* Profile */
 
 #profileTable h3 { /* Titles: Pofile, Statustucs and Contact */
-	color: #666EA4;
+	 color: #0B4F86;
 	margin: 15px 0 10px 24px;
 }
 
@@ -1059,7 +999,7 @@ ul.abc li {
 	width: 30%;
 	text-align: left;
 	padding: 3px 0 3px 0;
-	color:#8C92AD;
+	color: #698EA3;
 	font-weight: normal;
 }
 
@@ -1071,11 +1011,11 @@ ul.abc li {
 	font-size: 11px;
 	margin: 125px 62px 0 0;
 	text-align: right;
-	color:#B7958F;
+	color: #8C92AD;
 }
 
 #profileTable p a{
-	color:#B7958F;
+	color: #8C92AC;
 	font-size: 11px;
 }
 
@@ -1147,15 +1087,12 @@ ul.abc li {
 #messagePreview {
 	border: 1px solid #DCC0BA;
 	background-color: #F2E6E5;
-	width: 960px;
+	width: 980px;
 	height: auto;
 	border-radius: 4px;
-	margin: 20px 0 20px 15px;
+	margin: 20px 0 20px 0;
 	position: relative;
-}
-
-#messagePreview h2, #messagePreview p{
-	padding-left:20px;
+	padding: 0 0 0 14px;
 }
 
 #messagesTable {
@@ -1193,10 +1130,6 @@ ul.abc li {
 	background-color:#EFE0DE;
 	border-bottom:none;
 	display:table-row;
-}
-
-#messagesTable .rowLastNew .three, #messagesTable .rowLastNew .two, #messagesTable .rowLastNew .one{
-	border-bottom:none;
 }
 
 #messagesTable .list a  { 
@@ -1241,8 +1174,8 @@ input[type="checkbox"] {
 /* ---------- Message table ---------- */ 
 
 #message .list {
-	border: 1px solid #DCC0BA;
-	background-color: #F2E6E5;
+	border: 1px solid #698EA3;
+	background-color: #EFF4F7;
 	width: 999px;
 	height: auto;
 	border-radius: 4px;
@@ -1261,7 +1194,7 @@ input[type="checkbox"] {
 	width: 10%;
 	text-align: left;
 	padding: 3px 0 3px 0;
-	color: #8C92AD;
+	color: #698EA3;
 }
 
 #message .row:hover, #message 	.rowLast:hover {
@@ -1337,8 +1270,7 @@ span.search {
 	display: table-cell;
 	width:60%;
 	text-align:left;
-	color:#6d5c4d;
-	padding:3px 0 3px 5px;
+	padding:3px 0 3px 0;
 }
 
 .listForm .row:hover {
@@ -1420,14 +1352,14 @@ span.search {
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background:url(${contextPath}/images/1024/button_lastRecord_pageTurner.png) no-repeat;
+	background:url(${contextPath}/images/forum/button_lastRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height: 26px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background:url(${contextPath}/images/1024/button_nextRecord_pageTurner.png) no-repeat;
+	background:url(${contextPath}/images/forum/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height: 26px;
 }
@@ -1453,13 +1385,53 @@ span.search {
 /* ------------------------ Documents--------------------------------*/
 
 #searchDocument {
-    border: 1px solid #DCC0BA;
-    background-color: #F2E6E5;
     padding: 5px 10px 5px 10px;
-    border-radius: 4px;
     margin-bottom: 10px;
+    border: 1px solid #698EA3;
+	border-radius: 4px;	
+	-moz-border-radius: 4px;
+	background-color: #C6D9E4;
+	padding-left:30px;
+	min-height: 70px;
 }
 
 #newTopic {
     margin: 2px 0 10px 0;
+    display: inline-block;
+}
+
+
+/* BUTTONS */
+
+.button_mini, .button_small, .button_medium, .button_large, .button_bodyleft_small, .button_bodyleft_medium, .button_bodyleft_medium2, .button_bodyleft_large, .button_Xlarge {
+    background: url(${contextPath}/images/forum/nav_buttons.png) transparent no-repeat;
+    cursor:pointer;
+    text-align:center;
+    padding-top: 4px;
+    border:none;
+    color:#D6C8AF;
+    outline: none;
+} 
+
+a.button_mini:hover, a.button_small, a.button_medium, a.button_large {
+	text-decoration:none;
+	color:#D6C8AF;
+}
+
+.button_small {
+	width:52px;
+	height:22px;
+	background-position: -1px -25px;
+}
+
+.button_medium {
+	width: 127px;
+	height: 22px;
+	background-position: 0 -52px;
+}
+
+.button_large {
+	width: 182px;
+	height: 22px;
+	background-position: 0 -79px;
 }

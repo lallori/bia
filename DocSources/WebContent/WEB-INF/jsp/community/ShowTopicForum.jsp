@@ -17,8 +17,8 @@
 <c:url var="BIAHomeURL" value="/Home.do" />
 
 <div id="urlActions">
-	<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-	<a href="#" class="buttonMedium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
+	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+	<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
 </div>
 
 <h2>${topic.subject }</h2>
@@ -45,7 +45,7 @@
 		<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
 		
 		<p>${topic.forum.description}</p>
-		<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>
+		<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
 		<div id="prevNextButtons" class="thread">
 	    	<c:if test="${documentExplorer.image.imageOrder == 1}">
 	    		<div id="previousPage">
@@ -76,7 +76,7 @@
 		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId" value="${topic.forum.document.entryId}"/>
 		</c:url>
-		<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>		
+		<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>		
 	</c:if>
 	<c:if test="${topic.annotation != null}">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
@@ -97,21 +97,21 @@
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
 		</c:url>
-		<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord">Show record</a>
+		<a href="${ShowPlaceURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
 	</c:if>
 	<c:if test="${topic.forum.person != null}">
 		<p></p>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId" value="${topic.forum.person.personId}"/>
 		</c:url>
-		<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord">Show record</a>
+		<a href="${ShowPersonURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
 	</c:if>
 	<c:if test="${topic.forum.volume != null}">
 		<p></p>
 		<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 			<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
 		</c:url>
-		<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord">Show record</a>
+		<a href="${ShowVolumeURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
 	</c:if>
 		
 </security:authorize>
@@ -127,15 +127,15 @@
 			<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
 				<c:param name="forumTopicId" value="${topic.topicId}"/>
 			</c:url>
-			<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe" id="followTopic"><span>Subscribe</span></a>
+			<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
 		</c:if>
 		<c:if test="${subscribed}">
 			<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
 				<c:param name="forumTopicId" value="${topic.topicId}"/>
 			</c:url>
-			<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe" id="followTopic"><span>Unsubscribe</span></a>
+			<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
 		</c:if>
-		<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+		<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 	</security:authorize>
     <div id="searchThisForumFormDiv">
     	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
@@ -143,7 +143,7 @@
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>
-<!--     <a href="#" id="printButton" class="buttonMedium"><span class="button_print">Print discussion</span></a> -->
+<!--     <a href="#" id="printButton" class="buttonMedium button_medium"><span class="button_print">Print discussion</span></a> -->
 </div>
 
 <c:if test="${isEmpty == null}">
@@ -241,7 +241,7 @@
 <%-- 			<c:param name="forumId" value="${topic.forum.forumId}"/> --%>
 <%-- 			<c:param name="topicId" value="${topic.topicId}"/> --%>
 <%-- 	</c:url> --%>
-<%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a> --%>
+<%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a> --%>
 <%-- 	</security:authorize> --%>
 <!-- </div> -->
 
@@ -255,7 +255,7 @@
         <select id="selectForum" name="selectForum" class="selectform_long">
         	<option value="" selected="selected">Select a Forum</option>
         </select>
-        <input id="go" type="submit" title="go" value="Go" class="buttonMini">
+        <input id="go" type="submit" title="go" value="Go" class="buttonMini button_mini">
     </div>
 	
 	${paginationData}

@@ -59,9 +59,9 @@
 			<form:textarea id="htmlbox" name="text" path="text" style="width:970px; height:300px"></form:textarea>
 	    </div>
 	    
-	    <a href="#" id="preview" class="buttonSmall">Preview</a>
-	    <a href="#" id="discard" class="buttonSmall">Discard</a>
-	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
+	    <a href="#" id="preview" class="buttonSmall button_small">Preview</a>
+	    <a href="#" id="discard" class="buttonSmall button_small">Discard</a>
+	    <input type="submit" value="Submit" class="buttonSmall button_small" id="submit" onclick="instance.post();">
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>

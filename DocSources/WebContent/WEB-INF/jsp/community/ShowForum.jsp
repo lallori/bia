@@ -12,8 +12,8 @@
 	
 <!-- Main Forum Page -->
 	<div id="urlActions">
-		<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-		<a href="#" class="buttonMedium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
+		<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+		<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
 	</div>
 	<c:if test="${not empty category}">
 		<c:if test="${category.option.canHaveSubCategory}">
@@ -289,7 +289,7 @@ Use the textbox below to search this forum.</p>
         					<div id="searchThisForumFormDiv">
             					<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
                 					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
-                					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall" disabled="disabled"/>
+                					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall button_small" disabled="disabled"/>
                 					<input type="hidden" name="displayResults" value="Topics"/>
                 					<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
                 					<input type="hidden" name="newSearch" value="true"/>
@@ -463,7 +463,7 @@ Use the textbox below to search this forum.</p>
         				<div id="searchThisForumFormDiv">
             				<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
                					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
-               					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall" disabled="disabled"/>
+               					<input id="searchDocuments" type="submit" title="Search" value="Search" class="buttonSmall button_small" disabled="disabled"/>
                					<input type="hidden" name="displayResults" value="Topics"/>
                 				<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
                 				<input type="hidden" name="newSearch" value="true"/>

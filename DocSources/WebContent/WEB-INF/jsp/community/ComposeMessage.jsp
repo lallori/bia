@@ -37,8 +37,8 @@
 	<div>
 		<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
 	</div>
-    <input type="submit" value="Send" class="buttonSmall" id="send">
-    <a href="#" id="preview" class="buttonSmall">Preview</a>
+    <input type="submit" value="Send" class="buttonSmall button_small" id="send">
+    <a href="#" id="preview" class="buttonSmall button_small">Preview</a>
 	<form:hidden path="account"/>
     <form:hidden path="parentMessageId"/>
 </form:form>

@@ -49,9 +49,15 @@ input[type="text"], input[type="password"] {
 	position:absolute;
 }
 
+.bia {
+    position: absolute;
+	margin: 0 0 0 140px;
+}
+
 .mellon {
 	position: absolute;
 	margin: 0 0 0 140px;
+	display:none;
 }
 
 .dga {
@@ -612,7 +618,7 @@ a {
 	background-color:transparent;
 	background-image:url(${contextPath}/images/1024/button_small.png);
 	width:52px;
-	height:22px; 
+	height:22px;
 	border:none;
 	text-align: center;
 	padding-top: 3px;

@@ -36,6 +36,12 @@ body {
 	position:absolute;
 }
 
+.bia {
+    position: absolute;
+	margin: 0 0 0 140px;
+	display:none;
+}
+
 .mellon {
 	position: absolute;
 	margin: 0 0 0 140px;

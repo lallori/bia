@@ -36,7 +36,7 @@
 	</div>
 	</c:if>
 	
-	<a id="reply" class="buttonSmall" href="${ReplyMessageURL}">Reply</a>
+	<a id="reply" class="buttonSmall button_small" href="${ReplyMessageURL}">Reply</a>
 
 					
 <a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>

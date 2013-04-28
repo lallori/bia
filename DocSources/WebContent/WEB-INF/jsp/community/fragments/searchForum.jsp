@@ -7,11 +7,11 @@
 				<div id="searchForumAllDiv">
 					<form id="SearchForumAll" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
                         <input id="searchForumAllText" name="searchForumAllText" type="text" value="Search all forums...">
-                        <input id="search" type="submit" title="Search" value="Search" disabled="disabled"/>
+                        <input id="search" class="button_small" type="submit" title="Search" value="Search" disabled="disabled"/>
 					</form>
 				</div>
 
-                <a href="<c:url value="/community/ShowAdvancedSearchForumPost.do"/>" class="buttonMedium" id="advancedSearchButton">Advanced Search</a>
+                <a href="<c:url value="/community/ShowAdvancedSearchForumPost.do"/>" class="buttonMedium button_medium" id="advancedSearchButton">Advanced Search</a>
 
 
 				<script>
