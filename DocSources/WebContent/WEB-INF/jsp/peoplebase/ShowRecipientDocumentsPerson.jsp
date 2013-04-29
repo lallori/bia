@@ -16,7 +16,7 @@
 		<p>Total records found: <span id="recipientRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
-	<a id="refineRecipient${personId}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
+	<a id="refineRecipient${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPersonId${personId}">
 		<thead>

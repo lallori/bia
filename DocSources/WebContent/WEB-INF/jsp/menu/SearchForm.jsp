@@ -25,7 +25,7 @@
   						<div class="listSearch">
   							<div class="row">
 								<div class="col_r">for</div><div class="col_r"><input id="text" name="text" type="text" value=""/></div>
-								<div class="col_r"><input id="search" type="submit" title="submit form" value="Go"/></div>
+								<div class="col_r"><input id="search" type="submit" title="submit form" value="Go" class="button_mini"/></div>
 							</div>
 						</div>
 					</form>

@@ -256,8 +256,8 @@
 		</c:if>
 		<p>Total records found:
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
-		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print" href="#" style="visibility:hidden;">Print Records</a>
+		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
+		<a id="print${command.searchUUID}" class="print button_medium" href="#" style="visibility:hidden;">Print Records</a>
 		<c:if test="${command.searchType.toString() == 'DOCUMENT'}">
 			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
 		</c:if>

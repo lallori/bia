@@ -64,8 +64,8 @@
 	<form:hidden id="countryCode" path="countryCode" />
 	
 	<div>
-		<input id="close" type="submit" value="Close" title="Do not save changes" />
-		<input id="save" type="submit" value="Save" />
+		<input id="close" type="submit" value="Close" title="Do not save changes" class="button_small fl" />
+		<input id="save" type="submit" value="Save" class="button_small fr"/>
 	</div>
 	</fieldset>
 </form:form>

@@ -213,7 +213,7 @@
 			<br>
 			<br>
 			<a class="saveButton" href="#">Save</a>
-			<input type="submit" title="Search" value="Search" id="advsearch">
+			<input type="submit" title="Search" value="Search" id="advsearch" class="button_small">
 
 			<input type="hidden" name="idSearchFilter" value="${command.idSearchFilter}">
 			<input type="hidden" name="searchUUID" value="${command.searchUUID}">

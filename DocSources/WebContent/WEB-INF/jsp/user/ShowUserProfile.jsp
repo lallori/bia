@@ -28,14 +28,14 @@
 				<img src="${ShowPortraitUserURL}" width="111" height="145"/>
 			</c:if>
 			<c:if test="${!userProfile.portrait}">
-				<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+				<img src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
 			</c:if>
 			</div>
-			<a id="UploadPortraitUser" href="${UploadPortraitWindowURL}">Upload Portrait</a>
+			<a id="UploadPortraitUser" class="button_medium" href="${UploadPortraitWindowURL}">Upload Portrait</a>
 <%-- 			<a id="PersonalNotesButton" href="${ShowPersonalNotesUserURL}">Personal Notes</a> --%>
-			<a id="EditUserProfile" href="${EditUserProfileURL}">Edit Profile</a>
-			<a id="ChangePassword" href="${EditPasswordUserURL}">Change Password</a>
-			<a id="CloseUserProfile" href="#">Close Profile</a>
+			<a id="EditUserProfile" class="button_medium" href="${EditUserProfileURL}">Edit Profile</a>
+			<a id="ChangePassword" class="button_medium" href="${EditPasswordUserURL}">Change Password</a>
+			<a id="CloseUserProfile" class="button_medium" href="#">Close Profile</a>
 		</div>
 		
 		<div id="EditUserProfileDiv">

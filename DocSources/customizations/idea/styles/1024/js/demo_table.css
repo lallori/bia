@@ -144,7 +144,7 @@ table.display thead th {
     cursor: pointer;
     * cursor: hand;
 	text-align: center;
-	color: #8F726B;
+	color: #13325F;
 	font-weight:normal;
 }
 
@@ -243,7 +243,7 @@ tr.even {
 
 
 tr.odd:hover, tr.odd td.sorting_1:hover, tr.even:hover, tr.even td.sorting_1:hover  {
-    background-color: #b0addd;
+    background-color: #916D2A;
 	cursor: pointer;
 }
 
@@ -314,7 +314,7 @@ td.details {
 
 .paging_full_numbers span.paginate_button,
     .paging_full_numbers span.paginate_active {
-    border: 1px solid #DCC0BA;
+    border: 1px solid #698EA3;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     padding: 2px 5px;
@@ -324,11 +324,11 @@ td.details {
 }
 
 .paging_full_numbers span.paginate_button {
-    background-color: #EAD9D6;
+    background-color: #EFF4F7;
 }
 
 .paging_full_numbers span.paginate_button:hover {
-    background-color: #DCC0BA;
+    background-color: #698EA3;
 }
 
 .paging_full_numbers span.paginate_active {

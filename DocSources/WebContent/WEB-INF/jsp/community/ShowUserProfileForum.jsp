@@ -47,7 +47,7 @@
 					<img src="${ShowPortraitUserURL}" width="111" height="145"/>
 				</c:if>
 				<c:if test="${!userProfile.portrait}">
-					<img src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+					<img src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
 				</c:if>
 			</div>
         </div>

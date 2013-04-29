@@ -215,7 +215,7 @@
         			<img src="${ShowPortraitUserURL}" class="avatar"/>
         		</c:if>
         		<c:if test="${!currentPost.user.portrait}">
-        			<img class="avatar" src="<c:url value="/images/1024/img_user.jpg"/>" alt="User Portrait"/>
+        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
         		</c:if>
         		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
         	</li>

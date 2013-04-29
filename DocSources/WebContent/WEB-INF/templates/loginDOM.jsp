@@ -43,6 +43,5 @@
 <tiles:insertAttribute name="main"/>
 <!--<tiles:insertAttribute name="footer"/>-->
 		</div>
-		<div id="footer"><a href="http://bia.medici.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/poweredBy.png"/>" alt="Bia - The Medici Archive Project"></a></div>
 	</body>
 </html>

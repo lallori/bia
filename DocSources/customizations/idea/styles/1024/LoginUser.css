@@ -88,6 +88,7 @@ input[type="text"], input[type="password"] {
 #login input[type="text"], #login input[type="password"] {
 	width: 205px;
 	margin-left: 0;
+	color: #13325F;
 }
 
 div.buttons {

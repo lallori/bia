@@ -5174,3 +5174,7 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 #toTop:active, #toTop:focus {
 	outline:none;
 }
+
+a#UploadPortraitUser {
+margin-top: 50px;
+}
