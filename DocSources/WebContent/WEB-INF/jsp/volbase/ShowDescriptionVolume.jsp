@@ -45,7 +45,7 @@
 				<div class="value">${volume.folsNumbrd ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item"><fmt:message key="volbase.showDescriptionVolume.foliosCount"/></div>
+				<div class="item"><fmt:message key="volbase.showDescriptionVolume.folioCount"/></div>
 				<div class="value">${volume.folioCount}</div>
 			</div>
 			<div class="row">
