@@ -45,10 +45,10 @@
 				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
-				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>Documents related to this Volume record: <font color="#900">0</font></p>
+				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>: <font color="#900">0</font></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 1}">
-				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>Document related to this Volume record: <font color="#900">${volDocsRelated}</font></p>
+				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font></p>
 			</c:if>
 		</div>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
