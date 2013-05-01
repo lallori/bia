@@ -180,7 +180,7 @@ span.h7 {
  
 	color: #0B4F86;}
 
-#buttonPrint, #buttonMarkedList, #lastRecord, #nextRecord, #prevNextButtons #previousPage a, #prevNextButtons #nextPage a, #helpFilesIcon, #aboutMapIcon {
+#buttonPrint, #buttonMarkedList, #lastRecord, #nextRecord, #prevNextButtons #previousPage a, #prevNextButtons #nextPage a, #helpFilesIcon, #aboutMapIcon, .indexNames {
     background:url(${contextPath}/images/1024/nav_icons.png);
 }
 
@@ -833,7 +833,7 @@ img.transparent {
 	font-size: 11px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
-	margin: 5px 0 0 5px;
+	margin: 5px 0 0 16px;
 	width:auto;
 	border:1px solid #900;
 	border-radius:4px;
@@ -2327,16 +2327,12 @@ a.refreshVolumeExplorer {
 /* ---- Index of names --- */
 
 .indexNames { /* Index of Names button on Page Turner Panel */
-	background:url(${contextPath}/images/mview/button_indexOfNames.png) no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
-	text-decoration:none;
-	color:#6F6B69;
-	width:35px;
-	height:35px;
-	font-size:11px;
+	background-position: -78px -26px;
+	background-repeat: no-repeat;
 	float:right;
 	margin: 3px 5px 20px 0;
+	height: 35px;
+	width: 35px;
 }
 
 /* ---------------- */
@@ -2905,58 +2901,11 @@ form#EditUserProfileForm span{
 
 #modalBox #editCleanClose #edit {
 	margin: 0px auto auto 0px;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	border:none;
-	text-align:center;
 	float: left;
 }
 
-#modalBox #editCleanClose #cleanAll {
+#modalBox #editCleanClose #cleanAll, #modalBox #editCleanClose #close, #modalBox #editCleanClose #goBack, #closesavePersonalNotes #goBack {
 	margin:0 0 0 20px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	border:none;
-	text-align:center;
-	float: left;
-}
-
-#modalBox #editCleanClose #close {
-	margin:0 0 0 20px;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	border:none;
-	text-align:center;
-	float: left;
-}
-
-#modalBox #editCleanClose #goBack {
-	margin:0 0 0 20px;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	border:none;
-	text-align:center;
 	float: left;
 }
 
@@ -2987,39 +2936,11 @@ form#EditUserProfileForm span{
 
 #closesavePersonalNotes #close{
 	margin:0 0 0 10px;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
 	float:right;
-	padding:4px 0 0 0;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	text-align:center;
-}
-
-#closesavePersonalNotes #goBack{
-	margin: 0 0 0 20px;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	float:left;
-	font-size: 12px;
-	width:52px;
-	height:22px;
-	border:none;
-	text-align:center;
 }
 
 #EditPersonalNotesForm #savePersonalNotes {
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	background-color:transparent;
-	padding:0 0 0 3px;
-	font-size: 12px;
-	width:52px;
-	height:22px;
 	margin: 5px 0 0 15px;
-	border:none;
-	cursor:pointer;
 }
 
 

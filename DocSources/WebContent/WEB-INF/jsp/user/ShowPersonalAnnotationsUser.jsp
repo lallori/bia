@@ -28,8 +28,8 @@
 	</div>
 	
 	<div id="personalAnnotationsButtons">
-		<a id="eraseHistory" href="#" style="visibility:hidden;">Erase History</a>
-		<a id="closePersonalAnnotations" href="#" title="Close PersonalAnnotations window">Close</a>
+		<a id="eraseHistory" class="button_medium" href="#" style="visibility:hidden;">Erase History</a>
+		<a id="closePersonalAnnotations" class="button_small" href="#" title="Close PersonalAnnotations window">Close</a>
 	</div>
 
 

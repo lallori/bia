@@ -58,7 +58,7 @@ h1 {
 	border-bottom: 1px solid #A3B5C0;
 	margin-left: 2px;
 	font-weight: normal;
-	color: #6D5C4D;
+	color: #0B4F86;
 }
 
 h2, h2 a {
@@ -180,6 +180,7 @@ blockquote p {
 	margin-left: 420px;
 	position:absolute;
 	background:url(${contextPath}/images/forum/img_map.png) no-repeat;
+	z-index: 999;
 }
 
 #searchForumAllDiv { /* Search Form Container */
@@ -617,6 +618,9 @@ a.returnTo {
 	margin: 15px 0 20px 0;
 }
 
+#topicActions a{
+	display:inline-block
+}
 
 #topicActions span.button_print {
     background-image: url(${contextPath}/images/forum/img_print.png);   
@@ -864,6 +868,7 @@ input[type="submit"]:hover {
 
 #preview {
 	margin: 10px;
+	display: inline-block;
 }
 
 #preview:hover, #save:hover {
@@ -935,11 +940,17 @@ ul.abc li {
 }
 
 #findMember {
-	background-color: #F2E6E5;
+	border: 1px solid #698EA3;
+	background-color: #C6D9E4;
 	height: 20px;
-	border: 1px solid #DCC0BA;
 	border-radius: 4px;
 	margin-bottom: 10px;
+}
+
+#findMember a#findMember{
+    border:none;
+    background-color:transparent;
+	
 }
 
 /* ---------- My Profile ---------- */
@@ -1102,7 +1113,7 @@ ul.abc li {
 #messagesTable .list .one{
 	width: 18%;
 	text-align:left;
-	border-right: 1px solid #DCC0BA;
+	border-right: 1px solid #BED3E0;
 }
 
 #messagesTable .list .two  { /* Other column width */
@@ -1261,7 +1272,6 @@ span.search {
 	display: table-cell;
 	width:40%;
 	text-align:left;
-	color:#6d5c4d;
 	font-weight:bold;
 	padding:3px 0 3px 10px; 
 }
@@ -1283,14 +1293,17 @@ span.search {
 	 margin: 5px 6px 5px 10px; 
 }
 
-#anyTermsLabel, #allTerms {
+#allTerms, #anyTerms {
 	margin-left: 13px;
+	margin-right: 5px;
 }
 
 #searchQueryDiv {
-	background-color: #F2E6E5;
-	border: 1px solid #DCC0BA;
+	border: 1px solid #698EA3;
+	background-color: #C6D9E4;
 	border-radius: 4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
 	margin-bottom: 30px;
 	padding: 8px;
 }

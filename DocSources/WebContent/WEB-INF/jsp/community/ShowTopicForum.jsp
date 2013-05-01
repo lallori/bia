@@ -139,7 +139,7 @@
 	</security:authorize>
     <div id="searchThisForumFormDiv">
     	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
-            <input id="searchForumThisText" name="searchInForum" type="text" value="Search this forum...">
+            <input id="searchForumThisText" class="button_small" name="searchInForum" type="text" value="Search this forum...">
             <input id="search" type="submit" title="Search" value="Search"/>
         </form>
     </div>

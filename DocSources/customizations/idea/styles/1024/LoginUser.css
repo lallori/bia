@@ -623,7 +623,7 @@ a {
 	border:none;
 	text-align: center;
 	padding-top: 3px;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; 
 }
 
 input#update {

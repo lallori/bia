@@ -34,7 +34,7 @@
 						</div>
 					</div>
 			        <div>
-			        	<input id="save" type="submit" value="Save" title="Save User Preferences changes" />
+			        	<input id="save" class="button_small" type="submit" value="Save" title="Save User Preferences changes" />
 			        </div>    
 				</div>
 			</fieldset>		

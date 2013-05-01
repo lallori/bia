@@ -19,10 +19,10 @@
 			</div>
 	
 		<div id="editCleanClose">
-			<a id="edit" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
-			<a id="cleanAll" href="${ShowConfirmErasePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
-			<a id="close" href="#" title="Close this window">Close</a>
-			<a id="goBack" href="${ShowPersonalDirectoryURL}" title="Go Back to My Profile">Go back</a>
+			<a id="edit" class="button_small" href="${EditPersonalNotesUserURL}" title="Edit your Personal Notes">Edit</a>
+			<a id="cleanAll" class="button_small" href="${ShowConfirmErasePersonalNotesUserURL}" title="Delete all your Personal Notes">Delete</a>
+			<a id="close" class="button_small" href="#" title="Close this window">Close</a>
+			<a id="goBack" class="button_small" href="${ShowPersonalDirectoryURL}" title="Go Back to My Profile">Go back</a>
 		</div>
 		
 		</div>	

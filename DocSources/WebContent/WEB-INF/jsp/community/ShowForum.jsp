@@ -175,7 +175,7 @@
 			<c:if test="${forum.option.canHaveTopics}">
 				<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
-					<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
+					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic">New Topic</a>
 				</div>
 				</security:authorize>
 			</c:if>

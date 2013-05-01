@@ -65,7 +65,7 @@
 <!-- 			</div> -->
 <!-- 		</div> -->
 		
-		<input id="close" type="submit" title="Close Entry Menu window" value="Close"/>
+		<input id="close" class="button_small" type="submit" title="Close Entry Menu window" value="Close"/>
 	</div>
 	
 	<script type="text/javascript" charset="utf-8">

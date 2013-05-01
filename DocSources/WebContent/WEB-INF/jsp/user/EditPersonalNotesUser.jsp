@@ -15,10 +15,10 @@
 		<form:textarea path="personalNotes" cssClass="txtarea_personalNotes"/>
 
 		<div id="closesavePersonalNotes">
-	   		<a id="goBack" href="${ShowPersonalNotesUserURL}" title="Go Back to Personal Notes" >Go Back</a>
-			<a id="close" href="#" title="Close this window">Close</a>
+	   		<a id="goBack" class="button_small" href="${ShowPersonalNotesUserURL}" title="Go Back to Personal Notes">Go Back</a>
+			<a id="close" class="button_small" href="#" title="Close this window">Close</a>
 		</div>
-	    <input id="savePersonalNotes" type="submit" title="Save your Personal Notes" value="Save"/>
+	    <input id="savePersonalNotes" class="button_small" type="submit" title="Save your Personal Notes" value="Save"/>
 		
 	</form:form>
 

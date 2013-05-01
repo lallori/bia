@@ -32,7 +32,7 @@ body.search {
 
 h1 {
 	font-size:12px;
-	color:#BED3E0;
+	color:#0B4F86;
 }
 
 a img {
@@ -322,13 +322,6 @@ a {
 	text-decoration:none;
 }
 
-#digitizationModule:hover { /* Administration Module */
-	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important	
-}
-
 #top_bottom p{ /* top_bottom (Who am I?) */
 	margin-top: 0;
 	float:right;
@@ -356,7 +349,7 @@ a {
 
 .welcome{
 	font-size:16px;
-	margin-top:30px;
+	margin-top: 35px;
 	margin-left:50px;
 	position:absolute;
 }
@@ -727,15 +720,14 @@ $('.searchResult').live('click', function() {
 }
 
 #menageTitlOccDiv #goBack{
-        background:url(${contextPath}/images/1024/button_small.png) no-repeat;
+    background:url(${contextPath}/images/1024/button_small.png) no-repeat;
 	width:52px;
 	height:23px;
 	position:absolute;
 	text-decoration:none;
 	color:#6D5C4D;
 	text-align:center;
-	
-        margin: 110px 0 0 90px;
+    margin: 110px 0 0 90px;
 	border:none;
 	cursor:pointer;
 	padding-top:4px;
@@ -750,7 +742,7 @@ $('.searchResult').live('click', function() {
 }
 
 #basicSearchDiv h1 span{
-	color:#900;
+	color:#BF8B88;
 	font-size:12px;
 }
 
