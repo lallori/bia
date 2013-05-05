@@ -98,14 +98,13 @@ html version
 */
 
 #EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
+	border: 1px solid #698EA3;
+	background-color: #EFF4F7;
+	color: #13325F;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
 	font-size: 12px;
-	color: #000000;
 	width: 98%;
 	height:90%;
 	text-align:justify;

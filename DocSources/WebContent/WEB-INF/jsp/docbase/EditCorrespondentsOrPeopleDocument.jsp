@@ -186,8 +186,8 @@
 		</c:forEach>
 			<br>			
 			<div>
-				<input id="closePeople" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
-				<input id="AddNewValue" type="submit" value="Add" title="Add new Person" />
+				<input id="closePeople" type="submit" value="Close" title="Do not save changes" class="closeForm button_small fl"/>
+				<input id="AddNewValue" class="button_small fr" type="submit" value="Add" title="Add new Person" />
 			</div>
 		</fieldset>
 	</form:form>

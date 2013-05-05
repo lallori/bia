@@ -72,7 +72,7 @@
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	border: 1px solid #A3B5C0; 
-	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
+	background: #F0DAAA url(/idea/styles/1024/js/images/ui-state-default-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #56400D; 
 }
@@ -84,7 +84,7 @@
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
 	border: 1px solid #916D2A; 
-	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #F0DAAA url(/idea/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #0B4F86; 
 }
@@ -96,7 +96,7 @@
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { 
 	border: 1px solid #916D2A;
-	background: #F0DAAA url(${contextPath}/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
+	background: #F0DAAA url(/idea/styles/1024/js/images/ui-state-active-bg.png) 50% 50% repeat-x;
 	font-weight: normal; 
 	color: #56400D; 
 }
@@ -531,7 +531,7 @@
 
 /* Overlays */
 .ui-widget-overlay { 
-	background: #aaaaaa url(${contextPath}/styles/1024/js/images/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
+	background: #aaaaaa url(/idea/styles/1024/js/images/jquery-ui-diagonals-overlay.png) 50% 50% repeat; 
 	opacity: .20;
 	filter:Alpha(Opacity=20); 
 }
@@ -742,7 +742,8 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-dialog-titlebar { 
 	padding: .4em 1em; 
 	position: relative;
-	background-color: #E9D5D1;
+	border: 1px solid #698EA3;
+    background-color: #EFF4F7;
 }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }

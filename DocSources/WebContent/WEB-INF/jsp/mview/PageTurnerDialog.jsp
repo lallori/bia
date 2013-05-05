@@ -129,18 +129,18 @@
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
-		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
-		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
+		<a id="showTranscription" href="#" class="transcribe button_medium" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe button_medium" style="visibility: hidden;">Show this record</a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;">Show records</a>
+		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe button_medium" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
 		
 		<!--  This document has not been transcribed-->
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe </a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Set this as <font style="font-style:italic;">Start folio</font></a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe button_medium" style="visibility: hidden; cursor: pointer">Transcribe </a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe button_medium" style="visibility: hidden; cursor: pointer">Set this as <font style="font-style:italic;">Start folio</font></a>
 		
 		<!--  This document has a record in the database but it is not transcribed-->
 		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
-		<a id="extractTranscribe" href="#" title="Transcribe extract" class="transcribe" style="visibility: hidden; cursor: pointer;" >Transcribe</a>
+		<a id="extractTranscribe" href="#" title="Transcribe extract" class="transcribe button_medium" style="visibility: hidden; cursor: pointer;" >Transcribe</a>
 		
 		
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
@@ -156,9 +156,9 @@
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
-		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe" style="visibility: hidden; cursor:pointer;">Show records</a>
+		<a id="showTranscription" href="#" class="transcribe button_medium" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe button_medium" style="visibility: hidden;">Show this record</a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;">Show records</a>
 		
 		<!--  This document has a record in the database but it is not transcribed-->
 		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
@@ -197,7 +197,7 @@
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
-			<input id="go" type="submit" value="Go"/>
+			<input id="go" class="button_mini" type="submit" value="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
 			<form:hidden path="volLetExt" />
