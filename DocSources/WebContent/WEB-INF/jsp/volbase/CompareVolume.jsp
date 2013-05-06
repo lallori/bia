@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -27,7 +28,7 @@
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">
 		<div id="volumeTitle">
-			<h3><fmt:message key="volbase.compareVolume.title.volume"/> ${volume.volNum}</h3>
+			<h3>${fn2:getApplicationProperty("schedone.fondo")} - ${volume.volNum}</h3>
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
@@ -48,7 +49,7 @@
 		</div>
 		<div class="listDetails">
 			<div class="row">
-				<div class="item"><fmt:message key="volbase.compareVolume.volume"/</div>
+				<div class="item"><fmt:message key="volbase.compareVolume.volume"/></div>
 				<div class="value">${volume.volNum}${volume.volLetExt}</div>
 			</div>
 			<div class="row">
