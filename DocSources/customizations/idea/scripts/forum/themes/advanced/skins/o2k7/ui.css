@@ -14,13 +14,13 @@
 .o2k7Skin .mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px; background:url(../../img/icons.gif) -820px 0}
 
 /* Layout */
-.o2k7Skin table.mceLayout {border:0; border-left: 1px solid #DCC0BA; border-right: 1px solid #DCC0BA;border-radius: 5px;}
-.o2k7Skin table.mceLayout tr.mceFirst td {border-top: 1px solid #DCC0BA;}
-.o2k7Skin table.mceLayout tr.mceLast td {border-bottom: 1px solid #DCC0BA;border-radius: 0 0 5px 5px;}
+.o2k7Skin table.mceLayout {border:0; border-left: 1px solid #698EA3; border-right: 1px solid #698EA3;border-radius: 5px;}
+.o2k7Skin table.mceLayout tr.mceFirst td {border-top: 1px solid #698EA3;}
+.o2k7Skin table.mceLayout tr.mceLast td {border-bottom: 1px solid #698EA3;border-radius: 0 0 5px 5px;}
 .o2k7Skin table.mceToolbar, .o2k7Skin tr.mceFirst .mceToolbar tr td, .o2k7Skin tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0}
-.o2k7Skin .mceIframeContainer {border-top: 1px solid #DCC0BA; border-bottom: 1px solid #DCC0BA;}
-.o2k7Skin td.mceToolbar{background: #DCC0BA;}
-.o2k7Skin .mceStatusbar {background: #DCC0BA; display:block; font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; height:20px}
+.o2k7Skin .mceIframeContainer {border-top: 1px solid #698EA3; border-bottom: 1px solid #698EA3;}
+.o2k7Skin td.mceToolbar{background-color: #C6D9E4;}
+.o2k7Skin .mceStatusbar {background-color: #C6D9E4; display:block; font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; height:20px}
 .o2k7Skin .mceStatusbar div {float:left; padding:2px}
 .o2k7Skin .mceStatusbar a.mceResize {display:block; float:right; background:url(../../img/icons.gif) -800px 0; width:20px; height:20px; cursor:se-resize; outline:0}
 .o2k7Skin .mceStatusbar a:hover {text-decoration:underline}
@@ -39,7 +39,7 @@
 .o2k7Skin .mceButton {display:block;  width:22px; height:22px}
 .o2k7Skin a.mceButton span, .o2k7Skin a.mceButton img {margin-left:1px}
 .o2k7Skin .mceOldBoxModel a.mceButton span, .o2k7Skin .mceOldBoxModel a.mceButton img {margin:0 0 0 1px}
-.o2k7Skin a.mceButtonEnabled:hover {background-color: #F2E6E5; background-position:0 -22px;border-radius: 4px;}
+.o2k7Skin a.mceButtonEnabled:hover {background-color: #EFF4F7; background-position:0 -22px;border-radius: 4px;}
 .o2k7Skin a.mceButtonActive, .o2k7Skin a.mceButtonSelected {background-position:0 -44px}
 .o2k7Skin .mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
 .o2k7Skin .mceButtonLabeled {width:auto}
@@ -53,7 +53,7 @@
 /* ListBox */
 .o2k7Skin .mceListBox  {padding-left: 3px}
 .o2k7Skin .mceListBox, .o2k7Skin .mceListBox a {display:block}
-.o2k7Skin .mceListBox .mceText {padding-left:4px; text-align:left; width:70px; border: 1px solid #F2E6E5; border-right:0; background: #F2E6E5; font-family:Tahoma,Verdana,Arial,Helvetica; font-size:11px; height:20px; line-height:20px; overflow:hidden;border-radius: 4px;}
+.o2k7Skin .mceListBox .mceText {padding-left:4px; text-align:left; width:70px; border: 1px solid #698EA3; border-right:0; background: #EFF4F7; font-family:Tahoma,Verdana,Arial,Helvetica; font-size:11px; height:20px; line-height:20px; overflow:hidden;border-radius: 4px;}
 .o2k7Skin .mceListBox .mceOpen {width:14px; height:22px; background:url(img/button_bg.png) -66px 0}
 .o2k7Skin table.mceListBoxEnabled:hover .mceText, .o2k7Skin .mceListBoxHover .mceText, .o2k7Skin .mceListBoxSelected .mceText {background:#FFF}
 .o2k7Skin table.mceListBoxEnabled:hover .mceOpen, .o2k7Skin .mceListBoxHover .mceOpen, .o2k7Skin .mceListBoxSelected .mceOpen {background-position:-66px -22px}
@@ -156,7 +156,7 @@
 .o2k7Skin span.mce_code {background-position:-260px 0}
 .o2k7Skin span.mce_hr {background-position:-360px 0}
 .o2k7Skin span.mce_visualaid {background-position:-660px 0}
-.o2k7Skin span.mce_charmap {background-position:-240px 0}
+.o2k7Skin span.mce_charmap {background-position:-240px 0} 
 .o2k7Skin span.mce_paste {background-position:-560px 0}
 .o2k7Skin span.mce_copy {background-position:-700px 0}
 .o2k7Skin span.mce_cut {background-position:-680px 0}
@@ -233,4 +233,3 @@
 
 #htmlbox_tbl {
     margin: 10px;
-}

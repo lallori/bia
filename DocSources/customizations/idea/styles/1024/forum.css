@@ -873,7 +873,6 @@ input[type="submit"]:hover {
 
 #preview:hover, #save:hover {
 	text-decoration:none;
-	color:#6F6B69;
 }
 
 #save {

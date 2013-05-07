@@ -148,6 +148,10 @@ table.display thead th {
 	font-weight:normal;
 }
 
+#MB_content table.display thead th {
+	color: #F5F6F5;
+}
+
 table.display tfoot th {
     padding: 3px 18px 3px 10px;
     border-top: 1px solid black;

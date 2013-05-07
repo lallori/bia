@@ -47,10 +47,10 @@
 </div>
 	
 <div id="MarketListButtons">
-	<a id="eraseList" href="${ShowConfirmEraseMyMarkedListURL}">Erase List</a>
-    <a id="removeSelected" href="#">Remove selected</a>
-    <a id="selectAll" href="#">Select all</a>
-    <a id="printAllItems" href="#" target="_blank">Print selected</a>
+	<a id="eraseList" class="button_medium" href="${ShowConfirmEraseMyMarkedListURL}">Erase List</a>
+    <a id="removeSelected" class="button_medium" href="#">Remove selected</a>
+    <a id="selectAll" class="button_medium" href="#">Select all</a>
+    <a id="printAllItems" class="button_medium" href="#" target="_blank">Print selected</a>
 </div>
 	
 	
