@@ -99,18 +99,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"><fmt:message key="docbase.choiceStartFolio.previousPage"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"><fmt:message key="docbase.choiceStartFolio.previousPage"/></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"><fmt:message key="docbase.choiceStartFolio.nextPage"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
-				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"><fmt:message key="docbase.choiceStartFolio.nextPage"/></a>
 			</c:if>
 			</div>
 		</div>
@@ -120,18 +120,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"><fmt:message key="docbase.choiceStartFolio.previousPage"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previous" href="${previousPage}" class="previousPage">Previous folio</a>
+				<a id="previous" href="${previousPage}" class="previousPage"><fmt:message key="docbase.choiceStartFolio.previousPage"/></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"><fmt:message key="docbase.choiceStartFolio.nextPage"/></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
-				<a id="next" href="${nextPage}" class="nextPage">Next folio</a>
+				<a id="next" href="${nextPage}" class="nextPage"><fmt:message key="docbase.choiceStartFolio.nextPage"/></a>
 			</c:if>
 			</div>
 		</div>
@@ -140,11 +140,11 @@
 	
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<div id="chooseDiv">
-			<a id="choose" class="choose" href="${TranscribeAndContextualizeDocumentURL}">Choose this as Doc. start folio</a>
+			<a id="choose" class="choose" href="${TranscribeAndContextualizeDocumentURL}"><fmt:message key="docbase.choiceStartFolio.choseThisStartFolio"/></a>
 		</div>
 		</security:authorize>
 		<div id="gobackvolumeDiv">
-			<a id="gobackvolume" class="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER">Go back to Volume Explorer</a>
+			<a id="gobackvolume" class="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"><fmt:message key="docbase.choiceStartFolio.goBackToVolExplorer"/></a>
 		</div>	
 	
 

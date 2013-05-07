@@ -15,12 +15,12 @@
 	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare">Show or Edit this Volume</a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare"><fmt:message key="volbase.compareVolume.showOrEditThisVolume"/></a>
 	</div>
 	</security:authorize>
 	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare">Show this Volume</a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare"><fmt:message key="volbase.compareVolume.showThisVolume"/></a>
 	</div>
 	</security:authorize>
 		
@@ -61,7 +61,7 @@
 				<div class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</div>
 			</div>
 			<div class="row">	
-				<div class="item"><fmt:message key="volbase.compareVolume.notes"/></div>
+				<div class="item"><fmt:message key="volbase.compareVolume.dateNotes"/></div>
 				<div class="value">${volume.dateNotes}</div>
 			</div>
 		</div>

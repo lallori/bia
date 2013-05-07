@@ -20,8 +20,8 @@
 	
 	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
-			<legend><b>PEOPLE</b></legend>
-			<p>Individuals and corporate bodies indicated in the document extract:</p>
+			<legend><b><fmt:message key="docbase.editPeopleDocument.title.People"/></b></legend>
+			<p><fmt:message key="docbase.editPeopleDocument.subtitle.People"/>:</p>
 			
 		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
 			<c:if test="${currentPersonLinked.docRole!= 'S' && currentPersonLinked.docRole != 'R'}">

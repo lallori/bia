@@ -19,7 +19,7 @@
 		
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>TOPICS</b></legend>
+		<legend><b><fmt:message key="docbase.editTopicsDocument.title.topics"/></b></legend>
 		<c:forEach items="${topicsDocument}" var="currentTopicAndPlace">
 			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
 				<c:param name="entryId" value="${document.entryId}" />

@@ -50,12 +50,12 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare">Show or Edit this Document</a>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare"><fmt:message key="docbase.compareDocument.showOrEditThisDocument"/></a>
 	</div>
 	</security:authorize>
 	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare">Show this Document</a>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare"><fmt:message key="docbase.compareDocument.showThisDocument"/></a>
 	</div>
 	</security:authorize>
 	
@@ -64,17 +64,17 @@
 		<c:if test="${document.volume != null}">
 		<div id="documentTitle">
 			<div id="text">
-				<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolumeCompare${document.entryId}" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+				<h3><fmt:message key="docbase.compareDocument.volume"/>: <a href="${CompareVolumeURL}" class="linkVolumeCompare${document.entryId}" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
 	<!-- 		Checking if folio is inside inserts or inserts with parts -->
 	<!-- 		1) folio is not inside inserts-->
 				<c:if test="${document.insertNum == null}">
-					<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+					<h3><fmt:message key="docbase.compareDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 				</c:if>
 	<!-- 		2) folio is inside inserts with no parts -->
 				<c:if test="${document.insertNum != null && document.insertLet  == null}">
 					<br>
 					<br>
-					<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+					<h3><fmt:message key="docbase.compareDocument.insert"/>: ${document.insertNum}</h3><h3><fmt:message key="docbase.compareDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 					<br>
 					<br>
 				</c:if>
@@ -82,28 +82,28 @@
 				<c:if test="${document.insertLet  != null}">
 					<br>
 					<br>
-					<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+					<h3><fmt:message key="docbase.compareDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3><h3><fmt:message key="docbase.compareDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 					<br>
 					<br>
 				</c:if>
 				<c:choose>
 					<%-- Recipient empty --%>
 					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
 						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
 					</c:when>
 					<%-- Sender empty --%>
 					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
 				 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 					</c:when>
 					<%-- Sender and Recipient filled in --%>
 					<c:otherwise>
-				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+				  		<h4><fmt:message key="docbase.compareDocument.from"/>:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
 						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
-				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+				  		<h4><fmt:message key="docbase.compareDocument.to"/>:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
 						<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 					</c:otherwise>
 				</c:choose>
@@ -131,10 +131,10 @@
 			<c:if test="${empty image}">
 				<div id="DocumentImageNotDigitDiv">
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-						<span>To be digitized</span>
+						<span><fmt:message key="docbase.compareDocument.toBeDigitized"/></span>
 					</security:authorize>
 					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-						<span class="register">To be digitized</span>
+						<span class="register"><fmt:message key="docbase.compareDocument.toBeDigitized"/></span>
 					</security:authorize>
 				</div>
 			</c:if>
@@ -147,42 +147,42 @@
 		</div>
 		<div class="listDetails">
 			<div class="row">
-				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.docId"/></div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.volume"/></div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.insertPart"/></div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentStartsAtFolio"/></div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.paginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.nonconsecutive"/></div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentTypology"/>Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.modernDate"/></div> <div class="valueHilight">${document.yearModern}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.recorderYear"/></div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.dateUncertain"/></div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.undated"/></div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 			</div>
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item37">Date Notes</div> <div class="value50">${document.dateNotes}</div>
+				<div class="item37"><fmt:message key="docbase.compareDocument.dateNotes"/></div> <div class="value50">${document.dateNotes}</div>
 			</div>
 		</div>
 	</div>
@@ -192,7 +192,7 @@
 	
 	<div id="EditFactCheckDocumentDiv" class="background">
 	<div class="title">
-		<h5>FACT CHECK </h5>
+		<h5><fmt:message key="docbase.compareDocument.factCheck"/> </h5>
 		</div>
 
 		<div class="list">
@@ -207,45 +207,45 @@
 	
 	<div id="EditCorrespondentsOrPeopleDocumentDiv" class="background">
 	<div class="title">
-		<h5>CORRESPONDENTS/PEOPLE </h5>
+		<h5><fmt:message key="docbase.compareDocument.correspondentsAndPeople"/> </h5>
 	</div>
 		<div class="list">
 			<div class="row">
 <!-- 				Entries like "person name lost" or "to be entered" should be not clickable -->
 				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905 && document.senderPeople.personId != 198}">
-					<div class="item">Sender</div> <div class="value80"><a class="linkPeopleCompare" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.senderPeople.personId}" /></a></div>
+					<div class="item"><fmt:message key="docbase.compareDocument.sender"/></div> <div class="value80"><a class="linkPeopleCompare" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.senderPeople.personId}" /></a></div>
 				</c:if>
 				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905 || document.senderPeople.personId == 198}">
-					<div class="item">Sender</div> <div class="value80">${document.senderPeople.mapNameLf}</div>
+					<div class="item"><fmt:message key="docbase.compareDocument.sender"/></div> <div class="value80">${document.senderPeople.mapNameLf}</div>
 				</c:if>
 			</div>
 			<div class="row">
 				<c:if test="${document.senderPlace.placeAllId != 53384 && document.senderPlace.placeAllId != 55627 && document.senderPlace.placeAllId != 54332}">
-					<div class="item">From</div> <div class="value80"><a class="linkPlaceCompare" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+					<div class="item"><fmt:message key="docbase.compareDocument.senderFrom"/></div> <div class="value80"><a class="linkPlaceCompare" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
 				</c:if>
 				<c:if test="${document.senderPlace.placeAllId == 53384 || document.senderPlace.placeAllId == 55627 || document.senderPlace.placeAllId == 54332 }">
-					<div class="item">From</div> <div class="value80">${document.senderPlace.placeNameFull} </div>
+					<div class="item"><fmt:message key="docbase.compareDocument.senderFrom"/></div> <div class="value80">${document.senderPlace.placeNameFull} </div>
 				</c:if>
 			</div>	
 			<div class="row">
 				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905 && document.recipientPeople.personId != 198}">
-					<div class="item">Recipient</div> <div class="value80"><a class="linkPeopleCompare" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.recipientPeople.personId}" /></a></div>
+					<div class="item"><fmt:message key="docbase.compareDocument.recipient"/></div> <div class="value80"><a class="linkPeopleCompare" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}<input type="hidden" style="display:none;" class="tabId" value="peopleId${document.recipientPeople.personId}" /></a></div>
 				</c:if>
 				<c:if test="${document.recipientPeople.personId == 9285 || document.recipientPeople.personId == 3905 || document.recipientPeople.personId == 198}">
-					<div class="item">Recipient</div> <div class="value80">${document.recipientPeople.mapNameLf}</div>
+					<div class="item"><fmt:message key="docbase.compareDocument.recipient"/></div> <div class="value80">${document.recipientPeople.mapNameLf}</div>
 				</c:if>
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPlace.placeAllId != 53384 && document.recipientPlace.placeAllId != 55627 && document.recipientPlace.placeAllId != 54332}">
-					<div class="item">To</div> <div class="value80"><a class="linkPlaceCompare" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+					<div class="item"><fmt:message key="docbase.compareDocument.recipientTo"/></div> <div class="value80"><a class="linkPlaceCompare" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
 				</c:if>
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
-					<div class="item">To</div> <div class="value80">${document.recipientPlace.placeNameFull}</div>
+					<div class="item"><fmt:message key="docbase.compareDocument.recipientTo"/></div> <div class="value80">${document.recipientPlace.placeNameFull}</div>
 				</c:if>
 			</div>	
 			<br>
 			<div class="row">
-				<div class="item">People</div> 
+				<div class="item"><fmt:message key="docbase.compareDocument.people"/></div> 
 				
 			<c:forEach items="${document.epLink}" var="currentPeople">
 			<!-- This is a method to have a value near the item with the text People. -->	
@@ -275,16 +275,16 @@
 
 	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
 	<div class="title">
-		<h5>TRANSCRIPTION/SYNOPSIS </h5>
+		<h5><fmt:message key="docbase.compareDocument.transcriptionSynopsis"/> </h5>
 		</div>
 
 		<div class="list">
 			<div class="row">
-				<div class="item">Transcription</div>
+				<div class="item"><fmt:message key="docbase.compareDocument.transcription"/></div>
 				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
-				<div class="item">Synopsis</div>
+				<div class="item"><fmt:message key="docbase.compareDocument.synopsis"/></div>
 				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
 			</div>
 		</div>
@@ -294,17 +294,17 @@
 
 	<div id="EditTopicsDocumentDiv" class="background">
 	<div class="title">
-		<h5>TOPICS </h5>
+		<h5><fmt:message key="docbase.compareDocument.topics"/> </h5>
 		</div>
 	
 		<div class="list">
 		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
 			<div class="row">
-				<div class="item">Topic:</div>
+				<div class="item"><fmt:message key="docbase.compareDocument.topic"/>:</div>
 				<div class="value80"> ${currentTopicAndPlace.topic.topicTitle}</div>
 			</div>
 			<div class="row">
-				<div class="item">Topic Place:</div>
+				<div class="item"><fmt:message key="docbase.compareDocument.topicPlace"/>:</div>
 				<div class="value80"> ${currentTopicAndPlace.place.placeNameFull}</div>
 			</div>
 			<br/>

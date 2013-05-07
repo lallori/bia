@@ -8,7 +8,7 @@
 <div id="loadingDiv"></div>
 	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>FACT CHECK</b></legend>
+			<legend><b><fmt:message key="docbase.editFactCheckDocument.title.factcheck"/></b></legend>
 			
 			<div class="listForm">
 				<div class="row">

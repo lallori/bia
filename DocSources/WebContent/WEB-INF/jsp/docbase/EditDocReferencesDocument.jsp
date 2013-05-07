@@ -19,8 +19,8 @@
 	
 	<form:form id="DocReferenceDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
-			<legend><b>DOCUMENTS REFERRED TO</b></legend>
-			<p><a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.documentsreferred"></fmt:message>">?</a> &nbsp Documents referred to:</p>
+			<legend><b><fmt:message key="docbase.editDocReferencesDocument.title.documentsReferredTo"/></b></legend>
+			<p><a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.documentsreferred"></fmt:message>">?</a> &nbsp <fmt:message key="docbase.editDocReferencesDocument.documentsReferredTo"/></p>
 		
 			
 				<c:forEach items="${command.document.docReference}" var="currentDocument">

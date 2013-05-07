@@ -26,14 +26,14 @@
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.entryIdTo}"> 
-				<b>ADD NEW DOCUMENT</b>
+				<b><fmt:message key="docbase.editDocReferenceDocument.addNewDocument"/></b>
 			</c:if>
 			<c:if test="${command.entryIdTo > 0}">
-				<b>EDIT DOCUMENT</b>
+				<b><fmt:message key="docbase.editDocReferenceDocument.editDocument"/></b>
 			</c:if> 
 			</legend>
 			<div>
-				<form:label id="entryIdToLabel" for="entryIdTo" path="entryIdTo" cssErrorClass="error">Doc Id to link:</form:label>
+				<form:label id="entryIdToLabel" for="entryIdTo" path="entryIdTo" cssErrorClass="error"><fmt:message key="docbase.editDocReferenceDocument.docIdToLink"/>:</form:label>
 				<form:input id="entryIdTo" path="entryIdTo" cssClass="input_5c" />
 			</div>
 			<div>

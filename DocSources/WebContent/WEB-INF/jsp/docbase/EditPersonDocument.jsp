@@ -22,20 +22,20 @@
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.personId}"> 
-				<b>ADD NEW PERSON</b>
+				<b><fmt:message key="docbase.editPersonDocument.title.addNewPerson"/></b>
 			</c:if>
 			<c:if test="${command.personId > 0}">
-				<b>EDIT PERSON</b>
+				<b><fmt:message key="docbase.editPersonDocument.title.editPerson"/></b>
 			</c:if> 
 			</legend>
 			<div>
-				<form:label id="personDescriptionLabel" for="personDescription" path="personDescription" cssErrorClass="error">Name</form:label>
+				<form:label id="personDescriptionLabel" for="personDescription" path="personDescription" cssErrorClass="error"><fmt:message key="docbase.editPersonDocument.name"/></form:label>
 				<form:input id="personDescriptionAutoCompleter" path="personDescription" cssClass="input_25c" />
 			</div>
 			<div>
-				<form:label id="assignUnsureLabel" for="assignUnsure" path="assignUnsure" cssErrorClass="error">Unsure?</form:label>
+				<form:label id="assignUnsureLabel" for="assignUnsure" path="assignUnsure" cssErrorClass="error"><fmt:message key="docbase.editPersonDocument.unsure"/></form:label>
 				<form:checkbox id="assignUnsure" path="assignUnsure" cssClass="checkboxPers2"/>
-				<form:label id="portraitLabel" for="portrait" path="portrait" cssErrorClass="error">Portrait</form:label>
+				<form:label id="portraitLabel" for="portrait" path="portrait" cssErrorClass="error"><fmt:message key="docbase.editPersonDocument.portrait"/></form:label>
 				<form:checkbox id="portrait" path="portrait" cssClass="checkboxPers2"/>
 			</div>
 			<div>

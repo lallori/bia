@@ -21,11 +21,11 @@
 <div id="loadingDiv"></div>
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>TRANSCRIPTION/SYNOPSIS</b></legend>
+			<legend><b><fmt:message key="docbase.editExtractOrSynopsisDocument.title.transcriptionSynopsis"/></b></legend>
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.extract"></fmt:message>">?</a>
-					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Transcription</form:label>
+					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error"><fmt:message key="docbase.editExtractOrSynopsisDocument.transcription"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea id="docExtract" path="docExtract" class="txtarea_big" />
@@ -35,7 +35,7 @@
 			
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.synopsis"></fmt:message>">?</a>
-					<form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label>
+					<form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error"><fmt:message key="docbase.editExtractOrSynopsisDocument.synopsis"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea id="synopsis" path="synopsis" class="txtarea_big" />
@@ -56,8 +56,8 @@
 	<div id="DocReferenceDocumentDiv">
 		<form:form id="DocReferenceDocumentsForm" method="post" cssClass="edit">
 			<fieldset>	
-				<legend><b>DOCUMENTS REFERRED TO</b></legend>
-				<p><a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.documentsreferred"></fmt:message>">?</a> &nbsp Documents referred to:</p>
+				<legend><b><fmt:message key="docbase.editDocReferencesDocument.title.documentsReferredTo"/></b></legend>
+				<p><a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.documentsreferred"></fmt:message>">?</a> &nbsp <fmt:message key="docbase.editDocReferencesDocument.documentsReferredTo"/>:</p>
 			
 				<c:forEach items="${command.document.docReference}" var="currentDocument">
 					<div class="listForm">

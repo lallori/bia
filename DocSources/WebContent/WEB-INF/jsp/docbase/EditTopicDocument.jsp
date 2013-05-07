@@ -20,17 +20,17 @@
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
 		<fieldset>
 			<c:if test="${command.eplToId == 0}">  
-				<legend><b>ADD NEW TOPIC</b></legend>
+				<legend><b><fmt:message key="docbase.editTopicDocument.title.addNewTopic"/></b></legend>
 			</c:if>
 			<c:if test="${command.eplToId > 0}">
-				<legend><b>EDIT TOPIC</b></legend>
+				<legend><b><fmt:message key="docbase.editTopicDocument.title.editTopic"/></b></legend>
 			</c:if>
 			
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="<fmt:message key="docbase.editTopicDocument.help.show"></fmt:message>">?</a>
-						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error">Topic</form:label>
+						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error"><fmt:message key="docbase.editPeopleDocument.title.addNewPerson"/></form:label>
 					</div>
 					<div class="col_l">
 						<form:select path="topicId" id="topicId" cssClass="selectform_XXXlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />

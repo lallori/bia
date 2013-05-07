@@ -39,13 +39,13 @@
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>
-		<legend><b>CORRESPONDENTS</b></legend>
+		<legend><b><fmt:message key="docbase.editCorrespondentsOrPeople.title.correspondents"/></b></legend>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label></div>
+					<div class="col_l"><form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error"><fmt:message key="docbase.editCorrespondentsOrPeople.sender"/></form:label></div>
 					<div class="col_l"><form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" /></div>
 					<div class="col_l">
-						<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
+						<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure"><fmt:message key="docbase.editCorrespondentsOrPeople.unsure"/></form:label>
 						<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure"/>
 					</div>
 					<div class="col_l">
@@ -58,10 +58,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">Location</form:label></div>
+					<div class="col_l"><form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error"><fmt:message key="docbase.editCorrespondentsOrPeople.location"/></form:label></div>
 					<div class="col_l"><form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" /></div>
 					<div class="col_l">
-						<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
+						<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure"><fmt:message key="docbase.editCorrespondentsOrPeople.unsure"/></form:label>
 						<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure"/>
 					</div>
 					<div class="col_l">
@@ -80,7 +80,7 @@
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editCorrespondentsOrPeopleDocument.help.sendernotes"></fmt:message>">?</a>
-					<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes">Sender notes</form:label>
+					<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes"><fmt:message key="docbase.editCorrespondentsOrPeople.senderNotes"/></form:label>
 				</div>
 				<div class="row">
 					<form:textarea path="sendNotes" id="senderNotes" class="txtarea" name="senderNotes"/>
@@ -91,10 +91,10 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient</form:label></div>
+					<div class="col_l"><form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error"><fmt:message key="docbase.editCorrespondentsOrPeople.recipient"/></form:label></div>
 					<div class="col_l"><form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/></div>
 					<div class="col_l">
-						<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
+						<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure"><fmt:message key="docbase.editCorrespondentsOrPeople.unsure"/></form:label>
 						<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure"/>
 					</div>
 					<div class="col_l">
@@ -107,10 +107,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">Location</form:label></div>
+					<div class="col_l"><form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error"><fmt:message key="docbase.editCorrespondentsOrPeople.location"/></form:label></div>
 					<div class="col_l"><form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" /></div>
 					<div class="col_l">
-						<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
+						<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure"><fmt:message key="docbase.editCorrespondentsOrPeople.unsure"/></form:label>
 						<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure"/>
 					</div>
 					<div class="col_l">
@@ -129,7 +129,7 @@
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editCorrespondentsOrPeopleDocument.help.recipientnotes"></fmt:message>">?</a>
-					<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes">Recipient notes</form:label>
+					<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes"><fmt:message key="docbase.editCorrespondentsOrPeople.recipientNotes"/></form:label>
 				</div>
 				<div class="row"><form:textarea path="recipNotes" id="recipientNotes" name="recipientNotes" class="txtarea"/></div>
 			</div>
@@ -153,8 +153,8 @@
 	<div id="PeopleCorrespondentsDocumentDiv">
 	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
-			<legend><b>PEOPLE</b></legend>
-			<p>Individuals and corporate bodies indicated in the document extract:</p>
+			<legend><b><fmt:message key="docbase.editCorrespondentsOrPeople.title.people"/></b></legend>
+			<p><fmt:message key="docbase.editCorrespondentsOrPeople.subtitle.people"/>:</p>
 			
 		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
 			<c:if test="${currentPersonLinked.docRole!= 'S' && currentPersonLinked.docRole != 'R'}">

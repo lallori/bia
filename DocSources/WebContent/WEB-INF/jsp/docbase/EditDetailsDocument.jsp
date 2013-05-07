@@ -15,18 +15,18 @@
 	<div id="loadingDiv"></div>
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
 	<fieldset>
-			<legend><b>DOCUMENT DETAILS</b></legend>
+			<legend><b><fmt:message key="docbase.editDetailsDocument.title.documentDetails"/></b></legend>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.docid"></fmt:message>">?</a><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID</div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.docid"></fmt:message>">?</a><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.docId"/></div>
 					<div class="col_l"><span class="docId">${command.entryId}</span></div></form:label>
-					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label></div>
+					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.volumeMdp"/></form:label></div>
 					<div class="col_r"><form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/></div>
 				</div>
 				<div class="row">
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.insert"></fmt:message>">?</a>
-						<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert</form:label>
+						<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.insert"/></form:label>
 					</div>
 					<div class="col_l">
 						<c:if test="${fromTranscribe == null || !fromTranscribe}">
@@ -38,7 +38,7 @@
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.part"></fmt:message>">?</a>
-						<form:label id="insertLetLabel" for="insertLet" path="insertLet" cssErrorClass="error">Part</form:label>
+						<form:label id="insertLetLabel" for="insertLet" path="insertLet" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.part"/></form:label>
 					</div>
 					<div class="col_r">
 						<c:if test="${fromTranscribe == null || !fromTranscribe}">
@@ -52,10 +52,10 @@
 				<div class="row">
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.documentstartsatfolio"></fmt:message>">?</a>
-						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio</form:label>
+						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.documentStartsAtFolio"/></form:label>
 					</div>
 					<div class="col_l"><form:input id="folioNum" path="folioNum" class="input_5c" /></div>
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.iffolioaddenda"></fmt:message>">?</a><form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error">If folio addenda</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.iffolioaddenda"></fmt:message>">?</a><form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.ifFolioAddenda"/></form:label></div>
 					<div class="col_r"><form:input id="folioMod" path="folioMod" class="input_5c" /></div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@
 				<div class="row">
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.unpaginated"></fmt:message>">?</a>
-						<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error">Unpaginated</form:label>
+						<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.unpaginated"/></form:label>
 						<c:if test="${fromTranscribe == null || !fromTranscribe}">
 							<form:checkbox id="unpaged" path="unpaged"/>
 						</c:if>
@@ -74,7 +74,7 @@
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.nonconsecutive"></fmt:message>">?</a>
-						<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error">Nonconsecutive</form:label>
+						<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.nonconsecutive"/></form:label>
 						<form:checkbox id="contDisc" path="contDisc"/>
 					</div>
 				</div>
@@ -85,7 +85,7 @@
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.documenttypology"></fmt:message>">?</a>
-					<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error">Document Typology (if not letter)</form:label>
+					<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.documentTypology"/></form:label>
 					<form:input id="docTypology" path="docTypology" class="input_45c"/>
 				</div>
 			</div>
@@ -93,20 +93,20 @@
 			<hr />
 			
 			<div class="listForm">
-				<b>Date:</b>
+				<b><fmt:message key="docbase.editDetailsDocument.date"/>:</b>
 				<br />
 				<div class="row">
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.date"></fmt:message>">?</a><form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.date"></fmt:message>">?</a><form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.date.year"/></form:label></div>
 					<div class="col_l"><form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/></div>
-					<div class="col_r"><form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error">Month</form:label></div>
+					<div class="col_r"><form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.date.month"/></form:label></div>
 					<div class="col_l"><form:select id="docMonthNum" path="docMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-					<div class="col_r"><form:label  for="docDay" id="docDayLabel" path="docDay" cssErrorClass="error">Day</form:label></div>
+					<div class="col_r"><form:label  for="docDay" id="docDayLabel" path="docDay" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.date.day"/></form:label></div>
 					<div class="col_r"><form:input id="docDay" path="docDay" class="input_2c" maxlength="2"/></div>
 				</div>
 				<div class="row">
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.moderndating"></fmt:message>">?</a>
-						<form:label id="yearModernLabel" for="yearModern" path="yearModern" cssErrorClass="error">Modern dating</form:label>
+						<form:label id="yearModernLabel" for="yearModern" path="yearModern" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.modernDating"/></form:label>
 					</div>
 					<div class="col_l"><form:input id="yearModern" path="yearModern" class="input_4c" maxlength="4"/></div>
 				</div>
@@ -115,11 +115,11 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<form:label  id="dateUnsLabel" for="dateUns" path="dateUns">Date Uncertain or Approximate?</form:label>
+						<form:label  id="dateUnsLabel" for="dateUns" path="dateUns"><fmt:message key="docbase.editDetailsDocument.dateUncertain"/></form:label>
 						<form:checkbox id="dateUns" path="dateUns"/>
 					</div>
 					<div class="col_r">
-						<form:label  id="dateUndatedLabel" for="dateUndated" path="dateUndated">Undated</form:label>
+						<form:label  id="dateUndatedLabel" for="dateUndated" path="dateUndated"><fmt:message key="docbase.editDetailsDocument.dateUndated"/></form:label>
 						<form:checkbox  id="dateUndated" path="dateUndated"/>
 					</div>
 				</div>
@@ -130,7 +130,7 @@
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.datenotes"></fmt:message>">?</a>
-					<form:label for="dateNotes" id="dateNotesLabel" path="dateNotes">Date notes</form:label>
+					<form:label for="dateNotes" id="dateNotesLabel" path="dateNotes"><fmt:message key="docbase.editDetailsDocument.dateNotes"/></form:label>
 					<form:textarea id="dateNotes" path="dateNotes" class="txtarea"/>
 				</div>
 			</div>
