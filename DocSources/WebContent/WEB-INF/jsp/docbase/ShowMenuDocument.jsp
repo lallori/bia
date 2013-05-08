@@ -39,7 +39,7 @@
 
 		
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
+		<div id="createdby"><fmt:message key="docbase.showMenuDocument.createdBy"/> ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
 		<c:if test="${document.entryId != 0}">
 			<div id="id">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
 			<input type="hidden" id="currentUrl" value="${ShowDocumentURL}" />
@@ -56,13 +56,13 @@
 					<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		</security:authorize>
 		<span id="commentsOn"></span>
-		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#">Discussions</a>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${!document.logicalDelete}">
-				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="docbase.showMenuDocument.help.delete"></fmt:message>" href="${DeleteDocumentURL}">Delete</a>
+				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="docbase.showMenuDocument.help.delete"></fmt:message>" href="${DeleteDocumentURL}"><fmt:message key="docbase.showMenuDocument.delete"/></a>
 			</c:if>	
 			<c:if test="${document.logicalDelete}">
-				<a id="undeleteAction" class="button_bodyleft_small"  title="<fmt:message key="docbase.showMenuDocument.help.undelete"></fmt:message>" href="${UndeleteDocumentURL}">Undelete</a>
+				<a id="undeleteAction" class="button_bodyleft_small"  title="<fmt:message key="docbase.showMenuDocument.help.undelete"></fmt:message>" href="${UndeleteDocumentURL}"><fmt:message key="docbase.showMenuDocument.undelete"/></a>
 			</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="<fmt:message key="docbase.showMenuDocument.help.print"></fmt:message>"></a>
@@ -72,7 +72,7 @@
 		<c:if test="${inMarkedList == 'true'}">
 			<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListDocumentURL}" title="<fmt:message key="docbase.showMenuDocument.help.alreadymarkedlist"></fmt:message>" style="opacity: 0.5;"></a>
 		</c:if>
-		<a id="buttonShareLink" class="button_bodyleft_medium2" href="${ShareDocumentURL}" title="<fmt:message key="docbase.showMenuDocument.help.sharelink"></fmt:message>">Share/Link</a>
+		<a id="buttonShareLink" class="button_bodyleft_medium2" href="${ShareDocumentURL}" title="<fmt:message key="docbase.showMenuDocument.help.sharelink"></fmt:message>"><fmt:message key="docbase.showMenuDocument.shareLink"/></a>
 	</div>
 	
 	<script type="text/javascript">

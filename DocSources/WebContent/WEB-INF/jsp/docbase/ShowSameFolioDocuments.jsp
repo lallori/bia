@@ -12,7 +12,7 @@
 	</c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Documents with Volume/Folio: <font color="red" style="margin-left:5px">${volNum}${volLetExt} / ${folioNum}${folioMod}</font></p>
+		<p><fmt:message key="docbase.showSameFolioDocument.documentsWithVolumeFolio"/>: <font color="red" style="margin-left:5px">${volNum}${volLetExt} / ${folioNum}${folioMod}</font></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSameFolioDocuments${volNum}${folioNum}">

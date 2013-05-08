@@ -9,7 +9,7 @@
 		
 		<p>${topic.description}</p>
 		
-		<input id="close" type="submit" title="Close Topic Description window" value="Close" />
+		<input id="close" type="submit" title="<fmt:message key="docbase.showTopicDescriptionModal.closeDescription"/>" value="Close" />
 	</div>
 	<script type="text/javascript">
 		$j(document).ready(function() {			 

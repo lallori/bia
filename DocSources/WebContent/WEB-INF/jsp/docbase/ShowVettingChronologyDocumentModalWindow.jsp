@@ -14,9 +14,9 @@
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="vettingHistoryTable">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Action</th>
-                <th>Who</th>
+                <th><fmt:message key="docbase.showVettingChronologyDocument.date"/></th>
+                <th><fmt:message key="docbase.showVettingChronologyDocument.action"/></th>
+                <th><fmt:message key="docbase.showVettingChronologyDocument.who"/></th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
 </div>
 
 <div id="vettingHistoryButtons">
-	<a id="close" href="#" title="Close Vetting History window">Close</a>
+	<a id="close" href="#" title="Close Vetting History window"><fmt:message key="docbase.showVettingChronologyDocument.close"/></a>
 </div>
 
 	<script>

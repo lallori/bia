@@ -12,7 +12,7 @@
 	
 	<div id="EditTopicsDocumentDiv" class="background">
 		<div class="title">
-			<h5>TOPICS<a class="helpIcon" title="<fmt:message key="docbase.showTopicsDocument.help.show"></fmt:message>">?</a></h5>
+			<h5><fmt:message key="docbase.showTopicsDocument.title"/><a class="helpIcon" title="<fmt:message key="docbase.showTopicsDocument.help.show"></fmt:message>">?</a></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
 			<a id="EditTopicsDocument" href="${EditTopicsDocumentURL}" class="editButton"></a><span id="loading"/>
@@ -31,11 +31,11 @@
 				<c:param name="placeAllId" value="${currentTopicAndPlace.place.placeAllId}"/>
 			</c:url>
 			<div class="row">
-				<div class="item">Topic:</div>
-				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic" title="Show documents related to topic: ${currentTopicAndPlace.topic.topicTitle} - ${currentTopicAndPlace.place.placeName}">${currentTopicAndPlace.topic.topicTitle}<input type="hidden" value="${currentTopicAndPlace.place.placeName}" class="placeNameTab" style="display:none;" /></a></div>
+				<div class="item"><fmt:message key="docbase.showTopicsDocument.topic"/>:</div>
+				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic" title="<fmt:message key="docbase.showTopicsDocument.showDocumentsRelatedToThisTopic"/>: ${currentTopicAndPlace.topic.topicTitle} - ${currentTopicAndPlace.place.placeName}">${currentTopicAndPlace.topic.topicTitle}<input type="hidden" value="${currentTopicAndPlace.place.placeName}" class="placeNameTab" style="display:none;" /></a></div>
 			</div>
 			<div class="row">
-				<div class="item">Topic Place:</div>
+				<div class="item"><fmt:message key="docbase.showTopicsDocument.topicPlace"/>:</div>
 				<c:if test="${currentTopicAndPlace.place.placeAllId != 53384 && currentTopicAndPlace.place.placeAllId != 55627 && currentTopicAndPlace.place.placeAllId != 54332}">
 					<div class="value80"><a href="${ComparePlaceURL}" class="linkTopic">${currentTopicAndPlace.place.placeNameFull}</a></div>
 				</c:if>

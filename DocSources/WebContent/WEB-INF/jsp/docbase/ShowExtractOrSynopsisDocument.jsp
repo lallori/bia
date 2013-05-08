@@ -19,13 +19,13 @@
 		
 	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
 		<div class="title">
-			<h5>TRANSCRIPTION/SYNOPSIS </h5>
+			<h5><fmt:message key="docbase.showExtractOrSynopsisDocument.title"/> </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
-				<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="Edit Transcription/Synopsis"></a>
+				<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="<fmt:message key="docbase.showExtractOrSynopsisDocument.editTranscSyn"/>"></a>
 				<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editSplitScreen" title="Edit with Split Screen"></a>
 				<c:if test="${not empty image}">
-					<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="Edit with Manuscript Transcirber"></a><span id="loading"/>
+					<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="<fmt:message key="docbase.showExtractOrSynopsisDocument.editWithManTransc"/>"></a><span id="loading"/>
 				</c:if>
 				<c:if test="${empty image}">
 					<span class="EditDocumentInManuscriptTranscriberOff" title="Not yet digitized"></span>
@@ -36,15 +36,15 @@
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Transcription</div>
+				<div class="item"><fmt:message key="docbase.showExtractOrSynopsisDocument.transcription"/></div>
 				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
-				<div class="item">Synopsis</div>
+				<div class="item"><fmt:message key="docbase.showExtractOrSynopsisDocument.synopsis"/></div>
 				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
 			</div>
 			<div class="row">
-				<div class="item">Document referred to</div> 
+				<div class="item"><fmt:message key="docbase.showExtractOrSynopsisDocument.documentsReferredTo"/></div> 
 				<div class="value80">
 			<c:forEach items="${document.docReference}" var="currentDocument">
 			<!-- This is a method to have a value near the item with the text People. -->	

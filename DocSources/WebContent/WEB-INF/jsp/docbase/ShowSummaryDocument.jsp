@@ -39,23 +39,23 @@
 	</c:url>
 	<%-- Create new Document Record --%>
 	<c:if test="${document.volume == null}">
-			<h2 class="addNew">ADD New - Document Record</h2>
+			<h2 class="addNew"><fmt:message key="docbase.showSummaryDocument.addNewDocument"/>ADD New - Document Record</h2>
 	</c:if>
 	<%-- Editing Document Record --%>
 	<c:if test="${document.volume != null}">
 	<div id="documentTitle">
 		<div id="text">
-			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+			<h3><fmt:message key="docbase.showSummaryDocument.volume"/>: <a href="${CompareVolumeURL}" class="linkVolume" title="<fmt:message key="docbase.showSummaryDocument.viewVolumeN"/>${document.volume.volNum}${document.volume.volLetExt} <fmt:message key="docbase.showSummaryDocument.file"/>">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
 <!-- 		Checking if folio is inside inserts or inserts with parts -->
 <!-- 		1) folio is not inside inserts-->
 			<c:if test="${document.insertNum == null}">
-				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 			</c:if>
 <!-- 		2) folio is inside inserts with no parts -->
 			<c:if test="${document.insertNum != null && document.insertLet  == null}">
 				<br>
 				<br>
-				<h3>Insert: ${document.insertNum}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum}</h3><h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 				<br>
 				<br>
 			</c:if>
@@ -63,28 +63,28 @@
 			<c:if test="${document.insertLet  != null}">
 				<br>
 				<br>
-				<h3>Insert: ${document.insertNum} / ${document.insertLet}</h3><h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3><h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
 				<br>
 				<br>
 			</c:if>
 			<c:choose>
 				<%-- Recipient empty --%>
 				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+			 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
 					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+			 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
 				</c:when>
 				<%-- Sender empty --%>
 				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+			 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
+			 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
 			 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 				</c:when>
 				<%-- Sender and Recipient filled in --%>
 				<c:otherwise>
-			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+			  		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
 					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
-			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+			  		<h4><fmt:message key="docbase.showSummaryDocument.to"/>:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
 					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 				</c:otherwise>
 			</c:choose>
@@ -104,21 +104,21 @@
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 				</security:authorize>
 				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="You should register to see the digitized document fullscreen">
+					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="<fmt:message key="docbase.showSummaryDocument.shouldRegister"/>">
 				</security:authorize>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
-					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
+					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="docbase.showSummaryDocument.showThisDocumentInMV"/>"></a>
+					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="<fmt:message key="docbase.showSummaryDocument.showPreviewInRightSplitScreen"/>"></a>
 				</security:authorize>
 			</div>
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span>To be digitized</span>
+					<span><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
 				</security:authorize>
 				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span class="register">To be digitized</span>
+					<span class="register"><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
 				</security:authorize>
 			</div>
 		</c:if>
