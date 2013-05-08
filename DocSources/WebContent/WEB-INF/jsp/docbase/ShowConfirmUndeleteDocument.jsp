@@ -12,11 +12,11 @@
 	</c:url>
 
 	<div id="DeleteThisRecordDiv">
-		<h1>Are you sure you want to undelete this record?</h1>
+		<h1><fmt:message key="docbase.showConfirmUndeleteDocument.title.sureToUndeleteYN"/></h1>
 		
-		<a id="yes" href="${UndeleteDocumentURL}">YES</a>
+		<a id="yes" href="${UndeleteDocumentURL}"><fmt:message key="docbase.showConfirmUndeleteDocument.sureToUndeleteY"/></a>
 	
-		<a id="no" href="#">NO</a>
+		<a id="no" href="#"><fmt:message key="docbase.showConfirmUndeleteDocument.sureToUndeleteN"/></a>
 	</div>
 
 	<script>

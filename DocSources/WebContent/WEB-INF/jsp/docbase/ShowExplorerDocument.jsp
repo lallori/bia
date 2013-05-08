@@ -123,10 +123,10 @@
 	
 	<div id="ShowDocumentExplorer">
 		<div class="yourSearchDiv">
-			<p>Exploring Volume: <font color="red" style="margin-left:5px; font-size:15px">${documentExplorer.volNum}${documentExplorer.volLetExt}</font></p>
+			<p><fmt:message key="docbase.showExplorerDocument.exploringVolume"/>: <font color="red" style="margin-left:5px; font-size:15px">${documentExplorer.volNum}${documentExplorer.volLetExt}</font></p>
 		</div>
 		
-		<div id="baseOn">Based on <a target="_blank" href="http://iipimage.sourceforge.net"><img src="<c:url value="/images/1024/img_iip.png"/>" width="30" /></a></div>
+		<div id="baseOn"><fmt:message key="docbase.showExplorerDocument.basedOn"/> <a target="_blank" href="http://iipimage.sourceforge.net"><img src="<c:url value="/images/1024/img_iip.png"/>" width="30" /></a></div>
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -181,10 +181,10 @@
 			</security:authorize>
 			--%>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode button_large">Show in Fullscreen mode</a>
+				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode button_large"><fmt:message key="docbase.showExplorerDocument.showInFullscreen"/></a>
 			</security:authorize>
-			<a id="volumeSummary${documentExplorer.entryId}" class="volumeSummary button_medium" href="#">Volume Summary</a>
-			<a class="refreshVolumeExplorer button_small" href="${currentPageURL}">Refresh</a>
+			<a id="volumeSummary${documentExplorer.entryId}" class="volumeSummary button_medium" href="#"><fmt:message key="docbase.showExplorerDocument.volumeSummary"/></a>
+			<a class="refreshVolumeExplorer button_small" href="${currentPageURL}"><fmt:message key="docbase.showExplorerDocument.refresh"/></a>
 			<c:if test="${documentExplorer.totalRubricario > 0}">
 				<a id="indexNames${documentExplorer.entryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
 			</c:if>
@@ -192,11 +192,11 @@
 		
 		<div id="folioMoveTo">
 			<div id="folioCountForm"> 
-				<b>Total Folios in this Volume:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
+				<b><fmt:message key="docbase.showExplorerDocument.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 		
 			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="docbase.showExplorerDocument.goToFolio"/>:</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" class="button_mini" type="submit" value="Go" />
 				<form:hidden path="volNum" />

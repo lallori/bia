@@ -15,11 +15,11 @@
 	</c:url>
 	
 	<div id="DeleteThisRecordDiv">
-		<h1>Are you sure you want to delete this record?</h1>
+		<h1><fmt:message key="docbase.showConfirmDeleteDocument.title.sureToDeleteYN"/></h1>
 		
-		<a id="yes" href="${DeleteDocumentURL}">YES</a>
+		<a id="yes" href="${DeleteDocumentURL}"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteY"/></a>
 	
-		<a id="no" href="#">NO</a>
+		<a id="no" href="#"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteN"/></a>
 	</div>
 
 	<script>

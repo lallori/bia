@@ -31,7 +31,7 @@
 	
 		<div id="EditDetailsDocumentDiv" class="background">
 			<div class="title">
-				<h5>DOCUMENT DETAILS </h5>
+				<h5><fmt:message key="docbase.showDetailsDocument.title"/> </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
@@ -40,40 +40,40 @@
 			
 			<div class="list">
 				<div class="row">
-					<div class="item37">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.docId"/></div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.volume"/></div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></div>
 				</div>
 				<div class="row">
-					<div class="item37">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.insertPart"/></div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentStartsAtFolio"/> </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Unpaginated</div> <div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.notpaginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.nonconsecutive"/></div> <div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Document Typology (if not letter)</div> <div class="value">${document.docTypology}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTypology"/></div> <div class="value">${document.docTypology}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Modern Year</div> <div class="valueHilight">${document.yearModern}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.modernYear"/></div> <div class="valueHilight">${document.yearModern}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Date as written</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateAsWritten"/></div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateUncertain"/></div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.undated"/></div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 				</div>
 				<div class="row">
-					<div class="item37">Date Notes</div> <div class="value">${document.dateNotes}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateNotes"/></div> <div class="value">${document.dateNotes}</div>
 				</div>
 			</div>
 		</div>
