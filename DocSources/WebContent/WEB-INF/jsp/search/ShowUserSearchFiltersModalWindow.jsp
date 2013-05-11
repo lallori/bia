@@ -162,8 +162,8 @@
 	</div>
 	
 	<div id="savedFiltersButtons">
-		<a id="closeSavedFilters" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
-		<a id="goBackToAdvancedSearch" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}">Go back</a>
+		<a id="closeSavedFilters" class="button_small" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
+		<a id="goBackToAdvancedSearch" class="button_small" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}">Go back</a>
 		<a id="removeSelected" href="#">Remove selected</a>
 	</div>
 	

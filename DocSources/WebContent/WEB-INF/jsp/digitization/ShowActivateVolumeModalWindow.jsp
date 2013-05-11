@@ -7,7 +7,7 @@
 <div id="activateDiv">
 	<form:form id="activateForm" method="post" cssClass="edit">
 		<input type="submit" id="activate" class="button_large" value="Activate this volume" title="Activate this volume"/>
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</form:form>
 </div>
 

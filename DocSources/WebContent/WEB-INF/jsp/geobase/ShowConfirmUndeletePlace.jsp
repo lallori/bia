@@ -14,9 +14,9 @@
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to undelete this record?</h1>
 		
-		<a id="yes" href="${UndeletePlaceURL}">YES</a>
+		<a id="yes" class="button_small" href="${UndeletePlaceURL}">YES</a>
 	
-		<a id="no" href="#">NO</a>
+		<a id="no" class="button_small" href="#">NO</a>
 			
 	</div>
 

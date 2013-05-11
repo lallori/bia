@@ -17,9 +17,9 @@
 	<div id="DeleteThisRecordDiv">
 		<h1><fmt:message key="docbase.showConfirmDeleteDocument.title.sureToDeleteYN"/></h1>
 		
-		<a id="yes" href="${DeleteDocumentURL}"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteY"/></a>
+		<a id="yes" class="button_small" href="${DeleteDocumentURL}"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteY"/></a>
 	
-		<a id="no" href="#"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteN"/></a>
+		<a id="no" class="button_small" href="#"><fmt:message key="docbase.showConfirmDeleteDocument.sureToDeleteN"/></a>
 	</div>
 
 	<script>

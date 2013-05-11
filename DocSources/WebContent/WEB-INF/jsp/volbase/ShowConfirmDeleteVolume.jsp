@@ -17,9 +17,9 @@
 	<div id="DeleteThisRecordDiv">
 		<h1><fmt:message key="volbase.showConfirmDeleteVolume.message"/>?</h1>
 		
-		<a id="yes" href="${DeleteVolumeURL}"><fmt:message key="volbase.showConfirmDeleteVolume.yes"/></a>
+		<a id="yes" class="button_small" href="${DeleteVolumeURL}"><fmt:message key="volbase.showConfirmDeleteVolume.yes"/></a>
 	
-		<a id="no" href="#"><fmt:message key="volbase.showConfirmDeleteVolume.no"/></a>
+		<a id="no" class="button_small" href="#"><fmt:message key="volbase.showConfirmDeleteVolume.no"/></a>
 	</div>
 
 	<script>

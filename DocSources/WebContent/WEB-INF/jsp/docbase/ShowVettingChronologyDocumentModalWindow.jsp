@@ -28,7 +28,7 @@
 </div>
 
 <div id="vettingHistoryButtons">
-	<a id="close" href="#" title="Close Vetting History window"><fmt:message key="docbase.showVettingChronologyDocument.close"/></a>
+	<a id="close" class="button_small" href="#" title="Close Vetting History window"><fmt:message key="docbase.showVettingChronologyDocument.close"/></a>
 </div>
 
 	<script>

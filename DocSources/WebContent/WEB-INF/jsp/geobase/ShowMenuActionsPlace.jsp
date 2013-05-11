@@ -20,7 +20,7 @@
 		<c:if test="${place.logicalDelete}">
 		<a id="undeleteGeoBase" href="${UndeletePlaceURL}">Undelete this place record</a>
 		</c:if>					
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>

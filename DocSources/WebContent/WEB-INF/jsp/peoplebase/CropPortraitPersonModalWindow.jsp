@@ -24,7 +24,7 @@
 	<form id="cropPortraitPersonForm" action="${CropPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 		<div>
 <!-- 			<input id="save" type="submit" value="Save" /> -->
-		<input id="crop" type="submit" value="Crop" />
+		<input id="crop" class="button_small" type="submit" value="Crop" />
 		</div>
 		<input type="hidden" id="x" name="x" value"0">
 		<input type="hidden" id="x2" name="x2" value"0">

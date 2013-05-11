@@ -634,7 +634,11 @@ $('.searchResult').live('click', function() {
 	text-align:center;
 	font-size: 12px;
 	font-weight:normal;
-	color: #BED3E0;
+	color: #F5F6F5;
+}
+
+.ui-dialog #EntryMenuDiv h1, .ui-dialog #VetMenuDiv h1, .ui-dialog #ActionsMenuDiv h1, .ui-dialog #savedSearchFiltersDiv h1, .ui-dialog #DeleteThisRecordDiv h1, .ui-dialog #YesDeleteThisRecordDiv h1{
+	color: #0B4F86;
 }
 
 #EntryMenuDiv #close{

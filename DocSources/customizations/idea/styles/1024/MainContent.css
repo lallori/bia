@@ -264,30 +264,12 @@ span.h7 {
 
 #DeleteThisRecordDiv #yes {
 	margin: 15px auto 7px 100px;
-	text-align: center;
-	padding-top: 4px;
 	position: absolute;
-	cursor: pointer;
-	background-color: transparent;
-	background-image: url(${contextPath}/images/1024/button_small.png);
-	width: 52px;
-	height: 22px;
-	border: none;
-	background-repeat: no-repeat;
 }
 
 #DeleteThisRecordDiv #no {
 	margin: 15px auto 7px 220px;
 	position: absolute;
-	text-align: center;
-	padding-top: 4px;
-	cursor: pointer;
-	background-color: transparent;
-	background-image: url(${contextPath}/images/1024/button_small.png);
-	width: 52px;
-	height: 22px;
-	border: none;
-	background-repeat: no-repeat;
 }
 
 #DeleteThisRecordDiv #close{
@@ -640,31 +622,12 @@ item a{
 
 
 /* NAVIGATION ICONS */
-
-
-
-
-
 .showCompare {
-	width: 127px;
-	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_medium.png);
-	background-repeat: no-repeat;
-	padding: 4px 0 0 0;
-	cursor: pointer;
-	text-align: center;
 	position:absolute;
 	margin:-27px 0 0 355px;
 }
 
 .showOrEditCompare {
-	width: 182px;
-	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_large.png);
-	background-repeat: no-repeat;
-	padding: 4px 0 0 0;
-	cursor: pointer;
-	text-align: center;
 	position: absolute;
 	margin: -27px 0 0 301px;
 }
@@ -744,7 +707,7 @@ label {
 	border:none;
 	margin-top: 23px;
 }
-/*
+*/
 
 #button_transparent { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
@@ -761,24 +724,11 @@ label {
 #save, .save { /* Save button on bottom right  */
 	margin:5px auto auto 310px;
 	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(${contextPath}/images/1024/button_small.png);
-	width:52px;
-	height:22px;
-	border:none;
 }
 
 #saveFilter { /* Save button on bottom right  */
 	margin:5px auto auto 90px;
 	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	text-align:center;
-	width:52px;
-	height:22px;
-	border:none;
 }
 
 #AddNewValue, .AddNewValue  { /* "Add New Value" Button */
@@ -1800,12 +1750,6 @@ div.resetPortrait, div.savePortrait {
 #crop { /* Save button on bottom right  */
 	margin:5px auto 10px 0;
 	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(${contextPath}/images/1024/button_small.png);
-	width:52px;
-	height:22px;
-	border:none;
 }
 
 #personTitle p {
@@ -1832,14 +1776,6 @@ div.resetPortrait, div.savePortrait {
 }
 
 #uploadPortrait {
-	width: 127px;
-	height: 22px;
-	display: inline;
-	background-image: url(${contextPath}/images/1024/button_medium.png);
-	background-repeat: no-repeat;
-	padding: 4px 0 0 0;
-	cursor: pointer;
-	text-align: center;
 	display: block;
 	margin: 0 0 0 4px;
 }
@@ -1864,30 +1800,6 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	background-repeat: no-repeat;
 	margin: 0 5px 0 5px;
 	float: left;
-}
-
-#AddNamesPerson, #AddChildPerson, #AddExtLinkTgnPlace, #AddExtLinkMapPlace, #AddExtLinkMapSitePlace, #AddNameMapSitePlace, #AddNameMapPlace, #AddNameTgnPlace { /* "Add New ..." Button */
-	background-image: url(${contextPath}/images/1024/button_small.png);
-	border:none;
-	display:inline;
-	margin-left:260px;
-	width:59px;
-	height:23px;
-}
-
-#AddSpousePerson, #EditPerson { /* "Add New ..." Button */
-	background-color:transparent;
-	background-image: url(${contextPath}/images/1024/button_small.png);
-	padding:1px 5px 1px 5px;
-	border:none;
-	display:inline;
-	color: #6d5c4d;
-	font-size:11px;
-	text-decoration:none;
-	margin-left:255px;
-	width:59px;
-	height:23px;
-	cursor:pointer;
 }
 
 #AddTitlesOccupationsPerson { /* "Add New ..." Button */
@@ -2091,30 +2003,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	width: 30px;
 }
 
-#goR { /* "Move to rubricario" <input> GO button ID  */
-	margin:-4px 0 0 120px;
-	width:22px;
-	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
-	font-size:11px;
-	padding:0 0 0 2px;
-	background-repeat:no-repeat;
-	background-color:transparent;
-	border:none;
-	cursor:pointer;
-}
-
 #goRModal { /* "Move to rubricario" <input> GO button ID  */
 	margin:0;
-	width:22px;
-	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
 	font-size:11px;
 	padding:2px 0 0 2px;
-	background-repeat:no-repeat;
-	background-color:transparent;
-	border:none;
-	cursor:pointer;
 }
 
 
@@ -2190,15 +2082,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #goModal { /* "Move to rubricario" <input> GO button ID  */
 	margin:0 0 0 7px;
-	width:22px;
-	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
 	font-size:11px;
 	padding:2px 0 0 2px;
-	background-repeat:no-repeat;
-	background-color:transparent;
-	border:none;
-	cursor:pointer;
 }
 
 /* ---------------- */
@@ -2222,13 +2107,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*  Show in Fullscreen Mode -- Open mview window */
 
 #flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
-	width:127px;
-	height:22px;
 	position:absolute;
 	margin-left:20px;
 	display:inline;
-	background-image:url(${contextPath}/images/1024/button_medium.png);
-	background-repeat:no-repeat;
 	font-size:11px;
 	padding:4px 0 0 15px;
 }
@@ -2423,12 +2304,7 @@ a.refreshVolumeExplorer {
 }
 
 #chooseDiv .choose{
-	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	float:left;
-	width:182px;
-	height:22px;
-	text-align:center;
-	padding:4px 0 0 0;
 }
 
 #modalBox #gobackvolumeDiv{
@@ -2436,12 +2312,7 @@ a.refreshVolumeExplorer {
 }
 
 #gobackvolumeDiv .gobackvolume{
-	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	float:left;
-	width:182px;
-	height:22px;
-	text-align:center;
-	padding:4px 0 0 0;
 }
 
 #modalBox .inputerrors { /* Error Span messages */
@@ -2527,14 +2398,8 @@ a.refreshVolumeExplorer {
 }
 
 #volumeExplorerButtons #transcribe {
-	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
 	margin: 10px 0 0 258px;
 	float:left;
-	width:182px;
-	height:22px;
-	cursor:auto;
 }
 
 /* --------------------------------------- */ 
@@ -2740,14 +2605,7 @@ p.textPrincipalName {
 
 
 #EditGeoCoorPlaceForm #gettyTgn, #EditGeoCoorPlaceForm #googleMaps{
-	background:url(${contextPath}/images/1024/button_medium.png) no-repeat;
-	width:127px;
-	height:23px;
 	float:left;
-	text-decoration:none;
-	color:#6D5C4D;
-	padding:4px 0 0 0;
-	text-align:center;
 	margin-right: 5px;
 }
 
@@ -3557,24 +3415,10 @@ table#savedSearchFiltersForm.display {
 
 #goBackToAdvancedSearch {
 	float:left;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
-	width:52px;
-	height:22px;
 }
 
 #closeSavedFilters {
 	float:right;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
-	width:52px;
-	height:22px;
 }
 
 
@@ -3705,6 +3549,7 @@ table#savedSearchFiltersForm.display {
 #ConfirmCreateForum h1 {
 	font-size: 12px;
 	text-align: center;
+	color:#F5F6F5;
 }
 
 #ConfirmCreateForum #yes {
@@ -3869,13 +3714,7 @@ a.showDigitizedDocument:hover {
 
 #vettingHistoryButtons #close {
 	float:right;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(${contextPath}/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 12px;
-	width:52px;
-	height:22px;
 	margin:0;
 }
 
@@ -4434,15 +4273,6 @@ h3.systemManagement {
 
 #yes, #no, #yesPerson, #noPerson, #removeTabsYes, #removeTabsNo, #okGender {
 	margin: 0;
-	width: 52px;
-	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_small.png);
-	font-size: 11px;
-	padding: 0 0 0 2px;
-	background-repeat: no-repeat;
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
 }
 
 

@@ -35,7 +35,7 @@
 						
 			<div>
 				<input id="closeDialog" type="submit" value="Close" title="do not save changes" class="button" />
-				<input type="submit" value="Save" id="save">
+				<input type="submit" value="Save" id="save" class="button_small">
 			</div>
 			
 		</fieldset>	

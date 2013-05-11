@@ -129,7 +129,7 @@
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
-				<input id="goRModal" type="submit" value="Go" />
+				<input id="goRModal" class="button_mini" type="submit" value="Go" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -159,7 +159,7 @@
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
-				<input class="openmodalbox" id="goModal" type="submit" value="Go"/>
+				<input class="openmodalbox" id="goModal" class="button_mini" type="submit" value="Go"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>

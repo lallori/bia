@@ -50,12 +50,12 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare"><fmt:message key="docbase.compareDocument.showOrEditThisDocument"/></a>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare button_large"><fmt:message key="docbase.compareDocument.showOrEditThisDocument"/></a>
 	</div>
 	</security:authorize>
 	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare"><fmt:message key="docbase.compareDocument.showThisDocument"/></a>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare button_medium"><fmt:message key="docbase.compareDocument.showThisDocument"/></a>
 	</div>
 	</security:authorize>
 	

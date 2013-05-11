@@ -22,7 +22,7 @@
 		</c:if>	
 		<br>
 		<br>				
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>

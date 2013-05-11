@@ -15,12 +15,12 @@
 	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare"><fmt:message key="volbase.compareVolume.showOrEditThisVolume"/></a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare button_large"><fmt:message key="volbase.compareVolume.showOrEditThisVolume"/></a>
 	</div>
 	</security:authorize>
 	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare"><fmt:message key="volbase.compareVolume.showThisVolume"/></a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare button_medium"><fmt:message key="volbase.compareVolume.showThisVolume"/></a>
 	</div>
 	</security:authorize>
 		

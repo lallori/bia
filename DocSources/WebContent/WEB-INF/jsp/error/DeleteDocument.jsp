@@ -9,7 +9,7 @@
 		<form:errors path="entryId" cssClass="inputerrors" htmlEscape="false"/>
 		</form:form>
 			
-		<input id="close" type="submit" title="Accept and close window" value="OK"/>
+		<input id="close" class="button_small" type="submit" title="Accept and close window" value="OK"/>
 	</div>
 	
 	<script>

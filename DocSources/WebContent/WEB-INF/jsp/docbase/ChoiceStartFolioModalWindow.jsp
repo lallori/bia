@@ -140,11 +140,11 @@
 	
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<div id="chooseDiv">
-			<a id="choose" class="choose" href="${TranscribeAndContextualizeDocumentURL}"><fmt:message key="docbase.choiceStartFolio.choseThisStartFolio"/></a>
+			<a id="choose" class="choose button_large" href="${TranscribeAndContextualizeDocumentURL}"><fmt:message key="docbase.choiceStartFolio.choseThisStartFolio"/></a>
 		</div>
 		</security:authorize>
 		<div id="gobackvolumeDiv">
-			<a id="gobackvolume" class="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"><fmt:message key="docbase.choiceStartFolio.goBackToVolExplorer"/></a>
+			<a id="gobackvolume" class="gobackvolume button_large" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"><fmt:message key="docbase.choiceStartFolio.goBackToVolExplorer"/></a>
 		</div>	
 	
 

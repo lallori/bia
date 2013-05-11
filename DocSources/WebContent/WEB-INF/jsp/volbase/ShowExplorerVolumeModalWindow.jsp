@@ -98,7 +98,7 @@
 		</c:if>
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<div id="transcribe">
-				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="<fmt:message key="volbase.showExplorerVolumeModalWindow.help.transcribe"/>"><fmt:message key="volbase.showExplorerVolumeModalWindow.transcribe"/></a>
+				<a  href="${ChoiceStartFolioDocument}" class="transcribe button_large" title="<fmt:message key="volbase.showExplorerVolumeModalWindow.help.transcribe"/>"><fmt:message key="volbase.showExplorerVolumeModalWindow.transcribe"/></a>
 			</div>
 		</c:if>
 		</div>
@@ -148,7 +148,7 @@
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
-				<input id="goRModal" type="submit" value="Go" />
+				<input id="goRModal" class="button_mini" type="submit" value="Go" />
 				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
@@ -178,7 +178,7 @@
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
-				<input class="openmodalbox" id="goModal" type="submit" value="Go"/>
+				<input class="openmodalbox" id="goModal" class="button_mini" type="submit" value="Go"/>
 				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />

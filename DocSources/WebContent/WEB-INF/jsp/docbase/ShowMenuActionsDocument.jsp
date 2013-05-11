@@ -20,7 +20,7 @@
 		<c:if test="${document.logicalDelete}">
 		<a id="undeleteDocBase" href="${UndeleteDocumentURL}">Undelete this document record</a>
 		</c:if>					
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
 	<script>

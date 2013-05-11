@@ -58,7 +58,7 @@
 		</script>
 	</head>
 	
-	<body>
+	<body class="search">
 		<tiles:insertAttribute name="main"/>
 	</body>
 </html>
