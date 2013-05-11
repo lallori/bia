@@ -806,9 +806,6 @@ $('.searchResult').live('click', function() {
 
 #ActionsMenuDiv a:hover, #DeleteThisRecordDiv a:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #ActionsMenuDiv #deleteDocBase, #ActionsMenuDiv #deleteVolumeBase, #ActionsMenuDiv #deletePeopleBase, #ActionsMenuDiv #deleteGeoBase{
@@ -843,9 +840,6 @@ $('.searchResult').live('click', function() {
 
 #ActionsMenuDiv #Action1Docs:hover, #ActionsMenuDiv #Action2Docs:hover, #ActionsMenuDiv #Action3Docs:hover {
 	text-decoration:none;
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
 }
 
 #ActionsMenuDiv #close{

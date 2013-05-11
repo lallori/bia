@@ -3152,9 +3152,6 @@ div.title a.helpIcon{ /* Help symbol "?" */
 }
 
 #advancedSearch #body_left a:hover.helpIcon, #body_left a:hover.helpIcon { /* Help symbol "?" */
-	opacity:0.9; /* Chrome, Safari */
-	-moz-opacity: 0.9; /* FireFox */
-	filter:alpha(opacity=90); /* IE */
 	text-decoration: none;
 }
 
@@ -4165,6 +4162,7 @@ h3.systemManagement {
 .refine { /* Refine this search button on Search Results Tab */
  	float: right;
 	margin: 15px 0 10px 10px;
+	padding-top: 2px;
 }
 
 .print {
@@ -4552,3 +4550,4 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 a#UploadPortraitUser {
 	margin-top: 50px;
 }
+
