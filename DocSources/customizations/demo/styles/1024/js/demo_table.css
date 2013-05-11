@@ -641,7 +641,7 @@ span.highlighted{
 
 /* DEMO Color Classes */
 .rolloverRow {
-	background-color:#b0addd;
+	background-color:#b0addd!important;
 }
 
 .rolloverAncor {

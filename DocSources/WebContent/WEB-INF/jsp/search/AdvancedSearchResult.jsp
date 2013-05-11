@@ -143,8 +143,8 @@
 				
 				if(!$j(this).parent().parent().hasClass("selected")){
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
-					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").addClass("darkCell");
-					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").addClass("lightCell");
+					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").removeClass("rolloverRow").addClass("darkCell");
+					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").removeClass("rolloverRow").addClass("lightCell");
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
 				
 					

@@ -641,7 +641,7 @@ span.highlighted{
 
 /* MAP Color Classes */
 .rolloverRow {
-	background-color:#b0addd;
+	background-color:#b0addd!important;
 }
 
 .rolloverAncor {
