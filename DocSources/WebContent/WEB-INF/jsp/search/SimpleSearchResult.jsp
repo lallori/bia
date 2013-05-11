@@ -71,31 +71,31 @@
 					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					$j("tr.odd").mouseover(
 							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								$j(this).find("td a.searchResult").css('color','#000');
+								$j(this).find("td.sorting_1").addClass("rolloverRow");
+								$j(this).find("td a.searchResult").addClass("rolloverAncor");
 								return false;
 							}
 					);
 					
 					$j("tr.odd").mouseout(
 							function(){
-								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
-								$j(this).find("td a.searchResult").css('color','#6F6B69');
+								$j(this).find("td.sorting_1").removeClass("rolloverRow");
+								$j(this).find("td a.searchResult").removeClass("rolloverAncor");
 								return false;
 							}
 					);
 					$j("tr.even").mouseover(
 							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								$j(this).find("td a.searchResult").css('color','#000');
+								$j(this).find("td.sorting_1").addClass("rolloverRow");
+								$j(this).find("td a.searchResult").addClass("rolloverAncor");
 								return false;
 							}
 					);
 					
 					$j("tr.even").mouseout(
 							function(){
-								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
-								$j(this).find("td a.searchResult").css('color','#6F6B69');
+								$j(this).find("td.sorting_1").removeClass("rolloverRow");
+								$j(this).find("td a.searchResult").removeClass("rolloverAncor");
 								return false;
 							}
 					);
@@ -121,8 +121,8 @@
 				
 				if(!$j(this).parent().parent().hasClass("selected")){
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
-					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
-					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").addClass("darkCell");
+					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").addClass("lightCell");
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
 				
 					
@@ -146,8 +146,8 @@
 				
 				if(!$j(this).hasClass("selected")){
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
-					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
-					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+					$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").addClass("darkCell");
+					$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").addClass("lightCell");
 					$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
 				
 					

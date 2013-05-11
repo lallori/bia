@@ -86,27 +86,27 @@
 							"fnDrawCallback" : function(){
 								$j("tr.odd").mouseover(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											$j(this).find("td.sorting_1").addClass("rolloverRow");
 											return false;
 										}
 								);
 								
 								$j("tr.odd").mouseout(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+											$j(this).find("td.sorting_1").removeClass("rolloverRow");
 											return false;
 										}
 								);
 								$j("tr.even").mouseover(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											$j(this).find("td.sorting_1").addClass("rolloverRow");
 											return false;
 										}
 								);
 								
 								$j("tr.even").mouseout(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+											$j(this).find("td.sorting_1").removeClass("rolloverRow");
 											return false;
 										}
 								);
@@ -146,27 +146,27 @@
 							"fnDrawCallback" : function(){
 								$j("tr.odd").mouseover(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											$j(this).find("td.sorting_1").addClass("rolloverRow");
 											return false;
 										}
 								);
 								
 								$j("tr.odd").mouseout(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+											$j(this).find("td.sorting_1").removeClass("rolloverRow");
 											return false;
 										}
 								);
 								$j("tr.even").mouseover(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											$j(this).find("td.sorting_1").addClass("rolloverRow");
 											return false;
 										}
 								);
 								
 								$j("tr.even").mouseout(
 										function(){
-											$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+											$j(this).find("td.sorting_1").removeClass("rolloverRow");
 											return false;
 										}
 								);
@@ -208,27 +208,27 @@
 						"fnDrawCallback" : function(){
 							$j("tr.odd").mouseover(
 									function(){
-										$j(this).find("td.sorting_1").css('background-color','#b0addd');
+										$j(this).find("td.sorting_1").addClass("rolloverRow");
 										return false;
 									}
 							);
 							
 							$j("tr.odd").mouseout(
 									function(){
-										$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+										$j(this).find("td.sorting_1").removeClass("rolloverRow");
 										return false;
 									}
 							);
 							$j("tr.even").mouseover(
 									function(){
-										$j(this).find("td.sorting_1").css('background-color','#b0addd');
+										$j(this).find("td.sorting_1").addClass("rolloverRow");
 										return false;
 									}
 							);
 							
 							$j("tr.even").mouseout(
 									function(){
-										$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+										$j(this).find("td.sorting_1").removeClass("rolloverRow");
 										return false;
 									}
 							);
@@ -267,27 +267,27 @@
 					"fnDrawCallback" : function(){
 						$j("tr.odd").mouseover(
 								function(){
-									$j(this).find("td.sorting_1").css('background-color','#b0addd');
+									$j(this).find("td.sorting_1").addClass("rolloverRow");
 									return false;
 								}
 						);
 						
 						$j("tr.odd").mouseout(
 								function(){
-									$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+									$j(this).find("td.sorting_1").addClass("rolloverRow");
 									return false;
 								}
 						);
 						$j("tr.even").mouseover(
 								function(){
-									$j(this).find("td.sorting_1").css('background-color','#b0addd');
+									$j(this).find("td.sorting_1").addClass("rolloverRow");
 									return false;
 								}
 						);
 						
 						$j("tr.even").mouseout(
 								function(){
-									$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+									$j(this).find("td.sorting_1").addClass("rolloverRow");
 									return false;
 								}
 						);

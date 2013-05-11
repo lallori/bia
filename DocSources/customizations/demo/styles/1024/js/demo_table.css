@@ -638,3 +638,20 @@ span.highlighted{
     color: #BC2A4D;
     margin-left: 0;
 }
+
+/* DEMO Color Classes */
+.rolloverRow {
+	background-color:#b0addd;
+}
+
+.rolloverAncor {
+	color:#000;
+}
+
+.darkCell {
+	background-color:#DCC0BA;
+}
+
+.lightCell {
+	background-color:#EAD9D6;
+}

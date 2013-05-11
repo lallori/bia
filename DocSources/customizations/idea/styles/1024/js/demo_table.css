@@ -643,3 +643,21 @@ span.highlighted{
     color: #BC2A4D;
     margin-left: 0;
 }
+
+/* IDEA Color Classes */
+.rolloverRow { 
+	background-color:#916D2A;
+}
+
+.rolloverAncor {
+	color:#13325F;
+}
+
+.darkCell {
+	background-color:#094473;
+}
+
+.lightCell {
+	background-color:#487ba4;
+}
+

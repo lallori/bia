@@ -152,8 +152,8 @@
 
 <div id="removeTabs" style="display:none; cursor: default"> 
 	<h1>Are you sure you want to close all tabs?</h1> 
-	<input type="button" id="removeTabsYes" value="Yes" /> 
-	<input type="button" id="removeTabsNo" value="No" /> 
+	<input type="button" class="button_small" id="removeTabsYes" value="Yes" /> 
+	<input type="button" class="button_small" id="removeTabsNo" value="No" /> 
 </div>
 
 <script type="text/javascript">
