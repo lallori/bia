@@ -635,7 +635,7 @@ a:hover {
 }
 
 tr.selected, td.selected{
-    background-color: #b0addd;
+    background-color: #916D2A;
 }
 
 span.highlighted{
@@ -646,7 +646,7 @@ span.highlighted{
 
 /* IDEA Color Classes */
 .rolloverRow { 
-	background-color:#916D2A;
+	background-color:#916D2A!important;
 }
 
 .rolloverAncor {
