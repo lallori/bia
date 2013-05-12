@@ -186,7 +186,7 @@
 			<a id="volumeSummary${documentExplorer.entryId}" class="volumeSummary button_medium" href="#"><fmt:message key="docbase.showExplorerDocument.volumeSummary"/></a>
 			<a class="refreshVolumeExplorer button_small" href="${currentPageURL}"><fmt:message key="docbase.showExplorerDocument.refresh"/></a>
 			<c:if test="${documentExplorer.totalRubricario > 0}">
-				<a id="indexNames${documentExplorer.entryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+				<a id="indexNames${documentExplorer.entryId}" title="Index of Names" class="transcribe indexNames button_medium" href="${indexOfNamesURL}" ></a>
 			</c:if>
 		</div>
 		

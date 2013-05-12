@@ -542,7 +542,13 @@ item a{
     border:none;
     color:#D6C8AF;
     outline: none;
-} 
+}
+
+.button_mini {
+	width: 23px;
+	height:22px;
+	background-position: 0 2px;
+}
 
 .button_small {
 	width:52px;

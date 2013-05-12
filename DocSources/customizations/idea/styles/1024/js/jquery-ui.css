@@ -742,8 +742,8 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-dialog-titlebar { 
 	padding: .4em 1em; 
 	position: relative;
-	border: 1px solid #698EA3;
-    background-color: #EFF4F7;
+	border: 1px solid #916D2A;
+	background-color: #F0DAAA;
 }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }

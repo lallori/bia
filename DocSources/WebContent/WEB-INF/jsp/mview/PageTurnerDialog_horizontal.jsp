@@ -170,7 +170,7 @@
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
-			<input id="go" type="submit" value="Go"/>
+			<input id="go" class="button_mini" type="submit" value="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
 			<form:hidden path="volLetExt" />
@@ -193,7 +193,7 @@
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" class="transcribe" style="cursor: pointer;">Exit</a>
+		<a id="exitButton" href="#" class="transcribe button_small" style="cursor: pointer;">Exit</a>
 		<input type="hidden" id="editModify" value="" />
 	</div>
 </div>

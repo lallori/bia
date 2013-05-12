@@ -10,8 +10,8 @@
 	<div id="loadingDiv"></div>
 	<form:form id="EditPersonalNotesForm" action="${editPersonalNotesForm}" method="post" cssClass="edit">
 		<form:textarea id="personalNotes" path="personalNotes" rows="16" style="width: 98%; height: 90%;"/>
-		<input type="submit" value="Save Notes"  id="saveNotes">
-		<a id="cleanNotes">Clear notes</a>
+		<input type="submit" value="Save Notes"  id="saveNotes" class="button_medium">
+		<a id="cleanNotes" class="button_medium">Clear notes</a>
 	</form:form>
 	
 	<div id="clearNotes" title="ALERT" style="display:none"> 
