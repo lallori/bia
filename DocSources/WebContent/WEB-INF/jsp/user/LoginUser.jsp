@@ -70,11 +70,11 @@
 				    alert( "WARNING! Microsoft Internet Explorer is NOT supported by BIA, please use Mozilla Firefox or Google Chrome." );
 				    window.location.replace("http://www.medici.org");
 				  }
-				$j("#login").submit(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$j("#RegisterUser").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$j("#loginAsGuest").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$j("#SendUserPasswordReset").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$j("#SendUserActivationCode").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#login").submit(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
+				$j("#RegisterUser").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
+				$j("#loginAsGuest").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
+				$j("#SendUserPasswordReset").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
+				$j("#SendUserActivationCode").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
 				$j(window).unload(function (){$j.unblockUI();});
 			});
 			</script>

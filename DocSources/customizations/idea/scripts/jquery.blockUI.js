@@ -88,8 +88,8 @@ $.blockUI.defaults = {
 		left:		'35%',
 		textAlign:	'center',
 		color:		'#000',
-		border:		'1px solid #DCC0BA',
-		backgroundColor:'#f6edec',
+		border:		'1px solid #0B4F86',
+		backgroundColor:'#BED3E0',
 		cursor:		'wait'
 	},
 	

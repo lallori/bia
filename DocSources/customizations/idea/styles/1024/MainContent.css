@@ -697,7 +697,7 @@ input, select { /* INPUT text */
 	-webkit-border-radius:4px;	
 }
 
-label {
+label, label a {
 	color: #13325F;
 }
 
@@ -1050,6 +1050,10 @@ select {
 
 .selectform_medium{ /* short dropdown menu class */
 	width:60px;
+}
+
+.selectform_medium2{ /* short dropdown menu class */
+	width:80px;
 }
 
 .selectform_long { /* dropdown menu class */
@@ -1548,6 +1552,7 @@ span.docId, span.placeId {
 	font-weight: bold;
 	margin-left: 5px;
 	font-size: 13px;
+	color:#13325F;
 }
 
 /* -------------------------------------- */
