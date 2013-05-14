@@ -210,6 +210,20 @@
 					<attachClasses>true</attachClasses>
 					<webResources>
 			            <resource>
+				    		<directory>${basedir}/customizations/${customization}/config/</directory>
+				    		<targetPath>WEB-INF/config</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+			            </resource>
+			            <resource>
+				    		<directory>${basedir}/customizations/${customization}/images/</directory>
+				    		<targetPath>images</targetPath>
+				    		<includes>
+				    			<include>**/*.*</include>
+				    		</includes>
+				    	</resource>
+			            <resource>
 				    		<directory>${basedir}/customizations/${customization}/jsp/</directory>
 				    		<targetPath>WEB-INF/jsp</targetPath>
 				    		<includes>
@@ -232,13 +246,6 @@
 				    			<include>**/*.*</include>
 				    		</includes>
 			            </resource>
-			            <resource>
-				    		<directory>${basedir}/customizations/${customization}/images/</directory>
-				    		<targetPath>images</targetPath>
-				    		<includes>
-				    			<include>**/*.*</include>
-				    		</includes>
-				    	</resource>
 						<resource>
 				    		<filtering>true</filtering>
 				    		<directory>${basedir}/WebContent/scripts</directory>
