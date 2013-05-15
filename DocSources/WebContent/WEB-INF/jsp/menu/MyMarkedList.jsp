@@ -17,7 +17,7 @@
 					});
 					
 					$j("#markedListMenu").click(function() {															
-						Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myMarkedList.open", width: 750, height: 415});
+						Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myMarkedList.open"/>, width: 750, height: 415});
 						return false;
 					});	
 				</script>						
