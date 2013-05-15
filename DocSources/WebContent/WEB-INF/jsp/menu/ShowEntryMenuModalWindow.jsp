@@ -7,19 +7,19 @@
 			<h1>Click the button below to add a new element in one of the following categories:</h1>
 			
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"><p>Add New Document</p></a>
+			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"><p><fmt:message key="menu.dataEntry.addNewDocument"/></p></a>
 		</security:authorize>
 		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-			<a id="AddNewPerson" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><p>Add New Person & Manage Titles and Occupations</p></a>
+			<a id="AddNewPerson" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPerson"/></p></a>
 		</security:authorize>
 				
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">
-			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>"><p>Add New Volume</p></a>
+			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>"><p><fmt:message key="menu.dataEntry.addNewVolume"/></p></a>
 		</security:authorize>
 			
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p>Add New Place</p></a>
+			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPlace"/></p></a>
 		</security:authorize>
 			
 			<input id="close" class="button_small" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
