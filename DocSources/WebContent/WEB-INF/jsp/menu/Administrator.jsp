@@ -5,12 +5,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 			
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a></li>
+			<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule"><fmt:message key="menu.administrator.button"/></a></li>
 			
 			<script type="text/javascript">
 			$j(document).ready(function(){
 				$j("#administrationModule").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "ADMINISTRATION MODULE", width: 270, height: 280});
+					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.administrator.open"/>", width: 270, height: 280});
 					return false;
 				}						
 				);

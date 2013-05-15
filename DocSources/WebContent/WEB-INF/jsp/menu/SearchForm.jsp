@@ -10,14 +10,14 @@
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
 						<div class="listSearch">
 							<div class="row">
-								<div class="col_l">Simple Search in</div>
+								<div class="col_l"><fmt:message key="menu.simpleSearchIn.title"/></div>
 								<div class="col_r"><select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
-										<option value="ALL" selected="selected">All</option>
-										<option value="EXTRACT">Document Transcriptions</option>
-										<option value="SYNOPSIS">Document Synopses</option>
-										<option value="VOLUME">Volumes</option>
-										<option value="PEOPLE">People</option>
-										<option value="PLACE">Places</option>
+										<option value="ALL" selected="selected"><fmt:message key="menu.simpleSearchIn.all"/></option>
+										<option value="EXTRACT"><fmt:message key="menu.simpleSearchIn.docTranscriptions"/></option>
+										<option value="SYNOPSIS"><fmt:message key="menu.simpleSearchIn.docSynopses"/></option>
+										<option value="VOLUME"><fmt:message key="menu.simpleSearchIn.volumes"/></option>
+										<option value="PEOPLE"><fmt:message key="menu.simpleSearchIn.people"/></option>
+										<option value="PLACE"><fmt:message key="menu.simpleSearchIn.places"/></option>
 								</select></div>
 								<div class="col_l"><a class="helpIcon" title="<fmt:message key="menu.searchForm.help.all"></fmt:message>">?</a></div>
 							</div>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 		<div id="EntryMenuDiv">
-			<h1>Click the button below to add a new element in one of the following categories:</h1>
+			<h1><fmt:message key="menu.dataEntry.titleSectionExplain"/>:</h1>
 			
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
 			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"><p><fmt:message key="menu.dataEntry.addNewDocument"/></p></a>

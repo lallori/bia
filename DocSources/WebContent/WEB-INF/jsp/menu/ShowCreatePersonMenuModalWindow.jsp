@@ -6,9 +6,9 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
 
 	<div id="addNewPersonModalDiv">
-		<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>"><p>Add New Person</p></a>
-	    <a id="MenageTitlOcc" href="<c:url value="/de/ShowTitlesOrOccupationsMenu.do"/>"><p>Manage Titles and Occupations</p></a>
-	    <a id="goBack" class="button_small" title="Go back to Entry Menu window" href="<c:url value="/de/ShowEntryMenu.do"/>">Go Back</a>
+		<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>"><p><fmt:message key="menu.showCreatePersonModal.addNewPerson"/></p></a>
+	    <a id="MenageTitlOcc" href="<c:url value="/de/ShowTitlesOrOccupationsMenu.do"/>"><p><fmt:message key="menu.showCreatePersonModal.manageTitlesAndOccupations"/></p></a>
+	    <a id="goBack" class="button_small" title="Go back to Entry Menu window" href="<c:url value="/de/ShowEntryMenu.do"/>"><fmt:message key="menu.showCreatePersonModal.goBack"/></a>
 	</div>
 	
 	

@@ -7,7 +7,7 @@
 <c:url var="ShowPersonalDirectoryURL" value="/src/ShowPersonalDirectory.do"/>
 
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-				<li><a href="${ShowPersonalDirectoryURL}" id="personalDirectory">Personal Directory</a></li>
+				<li><a href="${ShowPersonalDirectoryURL}" id="personalDirectory"><fmt:message key="menu.myPersonalDirectory.button"/></a></li>
 			</security:authorize>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	

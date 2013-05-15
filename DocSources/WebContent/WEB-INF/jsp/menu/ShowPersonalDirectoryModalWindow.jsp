@@ -14,15 +14,15 @@
 
 <div id="personalDirectoryModalDiv">
 	<div id="userProfileDiv">
-        <a id="personalUserProfile" class="button_large" href="${ShowUserProfileURL}">User Preferences</a>
+        <a id="personalUserProfile" class="button_large" href="${ShowUserProfileURL}"><fmt:message key="menu.showPersonalDirectoryModal.userPreferences"/></a>
 	</div>
     
 	<div id="personalAnnotationsDiv">
-        <a id="personalAnnotations" class="button_large" href="${ShowPersonalAnnotationsUserURL}">Personal Annotations</a>
+        <a id="personalAnnotations" class="button_large" href="${ShowPersonalAnnotationsUserURL}"><fmt:message key="menu.showPersonalDirectoryModal.personalAnnotations"/></a>
 	</div>
     
 	<div id="personalNotesDiv">
-        <a id="personalNotes" class="button_large" href="${ShowPersonalNotesUserURL}">Personal Notes</a>
+        <a id="personalNotes" class="button_large" href="${ShowPersonalNotesUserURL}"><fmt:message key="menu.showPersonalDirectoryModal.personalNotes"/></a>
 	</div>
 
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>

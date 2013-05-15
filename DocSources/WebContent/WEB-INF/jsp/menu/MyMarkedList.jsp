@@ -8,7 +8,7 @@
 				<c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do"/>
 				<c:url var="ShowMyMarkedListURL" value="/user/ShowMyMarkedList.do"/>
 
-				<li><a href="${ShowMyMarkedListURL}" id="markedListMenu">My Marked List</a></li>
+				<li><a href="${ShowMyMarkedListURL}" id="markedListMenu"><fmt:message key="menu.myMarkedList.button"/></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {

@@ -10,40 +10,40 @@
     <div id="helpFiles">
     	<div id="helpFilesTitle">
         	<div id="helpFilesIcon"></div>
-        	<h1>HELP SYSTEM</h1>
+        	<h1><fmt:message key="menu.showHelpModal.helpSystem.title"/></h1>
         </div>
         <ul>
 <%--         	<li><a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br /></li> --%>
 <!--             <li><a href="#">Download Manual (PDF)</a></li> -->
 <!--             <li><a href="#">Help Videos</a></li> -->
 <!-- 			MD: Changed at the moment -->
-			<li><a target="_blank" title="Soon available" style="cursor:pointer;">User Manual (HTML version)</a><br /></li>
-            <li><a title="Soon available" style="cursor:pointer;">Download Manual (PDF)</a></li>
-            <li><a title="Soon available" style="cursor:pointer;">Help Videos</a></li>
+			<li><a target="_blank" title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualHtml"/></a><br /></li>
+            <li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualPdf"/></a></li>
+            <li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.helpVideos"/></a></li>
         </ul>
     </div>
     
     <div id="aboutMap">
     	<div id="aboutMapTitle">
         	<div id="aboutMapIcon"></div>
-        	<h1>ABOUT MAP</h1>
+        	<h1><fmt:message key="menu.showHelpModal.about.title"/></h1>
         </div>
         <ul>
-        	<li><a href="http://www.medici.org/news" target="_blank">News from MAP</a></li>
-            <li><a href="http://www.medici.org/" target="_blank">MAP website</a></li>
-            <li><a href="http://courses.medici.org">MAP online courses</a></li>
+        	<li><a href="http://www.medici.org/news" target="_blank"><fmt:message key="menu.showHelpModal.news"/></a></li>
+            <li><a href="http://www.medici.org/" target="_blank"><fmt:message key="menu.showHelpModal.website"/></a></li>
+            <li><a href="http://courses.medici.org"><fmt:message key="menu.showHelpModal.onlineCourses"/></a></li>
         </ul>
     </div>
 </div>
     
     <div id="credits">
-    	<p class="title">CREDITS</p>
-    	<p><u>Developing team:</u> Lorenzo Allori (Project Manager),  Lorenzo Pasquinelli (Senior Developer), Matteo Doni (Developer) and Joana Amill Luzondo (Web Designer).</p>
-        <p><u>Research and Testing team:</u> Alessio Assonitis, Maurizio Arfaioli, Lisa Kaborycha, Roberta Piccinelli, Julia Vicioso and Sheila Barker.</p>
-        <p><u>Special thanks to:</u> The Mellon Foundation, The Medici Archive Project, L'Archivio di Stato di Mantova. </p>
+    	<p class="title"><fmt:message key="menu.showHelpModal.credits.title"/></p>
+    	<p><u><fmt:message key="menu.showHelpModal.developingTeam"/>:</u> <fmt:message key="menu.showHelpModal.developingTeam.text"/></p>
+        <p><u><fmt:message key="menu.showHelpModal.researchAndTestingTeam"/>:</u> <fmt:message key="menu.showHelpModal.researchAndTestingTeam.text"/></p>
+        <p><u><fmt:message key="menu.showHelpModal.specialThanksTo"/>:</u> <fmt:message key="menu.showHelpModal.specialThanksTo.text"/></p>
     </div>
     
-    <div id="closeHelp" class="button_small">Close</div>
+    <div id="closeHelp" class="button_small"><fmt:message key="menu.showHelpModal.button.close"/></div>
 	
 	
 	

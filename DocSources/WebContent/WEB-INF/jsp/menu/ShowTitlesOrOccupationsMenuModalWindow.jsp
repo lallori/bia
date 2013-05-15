@@ -5,9 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
 		<div id="menageTitlOccDiv">
-			<a id="AddNewTitlOcc" href="<c:url value="/de/peoplebase/CreateTitleOrOccupation.do"/>" class="button_large">Add new Title/Occupation</a>
-		    <a id="EditDeleteTitlOcc" href="<c:url value="/src/peoplebase/ShowSearchTitlesOrOccupations.do"/>" class="button_large">Edit or delete Title/Occupation</a>
-		    <a id="goBack" title="Go back to Entry Menu window" href="<c:url value="/de/ShowCreatePersonMenu.do"/>">Go Back</a>
+			<a id="AddNewTitlOcc" href="<c:url value="/de/peoplebase/CreateTitleOrOccupation.do"/>" class="button_large"><fmt:message key="menu.showTitlesOrOccupationMenuModal.addNewTitleOrOccupation"/></a>
+		    <a id="EditDeleteTitlOcc" href="<c:url value="/src/peoplebase/ShowSearchTitlesOrOccupations.do"/>" class="button_large"><fmt:message key="menu.showTitlesOrOccupationMenuModal.editOrDeleteTitleOrOccupation"/></a>
+		    <a id="goBack" title="<fmt:message key="menu.showTitlesOrOccupationMenuModal.goBackToEntryMenu"/>" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><fmt:message key="menu.showTitlesOrOccupationMenuModal.goBack"/></a>
 		</div>
 		
 		
@@ -31,7 +31,7 @@
 					return false;
 				});
 				$j("#goBack").click(function() {															
-					Modalbox.show($j(this).attr("href"), {title: "PEOPLE BASE", width: 350, height: 200}); 
+					Modalbox.show($j(this).attr("href"), {title: "CREATE AND EDIT PEOPLE BIOS", width: 350, height: 200}); 
 					return false;
 				});	
 			});
