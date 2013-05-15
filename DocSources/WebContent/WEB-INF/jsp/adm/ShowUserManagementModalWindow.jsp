@@ -16,7 +16,7 @@
 	</div>
     
     <div id="globalPropertiesDiv">
-        <a id="globalProperties" href="#">Global User Properties</a>
+        <a id="globalProperties" class="button_large" href="#">Global User Properties</a>
     </div>
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
