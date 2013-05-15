@@ -10,6 +10,6 @@
 	
 	<script>
 	$j("#digitizationModule").click(function() {
-		Modalbox.show($j(this).attr("href"), {title: "DIGITIZATION MODULE", width: 350, height: 190});return false;}
+		Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.digitization.open"/>", width: 350, height: 190});return false;}
 	);
 	</script>

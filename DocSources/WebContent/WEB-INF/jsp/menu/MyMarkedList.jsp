@@ -12,12 +12,12 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {
-							Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});return false;}																	
+							Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myMarkedList.userPreferences.open"/>", width: 760, height: 470});return false;}																	
 						);	
 					});
 					
 					$j("#markedListMenu").click(function() {															
-						Modalbox.show($j(this).attr("href"), {title: "MY MARKED LIST", width: 750, height: 415});
+						Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myMarkedList.open", width: 750, height: 415});
 						return false;
 					});	
 				</script>						

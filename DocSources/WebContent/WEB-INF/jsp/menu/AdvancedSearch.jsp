@@ -10,7 +10,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#advsearchMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 325});return false;
+							Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.advancedSearch.open"/>", width: 750, height: 325});return false;
 						});							   	
 					});
 				</script>						

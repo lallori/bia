@@ -20,11 +20,11 @@
 				return false;
 			});
 			$j("#MenageTitlOcc").click(function() {															
-				Modalbox.show($j(this).attr("href"), {title: "TITLES AND OCCUPATIONS", width: 250, height: 180});
+				Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showCreatePersonModal.titlesAndOccupations.open"/>", width: 250, height: 180});
 				return false;
 			});	
 			$j("#goBack").click(function() {															
-				Modalbox.show($j(this).attr("href"), {title: "ENTRY MENU", width: 750, height: 225});
+				Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showCreatePersonModal.entryMenu.open"/>", width: 750, height: 225});
 				return false;
 			});	
 		});

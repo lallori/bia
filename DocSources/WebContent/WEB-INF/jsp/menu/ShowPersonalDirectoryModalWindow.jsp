@@ -30,23 +30,19 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#markedList").click(function() {															
-			Modalbox.show($j(this).attr("href"), {title: "MY MARKED LIST", width: 750, height: 415});
-			return false;
-		});	
 		
 		$j("#personalUserProfile").click(function() {
-			Modalbox.show($j(this).attr("href"), {title: "USER PREFERENCES", width: 760, height: 470});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.userPreferences.open"/>USER PREFERENCES", width: 760, height: 470});
 			return false;
 		});	
 		
 		$j("#personalNotes").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "PERSONAL NOTES", width: 750, height: 415});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalNotes.open"/>PERSONAL NOTES", width: 750, height: 415});
 			return false;
 		});
 		
 		$j("#personalAnnotations").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "PERSONAL ANNOTATIONS", width: 750, height: 415});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalAnnotations.open"/>PERSONAL ANNOTATIONS", width: 750, height: 415});
 			return false;
 		});
 		

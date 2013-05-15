@@ -34,11 +34,11 @@
 					return false;
 				});
 				$j("#AddNewPerson").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "PEOPLE BASE", width: 350, height: 200});
+					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.dataEntry.addNewPerson.open"/>", width: 350, height: 200});
 					return false;
 				});
 				$j("#AddNewPlace").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 780, height: 480});
+					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.dataEntry.addNewPlace.open"/>", width: 780, height: 480});
 					return false;
 				});
 

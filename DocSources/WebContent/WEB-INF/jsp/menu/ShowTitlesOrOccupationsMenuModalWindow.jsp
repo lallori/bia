@@ -31,7 +31,7 @@
 					return false;
 				});
 				$j("#goBack").click(function() {															
-					Modalbox.show($j(this).attr("href"), {title: "CREATE AND EDIT PEOPLE BIOS", width: 350, height: 200}); 
+					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showTitlesOrOccupationMenuModal.open"/>", width: 350, height: 200}); 
 					return false;
 				});	
 			});

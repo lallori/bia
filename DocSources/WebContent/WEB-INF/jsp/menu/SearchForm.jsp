@@ -90,7 +90,7 @@
 						$j("#SearchForm").submit(function() {
 							var title = $j('#simpleSearchPerimeter').find('option:selected').text();
 							if(title == 'All'){
-								Modalbox.show('${SimpleSearchModalURL}' + '?text=' + $j("#text").val(), {title: "BASIC SEARCH", width: 350, height: 250});
+								Modalbox.show('${SimpleSearchModalURL}' + '?text=' + $j("#text").val(), {title: "<fmt:message key="menu.simpleSearchIn.open"/>", width: 350, height: 250});
 								return false;
 							}
 							

@@ -12,7 +12,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#personalDirectory").click(function(){
-							Modalbox.show($j(this).attr("href"), {title: "PERSONAL DIRECTORY", width: 270, height: 200});
+							Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myPersonalDirectory.open"/>", width: 270, height: 200});
 							return false;
 						}						
 						);

@@ -8,7 +8,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#helpMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "HELP", width: 550, height: 500});return false;
+							Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.help.open"/>", width: 550, height: 500});return false;
 						});							   	
 					});
 				</script>						

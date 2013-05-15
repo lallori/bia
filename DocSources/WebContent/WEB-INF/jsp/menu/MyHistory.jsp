@@ -12,7 +12,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myHistoryMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 750, height: 415});return false;
+							Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.myHistory.open"/>", width: 750, height: 415});return false;
 						});	
 					});
 				</script>						
