@@ -31,7 +31,7 @@
         <ul>
         	<li><a href="<fmt:message key="menu.showHelpModal.news.link"/>" target="_blank"><fmt:message key="menu.showHelpModal.news"/></a></li>
             <li><a href="<fmt:message key="menu.showHelpModal.website.link"/>" target="_blank"><fmt:message key="menu.showHelpModal.website"/></a></li>
-            <li><a href=<fmt:message key="menu.showHelpModal.onlineCourses.link"/>"><fmt:message key="menu.showHelpModal.onlineCourses"/></a></li>
+            <li><a href="<fmt:message key="menu.showHelpModal.onlineCourses.link"/>" target="_blank"><fmt:message key="menu.showHelpModal.onlineCourses"/></a></li>
         </ul>
     </div>
 </div>
