@@ -29,9 +29,9 @@
         	<h1><fmt:message key="menu.showHelpModal.about.title"/></h1>
         </div>
         <ul>
-        	<li><a href="http://www.medici.org/news" target="_blank"><fmt:message key="menu.showHelpModal.news"/></a></li>
-            <li><a href="http://www.medici.org/" target="_blank"><fmt:message key="menu.showHelpModal.website"/></a></li>
-            <li><a href="http://courses.medici.org"><fmt:message key="menu.showHelpModal.onlineCourses"/></a></li>
+        	<li><a href="<fmt:message key="menu.showHelpModal.news.link"/>" target="_blank"><fmt:message key="menu.showHelpModal.news"/></a></li>
+            <li><a href="<fmt:message key="menu.showHelpModal.website.link"/>" target="_blank"><fmt:message key="menu.showHelpModal.website"/></a></li>
+            <li><a href=<fmt:message key="menu.showHelpModal.onlineCourses.link"/>"><fmt:message key="menu.showHelpModal.onlineCourses"/></a></li>
         </ul>
     </div>
 </div>
