@@ -33,7 +33,7 @@
 // 				}
 // 			});
 			
-			$j("#ui-dialog-title-ShowSynopsisDocumentDiv").text("SYNOPSIS / Start Folio: ${folioNum} - MDP: ${volNum}");
+			$j("#ui-dialog-title-ShowSynopsisDocumentDiv").text("<fmt:message key="mview.showSynopsisDocumentDialog.synopsisWindow.title"/> / <fmt:message key="mview.showSynopsisDocumentDialog.synopsisWindow.startfolio"/>: ${folioNum} - <fmt:message key="mview.showSynopsisDocumentDialog.synopsisWindow.volume"/>: ${volNum}");
 			
 // 			$j('#editExtract').click(function() {
 // 					$j("#ShowExtractDocumentDiv").dialog("close");
@@ -55,4 +55,4 @@
 		});
 	</script>
 	
-	<span id="transcribeModeFromShow" class="transcribeMessage" style="display: none;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>
+	<span id="transcribeModeFromShow" class="transcribeMessage" style="display: none;"><fmt:message key="mview.showSynopsisDocumentDialog.youAreTranscribingFrom"/><br /><fmt:message key="mview.showSynopsisDocumentDialog.youAreTranscribingFrom.folio"/>: ${folioNum} <fmt:message key="mview.showSynopsisDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}</span>

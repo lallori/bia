@@ -119,13 +119,13 @@
 <div id="PageTurnerHorizontalDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
-		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
-		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entered but not transcribed</font>
-		<a id="extractTranscribe" href="#" style="visibility: hidden; cursor: pointer;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden; cursor: pointer" class="transcribe">Show this document record</a>
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe this document</a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Choose this as "Start folio"</a>
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.transcriptionAvailableForFoliosOnly"/></span>
+		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.documentAlreadyTranscribed"/></a>
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green"><fmt:message key="mview.pageTurnerDialog_horizontal.documentEnteredButNotTranscribed"/></font>
+		<a id="extractTranscribe" href="#" style="visibility: hidden; cursor: pointer;" title="Transcribe extract" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.transcribeThisDocument"/></a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden; cursor: pointer" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.showThisDocument"/></a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.readyToTranscribe"/></a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.chooseThisAsStartFolio"/></a>
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
 		<input type="hidden" id="currentImageOrder" value="${command.imageOrder}" />
 	</div>
@@ -142,33 +142,33 @@
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You need to save your Extract / Synopsis text before using the page turner.</p> 
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog_horizontal.saveBeforeUsingPageTurner.alert"/></p> 
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<a id="next" title="Previous Folio"></a>
+			<a id="next" title="<fmt:message key="mview.pageTurnerDialog_horizontal.previousFolio"/>"></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a id="next" href="${nextPage}" title="Next Folio"></a>
+			<a id="next" href="${nextPage}" title="<fmt:message key="mview.pageTurnerDialog_horizontal.previousFolio"/>"></a>
 		</c:if>
 		</div>
 	</div>
 	
 	<c:if test="${command.totalRubricario > 0}">
 		<div>
-    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names" style="cursor: pointer;"></a>
+    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="<fmt:message key="mview.pageTurnerDialog_horizontal.indexOfNames.icon.title"/>" style="cursor: pointer;"></a>
     	</div>
     </c:if>
 
 	<div>
-		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary" style="cursor: pointer;"></a>
+		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="<fmt:message key="mview.pageTurnerDialog_horizontal.volumeSummary.icon.title"/>" style="cursor: pointer;"></a>
 	</div>
 
 	<div id="line" class="transcribe"></div>
 	
 	<div id="folioMoveTo" class="transcribe">
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog_horizontal.folioToMove"/></label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
 			<input id="go" class="button_mini" type="submit" value="Go"/>
 			<form:hidden path="entryId" />
@@ -189,26 +189,26 @@
 	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotesButton" href="#" class="transcribe" title="Personal Notes" style="cursor: pointer;"></a>
+		<a id="personalNotesButton" href="#" class="transcribe" title="<fmt:message key="mview.pageTurnerDialog_horizontal.personalNotes.button"/>" style="cursor: pointer;"></a>
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" class="transcribe button_small" style="cursor: pointer;">Exit</a>
+		<a id="exitButton" href="#" class="transcribe button_small" style="cursor: pointer;"><fmt:message key="mview.pageTurnerDialog_horizontal.exit.button"/></a>
 		<input type="hidden" id="editModify" value="" />
 	</div>
 </div>
 
 	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
-			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog_horizontal.exitWithoutSaving.alert"/></p>
 		</c:if> 
 		<c:if test="${command.modeEdit == false}">
-			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></span><fmt:message key="mview.pageTurnerDialog_horizontal.exit.alert"/></p>
 		</c:if> 
 	</div>
 
 	<div id="notFound" title="Alert" style="display:none">
-		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This folio is not present/missing/not available. Check the volume summary.</p>
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog_horizontal.folioMissing.alert"/></p>
 	</div>
 
 	<form:form id="transcribeForm" class="edit">
@@ -261,7 +261,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'Personal Notes',
+				title: '<fmt:message key="mview.pageTurnerDialog_horizontal.personalNotesWindow.title"/>',
 				position: ['right','top'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -276,7 +276,7 @@
 				resizable: false,
 				width: 550,
 				height: 600, 
-				title: 'VOLUME SUMMARY',
+				title: '<fmt:message key="mview.pageTurnerDialog_horizontal.volumeSummaryDialog.title"/>',
 				modal: true,
 				autoOpen : false,
 				zIndex: 3999,
@@ -327,7 +327,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EDIT EXTRACT',
+				title: '<fmt:message key="mview.pageTurnerDialog_horizontal.editTranscriptionWindow.title"/>',
 				position: ['left','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -347,7 +347,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EDIT SYNOPSIS',
+				title: '<fmt:message key="mview.pageTurnerDialog_horizontal.editSynopsisWindow.title"/>',
 				position: [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"],                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -363,9 +363,9 @@
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
 				if($j("#editModify").val() == 1){
-					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?");
+					$j("#closeMessage").text("<fmt:message key="mview.pageTurnerDialog_horizontal.exitWithoutSaving.alert"/>");
 				}else{
-					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer?");
+					$j("#closeMessage").text("<fmt:message key="mview.pageTurnerDialog_horizontal.exit.alert"/>");
 				}
 				return false;
 			});

@@ -21,17 +21,17 @@
 			var annotations = new Array();
 			var annotationId = "${annotationId}";
 			if ("${image.imageType}" == 'R') {
-				credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.indexOfNames"/> &nbsp;';
 			} else if ("${image.imageType}" == 'C') {
-				credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.folio"/> &nbsp; &nbsp;';
 			} else if ("${image.imageType}" == 'A') {
-				credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.allegato"/> &nbsp; &nbsp;';
 			} else if ("${image.imageType}" == 'G') {
-				credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.guardia"/> &nbsp; &nbsp;';
 			} else if ("${image.imageType}" == 'O') {
 				//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 				if(imageName.indexOf("COPERTA") != -1){
-					credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.coperta"/> &nbsp; &nbsp;';
 				}
 			} else {
            		credit += ' ';
@@ -49,7 +49,7 @@
 			
 			//MD:The last control is to verify if the image is a spine
 			if(imageName.indexOf("SPI") != -1){
-				credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+				credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.spine"/>' + '</span>';
 			}
 			
 			if(annotationId != null && annotationId != ''){

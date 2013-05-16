@@ -13,10 +13,10 @@
 		<div id="content">${docExtract}</div>
 	</security:authorize>	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<input id="editExtract" class="button_medium" type="submit" value="Edit Transcription"/>
+		<input id="editExtract" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.editTranscription.alt"/>"/>
 	</security:authorize>
-	<input id="showSynopsis" class="button_medium" type="submit" value="Show Synopsis"/>
-	<input id="exitExtract" class="button_small" type="submit" value="Close"/>
+	<input id="showSynopsis" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.showSynopsis.alt"/>"/>
+	<input id="exitExtract" class="button_small" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.close.button"/>"/>
     </div>
     
     <input type="hidden" id="extractEntryId" value="${entryId}" />
@@ -37,7 +37,7 @@
 // 				}
 // 			});
 			
-			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("TRANSCRIPTION / Start Folio: ${folioNum} - MDP: ${volNum}");
+			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("<fmt:message key="mview.showExtractDocumentDialog.showTranscriptionWindow.title"/> / <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.folio"/>: ${folioNum} - <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}");
 			
 			$j("#showSynopsis").click(function(){
 				$j('<div id="ShowSynopsisDocumentDiv"></div>').dialog({                                                                                                                                                                   
@@ -46,7 +46,7 @@
 					minWidth: 350,
 					minHeight: 200,
 					maxHeight: 500,
-					title: 'SYNOPSIS',
+					title: '<fmt:message key="mview.showExtractDocumentDialog.showSynopsisWindow.title"/>',
 					position: ['center','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
@@ -86,4 +86,4 @@
 		});
 	</script>
 	
-	<span id="transcribeModeFromShow" class="transcribeMessage" style="display: none;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>
+	<span id="transcribeModeFromShow" class="transcribeMessage" style="display: none;"><fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom"/><br /><fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.folio"/>: ${folioNum} <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}</span>

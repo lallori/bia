@@ -48,17 +48,17 @@
 				var imageName = "${documentExplorer.image.imageName}";
 				var annotations = new Array();
 				if ("${documentExplorer.image.imageType}" == 'R') {
-					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'C') {
-					credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/> &nbsp; &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'A') {
-					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/> &nbsp; &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'G') {
-					credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/> &nbsp; &nbsp;';
 				}else if ("${documentExplorer.image.imageType}" == 'O') {
 					//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 					if(imageName.indexOf("COPERTA") != -1){
-						credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/> &nbsp; &nbsp;';
 					}
 				} else {
 		    		credit += ' ';
@@ -78,7 +78,7 @@
 				
 				//MD:The last control is to verify if the image is a spine
 				if(imageName.indexOf("SPI") != -1){
-					credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+					credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
 				}
 				
 				iip = new IIPMooViewer( "targetframe", {
@@ -106,7 +106,7 @@
 					
 					                                                                                                                                                         
 					//title: 'Page T.',
-					title: 'Page T.',
+					title: '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.pageTurnerWindow.title"/>',
 					position: ['left','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					open: function(event, ui) { 

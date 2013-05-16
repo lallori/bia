@@ -11,11 +11,11 @@
 		<h3>${volumeSummary.carteggio}</h3>
 		<div class="list">
 			<div class="row">
-				<div class="item">Folio count</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.folioCount"/></div> 
 				<div class="value"><b>${volumeSummary.totalCarta}</b></div> 
 			</div>
 			<div class="row">
-				<div class="item"><i>Index of Names</i> count</div> 
+				<div class="item"><i><fmt:message key="mview.showSummaryVolumeDialog.indexOfNames"/></i> <fmt:message key="mview.showSummaryVolumeDialog.indexOfNames.count"/></div> 
 				<div class="value"><b>${volumeSummary.totalRubricario}</b></div> 
 			</div>
 <!-- 			<div class="row"> -->
@@ -39,40 +39,40 @@
 				<div class="valueMissingFolios">${volumeSummary.totalMissingFolios}</div> 
 			</div> --%>
 			<div class="row">
-				<div class="item">Missing Folios</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.missingFolios"/></div> 
 				<div class="valueMissingFolios"><b>${fn2:toString(volumeSummary.missingFolios)}</b></div> 
 			</div>
 			<div class="row">
-				<div class="item">Folio addenda<br />(bis, ter, quater, etc.)</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.folioAddenda"/><br /><fmt:message key="mview.showSummaryVolumeDialog.folioAddenda.extension"/></div> 
 				<div class="value"><b>${fn2:toString(volumeSummary.misnumberedFolios)}</b></div> 
 			</div>
 			
 			<div class="row">
-				<div class="item">Numeration</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.numeration"/></div> 
 				<div class="value">${volumeSummary.cartulazione}</div> 
 			</div>
 			<div class="row">
-				<div class="item">Numeration Notes</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.numerationNotes"/></div> 
 				<div class="value">${volumeSummary.noteCartulazioneEng}</div> 
 			</div>
 			<div class="row">
-				<div class="item">Context</div>
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.context"/></div>
 				<div class="value">${volumeSummary.ccontext}</div>
 			</div>
 			<div class="row">
-				<div class="item">Inventario Sommario Description</div>
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.inventarioSommarioDescription"/></div>
 				<div class="value">${volumeSummary.inventarioSommarioDescription}</div>
 			</div>
 			
 			<div class="row">
-				<div class="item"><u>Volume Size:</u></div> 
+				<div class="item"><u><fmt:message key="mview.showSummaryVolumeDialog.volumeSize"/>:</u></div> 
 			</div>
 			<div class="row">
-				<div class="item">Width (mm)</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.volumeWidth"/></div> 
 				<div class="value">${volumeSummary.width}</div> 
 			</div>
 			<div class="row">
-				<div class="item">Height (mm)</div> 
+				<div class="item"><fmt:message key="mview.showSummaryVolumeDialog.volumeHeight"/></div> 
 				<div class="value">${volumeSummary.height}</div> 
 			</div>
 		</div>

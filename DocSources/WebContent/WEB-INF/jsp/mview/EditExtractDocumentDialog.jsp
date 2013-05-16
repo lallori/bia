@@ -139,7 +139,7 @@
 				height:150,
 				modal: true,
 				autoOpen : false,
-				title: 'TRANSCRIPTION SAVED',
+				title: '<fmt:message key="mview.editExtractDocumentDialog.transcriptionSaved"/>',
 				overlay: {
 					backgroundColor: '#000',
 					opacity: 0.5
@@ -154,4 +154,4 @@
 		});
 	</script>
 
-<span id="transcribeMode" class="transcribeMessage" style="display: none;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>
+<span id="transcribeMode" class="transcribeMessage" style="display: none;"><fmt:message key="mview.editExtractDocumentDialog.youAreTranscribingFrom"/><br /><fmt:message key="mview.editExtractDocumentDialog.youAreTranscribingFrom.folio"/>: ${folioNum} <fmt:message key="mview.editExtractDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}</span>

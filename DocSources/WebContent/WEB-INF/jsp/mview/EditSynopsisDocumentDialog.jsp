@@ -21,7 +21,7 @@
 	</div>
 	
 	<div id="saveSynSuccess" title="Alert" style="display:none">
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your synopsis has been saved!</p>
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.editSynopsisDocumentDialog.synopsisSaved"/>!</p>
 	</div>
 
 	<script type="text/javascript">
@@ -84,7 +84,7 @@
 				height:150,
 				modal: true,
 				autoOpen : false,
-				title: 'SYNOPSIS SAVED',
+				title: '<fmt:message key="mview.editSynopsisDocumentDialog.synopsisSaved.title"/>',
 				overlay: {
 					backgroundColor: '#000',
 					opacity: 0.5

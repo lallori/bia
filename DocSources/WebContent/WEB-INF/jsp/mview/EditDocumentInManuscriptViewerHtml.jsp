@@ -34,17 +34,17 @@
 			var credit = '';	
 			var imageName = "${documentExplorer.image.imageName}";
 			if ("${documentExplorer.image.imageType}" == 'R') {
-				credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;';
 			} else if ("${documentExplorer.image.imageType}" == 'C') {
-				credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.folio"/> &nbsp; &nbsp;';
 			} else if ("${documentExplorer.image.imageType}" == 'A') {
-				credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.allegato"/> &nbsp; &nbsp;';
 			} else if ("${documentExplorer.image.imageType}" == 'G') {
-				credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.guardia"/> &nbsp; &nbsp;';
 			} else if ("${documentExplorer.image.imageType}" == 'O') {
 				//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 				if(imageName.indexOf("COPERTA") != -1){
-					credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.coperta"/> &nbsp; &nbsp;';
 				}
 			} else {
 	    		var credit = ' ';
@@ -64,7 +64,7 @@
 			
 			//MD:The last control is to verify if the image is a spine
 			if(imageName.indexOf("SPI") != -1){
-				credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+				credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
 			}
 		
 			iip = new IIPMooViewer( "targetframe", {
@@ -88,7 +88,7 @@
 					width: 355,
 					minWidth: 350,
 					minHeight: 200,                                                                                                                                                         
-					title: 'EDIT TRANSCRIPTION',
+					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editTranscription.windowTitle"/>',
 					position: ['center','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
@@ -108,7 +108,7 @@
 					width: 352,
 					minWidth: 350,
 					minHeight: 200,                                                                                                                                                         
-					title: 'EDIT SYNOPSIS',
+					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editSynopsis.windowTitle"/>',
 					position: ['left','bottom'],                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
@@ -130,7 +130,7 @@
 // 					height: 112,
 // 					minWidth: 470,
 // 					minHeight: 112,                                                                                                                                                         
-// 					title: 'PAGE TURNER',
+// 					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.pageTurner.windowTitle"/>',
 // 					position: ['right','middle'],                                                                                                                                                       
 // 					closeOnEscape: false,
 // 					maximized:false,
@@ -158,7 +158,7 @@
 				
 				                                                                                                                                                         
 				//title: 'Page T.',
-				title: 'Page Turner',
+				title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.pageTurner.windowTitle"/>',
 				position: ['left','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				open: function(event, ui) { 

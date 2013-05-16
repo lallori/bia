@@ -11,15 +11,15 @@
 	<form:form id="EditPersonalNotesForm" action="${editPersonalNotesForm}" method="post" cssClass="edit">
 		<form:textarea id="personalNotes" path="personalNotes" rows="16" style="width: 98%; height: 90%;"/>
 		<input type="submit" value="Save Notes"  id="saveNotes" class="button_medium">
-		<a id="cleanNotes" class="button_medium">Clear notes</a>
+		<a id="cleanNotes" class="button_medium"><fmt:message key="mview.editPersonalNotesDialog.clearNotes.button"/></a>
 	</form:form>
 	
 	<div id="clearNotes" title="ALERT" style="display:none"> 
-		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you want to clear the Personal Notes window?</p> 
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.editPersonalNotesDialog.areYouSureClearPersonalNotes"/>?</p> 
 	</div>
 	
 	<div id="saveNotesSuccess" title="Alert" style="display:none">
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your personal notes has been saved!</p>
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.editPersonalNotesDialog.personalNotesSaved"/>!</p>
 	</div>
 
 	<script type="text/javascript">
@@ -75,7 +75,7 @@
 				height:150,
 				modal: true,
 				autoOpen : false,
-				title: 'PERSONAL NOTES SAVED',
+				title: '<fmt:message key="mview.editPersonalNotesDialog.personalNotesSaved.title"/>',
 				overlay: {
 					backgroundColor: '#000',
 					opacity: 0.5

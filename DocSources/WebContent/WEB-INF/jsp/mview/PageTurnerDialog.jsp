@@ -125,22 +125,22 @@
 	<div id="transcribeDiv">
 	
 		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
-		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.transcriptionAvailableForFoliosOnly"/></span>
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
-		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe button_medium" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe button_medium" style="visibility: hidden;">Show this record</a>
-		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;">Show records</a>
-		<a id="transcribeAnyway" href="#" title="Transcribe anyway" class="transcribe button_medium" style="visibility:hidden; cursor: pointer;">Transcribe anyway</a>
+		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.documentAlreadyTranscribed"/></a>
+		<a id="showTranscription" href="#" class="transcribe button_medium" title="<fmt:message key="mview.pageTurnerDialog.showTranscription.alt"/>" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.showTranscription"/></a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="<fmt:message key="mview.pageTurnerDialog.showThisRecord.alt"/>"  class="transcribe button_medium" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.showThisRecord"/></a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="<fmt:message key="mview.pageTurnerDialog.showThisRecords.alt"/>" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;"><fmt:message key="mview.pageTurnerDialog.showThisRecords"/></a>
+		<a id="transcribeAnyway" href="#" title="<fmt:message key="mview.pageTurnerDialog.transcribeAnyway.alt"/>" class="transcribe button_medium" style="visibility:hidden; cursor: pointer;"><fmt:message key="mview.pageTurnerDialog.transcribeAnyway"/></a>
 		
 		<!--  This document has not been transcribed-->
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe button_medium" style="visibility: hidden; cursor: pointer">Transcribe </a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe button_medium" style="visibility: hidden; cursor: pointer">Set this as <font style="font-style:italic;">Start folio</font></a>
+		<a id="readyToTranscribe" href="#" title="<fmt:message key="mview.pageTurnerDialog.readyToTranscribe.alt"/>" class="transcribe button_medium" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog.readyToTranscribe"/> </a>
+		<a id="choiceThisFolioStart" href="#" title="<fmt:message key="mview.pageTurnerDialog.chooseThisAsStartFolio.alt"/>" class="transcribe button_medium" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog.setThisAs"/> <font style="font-style:italic;"><fmt:message key="mview.pageTurnerDialog.startFolio"/></font></a>
 		
 		<!--  This document has a record in the database but it is not transcribed-->
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
-		<a id="extractTranscribe" href="#" title="Transcribe extract" class="transcribe button_medium" style="visibility: hidden; cursor: pointer;" >Transcribe</a>
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.documentEnteredButNotTranscribed"/></a>
+		<a id="extractTranscribe" href="#" title="<fmt:message key="mview.pageTurnerDialog.transcribeThisDocument.alt"/>" class="transcribe button_medium" style="visibility: hidden; cursor: pointer;" ><fmt:message key="mview.pageTurnerDialog.transcribeThisDocument"/></a>
 		
 		
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
@@ -152,16 +152,16 @@
 		<div id="transcribeDiv">
 	
 		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
-		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.transcriptionAvailableForFoliosOnly"/></span>
 		
 		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
-		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe button_medium" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe button_medium" style="visibility: hidden;">Show this record</a>
-		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="Show documents record" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;">Show records</a>
+		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.documentAlreadyTranscribed"/></a>
+		<a id="showTranscription" href="#" class="transcribe button_medium" title="<fmt:message key="mview.pageTurnerDialog.showTranscription.alt"/>" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.showTranscription"/></a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="<fmt:message key="mview.pageTurnerDialog.showThisRecord.alt"/>"  class="transcribe button_medium" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.showThisRecord"/></a>
+		<a id="showAlreadyTranscribedDocs" href="${ShowDocumentsAlreadyURL}" title="<fmt:message key="mview.pageTurnerDialog.showThisRecords.alt"/>" class="transcribe button_medium" style="visibility: hidden; cursor:pointer;"><fmt:message key="mview.pageTurnerDialog.showThisRecords"/></a>
 		
 		<!--  This document has a record in the database but it is not transcribed-->
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog.documentEnteredButNotTranscribed"/></a>
 		
 		
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
@@ -174,28 +174,28 @@
 	<div id="prevNextButtons">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<a id="previous" title="Previous Folio"></a>
+	    	<a id="previous" title="<fmt:message key="mview.pageTurnerDialog.previousFolio"/>"></a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
-			<a id="previous" href="${previousPage}" title="Previous Folio"></a>
+			<a id="previous" href="${previousPage}" title="<fmt:message key="mview.pageTurnerDialog.previousFolio"/>"></a>
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You need to save your Extract / Synopsis text before using the page turner.</p> 
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog.saveBeforeUsingPageTurner.alert"/></p> 
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<a id="next" title="Previous Folio"></a>
+			<a id="next" title="<fmt:message key="mview.pageTurnerDialog.previousFolio"/>"></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a id="next" href="${nextPage}" title="Next Folio"></a>
+			<a id="next" href="${nextPage}" title="<fmt:message key="mview.pageTurnerDialog.nextFolio"/>"></a>
 		</c:if>
 		</div>
 	</div>
 	
 	<div id="folioMoveTo">
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.folioToMove"/> </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
 			<input id="go" class="button_mini" type="submit" value="Go"/>
 			<form:hidden path="entryId" />
@@ -214,17 +214,17 @@
 	</div>
 	
 	
-	<a id="volumeSummary" href="#" title="Volume Summary"></a>
+	<a id="volumeSummary" href="#" title="<fmt:message key="mview.pageTurnerDialog.volumeSummary.icon.title"/>"></a>
     
     <c:if test="${command.totalRubricario > 0}">
-        <a id="indexNames" href="${indexOfNamesURL}" title="Index of Names" style="cursor: pointer;"></a>
+        <a id="indexNames" href="${indexOfNamesURL}" title="<fmt:message key="mview.pageTurnerDialog.indexOfNames.icon.title"/>" style="cursor: pointer;"></a>
     </c:if>
     
-	<a id="personalNotesButton" href="#" title="Personal Notes" style="cursor: pointer;"></a>
+	<a id="personalNotesButton" href="#" title="<fmt:message key="mview.pageTurnerDialog.personalNotes.button"/>" style="cursor: pointer;"></a>
     
     <div id="line2"></div>
     
-	<a id="exitButton" href="#" class="button_small" style="cursor: pointer;">Exit</a>
+	<a id="exitButton" href="#" class="button_small" style="cursor: pointer;"><fmt:message key="mview.pageTurnerDialog.exit.button"/></a>
 	<input type="hidden" id="editExtractModify" value="" />
 	<input type="hidden" id="editSynopsisModify" value="" />
 	
@@ -232,10 +232,10 @@
 
 	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
-			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog.exitWithoutSaving.alert"/></p>
 		</c:if> 
 		<c:if test="${command.modeEdit == false}">
-			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><fmt:message key="mview.pageTurnerDialog.exit.alert"/></p>
 		</c:if> 
 	</div>
 
@@ -308,7 +308,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'Personal Notes',
+				title: '<fmt:message key="mview.pageTurnerDialog.personalNotesWindow.title"/>',
 				position: ['right','top'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -323,7 +323,7 @@
 				resizable: false,
 				width: 550,
 				height: 600, 
-				title: 'VOLUME SUMMARY',
+				title: '<fmt:message key="mview.pageTurnerDialog.volumeSummaryDialog.title"/>',
 				modal: true,
 				autoOpen : false,
 				zIndex: 3999,
@@ -375,7 +375,7 @@
 				minWidth: 370,
 				minHeight: 200, 
 				maxHeight: 500,
-				title: 'TRANSCRIPTION',
+				title: '<fmt:message key="mview.pageTurnerDialog.showTranscriptionWindow.title"/>',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -395,7 +395,7 @@
 				width: 355,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EDIT TRANSCRIPTION',
+				title: '<fmt:message key="mview.pageTurnerDialog.editTranscriptionWindow.title"/>',
 				position: ['center','middle'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -415,7 +415,7 @@
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'EDIT SYNOPSIS',
+				title: '<fmt:message key="mview.pageTurnerDialog.editSynopsisWindow.title"/>',
 				position: [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"],                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
@@ -431,9 +431,9 @@
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
 				if($j("#editExtractModify").val() == 1 || $j("editSynopsisModify").val() == 1){
-					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?");
+					$j("#closeMessage").text("<fmt:message key="mview.pageTurnerDialog.exitWithoutSaving.alert"/>");
 				}else{
-					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer?");
+					$j("#closeMessage").text("<fmt:message key="mview.pageTurnerDialog.exit.alert"/>");
 				}
 				return false;
 			});
