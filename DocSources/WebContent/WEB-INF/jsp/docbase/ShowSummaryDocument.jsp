@@ -39,7 +39,7 @@
 	</c:url>
 	<%-- Create new Document Record --%>
 	<c:if test="${document.volume == null}">
-			<h2 class="addNew"><fmt:message key="docbase.showSummaryDocument.addNewDocument"/>ADD New - Document Record</h2>
+			<h2 class="addNew"><fmt:message key="docbase.showSummaryDocument.addNewDocument"/></h2>
 	</c:if>
 	<%-- Editing Document Record --%>
 	<c:if test="${document.volume != null}">
