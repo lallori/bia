@@ -18,8 +18,10 @@
 			<legend><b><fmt:message key="docbase.editDetailsDocument.title.documentDetails"/></b></legend>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.docid"></fmt:message>">?</a><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.docId"/></div>
-					<div class="col_l"><span class="docId">${command.entryId}</span></div></form:label>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="docbase.editDetailsDocument.help.docid"></fmt:message>">?</a>
+					<form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.docId"/></form:label></div>
+					<div class="col_l"><span class="docId">${command.entryId}</span></div>
+
 					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.volumeMdp"/></form:label></div>
 					<div class="col_r"><form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/></div>
 				</div>
