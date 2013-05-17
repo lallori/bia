@@ -293,12 +293,12 @@
 				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
-				<div class="item">Bibliografia del documento</div>
-				<div class="value80" id="bibliografiaDocumento"></div>
-			</div>
-			<div class="row">
 				<div class="item"><fmt:message key="docbase.compareDocument.synopsis"/></div>
 				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
+			</div>
+			<div class="row">
+				<div class="item">Document Bibliography</div>
+				<div class="value80" id="documentBibliography"></div>
 			</div>
 		</div>
 	</div>
