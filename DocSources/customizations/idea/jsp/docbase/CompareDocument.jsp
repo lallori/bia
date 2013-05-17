@@ -165,7 +165,7 @@
 				<div class="item60"><fmt:message key="docbase.compareDocument.nonconsecutive"/></div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.documentTypology"/>Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentTypology"/></div> <div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
 				<div class="item60"><fmt:message key="docbase.compareDocument.modernDate"/></div> <div class="valueHilight">${document.yearModern}</div>
