@@ -33,15 +33,6 @@
 			
 				<br />
 				
-				<div class="row">
-					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.extract"></fmt:message>">?</a>
-					<label for="bibliografiaDoc" id="bibliografiaDocLabel">Bibliografia del documento</label>
-				</div>
-				<div class="row">
-					<form:textarea id="bibliografiaDoc" path="bibliografiaDoc" class="txtarea_big" />
-				</div>
-				
-				<br />
 			
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.synopsis"></fmt:message>">?</a>
@@ -50,6 +41,17 @@
 				<div class="row">
 					<form:textarea id="synopsis" path="synopsis" class="txtarea_big" />
 				</div>
+				
+				<br />
+				
+				<div class="row">
+					<a class="helpIcon" title="<fmt:message key="docbase.editExtractOrSynopsisDocument.help.documentBibliography"></fmt:message>">?</a>
+					<label for="documentBibliography" id="documentBibliographyLabel">Document Bibliography</label>
+				</div>
+				<div class="row">
+					<form:textarea id="documentBibliography" path="documentBibliography" class="txtarea_big" />
+				</div>
+				
 			</div>
 			
 			<div>
