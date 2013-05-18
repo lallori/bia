@@ -5,13 +5,13 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="advancedSearchModal">
-		<h1>Click the button below to search in one of the following categories:</h1>
+		<h1><fmt:message key="search.choiceAdvancedSearchModalWindow.choiceDescription"/>:</h1>
 		
-		<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=DOCUMENT"/>">Documents</a>
-		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=VOLUME"/>">Volumes</a>
-		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PEOPLE"/>">People</a>
-		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PLACE"/>">Places</a>
-		<a id="savedFilters" class="button_large" href="<c:url value="/src/ShowUserSearchFilters.do"/>">Your saved filters</a>
+		<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=DOCUMENT"/>"><fmt:message key="search.choiceAdvancedSearchModalWindow.documents"/></a>
+		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=VOLUME"/>"><fmt:message key="search.choiceAdvancedSearchModalWindow.volumes"/></a>
+		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PEOPLE"/>"><fmt:message key="search.choiceAdvancedSearchModalWindow.people"/></a>
+		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PLACE"/>"><fmt:message key="search.choiceAdvancedSearchModalWindow.places"/></a>
+		<a id="savedFilters" class="button_large" href="<c:url value="/src/ShowUserSearchFilters.do"/>"><fmt:message key="search.choiceAdvancedSearchModalWindow.yourSavedFilters"/></a>
 	
 		<div id="CloseButton">
 			<input id="close" class="button_small" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
@@ -21,16 +21,16 @@
 	
 	<script>
 	$j(document).ready(function() {
-		$j("#documentSearch").open({windowName: "Advanced Search Documents", width: 960, height: 350, scrollbars: "yes"});
+		$j("#documentSearch").open({windowName: "<fmt:message key="search.choiceAdvancedSearchModalWindow.documentsWindowName"/>", width: 960, height: 350, scrollbars: "yes"});
 			    
-		$j("#personSearch").open({windowName: "Advanced Search People",width: 980, height: 350, scrollbars: "yes"});
+		$j("#personSearch").open({windowName: "<fmt:message key="search.choiceAdvancedSearchModalWindow.peopleWindowName"/>",width: 980, height: 350, scrollbars: "yes"});
 		
-		$j("#volumeSearch").open({windowName: "Advanced Search Volume",width: 980, height: 350, scrollbars: "yes"});
+		$j("#volumeSearch").open({windowName: "<fmt:message key="search.choiceAdvancedSearchModalWindow.volumesWindowName"/>",width: 980, height: 350, scrollbars: "yes"});
 				
-		$j("#placeSearch").open({windowName: "Advanced Search Place",width: 980, height: 350, scrollbars: "yes"});		
+		$j("#placeSearch").open({windowName: "<fmt:message key="search.choiceAdvancedSearchModalWindow.placesWindowName"/>",width: 980, height: 350, scrollbars: "yes"});		
 
 		$j("#savedFilters").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "SAVED SEARCH FILTERS", width: 760, height: 415});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="search.choiceAdvancedSearchModalWindow.savedSearchFiltersWindowName"/>", width: 760, height: 415});
 			return false;
 		});
 	    
