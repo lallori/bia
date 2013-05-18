@@ -11,30 +11,30 @@
 
 <body class="search">
 	<div id="advancedSearch">
-		<div id="advancedSearch_top">SEARCH FOR DOCUMENTS</div>
+		<div id="advancedSearch_top"><fmt:message key="search.advancedSearchDocuments.title"/></div>
 		<div id="body_left">
 			<div id="customSearchFilterDiv">
-				<h1 class="advSearchTitle">Create your custom search filter</h1>
+				<h1 class="advSearchTitle"><fmt:message key="search.advancedSearchDocuments.createCustomSearchFilter"/></h1>
 				<div id="accordion">
-					<h1 id="wordSearch"><a>Word search</a></h1>
+					<h1 id="wordSearch"><a><fmt:message key="search.advancedSearchDocuments.wordSearch.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="wordSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.wordsearch"></fmt:message>">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.wordsearch"/>">?</a>
 										<input type="text" id="word" name="word" class="input_15c" value="" />
 					               	</div>
 					               	<div class="col_l">in</div>
 					               	<div class="col_l">
 					               		<select id="wordType" name="wordType" class="selectform_LXlong">
-											<option value="SynopsisAndExtract" selected="selected">Synopsis and Transcription</option>
-											<option value="Synopsis">Document Synopsis</option>
-											<option value="Extract">Document Transcription</option>				
+											<option value="SynopsisAndExtract" selected="selected"><fmt:message key="search.advancedSearchDocuments.wordSearch.synopsisAndTranscription"/></option>
+											<option value="Synopsis"><fmt:message key="search.advancedSearchDocuments.wordSearch.synopsis"/></option>
+											<option value="Extract"><fmt:message key="search.advancedSearchDocuments.wordSearch.transcription"/></option>				
 										</select>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Word Search">
 					               	</div>
 					            </div>
@@ -42,18 +42,18 @@
 				        </div>
 					</div>
 					
-					<h1 id="peoplePlaces"><a>People &amp; Places</a></h1>
+					<h1 id="peoplePlaces"><a><fmt:message key="search.advancedSearchDocuments.peopleAndPlaces.title"/></a></h1>
 				    <div class="documents">
 				    	<div class="listAdvSearch">
 				    		<form id="personSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.person"></fmt:message>">?</a>
-										<label for="person" id="personLabel">Person</label>
+										<label for="person" id="personLabel"><fmt:message key="search.advancedSearchDocuments.person"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="personAdd button_small" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="personAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="Person">
 										<input type="hidden" id="personId" value="">
 					               	</div>
@@ -64,11 +64,11 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.place"></fmt:message>">?</a>
-										<label for="place" id="placeLabel">Place</label>
+										<label for="place" id="placeLabel"><fmt:message key="search.advancedSearchDocuments.place"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="placeAdd button_small" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="placeAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="Place">
 										<input type="hidden" id="placeId" value="">
 					               	</div>
@@ -83,11 +83,11 @@
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.sender"></fmt:message>">?</a>
-										<label for="sender" id="senderLabel">Sender Name</label> 
+										<label for="sender" id="senderLabel"><fmt:message key="search.advancedSearchDocuments.senderName"/></label> 
 					               	</div>
 					               	<div class="col_l"><input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="senderAdd button_small">
 										<input type="hidden" id="category" value="Sender">
 										<input type="hidden" id="senderId" value="">
 					               	</div>
@@ -98,11 +98,11 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.from"></fmt:message>">?</a>
-										<label for="from" id="fromLabel">Place From</label>
+										<label for="from" id="fromLabel"><fmt:message key="search.advancedSearchDocuments.placeFrom"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="fromAdd button_small" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="fromAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="From">
 										<input type="hidden" id="fromId" value="">
 					               	</div>
@@ -113,11 +113,11 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.recipient"></fmt:message>">?</a>
-										<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label>
+										<label for="recipientSearch" id="recipientSearchLabel"><fmt:message key="search.advancedSearchDocuments.recipientName"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="recipientAdd button_small">
 										<input type="hidden" id="category" value="Recipient">
 										<input type="hidden" id="recipientId" value="">
 					               	</div>
@@ -128,11 +128,11 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.to"></fmt:message>">?</a>
-										<label for="to" id="toSearchLabel">Place To</label>
+										<label for="to" id="toSearchLabel"><fmt:message key="search.advancedSearchDocuments.placeTo"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="toAdd button_small" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="toAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="To">
 										<input type="hidden" id="toId" value="">
 					               	</div>
@@ -143,11 +143,11 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.peopleandplaces.refersto"></fmt:message>">?</a>
-										<label for="refersTo" id="refersToLabel">Refers to</label>
+										<label for="refersTo" id="refersToLabel"><fmt:message key="search.advancedSearchDocuments.refersTo"/></label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="refersToAdd button_small">
 										<input type="hidden" id="category" value="Referers To">
 										<input type="hidden" id="refersToId" value="">
 					               	</div>
@@ -156,20 +156,20 @@
 				        </div>
 					</div>
 				
-					<h1 id="extractSynopsis"><a>Transcription and/or Synopsis</a></h1>
+					<h1 id="extractSynopsis"><a><fmt:message key="search.advancedSearchDocuments.transcriptionAndOrSynopsis.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="extractSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.extractorsynopsis.extract"></fmt:message>">?</a>
-										<label for="extract" id="extractLabel">Transcription</label>
+										<label for="extract" id="extractLabel"><fmt:message key="search.advancedSearchDocuments.transcription"/></label>
 					               	</div>
 					            </div>
 					            <div class="row">
 					               	<div class="col_l"><textarea id="extract" name="extract" class="txtadvsearch"></textarea></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Extract">
 					               	</div>
 					            </div>
@@ -179,13 +179,13 @@
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.extractorsynopsis.synopsis"></fmt:message>">?</a>
-										<label for="synopsis" id="synopsisLabel">Synopsis</label>
+										<label for="synopsis" id="synopsisLabel"><fmt:message key="search.advancedSearchDocuments.synopsis"/></label>
 					               	</div>
 					            </div>
 					            <div class="row">
 					               	<div class="col_l"><textarea id="synopsis" name="synopsis" class="txtadvsearch"></textarea></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Synopsys">
 					               	</div>
 					            </div>
@@ -200,7 +200,7 @@
 					           	<div class="row">
 					           		<div class="col_l">
 					           			<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.topics"></fmt:message>">?</a>
-					           			<label for="topicType" id="topicSelectLabel">Select a Topic</label>
+					           			<label for="topicType" id="topicSelectLabel"><fmt:message key="search.advancedSearchDocuments.selectATopic"/></label>
 					           		</div>
 					               	<div class="col_l">
 										<select id="topicType" name="topicType" class="selectForm_Xlong">
@@ -222,13 +222,13 @@
 					            <div class="row">
 					            	<div class="col_l">
 					            		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.topics.place"></fmt:message>">?</a>
-					            		<label for="topic" id="topicPlaceLabel">Related to Place</label>
+					            		<label for="topic" id="topicPlaceLabel"><fmt:message key="search.advancedSearchDocuments.relatedToPlace"/></label>
 					            	</div>
 					               	<div class="col_l">
 										<input type="text" id="topic" class="input_24c"/><!-- AUTOCOMPLETE -->
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="topicAdd button_small">
 										<input type="hidden" id="category" value="topic">
 										<input type="hidden" id="topicId" value="">
 					               	</div>
@@ -237,7 +237,7 @@
 				        </div>
 					</div>
 		
-					<h1 id="dateRange"><a>Date Range</a></h1>
+					<h1 id="dateRange"><a><fmt:message key="search.advancedSearchDocuments.dateRange.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="dateSearchForm" method="post" class="edit">
@@ -245,10 +245,10 @@
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.daterange"></fmt:message>">?</a>
 										<select id="dateType" name="dateType" class="selectform_Llong">
-											<option value="From">Written from</option>
-											<option value="Before">Written before</option>
-											<option value="Between">Written between</option>
-											<option value="InOn">Written in/on</option>
+											<option value="From"><fmt:message key="search.advancedSearchDocuments.writtenFrom"/></option>
+											<option value="Before"><fmt:message key="search.advancedSearchDocuments.writtenBefore"/></option>
+											<option value="Between"><fmt:message key="search.advancedSearchDocuments.writtenBetween"/></option>
+											<option value="InOn"><fmt:message key="search.advancedSearchDocuments.writtenInOn"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/></div>
@@ -261,13 +261,13 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="visible button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="visible button_small">
 										<input type="hidden" id="category" value="Date">
 					               	</div>
 					            </div>
 					            
 					            <div class="row">
-					               	<div class="col_l"><p class="invisible">and</p></div>
+					               	<div class="col_l"><p class="invisible"><fmt:message key="search.advancedSearchDocuments.betweenAnd"/></p></div>
 					               	<div class="col_l"><input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/></div>
 					               	<div class="col_l">
 					               		<select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
@@ -278,51 +278,51 @@
 					               	</div>
 					               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="invisible button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="invisible button_small">
 					               	</div>
 					            </div>
 				            </form>
 				        </div>
 					</div>
 					
-					<h1 id="volumeSearch"><a>Volume and/or Folio</a></h1>
+					<h1 id="volumeSearch"><a><fmt:message key="search.advancedSearchDocuments.volumeAndFolio.title"/></a></h1>
 					<div class="documents">
-						<h3>Volume</h3>
+						<h3><fmt:message key="search.advancedSearchDocuments.volume.title"/></h3>
 						<div class="listAdvSearch">
 							<form id="volumeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.volume"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
-											<option value="Exactly" selected="selected">Exactly</option>
-											<option value="Between">Between</option>
+											<option value="Exactly" selected="selected"><fmt:message key="search.advancedSearchDocuments.volume.exactly"/></option>
+											<option value="Between"><fmt:message key="search.advancedSearchDocuments.volume.between"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE --></div>
-					               	<div class="col_l"><p class="invisibleVol">and</p></div>
+					               	<div class="col_l"><p class="invisibleVol"><fmt:message key="search.advancedSearchDocuments.volume.betweenAnd"/></p></div>
 					               	<div class="col_l"><input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="volumeAdd button_small" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="volumeAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="Volume">
 					               	</div>
 					            </div>
 					        </form>
 					            
-					        <h3>Folio</h3>
+					        <h3><fmt:message key="search.advancedSearchDocuments.folio.title"/></h3>
 					        <form id="folioSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.folio"></fmt:message>">?</a>
 										<select id="folioType" name="folioType" class="selectform_long">
-											<option value="Exactly" selected="selected">Exactly</option>
-											<option value="Between">Between</option>
+											<option value="Exactly" selected="selected"><fmt:message key="search.advancedSearchDocuments.folio.exactly"/></option>
+											<option value="Between"><fmt:message key="search.advancedSearchDocuments.folio.between"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="folio" name="folio" class="input_5c" maxlength="5" /></div>
-					               	<div class="col_l"><p class="invisibleFol">and</p></div>
+					               	<div class="col_l"><p class="invisibleFol"><fmt:message key="search.advancedSearchDocuments.folio.betweenAnd"/></p></div>
 					               	<div class="col_l"><input id="folioBetween" name="folioBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Folio">
 					               	</div>
 					            </div>
@@ -333,22 +333,22 @@
 					           	<div class="row">
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.foliomod"></fmt:message>">?</a>
-			                			<label for="folioMod" id="folioModLabel">Folio Mod</label> 
+			                			<label for="folioMod" id="folioModLabel"><fmt:message key="search.advancedSearchDocuments.folio.folioAddenda"/></label> 
 					               	</div>
 					               	<div class="col_l" style="width:60px;">
-					               		<label for="bis" id="bisLabel"><i>Bis</i></label>
+					               		<label for="bis" id="bisLabel"><i><fmt:message key="search.advancedSearchDocuments.folio.bis"/></i></label>
 			                			<input type="checkbox" name="bis" value="bis"\/>
 					               	</div>
 					               	<div class="col_l">
-					               		<label for="ter" id="terLabel"><i>Ter</i></label>
+					               		<label for="ter" id="terLabel"><i><fmt:message key="search.advancedSearchDocuments.folio.ter"/></i></label>
 			                			<input type="checkbox" name="ter" value="ter"\/>
 					               	</div>
 					               	<div class="col_l">
-					               		<label for="Other" id="otherLabel"><i>Other</i></label>
+					               		<label for="Other" id="otherLabel"><i><fmt:message key="search.advancedSearchDocuments.folio.other"/></i></label>
 			                			<input type="checkbox" name="other" value="other"\/>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="folioMod">
 					               	</div>
 					            </div>
@@ -357,7 +357,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="docIdSearch"><a>Doc ID</a></h1>
+					<h1 id="docIdSearch"><a><fmt:message key="search.advancedSearchDocuments.docId.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="docIdSearchForm" method="post" class="edit">
@@ -367,7 +367,7 @@
 										<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Doc Id">
 					               	</div>
 					            </div>
@@ -376,18 +376,18 @@
 					</div>
 					
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					<h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
+					<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchDocuments.logicalDelete.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="logicalDeleteSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
 										<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.logicaldelete"></fmt:message>">?</a>
-										<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
+										<label for="logicalDelete" id="logicalDeleteLabel"><fmt:message key="search.advancedSearchDocuments.deleted"/></label>
 										<input type="checkbox" name="logicalDelete" value="true"/>
 									</div>
 									<div class="col_r">
-										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Logical Delete">
 									</div>
 								</div>

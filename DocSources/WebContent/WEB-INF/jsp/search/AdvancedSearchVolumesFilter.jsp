@@ -10,40 +10,40 @@
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json" />
 
 	<div id="yourSearchFilterDiv">
-		<h1 class="advSearchTitle">Your search filter</h1>
+		<h1 class="advSearchTitle"><fmt:message key="search.advancedSearchVolumesFilter.yourSearchFilter.title"/></h1>
 		
 		<form id="yourEasySearchFilterForm" action="${AdvancedSearchURL}" method="post">
-			<p><u>Custom Search Filter</u></p>
+			<p><u><fmt:message key="search.advancedSearchVolumesFilter.customSearchFilter.title"/></u></p>
 			<br />
 			<div id="volumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.volumes}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Volume in <fmt:message key="search.documents.volumeType.${searchFilter.filterData.volumesTypes[iterator.index]}" />: </span>
-					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Exactly'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}, ${searchFilter.filterData.volumesBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volume.in"/> <fmt:message key="search.documents.volumeType.${searchFilter.filterData.volumesTypes[iterator.index]}" />: </span>
+					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Exactly'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a></c:if>
+					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}, ${searchFilter.filterData.volumesBetween[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a></c:if>
 					<input type="hidden" value="${searchFilter.filterData.volumesTypes[iterator.index]}|${searchFilter.filterData.volumes[iterator.index]}|${searchFilter.filterData.volumesBetween[iterator.index]}" name="volume">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.datesTypes) &&((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.datesTypes) &&((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="dateSearchDiv">
 			<c:forEach items="${searchFilter.filterData.datesTypes}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch"><fmt:message key="search.documents.dateType.${searchFilter.filterData.datesTypes[iterator.index]}" />: </span>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'From'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Before'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}, ${searchFilter.filterData.datesYearBetween[iterator.index]} ${months[searchFilter.filterData.datesMonthBetween[iterator.index]]} ${searchFilter.filterData.datesDayBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'From'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Before'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}, ${searchFilter.filterData.datesYearBetween[iterator.index]} ${months[searchFilter.filterData.datesMonthBetween[iterator.index]]} ${searchFilter.filterData.datesDayBetween[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a></c:if>
 					<input type="hidden" value="${searchFilter.filterData.datesTypes[iterator.index]}|${searchFilter.filterData.datesYear[iterator.index]}|${months[searchFilter.filterData.datesMonth[iterator.index]]}|${searchFilter.filterData.datesDay[iterator.index]}|${searchFilter.filterData.datesYearBetween[iterator.index]}|${months[searchFilter.filterData.datesMonthBetween[iterator.index]]}|${searchFilter.filterData.datesDayBetween[iterator.index]}" name="date">					
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.digitized != null) &&((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.datesTypes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.digitized != null) &&((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.datesTypes))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="digitizedSearchDiv">
 			<c:if test="${(searchFilter.filterData.digitized != null)}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Digitized: </span><span class="wordSearch"><c:if test="${searchFilter.filterData.digitized == true}">Yes</c:if><c:if test="${searchFilter.filterData.digitized == false}">No</c:if></span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.digitized"/>: </span><span class="wordSearch"><c:if test="${searchFilter.filterData.digitized == true}">Yes</c:if><c:if test="${searchFilter.filterData.digitized == false}">No</c:if></span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<c:if test="${searchFilter.filterData.digitized.toString() ==  'true'}">
 						<input type="hidden" value="Yes" name="digitized">
 					</c:if>
@@ -53,99 +53,99 @@
 				</div>
 			</c:if>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.languages) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.languages) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="languagesSearchDiv">
 			<c:forEach items="${searchFilter.filterData.languages}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Languages: </span><span class="wordSearch">${searchFilter.filterData.languages[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.languages"/>: </span><span class="wordSearch">${searchFilter.filterData.languages[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${searchFilter.filterData.languages[iterator.index]}" name="languages">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.otherLang) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.otherLang) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="otherLangSearchDiv">
 			<c:forEach items="${searchFilter.filterData.otherLang}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Other Language: </span><span class="wordSearch">${searchFilter.filterData.otherLang[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.languages.other"/>: </span><span class="wordSearch">${searchFilter.filterData.otherLang[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${searchFilter.filterData.otherLang[iterator.index]}" name="otherLang">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.cipher.length() != 0) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.cipher.length() != 0) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="cipherSearchDiv">
 			<c:if test="${searchFilter.filterData.cipher.length() != 0}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Cipher: </span><span class="wordSearch">${searchFilter.filterData.cipher}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.cipher"/>: </span><span class="wordSearch">${searchFilter.filterData.cipher}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.cipher)}" name="cipher">
 				</div>
 			</c:if>
 			</div>
-			<c:if test="${(searchFilter.filterData.index.length() != 0) && ((searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.index.length() != 0) && ((searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="indexSearchDiv">
 			<c:if test="${searchFilter.filterData.index.length() != 0}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Index: </span><span class="wordSearch">${searchFilter.filterData.index}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.languages.indexOfNames"/>: </span><span class="wordSearch">${searchFilter.filterData.index}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.index)}" name="index">
 				</div>
 			</c:if>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="fromVolumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.correspondentsAndContext.from"/>: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="fromVolume">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.toVolume) && ((not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.toVolume) && ((not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="toVolumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.toVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">To: </span><span class="wordSearch">${searchFilter.filterData.toVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.correspondentsAndContext.from"/>: </span><span class="wordSearch">${searchFilter.filterData.toVolume[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.toVolume[iterator.index])}" name="toVolume">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.context) && ((not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.context) && ((not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="contextSearchDiv">
 			<c:forEach items="${searchFilter.filterData.context}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Context: </span><span class="wordSearch">${searchFilter.filterData.context[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.correspondentsAndContext.context"/>: </span><span class="wordSearch">${searchFilter.filterData.context[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.context[iterator.index])}" name="context">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.inventario) && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.inventario) && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang)) }"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="inventarioSearchDiv">
 			<c:forEach items="${searchFilter.filterData.inventario}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Inventario: </span><span class="wordSearch">${searchFilter.filterData.inventario[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.correspondentsAndContext.inventarioSommario"/>: </span><span class="wordSearch">${searchFilter.filterData.inventario[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.inventario[iterator.index])}" name="inventario">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.volumesId) &&  ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.volumesId) &&  ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="volumeIdSearchDiv">
 			<c:forEach items="${searchFilter.filterData.volumesId}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="catogorySearch">Volume ID:</span><span class="wordSearch">${searchFilter.filterData.volumesId[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="catogorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeId.title"/>:</span><span class="wordSearch">${searchFilter.filterData.volumesId[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<input type="hidden" value="${searchFilter.filterData.volumesId[iterator.index]}" name="volumeId">
 				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p></c:if>
 			</c:forEach>	
 			</div>
-			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario) || (not empty searchFilter.filterData.volumesId))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang) || (not empty searchFilter.filterData.inventario) || (not empty searchFilter.filterData.volumesId))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchVolumesFilter.addBoolean"/></p><hr></c:if>
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Logical Delete:</span><span class="wordSearch">Yes</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.logicalDelete.title"/>:</span><span class="wordSearch"><fmt:message key="search.advancedSearchVolumesFilter.logicalDeleteYes"/></span><a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 					<c:if test="${searchFilter.filterData.logicalDelete.toString() ==  'true'}">
 						<input type="hidden" value="true" name="logicalDelete">
 					</c:if>
@@ -155,12 +155,12 @@
 				</div>
 			</c:if>
 			</div>
-			<p class="yourSearchDiv">Records found:
+			<p class="yourSearchDiv"><fmt:message key="search.advancedSearchVolumesFilter.recordsFound"/>:
 			<span class="recordsNum"></span></p>
 			
 			<br>
 			<br>
-			<a class="saveButton" href="#">Save</a>
+			<a class="saveButton" href="#"><fmt:message key="search.advancedSearchVolumesFilter.save"/></a>
 			<input type="submit" title="Search" value="Search" id="advsearch">
 
 			<input type="hidden" name="idSearchFilter" value="${command.idSearchFilter}">

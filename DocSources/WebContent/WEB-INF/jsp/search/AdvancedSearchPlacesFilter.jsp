@@ -10,65 +10,65 @@
 	<c:url var="AdvancedSearchCountURL" value="/src/AdvancedSearchCount.json" />
 
 <div id="yourSearchFilterDiv">
-	<h1 class="advSearchTitle">Your search filter</h1>
+	<h1 class="advSearchTitle"><fmt:message key="search.advancedSearchPlacesFilter.yourSearchFilter.title"/></h1>
 	
 	<form id="yourEasySearchFilterForm" method="post" action="${AdvancedSearchURL}">
-		<p><u>Custom Search Filter</u></p>
+		<p><u><fmt:message key="search.advancedSearchPlacesFilter.customSearchFilter.title"/></u></p>
 		<br />
 		<div id="placeNameSearchDiv">
 		<c:forEach items="${searchFilter.filterData.placesName}" varStatus="iterator">
 			<div class="searchFilterDiv">
-				<span class="categorySearch">Place Name: </span><span class="wordSearch">${searchFilter.filterData.placesName[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<span class="categorySearch"><fmt:message key="search.advancedSearchPlacesFilter.placeName"/>: </span><span class="wordSearch">${searchFilter.filterData.placesName[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 				<input type="hidden" value="${fn2:encode(searchFilter.filterData.placesName[iterator.index])}" name="placeName" />
 			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p></c:if>
 		</c:forEach>
 		</div>
-		<c:if test="${(not empty searchFilter.filterData.exactPlaceName) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(not empty searchFilter.filterData.exactPlaceName) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p><hr></c:if>
 		<div id="placeSearchDiv">
 		<c:forEach items="${searchFilter.filterData.exactPlaceName}" varStatus="iterator">	
 			<div class="searchFilterDiv">
-				<span class="categorySearch">Exact Name: </span><span class="wordSearch">${searchFilter.filterData.exactPlaceName[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<span class="categorySearch"><fmt:message key="search.advancedSearchPlacesFilter.exactPlaceName"/>: </span><span class="wordSearch">${searchFilter.filterData.exactPlaceName[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 				<input type="hidden" value="${searchFilter.filterData.placeId[iterator.index]}|${fn2:encode(searchFilter.filterData.exactPlaceName[iterator.index])}" name="place"/>
 			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p></c:if>
 		</c:forEach>
 		</div>
-		<c:if test="${(not empty searchFilter.filterData.placeType) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(not empty searchFilter.filterData.placeType) && ((not empty searchFilter.filterData.placesName)) }"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p><hr></c:if>
 		<div id="placeTypeSearchDiv">
 		<c:forEach items="${searchFilter.filterData.placeType}" varStatus="iterator">
 			<div class="searchFilterDiv">
-				<span class="categorySearch">Place Type: </span><span class="wordSearch">${searchFilter.filterData.placeType[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<span class="categorySearch"><fmt:message key="search.advancedSearchPlacesFilter.placeType"/>: </span><span class="wordSearch">${searchFilter.filterData.placeType[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 				<input type="hidden" value="${searchFilter.filterData.placeType[iterator.index]}" name="placeType" />
 			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p></c:if>
 		</c:forEach>
 		</div>
-		<c:if test="${(not empty searchFilter.filterData.linkedToPeople) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(not empty searchFilter.filterData.linkedToPeople) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p><hr></c:if>
 		<div id="linkedToPeopleSearchDiv">
 		<c:forEach items="${searchFilter.filterData.linkedToPeople}" varStatus="iterator">
 			<div class="searchFilterDiv">
-				<span class="categorySearch">Linked To People: </span><span class="wordSearch">${searchFilter.filterData.linkedToPeople[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<span class="categorySearch"><fmt:message key="search.advancedSearchPlacesFilter.linkedToPeople"/>: </span><span class="wordSearch">${searchFilter.filterData.linkedToPeople[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 				<input type="hidden" value="${searchFilter.filterData.linkedToPeople[iterator.index]}" name="linkedToPeople" />
 			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p></c:if>
 		</c:forEach>
 		</div>
-		<c:if test="${(not empty searchFilter.filterData.placesId) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(not empty searchFilter.filterData.placesId) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p><hr></c:if>
 		<div id="placeIdSearchDiv">
 		<c:forEach items="${searchFilter.filterData.placesId}" varStatus="iterator">
 			<div class="searchFilterDiv">
-				<span class="catogorySearch">Place ID:</span><span class="wordSearch">${searchFilter.filterData.placesId[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+				<span class="catogorySearch"><fmt:message key="search.advancedSearchPlacesFilter.placeId"/>:</span><span class="wordSearch">${searchFilter.filterData.placesId[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 				<input type="hidden" value="${searchFilter.filterData.placesId[iterator.index]}" name="placeId">
 			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p></c:if>
 		</c:forEach>	
 		</div>
-		<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName) || (not empty searchFilter.filterData.linkedToPeople))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchPlacesFilter.andBoolean"/></p><hr></c:if>
 		<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Logical Delete:</span><span class="wordSearch">Yes</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchPlacesFilter.logicalDelete"/>:</span><span class="wordSearch">Yes</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPlacesFilter.remove"/></a>
 					<c:if test="${searchFilter.filterData.logicalDelete.toString() ==  'true'}">
 						<input type="hidden" value="true" name="logicalDelete">
 					</c:if>
@@ -79,12 +79,12 @@
 			</c:if>
 		</div>
 		
-		<p class="yourSearchDiv">Records found:
+		<p class="yourSearchDiv"><fmt:message key="search.advancedSearchPlacesFilter.recordsFound"/>:
 		<span class="recordsNum"></span></p>
 		
 		<br />
 		<br />
-		<a class="saveButton button_small" href="#">Save</a>
+		<a class="saveButton button_small" href="#"><fmt:message key="search.advancedSearchPlacesFilter.save"/></a>
 		<input type="submit" title="Search" value="Search" id="advsearch" class="button_small">
 			
 		<input type="hidden" name="idSearchFilter" value="${command.idSearchFilter}">

@@ -11,16 +11,16 @@
 
 <body class="search">
 	<div id="advancedSearch">
-		<div id="advancedSearch_top">SEARCH FOR PEOPLE</div>
+		<div id="advancedSearch_top"><fmt:message key="search.advancedSearchPeople.searchForPeople.title"/></div>
 		<div id="body_left">
 			<div id="customSearchFilterDiv">
-				<h1 class="advSearchTitle">Create your custom search filter</h1>
+				<h1 class="advSearchTitle"><fmt:message key="search.advancedSearchPeople.searchForPeople.customSearchFilter.title"/></h1>
 			<div id="accordion">
-				<h1 id="nameParts"><a>Name Parts</a></h1>
+				<h1 id="nameParts"><a><fmt:message key="search.advancedSearchPeople.nameParts"/></a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
 						<div class="row">
-							<div class="col_l">Word search</div>
+							<div class="col_l"><fmt:message key="search.advancedSearchPeople.nameParts.wordSearch"/></div>
 						</div>
 						<form id="namePartsSearchForm" method="post" class="edit">
 				           	<div class="row">
@@ -28,27 +28,27 @@
 				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.nameparts"></fmt:message>">?</a>
 									<input id="nameParts" name="nameParts" class="input_20c" type="text" value=""/>
 				               	</div>
-				               	<div class="col_l">in</div>
+				               	<div class="col_l"><fmt:message key="search.advancedSearchPeople.nameParts.in"/></div>
 				               	<div class="col_l">
 				               		<select id="namePartsType" name="namePartsType" class="selectform_SXlong">
-										<option value="All Name Types" selected="selected">All Name Types</option>
-										<option value="Appellative">Appellative</option>
-										<option value="Family">Family</option>
-										<option value="Given">Given</option>
-										<option value="Maiden">Maiden</option>
-										<option value="Married">Married</option>
-										<option value="Patronymic">Patronymic</option> 
+										<option value="All Name Types" selected="selected"><fmt:message key="search.advancedSearchPeople.nameParts.allNameTypes"/></option>
+										<option value="Appellative"><fmt:message key="search.advancedSearchPeople.nameParts.appellative"/></option>
+										<option value="Family"><fmt:message key="search.advancedSearchPeople.nameParts.family"/></option>
+										<option value="Given"><fmt:message key="search.advancedSearchPeople.nameParts.given"/></option>
+										<option value="Maiden"><fmt:message key="search.advancedSearchPeople.nameParts.maiden"/></option>
+										<option value="Married"><fmt:message key="search.advancedSearchPeople.nameParts.married"/></option>
+										<option value="Patronymic"><fmt:message key="search.advancedSearchPeople.nameParts.patronymic"/></option> 
 									</select>
 				               	</div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
+				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>">
 									<input type="hidden" id="category" value="Name Parts">
 				               	</div>
 				            </div>
 			            </form>	
 			            <br />
 			            <div class="row">
-			            	<div class="col_l">Match the exact name</div>
+			            	<div class="col_l"><fmt:message key="search.advancedSearchPeople.matchTheExactName"/></div>
 			            </div>
 			            <form id="personSearchForm" method="post" class="edit">
 			            	<div class="row">
@@ -59,7 +59,7 @@
 				        		<div class="col_l"></div>
 				        		<div class="col_l"></div>
 				        		<div class="col_r">
-				        			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="personAdd button_small" disabled="disabled">
+				        			<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>" class="personAdd button_small" disabled="disabled">
 									<input type="hidden" id="category" value="person">
 									<input type="hidden" id="personId" value="">
 				        		</div>
@@ -68,7 +68,7 @@
 			        </div>
 				</div>
 				
-				<h1 id="titleOccupation"><a>Title/Occupation</a></h1>
+				<h1 id="titleOccupation"><a><fmt:message key="search.advancedSearchPeople.titleOccupation.title"/></a></h1>
 				<div class="people">
 			    	<div class="listAdvSearch">
 			    		<form id="roleCategorySearchForm" method="post" class="edit">
@@ -76,7 +76,7 @@
 				               	<div class="col_l">
 				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.titleoccupation.selectarolecategory"></fmt:message>">?</a>
 									<select id="roleCategorySelect" name="roleCategorySelect" class="selectform_XXXlong">
-						                    <option value="Select a Role Category" selected="selected">Select a Role Category</option>
+						                    <option value="Select a Role Category" selected="selected"><fmt:message key="search.advancedSearchPeople.selectRoleCategory"/></option>
 						                        <optgroup label="ARTISTS and ARTISANS">
 						                        	<option value="ARTISTS and ARTISANS">All Artists and Artisans</option>
 						                        	<option value="Actors/Dancers">Actors/Dancers</option>
@@ -164,7 +164,7 @@
 				               	</div>
 				               	<div class="col_r">
 				               		<input type="hidden" id="roleCategory" name="roleCategory" type="text" value=""/>
-						            <input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
+						            <input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>">
 									<input type="hidden" id="category" value="Role Category">
 				               	</div>
 				            </div>
@@ -173,7 +173,7 @@
 					<br />
 					
 						<div class="row">
-			               	<div class="col_l">Word search in Title/Occupation</div>
+			               	<div class="col_l"><fmt:message key="search.advancedSearchPeople.wordSearchInTitleOccupation.title"/></div>
 			            </div>
 			        
 			        <form id="occupationWordSearchForm" method="post" class="edit">
@@ -192,7 +192,7 @@
 			        <br />
 			        
 				        <div class="row">
-				             <div class="col_l">Match the exact Title/Occupation</div>
+				             <div class="col_l"><fmt:message key="search.advancedSearchPeople.matchTheExactTitleOccupation.title"/></div>
 				        </div>
 			        
 			        <form id="occupationSearchForm" method="post" class="edit">
@@ -211,25 +211,25 @@
 				</div> 
 				</div>
 				
-				<h1 id="placeSearch"><a>Person Details and Vital Statistics</a></h1>
+				<h1 id="placeSearch"><a><fmt:message key="search.advancedSearchPeople.personDetails.title"/></a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
 						<form id="genderSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
 				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.gender"></fmt:message>">?</a>
-									<label for="gender" id="genderLabel">Gender</label>
+									<label for="gender" id="genderLabel"><fmt:message key="search.advancedSearchPeople.personDetails.gender"/></label>
 				               	</div>
 				               	<div class="col_l">
 				               		<select id="genderSelect" name="genderSelect" class="selectform_short">
-										<option value="M" selected="selected">M</option>
-						                <option value="F">F</option>
-						                <option value="X">X</option>
+										<option value="M" selected="selected"><fmt:message key="search.advancedSearchPeople.personDetails.gender.male"/></option>
+						                <option value="F"><fmt:message key="search.advancedSearchPeople.personDetails.gender.female"/></option>
+						                <option value="X"><fmt:message key="search.advancedSearchPeople.personDetails.gender.notApplicable"/></option>
 									</select>
 				               	</div>
 				               	<div class="col_r">
 				               		<input type="hidden" id="gender" name="gender" type="text" value=""/>
-									<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="genderAdd button_small">
+									<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>" class="genderAdd button_small">
 									<input type="hidden" id="category" value="Gender">
 				               	</div>
 				            </div>
@@ -240,14 +240,14 @@
 				               	<div class="col_l">
 				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.birthdeathplace"></fmt:message>">?</a>
 									<select id="placeType" name="placeType" class="selectform_MXlong">
-										<option value="Birth/Death Place" selected="selected">Birth/Death Place</option>
-										<option value="Birth Place">Birth Place</option>
-										<option value="Death Place">Death Place</option>
+										<option value="Birth/Death Place" selected="selected"><fmt:message key="search.advancedSearchPeople.personDetails.birthDeathPlace"/></option>
+										<option value="Birth Place"><fmt:message key="search.advancedSearchPeople.personDetails.birthPlace"/></option>
+										<option value="Death Place"><fmt:message key="search.advancedSearchPeople.personDetails.deathPlace"/></option>
 									</select>
 				               	</div>
 				               	<div class="col_l"><input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd button_small" disabled="disabled">
+				               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>" class="placeAdd button_small" disabled="disabled">
 									<input type="hidden" id="category" value="Place">
 									<input type="hidden" id="placeId" value="">
 				               	</div>
@@ -261,10 +261,10 @@
 				               	<div class="col_l">
 				               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.persondetailsandvitalstatistics.bornanddeathdate"></fmt:message>">?</a>
 									<select id="dateType" name="dateType" class="selectform_Llong">
-										<option value="Born after" selected="selected" >Born after</option>
-										<option value="Dead by">Dead by</option>
-										<option value="Lived between">Lived between</option>
-										<option value="Born/Died on">Born/Died on</option>
+										<option value="Born after" selected="selected" ><fmt:message key="search.advancedSearchPeople.personDetails.bornAfter"/></option>
+										<option value="Dead by"><fmt:message key="search.advancedSearchPeople.personDetails.deadBy"/></option>
+										<option value="Lived between"><fmt:message key="search.advancedSearchPeople.personDetails.livedBetween"/></option>
+										<option value="Born/Died on"><fmt:message key="search.advancedSearchPeople.personDetails.bornDiedOn"/></option>
 									</select>
 				               	</div>
 				               	<div class="col_l"><input id="dateYear" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4"/></div>
@@ -276,13 +276,13 @@
 									</select>
 				               	</div>
 				               	<div class="col_l"><input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/></div>
-				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="visible button_small"></div>
+				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>" class="visible button_small"></div>
 				            </div>
 				            
 				            <div class="row">
 				               	<div class="col_l">
 				               		<input type="hidden" id="category" value="Date">
-									<p class="invisible">and</p>
+									<p class="invisible"><fmt:message key="search.advancedSearchPeople.personDetails.livedBetween.and"/></p>
 				               	</div>
 				               	<div class="col_l"><input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" /></div>
 				               	<div class="col_l">
@@ -293,13 +293,13 @@
 						            </select>
 				               	</div>
 				               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2"/></div>
-				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="invisible button_small"></div>
+				               	<div class="col_r"><input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>" class="invisible button_small"></div>
 				            </div>
 			            </form>
 			        </div>
 			    </div>
 				
-				<h1 id="researchNotes"><a><i>in </i>Research Notes</a></h1>
+				<h1 id="researchNotes"><a><i><fmt:message key="search.advancedSearchPeople.inResearchNotes.title"/> </i><fmt:message key="search.advancedSearchPeople.ResearchNotes.title"/></a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
 						<form id="researchNotesSearchForm" method="post" class="edit">
@@ -309,7 +309,7 @@
 									<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_r">
-				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
+				               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>">
 									<input type="hidden" id="category" value="Research Notes">
 				               	</div>
 				            </div>
@@ -317,7 +317,7 @@
 			        </div>
 				</div>
 				
-				<h1 id="personIdSearch"><a>Person ID</a></h1>
+				<h1 id="personIdSearch"><a><fmt:message key="search.advancedSearchPeople.personId.title"/></a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
 						<form id="personIdSearchForm" method="post" class="edit">
@@ -327,7 +327,7 @@
 									<input id="personId" name="personId" class="input_7c" type="text" maxlength="5" />
 								</div>
 								<div class="col_r">
-									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>">
 									<input type="hidden" id="category" value="Person Id">
 								</div>
 							</div>
@@ -336,18 +336,18 @@
 				</div>
 				
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
+				<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchPeople.logicalDelete.title"/></a></h1>
 				<div class="people">
 					<div class="listAdvSearch">
 						<form id="logicalDeleteSearchForm" method="post" class="edit">
 							<div class="row">
 								<div class="col_l">
 									<a class="helpIcon" title="<fmt:message key="search.advancedSearchPeople.help.logicaldelete"></fmt:message>">?</a>
-									<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
+									<label for="logicalDelete" id="logicalDeleteLabel"><fmt:message key="search.advancedSearchPeople.logicalDelete.deleted"/></label>
 									<input type="checkbox" name="logicalDelete" value="true"/>
 								</div>
 								<div class="col_r">
-									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this word search to your search filter">
+									<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPeople.addToYourSearchFilter.alt"/>">
 									<input type="hidden" id="category" value="Logical Delete">
 								</div>
 							</div>

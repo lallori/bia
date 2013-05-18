@@ -11,16 +11,16 @@
 
 <body class="search">
 	<div id="advancedSearch">
-		<div id="advancedSearch_top">SEARCH FOR PLACES</div>
+		<div id="advancedSearch_top"><fmt:message key="search.advancedSearchPlaces.title"/></div>
 		<div id="body_left">
 			<div id="customSearchFilterDiv">
-				<h1 class="advSearchTitle">Create your custom search filter</h1>			
+				<h1 class="advSearchTitle"><fmt:message key="search.advancedSearchPlaces.createCustomSearchFilter"/></h1>			
 				<div id="accordion">
-					<h1 id="placeNameH1"><a>Place Name</a></h1>
+					<h1 id="placeNameH1"><a><fmt:message key="search.advancedSearchPlaces.placeName.title"/></a></h1>
 					<div>
 						<div class="listAdvSearch">
 							<div class="row">
-								<div class="col_l">Word search</div>
+								<div class="col_l"><fmt:message key="search.advancedSearchPlaces.placeName.wordSearch"/></div>
 							</div>
 							<form id="placeNameSearchForm" method="post" class="edit">
 					           	<div class="row">
@@ -31,14 +31,14 @@
 							<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="Add this to your search filter">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPlaces.addToYourSearchFilter.alt">">
 										<input type="hidden" id="category" value="Place Name">
 					               	</div>
 					            </div>
 				            </form>
 				            <br />
 				            <div class="row">
-				            	<div class="col_l">Match the exact name</div>
+				            	<div class="col_l"><fmt:message key="search.advancedSearchPlaces.placeName.matchTheExactName"/></div>
 				            </div>
 				            <form id="placeSearchForm" method="post" class="edit">
 			            	<div class="row">
@@ -56,7 +56,7 @@
 				        </div>
 				    </div>
 					
-					<h1 id="placeTypeH1"><a>Place Type</a></h1>
+					<h1 id="placeTypeH1"><a><fmt:message key="search.advancedSearchPlaces.placeName.placeType"/></a></h1>
 					<div>
 						<div class="listAdvSearch">
 							<form id="placeTypeSearchForm" method="post" class="edit">
@@ -64,7 +64,7 @@
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.placetype.selectaplacetype"></fmt:message>">?</a>
 										<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
-											<option value="Select a Place Type" selected="selected">Select a Place Type</option>
+											<option value="Select a Place Type" selected="selected"><fmt:message key="search.advancedSearchPlaces.placeName.selectPlaceType"/></option>
 											<c:forEach items="${placeTypes}" var="placeType">
 												<option value="${placeType}">${placeType}</option>
 											</c:forEach>
@@ -80,7 +80,7 @@
 				        </div>
 					</div>
 				
-					<h1 id="linkedPeopleH1"><a>Linked to People</a></h1>
+					<h1 id="linkedPeopleH1"><a><fmt:message key="search.advancedSearchPlaces.linkedToPeople.title"/></a></h1>
 					<div>
 						<div class="listAdvSearch">
 							<form id="linkedToPeopleSearchForm" method="post" class="edit">
@@ -88,11 +88,11 @@
 					               	<div class="col_l">
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.linkedtopeople.selectalinktype.senderlocation"></fmt:message>">?</a>
 										<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
-											<option value="Select a Link Type" selected="selected">Select a Link Type</option>
-											<option value="Sender Location">Sender Location</option>
-											<option value="Recipient Location">Recipient Location</option>
-											<option value="Birth Place">Birth Place</option>
-											<option value="Death Place">Death Place</option>
+											<option value="Select a Link Type" selected="selected"><fmt:message key="search.advancedSearchPlaces.linkedToPeople.selectLinkType"/></option>
+											<option value="Sender Location"><fmt:message key="search.advancedSearchPlaces.linkedToPeople.senderLocation"/></option>
+											<option value="Recipient Location"><fmt:message key="search.advancedSearchPlaces.linkedToPeople.recipientLocation"/></option>
+											<option value="Birth Place"><fmt:message key="search.advancedSearchPlaces.linkedToPeople.birthPlace"/></option>
+											<option value="Death Place"><fmt:message key="search.advancedSearchPlaces.linkedToPeople.deathPlace"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_r">
@@ -105,7 +105,7 @@
 				        </div> 
 					</div>
 					
-					<h1 id="placeIdSearch"><a>Place ID</a></h1>
+					<h1 id="placeIdSearch"><a><fmt:message key="search.advancedSearchPlaces.placeId.title"/></a></h1>
 					<div>
 						<div class="listAdvSearch">
 							<form id="placeIdSearchForm" method="post" class="edit">
@@ -124,14 +124,14 @@
 					</div>
 					
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					<h1 id="logicalDeleteSearch"><a>Logical Delete</a></h1>
+					<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchPlaces.logicalDelete.title"/></a></h1>
 					<div>
 						<div class="listAdvSearch">
 							<form id="logicalDeleteSearchForm" method="post" class="edit">
 								<div class="row">
 									<div class="col_l">
 										<a class="helpIcon" title="<fmt:message key="search.advancedSearchPlaces.help.logicaldelete"></fmt:message>">?</a>
-										<label for="logicalDelete" id="logicalDeleteLabel">Deleted</label>
+										<label for="logicalDelete" id="logicalDeleteLabel"><fmt:message key="search.advancedSearchPlaces.logicalDelete.deleted"/></label>
 										<input type="checkbox" name="logicalDelete" value="true"/>
 									</div>
 									<div class="col_r">
