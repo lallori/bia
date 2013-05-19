@@ -10,7 +10,7 @@
 		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b>VOLUME DETAILS</b></legend>
+			<legend><b><fmt:message key="volbase.editDetailsVolume.title"/></b></legend>
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
