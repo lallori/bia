@@ -31,7 +31,7 @@
 							<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPlaces.addToYourSearchFilter.alt">">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchPlaces.addToYourSearchFilter.alt"/>">
 										<input type="hidden" id="category" value="Place Name">
 					               	</div>
 					            </div>
