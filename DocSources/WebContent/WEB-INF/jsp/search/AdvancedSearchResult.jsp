@@ -266,6 +266,8 @@
 			<p>
 				${yourSearch}
 			</p>
+			<br>
+			<br>
 		</div>
 	</div>
 	
