@@ -30,7 +30,7 @@
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="<fmt:message key="docbase.editTopicDocument.help.show"></fmt:message>">?</a>
-						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error"><fmt:message key="docbase.editPeopleDocument.title.addNewPerson"/></form:label>
+						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error"></form:label>
 					</div>
 					<div class="col_l">
 						<form:select path="topicId" id="topicId" cssClass="selectform_XXXlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />
