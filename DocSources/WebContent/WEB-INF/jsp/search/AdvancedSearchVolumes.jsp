@@ -26,7 +26,7 @@
 					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.volume.exactlyorbetween"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
 											<option value="Exactly" selected="selected"><fmt:message key="search.advancedSearchVolumes.volume.exatcly"/></option>
-											<option value="Between"></option>
+											<option value="Between"><fmt:message key="search.advancedSearchVolumes.volume.between"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE --></div>
