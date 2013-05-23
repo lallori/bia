@@ -58,6 +58,7 @@
 <!-- 			</div> -->
   
 			<div id="footer">
+				<a href="http://www.delmas.org/" class="delmas"><img src="<c:url value="/images/1024/img_delmas.jpg"/>" alt="The Gladys Krieble Delmas Foundation" /></a>
 				<a href="http://bia.medici.org" target="_blank" class="bia"><img src="<c:url value="/images/1024/img_poweredBy.png"/>" alt="Bia - The Medici Archive Project" /></a>
 				<a href="http://www.mellon.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/img_mellon.png"/>" alt="The Andrew W. Mellon Foundation" /></a>
 				<a href="http://www.archivi.beniculturali.it" target="_blank" class="dga"><img src="<c:url value="/images/1024/img_dga.png"/>" alt="DGA" /></a>
