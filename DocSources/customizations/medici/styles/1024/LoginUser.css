@@ -30,7 +30,7 @@ body {
 }
 
 #footer {
-	width:600px;
+	width:700px;
 	height: 95px;
 	margin: 546px 0 0 211px;
 	position:absolute;
@@ -38,13 +38,13 @@ body {
 
 .bia {
     position: absolute;
-	margin: 0 0 0 140px;
+	margin: 0 0 0 190px;
 	display:none;
 }
 
 .mellon {
 	position: absolute;
-	margin: 0 0 0 140px;
+	margin: 0 0 0 170px;
 }
 
 .dga {
@@ -53,7 +53,7 @@ body {
 }
 
 .archivio {
-	margin: 50px 0 0 270px;
+	margin: 50px 0 0 400px;
 	position: absolute;
 }
 
