@@ -1049,10 +1049,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPeoplePerson.jsp"/>
 	</definition>
 	
-	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
-	</definition>
-
 	<definition name="peoplebase/ShowVettingChronologyPersonModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowVettingChronologyPersonModalWindow.jsp"/>
 	</definition>
