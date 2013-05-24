@@ -717,20 +717,16 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditDetailsPlace.jsp"/>
 	</definition>
 	
-	<definition name="geobase/EditExternalLinksPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinksPlace.jsp" />
-	</definition>
-	
 	<definition name="geobase/EditGeographicCoordinatesPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditGeographicCoordinatesPlace.jsp" />
 	</definition>
 	
-	<definition name="geobase/EditExternalLinkPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinkPlace.jsp" />
-	</definition>
-	
 	<definition name="geobase/EditExternalLinksPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinksPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditExternalLinkPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinkPlace.jsp" />
 	</definition>
 	
 	<definition name="geobase/EditNamesOrNameVariantsPlace" extends="template.partialDOM">
