@@ -1037,7 +1037,7 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.titlesOrOccupation">
+	<definition name="peoplebase/ShowTitleOrOccupation" extends="template.titleOrOccupation">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitleOrOccupation.jsp"/>
 	</definition>
 
