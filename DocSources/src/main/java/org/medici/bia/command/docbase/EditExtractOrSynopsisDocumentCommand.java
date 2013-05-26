@@ -41,6 +41,7 @@ public class EditExtractOrSynopsisDocumentCommand {
 	private Integer synExtrId;
 	private Integer entryId;
 	private String docExtract;
+	private String documentBibliography;
 	private String synopsis;
 	private Boolean modalWindow;
 	private Document document;
@@ -89,6 +90,22 @@ public class EditExtractOrSynopsisDocumentCommand {
 	 */
 	public void setDocument(Document document) {
 		this.document = document;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDocumentBibliography() {
+		return documentBibliography;
+	}
+
+	/**
+	 * 
+	 * @param documentBibliography
+	 */
+	public void setDocumentBibliography(String documentBibliography) {
+		this.documentBibliography = documentBibliography;
 	}
 
 	/**
