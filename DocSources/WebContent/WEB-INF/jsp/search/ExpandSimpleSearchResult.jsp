@@ -12,12 +12,6 @@
 		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
 	</c:url>
 
-<%-- 	<c:url var="AdvancedSearchRefineURL" value="/src/ConvertSimpleSearchToAdvancedSearch.do"> --%>
-<%-- 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param> --%>
-<%-- 		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" /> --%>
-<%-- 		<c:param name="text" value="${command.text}" /> --%>
-<%-- 	</c:url> --%>
-
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 
 	<script type="text/javascript" charset="utf-8">
@@ -29,7 +23,7 @@
 
 		$j(document).ready(function() {
 			//dynamic field management
-			$j("#ExpandResults > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#ExpandResults > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><fmt:message key="${outputField}" var="outputFieldMessage"/><c:out escapeXml="false" value="<th>${outputFieldMessage}</th>"/></c:forEach>');
 									
 			var table = $j('#ExpandResults').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [6] }],
