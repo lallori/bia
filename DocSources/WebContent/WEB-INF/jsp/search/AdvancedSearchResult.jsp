@@ -24,7 +24,7 @@
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
 			//dynamic field management
-			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><fmt:message key="${outputField}" var="outputFieldMessage"/><c:out escapeXml="false" value="<th>${outputFieldMessage}</th>"/></c:forEach>');
 
 			var test;
 			var colsort;

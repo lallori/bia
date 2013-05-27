@@ -147,41 +147,41 @@ public class SimpleSearchController {
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
 		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
 			outputFields = new ArrayList<String>(6);
-			outputFields.add("Sender");
-			outputFields.add("Recipient");
-			outputFields.add("Date");
-			outputFields.add("Sender Location");
-			outputFields.add("Recipient Location");
-			outputFields.add("Volume <br /> (Ins/Pa) <br /> Folio");
+			outputFields.add("search.simpleSearchResult.extract.column1");
+			outputFields.add("search.simpleSearchResult.extract.column2");
+			outputFields.add("search.simpleSearchResult.extract.column3");
+			outputFields.add("search.simpleSearchResult.extract.column4");
+			outputFields.add("search.simpleSearchResult.extract.column5");
+			outputFields.add("search.simpleSearchResult.extract.column6");
 		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
 			outputFields = new ArrayList<String>(6);
-			outputFields.add("Sender");
-			outputFields.add("Recipient");
-			outputFields.add("Date");
-			outputFields.add("Sender Location");
-			outputFields.add("Recipient Location");
-			outputFields.add("Volume <br /> (Ins/Pa) <br /> Folio");
+			outputFields.add("search.simpleSearchResult.synopsis.column1");
+			outputFields.add("search.simpleSearchResult.synopsis.column2");
+			outputFields.add("search.simpleSearchResult.synopsis.column3");
+			outputFields.add("search.simpleSearchResult.synopsis.column4");
+			outputFields.add("search.simpleSearchResult.synopsis.column5");
+			outputFields.add("search.simpleSearchResult.synopsis.column6");
 		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
 			outputFields = new ArrayList<String>(5);
-			outputFields.add("Name");
-			outputFields.add("Gender");
-			outputFields.add("Born Date");
-			outputFields.add("Death Date");
-			outputFields.add("Documents Related");
+			outputFields.add("search.simpleSearchResult.people.column1");
+			outputFields.add("search.simpleSearchResult.people.column2");
+			outputFields.add("search.simpleSearchResult.people.column3");
+			outputFields.add("search.simpleSearchResult.people.column4");
+			outputFields.add("search.simpleSearchResult.people.column5");
 		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
 			outputFields = new ArrayList<String>(5);
-			outputFields.add("Place Name");
-			outputFields.add("Place Type");
-			outputFields.add("People Related");
-			outputFields.add("From/To Documents Related");
-			outputFields.add("Documents Related (Topics)");
+			outputFields.add("search.simpleSearchResult.place.column1");
+			outputFields.add("search.simpleSearchResult.place.column2");
+			outputFields.add("search.simpleSearchResult.place.column3");
+			outputFields.add("search.simpleSearchResult.place.column4");
+			outputFields.add("search.simpleSearchResult.place.column5");
 		} else {
 			outputFields = new ArrayList<String>(4);
-			outputFields.add("Carteggio");
-			outputFields.add("Filza N.(MDP)");
-			outputFields.add("Start Date");
-			outputFields.add("End Date");
-			outputFields.add("Digitized");
+			outputFields.add("search.simpleSearchResult.volume.column1");
+			outputFields.add("search.simpleSearchResult.volume.column2");
+			outputFields.add("search.simpleSearchResult.volume.column3");
+			outputFields.add("search.simpleSearchResult.volume.column4");
+			outputFields.add("search.simpleSearchResult.volume.column5");
 		}
 		
 		return outputFields;

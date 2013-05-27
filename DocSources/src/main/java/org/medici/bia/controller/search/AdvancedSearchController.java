@@ -254,34 +254,33 @@ public class AdvancedSearchController {
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
 		if (searchType.equals(SearchType.DOCUMENT)) {
 			outputFields = new ArrayList<String>(6);
-			outputFields.add("Sender");
-			outputFields.add("Recipient");
-			outputFields.add("Date");
-			outputFields.add("Sender Location");
-			outputFields.add("Recipient Location");
-			outputFields.add("Volume / Folio");
+			outputFields.add("search.advancedSearchResult.document.column1");
+			outputFields.add("search.advancedSearchResult.document.column2");
+			outputFields.add("search.advancedSearchResult.document.column3");
+			outputFields.add("search.advancedSearchResult.document.column4");
+			outputFields.add("search.advancedSearchResult.document.column5");
+			outputFields.add("search.advancedSearchResult.document.column6");
 		} else if (searchType.equals(SearchType.PEOPLE)) {
 			outputFields = new ArrayList<String>(5);
-			outputFields.add("Name");
-			outputFields.add("Gender");
-			//outputFields.add("Date");
-			outputFields.add("Born Date");
-			outputFields.add("Death Date");
-			outputFields.add("Documents Related");
+			outputFields.add("search.advancedSearchResult.people.column1");
+			outputFields.add("search.advancedSearchResult.people.column2");
+			outputFields.add("search.advancedSearchResult.people.column3");
+			outputFields.add("search.advancedSearchResult.people.column4");
+			outputFields.add("search.advancedSearchResult.people.column5");
 		} else if (searchType.equals(SearchType.PLACE)) {
 			outputFields = new ArrayList<String>(5);
-			outputFields.add("Place Name");
-			outputFields.add("Place Type");
-			outputFields.add("People Related");
-			outputFields.add("From/To Documents Related");
-			outputFields.add("Documents Related (Topics)");
+			outputFields.add("search.advancedSearchResult.place.column1");
+			outputFields.add("search.advancedSearchResult.place.column2");
+			outputFields.add("search.advancedSearchResult.place.column3");
+			outputFields.add("search.advancedSearchResult.place.column4");
+			outputFields.add("search.advancedSearchResult.place.column5");
 		} else {
 			outputFields = new ArrayList<String>(5);
-			outputFields.add("Carteggio");
-			outputFields.add("Filza N.(MDP)");
-			outputFields.add("Start Date");
-			outputFields.add("End Date");
-			outputFields.add("Digitized");
+			outputFields.add("search.advancedSearchResult.volume.column1");
+			outputFields.add("search.advancedSearchResult.volume.column2");
+			outputFields.add("search.advancedSearchResult.volume.column3");
+			outputFields.add("search.advancedSearchResult.volume.column4");
+			outputFields.add("search.advancedSearchResult.volume.column5");
 		}
 		
 		return outputFields;
