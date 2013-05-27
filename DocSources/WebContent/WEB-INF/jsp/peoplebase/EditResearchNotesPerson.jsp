@@ -19,7 +19,7 @@
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
 			<div class="listForm">
-				<div class="row"><a class="helpIcon" title="<fmt:message key="peoplebase.edit.researchnotes"></fmt:message>">?</a></div>
+				<div class="row"><a class="helpIcon" title="<fmt:message key="peoplebase.editResearchNotes.help.edit"></fmt:message>">?</a></div>
 				<div class="row"><form:textarea id="bioNotes" path="bioNotes" class="txtarea_big" /></div>
 			</div>
 			
