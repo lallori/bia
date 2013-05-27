@@ -19,7 +19,7 @@
 		</security:authorize>
 			
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
-			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPlace"/></p></a>
+			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPLace"/></p></a>
 		</security:authorize>
 			
 			<input id="close" class="button_small" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
