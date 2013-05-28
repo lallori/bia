@@ -22,7 +22,7 @@
 		<c:param name="flashVersion"	value="false" />
 	</c:url>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 		<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
@@ -55,7 +55,7 @@
 					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
 				</c:if>
 			</div>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<c:if test="${not empty image}">
 				<div id="SpineVolumeDigitDiv">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
@@ -77,10 +77,10 @@
 			</security:authorize>
 				<!-- <div id="SpineVolumeDiv">
 				<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
-				<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="<c:url value="/de/peoplebase/EditPortraitPerson.html"/>">edit</a></security:authorize></p>
+				<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS"><a id="EditPortraitPerson" href="<c:url value="/de/peoplebase/EditPortraitPerson.html"/>">edit</a></security:authorize></p>
 				</div> -->
 			
-			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<div id="SpineVolumeNotDigitDiv">
 					<span class="register"><fmt:message key="volbase.showDetailsVolume.register"/></span>
 				</div>
@@ -91,7 +91,7 @@
 		<div id="EditDetailsVolumeDiv" class="background">
 			<div class="title">
 				<h5><fmt:message key="volbase.showDetailsVolume.title.details"/> </h5>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 				<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 			</div>
@@ -196,7 +196,7 @@
 		});
 	});
 	</script>
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditContextVolume").css('visibility', 'visible');

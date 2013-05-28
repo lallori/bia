@@ -51,7 +51,7 @@
 				<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.shareVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font></p>
 			</c:if>
 		</div>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:if test="${not empty image}">
 			<div id="SpineVolumeDigitDiv">
 				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
@@ -72,7 +72,7 @@
 			</c:if>
 		</security:authorize>
 			
-		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<div id="SpineVolumeNotDigitDiv">
 				<span class="register"><fmt:message key="volbase.shareVolume.register"/></span>
 			</div>

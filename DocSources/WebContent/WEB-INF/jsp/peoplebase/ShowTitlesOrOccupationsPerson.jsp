@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditTitlesOrOccupationsPersonURL" value="/de/peoplebase/EditTitlesOrOccupationsPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
@@ -13,7 +13,7 @@
 	<div id="EditTitlesOrOccupationsPersonDiv" class="background">
 		<div class="title">
 			<h5>TITLES / OCCUPATIONS </h5>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<c:if test="${person.personId > 0}">
 				<a id="EditTitlesOrOccupationsPerson" href="${EditTitlesOrOccupationsPersonURL}" class="editButton"></a><span id="loading"/>
 				</c:if>

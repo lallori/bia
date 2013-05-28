@@ -91,7 +91,7 @@
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT' && not empty documentExplorer}">
 				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 					<c:param name="entryId" value="${documentExplorer.entryId}"/>
@@ -173,7 +173,7 @@
 			</security:authorize>
 			
 			<c:if test="${forum.option.canHaveTopics}">
-				<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+				<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
 					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic">New Topic</a>
 				</div>

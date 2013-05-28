@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditExternalLinksPlaceURL" value="/de/geobase/EditExternalLinksPlace.do">
 			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
@@ -14,7 +14,7 @@
 		<div class="title">
 			<h5>EXTERNAL LINKS</h5>
 			<c:if test="${place.placeAllId > 0 && place.prefFlag == 'P'}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a title="Edit External Links" href="${EditExternalLinksPlaceURL}" class="editButton" id="EditExtLinkPlace"></a>
 			</security:authorize>
 			</c:if>
@@ -32,7 +32,7 @@
 	<br />
 
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPlace").css('visibility', 'visible');

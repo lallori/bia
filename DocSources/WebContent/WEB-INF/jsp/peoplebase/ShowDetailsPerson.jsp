@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditDetailsPersonURL" value="/de/peoplebase/EditDetailsPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
@@ -122,7 +122,7 @@
 				</div>
 				<br>				
 <!-- 				<p style="text-align:center"><b>Portrait</b></p> -->
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, COMMUNITY_USERS">
 				<c:if test="${person.personId != 0}">
 					<a id="uploadPortrait" class="button_medium" href="${UploadPortraitWindowURL}">Upload Portrait</a>
 				</c:if>
@@ -134,7 +134,7 @@
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
 				<h5>PERSON DETAILS</h5>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 					<a id="EditDetailsPerson" href="${EditDetailsPersonURL}" class="editButton"></a><span id="loading"/>
 				</security:authorize>
 			</div>
@@ -181,7 +181,7 @@
 		</div>
 	</div>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {			
 			$j("#EditNamesPerson").css('visibility', 'visible');
@@ -361,7 +361,7 @@
 		});
 	</script>
 </security:authorize>
-<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 <script type="text/javascript">
 		$j(document).ready(function() {
 			

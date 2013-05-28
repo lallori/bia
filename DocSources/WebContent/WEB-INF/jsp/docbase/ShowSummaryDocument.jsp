@@ -16,7 +16,7 @@
 		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
 	</c:url>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 		<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="flashVersion"   value="false" />
@@ -100,13 +100,13 @@
 		</div>
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="<fmt:message key="docbase.showSummaryDocument.shouldRegister"/>">
 				</security:authorize>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="docbase.showSummaryDocument.showThisDocumentInMV"/>"></a>
 					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="<fmt:message key="docbase.showSummaryDocument.showPreviewInRightSplitScreen"/>"></a>
 				</security:authorize>
@@ -114,10 +114,10 @@
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 					<span><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
 				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 					<span class="register"><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
 				</security:authorize>
 			</div>

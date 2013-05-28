@@ -57,12 +57,12 @@
 				<a id="nextRecord" title="<fmt:message key="volbase.showMenuVolume.help.gonext"/>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.vettinghistory"/>" href="${ShowVettingChronologyVolumeURL}"><fmt:message key="volbase.showMenuVolume.vettingHistory"/></a>
 		</security:authorize>
 		<span id="commentsOn"></span>
 		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="volbase.showMenuVolume.help.discussions"/>" href="#"><fmt:message key="volbase.showMenuVolume.discussions"/></a>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${!volume.logicalDelete}">
 				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="volbase.showMenuVolume.help.delete"/>" href="${DeleteVolumeURL}"><fmt:message key="volbase.showMenuVolume.delete"/></a>
 			</c:if>	

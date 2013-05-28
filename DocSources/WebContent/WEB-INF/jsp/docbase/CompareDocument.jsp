@@ -48,12 +48,12 @@
 		<c:param name="placeAllId" value="${document.recipientPlace.placeAllId}" />
 	</c:url>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showOrEditCompare button_large"><fmt:message key="docbase.compareDocument.showOrEditThisDocument"/></a>
 	</div>
 	</security:authorize>
-	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="showCompare button_medium"><fmt:message key="docbase.compareDocument.showThisDocument"/></a>
 	</div>
@@ -119,10 +119,10 @@
 			</div>
 			<c:if test="${not empty image}">
 					<div id="DocumentImageDigitDiv">
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 						</security:authorize>
-						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 							<span class="register">To see this Document image  you must register</span>
 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);">
 						</security:authorize>
@@ -130,10 +130,10 @@
 				</c:if>
 			<c:if test="${empty image}">
 				<div id="DocumentImageNotDigitDiv">
-					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 						<span><fmt:message key="docbase.compareDocument.toBeDigitized"/></span>
 					</security:authorize>
-					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 						<span class="register"><fmt:message key="docbase.compareDocument.toBeDigitized"/></span>
 					</security:authorize>
 				</div>

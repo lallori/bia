@@ -37,12 +37,12 @@
 </c:url>
 
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="showOrEditCompare button_large">Show or Edit this Place</a>
 	</div>
 </security:authorize>
-<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="showCompare button_medium">Show this Place</a>
 	</div>

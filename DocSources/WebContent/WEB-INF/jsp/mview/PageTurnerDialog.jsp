@@ -121,7 +121,7 @@
 	<c:url var="UpdateAnnotationsURL" value="/src/mview/UpdateAnnotations.json" />
 		
 <div id="PageTurnerVerticalDiv">
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div id="transcribeDiv">
 	
 		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
@@ -148,7 +148,7 @@
     </div>
 	</security:authorize>
 	
-	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<div id="transcribeDiv">
 	
 		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
@@ -255,7 +255,7 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -270,7 +270,7 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -284,7 +284,7 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -298,7 +298,7 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -561,7 +561,7 @@
 							}
 							
 						} else if (data.linkedDocument == 'false') {
-							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 							$j("#readyToTranscribe").css('visibility', 'visible');
 							</security:authorize>
 							$j("#alreadyTranscribe").css('visibility', 'hidden');

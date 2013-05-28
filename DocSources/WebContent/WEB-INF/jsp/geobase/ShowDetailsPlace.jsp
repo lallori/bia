@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditDetailsPlaceURL" 		value="/de/geobase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   		value="${place.placeAllId}" />
 			<c:param name="plSource" 	 		value="${place.plSource}" />
@@ -147,7 +147,7 @@
 						</c:if>
 						<c:if test="${linkGoogleMaps == null }">
 							<span>Not attached to Google Maps</span>
-							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 							<c:if test="${place.prefFlag == 'P'}">
 								<a class="PlaceMap" href="${EditGeographicCoordinatesPlaceURL}">Assign Geo Coordinates</a>
 							</c:if>
@@ -161,7 +161,7 @@
 		<div class="background" id="EditDetailsPlaceDiv">
 			<div class="title">
 				<h5>PLACE DETAILS</h5>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="EditDetailsPlace" href="${EditDetailsPlaceURL}" class="editButton"></a><span id="loading" />
 				</security:authorize>
 			</div>

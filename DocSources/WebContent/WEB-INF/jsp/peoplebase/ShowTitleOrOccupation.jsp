@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditTitleOrOccupationURL" value="/de/peoplebase/EditTitleOrOccupation.do">
 			<c:param name="titleOccId"   value="${titleOccsList.titleOccId}" />
 		</c:url>
@@ -13,7 +13,7 @@
 	<div id="EditTitleOccupationDiv" class="background">
 		<div class="title">
 			<h5>TITLES / OCCUPATIONS </h5>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="EditTitleOccupation" href="${EditTitleOrOccupationURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
@@ -30,7 +30,7 @@
 	</div>
 
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditTitleOccupation").click(function(){

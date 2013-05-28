@@ -9,7 +9,7 @@
 	<div id="ShowSynopsisDocumentDiv">
 		<div id="content">${synopsis}</div>
 		
-<%-- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"> --%>
+<%-- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS"> --%>
 <!-- 		<input id="editExtract" class="button_medium" type="submit" value="Edit Extract"/> -->
 <%-- 	</security:authorize> --%>
 	<input id="exitSynopsis" class="button_small" type="submit" value="Close"/>

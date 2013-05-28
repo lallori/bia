@@ -33,12 +33,12 @@
 	<c:param name="personId" value="${person.personId}" />
 </c:url>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showOrEditCompare button_large">Show or Edit this Person</a>
 	</div>
 </security:authorize>
-<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showCompare button_medium">Show this Person</a>
 	</div>

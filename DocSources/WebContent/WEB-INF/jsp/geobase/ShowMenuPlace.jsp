@@ -59,12 +59,12 @@
 			</c:if>
 		</security:authorize>
 		<c:if test="${place.placeAllId != 0}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 			</security:authorize>
 			<span id="commentsOn"></span>
 			<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.discussions"></fmt:message>" href="#">Discussions</a>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${!place.logicalDelete}">
 				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.delete"></fmt:message>" href="${DeletePlaceURL}">Delete</a>
 			</c:if>	

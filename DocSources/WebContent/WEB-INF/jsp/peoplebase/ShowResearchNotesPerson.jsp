@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditResearchNotesPersonURL" value="/de/peoplebase/EditResearchNotesPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
@@ -13,7 +13,7 @@
 	<div id="EditResearchNotesPersonDiv" class="background">
 		<div class="title">
 			<h5>RESEARCH NOTES </h5>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${person.personId > 0}">
 			<a id="EditResearchNotesPerson" href="${EditResearchNotesPersonURL}" class="editButton"></a><span id="loading"/>
 			</c:if>
@@ -29,7 +29,7 @@
 		</div>		
 	</div>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPerson").css('visibility', 'visible');

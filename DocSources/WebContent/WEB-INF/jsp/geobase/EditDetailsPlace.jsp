@@ -6,7 +6,7 @@
 	
 	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   value="${command.placeAllId}" />
 		</c:url>

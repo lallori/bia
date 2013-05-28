@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
@@ -14,7 +14,7 @@
 	<div id="EditDescriptionVolumeDiv" class="background">
 		<div class="title">
 			<h5><fmt:message key="volbase.showDescriptionVolume.title"/></h5>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${volume.summaryId > 0}">
 			<a id="EditDescriptionVolume" href="${EditDescriptionVolume}" class="editButton"></a><span id="loading"/>
 			</c:if>
@@ -106,7 +106,7 @@
 		</div>
 	</div>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS">
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j("#EditContextVolume").css('visibility', 'visible');

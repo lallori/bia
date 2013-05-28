@@ -117,7 +117,7 @@
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" />
 
 <div id="PageTurnerHorizontalDiv">
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div id="transcribeDiv">
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.transcriptionAvailableForFoliosOnly"/></span>
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.documentAlreadyTranscribed"/></a>
@@ -223,7 +223,7 @@
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}', 
 				IIPImageServer: '${IIPImageServerURL}', 
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -233,7 +233,7 @@
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -242,7 +242,7 @@
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -251,7 +251,7 @@
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
 			});
@@ -445,7 +445,7 @@
 							$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 						}
 					} else if (data.linkedDocument == 'false') {
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 						$j("#readyToTranscribe").css('visibility', 'visible');
 						</security:authorize>
 						$j("#alreadyTranscribe").css('visibility', 'hidden');

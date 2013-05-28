@@ -23,7 +23,7 @@
 
 <h2>${topic.subject }</h2>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 	<c:if test="${topic.forum.document != null && not empty documentExplorer}">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="entryId" value="${documentExplorer.entryId}"/>
@@ -117,7 +117,7 @@
 </security:authorize>
 
 <div id="topicActions">
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 		<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
 			<c:param name="postId" value="0"/>
 			<c:param name="forumId" value="${topic.forum.forumId}"/>
@@ -235,7 +235,7 @@
 
 
 <!-- <div id="topicActions"> -->
-<%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
+<%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
 <%-- 	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do"> --%>
 <%-- 			<c:param name="postId" value="0"/> --%>
 <%-- 			<c:param name="forumId" value="${topic.forum.forumId}"/> --%>

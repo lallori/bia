@@ -6,7 +6,7 @@
 
 <c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="EditSpousePersonURL" value="/de/peoplebase/EditSpousePerson.do"/>
 
 		<c:url var="EditSpousesPersonURL" value="/de/peoplebase/EditSpousesPerson.do">

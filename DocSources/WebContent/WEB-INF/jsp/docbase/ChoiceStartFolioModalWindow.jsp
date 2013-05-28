@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
@@ -138,7 +138,7 @@
 		<br />	
 		<br />
 	
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<div id="chooseDiv">
 			<a id="choose" class="choose button_large" href="${TranscribeAndContextualizeDocumentURL}"><fmt:message key="docbase.choiceStartFolio.choseThisStartFolio"/></a>
 		</div>

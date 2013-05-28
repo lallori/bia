@@ -13,12 +13,12 @@
 		<c:param name="summaryId" value="${volume.summaryId}" />
 	</c:url>
 	
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare button_large"><fmt:message key="volbase.compareVolume.showOrEditThisVolume"/></a>
 	</div>
 	</security:authorize>
-	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div>
 		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare button_medium"><fmt:message key="volbase.compareVolume.showThisVolume"/></a>
 	</div>

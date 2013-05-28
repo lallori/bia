@@ -179,7 +179,7 @@
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	
 		<div>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="volbase.showExplorerVolume.help.manuscriptViewer"/>" class="showFullscreenMode button_large"><fmt:message key="volbase.showExplorerVolume.showInFullscreen"/></a>
 			</security:authorize>
 			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary button_medium" href="#"><fmt:message key="volbase.showExplorerVolume.volumeSummary"/></a>

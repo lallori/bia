@@ -95,12 +95,12 @@
 			</c:choose>
 		</div>
 		<c:if test="${not empty image}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<div id="DocumentImageDigitDiv">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
 				</div>
 			</security:authorize>
-			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<div id="DocumentImageNotDigitDiv">
 					<span><fmt:message key="docbase.shareDocument.documentDigitized"/></span>
 				</div>

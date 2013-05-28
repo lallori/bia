@@ -6,26 +6,26 @@
 		<div id="EntryMenuDiv">
 			<h1><fmt:message key="menu.dataEntry.titleSectionExplain"/>:</h1>
 			
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"><p><fmt:message key="menu.dataEntry.addNewDocument"/></p></a>
 		</security:authorize>
 		
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 			<a id="AddNewPerson" href="<c:url value="/de/ShowCreatePersonMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPerson"/></p></a>
 		</security:authorize>
 				
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">
 			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>"><p><fmt:message key="menu.dataEntry.addNewVolume"/></p></a>
 		</security:authorize>
 			
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p><fmt:message key="menu.dataEntry.addNewPLace"/></p></a>
 		</security:authorize>
 			
 			<input id="close" class="button_small" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
 		
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_DISTANT_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS,ROLE_DIGITIZATION_TECHNICIANS">
 		<script>
 			$j(document).ready(function() {
 				$j("#AddNewDocument").click(function() {
