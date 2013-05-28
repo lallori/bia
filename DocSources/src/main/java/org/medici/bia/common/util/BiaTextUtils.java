@@ -44,8 +44,8 @@ public class BiaTextUtils {
 	 * @return
 	 */
 	public static String normalize(String inputText){
-		String returnValue = inputText.replaceAll("\u00E7","\'");
-		
-		return returnValue;
+		//String returnValue = inputText.replaceAll("\u00E7","\'");
+		//return returnValue;
+		return inputText;
 	}	
 }
