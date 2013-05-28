@@ -3503,6 +3503,7 @@ form#EditUserProfileForm span{
 #advancedSearch #body_left a{
 	text-decoration:none;
 	color:#654c47;
+	text-align: left;
 }
 
 
@@ -3687,7 +3688,7 @@ div.title a.helpIcon{ /* Help symbol "?" */
 	background:url(/DocSources/images/1024/bg_searchFilter.jpg) no-repeat;
 	margin: 0;
 	padding: 5px 0 0 58px;
-	width:390px;
+	width:345px;
 	min-height:450px;
 }
 
@@ -3721,6 +3722,7 @@ div.title a.helpIcon{ /* Help symbol "?" */
 
 .searchFilterDiv {
 	margin:10px 0 10px 0;
+	width:345px;
 }
 
 span.wordSearch {
@@ -3753,7 +3755,7 @@ span.categorySearch {
 }
 
 .saveButton { /* Save Button */
-	margin: 25px 0 0 -195px;
+	margin: 25px 0 0 -170px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
@@ -3768,7 +3770,7 @@ span.categorySearch {
 }
 
 #advsearch { /* Search Button */
-	margin: 25px auto auto 100px;
+	margin: 25px auto auto 125px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;

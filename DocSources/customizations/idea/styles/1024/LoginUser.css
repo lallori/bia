@@ -64,14 +64,16 @@ input[type="text"], input[type="password"] {
 	position: absolute;
 	margin: 50px 0 0 0;
 	display:none;
-
 }
 
 .archivio {
 	margin: 50px 0 0 270px;
 	position: absolute;
 	display:none;
+}
 
+.delmas {
+	display: none;
 }
 
 
