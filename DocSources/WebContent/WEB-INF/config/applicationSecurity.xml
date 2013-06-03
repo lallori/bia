@@ -26,6 +26,7 @@
         <security:intercept-url pattern="/user/SendUserActivationCode.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserPasswordReset.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/de/ShowPersonalDirectory.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/de/docbase/ShowVettingChronologyDocument.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ShowUserProfile.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/WelcomeNewUser.do" 				access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do"						access="IS_AUTHENTICATED_ANONYMOUSLY" />

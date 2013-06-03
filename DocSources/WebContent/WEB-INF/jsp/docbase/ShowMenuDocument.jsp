@@ -52,12 +52,10 @@
 				<a id="nextRecord" title="<fmt:message key="docbase.showMenuDocument.help.gonext"></fmt:message>" href="${historyNavigator.nextHistoryUrl}"></a>
 			</c:if>
 		</security:authorize>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-					<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
-		</security:authorize>
+			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		<span id="commentsOn"></span>
 		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS">
 			<c:if test="${!document.logicalDelete}">
 				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="docbase.showMenuDocument.help.delete"></fmt:message>" href="${DeleteDocumentURL}"><fmt:message key="docbase.showMenuDocument.delete"/></a>
 			</c:if>	
