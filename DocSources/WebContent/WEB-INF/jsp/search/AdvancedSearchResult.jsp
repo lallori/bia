@@ -222,7 +222,6 @@
 					  modal: true,
 					  resizable: false,
 					  width: 300,
-					  height: 130, 
 					  buttons: {
 						  Ok: function() {
 							  $j(this).dialog("close");
@@ -266,8 +265,6 @@
 			<p>
 				${yourSearch}
 			</p>
-			<br>
-			<br>
 		</div>
 	</div>
 	
