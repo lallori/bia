@@ -1,0 +1,648 @@
+body {
+	background-image:url(${contextPath}/images/1024/bg.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	background-color:#f6edec;
+	margin:0;
+	padding:0;
+	font-size: 12px;
+	color:#6F6B69;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* Structural Divs */
+
+#layout {
+	width:1000px;
+	height:700px;
+	margin:0px auto 0 auto;
+	padding:0px;
+	top:0px;
+	position:relative;
+}
+
+#map { /* The Medici Archive Project image */
+	width:270px;
+	height:175px;
+	margin-left:365px;
+	position:absolute;
+	background:url(${contextPath}/images/1024/img_mapLogin.png) no-repeat;
+}
+
+#footer {
+	width:700px;
+	height: 95px;
+	margin: 546px 0 0 155px;
+	position:absolute;
+}
+
+.bia {
+    position: absolute;
+	margin: 0 0 0 190px;
+	display:none;
+}
+
+.mellon {
+	position: absolute;
+	margin: 0 0 0 170px;
+}
+
+.dga {
+	position: absolute;
+	margin: 50px 0 0 0;
+}
+
+.archivio {
+	margin: 50px 0 0 400px;
+	position: absolute;
+}
+
+.delmas {
+	margin: 48px 0 0 235px;
+	position: absolute;
+}
+
+
+/* DIV Log in */
+
+#login {
+	width:305px;
+	height:295px;
+	margin-top:220px;
+	margin-left: 210px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	border-radius:4px 0 0 4px;
+}
+
+div.buttons {
+    position:absolute;
+    width:300px;
+    height:400px;
+    margin-left: 555px;
+    margin-top: 220px;
+}
+
+/*  Log in - Form */
+
+#login h1 {
+	padding:15px 0 15px 0;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+	text-align:center;
+}
+
+.loginform{ /*  Form class */
+	width:200px;
+	height:220px;
+	margin-top: 10px;
+	margin-left: 44px;
+	position:absolute;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.button_login, .button_medium {
+	width: 127px;
+	height: 22px;
+	background-image: url(${contextPath}/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
+	text-align: center;
+	background-color:transparent; 
+	display:block;
+	font-size:12px;
+	padding:1px 0 0 0;
+	line-height:18px;
+}
+
+table.loginform .button_medium {
+	margin-left:48px;
+}
+
+.fyp { /* Forgot your password class */
+	 font-size: 11px;
+	line-height:17px;
+ 
+	width: 225px;}
+
+.fyp a {
+	font-size:90%;
+}
+
+input {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	border:none;
+	color:#60584d;
+} 
+
+.loginInput, .registerInput { /* INPUT text */
+	font-size:12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 7px 5px 5px;
+	width:150px;
+}
+
+.loginInput {
+	margin-left:30px;
+}
+
+.remember { /* Remember me class */
+	 font-size: 11px;
+	 margin-left: 5px;
+	 display: inline-block;
+	 vertical-align: middle;
+}
+
+.loginform input[type=checkbox] {
+    display:inline-block;
+    vertical-align:middle;
+    margin-left: 60px;
+}
+
+/* buttonons */
+
+#register_here{
+	background-image:url(${contextPath}/images/1024/button_registerHere.png);
+	width:230px;
+	height:65px;
+	display: block;
+}
+
+#onlineCourses{
+	background-image:url(${contextPath}/images/1024/button_onlineCourses.png);
+	width:230px;
+	height:65px;
+	display: block;
+	margin-top:10px
+}
+
+#guest {
+	margin-top:10px;
+}
+
+#baseOn {
+    position: absolute;
+    margin: 500px 0 0 585px;
+}
+
+#baseOn img{
+    vertical-align:middle;
+}
+
+#register {
+	background-image:url(${contextPath}/images/1024/button_loginGuest.png);
+	width:230px;
+	height:65px;
+}
+
+.guest {
+	margin:0px;
+}
+
+/*  Register - Form */
+
+.compulsory {
+	color: #990000;
+}
+
+#registrationForm  { /*  Form content */
+	width:850px;
+	height:420px;
+	margin-top:190px;
+	margin-left: 75px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	background-repeat:no-repeat;
+	z-index:1;
+	border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+}
+
+#registrationForm h1 {
+        text-align:center;
+	margin: 5px 0 5px 0;
+}
+
+#registrationForm .title{
+	border-bottom:1px solid #AEAEAE;
+	margin:0 0 5px 0;
+	font-size:10px;
+	width: 850px;
+	text-align: center;
+        padding-bottom:5px;
+}
+
+.registrationForm { /*  Form class */
+	width:850px;
+	height:300px;
+	margin-top: 30px;
+	margin-left:20px;
+	position:absolute;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.registrationFormKO { /*  Form class */
+	width:850px;
+	height:290px;
+	margin-top: 30px;
+	margin-left:20px;
+	position:absolute;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+
+#captcha_register{
+	position:absolute;
+	width:250px;
+	height:130px;
+}
+
+.readThis { /* read this text class */
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: 10px;
+	margin:10px 0px 0px 240px;
+}
+
+#submitbutton { /* submit button class */
+	margin-left:140px;
+	position:absolute;
+	width:100px;
+	height:30px;
+}
+
+.already { /* Already have an account? */
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color:#886863;
+	font-size: 11px;
+	margin:0px 0px 0px 660px;
+}
+
+.already a { /* Already have an account? Links */
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size: 11px;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size: 11px;
+	float:left;
+}
+
+.loginerror { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	border:#900 solid 1px;
+	text-align:left;
+	padding:2px;
+	position:absolute;
+	margin: 145px 0 0 210px;
+	max-width:150px;
+}
+
+#create {
+	margin: 12px 0px 0px 690px;
+}
+
+/*  Recovery - Form */
+
+#recovery { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left: 265px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+}
+
+#recovery h1 {
+	padding:15px 0 15px 150px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+}
+
+.recovery { /*  Form class */
+	margin-left:20px;
+	height: 198px;
+	width: 460px;
+	margin-top: 20px;
+}
+
+.recoveryKO { /*  Form KO class */
+	margin-left:20px;
+	height:100px;
+	width:650px;
+	position:absolute;
+}
+
+#stemma { /*  Medici symbol */
+	width:180px;
+	height:220px;
+	margin-top:260px;
+	margin-left:620px;	
+	position:absolute;
+	background-image:url(${contextPath}/images/1024/img_coatofarms.png);
+}
+
+.recoveryInput { /* input text class */
+	font-size:12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 7px 30px 5px;
+	width:250px;
+	margin-left:90px;
+}
+
+#captcha_recovery{
+	width: 450px;
+	height: 120px;
+	margin-left: 10px;
+}
+
+#captcha_recoveryKO{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	margin-top:40px;
+	z-index:2;
+}
+
+#recovery p {
+	text-align:center;
+	margin-top:30px;
+	line-height: 20px;
+}
+
+.inputerrors_recovery { /* Error Span messages */
+	color: #900;
+	font-size: 11px;
+	margin-left: 56px;
+}
+
+#passwordRecovery {
+	margin: 10px 0px 0px 160px;
+}
+
+/*  SendUserActivationCode */
+
+#activationcode { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left:265px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+}
+
+#activationcode h1 {
+	padding:15px 0 15px 0;
+        text-align:center;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+}
+
+#activationcode p {
+	text-align:center;
+	margin-top:30px;
+	line-height: 20px;
+}
+
+/*  Registration Success */
+
+#usersuccess { /* Div content */
+	width:395px;
+	height:275px;
+	margin-top:220px;
+	margin-left: 305px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+}
+
+#usersuccess h1 {
+	padding:15px 0 15px 0;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+	text-align:center;
+}
+
+#usersuccess a{ /* Div content */
+	margin-left: 135px;	
+}
+
+.usersuccess {  /* p class */
+	margin-top: 40px;
+	margin-left:25px;
+	height:50px;
+	width:345px;
+	position:absolute;
+	text-align:center;
+	line-height:20px;
+	font-size: 12px;
+}
+
+.activsuccess {  /* p class */
+	margin-top:65px;
+	height:50px;
+	width: 395px;
+	text-align:center;
+}
+
+
+/* Reset Password */
+
+#reset { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left: 265px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+}
+
+#reset h1 {
+	padding:15px 0 15px 170px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+}
+
+.reset { /*  Form class */
+	margin-top:25px;
+	margin-left:20px;
+	height:100px;
+	width:250px;
+	position:absolute;
+}
+
+#reset p{
+	text-align:center;
+	margin-top:130px;
+	line-height:20px;
+}
+
+#reset a{
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+#captcha_reset{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	margin-top:24px;
+	z-index:2;
+}
+
+#captcha_resetKO{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	z-index:2;
+}
+
+.inputerrors_reset { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	margin:10px 0 0 5px;
+	float:left;
+}
+
+/* Tag */
+
+
+h1 {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:110%;
+	color:#6F6B69;
+}
+
+a img, img {
+   border:none;
+}
+
+a:focus { 
+	outline: 0; 
+}
+
+a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	text-decoration:none;
+	color:#6F6B69;
+}
+
+/* ReCaptcha */
+
+.recaptchatable .recaptcha_image_cell, #recaptcha_table {
+	background-color:transparent; //reCaptcha widget background color
+}
+ 
+#recaptcha_table {
+	border-color: none; //reCaptcha widget border color
+	background-color:transparent;
+}
+ 
+#recaptcha_response_field {
+	border-color:#6F6B69; //Text input field border color
+}
+
+
+/* -------------------------- Under Mainteinance ----------------------------- */
+
+#maintenance {
+	position: absolute;
+	margin: 300px 0 0 350px;
+	width: 290px;
+	text-align: center;
+	color:#666EA4;
+}
+
+#maintenance h1{
+	font-size:17px;
+	color:#666EA4;
+}
+
+/*  Password Expirated */
+
+#passwordExpirated  { /*  Form content */
+	width: 450px;
+	height:420px;
+	margin-top:190px;
+	margin-left: 265px;	
+	position:absolute;
+	border:1px solid #AEAEAE;
+	border-right:none;
+	background-repeat:no-repeat;
+	z-index:1;
+}
+
+#passwordExpirated h1 {
+        text-align:center;
+	margin: 5px 0 5px 0;
+        border-bottom: 1px solid #AEAEAE;
+        padding: 15px 0 15px 0;
+}
+
+#passwordExpirated fieldset{ 
+	border:none;
+}
+
+.list { /* Whole display list */
+	margin: 20px 0 0 70px;
+ 	 width: 350px;
+}
+
+.row { /* Single row */
+	display: table-row;
+}
+
+
+.list .col_r{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:right;
+}
+
+.list .col_l{ /* Sub-fields title cell */
+	 display: table-cell;
+	 text-align:left;
+}
+
+.button_small {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(${contextPath}/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align: center;
+	padding-top: 3px;
+	background-repeat: no-repeat;
+}
+
+input#update {
+    margin: 200px 0 0 120px;
+}
