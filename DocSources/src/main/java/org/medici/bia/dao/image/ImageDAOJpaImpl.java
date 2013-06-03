@@ -110,27 +110,29 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum and volLetExt ");
+        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum AND volLetExt ");
         if (StringUtils.isEmpty(volLetExt)) {
+        	stringBuilder.append("is null");
+        } else {
+        	stringBuilder.append("=:volLetExt");
+        }
+        stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum AND missedNumbering ");
+        if (StringUtils.isEmpty(folioMod)) {
         	stringBuilder.append(" is null");
         } else {
-        	stringBuilder.append(" = :volLetExt");
+        	stringBuilder.append("=:folioMod");
         }
 
-    	stringBuilder.append(" and imageName like '%_C_");
-    	stringBuilder.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
-//    	stringBuilder.append(folioNum.toString());
-    	if(folioMod != null)
-    		stringBuilder.append("_" + folioMod);
-    	stringBuilder.append("_R.tif'");
-    	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
         	query.setParameter("volLetExt", volLetExt);
         }
-
+        query.setParameter("imageProgTypeNum", folioNum);
+        if (!StringUtils.isEmpty(folioMod)) {
+        	query.setParameter("folioMod", folioMod.toUpperCase());
+        }
 		List<Image> result = query.getResultList();
 		
 		if (result.size() >0) {
