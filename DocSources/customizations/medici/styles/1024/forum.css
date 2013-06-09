@@ -677,7 +677,6 @@ a.returnTo {
 /* ---------- Topic Actions ---------- */
 
 #topicActions {
-	height: 20px;
 	margin: 15px 0 20px 0;
 }
 
@@ -699,9 +698,7 @@ a.returnTo {
 }
 
 #followTopic { /* Button to subscribe/unsubscribe */
-	display: inline-block;
-	float: right;
-	margin: -40px 0 0 0;
+	display: block;
 }
 
 
