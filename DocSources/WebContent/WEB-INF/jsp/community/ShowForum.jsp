@@ -297,6 +297,7 @@ Use the textbox below to search this forum.</p>
                 					<input type="hidden" name="order" value="desc"/>
                 				</form>
                 			</div>
+                			<div style="clear:both"></div>
                 		</div>
             		</div>
             	</c:if>
@@ -471,6 +472,7 @@ Use the textbox below to search this forum.</p>
                 				<input type="hidden" name="order" value="desc"/>
                				</form>
                			</div>
+               			<div style="clear:both"></div>
                		</div>
             	</div>
             </c:if>
