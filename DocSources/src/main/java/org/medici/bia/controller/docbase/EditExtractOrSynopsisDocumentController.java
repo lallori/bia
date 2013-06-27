@@ -99,6 +99,7 @@ public class EditExtractOrSynopsisDocumentController {
 			synExtract.setDocument(new Document(command.getEntryId()));
 			synExtract.setSynopsis(command.getSynopsis());
 			synExtract.setDocExtract(BiaTextUtils.normalize(command.getDocExtract()));
+			synExtract.setDocumentBibliography(BiaTextUtils.normalize(command.getDocumentBibliography()));
 			synExtract.setSynopsis(BiaTextUtils.normalize(command.getSynopsis()));
 
 			try {
@@ -144,10 +145,12 @@ public class EditExtractOrSynopsisDocumentController {
 				if (synExtract != null) {
 					command.setSynExtrId(synExtract.getSynExtrId());
 					command.setDocExtract(synExtract.getDocExtract());
+					command.setDocumentBibliography(synExtract.getDocumentBibliography());
 					command.setSynopsis(synExtract.getSynopsis());
 				} else {
 					command.setSynExtrId(0);
 					command.setDocExtract(null);
+					command.setDocumentBibliography(null);
 					command.setSynopsis(null);
 				}
 				command.setDocument(getDocBaseService().findDocument(command.getEntryId()));
@@ -159,6 +162,7 @@ public class EditExtractOrSynopsisDocumentController {
 			command.setSynExtrId(0);
 			command.setDocExtract(null);
 			command.setSynopsis(null);
+			command.setDocumentBibliography(null);
 		}
 
 		if (BooleanUtils.isTrue(command.getModalWindow())) {

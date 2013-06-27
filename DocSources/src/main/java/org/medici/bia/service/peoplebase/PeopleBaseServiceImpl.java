@@ -309,12 +309,16 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public People addNewPerson(People person) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			person.setPersonId(null);
 			
 			//Setting fields that are defined as nullable = false
 			person.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			person.setCreatedBy(user);
 			person.setDateCreated(new Date());
 			person.setLastUpdate(new Date());
+			person.setLastUpdateBy(user);
 			person.setMapNameLf(PersonUtils.generateMapNameLf(person));
 
 			if (person.getGender().equals(Gender.NULL)) {
@@ -420,8 +424,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			searchName.setPerson(person);
 			getAltNameDAO().persist(searchName);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add person", Action.CREATE, Category.PEOPLE, person));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Add person", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, person));
@@ -824,6 +826,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public People editDetailsPerson(People person) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
 			
 			Set<AltName> altNames = personToUpdate.getAltName();
@@ -959,14 +963,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				personToUpdate.setActiveEnd(person.getActiveEnd());
 			}
 
+			personToUpdate.setLastUpdate(new Date());
+			personToUpdate.setLastUpdateBy(user);
+
 			getPeopleDAO().merge(personToUpdate);
 			
 			if(searchName != null){
 				searchName.setPerson(personToUpdate);
 				getAltNameDAO().persist(searchName);
 			}
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details", Action.MODIFY,Category.PEOPLE, personToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PEOPLE, personToUpdate));

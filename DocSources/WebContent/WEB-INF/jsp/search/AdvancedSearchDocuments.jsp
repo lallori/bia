@@ -375,6 +375,31 @@
 				        </div>
 					</div>
 					
+					<h1 id="userSearch"><a><fmt:message key="search.advancedSearchDocuments.userSearch.title"/></a></h1>
+					<div class="documents">
+						<div class="listAdvSearch">
+							<form id="lastUpdateForm" method="post" class="edit">
+					           	<div class="row">
+					               	<div class="col_l">
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.user"/>">?</a>
+										<input type="text" id="user" name="user" class="input_15c" value="" />
+					               	</div>
+					               	<div class="col_l">in</div>
+					               	<div class="col_l">
+					               		<select id="accountActionType" name="wordType" class="selectform_LXlong">
+											<option value="CreatedBy" selected="selected"><fmt:message key="search.advancedSearchDocuments.userSearch.createdBy"/></option>
+											<option value="LastUpdateBy"><fmt:message key="search.advancedSearchDocuments.userSearch.lastUpdateBy"/></option>
+										</select>
+					               	</div>
+					               	<div class="col_r">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
+										<input type="hidden" id="category" value="user">
+					               	</div>
+					            </div>
+				            </form>
+				        </div>
+					</div>
+					
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchDocuments.logicalDelete.title"/></a></h1>
 					<div class="documents">
@@ -533,6 +558,10 @@
 				consoleLog : false
 			});
 			$j("#docIdSearchForm").advancedSearchForm({
+				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+				consoleLog : false
+			});
+			$j("#accountSearchForm").advancedSearchForm({
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 				consoleLog : false
 			});

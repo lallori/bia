@@ -80,6 +80,10 @@ public class SynExtract implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docExtract;
 	
+	@Column(name="\"documentBibliography\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String documentBibliography;
+	
 	@Column(name="\"SYNOPSIS\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String synopsis;
@@ -148,6 +152,14 @@ public class SynExtract implements Serializable{
 	public void setDocExtract(String docExtract) {
 		this.docExtract = docExtract;
 	}
+	public String getDocumentBibliography() {
+		return documentBibliography;
+	}
+
+	public void setDocumentBibliography(String documentBibliography) {
+		this.documentBibliography = documentBibliography;
+	}
+
 	/**
 	 * @return the synopsis
 	 */

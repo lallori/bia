@@ -1,3 +1,4 @@
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -248,7 +249,7 @@
 	<div class="yourSearchDiv">
 		<p>Your search:
 		<c:if test="${yourSearch.length() > 45}">
-			<a id="yourSearch${command.searchUUID}" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a></p>
+			<a id="yourSearch${command.searchUUID}" href="${AdvancedSearchRefineURL}"><bia:textFormatter inputText="${yourSearch}" size="41"/>...</a></p>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
 			<font color="red" style="margin-left:5px">${yourSearch}</font></p>

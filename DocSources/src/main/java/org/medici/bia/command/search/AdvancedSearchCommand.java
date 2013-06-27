@@ -97,6 +97,8 @@ public class AdvancedSearchCommand {
 
 	private String logicalDelete;
 	
+	private List<String> user;
+	
 	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
@@ -267,10 +269,18 @@ public class AdvancedSearchCommand {
 		this.date = date;
 	}
 	
+	/**
+	 * 
+	 * @param dateLastUpdate
+	 */
 	public void setDateLastUpdate(List<String> dateLastUpdate) {
 		this.dateLastUpdate = dateLastUpdate;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getDateLastUpdate() {
 		return dateLastUpdate;
 	}
@@ -827,5 +837,19 @@ public class AdvancedSearchCommand {
 	 */
 	public void setGender(List<String> gender) {
 		this.gender = gender;
+	}
+
+	/**
+	 * @return the users
+	 */
+	public List<String> getUser() {
+		return user;
+	}
+
+	/**
+	 * @param users the users to set
+	 */
+	public void setUser(List<String> user) {
+		this.user = user;
 	}
 }

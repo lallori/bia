@@ -126,11 +126,15 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place addNewPlace(Place place) throws ApplicationThrowable {
 		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			place.setPlaceAllId(null);
 			place.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			place.setCreatedBy(user);
 			place.setDateEntered(new Date());
 			place.setDateCreated(new Date());
 			place.setLastUpdate(new Date());
+			place.setLastUpdateBy(user);
 			place.setAddlRes(false);
 			place.setLogicalDelete(Boolean.FALSE);
 			if(place.getParentPlace() != null){
@@ -158,8 +162,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ") /" + place.getGp2() + " (" + place.getGp2Ttype() + ")");
 				
 			getPlaceDAO().persist(place);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Add new place", Action.CREATE, Category.PLACE, place));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Create place", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PLACE, place));
@@ -370,6 +372,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place editDetailsPlace(Place place) throws ApplicationThrowable {
 		try{
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			Place placeToUpdate = getPlaceDAO().find(place.getPlaceAllId());
 			placeToUpdate.setPlacesMemo(place.getPlacesMemo());
 			placeToUpdate.setGeogKey(place.getGeogKey());
@@ -405,9 +409,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setPlNameFullPlType(placeToUpdate.getPlaceName() + " (" + placeToUpdate.getPlType() + ") / " + placeToUpdate.getPlParent() + " (" + placeToUpdate.getParentType() + ") / " + placeToUpdate.getgParent() + " (" + placeToUpdate.getGpType() + ") / " + placeToUpdate.getGgp() + " (" + placeToUpdate.getGgpType() + ") /" + placeToUpdate.getGp2() + " (" + placeToUpdate.getGp2Ttype() + ")");
 			
 			placeToUpdate.setLastUpdate(new Date());
+			placeToUpdate.setLastUpdateBy(user);
 			getPlaceDAO().merge(placeToUpdate);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details ", Action.MODIFY, Category.PLACE, placeToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.PLACE, placeToUpdate));
@@ -423,8 +426,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
-			throws ApplicationThrowable {
+	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable {
 		try{
 			PlaceExternalLinks placeExternalLinksToUpdate = getPlaceExternalLinksDAO().find(placeExternalLinks.getPlaceExternalLinksId());
 			placeExternalLinksToUpdate.setExternalLink(placeExternalLinks.getExternalLink());

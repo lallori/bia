@@ -46,7 +46,7 @@
 <%-- Existing Volume Record --%>
 <c:if test="${person.personId != 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
+		<div id="createdby">Created by ${person.createdBy.firstName} ${person.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
 		<div id="id">Person ID ${person.personId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowPersonURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">

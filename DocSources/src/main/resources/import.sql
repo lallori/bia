@@ -1363,6 +1363,18 @@ ALTER TABLE tblVettingHistory	ADD CONSTRAINT FK_tblVettingHistory_tblUser FOREIG
 
 -- MYSQL DATABASE DATA NORMALIZATION PATCH
 
+--Creation user
+update tblDocuments  a set a.createdBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblPeople  a set a.createdBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblPlaces  a set a.createdBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblVolumes  a set a.createdBy = (select b.account from tblUser b where b.initials = a.ResID);
+
+--Last update user
+update tblDocuments  a set a.lastUpdateBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblPeople  a set a.lastUpdateBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblPlaces  a set a.lastUpdateBy = (select b.account from tblUser b where b.initials = a.ResID);
+update tblVolumes  a set a.lastUpdateBy = (select b.account from tblUser b where b.initials = a.ResID);
+
 -- DOCUMENTS :
 -- docMonthNum 0 or 13 must be setted to null  (Foreign Keys Checks)
 update bia.tblDocuments set docMonthNum = null where docMonthNum = 0;

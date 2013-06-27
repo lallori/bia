@@ -214,6 +214,10 @@ public class Place implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"createdBy\"", nullable=true)
+	private User createdBy;
+
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -259,6 +263,10 @@ public class Place implements Serializable {
 	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"lastUpdateBy\"", nullable=true)
+	private User lastUpdateBy;
 	
 	@OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
 	//@ContainedIn
@@ -308,297 +316,31 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @return the placeAllId
+	 * @return the addlRes
 	 */
-	public Integer getPlaceAllId() {
-		return placeAllId;
+	public Boolean getAddlRes() {
+		return addlRes;
 	}
 	
 	/**
-	 * @param placeAllId the placeAllId to set
+	 * @return the bornedPeople
 	 */
-	public void setPlaceAllId(Integer placeAllId) {
-		this.placeAllId = placeAllId;
+	public Set<People> getBornedPeople() {
+		return bornedPeople;
 	}
 	
 	/**
-	 * @return the placeNameId
+	 * @return the createdBy
 	 */
-	public Integer getPlaceNameId() {
-		return placeNameId;
+	public User getCreatedBy() {
+		return createdBy;
 	}
 	
 	/**
-	 * @param placeNameId the placeNameId to set
+	 * @return the dateCreated
 	 */
-	public void setPlaceNameId(Integer placeNameId) {
-		this.placeNameId = placeNameId;
-	}
-	
-	/**
-	 * @return the geogKey
-	 */
-	public Integer getGeogKey() {
-		return geogKey;
-	}
-	
-	/**
-	 * @param geogKey the geogKey to set
-	 */
-	public void setGeogKey(Integer geogKey) {
-		this.geogKey = geogKey;
-	}
-	
-	/**
-	 * @return the placeName
-	 */
-	public String getPlaceName() {
-		return placeName;
-	}
-	
-	/**
-	 * @param placeName the placeName to set
-	 */
-	public void setPlaceName(String placeName) {
-		this.placeName = placeName;
-	}
-	
-	/**
-	 * @return the placeNameFull
-	 */
-	public String getPlaceNameFull() {
-		return placeNameFull;
-	}
-	
-	/**
-	 * @param placeNameFull the placeNameFull to set
-	 */
-	public void setPlaceNameFull(String placeNameFull) {
-		this.placeNameFull = placeNameFull;
-	}
-	
-	/**
-	 * @return the plNameFullPlType
-	 */
-	public String getPlNameFullPlType() {
-		return plNameFullPlType;
-	}
-	
-	/**
-	 * @param plNameFullPlType the plNameFullPlType to set
-	 */
-	public void setPlNameFullPlType(String plNameFullPlType) {
-		this.plNameFullPlType = plNameFullPlType;
-	}
-	
-	/**
-	 * @return the plType
-	 */
-	public String getPlType() {
-		return plType;
-	}
-	
-	/**
-	 * @param plType the plType to set
-	 */
-	public void setPlType(String plType) {
-		this.plType = plType;
-	}
-	
-	/**
-	 * @return the prefFlag
-	 */
-	public String getPrefFlag() {
-		return prefFlag;
-	}
-	
-	/**
-	 * @param prefFlag the prefFlag to set
-	 */
-	public void setPrefFlag(String prefFlag) {
-		this.prefFlag = prefFlag;
-	}
-	
-	/**
-	 * @return the plSource
-	 */
-	public String getPlSource() {
-		return plSource;
-	}
-	
-	/**
-	 * @param plSource the plSource to set
-	 */
-	public void setPlSource(String plSource) {
-		this.plSource = plSource;
-	}
-	
-	/**
-	 * @return the plParent
-	 */
-	public String getPlParent() {
-		return plParent;
-	}
-	
-	/**
-	 * @param plParent the plParent to set
-	 */
-	public void setPlParent(String plParent) {
-		this.plParent = plParent;
-	}
-	
-	/**
-	 * @return the parentType
-	 */
-	public String getParentType() {
-		return parentType;
-	}
-	
-	/**
-	 * @param parentType the parentType to set
-	 */
-	public void setParentType(String parentType) {
-		this.parentType = parentType;
-	}
-	
-	/**
-	 * @return the plParentTermId
-	 */
-	public Integer getPlParentTermId() {
-		return plParentTermId;
-	}
-	
-	/**
-	 * @param plParentTermId the plParentTermId to set
-	 */
-	public void setPlParentTermId(Integer plParentTermId) {
-		this.plParentTermId = plParentTermId;
-	}
-	
-	/**
-	 * @return the plParentSubjectId
-	 */
-	public Integer getPlParentSubjectId() {
-		return plParentSubjectId;
-	}
-	
-	/**
-	 * @param plParentSubjectId the plParentSubjectId to set
-	 */
-	public void setPlParentSubjectId(Integer plParentSubjectId) {
-		this.plParentSubjectId = plParentSubjectId;
-	}
-	
-	/**
-	 * @return the parentPlace
-	 */
-	public Place getParentPlace() {
-		return parentPlace;
-	}
-	
-	/**
-	 * @param parentPlace the parentPlace to set
-	 */
-	public void setParentPlace(Place parentPlace) {
-		this.parentPlace = parentPlace;
-	}
-	
-	/**
-	 * @return the gParent
-	 */
-	public String getgParent() {
-		return gParent;
-	}
-	
-	/**
-	 * @param gParent the gParent to set
-	 */
-	public void setgParent(String gParent) {
-		this.gParent = gParent;
-	}
-	
-	/**
-	 * @return the gpType
-	 */
-	public String getGpType() {
-		return gpType;
-	}
-	
-	/**
-	 * @param gpType the gpType to set
-	 */
-	public void setGpType(String gpType) {
-		this.gpType = gpType;
-	}
-	
-	/**
-	 * @return the ggp
-	 */
-	public String getGgp() {
-		return ggp;
-	}
-	
-	/**
-	 * @param ggp the ggp to set
-	 */
-	public void setGgp(String ggp) {
-		this.ggp = ggp;
-	}
-	
-	/**
-	 * @return the ggpType
-	 */
-	public String getGgpType() {
-		return ggpType;
-	}
-	
-	/**
-	 * @param ggpType the ggpType to set
-	 */
-	public void setGgpType(String ggpType) {
-		this.ggpType = ggpType;
-	}
-	
-	/**
-	 * @return the gp2
-	 */
-	public String getGp2() {
-		return gp2;
-	}
-	
-	/**
-	 * @param gp2 the gp2 to set
-	 */
-	public void setGp2(String gp2) {
-		this.gp2 = gp2;
-	}
-	
-	/**
-	 * @return the gp2Ttype
-	 */
-	public String getGp2Ttype() {
-		return gp2Ttype;
-	}
-	
-	/**
-	 * @param gp2Ttype the gp2Ttype to set
-	 */
-	public void setGp2Ttype(String gp2Ttype) {
-		this.gp2Ttype = gp2Ttype;
-	}
-	
-	/**
-	 * @return the researcher
-	 */
-	public String getResearcher() {
-		return researcher;
-	}
-	
-	/**
-	 * @param researcher the researcher to set
-	 */
-	public void setResearcher(String researcher) {
-		this.researcher = researcher;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 	
 	/**
@@ -609,80 +351,24 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @param dateEntered the dateEntered to set
+	 * @return the deathPeople
 	 */
-	public void setDateEntered(Date dateEntered) {
-		this.dateEntered = dateEntered;
+	public Set<People> getDeathPeople() {
+		return deathPeople;
 	}
 	
 	/**
-	 * @return the placesMemo
+	 * @return the eplToLinks
 	 */
-	public String getPlacesMemo() {
-		return placesMemo;
+	public Set<EplToLink> getEplToLinks() {
+		return eplToLinks;
 	}
 	
 	/**
-	 * @param placesMemo the placesMemo to set
+	 * @return the geogKey
 	 */
-	public void setPlacesMemo(String placesMemo) {
-		this.placesMemo = placesMemo;
-	}
-
-	/**
-	 * @return the addlRes
-	 */
-	public Boolean getAddlRes() {
-		return addlRes;
-	}
-	
-	/**
-	 * @param addlRes the addlRes to set
-	 */
-	public void setAddlRes(Boolean addlRes) {
-		this.addlRes = addlRes;
-	}
-	
-	/**
-	 * @return the termAccent
-	 */
-	public String getTermAccent() {
-		return termAccent;
-	}
-	
-	/**
-	 * @param termAccent the termAccent to set
-	 */
-	public void setTermAccent(String termAccent) {
-		this.termAccent = termAccent;
-	}
-	
-	/**
-	 * @return the language
-	 */
-	public Integer getLanguage() {
-		return language;
-	}
-	
-	/**
-	 * @param language the language to set
-	 */
-	public void setLanguage(Integer language) {
-		this.language = language;
-	}
-	
-	/**
-	 * @return the otherFlags
-	 */
-	public String getOtherFlags() {
-		return otherFlags;
-	}
-	
-	/**
-	 * @param otherFlags the otherFlags to set
-	 */
-	public void setOtherFlags(String otherFlags) {
-		this.otherFlags = otherFlags;
+	public Integer getGeogKey() {
+		return geogKey;
 	}
 	
 	/**
@@ -693,54 +379,259 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @param geogkeyChildren the geogkeyChildren to set
+	 * @return the ggp
 	 */
-	public void setGeogkeyChildren(String geogkeyChildren) {
-		this.geogkeyChildren = geogkeyChildren;
+	public String getGgp() {
+		return ggp;
 	}
-
+	
 	/**
-	 * @param senderDocuments the senderDocuments to set
+	 * @return the ggpType
 	 */
-	public void setSenderDocuments(Set<Document> senderDocuments) {
-		this.senderDocuments = senderDocuments;
+	public String getGgpType() {
+		return ggpType;
 	}
-
+	
 	/**
-	 * @return the senderDocuments
+	 * @return the gp2
 	 */
-	public Set<Document> getSenderDocuments() {
-		return senderDocuments;
+	public String getGp2() {
+		return gp2;
 	}
-
+	
 	/**
-	 * @param recipientDocuments the recipientDocuments to set
+	 * @return the gp2Ttype
 	 */
-	public void setRecipientDocuments(Set<Document> recipientDocuments) {
-		this.recipientDocuments = recipientDocuments;
+	public String getGp2Ttype() {
+		return gp2Ttype;
 	}
-
+	
+	/**
+	 * @return the gParent
+	 */
+	public String getgParent() {
+		return gParent;
+	}
+	
+	/**
+	 * @return the gpType
+	 */
+	public String getGpType() {
+		return gpType;
+	}
+	
+	/**
+	 * @return the language
+	 */
+	public Integer getLanguage() {
+		return language;
+	}
+	
+	/**
+	 * @return the lastUpdate
+	 */
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+	
+	/**
+	 * @return the lastUpdateBy
+	 */
+	public User getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+	
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+	
+	/**
+	 * @return the otherFlags
+	 */
+	public String getOtherFlags() {
+		return otherFlags;
+	}
+	
+	/**
+	 * @return the parentPlace
+	 */
+	public Place getParentPlace() {
+		return parentPlace;
+	}
+	
+	/**
+	 * @return the parentType
+	 */
+	public String getParentType() {
+		return parentType;
+	}
+	
+	/**
+	 * @return the placeAllId
+	 */
+	public Integer getPlaceAllId() {
+		return placeAllId;
+	}
+	
+	/**
+	 * 
+	 * @return the placeExternalLinks
+	 */
+	public Set<PlaceExternalLinks> getPlaceExternalLinks() {
+		return placeExternalLinks;
+	}
+	
+	/**
+	 * 
+	 * @return the placeGeographicCoordinates
+	 */
+	public PlaceGeographicCoordinates getPlaceGeographicCoordinates() {
+		return placeGeographicCoordinates;
+	}
+	
+	/**
+	 * @return the placeName
+	 */
+	public String getPlaceName() {
+		return placeName;
+	}
+	
+	/**
+	 * @return the placeNameFull
+	 */
+	public String getPlaceNameFull() {
+		return placeNameFull;
+	}
+	
+	/**
+	 * @return the placeNameId
+	 */
+	public Integer getPlaceNameId() {
+		return placeNameId;
+	}
+	
+	/**
+	 * @return the placesMemo
+	 */
+	public String getPlacesMemo() {
+		return placesMemo;
+	}
+	
+	/**
+	 * @return the plNameFullPlType
+	 */
+	public String getPlNameFullPlType() {
+		return plNameFullPlType;
+	}
+	
+	/**
+	 * @return the plParent
+	 */
+	public String getPlParent() {
+		return plParent;
+	}
+	
+	/**
+	 * @return the plParentSubjectId
+	 */
+	public Integer getPlParentSubjectId() {
+		return plParentSubjectId;
+	}
+	
+	/**
+	 * @return the plParentTermId
+	 */
+	public Integer getPlParentTermId() {
+		return plParentTermId;
+	}
+	
+	/**
+	 * @return the plSource
+	 */
+	public String getPlSource() {
+		return plSource;
+	}
+	
+	/**
+	 * @return the plType
+	 */
+	public String getPlType() {
+		return plType;
+	}
+	
+	/**
+	 * @return the prefFlag
+	 */
+	public String getPrefFlag() {
+		return prefFlag;
+	}
+	
 	/**
 	 * @return the recipientDocuments
 	 */
 	public Set<Document> getRecipientDocuments() {
 		return recipientDocuments;
 	}
-
+	
+	/**
+	 * @return the researcher
+	 */
+	public String getResearcher() {
+		return researcher;
+	}
+	
+	/**
+	 * @return the senderDocuments
+	 */
+	public Set<Document> getSenderDocuments() {
+		return senderDocuments;
+	}
+	
+	/**
+	 * @return the termAccent
+	 */
+	public String getTermAccent() {
+		return termAccent;
+	}
+	
+	/**
+	 * @param addlRes the addlRes to set
+	 */
+	public void setAddlRes(Boolean addlRes) {
+		this.addlRes = addlRes;
+	}
+	
 	/**
 	 * @param bornedPeople the bornedPeople to set
 	 */
 	public void setBornedPeople(Set<People> bornedPeople) {
 		this.bornedPeople = bornedPeople;
 	}
-
+	
 	/**
-	 * @return the bornedPeople
+	 * @param createdBy the createdBy to set
 	 */
-	public Set<People> getBornedPeople() {
-		return bornedPeople;
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
-
+	
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
+	/**
+	 * @param dateEntered the dateEntered to set
+	 */
+	public void setDateEntered(Date dateEntered) {
+		this.dateEntered = dateEntered;
+	}
+	
 	/**
 	 * @param deathPeople the deathPeople to set
 	 */
@@ -749,40 +640,122 @@ public class Place implements Serializable {
 	}
 
 	/**
-	 * @return the deathPeople
-	 */
-	public Set<People> getDeathPeople() {
-		return deathPeople;
-	}
-
-	/**
 	 * @param eplToLinks the eplToLinks to set
 	 */
 	public void setEplToLinks(Set<EplToLink> eplToLinks) {
 		this.eplToLinks = eplToLinks;
 	}
-
+	
 	/**
-	 * @return the eplToLinks
+	 * @param geogKey the geogKey to set
 	 */
-	public Set<EplToLink> getEplToLinks() {
-		return eplToLinks;
+	public void setGeogKey(Integer geogKey) {
+		this.geogKey = geogKey;
+	}
+	
+	/**
+	 * @param geogkeyChildren the geogkeyChildren to set
+	 */
+	public void setGeogkeyChildren(String geogkeyChildren) {
+		this.geogkeyChildren = geogkeyChildren;
+	}
+	
+	/**
+	 * @param ggp the ggp to set
+	 */
+	public void setGgp(String ggp) {
+		this.ggp = ggp;
+	}
+	
+	/**
+	 * @param ggpType the ggpType to set
+	 */
+	public void setGgpType(String ggpType) {
+		this.ggpType = ggpType;
+	}
+	
+	/**
+	 * @param gp2 the gp2 to set
+	 */
+	public void setGp2(String gp2) {
+		this.gp2 = gp2;
+	}
+	
+	/**
+	 * @param gp2Ttype the gp2Ttype to set
+	 */
+	public void setGp2Ttype(String gp2Ttype) {
+		this.gp2Ttype = gp2Ttype;
+	}
+	
+	/**
+	 * @param gParent the gParent to set
+	 */
+	public void setgParent(String gParent) {
+		this.gParent = gParent;
+	}
+	
+	/**
+	 * @param gpType the gpType to set
+	 */
+	public void setGpType(String gpType) {
+		this.gpType = gpType;
+	}
+	
+	/**
+	 * @param language the language to set
+	 */
+	public void setLanguage(Integer language) {
+		this.language = language;
 	}
 
 	/**
-	 * 
-	 * @param placeGeographicCoordinates the placeGeographicCoordinates to set
+	 * @param lastUpdate the lastUpdate to set
 	 */
-	public void setPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) {
-		this.placeGeographicCoordinates = placeGeographicCoordinates;
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	/**
-	 * 
-	 * @return the placeGeographicCoordinates
+	 * @param lastUpdateBy the lastUpdateBy to set
 	 */
-	public PlaceGeographicCoordinates getPlaceGeographicCoordinates() {
-		return placeGeographicCoordinates;
+	public void setLastUpdateBy(User lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @param otherFlags the otherFlags to set
+	 */
+	public void setOtherFlags(String otherFlags) {
+		this.otherFlags = otherFlags;
+	}
+
+	/**
+	 * @param parentPlace the parentPlace to set
+	 */
+	public void setParentPlace(Place parentPlace) {
+		this.parentPlace = parentPlace;
+	}
+
+	/**
+	 * @param parentType the parentType to set
+	 */
+	public void setParentType(String parentType) {
+		this.parentType = parentType;
+	}
+
+	/**
+	 * @param placeAllId the placeAllId to set
+	 */
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
 	}
 
 	/**
@@ -795,52 +768,115 @@ public class Place implements Serializable {
 
 	/**
 	 * 
-	 * @return the placeExternalLinks
+	 * @param placeGeographicCoordinates the placeGeographicCoordinates to set
 	 */
-	public Set<PlaceExternalLinks> getPlaceExternalLinks() {
-		return placeExternalLinks;
+	public void setPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) {
+		this.placeGeographicCoordinates = placeGeographicCoordinates;
 	}
 
 	/**
-	 * @param logicalDelete the logicalDelete to set
+	 * @param placeName the placeName to set
 	 */
-	public void setLogicalDelete(Boolean logicalDelete) {
-		this.logicalDelete = logicalDelete;
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
 
 	/**
-	 * @return the logicalDelete
+	 * @param placeNameFull the placeNameFull to set
 	 */
-	public Boolean getLogicalDelete() {
-		return logicalDelete;
+	public void setPlaceNameFull(String placeNameFull) {
+		this.placeNameFull = placeNameFull;
 	}
 
 	/**
-	 * @return the dateCreated
+	 * @param placeNameId the placeNameId to set
 	 */
-	public Date getDateCreated() {
-		return dateCreated;
+	public void setPlaceNameId(Integer placeNameId) {
+		this.placeNameId = placeNameId;
 	}
 
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param placesMemo the placesMemo to set
 	 */
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setPlacesMemo(String placesMemo) {
+		this.placesMemo = placesMemo;
 	}
 
 	/**
-	 * @return the lastUpdate
+	 * @param plNameFullPlType the plNameFullPlType to set
 	 */
-	public Date getLastUpdate() {
-		return lastUpdate;
+	public void setPlNameFullPlType(String plNameFullPlType) {
+		this.plNameFullPlType = plNameFullPlType;
 	}
 
 	/**
-	 * @param lastUpdate the lastUpdate to set
+	 * @param plParent the plParent to set
 	 */
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
+	public void setPlParent(String plParent) {
+		this.plParent = plParent;
+	}
+
+	/**
+	 * @param plParentSubjectId the plParentSubjectId to set
+	 */
+	public void setPlParentSubjectId(Integer plParentSubjectId) {
+		this.plParentSubjectId = plParentSubjectId;
+	}
+
+	/**
+	 * @param plParentTermId the plParentTermId to set
+	 */
+	public void setPlParentTermId(Integer plParentTermId) {
+		this.plParentTermId = plParentTermId;
+	}
+
+	/**
+	 * @param plSource the plSource to set
+	 */
+	public void setPlSource(String plSource) {
+		this.plSource = plSource;
+	}
+
+	/**
+	 * @param plType the plType to set
+	 */
+	public void setPlType(String plType) {
+		this.plType = plType;
+	}
+
+	/**
+	 * @param prefFlag the prefFlag to set
+	 */
+	public void setPrefFlag(String prefFlag) {
+		this.prefFlag = prefFlag;
+	}
+
+	/**
+	 * @param recipientDocuments the recipientDocuments to set
+	 */
+	public void setRecipientDocuments(Set<Document> recipientDocuments) {
+		this.recipientDocuments = recipientDocuments;
+	}
+
+	/**
+	 * @param researcher the researcher to set
+	 */
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
+	}
+
+	/**
+	 * @param senderDocuments the senderDocuments to set
+	 */
+	public void setSenderDocuments(Set<Document> senderDocuments) {
+		this.senderDocuments = senderDocuments;
+	}
+
+	/**
+	 * @param termAccent the termAccent to set
+	 */
+	public void setTermAccent(String termAccent) {
+		this.termAccent = termAccent;
 	}
 
 }

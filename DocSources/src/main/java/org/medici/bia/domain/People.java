@@ -323,6 +323,10 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"createdBy\"", nullable=true)
+	private User createdBy;
+
 	@Column (name="\"DATECREATED\"")
 	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
@@ -333,7 +337,11 @@ public class People implements Serializable {
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 
-	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"lastUpdateBy\"", nullable=true)
+	private User lastUpdateBy;
+	
+	@Column (name="\"LOGICALDELETE\"l", length=1, columnDefinition="tinyint default 0", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean logicalDelete;
@@ -1001,7 +1009,6 @@ public class People implements Serializable {
 		this.researcher = researcher;
 	}
 
-
 	/**
 	 * @return the dateCreated
 	 */
@@ -1017,6 +1024,34 @@ public class People implements Serializable {
 		this.dateCreated = dateCreated;
 	}
 
+
+	/**
+	 * @return the createdBy
+	 */
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the lastUpdateBy
+	 */
+	public User getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	/**
+	 * @param lastUpdateBy the lastUpdateBy to set
+	 */
+	public void setLastUpdateBy(User lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
 
 	/**
 	 * @return the lastUpdate

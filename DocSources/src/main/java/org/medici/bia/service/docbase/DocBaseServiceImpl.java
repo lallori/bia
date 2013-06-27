@@ -179,17 +179,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewDocument(Document document) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			document.setEntryId(null);
 
 			// We need to attach the correct volume istance by database extraction.
 			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			//Setting fields that are defined as nullable = false
 			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setCreatedBy(user);
 			document.setDateCreated(new Date());
 			document.setLastUpdate(new Date());
-			document.setDocTobeVetted(true);
-			document.setDocToBeVettedDate(new Date());
-			document.setDocVetted(false);
+			document.setLastUpdateBy(user);
 			document.setNewEntry(true);
 			document.setReckoning(false);
 			document.setSenderPeopleUnsure(false);
@@ -228,8 +229,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 
 			getDocumentDAO().persist(document);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create document", Action.CREATE, Category.DOCUMENT, document));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Create document", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
@@ -473,11 +472,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+
 			Document document = new Document();
 			// New Document must have entryId set to zero
 			document.setEntryId(0);
 			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setCreatedBy(user);
 			document.setDateCreated(new Date());
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
 			document.setVolume(getVolumeDAO().findVolume(documentToCreateImage.getVolNum(), documentToCreateImage.getVolLetExt()));
@@ -611,6 +615,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// fill fields of correspondents section
 			documentToUpdate.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 			if ((!document.getSenderPeople().getMapNameLf().equals("")) && (document.getSenderPeople().getPersonId() >0)){
 				People sender = getPeopleDAO().find(document.getSenderPeople().getPersonId());
 				documentToUpdate.setSenderPeople(sender);
@@ -739,6 +744,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
 			//Update the title of the linked forum if exist
@@ -752,6 +759,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			//fill fields to update document section
 			documentToUpdate.setLastUpdate(new Date());
+			documentToUpdate.setLastUpdateBy(user);
 			// We need to attach the correct volume istance by database extraction.
 			documentToUpdate.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			// Insert/Part: 
@@ -823,8 +831,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 				getForumDAO().merge(forum);
 			}
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit Details", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit Details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToUpdate));
 		
@@ -841,9 +847,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
-			Document document = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-			SynExtract synExtractToUpdate = document.getSynExtract();
+			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+			documentToUpdate.setLastUpdate(new Date());
+			documentToUpdate.setLastUpdateBy(user);
+			getDocumentDAO().merge(documentToUpdate);
+						
+			SynExtract synExtractToUpdate = documentToUpdate.getSynExtract();
 
 			// fill fields to update document section
 			synExtractToUpdate.setLastUpdate(new Date());
@@ -853,8 +864,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
@@ -872,6 +881,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+			documentToUpdate.setLastUpdate(new Date());
+			documentToUpdate.setLastUpdateBy(user);
+			getDocumentDAO().merge(documentToUpdate);
+
 			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
 			// fill fields to update document section
@@ -883,8 +899,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract or synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
@@ -902,13 +916,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			Document documentToUpdate = getDocumentDAO().find(factChecks.getDocument().getEntryId());
+			documentToUpdate.setLastUpdate(new Date());
+			documentToUpdate.setLastUpdateBy(user);
+			getDocumentDAO().merge(documentToUpdate);
+
 			FactChecks factChecksToUpdate = getFactChecksDAO().findByEntryId(factChecks.getDocument().getEntryId());
 			// fill fields to update fact check section
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 			getFactChecksDAO().merge(factChecksToUpdate);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit fact checks", Action.MODIFY, Category.DOCUMENT, factChecksToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, factChecksToUpdate.getDocument()));
 
@@ -952,6 +971,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+			documentToUpdate.setLastUpdate(new Date());
+			documentToUpdate.setLastUpdateBy(user);
+			getDocumentDAO().merge(documentToUpdate);
+
 			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
 			// fill fields to update document section
@@ -962,8 +988,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// We need to refresh linked document to refresh entity state, otherwise synExtract property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));

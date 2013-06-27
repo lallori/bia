@@ -108,6 +108,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<VolumeType> volumesTypes;
 	private List<String> words;
 	private List<WordType> wordsTypes;
+	private List<UserActionType> userActionTypes;
+	private List<String> users;
 
 	private static Logger logger = Logger.getLogger(AdvancedSearchDocument.class);
 	
@@ -161,6 +163,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		folioMods = new ArrayList<String>(0);
 		docIds = new ArrayList<String>(0);
 		logicalDelete = null;
+		userActionTypes = new ArrayList<AdvancedSearchAbstract.UserActionType>(0);
+		users = new ArrayList<String>(0);
 	}
 
 	/**
@@ -828,6 +832,42 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				logicalDelete = Boolean.FALSE;
 			}
 		}
+
+		//Users
+		if (command.getUser() != null){
+			userActionTypes = new ArrayList<UserActionType>(command.getUser().size());
+			users = new ArrayList<String>(command.getUser().size());
+			
+			for (String singleUser : command.getUser()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				singleUser = singleUser.replace("+", "%20");
+				singleUser = singleUser.replace("%E7", "\u00E7");
+				singleUser = singleUser.replace("\"", "%22");
+				singleUser = singleUser.replace("'", "%27");
+				StringTokenizer stringTokenizer = new StringTokenizer(singleUser, "|");
+				try {
+					if (stringTokenizer.countTokens() == 2) {
+						userActionTypes.add(UserActionType.valueOf(stringTokenizer.nextToken()));
+						StringBuffer tempString = new StringBuffer(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						if(StringUtils.countMatches(tempString.toString(), "\"")%2 != 0){
+							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
+						}
+						words.add(tempString.toString());
+						
+					} else {
+						continue;
+					}
+				}catch (URIException uriException) {
+					logger.debug(uriException);
+					wordsTypes.remove(wordsTypes.size()-1);
+				} 
+			}
+		} else {
+			userActionTypes = new ArrayList<UserActionType>(0);
+			users = new ArrayList<String>(0);
+		}
+
+
 	}
 
 	/**
@@ -864,7 +904,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				(volumes.size()>0) ||
 				(folios.size()>0) ||
 				(folioMods.size()>0) ||
-				(docIds.size()>0)) {
+				(docIds.size()>0) ||
+				(users.size()>0)) {
 			return Boolean.FALSE;
 		}
 
@@ -1136,6 +1177,20 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public List<WordType> getWordsTypes() {
 		return wordsTypes;
+	}
+
+	/**
+	 * @return the users
+	 */
+	public List<String> getUsers() {
+		return users;
+	}
+
+	/**
+	 * @param users the users to set
+	 */
+	public void setUser(List<String> users) {
+		this.users = users;
 	}
 
 	/**

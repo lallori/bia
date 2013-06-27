@@ -146,6 +146,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			//Setting fields that are defined as nullable = false
 			volume.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()); 
+			volume.setCreatedBy(user);
+			volume.setLastUpdateBy(user);
 			volume.setDateCreated(new Date());
 			volume.setLastUpdate(new Date());
 			volume.setVolTobeVetted(true);
@@ -189,8 +192,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			getVolumeDAO().persist(volume);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
 			getUserHistoryDAO().persist(new UserHistory(user, "Create volume", Action.CREATE, Category.VOLUME, volume));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Create volume", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.VOLUME, volume));
 			
@@ -373,19 +374,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public Volume editContextVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
-			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
-		volumeToUpdate.setCcontext(volume.getCcontext());
-		volumeToUpdate.setInventarioSommarioDescription(volume.getInventarioSommarioDescription());
-		volumeToUpdate.setLastUpdate(new Date());
-		
-		try {
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+			volumeToUpdate.setCcontext(volume.getCcontext());
+			volumeToUpdate.setInventarioSommarioDescription(volume.getInventarioSommarioDescription());
+			volumeToUpdate.setLastUpdate(new Date());
+			volumeToUpdate.setLastUpdateBy(user);
 			getVolumeDAO().merge(volumeToUpdate);
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit context", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit context", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
@@ -403,19 +400,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
-			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-
-		volumeToUpdate.setRecips(volume.getRecips());
-		volumeToUpdate.setSenders(volume.getSenders());
-		volumeToUpdate.setLastUpdate(new Date());
-		
-		try {
-			getVolumeDAO().merge(volumeToUpdate);
-
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+			volumeToUpdate.setRecips(volume.getRecips());
+			volumeToUpdate.setSenders(volume.getSenders());
+			volumeToUpdate.setLastUpdate(new Date());
+			volumeToUpdate.setLastUpdateBy(user);
+			getVolumeDAO().merge(volumeToUpdate);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit correspondents", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit correspondents", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
@@ -434,34 +426,31 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
-			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-
-		volumeToUpdate.setOrgNotes(volume.getOrgNotes());
-		volumeToUpdate.setCcondition(volume.getCcondition());
-		volumeToUpdate.setBound(volume.getBound());
-		volumeToUpdate.setFolioCount(volume.getFolioCount());
-		volumeToUpdate.setFolsNumbrd(volume.getFolsNumbrd());
-		volumeToUpdate.setOldAlphaIndex(volume.getOldAlphaIndex());
-		volumeToUpdate.setPrintedMaterial(volume.getPrintedMaterial());
-		volumeToUpdate.setPrintedDrawings(volume.getPrintedDrawings());
-		volumeToUpdate.setItalian(volume.getItalian());
-		volumeToUpdate.setSpanish(volume.getSpanish());
-		volumeToUpdate.setEnglish(volume.getEnglish());
-		volumeToUpdate.setLatin(volume.getLatin());
-		volumeToUpdate.setGerman(volume.getGerman());
-		volumeToUpdate.setFrench(volume.getFrench());
-		volumeToUpdate.setOtherLang(volume.getOtherLang());
-		volumeToUpdate.setCipher(volume.getCipher());
-		volumeToUpdate.setCipherNotes(volume.getCipherNotes());
-		volumeToUpdate.setLastUpdate(new Date());
-
-		try {
-			getVolumeDAO().merge(volumeToUpdate);
-
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+
+			volumeToUpdate.setOrgNotes(volume.getOrgNotes());
+			volumeToUpdate.setCcondition(volume.getCcondition());
+			volumeToUpdate.setBound(volume.getBound());
+			volumeToUpdate.setFolioCount(volume.getFolioCount());
+			volumeToUpdate.setFolsNumbrd(volume.getFolsNumbrd());
+			volumeToUpdate.setOldAlphaIndex(volume.getOldAlphaIndex());
+			volumeToUpdate.setPrintedMaterial(volume.getPrintedMaterial());
+			volumeToUpdate.setPrintedDrawings(volume.getPrintedDrawings());
+			volumeToUpdate.setItalian(volume.getItalian());
+			volumeToUpdate.setSpanish(volume.getSpanish());
+			volumeToUpdate.setEnglish(volume.getEnglish());
+			volumeToUpdate.setLatin(volume.getLatin());
+			volumeToUpdate.setGerman(volume.getGerman());
+			volumeToUpdate.setFrench(volume.getFrench());
+			volumeToUpdate.setOtherLang(volume.getOtherLang());
+			volumeToUpdate.setCipher(volume.getCipher());
+			volumeToUpdate.setCipherNotes(volume.getCipherNotes());
+			volumeToUpdate.setLastUpdate(new Date());
+			volumeToUpdate.setLastUpdateBy(user);
+
+			getVolumeDAO().merge(volumeToUpdate);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit description", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit description", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));
@@ -480,53 +469,49 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
-			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-		
-		volumeToUpdate.setVolNum(volume.getVolNum());
-		volumeToUpdate.setVolLetExt(volume.getVolLetExt());
-
-		if (volume.getSerieList() != null) {
-			volumeToUpdate.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
-		} else {
-			volumeToUpdate.setSerieList(null);
-		}
-
-		// Start date section
-		volumeToUpdate.setStartYear(volume.getStartYear());
-		if (volume.getStartMonthNum() != null) {
-			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
-			volumeToUpdate.setStartMonth(month.getMonthName());
-			volumeToUpdate.setStartMonthNum(month);
-		} else {
-			volumeToUpdate.setStartMonth(null);
-			volumeToUpdate.setStartMonthNum(null);
-		}
-		volumeToUpdate.setStartDay(volume.getStartDay());
-		volumeToUpdate.setStartDate(DateUtils.getLuceneDate(volumeToUpdate.getStartYear(), volumeToUpdate.getStartMonthNum(), volumeToUpdate.getStartDay()));
-
-		// End date section
-		volumeToUpdate.setEndYear(volume.getEndYear());
-		if (volume.getEndMonthNum() != null) {
-			Month month = getMonthDAO().find(volume.getEndMonthNum().getMonthNum());
-			volumeToUpdate.setEndMonth(month.getMonthName());
-			volumeToUpdate.setEndMonthNum(month);
-		} else {
-			volumeToUpdate.setEndMonth(null);
-			volumeToUpdate.setEndMonthNum(null);
-		}
-		volumeToUpdate.setEndDay(volume.getEndDay());
-		volumeToUpdate.setEndDate(DateUtils.getLuceneDate(volumeToUpdate.getEndYear(), volumeToUpdate.getEndMonthNum(), volumeToUpdate.getEndDay()));
-
-		volumeToUpdate.setDateNotes(volume.getDateNotes());
-		volumeToUpdate.setLastUpdate(new Date());
-		
-		try {
-			getVolumeDAO().merge(volumeToUpdate);
-
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+		
+			volumeToUpdate.setVolNum(volume.getVolNum());
+			volumeToUpdate.setVolLetExt(volume.getVolLetExt());
+	
+			if (volume.getSerieList() != null) {
+				volumeToUpdate.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
+			} else {
+				volumeToUpdate.setSerieList(null);
+			}
+	
+			// Start date section
+			volumeToUpdate.setStartYear(volume.getStartYear());
+			if (volume.getStartMonthNum() != null) {
+				Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
+				volumeToUpdate.setStartMonth(month.getMonthName());
+				volumeToUpdate.setStartMonthNum(month);
+			} else {
+				volumeToUpdate.setStartMonth(null);
+				volumeToUpdate.setStartMonthNum(null);
+			}
+			volumeToUpdate.setStartDay(volume.getStartDay());
+			volumeToUpdate.setStartDate(DateUtils.getLuceneDate(volumeToUpdate.getStartYear(), volumeToUpdate.getStartMonthNum(), volumeToUpdate.getStartDay()));
+	
+			// End date section
+			volumeToUpdate.setEndYear(volume.getEndYear());
+			if (volume.getEndMonthNum() != null) {
+				Month month = getMonthDAO().find(volume.getEndMonthNum().getMonthNum());
+				volumeToUpdate.setEndMonth(month.getMonthName());
+				volumeToUpdate.setEndMonthNum(month);
+			} else {
+				volumeToUpdate.setEndMonth(null);
+				volumeToUpdate.setEndMonthNum(null);
+			}
+			volumeToUpdate.setEndDay(volume.getEndDay());
+			volumeToUpdate.setEndDate(DateUtils.getLuceneDate(volumeToUpdate.getEndYear(), volumeToUpdate.getEndMonthNum(), volumeToUpdate.getEndDay()));
+	
+			volumeToUpdate.setDateNotes(volume.getDateNotes());
+			volumeToUpdate.setLastUpdate(new Date());
+			volumeToUpdate.setLastUpdateBy(user);
+			getVolumeDAO().merge(volumeToUpdate);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit details", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit details", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.VOLUME, volumeToUpdate));

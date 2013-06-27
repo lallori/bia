@@ -41,13 +41,13 @@
 	
 <c:if test="${place.placeAllId == 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+		<div id="createdby">Created by  ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 	</div>	
 </c:if>	
 
 <c:if test="${place.placeAllId != 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+		<div id="createdby">Created by ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 		<div id="id">Place ID ${place.placeAllId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowPlaceURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">

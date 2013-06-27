@@ -15,7 +15,6 @@
             /WEB-INF/config/applicationSchedulers.xml,
             /WEB-INF/config/applicationSecurity.xml,
             /WEB-INF/config/applicationServices.xml,
-            /WEB-INF/config/applicationTiles.xml,
             /WEB-INF/config/applicationValidators.xml
         </param-value>
 	</context-param>
@@ -79,6 +78,9 @@
 	</listener>
 	<listener>
 		<listener-class>org.medici.bia.listener.BiaListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.medici.bia.listener.TilesListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

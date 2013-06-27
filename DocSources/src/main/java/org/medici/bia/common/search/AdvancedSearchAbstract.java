@@ -158,4 +158,24 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	        return gender;
 	    }
 	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum UserActionType {
+		CreatedBy("CreatedBy"), LastUpdateBy("LastUpdateBy"); 
+
+		private final String accountActionType;
+
+	    private UserActionType(String value) {
+	    	accountActionType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return accountActionType;
+	    }
+	}
 }

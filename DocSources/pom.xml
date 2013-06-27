@@ -205,6 +205,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
+					<warName>${customization.warname}</warName>
 					<warSourceDirectory>WebContent/</warSourceDirectory>
 					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
 					<attachClasses>true</attachClasses>
@@ -268,12 +269,6 @@
 				    		<targetPath>WEB-INF/config</targetPath>
 				    		<includes>
 				    			<include>**/*.xml</include>
-				    		</includes>
-				    	</resource>
-				    	<resource>
-				    		<directory>${basedir}/WebContent/WEB-INF/config</directory>
-				    		<targetPath>WEB-INF/config</targetPath>
-				    		<includes>
 				    			<include>**/*.properties</include>
 				    		</includes>
 				    	</resource>
@@ -385,6 +380,9 @@
 		      <customization>medici</customization>
               <customization.warname>DocSources</customization.warname>
 		    </properties>
+		    <activation>
+				<activeByDefault>false</activeByDefault>
+		    </activation>
     	</profile>
 		<profile>
 			<id>demo</id>
@@ -392,6 +390,9 @@
 		      <customization>demo</customization>
               <customization.warname>biademo</customization.warname>
 		    </properties>
+		    <activation>
+				<activeByDefault>true</activeByDefault>
+		    </activation>
 		</profile>
 		<profile>
 			<id>idea</id>
@@ -399,6 +400,9 @@
 		      <customization>idea</customization>
               <customization.warname>idea</customization.warname>
 		    </properties>
+		    <activation>
+				<activeByDefault>false</activeByDefault>
+		    </activation>
 		</profile>
 	</profiles>
 	<dependencies>

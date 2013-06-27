@@ -135,6 +135,10 @@ public class Document implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"createdBy\"", nullable=true)
+	private User createdBy;
+
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -147,36 +151,9 @@ public class Document implements Serializable{
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 	
-	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	/*@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=BooleanBridge.class)*/
-	private Boolean docTobeVetted;
-	
-	@Column (name="\"DOCTOBEVETTEDDATE\"")
-	@Temporal(TemporalType.TIMESTAMP)
-	/*@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@DateBridge(resolution=Resolution.DAY)*/ 
-	private Date docToBeVettedDate;
-	
-	@Column (name="\"DOCVETID\"", length=50)
-	//@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String docVetId;
-	
-	@Column (name="\"DOCVETBEGINS\"")
-	@Temporal(TemporalType.TIMESTAMP)
-	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	//@DateBridge(resolution=Resolution.DAY) 
-	private Date docVetBegins;
-	
-	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Boolean docVetted;
-	
-	@Column (name="\"DOCVETTEDDATE\"")
-	@Temporal(TemporalType.TIMESTAMP)
-	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	//@DateBridge(resolution=Resolution.DAY) 
-	private Date docVettedDate;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"lastUpdateBy\"", nullable=true)
+	private User lastUpdateBy;
 	
 	@Column (name="\"DOCSTATBOX\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -211,6 +188,17 @@ public class Document implements Serializable{
 		@NumericField(forField="folioNum_Sort")
 	})
 	private Integer folioNum;
+	
+	/*@Column (name="\"FOLIONUMRECTOVERSO\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="folioNumRectoVerso_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="folioNumRectoVerso"),
+		@NumericField(forField="folioNumRectoVerso_Sort")
+	})
+	private RectoVerso folioNumRectoVerso;*/
 	
 	@Column (name="\"FOLIOMOD\"", length=15)
 	@Fields({
@@ -481,7 +469,7 @@ public class Document implements Serializable{
 	public void setResearcher(String researcher) {
 		this.researcher = researcher;
 	}
-	
+
 	/**
 	 * @return the dateCreated
 	 */
@@ -497,6 +485,34 @@ public class Document implements Serializable{
 	}
 	
 	/**
+	 * @return the createdBy
+	 */
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the lastUpdateBy
+	 */
+	public User getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	/**
+	 * @param lastUpdateBy the lastUpdateBy to set
+	 */
+	public void setLastUpdateBy(User lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	/**
 	 * @return the lastUpdate
 	 */
 	public Date getLastUpdate() {
@@ -508,90 +524,6 @@ public class Document implements Serializable{
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
-	}
-
-	/**
-	 * @return the docTobeVetted
-	 */
-	public Boolean getDocTobeVetted() {
-		return docTobeVetted;
-	}
-
-	/**
-	 * @param docTobeVetted the docTobeVetted to set
-	 */
-	public void setDocTobeVetted(Boolean docTobeVetted) {
-		this.docTobeVetted = docTobeVetted;
-	}
-
-	/**
-	 * @return the docToBeVettedDate
-	 */
-	public Date getDocToBeVettedDate() {
-		return docToBeVettedDate;
-	}
-
-	/**
-	 * @param docToBeVettedDate the docToBeVettedDate to set
-	 */
-	public void setDocToBeVettedDate(Date docToBeVettedDate) {
-		this.docToBeVettedDate = docToBeVettedDate;
-	}
-
-	/**
-	 * @return the docVetId
-	 */
-	public String getDocVetId() {
-		return docVetId;
-	}
-
-	/**
-	 * @param docVetId the docVetId to set
-	 */
-	public void setDocVetId(String docVetId) {
-		this.docVetId = docVetId;
-	}
-
-	/**
-	 * @return the docVetBegins
-	 */
-	public Date getDocVetBegins() {
-		return docVetBegins;
-	}
-
-	/**
-	 * @param docVetBegins the docVetBegins to set
-	 */
-	public void setDocVetBegins(Date docVetBegins) {
-		this.docVetBegins = docVetBegins;
-	}
-
-	/**
-	 * @return the docVetted
-	 */
-	public Boolean getDocVetted() {
-		return docVetted;
-	}
-
-	/**
-	 * @param docVetted the docVetted to set
-	 */
-	public void setDocVetted(Boolean docVetted) {
-		this.docVetted = docVetted;
-	}
-	
-	/**
-	 * @return the docVettedDate
-	 */
-	public Date getDocVettedDate() {
-		return docVettedDate;
-	}
-	
-	/**
-	 * @param docVettedDate the docVettedDate to set
-	 */
-	public void setDocVettedDate(Date docVettedDate) {
-		this.docVettedDate = docVettedDate;
 	}
 	
 	/**
@@ -1186,4 +1118,33 @@ public class Document implements Serializable{
 	public Boolean getLogicalDelete() {
 		return logicalDelete;
 	}
+
+	/**
+	 * This enumeration manages recto verso information on folio.
+	 *  
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum RectoVerso {
+		R(0), // Recto 
+		V(1); // Verso
+		
+		private final int imageRectoVerso;
+
+	    private RectoVerso(int value) {
+	    	imageRectoVerso = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        switch (imageRectoVerso) {
+		        case 0 :
+		        	return "R";
+		        case 1 :
+		        	return "V";
+		        default :
+		        	return "R";
+	        }
+	    }
+	}	
 }

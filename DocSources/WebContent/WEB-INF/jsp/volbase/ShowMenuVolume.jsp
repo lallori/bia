@@ -46,7 +46,7 @@
 <%-- Existing Volume Record --%>
 <c:if test="${volume.summaryId != 0}">
 	 <div id="topBodyLeftMenuDiv">
-		<div id="createdby"><fmt:message key="volbase.showMenuVolume.created"/> ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+		<div id="createdby"><fmt:message key="volbase.showMenuVolume.created"/> ${volume.createdBy.firstName} ${volume.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
 		<div id="id"><fmt:message key="volbase.showMenuVolume.volId"/> ${volume.summaryId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowVolumeURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">

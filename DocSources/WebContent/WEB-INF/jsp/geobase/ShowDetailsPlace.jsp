@@ -161,8 +161,8 @@
 		<div class="background" id="EditDetailsPlaceDiv">
 			<div class="title">
 				<h5>PLACE DETAILS</h5>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="EditDetailsPlace" href="${EditDetailsPlaceURL}" class="editButton"></a><span id="loading" />
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				</security:authorize>
 			</div>
 			
