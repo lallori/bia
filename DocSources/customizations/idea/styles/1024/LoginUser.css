@@ -631,3 +631,8 @@ a {
 input#update {
     margin: 200px 0 0 120px;
 }
+
+form#requestCommand {
+	margin: 300px 0 0 390px;
+	position: absolute;
+}
