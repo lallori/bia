@@ -38,7 +38,7 @@
 							<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 						</div>
 						<c:if test="${command.plSource != 'TGN'}">
-							<div class="col_l"><form:input path="geogKey" cssClass="input_35c_disabled" disabled="disabled"/></div>
+							<div class="col_l"><form:input path="geogKey" cssClass="input_35c_disabled" readonly="readonly" /></div>
 						</c:if>
 						
 						<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
@@ -149,7 +149,7 @@
 			});
 			
 			
-			$j('.input_35c_disabled').attr('disabled', 'disabled');
+			$j('.input_35c_disabled').attr('readonly', 'readonly');
 			
 			var placeParent = $j('#placeParentAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchPlaceParentURL}',
