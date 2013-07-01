@@ -26,6 +26,12 @@
     </function>
 
     <function>
+        <name>contains</name>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
+        <function-signature>java.lang.Boolean contains(java.util.List, java.lang.Object)</function-signature>
+    </function>
+    
+    <function>
         <name>getApplicationProperty</name>
         <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String getApplicationProperty(java.lang.String)</function-signature>

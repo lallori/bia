@@ -122,11 +122,32 @@ public final class JSTLFunctions {
     	return ForumUtils.getForumChronology(forum);
     }
     
+    /**
+     * 
+     * @param forumPost
+     * @param searchText
+     * @return
+     */
     public static String searchTextResultPost(ForumPost forumPost, String searchText){
     	return ForumUtils.searchTextResultPost(forumPost, searchText);
     }
-    
+
+    /**
+     * 
+     * @param messageBody
+     * @return
+     */
     public static String abbreviateMessage(String messageBody){
     	return ForumUtils.abbreviateMessage(messageBody);
+    }
+
+    /**
+     * 
+     * @param list
+     * @param object
+     * @return
+     */
+    public static Boolean contains(List<Object> list, Object object) {
+    	return list.contains(object);
     }
 }
