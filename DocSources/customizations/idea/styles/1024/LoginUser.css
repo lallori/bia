@@ -291,6 +291,12 @@ input {
 	text-shadow:1px 1px #222;
 }
 
+.error { /* Error Span messages */
+	color:#DD3D27;
+	font-size: 11px;
+	display: block;
+}
+
 .loginerror { /* Error Span messages */
 	color: #DD3D27;
 	font-size:11px;
@@ -596,6 +602,10 @@ a {
 	border:none;
 }
 
+#passwordExpirated .list { /*  Form content */
+	margin: 20px 0 0 135px;
+}
+
 .list { /* Whole display list */
 	margin: 20px 0 0 70px;
  	 width: 350px;
@@ -629,7 +639,7 @@ a {
 }
 
 input#update {
-    margin: 200px 0 0 120px;
+    margin: 40px 0 0 180px;
 }
 
 form#requestCommand {
