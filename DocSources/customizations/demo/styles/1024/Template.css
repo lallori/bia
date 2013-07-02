@@ -905,7 +905,7 @@ $('.searchResult').live('click', function() {
 }
 
 
-/* BASIC SEARCH - MODAL WINDOW */
+/* SIMPLE SEARCH - MODAL WINDOW */
 
 #basicSearchDiv h1{
 	font-size:12px;
