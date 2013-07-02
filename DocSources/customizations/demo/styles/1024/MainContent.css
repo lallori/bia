@@ -329,12 +329,14 @@ span.h7 {
 
 .background { /* Background image of each section */
 	background:url(${contextPath}/images/1024/bg_div.png) no-repeat;
+	width:485px;
 }
 
 .title { /* Title */
 	width:220px;
 	height:30px;
 	padding-top:18px;
+	text-align: left;
 }
 
 .editButton { /* Edit button on top right */
@@ -1535,6 +1537,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditDetailsDocumentDiv {
 	max-width:485px;
+	width:485px;
 }
 
 #EditDetailsDocumentDiv h3 {
@@ -1611,6 +1614,7 @@ p.notDigitized {
 	display: inline-block;
 	vertical-align: top;
 	margin-right:10px;
+	text-align: left;
 }
 
 #personTitle #text {
