@@ -261,10 +261,13 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="visible button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="visible button_small" onclick="return checkDateFilter();">
 										<input type="hidden" id="category" value="Date">
 					               	</div>
 					            </div>
+					            <div id="dateRangeError" class="inputerrors">
+				               		<fmt:message key="error.advancedSearchDocuments.dateRangeError"/>
+				               	</div>
 					            
 					            <div class="row">
 					               	<div class="col_l"><p class="invisible"><fmt:message key="search.advancedSearchDocuments.betweenAnd"/></p></div>
@@ -429,11 +432,23 @@
 	<c:url var="searchVolumeURL" value="/src/SearchVolume.json"/>
 	
 	<script type="text/javascript">
+	
+		checkDateFilter = function(){
+			var dYear = $j('#dateYear').val();
+			if (dYear == null || dYear == 'yyyy' || dYear == '') {
+				$j('#dateRangeError').show();
+				return false;
+			}
+			$j('#dateRangeError').hide();
+			return true; 
+		};
+		
 		$j(document).ready(function() {
 			$j("#dateMonth option:eq(0)").text("mm");
 			$j("#dateMonth option:eq(0)").attr('selected', 'selected');
 			$j("#dateMonthBetween option:eq(0)").text("mm");
 			$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
+			$j('#dateRangeError').hide();
 
 			$j("#volumeType").change(function(){
 				if(this.options[1].selected) {
@@ -609,6 +624,7 @@
 					$j(".addDateRange").removeAttr("disabled");
 					$j(".addDateRange").prop("disabled", false);
 				}
+				$j('#dateRangeError').hide();
 			});
 			
 			$j("#dateSearchForm").submit(function(){
@@ -1061,5 +1077,5 @@
 			});
 			
 		});
-
+		
 	</script>

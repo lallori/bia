@@ -2135,10 +2135,24 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(')');
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					datesQuery.append("(sortableDateInt >=");
-					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(") AND (sortableDateInt <");
-					datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					if (datesYear.get(i) != null) {
+						datesQuery.append("(sortableDateInt >=");
+						datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					} else {
+						datesQuery.append("(docMonthNum >= "+(datesMonth.get(i)!=null?datesMonth.get(i):1));
+						datesQuery.append(" OR docMonthNum IS NULL");
+						datesQuery.append(") AND (docDay >= "+(datesDay.get(i)!=null?datesDay.get(i):1));
+						datesQuery.append(" OR docDay IS NULL");
+					}
+					if (datesYearBetween.get(i)!=null) {
+						datesQuery.append(") AND (sortableDateInt <");
+						datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					} else {
+						datesQuery.append(") AND (docMonthNum <= "+(datesMonthBetween.get(i)!=null?datesMonthBetween.get(i):12));
+						datesQuery.append(" OR docMonthNum IS NULL");
+						datesQuery.append(") AND (docDay <= "+(datesDayBetween.get(i)!=null?datesDayBetween.get(i):31));
+						datesQuery.append(" OR docDay IS NULL");
+					}
 					datesQuery.append(')');
 				}else if (datesTypes.get(i).equals(DateType.InOn)){
 					if(datesYear.get(i) != null){
