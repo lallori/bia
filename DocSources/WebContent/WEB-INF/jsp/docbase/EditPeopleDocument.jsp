@@ -175,13 +175,13 @@
 			});
 		});
 	</script>
-
+<!-- 
 <div class="questionPerson" style="display:none; cursor: default"> 
 		<h1>Delete this Person entry?</h1> 
 		<input type="button" class="personYes" value="Yes" /> 
 		<input type="button" class="personNo" value="No" /> 
 </div>
-
+ -->
 <script type="text/javascript">
 	$j(document).ready(function() {
 		$j('#no').click(function() { 
