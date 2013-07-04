@@ -13,7 +13,7 @@
 					<div id="captcha_recovery">
 						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
 					</div>
-					<input name="submit" type="submit" style="margin:10px 0px 0px 160px" title="submit" class="button_medium" value="Submit"/>
+					<input name="submit" type="submit" style="margin:0px 0px 0px 160px" title="submit" class="button_medium" value="Submit"/>
 				</form:form>  
 			</div>
 			

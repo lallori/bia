@@ -14,14 +14,14 @@
 						<form:label for="password" id="passwordLabel" path="password">Password <font color="#990000">*</font></form:label>
 					</div> 
 					<div class="row"> 
-						<form:password path="password" id="password" class="registerInput" /><form:errors path="password" />
+						<form:password path="password" id="password" class="registerInput" /><form:errors path="password" cssClass="error"/>
 					</div>
 					<br> 
 					<div class="row"> 
 						<form:label for="confirmPassword" path="confirmPassword" id="confirmPasswordLabel">Confirm Password <font color="#990000">*</font></form:label>
 					</div>
 					<div class="row">	
-						<form:password path="confirmPassword" id="confirmPassword" class="registerInput" type="password" /><form:errors path="confirmPassword" />
+						<form:password path="confirmPassword" id="confirmPassword" class="registerInput" type="password" /><form:errors path="confirmPassword" cssClass="error"/>
 					</div>
 				</div> 
 				<br><br>
