@@ -6,8 +6,7 @@
 
 			<div id="usersuccess">
 				<p class="usersuccess">An e-mail has been sent to the e-mail address you provided in the previous form.<br/><br/>To access the system, please check your email account and confirm your password reset.</p>  		
-				<a href="<c:url value="/"/>"><img src="<c:url value="/images/button_login.jpg"/>" alt="Login"/></a>
-					<input name="Login" class="button_medium" type="submit" value="Login-new" title="send the module">
+				<a href="<c:url value="/"/>" class="button_medium" style="margin:180px 0px 0px 145px">Login</a></a>
 			</div>
 
 			
