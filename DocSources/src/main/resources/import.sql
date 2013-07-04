@@ -1895,3 +1895,9 @@ INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.p
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.path', '', '/data/portrait/user');
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.path.tmp', '', '/data/portrait/user/tmp');
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('portrait.user.default', '', '/data/portrait/user/img_user.jpg');
+
+ALTER TABLE `tbldocuments` ALTER `DOCTOBEVETTED` DROP DEFAULT;
+ALTER TABLE `tbldocuments` CHANGE COLUMN `DOCTOBEVETTED` `DOCTOBEVETTED` TINYINT(1) NULL AFTER `LastUpdate`;
+ALTER TABLE `tbldocuments` ALTER `DOCVETTED` DROP DEFAULT;
+ALTER TABLE `tbldocuments` CHANGE COLUMN `DOCVETTED` `DOCVETTED` TINYINT(1) NULL AFTER `DOCVETBEGINS`;
+
