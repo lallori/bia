@@ -434,6 +434,8 @@
 	<script type="text/javascript">
 	
 		checkDateFilter = function(){
+			if ($j('#dateType option:selected').val()=='InOn')
+				return true;
 			var dYear = $j('#dateYear').val();
 			if (dYear == null || dYear == 'yyyy' || dYear == '') {
 				$j('#dateRangeError').show();
