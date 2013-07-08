@@ -378,7 +378,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="userSearch"><a><fmt:message key="search.advancedSearchDocuments.userSearch.title"/></a></h1>
+					<%--<h1 id="userSearch"><a><fmt:message key="search.advancedSearchDocuments.userSearch.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="lastUpdateForm" method="post" class="edit">
@@ -402,7 +402,7 @@
 				            </form>
 				        </div>
 					</div>
-					
+					 --%>
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchDocuments.logicalDelete.title"/></a></h1>
 					<div class="documents">
