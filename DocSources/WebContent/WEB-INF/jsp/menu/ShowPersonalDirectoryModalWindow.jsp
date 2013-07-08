@@ -37,12 +37,12 @@
 		});	
 		
 		$j("#personalNotes").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalNotes.open"/>PERSONAL NOTES", width: 750, height: 415});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalNotes"/>PERSONAL NOTES", width: 750, height: 415});
 			return false;
 		});
 		
 		$j("#personalAnnotations").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalAnnotations.open"/>PERSONAL ANNOTATIONS", width: 750, height: 415});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.personalAnnotations"/>PERSONAL ANNOTATIONS", width: 750, height: 415});
 			return false;
 		});
 		
