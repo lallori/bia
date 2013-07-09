@@ -295,13 +295,13 @@
 
 <div id="subscribeModal" title="Subscribe topic" style="display:none"> 
 	<p>
-		Subsciription OK
+		<fmt:message key="community.forum.topic.subscribed.yes"/>
 	</p>
 </div>
 
 <div id="unsubscribeModal" title="Unsubscribe topic" style="display:none"> 
 	<p>
-		Unsubsciription OK
+		<fmt:message key="community.forum.topic.subscribed.no"/>
 	</p>
 </div>
 
