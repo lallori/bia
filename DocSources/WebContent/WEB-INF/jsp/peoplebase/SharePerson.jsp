@@ -9,7 +9,25 @@
 			margin:10px 0 20px 5px;
 		}
     </style>
-    
+	
+	<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui-1.8.9.custom.min.js"/>"></script>
+	
+    <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+		<c:set var="logged" value="true" />
+	</security:authorize>
+	
+    <security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+		<c:set var="logged" value="false" />
+	</security:authorize>
+	
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	<c:url var="HomeURL" value="/Home.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	<c:url var="ShowLoginFirstDialogURL" value="/menu/ShowLoginFirstModalWindow.do" />
+	
     <div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
@@ -19,7 +37,7 @@
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	
-	<a href="http://bia.medici.org" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
+	<a href="${ShowPersonURL}" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
 	
 	<ul id="network">
        <div class="fb-like" data-send="false" data-layout="button_count" data-width="500" data-show-faces="false" style="display:inline;"></div>
@@ -249,3 +267,47 @@
 			</div>		
 		</div>		
 	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			
+			var showDialogLoginFirst = $j('<div id="DialogLoginFirst"></div>').dialog({
+				resizable: false,
+				width: 300,
+				height: 150, 
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				open: function(event, ui) { 
+            		$j(this).load('${ShowLoginFirstDialogURL}');
+           		},
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				title: "LOG IN FIRST"
+			});
+			
+			$j("#moreInfoButton").die();
+			$j("#moreInfoButton").live('click', function(e){
+				if (!${logged}) {
+					showDialogLoginFirst.dialog('open');
+					return false;
+				}
+				e.preventDefault();
+				if (window.opener != null) {
+					if (window.opener.$j("#body_left").length == 1) {
+						window.opener.$j("#body_left").load($j(this).attr('href'));
+						window.opener.alert('<fmt:message key="home.showRecordAlertMessage"/>');
+					} else {
+						// Parent window is not yet opened
+						window.open("${HomeURL}","_self");
+					}
+				} else {
+					// If there isn't BIA window
+					window.open("${HomeURL}","_self");
+				}
+				return false;
+			});
+		});
+	</script>

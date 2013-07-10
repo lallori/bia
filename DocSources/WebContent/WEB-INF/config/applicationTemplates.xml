@@ -114,6 +114,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowHelpModalWindow.jsp" />
 	</definition>
 	
+	<definition name="menu/ShowLoginFirstModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowLoginFirstModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="menu/ShowPersonalDirectoryModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowPersonalDirectoryModalWindow.jsp" />
 	</definition>

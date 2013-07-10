@@ -354,7 +354,7 @@
 				e.preventDefault();
 				if(window.opener != null){
 					window.opener.$j("#body_left").load($j(this).attr('href'));
-					window.opener.alert("Close this window to access the record");
+					window.opener.alert('<fmt:message key="home.showRecordAlertMessage"/>');
 				}else{
 					//TODO: If the main window is closed
 // 					window.opener = window.open("${BIAHomeURL}", "_blank");

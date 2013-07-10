@@ -17,7 +17,9 @@
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css" />"/>
+		<!-- <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css" />"/>  -->
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" />
+		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		
 		<script type="text/javascript">var switchTo5x=true;</script>

@@ -1901,3 +1901,5 @@ ALTER TABLE `tblDocuments` CHANGE COLUMN `DOCTOBEVETTED` `DOCTOBEVETTED` TINYINT
 ALTER TABLE `tblDocuments` ALTER `DOCVETTED` DROP DEFAULT;
 ALTER TABLE `tblDocuments` CHANGE COLUMN `DOCVETTED` `DOCVETTED` TINYINT(1) NULL AFTER `DOCVETBEGINS`;
 
+INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`, `preparer`, `template`) VALUES ('menu/ShowLoginFirstModalWindow', 'template.partialDOM', NULL, NULL);
+INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('menu/ShowLoginFirstModalWindow', 'main', NULL, '/WEB-INF/jsp/menu/ShowLoginFirstModalWindow.jsp', 0, NULL);

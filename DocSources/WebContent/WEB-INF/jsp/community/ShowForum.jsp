@@ -22,7 +22,8 @@
 			</c:url>
 		
 			<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
-				<div id="forumTable">
+				<!-- RR: Category's identifier appended to div's identifier to avoid duplicate identifiers in DOM -->
+				<div id="forumTable_${currentCategory.forumId}">
 					<div class="list">
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
@@ -57,12 +58,13 @@
 								<div class="two">${currentForum.subForumsNumber}</div>
 							</c:if>
 							<c:if test="${currentCategory.dispositionOrder == 1 && currentForum.forumId == bia:getApplicationProperty('forum.identifier.document')}">
-								<div class="two">${documentSubForumsWithTopics}</div>
+								<div class="two"></div>
 							</c:if>
 <%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
 							<div class="three">${currentForum.topicsNumber}</div>
 							<c:if test="${not empty currentForum.lastPost}">
-							<div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+							<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+							<div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName_lastPostId_${currentForum.lastPost.postId}" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 							</c:if>
 							<c:if test="${empty currentForum.lastPost}">
 							<div class="four">empty forum</div>
@@ -218,7 +220,8 @@
 						<div class="two">${currentForum.topicsNumber}</div>
 			            <div class="three"><c:if test="${currentForum.totalViews == null}">0</c:if><c:if test="${currentForum.totalViews != null}">${currentForum.totalViews}</c:if></div>
 					<c:if test="${not empty currentForum.lastPost}">
-			            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+						<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+			            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName_lastPostId_${currentForum.lastPost.postId}" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 			        </c:if>
 					<c:if test="${empty currentForum.lastPost}">
 			            <div class="four"></div>
@@ -344,13 +347,15 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
+						            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
 						            <div class="four">${currentTopic.totalViews}</div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+									<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -364,12 +369,14 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
+						            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
 						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+									<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="four"></div>
@@ -555,13 +562,15 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
+						            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 						            <div class="three">${currentTopic.totalReplies - 1}</div>
 						            <div class="four"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+									<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						            <div class="five">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="five"></div>
@@ -575,12 +584,14 @@ Use the textbox below to search this forum.</p>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName" class="link">${currentTopic.user.account}</a></span>
+						            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span>Created by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
 						            </div>
 						            <div class="two">${currentTopic.totalReplies - 1}</div>
 						            <div class="three"><c:if test="${currentTopic.totalViews != null}">${currentTopic.totalViews}</c:if></div>
 								<c:if test="${not empty currentTopic.lastPost}">
-						            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+									<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+						            <div class="four">Last post by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </c:if>
 								<c:if test="${empty currentTopic.lastPost}">
 						            <div class="four"></div>
@@ -895,7 +906,7 @@ Use the textbox below to search this forum.</p>
 					e.preventDefault();
 					if(window.opener != null){
 						window.opener.$j("#body_left").load($j(this).attr('href'));
-						window.opener.alert("Close this window to access the record");
+						window.opener.alert('<fmt:message key="home.showRecordAlertMessage"/>');
 					}else{
 						//TODO: If the main window is closed
 //	 					window.opener = window.open("${BIAHomeURL}", "_blank");
