@@ -412,8 +412,11 @@ Use the textbox below to search this forum.</p>
 						<c:param name="forumId" value="${forum.forumParent.forumId}" />
 					</c:url>
 				
-					<c:if test="${not empty forum.forumParent}">
+					<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
 						<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+					</c:if>
+					<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
+						<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
 					</c:if>
 				</c:if>
 	
@@ -627,8 +630,11 @@ Use the textbox below to search this forum.</p>
 					<c:param name="forumId" value="${forum.forumParent.forumId}" />
 				</c:url>
 			
-				<c:if test="${not empty forum.forumParent}">
+				<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
 					<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+				</c:if>
+				<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
+					<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
 				</c:if>
 			</c:if>
 
