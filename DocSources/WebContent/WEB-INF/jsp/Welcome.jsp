@@ -29,7 +29,7 @@
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a> 
             	<br />
             	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
-            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${discussion.lastPost.postId}" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
     		</c:forEach>
     		
@@ -51,7 +51,7 @@
             	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
             	<br />
             	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
-            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" id="userName" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName_recentDiscussionLastPostId_${discussion.lastPost.postId}" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
 	    	</c:forEach>
     	</div>
