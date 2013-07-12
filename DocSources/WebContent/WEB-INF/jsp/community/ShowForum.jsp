@@ -93,6 +93,20 @@
 				<c:param name="topicId" value="0"/>
 			</c:url>
 			<h2>${forum.title}</h2>
+			<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
+				<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT' && not empty documentExplorer}">
+					<c:url var="LoginURL" value="/LoginUser.do" />
+					<c:url var="RegisterURL" value="/user/RegisterUser.do" />
+					<div>
+						<fmt:message key="community.forum.notLoggedIn" />
+						Log in <a href="${LoginURL}" target="_self" class="link">here</a>
+						<br />
+						<fmt:message key="community.forum.notRegistered" />
+						Subscribe <a href="${RegisterURL}" target="_self" class="link">here</a> for free
+					</div>
+				</c:if>
+			</security:authorize>
+			
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:if test="${forum.option.canHaveTopics && forum.subType == 'DOCUMENT' && not empty documentExplorer}">
 				<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
