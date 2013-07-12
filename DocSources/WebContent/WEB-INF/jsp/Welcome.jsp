@@ -13,6 +13,28 @@
 	  	<h1><fmt:message key="welcome.activityForums"/></h1>
     
    		<div id="topDiscussions">
+   			<h5><fmt:message key="welcome.most"/></h5>
+			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
+    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
+    			<c:param name="forumId" value="${discussion.forum.forumId}"/>
+    			<c:param name="topicId" value="${discussion.topicId}"/>
+    			<c:param name="completeDOM" value="true"/>
+    		</c:url>
+    		<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
+    			<c:param name="account" value="${discussion.lastPost.user.account}"/>
+    			<c:param name="completeDOM" value="true"/>
+    		</c:url>
+       		<div class="discussion">
+            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
+            	<br />
+            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
+            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName_recentDiscussionLastPostId_${discussion.lastPost.postId}" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
+        	</div>
+	    	</c:forEach>
+			
+			<br />
+			
         	<h5><fmt:message key="welcome.top"/></h5>
     		<c:forEach var="discussion" items="${forumStatistics['TOP DISCUSSIONS']}">
     		<c:url var="forumURL" value="/community/ShowTopicForum.do">
@@ -32,28 +54,6 @@
             	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${discussion.lastPost.postId}" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
         	</div>
     		</c:forEach>
-    		
-    		<br />
-    		
-        	<h5><fmt:message key="welcome.most"/></h5>
-			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
-    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
-    			<c:param name="forumId" value="${discussion.forum.forumId}"/>
-    			<c:param name="topicId" value="${discussion.topicId}"/>
-    			<c:param name="completeDOM" value="true"/>
-    		</c:url>
-    		<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
-    			<c:param name="account" value="${discussion.lastPost.user.account}"/>
-    			<c:param name="completeDOM" value="true"/>
-    		</c:url>
-       		<div class="discussion">
-            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
-            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
-            	<br />
-            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
-            	<span><fmt:message key="welcome.lastPost"/><a href="${showUserProfileURL}" target="_blank" id="userName_recentDiscussionLastPostId_${discussion.lastPost.postId}" class="link">${discussion.lastPost.user.account}</a><span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${discussion.lastUpdate}" /></span></span>
-        	</div>
-	    	</c:forEach>
     	</div>
         
     
