@@ -27,10 +27,12 @@ IIPMooViewer.implement({
 
   /* Create a new annotation, add it to our list and edit it
    */
-  newAnnotation: function(){
+  newAnnotation: function(canvas){
 
     // Create new ID for annotation
     var id = String.uniqueID();
+    
+    this.canvas = canvas;
 
     // Create default annotation and insert into our annotation array
     var a = {
@@ -44,7 +46,7 @@ IIPMooViewer.implement({
       text: '',
       deletable: true
     };
-
+    
     // Create an array if we don't have one and push a new annotation to it
     if( !this.annotations ) this.annotations = {};
     this.annotations[id] = a;
