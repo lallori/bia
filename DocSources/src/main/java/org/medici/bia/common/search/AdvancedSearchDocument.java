@@ -852,7 +852,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						if(StringUtils.countMatches(tempString.toString(), "\"")%2 != 0){
 							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
 						}
-						words.add(tempString.toString());
+						users.add(tempString.toString());
 						
 					} else {
 						continue;
@@ -2394,6 +2394,33 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(docIdQuery);
+			}
+		}
+		
+		//User
+		if(users.size() > 0) {
+			StringBuilder usersQuery = new StringBuilder("(");
+			for (int i=0; i<users.size(); i++) {
+				if (usersQuery.length()>1) {
+					usersQuery.append(" AND ");
+				}
+
+				if (userActionTypes.get(i).equals(UserActionType.CreatedBy)) {
+					usersQuery.append("(createdBy=");
+					usersQuery.append("'").append(users.get(i)).append("'");
+					usersQuery.append(')');
+				} else if (userActionTypes.get(i).equals(UserActionType.LastUpdateBy)) {
+					usersQuery.append("(lastUpdateBy=");
+					usersQuery.append("'").append(users.get(i)).append("'");
+					usersQuery.append(')');
+				}
+			}
+			usersQuery.append(')');
+			if (!usersQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(usersQuery);
 			}
 		}
 		

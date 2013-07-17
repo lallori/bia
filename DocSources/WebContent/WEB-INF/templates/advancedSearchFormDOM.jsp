@@ -44,6 +44,7 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.place.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.title.js"/>"></script>
+		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.user.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>

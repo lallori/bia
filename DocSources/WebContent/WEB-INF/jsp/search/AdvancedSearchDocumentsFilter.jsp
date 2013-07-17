@@ -192,6 +192,16 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchDocumentsFilter.andBoolean"/></p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(not empty searchFilter.filterData.users) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchDocumentsFilter.andBoolean"/></p><hr></c:if>
+			<div id="userSearchDiv">
+			<c:forEach items="${searchFilter.filterData.users}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="categorySearch"><fmt:message key="search.advancedSearchDocumentsFilter.users"/>:</span><span class="wordSearch">${searchFilter.filterData.users[iterator.index]}</span><a class="remove" href="#"><fmt:message key="search.advancedSearchDocumentsFilter.remove"/></a>
+					<input type="hidden" value="${searchFilter.filterData.users[iterator.index]}" name="user">
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch"><fmt:message key="search.advancedSearchDocumentsFilter.andBoolean"/></p></c:if>
+			</c:forEach>
+			</div>
 			<c:if test="${(searchFilter.filterData.logicalDelete != null && searchFilter.filterData.logicalDelete.toString() == 'true') && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.folios) || (not empty searchFilter.filterData.docIds) || (not empty searchFilter.filterData.folioMods))}"><hr><p class="andOrNotAdvancedSearchCenter"><fmt:message key="search.advancedSearchDocumentsFilter.andBoolean"/></p><hr></c:if>
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">

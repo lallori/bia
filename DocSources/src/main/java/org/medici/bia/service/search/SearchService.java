@@ -39,6 +39,7 @@ import org.medici.bia.domain.Place;
 import org.medici.bia.domain.PlaceType;
 import org.medici.bia.domain.SearchFilter;
 import org.medici.bia.domain.TopicList;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.domain.SearchFilter.SearchType;
@@ -266,6 +267,14 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchUserHistorySearchEntry(Integer idUserHistory) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public List<User> searchUsers(String query) throws ApplicationThrowable;
 	
 	/**
 	 * 

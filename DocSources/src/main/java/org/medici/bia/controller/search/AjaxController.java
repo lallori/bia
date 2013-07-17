@@ -62,6 +62,7 @@ import org.medici.bia.domain.RoleCat;
 import org.medici.bia.domain.SearchFilter;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.TopicList;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
@@ -1093,6 +1094,40 @@ public class AjaxController {
 				model.put("data", null);
 				model.put("suggestions", "");
 			}
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of user accounts. 
+	 *  
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing users' name.
+	 */
+	@RequestMapping(value = "/src/SearchUser", method = RequestMethod.GET)
+	public ModelAndView searchUser(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			
+			try {
+				query = new String(query.getBytes(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+			}
+
+			List<User> users = getSearchService().searchUsers(query);
+			model.put("query", query);
+			model.put("count", users.size());
+			model.put("data", ListBeanUtils.transformList(users, "account"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(users, "firstName/lastName/account", "/", " ", Boolean.FALSE));
+			model.put("firstNames", ListBeanUtils.transformList(users, "firstName"));
+			model.put("lastNames", ListBeanUtils.transformList(users, "lastName"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

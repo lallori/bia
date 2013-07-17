@@ -564,6 +564,18 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<User> searchUsers(String query) throws ApplicationThrowable {
+		try {
+			return getUserDAO().findUsers(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public UserHistory searchUserHistorySearchEntry(Integer idUserHistory) throws ApplicationThrowable {
 		try{
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);

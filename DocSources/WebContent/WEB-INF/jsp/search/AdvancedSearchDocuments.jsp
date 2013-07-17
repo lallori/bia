@@ -370,7 +370,7 @@
 										<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
+					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" >
 										<input type="hidden" id="category" value="Doc Id">
 					               	</div>
 					            </div>
@@ -378,31 +378,32 @@
 				        </div>
 					</div>
 					
-					<%--<h1 id="userSearch"><a><fmt:message key="search.advancedSearchDocuments.userSearch.title"/></a></h1>
+					<h1 id="userSearch"><a><fmt:message key="search.advancedSearchDocuments.userSearch.title"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
-							<form id="lastUpdateForm" method="post" class="edit">
+							<form id="userSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.user"/>">?</a>
-										<input type="text" id="user" name="user" class="input_15c" value="" />
+					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.user"></fmt:message>">?</a>
+										<input id="user" name="user" class="input_7c" type="text" />
 					               	</div>
 					               	<div class="col_l">in</div>
 					               	<div class="col_l">
-					               		<select id="accountActionType" name="wordType" class="selectform_LXlong">
+					               		<select id="userType" name="userType" class="selectform_LXlong">
 											<option value="CreatedBy" selected="selected"><fmt:message key="search.advancedSearchDocuments.userSearch.createdBy"/></option>
 											<option value="LastUpdateBy"><fmt:message key="search.advancedSearchDocuments.userSearch.lastUpdateBy"/></option>
 										</select>
 					               	</div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="userAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="user">
+										<input type="hidden" id="userId" value="">
 					               	</div>
 					            </div>
 				            </form>
 				        </div>
 					</div>
-					 --%>
+					 
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					<h1 id="logicalDeleteSearch"><a><fmt:message key="search.advancedSearchDocuments.logicalDelete.title"/></a></h1>
 					<div class="documents">
@@ -429,6 +430,7 @@
 	<c:url var="searchTopicURL" value="/src/SearchTopic.json"/>
 	<c:url var="searchPersonURL" value="/src/SearchPerson.json"/>
 	<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
+	<c:url var="searchUserURL" value="/src/SearchUser.json"/>
 	<c:url var="searchVolumeURL" value="/src/SearchVolume.json"/>
 	
 	<script type="text/javascript">
@@ -578,7 +580,7 @@
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 				consoleLog : false
 			});
-			$j("#accountSearchForm").advancedSearchForm({
+			$j("#userSearchForm").advancedSearchForm({
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 				consoleLog : false
 			});
@@ -683,6 +685,7 @@
 				$refersToAutocomplete.killSuggestions();
 				$topicPlaceAutocomplete.killSuggestions();
 				$volumeAutocomplete.killSuggestions();
+				$userAutocomplete.killSuggestions();
 				return false;
 			});
 			
@@ -1036,6 +1039,46 @@
 				return false;
 			});
 			
+			var $userValue = '';
+			var $userAutocomplete = $j("#user").autocompleteUser({
+				serviceUrl: '${searchUserURL}',
+			    loadingImageUrl:'${LoadingImageURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				colWidths: [35,35,30],
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j(".userAdd").die();
+					$j(".userAdd").removeAttr("disabled");
+					$j('#userId').val(data);
+					$j(".userAdd").attr("disabled");
+					$j(".userAdd").prop("disabled", false);
+					$userValue = $j("#user").val();
+					$j("#user").live('keyup', function(){
+						if($j("#user").val() != $userValue){
+							$j(".userAdd").attr("disabled","disabled");
+							$j("#userId").val("");
+						}
+						return false;
+					});
+					$j("#user").live('keypress', function(e){
+						if(e.keyCode == 13 && $j("#user").val() != $userValue){
+							e.stopPropagation();
+							return false;
+						}
+					});
+				}
+			});
+			
+			$j("#userSearchForm").submit(function(e){
+				$j("#userId").val("");
+				$j(".userAdd").attr("disabled","disabled");
+			});
+			
 // 			$j("#topic").keyup(function(){
 // 				if($j("#topicId").val() != '')
 // 					$j(".topicAdd").attr("disabled","disabled");
@@ -1075,6 +1118,12 @@
 			$j('#docIdSearch').click(function(){
 				$j.scrollTo({top:'245px',left:'0px'}, 800 );
 				$j("#yourSearchFilterDiv").animate({"top": "200px"}, "slow");
+				return false;
+			});
+			
+			$j('#userIdSearch').click(function(){
+				$j.scrollTo({top:'272px',left:'0px'}, 800 );
+				$j("#yourSearchFilterDiv").animate({"top": "220px"}, "slow");
 				return false;
 			});
 			

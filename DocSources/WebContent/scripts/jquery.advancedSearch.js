@@ -104,6 +104,12 @@
 						searchWord += "<i>" + getSearchWordForAutocompleterField(formName, fieldName) + "</i>";
 						hiddenValue = $(this).find("option:selected").val() + "|" + $(this).find("option:selected").text() + "|";
 						hiddenValue += getHiddenParameterForAutocompleterField(formName, fieldName);
+					}else if (isUserForm(formName)){
+						searchType = $(this).find("option:selected").val();
+						searchWord = getSearchWordForAutocompleterField(formName, fieldName);
+						hiddenValue = $(this).find("option:selected").val() + "|";
+						hiddenValue += $('#' + formName).find('#' + fieldName + 'Id').val();
+						resetAutocompleterField(formName, fieldName);
 					}else{
 						searchType = $(this).find("option:selected").val();
 						searchWord = getSearchWordForAutocompleterField(formName, fieldName);
@@ -542,6 +548,16 @@
 	 */
 	function isTopicForm(formName) {
 		if (formName.indexOf("topic") >= 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * This method check if form manage user.
+	 */
+	function isUserForm(formName) {
+		if (formName.indexOf("user") >= 0)
 			return true;
 		else
 			return false;
