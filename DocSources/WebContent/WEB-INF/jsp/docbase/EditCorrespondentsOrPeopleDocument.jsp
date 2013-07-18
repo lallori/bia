@@ -49,10 +49,11 @@
 						<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure"/>
 					</div>
 					<div class="col_l">
-						<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198 && command.document.senderPeople.personId != null}">
+						<!-- RR: personId = 198 equivalent to "To Be Entered" - 3905 equivalent to "Not Relevant in this Entry" - 9285 equivalent to "Person Name Lost, Not Indicated or Unidentifiable" -->
+						<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
 							<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"><input type="hidden" style="display:none;" class="tabId" value="peopleId${command.document.senderPeople.personId}" /></a>
 						</c:if>
-						<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198 || command.document.senderPeople.personId == null}">
+						<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198}">
 							<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
 						</c:if>
 					</div>
@@ -65,10 +66,11 @@
 						<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure"/>
 					</div>
 					<div class="col_l">
+						<!-- RR: placeAllId = 53384 equivalent to "Place Name Lost, Not Indicated or Unidentifable" - 54332 equivalent to "Not Relevant in this Entry" - 55627 equivalent to "To Be Entered" -->
 						<c:if test="${command.document.senderPlace.placeAllId != 53384 && command.document.senderPlace.placeAllId != 55627 && command.document.senderPlace.placeAllId != 54332}">
 							<a title="Show this place record" id="placeIcon" class="senderLinkPlace" href="${CompareFromURL}"></a>
 						</c:if>
-						<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 || command.document.senderPlace.placeAllId == 0}">
+						<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332}">
 							<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
 						</c:if>
 					</div>
@@ -101,7 +103,7 @@
 						<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905 && command.document.recipientPeople.personId != 198}">
 							<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"><input type="hidden" style="display:none;" class="tabId" value="peopleId${command.document.recipientPeople.personId}" /></a>
 						</c:if>
-						<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198 || command.document.recipientPeople.personId == 0}">
+						<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198}">
 							<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
 						</c:if>
 					</div>
@@ -117,7 +119,7 @@
 						<c:if test="${command.document.recipientPlace.placeAllId != 53384 && command.document.recipientPlace.placeAllId != 55627 && command.document.recipientPlace.placeAllId != 54332}">
 							<a title="Show this place record" id="placeIcon" class="recipientLinkPlace" href="${CompareToURL}"></a>
 						</c:if>
-						<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332 || command.document.recipientPlace.placeAllId == 0}">
+						<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332}">
 							<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
 						</c:if>
 					</div>
