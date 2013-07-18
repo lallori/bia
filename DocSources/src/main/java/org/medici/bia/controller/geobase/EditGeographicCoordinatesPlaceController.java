@@ -183,6 +183,12 @@ public class EditGeographicCoordinatesPlaceController {
 
 				HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
 				model.put("historyNavigator", historyNavigator);
+				
+				if(getGeoBaseService().ifPlaceAlreadyPresentInMarkedList(place.getPlaceAllId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
 
 				return new ModelAndView("geobase/ShowPlace", model);
 			} catch (ApplicationThrowable applicationThrowable) {

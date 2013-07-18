@@ -100,6 +100,13 @@ public class EditCorrespondentsVolumeController {
 			try {
 				volume = getVolBaseService().editCorrespondentsVolume(volume);
 				model.put("volume", volume);
+				
+				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("volbase/ShowCorrespondentsVolume", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

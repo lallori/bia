@@ -185,6 +185,12 @@ public class EditDetailsPersonController {
 					
 					HistoryNavigator historyNavigator = getPeopleBaseService().getHistoryNavigator(person);
 					model.put("historyNavigator", historyNavigator);
+					
+					if(getPeopleBaseService().ifPersonALreadyPresentInMarkedList(person.getPersonId())){
+						model.put("inMarkedList", "true");
+					}else{
+						model.put("inMarkedList", "false");
+					}
 
 					return new ModelAndView("peoplebase/ShowPerson", model);
 				}

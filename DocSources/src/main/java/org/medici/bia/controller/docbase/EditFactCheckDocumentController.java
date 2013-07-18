@@ -107,6 +107,13 @@ public class EditFactCheckDocumentController {
 				}
 
 				model.put("document", document);
+				
+				if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("docbase/ShowFactCheckDocument", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

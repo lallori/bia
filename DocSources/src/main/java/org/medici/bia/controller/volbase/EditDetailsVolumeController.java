@@ -156,6 +156,12 @@ public class EditDetailsVolumeController {
 					
 					HistoryNavigator historyNavigator = getVolBaseService().getHistoryNavigator(volume);
 					model.put("historyNavigator", historyNavigator);
+					
+					if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+						model.put("inMarkedList", "true");
+					}else{
+						model.put("inMarkedList", "false");
+					}
 
 					return new ModelAndView("volbase/ShowVolume", model);
 				}

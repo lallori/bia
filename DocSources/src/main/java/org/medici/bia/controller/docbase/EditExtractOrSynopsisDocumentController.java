@@ -112,6 +112,13 @@ public class EditExtractOrSynopsisDocumentController {
 				}
 
 				model.put("document", document);
+				
+				if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("docbase/ShowExtractOrSynopsisDocument", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

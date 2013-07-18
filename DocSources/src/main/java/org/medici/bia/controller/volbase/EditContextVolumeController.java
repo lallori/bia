@@ -102,6 +102,13 @@ public class EditContextVolumeController {
 				volume = getVolBaseService().editContextVolume(volume);
 
 				model.put("volume", volume);
+				
+				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("volbase/ShowContextVolume", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

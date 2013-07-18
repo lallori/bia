@@ -170,6 +170,13 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				model.put("document", document);
 				model.put("image", image);
 				model.put("historyNavigator", historyNavigator);
+				
+				if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);

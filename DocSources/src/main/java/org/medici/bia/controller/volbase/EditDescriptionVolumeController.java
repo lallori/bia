@@ -115,6 +115,13 @@ public class EditDescriptionVolumeController {
 			try {
 				volume = getVolBaseService().editDescriptionVolume(volume);
 				model.put("volume", volume);
+				
+				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){
+					model.put("inMarkedList", "true");
+				}else{
+					model.put("inMarkedList", "false");
+				}
+				
 				return new ModelAndView("volbase/ShowDescriptionVolume", model);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);

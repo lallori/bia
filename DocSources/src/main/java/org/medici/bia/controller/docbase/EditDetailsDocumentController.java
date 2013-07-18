@@ -173,6 +173,12 @@ public class EditDetailsDocumentController {
 					HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
 					model.put("historyNavigator", historyNavigator);
 					
+					if(getDocBaseService().ifDocumentAlreadyPresentInMarkedList(document.getEntryId())){
+						model.put("inMarkedList", "true");
+					}else{
+						model.put("inMarkedList", "false");
+					}
+					
 					return new ModelAndView("docbase/ShowDocument", model);
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
