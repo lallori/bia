@@ -48,4 +48,9 @@ public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 	 * @throws PersistenceException
 	 */
 	List<UserAuthority> getAuthorities() throws PersistenceException;
+	
+	/**
+	 * @return
+	 */
+	UserAuthority getMaximumAuthority(String accountId);
 }

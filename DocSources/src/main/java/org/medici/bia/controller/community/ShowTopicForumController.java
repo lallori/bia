@@ -41,10 +41,12 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -167,6 +169,16 @@ public class ShowTopicForumController {
 			
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
 			model.put("postsPage", postsPage);
+			
+			Map<String, UserAuthority> maxAuthorities = new HashMap<String, UserAuthority>();
+			for(ForumPost post : ((List<ForumPost>)postsPage.getList())) {
+				String accountId = post.getUser().getAccount();
+				if (!maxAuthorities.containsKey(accountId)) {
+					UserAuthority maxAuthority = getCommunityService().findUserMaximumAuthority(accountId);
+					maxAuthorities.put(accountId,maxAuthority);
+				}
+			}
+			model.put("maxAuthorities", maxAuthorities);
 			
 			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();
 			List<String> onlineUsers = (List<String>) whoIsOnlineHashMap.get("onlineUsers");

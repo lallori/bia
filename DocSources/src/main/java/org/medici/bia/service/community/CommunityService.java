@@ -189,6 +189,14 @@ public interface CommunityService {
 	
 	/**
 	 * 
+	 * @param accountId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	UserAuthority findUserMaximumAuthority(String accountId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param messageId
 	 * @return
 	 * @throws ApplicationThrowable

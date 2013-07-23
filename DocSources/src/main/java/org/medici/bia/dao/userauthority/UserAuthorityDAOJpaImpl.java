@@ -61,4 +61,17 @@ public class UserAuthorityDAOJpaImpl extends JpaDao<Authority, UserAuthority> im
 		
 		return (List<UserAuthority>) query.getResultList();	
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserAuthority getMaximumAuthority(String accountId) {
+		String queryString = "FROM UserAuthority WHERE priority = (SELECT MIN(uAuth.priority) FROM UserAuthority AS uAuth WHERE uAuth IN (SELECT userAuthority FROM UserRole where user.account = :accountId))";
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("accountId", accountId);
+		
+		return (UserAuthority) query.getSingleResult();
+	}
 }

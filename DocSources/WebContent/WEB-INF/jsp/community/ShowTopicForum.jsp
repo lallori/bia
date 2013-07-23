@@ -219,7 +219,7 @@
         		</c:if>
         		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
         	</li>
-            <li>Community User</li>
+            <li>${maxAuthorities[currentPost.user.account].description}</li>
             <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
             <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
         </ul>

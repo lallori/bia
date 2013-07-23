@@ -628,6 +628,22 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserAuthority findUserMaximumAuthority(String accountId) throws ApplicationThrowable {
+		try {
+			UserAuthority authority = getUserAuthorityDAO().getMaximumAuthority(accountId);
+			if (authority != null)
+				return authority;
+			else
+				throw new ApplicationThrowable(ApplicationError.USER_NOT_FOUND_ERROR);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
