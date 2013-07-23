@@ -157,7 +157,7 @@
 				maxHeight: 380,
 				
 				                                                                                                                                                         
-				//title: 'Page T.',
+				//title: 'Page Turner'
 				title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.pageTurner.windowTitle"/>',
 				position: ['left','middle'],                                                                                                                                                       
 				closeOnEscape: false,
