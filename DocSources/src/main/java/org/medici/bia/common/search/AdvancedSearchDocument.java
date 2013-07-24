@@ -2135,26 +2135,32 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(')');
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					if (datesYear.get(i) != null) {
+					if (datesYear.get(i) != null && datesYearBetween.get(i) != null) {
 						datesQuery.append("(sortableDateInt >=");
 						datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					} else {
-						datesQuery.append("(docMonthNum >= "+(datesMonth.get(i)!=null?datesMonth.get(i):1));
-						// FIXME: RR - include deleted conditions only when it is necessary to include not dated documents in the results
-						// datesQuery.append(" OR docMonthNum IS NULL");
-						datesQuery.append(") AND (docDay >= "+(datesDay.get(i)!=null?datesDay.get(i):1));
-						// datesQuery.append(" OR docDay IS NULL");
-					}
-					if (datesYearBetween.get(i)!=null) {
 						datesQuery.append(") AND (sortableDateInt <");
 						datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+						datesQuery.append(')');
 					} else {
-						datesQuery.append(") AND (docMonthNum <= "+(datesMonthBetween.get(i)!=null?datesMonthBetween.get(i):12));
-						// datesQuery.append(" OR docMonthNum IS NULL");
-						datesQuery.append(") AND (docDay <= "+(datesDayBetween.get(i)!=null?datesDayBetween.get(i):31));
-						// datesQuery.append(" OR docDay IS NULL");
+						// RR: Months are specified due to client validation
+						boolean moreThanOneMonth = !datesMonth.get(i).equals(datesMonthBetween.get(i)) || (datesDay.get(i) != null && datesDayBetween.get(i) != null && (datesDay.get(i) > datesDayBetween.get(i)));
+						int mFrom = datesMonth.get(i) < 12 ? datesMonth.get(i) + 1 : 1;
+						if (moreThanOneMonth && mFrom != datesMonthBetween.get(i)) {
+							int mTo = datesMonthBetween.get(i) > 1 ? datesMonthBetween.get(i) - 1 : 12;
+							datesQuery.append("(docMonthNum >= " + mFrom + " AND docMonthNum <= " +  mTo + " OR ");
+						}
+						
+						// FIXME: RR - include deleted conditions only when it is necessary to include not dated documents in the results
+						datesQuery.append("(docMonthNum = " + datesMonth.get(i) /* + " OR docMonthNum IS NULL " */);
+						if (datesDay.get(i) != null)
+							datesQuery.append(" AND docDay >= " + datesDay.get(i) /* + " OR docDay IS NULL " */);
+						if (moreThanOneMonth)
+							datesQuery.append(") OR (docMonthNum = " + datesMonthBetween.get(i) /* + " OR docMonthNum IS NULL " */);
+						datesQuery.append(datesDayBetween.get(i) != null ? (" AND docDay <= " + datesDayBetween.get(i) /* + " OR docDay IS NULL " */) + ")" : ")");
+						if (moreThanOneMonth)
+							datesQuery.append(")");
 					}
-					datesQuery.append(')');
+					
 				}else if (datesTypes.get(i).equals(DateType.InOn)){
 					if(datesYear.get(i) != null){
 						datesQuery.append("(yearModern =");

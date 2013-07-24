@@ -265,9 +265,6 @@
 										<input type="hidden" id="category" value="Date">
 					               	</div>
 					            </div>
-					            <div id="dateRangeError" class="inputerrors">
-				               		<fmt:message key="error.advancedSearchDocuments.dateRangeError"/>
-				               	</div>
 					            
 					            <div class="row">
 					               	<div class="col_l"><p class="invisible"><fmt:message key="search.advancedSearchDocuments.betweenAnd"/></p></div>
@@ -281,11 +278,12 @@
 					               	</div>
 					               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="invisible button_small">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="invisible button_small" onclick="return checkDateFilter();">
 					               	</div>
 					            </div>
 				            </form>
 				        </div>
+				        <div id="dateRangeError" class="inputerrorsDate"></div>
 					</div>
 					
 					<h1 id="volumeSearch"><a><fmt:message key="search.advancedSearchDocuments.volumeAndFolio.title"/></a></h1>
@@ -435,17 +433,138 @@
 	
 	<script type="text/javascript">
 	
+		/**
+		 * This function check if the date Filter is consistent with the specs.
+		 * Specs depend on the type of the date filter:
+		 *   1 - Between Filter: 
+		 *     # it is supposed to specify at least the Years
+		 *     # it is not allowed to specify unhomogeneous dates (first and second date must have same fields)
+		 *     # it is not allowed to specify days without month
+		 *     # the first date has to be prior to second one
+		 *   2 - From/Before Filter:
+		 *     # it is not allowed to unspecify the Year
+		 *   3 - InOn Filter:
+		 *     # it is supposed to specify at least one of Year, Month or Day
+		 */
 		checkDateFilter = function(){
-			if ($j('#dateType option:selected').val()=='InOn')
-				return true;
 			var dYear = $j('#dateYear').val();
-			if (dYear == null || dYear == 'yyyy' || dYear == '') {
+			var dMonth = $j('#dateMonth').val();
+			var dDay = $j('#dateDay').val();
+			
+			if (!validateDate(dYear,dMonth,dDay)) {
+				$j('#dateRangeError').html('<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.unvalidDate"/>');
 				$j('#dateRangeError').show();
 				return false;
+			} 
+			
+			if ($j('#dateType option:selected').val()=='Between') {
+				// Between Filter
+				var dYearB = $j('#dateYearBetween').val();
+				var dMonthB = $j('#dateMonthBetween').val();
+				var dDayB = $j('#dateDayBetween').val();
+				var msg = validateDate(dYearB,dMonthB,dDayB) ? '' : '<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.unvalidDate"/>';
+				
+				if (msg == '' && !validateHomogeneousPair(dYear,dMonth,dDay,dYearB,dMonthB,dDayB))
+					msg = '<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.notHomogeneousDates"/>';
+						
+				if (msg == '' && checkEmpty(dMonth, 'M') && !checkEmpty(dDay, 'D'))
+					msg = '<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.daysWithoutMonths"/>';
+				
+				if (msg == '' && checkEmpty(dYear, 'Y') && checkEmpty(dMonth, 'M') && checkEmpty(dDay, 'D'))
+					msg = '<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.atLeastYearsOrMonths"/>';
+					
+				if (msg == '' && !checkEmpty(dYear, 'Y') && !validateDatesOrder(dYear,dMonth,dDay,dYearB,dMonthB,dDayB))
+					msg = '<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.unorderedDates"/>';
+				
+				if (msg != '') {
+					$j('#dateRangeError').html(msg);
+					$j('#dateRangeError').show();
+					return false;
+				}
+			} else if ($j('#dateType option:selected').val()!='InOn') {
+				// From or Before Filter
+				if (checkEmpty(dYear, 'Y')) {
+					$j('#dateRangeError').html('<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.atLeastYear"/>');
+					$j('#dateRangeError').show();
+					return false;
+				}
+			} else {
+				// InOn Filter
+				if (checkEmpty(dYear, 'Y') && checkEmpty(dMonth, 'M') && checkEmpty(dDay, 'D')) {
+					$j('#dateRangeError').html('<fmt:message key="error.advancedSearchDocuments.dateRangeFilterError.emptyNotAllowed"/>');
+					$j('#dateRangeError').show();
+					return false;
+				}
 			}
 			$j('#dateRangeError').hide();
 			return true; 
 		};
+		
+		/**
+		 * This function checks if a portion of a date is empty.
+		 * Possible types of the date portion are:
+		 *   'D' - day
+		 *   'M' - month
+		 *   'Y' - year
+		 */
+		checkEmpty = function(part, type) {
+			switch (type) {
+			case 'D':
+				return part == null || part == 'dd' || part == '';
+			case 'M':
+				return part == null || part == 'mm' || part == '';
+			case 'Y':	
+				return part == null || part == 'yyyy' || part == '';
+			default:
+				return null;
+			}
+		}
+		
+		/**
+		 * This function checks if two dates are ordered or not.
+		 * y1,m1,d1 refer to first date
+		 * y2,m2,d2 refer to second date
+		 */
+		validateDatesOrder = function(y1,m1,d1,y2,m2,d2) {
+			var before = parseInt(y1+(checkEmpty(m1,'M')?'00':m1)+(checkEmpty(d1,'D')?'00':d1));
+			var after = parseInt(y2+(checkEmpty(m2,'M')?'00':m2)+(checkEmpty(d2,'D')?'00':d2));
+			return before <= after;
+		}
+		
+		/**
+		 * This function checks if a date is valid.
+		 * Note: A date can be valid even if it has empty portions.
+		 */
+		validateDate = function(y,m,d) {
+			try {
+				if (!checkEmpty(y,'Y'))
+					parseInt(y);
+				if (!checkEmpty(m,'M')) {
+					var month = parseInt(m);
+					if (month < 1 || month > 12)
+						return false;
+				}
+				if (!checkEmpty(d,'D')) {
+					var day = parseInt(d);
+					if (day < 1 || day > 31)
+						return false;
+				}
+			} catch (e) {
+				return false;
+			}
+			return true;
+		}
+		
+		/**
+		 * This function checks if two dates are homogeneous (-> have the same specified fields).
+		 * y1,m1,d1 refer to first date
+		 * y2,m2,d2 refer to second date
+		 */
+		validateHomogeneousPair = function(y1,m1,d1,y2,m2,d2) {
+			return (checkEmpty(y1,'Y') && checkEmpty(y2,'Y') || !checkEmpty(y1,'Y') && !checkEmpty(y2,'Y')) &&
+			(checkEmpty(m1,'M') && checkEmpty(m2,'M') || !checkEmpty(m1,'M') && !checkEmpty(m2,'M')) &&
+			(checkEmpty(d1,'D') && checkEmpty(d2,'D') || !checkEmpty(d1,'D') && !checkEmpty(d2,'D')); 
+		}
 		
 		$j(document).ready(function() {
 			$j("#dateMonth option:eq(0)").text("mm");
@@ -632,7 +751,7 @@
 			});
 			
 			$j("#dateSearchForm").submit(function(){
-				$j('#dateType option[value="After"]').attr('selected', 'selected');
+				$j('#dateType option[value="From"]').attr('selected', 'selected');
 				$j('#dateYearBetween').css('visibility','hidden');
 				$j('#dateMonthBetween').css('visibility','hidden');
 				$j('#dateDayBetween').css('visibility','hidden');

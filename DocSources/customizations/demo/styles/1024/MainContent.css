@@ -826,6 +826,20 @@ img.transparent {
 	-moz-border-radius: 4px;
 }
 
+.inputerrorsDate {
+	color:#900;
+	font-size: 11px;
+	text-align: left;
+	padding:1px 4px 1px 4px;
+	margin: 5px 0 0 5px;
+	width:100%;
+	border:1px solid #900;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+	display: inline-block;
+	max-width: 400px;
+}
+
 /* margin da -65px a -64px */
 .rubricarioLabel { /* "Move to rubricario" <label> class  */
     font-size:10px;
