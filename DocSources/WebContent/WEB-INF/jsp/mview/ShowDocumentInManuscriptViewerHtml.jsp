@@ -114,7 +114,7 @@
 					                                                                                                                                                         
 					//title: 'Page Turner',
 					title: '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.pageTurnerWindow.title"/>',
-					position: ['left','middle'],                                                                                                                                                       
+					position: ['right','top'],                                                                                                                                                       
 					closeOnEscape: false,
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide();
