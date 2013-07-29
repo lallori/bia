@@ -1904,4 +1904,4 @@ ALTER TABLE `tblDocuments` CHANGE COLUMN `DOCVETTED` `DOCVETTED` TINYINT(1) NULL
 INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`, `preparer`, `template`) VALUES ('menu/ShowLoginFirstModalWindow', 'template.partialDOM', NULL, NULL);
 INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('menu/ShowLoginFirstModalWindow', 'main', NULL, '/WEB-INF/jsp/menu/ShowLoginFirstModalWindow.jsp', 0, NULL);
 
-ALTER TABLE bia.tblImages ADD COLUMN `insertNum` VARCHAR(5) NULL DEFAULT NULL COMMENT 'Number of the Insert' AFTER `volLetExt`, ADD COLUMN `insertLet` VARCHAR(3) NULL DEFAULT NULL COMMENT 'Extension of the Insert' AFTER `insNum`;
+ALTER TABLE bia.tblImages ADD COLUMN `insertNum` VARCHAR(5) NULL DEFAULT NULL COMMENT 'Number of the Insert' AFTER `volLetExt`, ADD COLUMN `insertLet` VARCHAR(3) NULL DEFAULT NULL COMMENT 'Extension of the Insert' AFTER `insertNum`;
