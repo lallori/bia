@@ -13,13 +13,9 @@
         	<h1><fmt:message key="menu.showHelpModal.helpSystem.title"/></h1>
         </div>
         <ul>
-<%--         	<li><a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br /></li> --%>
-				<li><a href="${UserManualURL}" target="_blank">User Manual (PDF version)</a><br /></li>
-<!--             <li><a href="#">Download Manual (PDF)</a></li> -->
-<!--             <li><a href="#">Help Videos</a></li> -->
-<!-- 			MD: Changed at the moment -->
 			<li><a target="_blank" title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualHtml"/></a><br /></li>
-            <li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualPdf"/></a></li>
+            <li><a href="${UserManualURL}" target="_blank">User Manual (PDF version)</a><br /></li>
+            <!--<li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualPdf"/></a></li>-->
             <li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.helpVideos"/></a></li>
         </ul>
     </div>
