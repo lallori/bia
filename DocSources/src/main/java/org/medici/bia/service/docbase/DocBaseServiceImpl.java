@@ -488,6 +488,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setSubVol(documentToCreateImage.getVolLetExt());
 			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
 			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
+			
+			if (documentToCreateImage != null) {
+				document.setInsertNum(documentToCreateImage.getInsertNum());
+				document.setInsertLet(documentToCreateImage.getInsertLet());
+			}
 
 			document.setTranscribeFolioNum(ImageUtils.extractFolioNumber(documentToCreateImage.getImageName()));
 			document.setTranscribeFolioMod(ImageUtils.extractFolioExtension(documentToCreateImage.getImageName()));

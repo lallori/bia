@@ -44,7 +44,14 @@
 					cache: false
 				});
 
-				var credit = '';
+				// RR: Added volume informations and insert informations (if needed)
+				var volExt = "${documentExplorer.image.volLetExt}";
+				var insNum = "${documentExplorer.image.insertNum}";
+				var insExt = "${documentExplorer.image.insertLet}";
+				var credit = '<span style=\'font-size:12px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '</span><br>';
+				if (insNum != '')
+					credit += '<span style=\'font-size:12px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '</span><br>';
+					
 				var imageName = "${documentExplorer.image.imageName}";
 				var annotations = new Array();
 				if ("${documentExplorer.image.imageType}" == 'R') {

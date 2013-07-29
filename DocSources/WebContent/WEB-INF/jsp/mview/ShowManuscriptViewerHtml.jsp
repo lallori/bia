@@ -16,8 +16,16 @@
 	</c:url>
 	
 		<script type="text/javascript">
-			var credit = '';	
 			var imageName = "${image.imageName}";
+			
+			// RR: Added volume informations and insert informations (if needed)
+			var volExt = "${image.volLetExt}";
+			var insNum = "${image.insertNum}";
+			var insExt = "${image.insertLet}";
+			var credit = '<span style=\'font-size:12px\'><fmt:message key="mview.showManuscriptViewerHtml.volume"/> ${image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showManuscriptViewerHtml.extension"/> '+volExt : '') + '</span><br>';
+			if (insNum != '')
+				credit += '<span style=\'font-size:12px\'><fmt:message key="mview.showManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showManuscriptViewerHtml.extension"/> '+insExt : '') + '</span><br>';
+				
 			var annotations = new Array();
 			var annotationId = "${annotationId}";
 			if ("${image.imageType}" == 'R') {

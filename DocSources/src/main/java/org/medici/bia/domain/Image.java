@@ -69,6 +69,10 @@ public class Image implements Serializable {
 	private Integer volNum;
 	@Column (name="\"volLetExt\"", length=1)
 	private String volLetExt;
+	@Column (name="\"insertNum\"", length=5)
+	private String insertNum;
+	@Column (name="\"insertLet\"", length=3)
+	private String insertLet;
 	@Column (name="\"imageName\"", length=45, nullable=false)
 	private String imageName;
 	@Enumerated(EnumType.STRING) 
@@ -129,6 +133,34 @@ public class Image implements Serializable {
 	 */
 	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
+	}
+
+	/**
+	 * @return the insertNum
+	 */
+	public String getInsertNum() {
+		return insertNum;
+	}
+
+	/**
+	 * @param insertNum the insertNum to set
+	 */
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
+	}
+
+	/**
+	 * @return the insertLet
+	 */
+	public String getInsertLet() {
+		return insertLet;
+	}
+
+	/**
+	 * @param insertLet the insertLet to set
+	 */
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
 	}
 
 	/**

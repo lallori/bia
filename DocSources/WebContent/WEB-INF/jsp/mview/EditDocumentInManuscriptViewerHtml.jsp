@@ -31,7 +31,14 @@
 		<script type="text/javascript">
 			transcribing=true;
 
-			var credit = '';	
+			// RR: Added volume informations and insert informations (if needed)
+			var volExt = "${image.volLetExt}";
+			var insNum = "${image.insertNum}";
+			var insExt = "${image.insertLet}";
+			var credit = '<span style=\'font-size:12px\'><fmt:message key="mview.editDocumentInManuscriptViewerHtml.volume"/> ${image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.editDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '</span><br>';
+			if (insNum != '')
+				credit += '<span style=\'font-size:12px\'><fmt:message key="mview.editDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.editDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '</span><br>';
+			
 			var imageName = "${documentExplorer.image.imageName}";
 			if ("${documentExplorer.image.imageType}" == 'R') {
 				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;';
