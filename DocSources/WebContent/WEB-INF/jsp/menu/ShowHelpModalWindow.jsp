@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="UserManualURL" value="/manual/DataEntryManual.html" />
+<c:url var="UserManualURL" value="/manual/DataEntryManual.pdf" /> 
 
 <div id="helpDiv">
     <div id="helpFiles">
@@ -14,6 +14,7 @@
         </div>
         <ul>
 <%--         	<li><a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br /></li> --%>
+				<li><a href="${UserManualURL}" target="_blank">User Manual (PDF version)</a><br /></li>
 <!--             <li><a href="#">Download Manual (PDF)</a></li> -->
 <!--             <li><a href="#">Help Videos</a></li> -->
 <!-- 			MD: Changed at the moment -->
