@@ -15,6 +15,9 @@
 			<c:param name="entryIdFrom"   value="${command.entryId}" />
 			<c:param name="docReferenceId"  value="0" />
 		</c:url>
+		<c:url var="EditExtractOrSynopsisDocumentURL" value="/de/docbase/EditExtractOrSynopsisDocument.do">
+			<c:param name="entryId"   value="${command.entryId}" />
+		</c:url>
 	</security:authorize>
 	
 	<form:form id="DocReferenceDocumentsForm" method="post" cssClass="edit">
@@ -41,7 +44,7 @@
 				</c:forEach>
 			
 			<div>
-				<input id="close" class="button_small fl" type="submit" value="Close" title="Do not save changes" />
+				<input id="close_docRef2" class="button_small fl" type="submit" value="Close" title="Do not save changes" />
 				<input id="AddNewValue" class="button_small fr" type="submit" value="Add" title="Add new Document" />
 			</div>
 		</fieldset>
@@ -58,7 +61,7 @@
 				return false;
 			});
 	    	
-	    	$j('.closeForm').click(function() {
+	    	$j('#close_docRef2').click(function() {
 	        	if($j("#modify").val() == 1){
 					$j('#EditExtractOrSynopsisDocumentDiv').block({ message: $j('#question'),
 						css: { 

@@ -43,7 +43,7 @@
 			</div>
 			
 			<div>
-				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
+				<input id="close_extract" class="button_small fl" type="submit" value="Close" title="do not save changes" />
 				<input id="save" class="button_small fr" type="submit" value="Save" />
 			</div>
 			
@@ -77,7 +77,7 @@
 				</c:forEach>
 					
 				<div>
-					<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
+					<input id="close_docRef" type="submit" value="Close" title="Do not save changes" />
 					<input id="AddNewValue" type="submit" value="Add" title="Add new Document" />
 				</div>
 			</fieldset>
@@ -112,7 +112,7 @@
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
 
-	        $j('#close').click(function() {
+	        $j('#close_extract').click(function() {
 	        	if($j("#modify").val() == 1){
 					$j('#EditExtractOrSynopsisDocumentDiv').block({ message: $j('#question'),
 						css: { 
@@ -133,7 +133,7 @@
 	        	}
 			});
 	        
-	        $j('.closeForm').click(function() {
+	        $j('#close_docRef').click(function() {
 	        	if($j("#modify").val() == 1){
 					$j('#EditExtractOrSynopsisDocumentDiv').block({ message: $j('#question'),
 						css: { 
