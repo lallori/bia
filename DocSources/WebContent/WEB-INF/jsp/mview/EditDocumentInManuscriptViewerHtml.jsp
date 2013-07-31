@@ -35,26 +35,27 @@
 			var volExt = "${image.volLetExt}";
 			var insNum = "${image.insertNum}";
 			var insExt = "${image.insertLet}";
-			var credit = '<span style=\'font-size:12px\'><fmt:message key="mview.editDocumentInManuscriptViewerHtml.volume"/> ${image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.editDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '</span><br>';
+			var credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '&nbsp; - </span>';
 			if (insNum != '')
-				credit += '<span style=\'font-size:12px\'><fmt:message key="mview.editDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.editDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '</span><br>';
-			
+				credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '&nbsp; -</span>';
+				
 			var imageName = "${documentExplorer.image.imageName}";
+			var annotations = new Array();
 			if ("${documentExplorer.image.imageType}" == 'R') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;</span>';
 			} else if ("${documentExplorer.image.imageType}" == 'C') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.folio"/> &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/>&nbsp;</span>';
 			} else if ("${documentExplorer.image.imageType}" == 'A') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.allegato"/> &nbsp; &nbsp;';
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
 			} else if ("${documentExplorer.image.imageType}" == 'G') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.guardia"/> &nbsp; &nbsp;';
-			} else if ("${documentExplorer.image.imageType}" == 'O') {
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
+			}else if ("${documentExplorer.image.imageType}" == 'O') {
 				//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 				if(imageName.indexOf("COPERTA") != -1){
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.coperta"/> &nbsp; &nbsp;';
+					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp</span>;';
 				}
 			} else {
-	    		var credit = ' ';
+	    		credit += ' ';
 	    	}
 
 			credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
