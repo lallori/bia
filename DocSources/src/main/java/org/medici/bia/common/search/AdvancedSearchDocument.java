@@ -50,6 +50,7 @@ import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.URLTransformer;
 import org.medici.bia.common.util.VolumeUtils;
 
 /**
@@ -178,11 +179,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			words = new ArrayList<String>(command.getWord().size());
 			
 			for (String singleWord : command.getWord()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 2) {
@@ -212,9 +214,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			person = new ArrayList<String>(command.getPerson().size());
 			
 			for (String singleWord : command.getPerson()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -262,9 +265,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(command.getPlace().size());
 			
 			for (String singleWord : command.getPlace()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -344,9 +348,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			from = new ArrayList<String>(command.getFrom().size());
 			
 			for (String singleWord : command.getFrom()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -426,9 +431,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			to = new ArrayList<String>(command.getTo().size());
 			
 			for (String singleWord : command.getTo()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -507,11 +513,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			extract = new ArrayList<String>(command.getExtract().size());
 			
 			for (String singleWord : command.getExtract()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
+				//RR: And this is for replacing special characters with unicode values
+				singleWord = URLTransformer.decode(singleWord);
 				try {
 					extract.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException numberFormatException) {
@@ -530,9 +537,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			
 			for (String singleWord : command.getSynopsis()) {
 				singleWord = singleWord.replace("+", "%20");
-				singleWord = singleWord.replace("%E7", "\u00E7");
 				singleWord = singleWord.replace("\"", "%22");
 				singleWord = singleWord.replace("'", "%27");
+				singleWord = URLTransformer.decode(singleWord);
 				try {
 					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException numberFormatException) {
@@ -839,11 +846,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			users = new ArrayList<String>(command.getUser().size());
 			
 			for (String singleUser : command.getUser()) {
-				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "\u00E7" in "%E7"
+				//MD: This is for refine search when the URLencoder change the space in "+"
 				singleUser = singleUser.replace("+", "%20");
-				singleUser = singleUser.replace("%E7", "\u00E7");
 				singleUser = singleUser.replace("\"", "%22");
 				singleUser = singleUser.replace("'", "%27");
+				//RR: And this is for replacing special characters with unicode values
+				singleUser = URLTransformer.decode(singleUser);
 				StringTokenizer stringTokenizer = new StringTokenizer(singleUser, "|");
 				try {
 					if (stringTokenizer.countTokens() == 2) {
