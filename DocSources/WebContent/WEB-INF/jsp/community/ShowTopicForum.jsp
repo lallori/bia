@@ -180,6 +180,7 @@
 		</c:when>
 		<c:otherwise>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+				<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
 				<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
 			</security:authorize>
 		</c:otherwise>
