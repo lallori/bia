@@ -73,6 +73,9 @@ public class ForumPost implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"account\"", nullable=true)
 	private User user;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"lastUpdateBy\"", nullable=true)
+	private User updater;
 	@Column (name="\"dateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
@@ -151,6 +154,20 @@ public class ForumPost implements Serializable {
 	 */
 	public User getUser() {
 		return user;
+	}
+
+	/**
+	 * @return the updater information
+	 */
+	public User getUpdater() {
+		return updater;
+	}
+
+	/**
+	 * @param updater the user that has updated the post
+	 */
+	public void setUpdater(User updater) {
+		this.updater = updater;
 	}
 
 	/**

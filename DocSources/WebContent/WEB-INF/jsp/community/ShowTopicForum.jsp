@@ -172,66 +172,72 @@
 	</c:url>
 	
 	<div id="postTable">
-	<div id="topicIcons">
-		<c:choose>
-		<c:when test="${currentPost.user.account == account}">
-			<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
-			<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
-		</c:when>
-		<c:otherwise>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
-				<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
-			</security:authorize>
-		</c:otherwise>
-		</c:choose>
-        <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
-        <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
-    </div>
-    <div id="post">
-		<%-- In this case we enter in "my posts page" --%>
-		<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-			<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-			<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
-		</c:url>
-    	<c:choose>
-    		<c:when test="${topic.topicId == null}">
-    			<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
-    		</c:when>
-    		<c:otherwise>
-        		<h2>${currentPost.subject}</h2>
-        	</c:otherwise>
-        </c:choose>
-        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
-        <p>${currentPost.text}</p>
-    </div>
-    <div id="postProfile">
-    	<ul>
-        	<li>
-        		<c:if test="${currentPost.user.portrait}">
-        			<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
-						<c:param name="account" value="${currentPost.user.account}" />
-						<c:param name="time" value="${time}" />
-					</c:url>
-        			<img src="${ShowPortraitUserURL}" class="avatar"/>
-        		</c:if>
-        		<c:if test="${!currentPost.user.portrait}">
-        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
-        		</c:if>
-        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
-        	</li>
-            <li>${maxAuthorities[currentPost.user.account].description}</li>
-            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
-        </ul>
-    </div>
-    <c:if test="${bia:contains(onlineUsers, currentPost.user.account)}">
-    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-    </c:if>
-    <c:if test="${! bia:contains(onlineUsers, currentPost.user.account)}">
-    	<div id="online"></div>
-    </c:if>
-</div>
+		<div id="topicIcons">
+			<c:choose>
+				<c:when test="${currentPost.user.account == account}">
+					<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+					<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+				</c:when>
+				<c:otherwise>
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+						<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+						<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+					</security:authorize>
+				</c:otherwise>
+			</c:choose>
+	        <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
+	        <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
+	    </div>
+	    <div id="post">
+			<%-- In this case we enter in "my posts page" --%>
+			<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+				<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
+			</c:url>
+	    	<c:choose>
+	    		<c:when test="${topic.topicId == null}">
+	    			<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
+	    		</c:when>
+	    		<c:otherwise>
+	        		<h2>${currentPost.subject}</h2>
+	        	</c:otherwise>
+	        </c:choose>
+	        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span> 
+		        <c:if test="${currentPost.updater != null && currentPost.user.account != currentPost.updater.account}">
+		        	<span>[&nbsp;<a title='<fmt:message key="community.forum.topic.editedByAdministrator" />' href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" id="updaterName_postId_${currentPost.postId}" class="linkUpdater">${currentPost.updater.account}</a>&nbsp;]
+		        		<%-- TODO insert here an admin image with tooltip --%>
+		        	</span>
+		        </c:if>
+	        </p>
+	        <p>${currentPost.text}</p>
+	    </div>
+	    <div id="postProfile">
+	    	<ul>
+	        	<li>
+	        		<c:if test="${currentPost.user.portrait}">
+	        			<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+							<c:param name="account" value="${currentPost.user.account}" />
+							<c:param name="time" value="${time}" />
+						</c:url>
+	        			<img src="${ShowPortraitUserURL}" class="avatar"/>
+	        		</c:if>
+	        		<c:if test="${!currentPost.user.portrait}">
+	        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
+	        		</c:if>
+	        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
+	        	</li>
+	            <li>${maxAuthorities[currentPost.user.account].description}</li>
+	            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
+	            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
+	        </ul>
+	    </div>
+	    <c:if test="${bia:contains(onlineUsers, currentPost.user.account)}">
+	    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+	    </c:if>
+	    <c:if test="${! bia:contains(onlineUsers, currentPost.user.account)}">
+	    	<div id="online"></div>
+	    </c:if>
+	</div>
 </c:forEach>
 
 

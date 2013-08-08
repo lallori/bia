@@ -581,6 +581,11 @@ a.link {  /* "Last post by" user name */
 	margin: 0;
 }
 
+#post a.linkUpdater{ /* Updater link inside post */
+	font-size: 11px;
+	font-style: italic;
+}
+
 a.returnTo {
 	color: #B7958F;
 	margin-bottom: 20px;

@@ -195,12 +195,13 @@ public class CommunityServiceImpl implements CommunityService {
 
 			forumPost.setForum(forum);
 			
+			Date currentDate = new Date();
 			if (forumPost.getTopic().getTopicId() == 0) {
 				//Create the first post of a new topic
 				ForumTopic forumTopic = new ForumTopic(null);
 				forumTopic.setForum(forum);
-				forumTopic.setDateCreated(new Date());
-				forumTopic.setLastUpdate(forumTopic.getDateCreated());
+				forumTopic.setDateCreated(currentDate);
+				forumTopic.setLastUpdate(currentDate);
 				forumTopic.setIpAddress(forumPost.getIpAddress());
 				
 				forumTopic.setUser(user);
@@ -240,10 +241,11 @@ public class CommunityServiceImpl implements CommunityService {
 				if(parentPost != null)
 					forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
 			}
-			forumPost.setDateCreated(new Date());
+			forumPost.setDateCreated(currentDate);
 			forumPost.setLogicalDelete(Boolean.FALSE);
-			forumPost.setLastUpdate(new Date());
-			forumPost.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPost.setLastUpdate(currentDate);
+			forumPost.setUser(user);
+			forumPost.setUpdater(user);
 			getForumPostDAO().persist(forumPost);
 			
 			if (forumPost.getParentPost() != null) {
@@ -258,14 +260,14 @@ public class CommunityServiceImpl implements CommunityService {
 			recursiveSetLastPost(forum, forumPost);
 			
 			forumPost.getTopic().setLastPost(forumPost);
-			forumPost.getTopic().setLastUpdate(new Date());
+			forumPost.getTopic().setLastUpdate(currentDate);
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
 			getForumTopicDAO().merge(forumPost.getTopic());
 
 			// Update number of post 
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
-			user.setLastActiveForumDate(new Date());
-			user.setLastForumPostDate(new Date());
+			user.setLastActiveForumDate(currentDate);
+			user.setLastForumPostDate(currentDate);
 			getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
@@ -554,12 +556,12 @@ public class CommunityServiceImpl implements CommunityService {
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 
 			forumPostToUpdate.setForum(forum);
-			forumPostToUpdate.setDateCreated(new Date());
+			
 			forumPostToUpdate.setLastUpdate(new Date());
 			forumPostToUpdate.setIpAddress(forumPost.getIpAddress());
 			forumPostToUpdate.setSubject(forumPost.getSubject());
 			forumPostToUpdate.setText(forumPost.getText());
-			forumPostToUpdate.setUser(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
+			forumPostToUpdate.setUpdater(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			if (forumPost.getParentPost() != null) {
 				forumPostToUpdate.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
 			}

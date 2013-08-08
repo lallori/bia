@@ -1905,3 +1905,5 @@ INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`, `preparer`, `templ
 INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('menu/ShowLoginFirstModalWindow', 'main', NULL, '/WEB-INF/jsp/menu/ShowLoginFirstModalWindow.jsp', 0, NULL);
 
 ALTER TABLE bia.tblImages ADD COLUMN `insertNum` VARCHAR(5) NULL DEFAULT NULL COMMENT 'Number of the Insert' AFTER `volLetExt`, ADD COLUMN `insertLet` VARCHAR(3) NULL DEFAULT NULL COMMENT 'Extension of the Insert' AFTER `insertNum`;
+
+ALTER TABLE bia.tblForumpost ADD COLUMN `lastUpdateBy` VARCHAR(50) NULL DEFAULT NULL AFTER `account`, ADD CONSTRAINT `Fk_tblForumPost_tblUser_updater` FOREIGN KEY (`lastUpdateBy`) REFERENCES `tbluser` (`account`) ON UPDATE CASCADE ON DELETE CASCADE;
