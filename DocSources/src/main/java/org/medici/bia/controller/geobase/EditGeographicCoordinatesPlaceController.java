@@ -119,7 +119,7 @@ public class EditGeographicCoordinatesPlaceController {
 			if (command.getSecondLatitude() != null) {
 				placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
 			} else {
-				placeGeographicCoordinates.setSecondLatitude(0);
+				placeGeographicCoordinates.setSecondLatitude(0f);
 			}
 
 			if (!command.getDirectionLatitude().equals("")) {
@@ -143,7 +143,7 @@ public class EditGeographicCoordinatesPlaceController {
 			if (command.getSecondLongitude() != null) {
 				placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
 			} else {
-				placeGeographicCoordinates.setSecondLongitude(0);
+				placeGeographicCoordinates.setSecondLongitude(0f);
 			}
 			
 			if (!command.getDirectionLongitude().equals("")) {

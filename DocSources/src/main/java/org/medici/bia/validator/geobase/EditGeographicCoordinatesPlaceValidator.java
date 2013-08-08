@@ -63,7 +63,7 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only ModifyPlaceCommand.
+	 * validator supports only EditDetailsPlaceCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
@@ -105,7 +105,7 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 		}
 	}
 	
-	public void validateGeoCoorPlace(Integer degLong, Integer minLong, Integer secLong, String dirLong, Integer degLat, Integer minLat, Integer secLat, String dirLat, Errors errors){
+	public void validateGeoCoorPlace(Integer degLong, Integer minLong, Float secLong, String dirLong, Integer degLat, Integer minLat, Float secLat, String dirLat, Errors errors){
 		if(!errors.hasErrors()){
 			if(degLong == null || degLong < 0 || degLong > 180){
 				errors.rejectValue("degreeLongitude", "error.degreeLongitude.invalid");
@@ -113,7 +113,7 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 			if(degLat == null || degLat < 0 || degLat > 90){
 				errors.rejectValue("degreeLatitude", "error.degreeLatitude.invalid");
 			}
-			if(minLong != null && (minLong < 0 || minLong > 59)){
+			if(minLong != null && (minLong < 0 || minLong >= (float)60)){
 				errors.rejectValue("minuteLongitude", "error.minuteLongitude.invalid");
 			}
 			if(secLong != null && (secLong < 0 || secLong > 59)){
@@ -122,7 +122,7 @@ public class EditGeographicCoordinatesPlaceValidator implements Validator {
 			if(minLat != null && (minLat < 0 || minLat > 59)){
 				errors.rejectValue("minuteLatitude", "error.minuteLatitude.invalid");
 			}
-			if(secLat != null && (secLat < 0 || secLat > 59)){
+			if(secLat != null && (secLat < 0 || secLat >= (float)60)){
 				errors.rejectValue("secondLatitude", "error.secondLatitude.invalid");
 			}
 			if(!dirLong.toLowerCase().equals("w") && !dirLong.toLowerCase().equals("e")){

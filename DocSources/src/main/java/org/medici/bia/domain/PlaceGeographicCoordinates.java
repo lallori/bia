@@ -119,7 +119,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 
 	@Column (name="\"SECOND_LATITUDE\"", length=10)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer secondLatitude;
+	private Float secondLatitude;
 
 	@Column (name="\"DIRECTION_LATITUDE\"", length=1)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -135,7 +135,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 
 	@Column (name="\"SECOND_LONGITUDE\"", length=10)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer secondLongitude;
+	private Float secondLongitude;
 
 	@Column (name="\"DIRECTION_LONGITUDE\"", length=1)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -209,7 +209,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 	 * 
 	 * @param secondLatitude the secondLatitude to set
 	 */
-	public void setSecondLatitude(Integer secondLatitude) {
+	public void setSecondLatitude(Float secondLatitude) {
 		this.secondLatitude = secondLatitude;
 	}
 
@@ -217,7 +217,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 	 * 
 	 * @return the secondLatitude
 	 */
-	public Integer getSecondLatitude() {
+	public Float getSecondLatitude() {
 		return secondLatitude;
 	}
 
@@ -273,7 +273,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 	 * 
 	 * @param secondLongitude the secondLongitude to set
 	 */
-	public void setSecondLongitude(Integer secondLongitude) {
+	public void setSecondLongitude(Float secondLongitude) {
 		this.secondLongitude = secondLongitude;
 	}
 
@@ -281,7 +281,7 @@ public class PlaceGeographicCoordinates implements Serializable{
 	 * 
 	 * @return the secondLongitude
 	 */
-	public Integer getSecondLongitude() {
+	public Float getSecondLongitude() {
 		return secondLongitude;
 	}
 

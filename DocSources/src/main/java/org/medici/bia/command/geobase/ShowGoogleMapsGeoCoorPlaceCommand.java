@@ -43,11 +43,11 @@ public class ShowGoogleMapsGeoCoorPlaceCommand {
 	private Integer placeGeographicCoordinatesId;
 	private Integer degreeLatitude;
 	private Integer minuteLatitude;
-	private Integer secondLatitude;
+	private Float secondLatitude;
 	private String directionLatitude;
 	private Integer degreeLongitude;
 	private Integer minuteLongitude;
-	private Integer secondLongitude;
+	private Float secondLongitude;
 	private String directionLongitude;
 	
 	/**
@@ -81,14 +81,14 @@ public class ShowGoogleMapsGeoCoorPlaceCommand {
 	/**
 	 * @return the secondLatitude
 	 */
-	public Integer getSecondLatitude() {
+	public Float getSecondLatitude() {
 		return secondLatitude;
 	}
 
 	/**
 	 * @param secondLatitude the secondLatitude to set
 	 */
-	public void setSecondLatitude(Integer secondLatitude) {
+	public void setSecondLatitude(Float secondLatitude) {
 		this.secondLatitude = secondLatitude;
 	}
 
@@ -137,14 +137,14 @@ public class ShowGoogleMapsGeoCoorPlaceCommand {
 	/**
 	 * @return the secondLongitude
 	 */
-	public Integer getSecondLongitude() {
+	public Float getSecondLongitude() {
 		return secondLongitude;
 	}
 
 	/**
 	 * @param secondLongitude the secondLongitude to set
 	 */
-	public void setSecondLongitude(Integer secondLongitude) {
+	public void setSecondLongitude(Float secondLongitude) {
 		this.secondLongitude = secondLongitude;
 	}
 
