@@ -39,10 +39,9 @@ public class ImageUtils {
 	private static Logger logger = Logger.getLogger(ImageUtils.class);
 
 	/**
-	 * 
-	 * @param ldapConfiguration
-	 * @param account
-	 * @return
+	 * Extract the folio number from the image file name
+	 * @param fileName the image file name
+	 * @return the folio number
 	 */
 	public static Integer extractFolioNumber(String fileName) {
 		String folioNumber = fileName.trim();
@@ -73,9 +72,9 @@ public class ImageUtils {
 	}
 
 	/**
-	 * 
-	 * @param volume
-	 * @return
+	 * Extract the folio extension from the image file name
+	 * @param fileName the image file name
+	 * @return the folio extension
 	 */
 	public static String extractFolioExtension(String fileName) {
 		String folio = fileName.trim();
@@ -93,7 +92,8 @@ public class ImageUtils {
 	/**
 	 * This method will format an input id for document identifier.
 	 * 
-	 * @param entryId
+	 * @param folioNum
+	 * @param folioMod
 	 * @return
 	 */
 	public static Object formatFolioNumber(Integer folioNum, String folioMod) {

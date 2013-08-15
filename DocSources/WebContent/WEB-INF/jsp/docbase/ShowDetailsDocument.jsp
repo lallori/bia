@@ -49,7 +49,22 @@
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.insertPart"/></div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentStartsAtFolio"/> </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentStartsAtFolio"/> </div> 
+					<div class="value">${document.folioNum}
+						<c:if test="${document.folioMod != null}">
+							/ ${document.folioMod}
+						</c:if>
+						<c:choose>
+							<c:when test="${document.folioRectoVerso == 'R'}">
+								/ <fmt:message key="docbase.showDetailsDocument.folioRecto"/>
+							</c:when>
+							<c:when test="${document.folioRectoVerso == 'V'}">
+								/ <fmt:message key="docbase.showDetailsDocument.folioVerso"/>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.notpaginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'No'}</div>

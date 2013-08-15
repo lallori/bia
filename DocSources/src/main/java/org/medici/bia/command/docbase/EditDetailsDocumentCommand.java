@@ -56,6 +56,7 @@ public class EditDetailsDocumentCommand {
 	//Folio Start 
 	private Integer folioNum;
 	private String folioMod;
+	private String folioRectoVerso;
 	//Transcribe Folio
 	private Integer transcribeFolioNum;
 	private String transcribeFolioMod;
@@ -151,6 +152,18 @@ public class EditDetailsDocumentCommand {
 	 */
 	public void setFolioMod(String folioMod) {
 		this.folioMod = folioMod;
+	}
+	/**
+	 * @return the folioRectoVerso
+	 */
+	public String getFolioRectoVerso() {
+		return folioRectoVerso;
+	}
+	/**
+	 * @param folioRectoVerso the folioRectoVerso to set
+	 */
+	public void setFolioRectoVerso(String folioRectoVerso) {
+		this.folioRectoVerso = folioRectoVerso;
 	}
 	/**
 	 * @return the transcribeFolioNum

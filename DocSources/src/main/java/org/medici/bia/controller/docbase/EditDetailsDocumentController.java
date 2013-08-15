@@ -123,6 +123,11 @@ public class EditDetailsDocumentController {
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
 			document.setFolioMod(command.getFolioMod());
+			if (command.getFolioRectoVerso() != null && !"".equals(command.getFolioRectoVerso().trim()))
+				if ("R".equals(command.getFolioRectoVerso().trim().toUpperCase()))
+					document.setFolioRectoVerso(Document.RectoVerso.R);
+				else
+					document.setFolioRectoVerso(Document.RectoVerso.V);
 			// Transcribe Folio Start:
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
 			document.setTranscribeFolioMod(command.getTranscribeFolioMod());
@@ -233,6 +238,8 @@ public class EditDetailsDocumentController {
 			command.setInsertLet(document.getInsertLet());
 			command.setFolioNum(document.getFolioNum());
 			command.setFolioMod(document.getFolioMod());
+			if (document.getFolioRectoVerso() != null)
+				command.setFolioRectoVerso(document.getFolioRectoVerso().toString());
 			command.setTranscribeFolioNum(document.getTranscribeFolioNum());
 			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
 			command.setUnpaged(document.getUnpaged());

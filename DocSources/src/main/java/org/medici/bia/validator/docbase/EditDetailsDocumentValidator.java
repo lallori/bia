@@ -90,7 +90,7 @@ public class EditDetailsDocumentValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
-		validateDocument(editDetailsDocumentCommand.getEntryId(), errors);
+		validateDocument(editDetailsDocumentCommand.getEntryId(), editDetailsDocumentCommand.getFolioRectoVerso(), errors);
 		validateLinkedVolume(editDetailsDocumentCommand.getVolume(), errors);
 		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
 	}
@@ -120,20 +120,24 @@ public class EditDetailsDocumentValidator implements Validator {
 	/**
 	 * 
 	 * @param entryId
+	 * @param folioRectoVerso
 	 * @param errors
 	 */
-	public void validateDocument(Integer entryId, Errors errors) {
+	public void validateDocument(Integer entryId, String folioRectoVerso, Errors errors) {
 		if (!errors.hasErrors()) {
 			// entryId equals zero is 'New Document', it shouldn't be validated  
 			if (entryId > 0) {
 				try {
 					if (getDocBaseService().findDocument(entryId) == null) {
-						errors.rejectValue("entryId", "error.document.notfound");
+						errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.rejectValue("entryId", "error.document.notfound");
+					errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
 				}
 			}
+			// validation of Recto / Verso field
+			if (folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) && !folioRectoVerso.trim().equalsIgnoreCase("R") && !folioRectoVerso.trim().equalsIgnoreCase("V"))
+				errors.rejectValue("folioRectoVerso", "error.document.rectoVersoInvalid");
 		}
 	}
 

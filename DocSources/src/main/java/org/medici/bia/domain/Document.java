@@ -34,6 +34,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -189,7 +191,9 @@ public class Document implements Serializable{
 	})
 	private Integer folioNum;
 	
-	/*@Column (name="\"FOLIONUMRECTOVERSO\"", length=10)
+	@Enumerated(EnumType.STRING)
+	@Column (name="\"FOLIORV\"", length=1, nullable=true)
+	/*
 	@Fields({
 		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
 		@Field(name="folioNumRectoVerso_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -197,8 +201,8 @@ public class Document implements Serializable{
 	@NumericFields({
 		@NumericField(forField="folioNumRectoVerso"),
 		@NumericField(forField="folioNumRectoVerso_Sort")
-	})
-	private RectoVerso folioNumRectoVerso;*/
+	})*/
+	private RectoVerso folioRectoVerso;
 	
 	@Column (name="\"FOLIOMOD\"", length=15)
 	@Fields({
@@ -596,6 +600,20 @@ public class Document implements Serializable{
 		this.folioNum = folioNum;
 	}
 	
+	/**
+	 * @return the folioRectoVerso
+	 */
+	public RectoVerso getFolioRectoVerso() {
+		return folioRectoVerso;
+	}
+
+	/**
+	 * @param folioRectoVerso the folioRectoVerso to set
+	 */
+	public void setFolioRectoVerso(RectoVerso folioRectoVerso) {
+		this.folioRectoVerso = folioRectoVerso;
+	}
+
 	/**
 	 * @return the folioMod
 	 */

@@ -73,6 +73,7 @@ import org.medici.bia.domain.FactChecks;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
@@ -188,8 +189,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			//Setting fields that are defined as nullable = false
 			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setCreatedBy(user);
-			document.setDateCreated(new Date());
-			document.setLastUpdate(new Date());
+			Date dateCreated = new Date();
+			document.setDateCreated(dateCreated);
+			document.setLastUpdate(dateCreated);
 			document.setLastUpdateBy(user);
 			document.setNewEntry(true);
 			document.setReckoning(false);
@@ -218,14 +220,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 
 			// We set InsertLet to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getInsertLet()).equals("")){
+			if (ObjectUtils.toString(document.getInsertLet()).trim().equals("")){
 				document.setInsertLet(null);
 			} else {
 				document.setInsertLet(document.getInsertLet());
 			}
 			// We set FolioMod to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getFolioMod()).equals("")) {
+			if (ObjectUtils.toString(document.getFolioMod()).trim().equals("")) {
 				document.setFolioMod(null);
+			}
+			// We set FolioRV to null if it's an empty string. 
+			if (ObjectUtils.toString(document.getFolioRectoVerso()).trim().equals("")) {
+				document.setFolioRectoVerso(null);
 			}
 
 			getDocumentDAO().persist(document);
@@ -308,8 +314,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
 			synExtract.setSynExtrId(null);
-			synExtract.setDateCreated(new Date());
-			synExtract.setLastUpdate(new Date());
+			Date dateCreated = new Date();
+			synExtract.setDateCreated(dateCreated);
+			synExtract.setLastUpdate(dateCreated);
 			synExtract.setDocument(getDocumentDAO().find(synExtract.getDocument().getEntryId()));
 			getSynExtractDAO().persist(synExtract);
 
@@ -479,8 +486,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setEntryId(0);
 			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setCreatedBy(user);
-			document.setDateCreated(new Date());
-			document.setLastUpdate(new Date());
+			Date dateCreated = new Date();
+			document.setDateCreated(dateCreated);
+			document.setLastUpdate(dateCreated);
 			document.setLastUpdateBy(user);
 			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
@@ -488,6 +496,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setSubVol(documentToCreateImage.getVolLetExt());
 			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
 			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
+			document.setFolioRectoVerso(convertFromImageRectoVersoToDocumentRectoVerso(documentFolioStartImage.getImageRectoVerso()));
 			
 			if (documentToCreateImage != null) {
 				document.setInsertNum(documentToCreateImage.getInsertNum());
@@ -501,6 +510,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	private Document.RectoVerso convertFromImageRectoVersoToDocumentRectoVerso(ImageRectoVerso imageRectoVerso) {
+		switch (imageRectoVerso) {
+		case R:
+			return Document.RectoVerso.R;
+		case V:
+			return Document.RectoVerso.V;
+		}
+		return null;
 	}
 	
 	/**
@@ -770,7 +789,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// Insert/Part: 
 			documentToUpdate.setInsertNum(document.getInsertNum());
 			// We set InsertLet to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getInsertLet()).equals("")){
+			if (ObjectUtils.toString(document.getInsertLet()).trim().equals("")){
 				documentToUpdate.setInsertLet(null);
 			} else {
 				documentToUpdate.setInsertLet(document.getInsertLet());
@@ -778,10 +797,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// Folio Start:
 			documentToUpdate.setFolioNum(document.getFolioNum());
 			// We set FolioMod to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getFolioMod()).equals("")) {
+			if (ObjectUtils.toString(document.getFolioMod()).trim().equals("")) {
 				documentToUpdate.setFolioMod(null);
 			} else {
 				documentToUpdate.setFolioMod(document.getFolioMod());
+			}
+			// We set FolioRV to null if it's an empty string.
+			if (ObjectUtils.toString(document.getFolioRectoVerso()).trim().equals("")) {
+				documentToUpdate.setFolioRectoVerso(null);
+			} else {
+				documentToUpdate.setFolioRectoVerso(document.getFolioRectoVerso());
 			}
 			// Transcribe Folio Start:
 			documentToUpdate.setTranscribeFolioNum(document.getTranscribeFolioNum());

@@ -49,13 +49,36 @@
 <!-- 		Checking if folio is inside inserts or inserts with parts -->
 <!-- 		1) folio is not inside inserts-->
 			<c:if test="${document.insertNum == null}">
-				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+					<c:choose>
+						<c:when test="${document.folioRectoVerso == 'R'}">
+							<fmt:message key="docbase.showSummaryDocument.recto"/>
+						</c:when>
+						<c:when test="${document.folioRectoVerso == 'V'}">
+							<fmt:message key="docbase.showSummaryDocument.verso"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</h3>
 			</c:if>
 <!-- 		2) folio is inside inserts with no parts -->
 			<c:if test="${document.insertNum != null && document.insertLet  == null}">
 				<br>
 				<br>
-				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum}</h3><h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+					<c:choose>
+						<c:when test="${document.folioRectoVerso == 'R'}">
+							<fmt:message key="docbase.showSummaryDocument.recto"/>
+						</c:when>
+						<c:when test="${document.folioRectoVerso == 'V'}">
+							<fmt:message key="docbase.showSummaryDocument.verso"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</h3>
 				<br>
 				<br>
 			</c:if>
@@ -63,7 +86,19 @@
 			<c:if test="${document.insertLet  != null}">
 				<br>
 				<br>
-				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3><h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3>
+				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+					<c:choose>
+						<c:when test="${document.folioRectoVerso == 'R'}">
+							<fmt:message key="docbase.showSummaryDocument.recto"/>
+						</c:when>
+						<c:when test="${document.folioRectoVerso == 'V'}">
+							<fmt:message key="docbase.showSummaryDocument.verso"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</h3>
 				<br>
 				<br>
 			</c:if>
