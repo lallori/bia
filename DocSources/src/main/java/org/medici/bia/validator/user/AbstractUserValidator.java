@@ -105,6 +105,20 @@ public abstract class AbstractUserValidator implements Validator {
 			errors.rejectValue("account", "error.account.notfound");
 		}
 	}
+	
+	/**
+	 * @param mail
+	 * @param confirmMail
+	 * @param errors
+	 */
+	public void validateConfirmMail(String mail, String confirmMail, Errors errors) {
+		if (errors.hasErrors())
+			return;
+
+		if (!mail.equals(confirmMail)) {
+			errors.rejectValue("confirmMail", "error.confirmMail.mismatch");
+		}
+	}
 
 	/**
 	 * 
@@ -112,12 +126,23 @@ public abstract class AbstractUserValidator implements Validator {
 	 * @param confirmPassword
 	 * @param errors
 	 */
-	public void validateConfirmPassword(String password, String confirmPassword, Errors errors) {
+	public void validatePassword(String password, String confirmPassword, Errors errors) {
 		if (errors.hasErrors())
 			return;
 
+		if (password == null) {
+			errors.rejectValue("password", "error.password.null");
+			return;
+		}
+		
+		if (confirmPassword == null) {
+			errors.rejectValue("confirmPassword", "error.confirmpassword.null");
+			return;
+		} 
+		
 		if (!password.equals(confirmPassword)) {
 			errors.rejectValue("confirmPassword", "error.confirmPassword.mismatch");
+			return;
 		}
 	}
 

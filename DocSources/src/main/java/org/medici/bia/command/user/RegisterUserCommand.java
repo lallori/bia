@@ -37,11 +37,17 @@ import javax.validation.constraints.Size;
  * 
  * @see org.merdici.docsources.controller.user.RegisterUserController
  */
+/**
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
+ *
+ */
 public class RegisterUserCommand {
 	private String address;
 	private Boolean agree;
 	@NotNull
 	private String city;
+	@NotNull
+	private String confirmMail;
 	@NotNull
 	@Size(min = 8, max = 15)
 	private String confirmPassword;
@@ -92,6 +98,15 @@ public class RegisterUserCommand {
 	 */
 	public String getCity() {
 		return city;
+	}
+
+	/**
+	 * This method returns confirmMail property.
+	 * 
+	 * @return the confirmMail
+	 */
+	public String getConfirmMail() {
+		return confirmMail;
 	}
 
 	/**
@@ -230,6 +245,16 @@ public class RegisterUserCommand {
 	 */
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	
+	/**
+	 * This method sets confirmMail property.
+	 * 
+	 * @param confirmMail the confirmMail to set
+	 */
+	public void setConfirmMail(String confirmMail) {
+		this.confirmMail = confirmMail;
 	}
 
 	/**

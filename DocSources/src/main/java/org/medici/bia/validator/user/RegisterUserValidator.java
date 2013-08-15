@@ -92,6 +92,8 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 		validateOrganization(registerCommand.getOrganization(), errors);
 		validateCity(registerCommand.getCity(), errors);
 		validateMail(registerCommand.getMail(), errors);
+		validateConfirmMail(registerCommand.getMail(), registerCommand.getConfirmMail(), errors);
+		validatePassword(registerCommand.getPassword(), registerCommand.getConfirmPassword(), errors);
 		validateReCaptcha(registerCommand.getRemoteAddress(), registerCommand.getRecaptcha_challenge_field(), registerCommand.getRecaptcha_response_field(), errors);
 	}
 

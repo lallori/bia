@@ -94,7 +94,7 @@ public class ResetUserPasswordValidator extends AbstractUserValidator implements
 
 		validateReCaptcha(resetUserPasswordCommand.getRemoteAddress(), resetUserPasswordCommand.getRecaptcha_challenge_field(), resetUserPasswordCommand.getRecaptcha_response_field(), errors);
 		validateUuid(resetUserPasswordCommand.getUuid(), errors);
-		validateConfirmPassword(resetUserPasswordCommand.getPassword(), resetUserPasswordCommand.getConfirmPassword(), errors);
+		validatePassword(resetUserPasswordCommand.getPassword(), resetUserPasswordCommand.getConfirmPassword(), errors);
 	}
 
 	/**

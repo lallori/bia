@@ -87,27 +87,4 @@ public class ChangeExpiratedUserPasswordValidator extends AbstractUserValidator 
 		validatePassword(changeExpiratedUserPasswordCommand.getPassword(), changeExpiratedUserPasswordCommand.getConfirmPassword(), errors);
 	}
 
-	/**
-	 * 
-	 * @param password
-	 * @param confirmPassword
-	 * @param errors
-	 */
-	private void validatePassword(String password, String confirmPassword, Errors errors) {
-		if (password == null) {
-			errors.rejectValue("password", "error.confirmpassword.null");
-			return;
-		}
-		
-		if (confirmPassword == null) {
-			errors.rejectValue("password", "error.confirmpassword.null");
-			return;
-		} 
-		
-		if (!password.equals(confirmPassword)) {
-			errors.rejectValue("password", "error.password.notequals");
-			return;
-		}
-		return;
-	}
 }
