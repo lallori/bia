@@ -753,6 +753,14 @@ a.returnTo {
 	float: right;
 }
 
+#postTable .administratorEdit {
+	background-image:url(${contextPath}/images/forum/button_admin.png);
+	width:20px;
+	height:23px;
+    display:inline-block;
+	margin:0 0 0 5px;
+}
+
 
 /* ---------- Topic Icons ---------- */
 
