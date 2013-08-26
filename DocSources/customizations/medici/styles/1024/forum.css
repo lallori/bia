@@ -91,7 +91,7 @@ h2.title {
 	line-height: 17px;
 }
 
-#postTable p.by {
+#postTable p.by, #postTable table.by {
 	margin-bottom:25px;
 }
 

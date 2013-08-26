@@ -202,13 +202,21 @@
 	        		<h2>${currentPost.subject}</h2>
 	        	</c:otherwise>
 	        </c:choose>
-	        <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span> 
-		        <c:if test="${currentPost.updater != null && currentPost.user.account != currentPost.updater.account}">
-		        	<span>[&nbsp;<a title='<fmt:message key="community.forum.topic.editedByAdministrator" />' href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" id="updaterName_postId_${currentPost.postId}" class="linkUpdater">${currentPost.updater.account}</a>&nbsp;]
-		        		<%-- TODO insert here an admin image with tooltip --%>
-		        	</span>
-		        </c:if>
-	        </p>
+	        <c:choose>
+	        	<c:when test="${currentPost.updater == null || currentPost.user.account == currentPost.updater.account}">
+	        		<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
+	        	</c:when>
+	        	<c:otherwise>
+	        		<table class="by">
+	        			<tr>
+	        				<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
+	        				<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
+	        				<td><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
+	        			</tr>
+			        </table>
+	        	</c:otherwise>
+	        </c:choose>
+	        
 	        <p>${currentPost.text}</p>
 	    </div>
 	    <div id="postProfile">
