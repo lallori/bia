@@ -32,8 +32,45 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * Image name contains some informations, some of them are mandatory while others are optional.
+ * Every single information starts with an underscore &quot;<code>_</code>&quot;, only the first one do not follow this rule 
+ * (<code>imageOrder</code>).<br>
+ * This is the image name specification:<br><br>
  * 
+ * <code>{imgageOrder}(_insert)_{type}_{folioNumber}(_folioExtension)_{recto/verso}.ext</code><br><br>
+ * 
+ * where the braces mean mandatory informations and the parenthesis mean optional informations.
+ * 
+ * <ul>
+ * <li><b>imageOrder</b> is the progressive number of the image --> linked to <i>tblImages.imageOrder</i> field</li>
+ * <li><b>insert</b> contains the insert's informations</li>
+ * <li><b>type</b> is the type of the image document -&gt; linked to <i>tblImages.imageType</i> field</li>
+ * <li><b>folioNumber</b> is the number of the folio -&gt; linked to <i>tblImages.imageProgTypeNum</i> field</li>
+ * <li><b>folioExtension</b> is the extended information of the folio -&gt; linked to <i>tblImages.missedNumbering</i> field</li>
+ * <li><b>recto/verso</b> contains the recto (R) or verso (V) information -&gt; lined to <i>tblImages.imageRectoVerso</i> field</li>
+ * <li><b>.ext</b> is the extension of the file</li>
+ * </ul>
+ * 
+ * Furthermore the insert's informations are written between brackets and have the following format:<br><br>
+ * <code>[{insertNumber}(-insertExtension)]</code><br><br>
+ * where
+ * <ul>
+ * <li><b>insertNumber</b> is the number of the insert -&gt; linked to <i>tblImages.insertNum</i> field</li>
+ * <li><b>insertExtension</b> is the extended information of the insert -&gt; linked to <i>tblImages.insertLet</i> field</li>
+ * </ul>
+ * 
+ * These are some images name examples:
+ * <ul>
+ * <li><i>standard name</i> -&gt; <code>0594_C_416_R.tif</code></li>
+ * <li><i>folio with extension (extended folio)</i> -&gt; <code>0586_C_410_BIS_V.tif</code></li>
+ * <li><i>insert</i> -&gt; <code>0422_[1]_C_175_R.tif</code></li>
+ * <li><i>insert with extension (extended insert)</i> -&gt; <code>0426_[A-13]_C_179_R.tif</code></li>
+ * <li><i>insert with extended folio</i> -&gt; <code>0426_[A]_C_179_BIS_R.tif</code></li>
+ * <li><i>extended insert with extended folio</i> -&gt; <code>0425_[A-12]_C_178_BIS_R.tif</code></li>
+ * </ul>
+ * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public class ImageUtils {
 	private static Logger logger = Logger.getLogger(ImageUtils.class);
@@ -49,7 +86,16 @@ public class ImageUtils {
 			return null;
 		}
 		
-		folioNumber = StringUtils.substringBetween(folioNumber, "_C_", "_");
+		boolean insert = StringUtils.contains(folioNumber,"[");
+		
+		int beforeIdx = indexOfOccurrence(folioNumber, "_", insert ? 2 : 1);
+		int afterIdx = indexOfOccurrence(folioNumber, "_", insert ? 3 : 2);
+		if (beforeIdx == -1 || afterIdx == -1) {
+			logger.debug("Unable to find folio number. Image file " + fileName);
+			return null;
+		}
+		folioNumber = folioNumber.substring(beforeIdx + 1, afterIdx);
+		
 		if (StringUtils.isNumeric(folioNumber)){
 			try {
 				return new Integer(folioNumber);
@@ -81,12 +127,16 @@ public class ImageUtils {
 		if (StringUtils.isEmpty(folio)) {
 			return null;
 		}
-		if (StringUtils.countMatches(folio, "_") != 4) {
+		
+		boolean insert = StringUtils.contains(folio,"[");
+		int beforeIdx = indexOfOccurrence(folio, "_", insert ? 3 : 2);
+		int afterIdx = indexOfOccurrence(folio, "_", insert ? 4 : 3);
+		if (afterIdx == -1 || beforeIdx == -1) {
+			logger.debug("Unable to find folio extension. Image file " + fileName);
 			return null;
 		}
 
-		// If we have 4 underscore, we have mod information :
-		return StringUtils.substringBetween(StringUtils.substringBetween(folio, "_C_", ".tif"), "_", "_");
+		return folio.substring(beforeIdx + 1, afterIdx);
 	}
 
 	/**
@@ -100,5 +150,22 @@ public class ImageUtils {
 		String value = "00" + folioNum.toString();
 		
 		return value.substring(value.length()-3);
+	}
+	
+	/**
+	 * Returns the <i>n-th</i> occurrence of the searched string in the provided string
+	 * @param str provided string
+	 * @param searchStr searched string
+	 * @param idx index of the occurrence (0 for the first, 1 for the second...)
+	 * @return index of the <i>n-th</i> occurrence
+	 */
+	private static int indexOfOccurrence(String str, String searchStr, int idx) {
+		int res = -1;
+		for (int i = 0; i < idx + 1; i++) {
+			res = str.indexOf(searchStr, res+1);
+			if (res == -1)
+				break;
+		}
+		return res;
 	}
 }

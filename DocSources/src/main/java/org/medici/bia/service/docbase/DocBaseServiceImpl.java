@@ -494,8 +494,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
 			document.setVolume(getVolumeDAO().findVolume(documentToCreateImage.getVolNum(), documentToCreateImage.getVolLetExt()));
 			document.setSubVol(documentToCreateImage.getVolLetExt());
-			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
-			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
+			document.setFolioNum(documentFolioStartImage.getImageProgTypeNum());
+			document.setFolioMod(documentFolioStartImage.getMissedNumbering());
 			document.setFolioRectoVerso(convertFromImageRectoVersoToDocumentRectoVerso(documentFolioStartImage.getImageRectoVerso()));
 			
 			if (documentToCreateImage != null) {
@@ -503,9 +503,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 				document.setInsertLet(documentToCreateImage.getInsertLet());
 			}
 
-			document.setTranscribeFolioNum(ImageUtils.extractFolioNumber(documentToCreateImage.getImageName()));
-			document.setTranscribeFolioMod(ImageUtils.extractFolioExtension(documentToCreateImage.getImageName()));
-			//document.setFolioNum(documen);
+			document.setTranscribeFolioNum(documentToCreateImage.getImageProgTypeNum());
+			document.setTranscribeFolioMod(documentToCreateImage.getMissedNumbering());
+			
 			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
