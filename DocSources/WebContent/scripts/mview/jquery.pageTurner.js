@@ -42,7 +42,18 @@
         "annotationsType": "remote",
         "retrieveAnnotationsUrl": "",
         "updateAnnotationsUrl": "",
-        "annotations": new Array()
+        "annotations": new Array(),
+        "textVolume": "Volume",
+        "textExtension": "Ext",
+        "textInsert": "Insert",
+        "textIndexOfNames": "index of names &nbsp;",
+        "textFolio": "folio &nbsp; &nbsp;",
+        "textAttachment": "allegato &nbsp; &nbsp;",
+        "textGuardia" : "guardia &nbsp; &nbsp;",
+        "textCoperta" : "coperta &nbsp; &nbsp;",
+        "textSpine" : "SPINE",
+        "textRecto" : "recto",
+        "textVerso" : "verso"
     };
 
     $.fn.pageTurnerForm = function (params) {
@@ -66,40 +77,45 @@
 						$j('#notFound').dialog('open');
 					} else {
 						$("#targetframe").html('');
-						var credit = '';
+
+						// RR: Added volume informations and insert informations (if needed)
+						var volExt = data.volLetExt != null ? data.volLetExt : '';
+						var insNum = data.insertNum != null ? data.insertNum : '';
+						var insExt = data.insertExt != null ? data.insertExt : '';
+						var credit = '<span style=\'font-size:16px\'>' + functionParams["textVolume"] + ' ' + data.volNum + (volExt != '' ? ' ' + functionParams["textExtension"] + ' ' + volExt : '') + '&nbsp; - </span>';
+						if (insNum != '')
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
 						
 						if (data.imageType == 'R') {
-							credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
-						} else if (data.imageType == 'C') {
-							credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"];
+						}  else if (data.imageType == 'C') {
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"];
 						} else if (data.imageType == 'A') {
-							credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"];
 						} else if (data.imageType == 'G') {
-							credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"];
 						}else if (data.imageType == 'O') {
 							//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 							if(data.imageName.indexOf("COPERTA") != -1){
-								credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+								credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"];
 							}
 						} else {
 	                		credit += ' ';
-	                	} 
-
-						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+	                	}
 						
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
 						if (data.missedNumbering) {
 							credit += ' ' + data.missedNumbering;
 						}
-
 						if (data.imageRectoVerso == 'R') {
-							credit += '</span>' + ' recto' + '</span>';
-						} else if (data.imageRectoVerso == 'V'){
-							credit += '</span>' + ' verso' + '</span>';
+							credit += '</span> ' + functionParams["textRecto"] + '</span>';
+						} else if(data.imageRectoVerso == 'V'){
+							credit += '</span> ' + functionParams["textVerso"] + '</span>';
 						}
 						
 						//MD:The last control is to verify if the image is a spine
 						if(data.imageName.indexOf("SPI") != -1){
-							credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+							credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
 						}
 
 						iipMooViewer = new IIPMooViewer( "targetframe", {
@@ -295,7 +311,18 @@
         "annotationsType": "remote",
         "retrieveAnnotationsUrl": "",
         "updateAnnotationsUrl": "",
-        "annotations": new Array()
+        "annotations": new Array(),
+        "textVolume": "Volume",
+        "textExtension": "Ext",
+        "textInsert": "Insert",
+        "textIndexOfNames": "index of names &nbsp;",
+        "textFolio": "folio &nbsp; &nbsp;",
+        "textAttachment": "allegato &nbsp; &nbsp;",
+        "textGuardia" : "guardia &nbsp; &nbsp;",
+        "textCoperta" : "coperta &nbsp; &nbsp;",
+        "textSpine" : "SPINE",
+        "textRecto" : "recto",
+        "textVerso" : "verso"
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -314,20 +341,27 @@
 
                 $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
-					var credit = '';
+					
+					// RR: Added volume informations and insert informations (if needed)
+					var volExt = data.volLetExt != null ? data.volLetExt : '';
+					var insNum = data.insertNum != null ? data.insertNum : '';
+					var insExt = data.insertExt != null ? data.insertExt : '';
+					var credit = '<span style=\'font-size:16px\'>' + functionParams["textVolume"] + ' ' + data.volNum + (volExt != '' ? ' ' + functionParams["textExtension"] + ' ' + volExt : '') + '&nbsp; - </span>';
+					if (insNum != '')
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
 					
 					if (data.imageType == 'R') {
-						credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"];
 					}  else if (data.imageType == 'C') {
-						credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"];
 					} else if (data.imageType == 'A') {
-						credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"];
 					} else if (data.imageType == 'G') {
-						credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"];
 					}else if (data.imageType == 'O') {
 						//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 						if(data.imageName.indexOf("COPERTA") != -1){
-							credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"];
 						}
 					} else {
                 		credit += ' ';
@@ -338,14 +372,14 @@
 						credit += ' ' + data.missedNumbering;
 					}
 					if (data.imageRectoVerso == 'R') {
-						credit += '</span>' + ' recto' + '</span>';
+						credit += '</span> ' + functionParams["textRecto"] + '</span>';
 					} else if(data.imageRectoVerso == 'V'){
-						credit += '</span>' + ' verso' + '</span>';
+						credit += '</span> ' + functionParams["textVerso"] + '</span>';
 					}
 					
 					//MD:The last control is to verify if the image is a spine
 					if(data.imageName.indexOf("SPI") != -1){
-						credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+						credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
 					}
 					
 					iipMooViewer = new IIPMooViewer( "targetframe", {

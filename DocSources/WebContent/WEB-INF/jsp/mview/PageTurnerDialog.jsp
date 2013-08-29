@@ -255,6 +255,17 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
+				textVolume: '<fmt:message key="mview.pageTurner.credits.volume"/>',
+			    textExtension: '<fmt:message key="mview.pageTurner.credits.extension"/>',
+			    textInsert: '<fmt:message key="mview.pageTurner.credits.insert"/>',
+			    textIndexOfNames: '<fmt:message key="mview.pageTurner.credits.indexOfNames"/>',
+			    textFolio: '<fmt:message key="mview.pageTurner.credits.folio"/>',
+			    textAttachment: '<fmt:message key="mview.pageTurner.credits.attachment"/>',
+			    textGuardia : '<fmt:message key="mview.pageTurner.credits.guardia"/>',
+			    textCoperta : '<fmt:message key="mview.pageTurner.credits.coperta"/>',
+			    textSpine : '<fmt:message key="mview.pageTurner.credits.spine"/>',
+			    textRecto : '<fmt:message key="mview.pageTurner.credits.recto"/>',
+			    textVerso : '<fmt:message key="mview.pageTurner.credits.verso"/>',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -270,6 +281,17 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
+				textVolume: '<fmt:message key="mview.pageTurner.credits.volume"/>',
+			    textExtension: '<fmt:message key="mview.pageTurner.credits.extension"/>',
+			    textInsert: '<fmt:message key="mview.pageTurner.credits.insert"/>',
+			    textIndexOfNames: '<fmt:message key="mview.pageTurner.credits.indexOfNames"/>',
+			    textFolio: '<fmt:message key="mview.pageTurner.credits.folio"/>',
+			    textAttachment: '<fmt:message key="mview.pageTurner.credits.attachment"/>',
+			    textGuardia : '<fmt:message key="mview.pageTurner.credits.guardia"/>',
+			    textCoperta : '<fmt:message key="mview.pageTurner.credits.coperta"/>',
+			    textSpine : '<fmt:message key="mview.pageTurner.credits.spine"/>',
+			    textRecto : '<fmt:message key="mview.pageTurner.credits.recto"/>',
+			    textVerso : '<fmt:message key="mview.pageTurner.credits.verso"/>',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -284,6 +306,17 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
+				textVolume: '<fmt:message key="mview.pageTurner.credits.volume"/>',
+			    textExtension: '<fmt:message key="mview.pageTurner.credits.extension"/>',
+			    textInsert: '<fmt:message key="mview.pageTurner.credits.insert"/>',
+			    textIndexOfNames: '<fmt:message key="mview.pageTurner.credits.indexOfNames"/>',
+			    textFolio: '<fmt:message key="mview.pageTurner.credits.folio"/>',
+			    textAttachment: '<fmt:message key="mview.pageTurner.credits.attachment"/>',
+			    textGuardia : '<fmt:message key="mview.pageTurner.credits.guardia"/>',
+			    textCoperta : '<fmt:message key="mview.pageTurner.credits.coperta"/>',
+			    textSpine : '<fmt:message key="mview.pageTurner.credits.spine"/>',
+			    textRecto : '<fmt:message key="mview.pageTurner.credits.recto"/>',
+			    textVerso : '<fmt:message key="mview.pageTurner.credits.verso"/>',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
@@ -298,6 +331,17 @@
 				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
+				textVolume: '<fmt:message key="mview.pageTurner.credits.volume"/>',
+			    textExtension: '<fmt:message key="mview.pageTurner.credits.extension"/>',
+			    textInsert: '<fmt:message key="mview.pageTurner.credits.insert"/>',
+			    textIndexOfNames: '<fmt:message key="mview.pageTurner.credits.indexOfNames"/>',
+			    textFolio: '<fmt:message key="mview.pageTurner.credits.folio"/>',
+			    textAttachment: '<fmt:message key="mview.pageTurner.credits.attachment"/>',
+			    textGuardia : '<fmt:message key="mview.pageTurner.credits.guardia"/>',
+			    textCoperta : '<fmt:message key="mview.pageTurner.credits.coperta"/>',
+			    textSpine : '<fmt:message key="mview.pageTurner.credits.spine"/>',
+			    textRecto : '<fmt:message key="mview.pageTurner.credits.recto"/>',
+			    textVerso : '<fmt:message key="mview.pageTurner.credits.verso"/>',
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>

@@ -363,6 +363,8 @@ public class AjaxController {
 				model.put("entryId", documentExplorer.getEntryId());
 				model.put("volNum", documentExplorer.getVolNum());
 				model.put("volLetExt", documentExplorer.getVolLetExt());
+				model.put("insertNum", documentExplorer.getImage().getInsertNum());
+				model.put("insertExt", documentExplorer.getImage().getInsertLet());
 				model.put("imageId", documentExplorer.getImage().getImageId());
 				model.put("imageType", documentExplorer.getImage().getImageType());
 				model.put("imageName", documentExplorer.getImage().getImageName());
