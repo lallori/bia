@@ -144,6 +144,29 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
+	
+	/**
+	 * @param volNum
+	 * @param volLetExt
+	 * @param insertNum
+	 * @param insertLet
+	 * @param folioNum
+	 * @param folioMod
+	 * @param rectoVerso
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable;
+	
+	/**
+	 * @param volNum
+	 * @param volLetExt
+	 * @param insertNum
+	 * @param insertLet
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean checkInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable;
 
 	/**
 	 * 

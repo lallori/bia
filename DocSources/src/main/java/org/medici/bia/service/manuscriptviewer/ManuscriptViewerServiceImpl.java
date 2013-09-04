@@ -265,7 +265,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				if (document != null) {
 	
 					List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
-					if (images.size() > 0) {
+					if (images != null) {
 						return images.get(0);
 					} else 
 						return null;
@@ -275,7 +275,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			} else if ((entryId != null) && (imageOrder != null)) {
 				Document document = getDocumentDAO().find(entryId);
 				
-				if (document != null) {
+				if (document != null && imageOrder != null) {
 					return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
 				} else {
 					return null;
@@ -283,7 +283,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			} else {
 				List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
 				
-				if (images.size()>0) {
+				if (images != null) {
 					return images.get(0);
 				}
 				

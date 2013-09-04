@@ -445,6 +445,36 @@ public class DocBaseServiceImpl implements DocBaseService {
 		
 		return digitized;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
+		Image.ImageRectoVerso rv = (rectoVerso != null && !"".equals(rectoVerso.trim())) ? 
+			("R".equals(rectoVerso.trim().toUpperCase()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V) : null;
+		if (rv != null) {
+			try {
+				return getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, rv) != null;
+			} catch (Throwable th) {
+				throw new ApplicationThrowable(th);
+			}
+		}
+		return Boolean.FALSE;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkInsert(Integer volNum, String volLetExt,
+			String insertNum, String insertLet) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findImages(volNum, volLetExt, insertNum, insertLet).size() > 0;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	@Override
 	public Document checkVolumeFolio(Integer summaryId)	throws ApplicationThrowable {
@@ -1926,4 +1956,5 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
+
 }

@@ -100,6 +100,8 @@ public class ShowExplorerDocumentController {
 				documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 				documentExplorer.getImage().setImageOrder(command.getImageOrder());
 				documentExplorer.getImage().setImageType(command.getImageType());
+				if (document != null && document.getFolioRectoVerso() != null)
+					documentExplorer.getImage().setImageRectoVerso(Document.RectoVerso.R.equals(document.getFolioRectoVerso()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V);
 				documentExplorer.setTotal(command.getTotal());
 				documentExplorer.setTotalRubricario(command.getTotalRubricario());
 				documentExplorer.setTotalCarta(command.getTotalCarta());

@@ -30,6 +30,7 @@ package org.medici.bia.validator.docbase;
 import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.docbase.EditDetailsDocumentCommand;
 import org.medici.bia.common.util.VolumeUtils;
+import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.medici.bia.service.volbase.VolBaseService;
@@ -49,23 +50,6 @@ public class EditDetailsDocumentValidator implements Validator {
 	private DocBaseService docBaseService;
 	@Autowired
 	private VolBaseService volBaseService;
-
-	/**
-	 * x
-	 * 
-	 * @return
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * 
-	 * @param docBaseService
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
@@ -91,30 +75,14 @@ public class EditDetailsDocumentValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
 		validateDocument(editDetailsDocumentCommand.getEntryId(), editDetailsDocumentCommand.getFolioRectoVerso(), errors);
-		validateLinkedVolume(editDetailsDocumentCommand.getVolume(), errors);
+		validateVolumeInsertAndFolio(editDetailsDocumentCommand.getVolume(), 
+				editDetailsDocumentCommand.getInsertNum(), 
+				editDetailsDocumentCommand.getInsertLet(), 
+				editDetailsDocumentCommand.getFolioNum(), 
+				editDetailsDocumentCommand.getFolioMod(), 
+				editDetailsDocumentCommand.getFolioRectoVerso(), 
+				errors);
 		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
-	}
-
-	/**
-	 * 
-	 * @param volume
-	 * @param errors
-	 */
-	private void validateLinkedVolume(String volume, Errors errors) {
-		if (!errors.hasErrors()) {
-			if (StringUtils.isEmpty(volume)) {
-				errors.rejectValue("volume", "error.volume.notfound");
-			}else{
-				try {
-					if (getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume)) == null) {
-						errors.rejectValue("volume", "error.volume.notfound");
-					}
-				} catch (ApplicationThrowable ath) {
-					errors.rejectValue("volume", "error.volume.notfound");
-				}
-			}
-		}
-		
 	}
 
 	/**
@@ -170,6 +138,93 @@ public class EditDetailsDocumentValidator implements Validator {
 				}
 			}
 		}
+	}
+	
+	private void validateVolumeInsertAndFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, Errors errors) {
+		boolean digitized = true;
+		
+		if (!errors.hasErrors()) {
+			digitized = validateVolume(volume, errors);
+		}
+		
+		if (digitized) {
+			// validation of insert and folio must be done only for digitized volumes
+			if (!errors.hasErrors()) {
+				validateInsert(volume, insertNum, insertLet, errors);
+			}
+			
+			if (!errors.hasErrors()) {
+				validateFolio(volume, insertNum, insertLet, folioNum, folioMod, rectoVerso, errors);
+			}
+		}
+	}
+	
+	private void validateFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, Errors errors) {
+		try  {
+			if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
+					VolumeUtils.extractVolLetExt(volume), 
+					insertNum.trim(), 
+					insertLet != null ? insertLet.trim() : null, 
+					folioNum, 
+					folioMod != null ? folioMod.trim() : null, 
+					rectoVerso)) {
+				errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{folioNum + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+			}
+		} catch (ApplicationThrowable ath) {
+			errors.rejectValue("insertNum", "error.folio.notfound", new  Object[]{folioNum + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+		}
+	}
+	
+	private void validateInsert(String volume, String insertNum, String insertLet, Errors errors) {
+		try  {
+			if (insertNum != null && !"".equals(insertNum.trim())) {
+				if (!getDocBaseService().checkInsert(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume), insertNum.trim(), insertLet != null ? insertLet.trim() : null)) {
+					errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+				}
+			}
+		} catch (ApplicationThrowable ath) {
+			errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+		}
+	}
+	
+	/**
+	 * This method checks if the volume exists and returns true if it is digitized.
+	 * 
+	 * @param volume volume identifier and extension
+	 * @param errors
+	 * @return true if the volume exists and it is digitized
+	 */
+	private Boolean validateVolume(String volume, Errors errors) {
+		if (StringUtils.isEmpty(volume)) {
+			errors.rejectValue("volume", "error.volume.notfound");
+		} else {
+			try {
+				Volume vol = getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume));
+				if (vol == null) {
+					errors.rejectValue("volume", "error.volume.notfound");
+				} else {
+					return vol.getDigitized();
+				}
+			} catch (ApplicationThrowable ath) {
+				errors.rejectValue("volume", "error.volume.notfound");
+			}
+		}
+		return Boolean.FALSE;
+	}
+	
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
+
+	/**
+	 * 
+	 * @param docBaseService
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
 	}
 
 	/**

@@ -274,6 +274,41 @@
 	 		}
 			$j("#volume").change(showVolumeExplorer);
 			
+			var rectoVersoOnDigitizedVolume = function(){
+				if ($j("#rectoVersoError").length > 0){
+					$j("#rectoVersoError").remove();
+					$j("#rectoVersoError\\.errors").remove();
+				}
+				
+				if (!$j("#volume").val() || $j("#volume").val() == "" || !$j("#folioNum").val() || $j("#folioNum").val() == "") {
+					$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">You should specify volume number and folio number first. Save is disabled.<br></span>");
+					$j("#folioRectoVerso").val("");
+					$j("#save").attr("disabled","true");
+				} else {
+					var rectoVersoInputValue = $j("#folioRectoVerso").val();
+					var rectoVersoValidate = rectoVersoInputValue == '' || rectoVersoInputValue == 'R' || rectoVersoInputValue == 'r' || rectoVersoInputValue == 'V' || rectoVersoInputValue == 'v';
+					
+					if (!rectoVersoValidate) {
+						$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">Recto/Verso information is not correct. Save is disabled.<br></span>");
+						$j("#save").attr("disabled","true");
+					} else {
+						$j("#save").removeAttr("disabled");
+					
+						$j.get('<c:url value="/digitization/CheckDigitization.json" />', 
+							{ volume: $j("#volume").val(), insertNum : $j("#insertNum").val(), insertLet: $j("#insertLet").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val(), folioRectoVerso: $j("#folioRectoVerso").val() },
+								function(data){
+									if (data.volumeDigitized && !data.rectoVersoCheck) {
+										var errorMsg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoNotExist" />';
+										$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+errorMsg+"<br /></span>");
+										$j("#save").attr("disabled","true");
+									}
+								}
+						);
+					}
+				}
+			}
+			$j("#folioRectoVerso").change(rectoVersoOnDigitizedVolume);
+			
 			//MD: If we check on document ready
 // 			 $j("#EditDetailsDocumentForm :input").keyup(showVolumeExplorer);
 			

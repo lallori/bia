@@ -252,6 +252,48 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso) {
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum = :volNum");
+		stringBuilder.append(" AND volLetExt ").append(!StringUtils.isEmpty(volLetExt) ? "= :volLetExt" : "IS NULL");
+		if (imageType != null)
+			stringBuilder.append(" AND imageType = :imageType");
+		
+		stringBuilder.append(" AND insertNum ").append(!StringUtils.isEmpty(insertNum) ? "= :insertNum" : "IS NULL");
+		stringBuilder.append(" AND insertLet ").append(!StringUtils.isEmpty(insertLet) ? "= :insertLet" : "IS NULL");
+		
+		stringBuilder.append(" AND imageProgTypeNum = :folioNum");
+		stringBuilder.append(" AND missedNumbering ").append(!StringUtils.isEmpty(folioMod) ? "= :folioMod" : "IS NULL");
+		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
+		
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
+		query.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			query.setParameter("volLetExt", volLetExt);
+		if (imageType != null)
+			query.setParameter("imageType", imageType);
+		if (!StringUtils.isEmpty(insertNum))
+			query.setParameter("insertNum", insertNum);
+		if (!StringUtils.isEmpty(insertLet))
+			query.setParameter("insertLet", insertLet);
+		query.setParameter("folioNum", folioNum);
+		if (!StringUtils.isEmpty(folioMod))
+			query.setParameter("folioMod", folioMod);
+		query.setParameter("imageRectoVerso", rectoVerso);
+		
+		List<Image> result = (List<Image>) query.getResultList();
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+        
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -277,6 +319,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	if(documentExplorer.getFolioMod() != null){
             	stringBuilder.append(" and imageName like '%" + documentExplorer.getFolioMod() + "%'");
             }
+        	if (documentExplorer.getImage().getImageRectoVerso() != null)
+        		stringBuilder.append(" and imageRectoVerso=:imageRectoVerso");
         } else if (documentExplorer.getImage().getImageOrder() != null) {
         	stringBuilder.append(" and imageOrder=:imageOrder");
         } else {
@@ -292,6 +336,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	query.setParameter("imageType", documentExplorer.getImage().getImageType());
         	query.setParameter("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
+        	if (documentExplorer.getImage().getImageRectoVerso() != null)
+        		query.setParameter("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());
 			List<Image> result = (List<Image>) query.getResultList();
 			
 			if (result.size() > 0) {
@@ -414,6 +460,26 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		page.setList(typedQuery.getResultList());
 
 		return page;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Image> findImages(Integer volNum, String volLetExt, String insertNum, String insertLet) {
+		boolean isEmptyVolExt = StringUtils.isEmpty(volLetExt);
+		boolean isEmptyInsertExt = StringUtils.isEmpty(insertLet);
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum = :volNum");
+		stringBuilder.append(" AND volLetExt").append(!isEmptyVolExt ? " = :volLetExt" : " IS NULL");
+		stringBuilder.append(" AND insertNum = :insertNum");
+		stringBuilder.append(" AND insertLet").append(!isEmptyInsertExt ? " = :insertLet" : " IS NULL");
+		
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
+		query.setParameter("volNum", volNum);
+		if (!isEmptyVolExt)
+			query.setParameter("volLetExt", volLetExt);
+		query.setParameter("insertNum", insertNum);
+		if (!isEmptyInsertExt)
+			query.setParameter("insertLet", insertLet);
+		
+		return (List<Image>) query.getResultList();
 	}
 
 	/**

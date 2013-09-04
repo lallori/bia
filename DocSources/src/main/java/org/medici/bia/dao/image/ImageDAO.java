@@ -102,6 +102,21 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException;
+	
+	/**
+	 * This method searches an image identified by volume identifiers, insert identifier, folio identifiers and image type.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param imageType Type of image
+	 * @param insertNum Number of insert
+	 * @param insertLet extension of insert
+	 * @param folioNum Number of folio
+	 * @param folioMod extension of folio
+	 * @param rectoVerso recto or verso of the folio
+	 * @return A {@link org.medici.bia.domain.Image}
+	 */
+	Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso);
 
 	/**
 	 * 
@@ -131,6 +146,16 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This methods returns a list of images linked to a specific insert.
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param insertNum insert identifier
+	 * @param insertLet insert extension
+	 * @return A List<Image> linked to an insert
+	 */
+	List<Image> findImages(Integer volNum, String volLetExt, String insertNum, String insertLet);
 
 	/**
 	 * 
@@ -168,6 +193,7 @@ public interface ImageDAO extends Dao<Integer, Image> {
 
 	/**
 	 * This method searches a volume image identified by volume identifiers and image order.
+	 * It returns null value if no image has been found.
 	 * 
 	 * @param volNum MDP Volume identifier
 	 * @param volLetExt MDP Volume extension

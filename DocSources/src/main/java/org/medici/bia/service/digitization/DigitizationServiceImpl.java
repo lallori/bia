@@ -44,6 +44,7 @@ import org.medici.bia.dao.schedone.SchedoneDAO;
 import org.medici.bia.dao.serieslist.SeriesListDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Digitization;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.SerieList;
@@ -536,6 +537,36 @@ public class DigitizationServiceImpl implements DigitizationService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkVolumeDigitization(Integer volNum, String volLetExt)
+			throws ApplicationThrowable {
+		try{
+			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
+			return volume != null ? volume.getDigitized() : null;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkRectoVerso(Integer volNum, String volLetExt,
+			String insertNum, String insertLet, Integer folioNum,
+			String folioMod, String folioRectoVerso)
+			throws ApplicationThrowable {
+		try{
+			Image image = getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, "R".equals(folioRectoVerso.trim().toUpperCase()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V);
+			return image != null;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @param digitizationDAO the digitizationDAO to set
@@ -578,4 +609,5 @@ public class DigitizationServiceImpl implements DigitizationService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
 }
