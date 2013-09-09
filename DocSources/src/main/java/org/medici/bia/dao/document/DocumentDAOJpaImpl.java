@@ -38,6 +38,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -157,6 +158,49 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		} else {
 			return query.getResultList();
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws PersistenceException {
+		boolean isEmptyVolLetExt = "".equals(ObjectUtils.toString(volLetExt).trim());
+		boolean isEmptyInsertNum = "".equals(ObjectUtils.toString(insertNum).trim());
+		boolean isEmptyInsertLet = "".equals(ObjectUtils.toString(insertLet).trim());
+		boolean isEmptyFolioMod = "".equals(ObjectUtils.toString(folioMod).trim());
+		
+		StringBuilder stringBuilder = new StringBuilder("FROM Document WHERE volume.volNum = :volNum");
+		stringBuilder.append(" AND volume.volLetExt ").append(!isEmptyVolLetExt ? "= :volLetExt" : "IS NULL");
+		stringBuilder.append(" AND insertNum ").append(!isEmptyInsertNum ? "= :insertNum" : "IS NULL");
+		stringBuilder.append(" AND insertLet ").append(!isEmptyInsertLet ? "= :insertLet" : "IS NULL");
+		stringBuilder.append(" AND folioNum = :folioNum");
+		stringBuilder.append(" AND folioMod ").append(!isEmptyFolioMod ? "= :folioMod" : "IS NULL");
+		if (folioRectoVerso != null)
+			stringBuilder.append(" AND folioRectoVerso = :folioRectoVerso ");
+		stringBuilder.append(" AND logicalDelete=false");
+		
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
+		query.setParameter("volNum", volNum);
+		if (!isEmptyVolLetExt)
+			query.setParameter("volLetExt", volLetExt);
+		if (!isEmptyInsertNum) {
+			query.setParameter("insertNum", insertNum.trim());
+			if (!isEmptyInsertLet)
+				query.setParameter("insertLet", insertLet.trim());
+		}
+		query.setParameter("folioNum", folioNum);
+		if (!isEmptyFolioMod)
+			query.setParameter("folioMod", folioMod);
+		if (folioRectoVerso != null)
+			query.setParameter("folioRectoVerso", folioRectoVerso);
+
+		List<Document> docs = query.getResultList();
+		if (docs.size() == 0) 
+			return null;
+			
+		return docs;
 	}
 	
 	/**

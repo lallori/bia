@@ -1151,6 +1151,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	@Override
+	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

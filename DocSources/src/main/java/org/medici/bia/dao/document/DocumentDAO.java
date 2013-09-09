@@ -74,19 +74,35 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 
 	/**
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param folioNum
-	 * @param folioMod
-	 * @return
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @return a list of {@link Document}
 	 * @throws PersistenceException
 	 */
 	List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 	
 	/**
+	 * This method searches all the documents that have the provided informations of volume, insert and folio.
 	 * 
-	 * @param folioNum
-	 * @param folioMod
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param folioRectoVerso the folio {@link Document.RectoVerso} information 
+	 * @return a list of {@link Document}
+	 * @throws PersistenceException
+	 */
+	List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws PersistenceException;
+	
+	/**
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
 	 * @return
 	 * @throws PersistenceException
 	 */

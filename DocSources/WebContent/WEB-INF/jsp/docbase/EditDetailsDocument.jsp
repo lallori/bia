@@ -208,6 +208,19 @@
 	<c:url var="ShowDocumentAlreadyURL" value="/src/docbase/CompareDocument.do" />
 	
 	<c:url var="ShowDocumentsAlreadyURL" value="/src/docbase/ShowSameFolioDocuments.do" />
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1><fmt:message key="docbase.editDetailsDocument.messages.discardChanges"/></h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<div id="existentDocumentQuestion" style="display:none; cursor: default"> 
+		<span class="warningMessage"></span>
+		<span class="clickHere"></span>
+		<input type="button" id="yesDQ" value="Yes" /> 
+		<input type="button" id="noDQ" value="No" /> 
+	</div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -236,12 +249,18 @@
     			</c:if>
 			</security:authorize>
 
-			var showVolumeExplorer = function (){
+			
+			/**
+			 * This function defines the change-handler of the "volume" input.
+			 * If the volume informations correspond to an existent volume it shows that volume in the Volume Explorer (inside a tab).
+			 */
+			var showVolumeExplorer = function () {
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
 					function(data){
 						if (data.summaryId == "") {
 							if ($j("#volNotExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\" style=\"color:red\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
+								var msg = '<fmt:message key="docbase.editDetailsDocument.messages.volumeNotExist"/>';
+								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\" style=\"color:red\">" + msg + "<br></span>");
 							}
 							$j("#save").attr("disabled","true");
 						} else {
@@ -252,7 +271,8 @@
 							$j("#save").removeAttr("disabled");
 							
 							if(data.volumeDigitized){
-								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+								var msg = '<fmt:message key="docbase.editDetailsDocument.messages.removeTab"/>';
+								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">" + msg;
 	            				var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
 	                    		$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
 	                    		$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
@@ -268,16 +288,25 @@
 					}
 				);
 	 		}
+			// We attach the change-handler to the "volume" input.
 			$j("#volume").change(showVolumeExplorer);
 			
-			var rectoVersoOnDigitizedVolume = function(){
+			
+			/**
+			 * This function defines the handler of the value change of the folioRectoVerso input.
+			 * If the informations of volume, insert and folio (number + extension) provided in the 'EditDetailsDocumentForm'
+			 * correspond to a digitized folio this function checks if that folio has a correct recto/verso information.
+			 * NOTE: at least volume and folio number informations must be provided.
+			 */
+			var checkRectoVersoOnDigitizedFolio = function(){
 				if ($j("#rectoVersoError").length > 0){
 					$j("#rectoVersoError").remove();
 					$j("#rectoVersoError\\.errors").remove();
 				}
 				
 				if (!$j("#volume").val() || $j("#volume").val() == "" || !$j("#folioNum").val() || $j("#folioNum").val() == "") {
-					$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">You should specify volume number and folio number first. Save is disabled.<br></span>");
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.volumeAndFolioMissing"/>';
+					$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ msg +"<br></span>");
 					$j("#folioRectoVerso").val("");
 					$j("#save").attr("disabled","true");
 				} else {
@@ -285,7 +314,8 @@
 					var rectoVersoValidate = rectoVersoInputValue == '' || rectoVersoInputValue == 'R' || rectoVersoInputValue == 'r' || rectoVersoInputValue == 'V' || rectoVersoInputValue == 'v';
 					
 					if (!rectoVersoValidate) {
-						$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">Recto/Verso information is not correct. Save is disabled.<br></span>");
+						var msg = '<fmt:message key="docbase.editDetailsDocument.messages.rectoVersoIncorrect"/>';
+						$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ msg +"<br></span>");
 						$j("#save").attr("disabled","true");
 					} else {
 						$j("#save").removeAttr("disabled");
@@ -295,7 +325,7 @@
 								function(data){
 									if (data.volumeDigitized && !data.rectoVersoCheck) {
 										var errorMsg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoNotExist" />';
-										$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+errorMsg+"<br /></span>");
+										$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ errorMsg +"<br /></span>");
 										$j("#save").attr("disabled","true");
 									}
 								}
@@ -303,166 +333,37 @@
 					}
 				}
 			}
-			$j("#folioRectoVerso").change(rectoVersoOnDigitizedVolume);
+			// We attach the change-handler to the "folioRectoVerso" input
+			$j("#folioRectoVerso").change(checkRectoVersoOnDigitizedFolio);
 			
-			//MD: If we check on document ready
-// 			 $j("#EditDetailsDocumentForm :input").keyup(showVolumeExplorer);
 			
-			var alreadyDigitized = function(){
-				if($j("#folioNum").val() == $j("#folioNumStored").val()){
-					if ($j("#alreadyDigitized").length > 0) {
-						$j("#alreadyDigitized").remove();
-					}
-					$j("#save").removeAttr("disabled");
-					return "";
-				}
-				$j.get('<c:url value="/src/docbase/FindDocument.json" />', { volNum: $j("#volume").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val() },
-						function(data){
-							//MD: In this case we have a document with the same volume and folio and the link open in a tab its record.
-							if (data.countAlreadyEntered == 1) {
-								if ($j("#alreadyDigitized").length == 0) {
-										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">A document with this 'start folio' is already present in the database. <br />Are you sure you want to create another document record ? Click <a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>here</u></a> to view the document already indexed.<br></font></span>");
-										$j('.compareDoc').click(function(){
-											var tabName = "" + $j("#volume").val() + " / " + $j("#folioNum").val();
-											var numTab = 0;
-											
-											//Check if already exist a tab with this person
-// 											var tabExist = false;
-// 											$j("#tabs ul li a").each(function(){
-// 												if(!tabExist)
-// 													numTab++;
-// 												if(this.text == tabName){
-// 													tabExist = true;
-// 												}
-// 											});
-											
-// 											if(!tabExist){
-// 												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-// 												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-// 												return false;
-// 											}else{
-// 												$j("#tabs").tabs("select", numTab-1);
-// 												return false;
-// 											}
-											var tabExist = false;
-											$j("#tabs ul li a").each(function(){
-												if(!tabExist){
-													if(this.text != ""){
-														numTab++;
-													}
-												}
-												if(this.text == tabName){
-													tabExist = true;
-												}
-											});
-												
-											if(!tabExist){
-												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-												return false;
-											}else{
-												$j("#tabs").tabs("select", numTab);
-												return false;
-											}
-											});
-											return false;
-										
-								}
-// 								$j("#save").attr("disabled","true");
-								return data.entryId;
-							} else if (data.countAlreadyEntered > 1){
-								if ($j("#alreadyDigitized").length == 0) {
-									$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">More than 1 document. <br />Are you sure you want to create another document record ? Click <a class=\"compareDocs\" style=\"color:red\" href=\"${ShowDocumentsAlreadyURL}?volNum=" + data.volNum +  "&volLetExt=" + data.volLetExt + "&folioNum=" + data.folioNum + "&folioMod=" + data.folioMod + "\"><u>here</u></a> to view the dataTable.<br></font></span>");
-									$j('.compareDocs').click(function(){
-										var tabName = "" + $j("#volume").val() + " / " + $j("#folioNum").val() + " Documents"
-										var numTab = 0;
-										var tabExist = false;
-										$j("#tabs ul li a").each(function(){
-											if(!tabExist){
-												if(this.text != ""){
-													numTab++;
-												}
-											}
-											if(this.text == tabName){
-												tabExist = true;
-											}
-										});
-											
-										if(!tabExist){
-											$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-											$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-											return false;
-										}else{
-											$j("#tabs").tabs("select", numTab);
-											return false;
-										}
-										});
-									return false;
-								}
-							} else {
-								if ($j("#alreadyDigitized").length > 0) {
-									$j("#alreadyDigitized").remove();
-								}
-// 								$j("#save").removeAttr("disabled");
-								
-								return data.entryId;
-								
-// 								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
-// 		            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-// 		                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
-// 		                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-		                    	
-		                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
-									function(data){
-										$j("#body_right").html(data);
-										return true;
-									}
-								);*/
-							}
+			/** 
+			 * This function handles folio number out of range case.
+			 */
+			var folioNotExistHandler = function(data) {
+				if (data.folioCount != "") {
+					if ($j("#folioNotExist").length == 0) {
+						if (parseInt($j("#folioNum").val(),10) > parseInt(data.folioCount,10)) {
+							$j("#close").before("<span class=\"inputerrorsFolioNotExist\" id=\"folioNotExist\">This folio number is higher than the folio count total of the volume. Save is disabled.<br></span>");
+							$j("#save").attr("disabled","true");
 						}
-					);
-			};
-			$j("#folioNum").keyup(alreadyDigitized);
-			$j("#folioMod").keyup(alreadyDigitized);
-			$j("#folioNum").focus(function(){
-				if ($j("#alreadyDigitized").length > 0) {
-					$j("#alreadyDigitized").remove();
-				}
-				$j("#save").removeAttr("disabled");
-			});
-			
-			var folioNotExist = function (){
-				if($j("#volume").val() != ""){
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
-					function(data){
-						if (data.folioCount != "") {
-							if ($j("#folioNotExist").length == 0) {
-								if(parseInt($j("#folioNum").val(),10) > parseInt(data.folioCount,10)){
-									$j("#close").before("<span class=\"inputerrorsFolioNotExist\" id=\"folioNotExist\">This folio number is higher than the folio count total of the volume. Save is disabled.<br></span>");
-									$j("#save").attr("disabled","true");
-								}
-							}else {
-								if ($j("#folioNotExist").length > 0 && parseInt(data.folioCount,10) >= parseInt($j("#folioNum").val(),10)) {
-									$j("#folioNotExist").remove();
-								}
-								$j("#save").removeAttr("disabled");
-							
-							} 
-							
-							/*var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
-	            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-	                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
-	                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);*/
-	                    	
-	                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
-								function(data){
-									$j("#body_right").html(data);
-									return true;
-								}
-							);*/
+					} else {
+						if ($j("#folioNotExist").length > 0 && parseInt(data.folioCount,10) >= parseInt($j("#folioNum").val(),10)) {
+							$j("#folioNotExist").remove();
 						}
-					}
-				);
+						$j("#save").removeAttr("disabled");
+					
+					} 
+				}
+			}
+			
+			/**
+			 * This function checks if the folio exists or not.
+			 * NOTE: unused because the folio existence is checked during the form validation phase.
+			 */
+			var folioNotExist = function () {
+				if ($j("#volume").val() != "") {
+					$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() }, folioNotExistHandler);
 				}
 	 		}
 			
@@ -478,42 +379,161 @@
 					target 					: $j("#body_right") 
 				});  
 			}
-
-			$j("#EditDetailsDocumentForm").submit(function (){
-//  				var error = alreadyDigitized();
-//  				alert(error);
-//  				if(error != ""){
-//  					return false;
-//  				}
-				//MD: The next instruction is for spring to assign the volume value, else it remains null
-				if($j("#volume").attr("disabled") == 'disabled'){
+			
+			
+			/**
+			 * This function defines the operations of the submit process.
+			 */
+			var submitHandler = function () {
+				// Disabled attribute is removed because disabled inputs are submitted with null values.
+				if ($j("#volume").attr("disabled") == 'disabled') {
 					$j("#volume").removeAttr("disabled");
 				}
 				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        	
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if ($j(html).find(".inputerrors").length > 0){
+					if ($j(html).find(".inputerrors").length > 0) {
 						$j("#EditDetailsDocumentDiv").html(html);
 					} else {
-				<c:choose> 
-					<c:when test="${command.entryId == 0}"> 
-						$j("#body_left").html(html);
-					</c:when> 
-					<c:otherwise> 
-						$j("#body_left").html(html);
-					</c:otherwise> 
-				</c:choose> 
+						<c:choose> 
+							<c:when test="${command.entryId == 0}"> 
+								$j("#body_left").html(html);
+							</c:when> 
+							<c:otherwise> 
+								$j("#body_left").html(html);
+							</c:otherwise> 
+						</c:choose> 
 					}
 				}});
 				return false;
-			});
+			}
+			// We attach the submit-handler to the form (with 'EditDetailsDocumentForm' identifier)
+			$j("#EditDetailsDocumentForm").submit(submitHandler);
 			
+			
+			/**
+			 * This object contains message and style informations of the "existentDocumentQuestion" popup.
+			 */
+			var existentDocumentPopupBlock = { 
+					message: $j('#existentDocumentQuestion'), 
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						width: '250px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				};
+			
+			
+			/**
+			 * This function defines the find document callback used in the save process.
+			 */
+			var findDocumentCallback = function(data) {
+				//In this case we have a document with the same volume and folio and the link open in a tab its record.
+				if (data.countAlreadyEntered == 1) {
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.oneDocExists"/>';
+					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
+					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDoc"/>';
+					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>"+clickHereMsg+"</u></a><br/></span>");
+					
+					$j(".compareDoc").click(function() {
+						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), false);
+						return false;
+					});
+					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
+					return;
+				} else if (data.countAlreadyEntered > 1) {
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.moreDocsExist"/>';
+					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
+					var showDocumentsAlreadyURLParams = "?volNum=" + data.volNum +  "&volLetExt=" + data.volLetExt + "&insertNum=" + data.insertNum + "&insertLet=" + data.insertLet + "&folioNum=" + data.folioNum + "&folioMod=" + data.folioMod + "&folioRectoVerso=" + data.folioRectoVerso;
+					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDocs"/>';
+					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDocs\" style=\"color:red\" href=\"${ShowDocumentsAlreadyURL}" + showDocumentsAlreadyURLParams + "\"><u>"+clickHereMsg+"</u></a><br/></span>");
+					
+					$j(".compareDocs").click(function() {
+						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), true);
+						return false;
+					});
+					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
+					return;
+				}
+				$j("#EditDetailsDocumentForm").submit();
+			}
+			
+			
+			/**
+			 * This function defines the handler of the "Save" button.
+			 */
+			var saveHandler = function() {
+				if($j("#folioNum").val() == $j("#folioNumStored").val()){
+					// An existent document is going to be modified.					
+					if ($j("#alreadyDigitized").length > 0) {
+						$j("#alreadyDigitized").remove();
+					}
+					$j("#save").removeAttr("disabled");
+					return true;
+				}
+				
+				$j.get('<c:url value="/src/docbase/FindDocument.json" />', 
+					{ volume: $j("#volume").val(), 
+					  insertNum: $j("#insertNum").val(), 
+					  insertLet: $j("#insertLet").val(), 
+					  folioNum: $j("#folioNum").val(), 
+					  folioMod: $j("#folioMod").val(), 
+					  folioRectoVerso: $j("#folioRectoVerso").val() },
+					findDocumentCallback
+				);
+				return false;
+			}
+			// We attach the save click-handler to the "Save" button.
+			$j("#save").click(saveHandler);
+			
+			
+			/**
+			 * This function opens a tab with the informations retrieved from the href param provided.
+			 * If a tab with a specific name already exists this function selects that tab.
+			 * @param volume the volume (number + extension)
+			 * @param insert the insert (number + extension)
+			 * @param folio the folio (number + extension + recto/verso)
+			 */
+			var showAlreadyEnteredDocumentsTab = function(volume,insert,folio,href,tableDoc) {
+				var tabName = '<fmt:message key="docbase.editDetailsDocument.messages.vol"/>' + volume + 
+					(insert != "" ? " / " + '<fmt:message key="docbase.editDetailsDocument.messages.ins"/> ' + insert : "") + 
+					" / " + '<fmt:message key="docbase.editDetailsDocument.messages.folio"/> ' + folio + 
+					(tableDoc ? ' <fmt:message key="docbase.editDetailsDocument.messages.document"/> ' : ' <fmt:message key="docbase.editDetailsDocument.messages.documents"/> ');
+				var numTab = 0;
+				var tabExist = false;
+				$j("#tabs ul li a").each(function() {
+					if (!tabExist) {
+						if (this.text != "") {
+							numTab++;
+						}
+					}
+					if (this.text == tabName) {
+						tabExist = true;
+					}
+				});
+				if (!tabExist) {
+					// the new tab is opened and the CompareDoc Table is loaded
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.removeTab"/>';
+					$j("#tabs").tabs("add", href, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">" + msg);
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				} else {
+					// the existent tab is selected
+					$j("#tabs").tabs("select", numTab);
+				}
+				return false;
+			}
 			
 
-	        $j('#close').click(function() {
-	        	if($j("#modify").val() == 1){
-	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+			/**
+			 * This function defines the handler of "Close" button.
+			 */
+			var closeHandler = function() {
+				if ($j("#modify").val() == 1) {
+	        		// Block is attached to form otherwise this block does not work when we use in transcribe and contextualize document
 					$j('#EditDetailsDocumentForm').block({ message: $j('#question'), 
 						css: { 
 							border: 'none', 
@@ -524,84 +544,90 @@
 							overlayCSS: { backgroundColor: '#999' }	
 					}); 
 					return false;
-	        	}else{
+	        	} else {
 	        		$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 	    				$j("#body_left").html(html);
 	    			}});
 	    				
 	    			return false; 
-	        	}	        		
-			});
-	        
-	        $j('.compareDoc').click(function(){
-				var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
-				var numTab = 0;
-				
-				<%-- Check if already exist a tab with this person --%>
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist){
-						if(this.text != ""){
-							numTab++;
-						}
-					}
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab);
-					return false;
-				}
-			});
-	        
-      
-		});
-		
-		
-		
-		
-	</script>
-
-<div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div>
-
-<script type="text/javascript">
-	$j(document).ready(function() {
-		
-		$j('.helpIcon').tooltip({ 
-			track: true, 
-			fade: 350 
-		});
-		
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			$j("#question").hide();
-			// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-			$j("#EditDetailsDocumentForm").append($j("#question"));
-			$j(".blockUI").remove();
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			if($j("#returnToManuscriptViewer").length > 0){
-				window.open($j("#returnToManuscriptViewer").val(),'BIA Manuscript Viewer', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+	        	}	
 			}
-			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
-			}});
-							
-			return false; 
-		}); 
+			// We attach the close click-handler to the "Close" button.
+	        $j('#close').click(closeHandler);
+	        
+			$j('.helpIcon').tooltip({ 
+				track: true, 
+				fade: 350 
+			});
+			
+			
+			/**
+			 * This function defines the handler for the "No" button of the "Discarg changes" popup.
+			 */
+			var discardChangesNoHandler = function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#question").hide();
+				// Block is attached to the form otherwise this block does not work when we use in transcribe and contextualize document
+				$j("#EditDetailsDocumentForm").append($j("#question"));
+				$j(".blockUI").remove();
+				return false; 
+			}
+			// We attach the click-handler to the "No" button of the "Discarg changes" popup.
+			$j('#no').click(discardChangesNoHandler); 
+	        
+			
+			/**
+			 * This function defines the handler for the "Yes" button of the "Discarg changes" popup.
+			 */
+			var discardChangesYesHandler = function() {
+				if($j("#returnToManuscriptViewer").length > 0){
+					window.open($j("#returnToManuscriptViewer").val(),'BIA Manuscript Viewer', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+				}
+				$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
+				}});
+								
+				return false; 
+			}
+			// We attach the click-handler to the "Yes" button of the "Discarg changes" popup.
+			$j('#yes').click(discardChangesYesHandler); 
+			
+			
+			/**
+			 * This function defines the handler for the "No" button of the "ExistentDocumentQuestion" popup.
+			 * ==> The user does not want to create the document.
+			 */
+			var existentDocumentQuestionNoHandler = function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#existentDocumentQuestion").hide();
+				// Block is attached to the form otherwise this block does not work when we use in transcribe and contextualize document
+				$j("#EditDetailsDocumentForm").append($j("#existentDocumentQuestion"));
+				$j(".blockUI").remove();
+				return false; 
+			}
+			// We attach the click-handler to the "No" button of the "ExistentDocumentQuestion" popup.
+			$j('#noDQ').click(existentDocumentQuestionNoHandler);
+			
+			
+			/**
+			 * This function defines the handler for the "Yes" button of the "ExistentDocumentQuestion" popup.
+			 * ==> The user wants to create the document.
+			 */
+			var existentDocumentQuestionYesHandler = function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#existentDocumentQuestion").hide();
+				// Block is attached to the form otherwise this block does not work when we use in transcribe and contextualize document
+				$j("#EditDetailsDocumentForm").append($j("#existentDocumentQuestion"));
+				$j(".blockUI").remove();
+				// Submitting the "EditDetailsDocumentForm" form.
+				$j("#EditDetailsDocumentForm").submit();
+				return false;
+			}
+			// We attach the click-handler to the "Yes" button of the "ExistentDocumentQuestion" popup.
+			$j('#yesDQ').click(existentDocumentQuestionYesHandler);
      	
-	});
-</script>
+		});
+	</script>

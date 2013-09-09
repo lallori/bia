@@ -347,6 +347,17 @@ public interface DocBaseService {
 	 */
 	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
+	/**
+	 * @param volNum
+	 * @param volLetExt
+	 * @param insertNum
+	 * @param insertLet
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws ApplicationThrowable;
 
 	/**
 	 * 

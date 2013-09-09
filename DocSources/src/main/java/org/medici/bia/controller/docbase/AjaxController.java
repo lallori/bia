@@ -42,6 +42,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
+import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Forum;
@@ -189,38 +190,38 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/docbase/FindDocument", method = RequestMethod.GET)
-	public ModelAndView findDocument(	@RequestParam(value="volNum", required=false) Integer volNum, 
-									@RequestParam(value="volLetExt", required=false) String volLetExt,
+	public ModelAndView findDocument(	@RequestParam(value="volume", required=false) String volume, 
+									@RequestParam(value="insertNum", required=false) String insertNum,
+									@RequestParam(value="insertLet", required=false) String insertLet,
 									@RequestParam(value="folioNum", required=false) Integer folioNum,
-									@RequestParam(value="folioMod", required=false) String folioMod) {
+									@RequestParam(value="folioMod", required=false) String folioMod,
+									@RequestParam(value="folioRectoVerso", required=false) String folioRectoVerso) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		try{
-			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
+		try {
+			Integer volNum = VolumeUtils.extractVolNum(volume);
+			String volLetExt = VolumeUtils.extractVolLetExt(volume);
+			Document.RectoVerso folioRV = folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) ? ("R".equals(folioRectoVerso.trim().toUpperCase()) ? Document.RectoVerso.R : Document.RectoVerso.V) : null;
+			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRV);
 			if(documents != null){
 				model.put("entryId", documents.get(0).getEntryId());
 				model.put("countAlreadyEntered", documents.size());
 				model.put("volNum", volNum);
-				if(volLetExt == null || volLetExt.equals("")){
-					model.put("volLetExt", "");
-				}else{
-					model.put("volLetExt", volLetExt);
-				}
+				model.put("volLetExt", volLetExt == null || "".equals(volLetExt.trim()) ? "" : volLetExt);
+				model.put("insertNum", insertNum == null || "".equals(insertNum.trim()) ? "" : insertNum);
+				model.put("insertLet", insertLet == null || "".equals(insertLet.trim()) ? "" : insertLet);
 				model.put("folioNum", folioNum);
-				if(folioMod == null || folioMod.equals("")){
-					model.put("folioMod", folioMod);
-				}else{
-					model.put("folioMod", folioMod);
-				}
-			}else{
+				model.put("folioMod", folioMod == null || "".equals(folioMod.trim()) ? "" : folioMod);
+				model.put("folioRectoVerso", folioRectoVerso == null || "".equals(folioRectoVerso.trim()) ? "" : folioRectoVerso);
+			} else {
 				model.put("entryId", "");
 				model.put("countAlreadyEntered", 0);
 			}			
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable th) {
 			model.put("entryId", "");
 			model.put("countAlreadyEntered", "");
 		}
-		return new ModelAndView("responseOK", model);		
+		return new ModelAndView("responseOK", model);
 	}
 	
 	/**

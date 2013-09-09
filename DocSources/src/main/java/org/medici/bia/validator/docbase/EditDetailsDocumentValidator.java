@@ -168,10 +168,10 @@ public class EditDetailsDocumentValidator implements Validator {
 					folioNum, 
 					folioMod != null ? folioMod.trim() : null, 
 					rectoVerso)) {
-				errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{folioNum + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+				errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
 			}
 		} catch (ApplicationThrowable ath) {
-			errors.rejectValue("insertNum", "error.folio.notfound", new  Object[]{folioNum + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+			errors.rejectValue("insertNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
 		}
 	}
 	
