@@ -49,6 +49,7 @@ import org.medici.bia.common.util.ImageUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.dao.JpaDao;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.springframework.stereotype.Repository;
@@ -168,6 +169,49 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		List<Image> result = query.getResultList();
 		
 		return result;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> findDigitizedDocumentsFromImages(List<Document> documents) {
+		List<String> returnValues = new ArrayList<String>(0);
+		if (documents.size() > 0) {
+			StringBuilder sb = new StringBuilder("FROM Image WHERE ");
+			boolean first = true;
+			for(Document doc : documents) {
+				if (!first) {
+					sb.append(" OR ");
+					first = false;
+				}
+				sb.append("(volNum=").append(doc.getVolume().getVolNum());
+				sb.append(" AND volLetExt").append(!StringUtils.isEmpty(doc.getVolume().getVolLetExt()) ? "='"+doc.getVolume().getVolLetExt()+"'" : " IS NULL");
+				sb.append(" AND insertNum").append(!StringUtils.isEmpty(doc.getInsertNum()) ? "='"+doc.getInsertNum()+"'" : " IS NULL");
+				sb.append(" AND insertLet").append(!StringUtils.isEmpty(doc.getInsertLet()) ? "='"+doc.getInsertLet()+"'" : " IS NULL");
+				sb.append(" AND insertLet").append(!StringUtils.isEmpty(doc.getInsertLet()) ? "='"+doc.getInsertLet()+"'" : " IS NULL");
+				sb.append(" AND imageProgTypeNum=").append(doc.getFolioNum());
+				sb.append(" AND missedNumbering").append(!StringUtils.isEmpty(doc.getFolioMod()) ? "='"+doc.getFolioMod()+"'" : " IS NULL");
+				sb.append(" AND imageRectoVerso").append(doc.getFolioRectoVerso() != null ? "='"+doc.getFolioRectoVerso().toString()+"'" : " IS NULL");
+				sb.append(")");
+			}
+			
+			Query query = getEntityManager().createQuery(sb.toString());
+
+        	List<Image> result = (List<Image>) query.getResultList();
+        	for (int i=0; i<result.size(); i++) {
+        		Image img = result.get(i);
+        		returnValues.add(DocumentUtils.toMDPInsertFolioFormat(
+        				img.getVolNum(), 
+        				img.getVolLetExt(), 
+        				img.getInsertNum(), 
+        				img.getInsertLet(), 
+        				img.getImageProgTypeNum(), 
+        				img.getMissedNumbering(), 
+        				img.getImageRectoVerso().toString()));
+        	}
+		}
+		
+		
+		return returnValues;
 	}
 
 	/**

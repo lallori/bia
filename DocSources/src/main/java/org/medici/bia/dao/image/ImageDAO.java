@@ -36,6 +36,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 
@@ -81,14 +82,25 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 
 	/**
-	 * This method returns a list of all document which are digitized
+	 * This method returns a list of string representation of digitized documents.<br/>
+	 * NOTE: use {@link #findDigitizedDocumentsFromImages(List)} instead.
+	 * 
 	 * @param volNums
 	 * @param volLetExts
 	 * @param folioNums
 	 * @param folioMods
 	 * @return
 	 */
+	@Deprecated
 	List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods);
+	
+	/**
+	 * This method return a list of string representation of digitized documents.
+	 * 
+	 * @param documents list of document provided
+	 * @return list of string representation of digitized documents
+	 */
+	List<String> findDigitizedDocumentsFromImages(List<Document> documents);
 
 	/**
 	 * This method searches an image identified by volume identifiers, number of folio
@@ -149,6 +161,7 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	
 	/**
 	 * This methods returns a list of images linked to a specific insert.
+	 * 
 	 * @param volNum MDP Volume identifier
 	 * @param volLetExt MDP Volume extension
 	 * @param insertNum insert identifier

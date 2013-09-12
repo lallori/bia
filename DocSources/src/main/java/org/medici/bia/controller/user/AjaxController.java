@@ -43,6 +43,7 @@ import org.medici.bia.common.search.SearchFromLast;
 import org.medici.bia.common.search.SearchFromLast.FromLast;
 import org.medici.bia.common.search.SearchFromLast.SearchPerimeter;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Annotation;
@@ -189,7 +190,7 @@ public class AjaxController {
 		   if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
 				singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			    singleRow.add(currentUserHistory.getAction().toString());
-			    singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
+			    singleRow.add(DocumentUtils.toMDPInsertFolioFormat(currentUserHistory.getDocument()));
 			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
@@ -262,7 +263,7 @@ public class AjaxController {
 			singleRow.add(currentUserHistory.getCategory().toString());
 			singleRow.add(currentUserHistory.getAction().toString());
 			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
-				singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
+				singleRow.add(DocumentUtils.toMDPInsertFolioFormat(currentUserHistory.getDocument()));
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add("");
@@ -355,7 +356,7 @@ public class AjaxController {
 			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			singleRow.add(currentUserHistory.getAction().toString());
 			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
-				singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
+				singleRow.add(DocumentUtils.toMDPInsertFolioFormat(currentUserHistory.getDocument()));
 
 				if (currentUserHistory.getDocument().getSenderPeople() != null) {
 					singleRow.add(currentUserHistory.getDocument().getSenderPeople().toString());
@@ -434,7 +435,7 @@ public class AjaxController {
 			singleRow.add(simpleDateFormat.format(currentElement.getDateCreated()));
 			if (currentElement.getDocument() != null) {
 				singleRow.add("Document");
-				singleRow.add(currentElement.getDocument().getMDPAndFolio());
+				singleRow.add(DocumentUtils.toMDPInsertFolioFormat(currentElement.getDocument()));
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add("");

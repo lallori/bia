@@ -83,7 +83,7 @@ public class ShowMyHistoryByCategoryController {
 			outputFields = new ArrayList<String>(6);
 			outputFields.add("Date");
 			outputFields.add("Action");
-			outputFields.add("Volume / Folio");
+			outputFields.add("Volume / Insert / Folio");
 			outputFields.add("Sender");
 			outputFields.add("Recipient");
 		} else if (category.equals(Category.PEOPLE)) {

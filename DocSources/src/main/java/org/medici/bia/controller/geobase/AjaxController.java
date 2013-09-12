@@ -39,6 +39,7 @@ import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.domain.Document;
@@ -632,78 +633,61 @@ public class AjaxController {
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
 		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
-		try{
+		try {
 			page = getGeoBaseService().searchRecipientDocumentsPlace(alias, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
+			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState((List<Document>)page.getList());
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+			if (currentDocument.getSenderPeople() != null) {
+				if (!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPeople() != null){
+			if (currentDocument.getRecipientPeople() != null) {
 				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
+			if (currentDocument.getSenderPlace() != null) {
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPlace() != null){
+			if (currentDocument.getRecipientPlace() != null) {
 				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
-				}else{
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-				}					
+			String documentStringFormat = DocumentUtils.toMDPInsertFolioFormat(currentDocument);
+			if (stateDocumentsDigitized.get(documentStringFormat)) {
+				singleRow.add("<b>"+documentStringFormat+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
+			} else {
+				singleRow.add("<b>"+documentStringFormat+"</b>");
 			}
-			else
-				singleRow.add("");
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
@@ -713,9 +697,6 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 		
-
-		
-
 		return new ModelAndView("responseOK", model);
 	}
 	
@@ -742,88 +723,73 @@ public class AjaxController {
 
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowSenderDocumentsPlacePagination.json", method = RequestMethod.GET)
-	public ModelAndView ShowSenderDocumentsPlace(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowSenderDocumentsPlace(
+			@RequestParam(value="sSearch") String alias,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
 		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
-		try{
+		try {
 			page = getGeoBaseService().searchSenderDocumentsPlace(alias, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
+			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState((List<Document>)page.getList());
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+			if (currentDocument.getSenderPeople() != null) {
+				if (!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+			if (currentDocument.getRecipientPeople() != null) {
+				if (!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
+			if (currentDocument.getSenderPlace() != null) {
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
-				}else{
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-				}			
+			String documentStringFormat = DocumentUtils.toMDPInsertFolioFormat(currentDocument);
+			if (stateDocumentsDigitized.get(documentStringFormat)) {
+				singleRow.add("<b>"+documentStringFormat+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
+			} else {
+				singleRow.add("<b>"+documentStringFormat+"</b>");
 			}
-			else
-				singleRow.add("");
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
@@ -868,31 +834,33 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowTopicsPlacePagination.json", method = RequestMethod.GET)
-	public ModelAndView ShowTopicsPlace(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowTopicsPlace(
+			@RequestParam(value="sSearch") String alias,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		//Page page = null;
 		//PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
 		Map<String, Long> result = new HashMap<String, Long>();
 		
-		try{
+		try {
 			result = getGeoBaseService().searchTopicsPlace(alias);
-		}catch(ApplicationThrowable aex){
-			
+		} catch (ApplicationThrowable aex) {
+
 		}
 		
 		List resultList = new ArrayList();
 		for (Map.Entry<String, Long> currentElement : result.entrySet()) {
 			List singleRow = new ArrayList();
-			if(currentElement.getKey() != null){
+			if (currentElement.getKey() != null) {
 				singleRow.add(currentElement.getKey());
-				if(currentElement.getValue() > 1){
+				if (currentElement.getValue() > 1) {
 					singleRow.add(currentElement.getValue().toString());
-				}else{
+				} else {
 					singleRow.add(currentElement.getValue().toString());
 				}
 			}
@@ -919,20 +887,22 @@ public class AjaxController {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/geobase/ShowVettingHistoryPlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowVettingHistoryPlace(@RequestParam(value="placeAllId") Integer placeAllId,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowVettingHistoryPlace(
+			@RequestParam(value="placeAllId") Integer placeAllId,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		
-		try{
+		try {
 			page = getGeoBaseService().searchVettingHistoryPlace(placeAllId, paginationFilter);
-		}catch(ApplicationThrowable aex){
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
@@ -942,7 +912,6 @@ public class AjaxController {
 			singleRow.add(simpleDateFormat.format(currentVettingHistory.getDateAndTime()));
 			singleRow.add(currentVettingHistory.getDescription());
 			singleRow.add(currentVettingHistory.getUser().getAccount());
-			
 			
 			resultList.add(singleRow);
 		}

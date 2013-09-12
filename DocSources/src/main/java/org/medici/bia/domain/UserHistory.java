@@ -44,6 +44,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.medici.bia.common.search.Search;
+import org.medici.bia.common.util.DocumentUtils;
 
 /**
  * UserHistory entity.
@@ -356,7 +357,7 @@ public class UserHistory implements Serializable {
 		}
 		
 		if (getCategory().equals(Category.DOCUMENT)) {
-			return getDocument().getMDPAndFolio();
+			return DocumentUtils.toMDPInsertFolioFormat(getDocument());
 		} else if (getCategory().equals(Category.PEOPLE)) {
 			return getPerson().getMapNameLf();
 		} else if (getCategory().equals(Category.PLACE)) {

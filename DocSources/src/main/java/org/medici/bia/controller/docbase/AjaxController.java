@@ -40,11 +40,11 @@ import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
@@ -68,20 +68,30 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller("DocBaseAjaxController")
 public class AjaxController {
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	private DocBaseService docBaseService;
+	
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
 
-	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
 	 */
 	@RequestMapping(value = "/src/docbase/CheckDocumentDigitized", method = RequestMethod.GET)
-	public ModelAndView checkDocumentDigitized(	@RequestParam(value="entryId", required=false) Integer entryId,
-												@RequestParam(value="volNum", required=false) Integer volNum, 
-												@RequestParam(value="volLetExt", required=false) String volLetExt,
-												@RequestParam(value="folioNum", required=false) Integer folioNum,
-												@RequestParam(value="folioMod", required=false) String folioMod) {
+	public ModelAndView checkDocumentDigitized(
+			@RequestParam(value="entryId", required=false) Integer entryId,
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		if (entryId != null) {
@@ -168,14 +178,14 @@ public class AjaxController {
 	public ModelAndView checkVolumeFolio(	@RequestParam(value="summaryId", required=false) Integer summaryId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		try{
+		try {
 			Document document = getDocBaseService().checkVolumeFolio(summaryId);
-			if(document != null){
+			if (document != null) {
 				model.put("folioMax", document.getFolioNum());
-			}else{
+			} else {
 				model.put("folioMax", "");
-			}			
-		}catch(ApplicationThrowable applicationThrowable){
+			}
+		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("folioMax", "");
 		}
 		return new ModelAndView("responseOK", model);		
@@ -190,18 +200,20 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/docbase/FindDocument", method = RequestMethod.GET)
-	public ModelAndView findDocument(	@RequestParam(value="volume", required=false) String volume, 
-									@RequestParam(value="insertNum", required=false) String insertNum,
-									@RequestParam(value="insertLet", required=false) String insertLet,
-									@RequestParam(value="folioNum", required=false) Integer folioNum,
-									@RequestParam(value="folioMod", required=false) String folioMod,
-									@RequestParam(value="folioRectoVerso", required=false) String folioRectoVerso) {
+	public ModelAndView findDocument(
+			@RequestParam(value="volume", required=false) String volume,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRectoVerso", required=false) String folioRectoVerso) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
 			Integer volNum = VolumeUtils.extractVolNum(volume);
 			String volLetExt = VolumeUtils.extractVolLetExt(volume);
-			Document.RectoVerso folioRV = folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) ? ("R".equals(folioRectoVerso.trim().toUpperCase()) ? Document.RectoVerso.R : Document.RectoVerso.V) : null;
+			Document.RectoVerso folioRV = Document.RectoVerso.convertFromString(folioRectoVerso);
 			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRV);
 			if(documents != null){
 				model.put("entryId", documents.get(0).getEntryId());
@@ -351,12 +363,15 @@ public class AjaxController {
 	 * @return ModelAndView containing linkable topics.
 	 */
 	@RequestMapping(value = "/de/docbase/SearchPlaceLinkableToTopicDocument", method = RequestMethod.GET)
-	public ModelAndView searchPlaceLinkableToTopicDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
+	public ModelAndView searchPlaceLinkableToTopicDocument(
+			@RequestParam("entryId") Integer entryId,
+			@RequestParam("query") String query) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		try{
+		try {
 			query = new String(query.getBytes(), "UTF-8");
-		} catch(UnsupportedEncodingException unsupportedEncodingException){
+		} catch(UnsupportedEncodingException unsupportedEncodingException) {
 			logger.debug(unsupportedEncodingException);
 		}
 
@@ -385,7 +400,10 @@ public class AjaxController {
 	 * @return ModelAndView containing linkable topics.
 	 */
 	@RequestMapping(value = "/de/docbase/SearchTopicLinkableToDocument", method = RequestMethod.GET)
-	public ModelAndView searchTopicLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
+	public ModelAndView searchTopicLinkableToDocument(
+			@RequestParam("entryId") Integer entryId,
+			@RequestParam("query") String query) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
@@ -403,52 +421,46 @@ public class AjaxController {
 	}
 	
 	/**
-	 * @param docBaseService the docBaseService to set
+	 * @param alias
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/LinkedDocumentsTopic.json", method = RequestMethod.GET)
-	public ModelAndView showLinkedDocumentsTopic(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView showLinkedDocumentsTopic(
+			@RequestParam(value="sSearch") String alias,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
 		
 		String place = null, topic = null;
 		StringTokenizer stringTokenizer = new StringTokenizer(alias, "|");
-		if(stringTokenizer.countTokens() == 2){
+		if (stringTokenizer.countTokens() == 2) {
 			place = stringTokenizer.nextToken();
 			topic = stringTokenizer.nextToken();
 		}
 		
-		try{
+		try {
 			page = getDocBaseService().searchLinkedDocumentsTopic(place, topic, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
+			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState((List<Document>)page.getList());
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList(0);
-			if (currentDocument.getSenderPeople() != null){
+			if (currentDocument.getSenderPeople() != null) {
 				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
@@ -458,7 +470,7 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPeople() != null){
+			if (currentDocument.getRecipientPeople() != null) {
 				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				} else {
@@ -468,13 +480,13 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
+			if (currentDocument.getSenderPlace() != null) {
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				} else {
@@ -485,7 +497,7 @@ public class AjaxController {
 			}
 
 			if (currentDocument.getRecipientPlace() != null) {
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -494,14 +506,11 @@ public class AjaxController {
 				singleRow.add("");
 			} 
 			
-			if (currentDocument.getMDPAndFolio() != null) {
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio()) ){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp" + HtmlUtils.getImageDigitized());
-				} else {
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-				}
+			String documentStringFormat = DocumentUtils.toMDPInsertFolioFormat(currentDocument);
+			if (stateDocumentsDigitized.get(documentStringFormat)) {
+				singleRow.add("<b>"+documentStringFormat+"</b>&nbsp;" + HtmlUtils.getImageDigitized());
 			} else {
-				singleRow.add("");
+				singleRow.add("<b>"+documentStringFormat+"</b>");
 			}
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
@@ -516,26 +525,31 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowSameFolioDocuments.json", method = RequestMethod.GET)
-	public ModelAndView showSameFolioDocuments(@RequestParam(value="volNum", required=false) Integer volNum,
-										 @RequestParam(value="volLetExt", required=false) String volLetExt,
-										 @RequestParam(value="folioNum", required=false) Integer folioNum,
-										 @RequestParam(value="folioMod", required=false) String folioMod,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView showSameFolioDocuments(
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRectoVerso", required=false) String folioRectoVerso,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Document> documents = null;
-		try{
-			documents = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
-		}catch(ApplicationThrowable applicationThrowable){
+		try {
+			documents = getDocBaseService().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, Document.RectoVerso.convertFromString(folioRectoVerso));
+		} catch (ApplicationThrowable applicationThrowable){
 			logger.debug(applicationThrowable);
 		}
 		
 		List resultList = new ArrayList(0);
 		for (Document currentDocument : documents) {
 			List singleRow = new ArrayList(0);
-			if (currentDocument.getSenderPeople() != null){
+			if (currentDocument.getSenderPeople() != null) {
 				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
@@ -545,8 +559,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
+			if (currentDocument.getRecipientPeople() != null) {
+				if (!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				} else {
 					singleRow.add("Person Name Lost");
@@ -562,7 +576,7 @@ public class AjaxController {
 			}
 			
 			if (currentDocument.getSenderPlace() != null) {
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+				if (!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -571,8 +585,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());	
 				} else {
 					singleRow.add("Place Name Lost");
@@ -581,11 +595,7 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getMDPAndFolio() != null){
-				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
-			} else {
-				singleRow.add("");
-			}
+			singleRow.add("<b>"+DocumentUtils.toMDPInsertFolioFormat(currentDocument)+"</b>");				
 
 			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
@@ -600,40 +610,30 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
-	public ModelAndView ShowTopicsRelatedDocument(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="topicId") Integer topicId,
-										 @RequestParam(value="placeAllId") Integer placeAllId,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowTopicsRelatedDocument(
+			@RequestParam(value="sSearch") String alias,
+			@RequestParam(value="topicId") Integer topicId,
+			@RequestParam(value="placeAllId") Integer placeAllId,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
-		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
-		try{
+		try {
 			page = getDocBaseService().searchTopicsRelatedDocument(topicId, placeAllId, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList(0);
-			if (currentDocument.getSenderPeople() != null){
+			if (currentDocument.getSenderPeople() != null) {
 				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
@@ -643,7 +643,7 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPeople() != null){
+			if (currentDocument.getRecipientPeople() != null) {
 				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				} else {
@@ -653,13 +653,13 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
+			if (currentDocument.getSenderPlace() != null) {
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				} else {
@@ -669,8 +669,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -680,49 +680,47 @@ public class AjaxController {
 			}
 			
 			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
-				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-				
+			StringBuilder lastColumn = new StringBuilder();
+			lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+			lastColumn.append("</b><br />");
+			titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+			lastColumn.append("(");
+			if (currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")) {
+				lastColumn.append(currentDocument.getInsertNum() + "/");
+				titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+				if (currentDocument.getInsertLet() != null) {
+					lastColumn.append(currentDocument.getInsertLet());
+					titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+				} else {
+					lastColumn.append("-");
+				}					
 			} else {
-				singleRow.add("");
+				lastColumn.append("-/-");
 			}
-
-			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), currentDocument.getMDPAndFolio(), titleLastColumn.toString()));
+			lastColumn.append(")<br />");
+			lastColumn.append("<b>");
+			if (currentDocument.getFolioNum() != null) {
+				lastColumn.append(currentDocument.getFolioNum());
+				titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+				if (currentDocument.getFolioMod() != null) {
+					lastColumn.append(currentDocument.getFolioMod());
+					titleLastColumn.append(currentDocument.getFolioMod());
+				}
+				if (currentDocument.getFolioRectoVerso() != null) {
+					lastColumn.append(" ").append(currentDocument.getFolioRectoVerso().toString());
+					titleLastColumn.append(" ").append(currentDocument.getFolioRectoVerso().toString());
+				}
+			} else {
+				lastColumn.append("NNF");
+				titleLastColumn.append("Folio NNF");
+			}
+			lastColumn.append("</b>");
+			if (currentDocument.getVolume().getDigitized()) {
+				lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+			}
+			singleRow.add(lastColumn.toString());
+			
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), DocumentUtils.toMDPInsertFolioFormat(currentDocument), titleLastColumn.toString()));
 		}
 		
 		model.put("iEcho", "1");
@@ -735,31 +733,33 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowVettingHistoryDocument.json", method = RequestMethod.GET)
-	public ModelAndView ShowVettingHistoryDocument(@RequestParam(value="entryId") Integer entryId,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowVettingHistoryDocument(
+			@RequestParam(value="entryId") Integer entryId,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		
-		try{
-			page = getDocBaseService().searchVettingHistoryDocument(entryId, paginationFilter);
-		}catch(ApplicationThrowable aex){
+		try {
+			page = getDocBaseService().searchVettingHistoryDocument(entryId,
+					paginationFilter);
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
-		
+
 		List resultList = new ArrayList();
-		for (VettingHistory currentVettingHistory : (List<VettingHistory>)page.getList()) {
+		for (VettingHistory currentVettingHistory : (List<VettingHistory>) page.getList()) {
 			List singleRow = new ArrayList();
 			singleRow.add(simpleDateFormat.format(currentVettingHistory.getDateAndTime()));
 			singleRow.add(currentVettingHistory.getDescription());
 			singleRow.add(currentVettingHistory.getUser().getAccount());
-			
-			
+
 			resultList.add(singleRow);
 		}
 

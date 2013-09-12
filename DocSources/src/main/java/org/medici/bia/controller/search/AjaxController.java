@@ -145,18 +145,9 @@ public class AjaxController {
 		Page page = null;
 		Map<String, SearchFilter> searchFilterMap = (Map<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 
 		try {
 			page = getSearchService().searchAdvancedDocuments(searchFilter.getFilterData(), paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -164,8 +155,8 @@ public class AjaxController {
 		List resultList = new ArrayList(0);
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList(0);
-			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
+			if (currentDocument.getSenderPeople() != null) {
+				if (!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
 					singleRow.add("Person Name Lost");
@@ -174,8 +165,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
+			if (currentDocument.getRecipientPeople() != null) {
+				if (!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				} else {
 					singleRow.add("Person Name Lost");
@@ -184,14 +175,14 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			} else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getSenderPlace() != null) {
+				if (!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -200,8 +191,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -211,47 +202,8 @@ public class AjaxController {
 			}
 
 			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
-				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-				
-			} else {
-				singleRow.add("");
-			}
+			String lastColumn = getLastColumn(currentDocument, titleLastColumn);
+			singleRow.add(lastColumn.toString());
 
 			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastColumn.toString()));
 		}
@@ -272,13 +224,15 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/AdvancedSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView advancedSearchPagination(HttpSession httpSession,
-											@RequestParam(value="searchType") SearchType searchType,
-											@RequestParam(value="searchUUID") String searchUUID,
-								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
-								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView advancedSearchPagination(
+			HttpSession httpSession,
+			@RequestParam(value="searchType") SearchType searchType,
+			@RequestParam(value="searchUUID") String searchUUID,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		
@@ -436,16 +390,16 @@ public class AjaxController {
 		List resultList = new ArrayList(0);
 		for (Volume currentVolume : (List<Volume>)page.getList()) {
 			List singleRow = new ArrayList(0);
-			if(currentVolume.getSerieList() != null){
+			if (currentVolume.getSerieList() != null) {
 				singleRow.add(currentVolume.getSerieList().toString());
-			}else{
+			} else {
 				singleRow.add("");
 			}
 			singleRow.add(currentVolume.getMDP());
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
-			if(stateVolumesDigitized.get(currentVolume.getMDP())) {
+			if (stateVolumesDigitized.get(currentVolume.getMDP())) {
 				singleRow.add("YES");
 			} else {
 				singleRow.add("NO");
@@ -497,8 +451,8 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+			if (currentDocument.getSenderPeople() != null) {
+				if (!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
@@ -506,104 +460,63 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+			if (currentDocument.getRecipientPeople() != null) {
+				if (!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if(currentDocument.getYearModern() != null){
+			if (currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+			if (currentDocument.getSenderPlace() != null) {
+				if (!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				else
 					singleRow.add("Place Name Lost");
-			}
-			else
+			} else
 				singleRow.add("");
 			
-			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
-				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-			}
-			else
-				singleRow.add("");
+			String lastColumn = getLastColumn(currentDocument, new StringBuilder());
+			singleRow.add(lastColumn);
+
 			AdvancedSearchDocument advancedSearchDocument = (AdvancedSearchDocument) searchFilter.getFilterData();
 			StringBuffer yourSearch = new StringBuffer();
-			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
-				if(advancedSearchDocument.getExtract() != null){
-					for(String currentExtract : advancedSearchDocument.getExtract()){
-						if(StringUtils.countMatches(currentExtract, "\"")%2 != 0){
+			if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
+				if (advancedSearchDocument.getExtract() != null) {
+					for (String currentExtract : advancedSearchDocument.getExtract()) {
+						if (StringUtils.countMatches(currentExtract, "\"")%2 != 0) {
 							StringBuffer tempString = new StringBuffer(currentExtract);
 							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
 							currentExtract = tempString.toString();
 						}
 						//This code is for highlight the correct words
-						if(currentExtract.contains("\"")){
+						if (currentExtract.contains("\"")) {
 							StringTokenizer stringTokenizer = new StringTokenizer(currentExtract.replace('"', ' '), " ");
-							while(stringTokenizer.hasMoreTokens()){
+							while (stringTokenizer.hasMoreTokens()) {
 								String currentToken = stringTokenizer.nextToken();
-								if(currentToken.length() > 0 && currentToken != ""){
-									if(yourSearch.toString().length() > 0)
+								if (currentToken.length() > 0 && currentToken != "") {
+									if (yourSearch.toString().length() > 0)
 										yourSearch.append(" " + currentToken);
 									else
 										yourSearch.append(currentToken);					
 								}
 							}
-						}else{
-							if(yourSearch.toString().length() > 0)
+						} else {
+							if (yourSearch.toString().length() > 0)
 								yourSearch.append(" " + currentExtract);
 							else
 								yourSearch.append(currentExtract);
@@ -611,42 +524,42 @@ public class AjaxController {
 						
 					}
 				}
-				if(currentDocument.getSynExtract().getDocExtract() != null){
-					if(yourSearch.length() != 0){
+				if (currentDocument.getSynExtract().getDocExtract() != null) {
+					if (yourSearch.length() != 0) {
 						String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), yourSearch.toString());
 						singleRow.add(HtmlUtils.highlightText(text, yourSearch.toString()));
-					}else{
-						if(currentDocument.getSynExtract().getDocExtract().length() > 200){
+					} else {
+						if (currentDocument.getSynExtract().getDocExtract().length() > 200) {
 							String text = currentDocument.getSynExtract().getDocExtract().substring(0, 197);
 							singleRow.add(text.substring(0, text.lastIndexOf(" ")) + " ...");
-						}else{
+						} else {
 							singleRow.add(currentDocument.getSynExtract().getDocExtract());
 						}
 					}
-				}else
+				} else
 					singleRow.add("");
-			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
-				if(advancedSearchDocument.getSynopsis() != null){
-					for(String currentSynopsis : advancedSearchDocument.getSynopsis()){
-						if(StringUtils.countMatches(currentSynopsis, "\"")%2 != 0){
+			} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+				if (advancedSearchDocument.getSynopsis() != null) {
+					for (String currentSynopsis : advancedSearchDocument.getSynopsis()) {
+						if (StringUtils.countMatches(currentSynopsis, "\"")%2 != 0){ 
 							StringBuffer tempString = new StringBuffer(currentSynopsis);
 							tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
 							currentSynopsis = tempString.toString();
 						}
 						//This code is for highlight the correct words
-						if(currentSynopsis.contains("\"")){
+						if (currentSynopsis.contains("\"")) {
 							StringTokenizer stringTokenizer = new StringTokenizer(currentSynopsis.replace('"', ' '), " ");
-							while(stringTokenizer.hasMoreTokens()){
+							while (stringTokenizer.hasMoreTokens()) {
 								String currentToken = stringTokenizer.nextToken();
-								if(currentToken.length() > 0 && currentToken != ""){
-									if(yourSearch.toString().length() > 0)
+								if (currentToken.length() > 0 && currentToken != "") {
+									if (yourSearch.toString().length() > 0)
 										yourSearch.append(" " + currentToken);
 									else
 										yourSearch.append(currentToken);					
 								}
 							}
-						}else{
-							if(yourSearch.toString().length() > 0)
+						} else {
+							if (yourSearch.toString().length() > 0)
 								yourSearch.append(" " + currentSynopsis);
 							else
 								yourSearch.append(currentSynopsis);
@@ -654,21 +567,21 @@ public class AjaxController {
 						
 					}
 				}
-				if(currentDocument.getSynExtract().getSynopsis() != null){
-					if(yourSearch.length() != 0){
+				if (currentDocument.getSynExtract().getSynopsis() != null) {
+					if (yourSearch.length() != 0) {
 						String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getSynopsis(), yourSearch.toString());
 						singleRow.add(HtmlUtils.highlightText(text, yourSearch.toString()));
-					}else{
-						if(currentDocument.getSynExtract().getSynopsis().length() > 200){
+					} else {
+						if (currentDocument.getSynExtract().getSynopsis().length() > 200) {
 							String text = currentDocument.getSynExtract().getSynopsis().substring(0, 197);
 							singleRow.add(text.substring(0, text.lastIndexOf(" ")) + " ...");
-						}else{
+						} else {
 							singleRow.add(currentDocument.getSynExtract().getSynopsis());
 						}
 					}
-				}else
+				} else
 					singleRow.add("");
-			}else
+			} else
 				singleRow.add("");
 
 			resultList.add(HtmlUtils.showDocumentExpand(singleRow, currentDocument.getEntryId()));
@@ -763,47 +676,9 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
-				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-			}
-			else
-				singleRow.add("");
+			String lastColumn = getLastColumn(currentDocument, new StringBuilder());
+			singleRow.add(lastColumn);
+			
 			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
 				if(currentDocument.getSynExtract().getDocExtract() != null){
 					String text = DocumentUtils.searchTextResultExpand(currentDocument.getSynExtract().getDocExtract(), alias);
@@ -1238,46 +1113,8 @@ public class AjaxController {
 				singleRow.add("");
 			
 			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
-				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-			}
-			else
-				singleRow.add("");
+			String lastColumn = getLastColumn(currentDocument, titleLastColumn);
+			singleRow.add(lastColumn);
 
 			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId(), titleLastColumn.toString()));
 		}
@@ -1563,5 +1400,49 @@ public class AjaxController {
 		}
 
 		return new ModelAndView("responseOK", model);
+	}
+	
+	private String getLastColumn(Document document, StringBuilder titleLastColumn) {
+		StringBuilder lastColumn = new StringBuilder();
+		lastColumn.append("<b>" + document.getVolume().getMDP());
+		lastColumn.append("</b><br />");
+		titleLastColumn.append("Volume " + document.getVolume().getMDP() + ", ");
+		lastColumn.append("(");
+		if (document.getInsertNum() != null && !document.getInsertNum().equals("")) {
+			lastColumn.append(document.getInsertNum() + "/");
+			titleLastColumn.append("Insert " + document.getInsertNum() + ", ");
+			if (document.getInsertLet() != null) {
+				lastColumn.append(document.getInsertLet());
+				titleLastColumn.append("Part " + document.getInsertLet() + ", ");
+			} else {
+				lastColumn.append("-");
+			}					
+		} else {
+			lastColumn.append("-/-");
+		}
+		lastColumn.append(")<br />");
+		lastColumn.append("<b>");
+		if (document.getFolioNum() != null) {
+			lastColumn.append(document.getFolioNum());
+			titleLastColumn.append("Folio " + document.getFolioNum());
+			if (document.getFolioMod() != null) {
+				lastColumn.append(document.getFolioMod());
+				titleLastColumn.append(document.getFolioMod());
+			}
+			if (document.getFolioRectoVerso() != null) {
+				lastColumn.append(" ").append(document.getFolioRectoVerso().toString());
+				titleLastColumn.append(" ").append(document.getFolioRectoVerso().toString());
+			}
+		} else {
+			lastColumn.append("NNF");
+			titleLastColumn.append("Folio NNF");
+		}
+		lastColumn.append("</b>");
+		if (document.getVolume().getDigitized()) {
+			lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+		}
+		
+		return lastColumn.toString();
+		
 	}
 }

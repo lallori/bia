@@ -31,13 +31,17 @@ package org.medici.bia.command.docbase;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class ShowSameFolioDocumentsCommand {
 	private Integer volNum;
 	private String volLetExt;
+	private String insertNum;
+	private String insertLet;
 	private Integer folioNum;
 	private String folioMod;
+	private String folioRectoVerso;
 	
 	/**
 	 * @return the volNum
@@ -64,6 +68,30 @@ public class ShowSameFolioDocumentsCommand {
 		this.volLetExt = volLetExt;
 	}
 	/**
+	 * @return the insertNum
+	 */
+	public String getInsertNum() {
+		return insertNum;
+	}
+	/**
+	 * @param insertNum the insertNum to set
+	 */
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
+	}
+	/**
+	 * @return the insertLet
+	 */
+	public String getInsertLet() {
+		return insertLet;
+	}
+	/**
+	 * @param insertLet the insertLet to set
+	 */
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
+	}
+	/**
 	 * @return the folioNum
 	 */
 	public Integer getFolioNum() {
@@ -86,5 +114,17 @@ public class ShowSameFolioDocumentsCommand {
 	 */
 	public void setFolioMod(String folioMod) {
 		this.folioMod = folioMod;
+	}
+	/**
+	 * @return the folioRectoVerso
+	 */
+	public String getFolioRectoVerso() {
+		return folioRectoVerso;
+	}
+	/**
+	 * @param folioRectoVerso the folioRectoVerso to set
+	 */
+	public void setFolioRectoVerso(String folioRectoVerso) {
+		this.folioRectoVerso = folioRectoVerso;
 	}
 }

@@ -87,7 +87,7 @@ public class LinkedDocumentsTopicDocumentController {
 			outputFields.add("Date");
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
-			outputFields.add("Volume / Folio");
+			outputFields.add("Volume / Insert / Folio");
 				
 			model.put("outputFields", outputFields);
 

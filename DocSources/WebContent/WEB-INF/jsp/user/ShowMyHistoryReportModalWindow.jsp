@@ -51,7 +51,7 @@
                 	<tr>
                     	<th>Date</th>
                     	<th>Action</th>
-                    	<th>Volume/Folio</th>
+                    	<th>Volume/Insert/Folio</th>
                 	</tr>
             	</thead>
             	<tbody>

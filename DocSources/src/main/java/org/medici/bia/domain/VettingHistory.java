@@ -42,6 +42,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.medici.bia.common.util.DocumentUtils;
+
 
 /**
  * VettingHistory entity.
@@ -326,7 +328,7 @@ public class VettingHistory implements Serializable {
 		}
 		
 		if (getCategory().equals(Category.DOCUMENT)) {
-			return getDocument().getMDPAndFolio();
+			return DocumentUtils.toMDPInsertFolioFormat(getDocument());
 		} else if (getCategory().equals(Category.PEOPLE)) {
 			return getPerson().getMapNameLf();
 		} else if (getCategory().equals(Category.PLACE)) {

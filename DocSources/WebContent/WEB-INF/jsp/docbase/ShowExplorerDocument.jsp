@@ -235,9 +235,20 @@
 				delay(function(){
 					$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
 						if(data.imageType == 'C'){
-							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Volume ${documentExplorer.volNum} - Folio ' + data.imageProgTypeNum);
+							var insertTitle = '';
+							if (data.insertNum != null) {
+								insertTitle = ' - <fmt:message key="docbase.showExplorerDocument.insert"/> ' + data.insertNum;
+								if (data.insertExt != null)
+									insertTitle += ' ' + data.insertExt;
+							}
+							var folioTitle = ' - <fmt:message key="docbase.showExplorerDocument.folio"/> ' + data.imageProgTypeNum;
+							if (data.missedNumbering != null)
+								folioTitle += ' ' + data.missedNumbering;
+							if (data.imageRectoVerso != null)
+								folioTitle += ' ' + data.imageRectoVerso;
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('<fmt:message key="docbase.showExplorerDocument.volume"/> ${documentExplorer.volNum}' + insertTitle + folioTitle);
 						}else{
-							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Volume ${documentExplorer.volNum}');
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('<fmt:message key="docbase.showExplorerDocument.volume"/> ${documentExplorer.volNum}');
 						}
 				}});},250);
 				

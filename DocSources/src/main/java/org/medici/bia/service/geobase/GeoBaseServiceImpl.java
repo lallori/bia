@@ -55,6 +55,7 @@ import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Place;
@@ -118,6 +119,212 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private UserMarkedListElementDAO userMarkedListElementDAO;
 	@Autowired
 	private VettingHistoryDAO vettingHistoryDAO;
+	
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+	
+	/**
+	 * @return the eplToLinkDAO
+	 */
+	public EplToLinkDAO getEplToLinkDAO() {
+		return eplToLinkDAO;
+	}
+	
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+	
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+
+	/**
+	 * @return the placeExternalLinksDAO
+	 */
+	public PlaceExternalLinksDAO getPlaceExternalLinksDAO() {
+		return placeExternalLinksDAO;
+	}
+	
+	/**
+	 * @return the placeGeographicCoordinatesDAO
+	 */
+	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
+		return placeGeographicCoordinatesDAO;
+	}
+	
+	/**
+	 * @return the placeTypeDAO
+	 */
+	public PlaceTypeDAO getPlaceTypeDAO() {
+		return placeTypeDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+	
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+	
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
+	
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
+	 * @param eplToLinkDAO the eplToLinkDAO to set
+	 */
+	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
+		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @param placeExternalLinksDAO the placeExternalLinksDAO to set
+	 */
+	public void setPlaceExternalLinksDAO(PlaceExternalLinksDAO placeExternalLinksDAO) {
+		this.placeExternalLinksDAO = placeExternalLinksDAO;
+	}
+
+	/**
+	 * @param placeGeographicCoordinatesDAO the placeGeographicCoordinatesDAO to set
+	 */
+	public void setPlaceGeographicCoordinatesDAO(
+			PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO) {
+		this.placeGeographicCoordinatesDAO = placeGeographicCoordinatesDAO;
+	}
+
+	/**
+	 * @param placeTypeDAO the placeTypeDAO to set
+	 */
+	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
+		this.placeTypeDAO = placeTypeDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -822,50 +1029,25 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @return the documentDAO
+	 * {@inheritDoc}
 	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
 	@Override
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
-		try{
-			for(int i=0; i<volNums.size();i++){
-				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
-			}
+		try {
+			for(Document document : documents)
+				retValue.put(DocumentUtils.toMDPInsertFolioFormat(document), Boolean.FALSE);
 			
-			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			List<String> documentsDigitized = getImageDAO().findDigitizedDocumentsFromImages(documents);
 			
-			for(String MDPFolio : documentsDigitized){
-				retValue.put(MDPFolio, Boolean.TRUE);
-			}
+			for(String documentString : documentsDigitized)
+				retValue.put(documentString, Boolean.TRUE);
+			
 			return retValue;
-		}catch(Throwable th){
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the eplToLinkDAO
-	 */
-	public EplToLinkDAO getEplToLinkDAO() {
-		return eplToLinkDAO;
-	}
-	
-	/**
-	 * @return the forumDAO
-	 */
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	/**
-	 * @return the forumOptionDAO
-	 */
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
+		
 	}
 
 	/**
@@ -917,34 +1099,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @return the imageDAO
-	 */
-	public ImageDAO getImageDAO() {
-		return imageDAO;
-	}
-
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
-
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-
-	/**
-	 * @return the placeExternalLinksDAO
-	 */
-	public PlaceExternalLinksDAO getPlaceExternalLinksDAO() {
-		return placeExternalLinksDAO;
-	}
-
-	/**
 	 * 
 	 */
 	@Override
@@ -954,52 +1108,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the placeGeographicCoordinatesDAO
-	 */
-	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
-		return placeGeographicCoordinatesDAO;
-	}
-	
-	/**
-	 * @return the placeTypeDAO
-	 */
-	public PlaceTypeDAO getPlaceTypeDAO() {
-		return placeTypeDAO;
-	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-	
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-	
-	/**
-	 * @return the userMarkedListDAO
-	 */
-	public UserMarkedListDAO getUserMarkedListDAO() {
-		return userMarkedListDAO;
-	}
-
-	/**
-	 * @return the userMarkedListElementDAO
-	 */
-	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
-		return userMarkedListElementDAO;
-	}
-
-	/**
-	 * @return the vettingHistoryDAO
-	 */
-	public VettingHistoryDAO getVettingHistoryDAO() {
-		return vettingHistoryDAO;
 	}
 
 	/**
@@ -1202,110 +1310,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
-	 * @param eplToLinkDAO the eplToLinkDAO to set
-	 */
-	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
-		this.eplToLinkDAO = eplToLinkDAO;
-	}
-
-	/**
-	 * @param forumDAO the forumDAO to set
-	 */
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
-	 * @param imageDAO the imageDAO to set
-	 */
-	public void setImageDAO(ImageDAO imageDAO) {
-		this.imageDAO = imageDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @param placeExternalLinksDAO the placeExternalLinksDAO to set
-	 */
-	public void setPlaceExternalLinksDAO(PlaceExternalLinksDAO placeExternalLinksDAO) {
-		this.placeExternalLinksDAO = placeExternalLinksDAO;
-	}
-
-	/**
-	 * @param placeGeographicCoordinatesDAO the placeGeographicCoordinatesDAO to set
-	 */
-	public void setPlaceGeographicCoordinatesDAO(
-			PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO) {
-		this.placeGeographicCoordinatesDAO = placeGeographicCoordinatesDAO;
-	}
-
-	/**
-	 * @param placeTypeDAO the placeTypeDAO to set
-	 */
-	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
-		this.placeTypeDAO = placeTypeDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @param userMarkedListDAO the userMarkedListDAO to set
-	 */
-	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
-		this.userMarkedListDAO = userMarkedListDAO;
-	}
-
-	/**
-	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
-	 */
-	public void setUserMarkedListElementDAO(
-			UserMarkedListElementDAO userMarkedListElementDAO) {
-		this.userMarkedListElementDAO = userMarkedListElementDAO;
-	}
-
-	/**
-	 * @param vettingHistoryDAO the vettingHistoryDAO to set
-	 */
-	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
-		this.vettingHistoryDAO = vettingHistoryDAO;
 	}
 
 	/**

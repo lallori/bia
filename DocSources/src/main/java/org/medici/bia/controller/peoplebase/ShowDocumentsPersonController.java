@@ -65,7 +65,6 @@ public class ShowDocumentsPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	
-	
 	/**
 	 * @param peopleBaseService the peopleBaseService to set
 	 */
@@ -73,14 +72,12 @@ public class ShowDocumentsPersonController {
 		this.peopleBaseService = peopleBaseService;
 	}
 
-
 	/**
 	 * @return the peopleBaseService
 	 */
 	public PeopleBaseService getPeopleBaseService() {
 		return peopleBaseService;
 	}
-
 
 	/**
 	 * 
@@ -95,7 +92,7 @@ public class ShowDocumentsPersonController {
 
 		People person = new People();
 		
-		if(command.getPersonId() > 0){
+		if (command.getPersonId() > 0) {
 			try {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
 								
@@ -105,7 +102,7 @@ public class ShowDocumentsPersonController {
 				outputFields.add("Date");
 				outputFields.add("Sender Location");
 				outputFields.add("Recipient Location");
-				outputFields.add("Volume / Folio");
+				outputFields.add("Volume / Insert/ Folio");
 				
 				model.put("outputFields", outputFields);
 

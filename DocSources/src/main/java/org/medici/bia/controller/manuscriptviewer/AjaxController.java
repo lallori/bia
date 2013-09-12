@@ -283,13 +283,7 @@ public class AjaxController {
 			if(documents != null && documents.size() == 1){
 				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
 			} else if(documents != null && documents.size() > 1){
-				Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
-				String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
-				if(folioMod != null) {
-					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, folioMod));
-				} else {
-					model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, folioNum, ""));
-				}
+				model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString()));
 			}
 			model.put("isExtract", (isExtract.equals(Boolean.TRUE)) ? "true" : "false");
 		}catch (ApplicationThrowable applicationThrowable) {
@@ -368,9 +362,7 @@ public class AjaxController {
 				model.put("imageId", documentExplorer.getImage().getImageId());
 				model.put("imageType", documentExplorer.getImage().getImageType());
 				model.put("imageName", documentExplorer.getImage().getImageName());
-				if (documentExplorer.getImage().getMissedNumbering() != null) { 
-					model.put("missedNumbering", documentExplorer.getImage().getMissedNumbering());
-				}
+				model.put("missedNumbering", documentExplorer.getImage().getMissedNumbering() != null ? documentExplorer.getImage().getMissedNumbering() : null);
 				model.put("imageCompleteName", documentExplorer.getImage().toString());
 				model.put("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
 				model.put("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());

@@ -888,17 +888,14 @@ public class HtmlUtils {
 	 * @param titleLastRow
 	 * @return
 	 */
-	public static List<String> showDocumentRelated(List<String> inputList, Integer entryId, String MDPAndFolio, String titleLastRow) {
+	public static List<String> showDocumentRelated(List<String> inputList, Integer entryId, String volumeInsertAndFolio, String titleLastRow) {
 		if (inputList == null)
 			return null;
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		StringBuilder anchorBegin = new StringBuilder("<a title=\"");
-		if(!MDPAndFolio.contains("NNF"))
-			anchorBegin.append(MDPAndFolio);
-		else
-			anchorBegin.append("DocId#" + entryId + " - " + MDPAndFolio);
+		anchorBegin.append("DocId#" + entryId + " - " + volumeInsertAndFolio);
 		anchorBegin.append("\" class=\"showResult tabTitle\" id=\"docId" + entryId + "\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
@@ -1192,23 +1189,35 @@ public class HtmlUtils {
 	}
 
 	/**
+	 * This method returns the url relative to the server call to find documents with the same volume, 
+	 * insert and folio informations.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param folioNum
-	 * @param folioMod
-	 * @return
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param folioRectoVerso the folio recto/verso information
+	 * @return url to the server call
 	 */
-	public static String showSameFolioDocuments(Integer volNum, String volLetExt, Integer folioNum, String folioMod) {
+	public static String showSameFolioDocuments(
+			Integer volNum, 
+			String volLetExt, 
+			String insertNum, 
+			String insertLet, 
+			Integer folioNum, 
+			String folioMod, 
+			String folioRectoVerso) {
+		
 		StringBuilder url = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()); 
-		url.append("/src/docbase/ShowSameFolioDocuments.do?volNum=");
-		url.append(volNum);
-		url.append("&volLetExt=");
-		url.append(volLetExt);
-		url.append("&folioNum=");
-		url.append(folioNum);
-		url.append("&folioMod=");
-		url.append(folioMod);
+		url.append("/src/docbase/ShowSameFolioDocuments.do?volNum=").append(volNum);
+		url.append("&volLetExt=").append(volLetExt != null ? volLetExt.trim() : "");
+		url.append("&insertNum=").append(insertNum != null ? insertNum.trim() : "");
+		url.append("&insertLet=").append(insertLet != null ? insertLet.trim() : "");
+		url.append("&folioNum=").append(folioNum != null ? folioNum : "");
+		url.append("&folioMod=").append(folioMod != null ? folioMod.trim() : "");
+		url.append("&folioRectoVerso=").append(folioRectoVerso != null ? folioRectoVerso.trim() : "");
 
 		return url.toString();
 	}

@@ -31,7 +31,7 @@
 	        <tr>
 	            <th>Date</th>
 	            <th>Type</th>
-	            <th>Volume/Folio</th>
+	            <th>Volume/Insert/Folio</th>
 	            <th>Volume Number</th>
 	            <th>Place Name</th>
 	            <th>Person Name</th>

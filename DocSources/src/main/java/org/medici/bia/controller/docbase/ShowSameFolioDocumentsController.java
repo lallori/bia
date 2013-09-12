@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.docbase.ShowSameFolioDocumentsCommand;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/docbase/ShowSameFolioDocuments")
@@ -79,13 +81,16 @@ public class ShowSameFolioDocumentsController {
 		outputFields.add("Date");
 		outputFields.add("Sender Location");
 		outputFields.add("Recipient Location");
-		outputFields.add("Volume / Folio");
+		outputFields.add("Volume / Insert / Folio");
 			
 		model.put("outputFields", outputFields);
 		model.put("volNum", command.getVolNum());
-		model.put("volLetExt", command.getVolLetExt());
+		model.put("volLetExt", ObjectUtils.toString(command.getVolLetExt()));
+		model.put("insertNum", ObjectUtils.toString(command.getInsertNum()));
+		model.put("insertLet", ObjectUtils.toString(command.getInsertLet()));
 		model.put("folioNum", command.getFolioNum());
-		model.put("folioMod", command.getFolioMod());		
+		model.put("folioMod", ObjectUtils.toString(command.getFolioMod()));		
+		model.put("folioRectoVerso", ObjectUtils.toString(command.getFolioRectoVerso()));		
 
 		return new ModelAndView("docbase/ShowSameFolioDocuments", model);
 	}

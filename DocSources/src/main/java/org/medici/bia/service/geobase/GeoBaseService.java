@@ -34,6 +34,7 @@ import java.util.Map;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.PlaceExternalLinks;
@@ -351,15 +352,13 @@ public interface GeoBaseService {
 	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable;
 	
 	/**
+	 * This method checks if the documents provided are digitized or not
 	 * 
-	 * @param volNums
-	 * @param volLetExts
-	 * @param folioNums
-	 * @param folioMods
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @param documents list of documents
+	 * @return map of digitized and not digitized documents
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable;
 	
 	/**
 	 * 

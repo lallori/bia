@@ -189,8 +189,19 @@
 				$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Volume ${document.volume.volNum}${document.volume.volLetExt} - Folio ${document.folioNum}</span>";
-				
+				var insertTitle = '';
+				if (${document.insertNum != null}) {
+					insertTitle = ' - <fmt:message key="docbase.showSummaryDocument.insert"/> ${document.insertNum}';
+					if (${document.insertLet != null})
+						insertTitle += ' ${document.insertLet}';
+				}
+				var folioTitle = ' - <fmt:message key="docbase.showSummaryDocument.folio"/> ${document.folioNum}';
+				if (${document.folioMod != null})
+					folioTitle += ' ${document.folioMod}';
+				if (${document.folioRectoVerso != null})
+					folioTitle += ' ${document.folioRectoVerso}';
+					
+				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'><fmt:message key='docbase.showSummaryDocument.volume'/> ${document.volume.volNum}${document.volume.volLetExt}" + insertTitle + folioTitle + "</span>";
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
 				var tabExist = false;

@@ -59,6 +59,7 @@ import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.Document.RectoVerso;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Status;
 import org.medici.bia.domain.Forum.SubType;
@@ -371,9 +372,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable {
 		try {
-			Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
-			String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
-			List<Document> documents = getDocumentDAO().findDocumentByFolioStart(volNum, volLetExt, folioNum, folioMod);
+			RectoVerso rectoVerso = RectoVerso.convertFromString(image.getImageRectoVerso().toString());
+			List<Document> documents = getDocumentDAO().findDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), rectoVerso);
 			if (documents != null) {
 				return documents;
 			} else {

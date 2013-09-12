@@ -522,16 +522,13 @@ public interface DocBaseService {
 	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable;
 	
 	/**
-	 * This method searches if the documents are digitized
+	 * This method checks if the documents provided are digitized or not
 	 * 
-	 * @param volNums
-	 * @param volLetExts
-	 * @param folioNums
-	 * @param folioMods
-	 * @return
+	 * @param documents list of documents
+	 * @return map of digitized and not digitized documents
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable;
 	
 	/**
 	 * 

@@ -1433,20 +1433,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods)	throws ApplicationThrowable {
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
-		try{
-			for(int i=0; i<volNums.size();i++){
-				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
-			}
+		try {
+			for(Document document : documents)
+				retValue.put(DocumentUtils.toMDPInsertFolioFormat(document), Boolean.FALSE);
 			
-			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			List<String> documentsDigitized = getImageDAO().findDigitizedDocumentsFromImages(documents);
 			
-			for(String MDPFolio : documentsDigitized){
-				retValue.put(MDPFolio, Boolean.TRUE);
-			}
+			for(String documentString : documentsDigitized)
+				retValue.put(documentString, Boolean.TRUE);
+			
 			return retValue;
-		}catch(Throwable th){
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		

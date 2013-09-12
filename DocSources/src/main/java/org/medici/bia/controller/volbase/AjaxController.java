@@ -37,6 +37,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.DateUtils;
+import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.VolumeUtils;
@@ -68,14 +69,44 @@ public class AjaxController {
 	private UserService userService;
 	@Autowired
 	private VolBaseService volBaseService;
+	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+	
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
 
 	/**
 	 * 
 	 */
 	@RequestMapping(value = "/src/volbase/CheckVolumeDigitized", method = RequestMethod.GET)
-	public ModelAndView checkVolumeDigitized(	@RequestParam(value="summaryId", required=false) Integer summaryId,
-												@RequestParam(value="volNum", required=false) Integer volNum, 
-												@RequestParam(value="volLetExt", required=false) String volLetExt) {
+	public ModelAndView checkVolumeDigitized(	
+			@RequestParam(value="summaryId", required=false) Integer summaryId,
+			@RequestParam(value="volNum", required=false) Integer volNum, 
+			@RequestParam(value="volLetExt", required=false) String volLetExt) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		if (summaryId != null) {
@@ -217,9 +248,11 @@ public class AjaxController {
 	 * @return ModelAndView containing input params and summaryId.
 	 */
 	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
-	public ModelAndView findVolume(	@RequestParam(value="volume", required=false) String volume,
-									@RequestParam(value="volNum", required=false) Integer volNum, 
-									@RequestParam(value="volLetExt", required=false) String volLetExt) {
+	public ModelAndView findVolume(
+			@RequestParam(value="volume", required=false) String volume,
+			@RequestParam(value="volNum", required=false) Integer volNum, 
+			@RequestParam(value="volLetExt", required=false) String volLetExt) {
+		
  		if (volNum != null) {
 			return findVolume(volNum, volLetExt);
 		}
@@ -257,20 +290,6 @@ public class AjaxController {
 	}
 
 	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
-	}
-	
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
-
-	/**
 	 * This method returns a list of seriesList. 
 	 *  
 	 * @param text Text to search in title, subTitle1 and subTitle2
@@ -293,47 +312,23 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * @param volBaseService the volBaseService to set
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
-	}
-
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
-	public ModelAndView showDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView showDocumentsRelatedPerson(
+			@RequestParam(value="sSearch") String alias,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
-		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
-		try{
+		try {
 			page = getVolBaseService().searchDocumentsRelated(alias, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getVolBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 		
@@ -341,7 +336,7 @@ public class AjaxController {
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList(0);
 			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				} else {
 					singleRow.add("Person Name Lost");
@@ -350,7 +345,7 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPeople() != null){
+			if (currentDocument.getRecipientPeople() != null) {
 				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable")) {
 					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				} else {
@@ -360,14 +355,14 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if(currentDocument.getYearModern() != null){
+			if(currentDocument.getYearModern() != null) {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
+			} else {
 				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			}
 			
-			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getSenderPlace() != null) {
+				if (!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -376,8 +371,8 @@ public class AjaxController {
 				singleRow.add("");
 			}
 			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
+			if (currentDocument.getRecipientPlace() != null) {
+				if (!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable")) {
 					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
 				} else {
 					singleRow.add("Place Name Lost");
@@ -387,49 +382,47 @@ public class AjaxController {
 			}
 			
 			StringBuilder titleLastColumn = new StringBuilder();
-			if (currentDocument.getMDPAndFolio() != null){
-				StringBuilder lastColumn = new StringBuilder();
-				lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
-				lastColumn.append("</b><br />");
-				titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
-				lastColumn.append("(");
-				if(currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")){
-					lastColumn.append(currentDocument.getInsertNum() + "/");
-					titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
-					if(currentDocument.getInsertLet() != null){
-						lastColumn.append(currentDocument.getInsertLet());
-						titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
-					}else{
-						lastColumn.append("-");
-					}					
-				}else{
-					lastColumn.append("-/-");
+			StringBuilder lastColumn = new StringBuilder();
+			lastColumn.append("<b>" + currentDocument.getVolume().getMDP());
+			lastColumn.append("</b><br />");
+			titleLastColumn.append("Volume " + currentDocument.getVolume().getMDP() + ", ");
+			lastColumn.append("(");
+			if (currentDocument.getInsertNum() != null && !currentDocument.getInsertNum().equals("")) {
+				lastColumn.append(currentDocument.getInsertNum() + "/");
+				titleLastColumn.append("Insert " + currentDocument.getInsertNum() + ", ");
+				if (currentDocument.getInsertLet() != null) {
+					lastColumn.append(currentDocument.getInsertLet());
+					titleLastColumn.append("Part " + currentDocument.getInsertLet() + ", ");
+				} else {
+					lastColumn.append("-");
 				}
-				lastColumn.append(")<br />");
-				lastColumn.append("<b>");
-				if(currentDocument.getFolioNum() != null){
-					lastColumn.append(currentDocument.getFolioNum());
-					titleLastColumn.append("Folio " + currentDocument.getFolioNum());
-					if(currentDocument.getFolioMod() != null){
-						lastColumn.append(currentDocument.getFolioMod());
-						titleLastColumn.append(currentDocument.getFolioMod());
-					}
-				}
-				else{
-					lastColumn.append("NNF");
-					titleLastColumn.append("Folio NNF");
-				}
-				lastColumn.append("</b>");
-				if(currentDocument.getVolume().getDigitized()){
-					lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
-				}
-				singleRow.add(lastColumn.toString());
-				
 			} else {
-				singleRow.add("");
+				lastColumn.append("-/-");
 			}
+			lastColumn.append(")<br />");
+			lastColumn.append("<b>");
+			if (currentDocument.getFolioNum() != null) {
+				lastColumn.append(currentDocument.getFolioNum());
+				titleLastColumn.append("Folio " + currentDocument.getFolioNum());
+				if (currentDocument.getFolioMod() != null) {
+					lastColumn.append(currentDocument.getFolioMod());
+					titleLastColumn.append(currentDocument.getFolioMod());
+				}
+				if (currentDocument.getFolioRectoVerso() != null) {
+					lastColumn.append(" ").append(currentDocument.getFolioRectoVerso().toString());
+					titleLastColumn.append(" ").append(currentDocument.getFolioRectoVerso().toString());
+				}
+			} else {
+				lastColumn.append("NNF");
+				titleLastColumn.append("Folio NNF");
+			}
+			lastColumn.append("</b>");
+			if (currentDocument.getVolume().getDigitized()) {
+				lastColumn.append("&nbsp;" + HtmlUtils.getImageDigitized());
+			}
+			singleRow.add(lastColumn.toString());
 
-			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), currentDocument.getMDPAndFolio(), titleLastColumn.toString()));
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId(), DocumentUtils.toMDPInsertFolioFormat(currentDocument), titleLastColumn.toString()));
 		}
 
 		model.put("iEcho", "1");
@@ -437,39 +430,38 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 		
-
-		
-
 		return new ModelAndView("responseOK", model);
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/volbase/ShowVettingHistoryVolume.json", method = RequestMethod.GET)
-	public ModelAndView ShowVettingHistoryVolume(@RequestParam(value="summaryId") Integer summaryId,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	public ModelAndView ShowVettingHistoryVolume(
+			@RequestParam(value="summaryId") Integer summaryId,
+			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			@RequestParam(value="iDisplayStart") Integer firstRecord,
+			@RequestParam(value="iDisplayLength") Integer length) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		
-		try{
-			page = getVolBaseService().searchVettingHistoryVolume(summaryId, paginationFilter);
-		}catch(ApplicationThrowable aex){
+		try {
+			page = getVolBaseService().searchVettingHistoryVolume(summaryId,
+					paginationFilter);
+		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
-		
+
 		List resultList = new ArrayList();
-		for (VettingHistory currentVettingHistory : (List<VettingHistory>)page.getList()) {
+		for (VettingHistory currentVettingHistory : (List<VettingHistory>) page.getList()) {
 			List singleRow = new ArrayList();
 			singleRow.add(simpleDateFormat.format(currentVettingHistory.getDateAndTime()));
 			singleRow.add(currentVettingHistory.getDescription());
 			singleRow.add(currentVettingHistory.getUser().getAccount());
-			
-			
+
 			resultList.add(singleRow);
 		}
 

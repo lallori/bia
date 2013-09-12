@@ -71,6 +71,28 @@ public class ShowDocumentController {
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
 	}
+	
+	/**
+	 * 
+	 * @param docBaseService
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
 
 	/**
 	 * 
@@ -116,27 +138,5 @@ public class ShowDocumentController {
 		model.put("historyNavigator", historyNavigator);
 
 		return new ModelAndView("docbase/ShowDocument", model);
-	}
-
-	/**
-	 * 
-	 * @param docBaseService
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
 	}
 }

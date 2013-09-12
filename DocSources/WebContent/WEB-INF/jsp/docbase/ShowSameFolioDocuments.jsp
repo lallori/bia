@@ -7,15 +7,18 @@
 	<c:url var="ShowSameFolioDocumentsURL" value="/src/docbase/ShowSameFolioDocuments.json">
 		<c:param name="volNum" value="${volNum}" />
 		<c:param name="volLetExt" value="${volLetExt}" />
+		<c:param name="insertNum" value="${insertNum}" />
+		<c:param name="insertLet" value="${insertLet}" />
 		<c:param name="folioNum" value="${folioNum}" />
 		<c:param name="folioMod" value="${folioMod}" />
+		<c:param name="folioRectoVerso" value="${folioRectoVerso}" />
 	</c:url>
 	
 	<div class="yourSearchDiv">
 		<p><fmt:message key="docbase.showSameFolioDocument.documentsWithVolumeFolio"/>: <font color="red" style="margin-left:5px">${volNum}${volLetExt} / ${folioNum}${folioMod}</font></p>
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSameFolioDocuments${volNum}${folioNum}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSameFolioDocuments${volNum}${insertNum}${folioNum}">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -31,9 +34,9 @@
 			
 			
 			//dynamic field management
-			$j("#showSameFolioDocuments${volNum}${folioNum} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showSameFolioDocuments${volNum}${insertNum}${folioNum} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showSameFolioDocuments${volNum}${folioNum}').dataTable( {
+			$j('#showSameFolioDocuments${volNum}${insertNum}${folioNum}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,

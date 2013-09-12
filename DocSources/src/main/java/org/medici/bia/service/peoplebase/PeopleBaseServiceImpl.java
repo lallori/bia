@@ -80,6 +80,7 @@ import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.domain.AltName;
 import org.medici.bia.domain.AltName.NameType;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
@@ -176,6 +177,309 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 	@Autowired
 	private VettingHistoryDAO vettingHistoryDAO;
+	
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+	
+	/**
+	 * @return the altNameDAO
+	 */
+	public AltNameDAO getAltNameDAO() {
+		return altNameDAO;
+	}
+	
+	/**
+	 * @return the applicationPropertyDAO
+	 */
+	public ApplicationPropertyDAO getApplicationPropertyDAO() {
+		return applicationPropertyDAO;
+	}
+
+	/**
+	 * @return the biblioTDAO
+	 */
+	public BiblioTDAO getBiblioTDAO() {
+		return biblioTDAO;
+	}
+
+	/**
+	 * @return the bioRefLinkDAO
+	 */
+	public BioRefLinkDAO getBioRefLinkDAO() {
+		return bioRefLinkDAO;
+	}
+	
+	/**
+	 * @return the epLinkDAO
+	 */
+	public EpLinkDAO getEpLinkDAO() {
+		return epLinkDAO;
+	}
+
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+	
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
+	 * @return the marriageDAO
+	 */
+	public MarriageDAO getMarriageDAO() {
+		return marriageDAO;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+	
+	/**
+	 * @return the parentDAO
+	 */
+	public ParentDAO getParentDAO() {
+		return parentDAO;
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+	
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+
+	/**
+	 * @return the poLinkDAO
+	 */
+	public PoLinkDAO getPoLinkDAO() {
+		return poLinkDAO;
+	}
+	
+	/**
+	 * @return the roleCatsDAO
+	 */
+	public RoleCatDAO getRoleCatDAO() {
+		return roleCatDAO;
+	}
+
+	/**
+	 * @return the titleOccsListDAO
+	 */
+	public TitleOccsListDAO getTitleOccsListDAO() {
+		return titleOccsListDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+	
+	/**
+	 * @param altNameDAO the altNameDAO to set
+	 */
+	public void setAltNameDAO(AltNameDAO altNameDAO) {
+		this.altNameDAO = altNameDAO;
+	}
+
+	/**
+	 * @param applicationPropertyDAO the applicationPropertyDAO to set
+	 */
+	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
+		this.applicationPropertyDAO = applicationPropertyDAO;
+	}
+
+	/**
+	 * @param biblioTDAO the biblioTDAO to set
+	 */
+	public void setBiblioTDAO(BiblioTDAO biblioTDAO) {
+		this.biblioTDAO = biblioTDAO;
+	}
+
+	/**
+	 * @param bioRefLinkDAO the bioRefLinkDAO to set
+	 */
+	public void setBioRefLinkDAO(BioRefLinkDAO bioRefLinkDAO) {
+		this.bioRefLinkDAO = bioRefLinkDAO;
+	}
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
+	 * @param epLinkDAO the epLinkDAO to set
+	 */
+	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
+		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	/**
+	 * @param marriageDAO the marriageDAO to set
+	 */
+	public void setMarriageDAO(MarriageDAO marriageDAO) {
+		this.marriageDAO = marriageDAO;
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param parentDAO the parentDAO to set
+	 */
+	public void setParentDAO(ParentDAO parentDAO) {
+		this.parentDAO = parentDAO;
+	}
+
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
+		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @param poLinkDAO the poLinkDAO to set
+	 */
+	public void setPoLinkDAO(PoLinkDAO poLinkDAO) {
+		this.poLinkDAO = poLinkDAO;
+	}
+
+	/**
+	 * @param roleCatDAO the roleCatDAO to set
+	 */
+	public void setRoleCatDAO(RoleCatDAO roleCatDAO) {
+		this.roleCatDAO = roleCatDAO;
+	}
+
+	/**
+	 * @param titleOccsListDAO the titleOccsListDAO to set
+	 */
+	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
+		this.titleOccsListDAO = titleOccsListDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -1668,34 +1972,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @return the altNameDAO
-	 */
-	public AltNameDAO getAltNameDAO() {
-		return altNameDAO;
-	}
-	
-	/**
-	 * @return the applicationPropertyDAO
-	 */
-	public ApplicationPropertyDAO getApplicationPropertyDAO() {
-		return applicationPropertyDAO;
-	}
-
-	/**
-	 * @return the biblioTDAO
-	 */
-	public BiblioTDAO getBiblioTDAO() {
-		return biblioTDAO;
-	}
-
-	/**
-	 * @return the bioRefLinkDAO
-	 */
-	public BioRefLinkDAO getBioRefLinkDAO() {
-		return bioRefLinkDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1721,50 +1997,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 	
 	/**
-	 * @return the documentDAO
+	 * {@inheritDoc}
 	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
 	@Override
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
-		try{
-			for(int i=0; i<volNums.size();i++){
-				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
-			}
+		try {
+			for (Document document : documents)
+				retValue.put(DocumentUtils.toMDPInsertFolioFormat(document), Boolean.FALSE);
 			
-			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			List<String> documentsDigitized = getImageDAO().findDigitizedDocumentsFromImages(documents);
 			
-			for(String MDPFolio : documentsDigitized){
-				retValue.put(MDPFolio, Boolean.TRUE);
-			}
+			for (String documentString : documentsDigitized)
+				retValue.put(documentString, Boolean.TRUE);
+			
 			return retValue;
-		}catch(Throwable th){
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the epLinkDAO
-	 */
-	public EpLinkDAO getEpLinkDAO() {
-		return epLinkDAO;
-	}
-
-	/**
-	 * @return the forumDAO
-	 */
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	/**
-	 * @return the forumOptionDAO
-	 */
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
 	}
 
 	/**
@@ -1816,27 +2066,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @return the imageDAO
-	 */
-	public ImageDAO getImageDAO() {
-		return imageDAO;
-	}
-
-	/**
-	 * @return the marriageDAO
-	 */
-	public MarriageDAO getMarriageDAO() {
-		return marriageDAO;
-	}
-
-	/**
-	 * @return the monthDAO
-	 */
-	public MonthDAO getMonthDAO() {
-		return monthDAO;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1877,20 +2106,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @return the parentDAO
-	 */
-	public ParentDAO getParentDAO() {
-		return parentDAO;
-	}
-
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1900,20 +2115,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-
-	/**
-	 * @return the poLinkDAO
-	 */
-	public PoLinkDAO getPoLinkDAO() {
-		return poLinkDAO;
 	}
 
 	/**
@@ -1958,45 +2159,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 	
-	/**
-	 * @return the roleCatsDAO
-	 */
-	public RoleCatDAO getRoleCatDAO() {
-		return roleCatDAO;
-	}
-
-	/**
-	 * @return the titleOccsListDAO
-	 */
-	public TitleOccsListDAO getTitleOccsListDAO() {
-		return titleOccsListDAO;
-	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
-	 * @return the userMarkedListDAO
-	 */
-	public UserMarkedListDAO getUserMarkedListDAO() {
-		return userMarkedListDAO;
-	}
-
-	/**
-	 * @return the userMarkedListElementDAO
-	 */
-	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
-		return userMarkedListElementDAO;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -2332,165 +2494,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @param altNameDAO the altNameDAO to set
-	 */
-	public void setAltNameDAO(AltNameDAO altNameDAO) {
-		this.altNameDAO = altNameDAO;
-	}
-
-	/**
-	 * @param applicationPropertyDAO the applicationPropertyDAO to set
-	 */
-	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
-		this.applicationPropertyDAO = applicationPropertyDAO;
-	}
-
-	/**
-	 * @param biblioTDAO the biblioTDAO to set
-	 */
-	public void setBiblioTDAO(BiblioTDAO biblioTDAO) {
-		this.biblioTDAO = biblioTDAO;
-	}
-
-	/**
-	 * @param bioRefLinkDAO the bioRefLinkDAO to set
-	 */
-	public void setBioRefLinkDAO(BioRefLinkDAO bioRefLinkDAO) {
-		this.bioRefLinkDAO = bioRefLinkDAO;
-	}
-
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
-	 * @param epLinkDAO the epLinkDAO to set
-	 */
-	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
-		this.epLinkDAO = epLinkDAO;
-	}
-
-	/**
-	 * @param forumDAO the forumDAO to set
-	 */
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
-	 * @param imageDAO the imageDAO to set
-	 */
-	public void setImageDAO(ImageDAO imageDAO) {
-		this.imageDAO = imageDAO;
-	}
-
-	/**
-	 * @param marriageDAO the marriageDAO to set
-	 */
-	public void setMarriageDAO(MarriageDAO marriageDAO) {
-		this.marriageDAO = marriageDAO;
-	}
-
-	/**
-	 * @param monthDAO the monthDAO to set
-	 */
-	public void setMonthDAO(MonthDAO monthDAO) {
-		this.monthDAO = monthDAO;
-	}
-
-	/**
-	 * @param parentDAO the parentDAO to set
-	 */
-	public void setParentDAO(ParentDAO parentDAO) {
-		this.parentDAO = parentDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @param poLinkDAO the poLinkDAO to set
-	 */
-	public void setPoLinkDAO(PoLinkDAO poLinkDAO) {
-		this.poLinkDAO = poLinkDAO;
-	}
-
-	/**
-	 * @param roleCatDAO the roleCatDAO to set
-	 */
-	public void setRoleCatDAO(RoleCatDAO roleCatDAO) {
-		this.roleCatDAO = roleCatDAO;
-	}
-
-	/**
-	 * @param titleOccsListDAO the titleOccsListDAO to set
-	 */
-	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
-		this.titleOccsListDAO = titleOccsListDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @param userMarkedListDAO the userMarkedListDAO to set
-	 */
-	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
-		this.userMarkedListDAO = userMarkedListDAO;
-	}
-
-	/**
-	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
-	 */
-	public void setUserMarkedListElementDAO(
-			UserMarkedListElementDAO userMarkedListElementDAO) {
-		this.userMarkedListElementDAO = userMarkedListElementDAO;
-	}
-
-	/**
-	 * @param vettingHistoryDAO the vettingHistoryDAO to set
-	 */
-	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
-		this.vettingHistoryDAO = vettingHistoryDAO;
-	}
-
-	/**
-	 * @return the vettingHistoryDAO
-	 */
-	public VettingHistoryDAO getVettingHistoryDAO() {
-		return vettingHistoryDAO;
 	}
 
 	/**

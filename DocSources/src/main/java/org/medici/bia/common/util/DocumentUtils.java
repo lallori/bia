@@ -30,7 +30,9 @@ package org.medici.bia.common.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.medici.bia.domain.Document;
 
 /**
  * 
@@ -69,6 +71,67 @@ public class DocumentUtils {
 		}
 		
 		return returnValue;
+	}
+	
+	/**
+	 * This method return a string relative to the document provided with the following style: <br/>
+	 * <code> volNum + volLetExt / insertNum + insertLet / folioNum + folioMod + folioRectoVerso </code>
+	 * 
+	 * @param document the document
+	 * @return formatted string
+	 */
+	public static String toMDPInsertFolioFormat(Document document) {
+		return toMDPInsertFolioFormat(
+				document.getVolume().getVolNum(), 
+				document.getVolume().getVolLetExt(), 
+				document.getInsertNum(), 
+				document.getInsertLet(), 
+				document.getFolioNum(), 
+				document.getFolioMod(), 
+				document.getFolioRectoVerso() != null ? document.getFolioRectoVerso().toString() : null);
+	}
+	
+	/**
+	 * This method return a string relative to the document provided with the following style: <br/>
+	 * <code> volNum + volLetExt / insertNum + insertLet / folioNum + folioMod + folioRectoVerso </code>
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension letter
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param folioRectoVerso the folio recto/verso information
+	 * @return formatted string
+	 */
+	public static String toMDPInsertFolioFormat(
+			Integer volNum, 
+			String volLetExt, 
+			String insertNum, 
+			String insertLet, 
+			Integer folioNum, 
+			String folioMod, 
+			String folioRectoVerso) {
+		
+		StringBuilder s = new StringBuilder();
+		s.append(volNum != null ? volNum : "");
+		s.append(ObjectUtils.toString(volLetExt));
+		if (!"".equals(ObjectUtils.toString(insertNum))) {
+			s.append(" / ").append(insertNum);
+			if (!"".equals(ObjectUtils.toString(insertLet)))
+				s.append(" ").append(insertLet);
+		} else
+			s.append(" / NNF");
+		if (folioNum != null) {
+			s.append(" / ").append(folioNum);
+			if (!"".equals(ObjectUtils.toString(folioMod)))
+				s.append(" ").append(folioMod);
+			if (folioRectoVerso != null)
+				s.append(" ").append(folioRectoVerso);
+		} else
+			s.append(" / NNF");
+		
+		return s.toString();
 	}
 	
 	/**
