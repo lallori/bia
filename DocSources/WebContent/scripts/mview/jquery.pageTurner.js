@@ -341,7 +341,7 @@
 
                 $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
-					
+					alert('QUI');debugger;
 					// RR: Added volume informations and insert informations (if needed)
 					var volExt = data.volLetExt != null ? data.volLetExt : '';
 					var insNum = data.insertNum != null ? data.insertNum : '';
@@ -351,17 +351,17 @@
 						credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
 					
 					if (data.imageType == 'R') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"];
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"] + '</span>';
 					}  else if (data.imageType == 'C') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"];
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"] + '</span>';
 					} else if (data.imageType == 'A') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"];
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"] + '</span>';
 					} else if (data.imageType == 'G') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"];
+						credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"] + '</span>';
 					}else if (data.imageType == 'O') {
 						//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 						if(data.imageName.indexOf("COPERTA") != -1){
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"];
+							credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"] + '</span>';
 						}
 					} else {
                 		credit += ' ';
