@@ -341,7 +341,7 @@
 
                 $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
-					alert('QUI');debugger;
+					
 					// RR: Added volume informations and insert informations (if needed)
 					var volExt = data.volLetExt != null ? data.volLetExt : '';
 					var insNum = data.insertNum != null ? data.insertNum : '';
