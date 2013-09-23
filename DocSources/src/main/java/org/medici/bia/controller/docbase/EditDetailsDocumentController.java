@@ -110,30 +110,19 @@ public class EditDetailsDocumentController {
 			document.setResearcher(command.getResearcher());
 			document.setVolume(new Volume(command.getVolume()));
 			// Insert/Part:
-			if(ObjectUtils.toString(command.getInsertNum()).equals("")){
-				document.setInsertNum(null);
-			}else{
-				document.setInsertNum(command.getInsertNum());
-			}
-			if(ObjectUtils.toString(command.getInsertNum()).equals(null)){
-				document.setInsertLet(null);
-			}else{
-				document.setInsertLet(command.getInsertLet());
-			}
+			boolean insertNumNotEmpty = command.getInsertNum() != null && !"".equals(command.getInsertNum().trim());
+			document.setInsertNum(insertNumNotEmpty ? command.getInsertNum().trim() : null);
+			document.setInsertLet((insertNumNotEmpty && command.getInsertLet() != null && !"".equals(command.getInsertLet().trim())) ? command.getInsertLet().trim() : null);
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
-			document.setFolioMod(command.getFolioMod());
+			document.setFolioMod((command.getFolioMod() != null && !"".equals(command.getFolioMod().trim())) ? command.getFolioMod().trim() : null);
 			document.setFolioRectoVerso(Document.RectoVerso.convertFromString(command.getFolioRectoVerso()));
 			// Transcribe Folio Start:
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
-			document.setTranscribeFolioMod(command.getTranscribeFolioMod());
+			document.setTranscribeFolioMod((command.getTranscribeFolioMod() != null && !"".equals(command.getTranscribeFolioMod().trim())) ? command.getTranscribeFolioMod().trim() : null);
 			document.setTranscribeFolioRectoVerso(Document.RectoVerso.convertFromString(command.getTranscribeFolioRectoVerso()));
 			// Paginated
-			if(command.getUnpaged() == null){
-				document.setUnpaged(Boolean.FALSE);
-			}else{
-				document.setUnpaged(command.getUnpaged());
-			}
+			document.setUnpaged(command.getUnpaged() != null ? command.getUnpaged() : Boolean.FALSE);
 			//Disc. Cont'd
 			document.setContDisc(command.getContDisc());
 			//Document Typology

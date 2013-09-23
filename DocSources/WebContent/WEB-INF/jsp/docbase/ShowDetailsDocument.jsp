@@ -51,7 +51,7 @@
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentStartsAtFolio"/> </div> 
 					<div class="value">${document.folioNum}
-						<c:if test="${document.folioMod != null}">
+						<c:if test="${document.folioMod != null && document.folioMod != ''}">
 							/ ${document.folioMod}
 						</c:if>
 						<c:choose>
@@ -69,7 +69,7 @@
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTranscribeFolio"/> </div> 
 					<div class="value">${document.transcribeFolioNum}
-						<c:if test="${document.transcribeFolioNum != null}">
+						<c:if test="${document.transcribeFolioMod != null && document.transcribeFolioMod != ''}">
 							/ ${document.transcribeFolioMod}
 						</c:if>
 						<c:choose>
