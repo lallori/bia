@@ -60,6 +60,7 @@ public class EditDetailsDocumentCommand {
 	//Transcribe Folio
 	private Integer transcribeFolioNum;
 	private String transcribeFolioMod;
+	private String transcribeFolioRectoVerso;
 	//Unpaginated
 	private Boolean unpaged;
 	//Disc. Cont'd
@@ -188,6 +189,18 @@ public class EditDetailsDocumentCommand {
 	 */
 	public void setTranscribeFolioMod(String transcribeFolioMod) {
 		this.transcribeFolioMod = transcribeFolioMod;
+	}
+	/**
+	 * @return the transcribeFolioRectoVerso
+	 */
+	public String getTranscribeFolioRectoVerso() {
+		return transcribeFolioRectoVerso;
+	}
+	/**
+	 * @param transcribeFolioRectoVerso the transcribeFolioRectoVerso to set
+	 */
+	public void setTranscribeFolioRectoVerso(String transcribeFolioRectoVerso) {
+		this.transcribeFolioRectoVerso = transcribeFolioRectoVerso;
 	}
 	/**
 	 * @return the unpaged

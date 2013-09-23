@@ -225,6 +225,10 @@ public class Document implements Serializable{
 	})
 	private String transcribeFolioMod;
 	
+	@Enumerated(EnumType.STRING)
+	@Column (name="\"TRANSCRIBEFOLIORV\"", length=1, nullable=true)
+	private RectoVerso transcribeFolioRectoVerso;
+	
 	@Column (name="\"CONTDISC\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
@@ -654,6 +658,20 @@ public class Document implements Serializable{
 	 */
 	public String getTranscribeFolioMod() {
 		return transcribeFolioMod;
+	}
+
+	/**
+	 * @return the transcribeFolioRectoVerso
+	 */
+	public RectoVerso getTranscribeFolioRectoVerso() {
+		return transcribeFolioRectoVerso;
+	}
+
+	/**
+	 * @param transcribeFolioRectoVerso the transcribeFolioRectoVerso to set
+	 */
+	public void setTranscribeFolioRectoVerso(RectoVerso transcribeFolioRectoVerso) {
+		this.transcribeFolioRectoVerso = transcribeFolioRectoVerso;
 	}
 
 	/**

@@ -120,6 +120,33 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
+	@RequestMapping(value="/src/docbase/CheckInsert", method = RequestMethod.GET)
+	public ModelAndView checkInsert(
+			@RequestParam(value="volume", required=true) String volume,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		if (volume != null && volume.trim() != "") {
+			try {
+				Integer volNum = VolumeUtils.extractVolNum(volume);
+				String volLetExt = VolumeUtils.extractVolLetExt(volume);
+				if (volNum != null) {
+					Boolean insertOK = getDocBaseService().checkInsert(volNum, volLetExt, insertNum, insertLet);
+					model.put("insertOK", insertOK);
+				} else {
+					model.put("error", "volume incorrect format");
+				}
+			} catch (ApplicationThrowable e) {
+				model.put("error", e.getApplicationError().toString());
+			}
+		} else {
+			model.put("error", "incorrect call");
+		}
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 

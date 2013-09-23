@@ -103,6 +103,8 @@ public class TranscribeAndContextualizeDocumentController {
 				command.setFolioRectoVerso(document.getFolioRectoVerso().toString());
 			command.setTranscribeFolioNum(document.getTranscribeFolioNum());
 			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
+			if (document.getTranscribeFolioRectoVerso() != null)
+				command.setTranscribeFolioRectoVerso(document.getTranscribeFolioRectoVerso().toString());
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
 			command.setDocYear(document.getDocYear());

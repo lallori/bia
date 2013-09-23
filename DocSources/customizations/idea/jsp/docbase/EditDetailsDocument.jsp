@@ -6,9 +6,18 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId"   value="${command.entryId}" />
+			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
+	
+	<c:choose>
+		<c:when test="${fromTranscribe == null || !fromTranscribe}">
+			<c:set var="transcribe" value="false" />
+		</c:when>
+		<c:otherwise>
+			<c:set var="transcribe" value="true" />
+		</c:otherwise>
+	</c:choose>
 	
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
 	<%-- Loading div when saving the form --%>
@@ -32,15 +41,12 @@
 						<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.insert"/></form:label>
 					</div>
 					<div class="col_l">
-						<c:if test="${fromTranscribe == null || !fromTranscribe}">
-							<form:input id="insertNum" path="insertNum" class="input_5c" />
+						<form:input id="insertNum" path="insertNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						<c:if test="${!transcribe}">
 							<select id="insertType" name="insertType" class="selectform_medium2">
 			                    <option value="libro">libro</option>
 			                    <option value="fascicolo">fascicolo</option>
 			                </select>
-						</c:if>
-						<c:if test="${fromTranscribe != null && fromTranscribe}">
-							<form:input id="insertNum" path="insertNum" class="input_4c_disabled" disabled="true" />
 						</c:if>
 					</div>
 					<div class="col_r">
@@ -48,12 +54,7 @@
 						<form:label id="insertLetLabel" for="insertLet" path="insertLet" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.part"/></form:label>
 					</div>
 					<div class="col_r">
-						<c:if test="${fromTranscribe == null || !fromTranscribe}">
-							<form:input id="insertLet" path="insertLet" class="input_5c" />
-						</c:if>
-						<c:if test="${fromTranscribe != null && fromTranscribe}">
-							<form:input id="insertLet" path="insertLet" class="input_4c_disabled" disabled="true" />
-						</c:if>
+						<form:input id="insertLet" path="insertLet" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
 					</div>
 				</div>
 				<div class="row">
@@ -61,12 +62,16 @@
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.documentstartsatfolio"/>'>?</a>
 						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.documentStartsAtFolio"/></form:label>
 					</div>
-					<div class="col_l"><form:input id="folioNum" path="folioNum" class="input_5c" /></div>
+					<div class="col_l">
+						<form:input id="folioNum" path="folioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+					</div>
 					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.iffolioaddenda"/>'>?</a>
 						<form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.ifFolioAddenda"/></form:label>
 					</div>
-					<div class="col_r"><form:input id="folioMod" path="folioMod" class="input_5c" /></div>
+					<div class="col_r">
+						<form:input id="folioMod" path="folioMod" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+					</div>
 				</div>
 				<div class="row">
 					<div class="col_r">
@@ -74,12 +79,32 @@
 						<form:label id="folioRectoVersoLabel" for="folioRectoVerso" path="folioRectoVerso" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.folioRectoVerso"/></form:label>
 					</div>
 					<div class="col_l">
-						<c:if test="${fromTranscribe == null || !fromTranscribe}">
-							<form:input id="folioRectoVerso" path="folioRectoVerso" class="input_2c" maxlength="1" />
-						</c:if>
-						<c:if test="${fromTranscribe != null && fromTranscribe}">
-							<form:input id="folioRectoVerso" path="folioRectoVerso" class="input_4c_disabled" disabled="true" />
-						</c:if>
+						<form:input id="folioRectoVerso" path="folioRectoVerso" maxlength="1" class="${transcribe ? 'input_4c_disabled' : 'input_2c'}" disabled="${transcribe ? 'true' : 'false' }" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefolionum"/>'>?</a>
+						<form:label id="transcribeFolioNumLabel" for="transcribeFolioNum" path="transcribeFolioNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.transcribeFolioNum"/></form:label>
+					</div>
+					<div class="col_l">
+						<form:input id="transcribeFolioNum" path="transcribeFolioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+					</div>
+					<div class="col_r">
+						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefoliomod"/>'>?</a>
+						<form:label id="transcribeFolioModLabel" for="transcribeFolioMod" path="transcribeFolioMod" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.transcribeFolioMod"/></form:label>
+					</div>
+					<div class="col_r">
+						<form:input id="transcribeFolioMod" path="transcribeFolioMod" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefoliorectoverso"/>'>?</a>
+						<form:label id="transcribeFolioRectoVersoLabel" for="transcribeFolioRectoVerso" path="transcribeFolioRectoVerso" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.transcribeFolioRectoVerso"/></form:label>
+					</div>
+					<div class="col_l">
+						<form:input id="transcribeFolioRectoVerso" path="transcribeFolioRectoVerso" maxlength="1" class="${transcribe ? 'input_4c_disabled' : 'input_2c'}" disabled="${transcribe ? 'true' : 'false' }" />
 					</div>
 				</div>
 			</div>
@@ -89,12 +114,7 @@
 					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.unpaginated"/>'>?</a>
 						<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.unpaginated"/></form:label>
-						<c:if test="${fromTranscribe == null || !fromTranscribe}">
-							<form:checkbox id="unpaged" path="unpaged"/>
-						</c:if>
-						<c:if test="${fromTranscribe != null && fromTranscribe}">
-							<form:checkbox id="unpaged" path="unpaged" disabled="true"/>
-						</c:if>
+						<form:checkbox id="unpaged" path="unpaged" disabled="${transcribe ? 'true' : 'false' }" />
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.nonconsecutive"/>'>?</a>
@@ -103,6 +123,11 @@
 					</div>
 				</div>
 			</div>
+			
+			<div id="volumeErrorClient" class="errorClient" display="none" style="color:red;" />
+			<div id="insertErrorClient" class="errorClient" display="none" style="color:red;" />
+			<div id="folioErrorClient" class="errorClient" display="none" style="color:red;" />
+			<div id="transcribeFolioErrorClient" class="errorClient" display="none" style="color:red;" />
 			
 			<hr />
 			
@@ -162,16 +187,19 @@
 				</div>
 			</div>
 			
-			<form:hidden id="transcribeFolioNum" path="transcribeFolioNum" />
-			<form:hidden id="transcribeFolioMod" path="transcribeFolioMod" />
+			<!-- <form:hidden id="transcribeFolioNum" path="transcribeFolioNum" /> -->
+			<!-- <form:hidden id="transcribeFolioMod" path="transcribeFolioMod" /> -->
 			<form:hidden id="dateCreated" path="dateCreated" />
 			<form:hidden id="entryId" path="entryId" />
 			
-			<form:errors path="folioNum" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="entryId" cssClass="inputErrors" htmlEscape="false"/>
 			<form:errors path="docDay" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="yearModern" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="docMonthNum" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="folioNum" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="folioRectoVerso" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="insertNum" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
 
 			<div style="margin-top:5px">
 				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
@@ -253,6 +281,59 @@
     			</c:if>
 			</security:authorize>
 
+			/**
+			 * This function open the tab that shows the volume explorer of the volume indicated as a param 
+			 * of the url (href) or the one that has the id specificated in idTab (if the url does not contain
+			 * the volume reference)
+			 * @param volNum the volume number
+			 * @param volLetExt the volume extension
+			 * @param href the url to call for volume data loading process
+			 */
+			var openTab = function(volNum,volLetExt,href) {
+				var idTab = '' + volNum + volLetExt;
+				var numTab = 0;
+				var tabExist = false;
+				
+				$j("#tabs ul li a").each(function() {
+					
+					if (!tabExist) {
+						if (this.text != "") {
+							numTab++;
+						}
+					}
+					// We read the volNum associated to the current tab from the 'href' attribute of the anchor.
+					// It is expected the 'href' attribute contains this information otherwise we search it
+					// from the 'titleTab' identifier.
+					var currentVolNum = getURLParameter($j(this).attr('href'), "volNum");
+					if (currentVolNum == null && $j(this).find("#titleTab"+idTab).length > 0)
+						tabExist = true;
+					else if (volNum == currentVolNum) {
+						// Check for the volume extension equality
+						var currentVolExt = getURLParameter($j(this).attr('href'), "volLetExt");
+						if (volLetExt == currentVolExt)
+							tabExist = true;
+					}
+				});
+				
+				if (!tabExist) {
+					// open a new tab
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.removeTab"/>';
+					$j("#tabs").tabs("add", href, "<span id=\"titleTab" + idTab + "\">Explore Volume " + idTab + "</span></span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">" + msg + "</span>");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				} else {
+					// open the existent tab
+					$j("#tabs").tabs("select", numTab);
+				}
+			}
+			
+			/**
+			 * This function returns the value of the parameter (identified with 'name') read from the url provided.
+			 * @param url the url to check
+			 * @param name the name of the parameter
+			 */
+			var getURLParameter = function(url, name) {
+			    return (RegExp('[\\?&]' + name + '=([^&#]*)').exec(url)||[,null])[1];
+			}
 			
 			/**
 			 * This function defines the change-handler of the "volume" input.
@@ -262,119 +343,294 @@
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
 					function(data){
 						if (data.summaryId == "") {
-							if ($j("#volNotExist").length == 0) {
-								var msg = '<fmt:message key="docbase.editDetailsDocument.messages.volumeNotExist"/>';
-								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\" style=\"color:red\">" + msg + "<br></span>");
-							}
-							$j("#save").attr("disabled","true");
+							var vol = $j("#volume").val();
+							var msg = '<fmt:message key="docbase.editDetailsDocument.error.volumeNotExist"><fmt:param value="' + vol + '" /></fmt:message>';
+							displayErrorClientMsg("volume",msg);
+							resetErrorClientMsg("folio");
+							resetErrorClientMsg("transcribeFolio");
+							resetErrorClientMsg("insert");
 						} else {
-							if ($j("#volNotExist").length > 0) {
-								$j("#volNotExist").remove();
-								$j("#volume\\.errors").remove();
-							}
-							$j("#save").removeAttr("disabled");
 							
-							if(data.volumeDigitized){
-								var msg = '<fmt:message key="docbase.editDetailsDocument.messages.removeTab"/>';
-								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">" + msg;
-	            				var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-	                    		$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
-	                    		$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-	                    	
-	                    	<%-- $j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
-								function(data){
-									$j("#body_right").html(data);
-									return true;
-								}
-							); --%>
+							// Launch the insert checking process if not empty
+							if ($j("#insertNum").val() && $j("#insertNum").val() != "") {
+								$j("#insertNum").change();
+							} else {
+								// Launch the folio checking process if not empty
+								if ($j("#folioNum").val() && $j("#folioNum").val() != "")
+									checkRectoVersoOnDigitizedFolio("folio");
+								
+								// Launch the transcribe folio checking process if not empty
+								if ($j("#transcribeFolioNum").val() && $j("#transcribeFolioNum").val() != "")
+									checkRectoVersoOnDigitizedFolio("transcribeFolio");
+							}
+							
+							// Open the volume explorer if volume is digitized
+							if (data.volumeDigitized) {
+	            				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+	                    		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
 							}
 						}
 					}
 				);
 	 		}
 			// We attach the change-handler to the "volume" input.
-			$j("#volume").change(showVolumeExplorer);
+			$j("#volume").change(function() {
+				resetErrorClientMsg("volume");
+				$j("#save").attr("disabled","true");
+				if ($j(this).val() != "") {
+					showVolumeExplorer();
+				} else {
+					// We remove all errors from the client
+					resetErrorClientMsg("folio");
+					resetErrorClientMsg("transcribeFolio");
+					resetErrorClientMsg("insert");
+				}
+			});
+			
+			/**
+			 * This function enables the save button if (and only if) all the client-error sections are empty.
+			 */
+			function enableSaveIfNeeded() {
+				var saveDisabled = false;
+				$j("[id$=ErrorClient]").each(function() {
+					if ($j(this).attr("display") == "block")
+						saveDisabled = true;
+				});
+				if (!saveDisabled)
+					$j("#save").removeAttr("disabled");
+			}
+			
+			/**
+			 * This function removes the warning message from the error section and remove the save button inhibition
+			 * (only if all the client error section are empty).
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
+			 */
+			function resetErrorClientMsg(prefix) {
+				if ($j("#" + prefix + "ErrorClient").length > 0) {
+					$j("#" + prefix + "ErrorClient").html("");
+					$j("#" + prefix + "ErrorClient").attr("display","none");
+				}
+				// The save button is enabled if there are no other errors
+				enableSaveIfNeeded();
+			}
+			
+			/**
+			 * This function shows a warning message in the error section.
+			 * NOTE: this function does not inhibit the save button.
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio' and 'transcribeFolio'
+			 * @param msg the message to show
+			 */
+			function displayErrorClientMsg(prefix,msg) {
+				$j("#" + prefix + "ErrorClient").html(msg);
+				$j("#" + prefix + "ErrorClient").attr("display","block");
+			}
 			
 			
 			/**
-			 * This function defines the handler of the value change of the folioRectoVerso input.
+			 * This function checks the correctness of recto/verso information.
 			 * If the informations of volume, insert and folio (number + extension) provided in the 'EditDetailsDocumentForm'
 			 * correspond to a digitized folio this function checks if that folio has a correct recto/verso information.
 			 * NOTE: at least volume and folio number informations must be provided.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
 			 */
-			var checkRectoVersoOnDigitizedFolio = function(){
-				if ($j("#rectoVersoError").length > 0){
-					$j("#rectoVersoError").remove();
-					$j("#rectoVersoError\\.errors").remove();
-				}
+			var checkRectoVersoOnDigitizedFolio = function(prefix) {
+				 resetErrorClientMsg(prefix);
 				
-				if (!$j("#volume").val() || $j("#volume").val() == "" || !$j("#folioNum").val() || $j("#folioNum").val() == "") {
-					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.volumeAndFolioMissing"/>';
-					$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ msg +"<br></span>");
-					$j("#folioRectoVerso").val("");
-					$j("#save").attr("disabled","true");
+				var rectoVersoSelector = $j("#" + prefix + "RectoVerso");
+				var volumeBlank = !$j("#volume").val() || $j("#volume").val() == "";
+				var folioNumBlank = !$j("#" + prefix + "Num").val() || $j("#" + prefix + "Num").val() == "";
+				var folioModBlank = !$j("#" + prefix + "Mod").val() || $j("#" + prefix + "Mod").val() == "";
+				var folioRVBlank = !$j(rectoVersoSelector).val() || $j(rectoVersoSelector).val() == "";
+
+				// The save button is inhibited during the checking process
+				$j("#save").attr("disabled","true");
+				
+				if (volumeBlank) {
+					displayErrorClientMsg("volume",'<fmt:message key="docbase.editDetailsDocument.error.volumeMissing"/>');
 				} else {
-					var rectoVersoInputValue = $j("#folioRectoVerso").val();
+					var rectoVersoInputValue = $j(rectoVersoSelector).val();
 					var rectoVersoValidate = rectoVersoInputValue == '' || rectoVersoInputValue == 'R' || rectoVersoInputValue == 'r' || rectoVersoInputValue == 'V' || rectoVersoInputValue == 'v';
 					
 					if (!rectoVersoValidate) {
-						var msg = '<fmt:message key="docbase.editDetailsDocument.messages.rectoVersoIncorrect"/>';
-						$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ msg +"<br></span>");
-						$j("#save").attr("disabled","true");
+						var rectoVersoString = '' + (folioRVBlank ? 'blank' : $j(rectoVersoSelector).val());
+						var msg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoIncorrect"><fmt:param value="' + rectoVersoString + '" /></fmt:message>';
+						displayErrorClientMsg(prefix,msg);
 					} else {
-						$j("#save").removeAttr("disabled");
 					
 						$j.get('<c:url value="/digitization/CheckDigitization.json" />', 
-							{ volume: $j("#volume").val(), insertNum : $j("#insertNum").val(), insertLet: $j("#insertLet").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val(), folioRectoVerso: $j("#folioRectoVerso").val() },
-								function(data){
-									if (data.volumeDigitized && !data.rectoVersoCheck) {
-										var errorMsg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoNotExist" />';
-										$j("#close").before("<span class=\"inputerrorsRectoVerso\" id=\"rectoVersoError\" style=\"color:red\">"+ errorMsg +"<br /></span>");
-										$j("#save").attr("disabled","true");
-									}
+							{ volume: $j("#volume").val(), 
+							  insertNum : $j("#insertNum").val(), 
+							  insertLet: $j("#insertLet").val(), 
+							  folioNum: $j("#" + prefix + "Num").val(), 
+							  folioMod: $j("#" + prefix + "Mod").val(), 
+							  folioRectoVerso: $j(rectoVersoSelector).val() 
+							},
+							function(data){
+								if (data.volumeDigitized && !data.rectoVersoCheck) {
+									var startOrTranscribe = '' + ((prefix == 'folio') ? '<fmt:message key="docbase.editDetailsDocument.error.start"/>' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe"/>');  
+									var folioString = '' + (folioNumBlank ? 'blank' : $j("#" + prefix + "Num").val());
+									folioString += (folioModBlank ? '' : (' ' + $j("#" + prefix + "Mod").val()));
+									folioString += (folioRVBlank ? '' : (' ' + $j(rectoVersoSelector).val()));
+									var msg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoNotExist"><fmt:param value="' + startOrTranscribe + '" /><fmt:param value="' + folioString + '" /></fmt:message>';
+									displayErrorClientMsg(prefix,msg);
+								} else {
+									// The save button is enabled if there are no other errors
+									enableSaveIfNeeded();
 								}
+							}
 						);
 					}
 				}
 			}
-			// We attach the change-handler to the "folioRectoVerso" input
-			$j("#folioRectoVerso").change(checkRectoVersoOnDigitizedFolio);
 			
-			
-			/** 
-			 * This function handles folio number out of range case.
-			 */
-			var folioNotExistHandler = function(data) {
-				if (data.folioCount != "") {
-					if ($j("#folioNotExist").length == 0) {
-						if (parseInt($j("#folioNum").val(),10) > parseInt(data.folioCount,10)) {
-							$j("#close").before("<span class=\"inputerrorsFolioNotExist\" id=\"folioNotExist\">This folio number is higher than the folio count total of the volume. Save is disabled.<br></span>");
-							$j("#save").attr("disabled","true");
-						}
-					} else {
-						if ($j("#folioNotExist").length > 0 && parseInt(data.folioCount,10) >= parseInt($j("#folioNum").val(),10)) {
-							$j("#folioNotExist").remove();
-						}
-						$j("#save").removeAttr("disabled");
-					
-					} 
-				}
-			}
 			
 			/**
-			 * This function checks if the folio exists or not.
-			 * NOTE: unused because the folio existence is checked during the form validation phase.
+			 * This function defines the "out of range" check for the folio number.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
 			 */
-			var folioNotExist = function () {
-				if ($j("#volume").val() != "") {
-					$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() }, folioNotExistHandler);
-				}
-	 		}
+			var outOfRangeFolioCheck = function(prefix) {
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() }, function(data) {
+					if (data.folioCount != "") {
+						var folioNumber = parseInt($j("#" + prefix + "Num").val(),10);
+						if (folioNumber > parseInt(data.folioCount,10)) {
+							var folioStr = '' + (prefix == 'folio' ? '<fmt:message key="docbase.editDetailsDocument.error.start" />' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe" />')
+							var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioHigher"><fmt:param value="' + folioStr + '" /><fmt:param value="' + folioNumber + '" /></fmt:message>';
+							displayErrorClientMsg(prefix,msg);
+						} else if ($j("#" + prefix + "Num").val() != "") {
+							checkRectoVersoOnDigitizedFolio(prefix);
+						} else {
+							// The save button is enabled if there are no other errors
+							enableSaveIfNeeded();
+						}
+					} else {
+						if ($j("#" + prefix + "Num").val() != "") {
+							checkRectoVersoOnDigitizedFolio(prefix);
+						} else {
+							// The save button is enabled if there are no other errors
+							enableSaveIfNeeded();
+						}
+					}
+				});
+			}
 			
-			/*$j("#folioNum").change(folioNotExist);
-			$j("#folioMod").change(folioNotExist);*/
-
-			if ($j("#transcribeFolioNum").val().length>0) {
+			
+			/**
+			 * This function defines a change handler for the folio number inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioNumChangeHandler = function(prefix) {
+				resetErrorClientMsg(prefix);
+				var folioSelector = $j("#" + prefix + "Num");
+				if ($j(folioSelector).val() && $j(folioSelector).val() != "") {
+					$j("#save").attr("disabled","true");
+					if ($j("#volume").val() && $j("#volume").val() != "") {
+						outOfRangeFolioCheck(prefix);
+					} else {
+						displayErrorClientMsg("volume",'<fmt:message key="docbase.editDetailsDocument.error.volumeMissing"/>');
+					}
+				}
+			}
+			// We attach the change-handler to the "folioNum" input
+			$j("#folioNum").change(function() {
+				folioNumChangeHandler("folio");
+			});
+			// We attach the change-handler to the "transcribeFolioNum" input
+			$j("#transcribeFolioNum").change(function() {
+				folioNumChangeHandler("transcribeFolio");
+			});
+			
+			
+			/**
+			 * This function defines a change handler for the folio extension inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioModChangeHandler = function(prefix) {
+				var folioSelector = $j("#" + prefix + "Num");
+				if ($j(folioSelector).val() && $j(folioSelector).val() != "") {
+					$j(folioSelector).change();
+				}
+			}
+			// We attach the change-handler to the "folioMod" input
+			$j("#folioMod").change(function() {
+				folioModChangeHandler("folio");
+			});
+			// We attach the change-handler to the "transcribeFolioMod" input
+			$j("#transcribeFolioMod").change(function() {
+				folioModChangeHandler("transcribeFolio");
+			});
+			
+			
+			/**
+			 * This function defines a change handler for the folio recto/verso inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioRectoVersoChangeHandler = function(prefix) {
+				resetErrorClientMsg(prefix);
+				var folioSelector = $j("#" + prefix + "Num");
+				if ($j(folioSelector).val() && $j(folioSelector).val() != "") {
+					checkRectoVersoOnDigitizedFolio(prefix);
+				}
+			}
+			// We attach the change-handler to the "folioRectoVerso" input
+			$j("#folioRectoVerso").change(function() {
+				folioRectoVersoChangeHandler("folio");
+			});
+			// We attach the change-handler to the "transcribeFolioRectoVerso" input
+			$j("#transcribeFolioRectoVerso").change(function() {
+				folioRectoVersoChangeHandler("transcribeFolio");
+			});
+			
+			
+			/**
+			 * This function defines a change handler for the insert number input.
+			 */
+			var insertNumChangeHandler = function() {
+				resetErrorClientMsg("insert");
+				if ($j("#volume").val() && $j("#volume").val() != "" && $j(this).val() && $j(this).val() != "") {
+					$j("#save").attr("disabled","true");
+					if ($j("#volumeErrorClient").html() == "") {
+						// Volume exists
+						$j.get('<c:url value="/src/docbase/CheckInsert.json" />', { volume: $j("#volume").val(), insertNum: $j(this).val(), insertLet: $j("#insertLet").val() }, function(data) {
+							if (typeof data.error === "undefined") {
+								if (data.insertOK == false) {
+									var insertNum = $j("#insertNum").val();
+									var msg = '<fmt:message key="docbase.editDetailsDocument.error.insertNotExist"><fmt:param value="' + insertNum + '" /></fmt:message>';
+									displayErrorClientMsg("insert", msg);
+								} else {
+									$j("#folioNum").change();
+									$j("#transcribeFolioNum").change();
+								}
+							} else {
+								displayErrorClientMsg("insert", data.error);
+							}
+						});
+					}
+				}
+			}
+			// We attach the change-handler to the "insertNum" input
+			$j("#insertNum").change(insertNumChangeHandler);
+			
+			
+			/**
+			 * This function defines a change handler for the insert extension input.
+			 */
+			var insertLetChangeHandler = function() {
+				if ($j("#insertNum").val() && $j("#insertNum").val() != "") {
+					$j("#insertNum").change();
+				}
+			}
+			// We attach the change-handler to the "insertLet" input
+			$j("#insertLet").change(insertLetChangeHandler);
+			
+			
+			/*if ($j("#transcribeFolioNum").val().length>0) {
 				$j("#EditDetailsDocument").volumeExplorer( {
 					summaryId				: "${document.volume.summaryId}",
 					transcribeFolioNum		: "${command.transcribeFolioNum}",
@@ -382,17 +638,17 @@
 					showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
 					target 					: $j("#body_right") 
 				});  
-			}
+			}*/
 			
 			
 			/**
 			 * This function defines the operations of the submit process.
 			 */
 			var submitHandler = function () {
-				// Disabled attribute is removed because disabled inputs are submitted with null values.
-				if ($j("#volume").attr("disabled") == 'disabled') {
-					$j("#volume").removeAttr("disabled");
-				}
+				// Disabled attributes are removed because disabled inputs are submitted with null values.
+				$j("#EditDetailsDocumentForm").find("[disabled='disabled']").each(function(index) {
+					$j(this).removeAttr("disabled");
+				});
 				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        	
@@ -412,7 +668,7 @@
 				}});
 				return false;
 			}
-			// We attach the submit-handler to the form (with 'EditDetailsDocumentForm' identifier)
+			// We attach the submit-handler to the form 'EditDetailsDocumentForm'.
 			$j("#EditDetailsDocumentForm").submit(submitHandler);
 			
 			
@@ -498,9 +754,12 @@
 			/**
 			 * This function opens a tab with the informations retrieved from the href param provided.
 			 * If a tab with a specific name already exists this function selects that tab.
+			 *
 			 * @param volume the volume (number + extension)
 			 * @param insert the insert (number + extension)
 			 * @param folio the folio (number + extension + recto/verso)
+			 * @param href the url where to retrieve the informations to show
+			 * @param tableDoc true if only one doc is retrieved
 			 */
 			var showAlreadyEnteredDocumentsTab = function(volume,insert,folio,href,tableDoc) {
 				var tabName = '<fmt:message key="docbase.editDetailsDocument.messages.vol"/>' + volume + 
@@ -531,7 +790,6 @@
 				return false;
 			}
 			
-
 			/**
 			 * This function defines the handler of "Close" button.
 			 */

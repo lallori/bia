@@ -526,7 +526,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setSubVol(documentToCreateImage.getVolLetExt());
 			document.setFolioNum(documentFolioStartImage.getImageProgTypeNum());
 			document.setFolioMod(documentFolioStartImage.getMissedNumbering());
-			document.setFolioRectoVerso(convertFromImageRectoVersoToDocumentRectoVerso(documentFolioStartImage.getImageRectoVerso()));
+			document.setFolioRectoVerso(Document.RectoVerso.convertFromString(documentFolioStartImage.getImageRectoVerso() != null ? documentFolioStartImage.getImageRectoVerso().toString() : null));
 			
 			if (documentToCreateImage != null) {
 				document.setInsertNum(documentToCreateImage.getInsertNum());
@@ -535,21 +535,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			document.setTranscribeFolioNum(documentToCreateImage.getImageProgTypeNum());
 			document.setTranscribeFolioMod(documentToCreateImage.getMissedNumbering());
+			document.setTranscribeFolioRectoVerso(Document.RectoVerso.convertFromString(documentToCreateImage.getImageRectoVerso() != null ? documentToCreateImage.getImageRectoVerso().toString() : null));
 			
 			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-	
-	private Document.RectoVerso convertFromImageRectoVersoToDocumentRectoVerso(ImageRectoVerso imageRectoVerso) {
-		switch (imageRectoVerso) {
-		case R:
-			return Document.RectoVerso.R;
-		case V:
-			return Document.RectoVerso.V;
-		}
-		return null;
 	}
 	
 	/**

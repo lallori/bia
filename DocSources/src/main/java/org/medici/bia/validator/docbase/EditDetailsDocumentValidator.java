@@ -75,12 +75,21 @@ public class EditDetailsDocumentValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
 		validateDocument(editDetailsDocumentCommand.getEntryId(), editDetailsDocumentCommand.getFolioRectoVerso(), errors);
+		// document start folio validation
 		validateVolumeInsertAndFolio(editDetailsDocumentCommand.getVolume(), 
 				editDetailsDocumentCommand.getInsertNum(), 
 				editDetailsDocumentCommand.getInsertLet(), 
 				editDetailsDocumentCommand.getFolioNum(), 
 				editDetailsDocumentCommand.getFolioMod(), 
 				editDetailsDocumentCommand.getFolioRectoVerso(), 
+				errors);
+		// transcription start folio validation
+		validateFolio(editDetailsDocumentCommand.getVolume(),
+				editDetailsDocumentCommand.getInsertNum(),
+				editDetailsDocumentCommand.getInsertLet(),
+				editDetailsDocumentCommand.getTranscribeFolioNum(),
+				editDetailsDocumentCommand.getTranscribeFolioMod(),
+				editDetailsDocumentCommand.getTranscribeFolioRectoVerso(),
 				errors);
 		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
 	}
@@ -160,18 +169,20 @@ public class EditDetailsDocumentValidator implements Validator {
 	}
 	
 	private void validateFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, Errors errors) {
-		try  {
-			if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
-					VolumeUtils.extractVolLetExt(volume), 
-					insertNum.trim(), 
-					insertLet != null ? insertLet.trim() : null, 
-					folioNum, 
-					folioMod != null ? folioMod.trim() : null, 
-					rectoVerso)) {
+		if (!errors.hasErrors()) {
+			try  {
+				if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
+						VolumeUtils.extractVolLetExt(volume), 
+						insertNum.trim(), 
+						insertLet != null ? insertLet.trim() : null, 
+						folioNum, 
+						folioMod != null ? folioMod.trim() : null, 
+						rectoVerso)) {
+					errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+				}
+			} catch (ApplicationThrowable ath) {
 				errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
 			}
-		} catch (ApplicationThrowable ath) {
-			errors.rejectValue("insertNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
 		}
 	}
 	

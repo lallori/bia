@@ -123,14 +123,11 @@ public class EditDetailsDocumentController {
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
 			document.setFolioMod(command.getFolioMod());
-			if (command.getFolioRectoVerso() != null && !"".equals(command.getFolioRectoVerso().trim()))
-				if ("R".equals(command.getFolioRectoVerso().trim().toUpperCase()))
-					document.setFolioRectoVerso(Document.RectoVerso.R);
-				else
-					document.setFolioRectoVerso(Document.RectoVerso.V);
+			document.setFolioRectoVerso(Document.RectoVerso.convertFromString(command.getFolioRectoVerso()));
 			// Transcribe Folio Start:
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
 			document.setTranscribeFolioMod(command.getTranscribeFolioMod());
+			document.setTranscribeFolioRectoVerso(Document.RectoVerso.convertFromString(command.getTranscribeFolioRectoVerso()));
 			// Paginated
 			if(command.getUnpaged() == null){
 				document.setUnpaged(Boolean.FALSE);
@@ -242,6 +239,8 @@ public class EditDetailsDocumentController {
 				command.setFolioRectoVerso(document.getFolioRectoVerso().toString());
 			command.setTranscribeFolioNum(document.getTranscribeFolioNum());
 			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
+			if (document.getTranscribeFolioRectoVerso() != null)
+				command.setTranscribeFolioRectoVerso(document.getTranscribeFolioRectoVerso().toString());
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
 			command.setDocTypology(document.getDocTypology());
@@ -267,7 +266,7 @@ public class EditDetailsDocumentController {
 			command.setContDisc(false);
 			// Date
 			command.setDocYear(null);
-			// Empty month is in last positizion
+			// Empty month is in last position
 			command.setDocMonthNum(null);
 			command.setDocDay(null);
 			//Modern Dating

@@ -67,6 +67,24 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTranscribeFolio"/> </div> 
+					<div class="value">${document.transcribeFolioNum}
+						<c:if test="${document.transcribeFolioNum != null}">
+							/ ${document.transcribeFolioMod}
+						</c:if>
+						<c:choose>
+							<c:when test="${document.transcribeFolioRectoVerso == 'R'}">
+								/ <fmt:message key="docbase.showDetailsDocument.folioRecto"/>
+							</c:when>
+							<c:when test="${document.transcribeFolioRectoVerso == 'V'}">
+								/ <fmt:message key="docbase.showDetailsDocument.folioVerso"/>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.notpaginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
