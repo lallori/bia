@@ -141,7 +141,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage previousPage${volumeExplorer.summaryId}"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -149,7 +149,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage nextPage${volumeExplorer.summaryId}"></a>
 			</c:if>
 			</div>
 		</div>
@@ -164,7 +164,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage previousPage${volumeExplorer.summaryId}"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -172,7 +172,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage nextPage${volumeExplorer.summaryId}"></a>
 			</c:if>
 			</div>
 		</div>
@@ -180,12 +180,17 @@
 	
 		<div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="volbase.showExplorerVolume.help.manuscriptViewer"/>" class="showFullscreenMode button_large"><fmt:message key="volbase.showExplorerVolume.showInFullscreen"/></a>
+				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" 
+				   href="${ShowDocumentInManuscriptViewerURL}" 
+				   title="<fmt:message key='volbase.showExplorerVolume.help.manuscriptViewer'/>" 
+				   class="showFullscreenMode button_large">
+				   	<fmt:message key="volbase.showExplorerVolume.showInFullscreen"/>
+				</a>
 			</security:authorize>
 			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary button_medium" href="#"><fmt:message key="volbase.showExplorerVolume.volumeSummary"/></a>
-			<a class="refreshVolumeExplorer button_small" href="${currentPage}"><fmt:message key="volbase.showExplorerVolume.refresh"/></a>
+			<a class="refreshVolumeExplorer refreshVolumeExplorer${volumeExplorer.summaryId} button_small" href="${currentPage}"><fmt:message key="volbase.showExplorerVolume.refresh"/></a>
 			<c:if test="${volumeExplorer.totalRubricario > 0}">
-				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="<fmt:message key="volbase.showExplorerVolume.help.IndexOfNames"/>" class="transcribe" href="${indexOfNamesURL}" ></a>
+				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames indexNames${volumeExplorer.summaryId}" title="<fmt:message key="volbase.showExplorerVolume.help.IndexOfNames"/>" class="transcribe" href="${indexOfNamesURL}" ></a>
 			</c:if>
 		</div>
 		
@@ -194,7 +199,7 @@
 				<b><fmt:message key="volbase.showExplorerVolume.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 		
-		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
+		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm${volumeExplorer.summaryId}">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
 			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 			<input id="go" class="button_mini" type="submit" value="Go" />
@@ -239,7 +244,7 @@
 						}
 				}});},250);
 
-				$j(".previousPage").click(function(){
+				$j(".previousPage${volumeExplorer.summaryId}").click(function(){
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -249,7 +254,7 @@
 					return false;
 				});
 				
-				$j(".nextPage").click(function(){					
+				$j(".nextPage${volumeExplorer.summaryId}").click(function(){					
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -259,7 +264,7 @@
 					return false;
 				});
 				
-				$j(".refreshVolumeExplorer").click(function(){
+				$j(".refreshVolumeExplorer${volumeExplorer.summaryId}").click(function(){
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -268,7 +273,7 @@
 					return false;
 				});
 
-				$j(".indexNames").click(function (){
+				$j(".indexNames${volumeExplorer.summaryId}").click(function (){
 					//New Script for jQuery 1.9 tabs
 					var href = $j(this).attr("href");
 					var active = $j("#tabs").tabs("option", "active");
@@ -277,7 +282,7 @@
 					return false;
 				});
 		        
-				$j(".editMoveToFolioForm").submit(function (){
+				$j(".editMoveToFolioForm${volumeExplorer.summaryId}").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	//New Script for jQuery 1.9 tabs
 					var active = $j("#tabs").tabs("option", "active");
@@ -305,15 +310,6 @@
 				
 				$j("#volumeSummary${volumeExplorer.summaryId}").click(function(){
 					$dialogVolumeSummary.dialog('open');
-					return false;
-				});
-
-				$j("#indexNames").click(function(){
-					//New Script for jQuery 1.9 tabs
-					var href = $j(this).attr("href");
-					var active = $j("#tabs").tabs("option", "active");
-					$j('#tabs ul li').eq(active).data('loaded', false).find('a').attr('href', href);
-					$j('#tabs').tabs('load', active);
 					return false;
 				});
 

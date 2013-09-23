@@ -12,6 +12,8 @@
 
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
+		<c:param name="volNum"	value="${volume.volNum}" />
+		<c:param name="volLetExt" value="${volume.volLetExt}" />
 		<c:param name="flashVersion" value="false" />
 	</c:url>
 	
