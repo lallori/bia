@@ -57,6 +57,7 @@ import org.medici.bia.exception.ApplicationThrowable;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  * 
  */
 public interface VolBaseService {
@@ -101,6 +102,25 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	
+	/**
+	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
+	 * by its volNum and volLetExt has an insert, identified by its insertNum and insertLet, with a
+	 * folio identified by its folioNum, folioMod and folioRectoVerso. Control is implemented by searching  
+	 * {@link org.medici.bia.domain.Image} entity.
+	 * 
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param insertNum Insert Number
+	 * @param insertLet Insert Extension
+	 * @param folioNum Folio Number
+	 * @param folioMod Folio Extension
+	 * @param folioRectoVerso Folio Recto or Verso
+	 * @return Boolean, true if volume is digitized, otherwise false.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Boolean checkRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso) throws ApplicationThrowable;
 	
 	/**
 	 * This method checks if {@link org.medici.bia.domain.Volume} identified 

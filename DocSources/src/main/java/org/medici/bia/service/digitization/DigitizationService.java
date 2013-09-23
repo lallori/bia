@@ -44,7 +44,6 @@ import org.medici.bia.exception.ApplicationThrowable;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
- * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface DigitizationService {
 
@@ -197,25 +196,4 @@ public interface DigitizationService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
-	 */
-	public Boolean checkVolumeDigitization(Integer volNum, String volLetExt) throws ApplicationThrowable;
-
-	/**
-	 * @param volNum
-	 * @param volLetExt
-	 * @param insertNum
-	 * @param insertLet
-	 * @param folioNum
-	 * @param folioMod
-	 * @param folioRectoVerso
-	 * @return
-	 */
-	public Boolean checkRectoVerso(Integer volNum, String volLetExt,
-			String insertNum, String insertLet, Integer folioNum,
-			String folioMod, String folioRectoVerso) throws ApplicationThrowable;
 }

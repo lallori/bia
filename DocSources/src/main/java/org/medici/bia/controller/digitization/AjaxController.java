@@ -391,33 +391,4 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
-	@RequestMapping(value = "/digitization/CheckDigitization.json", method = RequestMethod.GET)
-	public ModelAndView checkDigitization(@RequestParam(value="volume", required=true) String inputVolume,
-			@RequestParam(value="insertNum", required=false) String insertNum,
-			@RequestParam(value="insertLet", required=false) String insertLet,
-			@RequestParam(value="folioNum", required=true) Integer folioNum,
-			@RequestParam(value="folioMod", required=false) String folioMod,
-			@RequestParam(value="folioRectoVerso", required=true) String folioRectoVerso) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		try {
-			Integer volNum = VolumeUtils.extractVolNum(inputVolume);
-			String volLetExt = VolumeUtils.extractVolLetExt(inputVolume);
-			Boolean volumeDigitized = getDigitizationService().checkVolumeDigitization(volNum, volLetExt);
-			if (volumeDigitized != null) {
-				model.put("volumeDigitized", volumeDigitized);
-				if (volumeDigitized) {
-					Boolean checkRectoVerso = getDigitizationService().checkRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
-					model.put("rectoVersoCheck", checkRectoVerso);
-				}
-			} else
-				model.put("volumeNotExist", Boolean.TRUE);
-			
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-		
-		return new ModelAndView("responseOK", model);
-	}
 }

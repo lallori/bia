@@ -285,6 +285,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return digitized;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso) throws ApplicationThrowable {
+		try{
+			Image image = getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, "R".equals(folioRectoVerso.trim().toUpperCase()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V);
+			return image != null;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

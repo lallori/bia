@@ -454,7 +454,7 @@
 						displayErrorClientMsg(prefix,msg);
 					} else {
 					
-						$j.get('<c:url value="/digitization/CheckDigitization.json" />', 
+						$j.get('<c:url value="/de/volbase/CheckFolio.json" />', 
 							{ volume: $j("#volume").val(), 
 							  insertNum : $j("#insertNum").val(), 
 							  insertLet: $j("#insertLet").val(), 

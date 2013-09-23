@@ -140,6 +140,48 @@ public class AjaxController {
 		
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * This method checks if a folio (identified by volume, insert and folio informations provided)
+	 * is stored in the system or not. If the volume provided does not exist it returns this information.
+	 * 
+	 * @param inputVolume Volume (number and extension letter)
+	 * @param insertNum Insert number
+	 * @param insertLet Insert extension
+	 * @param folioNum Folio number
+	 * @param folioMod Folio extension
+	 * @param folioRectoVerso Folio recto/verso
+	 * @return ModelAndView containing the above informations.
+	 */
+	@RequestMapping(value = "/de/volbase/CheckFolio.json", method = RequestMethod.GET)
+	public ModelAndView checkDigitization(@RequestParam(value="volume", required=true) String inputVolume,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=true) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRectoVerso", required=true) String folioRectoVerso) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			Integer volNum = VolumeUtils.extractVolNum(inputVolume);
+			String volLetExt = VolumeUtils.extractVolLetExt(inputVolume);
+			Volume volume = getVolBaseService().findVolume(volNum, volLetExt);
+			if (volume != null) {
+				model.put("volumeDigitized", volume.getDigitized());
+				if (volume.getDigitized()) {
+					Boolean checkRectoVerso = getVolBaseService().checkRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+					model.put("rectoVersoCheck", checkRectoVerso);
+				}
+			} else
+				model.put("volumeNotExist", Boolean.TRUE);
+			
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+		
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 
