@@ -5,6 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:set var="projectName" value="${fn2:getApplicationProperty('project.name')}"/>
+
 	<a href="javascript:window.print()" class="print" title="Print"></a>
 	
 	<div id="top">
@@ -16,20 +18,55 @@
 
 	<h5 class="first"><fmt:message key="docbase.printDocument.title.documentDetails"/></h5>
 	<table>
-	    <tr> 
-	      <td width="25%"><fmt:message key="docbase.printDocument.volumeNumber"/></td>
-	      <td width="30%" class="value">${document.volume.MDP}</td>
-	      <td width="25%"><fmt:message key="docbase.printDocument.folioNumber"/></td>
-	      <td width="30%" class="value">${document.folioNum} <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if></td>
-
-	    </tr>
-	    <tr>
-	      <td width="25%"><fmt:message key="docbase.printDocument.citationFormat"/></td>
-	      <td width="70%" colspan="3" class="value">${fn2:getApplicationProperty("project.name")}, Doc ID# ${document.entryId} (${fn2:getApplicationProperty("schedone.istituto")}, ${fn2:getApplicationProperty("schedone.fondo")} ${document.volume.MDP} 
-	      <c:if test="${not empty document.folioNum}">, <fmt:message key="docbase.printDocument.folio"/> ${document.folioNum}</c:if>
-	      <c:if test="${empty document.folioNum}">, <fmt:message key="docbase.printDocument.notnumberedfolio"/></c:if>
-	      <c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if>)</td>
-	   	</tr>
+		<tr> 
+			<td width="25%"><fmt:message key="docbase.printDocument.volumeNumber"/></td>
+			<td width="25%" class="value">${document.volume.MDP}</td>
+			<c:choose>
+				<c:when test="${not empty document.insertNum}">
+					<td width="25%"><fmt:message key="docbase.printDocument.insertNumber"/></td>
+					<td width="25%" class="value">${document.insertNum} <c:if test="${not empty document.insertLet}">/ ${document.insertLet}</c:if></td>
+				</c:when>
+				<c:otherwise>
+					<td width="25%"></td>
+					<td width="25%"></td>
+				</c:otherwise>
+			</c:choose>
+		</tr>
+		<tr>
+			<td width="25%"><fmt:message key="docbase.printDocument.folioNumber"/></td>
+			<td width="25%" class="value">${document.folioNum}<c:if test="${not empty document.folioMod}"> / ${document.folioMod}</c:if><c:if test="${not empty document.folioRectoVerso}"> / ${document.folioRectoVerso}</c:if></td>
+			<td width="25%"><fmt:message key="docbase.printDocument.transcribeFolioNumber"/></td>
+			<td width="25%" class="value">${document.transcribeFolioNum}<c:if test="${not empty document.transcribeFolioMod}"> / ${document.transcribeFolioMod}</c:if><c:if test="${not empty document.transcribeFolioRectoVerso}"> / ${document.transcribeFolioRectoVerso}</c:if></td>
+		</tr>
+		<tr>
+			<td width="25%"><fmt:message key="docbase.printDocument.citationFormat"/></td>
+			<td width="75%" colspan="3" class="value">
+				<c:if test="${not empty projectName}">
+					<span>${projectName}, </span>
+				</c:if>
+				<span>Doc ID# ${document.entryId} (${fn2:getApplicationProperty("schedone.istituto")}, ${fn2:getApplicationProperty("schedone.fondo")} ${document.volume.MDP}
+					<c:if test="${not empty document.insertNum}">
+						<span>, <fmt:message key="docbase.printDocument.insert"/> ${document.insertNum}<c:if test="${not empty document.insertLet}"> / ${document.insertLet}</c:if></span>
+					</c:if>
+					<c:choose>
+						<c:when test="${not empty document.folioNum}">
+							<span>, <fmt:message key="docbase.printDocument.folio"/> ${document.folioNum}<c:if test="${not empty document.folioMod}">/ ${document.folioMod}</c:if></span>
+						</c:when>
+						<c:otherwise>
+							<span>, <fmt:message key="docbase.printDocument.notnumberedfolio"/></span>
+						</c:otherwise> 
+					</c:choose>
+					<c:choose>
+						<c:when test="${not empty document.transcribeFolioNum}">
+							<span>, <fmt:message key="docbase.printDocument.transcribefolio"/> ${document.transcribeFolioNum}<c:if test="${not empty document.transcribeFolioMod}">/ ${document.transcribeFolioMod}</c:if>)</span>
+						</c:when>
+						<c:otherwise>
+							<span>, <fmt:message key="docbase.printDocument.notnumberedtranscribefolio"/>)</span>
+						</c:otherwise> 
+					</c:choose>
+				</span>
+			</td>
+		</tr>
 	</table> 
  
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
@@ -55,6 +92,12 @@
 	
 	      <td width="40%" class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</td>
 	    </tr>
+	    <c:if test="${not empty document.yearModern}">
+	    	<tr>
+	    		<td width="15%"><fmt:message key="docbase.printDocument.yearModern" /></td>
+	    		<td width="40%" class="value">${document.yearModern}</td>
+	    	</tr>
+	    </c:if>
 	</table> 
 	
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
