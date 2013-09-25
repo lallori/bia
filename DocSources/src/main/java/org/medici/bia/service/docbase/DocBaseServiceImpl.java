@@ -45,7 +45,7 @@ import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.EpLinkUtils;
 import org.medici.bia.common.util.EplToLinkUtils;
 import org.medici.bia.common.util.HtmlUtils;
-import org.medici.bia.common.util.ImageUtils;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.dao.docreference.DocReferenceDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.eplink.EpLinkDAO;
@@ -73,7 +73,6 @@ import org.medici.bia.domain.FactChecks;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Image;
-import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
@@ -808,30 +807,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to attach the correct volume istance by database extraction.
 			documentToUpdate.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			// Insert/Part: 
-			documentToUpdate.setInsertNum(document.getInsertNum());
-			// We set InsertLet to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getInsertLet()).trim().equals("")){
-				documentToUpdate.setInsertLet(null);
-			} else {
-				documentToUpdate.setInsertLet(document.getInsertLet());
-			}
+			documentToUpdate.setInsertNum(StringUtils.nullTrim(document.getInsertNum()));
+			documentToUpdate.setInsertLet(StringUtils.nullTrim(document.getInsertLet()));
 			// Folio Start:
 			documentToUpdate.setFolioNum(document.getFolioNum());
-			// We set FolioMod to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getFolioMod()).trim().equals("")) {
-				documentToUpdate.setFolioMod(null);
-			} else {
-				documentToUpdate.setFolioMod(document.getFolioMod());
-			}
-			// We set FolioRV to null if it's an empty string.
-			if (ObjectUtils.toString(document.getFolioRectoVerso()).trim().equals("")) {
-				documentToUpdate.setFolioRectoVerso(null);
-			} else {
-				documentToUpdate.setFolioRectoVerso(document.getFolioRectoVerso());
-			}
+			documentToUpdate.setFolioMod(StringUtils.nullTrim(document.getFolioMod()));
+			documentToUpdate.setFolioRectoVerso(document.getFolioRectoVerso());
 			// Transcribe Folio Start:
 			documentToUpdate.setTranscribeFolioNum(document.getTranscribeFolioNum());
-			documentToUpdate.setTranscribeFolioMod(document.getTranscribeFolioMod().toString());
+			documentToUpdate.setTranscribeFolioMod(StringUtils.nullTrim(document.getTranscribeFolioMod()));
 			// Paginated
 			documentToUpdate.setUnpaged(document.getUnpaged());
 			//Disc. Cont'd

@@ -34,9 +34,9 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.docbase.EditDetailsDocumentCommand;
 import org.medici.bia.common.pagination.HistoryNavigator;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Image;
@@ -62,6 +62,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/docbase/EditDetailsDocument")
@@ -110,16 +111,16 @@ public class EditDetailsDocumentController {
 			document.setResearcher(command.getResearcher());
 			document.setVolume(new Volume(command.getVolume()));
 			// Insert/Part:
-			boolean insertNumNotEmpty = command.getInsertNum() != null && !"".equals(command.getInsertNum().trim());
-			document.setInsertNum(insertNumNotEmpty ? command.getInsertNum().trim() : null);
-			document.setInsertLet((insertNumNotEmpty && command.getInsertLet() != null && !"".equals(command.getInsertLet().trim())) ? command.getInsertLet().trim() : null);
+			document.setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
+			// We specify 'insertLet' only if 'insertNum' is also specified
+			document.setInsertLet(StringUtils.isNullableString(command.getInsertNum()) ? null : StringUtils.nullTrim(command.getInsertLet()));
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
-			document.setFolioMod((command.getFolioMod() != null && !"".equals(command.getFolioMod().trim())) ? command.getFolioMod().trim() : null);
+			document.setFolioMod(StringUtils.nullTrim(command.getFolioMod()));
 			document.setFolioRectoVerso(Document.RectoVerso.convertFromString(command.getFolioRectoVerso()));
 			// Transcribe Folio Start:
 			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
-			document.setTranscribeFolioMod((command.getTranscribeFolioMod() != null && !"".equals(command.getTranscribeFolioMod().trim())) ? command.getTranscribeFolioMod().trim() : null);
+			document.setTranscribeFolioMod(StringUtils.nullTrim(command.getTranscribeFolioMod()));
 			document.setTranscribeFolioRectoVerso(Document.RectoVerso.convertFromString(command.getTranscribeFolioRectoVerso()));
 			// Paginated
 			document.setUnpaged(command.getUnpaged() != null ? command.getUnpaged() : Boolean.FALSE);
@@ -137,7 +138,7 @@ public class EditDetailsDocumentController {
 			document.setDateUns(command.getDateUns());
 			// Undated
 			document.setUndated(command.getDateUndated());
-			document.setDateNotes(command.getDateNotes());
+			document.setDateNotes(StringUtils.nullTrim(command.getDateNotes()));
 
 			try {
 				if (command.getEntryId().equals(0)) {
