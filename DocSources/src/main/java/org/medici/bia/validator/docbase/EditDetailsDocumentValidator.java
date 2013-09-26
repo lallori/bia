@@ -43,6 +43,7 @@ import org.springframework.validation.Validator;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  * 
  */
 public class EditDetailsDocumentValidator implements Validator {
@@ -50,178 +51,6 @@ public class EditDetailsDocumentValidator implements Validator {
 	private DocBaseService docBaseService;
 	@Autowired
 	private VolBaseService volBaseService;
-
-	/**
-	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only ModifyDocumentCommand.
-	 * 
-	 * @param givenClass the class to test for support
-	 * @return true if supported; false otherwise
-	 */
-	@SuppressWarnings("rawtypes")
-	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditDetailsDocumentCommand.class);
-	}
-
-	/**
-	 * Validate the supplied target object, which must be of a Class for which
-	 * the supports(Class) method typically has (or would) return true. The
-	 * supplied errors instance can be used to report any resulting validation
-	 * errors.
-	 * 
-	 * @param object the object that is to be validated (can be null)
-	 * @param errors contextual state about the validation process (never null)
-	 */
-	public void validate(Object object, Errors errors) {
-		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
-		validateDocument(editDetailsDocumentCommand.getEntryId(), editDetailsDocumentCommand.getFolioRectoVerso(), errors);
-		// document start folio validation
-		validateVolumeInsertAndFolio(editDetailsDocumentCommand.getVolume(), 
-				editDetailsDocumentCommand.getInsertNum(), 
-				editDetailsDocumentCommand.getInsertLet(), 
-				editDetailsDocumentCommand.getFolioNum(), 
-				editDetailsDocumentCommand.getFolioMod(), 
-				editDetailsDocumentCommand.getFolioRectoVerso(), 
-				errors);
-		// transcription start folio validation
-		validateFolio(editDetailsDocumentCommand.getVolume(),
-				editDetailsDocumentCommand.getInsertNum(),
-				editDetailsDocumentCommand.getInsertLet(),
-				editDetailsDocumentCommand.getTranscribeFolioNum(),
-				editDetailsDocumentCommand.getTranscribeFolioMod(),
-				editDetailsDocumentCommand.getTranscribeFolioRectoVerso(),
-				errors);
-		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
-	}
-
-	/**
-	 * 
-	 * @param entryId
-	 * @param folioRectoVerso
-	 * @param errors
-	 */
-	public void validateDocument(Integer entryId, String folioRectoVerso, Errors errors) {
-		if (!errors.hasErrors()) {
-			// entryId equals zero is 'New Document', it shouldn't be validated  
-			if (entryId > 0) {
-				try {
-					if (getDocBaseService().findDocument(entryId) == null) {
-						errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
-					}
-				} catch (ApplicationThrowable ath) {
-					errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
-				}
-			}
-			// validation of Recto / Verso field
-			if (folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) && !folioRectoVerso.trim().equalsIgnoreCase("R") && !folioRectoVerso.trim().equalsIgnoreCase("V"))
-				errors.rejectValue("folioRectoVerso", "error.document.rectoVersoInvalid");
-		}
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param startYear
-	 * @param startMonthNum
-	 * @param startDay
-	 * @param endYear
-	 * @param endMonthNum
-	 * @param endDay
-	 * @param errors
-	 */
-	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Errors errors) {
-		if (!errors.hasErrors()) {
-			if (startYear != null) {
-				if ((startYear < 1200) || (startYear > 1700)) {
-					errors.rejectValue("docYear", "error.docYear.invalid");
-				}
-			}
-			if (startMonthNum != null) {
-				if ((startMonthNum <1) || (startMonthNum >12)) {
-					errors.rejectValue("docMonthNum", "error.docMonthNum.invalid");
-				}
-			}
-			if (startDay != null) {
-				if ((startDay < 0) || (startDay > 31)) {
-					errors.rejectValue("docDay", "error.docDay.invalid");
-				}
-			}
-		}
-	}
-	
-	private void validateVolumeInsertAndFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, Errors errors) {
-		boolean digitized = true;
-		
-		if (!errors.hasErrors()) {
-			digitized = validateVolume(volume, errors);
-		}
-		
-		if (digitized) {
-			// validation of insert and folio must be done only for digitized volumes
-			if (!errors.hasErrors()) {
-				validateInsert(volume, insertNum, insertLet, errors);
-			}
-			
-			if (!errors.hasErrors()) {
-				validateFolio(volume, insertNum, insertLet, folioNum, folioMod, rectoVerso, errors);
-			}
-		}
-	}
-	
-	private void validateFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, Errors errors) {
-		if (!errors.hasErrors()) {
-			try  {
-				if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
-						VolumeUtils.extractVolLetExt(volume), 
-						insertNum.trim(), 
-						insertLet != null ? insertLet.trim() : null, 
-						folioNum, 
-						folioMod != null ? folioMod.trim() : null, 
-						rectoVerso)) {
-					errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
-				}
-			} catch (ApplicationThrowable ath) {
-				errors.rejectValue("folioNum", "error.folio.notfound", new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
-			}
-		}
-	}
-	
-	private void validateInsert(String volume, String insertNum, String insertLet, Errors errors) {
-		try  {
-			if (insertNum != null && !"".equals(insertNum.trim())) {
-				if (!getDocBaseService().checkInsert(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume), insertNum.trim(), insertLet != null ? insertLet.trim() : null)) {
-					errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
-				}
-			}
-		} catch (ApplicationThrowable ath) {
-			errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
-		}
-	}
-	
-	/**
-	 * This method checks if the volume exists and returns true if it is digitized.
-	 * 
-	 * @param volume volume identifier and extension
-	 * @param errors
-	 * @return true if the volume exists and it is digitized
-	 */
-	private Boolean validateVolume(String volume, Errors errors) {
-		if (StringUtils.isEmpty(volume)) {
-			errors.rejectValue("volume", "error.volume.notfound");
-		} else {
-			try {
-				Volume vol = getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume));
-				if (vol == null) {
-					errors.rejectValue("volume", "error.volume.notfound");
-				} else {
-					return vol.getDigitized();
-				}
-			} catch (ApplicationThrowable ath) {
-				errors.rejectValue("volume", "error.volume.notfound");
-			}
-		}
-		return Boolean.FALSE;
-	}
 	
 	/**
 	 * @return the docBaseService
@@ -250,5 +79,204 @@ public class EditDetailsDocumentValidator implements Validator {
 	 */
 	public VolBaseService getVolBaseService() {
 		return volBaseService;
+	}
+
+	/**
+	 * Indicates whether the given class is supported by this converter. This
+	 * validator supports only ModifyDocumentCommand.
+	 * 
+	 * @param givenClass the class to test for support
+	 * @return true if supported; false otherwise
+	 */
+	@SuppressWarnings("rawtypes")
+	public boolean supports(Class givenClass) {
+		return givenClass.equals(EditDetailsDocumentCommand.class);
+	}
+
+	/**
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
+	 * 
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
+	 */
+	public void validate(Object object, Errors errors) {
+		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
+		validateDocument(editDetailsDocumentCommand.getEntryId(), errors);
+		validateRectoVerso(editDetailsDocumentCommand.getFolioRectoVerso(), false, errors);
+		validateRectoVerso(editDetailsDocumentCommand.getTranscribeFolioRectoVerso(), true, errors);
+		boolean digitized = validateVolume(editDetailsDocumentCommand.getVolume(), errors);
+		if (digitized) {
+			// validation of insert and folio must be done only for digitized volumes
+			validateInsert(editDetailsDocumentCommand.getVolume(), 
+					editDetailsDocumentCommand.getInsertNum(), 
+					editDetailsDocumentCommand.getInsertLet(),
+					errors);
+			// document start folio validation
+			validateFolio(editDetailsDocumentCommand.getVolume(), 
+					editDetailsDocumentCommand.getInsertNum(), 
+					editDetailsDocumentCommand.getInsertLet(), 
+					editDetailsDocumentCommand.getFolioNum(), 
+					editDetailsDocumentCommand.getFolioMod(), 
+					editDetailsDocumentCommand.getFolioRectoVerso(), 
+					false,
+					errors);
+			// transcription start folio validation
+			validateFolio(editDetailsDocumentCommand.getVolume(),
+					editDetailsDocumentCommand.getInsertNum(),
+					editDetailsDocumentCommand.getInsertLet(),
+					editDetailsDocumentCommand.getTranscribeFolioNum(),
+					editDetailsDocumentCommand.getTranscribeFolioMod(),
+					editDetailsDocumentCommand.getTranscribeFolioRectoVerso(),
+					true,
+					errors);
+		}
+		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
+	}
+
+	/**
+	 * This method checks if the document with the indentifier provided is valid.
+	 * 
+	 * @param entryId the document identifier
+	 * @param errors
+	 */
+	private void validateDocument(Integer entryId, Errors errors) {
+		if (!errors.hasErrors()) {
+			// entryId equals zero is 'New Document', it shouldn't be validated  
+			if (entryId > 0) {
+				try {
+					if (getDocBaseService().findDocument(entryId) == null) {
+						errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
+					}
+				} catch (ApplicationThrowable ath) {
+					errors.rejectValue("entryId", "error.document.notfound", new  Object[]{entryId}, null);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * This method checks if the recto/verso information provided is correct.
+	 * 
+	 * @param folioRectoVerso the recto/verso information.
+	 * @param transcribeFolioCheck true if the check is done for the transcribe folio.
+	 * @param errors
+	 */
+	private void validateRectoVerso(String folioRectoVerso, boolean transcribeFolioCheck, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) && !folioRectoVerso.trim().equalsIgnoreCase("R") && !folioRectoVerso.trim().equalsIgnoreCase("V"))
+				errors.rejectValue(transcribeFolioCheck ? "transcribeFolioRectoVerso" : "folioRectoVerso", "error.document.rectoVersoInvalid");
+		}
+	}
+
+	/**
+	 * This method checks if date is correct.
+	 * 
+	 * @param startYear the year (between 1200 and 1700)
+	 * @param startMonthNum the month number (1 to 12)
+	 * @param startDay the day (1 to 31)
+	 * @param errors
+	 */
+	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (startYear != null) {
+				if ((startYear < 1200) || (startYear > 1700)) {
+					errors.rejectValue("docYear", "error.docYear.invalid");
+				}
+			}
+			if (startMonthNum != null) {
+				if ((startMonthNum <1) || (startMonthNum >12)) {
+					errors.rejectValue("docMonthNum", "error.docMonthNum.invalid");
+				}
+			}
+			if (startDay != null) {
+				if ((startDay < 0) || (startDay > 31)) {
+					errors.rejectValue("docDay", "error.docDay.invalid");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * This method checks if the folio (of the insert of a volume) is found in the digitized volumes.
+	 * 
+	 * @param volume the volume (number + extension letter)
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the folio recto/verso information
+	 * @param transcribeFolioCheck true if the above information are for the transcribe folio
+	 * @param errors
+	 */
+	private void validateFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, boolean transcribeFolioCheck, Errors errors) {
+		if (!errors.hasErrors()) {
+			try  {
+				if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
+						VolumeUtils.extractVolLetExt(volume), 
+						insertNum.trim(), 
+						insertLet != null ? insertLet.trim() : null, 
+						folioNum, 
+						folioMod != null ? folioMod.trim() : null, 
+						rectoVerso)) {
+					errors.rejectValue(
+						transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+						transcribeFolioCheck ? "error.transcribefolio.notfound" : "error.folio.notfound",
+						new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+				}
+			} catch (ApplicationThrowable ath) {
+				errors.rejectValue(
+					transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+					transcribeFolioCheck ? "error.transcribefolio.notfound" : "error.folio.notfound",
+					new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+			}
+		}
+	}
+	
+	/**
+	 * This method checks if the insert of a volume is found in the digitized volumes.
+	 * 
+	 * @param volume the volume (number + extension letter)
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param errors
+	 */
+	private void validateInsert(String volume, String insertNum, String insertLet, Errors errors) {
+		try  {
+			if (insertNum != null && !"".equals(insertNum.trim())) {
+				if (!getDocBaseService().checkInsert(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume), insertNum.trim(), insertLet != null ? insertLet.trim() : null)) {
+					errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+				}
+			}
+		} catch (ApplicationThrowable ath) {
+			errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+		}
+	}
+	
+	/**
+	 * This method checks if the volume exists and returns true if it is digitized.
+	 * 
+	 * @param volume the volume (number + extension letter)
+	 * @param errors
+	 * @return true if the volume exists and it is digitized
+	 */
+	private Boolean validateVolume(String volume, Errors errors) {
+		if (StringUtils.isEmpty(volume)) {
+			errors.rejectValue("volume", "error.volume.notfound");
+		} else {
+			try {
+				Volume vol = getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume));
+				if (vol == null) {
+					errors.rejectValue("volume", "error.volume.notfound");
+				} else {
+					return vol.getDigitized();
+				}
+			} catch (ApplicationThrowable ath) {
+				errors.rejectValue("volume", "error.volume.notfound");
+			}
+		}
+		return Boolean.FALSE;
 	}
 }

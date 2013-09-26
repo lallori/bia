@@ -183,7 +183,9 @@
 			<form:errors path="docMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="folioNum" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="transcribeFolioNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="folioRectoVerso" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="transcribeFolioRectoVerso" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="insertNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
 
