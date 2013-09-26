@@ -816,6 +816,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// Transcribe Folio Start:
 			documentToUpdate.setTranscribeFolioNum(document.getTranscribeFolioNum());
 			documentToUpdate.setTranscribeFolioMod(StringUtils.nullTrim(document.getTranscribeFolioMod()));
+			documentToUpdate.setTranscribeFolioRectoVerso(document.getTranscribeFolioRectoVerso());
 			// Paginated
 			documentToUpdate.setUnpaged(document.getUnpaged());
 			//Disc. Cont'd
