@@ -672,7 +672,7 @@
 						boxShadow: '1px 1px 10px #666',
 						'-webkit-box-shadow': '1px 1px 10px #666'
 						} ,
-						overlayCSS: { backgroundColor: '#999' }	
+					overlayCSS: { backgroundColor: '#999' }	
 				};
 			
 			
@@ -692,7 +692,7 @@
 						return false;
 					});
 					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
-					return;
+					return false;
 				} else if (data.countAlreadyEntered > 1) {
 					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.moreDocsExist"/>';
 					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
@@ -705,7 +705,7 @@
 						return false;
 					});
 					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
-					return;
+					return false;
 				}
 				$j("#EditDetailsDocumentForm").submit();
 			}
