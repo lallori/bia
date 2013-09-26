@@ -147,51 +147,107 @@
 		</div>
 		<div class="listDetails">
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.docId"/></div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.docId"/></div>
+				<div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.volume"/></div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.volume"/></div>
+				<div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.insertPart"/></div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.insertPart"/></div>
+				<div class="value">
+					<c:if test="${not empty document.insertNum}">
+						${document.insertNum}
+						<c:if test="${not empty document.insertLet}">
+							/ ${document.insertLet}
+						</c:if>
+					</c:if>
+				</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.documentStartsAtFolio"/></div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentStartsAtFolio"/></div>
+				<div class="value">
+					${document.folioNum}
+					<c:if test="${not empty document.folioMod}">
+						/ ${document.folioMod}
+					</c:if>
+					<c:choose>
+						<c:when test="${document.folioRectoVerso == 'R'}">
+							/ <fmt:message key="docbase.compareDocument.folioRecto"/>
+						</c:when>
+						<c:when test="${document.folioRectoVerso == 'V'}">
+							/ <fmt:message key="docbase.compareDocument.folioVerso"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</div> 
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.paginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentTranscribeFolio"/></div>
+				<div class="value">
+					${document.transcribeFolioNum}
+					<c:if test="${not empty document.transcribeFolioMod}">
+						/ ${document.transcribeFolioMod}
+					</c:if>
+					<c:choose>
+						<c:when test="${document.transcribeFolioRectoVerso == 'R'}">
+							/ <fmt:message key="docbase.compareDocument.folioRecto"/>
+						</c:when>
+						<c:when test="${document.transcribeFolioRectoVerso == 'V'}">
+							/ <fmt:message key="docbase.compareDocument.folioVerso"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</div> 
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.nonconsecutive"/></div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.notpaginated"/></div>
+				<div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.documentTypology"/></div> <div class="value">${document.docTypology}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.nonconsecutive"/></div>
+				<div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.modernDate"/></div> <div class="valueHilight">${document.yearModern}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.documentTypology"/></div>
+				<div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.recorderYear"/></div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.modernDate"/></div>
+				<div class="valueHilight">${document.yearModern}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.dateUncertain"/></div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.recorderYear"/></div>
+				<div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 			</div>
 			<div class="row">
-				<div class="item60"><fmt:message key="docbase.compareDocument.undated"/></div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.dateUncertain"/></div>
+				<div class="value">${document.dateUns ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Istituto di Conservazione</div> <div class="value">Archivio di Stato di Mantova</div>
+				<div class="item60"><fmt:message key="docbase.compareDocument.undated"/></div>
+				<div class="value">${document.undated ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Fondo</div> <div class="value">Archivio Gonzaga</div>
+				<div class="item60">Istituto di Conservazione</div>
+				<div class="value">Archivio di Stato di Mantova</div>
 			</div>
 			<div class="row">
-				<div class="item60">Serie</div> <div class="value">Corrispondenza, Copialettere, Originali, Minute, Autografi</div>
+				<div class="item60">Fondo</div>
+				<div class="value">Archivio Gonzaga</div>
+			</div>
+			<div class="row">
+				<div class="item60">Serie</div>
+				<div class="value">Corrispondenza, Copialettere, Originali, Minute, Autografi</div>
 			</div>
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item37"><fmt:message key="docbase.compareDocument.dateNotes"/></div> <div class="value50">${document.dateNotes}</div>
+				<div class="item37"><fmt:message key="docbase.compareDocument.dateNotes"/></div>
+				<div class="value50">${document.dateNotes}</div>
 			</div>
 		</div>
 	</div>

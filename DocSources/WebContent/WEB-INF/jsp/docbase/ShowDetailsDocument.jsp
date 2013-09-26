@@ -40,18 +40,30 @@
 			
 			<div class="list">
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.docId"/></div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.docId"/></div>
+					<div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.volume"/></div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.volume"/></div>
+					<div class="value">
+						<a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a>
+					</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.insertPart"/></div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.insertPart"/></div>
+					<div class="value">
+						<c:if test="${not empty document.insertNum}">
+							${document.insertNum}
+							<c:if test="${not empty document.insertLet}">
+								/ ${document.insertLet}
+							</c:if>
+						</c:if>
+					</div>
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentStartsAtFolio"/> </div> 
 					<div class="value">${document.folioNum}
-						<c:if test="${document.folioMod != null && document.folioMod != ''}">
+						<c:if test="${not empty document.folioMod}">
 							/ ${document.folioMod}
 						</c:if>
 						<c:choose>
@@ -69,7 +81,7 @@
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTranscribeFolio"/> </div> 
 					<div class="value">${document.transcribeFolioNum}
-						<c:if test="${document.transcribeFolioMod != null && document.transcribeFolioMod != ''}">
+						<c:if test="${not empty document.transcribeFolioMod}">
 							/ ${document.transcribeFolioMod}
 						</c:if>
 						<c:choose>
@@ -85,28 +97,36 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.notpaginated"/></div> <div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.notpaginated"/></div>
+					<div class="value">${document.unpaged ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.nonconsecutive"/></div> <div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.nonconsecutive"/></div>
+					<div class="value">${document.contDisc ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTypology"/></div> <div class="value">${document.docTypology}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.documentTypology"/></div>
+					<div class="value">${document.docTypology}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.modernYear"/></div> <div class="valueHilight">${document.yearModern}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.modernYear"/></div>
+					<div class="valueHilight">${document.yearModern}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateAsWritten"/></div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateAsWritten"/></div>
+					<div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateUncertain"/></div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateUncertain"/></div>
+					<div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.undated"/></div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.undated"/></div>
+					<div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 				</div>
 				<div class="row">
-					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateNotes"/></div> <div class="value">${document.dateNotes}</div>
+					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateNotes"/></div>
+					<div class="value">${document.dateNotes}</div>
 				</div>
 			</div>
 		</div>
