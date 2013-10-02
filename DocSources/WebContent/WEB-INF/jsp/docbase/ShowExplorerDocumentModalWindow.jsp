@@ -22,43 +22,43 @@
 		</c:url>
 		
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="entryId" value="${documentExplorer.entryId}"/>
-			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-			<c:param name="imageRectoVerso"   value="${documentExplorer.image.imageRectoVerso}" />
-			<c:param name="flashVersion"   value="false" />
+			<c:param name="entryId"			value="${documentExplorer.entryId}"/>
+			<c:param name="imageOrder"		value="${documentExplorer.image.imageOrder}" />
+			<c:param name="imageRectoVerso"	value="${documentExplorer.image.imageRectoVerso}" />
+			<c:param name="flashVersion"	value="false" />
 		</c:url>
 	</security:authorize>
 	
 	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
 	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="entryId" value="${documentExplorer.entryId}"/>
-		<c:param name="volNum" value="${documentExplorer.volNum}" />
-		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
-		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
-		<c:param name="total" value="${documentExplorer.total}" />
-		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="false" />
-		<c:param name="modalWindow" value="true"/>
+		<c:param name="entryId"			value="${documentExplorer.entryId}"/>
+		<c:param name="volNum"			value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt"		value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder"		value="${documentExplorer.image.imageOrder + 1}" />
+		<c:param name="total"			value="${documentExplorer.total}" />
+		<c:param name="totalRubricario"	value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta"		value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix"	value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther"		value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia"	value="${documentExplorer.totalGuardia}" />
+		<c:param name="flashVersion"	value="false" />
+		<c:param name="modalWindow"		value="true"/>
 	</c:url>
 
 	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="entryId" value="${documentExplorer.entryId}"/>
-		<c:param name="volNum" value="${documentExplorer.volNum}" />
-		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
-		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
-		<c:param name="total" value="${documentExplorer.total}" />
-		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="false" />
-		<c:param name="modalWindow" value="true"/>
+		<c:param name="entryId"			value="${documentExplorer.entryId}"/>
+		<c:param name="volNum"			value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt"		value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder"		value="${documentExplorer.image.imageOrder - 1}" />
+		<c:param name="total"			value="${documentExplorer.total}" />
+		<c:param name="totalRubricario"	value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta"		value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix"	value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther"		value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia"	value="${documentExplorer.totalGuardia}" />
+		<c:param name="flashVersion"	value="false" />
+		<c:param name="modalWindow"		value="true"/>
 	</c:url>
 	
 	<div id="modalBox">

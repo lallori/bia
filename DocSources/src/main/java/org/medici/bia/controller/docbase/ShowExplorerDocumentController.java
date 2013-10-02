@@ -35,11 +35,12 @@ import javax.validation.Valid;
 import org.apache.commons.lang.BooleanUtils;
 import org.medici.bia.command.docbase.ShowExplorerDocumentCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
-import org.medici.bia.domain.Document;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,65 @@ public class ShowExplorerDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired
+	private VolBaseService volBaseService;
+	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
+	
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
 
 	/**
 	 * 
@@ -79,36 +138,39 @@ public class ShowExplorerDocumentController {
 		if (result.hasErrors()) {
 			// in case of errors we need to remove imageType and imageProgTypeNum, so we return imageOrder which is previous image.
 			command.setImageType(null);
-			command.setImageProgTypeNum(null);
+			// command.setImageProgTypeNum(null);
 			return setupForm(command, result);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>(0);
 			try{
-				Document document = new Document();
-				if(command.getEntryId() != null){
-					document = getDocBaseService().findDocument(command.getEntryId());
-				}
+//				Document document = new Document();
+//				if(command.getEntryId() != null){
+//					document = getDocBaseService().findDocument(command.getEntryId());
+//				}
+				Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
+				model.put("hasInsert", hasInserts);
 				
 				DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
-				if(document.getFolioNum() != null){
-					documentExplorer.setFolioNum(document.getFolioNum());
-				}
-				if(document.getFolioMod() != null){
-					documentExplorer.setFolioMod(document.getFolioMod());
-				}
+//				// we set informations from the document
+//				documentExplorer.setFolioNum(document.getFolioNum());
+//				documentExplorer.setFolioMod(document.getFolioMod());
+				
 				documentExplorer.setImage(new Image());
+				if (!StringUtils.isNullableString(command.getInsertNum())) {
+					documentExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
+					documentExplorer.getImage().setInsertLet(StringUtils.nullTrim(command.getInsertLet()));
+				}
 				documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+				documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
+				documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 				documentExplorer.getImage().setImageOrder(command.getImageOrder());
 				documentExplorer.getImage().setImageType(command.getImageType());
-				if (document != null && document.getFolioRectoVerso() != null)
-					documentExplorer.getImage().setImageRectoVerso(Document.RectoVerso.R.equals(document.getFolioRectoVerso()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V);
 				documentExplorer.setTotal(command.getTotal());
 				documentExplorer.setTotalRubricario(command.getTotalRubricario());
 				documentExplorer.setTotalCarta(command.getTotalCarta());
 				documentExplorer.setTotalAppendix(command.getTotalAppendix());
 				documentExplorer.setTotalOther(command.getTotalOther());
 				documentExplorer.setTotalGuardia(command.getTotalGuardia());
-		
 				
 				documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 		
@@ -138,8 +200,11 @@ public class ShowExplorerDocumentController {
 		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
 		documentExplorer.setImage(new Image());
 		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
 		documentExplorer.getImage().setImageOrder(command.getImageOrder());
 		documentExplorer.getImage().setImageType(command.getImageType());
+		documentExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
+		documentExplorer.getImage().setInsertLet(StringUtils.isNullableString(command.getInsertNum()) ? null : command.getInsertLet());
 		documentExplorer.setTotal(command.getTotal());
 		documentExplorer.setTotalRubricario(command.getTotalRubricario());
 		documentExplorer.setTotalCarta(command.getTotalCarta());
@@ -149,8 +214,10 @@ public class ShowExplorerDocumentController {
 
 		try {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-
 			model.put("documentExplorer", documentExplorer);
+			
+			Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
+			model.put("hasInsert", hasInserts);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 		}
@@ -160,47 +227,5 @@ public class ShowExplorerDocumentController {
 		} else {
 			return new ModelAndView("docbase/ShowExplorerDocument", model);
 		}
-	}
-
-	/**
-	 * @param validator the validator to set
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
-
-	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
 	}
 }

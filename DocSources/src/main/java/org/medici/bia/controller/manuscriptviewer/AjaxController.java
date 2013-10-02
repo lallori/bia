@@ -362,7 +362,7 @@ public class AjaxController {
 				model.put("imageId", documentExplorer.getImage().getImageId());
 				model.put("imageType", documentExplorer.getImage().getImageType());
 				model.put("imageName", documentExplorer.getImage().getImageName());
-				model.put("missedNumbering", documentExplorer.getImage().getMissedNumbering() != null ? documentExplorer.getImage().getMissedNumbering() : null);
+				model.put("missedNumbering", documentExplorer.getImage().getMissedNumbering());
 				model.put("imageCompleteName", documentExplorer.getImage().toString());
 				model.put("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
 				model.put("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());

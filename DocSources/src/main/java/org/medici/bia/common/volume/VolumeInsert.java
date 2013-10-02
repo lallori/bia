@@ -1,5 +1,5 @@
 /*
- * DocumentExplorer.java
+ * VolumeInsert.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,59 +25,64 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.common.pagination;
-
+package org.medici.bia.common.volume;
 
 /**
- * DocumentExplorer contains informations about a document.
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class DocumentExplorer extends VolumeExplorer {
-	private Integer entryId;
-	private Boolean linkedDocument;
-
-	public DocumentExplorer() {
-		super();
+public class VolumeInsert {
+	
+	private Integer volNum;
+	private String volLetExt;
+	private String insertNum;
+	private String insertLet;
+	
+	public Integer getVolNum() {
+		return volNum;
 	}
 
-	public DocumentExplorer(Integer entryId, Integer volNum, String volLetExt) {
-		super(volNum, volLetExt);
-		setEntryId(entryId);
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
 	}
 
-	public DocumentExplorer(Integer entryId, Integer summaryId, Integer volNum, String volLetExt) {
-		super(summaryId, volNum, volLetExt);
-		setEntryId(entryId);
+	public String getVolLetExt() {
+		return volLetExt;
+	}
+
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
+	}
+
+	public String getInsertNum() {
+		return insertNum;
+	}
+
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
+	}
+
+	public String getInsertLet() {
+		return insertLet;
+	}
+
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
+	}
+
+	public VolumeInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) {
+		this.volNum = volNum;
+		this.volLetExt = volLetExt;
+		this.insertNum = insertNum;
+		this.insertLet = insertLet;
 	}
 	
-	/**
-	 * @param entryId the entryId to set
-	 */
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
+	public VolumeInsert(Integer volNum, String volLetExt, String insertNum) {
+		this(volNum, volLetExt, insertNum, null);
 	}
-
-	/**
-	 * @return the entryId
-	 */
-	public Integer getEntryId() {
-		return entryId;
-	}
-
-	/**
-	 * @param linkedDocument the linkedDocument to set
-	 */
-	public void setLinkedDocument(Boolean linkedDocument) {
-		this.linkedDocument = linkedDocument;
-	}
-
-	/**
-	 * @return the linkedDocument
-	 */
-	public Boolean getLinkedDocument() {
-		return linkedDocument;
+	
+	public VolumeInsert(Integer volNum, String insertNum) {
+		this(volNum, null, insertNum, null);
 	}
 }

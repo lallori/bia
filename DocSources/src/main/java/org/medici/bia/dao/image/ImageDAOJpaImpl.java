@@ -48,6 +48,7 @@ import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.ImageUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.common.volume.FoliosInformations;
+import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
@@ -300,9 +301,20 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
+	@Override
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod) {
+		return findImage(volNum, volLetExt, imageType, insertNum, insertLet, folioNum, folioMod, null, false);
+	}
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso) {
+		return findImage(volNum, volLetExt, imageType, insertNum, insertLet, folioNum, folioMod, rectoVerso, true);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso, boolean considerRectoVerso) {
 		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum = :volNum");
 		stringBuilder.append(" AND volLetExt ").append(!StringUtils.isEmpty(volLetExt) ? "= :volLetExt" : "IS NULL");
 		if (imageType != null)
@@ -313,7 +325,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		
 		stringBuilder.append(" AND imageProgTypeNum = :folioNum");
 		stringBuilder.append(" AND missedNumbering ").append(!StringUtils.isEmpty(folioMod) ? "= :folioMod" : "IS NULL");
-		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
+		if (considerRectoVerso)
+			stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
 		
 		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter("volNum", volNum);
@@ -328,7 +341,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		query.setParameter("folioNum", folioNum);
 		if (!StringUtils.isEmpty(folioMod))
 			query.setParameter("folioMod", folioMod);
-		query.setParameter("imageRectoVerso", rectoVerso);
+		if (considerRectoVerso)
+			query.setParameter("imageRectoVerso", rectoVerso);
 		
 		List<Image> result = (List<Image>) query.getResultList();
 		
@@ -350,36 +364,42 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			this.updateDocumentExplorerTotals(documentExplorer);
 		} 
 
-        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
-        	stringBuilder.append("=:volLetExt");
-        } else {
-        	stringBuilder.append(" is null");
-        }
+		boolean emptyVolLetExt = StringUtils.isEmpty(documentExplorer.getVolLetExt());
+		boolean nullInsertNum = documentExplorer.getImage().getInsertNum() == null;
+		boolean nullInsertLet = documentExplorer.getImage().getInsertLet() == null;
+		
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
+        stringBuilder.append(" volNum = :volNum");
+		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
+		stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
+		stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
         
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuilder.append(" and imageType=:imageType");
-        	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
-        	if(documentExplorer.getFolioMod() != null){
-            	stringBuilder.append(" and imageName like '%" + documentExplorer.getFolioMod() + "%'");
-            }
+        	stringBuilder.append(" AND imageType = :imageType");
+        	stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum");
+            stringBuilder.append(" AND missedNumbering").append(documentExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
         	if (documentExplorer.getImage().getImageRectoVerso() != null)
-        		stringBuilder.append(" and imageRectoVerso=:imageRectoVerso");
+        		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
         } else if (documentExplorer.getImage().getImageOrder() != null) {
-        	stringBuilder.append(" and imageOrder=:imageOrder");
+        	stringBuilder.append(" AND imageOrder = :imageOrder");
         } else {
-        	stringBuilder.append(" and imageOrder = 1");
+        	stringBuilder.append(" AND imageOrder = 1");
         }
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", documentExplorer.getVolNum());
-        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
+        if (!emptyVolLetExt)
         	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
-        }
+        if (!nullInsertNum)
+        	query.setParameter("insertNum", documentExplorer.getImage().getInsertNum());
+        if (!nullInsertLet)
+        	query.setParameter("insertLet", documentExplorer.getImage().getInsertLet());
 
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	query.setParameter("imageType", documentExplorer.getImage().getImageType());
         	query.setParameter("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
+        	if (documentExplorer.getImage().getMissedNumbering() != null)
+        		query.setParameter("missedNumbering", documentExplorer.getImage().getMissedNumbering());
         	if (documentExplorer.getImage().getImageRectoVerso() != null)
         		query.setParameter("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());
 			List<Image> result = (List<Image>) query.getResultList();
@@ -914,6 +934,50 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 		return returnValues;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	//@SuppressWarnings("unchecked")
+	public List<VolumeInsert> findVolumeInserts(Integer volNum, String volLetExt) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+		
+		CriteriaQuery<VolumeInsert> cq = criteriaBuilder.createQuery(VolumeInsert.class);
+		Root<Image> root = cq.from(Image.class);
+		
+		cq.select(criteriaBuilder.construct(VolumeInsert.class, root.get("volNum"), root.get("volLetExt"), root.get("insertNum"), root.get("insertLet"))).distinct(true);
+		cq.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(volLetExt) ? 
+					criteriaBuilder.isNull(root.get("volLetExt")) : 
+					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText),
+				criteriaBuilder.isNotNull(root.get("insertLet"))
+			)
+		);
+		cq.orderBy(criteriaBuilder.asc(root.get("insertNum")), criteriaBuilder.asc(root.get("insertLet")));
+		
+		/* The above query is equivalent to the following:
+		 * SELECT DISTINCT volNum, volLetExt, insertNum, insertLet FROM Image
+		 * WHERE 
+		 * 		 volNum = :volNum
+		 *   AND volLetExt (<nullable> ? 'IS NULL' : ':volLetExt')
+		 *   AND insertNum IS NOT NULL
+		 * ORDER BY
+		 * 		insertNum ASC,
+		 * 		insertLet ASC
+		 */
+		
+		TypedQuery<VolumeInsert> tq = getEntityManager().createQuery(cq);
+		tq.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			tq.setParameter("volLetExt", volLetExt);
+		
+		return tq.getResultList();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -942,7 +1006,15 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		
 		return null;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean hasInserts(Integer volNum, String volLetExt) {
+		return findVolumeInserts(volNum, volLetExt).size() > 0;
+	}
+	
 	/**
 	 * This method updates every totals in input 
 	 * {@link org.medici.bia.common.pagination.DocumentExplorer}.

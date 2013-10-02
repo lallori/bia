@@ -5,37 +5,39 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="ShareDocumentURL" value="/src/docbase/ShowDocument.do">
-		<c:param name="entryId"   value="${document.entryId}" />
+		<c:param name="entryId"		value="${document.entryId}" />
 	</c:url>
 
 	<c:url var="checkDocumentDigitizedURL" value="/src/docbase/CheckDocumentDigitized.json">
-		<c:param name="entryId"   value="${document.entryId}" />
-		<c:param name="folioNum"   value="${document.folioNum}" />
-		<c:param name="folioMod"   value="${document.folioMod}" />
-		<c:param name="volNum"   value="${document.volume.volNum}" />
-		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
+		<c:param name="entryId"		value="${document.entryId}" />
+		<c:param name="folioNum"	value="${document.folioNum}" />
+		<c:param name="folioMod"	value="${document.folioMod}" />
+		<c:param name="volNum"		value="${document.volume.volNum}" />
+		<c:param name="volLetExt"	value="${document.volume.volLetExt}" />
 	</c:url>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 		<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-			<c:param name="flashVersion"   value="false" />
+			<c:param name="entryId"			value="${document.entryId}" />
+			<c:param name="flashVersion"	value="false" />
 		</c:url>
 	</security:authorize>
 	
 	<c:url var="ShowDocumentExplorerURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="entryId"   value="${document.entryId}" />
-		<c:param name="volNum"   value="${document.volume.volNum}" />
-		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
-		<c:param name="folioNum"   value="${document.folioNum}" />
-		<c:param name="folioMod"   value="${document.folioMod}" />
-		<c:param name="imageType"   value="C" />
-		<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
-		<c:param name="flashVersion"   value="false" />
+		<c:param name="entryId"				value="${document.entryId}" />
+		<c:param name="volNum"				value="${document.volume.volNum}" />
+		<c:param name="volLetExt"			value="${document.volume.volLetExt}" />
+		<c:param name="insertNum"			value="${document.insertNum}" />
+		<c:param name="insertLet"			value="${document.insertLet}" />
+		<c:param name="imageType"			value="C" />
+		<c:param name="imageProgTypeNum" 	value="${document.folioNum}" />
+		<c:param name="missedNumbering"		value="${document.folioMod}" />
+		<c:param name="imageRectoVerso"		value="${document.folioRectoVerso}" />
+		<c:param name="flashVersion"		value="false" />
 	</c:url>
 	
 	<c:url var="CompareVolumeURL" value="/src/volbase/CompareVolume.do">
-		<c:param name="summaryId"   value="${document.volume.summaryId}" />
+		<c:param name="summaryId"	value="${document.volume.summaryId}" />
 	</c:url>
 	<%-- Create new Document Record --%>
 	<c:if test="${document.volume == null}">

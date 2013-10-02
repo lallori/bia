@@ -47,8 +47,16 @@ public class ShowExplorerVolumeCommand {
 	private Integer imageOrder;
 	/** This parameter is used to manage image type (Rubricario, Carta...) */
 	private ImageType imageType;
-	/** This parameter is used to folio identifier ) */
+	/** This parameter is used to specify the insert number */
+	private String insertNum;
+	/** This parameter is used to specify the insert extension */
+	private String insertLet;
+	/** This parameter is used to specify the folio identifier ) */
 	private Integer imageProgTypeNum;
+	/** This parameter is used to specify the folio extension (BIS, TER, ...) */
+	private String missedNumbering;
+	/** This parameter is used to specify the folio recto/verso information */
+	private String imageRectoVerso;
 	private Long total;
 	/** This parameter is used to count Rubricario total */ 
 	private Long totalRubricario;
@@ -260,5 +268,61 @@ public class ShowExplorerVolumeCommand {
 	 */
 	public Boolean getFlashVersion() {
 		return flashVersion;
+	}
+
+	/**
+	 * @return the insertNum
+	 */
+	public String getInsertNum() {
+		return insertNum;
+	}
+
+	/**
+	 * @param insertNum the insertNum to set
+	 */
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
+	}
+
+	/**
+	 * @return the insertLet
+	 */
+	public String getInsertLet() {
+		return insertLet;
+	}
+
+	/**
+	 * @param insertLet the insertLet to set
+	 */
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
+	}
+
+	/**
+	 * @return the missedNumbering
+	 */
+	public String getMissedNumbering() {
+		return missedNumbering;
+	}
+
+	/**
+	 * @param missedNumbering the missedNumbering to set
+	 */
+	public void setMissedNumbering(String missedNumbering) {
+		this.missedNumbering = missedNumbering;
+	}
+
+	/**
+	 * @return the imageRectoVerso
+	 */
+	public String getImageRectoVerso() {
+		return imageRectoVerso;
+	}
+
+	/**
+	 * @param imageRectoVerso the imageRectoVerso to set
+	 */
+	public void setImageRectoVerso(String imageRectoVerso) {
+		this.imageRectoVerso = imageRectoVerso;
 	}
 }

@@ -107,6 +107,25 @@ public interface VolBaseService {
 	/**
 	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
 	 * by its volNum and volLetExt has an insert, identified by its insertNum and insertLet, with a
+	 * folio identified by its folioNum, folioMod. Control is implemented by searching  
+	 * {@link org.medici.bia.domain.Image} entity.<br />
+	 * Note that this method does not consider the recto/verso information.
+	 * 
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param insertNum Insert Number
+	 * @param insertLet Insert Extension
+	 * @param folioNum Folio Number
+	 * @param folioMod Folio Extension
+	 * @param type the folio type (charta, rubricario, ...)
+	 * @return Boolean, true if volume is digitized, otherwise false.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type) throws ApplicationThrowable;
+	
+	/**
+	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
+	 * by its volNum and volLetExt has an insert, identified by its insertNum and insertLet, with a
 	 * folio identified by its folioNum, folioMod and folioRectoVerso. Control is implemented by searching  
 	 * {@link org.medici.bia.domain.Image} entity.
 	 * 
@@ -358,7 +377,29 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
-
+	
+	/**
+	 * This method checks if the volume provided contains the insert provided.
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param insertNum
+	 * @param insertLet
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean hasInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable;
+	
+	/**
+	 * This method checks if a volume contains inserts or not.
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Boolean hasInserts(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param summaryId

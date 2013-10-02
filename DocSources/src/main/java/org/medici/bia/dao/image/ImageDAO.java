@@ -35,6 +35,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.volume.FoliosInformations;
+import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
@@ -114,6 +115,21 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException;
+	
+	/**
+	 * This method searches an image identified by volume identifiers, insert identifier, folio identifiers and image type.<br/>
+	 * Note that this method does not consider the recto/verso information.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param imageType Type of image
+	 * @param insertNum Number of insert
+	 * @param insertLet extension of insert
+	 * @param folioNum Number of folio
+	 * @param folioMod extension of folio
+	 * @return A {@link org.medici.bia.domain.Image}
+	 */
+	Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod);
 	
 	/**
 	 * This method searches an image identified by volume identifiers, insert identifier, folio identifiers and image type.
@@ -247,6 +263,15 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @return
 	 */
 	List<Image> findVolumeImages(Integer volNum, String volLetExt, Integer imageOrder);
+	
+	/**
+	 * This method searches the inserts of a volume.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @return A List of {@link VolumeInsert}
+	 */
+	List<VolumeInsert> findVolumeInserts(Integer volNum, String volLetExt);
 
 	/**
 	 * This method returns a list of all volume which are digitized. 
@@ -266,4 +291,14 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException;
+	
+	
+	/**
+	 * This methods checks if a volume contains inserts or not.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @return true if the volume contains inserts.
+	 */
+	Boolean hasInserts(Integer volNum, String volLetExt);
 }

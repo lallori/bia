@@ -28,10 +28,12 @@
 package org.medici.bia.validator.docbase;
 
 import org.medici.bia.command.docbase.ShowExplorerDocumentCommand;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -46,11 +48,12 @@ public class ShowExplorerDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired
+	private VolBaseService volBaseService;
+	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
-	 * 
-	 * @param docBaseService
+	 * @param docBaseService to docBaseService set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
@@ -58,10 +61,39 @@ public class ShowExplorerDocumentValidator implements Validator {
 
 	/**
 	 * 
-	 * @return
+	 * @return the docBaseService
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+	
+	/**
+	 * @param volBaseService to volBaseService set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * 
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 
 	/**
@@ -87,34 +119,39 @@ public class ShowExplorerDocumentValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		ShowExplorerDocumentCommand showExplorerDocumentCommand = (ShowExplorerDocumentCommand) object;
+		Integer volNum = showExplorerDocumentCommand.getVolNum();
+		String volLetExt = StringUtils.nullTrim(showExplorerDocumentCommand.getVolLetExt());
+		String insertNum = StringUtils.nullTrim(showExplorerDocumentCommand.getInsertNum());
+		String insertLet = StringUtils.nullTrim(showExplorerDocumentCommand.getInsertLet());
+		Integer folioNum = showExplorerDocumentCommand.getImageProgTypeNum();
+		String folioMod = StringUtils.nullTrim(showExplorerDocumentCommand.getMissedNumbering());
+		String type = showExplorerDocumentCommand.getImageType() != null ? showExplorerDocumentCommand.getImageType().toString() : "C";
 		
-		if (showExplorerDocumentCommand.getImageProgTypeNum() != null) {
-			try {
-				if (getManuscriptViewerService().findDocumentImages(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
-					if (showExplorerDocumentCommand.getImageType().equals(ImageType.R)) {
-						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
-					}
-					else if (showExplorerDocumentCommand.getImageType().equals(ImageType.C)) {
-						errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
-					}
+		validateInsert(volNum, volLetExt, insertNum, insertLet, errors);
+		validateFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, type, errors);
+	}
+	
+	private void validateInsert(Integer volNum, String volLetExt, String insertNum, String insertLet, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (insertNum != null)
+				try {
+					if (!getVolBaseService().hasInsert(volNum, volLetExt, insertNum, insertLet))
+						errors.rejectValue("insertNum", "error.insert.notfound", new Object[]{insertNum + (insertLet != null ? " " + insertLet : "")}, null);
+				} catch (ApplicationThrowable applicationThrowable) {
+					errors.rejectValue("insertNum", "application error...please retry");
 				}
-			} catch (ApplicationThrowable applicationThrowable) {
-				
-			}
 		}
 	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
+	
+	private void validateFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type, Errors errors) {
+		if (!errors.hasErrors()) {
+			try {
+				String errorTarget = (type != null && "R".equalsIgnoreCase(type.trim())) ? "error.rubricario.notfound" : "error.folio.notfound";
+				if (!getVolBaseService().checkFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, type))
+					errors.rejectValue("imageProgTypeNum", errorTarget, new Object[]{(folioNum != null ? folioNum : "{empty}") + (folioMod != null ? " " + folioMod : "")}, null);
+			} catch (ApplicationThrowable applicationThrowable) {
+				errors.rejectValue("imageProgTypeNum", "application error...please retry");
+			}	
+		}
 	}
 }

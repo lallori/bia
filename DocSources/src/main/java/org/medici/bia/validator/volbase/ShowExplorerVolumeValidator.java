@@ -27,7 +27,9 @@
  */
 package org.medici.bia.validator.volbase;
 
+import org.medici.bia.command.docbase.ShowExplorerDocumentCommand;
 import org.medici.bia.command.volbase.ShowExplorerVolumeCommand;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -49,7 +51,6 @@ public class ShowExplorerVolumeValidator implements Validator {
 	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
-	 * 
 	 * @return
 	 */
 	public VolBaseService getVolBaseService() {
@@ -57,11 +58,24 @@ public class ShowExplorerVolumeValidator implements Validator {
 	}
 
 	/**
-	 * 
 	 * @param volBaseService
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 
 	/**
@@ -87,34 +101,40 @@ public class ShowExplorerVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		ShowExplorerVolumeCommand showExplorerVolumeCommand = (ShowExplorerVolumeCommand) object;
+		Integer volNum = showExplorerVolumeCommand.getVolNum();
+		String volLetExt = StringUtils.nullTrim(showExplorerVolumeCommand.getVolLetExt());
+		String insertNum = StringUtils.nullTrim(showExplorerVolumeCommand.getInsertNum());
+		String insertLet = StringUtils.nullTrim(showExplorerVolumeCommand.getInsertLet());
+		Integer folioNum = showExplorerVolumeCommand.getImageProgTypeNum();
+		String folioMod = StringUtils.nullTrim(showExplorerVolumeCommand.getMissedNumbering());
+		String type = showExplorerVolumeCommand.getImageType() != null ? showExplorerVolumeCommand.getImageType().toString() : "C";
 		
-		if (showExplorerVolumeCommand.getImageProgTypeNum() != null) {
-			try {
-				if (getManuscriptViewerService().findVolumeImages(null, showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum(), null) == null) {
-					if (showExplorerVolumeCommand.getImageType().equals(ImageType.R)) {
-						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
-					}
-					else if (showExplorerVolumeCommand.getImageType().equals(ImageType.C)) {
-						errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
-					}
+		validateInsert(volNum, volLetExt, insertNum, insertLet, errors);
+		if (folioNum != null)
+			validateFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, type, errors);
+	}
+
+	private void validateInsert(Integer volNum, String volLetExt, String insertNum, String insertLet, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (insertNum != null)
+				try {
+					if (!getVolBaseService().hasInsert(volNum, volLetExt, insertNum, insertLet))
+						errors.rejectValue("insertNum", "error.insert.notfound", new Object[]{insertNum + (insertLet != null ? " " + insertLet : "")}, null);
+				} catch (ApplicationThrowable applicationThrowable) {
+					errors.rejectValue("insertNum", "application error...please retry");
 				}
-			} catch (ApplicationThrowable applicationThrowable) {
-				
-			}
 		}
 	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
+	
+	private void validateFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type, Errors errors) {
+		if (!errors.hasErrors()) {
+			try {
+				String errorTarget = (type != null && "R".equalsIgnoreCase(type.trim())) ? "error.rubricario.notfound" : "error.folio.notfound";
+				if (!getVolBaseService().checkFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, type))
+					errors.rejectValue("imageProgTypeNum", errorTarget, new Object[]{folioNum + (folioMod != null ? " " + folioMod : "")}, null);
+			} catch (ApplicationThrowable applicationThrowable) {
+				errors.rejectValue("imageProgTypeNum", "application error...please retry");
+			}	
+		}
 	}
 }

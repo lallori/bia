@@ -314,6 +314,22 @@ public class Image implements Serializable {
 	    public String toString(){
 	        return imageType;
 	    }
+	    
+	    public static ImageType convertFromString(String s) {
+	    	if (s == null || s.trim() == "")
+	    		return null;
+	    	if ("R".equalsIgnoreCase(s.trim()))
+	    		return R;
+	    	if ("C".equalsIgnoreCase(s.trim()))
+	    		return C;
+	    	if ("G".equalsIgnoreCase(s.trim()))
+	    		return G;
+	    	if ("A".equalsIgnoreCase(s.trim()))
+	    		return A;
+	    	if ("O".equalsIgnoreCase(s.trim()))
+	    		return O;
+	    	return null;
+	    }
 	}	
 
 	/**
@@ -336,6 +352,16 @@ public class Image implements Serializable {
 	    @Override
 	    public String toString(){
 	        return imageRectoVerso;
+	    }
+	    
+	    public static ImageRectoVerso convertFromString(String rectoVerso) {
+	    	if (rectoVerso == null || "".equals(rectoVerso.trim()))
+	    		return null;
+	    	if ("R".equalsIgnoreCase(rectoVerso.trim()))
+	    		return R;
+	    	if ("V".equalsIgnoreCase(rectoVerso.trim()))
+	    		return V;
+	    	return null;
 	    }
 	}	
 }

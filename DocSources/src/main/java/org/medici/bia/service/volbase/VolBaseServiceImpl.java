@@ -45,6 +45,7 @@ import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.common.volume.FoliosInformations;
+import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
@@ -63,6 +64,8 @@ import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.SerieList;
@@ -125,6 +128,185 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private VolumeDAO volumeDAO;
 	@Autowired
 	private VettingHistoryDAO vettingHistoryDAO;
+	
+	/**
+	 * @return the documetDAO
+	 */
+	public DocumentDAO getDocumetDAO() {
+		return documetDAO;
+	}
+	
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+	
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+	
+	/**
+	 * @return the catalogDAO
+	 */
+	public SchedoneDAO getSchedoneDAO() {
+		return schedoneDAO;
+	}
+
+	/**
+	 * @return the seriesListDAO
+	 */
+	public SeriesListDAO getSeriesListDAO() {
+		return seriesListDAO;
+	}
+	
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	/**
+	 * @return the UserMessageDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
+	
+	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+	
+	/**
+	 * @param documetDAO the documetDAO to set
+	 */
+	public void setDocumetDAO(DocumentDAO documetDAO) {
+		this.documetDAO = documetDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param schedoneDAO the schedoneDAO to set
+	 */
+	public void setSchedoneDAO(SchedoneDAO schedoneDAO) {
+		this.schedoneDAO = schedoneDAO;
+	}
+
+	/**
+	 * @param seriesListDAO the seriesListDAO to set
+	 */
+	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
+		this.seriesListDAO = seriesListDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+	
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -290,9 +472,22 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type) throws ApplicationThrowable {
+		try{
+			Image image = getImageDAO().findImage(volNum, volLetExt, ImageType.convertFromString(type), insertNum, insertLet, folioNum, folioMod);
+			return image != null;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Boolean checkRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso) throws ApplicationThrowable {
 		try{
-			Image image = getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, "R".equals(folioRectoVerso.trim().toUpperCase()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V);
+			Image image = getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, ImageRectoVerso.convertFromString(folioRectoVerso));
 			return image != null;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -770,27 +965,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
-	 * @return the documetDAO
-	 */
-	public DocumentDAO getDocumetDAO() {
-		return documetDAO;
-	}
-	
-	/**
-	 * @return the forumDAO
-	 */
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	/**
-	 * @return the forumOptionDAO
-	 */
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -839,22 +1013,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
-	 * @return the imageDAO
-	 */
-	public ImageDAO getImageDAO() {
-		return imageDAO;
-	}
-
-
-	/**
-	 * @return the monthDAO
-	 */
-	public MonthDAO getMonthDAO() {
-		return monthDAO;
-	}
-
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -868,71 +1026,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-
-	/**
-	 * @return the catalogDAO
-	 */
-	public SchedoneDAO getSchedoneDAO() {
-		return schedoneDAO;
-	}
-
-
-	/**
-	 * @return the seriesListDAO
-	 */
-	public SeriesListDAO getSeriesListDAO() {
-		return seriesListDAO;
-	}
-	
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	/**
-	 * @return the UserMessageDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
-	 * @return the userMarkedListDAO
-	 */
-	public UserMarkedListDAO getUserMarkedListDAO() {
-		return userMarkedListDAO;
-	}
-
-
-	/**
-	 * @return the userMarkedListElementDAO
-	 */
-	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
-		return userMarkedListElementDAO;
-	}
-
-
-	/**
-	 * @return the volumeDAO
-	 */
-	public VolumeDAO getVolumeDAO() {
-		return volumeDAO;
-	}
-
-
-	/**
-	 * @param vettingHistoryDAO the vettingHistoryDAO to set
-	 */
-	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
-		this.vettingHistoryDAO = vettingHistoryDAO;
-	}
-
-	/**
-	 * @return the vettingHistoryDAO
-	 */
-	public VettingHistoryDAO getVettingHistoryDAO() {
-		return vettingHistoryDAO;
 	}
 
 	/**
@@ -998,6 +1091,42 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean hasInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable {
+		try {
+			List<VolumeInsert> inserts = getImageDAO().findVolumeInserts(volNum, volLetExt);
+			for (VolumeInsert insert : inserts) {
+				if (insertNum.equalsIgnoreCase(insert.getInsertNum())) {
+					if (insertLet == null) {
+						if (insert.getInsertLet() == null)
+							return Boolean.TRUE;
+					} else { 
+						if (insertLet.equalsIgnoreCase(insert.getInsertLet()))
+							return Boolean.TRUE;
+					}
+				}
+			}
+			return Boolean.FALSE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean hasInserts(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			return getImageDAO().hasInserts(volNum, volLetExt);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -1080,96 +1209,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-
-	/**
-	 * @param documetDAO the documetDAO to set
-	 */
-	public void setDocumetDAO(DocumentDAO documetDAO) {
-		this.documetDAO = documetDAO;
-	}
-
-
-	/**
-	 * @param forumDAO the forumDAO to set
-	 */
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-
-	/**
-	 * @param imageDAO the imageDAO to set
-	 */
-	public void setImageDAO(ImageDAO imageDAO) {
-		this.imageDAO = imageDAO;
-	}
-
-
-	/**
-	 * @param monthDAO the monthDAO to set
-	 */
-	public void setMonthDAO(MonthDAO monthDAO) {
-		this.monthDAO = monthDAO;
-	}
-
-
-	/**
-	 * @param schedoneDAO the schedoneDAO to set
-	 */
-	public void setSchedoneDAO(SchedoneDAO schedoneDAO) {
-		this.schedoneDAO = schedoneDAO;
-	}
-
-	/**
-	 * @param seriesListDAO the seriesListDAO to set
-	 */
-	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
-		this.seriesListDAO = seriesListDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @param userMarkedListDAO the userMarkedListDAO to set
-	 */
-	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
-		this.userMarkedListDAO = userMarkedListDAO;
-	}
-
-
-	/**
-	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
-	 */
-	public void setUserMarkedListElementDAO(
-			UserMarkedListElementDAO userMarkedListElementDAO) {
-		this.userMarkedListElementDAO = userMarkedListElementDAO;
-	}
-
-	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
 	}
 
 	/**

@@ -134,7 +134,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -142,7 +142,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 		</div>
@@ -169,7 +169,10 @@
 			</c:if>
 			</div>
 		</div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
+		<form:form>
+			<form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/>
+			<form:errors path="insertNum" id="insert.errors" cssClass="inputerrors"/>
+		</form:form>
 		
 		
 
@@ -184,9 +187,9 @@
 				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode button_large"><fmt:message key="docbase.showExplorerDocument.showInFullscreen"/></a>
 			</security:authorize>
 			<a id="volumeSummary${documentExplorer.entryId}" class="volumeSummary button_medium" href="#"><fmt:message key="docbase.showExplorerDocument.volumeSummary"/></a>
-			<a class="refreshVolumeExplorer button_small" href="${currentPageURL}"><fmt:message key="docbase.showExplorerDocument.refresh"/></a>
+			<a class="refreshVolumeExplorer button_small refreshVolumeExplorer_${documentExplorer.volNum}${documentExplorer.volLetExt}" href="${currentPageURL}"><fmt:message key="docbase.showExplorerDocument.refresh"/></a>
 			<c:if test="${documentExplorer.totalRubricario > 0}">
-				<a id="indexNames${documentExplorer.entryId}" title="Index of Names" class="transcribe indexNames button_medium" href="${indexOfNamesURL}" ></a>
+				<a id="indexNames${documentExplorer.entryId}" title="Index of Names" class="transcribe indexNames button_medium indexNames_${documentExplorer.volNum}${documentExplorer.volLetExt}" href="${indexOfNamesURL}" ></a>
 			</c:if>
 		</div>
 		
@@ -195,10 +198,49 @@
 				<b><fmt:message key="docbase.showExplorerDocument.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="docbase.showExplorerDocument.goToFolio"/>:</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input id="go" class="button_mini" type="submit" value="Go" />
+			<form:form id="moveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
+				<table style="width: 240px; height: 80px; float: right; ">
+					<tbody>
+						<tr height="${hasInsert ? '34%' : '50%'}">
+							<td colspan="5" align="center" valign="bottom">
+								<span>Go To page</span>
+							</td>
+						</tr>
+						<c:if test="${hasInsert}">
+							<tr height="33%">
+								<td width="5%" align="center" valign="bottom">
+									<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+								</td>
+								<td width="25%" align="center">
+									<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+								</td>
+								<td width="30%">
+									<input id="insertNum" name="insertNum" class="input_4cFolio" type="text" value="${documentExplorer.image.insertNum}" />
+								</td>
+								<td width="30%" align="left" valign="middle">
+									<input id="insertLet" name="insertLet" class="input_4cFolio" type="text" value="${documentExplorer.image.insertLet}" />
+								</td>
+							</tr>
+						</c:if>
+						<tr height="${hasInsert ? '33%' : '50%'}">
+							<td width="5%" align="center" valign="bottom">
+								<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+							</td>
+							<td width="25%" align="center">
+								<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+							</td>
+							<td width="30%">
+								<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${documentExplorer.image.imageProgTypeNum}" />
+							</td>
+							<td width="30%">
+								<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${documentExplorer.image.missedNumbering}" />
+							</td>
+							<td width="10%" rowspan="${hasInsert ? '2' : '1' }" align="center" valign="middle">
+								<input id="go" class="button_mini" type="submit" value="Go" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
@@ -253,7 +295,7 @@
 				}});},250);
 				
 								
-				$j(".previousPage").click(function(){
+				$j(".previousPage_${documentExplorer.volNum}${documentExplorer.volLetExt}").click(function(){
 					// we change selected tab url, 
 // 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
@@ -267,7 +309,7 @@
 					return false;
 				});
 				
-				$j(".nextPage").click(function(){
+				$j(".nextPage_${documentExplorer.volNum}${documentExplorer.volLetExt}").click(function(){
 // 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 // 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 
@@ -279,7 +321,7 @@
 					return false;
 				});
 				
-				$j(".refreshVolumeExplorer").click(function(){
+				$j(".refreshVolumeExplorer_${documentExplorer.volNum}${documentExplorer.volLetExt}").click(function(){
 // 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 // 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 
@@ -291,7 +333,7 @@
 					return false;
 				});
 				
-				$j(".indexNames").click(function (){
+				$j(".indexNames_${documentExplorer.volNum}${documentExplorer.volLetExt}").click(function (){
 // 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 // 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					
@@ -303,7 +345,7 @@
 					return false;
 				});
 		        
-		        $j(".editMoveToFolioForm").submit(function (){
+		        $j("#moveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 // 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 // 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));

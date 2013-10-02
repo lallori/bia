@@ -35,6 +35,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.BooleanUtils;
 import org.medici.bia.command.volbase.ShowExplorerVolumeCommand;
 import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.volbase.VolBaseService;
@@ -83,7 +84,7 @@ public class ShowExplorerVolumeController {
 		if (result.hasErrors()) {
 			// in case of errors we need to remove imageType and imageProgTypeNum, so we return imageOrder which is previous image.
 			command.setImageType(null);
-			command.setImageProgTypeNum(null);
+			//command.setImageProgTypeNum(null);
 			return setupForm(command, result);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>(0);
@@ -91,6 +92,8 @@ public class ShowExplorerVolumeController {
 			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 			volumeExplorer.setImage(new Image());
 			volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+			volumeExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
+			volumeExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 			volumeExplorer.getImage().setImageOrder(command.getImageOrder());
 			volumeExplorer.getImage().setImageType(command.getImageType());
 			volumeExplorer.setTotal(command.getTotal());
@@ -101,8 +104,10 @@ public class ShowExplorerVolumeController {
 			volumeExplorer.setTotalGuardia(command.getTotalGuardia());
 	
 			try {
+				Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
+				model.put("hasInsert", hasInserts);
+				
 				volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
-	
 				model.put("volumeExplorer", volumeExplorer);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
@@ -129,8 +134,11 @@ public class ShowExplorerVolumeController {
 		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 		volumeExplorer.setImage(new Image());
 		volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		volumeExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
 		volumeExplorer.getImage().setImageOrder(command.getImageOrder());
 		volumeExplorer.getImage().setImageType(command.getImageType());
+		volumeExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
+		volumeExplorer.getImage().setInsertLet(StringUtils.isNullableString(command.getInsertNum()) ? null : command.getInsertLet());
 		volumeExplorer.setTotal(command.getTotal());
 		volumeExplorer.setTotalRubricario(command.getTotalRubricario());
 		volumeExplorer.setTotalCarta(command.getTotalCarta());
@@ -140,8 +148,10 @@ public class ShowExplorerVolumeController {
 
 		try {
 			volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
-
 			model.put("volumeExplorer", volumeExplorer);
+			
+			Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
+			model.put("hasInsert", hasInserts);
 		} catch (ApplicationThrowable ath) {
 		}
 

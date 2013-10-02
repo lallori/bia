@@ -176,7 +176,10 @@
 			</c:if>
 			</div>
 		</div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
+		<form:form>
+			<form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/>
+			<form:errors path="insertNum" id="folio.errors" cssClass="inputerrors"/>
+		</form:form>
 	
 		<div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
@@ -200,9 +203,48 @@
 			</div>
 		
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm${volumeExplorer.summaryId}">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-			<input id="go" class="button_mini" type="submit" value="Go" />
+			<table style="width: 240px; height: 80px; float: right; ">
+				<tbody>
+					<tr height="${hasInsert ? '34%' : '50%'}">
+						<td colspan="5" align="center" valign="bottom">
+							<span>Go To page</span>
+						</td>
+					</tr>
+					<c:if test="${hasInsert}">
+						<tr height="33%">
+							<td width="5%" align="center" valign="bottom">
+								<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+							</td>
+							<td width="25%" align="center">
+								<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+							</td>
+							<td width="30%">
+								<input id="insertNum" name="insertNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.insertNum}" />
+							</td>
+							<td width="30%" align="left" valign="middle">
+								<input id="insertLet" name="insertLet" class="input_4cFolio" type="text" value="${volumeExplorer.image.insertLet}" />
+							</td>
+						</tr>
+					</c:if>
+					<tr height="${hasInsert ? '33%' : '50%'}">
+						<td width="5%" align="center" valign="bottom">
+							<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+						</td>
+						<td width="25%" align="center">
+							<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+						</td>
+						<td width="30%">
+							<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
+						</td>
+						<td width="30%">
+							<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${volumeExplorer.image.missedNumbering}" />
+						</td>
+						<td width="10%" rowspan="${hasInsert ? '2' : '1' }" align="center" valign="middle">
+							<input id="go" class="button_mini" type="submit" value="Go" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<form:hidden path="summaryId" />
 			<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 			<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
