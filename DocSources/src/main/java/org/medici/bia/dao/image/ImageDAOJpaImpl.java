@@ -960,7 +960,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				StringUtils.isEmpty(volLetExt) ? 
 					criteriaBuilder.isNull(root.get("volLetExt")) : 
 					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText),
-				criteriaBuilder.isNotNull(root.get("insertLet"))
+				criteriaBuilder.isNotNull(root.get("insertNum"))
 			)
 		);
 		cq.orderBy(criteriaBuilder.asc(root.get("insertNum")), criteriaBuilder.asc(root.get("insertLet")));
