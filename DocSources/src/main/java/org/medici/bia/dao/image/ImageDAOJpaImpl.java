@@ -40,6 +40,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -65,6 +66,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO {
+	
+	private Logger logger = Logger.getLogger(ImageDAOJpaImpl.class);
 
 	/**
 	 * 
@@ -371,10 +374,10 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
         stringBuilder.append(" volNum = :volNum");
 		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
-		stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
-		stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
         
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
+        	stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
+        	stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
         	stringBuilder.append(" AND imageType = :imageType");
         	stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum");
             stringBuilder.append(" AND missedNumbering").append(documentExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
@@ -385,17 +388,19 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         } else {
         	stringBuilder.append(" AND imageOrder = 1");
         }
+        
+        logger.info("Query: " + stringBuilder.toString());
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", documentExplorer.getVolNum());
         if (!emptyVolLetExt)
         	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
-        if (!nullInsertNum)
-        	query.setParameter("insertNum", documentExplorer.getImage().getInsertNum());
-        if (!nullInsertLet)
-        	query.setParameter("insertLet", documentExplorer.getImage().getInsertLet());
 
         if (documentExplorer.getImage().getImageProgTypeNum() != null) {
+        	if (!nullInsertNum)
+        		query.setParameter("insertNum", documentExplorer.getImage().getInsertNum());
+        	if (!nullInsertLet)
+        		query.setParameter("insertLet", documentExplorer.getImage().getInsertLet());
         	query.setParameter("imageType", documentExplorer.getImage().getImageType());
         	query.setParameter("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
         	if (documentExplorer.getImage().getMissedNumbering() != null)
