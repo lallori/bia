@@ -389,7 +389,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuilder.append(" AND imageOrder = 1");
         }
         
-        logger.info("Query: " + stringBuilder.toString());
+        logger.debug("FindImages from documentExplorer query: " + stringBuilder.toString());
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", documentExplorer.getVolNum());
@@ -561,31 +561,47 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		if (volumeExplorer.getTotal() == null) {
 			this.updateVolumeExplorerTotals(volumeExplorer);
 		} 
-
-        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
-        	stringBuilder.append("=:volLetExt");
-        } else {
-        	stringBuilder.append(" is null");
-        }
+		
+		boolean emptyVolLetExt = StringUtils.isEmpty(volumeExplorer.getVolLetExt());
+		boolean nullInsertNum = volumeExplorer.getImage().getInsertNum() == null;
+		boolean nullInsertLet = volumeExplorer.getImage().getInsertLet() == null;
+		
+        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
+        stringBuilder.append(" volNum = :volNum");
+		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
+        
         if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuilder.append(" and imageType=:imageType");
-        	stringBuilder.append(" and imageProgTypeNum=:imageProgTypeNum");
+        	stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
+        	stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
+        	stringBuilder.append(" AND imageType = :imageType");
+        	stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum");
+            stringBuilder.append(" AND missedNumbering").append(volumeExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
+        	if (volumeExplorer.getImage().getImageRectoVerso() != null)
+        		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
         } else if (volumeExplorer.getImage().getImageOrder() != null) {
-        	stringBuilder.append(" and imageOrder=:imageOrder");
+        	stringBuilder.append(" AND imageOrder = :imageOrder");
         } else {
-        	stringBuilder.append(" and imageOrder = 1");
+        	stringBuilder.append(" AND imageOrder = 1");
         }
+        
+        logger.debug("FindImages from documentExplorer query: " + stringBuilder.toString());
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volumeExplorer.getVolNum());
-        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
+        if (!emptyVolLetExt)
         	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-        }
 
         if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
+        	if (!nullInsertNum)
+        		query.setParameter("insertNum", volumeExplorer.getImage().getInsertNum());
+        	if (!nullInsertLet)
+        		query.setParameter("insertLet", volumeExplorer.getImage().getInsertLet());
         	query.setParameter("imageType", volumeExplorer.getImage().getImageType());
         	query.setParameter("imageProgTypeNum", volumeExplorer.getImage().getImageProgTypeNum());
+        	if (volumeExplorer.getImage().getMissedNumbering() != null)
+        		query.setParameter("missedNumbering", volumeExplorer.getImage().getMissedNumbering());
+        	if (volumeExplorer.getImage().getImageRectoVerso() != null)
+        		query.setParameter("imageRectoVerso", volumeExplorer.getImage().getImageRectoVerso());
 			List<Image> result = (List<Image>) query.getResultList();
 			
 			if (result.size() > 0) {

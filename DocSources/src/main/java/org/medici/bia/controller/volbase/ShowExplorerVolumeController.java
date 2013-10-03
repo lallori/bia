@@ -91,6 +91,10 @@ public class ShowExplorerVolumeController {
 			
 			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 			volumeExplorer.setImage(new Image());
+			if (!StringUtils.isNullableString(command.getInsertNum())) {
+				volumeExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
+				volumeExplorer.getImage().setInsertLet(StringUtils.nullTrim(command.getInsertLet()));
+			}
 			volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 			volumeExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
 			volumeExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
