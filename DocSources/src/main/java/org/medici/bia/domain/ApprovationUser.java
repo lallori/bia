@@ -48,10 +48,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table ( name = "\"tblApprovationUser\"" ) 
 public class ApprovationUser implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2084201619215125604L;
+	private static final long serialVersionUID = 8840387704967604225L;
 
 	@Id
 	@ManyToOne(fetch=FetchType.LAZY)

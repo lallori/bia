@@ -51,11 +51,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table ( name = "\"tblReportedForumPost\"" ) 
 public class ReportedForumPost implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2084201619215125604L;
-
+	private static final long serialVersionUID = -3270930110030676671L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)

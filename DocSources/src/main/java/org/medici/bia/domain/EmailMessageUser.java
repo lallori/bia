@@ -51,10 +51,11 @@ import javax.persistence.TemporalType;
 @Entity
 @Table ( name = "\"tblEmailMessageUser\"" ) 
 public class EmailMessageUser implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2084201619215125604L;
+	private static final long serialVersionUID = 946773091626705272L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
