@@ -116,7 +116,7 @@
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateUncertain"/></div> 
-					div class="value">${document.dateUns ? 'Yes' : 'No'}</div>
+					<div class="value">${document.dateUns ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.undated"/></div>

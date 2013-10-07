@@ -63,7 +63,12 @@
 						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.documentStartsAtFolio"/></form:label>
 					</div>
 					<div class="col_l">
-						<form:input id="folioNum" path="folioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						<div class="col_l">
+							<form:input id="folioNum" path="folioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						</div>
+						<div class="col_r">
+							<form:input id="folioRectoVerso" path="folioRectoVerso" maxlength="1" class="${transcribe ? 'input_2c_disabled' : 'input_1c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						</div>
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.iffolioaddenda"/>'>?</a>
@@ -75,20 +80,16 @@
 				</div>
 				<div class="row">
 					<div class="col_r">
-						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.documentfoliorectoverso"/>'>?</a>
-						<form:label id="folioRectoVersoLabel" for="folioRectoVerso" path="folioRectoVerso" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.folioRectoVerso"/></form:label>
-					</div>
-					<div class="col_l">
-						<form:input id="folioRectoVerso" path="folioRectoVerso" maxlength="1" class="${transcribe ? 'input_4c_disabled' : 'input_2c'}" disabled="${transcribe ? 'true' : 'false' }" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefolionum"/>'>?</a>
 						<form:label id="transcribeFolioNumLabel" for="transcribeFolioNum" path="transcribeFolioNum" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.transcribeFolioNum"/></form:label>
 					</div>
 					<div class="col_l">
-						<form:input id="transcribeFolioNum" path="transcribeFolioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						<div class="col_l">
+							<form:input id="transcribeFolioNum" path="transcribeFolioNum" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						</div>
+						<div class="col_r">
+							<form:input id="transcribeFolioRectoVerso" path="transcribeFolioRectoVerso" maxlength="1" class="${transcribe ? 'input_2c_disabled' : 'input_1c'}" disabled="${transcribe ? 'true' : 'false' }" />
+						</div>
 					</div>
 					<div class="col_r">
 						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefoliomod"/>'>?</a>
@@ -96,15 +97,6 @@
 					</div>
 					<div class="col_r">
 						<form:input id="transcribeFolioMod" path="transcribeFolioMod" class="${transcribe ? 'input_4c_disabled' : 'input_5c'}" disabled="${transcribe ? 'true' : 'false' }" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col_r">
-						<a class="helpIcon" title='<fmt:message key="docbase.editDetailsDocument.help.transcribefoliorectoverso"/>'>?</a>
-						<form:label id="transcribeFolioRectoVersoLabel" for="transcribeFolioRectoVerso" path="transcribeFolioRectoVerso" cssErrorClass="error"><fmt:message key="docbase.editDetailsDocument.transcribeFolioRectoVerso"/></form:label>
-					</div>
-					<div class="col_l">
-						<form:input id="transcribeFolioRectoVerso" path="transcribeFolioRectoVerso" maxlength="1" class="${transcribe ? 'input_4c_disabled' : 'input_2c'}" disabled="${transcribe ? 'true' : 'false' }" />
 					</div>
 				</div>
 			</div>
