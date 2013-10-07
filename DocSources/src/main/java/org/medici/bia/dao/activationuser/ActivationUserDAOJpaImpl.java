@@ -52,7 +52,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ActivationUserDAOJpaImpl extends JpaDao<String, ActivationUser> implements ActivationUserDAO {
-
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -71,7 +70,7 @@ public class ActivationUserDAOJpaImpl extends JpaDao<String, ActivationUser> imp
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 617902723399766439L;
+	private static final long serialVersionUID = 325665150465723166L;
 
 	/**
 	 * 

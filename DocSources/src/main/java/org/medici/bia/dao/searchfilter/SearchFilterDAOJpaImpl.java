@@ -69,7 +69,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 617902723399766439L;
+	private static final long serialVersionUID = 3916527405884335734L;
 
 	/**
 	 * {@inheritDoc}
