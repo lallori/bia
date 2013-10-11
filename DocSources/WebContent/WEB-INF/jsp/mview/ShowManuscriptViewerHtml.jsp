@@ -60,6 +60,27 @@
 				credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showManuscriptViewerHtml.spine"/>' + '</span>';
 			}
 			
+			iip = new IIPMooViewer( "targetframe", {
+				server: '${IIPImageServerURL}',
+				prefix: '${ImagePrefixURL}',
+				image: '${image}',
+				annotationsType: 'remote',
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
+				annotationId: annotationId,
+				credit: credit,
+				navigation: true,
+				showNavWindow: true,
+				showNavImage: true, // this property hide navigation image
+				showNavButtons: true,
+				winResize: true,
+				zoom: 2,
+				scale: 0
+			});
+			
+			// RR The if-else condition has been removed because we always want IIPMooViewer instantiated with extended options
+			/*
 			if(annotationId != null && annotationId != ''){
 				iip = new IIPMooViewer( "targetframe", {
 					server: '${IIPImageServerURL}',
@@ -94,5 +115,6 @@
 					scale: 0
 				});		
 			}
+			*/
 
 		</script>
