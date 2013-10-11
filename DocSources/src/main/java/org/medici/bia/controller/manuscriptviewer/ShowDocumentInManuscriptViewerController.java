@@ -84,14 +84,10 @@ public class ShowDocumentInManuscriptViewerController {
 
 		try {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-			if(documentExplorer.getEntryId() == null){
+			if (documentExplorer.getEntryId() == null) {
 				List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), documentExplorer.getImage());
-				if(documents != null){
-					if(documents.size() == 1){
-						documentExplorer.setEntryId(documents.get(0).getEntryId());
-					}else{
-						documentExplorer.setEntryId(documents.get(0).getEntryId());
-					}
+				if (documents.size() > 0) {
+					documentExplorer.setEntryId(documents.get(0).getEntryId());
 				}
 			}
 

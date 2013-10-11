@@ -242,7 +242,7 @@ public class AjaxController {
 			String volLetExt = VolumeUtils.extractVolLetExt(volume);
 			Document.RectoVerso folioRV = Document.RectoVerso.convertFromString(folioRectoVerso);
 			List<Document> documents = getDocBaseService().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRV);
-			if(documents != null){
+			if(documents != null && documents.size() > 0){
 				model.put("entryId", documents.get(0).getEntryId());
 				model.put("countAlreadyEntered", documents.size());
 				model.put("volNum", volNum);

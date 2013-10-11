@@ -197,8 +197,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			query.setParameter("folioRectoVerso", folioRectoVerso);
 
 		List<Document> docs = query.getResultList();
-		if (docs.size() == 0) 
-			return null;
 			
 		return docs;
 	}
