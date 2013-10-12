@@ -2253,7 +2253,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #folioCountForm { /* "Folio Count" FORM */
 	color:#6d5c4d;
-	float: left;
+	margin-bottom: 20px;
 }
 
 #folioModalCountForm { /* "Folio Count" FORM in Fullscreen Mode */
@@ -2265,9 +2265,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #moveToFolioForm { /* Move to folio FORM */
-	width: 110px;
 	color:#6d5c4d;
-	float:right;
 }
 
 #moveToFolioModalForm { /* Move to folio FORM in Fullscreen Mode */
@@ -2280,7 +2278,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 .folioLabel { /* "Move to folio" <label> ID  */
 	margin: 0;
-	position:absolute;
 	color:#6d5c4d;
 }
 
@@ -2303,7 +2300,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #go { /* "Move to rubricario" <input> GO button ID  */
-	margin: -4px 0 0 80px;
 	width:22px;
 	height:22px;
 	background-image:url(${contextPath}/images/1024/button_mini.png);
@@ -3629,6 +3625,7 @@ a.helpIcon{ /* Help symbol "?" */
 	border-radius: 8px;
 	cursor:default;
 }
+#moveToFolioForm a.helpIcon {margin-right:10px}
 
 div.title a.helpIcon{ /* Help symbol "?" */
 	text-decoration:none;

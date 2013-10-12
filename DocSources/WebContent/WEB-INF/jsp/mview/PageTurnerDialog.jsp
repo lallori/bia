@@ -121,6 +121,30 @@
 	<c:url var="UpdateAnnotationsURL" value="/src/mview/UpdateAnnotations.json" />
 		
 <div id="PageTurnerVerticalDiv">
+
+	<!-- Go to page 
+	<div class="goToPage">
+		<span><b>Go To page</b></span> 
+		
+		<!-- If has insert 
+		<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+		<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+		<div class="labels">
+			<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${volumeExplorer.image.insertNum}" />
+			<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${volumeExplorer.image.insertLet}" />
+		</div>
+		<!-- End If has insert 
+		
+		<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+		<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+		<div class="labels">
+			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
+			<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${volumeExplorer.image.missedNumbering}" />
+		</div>
+		<input id="go" class="button_mini" type="submit" value="Go" />
+	</div>		
+	<!-- End Go to page -->
+
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div id="transcribeDiv">
 	

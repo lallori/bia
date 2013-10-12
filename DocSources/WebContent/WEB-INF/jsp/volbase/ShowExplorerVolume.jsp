@@ -201,6 +201,25 @@
 			<div id="folioCountForm"> 
 				<b><fmt:message key="volbase.showExplorerVolume.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
+			
+			<!-- Go to page 
+			<div>
+				<span><b>Go To page</b></span> 
+				
+				<!-- If has insert 
+				<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+				<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+				<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${volumeExplorer.image.insertNum}" />
+				<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${volumeExplorer.image.insertLet}" />
+				<!-- End If has insert 
+				
+				<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
+				<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${volumeExplorer.image.missedNumbering}" />
+				<input id="go" class="button_mini" type="submit" value="Go" />
+			</div>		
+			<!-- End Go to page -->
 		
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm${volumeExplorer.summaryId}">
 			<table style="width: 240px; height: 80px; float: right; ">
