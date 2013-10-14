@@ -198,85 +198,46 @@
 		</div>
 		
 		<div id="folioMoveTo">
+			
 			<div id="folioCountForm"> 
 				<b><fmt:message key="volbase.showExplorerVolume.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
-			
-			<!-- Go to page 
-			<div>
-				<span><b>Go To page</b></span> 
-				
-				<!-- If has insert 
-				<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
-				<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
-				<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${volumeExplorer.image.insertNum}" />
-				<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${volumeExplorer.image.insertLet}" />
-				<!-- End If has insert 
-				
-				<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
-				<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${volumeExplorer.image.missedNumbering}" />
-				<input id="go" class="button_mini" type="submit" value="Go" />
-			</div>		
-			<!-- End Go to page -->
 		
-		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm${volumeExplorer.summaryId}">
-			<table style="width: 240px; height: 80px; float: right; ">
-				<tbody>
-					<tr height="${hasInsert ? '34%' : '50%'}">
-						<td colspan="5" align="center" valign="bottom">
-							<span>Go To page</span>
-						</td>
-					</tr>
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm${volumeExplorer.summaryId}">
+				<div>
+					<div class="moveToFolioTitle">
+						Go To page
+					</div> 
+					
 					<c:if test="${hasInsert}">
-						<tr height="33%">
-							<td width="5%" align="center" valign="bottom">
-								<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
-							</td>
-							<td width="25%" align="center">
-								<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
-							</td>
-							<td width="30%">
-								<input id="insertNum" name="insertNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.insertNum}" />
-							</td>
-							<td width="30%" align="left" valign="middle">
-								<input id="insertLet" name="insertLet" class="input_4cFolio" type="text" value="${volumeExplorer.image.insertLet}" />
-							</td>
-						</tr>
+						<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+						<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+						<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${volumeExplorer.image.insertNum}" />
+						<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${volumeExplorer.image.insertLet}" />
 					</c:if>
-					<tr height="${hasInsert ? '33%' : '50%'}">
-						<td width="5%" align="center" valign="bottom">
-							<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
-						</td>
-						<td width="25%" align="center">
-							<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
-						</td>
-						<td width="30%">
-							<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
-						</td>
-						<td width="30%">
-							<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${volumeExplorer.image.missedNumbering}" />
-						</td>
-						<td width="10%" rowspan="${hasInsert ? '2' : '1' }" align="center" valign="middle">
-							<input id="go" class="button_mini" type="submit" value="Go" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<form:hidden path="summaryId" />
-			<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
-			<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
-			<form:hidden path="imageType" value="C"/>
-			<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
-			<form:hidden path="total" value="${volumeExplorer.total}" />
-			<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-			<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-			<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-			<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-			<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<form:hidden path="flashVersion" value="false" />
-		</form:form>
+					
+					<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+					<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="${volumeExplorer.image.imageProgTypeNum}" />
+					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="${volumeExplorer.image.missedNumbering}" />
+					<input id="go" class="button_mini" type="submit" value="Go" />
+				</div>
+				
+				<form:hidden path="summaryId" />
+				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
+				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
+				<form:hidden path="imageType" value="C"/>
+				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
+				<form:hidden path="total" value="${volumeExplorer.total}" />
+				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
+				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
+				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+				<form:hidden path="flashVersion" value="false" />
+			</form:form>
+		
+		</div>
 		
 		<script type="text/javascript">
 			$j(document).ready(function() {

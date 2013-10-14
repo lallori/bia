@@ -864,6 +864,25 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
     max-height: 485px;
 }
 
+/* Go to page */
+.goToPage span {display:block; margin-bottom:8px}
+a.helpIcon {
+	border: 1px solid #6D5C4D;
+	color: #6D5C4D;
+	font-size: 12px;
+	background-color: #DCC0BA;
+	padding-left: 5px;
+	padding-right: 4px;
+	font-weight: bold;
+	text-decoration: none;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	cursor: default;
+}
+.input_4c {width: 35px;}
+.goToPage .labels {margin-left:15px}
+.goToPage #go {margin-left: 92px;}
+
 
 
 /* Modified elements from the original jquery-ui-1.8.9.custos.css */

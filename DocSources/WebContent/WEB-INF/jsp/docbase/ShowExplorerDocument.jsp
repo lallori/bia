@@ -198,49 +198,26 @@
 				<b><fmt:message key="docbase.showExplorerDocument.totalFolios"/>:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
-				<table style="width: 240px; height: 80px; float: right; ">
-					<tbody>
-						<tr height="${hasInsert ? '34%' : '50%'}">
-							<td colspan="5" align="center" valign="bottom">
-								<span>Go To page</span>
-							</td>
-						</tr>
-						<c:if test="${hasInsert}">
-							<tr height="33%">
-								<td width="5%" align="center" valign="bottom">
-									<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
-								</td>
-								<td width="25%" align="center">
-									<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
-								</td>
-								<td width="30%">
-									<input id="insertNum" name="insertNum" class="input_4cFolio" type="text" value="${documentExplorer.image.insertNum}" />
-								</td>
-								<td width="30%" align="left" valign="middle">
-									<input id="insertLet" name="insertLet" class="input_4cFolio" type="text" value="${documentExplorer.image.insertLet}" />
-								</td>
-							</tr>
-						</c:if>
-						<tr height="${hasInsert ? '33%' : '50%'}">
-							<td width="5%" align="center" valign="bottom">
-								<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
-							</td>
-							<td width="25%" align="center">
-								<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
-							</td>
-							<td width="30%">
-								<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="${documentExplorer.image.imageProgTypeNum}" />
-							</td>
-							<td width="30%">
-								<input id="missedNumbering" name="missedNumbering" class="input_4cFolio" type="text" value="${documentExplorer.image.missedNumbering}" />
-							</td>
-							<td width="10%" rowspan="${hasInsert ? '2' : '1' }" align="center" valign="middle">
-								<input id="go" class="button_mini" type="submit" value="Go" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}">
+				<div>
+					<div class="moveToFolioTitle">
+						Go To page
+					</div> 
+					
+					<c:if test="${hasInsert}">
+						<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
+						<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+						<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${documentExplorer.image.insertNum}" />
+						<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${documentExplorer.image.insertLet}" />
+					</c:if>
+					
+					<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+					<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="${documentExplorer.image.imageProgTypeNum}" />
+					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="${documentExplorer.image.missedNumbering}" />
+					<input id="go" class="button_mini" type="submit" value="Go" />
+				</div>
+				
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
@@ -345,7 +322,7 @@
 					return false;
 				});
 		        
-		        $j("#moveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}").submit(function (){
+		        $j(".editMoveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 // 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 // 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));

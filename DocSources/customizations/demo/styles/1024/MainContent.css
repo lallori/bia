@@ -2267,6 +2267,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 #moveToFolioForm { /* Move to folio FORM */
 	color:#6d5c4d;
 }
+#moveToFolioForm .moveToFolioTitle {
+	font-weight: bold;
+}
 
 #moveToFolioModalForm { /* Move to folio FORM in Fullscreen Mode */
 	width:230px;
@@ -3625,7 +3628,9 @@ a.helpIcon{ /* Help symbol "?" */
 	border-radius: 8px;
 	cursor:default;
 }
-#moveToFolioForm a.helpIcon {margin-right:10px}
+#moveToFolioForm a.helpIcon {
+	margin: 0 10px 0 20px;
+}
 
 div.title a.helpIcon{ /* Help symbol "?" */
 	text-decoration:none;
