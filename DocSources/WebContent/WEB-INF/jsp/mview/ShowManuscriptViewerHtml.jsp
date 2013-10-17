@@ -70,6 +70,7 @@
 				annotations: annotations,
 				annotationId: annotationId,
 				credit: credit,
+				enableEdit: false,
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image

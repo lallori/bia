@@ -77,7 +77,7 @@ IIPMooViewer.implement({
 	 * Create annotations if they are contained within our current view
 	 */
 	createAnnotations: function() {
-
+		
 		// If there are no annotations, simply return
 		if (!this.annotations || this.annotations.length == 0) {
 			return;
@@ -85,11 +85,18 @@ IIPMooViewer.implement({
 	
 	    // Convert our annotation object into an array - we'll need this for sorting later
 		var annotation_array = new Array();
-	    
-		for (var a in this.annotations) {
+		
+		/** MEDICI ARCHIVE PROJECT START **/
+		// RR: We read annotations by index position
+		/*for (var a in this.annotations) {
 			this.annotations[a].id = a;
 			annotation_array.push(this.annotations[a]);
+		}*/
+		for (var count = 0; count < this.annotations.length; count++) {
+			this.annotations[count].id = count;
+			annotation_array.push(this.annotations[count]);
 		}
+		/** MEDICI ARCHIVE PROJECT END */
 	
 	    // Make sure we really have some content
 		if (annotation_array.length == 0) {
@@ -100,7 +107,7 @@ IIPMooViewer.implement({
 	    // with annotations within annotations.
 		annotation_array.sort(
 			function(a,b) {
-				return (b.w*b.h)-(a.w*a.h);
+				return (b.w * b.h) - (a.w * a.h);
 			}
 		);
 	
@@ -130,7 +137,7 @@ IIPMooViewer.implement({
 						width: Math.round(this.wid * annotation_array[i].w),
 						height: Math.round(this.hei * annotation_array[i].h)
 					}
-				}).inject( this.canvas );
+				}).inject(this.canvas);
 			
 				if (this.annotationsVisible == false) {
 					annotation.addClass('hidden');
@@ -138,23 +145,24 @@ IIPMooViewer.implement({
 	
 				// Add edit events to annotations if we have included the functions
 				/** MEDICI ARCHIVE PROJECT START **/
-				/*	if( typeof(this.editAnnotation)=="function" ){
-				  if( annotation_array[i].edit == true ) this.editAnnotation( annotation );
-				  else{
-				    var _this = this;
-				    annotation.addEvent( 'dblclick', function(e){
-							   var event = new DOMEvent(e); 
-							   event.stop();
-							   _this.editAnnotation(this);
-							 });
-				}  */
+				/*if (typeof(this.editAnnotation) == "function") {
+					if (annotation_array[i].edit == true) {
+						this.editAnnotation(annotation);
+					} else {
+						var _this = this;
+						annotation.addEvent('dblclick', function(e) {
+							var event = new DOMEvent(e); 
+							event.stop();
+							_this.editAnnotation(this);
+						});
+					}*/
 		
-				if (typeof(this.editAnnotation)=="function") {
+				if (typeof(this.editAnnotation) == "function") {
 					if (annotation_array[i].edit == true) { 
 						this.editAnnotation(annotation);
 					} else {
 						var _this = this;
-						if (annotation_array[i].deletable) {
+						if (annotation_array[i].updatable) {
 							annotation.addEvent('dblclick', function(e) {
 								var event = new DOMEvent(e); 
 								event.stop();
@@ -278,7 +286,7 @@ IIPMooViewer.implement({
 					},
 
 					onSuccess: function(responseJSON, responseText) {
-						for (i=0; i<responseJSON.annotations.length; i++) {
+						for (i = 0; i < responseJSON.annotations.length; i++) {
 							this.annotations.push({
 								annotationId: responseJSON.annotations[i].annotationId.toInt(),
 								id: responseJSON.annotations[i].id,
@@ -289,7 +297,8 @@ IIPMooViewer.implement({
 								type: responseJSON.annotations[i].type,
 								title: responseJSON.annotations[i].title,
 								text: responseJSON.annotations[i].text,
-								deletable: responseJSON.annotations[i].deletable
+								deletable: responseJSON.annotations[i].deletable,
+								updatable: responseJSON.annotations[i].updatable
 								//Add Link To Forum
 							});
 						}
@@ -324,7 +333,8 @@ IIPMooViewer.implement({
 								type: responseJSON.annotations[i].type,
 								title: responseJSON.annotations[i].title,
 								text: responseJSON.annotations[i].text,
-								deletable: responseJSON.annotations[i].deletable
+								deletable: responseJSON.annotations[i].deletable,
+								updatable: responseJSON.annotations[i].updatable
 								//Add Link To Forum
 							});
 						}

@@ -716,6 +716,17 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isDeletableAnnotation(Annotation annotation) {
+		if (annotation.getForumTopic() != null) {
+			return getForumPostDAO().countPostsFromTopic(annotation.getForumTopic().getTopicId()) == 0;
+		}
+		return Boolean.TRUE;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -854,7 +865,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable {
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable {
 		try {
 			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
 			Image image = getImageDAO().findImageByImageId(imageId);
@@ -864,58 +875,62 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			
-			List<Annotation> annotationSaved = getAnnotationDAO().findAnnotationByImageAndUser(image.getImageName(), user);
+			List<Annotation> persistedAnnotations = getAnnotationDAO().findAnnotationByImageAndUser(image.getImageName(), user);
+			
+			Date operationDate = new Date();
 
-			for (Annotation annotation : annotationsList) {
-				annotation.setUser(user);
-				annotation.setImage(image);
-
-				Annotation persistedAnnotation = getAnnotationDAO().findByAnnotationId(annotation.getAnnotationId());
-				if (persistedAnnotation == null) {
-					annotation.setAnnotationId(null);
-					annotation.setDateCreated(new Date());
-					annotation.setLastUpdate(new Date());
-					if (annotation.getType() == null) {
-						annotation.setType(Annotation.Type.GENERAL);
+			for (Annotation viewAnnotation : fromViewAnnotations) {
+				Annotation annotation = getAnnotationDAO().findByAnnotationId(viewAnnotation.getAnnotationId());
+				
+				boolean isChanged = annotation == null || (annotation != null && 
+						(!annotation.getTitle().equals(viewAnnotation.getTitle()) 
+							|| !annotation.getText().equals(viewAnnotation.getText())
+							|| !annotation.getX().equals(viewAnnotation.getX())
+							|| !annotation.getY().equals(viewAnnotation.getY())
+							|| !annotation.getWidth().equals(viewAnnotation.getWidth())
+							|| !annotation.getHeight().equals(viewAnnotation.getHeight())));
+				
+				if (annotation == null) {
+					annotation = new Annotation();
+				} 
+				
+				if (isChanged) {
+					// We set general annotation details
+					annotation.setLastUpdate(operationDate);
+					annotation.setTitle(viewAnnotation.getTitle());
+					annotation.setText(viewAnnotation.getText());
+					annotation.setX(viewAnnotation.getX());
+					annotation.setY(viewAnnotation.getY());
+					annotation.setWidth(viewAnnotation.getWidth());
+					annotation.setHeight(viewAnnotation.getHeight());
+				}
+				
+				if (annotation.getAnnotationId() != null) {
+					// The annotation already exists in the database, we remove it from the persistedAnnotation list
+					for (int i = persistedAnnotations.size() - 1 ; i >= 0; i--) {
+						if (persistedAnnotations.get(i).getAnnotationId() == annotation.getAnnotationId()) {
+							persistedAnnotations.remove(i);
+							break;
+						}
 					}
+					
+					returnMap.put(annotation, -1);
+				} else {
+					// This is a new annotation
+					annotation.setDateCreated(operationDate);
+					annotation.setUser(user);
+					annotation.setImage(image);
+					annotation.setType(viewAnnotation.getType() != null ? viewAnnotation.getType() : Annotation.Type.GENERAL);
+					
 					getAnnotationDAO().persist(annotation);
 					
-					if (annotation.getType().equals(Annotation.Type.GENERAL)) {
-						Forum generalQuestionsForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.general")));
-						image = getImageDAO().find(image.getImageId());
-						
-						ForumTopic topicAnnotation = new ForumTopic(null);
-						topicAnnotation.setForum(generalQuestionsForum);
-						topicAnnotation.setDateCreated(new Date());
-						topicAnnotation.setLastUpdate(topicAnnotation.getDateCreated());
-						topicAnnotation.setIpAddress(ipAddress);
-						topicAnnotation.setUser(user);
-						topicAnnotation.setSubject(annotation.getTitle() + " (Annotation)");
-						topicAnnotation.setTotalReplies(new Integer(0));
-						topicAnnotation.setTotalViews(new Integer(0));
-						topicAnnotation.setLastPost(null);
-						topicAnnotation.setFirstPost(null);
-						topicAnnotation.setLogicalDelete(Boolean.FALSE);
-						
-						topicAnnotation.setAnnotation(annotation);
-						getForumTopicDAO().persist(topicAnnotation);
-						
-						getForumDAO().recursiveIncreaseTopicsNumber(generalQuestionsForum);
-						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
-							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
-							getForumTopicWatchDAO().persist(forumTopicWatch);
-						}
-						annotation.setForumTopic(topicAnnotation);
-						getAnnotationDAO().merge(annotation);
-						returnMap.put(annotation, topicAnnotation.getTopicId());
-//						annotation.setText(topicAnnotation.getSubject());
-//						getAnnotationDAO().merge(annotation);
-					}else if(annotation.getType().equals(Annotation.Type.PALEOGRAPHY)){
-						Forum paleographyForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography")));
+					if (Annotation.Type.GENERAL.equals(annotation.getType()) || Annotation.Type.PALEOGRAPHY.equals(annotation.getType())) {
+						Forum forum = getForumDAO().find(NumberUtils.createInteger(
+								ApplicationPropertyManager.getApplicationProperty(Annotation.Type.GENERAL.equals(annotation.getType()) ? "forum.identifier.general" : "forum.identifier.paleography")));
 						image = getImageDAO().find(imageId);
 						
 						ForumTopic topicAnnotation = new ForumTopic(null);
-						topicAnnotation.setForum(paleographyForum);
+						topicAnnotation.setForum(forum);
 						topicAnnotation.setDateCreated(new Date());
 						topicAnnotation.setLastUpdate(topicAnnotation.getDateCreated());
 						topicAnnotation.setIpAddress(ipAddress);
@@ -930,51 +945,37 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						topicAnnotation.setAnnotation(annotation);
 						getForumTopicDAO().persist(topicAnnotation);
 						
-						getForumDAO().recursiveIncreaseTopicsNumber(paleographyForum);
+						getForumDAO().recursiveIncreaseTopicsNumber(forum);
 						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
 							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
 							getForumTopicWatchDAO().persist(forumTopicWatch);
 						}
 						annotation.setForumTopic(topicAnnotation);
-						getAnnotationDAO().merge(annotation);
+						// getAnnotationDAO().merge(annotation);
 						returnMap.put(annotation, topicAnnotation.getTopicId());
+					} else {
+						returnMap.put(annotation, -1);
 					}
-				} else {
-					// we override id value beacause wen you edit an existing annotation, client set id to numeric.
-					annotation.setAnnotationId(persistedAnnotation.getAnnotationId());
-					
-					int i = 0;
-					Boolean finded = Boolean.FALSE;
-					while(i < annotationSaved.size() && !finded){
-						if(annotationSaved.get(i).getAnnotationId() == persistedAnnotation.getAnnotationId()){
-							annotationSaved.remove(i);
-							finded = Boolean.TRUE;
-						}
-						i++;
-					}
-					
-					annotation.setLastUpdate(new Date());
-					getAnnotationDAO().merge(annotation);
-					returnMap.put(annotation, 0);
 				}
 			}
 			
-			if(!annotationSaved.isEmpty()){
-				for(Annotation annotation : annotationSaved){
-					ForumTopic topicAnnotation = getForumTopicDAO().find(annotation.getForumTopic().getTopicId());
+			// We remove the old persisted annotations that are still in the list
+			for(Annotation toRemoveAnnotation : persistedAnnotations) {
+				if (toRemoveAnnotation.getForumTopic() != null) {
+					ForumTopic topicAnnotation = getForumTopicDAO().find(toRemoveAnnotation.getForumTopic().getTopicId());
 					topicAnnotation.setLogicalDelete(Boolean.TRUE);
 					topicAnnotation.setAnnotation(null);
-					getForumTopicDAO().merge(topicAnnotation);
+					// getForumTopicDAO().merge(topicAnnotation);
 					getForumPostDAO().deleteForumPostsFromForumTopic(topicAnnotation.getTopicId());
 					Forum forum = topicAnnotation.getForum();
 					recursiveSetLastPost(forum);
 					getForumDAO().recursiveDecreasePostsNumber(forum, topicAnnotation.getTotalReplies());
 					getForumDAO().recursiveDecreaseTopicsNumber(forum);
-//					forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
+					// forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
 					getForumDAO().merge(forum);				
-					annotation.setForumTopic(null);
-					getAnnotationDAO().remove(annotation);
+					toRemoveAnnotation.setForumTopic(null);
 				}
+				getAnnotationDAO().remove(toRemoveAnnotation);
 			}
 			
 			return returnMap;
@@ -983,9 +984,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
 		if(forum.getType().equals(Type.CATEGORY)){
 			return;
@@ -1000,9 +998,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		recursiveSetLastPost(forum.getForumParent(), lastPost);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	private void recursiveSetLastPost(Forum forum, ForumPost forumPost) throws ApplicationThrowable {
 		if(forum.getType().equals(Type.CATEGORY)){
 			return;

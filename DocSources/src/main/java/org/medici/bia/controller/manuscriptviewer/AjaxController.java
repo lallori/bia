@@ -28,6 +28,7 @@
 package org.medici.bia.controller.manuscriptviewer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.util.HtmlUtils;
-import org.medici.bia.common.util.ImageUtils;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
@@ -68,23 +68,73 @@ public class AjaxController {
 	private ManuscriptViewerService manuscriptViewerService;
 	@Autowired
 	private UserService userService;
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
 
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * This method calls the "add new annotation" process.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param imageType the image type
+	 * @param imageProgTypeNum the image progress type number
+	 * @param imageOrder the image order
+	 * @param imageName the image name
+	 * @param id
+	 * @param x the x-coordinate of the annotation
+	 * @param y the y-coordinate of the annotation
+	 * @param w the width of the annotation
+	 * @param h the height of the annotation
+	 * @param title the title of the annotation
+	 * @param category the category of the annotation
+	 * @param text the text associated to the annotation
+	 * @param httpServletRequest
+	 * @return
+	 */
 	@RequestMapping(value = {"/src/mview/CreateAnnotation.json", "/de/mview/CreateAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView createAnnotation(	@RequestParam(value="volNum", required=true) Integer volNum,
-											@RequestParam(value="volLetExt", required=true) String volLetExt,
-											@RequestParam(value="imageType", required=true) String imageType,
-											@RequestParam(value="imageProgTypeNum", required=true) Integer imageProgTypeNum,
-											@RequestParam(value="imageOrder", required=true) Integer imageOrder,
-											@RequestParam(value="imageName", required=true) String imageName,
-											@RequestParam(value="id", required=false) String id,
-											@RequestParam(value="x", required=true) Double x,
-											@RequestParam(value="y", required=true) Double y,
-											@RequestParam(value="w", required=true) Double w,
-											@RequestParam(value="h", required=true) Double h,
-											@RequestParam(value="title", required=true) String title,
-											@RequestParam(value="category", required=true) String category,
-											@RequestParam(value="text", required=false) String text,
-											HttpServletRequest httpServletRequest) {
+	public ModelAndView createAnnotation(
+			@RequestParam(value="volNum", required=true) Integer volNum,
+			@RequestParam(value="volLetExt", required=true) String volLetExt,
+			@RequestParam(value="imageType", required=true) String imageType,
+			@RequestParam(value="imageProgTypeNum", required=true) Integer imageProgTypeNum,
+			@RequestParam(value="imageOrder", required=true) Integer imageOrder,
+			@RequestParam(value="imageName", required=true) String imageName,
+			@RequestParam(value="id", required=false) String id,
+			@RequestParam(value="x", required=true) Double x,
+			@RequestParam(value="y", required=true) Double y,
+			@RequestParam(value="w", required=true) Double w,
+			@RequestParam(value="h", required=true) Double h,
+			@RequestParam(value="title", required=true) String title,
+			@RequestParam(value="category", required=true) String category,
+			@RequestParam(value="text", required=false) String text,
+			HttpServletRequest httpServletRequest) {
+		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
@@ -134,48 +184,15 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-			Boolean administrator = getUserService().isAccountAdministrator(account);
 			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
-			List<Object> resultList = new ArrayList<Object>();
-			for (Annotation currentAnnotation : annotations) {
-				Map<String, Object> singleRow = new HashMap<String, Object>(0);
-				if((annotationId != null && annotationId == currentAnnotation.getAnnotationId())){
-					//In this case we are in annotation forum
-					singleRow.put("annotationId", currentAnnotation.getAnnotationId());
-					singleRow.put("x", currentAnnotation.getX());
-					singleRow.put("y", currentAnnotation.getY());
-					singleRow.put("w", currentAnnotation.getWidth());
-					singleRow.put("h", currentAnnotation.getHeight());
-					singleRow.put("type", currentAnnotation.getType());
-					singleRow.put("title", currentAnnotation.getTitle());
-					singleRow.put("text", currentAnnotation.getText());
-					singleRow.put("deletable", false);
-					resultList.add(singleRow);
-				}else if(annotationId == null){
-					//In this case we are in manuscript viewer
-					singleRow.put("annotationId", currentAnnotation.getAnnotationId());
-					singleRow.put("x", currentAnnotation.getX());
-					singleRow.put("y", currentAnnotation.getY());
-					singleRow.put("w", currentAnnotation.getWidth());
-					singleRow.put("h", currentAnnotation.getHeight());
-					singleRow.put("type", currentAnnotation.getType());
-					singleRow.put("title", currentAnnotation.getTitle());
-					singleRow.put("text", currentAnnotation.getText());
-					if(account.equals(currentAnnotation.getUser().getAccount()) || administrator)
-						singleRow.put("deletable", true);
-					else
-						singleRow.put("deletable", false);
-					resultList.add(singleRow);
-				}
-			}
+			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
 			model.put("annotations", resultList);
 		} catch (ApplicationThrowable ath) {
 		}
 	
 		return new ModelAndView("responseOK", model);
 	}
-
+	
 	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
 	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -186,12 +203,12 @@ public class AjaxController {
 			// annotations in case of client send 1 single annotation 
 			//String imageName = httpServletRequest.getParameter("imageName");
 			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
-			String[] annotations = httpServletRequest.getParameterValues("annotations");
+			String[] annotationsFormView = httpServletRequest.getParameterValues("annotations");
 			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
 			List<Object> resultList = new ArrayList<Object>();
 
-			if (annotations != null) {
-				for (String string : annotations) {
+			if (annotationsFormView != null) {
+				for (String string : annotationsFormView) {
 					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
 					String[] splitted = StringUtils.splitPreserveAllTokens(string, ",");
 					Annotation annotation = new Annotation();
@@ -206,16 +223,20 @@ public class AjaxController {
 					annotationsList.add(annotation);
 				}
 			}
-			Map<Annotation, Integer> annotationMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
-			for(Annotation currentAnnotation : annotationMap.keySet()){
+			Map<Annotation, Integer> imageAnnotationsMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
+			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
-				if(annotationMap.get(currentAnnotation) != 0){
-					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/community/EditForumPostAnnotation.do?topicId=" + annotationMap.get(currentAnnotation));
+				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
+					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/community/EditForumPostAnnotation.do?topicId=" + imageAnnotationsMap.get(currentAnnotation));
 					resultList.add(singleRow);
 				}
 			}
+			// links -> only new annotations associated to a forum 
 			model.put("links", resultList);
-		}catch (ApplicationThrowable applicationThrowable) {
+			// annotation -> all of the annotations associated to the current image
+			model.put("annotations", getAnnotationsForView(null, imageAnnotationsMap.keySet()));
+			
+		} catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("responseKO", model);
 		}
 		
@@ -319,7 +340,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = {"/src/mview/SearchCarta.json", "/de/mview/SearchCarta.json"}, method = RequestMethod.GET)
-	public ModelAndView searchCarta(@RequestParam(value="entryId", required=false) Integer entryId,
+	public ModelAndView searchCarta(
+			@RequestParam(value="entryId", required=false) Integer entryId,
 			@RequestParam(value="volNum", required=false) Integer volNum,
 			@RequestParam(value="volLetExt", required=false) String volLetExt,
 			@RequestParam(value="imageType", required=false) String imageType,
@@ -390,30 +412,34 @@ public class AjaxController {
 	}
 
 	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 * This method generates a view of annotations to be sent to the view level.
+	 * 
+	 * @param annotationId the identifier of the annotation to show (if null all annotations of the list are showed)
+	 * @param annotations a list of annotations
+	 * @return a view of annotations
+	 * @throws ApplicationThrowable
 	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	private List<Object> getAnnotationsForView(Integer annotationId, Collection<Annotation> annotations) throws ApplicationThrowable {
+		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		Boolean administrator = getUserService().isAccountAdministrator(account);
+		
+		List<Object> resultList = new ArrayList<Object>();
+		for (Annotation currentAnnotation : annotations) {
+			Map<String, Object> singleRow = new HashMap<String, Object>(0);
+			if (annotationId == null || (annotationId != null && annotationId == currentAnnotation.getAnnotationId())) {
+				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
+				singleRow.put("x", currentAnnotation.getX());
+				singleRow.put("y", currentAnnotation.getY());
+				singleRow.put("w", currentAnnotation.getWidth());
+				singleRow.put("h", currentAnnotation.getHeight());
+				singleRow.put("type", currentAnnotation.getType());
+				singleRow.put("title", currentAnnotation.getTitle());
+				singleRow.put("text", currentAnnotation.getText());
+				singleRow.put("deletable", annotationId == null && getManuscriptViewerService().isDeletableAnnotation(currentAnnotation) ? true : false);
+				singleRow.put("updatable", annotationId == null && (account.equals(currentAnnotation.getUser().getAccount()) || administrator) ? true : false);
+				resultList.add(singleRow);
+			}
+		}
+		return resultList;
 	}
 }

@@ -269,13 +269,22 @@ public interface ManuscriptViewerService {
 	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable;
 
 	/**
+	 * This method determines if an annotation is deletable or not.<br/>
+	 * An annotation is deletable if it has no forum topic associated or if the associated forum topic has no active post.
+	 * 
+	 * @param annotation the annotation
+	 * @return true if the annotation provided is deletable
+	 */
+	public Boolean isDeletableAnnotation(Annotation annotation);
+	
+	/**
 	 * 
 	 * @param entryId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param imageId
@@ -285,10 +294,13 @@ public interface ManuscriptViewerService {
 	public Annotation updateAnnotation(Integer imageId, Annotation annotation) throws ApplicationThrowable;
 	
 	/**
+	 * This method updates the annotations associated to an image.
 	 * 
-	 * @param imageId
-	 * @param annotationsList
+	 * @param imageId the image identifier
+	 * @param fromViewAnnotations the list of annotations retrieved from the view level
+	 * @param ipAddress the ip address
+	 * @return a map with all the annotations (key) of the current image associated to a forum identifier (value greather than -1 only for new annotations)
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> annotationsList, String ipAddress) throws ApplicationThrowable;
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable;
 }

@@ -45,8 +45,17 @@ import org.medici.bia.domain.User;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface ForumPostDAO extends Dao<Integer, ForumPost> {
+	
+	/**
+	 * This method counts the number of active posts of a topic
+	 * 
+	 * @param forumTopicId the forum topic identifier
+	 * @return the number of active posts
+	 */
+	long countPostsFromTopic(Integer forumTopicId);
 
 	/**
 	 * 

@@ -98,6 +98,7 @@
 					annotationsType: 'remote',
 					retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+					enableEdit: true,
 					annotations: annotations
 				});
 				

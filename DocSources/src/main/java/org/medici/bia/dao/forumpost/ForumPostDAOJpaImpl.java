@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -83,6 +84,20 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	private static final long serialVersionUID = -7766262138445120927L;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long countPostsFromTopic(Integer forumTopicId) {
+		Query query = getEntityManager().createQuery("SELECT COUNT(*) FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false");
+		query.setParameter("topicId", forumTopicId);
+		try {
+			return (Long) query.getSingleResult();
+		} catch (NoResultException e) {
+			return 0;
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -444,4 +459,5 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 
 		return query.executeUpdate();
 	}
+
 }

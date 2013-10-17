@@ -43,6 +43,7 @@ import org.medici.bia.domain.User;
  * @author Lorenzo Pasquinelli (<a
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *         @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ *         @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface AnnotationDAO extends Dao<Integer, Annotation> {
 
@@ -55,10 +56,12 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
 	
 	/**
+	 * This method retrieves annotations associated to the provided image.<br/>
+	 * It retrieves also personal annotation associated to the provided owner.
 	 * 
-	 * @param imageName
-	 * @param user
-	 * @return
+	 * @param imageName the name of the image
+	 * @param user the owner of the annotations
+	 * @return a list of annotations associated to the provided image and owner (for personal annotations)
 	 * @throws PersistenceException
 	 */
 	List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException;
