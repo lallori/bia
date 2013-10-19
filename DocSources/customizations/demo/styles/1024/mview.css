@@ -7,7 +7,7 @@ body {
 .button_mini {
 	width:22px;
 	height:22px;
-	background-image:url(${contextPath}/images/1024/button_mini.png);
+	background-image:url(/biademo/images/1024/button_mini.png);
 	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -22,7 +22,7 @@ body {
 .button_small {
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(${contextPath}/images/1024/button_small.png);
+	background-image:url(/biademo/images/1024/button_small.png);
 	width:52px;
 	height:22px;
 	border:none;
@@ -38,7 +38,7 @@ body {
 .button_medium {
 	width: 126px;
 	height: 22px;
-	background-image: url(${contextPath}/images/1024/button_medium.png);
+	background-image: url(/biademo/images/1024/button_medium.png);
 	background-repeat: no-repeat;
 	padding: 4px 0 0 0;
 	cursor: pointer;
@@ -119,12 +119,24 @@ html version
 	font-size: 12px;
 }
 
+#prevButton {
+	display: inline-block;
+}
+
+#prevNextButtons {
+	position: relative;
+	margin: 0 auto;
+	width: 80px;
+}
+
 #PageTurnerVerticalDiv {
 	position:relative;
 	margin:0 auto 0 auto;
-	height: 95%;
+	height: 116%;
 	font-size: 12px;
 	overflow:hidden;
+	display: inline-block;
+	display: inline-block;
 }
 
 div.hideAnnotation {
@@ -165,18 +177,10 @@ div.hideNavWindow {
 #PageTurnerHorizontalDiv #prevNextButtons {
 	width: 80px;
 	margin-top:8px;
-	position:absolute;
 }
 
 #PageTurnerHorizontalDiv #prevNextButtons.transcribe {
 	margin: 3px 0 0 215px;
-}
-
-#PageTurnerVerticalDiv #prevNextButtons {
-	width: 90px;
-	margin-top: 130px;
-	margin-left: 15px;
-	position: absolute;
 }
 
 #PageTurnerHorizontalDiv #prevButton img, #PageTurnerHorizontalDiv #nextButton img, #PageTurnerHorizontalDiv #personalNotesDiv img, #PageTurnerHorizontalDiv #exitDiv img{
@@ -184,8 +188,7 @@ div.hideNavWindow {
 }
 
 #PageTurnerHorizontalDiv #prevButton a,  #PageTurnerVerticalDiv #prevButton a{
-	float:left;
-	background:url(${contextPath}/images/mview/button_lastRecord_pageTurner.png) no-repeat;
+	background:url(/biademo/images/mview/button_lastRecord_pageTurner.png) no-repeat;
 	padding:4px 0 0 4px;
 	text-align:center;
 	text-decoration:none;
@@ -194,11 +197,11 @@ div.hideNavWindow {
 	height:22px;
 	font-size:11px;
 	cursor: pointer;
+	display: inline-block;
 }
 
 #PageTurnerHorizontalDiv #nextButton a, #PageTurnerVerticalDiv #nextButton a {
-	float:right;
-	background:url(${contextPath}/images/mview/button_nextRecord_pageTurner.png) no-repeat;
+	background:url(/biademo/images/mview/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height:22px;
 	font-size:11px;
@@ -206,6 +209,7 @@ div.hideNavWindow {
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
+	display: inline-block;
 }
 
 
@@ -218,7 +222,7 @@ div.hideNavWindow {
 }
 
 a.transcribe {
-	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	background:url(/biademo/images/mview/button_medium.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	margin: 10px 0 0 0;
@@ -228,7 +232,6 @@ a.transcribe {
 	cursor:auto;
 	text-decoration: none;
 	color: #6F6B69;
-	position:absolute;
 }
 
 .transcribeMessage:hover {
@@ -237,16 +240,10 @@ a.transcribe {
 
 .transcribeMessage {
 	color:#F00;
-	position:absolute;
 	text-decoration:none;
-	width:182px;
-	height:36px;
 	text-align: center;
 	padding-top: 4px;
-}
-
-#PageTurnerVerticalDiv #transcribeDiv .transcribeMessage {
-	width: 120px;
+	display: block;
 }
 
 #PageTurnerVerticalDiv #transcribeDiv #transcribe {
@@ -279,26 +276,6 @@ a.transcribe {
 	color: green;
 }
 
-#PageTurnerVerticalDiv #showAlreadyTranscribedDocs {
-	margin: 45px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerVerticalDiv #transcribeAnyway {
-	margin: 75px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerHorizontalDiv #showAlreadyTranscribedDocs {
-	margin: 25px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerHorizontalDiv #transcribeAnyway {
-	margin: 55px 0 0 0;
-	position:absolute;
-}
-
 
 .inputerrors { /* Error Span messages */
 	color:#900;
@@ -325,15 +302,6 @@ a.transcribe {
 
 /* ---- Show Allready Transcribed Document ----- */
 
-#showAlreadyTranscribed.transcribe   { /* Volume Summary button on Page Turner Panel */
-	 margin: 53px 0 0 35px;
-}
-
-#PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
-	 margin: 75px 0 0 0px;
-	position: absolute;
-}
-
 #PageTurnerVerticalDiv #extractTranscribe { /* Volume Summary button on Page Turner Vertical Panel */
 	 margin: 65px 0 0 0px;
 	position: absolute;
@@ -345,15 +313,6 @@ a.transcribe {
 }
 
 /* ---- Trascription ----- */
-
-#showTranscription {
-	margin: 25px 0 0 35px;
-}
-
-#PageTurnerVerticalDiv #showTranscription {
-	margin: 45px 0 0 0;
-}
-
 #showSynopsis {
 	float: left;
 }
@@ -371,9 +330,7 @@ a.transcribe {
 /* ---- Volume Summary ----- */
 
 #volumeSummary { /* Volume Summary button on Page Turner Panel */
-	margin:7px 0 0 37px;
-	position:absolute;
-	background:url(${contextPath}/images/mview/button_volumeSummary.png) no-repeat;
+	background:url(/biademo/images/mview/button_volumeSummary.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -381,14 +338,11 @@ a.transcribe {
 	width:35px;
 	height:35px;
 	font-size:11px;
+	display: inline-block;
 }
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
 	margin: 3px 0 0 329px;
-}
-
-#PageTurnerVerticalDiv #volumeSummary {
-	margin: 227px 0 0 0;
 }
 
 /* Volume Summary dialog Window */
@@ -454,9 +408,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Index of Names ----- */
 
 #indexNames { /* Index of Names button on Page Turner Panel */
-	margin:7px 0 0 37px;
-	position:absolute;
-	background:url(${contextPath}/images/mview/button_indexOfNames.png) no-repeat;
+	background:url(/biademo/images/mview/button_indexOfNames.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -464,14 +416,12 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:35px;
 	height:35px;
 	font-size:11px;
+	display: inline-block;
+	margin-left: 3px;
 }
 
 #indexNames.transcribe { /* Index of Names button on Page Turner Pannel */
 	margin: 40px 0 0 328px;
-}
-
-#PageTurnerVerticalDiv #indexNames {
-	margin: 227px 0 0 46px;
 }
 
 
@@ -522,7 +472,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin:-5px 0 0 140px;
 	width:22px;
 	height:22px;
-	background-image:url(${contextPath}/images/mview/button_mini.png);
+	background-image:url(/biademo/images/mview/button_mini.png);
 	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -557,8 +507,11 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerVerticalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM in VERTICAL MODE */
 	width:120px;
 	color:#6d5c4d;
-	position: absolute;
-	margin: 181px 0 0 2px;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #PageTurnerHorizontalDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
@@ -608,7 +561,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: -5px 0 0 110px;
 	width:22px;
 	height:22px;
-	background-image:url(${contextPath}/images/mview/button_mini.png);
+	background-image:url(/biademo/images/mview/button_mini.png);
 	font-size: 12px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -622,7 +575,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: -5px 0 0 92px;
 	width:22px;
 	height:22px;
-	background-image:url(${contextPath}/images/mview/button_mini.png);
+	background-image:url(/biademo/images/mview/button_mini.png);
 	font-size: 12px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -640,7 +593,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerHorizontalDiv #personalNotesDiv a{
 	margin:8px 0 0 455px;
 	position:absolute;
-	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
+	background:url(/biademo/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -651,9 +604,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv a#personalNotesButton{
-	margin: 230px 0 0 91px;
-	position:absolute;
-	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
+	background:url(/biademo/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -662,6 +613,8 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	height:32px;
 	font-size:11px;
 	cursor:pointer;
+	display: inline-block;
+	margin-left: 3px;
 }
 
 #PageTurnerHorizontalDiv #personalNotesDiv a.transcribe{
@@ -676,7 +629,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #exitDiv a{
 	margin:47px 0 0 455px;
 	position:absolute;
-	background:url(${contextPath}/images/mview/button_small.png) no-repeat;
+	background:url(/biademo/images/mview/button_small.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -692,8 +645,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv a#exitButton{
-	margin: 300px 0 0 35px;
-	position:absolute;
+	display: block;
+	position: relative;
+	margin: 0 auto;
 }
 
 /* ---------------- */
@@ -728,16 +682,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:120px;
 	height:1px;
 	background-color:#E6D0C6;
-}
-
-#PageTurnerVerticalDiv #line {
-	position:absolute;
-	margin-top: 110px;
-}
-
-#PageTurnerVerticalDiv #line2 {
-	position:absolute;
-	margin-top: 280px;
+	margin: 10px 0;
 }
 
 /* ---------------- */
@@ -756,7 +701,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditExtractDocumentDiv #saveExtract {
 	float:left;
 	display:inline;
-	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	background:url(/biademo/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -769,7 +714,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditExtractDocumentDiv #saveAndEditSynopsis {
 	float:right;	
 	display:inline;
-	background:url(${contextPath}/images/mview/button_large.png) no-repeat;
+	background:url(/biademo/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -790,7 +735,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditSynopsisDocumentDiv #saveSynopsis {
 	float:left;
 	display:inline;
-	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	background:url(/biademo/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -803,7 +748,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditSynopsisDocumentDiv #saveSynopsisExit {
 	float:right;	
 	display:inline;
-	background:url(${contextPath}/images/mview/button_large.png) no-repeat;
+	background:url(/biademo/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -820,7 +765,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #DialogPersonalNotesDiv #saveNotes {
 	float:left;
 	display:inline;
-	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	background:url(/biademo/images/mview/button_medium.png) no-repeat;
 	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -835,7 +780,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #DialogPersonalNotesDiv #cleanNotes {
 	float:right;	
 	display:inline;
-	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	background:url(/biademo/images/mview/button_medium.png) no-repeat;
 	padding: 4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -848,7 +793,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
-    background-image:url(${contextPath}/images/1024/img_loadingDiv.gif);
+    background-image:url(/biademo/images/1024/img_loadingDiv.gif);
     visibility: hidden;
     z-index:999;
     opacity:0.4;
@@ -917,9 +862,9 @@ a.helpIcon {
 /* Interaction states
 ----------------------------------*/
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(${contextPath}/images/mview/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(/biademo/images/mview/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(${contextPath}/images/mview/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(/biademo/images/mview/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
 
 
 /* jQuery UI Dialog 1.8.9 */
