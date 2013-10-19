@@ -36,7 +36,7 @@ import org.apache.tiles.Initializable;
 import org.apache.tiles.awareness.TilesApplicationContextAware;
 import org.apache.tiles.context.TilesRequestContext;
 import org.apache.tiles.definition.DefinitionsFactory;
-import org.apache.tiles.definition.NoSuchDefinitionException;
+import org.apache.tiles.definition.DefinitionsFactoryException;
 import org.apache.tiles.definition.UnresolvingLocaleDefinitionsFactory;
 import org.apache.tiles.definition.dao.CachingLocaleUrlDefinitionDAO;
 import org.apache.tiles.definition.dao.DefinitionDAO;
@@ -46,8 +46,7 @@ import org.apache.tiles.reflect.ClassUtil;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public class ApplicationTilesDefinitionsFactory extends UnresolvingLocaleDefinitionsFactory implements Initializable {
