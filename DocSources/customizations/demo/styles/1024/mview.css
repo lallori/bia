@@ -119,7 +119,7 @@ html version
 	font-size: 12px;
 }
 
-#prevButton {
+#prevButton, #nextButton {
 	display: inline-block;
 }
 
@@ -132,7 +132,7 @@ html version
 #PageTurnerVerticalDiv {
 	position:relative;
 	margin:0 auto 0 auto;
-	height: 116%;
+	height: auto!important;
 	font-size: 12px;
 	overflow:hidden;
 	display: inline-block;
