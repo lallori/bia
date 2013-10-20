@@ -139,6 +139,8 @@ html version
 	display: inline-block;
 }
 
+.ui-dialog[aria-labelledby=ui-dialog-title-PageTurnerVerticalDiv] {height:auto!important;}
+
 div.hideAnnotation {
     bottom: 85px;
     left: 10px;
@@ -226,7 +228,6 @@ a.transcribe {
 	padding:4px 0 0 0;
 	text-align:center;
 	margin: 10px 0 0 0;
-	float:left;
 	width:122px;
 	height:22px;
 	cursor:auto;
