@@ -119,13 +119,13 @@
 <div id="PageTurnerHorizontalDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	<div id="transcribeDiv">
-		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.transcriptionAvailableForFoliosOnly"/></span>
-		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;"><fmt:message key="mview.pageTurnerDialog_horizontal.documentAlreadyTranscribed"/></a>
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green"><fmt:message key="mview.pageTurnerDialog_horizontal.documentEnteredButNotTranscribed"/></font>
-		<a id="extractTranscribe" href="#" style="visibility: hidden; cursor: pointer;" title="Transcribe extract" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.transcribeThisDocument"/></a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden; cursor: pointer" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.showThisDocument"/></a>
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.readyToTranscribe"/></a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.chooseThisAsStartFolio"/></a>
+		<span id="unvailableTranscribe" class="transcribeMessage" style="display: none;"><fmt:message key="mview.pageTurnerDialog_horizontal.transcriptionAvailableForFoliosOnly"/></span>
+		<a id="alreadyTranscribe" class="transcribeMessage" style="display: none;"><fmt:message key="mview.pageTurnerDialog_horizontal.documentAlreadyTranscribed"/></a>
+		<a id="notExtract" class="transcribeMessage" style="display: none;"><font color="green"><fmt:message key="mview.pageTurnerDialog_horizontal.documentEnteredButNotTranscribed"/></font>
+		<a id="extractTranscribe" href="#" style="display: none; cursor: pointer;" title="Transcribe extract" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.transcribeThisDocument"/></a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="display: none; cursor: pointer" class="transcribe"><fmt:message key="mview.pageTurnerDialog_horizontal.showThisDocument"/></a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="display: none; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.readyToTranscribe"/></a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="display: none; cursor: pointer"><fmt:message key="mview.pageTurnerDialog_horizontal.chooseThisAsStartFolio"/></a>
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
 		<input type="hidden" id="currentImageOrder" value="${command.imageOrder}" />
 	</div>
@@ -450,78 +450,78 @@
 				currentImage = data.imageId;
 				$j("#currentImageOrder").val(data.imageOrder);
 				if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#alreadyTranscribe").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#notExtract").css('visibility', 'hidden');
-					$j("#extractTranscribe").css('visibility', 'hidden');
-					$j("#readyToTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					$j("#unvailableTranscribe").css('display', 'none');
+					$j("#alreadyTranscribe").css('display', 'none');
+					$j("#showAlreadyTranscribed").css('display', 'none');
+					$j("#notExtract").css('display', 'none');
+					$j("#extractTranscribe").css('display', 'none');
+					$j("#readyToTranscribe").css('display', 'none');
+					$j("#choiceThisFolioStart").css('display', 'none');
 					$j("#transcribeDiv").append($j("#transcribeMode"));
 					$j("#transcribeMode").css('display', 'inline');
 				}else{
 					if (data.error == 'wrongType' || data.imageType == 'R') {
-						$j("#unvailableTranscribe").css('visibility', 'visible');
-						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-						$j("#notExtract").css('visibility', 'hidden');
-						$j("#extractTranscribe").css('visibility', 'hidden');
-						$j("#readyToTranscribe").css('visibility', 'hidden');
-						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						$j("#unvailableTranscribe").css('display', 'block');
+						$j("#alreadyTranscribe").css('display', 'none');
+						$j("#showAlreadyTranscribed").css('display', 'none');
+						$j("#notExtract").css('display', 'none');
+						$j("#extractTranscribe").css('display', 'none');
+						$j("#readyToTranscribe").css('display', 'none');
+						$j("#choiceThisFolioStart").css('display', 'none');
 					} else if (data.linkedDocument == 'true') {
 						if(data.isExtract == 'false'){
-							$j("#notExtract").css('visibility', 'visible');
-							$j("#extractTranscribe").css('visibility', 'visible');
+							$j("#notExtract").css('display', 'block');
+							$j("#extractTranscribe").css('display', 'block');
 							$j("#currentEntryId").val(data.entryId);
-							$j("#alreadyTranscribe").css('visibility', 'hidden');
-							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-							$j("#unvailableTranscribe").css('visibility', 'hidden');
-							$j("#readyToTranscribe").css('visibility', 'hidden');
-							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							$j("#alreadyTranscribe").css('display', 'none');
+							$j("#showAlreadyTranscribed").css('display', 'none');
+							$j("#unvailableTranscribe").css('display', 'none');
+							$j("#readyToTranscribe").css('display', 'none');
+							$j("#choiceThisFolioStart").css('display', 'none');
 						}else{
-							$j("#alreadyTranscribe").css('visibility', 'visible');
-							$j("#showAlreadyTranscribed").css('visibility', 'visible');
-							$j("#notExtract").css('visibility', 'hidden');
-							$j("#extractTranscribe").css('visibility', 'hidden');
-							$j("#unvailableTranscribe").css('visibility', 'hidden');
-							$j("#readyToTranscribe").css('visibility', 'hidden');
-							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							$j("#alreadyTranscribe").css('display', 'block');
+							$j("#showAlreadyTranscribed").css('display', 'block');
+							$j("#notExtract").css('display', 'none');
+							$j("#extractTranscribe").css('display', 'none');
+							$j("#unvailableTranscribe").css('display', 'none');
+							$j("#readyToTranscribe").css('display', 'none');
+							$j("#choiceThisFolioStart").css('display', 'none');
 							$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 						}
 					} else if (data.linkedDocument == 'false') {
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-						$j("#readyToTranscribe").css('visibility', 'visible');
+						$j("#readyToTranscribe").css('display', 'block');
 						</security:authorize>
-						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-						$j("#notExtract").css('visibility', 'hidden');
-						$j("#extractTranscribe").css('visibility', 'hidden');
-						$j("#unvailableTranscribe").css('visibility', 'hidden');
-						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						$j("#alreadyTranscribe").css('display', 'none');
+						$j("#showAlreadyTranscribed").css('display', 'none');
+						$j("#notExtract").css('display', 'none');
+						$j("#extractTranscribe").css('display', 'none');
+						$j("#unvailableTranscribe").css('display', 'none');
+						$j("#choiceThisFolioStart").css('display', 'none');
 					} else {
-						$j("#unvailableTranscribe").css('visibility', 'hidden');
-						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-						$j("#notExtract").css('visibility', 'hidden');
-						$j("#extractTranscribe").css('visibility', 'hidden');
-						$j("#readyToTranscribe").css('visibility', 'hidden');
-						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						$j("#unvailableTranscribe").css('display', 'none');
+						$j("#alreadyTranscribe").css('display', 'none');
+						$j("#showAlreadyTranscribed").css('display', 'none');
+						$j("#notExtract").css('display', 'none');
+						$j("#extractTranscribe").css('display', 'none');
+						$j("#readyToTranscribe").css('display', 'none');
+						$j("#choiceThisFolioStart").css('display', 'none');
 					}
 				}
 			}});
 
 			
 			$j('#readyToTranscribe').click(function() {
-				$j("#choiceThisFolioStart").css('visibility', 'visible');
-				$j("#readyToTranscribe").css('visibility', 'hidden');
+				$j("#choiceThisFolioStart").css('display', 'block');
+				$j("#readyToTranscribe").css('display', 'none');
 				transcribing=true;
 				imageDocumentToCreate=currentImage;
 				return false;
 			});
 			
 			$j('#choiceThisFolioStart').click(function() {
-				$j("#choiceThisFolioStart").css('visibility', 'visible');
-				$j("#readyToTranscribe").css('visibility', 'hidden');
+				$j("#choiceThisFolioStart").css('display', 'block');
+				$j("#readyToTranscribe").css('display', 'none');
 				imageDocumentFolioStart=currentImage;
 				var contextPath ="${ContextPathURL}";
 				var urlToTranscribe = contextPath + "de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
@@ -535,7 +535,7 @@
 				}
 				urlToExplore = contextPath + "src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
 				window.opener.$j("#body_left").load(urlToTranscribe);
-				$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				$j("#choiceThisFolioStart").css('display', 'none');
 				//To open volume explorer in a tab
 				var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Explore Volume ${command.volNum}" + volLetExt + "</span>";
 				var numTab = 0;
