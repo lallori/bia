@@ -247,14 +247,6 @@ a.transcribe {
 	display: block;
 }
 
-#PageTurnerVerticalDiv #transcribeDiv #transcribe {
-	position: absolute;
-}
-
-#extractTranscribe {
-	position: absolute;
-}
-
 #PageTurnerVerticalDiv #readyToTranscribe {
 	margin-top: 20px;
 	position: absolute;
@@ -300,18 +292,6 @@ a.transcribe {
 	position: absolute;
 }	
 
-
-/* ---- Show Allready Transcribed Document ----- */
-
-#PageTurnerVerticalDiv #extractTranscribe { /* Volume Summary button on Page Turner Vertical Panel */
-	 margin: 65px 0 0 0px;
-	position: absolute;
-}
-
-#PageTurnerHorizontalDiv #extractTranscribe { /* Volume Summary button on Page Turner Horizontal Panel */
-	 margin: 50px 0 0 30px;
-	position: absolute;
-}
 
 /* ---- Trascription ----- */
 #showSynopsis {

@@ -168,7 +168,6 @@ div.hideNavWindow {
 }
 
 #PageTurnerHorizontalDiv #prevButton a,  #PageTurnerVerticalDiv #prevButton a{
-	float:left;
 	background:url(${contextPath}/images/mview/button_lastRecord_pageTurner.png) no-repeat;
 	padding:4px 0 0 4px;
 	text-align:center;
@@ -178,10 +177,10 @@ div.hideNavWindow {
 	height:22px;
 	font-size:11px;
 	cursor: pointer;
+	display: inline-block;
 }
 
 #PageTurnerHorizontalDiv #nextButton a, #PageTurnerVerticalDiv #nextButton a {
-	float:right;
 	background:url(${contextPath}/images/mview/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height:22px;
@@ -190,6 +189,7 @@ div.hideNavWindow {
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
+	display: inline-block;
 }
 
 
@@ -202,9 +202,15 @@ div.hideNavWindow {
 }
 
 a.transcribe {
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
 	margin: 10px 0 0 0;
-	float:left;
-	position:absolute;
+	width:122px;
+	height:22px;
+	cursor:auto;
+	text-decoration: none;
+	color: #6F6B69;
 }
 
 .transcribeMessage:hover {
@@ -213,24 +219,10 @@ a.transcribe {
 
 .transcribeMessage {
 	color:#F00;
-	position:absolute;
 	text-decoration:none;
-	width:182px;
-	height:36px;
 	text-align: center;
 	padding-top: 4px;
-}
-
-#PageTurnerVerticalDiv #transcribeDiv .transcribeMessage {
-	width: 120px;
-}
-
-#PageTurnerVerticalDiv #transcribeDiv #transcribe {
-	position: absolute;
-}
-
-#extractTranscribe {
-	position: absolute;
+	display: block;
 }
 
 #PageTurnerVerticalDiv #readyToTranscribe {
@@ -253,26 +245,6 @@ a.transcribe {
 
 #notExtract {
 	color: green;
-}
-
-#PageTurnerVerticalDiv #showAlreadyTranscribedDocs {
-	margin: 45px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerVerticalDiv #transcribeAnyway {
-	margin: 75px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerHorizontalDiv #showAlreadyTranscribedDocs {
-	margin: 25px 0 0 0;
-	position:absolute;
-}
-
-#PageTurnerHorizontalDiv #transcribeAnyway {
-	margin: 55px 0 0 0;
-	position:absolute;
 }
 
 
@@ -298,38 +270,7 @@ a.transcribe {
 	position: absolute;
 }	
 
-
-/* ---- Show Allready Transcribed Document ----- */
-
-#showAlreadyTranscribed.transcribe   { /* Volume Summary button on Page Turner Panel */
-	 margin: 53px 0 0 35px;
-}
-
-#PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
-	 margin: 75px 0 0 0px;
-	position: absolute;
-}
-
-#PageTurnerVerticalDiv #extractTranscribe { /* Volume Summary button on Page Turner Vertical Panel */
-	 margin: 65px 0 0 0px;
-	position: absolute;
-}
-
-#PageTurnerHorizontalDiv #extractTranscribe { /* Volume Summary button on Page Turner Horizontal Panel */
-	 margin: 50px 0 0 30px;
-	position: absolute;
-}
-
 /* ---- Trascription ----- */
-
-#showTranscription {
-	margin: 25px 0 0 35px;
-}
-
-#PageTurnerVerticalDiv #showTranscription {
-	margin: 45px 0 0 0;
-}
-
 #showSynopsis {
 	float: left;
 }
@@ -347,8 +288,6 @@ a.transcribe {
 /* ---- Volume Summary ----- */
 
 #volumeSummary { /* Volume Summary button on Page Turner Panel */
-	margin:7px 0 0 37px;
-	position:absolute;
 	background:url(${contextPath}/images/mview/button_volumeSummary.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
@@ -357,14 +296,11 @@ a.transcribe {
 	width:35px;
 	height:35px;
 	font-size:11px;
+	display: inline-block;
 }
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
 	margin: 3px 0 0 329px;
-}
-
-#PageTurnerVerticalDiv #volumeSummary {
-	margin: 227px 0 0 0;
 }
 
 /* Volume Summary dialog Window */
@@ -430,8 +366,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Index of Names ----- */
 
 #indexNames { /* Index of Names button on Page Turner Panel */
-	margin:7px 0 0 37px;
-	position:absolute;
 	background:url(${contextPath}/images/mview/button_indexOfNames.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
@@ -440,15 +374,14 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:35px;
 	height:35px;
 	font-size:11px;
+	display: inline-block;
+	margin-left: 3px;
 }
 
 #indexNames.transcribe { /* Index of Names button on Page Turner Pannel */
 	margin: 40px 0 0 328px;
 }
 
-#PageTurnerVerticalDiv #indexNames {
-	margin: 227px 0 0 46px;
-}
 
 
 /* ---------------- */
@@ -517,8 +450,11 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerVerticalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM in VERTICAL MODE */
 	width:120px;
 	color:#6d5c4d;
-	position: absolute;
-	margin: 181px 0 0 2px;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #PageTurnerHorizontalDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
@@ -578,8 +514,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Personal Notes ----- */
 
 #PageTurnerHorizontalDiv #personalNotesDiv a{
-	margin:8px 0 0 455px;
-	position:absolute;
+	margin: -5px 0 0 110px;
 	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
@@ -591,8 +526,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv a#personalNotesButton{
-	margin: 230px 0 0 91px;
-	position:absolute;
 	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
@@ -602,6 +535,8 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	height:32px;
 	font-size:11px;
 	cursor:pointer;
+	display: inline-block;
+	margin-left: 3px;
 }
 
 #PageTurnerHorizontalDiv #personalNotesDiv a.transcribe{
@@ -624,8 +559,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv a#exitButton{
-	margin: 300px 0 0 35px;
-	position:absolute;
+	display: block;
+	position: relative;
+	margin: 0 auto;
 }
 
 /* ---------------- */

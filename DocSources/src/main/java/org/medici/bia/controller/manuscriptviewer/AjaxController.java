@@ -298,7 +298,7 @@ public class AjaxController {
 				isExtract = getManuscriptViewerService().isDocumentExtract(documentId);
 			}
 			
-			model.put("linkedDocument", (documents != null) ? "true" : "false");
+			model.put("linkedDocument", (documents != null && documents.size() > 0) ? "true" : "false");
 			model.put("countAlreadyEntered", (documents != null) ? documents.size() : 0);
 			model.put("entryId", documentId );
 			if(documents != null && documents.size() == 1){
