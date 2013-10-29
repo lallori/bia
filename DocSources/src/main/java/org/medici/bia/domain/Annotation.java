@@ -51,6 +51,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 @Entity
@@ -101,6 +102,9 @@ public class Annotation implements Serializable {
 	@JoinColumn(name="\"topicId\"")
 	@IndexedEmbedded
 	private ForumTopic forumTopic;
+	
+	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean logicalDelete;
 	
 	/**
 	 * 
@@ -301,6 +305,20 @@ public class Annotation implements Serializable {
 	 */
 	public void setForumTopic(ForumTopic forumTopic) {
 		this.forumTopic = forumTopic;
+	}
+	
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+	
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
 	}
 
 	/**

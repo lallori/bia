@@ -47,7 +47,8 @@ IIPMooViewer.implement({
 				title: '',
 				text: '',
 				deletable: true,
-				updatable: true
+				updatable: true,
+				newAnnotation: true
 		};
 
 		// Create an array if we don't have one and push a new annotation to it
@@ -145,10 +146,15 @@ IIPMooViewer.implement({
 				}
 			}).inject(annotation);
 			
+			var titleEditable = this.annotations[currentIndex].newAnnotation || this.annotations[currentIndex].type == "PERSONAL";
+			
 			// Create our input fields
 			var html = '<table><tr><td>Annotation Title</td><td><input type="text" name="title" autofocus';
 			if (this.annotations[currentIndex].title ) {
 				html += ' value="' + this.annotations[currentIndex].title + '"';
+				if (!titleEditable) {
+					html += ' readonly="readonly" title="It is not possible to modify the title!"';
+				}
 			}
 			html += '/></td></tr>';
 	
@@ -160,7 +166,7 @@ IIPMooViewer.implement({
 			if (changeableType) {
 				/*html += '<tr><td>Annotation Type</td><td><input type="text" name="category"';
 				html += '<tr><td>Annotation Type</td><td><select name="category"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';*/
-				html += '<tr><td>Annotation Type</td><td><input name="category" type="radio"  value="GENERAL"';
+				html += '<tr><td>Annotation Type</td><td><input name="category" type="radio" value="GENERAL"';
 				if (this.annotations[currentIndex].type == 'GENERAL' || this.annotations[currentIndex].type == '') {
 					html += 'checked="true"';
 				}
@@ -168,7 +174,7 @@ IIPMooViewer.implement({
 				if (this.annotations[currentIndex].type == 'PALEOGRAPHY') {
 					html += 'checked="true"';
 				}
-				html +=	'>Paleography<br><input name="category" type="radio" value="PERSONAL"';
+				html +=	'>Paleography<br><input id="defaultAnnotation" name="category" type="radio" value="PERSONAL"';
 				if (this.annotations[currentIndex].type == 'PERSONAL') {
 					html += 'checked="true"';
 				}
@@ -182,10 +188,11 @@ IIPMooViewer.implement({
 			}
 			
 	
-			if (this.annotations[currentIndex].type == 'PERSONAL') {
+			if (this.annotations[currentIndex].newAnnotation || this.annotations[currentIndex].type == 'PERSONAL') {
 				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			} else {
-				html += '<tr><td colspan="2"><textarea name="text" rows="5" style="display:none;" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
+				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea" readonly="readonly">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
+				//html += '<tr><td colspan="2"><textarea name="text" rows="5" style="display:none;" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			}
 	
 			html += '<input type="hidden" name="annotationId" value="' + this.annotations[currentIndex].annotationId + '">';
@@ -290,9 +297,14 @@ IIPMooViewer.implement({
 				},
 				'reset': function() {
 					/** MEDICI ARCHIVE PROJECT START **/
-					// RR: now we use the index of the annotations array
-					// delete _this.annotations[id].edit;
-					delete _this.annotations[currentIndex].edit;
+					if (_this.annotations[currentIndex].newAnnotation) {
+						// RR: if we remove a new annotation we have to remove it from the array
+						_this.annotations.splice(currentIndex, 1);
+					} else {
+						// RR: we remove the edit property for a stored annotation
+						// delete _this.annotations[id].edit;
+						delete _this.annotations[currentIndex].edit;
+					}
 					/** MEDICI ARCHIVE PROJECT END **/
 					_this.updateAnnotations();
 				}
@@ -386,7 +398,7 @@ IIPMooViewer.implement({
 	
 	
 			// Set default focus on textarea
-			annotation.addEvent( 'mouseenter', function() {
+			annotation.addEvent('mouseenter', function() {
 				form.getElement('textarea').focus();
 				form.getElement('textarea').value = form.getElement('textarea').value;
 			});
@@ -398,7 +410,7 @@ IIPMooViewer.implement({
 					this.value = this.value;
 				},
 				'dblclick': function(e) {
-					e.stop;
+					e.stop();
 				},
 				'mousedown': function(e) {
 					e.stop();
@@ -410,6 +422,13 @@ IIPMooViewer.implement({
 					e.stop();
 				}
 			});
+			
+			/** MEDICI ARCHIVE PROJECT START **/
+			// RR: The default annotation type ('PERSONAL') is selected for new annotations
+			if (this.annotations[currentIndex].newAnnotation) {
+				document.getElementById('defaultAnnotation').click();
+			}
+			/** MEDICI ARCHIVE PROJECT END **/
 		}
 
 	},

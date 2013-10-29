@@ -39,7 +39,6 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.bia.common.util.ImageUtils;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.common.volume.VolumeSummary;
@@ -121,10 +120,119 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	private UserRoleDAO userRoleDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
 
-	/**
-	 * 
-	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	public SchedoneDAO getCatalogDAO() {
+		return catalogDAO;
+	}
+
+	public void setCatalogDAO(SchedoneDAO catalogDAO) {
+		this.catalogDAO = catalogDAO;
+	}
+
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
+	}
+
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
+	}
+
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
+
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
@@ -527,27 +635,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * @return the annotationDAO
-	 */
-	public AnnotationDAO getAnnotationDAO() {
-		return annotationDAO;
-	}
-
-	/**
-	 * @return the catalogDAO
-	 */
-	public SchedoneDAO getCatalogDAO() {
-		return catalogDAO;
-	}
-
-	/**
-	 * @return the documentDAO
-	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -598,29 +685,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}
 	}
 
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
-	}
-
-	public ForumPostDAO getForumPostDAO() {
-		return forumPostDAO;
-	}
-
-	public ForumTopicDAO getForumTopicDAO() {
-		return forumTopicDAO;
-	}
-
-	/**
-	 * @return the forumTopicWatchDAO
-	 */
-	public ForumTopicWatchDAO getForumTopicWatchDAO() {
-		return forumTopicWatchDAO;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -659,13 +723,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * @return the imageDAO
-	 */
-	public ImageDAO getImageDAO() {
-		return imageDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -682,41 +739,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}	
 	}
 
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
-
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-
-	/**
-	 * @return the userDAO
-	 */
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-	
-	/**
-	 * @return the userRoleDAO
-	 */
-	public UserRoleDAO getUserRoleDAO() {
-		return userRoleDAO;
-	}
-
-	/**
-	 * @return the volumeDAO
-	 */
-	public VolumeDAO getVolumeDAO() {
-		return volumeDAO;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -745,92 +767,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}
 	}
 
-	/**
-	 * @param annotationDAO the annotationDAO to set
-	 */
-	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
-		this.annotationDAO = annotationDAO;
-	}
-
-	/**
-	 * @param catalogDAO the catalogDAO to set
-	 */
-	public void setCatalogDAO(SchedoneDAO catalogDAO) {
-		this.catalogDAO = catalogDAO;
-	}
-
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
-		this.forumPostDAO = forumPostDAO;
-	}
-
-	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
-		this.forumTopicDAO = forumTopicDAO;
-	}
-
-	/**
-	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
-	 */
-	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
-		this.forumTopicWatchDAO = forumTopicWatchDAO;
-	}
-
-	/**
-	 * @param imageDAO the imageDAO to set
-	 */
-	public void setImageDAO(ImageDAO imageDAO) {
-		this.imageDAO = imageDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @param userDAO the userDAO to set
-	 */
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userRoleDAO the userRoleDAO to set
-	 */
-	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-		this.userRoleDAO = userRoleDAO;
-	}
-
-	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -918,6 +854,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				} else {
 					// This is a new annotation
 					annotation.setDateCreated(operationDate);
+					annotation.setLogicalDelete(Boolean.FALSE);
 					annotation.setUser(user);
 					annotation.setImage(image);
 					annotation.setType(viewAnnotation.getType() != null ? viewAnnotation.getType() : Annotation.Type.GENERAL);
@@ -962,20 +899,22 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			// We remove the old persisted annotations that are still in the list
 			for(Annotation toRemoveAnnotation : persistedAnnotations) {
 				if (toRemoveAnnotation.getForumTopic() != null) {
-					ForumTopic topicAnnotation = getForumTopicDAO().find(toRemoveAnnotation.getForumTopic().getTopicId());
-					topicAnnotation.setLogicalDelete(Boolean.TRUE);
-					topicAnnotation.setAnnotation(null);
+					// RR: It should not be possible to remove an annotation associated to a topic
+					//ForumTopic annotationTopic = getForumTopicDAO().find(toRemoveAnnotation.getForumTopic().getTopicId());
+					ForumTopic annotationTopic = toRemoveAnnotation.getForumTopic();
+					annotationTopic.setLogicalDelete(Boolean.TRUE);
+					// annotationTopic.setAnnotation(null);
 					// getForumTopicDAO().merge(topicAnnotation);
-					getForumPostDAO().deleteForumPostsFromForumTopic(topicAnnotation.getTopicId());
-					Forum forum = topicAnnotation.getForum();
+					getForumPostDAO().deleteForumPostsFromForumTopic(annotationTopic.getTopicId());
+					Forum forum = annotationTopic.getForum();
 					recursiveSetLastPost(forum);
-					getForumDAO().recursiveDecreasePostsNumber(forum, topicAnnotation.getTotalReplies());
+					getForumDAO().recursiveDecreasePostsNumber(forum, annotationTopic.getTotalReplies());
 					getForumDAO().recursiveDecreaseTopicsNumber(forum);
 					// forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
-					getForumDAO().merge(forum);				
-					toRemoveAnnotation.setForumTopic(null);
+					// getForumDAO().merge(forum);				
 				}
-				getAnnotationDAO().remove(toRemoveAnnotation);
+				toRemoveAnnotation.setLastUpdate(operationDate);
+				toRemoveAnnotation.setLogicalDelete(Boolean.TRUE);
 			}
 			
 			return returnMap;
@@ -983,6 +922,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(throwable);
 		}
 	}
+	
+	/* Privates */
 	
 	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
 		if(forum.getType().equals(Type.CATEGORY)){

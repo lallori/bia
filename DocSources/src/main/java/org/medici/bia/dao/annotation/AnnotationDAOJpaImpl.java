@@ -78,7 +78,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account) order by annotationId desc";
+		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account = :account)) AND logicalDelete = false order by annotationId desc";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("imageName", imageName);
@@ -92,7 +92,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName=:imageName AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account=:account)) order by annotationId desc";
+		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account = :account)) AND logicalDelete = false order by annotationId desc";
 		Query query = getEntityManager().createQuery(jpql);
         query.setParameter("imageName", imageName);
         query.setParameter("account", user.getAccount());
@@ -106,7 +106,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public Annotation findById(String id) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE id=:id";
+		String jpql = "FROM Annotation WHERE id = :id AND logicalDelete = false";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("annotationId", id);
@@ -126,7 +126,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE annotationId=:annotationId";
+		String jpql = "FROM Annotation WHERE annotationId = :annotationId and logicalDelete = false";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("annotationId", annotationId);
@@ -148,14 +148,14 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		Page page = new Page(paginationFilter);
 		
 		if(paginationFilter.getTotal() == null){
-			String queryString = "SELECT count(annotationId) FROM Annotation WHERE type = 'Personal' AND user=:user";
+			String queryString = "SELECT count(annotationId) FROM Annotation WHERE type = 'Personal' AND user = :user AND logicalDelete = false";
 			
 			 Query query = getEntityManager().createQuery(queryString);
 		     query.setParameter("user", user);
 		     page.setTotal(new Long((Long)query.getSingleResult()));
 		}
 		
-		String objectsQuery = "FROM Annotation WHERE type = 'Personal' AND user=:user";
+		String objectsQuery = "FROM Annotation WHERE type = 'Personal' AND user = :user AND logicalDelete = false";
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -222,7 +222,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 */
 	@Override
 	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
-		String jpql = "UPDATE Annotation SET user.account=:newAccount WHERE user.account=:originalAccount";
+		String jpql = "UPDATE Annotation SET user.account = :newAccount WHERE user.account = :originalAccount";
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("newAccount", newAccount);
 		query.setParameter("originalAccount", originalAccount);

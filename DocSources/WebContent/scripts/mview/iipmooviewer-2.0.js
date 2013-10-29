@@ -236,7 +236,7 @@ var IIPMooViewer = new Class({
 							});
 						}
 						_this.reload();
-						for (i=0; i<responseJSON.links.length; i++) {
+						for (i = 0; i < responseJSON.links.length; i++) {
 							/*var popupWindow = window.opener.open(responseJSON.links[i].forum, "_blank", "scrollbars=yes");
 							popupWindow.focus();
 							window.close(); */

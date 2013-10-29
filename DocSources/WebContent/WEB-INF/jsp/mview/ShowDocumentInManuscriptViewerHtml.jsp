@@ -128,16 +128,16 @@
 				//To manage the form of the annotation
 				$j("input[name=category]:radio").die();
 				$j("input[name=category]:radio").live('change', function(){
-					if($j("input[name=category]:checked").val() == 'GENERAL'){
-						$j(".annotation form").parent().css("background-color", "rgba(255, 255, 0, 0.2)");
-					}
-					if($j("input[name=category]:checked").val() == 'PALEOGRAPHY'){
+					if ($j("input[name=category]:checked").val() == 'GENERAL') {
+						$j(".annotation form").parent().css("background-color", "rgba(255, 255, 0, 0.2)");0
+						$j("#annotationTextarea").css("display", "inherit");
+					} else if($j("input[name=category]:checked").val() == 'PALEOGRAPHY') {
 						$j(".annotation form").parent().css("background-color", "rgba(255, 130, 0, 0.2)");
-					}
-					if($j("input[name=category]:checked").val() == 'PERSONAL'){
+						$j("#annotationTextarea").css("display", "inherit");
+					} else if ($j("input[name=category]:checked").val() == 'PERSONAL') {
 						$j("#annotationTextarea").css("display", "inherit");
 						$j(".annotation form").parent().css("background-color", "rgba(180, 0, 255, 0.2)");
-					}else{
+					} else {
 						$j("#annotationTextarea").css("display", "none");
 					}
 				});

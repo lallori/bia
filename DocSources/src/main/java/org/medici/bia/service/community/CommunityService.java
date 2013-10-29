@@ -51,6 +51,7 @@ import org.medici.bia.exception.ApplicationThrowable;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  * 
  */
 public interface CommunityService {
@@ -337,6 +338,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable;
+	
+	/**
+	 * @param forumTopicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	ForumTopic getForumTopicById(Integer forumTopicId) throws ApplicationThrowable;
 	
 	/**
 	 * 

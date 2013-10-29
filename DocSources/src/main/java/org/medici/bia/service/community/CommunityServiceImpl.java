@@ -45,6 +45,7 @@ import org.medici.bia.common.search.AdvancedSearchVolume;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.ApplicationError;
+import org.medici.bia.common.util.dom.DOMHelper;
 import org.medici.bia.dao.accesslog.AccessLogDAO;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.document.DocumentDAO;
@@ -63,6 +64,7 @@ import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
@@ -92,6 +94,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 @Service
@@ -187,21 +190,20 @@ public class CommunityServiceImpl implements CommunityService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
+		Date operationDate = new Date();
 		try {
-			forumPost.setPostId(null);
-			forumPost.setLogicalDelete(Boolean.TRUE);
-			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			forumPost.setForum(forum);
 			
-			Date currentDate = new Date();
+			forumPost.setPostId(null);
+			// forumPost.setLogicalDelete(Boolean.TRUE);
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
+
 			if (forumPost.getTopic().getTopicId() == 0) {
 				//Create the first post of a new topic
 				ForumTopic forumTopic = new ForumTopic(null);
 				forumTopic.setForum(forum);
-				forumTopic.setDateCreated(currentDate);
-				forumTopic.setLastUpdate(currentDate);
+				forumTopic.setDateCreated(operationDate);
+				forumTopic.setLastUpdate(operationDate);
 				forumTopic.setIpAddress(forumPost.getIpAddress());
 				
 				forumTopic.setUser(user);
@@ -235,15 +237,22 @@ public class CommunityServiceImpl implements CommunityService {
 					getForumTopicWatchDAO().persist(forumTopicWatch);
 				}
 			} else {
-				forumPost.setTopic(getForumTopicDAO().find(forumPost.getTopic().getTopicId()));
+				ForumTopic forumTopic = getForumTopicDAO().find(forumPost.getTopic().getTopicId());
+				forumPost.setTopic(forumTopic);
 				//To set the parent post Id
 				ForumPost parentPost = getForumPostDAO().findFirstPostByTopicId(forumPost.getTopic().getTopicId());
-				if(parentPost != null)
+				if(parentPost != null) {
 					forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
+				} else if (forumTopic.getAnnotation() != null) {
+					// RR: in this case the post is the first post associated to an annotation
+					DOMHelper domHelper = new DOMHelper(forumPost.getText(), true, true);
+					String plainText = domHelper.getAllPlainText(true);
+					forumTopic.getAnnotation().setText(plainText);
+				}
 			}
-			forumPost.setDateCreated(currentDate);
+			forumPost.setDateCreated(operationDate);
 			forumPost.setLogicalDelete(Boolean.FALSE);
-			forumPost.setLastUpdate(currentDate);
+			forumPost.setLastUpdate(operationDate);
 			forumPost.setUser(user);
 			forumPost.setUpdater(user);
 			getForumPostDAO().persist(forumPost);
@@ -260,15 +269,15 @@ public class CommunityServiceImpl implements CommunityService {
 			recursiveSetLastPost(forum, forumPost);
 			
 			forumPost.getTopic().setLastPost(forumPost);
-			forumPost.getTopic().setLastUpdate(currentDate);
+			forumPost.getTopic().setLastUpdate(operationDate);
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
-			getForumTopicDAO().merge(forumPost.getTopic());
+			// getForumTopicDAO().merge(forumPost.getTopic());
 
 			// Update number of post 
 			user.setForumNumberOfPost(user.getForumNumberOfPost()+1);
-			user.setLastActiveForumDate(currentDate);
-			user.setLastForumPostDate(currentDate);
-			getUserDAO().merge(user);
+			user.setLastActiveForumDate(operationDate);
+			user.setLastForumPostDate(operationDate);
+			// getUserDAO().merge(user);
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
@@ -495,11 +504,14 @@ public class CommunityServiceImpl implements CommunityService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteForumTopic(Integer topicId) throws ApplicationThrowable {
-		try{
+		try {
 			ForumTopic forumTopic = getForumTopicDAO().find(topicId);
 			forumTopic.setLogicalDelete(Boolean.TRUE);
-				
-			getForumTopicDAO().merge(forumTopic);
+			if (forumTopic.getAnnotation() != null) {
+				forumTopic.getAnnotation().setLogicalDelete(Boolean.TRUE);
+			}
+			
+			// getForumTopicDAO().merge(forumTopic);
 			getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
 
 			Forum forum = forumTopic.getForum();
@@ -507,12 +519,12 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumDAO().recursiveDecreasePostsNumber(forum, forumTopic.getTotalReplies());
 			getForumDAO().recursiveDecreaseTopicsNumber(forum);
 //			forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
-			getForumDAO().merge(forum);				
+			// getForumDAO().merge(forum);
 
 			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			user.setLastActiveForumDate(new Date());
-			getUserDAO().merge(user);
-		}catch(Throwable th){
+			// getUserDAO().merge(user);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		
@@ -549,31 +561,43 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
+	public ForumPost editPost(ForumPost postFromView) throws ApplicationThrowable {
+		Date operationDate = new Date();
 		try {
-			ForumPost forumPostToUpdate = getForumPostDAO().find(forumPost.getPostId());
-
-			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
-
-			forumPostToUpdate.setForum(forum);
+			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			
-			forumPostToUpdate.setLastUpdate(new Date());
-			forumPostToUpdate.setIpAddress(forumPost.getIpAddress());
-			forumPostToUpdate.setSubject(forumPost.getSubject());
-			forumPostToUpdate.setText(forumPost.getText());
-			forumPostToUpdate.setUpdater(getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
-			if (forumPost.getParentPost() != null) {
-				forumPostToUpdate.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
+			ForumPost forumPostToUpdate = getForumPostDAO().find(postFromView.getPostId());
+
+			//Forum forum = getForumDAO().find(postFromView.getForum().getForumId());
+			//forumPostToUpdate.setForum(forum);
+			
+			forumPostToUpdate.setLastUpdate(operationDate);
+			forumPostToUpdate.setIpAddress(postFromView.getIpAddress());
+			forumPostToUpdate.setSubject(postFromView.getSubject());
+			forumPostToUpdate.setText(postFromView.getText());
+			forumPostToUpdate.setUpdater(user);
+			if (postFromView.getParentPost() != null) {
+				forumPostToUpdate.setParentPost(getForumPostDAO().find(postFromView.getParentPost().getPostId()));
+			} else {
+				// we update the annotation text if needed
+				Annotation annotation = forumPostToUpdate.getTopic().getAnnotation();
+				if (annotation != null) {
+					DOMHelper domHelper = new DOMHelper(forumPostToUpdate.getText(), true, true);
+					String newAnnotationText = domHelper.getAllPlainText(true);
+					if (!newAnnotationText.equals(annotation.getText())) {
+						annotation.setText(newAnnotationText);
+						annotation.setLastUpdate(operationDate);
+					}
+				}
 			}
 
-			getForumPostDAO().merge(forumPostToUpdate);
+			//getForumPostDAO().merge(forumPostToUpdate);
+			// Changing the user last forum
+			user.setLastActiveForumDate(operationDate);
+			user.setLastForumPostDate(operationDate);
+			//getUserDAO().merge(user);
 
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			user.setLastActiveForumDate(new Date());
-			user.setLastForumPostDate(new Date());
-			getUserDAO().merge(user);
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, postFromView));
 			
 			return forumPostToUpdate;
 		} catch (Throwable th) {
@@ -946,15 +970,24 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * 
-	 * @param forumTopic
-	 * @return
-	 * @throws ApplicationThrowable
+	 * {@inheritDoc}
 	 */
 	@Override
 	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable {
 		try {
 			return getForumTopicDAO().findForumTopic(forumTopic);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumTopic getForumTopicById(Integer forumTopicId) throws ApplicationThrowable {
+		try {
+			return getForumTopicDAO().findForumTopicById(forumTopicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1543,5 +1576,5 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}	
+	}
 }

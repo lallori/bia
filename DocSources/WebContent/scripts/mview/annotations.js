@@ -129,7 +129,7 @@ IIPMooViewer.implement({
 					cl += ' ' + annotation_array[i].type;
 				}
 				var annotation = new Element('div', {
-					'id': 'annotation_' + annotation_array[i].annotationId,
+					'id': (annotation_array[i].annotationId ? 'annotation_' + annotation_array[i].annotationId : annotation_array[i].id),
 					'class': cl,
 					'styles': {
 						left: Math.round(this.wid * annotation_array[i].x),
@@ -144,19 +144,6 @@ IIPMooViewer.implement({
 				}
 	
 				// Add edit events to annotations if we have included the functions
-				/** MEDICI ARCHIVE PROJECT START **/
-				/*if (typeof(this.editAnnotation) == "function") {
-					if (annotation_array[i].edit == true) {
-						this.editAnnotation(annotation);
-					} else {
-						var _this = this;
-						annotation.addEvent('dblclick', function(e) {
-							var event = new DOMEvent(e); 
-							event.stop();
-							_this.editAnnotation(this);
-						});
-					}*/
-		
 				if (typeof(this.editAnnotation) == "function") {
 					if (annotation_array[i].edit == true) { 
 						this.editAnnotation(annotation);
@@ -177,7 +164,7 @@ IIPMooViewer.implement({
 				if (annotation_array[i].title) {
 					text = '<h1>'+annotation_array[i].title+'</h1>' + text;
 				}
-				annotation.store( 'tip:text', text );
+				annotation.store('tip:text', text);
 	    	}
 	
 		}
@@ -185,7 +172,7 @@ IIPMooViewer.implement({
 	
 		if (!this.annotationTip) {
 			var _this = this;
-			this.annotationTip = new Tips( 'div.annotation', {
+			this.annotationTip = new Tips('div.annotation', {
 				className: 'tip', // We need this to force the tip in front of nav window
 				fixed: true,
 				offset: {

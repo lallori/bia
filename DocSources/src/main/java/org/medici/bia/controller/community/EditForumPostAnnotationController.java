@@ -75,7 +75,6 @@ public class EditForumPostAnnotationController {
 				model.put("forumPost", forumPost);
 			} catch (ApplicationThrowable applicationThrowable) {
 				return new ModelAndView("error/EditPostForum", model);
-				
 			}
 			command.setForumId(topicAnnotation.getForum().getForumId());
 			command.setParentPostId(0);
@@ -84,7 +83,8 @@ public class EditForumPostAnnotationController {
 				command.setParentPostId(forumPost.getParentPost().getId());
 			}*/
 			command.setSubject(topicAnnotation.getSubject());
-			command.setText("");
+			// RR: we initialize the post with the text of the annotation
+			command.setText(topicAnnotation.getAnnotation().getText());
 		}
 
 		return new ModelAndView("community/EditForumPostCompleteDOM", model);

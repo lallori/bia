@@ -50,6 +50,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.ForumPost
  * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
@@ -105,13 +106,24 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
-		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumTopic WHERE topicId = :topicId AND logicalDelete=false ";
-
 		if (forumTopic == null) {
+			return null;
+		}
+		
+		return findForumTopicById(forumTopic.getTopicId());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public ForumTopic findForumTopicById(Integer forumTopicId) throws PersistenceException {
+		String queryString = "FROM ForumTopic WHERE topicId = :topicId AND logicalDelete = false ";
+
+		if (forumTopicId == null) {
 			return null;
 		}
 		
@@ -119,16 +131,16 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		String jpql = queryString;
 		logger.debug("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", forumTopic.getTopicId());
+        query.setParameter("topicId", forumTopicId);
 
 		// We manage sorting (this manages sorting on multiple fields)
 		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
 
-		if (list.size() ==0) { 
+		if (list.size() == 0) { 
 			return null;
-		} else {
-			return (ForumTopic) list.get(0);
 		}
+
+		return (ForumTopic) list.get(0);
 	}
 
 	/**

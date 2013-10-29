@@ -43,6 +43,7 @@ import org.medici.bia.exception.ApplicationThrowable;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 
@@ -69,6 +70,15 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
+	
+	/**
+	 * Returns a specific forum topic by its identifier.
+	 * 
+	 * @param froumTopicId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	ForumTopic findForumTopicById(Integer froumTopicId) throws PersistenceException;
 
 	/**
 	 * Returns list of topics on a specific forum.
