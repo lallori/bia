@@ -509,7 +509,7 @@
 					$dialogShowExtract.dialog("open");
 				}
 				$j('#showTranscription').css('display','none');
-				$j("#showAlreadyTranscribed").css('display', 'none');
+				$j("#showAlreadyTranscribed").css('display', 'block');
 				return false;
 			});
 			
