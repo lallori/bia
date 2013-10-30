@@ -361,6 +361,8 @@ public class Image implements Serializable {
 	    		return R;
 	    	if ("V".equalsIgnoreCase(rectoVerso.trim()))
 	    		return V;
+	    	if ("N".equalsIgnoreCase(rectoVerso.trim()))
+	    		return N;
 	    	return null;
 	    }
 	}	

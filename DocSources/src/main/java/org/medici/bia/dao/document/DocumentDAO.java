@@ -84,7 +84,11 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 	
 	/**
-	 * This method searches all the documents that have the provided informations of volume, insert and folio.
+	 * This method searches all the documents that have the provided details of volume, insert and folio.<br/>
+	 * <strong>NOTE:</strong> if the <code>folioRectoVerso</code> provided is null documents are not filtered 
+	 * by this detail. Furthermore if <code>folioRectoVerso</code> is <code>Document.RectoVerso.N</code> we 
+	 * search for all documents with NULL recto/verso detail in the database (this is the case of old processes
+	 * when it was not possible to specify the recto/verso detail). 
 	 * 
 	 * @param volNum the volume number
 	 * @param volLetExt the volume extension

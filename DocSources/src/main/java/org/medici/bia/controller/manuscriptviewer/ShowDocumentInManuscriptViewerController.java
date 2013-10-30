@@ -85,7 +85,8 @@ public class ShowDocumentInManuscriptViewerController {
 		try {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 			if (documentExplorer.getEntryId() == null) {
-				List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), documentExplorer.getImage());
+				Image image = documentExplorer. getImage();
+				List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
 				if (documents.size() > 0) {
 					documentExplorer.setEntryId(documents.get(0).getEntryId());
 				}

@@ -478,15 +478,11 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable {
+	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering, String rectoVerso) throws ApplicationThrowable {
 		try {
-			RectoVerso rectoVerso = RectoVerso.convertFromString(image.getImageRectoVerso().toString());
-			List<Document> documents = getDocumentDAO().findDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), rectoVerso);
-			if (documents != null) {
-				return documents;
-			} else {
-				return null;
-			}
+			RectoVerso rv = RectoVerso.convertFromString(rectoVerso);
+			List<Document> documents = getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, imageProgTypeNum, missedNumbering, rv);
+			return documents;
 
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);

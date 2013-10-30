@@ -124,18 +124,19 @@ public interface ManuscriptViewerService {
 	public Image findImage(Integer imageId) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the documents linked to an image in a volume.<br/>
 	 * 
-	 * @param summaryId
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageType
-	 * @param imageProgTypeNum
-	 * @param imageOrder
-	 * @param image
-	 * @return
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param imageProgTypeNum the folio number
+	 * @param missedNumbering the folio extension
+	 * @param rectoVerso the recto/verso detail
+	 * @return a list of documents related to the image details provided within the volume provided
 	 * @throws ApplicationThrowable
 	 */
-	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable;
+	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering, String rectoVerso) throws ApplicationThrowable;
 	
 	/**
 	 * 

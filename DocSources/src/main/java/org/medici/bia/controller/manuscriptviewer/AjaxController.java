@@ -41,6 +41,7 @@ import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -269,21 +270,27 @@ public class AjaxController {
 //			if (entryId != null) {
 //				documentId = entryId;
 //			} else {
-				if ((!ObjectUtils.toString(imageType).equals(""))  && (!imageType.equals("C"))){
+				if ((!ObjectUtils.toString(imageType).equals("")) && (!imageType.equals("C"))) {
 					model.put("error", "wrongType");
 				} else {
 					// We extract image
-					image = getManuscriptViewerService().findVolumeImage(null, volNum, volLetExt, (imageType!=null) ? ImageType.valueOf(imageType) : null, imageProgTypeNum, imageOrder);
+					image = getManuscriptViewerService().findVolumeImage(null, volNum, volLetExt, (imageType != null) ? ImageType.valueOf(imageType) : null, imageProgTypeNum, imageOrder);
 					
 					if (image != null) {
-						if ((!ObjectUtils.toString(image.getImageType()).equals(""))  && (!image.getImageType().equals(ImageType.C))){
+						if ((!ObjectUtils.toString(image.getImageType()).equals("")) && (!image.getImageType().equals(ImageType.C))) {
 							model.put("error", "wrongType");
 						} else {
 							// We check if this image has a document linked...
-							documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
-							if(documents != null && documents.size() == 1){
+							documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
+							if (documents.size() == 0) {
+								// If the previous query did not find documents we search documents where 
+								// recto/verso is NULL in the database: this is the case of old processes
+								// when it was not possible to specify the recto/verso detail.
+								documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), ImageRectoVerso.N.toString());
+							}
+							if (documents.size() == 1) {
 								documentId = documents.get(0).getEntryId();
-							}else if(documents != null && documents.size() > 1){
+							} else if (documents.size() > 1) {
 								isExtract = Boolean.TRUE;
 							}
 						}
@@ -301,13 +308,13 @@ public class AjaxController {
 			model.put("linkedDocument", (documents != null && documents.size() > 0) ? "true" : "false");
 			model.put("countAlreadyEntered", (documents != null) ? documents.size() : 0);
 			model.put("entryId", documentId );
-			if(documents != null && documents.size() == 1){
+			if (documents.size() == 1) {
 				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
-			} else if(documents != null && documents.size() > 1){
+			} else if (documents.size() > 1) {
 				model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString()));
 			}
 			model.put("isExtract", (isExtract.equals(Boolean.TRUE)) ? "true" : "false");
-		}catch (ApplicationThrowable applicationThrowable) {
+		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
 			model.put("linkedDocument", "false");
 			model.put("showLinkedDocument", "");

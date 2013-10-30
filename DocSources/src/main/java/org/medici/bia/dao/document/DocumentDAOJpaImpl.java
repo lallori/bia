@@ -170,6 +170,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		boolean isEmptyInsertNum = "".equals(ObjectUtils.toString(insertNum).trim());
 		boolean isEmptyInsertLet = "".equals(ObjectUtils.toString(insertLet).trim());
 		boolean isEmptyFolioMod = "".equals(ObjectUtils.toString(folioMod).trim());
+		boolean isRectoVersoNullable = Document.RectoVerso.N.equals(folioRectoVerso);
 		
 		StringBuilder stringBuilder = new StringBuilder("FROM Document WHERE volume.volNum = :volNum");
 		stringBuilder.append(" AND volume.volLetExt ").append(!isEmptyVolLetExt ? "= :volLetExt" : "IS NULL");
@@ -177,24 +178,29 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		stringBuilder.append(" AND insertLet ").append(!isEmptyInsertLet ? "= :insertLet" : "IS NULL");
 		stringBuilder.append(" AND folioNum = :folioNum");
 		stringBuilder.append(" AND folioMod ").append(!isEmptyFolioMod ? "= :folioMod" : "IS NULL");
-		if (folioRectoVerso != null)
-			stringBuilder.append(" AND folioRectoVerso = :folioRectoVerso ");
-		stringBuilder.append(" AND logicalDelete=false");
+		if (folioRectoVerso != null) {
+			stringBuilder.append(" AND folioRectoVerso ").append(!isRectoVersoNullable ? "= :folioRectoVerso " : "IS NULL");
+		}
+		stringBuilder.append(" AND logicalDelete = false");
 		
 		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter("volNum", volNum);
-		if (!isEmptyVolLetExt)
+		if (!isEmptyVolLetExt) {
 			query.setParameter("volLetExt", volLetExt);
+		}
 		if (!isEmptyInsertNum) {
 			query.setParameter("insertNum", insertNum.trim());
-			if (!isEmptyInsertLet)
+			if (!isEmptyInsertLet) {
 				query.setParameter("insertLet", insertLet.trim());
+			}
 		}
 		query.setParameter("folioNum", folioNum);
-		if (!isEmptyFolioMod)
+		if (!isEmptyFolioMod) {
 			query.setParameter("folioMod", folioMod);
-		if (folioRectoVerso != null)
+		}
+		if (folioRectoVerso != null && !isRectoVersoNullable) {
 			query.setParameter("folioRectoVerso", folioRectoVerso);
+		}
 
 		List<Document> docs = query.getResultList();
 			

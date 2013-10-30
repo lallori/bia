@@ -1135,8 +1135,9 @@ public class Document implements Serializable{
 	 *
 	 */
 	public static enum RectoVerso {
-		R(0), // Recto 
-		V(1); // Verso
+		R(0),	// Recto 
+		V(1),	// Verso
+		N(-1);	// For digitized items without recto or verso.
 		
 		private final int imageRectoVerso;
 
@@ -1147,6 +1148,8 @@ public class Document implements Serializable{
 	    @Override
 	    public String toString(){
 	        switch (imageRectoVerso) {
+	        	case -1 :
+	        		return "N";
 		        case 0 :
 		        	return "R";
 		        case 1 :
@@ -1163,6 +1166,8 @@ public class Document implements Serializable{
 	    		return R;
 	    	if ("V".equalsIgnoreCase(rectoVerso.trim()))
 	    		return V;
+	    	if ("N".equalsIgnoreCase(rectoVerso.trim()))
+	    		return N;
 	    	return null;
 	    }
 	}	

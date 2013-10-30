@@ -85,7 +85,7 @@ public class PageTurnerDialogController {
 		
 		try {
 			// We check if this image has a document linked...
-			List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
+			List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
 			model.put("entryId", documents != null && documents.size() > 0 ? documents.get(0).getEntryId() : null);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
