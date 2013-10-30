@@ -247,16 +247,6 @@ a.transcribe {
 	display: block;
 }
 
-#PageTurnerVerticalDiv #readyToTranscribe {
-	margin-top: 20px;
-	position: absolute;
-}
-
-#PageTurnerHorizontalDiv #readyToTranscribe {
-	margin: 10px 0 0 30px;
-	position: absolute;
-}
-
 #PageTurnerVerticalDiv #choiceThisFolioStart {
         margin-top: 75px;
 }
