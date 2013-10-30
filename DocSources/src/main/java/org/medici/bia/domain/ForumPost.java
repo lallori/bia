@@ -94,9 +94,9 @@ public class ForumPost implements Serializable {
 	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean logicalDelete;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	/*@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"annotationId\"", nullable=true)
-	private Annotation annotation;
+	private Annotation annotation;*/
 
 	/**
 	 * Default constructor
@@ -279,12 +279,12 @@ public class ForumPost implements Serializable {
 		return logicalDelete;
 	}
 
-	public void setAnnotation(Annotation annotation) {
+	/*public void setAnnotation(Annotation annotation) {
 		this.annotation = annotation;
 	}
 
 	public Annotation getAnnotation() {
 		return annotation;
-	}
+	}*/
 
 }

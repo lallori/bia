@@ -233,7 +233,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		this.volumeDAO = volumeDAO;
 	}
 
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	/*@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable {
 		try {
@@ -360,7 +360,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
-	}
+	}*/
 
 	/**
 	 * {@inheritDoc}

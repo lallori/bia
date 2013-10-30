@@ -62,6 +62,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rianldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Controller("ManuscriptViewerAjaxController")
 public class AjaxController {
@@ -96,68 +97,6 @@ public class AjaxController {
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-
-	/**
-	 * This method calls the "add new annotation" process.
-	 * 
-	 * @param volNum the volume number
-	 * @param volLetExt the volume letter extension
-	 * @param imageType the image type
-	 * @param imageProgTypeNum the image progress type number
-	 * @param imageOrder the image order
-	 * @param imageName the image name
-	 * @param id
-	 * @param x the x-coordinate of the annotation
-	 * @param y the y-coordinate of the annotation
-	 * @param w the width of the annotation
-	 * @param h the height of the annotation
-	 * @param title the title of the annotation
-	 * @param category the category of the annotation
-	 * @param text the text associated to the annotation
-	 * @param httpServletRequest
-	 * @return
-	 */
-	@RequestMapping(value = {"/src/mview/CreateAnnotation.json", "/de/mview/CreateAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView createAnnotation(
-			@RequestParam(value="volNum", required=true) Integer volNum,
-			@RequestParam(value="volLetExt", required=true) String volLetExt,
-			@RequestParam(value="imageType", required=true) String imageType,
-			@RequestParam(value="imageProgTypeNum", required=true) Integer imageProgTypeNum,
-			@RequestParam(value="imageOrder", required=true) Integer imageOrder,
-			@RequestParam(value="imageName", required=true) String imageName,
-			@RequestParam(value="id", required=false) String id,
-			@RequestParam(value="x", required=true) Double x,
-			@RequestParam(value="y", required=true) Double y,
-			@RequestParam(value="w", required=true) Double w,
-			@RequestParam(value="h", required=true) Double h,
-			@RequestParam(value="title", required=true) String title,
-			@RequestParam(value="category", required=true) String category,
-			@RequestParam(value="text", required=false) String text,
-			HttpServletRequest httpServletRequest) {
-		
-		Map<String, Object> model = new HashMap<String, Object>(0);
-
-		try {
-			Annotation annotation = new Annotation();
-			annotation.setX(x);
-			annotation.setY(y);
-			annotation.setWidth(w);
-			annotation.setHeight(h);
-			annotation.setType(Annotation.Type.valueOf(category));
-			annotation.setTitle(title);
-			annotation.setText(text);
-			Image image = new Image();
-			image.setImageType(Image.ImageType.valueOf(imageType));
-			image.setImageProgTypeNum(imageProgTypeNum);
-			image.setImageOrder(imageOrder);
-			image.setImageName(imageName);
-			annotation = getManuscriptViewerService().addNewAnnotation(annotation, image, httpServletRequest.getRemoteAddr());			
-			model.put("annotationId", annotation.getAnnotationId());
-		} catch (ApplicationThrowable ath) {
-		}
-
-		return new ModelAndView("responseOK", model);
 	}
 
 	/**

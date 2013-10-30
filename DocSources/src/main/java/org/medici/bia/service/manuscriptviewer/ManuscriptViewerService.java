@@ -65,7 +65,7 @@ public interface ManuscriptViewerService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable;
+	//public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable;
 
 	/**
 	 * 
