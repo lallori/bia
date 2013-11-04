@@ -154,7 +154,11 @@ public class ShowForumController {
 					if(getManuscriptViewerService().findDocumentImageThumbnail(document) != null){
 						DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 						documentExplorer.setImage(new Image());
+						documentExplorer.getImage().setInsertNum(document.getInsertNum());
+						documentExplorer.getImage().setInsertLet(document.getInsertLet());
 						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+						documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
+						documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
 						documentExplorer.getImage().setImageType(ImageType.C);
 						documentExplorer.setTotal(null);
 					

@@ -67,6 +67,7 @@ import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Schedone;
@@ -368,36 +369,36 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public Image findDocumentImage(Integer entryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
 		try {
-			if ((entryId != null) && (imageProgTypeNum != null)) {
-				Document document = getDocumentDAO().find(entryId);
-				
-				if (document != null) {
-	
-					List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
-					if (images != null) {
-						return images.get(0);
-					} else 
-						return null;
-				} else {
-					return null;
-				}
-			} else if ((entryId != null) && (imageOrder != null)) {
-				Document document = getDocumentDAO().find(entryId);
-				
-				if (document != null && imageOrder != null) {
-					return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
-				} else {
-					return null;
-				}
-			} else {
-				List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
-				
+			Document document = null;
+			if (entryId != null) {
+				document = getDocumentDAO().find(entryId);
+			}
+			
+			if (document != null && imageProgTypeNum != null) {
+				List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
 				if (images != null) {
 					return images.get(0);
 				}
-				
 				return null;
 			}
+			
+			if (document != null && imageOrder != null) {
+				return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+			}
+			
+			if (document != null) {
+				return findDocumentImageThumbnail(document);
+			}
+			
+			if (entryId == null) {
+				List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+					
+				if (images != null) {
+					return images.get(0);
+				}
+			}
+				
+			return null;
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -448,11 +449,15 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try {
 			if (document != null) {
 				// We extract only image based on folioNum 
-				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0) && (document.getFolioMod() == null)) {
-					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
-				}else if((document.getFolioNum() != null) && (document.getFolioNum() > 0) && (document.getFolioMod() != null)){
-					return getImageDAO().findDocumentImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
-				}
+				// return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
+				return getImageDAO().findDocumentImage(
+						document.getVolume().getVolNum(), 
+						document.getVolume().getVolLetExt(), 
+						document.getInsertNum(), 
+						document.getInsertLet(), 
+						document.getFolioNum(), 
+						document.getFolioMod(), 
+						document.getFolioRectoVerso() != null && !Document.RectoVerso.N.equals(document.getFolioRectoVerso()) ? document.getFolioRectoVerso().toString() : null);
 			}
 			
 			return null;
@@ -640,12 +645,18 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				Document document = getDocumentDAO().find(documentExplorer.getEntryId());
 				documentExplorer.setVolNum(document.getVolume().getVolNum());
 				documentExplorer.setVolLetExt(document.getVolume().getVolLetExt());
-				if ((documentExplorer.getImage().getImageOrder()==null) && (documentExplorer.getImage().getImageProgTypeNum()==null) && (documentExplorer.getImage().getImageName() ==null)) {
+				if ((documentExplorer.getImage().getImageOrder() == null) 
+						/*&& (documentExplorer.getImage().getImageProgTypeNum() == null)*/ 
+						&& (documentExplorer.getImage().getImageName() == null)) {
+					// no image order and no image name provided
 					if (document.getFolioNum() != null) {
 						if (document.getFolioNum() > 0) {
+							documentExplorer.getImage().setInsertNum(document.getInsertNum());
+							documentExplorer.getImage().setInsertLet(document.getInsertLet());
 							documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
-							documentExplorer.getImage().setImageType(ImageType.C);
 							documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
+							documentExplorer.getImage().setImageType(ImageType.C);
+							documentExplorer.getImage().setImageRectoVerso(ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
 						}
 					}
 				}

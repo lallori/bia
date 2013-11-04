@@ -114,33 +114,50 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum AND volLetExt ");
-        if (StringUtils.isEmpty(volLetExt)) {
-        	stringBuilder.append("is null");
-        } else {
-        	stringBuilder.append("=:volLetExt");
+	public Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException {
+		boolean notSpecifiedInsertNum = insertNum != null && insertNum.trim().isEmpty();
+		boolean notSpecifiedInsertLet = insertLet != null && insertLet.trim().isEmpty();
+		boolean notSpecifiedFolioMod = folioMod != null && folioMod.trim().isEmpty();
+		boolean notSpecifiedRectoVerso = rectoVerso != null && rectoVerso.trim().isEmpty();
+		
+        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum");
+        stringBuilder.append(" AND volLetExt ").append(StringUtils.isEmpty(volLetExt) ? "IS NULL" : "= :volLetExt");
+        if (!notSpecifiedInsertNum) {
+        	stringBuilder.append(" AND insertNum ").append(insertNum == null ? "IS NULL" : "= :insertNum");
+        	if (!notSpecifiedInsertLet) {
+        		stringBuilder.append(" AND insertLet ").append(insertLet == null ? "IS NULL" : "= :insertLet");
+        	}
         }
-        stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum AND missedNumbering ");
-        if (StringUtils.isEmpty(folioMod)) {
-        	stringBuilder.append(" is null");
-        } else {
-        	stringBuilder.append("=:folioMod");
+        stringBuilder.append(" AND imageProgTypeNum = :folioNum");
+        if (!notSpecifiedFolioMod) {
+        	stringBuilder.append(" AND missedNumbering ").append(folioMod == null ? "IS NULL" : "= :folioMod");
+        }
+        if (!notSpecifiedRectoVerso) {
+        	stringBuilder.append(" AND imageRectoVerso ").append(rectoVerso == null ? "IS NULL" : "= :rectoVerso");
         }
 
         Query query = getEntityManager().createQuery(stringBuilder.toString());
 
         query.setParameter("volNum", volNum);
         if (!StringUtils.isEmpty(volLetExt)) {
-        	query.setParameter("volLetExt", volLetExt);
+        	query.setParameter("volLetExt", volLetExt.trim());
         }
-        query.setParameter("imageProgTypeNum", folioNum);
-        if (!StringUtils.isEmpty(folioMod)) {
-        	query.setParameter("folioMod", folioMod.toUpperCase());
+        if (!notSpecifiedInsertNum && insertNum != null) {
+        	query.setParameter("insertNum", insertNum.trim());
+        	if (!notSpecifiedInsertLet && insertLet != null) {
+        		query.setParameter("insertLet", insertLet.trim());
+        	}
+        }
+        query.setParameter("folioNum", folioNum);
+        if (!notSpecifiedFolioMod && folioMod != null) {
+        	query.setParameter("folioMod", folioMod.trim().toUpperCase());
+        }
+        if (!notSpecifiedRectoVerso && rectoVerso != null) {
+        	query.setParameter("rectoVerso", Image.ImageRectoVerso.convertFromString(rectoVerso.trim()));
         }
 		List<Image> result = query.getResultList();
 		
-		if (result.size() >0) {
+		if (result.size() > 0) {
 			return result.get(0);
 		}
 		
@@ -374,8 +391,12 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
         stringBuilder.append(" volNum = :volNum");
 		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
-        
-        if (documentExplorer.getImage().getImageProgTypeNum() != null) {
+		
+		if (documentExplorer.getImage().getImageOrder() != null) {
+			stringBuilder.append(" AND imageOrder = :imageOrder");
+		} else if (documentExplorer.getImage().getImageName() != null && !"".equals(documentExplorer.getImage().getImageName().trim())) {
+			stringBuilder.append(" AND imageName LIKE '%").append(documentExplorer.getImage().getImageName().trim()).append("%'");
+		} else if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
         	stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
         	stringBuilder.append(" AND imageType = :imageType");
@@ -383,8 +404,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
             stringBuilder.append(" AND missedNumbering").append(documentExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
         	if (documentExplorer.getImage().getImageRectoVerso() != null)
         		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
-        } else if (documentExplorer.getImage().getImageOrder() != null) {
-        	stringBuilder.append(" AND imageOrder = :imageOrder");
         } else {
         	stringBuilder.append(" AND imageOrder = 1");
         }
@@ -396,7 +415,19 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         if (!emptyVolLetExt)
         	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
 
-        if (documentExplorer.getImage().getImageProgTypeNum() != null) {
+        if (documentExplorer.getImage().getImageOrder() != null) {
+        	query.setParameter("imageOrder", documentExplorer.getImage().getImageOrder());
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			documentExplorer.setImage((Image) query.getSingleResult());
+        } else if (documentExplorer.getImage().getImageName() != null && !"".equals(documentExplorer.getImage().getImageName().trim())) {
+        	query.setFirstResult(0);
+			query.setMaxResults(1);
+			try {
+				documentExplorer.setImage((Image) query.getSingleResult());
+			} catch (NoResultException noResultExcepion) {
+			}
+        } else if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	if (!nullInsertNum)
         		query.setParameter("insertNum", documentExplorer.getImage().getInsertNum());
         	if (!nullInsertLet)
@@ -412,11 +443,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			if (result.size() > 0) {
 				documentExplorer.setImage(result.get(0));
 			}
-        } else if (documentExplorer.getImage().getImageOrder() != null) {
-        	query.setParameter("imageOrder", documentExplorer.getImage().getImageOrder());
-			query.setFirstResult(0);
-			query.setMaxResults(1);
-			documentExplorer.setImage((Image) query.getSingleResult());
         } else {
 			query.setFirstResult(0);
 			query.setMaxResults(1);

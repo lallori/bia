@@ -431,10 +431,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
+	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
 		Boolean digitized = Boolean.FALSE;
 		try {
-			Image firstImage = getImageDAO().findDocumentImage(volNum, volLetExt, folioNum, folioMod);
+			Image firstImage = getImageDAO().findDocumentImage(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
 			if (firstImage != null) {
 				digitized = Boolean.TRUE;
 			}

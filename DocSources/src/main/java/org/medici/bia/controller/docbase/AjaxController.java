@@ -89,14 +89,17 @@ public class AjaxController {
 			@RequestParam(value="entryId", required=false) Integer entryId,
 			@RequestParam(value="volNum", required=false) Integer volNum,
 			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
 			@RequestParam(value="folioNum", required=false) Integer folioNum,
-			@RequestParam(value="folioMod", required=false) String folioMod) {
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRectoVerso", required=false) String rectoVerso) {
 		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		if (entryId != null) {
 			try {
-				Boolean digitized = getDocBaseService().checkDocumentDigitized(volNum, volLetExt, folioNum, folioMod);
+				Boolean digitized = getDocBaseService().checkDocumentDigitized(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
 				model.put("digitized", digitized.toString());
 			} catch (ApplicationThrowable aex) {
 				model.put("digitized", "false");

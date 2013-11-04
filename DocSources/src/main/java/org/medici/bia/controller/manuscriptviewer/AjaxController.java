@@ -247,9 +247,9 @@ public class AjaxController {
 			model.put("linkedDocument", (documents != null && documents.size() > 0) ? "true" : "false");
 			model.put("countAlreadyEntered", (documents != null) ? documents.size() : 0);
 			model.put("entryId", documentId );
-			if (documents.size() == 1) {
+			if (documents != null && documents.size() == 1) {
 				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
-			} else if (documents.size() > 1) {
+			} else if (documents != null && documents.size() > 1) {
 				model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString()));
 			}
 			model.put("isExtract", (isExtract.equals(Boolean.TRUE)) ? "true" : "false");
