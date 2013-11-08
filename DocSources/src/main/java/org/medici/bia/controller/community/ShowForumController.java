@@ -149,53 +149,50 @@ public class ShowForumController {
 			} else if (forum.getType().equals(Type.FORUM)) {
 				model.put("forum", forum);
 				//MD: Prepare the Manuscript Viewer
-				if(forum.getDocument() != null){
+				if (forum.getDocument() != null) {
 					Document document = forum.getDocument();
-					if(getManuscriptViewerService().findDocumentImageThumbnail(document) != null){
+					if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
 						DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 						documentExplorer.setImage(new Image());
 						documentExplorer.getImage().setInsertNum(document.getInsertNum());
 						documentExplorer.getImage().setInsertLet(document.getInsertLet());
 						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 						documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
-						documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
+						documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() == null ? null : Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
 						documentExplorer.getImage().setImageType(ImageType.C);
 						documentExplorer.setTotal(null);
 					
 						try {
 							documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-							
 							model.put("documentExplorer", documentExplorer);
 						} catch (ApplicationThrowable applicationThrowable) {
 							model.put("applicationThrowable", applicationThrowable);
 							return new ModelAndView("error/ShowForum", model);
 						}
-					}else{
+					} else {
 						model.put("documentExplorer", null);
 					}
-				}else if(forum.getVolume() != null){
+				} else if(forum.getVolume() != null) {
 					Volume volume = forum.getVolume();
-					if(volume.getDigitized()){
+					if (volume.getDigitized()) {
 						VolumeExplorer volumeExplorer = new VolumeExplorer(volume.getSummaryId(), volume.getVolNum(), volume.getVolLetExt());
-						if(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()) != null){
+						if (getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()) != null) {
 							volumeExplorer.setImage(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()));
-						}else{
+						} else {
 							volumeExplorer.setImage(new Image());
-//							volumeExplorer.getImage().setImageProgTypeNum(1);
 							volumeExplorer.getImage().setImageOrder(1);
 							volumeExplorer.getImage().setImageType(ImageType.C);
 						}
 						volumeExplorer.setTotal(null);
 						
-						try{
+						try {
 							volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
-							
 							model.put("volumeExplorer", volumeExplorer);
-						}catch (ApplicationThrowable applicationThrowable) {
+						} catch (ApplicationThrowable applicationThrowable) {
 							model.put("applicationThrowable", applicationThrowable);
 							return new ModelAndView("error/ShowForum", model);
 						}
-					}else{
+					} else {
 						model.put("volumeExplorer", null);
 					}
 				}

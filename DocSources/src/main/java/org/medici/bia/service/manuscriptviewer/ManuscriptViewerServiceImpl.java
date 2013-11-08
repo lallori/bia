@@ -60,16 +60,13 @@ import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Document.RectoVerso;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.Forum.Status;
-import org.medici.bia.domain.Forum.SubType;
 import org.medici.bia.domain.Forum.Type;
-import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
-import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
@@ -232,6 +229,18 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findImages(volNum, volLetExt, insertNum, insertLet).size() > 0;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/*@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
@@ -478,6 +487,19 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering) throws ApplicationThrowable {
+		try {
+			Image image = getImageDAO().findImage(volNum, volLetExt, imageType, insertNum, insertLet, imageProgTypeNum, missedNumbering);
+			return image;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -662,7 +684,11 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				}
 			}
 
-			return getImageDAO().findImages(documentExplorer);
+			Image image = getImageDAO().findImage(documentExplorer);
+			if (image != null) {
+				documentExplorer.setImage(image);
+			}
+			return documentExplorer;
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -675,18 +701,25 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable {
 		try {
 			if (volumeExplorer.getSummaryId() != null && volumeExplorer.getVolNum() == null) {
-				if (volumeExplorer.getSummaryId() >0) {
+				if (volumeExplorer.getSummaryId() > 0) {
 					Volume volume = getVolumeDAO().find(volumeExplorer.getSummaryId());
 					volumeExplorer.setVolNum(volume.getVolNum());
 					volumeExplorer.setVolLetExt(volume.getVolLetExt());
+				} else {
+					return volumeExplorer;
 				}
 			} else if (volumeExplorer.getSummaryId() == null && volumeExplorer.getVolNum() != null) {
 				Volume volume = getVolumeDAO().findVolume(volumeExplorer.getVolNum(), volumeExplorer.getVolLetExt());
-				if (volume != null) {
-					volumeExplorer.setSummaryId(volume.getSummaryId());
+				if (volume == null) {
+					return volumeExplorer;
 				}
+				volumeExplorer.setSummaryId(volume.getSummaryId());
 			}
-			return getImageDAO().findImages(volumeExplorer);
+			Image image = getImageDAO().findImage(volumeExplorer);
+			if (image != null) {
+				volumeExplorer.setImage(image);
+			}
+			return volumeExplorer;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -128,8 +128,9 @@ IIPMooViewer.implement({
 				if (annotation_array[i].type) {
 					cl += ' ' + annotation_array[i].type;
 				}
+				var annotId = annotation_array[i].annotationId ? annotation_array[i].annotationId : annotation_array[i].id;
 				var annotation = new Element('div', {
-					'id': (annotation_array[i].annotationId ? 'annotation_' + annotation_array[i].annotationId : annotation_array[i].id),
+					'id': 'annotation_' + annotId,
 					'class': cl,
 					'styles': {
 						left: Math.round(this.wid * annotation_array[i].x),
@@ -138,24 +139,23 @@ IIPMooViewer.implement({
 						height: Math.round(this.hei * annotation_array[i].h)
 					}
 				}).inject(this.canvas);
+				
+				var annotationCommandOpenClose = null;
+				if (this.editEnabled) {
+					annotationCommandOpenClose = this.initAnnotationCommands(annotation, annotId);
+				}
 			
 				if (this.annotationsVisible == false) {
 					annotation.addClass('hidden');
+					if (annotationCommandOpenClose != null) {
+						annotationCommandOpenClose.addClass('hidden');
+					}
 				}
 	
 				// Add edit events to annotations if we have included the functions
 				if (typeof(this.editAnnotation) == "function") {
 					if (annotation_array[i].edit == true) { 
 						this.editAnnotation(annotation);
-					} else {
-						var _this = this;
-						if (annotation_array[i].updatable) {
-							annotation.addEvent('dblclick', function(e) {
-								var event = new DOMEvent(e); 
-								event.stop();
-								_this.editAnnotation(this);
-							});
-						}
 					}
 				}
 			
@@ -222,22 +222,138 @@ IIPMooViewer.implement({
 			});
 		}
 	},
-
-
+	
+	/**
+	 * Initializes the annotation action commands.
+	 * 
+	 * @param annotation the annotation 'div' element
+	 * @param annotationId the annotation identifier
+	 * @returns the master annotation command (open/close command)
+	 */
+	initAnnotationCommands: function(annotation, annotationId) {
+		var _this = this;
+		var idx = 0;
+		while (idx < this.annotations.length) {
+			if ((typeof this.annotations[idx].annotationId === "undefined" && this.annotations[idx].id == annotationId)
+					|| this.annotations[idx].annotationId == annotationId) {
+				break;
+			}
+			idx++;
+		}
+		var annotationCommandOpenClose = new Element('div', {
+			'id': ('commandBtn_' + annotationId),
+			'class': 'commandBtn moreBtn',
+			'styles': {
+				left: 0,
+				top: 0
+			},
+			'title': 'open/close annotation commands'
+		}).inject(annotation);
+		
+		var delta = 0;
+		
+		if (this.annotations[idx].deletable == true) {
+			var annotationDelete = new Element('div', {
+				'id': ('deleteBtn_' + annotationId),
+				'class': 'commandBtn deleteBtn hidden',
+				'styles': {
+					left: 20,
+					top: delta * 22
+				},
+				'title': 'delete this annotation'
+			}).inject(annotation);
+			
+			annotationDelete.addEvent('click', function(e) {
+				var event = new DOMEvent(e);
+				event.stop();
+				if (confirm('Do you want to delete this annotation?')) {
+					_this.annotations.splice(idx, 1);
+					_this.updateAnnotations();
+					_this.fireEvent('annotationChange', _this.annotations);
+				}
+			});
+			delta++;
+		}
+		
+		if (this.annotations[idx].updatable == true) {
+			var annotationUpdate = new Element('div', {
+				'id': ('updateBtn_' + annotationId),
+				'class': 'commandBtn updateBtn hidden',
+				'styles': {
+					left: 20,
+					top: delta * 22
+				},
+				'title': 'modify this annotation'
+			}).inject(annotation);
+			
+			annotationUpdate.addEvent('click', function(e) {
+				e.stop();
+				_this.canvas.getElements('div.commandBtn').addClass('hidden');
+				_this.editAnnotation(annotation);
+			})
+			delta++;
+		}
+		
+		annotationCommandOpenClose.addEvent('click', function(e) {
+			var event = new DOMEvent(e);
+			event.stop();
+			var annotationId = this.id.substring(11, this.id.length);
+			if (this.hasClass('moreBtn')) {
+				this.removeClass('moreBtn');
+				this.addClass('lessBtn');
+				_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId).removeClass('hidden');
+			} else if (this.hasClass('lessBtn')) {
+				this.removeClass('lessBtn');
+				this.addClass('moreBtn');
+				_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId).addClass('hidden');
+			}
+		});
+		
+		return annotationCommandOpenClose;
+	},
+	
+	/**
+	 * Renders or hides the commands associated to annotations
+	 * 
+	 * @param show true if you want to render commands
+	 */
+	renderCommands: function(show) {
+		if (!show) {
+			this.canvas.getElements('div.commandBtn').each(function(el) {
+				el.addClass('hidden');
+			}); 
+		} else {
+			this.canvas.getElements('div.lessBtn').each(function(el) {
+				el.removeClass('lessBtn');
+				el.addClass('moreBtn');
+			});
+			this.canvas.getElements('div.moreBtn,div.lessBtn').each(function(el) {
+				el.removeClass('hidden');
+			});
+		}
+	},
+	
 	/**
 	 * Toggle visibility of any annotations
 	 */
 	toggleAnnotations: function() {
-		var els;
-		if (els = this.canvas.getElements('div.annotation')) {
-			if (this.annotationsVisible) {
-				els.addClass('hidden');
-				this.annotationsVisible = false;
-				this.showPopUp(IIPMooViewer.lang.annotationsDisabled);
-			} else {
-				els.removeClass('hidden');
-				this.annotationsVisible = true;
-			}
+		var visible = this.annotationsVisible;
+		if (visible) {
+			this.canvas.getElements('div.annotation').each(function(el) {
+				el.addClass('hidden');
+			});
+			this.renderCommands(true);
+		} else if (!visible) {
+			this.canvas.getElements('div.annotation').each(function(el) {
+				el.removeClass('hidden');
+			});
+			this.renderCommands(false);
+		}
+		if (visible) {
+			this.annotationsVisible = false;
+			this.showPopUp(IIPMooViewer.lang.annotationsDisabled);
+		} else {
+			this.annotationsVisible = true;
 		}
 	},
 
@@ -251,6 +367,9 @@ IIPMooViewer.implement({
 		}
 		this.canvas.getChildren('div.annotation').each(function(el) {
 			el.eliminate('tip:text');
+			el.destroy();
+		});
+		this.canvas.getChildren('div.commandBtn').each(function(el) {
 			el.destroy();
 		});
 	},

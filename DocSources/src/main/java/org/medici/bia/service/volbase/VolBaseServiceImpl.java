@@ -1046,7 +1046,11 @@ public class VolBaseServiceImpl implements VolBaseService {
 					volumeExplorer.setSummaryId(volume.getSummaryId());
 				}
 			}
-			return getImageDAO().findImages(volumeExplorer);
+			Image image = getImageDAO().findImage(volumeExplorer);
+			if (image != null) {
+				volumeExplorer.setImage(image);
+			}
+			return volumeExplorer;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

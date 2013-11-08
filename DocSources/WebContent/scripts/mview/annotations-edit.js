@@ -35,6 +35,8 @@ IIPMooViewer.implement({
 		var id = String.uniqueID();
     
 		this.canvas = canvas;
+		
+		this.renderCommands(false);
 
 		// Create default annotation and insert into our annotation array
 		var a = {
@@ -213,41 +215,6 @@ IIPMooViewer.implement({
 				'value': 'cancel'
 			}).inject(form);
 	
-			if (this.annotations[currentIndex].deletable) {
-				var del = new Element('input', {
-					'type': 'button',
-					'class': 'button delAnnotation',
-					'value': 'delete'
-				}).inject(form);
-	
-				var question = new Element('div', {
-					'id': 'question',
-					'style': 'display:none; cursor: default; z-index: 999; ',
-					'html': 'Are you sure?'
-				}).inject(form);
-	
-				var yesQuestion = new Element('input', {
-					'type': 'button',
-					'class': 'button',
-					'value': 'Yes'
-				}).inject(question);
-	
-				var noQuestion = new Element('input', {
-					'id':'noQuestion',
-					'type': 'button',
-					'class': 'button',
-					'value': 'No'
-				}).inject(question);
-			} else {
-				var del = new Element('input', {
-					'type': 'button',
-					'class': 'button delAnnotation',
-					'value': 'delete',
-					'disabled' : 'disabled',
-					'title' : 'DELETE button is disabled: you cannot delete this annotation because there are some posts associated to it' 
-				}).inject(form);
-			}
-	
 			/** MEDICI ARCHIVE PROJECT START **/
 			//To position the form
 			if (annotation.getPosition().y + annotation.getSize().y + form.getSize().y > window.innerHeight) {
@@ -309,34 +276,6 @@ IIPMooViewer.implement({
 					_this.updateAnnotations();
 				}
 			});
-	
-			/** MEDICI ARCHIVE PROJECT START **/
-			// Add a delete event to our annotation
-			/*del.addEvent('click', function() {
-				delete _this.annotations[id];
-				_this.updateAnnotations();
-				_this.fireEvent('annotationChange', _this.annotations);
-			});*/
-	
-			if (this.annotations[currentIndex].deletable) {
-				/*del.addEvent('click', function() {
-					delete _this.annotations[id];
-					_this.updateAnnotations();
-					_this.fireEvent('annotationChange', _this.annotations);
-				});*/
-	
-				yesQuestion.addEvent('click', function() {
-					/** MEDICI ARCHIVE PROJECT START **/
-					// RR: now we use the index of the annotations array and we use splice to remove the current annotation correctly 
-					// delete _this.annotations[id];
-					_this.annotations.splice(currentIndex, 1);
-					/** MEDICI ARCHIVE PROJECT END **/
-					_this.updateAnnotations();
-					_this.fireEvent('annotationChange', _this.annotations);
-				});
-			}
-			/** MEDICI ARCHIVE PROJECT END **/
-	
 	
 			/** MEDICI ARCHIVE PROJECT START **/
 			// Make it draggable and resizable, but prevent this interfering with our canvas drag

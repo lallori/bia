@@ -41,7 +41,6 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
@@ -378,81 +377,104 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public DocumentExplorer findImages(DocumentExplorer documentExplorer) throws PersistenceException {
+	public <T extends VolumeExplorer> Image findImage(T explorer) throws PersistenceException {
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
-		if (documentExplorer.getTotal() == null) {
-			this.updateDocumentExplorerTotals(documentExplorer);
+		if (explorer.getTotal() == null) {
+			this.updateExplorerTotals(explorer);
 		} 
 
-		boolean emptyVolLetExt = StringUtils.isEmpty(documentExplorer.getVolLetExt());
-		boolean nullInsertNum = documentExplorer.getImage().getInsertNum() == null;
-		boolean nullInsertLet = documentExplorer.getImage().getInsertLet() == null;
+		Image image = explorer.getImage();
 		
         StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
         stringBuilder.append(" volNum = :volNum");
-		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
+        if (explorer.getVolLetExt() == null || !StringUtils.isEmpty(explorer.getVolLetExt().trim())) {
+        	stringBuilder.append(" AND volLetExt").append(explorer.getVolLetExt() == null ? " IS NULL" : " = :volLetExt");
+        }
 		
-		if (documentExplorer.getImage().getImageOrder() != null) {
+		if (image.getImageOrder() != null) {
+			// imageOrder is provided --> the query search by this criterium 
 			stringBuilder.append(" AND imageOrder = :imageOrder");
-		} else if (documentExplorer.getImage().getImageName() != null && !"".equals(documentExplorer.getImage().getImageName().trim())) {
-			stringBuilder.append(" AND imageName LIKE '%").append(documentExplorer.getImage().getImageName().trim()).append("%'");
-		} else if (documentExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
-        	stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
-        	stringBuilder.append(" AND imageType = :imageType");
+		} else if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getImageName())) {
+			// imageOrder is not provided --> we first consider imageName search filter
+			stringBuilder.append(" AND imageName LIKE '%").append(image.getImageName().trim()).append("%'");
+		} else if (image.getImageProgTypeNum() != null) {
+			// imageOrder nor imageName are provided --> we consider folio number search filter
+			if (image.getInsertNum() == null || !StringUtils.isEmpty(image.getInsertNum().trim())) {
+				stringBuilder.append(" AND insertNum").append(image.getInsertNum() == null ? " IS NULL" : " = :insertNum");
+			}
+			if (image.getInsertLet() == null || !StringUtils.isEmpty(image.getInsertLet().trim())) {
+				stringBuilder.append(" AND insertLet").append(image.getInsertLet() == null ? " IS NULL" : " = :insertLet");
+			}
+			if (image.getImageType() != null) {
+				stringBuilder.append(" AND imageType = :imageType");
+			}
         	stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum");
-            stringBuilder.append(" AND missedNumbering").append(documentExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
-        	if (documentExplorer.getImage().getImageRectoVerso() != null)
-        		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
+            if (image.getMissedNumbering() == null || !StringUtils.isEmpty(image.getMissedNumbering().trim())) {
+            	stringBuilder.append(" AND missedNumbering").append(image.getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
+            }
+        	if (!Image.ImageRectoVerso.N.equals(image.getImageRectoVerso())) {
+        		stringBuilder.append(" AND imageRectoVerso").append(image.getImageRectoVerso() == null ? " IS NULL" : " = :imageRectoVerso");
+        	}
         } else {
+        	// no search filter is provided --> we set 1 for imageOrder
         	stringBuilder.append(" AND imageOrder = 1");
         }
         
         logger.debug("FindImages from documentExplorer query: " + stringBuilder.toString());
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
-        query.setParameter("volNum", documentExplorer.getVolNum());
-        if (!emptyVolLetExt)
-        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
+        query.setParameter("volNum", explorer.getVolNum());
+        if (!org.medici.bia.common.util.StringUtils.isNullableString(explorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", explorer.getVolLetExt());
+        }
 
-        if (documentExplorer.getImage().getImageOrder() != null) {
-        	query.setParameter("imageOrder", documentExplorer.getImage().getImageOrder());
+        if (image.getImageOrder() != null) {
+        	// imageOrder is provided
+        	query.setParameter("imageOrder", image.getImageOrder());
 			query.setFirstResult(0);
 			query.setMaxResults(1);
-			documentExplorer.setImage((Image) query.getSingleResult());
-        } else if (documentExplorer.getImage().getImageName() != null && !"".equals(documentExplorer.getImage().getImageName().trim())) {
+			return (Image) query.getSingleResult();
+        }
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getImageName())) {
+			// imageOrder is not provided but imageName is provided
         	query.setFirstResult(0);
 			query.setMaxResults(1);
 			try {
-				documentExplorer.setImage((Image) query.getSingleResult());
-			} catch (NoResultException noResultExcepion) {
-			}
-        } else if (documentExplorer.getImage().getImageProgTypeNum() != null) {
-        	if (!nullInsertNum)
-        		query.setParameter("insertNum", documentExplorer.getImage().getInsertNum());
-        	if (!nullInsertLet)
-        		query.setParameter("insertLet", documentExplorer.getImage().getInsertLet());
-        	query.setParameter("imageType", documentExplorer.getImage().getImageType());
-        	query.setParameter("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
-        	if (documentExplorer.getImage().getMissedNumbering() != null)
-        		query.setParameter("missedNumbering", documentExplorer.getImage().getMissedNumbering());
-        	if (documentExplorer.getImage().getImageRectoVerso() != null)
-        		query.setParameter("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());
+				return (Image) query.getSingleResult();
+			} catch (NoResultException noResultExcepion) { }
+        }
+		if (image.getImageProgTypeNum() != null) {
+			// imageOrder nor imageName are provided but insert and folio details are provided
+        	if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getInsertNum())) {
+        		query.setParameter("insertNum", image.getInsertNum().trim());
+        	}
+        	if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getInsertLet())) {
+        		query.setParameter("insertLet", image.getInsertLet().trim());
+        	}
+        	if (image.getImageType() != null) {
+        		query.setParameter("imageType", image.getImageType());
+        	}
+        	query.setParameter("imageProgTypeNum", image.getImageProgTypeNum());
+        	if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getMissedNumbering())) {
+        		query.setParameter("missedNumbering", image.getMissedNumbering());
+        	}
+        	if (image.getImageRectoVerso() != null && !Image.ImageRectoVerso.N.equals(image.getImageRectoVerso())) {
+        		query.setParameter("imageRectoVerso", image.getImageRectoVerso());
+        	}
 			List<Image> result = (List<Image>) query.getResultList();
 			
 			if (result.size() > 0) {
-				documentExplorer.setImage(result.get(0));
-			}
-        } else {
-			query.setFirstResult(0);
-			query.setMaxResults(1);
-			try {
-				documentExplorer.setImage((Image) query.getSingleResult());
-			} catch (NoResultException noResultExcepion) {
+				return result.get(0);
 			}
         }
+		// no searching criteria is provided --> we search with imageOrder = 1
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+		try {
+			return (Image) query.getSingleResult();
+		} catch (NoResultException noResultExcepion) { }
 
-        return documentExplorer;
+        return null;
 	}
 
 	/**
@@ -575,79 +597,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			query.setParameter("insertLet", insertLet);
 		
 		return (List<Image>) query.getResultList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException {
-		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
-		if (volumeExplorer.getTotal() == null) {
-			this.updateVolumeExplorerTotals(volumeExplorer);
-		} 
-		
-		boolean emptyVolLetExt = StringUtils.isEmpty(volumeExplorer.getVolLetExt());
-		boolean nullInsertNum = volumeExplorer.getImage().getInsertNum() == null;
-		boolean nullInsertLet = volumeExplorer.getImage().getInsertLet() == null;
-		
-        StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE");
-        stringBuilder.append(" volNum = :volNum");
-		stringBuilder.append(" AND volLetExt").append(emptyVolLetExt ? " IS NULL" : " = :volLetExt");
-        
-        if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
-        	stringBuilder.append(" AND insertNum").append(nullInsertNum ? " IS NULL" : " = :insertNum");
-        	stringBuilder.append(" AND insertLet").append(nullInsertLet ? " IS NULL" : " = :insertLet");
-        	stringBuilder.append(" AND imageType = :imageType");
-        	stringBuilder.append(" AND imageProgTypeNum = :imageProgTypeNum");
-            stringBuilder.append(" AND missedNumbering").append(volumeExplorer.getImage().getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
-        	if (volumeExplorer.getImage().getImageRectoVerso() != null)
-        		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
-        } else if (volumeExplorer.getImage().getImageOrder() != null) {
-        	stringBuilder.append(" AND imageOrder = :imageOrder");
-        } else {
-        	stringBuilder.append(" AND imageOrder = 1");
-        }
-        
-        logger.debug("FindImages from documentExplorer query: " + stringBuilder.toString());
-    	
-        Query query = getEntityManager().createQuery(stringBuilder.toString());
-        query.setParameter("volNum", volumeExplorer.getVolNum());
-        if (!emptyVolLetExt)
-        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-
-        if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
-        	if (!nullInsertNum)
-        		query.setParameter("insertNum", volumeExplorer.getImage().getInsertNum());
-        	if (!nullInsertLet)
-        		query.setParameter("insertLet", volumeExplorer.getImage().getInsertLet());
-        	query.setParameter("imageType", volumeExplorer.getImage().getImageType());
-        	query.setParameter("imageProgTypeNum", volumeExplorer.getImage().getImageProgTypeNum());
-        	if (volumeExplorer.getImage().getMissedNumbering() != null)
-        		query.setParameter("missedNumbering", volumeExplorer.getImage().getMissedNumbering());
-        	if (volumeExplorer.getImage().getImageRectoVerso() != null)
-        		query.setParameter("imageRectoVerso", volumeExplorer.getImage().getImageRectoVerso());
-			List<Image> result = (List<Image>) query.getResultList();
-			
-			if (result.size() > 0) {
-				volumeExplorer.setImage(result.get(0));
-			}
-        } else if (volumeExplorer.getImage().getImageOrder() != null) {
-        	query.setParameter("imageOrder", volumeExplorer.getImage().getImageOrder());
-			query.setFirstResult(0);
-			query.setMaxResults(1);
-			volumeExplorer.setImage((Image) query.getSingleResult());
-        } else {
-			query.setFirstResult(0);
-			query.setMaxResults(1);
-			try {
-				volumeExplorer.setImage((Image) query.getSingleResult());
-			} catch (NoResultException noResultExcepion) {
-			}
-        }
-
-        return volumeExplorer;
 	}
 
 	/**
@@ -1063,13 +1012,12 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	}
 	
 	/**
-	 * This method updates every totals in input 
-	 * {@link org.medici.bia.common.pagination.DocumentExplorer}.
+	 * This method updates every totals in input .
 	 * 
-	 * @param documentExplorer DocumentExplorer input object to be update.
+	 * @param explorer input object to be update.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void updateDocumentExplorerTotals(DocumentExplorer documentExplorer) {
+	private <T extends VolumeExplorer> void updateExplorerTotals(T explorer) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 
 		CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
@@ -1083,39 +1031,39 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		criteriaQueryCount.where(
 			criteriaBuilder.and(
 				criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-				StringUtils.isEmpty(documentExplorer.getVolLetExt()) ? 
+				StringUtils.isEmpty(explorer.getVolLetExt()) ? 
 					criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
 					criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
 			)
 		);
 
 		TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-		typedQueryCount.setParameter("volNum", documentExplorer.getVolNum());
-		if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
-			typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
-		documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
+		typedQueryCount.setParameter("volNum", explorer.getVolNum());
+		if (!StringUtils.isEmpty(explorer.getVolLetExt()))
+			typedQueryCount.setParameter("volLetExt", explorer.getVolLetExt());
+		explorer.setTotal((Long)typedQueryCount.getSingleResult());
 
         StringBuilder stringBuilder = new StringBuilder("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
+        if (!StringUtils.isEmpty(explorer.getVolLetExt()))
         	stringBuilder.append(" = :volLetExt");
         else
         	stringBuilder.append(" is null");
     	stringBuilder.append(" group by imageType, imageRectoVerso");
     	
         Query query = getEntityManager().createQuery(stringBuilder.toString());
-        query.setParameter("volNum", documentExplorer.getVolNum());
-        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
-        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
+        query.setParameter("volNum", explorer.getVolNum());
+        if (!StringUtils.isEmpty(explorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", explorer.getVolLetExt());
         }
 
 		List<Object[]> result = (List<Object[]>)query.getResultList();
 
 		// We init every partial-total
-		documentExplorer.setTotalRubricario(new Long(0));
-		documentExplorer.setTotalCarta(new Long(0));
-		documentExplorer.setTotalAppendix(new Long(0));
-		documentExplorer.setTotalOther(new Long(0));
-		documentExplorer.setTotalGuardia(new Long(0));
+		explorer.setTotalRubricario(new Long(0));
+		explorer.setTotalCarta(new Long(0));
+		explorer.setTotalAppendix(new Long(0));
+		explorer.setTotalOther(new Long(0));
+		explorer.setTotalGuardia(new Long(0));
 		
 		// We set new partial-total values 
 		for (int i=0; i<result.size(); i++) {
@@ -1123,111 +1071,26 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			Object[] singleGroup = result.get(i);
 
 			if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-				if (documentExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
-					documentExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
+				if (explorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
+					explorer.setTotalRubricario(new Long(singleGroup[2].toString()));
 				}
 			} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-				if (documentExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
-					documentExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
+				if (explorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
+					explorer.setTotalCarta(new Long(singleGroup[2].toString()));
 				}
 			} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-				if (documentExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
-					documentExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
+				if (explorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
+					explorer.setTotalAppendix(new Long(singleGroup[2].toString()));
 				}
 			} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-				if (documentExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
-					documentExplorer.setTotalOther(new Long(singleGroup[2].toString()));
+				if (explorer.getTotalOther() < new Long(singleGroup[2].toString())) {
+					explorer.setTotalOther(new Long(singleGroup[2].toString()));
 				}
 			} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-				if (documentExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
-					documentExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
+				if (explorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
+					explorer.setTotalGuardia(new Long(singleGroup[2].toString()));
 				}
 			}
 		}
 	}
-
-	/**
-	 * This method updates every totals in input 
-	 * {@link org.medici.bia.common.pagination.VolumeExplorer}.
-	 * 
-	 * @param volumeExplorer VolumeExplorer input object to be update.
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void updateVolumeExplorerTotals(VolumeExplorer volumeExplorer) {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-
-		CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-		Root<Image> rootCount = criteriaQueryCount.from(Image.class);
-		criteriaQueryCount.select(criteriaBuilder.count(rootCount));
-
-		// Define predicate's elements
-		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
-
-		criteriaQueryCount.where(
-			criteriaBuilder.and(
-				criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-				StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
-					criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
-					criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
-			)
-		);
-
-		TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-		typedQueryCount.setParameter("volNum", volumeExplorer.getVolNum());
-		if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-			typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-		volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
-
-        StringBuilder stringBuilder = new StringBuilder("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-        	stringBuilder.append(" = :volLetExt");
-        else
-        	stringBuilder.append(" is null");
-    	stringBuilder.append(" group by imageType, imageRectoVerso");
-    	
-        Query query = getEntityManager().createQuery(stringBuilder.toString());
-        query.setParameter("volNum", volumeExplorer.getVolNum());
-        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
-        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-        }
-
-		List<Object[]> result = (List<Object[]>)query.getResultList();
-
-		// We init every partial-total
-		volumeExplorer.setTotalRubricario(new Long(0));
-		volumeExplorer.setTotalCarta(new Long(0));
-		volumeExplorer.setTotalAppendix(new Long(0));
-		volumeExplorer.setTotalOther(new Long(0));
-		volumeExplorer.setTotalGuardia(new Long(0));
-		
-		// We set new partial-total values 
-		for (int i=0; i<result.size(); i++) {
-			// This is an array defined as [ImageType, Count by ImageType]
-			Object[] singleGroup = result.get(i);
-
-			if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-				if (volumeExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
-					volumeExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
-				}
-			} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-				if (volumeExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
-					volumeExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
-				}
-			} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-				if (volumeExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
-					volumeExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
-				}
-			} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-				if (volumeExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
-					volumeExplorer.setTotalOther(new Long(singleGroup[2].toString()));
-				}
-			} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-				if (volumeExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
-					volumeExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
-				}
-			}
-		}
-	}
-
 }

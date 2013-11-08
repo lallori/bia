@@ -30,7 +30,6 @@ package org.medici.bia.dao.image;
 import java.util.List;
 import javax.persistence.PersistenceException;
 
-import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
@@ -121,7 +120,7 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	
 	/**
 	 * This method searches an image identified by volume identifiers, insert identifier, folio identifiers and image type.<br/>
-	 * Note that this method does not consider the recto/verso information.
+	 * Note that this method does not consider the recto/verso detail.
 	 * 
 	 * @param volNum MDP Volume identifier
 	 * @param volLetExt MDP Volume extension
@@ -150,12 +149,23 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso);
 
 	/**
+	 * This method populates the documentExplorer provided with the first image that satisfies the searching 
+	 * criteria.<br />
+	 * <b>NOTE :</b>
+	 * <ul>
+	 * <li>a null field implies a null value in the database</li>
+	 * <li>a blank field (empty string) means that field is not considered during the search process</li> 
+	 * <li>for the recto/verso detail the 'N' value stands for 'not specified' (null, recto or verso)</li>
+	 * <li>one of <code>imageOrder</code>, <code>imageName</code>, <code>imageProgrTypeNum</code> (aka
+	 * <code>folioNum</code>) should be specified, otherwise <i>1</i> is assigned to <code>imageOrder</code> 
+	 * field</li>
+	 * </ul>
 	 * 
-	 * @param pageTurner
-	 * @return
+	 * @param explorer the explorer that contains the searching criteria
+	 * @return the image found
 	 * @throws PersistenceException
 	 */
-	DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException;
+	<T extends VolumeExplorer> Image findImage(T explorer) throws PersistenceException;
 
 	/**
 	 * This method returns a list of Images linked to a specific volume.
@@ -188,14 +198,6 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @return A List<Image> linked to an insert
 	 */
 	List<Image> findImages(Integer volNum, String volLetExt, String insertNum, String insertLet);
-
-	/**
-	 * 
-	 * @param volumeExplorer
-	 * @return
-	 * @throws PersistenceException
-	 */
-	VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException;
 
 	/**
 	 * 

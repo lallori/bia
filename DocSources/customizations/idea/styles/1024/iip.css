@@ -266,7 +266,8 @@
 
 /* Use transitions to fade and set the annotation to invisible
  */
-.iipmooviewer .canvas .annotation.hidden{
+.iipmooviewer .canvas .annotation.hidden,
+.iipmooviewer .canvas .commandBtn.hidden {
   visibility: hidden;
   opacity: 0;
   -webkit-transition: visibility 0s linear 0.3s, opacity 0.3s linear;
@@ -516,4 +517,90 @@ a.logo:link, a.logo:visited {
     height: 36px;
     padding: 2px;
   }
+}
+
+/** Annotation Commands **/
+.iipmooviewer .canvas .commandBtn {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	overflow: visible;
+	z-index: 100;
+	opacity: 1;
+	-webkit-transition: opacity 0.3s linear;
+	-moz-transition: opacity 0.3s linear;
+	-o-transition: opacity 0.3s linear;
+	-ms-transition: opacity 0.3s linear;
+	transition: opacity 0.3s linear;
+}
+
+.iipmooviewer .canvas .deleteBtn {
+  margin-left: -22px;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #888;
+  border-bottom: 2px solid #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  background-image:url('${contextPath}/images/1024/button_deleteAnnotation.png');
+  background-size:20px 20px;
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  -ms-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+.iipmooviewer .canvas .updateBtn {
+  margin-left: -22px;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #888;
+  border-bottom: 2px solid #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  background-image:url('${contextPath}/images/1024/button_editAnnotation.png');
+  background-size:20px 20px;
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  -ms-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+.iipmooviewer .canvas .moreBtn {
+	margin-left: -15px;
+	width: 15px;
+	height: 24px;
+	border: none;
+	background-image: url('${contextPath}/images/1024/button_openCloseCmd.png');
+	background-color: rgba(255,255,255,0.8);
+	background-size: 15px 24px;
+	background-repeat: no-repeat;
+	border-top-left-radius: 15px 12px;
+	-moz-border-radius-topleft: 15px 12px;
+	border-bottom-left-radius: 15px 12px;
+	-moz-border-radius-bottomleft: 15px 12px;
+}
+
+.iipmooviewer .canvas .lessBtn {
+	margin-left: -37px;
+	margin-right: 2px;
+	width: 15px;
+	height: 24px;
+	border: none;
+	background-image: url('${contextPath}/images/1024/button_openCloseCmd.png');
+	background-color: rgba(255,255,255,0.8);
+	background-size: 15px 24px;
+	background-repeat: no-repeat;
+	border-top-left-radius: 15px 12px;
+	-moz-border-radius-topleft: 15px 12px;
+	border-bottom-left-radius: 15px 12px;
+	-moz-border-radius-bottomleft: 15px 12px;
 }

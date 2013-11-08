@@ -29,7 +29,6 @@ package org.medici.bia.validator.docbase;
 
 import org.medici.bia.command.docbase.ShowExplorerDocumentCommand;
 import org.medici.bia.common.util.StringUtils;
-import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -98,7 +97,7 @@ public class ShowExplorerDocumentValidator implements Validator {
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only ModifyVolumeCommand.
+	 * validator supports only {@link ShowExplorerDocumentCommand}.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise

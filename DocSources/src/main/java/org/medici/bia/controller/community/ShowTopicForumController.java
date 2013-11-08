@@ -127,32 +127,31 @@ public class ShowTopicForumController {
 			
 			model.put("subscribed", getCommunityService().ifTopicSubscribed(forumTopic.getTopicId()));
 			
-			if(forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null){
+			if (forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null) {
 				//MD: Prepare the Manuscript Viewer
 				Document document = forumTopic.getForum().getDocument();
-				if(getManuscriptViewerService().findDocumentImageThumbnail(document) != null){
+				if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
 					DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 					documentExplorer.setImage(new Image());
 					documentExplorer.getImage().setInsertNum(document.getInsertNum());
 					documentExplorer.getImage().setInsertLet(document.getInsertLet());
 					documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 					documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
-					documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
+					documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() == null ? null : Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
 					documentExplorer.getImage().setImageType(ImageType.C);
 					documentExplorer.setTotal(null);
 					
 					try {
 						documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-		
 						model.put("documentExplorer", documentExplorer);
 					} catch (ApplicationThrowable applicationThrowable) {
 						model.put("applicationThrowable", applicationThrowable);
 						return new ModelAndView("error/ShowTopicForum", model);
 					}
-				}else{
+				} else {
 					model.put("documentExplorer", null);
 				}
-			}else if(forumTopic.getAnnotation() != null){
+			} else if(forumTopic.getAnnotation() != null) {
 				Annotation annotation = forumTopic.getAnnotation();
 				Image image = new Image();
 				image = getManuscriptViewerService().findImage(annotation.getImage().getImageId());
@@ -161,11 +160,10 @@ public class ShowTopicForumController {
 				volumeExplorer.setImage(new Image());
 				volumeExplorer.getImage().setImageOrder(image.getImageOrder());
 				volumeExplorer.getImage().setStoragePath(image.getStoragePath());
-				try{
+				try {
 					volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
-					
 					model.put("volumeExplorer", volumeExplorer);
-				}catch (ApplicationThrowable applicationThrowable) {
+				} catch (ApplicationThrowable applicationThrowable) {
 					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/ShowTopic", model);
 				}

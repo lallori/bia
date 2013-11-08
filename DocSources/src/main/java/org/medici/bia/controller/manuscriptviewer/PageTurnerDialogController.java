@@ -37,6 +37,7 @@ import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -50,12 +51,44 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/src/mview/PageTurnerDialog", "/de/mview/PageTurnerDialog"})
 public class PageTurnerDialogController {
+	
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private VolBaseService volBaseService;
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
+	
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
 
 	/**
 	 * 
@@ -76,7 +109,7 @@ public class PageTurnerDialogController {
 				image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), null, null, command.getImageType(), command.getImageProgTypeNum(), command.getImageOrder());
 			} else {
 				image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getVolNum(), command.getVolLetExt(), command.getImageType(), command.getImageProgTypeNum(), command.getImageOrder());
-			} 
+			}
 
 			model.put("image", image);
 		} catch (ApplicationThrowable applicationThrowable) {
@@ -87,6 +120,8 @@ public class PageTurnerDialogController {
 			// We check if this image has a document linked...
 			List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
 			model.put("entryId", documents != null && documents.size() > 0 ? documents.get(0).getEntryId() : null);
+			Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
+			model.put("hasInsert", hasInserts);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			model.put("entryId", null);
@@ -99,19 +134,5 @@ public class PageTurnerDialogController {
 		}
 		
 		return new ModelAndView("mview/PageTurnerDialog", model);
-	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
 	}
 }

@@ -31,6 +31,7 @@ package org.medici.bia.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.manuscriptviewer.EditDocumentInManuscriptViewerCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.domain.Document;
@@ -68,10 +69,17 @@ public class EditDocumentInManuscriptViewerController {
 	public ModelAndView setupPage(@ModelAttribute("requestCommand") EditDocumentInManuscriptViewerCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), StringUtils.isEmpty(command.getVolLetExt()) ? null : command.getVolLetExt());
 		documentExplorer.setImage(new Image());
 		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 		documentExplorer.getImage().setImageOrder(command.getImageOrder());
+		if (command.getImageOrder() == null) {
+			// FIXME do extend command
+			documentExplorer.getImage().setInsertNum("");
+			documentExplorer.getImage().setInsertLet("");
+			documentExplorer.getImage().setMissedNumbering("");
+			documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.N);
+		}
 		documentExplorer.getImage().setImageType(command.getImageType());
 		documentExplorer.setTotal(command.getTotal());
 		documentExplorer.setTotalRubricario(command.getTotalRubricario());

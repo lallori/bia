@@ -34,6 +34,7 @@ import org.medici.bia.domain.Image.ImageType;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class PageTurnerCommand {
@@ -46,8 +47,16 @@ public class PageTurnerCommand {
 	private Integer imageOrder;
 	/** This parameter is used to manage image type (Rubricario, Carta...) */
 	private ImageType imageType;
-	/** This parameter is used to folio identifier ) */
+	/** This parameter is used to specify the insert number */
+	private String insertNum;
+	/** This parameter is used to specify the insert extension */
+	private String insertLet;
+	/** This parameter is used to specify the folio identifier ) */
 	private Integer imageProgTypeNum;
+	/** This parameter is used to specify the folio extension (BIS, TER, ...) */
+	private String missedNumbering;
+	/** This parameter is used to specify the folio recto/verso information */
+	private String imageRectoVerso;
 	private Long total;
 	/** This parameter is used to count Rubricario total */ 
 	private Long totalRubricario;
@@ -61,6 +70,8 @@ public class PageTurnerCommand {
 	private Long totalAppendix;
 	/** This parameter is used to manage urls of caller controller */
 	private Boolean modeEdit;
+	/** This parameter is used to manage "jump to" form submit */
+	private Boolean formSubmitting;
 	
 	/**
 	 * @return the entryId
@@ -139,6 +150,30 @@ public class PageTurnerCommand {
 		this.imageType = imageType;
 	}
 	/**
+	 * @return the insertNum
+	 */
+	public String getInsertNum() {
+		return insertNum;
+	}
+	/**
+	 * @param insertNum the insertNum to set
+	 */
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
+	}
+	/**
+	 * @return the insertLet
+	 */
+	public String getInsertLet() {
+		return insertLet;
+	}
+	/**
+	 * @param insertLet the insertLet to set
+	 */
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
+	}
+	/**
 	 * @return the imageProgTypeNum
 	 */
 	public Integer getImageProgTypeNum() {
@@ -149,6 +184,30 @@ public class PageTurnerCommand {
 	 */
 	public void setImageProgTypeNum(Integer imageProgTypeNum) {
 		this.imageProgTypeNum = imageProgTypeNum;
+	}
+	/**
+	 * @return the missedNumbering
+	 */
+	public String getMissedNumbering() {
+		return missedNumbering;
+	}
+	/**
+	 * @param missedNumbering the missedNumbering to set
+	 */
+	public void setMissedNumbering(String missedNumbering) {
+		this.missedNumbering = missedNumbering;
+	}
+	/**
+	 * @return the imageRectoVerso
+	 */
+	public String getImageRectoVerso() {
+		return imageRectoVerso;
+	}
+	/**
+	 * @param imageRectoVerso the imageRectoVerso to set
+	 */
+	public void setImageRectoVerso(String imageRectoVerso) {
+		this.imageRectoVerso = imageRectoVerso;
 	}
 	/**
 	 * @return the total
@@ -235,6 +294,20 @@ public class PageTurnerCommand {
 	 */
 	public Boolean getModeEdit() {
 		return modeEdit;
+	}
+	
+	/**
+	 * @param formSubmitting the modeEdit to set
+	 */
+	public void setFormSubmitting(Boolean formSubmitting) {
+		this.formSubmitting = formSubmitting;
+	}
+	
+	/**
+	 * @return the formSubmitting
+	 */
+	public Boolean getFormSubmitting() {
+		return formSubmitting;
 	}
 
 }

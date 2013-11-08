@@ -150,7 +150,7 @@ public class ShowExplorerDocumentController {
 				Boolean hasInserts = getVolBaseService().hasInserts(command.getVolNum(), command.getVolLetExt());
 				model.put("hasInsert", hasInserts);
 				
-				DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+				DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), StringUtils.nullTrim(command.getVolLetExt()));
 //				// we set informations from the document
 //				documentExplorer.setFolioNum(document.getFolioNum());
 //				documentExplorer.setFolioMod(document.getFolioMod());
@@ -162,7 +162,7 @@ public class ShowExplorerDocumentController {
 				}
 				documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 				documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
-				documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
+				documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? Image.ImageRectoVerso.N : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 				documentExplorer.getImage().setImageOrder(command.getImageOrder());
 				documentExplorer.getImage().setImageType(command.getImageType());
 				documentExplorer.setTotal(command.getTotal());
@@ -197,10 +197,11 @@ public class ShowExplorerDocumentController {
 	public ModelAndView setupForm(@ModelAttribute("command") ShowExplorerDocumentCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), StringUtils.nullTrim(command.getVolLetExt()));
 		documentExplorer.setImage(new Image());
 		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 		documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
+		documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? Image.ImageRectoVerso.N : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 		documentExplorer.getImage().setImageOrder(command.getImageOrder());
 		documentExplorer.getImage().setImageType(command.getImageType());
 		documentExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));

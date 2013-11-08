@@ -32,7 +32,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -98,91 +100,100 @@ public class AjaxController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	/**
+	 * This method is called from the client when the user try to jump to a folio.
+	 * It checks if the folio details are correct.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @return the data of the checking process
+	 */
+	@RequestMapping(value = {"/src/mview/CheckFolio.json"}, method = RequestMethod.GET)
+	public ModelAndView checkFolio(
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			if (folioNum != null) {
+				Image image = getManuscriptViewerService().findImage(
+						volNum,
+						volLetExt,
+						null, 
+						org.medici.bia.common.util.StringUtils.nullTrim(insertNum),
+						org.medici.bia.common.util.StringUtils.nullTrim(insertLet),
+						folioNum,
+						org.medici.bia.common.util.StringUtils.nullTrim(folioMod));
+				model.put("folioOK", image != null);
+			} else {
+				model.put("error", "error.manuscriptviewer.incorrectfolio");
+			}
+		} catch (ApplicationThrowable e) {
+			model.put("error", e.getApplicationError().toString());
+		}
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method is called from the client when the user try to jump to a folio.
+	 * It checks if the insert details are correct.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @return the data of the checking process
+	 */
+	@RequestMapping(value = {"/src/mview/CheckInsert.json"}, method = RequestMethod.GET)
+	public ModelAndView checkInsert(
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			if (volNum != null) {
+				Boolean insertOK = getManuscriptViewerService().checkInsert(volNum, volLetExt, org.medici.bia.common.util.StringUtils.nullTrim(insertNum), org.medici.bia.common.util.StringUtils.nullTrim(insertLet));
+				model.put("insertOK", insertOK);
+			} else {
+				model.put("error", "error.manuscriptviewer.incorrectvolume");
+			}
+		} catch (ApplicationThrowable e) {
+			model.put("error", e.getApplicationError().toString());
+		}
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
-	 * 
-	 * @param entryId Document identifier
-	 * @param volNum Volume Number
-	 * @param volLetExt Volume Letter Extension
-	 * @param imageType 
+	 * @param entryId
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageType
 	 * @param imageProgTypeNum
-	 * @param firstRecord This is input parameter for Carta Form
-	 * @param secondRecord This is input parameter for Rubricario Form
-	 * @param imageOrder Unique id identifier inside volume.
-	 * @param total Global total of volume.
-	 * @param totalRubricario Total count page in rubricario section.
-	 * @param totalCarta Total count page in carta section.
-	 * @param totalAppendix Total count page in appendix section.
+	 * @param imageOrder
+	 * @param imageName
+	 * @param total
+	 * @param totalRubricario
+	 * @param totalCarta
+	 * @param totalAppendix
 	 * @param totalOther
 	 * @param totalGuardia
 	 * @param modeEdit
+	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName,
-											@RequestParam(value="annotationId", required=false) Integer annotationId) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-
-		try {
-			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
-			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
-			model.put("annotations", resultList);
-		} catch (ApplicationThrowable ath) {
-		}
-	
-		return new ModelAndView("responseOK", model);
-	}
-	
-	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
-	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-
-		try {
-			// In this controller we get input parameter at low level beacause 
-			// there is a bug in spring which construct a wrong list of 
-			// annotations in case of client send 1 single annotation 
-			//String imageName = httpServletRequest.getParameter("imageName");
-			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
-			String[] annotationsFormView = httpServletRequest.getParameterValues("annotations");
-			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
-			List<Object> resultList = new ArrayList<Object>();
-
-			if (annotationsFormView != null) {
-				for (String string : annotationsFormView) {
-					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
-					String[] splitted = StringUtils.splitPreserveAllTokens(string, ",");
-					Annotation annotation = new Annotation();
-					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
-					annotation.setX(NumberUtils.toDouble(splitted[2]));
-					annotation.setY(NumberUtils.toDouble(splitted[3]));
-					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
-					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
-					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
-					annotation.setTitle(splitted[7]);
-					annotation.setText(splitted[8]);
-					annotationsList.add(annotation);
-				}
-			}
-			Map<Annotation, Integer> imageAnnotationsMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
-			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
-				Map<String, Object> singleRow = new HashMap<String, Object>(0);
-				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
-					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/community/EditForumPostAnnotation.do?topicId=" + imageAnnotationsMap.get(currentAnnotation));
-					resultList.add(singleRow);
-				}
-			}
-			// links -> only new annotations associated to a forum 
-			model.put("links", resultList);
-			// annotation -> all of the annotations associated to the current image
-			model.put("annotations", getAnnotationsForView(null, imageAnnotationsMap.keySet()));
-			
-		} catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("responseKO", model);
-		}
-		
-		return new ModelAndView("responseOK", model);
-	}
-
 	@RequestMapping(value = {"/src/mview/GetLinkedDocument.json", "/de/mview/GetLinkedDocument.json"}, method = RequestMethod.GET)
 	public ModelAndView findLinkedDocument(@RequestParam(value="entryId", required=false) Integer entryId,
 			@RequestParam(value="volNum", required=false) Integer volNum,
@@ -265,6 +276,40 @@ public class AjaxController {
 		
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * 
+	 * @param entryId Document identifier
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param imageType 
+	 * @param imageProgTypeNum
+	 * @param firstRecord This is input parameter for Carta Form
+	 * @param secondRecord This is input parameter for Rubricario Form
+	 * @param imageOrder Unique id identifier inside volume.
+	 * @param total Global total of volume.
+	 * @param totalRubricario Total count page in rubricario section.
+	 * @param totalCarta Total count page in carta section.
+	 * @param totalAppendix Total count page in appendix section.
+	 * @param totalOther
+	 * @param totalGuardia
+	 * @param modeEdit
+	 * @return
+	 */
+	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
+	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName,
+											@RequestParam(value="annotationId", required=false) Integer annotationId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
+			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
+			model.put("annotations", resultList);
+		} catch (ApplicationThrowable ath) {
+		}
+	
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 
@@ -290,8 +335,11 @@ public class AjaxController {
 			@RequestParam(value="entryId", required=false) Integer entryId,
 			@RequestParam(value="volNum", required=false) Integer volNum,
 			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
 			@RequestParam(value="imageType", required=false) String imageType,
 			@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
+			@RequestParam(value="missedNumbering", required=false) String missedNumbering,
 			@RequestParam(value="imageOrder", required=false) Integer imageOrder,
 			@RequestParam(value="total", required=false) Long total,
 			@RequestParam(value="totalRubricario", required=false) Long totalRubricario,
@@ -299,17 +347,26 @@ public class AjaxController {
 			@RequestParam(value="totalAppendix", required=false) Long totalAppendix,
 			@RequestParam(value="totalOther", required=false) Long totalOther,
 			@RequestParam(value="totalGuardia", required=false) Long totalGuardia,
+			@RequestParam(value="formSubmitting", required=false) Boolean formSubmitting,
 			@RequestParam(value="modeEdit", required=false) Boolean modeEdit, 
 			HttpServletRequest request){
 
 		Map<String, Object> model = new HashMap<String, Object>(0);
-
-		DocumentExplorer documentExplorer = new DocumentExplorer(entryId, volNum, volLetExt);
+		
+		DocumentExplorer documentExplorer = new DocumentExplorer(entryId, volNum, org.medici.bia.common.util.StringUtils.nullTrim(volLetExt));
 		documentExplorer.setImage(new Image());
-		documentExplorer.getImage().setImageOrder(imageOrder);
-        if (!StringUtils.isEmpty(imageType)) {
-			documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
+		if (Boolean.TRUE.equals(formSubmitting)) {
+			documentExplorer.getImage().setInsertNum(org.medici.bia.common.util.StringUtils.nullTrim(insertNum));
+			documentExplorer.getImage().setInsertLet(org.medici.bia.common.util.StringUtils.nullTrim(insertLet));
 			documentExplorer.getImage().setImageProgTypeNum(imageProgTypeNum);
+			documentExplorer.getImage().setMissedNumbering(org.medici.bia.common.util.StringUtils.nullTrim(missedNumbering));
+			// In this case recto/verso detail is not specified
+			documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.N);
+			if (!StringUtils.isEmpty(imageType)) {
+				documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
+			}
+		} else {
+			documentExplorer.getImage().setImageOrder(imageOrder != null && imageOrder < 1 ? 1 : imageOrder);
 		}
 		documentExplorer.setTotal(total);
 		documentExplorer.setTotalRubricario(totalRubricario);
@@ -356,7 +413,62 @@ public class AjaxController {
 			
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * This method update the annotations of the folio presented in the manuscript viewer.
+	 * 
+	 * @param httpServletRequest the request
+	 * @return
+	 */
+	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
+	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
 
+		try {
+			// In this controller we get input parameter at low level beacause 
+			// there is a bug in spring which construct a wrong list of 
+			// annotations in case of client send 1 single annotation 
+			//String imageName = httpServletRequest.getParameter("imageName");
+			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
+			String[] annotationsFormView = httpServletRequest.getParameterValues("annotations");
+			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
+			List<Object> resultList = new ArrayList<Object>();
+
+			if (annotationsFormView != null) {
+				for (String string : annotationsFormView) {
+					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
+					String[] splitted = StringUtils.splitPreserveAllTokens(string, ",");
+					Annotation annotation = new Annotation();
+					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
+					annotation.setX(NumberUtils.toDouble(splitted[2]));
+					annotation.setY(NumberUtils.toDouble(splitted[3]));
+					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
+					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
+					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
+					annotation.setTitle(splitted[7]);
+					annotation.setText(splitted[8]);
+					annotationsList.add(annotation);
+				}
+			}
+			Map<Annotation, Integer> imageAnnotationsMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
+			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
+				Map<String, Object> singleRow = new HashMap<String, Object>(0);
+				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
+					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/community/EditForumPostAnnotation.do?topicId=" + imageAnnotationsMap.get(currentAnnotation));
+					resultList.add(singleRow);
+				}
+			}
+			// links -> only new annotations associated to a forum 
+			model.put("links", resultList);
+			// annotation -> all of the annotations associated to the current image
+			model.put("annotations", getAnnotationsForView(null, imageAnnotationsMap.keySet()));
+		} catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("responseKO", model);
+		}
+		
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * This method generates a view of annotations to be sent to the view level.
 	 * 

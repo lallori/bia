@@ -182,26 +182,16 @@ public class HtmlUtils {
 		}
 
 		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuilder.append("?entryId=");
-		stringBuilder.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
-		stringBuilder.append("&volNum=");
-		stringBuilder.append(documentExplorer.getVolNum());
-		stringBuilder.append("&volLetExt=");
-		stringBuilder.append(documentExplorer.getVolLetExt());
-		stringBuilder.append("&imageOrder=");
-		stringBuilder.append(documentExplorer.getImage().getImageOrder()+1);
-		stringBuilder.append("&total=");
-		stringBuilder.append(documentExplorer.getTotal());
-		stringBuilder.append("&totalRubricario=");
-		stringBuilder.append(documentExplorer.getTotalRubricario());
-		stringBuilder.append("&totalCarta=");
-		stringBuilder.append(documentExplorer.getTotalCarta());
-		stringBuilder.append("&totalAppendix=");
-		stringBuilder.append(documentExplorer.getTotalAppendix());
-		stringBuilder.append("&totalOther=");
-		stringBuilder.append(documentExplorer.getTotalOther());
-		stringBuilder.append("&totalGuardia=");
-		stringBuilder.append(documentExplorer.getTotalGuardia());
+		stringBuilder.append("?entryId=").append(documentExplorer.getEntryId() == null ? "" : documentExplorer.getEntryId().toString())
+			.append("&volNum=").append(documentExplorer.getVolNum())
+			.append("&volLetExt=").append(documentExplorer.getVolLetExt() == null ? "" : documentExplorer.getVolLetExt())
+			.append("&imageOrder=").append(documentExplorer.getImage().getImageOrder() + 1)
+			.append("&total=").append(documentExplorer.getTotal() == null ? "" : documentExplorer.getTotal().toString())
+			.append("&totalRubricario=").append(documentExplorer.getTotalRubricario() == null ? "" : documentExplorer.getTotalRubricario().toString())
+			.append("&totalCarta=").append(documentExplorer.getTotalCarta() == null ? "" : documentExplorer.getTotalCarta().toString())
+			.append("&totalAppendix=").append(documentExplorer.getTotalAppendix() == null ? "" : documentExplorer.getTotalAppendix().toString())
+			.append("&totalOther=").append(documentExplorer.getTotalOther() == null ? "" : documentExplorer.getTotalOther().toString())
+			.append("&totalGuardia=").append(documentExplorer.getTotalGuardia() == null ? "" : documentExplorer.getTotalGuardia().toString());
 		
 		return stringBuilder.toString();
 	}
@@ -221,26 +211,16 @@ public class HtmlUtils {
 		}
 
 		StringBuilder stringBuilder = new StringBuilder(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuilder.append("?entryId=");
-		stringBuilder.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
-		stringBuilder.append("&volNum=");
-		stringBuilder.append(documentExplorer.getVolNum());
-		stringBuilder.append("&volLetExt=");
-		stringBuilder.append(documentExplorer.getVolLetExt());
-		stringBuilder.append("&imageOrder=");
-		stringBuilder.append(documentExplorer.getImage().getImageOrder()-1);
-		stringBuilder.append("&total=");
-		stringBuilder.append(documentExplorer.getTotal());
-		stringBuilder.append("&totalRubricario=");
-		stringBuilder.append(documentExplorer.getTotalRubricario());
-		stringBuilder.append("&totalCarta=");
-		stringBuilder.append(documentExplorer.getTotalCarta());
-		stringBuilder.append("&totalAppendix=");
-		stringBuilder.append(documentExplorer.getTotalAppendix());
-		stringBuilder.append("&totalOther=");
-		stringBuilder.append(documentExplorer.getTotalOther());
-		stringBuilder.append("&totalGuardia=");
-		stringBuilder.append(documentExplorer.getTotalGuardia());
+		stringBuilder.append("?entryId=").append(documentExplorer.getEntryId() == null ? "" : documentExplorer.getEntryId().toString())
+			.append("&volNum=").append(documentExplorer.getVolNum())
+			.append("&volLetExt=").append(documentExplorer.getVolLetExt() == null ? "" : documentExplorer.getVolLetExt())
+			.append("&imageOrder=").append(documentExplorer.getImage().getImageOrder() - 1)
+			.append("&total=").append(documentExplorer.getTotal() == null ? "" : documentExplorer.getTotal().toString())
+			.append("&totalRubricario=").append(documentExplorer.getTotalRubricario() == null ? "" : documentExplorer.getTotalRubricario().toString())
+			.append("&totalCarta=").append(documentExplorer.getTotalCarta() == null ? "" : documentExplorer.getTotalCarta().toString())
+			.append("&totalAppendix=").append(documentExplorer.getTotalAppendix() == null ? "" : documentExplorer.getTotalAppendix().toString())
+			.append("&totalOther=").append(documentExplorer.getTotalOther() == null ? "" : documentExplorer.getTotalOther().toString())
+			.append("&totalGuardia=").append(documentExplorer.getTotalGuardia() == null ? "" : documentExplorer.getTotalGuardia().toString());
 		
 		return stringBuilder.toString();
 	}

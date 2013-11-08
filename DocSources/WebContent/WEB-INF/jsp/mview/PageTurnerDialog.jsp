@@ -6,7 +6,7 @@
 
 	<c:url var="ContextPathURL" value="/"/>
 
-	<c:url var="PageTurnerDialogURL" value="/src/mview/PageTurnerDialog.do"/>
+	<c:url var="PageTurnerDialogURL" value="/src/mview/JumpToFolio.json"/>
 
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
@@ -195,6 +195,8 @@
 	</div>
 	
 	<div id="folioMoveTo">
+		<div id="insertErrorClient" class="errorClient" display="none" style="color:red;" ></div>
+		<div id="folioErrorClient" class="errorClient" display="none" style="color:red;" ></div>
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<div class="goToPage">
 				<span><b>Go To page</b></span> 
@@ -214,7 +216,7 @@
 					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
 					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" />
 				</div>
-				<input id="go" class="button_mini" type="submit" value="Go" />
+				<input id="go" class="button_mini" type="submit" value="Go" onclick="return validateForm();"/>
 			</div>
 			
 			<form:hidden path="entryId" />
@@ -229,6 +231,7 @@
 			<form:hidden path="totalOther" value="${command.totalOther}" />
 			<form:hidden path="totalGuardia" value="${command.totalGuardia}" />
 			<form:hidden path="modeEdit" value="${command.modeEdit}" />
+			<form:hidden id="formSubmitting" path="formSubmitting" value="${command.formSubmitting}" />
 		</form:form>
 	</div>
 	
@@ -264,7 +267,7 @@
 		$j(document).ready(function() {
 			var annotations = new Array();
 			
-			$j("#moveToFolioForm").pageTurnerForm({
+			var pageTurnerParams = {
 				searchUrl: '${SearchAjaxURL}', 
 		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
 				imagePrefix: '${ImagePrefixURL}', 
@@ -288,83 +291,12 @@
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				canTranscribe: 'true'
 				</security:authorize>
-			});
-
-			$j("#indexNames").pageTurnerPage({
-				searchUrl: '${SearchAjaxURL}',
-		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
-				imagePrefix: '${ImagePrefixURL}',
-				IIPImageServer: '${IIPImageServerURL}',
-				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
-				annotationsType: 'remote',
-				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
-				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
-				annotations: annotations,
-				textVolume: '<fmt:message key="mview.credits.volume"/>',
-			    textExtension: '<fmt:message key="mview.credits.extension"/>',
-			    textInsert: '<fmt:message key="mview.credits.insert"/>',
-			    textIndexOfNames: '<fmt:message key="mview.credits.indexOfNames"/>',
-			    textFolio: '<fmt:message key="mview.credits.folio"/>',
-			    textAttachment: '<fmt:message key="mview.credits.attachment"/>',
-			    textGuardia : '<fmt:message key="mview.credits.guardia"/>',
-			    textCoperta : '<fmt:message key="mview.credits.coperta"/>',
-			    textSpine : '<fmt:message key="mview.credits.spine"/>',
-			    textRecto : '<fmt:message key="mview.credits.recto"/>',
-			    textVerso : '<fmt:message key="mview.credits.verso"/>',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-				canTranscribe: 'true'
-				</security:authorize>
-			});
-			$j("#previous").pageTurnerPage({
-				searchUrl: '${SearchAjaxURL}',
-		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
-				imagePrefix: '${ImagePrefixURL}',
-				IIPImageServer: '${IIPImageServerURL}',
-				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
-				annotationsType: 'remote',
-				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
-				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
-				annotations: annotations,
-				textVolume: '<fmt:message key="mview.credits.volume"/>',
-			    textExtension: '<fmt:message key="mview.credits.extension"/>',
-			    textInsert: '<fmt:message key="mview.credits.insert"/>',
-			    textIndexOfNames: '<fmt:message key="mview.credits.indexOfNames"/>',
-			    textFolio: '<fmt:message key="mview.credits.folio"/>',
-			    textAttachment: '<fmt:message key="mview.credits.attachment"/>',
-			    textGuardia : '<fmt:message key="mview.credits.guardia"/>',
-			    textCoperta : '<fmt:message key="mview.credits.coperta"/>',
-			    textSpine : '<fmt:message key="mview.credits.spine"/>',
-			    textRecto : '<fmt:message key="mview.credits.recto"/>',
-			    textVerso : '<fmt:message key="mview.credits.verso"/>',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-				canTranscribe: 'true'
-				</security:authorize>
-			});
-			$j("#next").pageTurnerPage({
-				searchUrl: '${SearchAjaxURL}',
-		        getLinkedDocumentUrl:  '${GetLinkedDocumentURL}',
-				imagePrefix: '${ImagePrefixURL}',
-				IIPImageServer: '${IIPImageServerURL}',
-				getLinkedDocumentUrl: '${LinkedDocumentUrl}',
-				annotationsType: 'remote',
-				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
-				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
-				annotations: annotations,
-				textVolume: '<fmt:message key="mview.credits.volume"/>',
-			    textExtension: '<fmt:message key="mview.credits.extension"/>',
-			    textInsert: '<fmt:message key="mview.credits.insert"/>',
-			    textIndexOfNames: '<fmt:message key="mview.credits.indexOfNames"/>',
-			    textFolio: '<fmt:message key="mview.credits.folio"/>',
-			    textAttachment: '<fmt:message key="mview.credits.attachment"/>',
-			    textGuardia : '<fmt:message key="mview.credits.guardia"/>',
-			    textCoperta : '<fmt:message key="mview.credits.coperta"/>',
-			    textSpine : '<fmt:message key="mview.credits.spine"/>',
-			    textRecto : '<fmt:message key="mview.credits.recto"/>',
-			    textVerso : '<fmt:message key="mview.credits.verso"/>',
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-				canTranscribe: 'true'
-				</security:authorize>
-			});
+			};
+			
+			$j("#moveToFolioForm").pageTurnerForm(pageTurnerParams);
+			$j("#indexNames").pageTurnerPage(pageTurnerParams);
+			$j("#previous").pageTurnerPage(pageTurnerParams);
+			$j("#next").pageTurnerPage(pageTurnerParams);
 			
 			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
@@ -939,6 +871,157 @@
 						}}});
 					return false;
 				}
+			});
+			
+			
+			// "Jump To" form -> validation process
+			
+			/**
+			 * This function checks if the parameter provided is a number.
+			 *
+			 * @param n the string to be checked
+			 * @return true if 'n' is a number
+			 */
+			isNumber = function(n) {
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			};
+		
+			/**
+			 * This function performs the validation of the 'jump to' form.
+			 */
+			validateForm = function() {
+				resetAllErrors();
+				if (isNumber($j('#imageProgTypeNum').val()) == false) {
+					displayErrorClientMsg('folio', '<fmt:message key="mview.pageTurnerDialog.onlyNumberAllowedFolio"/>');
+					return false;
+				}
+				var volExt = '' + '${command.volLetExt}';
+				if (${hasInsert} == true) {
+					$j.get('<c:url value="/src/mview/CheckInsert.json" />', 
+						{	volNum: ${command.volNum},
+					    	volLetExt: volExt, 
+					    	insertNum: $j('#insertNum').val(), 
+					    	insertLet: $j("#insertLet").val()
+					    },
+					    function(data) {
+					    	checkInsertCallback(data);
+					    }
+					);
+				} else {
+					$j.get('<c:url value="/src/mview/CheckFolio.json" />', 
+						{	volNum: ${command.volNum},
+							volLetExt: volExt,
+							insertNum : $j("#insertNum").val(), 
+							insertLet: $j("#insertLet").val(), 
+							folioNum: $j("#imageProgTypeNum").val(), 
+							folioMod: $j("#missedNumbering").val()
+						},
+						function(data) {
+							checkFolioCallback(data);
+						}
+					);
+				}
+				return false;
+			};
+			
+			/**
+			 * This callback is called during the insert validation.
+			 *
+			 * @param data the data provided to the callback
+			 */
+			var checkInsertCallback = function(data) {
+				var volExt = '' + '${command.volLetExt}';
+				if (typeof data.error === "undefined") {
+					if (data.insertOK == false) {
+						var insNum = $j("#insertNum").val();
+						var insLet = $j('#insertLet').val();
+						var msg = '<fmt:message key="mview.pageTurnerDialog.missingInsert"><fmt:param value="' + insNum + (insLet != '' ? ' ' + insLet : '' ) + '" /></fmt:message>';
+						displayErrorClientMsg("insert", msg);
+					} else {
+						$j.get('<c:url value="/src/mview/CheckFolio.json" />', 
+							{	volNum: ${command.volNum},
+								volLetExt: volExt,
+								insertNum : $j("#insertNum").val(), 
+								insertLet: $j("#insertLet").val(), 
+								folioNum: $j("#imageProgTypeNum").val(), 
+								folioMod: $j("#missedNumbering").val()
+							},
+							function(data) {
+								checkFolioCallback(data);
+							}
+						);
+					}
+				} else {
+					if (data.error == 'error.manuscriptviewer.incorrectvolume') {
+						var msg = '<fmt:message key="mview.pageTurnerDialog.incorrectVolume"></fmt:message>';
+						displayErrorClientMsg("insert", msg);
+					} else {
+						displayErrorClientMsg("insert", data.error);
+					}
+				}
+			}
+			
+			/**
+			 * This callback is called during the folio validation.
+			 *
+			 * @param data the data provided to the callback
+			 */
+			var checkFolioCallback = function(data) {
+				if (typeof data.error === "undefined") {
+					var folioNumBlank = !$j("#imageProgTypeNum").val() || $j("#imageProgTypeNum").val() == "";
+					var folioModBlank = !$j("#missedNumbering").val() || $j("#missedNumbering").val() == "";
+					if (data.folioOK == false) {
+						var folioString = '' + (folioNumBlank ? 'blank' : $j("#imageProgTypeNum").val());
+						folioString += (folioModBlank ? '' : (' ' + $j("#missedNumbering").val()));
+						var msg = '<fmt:message key="mview.pageTurnerDialog.missingFolio"><fmt:param value="' + folioString + '" /></fmt:message>';
+						displayErrorClientMsg('folio',msg);
+					} else {
+						$j('#formSubmitting').val(true);
+						$j("#moveToFolioForm").submit();
+					}
+				} else {
+					if (data.error == 'error.manuscriptviewer.incorrectfolio') {
+						var msg = '<fmt:message key="mview.pageTurnerDialog.incorrectFolio"></fmt:message>';
+						displayErrorClientMsg('folio', msg);
+					} else {
+						displayErrorClientMsg('folio', data.error);
+					}
+				}
+			}
+			
+			/**
+			 * This function removes the warning message from the error section.
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio' and 'insert'.
+			 */
+			 var resetErrorClientMsg = function(prefix) {
+				if ($j("#" + prefix + "ErrorClient").length > 0) {
+					$j("#" + prefix + "ErrorClient").html("");
+					$j("#" + prefix + "ErrorClient").attr("display","none");
+				}
+			}
+			
+			/**
+			 * This function shows a warning message in the error section.
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio' and 'insert'
+			 * @param msg the message to show
+			 */
+			 var displayErrorClientMsg = function(prefix,msg) {
+				$j("#" + prefix + "ErrorClient").html(msg);
+				$j("#" + prefix + "ErrorClient").attr("display","block");
+			}
+			 
+			 /**
+			  * This function removes all the warning messages from the error section.
+			  */
+			 var resetAllErrors = function() {
+				resetErrorClientMsg('insert');
+				resetErrorClientMsg('folio'); 
+			 }
+			
+			$j('#insertNum,#insertLet,#imageProgTypeNum,#missedNumbering').change(function() {
+				resetAllErrors();
 			});
 			
 		});

@@ -2374,16 +2374,18 @@ var IIPMooViewer = new Class({
 		if (this.showNavWindow) {
 			var navcontainer = this.container.getElement('div.navcontainer');
 			/** MEDICI ARCHIVE PROJECT START **/
-			if (navcontainer && this.navWinPos == 'left') {
-				navcontainer.setStyles({
-					top: (Browser.Platform.ios && window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-					left: '0px'		  
-				});
-			} else {
-				navcontainer.setStyles({
-					top: (Browser.Platform.ios && window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
-					left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
-				});
+			if (navcontainer) {
+				if (this.navWinPos == 'left') {
+					navcontainer.setStyles({
+						top: (Browser.Platform.ios && window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+								left: '0px'		  
+					});
+				} else {
+					navcontainer.setStyles({
+						top: (Browser.Platform.ios && window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode
+								left: this.container.getPosition(this.container).x + this.container.getSize().x - this.navWin.w - 10
+					});
+				}
 			}
 			/*if (navcontainer) navcontainer.setStyles({
 				top: (Browser.Platform.ios && window.navigator.standalone) ? 20 : 10, // Nudge down window in iOS standalone mode

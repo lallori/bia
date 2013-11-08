@@ -66,6 +66,19 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	//public Annotation addNewAnnotation(Annotation annotation, Image image, String ipAddress) throws ApplicationThrowable;
+	
+	/**
+	 * This method checks if an insert is a part of a volume.<br/>
+	 * <b>NOTE :</b>this check is possible only for digitized volumes.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @return true if the insert exists, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean checkInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -79,7 +92,7 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public Image findDocumentImage(Integer entryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method searches document's images linked to a specific document.
 	 * 
@@ -122,6 +135,21 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public Image findImage(Integer imageId) throws ApplicationThrowable;
+	
+	/**
+	 * Returns the image associated to the configuration provided.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param imageType the image type
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param imageProgTypeNum the folio number
+	 * @param missedNumbering the folio extension
+	 * @return an {@link org.medici.bia.domain.Image}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the documents linked to an image in a volume.<br/>
