@@ -167,7 +167,7 @@ public class EditSpousePersonController {
 					command.setWifeDescription(marriage.getWife().getMapNameLf());
 					command.setStartYear(marriage.getStartYear());
 					command.setEndYear(marriage.getEndYear());
-					command.setMarriageTerm(marriage.getMarTerm().toString());
+					command.setMarriageTerm(marriage.getMarTerm() != null ? marriage.getMarTerm().toString() : null);
 					command.setWifeId(marriage.getWife().getPersonId());
 					command.setHusbandId(marriage.getHusband().getPersonId());
 					if(command.getPersonId().equals(command.getHusbandId())){
