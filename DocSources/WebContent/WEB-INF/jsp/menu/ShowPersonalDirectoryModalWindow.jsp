@@ -32,7 +32,7 @@
 	$j(document).ready(function() {
 		
 		$j("#personalUserProfile").click(function() {
-			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.userPreferences.open"/>", width: 760, height: 470});
+			Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.showPersonalDirectoryModal.userPreferences"/>", width: 760, height: 470});
 			return false;
 		});	
 		
