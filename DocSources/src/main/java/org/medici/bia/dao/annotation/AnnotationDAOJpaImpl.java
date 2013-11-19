@@ -105,26 +105,6 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Annotation findById(String id) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE id = :id AND logicalDelete = false";
-    	
-        Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("annotationId", id);
-
-		List<Annotation> resultList = (List<Annotation>) query.getResultList();
-		
-		if (resultList.size() == 1){
-			return resultList.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
 	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException {
 		String jpql = "FROM Annotation WHERE annotationId = :annotationId and logicalDelete = false";
     	
@@ -138,6 +118,20 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Annotation> findForumAnnotations() throws PersistenceException {
+		String jpql = "FROM Annotation WHERE type IN ('" + Annotation.Type.GENERAL + "','" + Annotation.Type.PALEOGRAPHY + "') AND logicalDelete = false ORDER BY user ASC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+
+		List<Annotation> resultList = (List<Annotation>) query.getResultList();
+		return resultList;
 	}
 	
 	/**

@@ -54,6 +54,8 @@
 	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp" />
 
 	<definition name="template.manuscriptViewerHtmlSimple" template="/WEB-INF/templates/manuscriptViewerHtmlSimple.jsp" />
+	
+	<definition name="template.annotationDOM" template="/WEB-INF/templates/annotationDOM.jsp" />
 
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
@@ -872,6 +874,12 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSummaryVolumeDialog.jsp"/>
 	</definition>
 	<!--  Manuscript Viewer END -->
+	
+	<!--  Open Annotation START -->
+	<definition name="openannotation/ShowOpenAnnotations" extends="template.annotationDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/openannotation/ShowOpenAnnotations.jsp"/>
+	</definition>
+	<!--  Open Annotation END -->
 
 	<!-- PeopleBase Module START -->
 	<definition name="peoplebase/CreateNewTitleOrOccupationPerson" extends="template.partialDOM">

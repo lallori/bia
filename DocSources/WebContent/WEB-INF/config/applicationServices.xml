@@ -14,6 +14,10 @@
     <bean id="adminService" class="org.medici.bia.service.admin.AdminServiceImpl">
     	<description>Service that manages every information on admin process (users, properties).</description>
     </bean>
+
+    <bean id="annotationService" class="org.medici.bia.service.openannotation.AnnotationServiceImpl">
+    	<description>Service that manages open annotation serialization processes.</description>
+    </bean>
     
     <bean id="communityService" class="org.medici.bia.service.community.CommunityServiceImpl">
     	<description>Service that manages every information on community process (comments, private messages).</description>

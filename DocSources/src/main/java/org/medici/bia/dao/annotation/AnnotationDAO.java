@@ -68,14 +68,6 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 
 	/**
 	 * 
-	 * @param id
-	 * @return
-	 * @throws PersistenceException
-	 */
-	Annotation findById(String id) throws PersistenceException;
-
-	/**
-	 * 
 	 * @param annotationId
 	 * @return
 	 * @throws PersistenceException
@@ -90,6 +82,14 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @throws PersistenceException
 	 */
 	Page findPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This method retrieves the annotations associated to a forum topic.
+	 * 
+	 * @return a list of annotations
+	 * @throws PersistenceException
+	 */
+	List<Annotation> findForumAnnotations() throws PersistenceException;
 
 	/**
 	 * 

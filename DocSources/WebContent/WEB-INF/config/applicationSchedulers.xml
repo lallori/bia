@@ -57,6 +57,8 @@
 	
 	<bean id="lockedUserEmailUnlockedJob" class="org.medici.bia.scheduler.LockedUserEmailUnlockedJob"/>
 
+	<bean id="openAnnotationContributionJob" class="org.medici.bia.scheduler.OpenAnnotationContributionJob"/>
+
 	<bean id="resetUserPasswordEmailJob" class="org.medici.bia.scheduler.ResetUserPasswordEmailJob"/>
 	
 	<bean id="sendEmailMessageUserJob" class="org.medici.bia.scheduler.SendEmailMessageUserJob"/>

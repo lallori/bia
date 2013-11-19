@@ -1915,3 +1915,11 @@ ALTER TABLE bia.tblDocuments ADD COLUMN `FOLIORV` VARCHAR(1) NULL DEFAULT NULL A
 ALTER TABLE bia.tblDocuments ADD COLUMN `TRANSCRIBEFOLIORV` VARCHAR(1) NULL DEFAULT NULL AFTER `TRANSCRIBEFOLIOMOD`;
 
 ALTER TABLE bia.tblAnnotations ADD COLUMN `logicalDelete` TINYINT(4) NOT NULL DEFAULT '0' AFTER `topicId`;
+
+-- open annotation path definition
+INSERT INTO bia.tblApplicationProperty (`id`, `help`, `value`) VALUES ('openannotation.path', 'Open Annotation output path', '/data/openannotation/');
+
+-- show open annotation view definition -> it extends template annotationDOM
+INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`) VALUES ('openannotation/ShowOpenAnnotations', 'template.annotationDOM');
+INSERT INTO bia.tblApplicationTemplate (`name`, `template`) VALUES ('template.annotationDOM', '/WEB-INF/templates/annotationDOM.jsp');
+INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('openannotation/ShowOpenAnnotations', 'main', '/WEB-INF/jsp/openannotation/ShowOpenAnnotations.jsp', 0);
