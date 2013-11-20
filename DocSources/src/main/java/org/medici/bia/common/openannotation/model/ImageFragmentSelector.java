@@ -30,6 +30,7 @@ package org.medici.bia.common.openannotation.model;
 import org.medici.bia.common.openannotation.OAConstants;
 
 /**
+ * This class defines an image fragment selector.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *

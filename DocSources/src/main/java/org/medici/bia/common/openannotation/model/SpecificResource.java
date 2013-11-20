@@ -31,17 +31,63 @@ import org.medici.bia.common.openannotation.OAConstants;
 import org.medici.bia.common.openannotation.OASerializableField;
 
 /**
+ * This class is for describing specific resources.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class SpecificResource extends Source {
 	
+	/**
+	 * The source of this specific resource.
+	 */
 	@OASerializableField(value = "hasSource", valueFor = OAConstants.OA_HAS_SOURCE)
 	private Source source;
 	
+	/**
+	 * The selector of this specific resource (if needed).
+	 */
+	@OASerializableField(value = "hasSelector", valueFor = OAConstants.OA_HAS_SELECTOR)
+	private Selector selector;
+	
 	public SpecificResource() {
 		this.addType(OAConstants.OA_SPECIFIC_RESOURCE);
+	}
+
+	/**
+	 * Returns the source.
+	 * 
+	 * @return the source
+	 */
+	public Source getSource() {
+		return source;
+	}
+
+	/**
+	 * Sets the source.
+	 * 
+	 * @param source the source to set
+	 */
+	public void setSource(Source source) {
+		this.source = source;
+	}
+
+	/**
+	 * Returns the selector.
+	 * 
+	 * @return the selector
+	 */
+	public Selector getSelector() {
+		return selector;
+	}
+
+	/**
+	 * Sets the selector.
+	 * 
+	 * @param selector the selector to set
+	 */
+	public void setSelector(Selector selector) {
+		this.selector = selector;
 	}
 
 }

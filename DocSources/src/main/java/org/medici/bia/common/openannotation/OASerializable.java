@@ -28,6 +28,7 @@
 package org.medici.bia.common.openannotation;
 
 /**
+ * This interface defines serializable elements (json-ld format).
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *

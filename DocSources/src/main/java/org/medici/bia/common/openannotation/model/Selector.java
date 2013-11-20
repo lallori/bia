@@ -27,11 +27,13 @@
  */
 package org.medici.bia.common.openannotation.model;
 
+
 /**
+ * This class represents a generic source selector.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class Selector extends OpenAnnotationElement {
-
+public abstract class Selector extends OpenAnnotationElement {
+	
 }

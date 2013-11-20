@@ -31,25 +31,44 @@ import org.medici.bia.common.openannotation.OAConstants;
 import org.medici.bia.common.openannotation.OASerializableField;
 
 /**
+ * This class defines creator of open annotations.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class OAPerson extends OpenAnnotationElement {
 	
+	/**
+	 * The extended name.
+	 */
 	@OASerializableField
 	private String name;
 	
+	/**
+	 * The first name.
+	 */
 	@OASerializableField(value = OAConstants.FOAF_FIRST_NAME)
 	private String firstName;
 	
+	/**
+	 * The surname.
+	 */
 	@OASerializableField(value = OAConstants.FOAF_SURNAME)
 	private String surname;
 	
+	/**
+	 * Constructor with empty name.
+	 */
 	public OAPerson() {
 		this.addType(OAConstants.FOAF_PERSON);
 	}
 	
+	/**
+	 * Constructor with provided name.
+	 * 
+	 * @param firstName the first name
+	 * @param surname the surname
+	 */
 	public OAPerson(String firstName, String surname) {
 		this();
 		this.setFirstName(firstName);
@@ -57,26 +76,56 @@ public class OAPerson extends OpenAnnotationElement {
 		this.setName(firstName + " " + surname);
 	}
 
+	/**
+	 * Returns the extended name.
+	 * 
+	 * @return the extended name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the extended name.
+	 * 
+	 * @param name the extended name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the first name.
+	 * 
+	 * @return the first name
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * Sets the first name.
+	 * 
+	 * @param firstName the first name to set
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	/**
+	 * Returns the surname.
+	 * 
+	 * @return the surname
+	 */
 	public String getSurname() {
 		return surname;
 	}
 
+	/**
+	 * Sets the surname.
+	 * 
+	 * @param surname the surname to set
+	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}

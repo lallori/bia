@@ -33,6 +33,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * This annotation specify a class property that has to be serialized with a json-ld serializer.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
@@ -41,7 +42,17 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface OASerializableField {
 	
+	/**
+	 * The key associated to the class property that has to be shown in the json serialization.
+	 * 
+	 * @return the key value
+	 */
 	String value() default "DEFAULT_VALUE";
+	
+	/**
+	 * The extended key value (with namespace)
+	 * @return
+	 */
 	String valueFor() default "DEFAULT_VALUEFOR";
 
 }

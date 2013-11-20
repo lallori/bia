@@ -28,6 +28,7 @@
 package org.medici.bia.common.openannotation;
 
 /**
+ * Constants class for Open Annotation Collaboration processes.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *

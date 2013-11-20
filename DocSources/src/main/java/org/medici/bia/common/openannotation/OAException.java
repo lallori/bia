@@ -28,7 +28,8 @@
 package org.medici.bia.common.openannotation;
 
 /**
- * 
+ * This Exception can be launched during json-ld serialization.
+ *  
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */

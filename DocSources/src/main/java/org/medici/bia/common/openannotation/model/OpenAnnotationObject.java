@@ -31,18 +31,28 @@ import org.medici.bia.common.openannotation.OASerializable;
 
 
 /**
+ * This class should be used to wrap generic elements associated to open annotation elements.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
+ * @param <T> the type of the wrapped element
  */
 public class OpenAnnotationObject<T> implements OASerializable {
 
+	/**
+	 * The wrapped object.
+	 */
 	private T annotationObject;
 	
 	public OpenAnnotationObject(T annotationObject) {
 		this.annotationObject = annotationObject;
 	}
 	
+	/**
+	 * Returns the wrapped object.
+	 * 
+	 * @return the wrapped object
+	 */
 	public T getAnnotationObject() {
 		return annotationObject;
 	}

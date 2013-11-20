@@ -31,36 +31,63 @@ import org.medici.bia.common.openannotation.OAConstants;
 import org.medici.bia.common.openannotation.OASerializableField;
 
 /**
+ * This class defines a fragment selector (i.e. of text or image) for annotation bodies or annotation targets.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class FragmentSelector extends Selector {
 	
-	@OASerializableField
-	private String value;
-	
+	/**
+	 * The selector structure.
+	 */
 	@OASerializableField(value = "conformsTo", valueFor = OAConstants.DCTERMS_CONFORMS_TO)
 	private String conformsSpec;
+	
+	/**
+	 * The selector value.
+	 */
+	@OASerializableField(valueFor = OAConstants.RDF_VALUE)
+	private String value;
 	
 	public FragmentSelector() {
 		this.addType(OAConstants.OA_FRAGMENT_SELECTOR);
 	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+	
+	/**
+	 * Returns the selector structure.
+	 * 
+	 * @return the selector structure
+	 */
 	public String getConformsSpec() {
 		return conformsSpec;
 	}
 
+	/**
+	 * Sets the selector structure.
+	 * 
+	 * @param conformsTo the selector structure to set
+	 */
 	public void setConformsSpec(String conformsSpec) {
 		this.conformsSpec = conformsSpec;
+	}
+
+	/**
+	 * Returns the selector value.
+	 * 
+	 * @return the selector value
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * Sets the selector value.
+	 * 
+	 * @param value the selector value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

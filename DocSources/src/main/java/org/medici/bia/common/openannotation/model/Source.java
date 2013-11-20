@@ -31,30 +31,57 @@ import org.medici.bia.common.openannotation.OAConstants;
 import org.medici.bia.common.openannotation.OASerializableField;
 
 /**
+ * This class defines open annotation sources (bodies or targets).
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public abstract class Source extends OpenAnnotationElement {
 	
+	/**
+	 * The source title.
+	 */
 	@OASerializableField(valueFor = OAConstants.RDFS_LABEL)
 	private String label;
 	
+	/**
+	 * The source subject.
+	 */
 	@OASerializableField(value = OAConstants.DC_SUBJECT)
 	private String subject;
 
+	/**
+	 * Returns the source title.
+	 * 
+	 * @return the source title
+	 */
 	public String getLabel() {
 		return label;
 	}
 
+	/**
+	 * Sets the source title.
+	 * 
+	 * @param label the source title to set
+	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
+	/**
+	 * Returns the source subject.
+	 * 
+	 * @return the source subject
+	 */
 	public String getSubject() {
 		return subject;
 	}
 
+	/**
+	 * Sets the source subject.
+	 * 
+	 * @param subject the source subject to set
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}

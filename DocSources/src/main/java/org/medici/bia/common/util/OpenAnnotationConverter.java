@@ -39,6 +39,7 @@ import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.User;
 
 /**
+ * This class transforms bia annotations ({@link Annotation}) to open annotations ({@link OAAnnotation}).
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
@@ -51,6 +52,11 @@ public class OpenAnnotationConverter {
 		this.contextPath = contextPath;
 	}
 	
+	/**
+	 * This method transforms a collection of bia annotations ({@link Annotation}) to open annotations ({@link OAAnnotation}).
+	 * @param biaAnnotations the annotations to transform
+	 * @return the transformed annotations
+	 */
 	public List<OAAnnotation<OAPerson, Text, String>> convertToOpenAnnotations(List<Annotation> biaAnnotations) {
 		List<OAAnnotation<OAPerson, Text, String>> oaAnnotations = new ArrayList<OAAnnotation<OAPerson, Text, String>>();
 		for (Annotation biaAnnotation : biaAnnotations) {
@@ -59,6 +65,11 @@ public class OpenAnnotationConverter {
 		return oaAnnotations;
 	}
 	
+	/**
+	 * This method transforms one bia annotation ({@link Annotation}) to an open annotation ({@link OAAnnotation}).
+	 * @param biaAnnotation the annotation to transform
+	 * @return the transformed annotation
+	 */
 	public OAAnnotation<OAPerson, Text, String> convertToOpenAnnotation(Annotation biaAnnotation) {
 		OAAnnotation<OAPerson, Text, String> oaAnnotation = new OAAnnotation<OAPerson, Text, String>();
 		oaAnnotation.setId(getOpenAnnotationId(biaAnnotation));

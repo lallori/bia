@@ -36,6 +36,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This class implements the scheduler to perform the writing of the &quot;open annotation file&quot;.<br/>
+ * The jobs is scheduled once a day (at 0:30:00 am).
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *

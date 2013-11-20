@@ -31,40 +31,75 @@ import org.medici.bia.common.openannotation.OAConstants;
 import org.medici.bia.common.openannotation.OASerializableField;
 
 /**
+ * This class represents text content for open annotation sources (bodies or targets).
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public final class Text extends Source {
 	
+	/**
+	 * The text content.
+	 */
 	@OASerializableField(valueFor = OAConstants.CNT_CHARS)
 	private String chars;
 	
+	/**
+	 * The format of the text content (i.e. plain text or html)
+	 */
 	@OASerializableField(valueFor = OAConstants.DC_FORMAT)
 	private String format;
 	
+	/**
+	 * Empty constructor.
+	 */
 	public Text() {
 		this.addType(OAConstants.CNT_CONTENT_AS_TEXT);
 		this.addType(OAConstants.DCTYPES_TYPE_TEXT);
 	}
 	
+	/**
+	 * Constructor with provided text content.
+	 * 
+	 * @param chars the text content
+	 */
 	public Text(String chars) {
 		this();
 		this.setChars(chars);
 	}
 
+	/**
+	 * Returns the text content.
+	 * 
+	 * @return the text content
+	 */
 	public String getChars() {
 		return chars;
 	}
 
+	/**
+	 * Sets the text content.
+	 * 
+	 * @param chars the text content to set
+	 */
 	public void setChars(String chars) {
 		this.chars = chars;
 	}
 
+	/**
+	 * Returns the text format.
+	 * 
+	 * @return the text format
+	 */
 	public String getFormat() {
 		return format;
 	}
 
+	/**
+	 * Sets the text format.
+	 * 
+	 * @param format the text format to set
+	 */
 	public void setFormat(String format) {
 		this.format = format;
 	}

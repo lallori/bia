@@ -48,6 +48,7 @@ import org.medici.bia.common.openannotation.model.OpenAnnotationObject;
 import org.medici.bia.common.openannotation.model.Text;
 
 /**
+ * This class tests open annotation serializer.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
