@@ -27,8 +27,14 @@
  */
 package org.medici.bia.controller.common;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.openannotation.AnnotationService;
@@ -67,6 +73,37 @@ public class OpenAnnotationsViewController {
 		}
 		model.put("jsonannotations", content);
 		return new ModelAndView("openannotation/ShowOpenAnnotations", model);
+	}
+	
+	@RequestMapping(value = "src/openannotation/downloadOAFile.do", method = RequestMethod.GET)
+	public void doDownload (HttpServletRequest request, HttpServletResponse response) {
+		ServletOutputStream outputStream = null;
+		
+		// set headers for the response
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=\"BiaAnnotations.json\"";
+        response.setHeader(headerKey, headerValue);
+        
+		try {
+			outputStream = response.getOutputStream();
+			long fileLength = getAnnotationService().writeJsonLDFileToOutputStream(outputStream);
+			
+			// set content attributes for the response
+			response.setContentType("application/octet-stream");
+			response.setContentLength((int) fileLength);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ApplicationThrowable e) {
+			e.printStackTrace();
+		} finally {
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

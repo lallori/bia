@@ -9,6 +9,8 @@
 	<div id="pageContainer" class="containerView">
 		<img src="<c:url value='/images/1024/img_mapLogin.png' />" class="annotationViewImg"/>
 		<div class="annotationViewTitle"><fmt:message key="openannotation.showAnnotationsTitle"></fmt:message></div>
+		<a id="link" class="annotationDownloadButton" title="<fmt:message key='openannotation.downloadbutton.downloadTitle'></fmt:message>" 
+			href="<c:url value='/src/openannotation/downloadOAFile.do'/>"><fmt:message key='openannotation.downloadbutton.download'></fmt:message></a> 
 		<div id="annotationcontent" class="annotationViewContent">
 			<c:if test="${not empty jsonannotations}">
 				<pre>${jsonannotations}</pre>

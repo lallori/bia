@@ -29,13 +29,14 @@ package org.medici.bia.service.openannotation;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,7 @@ import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * This class is the default implementation of services associated to open annotations features.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
@@ -62,6 +64,11 @@ public class AnnotationServiceImpl implements AnnotationService {
 	
 	private final static String FILENAME = "BiaAnnotations";
 	private final static String FILEEXT = "json";
+	
+	/**
+     * Size of a byte buffer to read/write file
+     */
+    private static final int BUFFER_SIZE = 4096;
 	
 	private static Logger logger = Logger.getLogger(AnnotationServiceImpl.class);
 	
@@ -84,7 +91,19 @@ public class AnnotationServiceImpl implements AnnotationService {
 		if (!checkOAPath(false)) {
 			logger.error("It is not possible to access to the open annotation path");
 		}
-		String json = getJsonContent();
+		ByteArrayOutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
+		getJsonContent(output);
+		String json = null;
+		try {
+			json = output.toString("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				output.close();
+			} catch (IOException e) {
+			}
+		}
 		return json;
 	}
 
@@ -104,6 +123,17 @@ public class AnnotationServiceImpl implements AnnotationService {
 			logger.warn("There are no annotations to serialize!");
 		}
 		logger.info("Writing to Json-LD file process: END");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long writeJsonLDFileToOutputStream(OutputStream outputStream) throws ApplicationThrowable {
+		if (!checkOAPath(false)) {
+			logger.error("It is not possible to access to the open annotation path");
+		}
+		return getJsonContent(outputStream);
 	}
 	
 	/* Privates */
@@ -126,22 +156,21 @@ public class AnnotationServiceImpl implements AnnotationService {
 		return ApplicationPropertyManager.getApplicationProperty("openannotation.path") + File.separator + FILENAME + "." + FILEEXT;
 	}
 	
-	private String getJsonContent() {
+	private long getJsonContent(OutputStream output) {
 		File file = new File(getFileName());
 		if (!file.exists()) {
 			logger.warn("Open Annotation File does not exist!");
-			return "";
+			return -1;
 		}
 		BufferedReader reader = null;
 		try {
 			FileInputStream input = new FileInputStream(file);
 			reader = new BufferedReader(new InputStreamReader(input));
-			String line = null;
-			String output = "";
-			while ((line = reader.readLine()) != null) {
-				output += line + System.getProperty("line.separator");
+			byte[] buffer = new byte[BUFFER_SIZE];
+	        int bytesRead = -1;
+			while ((bytesRead = input.read(buffer)) != -1) {
+				output.write(buffer, 0, bytesRead);
 			}
-			return output;
 		} catch (Exception e) {
 			logger.error("Problems reading Open Annotation File.", e);
 		} finally {
@@ -152,7 +181,7 @@ public class AnnotationServiceImpl implements AnnotationService {
 				}
 			}
 		}
-		return "";
+		return file.length();
 	}
 	
 	private List<OAAnnotation<OAPerson, Text, String>> getOpenAnnotations(List<Annotation> biaAnnotations) {

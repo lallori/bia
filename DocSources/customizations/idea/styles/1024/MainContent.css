@@ -4617,3 +4617,16 @@ a#UploadPortraitUser {
 	background-color: white;
 	margin: 40px;
 }
+
+.annotationDownloadButton {
+	clear: both;
+	float: left;
+	text-align: center;
+	padding-top: 4px;
+	margin-left: 40px;
+	cursor: pointer;
+	background: url(/DocSources/images/1024/button_large.png) no-repeat;
+	width: 187px;
+	height: 22px;
+	border: none;
+}

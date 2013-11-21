@@ -27,6 +27,8 @@
  */
 package org.medici.bia.service.openannotation;
 
+import java.io.OutputStream;
+
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -50,5 +52,14 @@ public interface AnnotationService {
 	 * @throws ApplicationThrowable
 	 */
 	public void writeJsonLDFile() throws ApplicationThrowable;
+
+	/**
+	 * Writes the open annotation file content to the output stream provided.
+	 * 
+	 * @param outputStream the output stream
+	 * @return the length of the file
+	 * @throws ApplicationThrowable
+	 */
+	public long writeJsonLDFileToOutputStream(OutputStream outputStream) throws ApplicationThrowable;
 
 }
