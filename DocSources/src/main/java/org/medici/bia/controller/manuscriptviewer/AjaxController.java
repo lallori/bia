@@ -361,7 +361,7 @@ public class AjaxController {
 			documentExplorer.getImage().setImageProgTypeNum(imageProgTypeNum);
 			documentExplorer.getImage().setMissedNumbering(org.medici.bia.common.util.StringUtils.nullTrim(missedNumbering));
 			// In this case recto/verso detail is not specified
-			documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.N);
+			documentExplorer.getImage().setImageRectoVerso(null);
 			if (!StringUtils.isEmpty(imageType)) {
 				documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
 			}

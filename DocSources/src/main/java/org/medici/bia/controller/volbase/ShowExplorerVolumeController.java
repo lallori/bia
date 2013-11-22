@@ -79,7 +79,10 @@ public class ShowExplorerVolumeController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView searchCarta(@Valid @ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
-		getValidator().validate(command, result);
+		if (command.getInsertNum() != null || command.getInsertLet() != null || command.getImageProgTypeNum() != null || command.getMissedNumbering() != null) {
+			// validation should be launched only when insert and folio details have a value (at least one of them)
+			getValidator().validate(command, result);
+		}
 
 		if (result.hasErrors()) {
 			// in case of errors we need to remove imageType and imageProgTypeNum, so we return imageOrder which is previous image.
@@ -139,6 +142,7 @@ public class ShowExplorerVolumeController {
 		volumeExplorer.setImage(new Image());
 		volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 		volumeExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
+		volumeExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 		volumeExplorer.getImage().setImageOrder(command.getImageOrder());
 		volumeExplorer.getImage().setImageType(command.getImageType());
 		volumeExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));

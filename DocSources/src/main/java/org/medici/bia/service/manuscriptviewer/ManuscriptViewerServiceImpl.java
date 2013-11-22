@@ -678,7 +678,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 							documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
 							documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
 							documentExplorer.getImage().setImageType(ImageType.C);
-							documentExplorer.getImage().setImageRectoVerso(ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
+							documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() != null ? ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()) : null);
 						}
 					}
 				}

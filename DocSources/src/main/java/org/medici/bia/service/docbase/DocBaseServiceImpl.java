@@ -434,7 +434,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
 		Boolean digitized = Boolean.FALSE;
 		try {
-			Image firstImage = getImageDAO().findDocumentImage(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
+			Image firstImage = getImageDAO().findDocumentImage(
+					volNum, 
+					StringUtils.nullTrim(volLetExt), 
+					StringUtils.nullTrim(insertNum), 
+					StringUtils.nullTrim(insertLet), 
+					folioNum, 
+					StringUtils.nullTrim(folioMod), 
+					StringUtils.nullTrim(rectoVerso));
 			if (firstImage != null) {
 				digitized = Boolean.TRUE;
 			}

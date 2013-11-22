@@ -111,56 +111,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException {
-		boolean notSpecifiedInsertNum = insertNum != null && insertNum.trim().isEmpty();
-		boolean notSpecifiedInsertLet = insertLet != null && insertLet.trim().isEmpty();
-		boolean notSpecifiedFolioMod = folioMod != null && folioMod.trim().isEmpty();
-		boolean notSpecifiedRectoVerso = rectoVerso != null && rectoVerso.trim().isEmpty();
-		
-        StringBuilder stringBuilder = new StringBuilder("FROM Image WHERE volNum = :volNum");
-        stringBuilder.append(" AND volLetExt ").append(StringUtils.isEmpty(volLetExt) ? "IS NULL" : "= :volLetExt");
-        if (!notSpecifiedInsertNum) {
-        	stringBuilder.append(" AND insertNum ").append(insertNum == null ? "IS NULL" : "= :insertNum");
-        	if (!notSpecifiedInsertLet) {
-        		stringBuilder.append(" AND insertLet ").append(insertLet == null ? "IS NULL" : "= :insertLet");
-        	}
-        }
-        stringBuilder.append(" AND imageProgTypeNum = :folioNum");
-        if (!notSpecifiedFolioMod) {
-        	stringBuilder.append(" AND missedNumbering ").append(folioMod == null ? "IS NULL" : "= :folioMod");
-        }
-        if (!notSpecifiedRectoVerso) {
-        	stringBuilder.append(" AND imageRectoVerso ").append(rectoVerso == null ? "IS NULL" : "= :rectoVerso");
-        }
-
-        Query query = getEntityManager().createQuery(stringBuilder.toString());
-
-        query.setParameter("volNum", volNum);
-        if (!StringUtils.isEmpty(volLetExt)) {
-        	query.setParameter("volLetExt", volLetExt.trim());
-        }
-        if (!notSpecifiedInsertNum && insertNum != null) {
-        	query.setParameter("insertNum", insertNum.trim());
-        	if (!notSpecifiedInsertLet && insertLet != null) {
-        		query.setParameter("insertLet", insertLet.trim());
-        	}
-        }
-        query.setParameter("folioNum", folioNum);
-        if (!notSpecifiedFolioMod && folioMod != null) {
-        	query.setParameter("folioMod", folioMod.trim().toUpperCase());
-        }
-        if (!notSpecifiedRectoVerso && rectoVerso != null) {
-        	query.setParameter("rectoVerso", Image.ImageRectoVerso.convertFromString(rectoVerso.trim()));
-        }
-		List<Image> result = query.getResultList();
-		
-		if (result.size() > 0) {
-			return result.get(0);
-		}
-		
-		return null;
+		return findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, Image.ImageRectoVerso.convertFromString(rectoVerso), rectoVerso != null);
 	}
 
 	/**
@@ -391,14 +344,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuilder.append(" AND volLetExt").append(explorer.getVolLetExt() == null ? " IS NULL" : " = :volLetExt");
         }
 		
-		if (image.getImageOrder() != null) {
-			// imageOrder is provided --> the query search by this criterium 
-			stringBuilder.append(" AND imageOrder = :imageOrder");
-		} else if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getImageName())) {
-			// imageOrder is not provided --> we first consider imageName search filter
-			stringBuilder.append(" AND imageName LIKE '%").append(image.getImageName().trim()).append("%'");
-		} else if (image.getImageProgTypeNum() != null) {
-			// imageOrder nor imageName are provided --> we consider folio number search filter
+        if (image.getImageProgTypeNum() != null) {
+			// folio number is provided --> the query search by this criterium
 			if (image.getInsertNum() == null || !StringUtils.isEmpty(image.getInsertNum().trim())) {
 				stringBuilder.append(" AND insertNum").append(image.getInsertNum() == null ? " IS NULL" : " = :insertNum");
 			}
@@ -412,10 +359,17 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
             if (image.getMissedNumbering() == null || !StringUtils.isEmpty(image.getMissedNumbering().trim())) {
             	stringBuilder.append(" AND missedNumbering").append(image.getMissedNumbering() == null ? " IS NULL" : " = :missedNumbering");
             }
-        	if (!Image.ImageRectoVerso.N.equals(image.getImageRectoVerso())) {
-        		stringBuilder.append(" AND imageRectoVerso").append(image.getImageRectoVerso() == null ? " IS NULL" : " = :imageRectoVerso");
+        	if (image.getImageRectoVerso() != null) {
+        		// imageRectoVerso cannot be null in tblImages
+        		stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
         	}
-        } else {
+        } else  if (image.getImageOrder() != null) {
+			// folio numnber is not provided --> we first consider image order search filter
+			stringBuilder.append(" AND imageOrder = :imageOrder");
+		} else if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getImageName())) {
+			// imageOrder is not provided --> we consider imageName search filter
+			stringBuilder.append(" AND imageName LIKE '%").append(image.getImageName().trim()).append("%'");
+		} else {
         	// no search filter is provided --> we set 1 for imageOrder
         	stringBuilder.append(" AND imageOrder = 1");
         }
@@ -428,23 +382,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	query.setParameter("volLetExt", explorer.getVolLetExt());
         }
 
-        if (image.getImageOrder() != null) {
-        	// imageOrder is provided
-        	query.setParameter("imageOrder", image.getImageOrder());
-			query.setFirstResult(0);
-			query.setMaxResults(1);
-			return (Image) query.getSingleResult();
-        }
-		if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getImageName())) {
-			// imageOrder is not provided but imageName is provided
-        	query.setFirstResult(0);
-			query.setMaxResults(1);
-			try {
-				return (Image) query.getSingleResult();
-			} catch (NoResultException noResultExcepion) { }
-        }
-		if (image.getImageProgTypeNum() != null) {
-			// imageOrder nor imageName are provided but insert and folio details are provided
+        if (image.getImageProgTypeNum() != null) {
         	if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getInsertNum())) {
         		query.setParameter("insertNum", image.getInsertNum().trim());
         	}
@@ -466,8 +404,15 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			if (result.size() > 0) {
 				return result.get(0);
 			}
+			return null;
         }
-		// no searching criteria is provided --> we search with imageOrder = 1
+        
+        if (image.getImageOrder() != null) {
+        	// imageOrder is provided
+        	query.setParameter("imageOrder", image.getImageOrder());
+        }
+		
+		// imageOrder provided or image name provided or no searching criteria is provided
 		query.setFirstResult(0);
 		query.setMaxResults(1);
 		try {

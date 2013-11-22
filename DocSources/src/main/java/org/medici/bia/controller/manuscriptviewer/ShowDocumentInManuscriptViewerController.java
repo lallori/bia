@@ -80,7 +80,7 @@ public class ShowDocumentInManuscriptViewerController {
 			documentExplorer.getImage().setInsertNum("");
 			documentExplorer.getImage().setInsertLet("");
 			documentExplorer.getImage().setMissedNumbering("");
-			documentExplorer.getImage().setImageRectoVerso(Image.ImageRectoVerso.N);
+			documentExplorer.getImage().setImageRectoVerso(null);
 		}
 		documentExplorer.getImage().setImageType(command.getImageType());
 		documentExplorer.setTotal(command.getTotal());

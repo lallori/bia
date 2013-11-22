@@ -133,7 +133,10 @@ public class ShowExplorerDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView searchCarta(@Valid @ModelAttribute("command") ShowExplorerDocumentCommand command, BindingResult result){
-		getValidator().validate(command, result);
+		if (command.getInsertNum() != null || command.getInsertLet() != null || command.getImageProgTypeNum() != null || command.getMissedNumbering() != null) {
+			// validation should be launched only when insert and folio details have a value (at least one of them)
+			getValidator().validate(command, result);
+		}
 
 		if (result.hasErrors()) {
 			// in case of errors we need to remove imageType and imageProgTypeNum, so we return imageOrder which is previous image.
@@ -162,7 +165,7 @@ public class ShowExplorerDocumentController {
 				}
 				documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 				documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
-				documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? Image.ImageRectoVerso.N : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
+				documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? null : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 				documentExplorer.getImage().setImageOrder(command.getImageOrder());
 				documentExplorer.getImage().setImageType(command.getImageType());
 				documentExplorer.setTotal(command.getTotal());
@@ -201,7 +204,7 @@ public class ShowExplorerDocumentController {
 		documentExplorer.setImage(new Image());
 		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 		documentExplorer.getImage().setMissedNumbering(StringUtils.nullTrim(command.getMissedNumbering()));
-		documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? Image.ImageRectoVerso.N : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
+		documentExplorer.getImage().setImageRectoVerso(StringUtils.isNullableString(command.getImageRectoVerso()) ? null : Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(command.getImageRectoVerso())));
 		documentExplorer.getImage().setImageOrder(command.getImageOrder());
 		documentExplorer.getImage().setImageType(command.getImageType());
 		documentExplorer.getImage().setInsertNum(StringUtils.nullTrim(command.getInsertNum()));
