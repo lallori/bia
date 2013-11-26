@@ -120,14 +120,15 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	
 		// Define predicate's elements
 		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLetExt = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+		ParameterExpression<String> parameterVolLetExt = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt");
 
 		criteriaQuery.where(
 			criteriaBuilder.and(
 				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
 				StringUtils.isEmpty(volLetExt) ? 
 					criteriaBuilder.isNull(root.get("volLetExt")) : 
-					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLetExt)
+					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLetExt),
+				criteriaBuilder.equal(root.<Boolean>get("logicalDelete"), Boolean.FALSE)
 			)
 		);
 
@@ -357,7 +358,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		Query query = null;
 		//String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
 		//MD: The next query is builded for test if is possible order result by date of Title Occupation
-		String toSearch = new String("FROM Volume WHERE volNum>=" + volNum + " AND volNum<=" + volNumBetween);
+		String toSearch = new String("FROM Volume WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween + " AND logicalDelete = false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
