@@ -100,13 +100,16 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
 public class DocBaseServiceImpl implements DocBaseService {
+	
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	private DocumentDAO documentDAO;
-
 	@Autowired
 	private DocReferenceDAO docReferenceDAO;
 	@Autowired
@@ -121,7 +124,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ImageDAO imageDAO;
-	private final Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	private MonthDAO monthDAO;
 	@Autowired
@@ -146,28 +148,305 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private VettingHistoryDAO vettingHistoryDAO;
 	
 	/**
+	 * @return the docReferenceDAO
+	 */
+	public DocReferenceDAO getDocReferenceDAO() {
+		return docReferenceDAO;
+	}
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
+	/**
+	 * @return the epLinkDAO
+	 */
+	public EpLinkDAO getEpLinkDAO() {
+		return epLinkDAO;
+	}
+	
+	/**
+	 * @return the eplToLinkDAO
+	 */
+	public EplToLinkDAO getEplToLinkDAO() {
+		return eplToLinkDAO;
+	}
+
+	/**
+	 * @return the factChecksDAO
+	 */
+	public FactChecksDAO getFactChecksDAO() {
+		return factChecksDAO;
+	}
+
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+	
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+
+	/**
+	 * @return the synExtractDAO
+	 */
+	public SynExtractDAO getSynExtractDAO() {
+		return synExtractDAO;
+	}
+
+	/**
+	 * @return the topicsListDAO
+	 */
+	public TopicsListDAO getTopicsListDAO() {
+		return topicsListDAO;
+	}
+
+	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+	
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
+	 * @return the userMarkedListDAO
+	 */
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	/**
+	 * @return the userMarkedListElementDAO
+	 */
+	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
+		return userMarkedListElementDAO;
+	}
+
+	/**
+	 * @return the vettingHistoryDAO
+	 */
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
+	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	/**
+	 * @param docReferenceDAO the docReferenceDAO to set
+	 */
+	public void setDocReferenceDAO(DocReferenceDAO docReferenceDAO) {
+		this.docReferenceDAO = docReferenceDAO;
+	}
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
+	 * @param epLinkDAO the epLinkDAO to set
+	 */
+	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
+		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
+	 * @param eplToLinkDAO the eplToLinkDAO to set
+	 */
+	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
+		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
+	 * @param factChecksDAO the factChecksDAO to set
+	 */
+	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
+		this.factChecksDAO = factChecksDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @param synExtractDAO the synExtractDAO to set
+	 */
+	public void setSynExtractDAO(SynExtractDAO synExtractDAO) {
+		this.synExtractDAO = synExtractDAO;
+	}
+
+	/**
+	 * @param topicsListDAO the topicsListDAO to set
+	 */
+	public void setTopicsListDAO(TopicsListDAO topicsListDAO) {
+		this.topicsListDAO = topicsListDAO;
+	}
+
+	/**
+	 * @param userDAO the userDAO to set
+	 */
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userMarkedListDAO the userMarkedListDAO to set
+	 */
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	/**
+	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
+	 */
+	public void setUserMarkedListElementDAO(
+			UserMarkedListElementDAO userMarkedListElementDAO) {
+		this.userMarkedListElementDAO = userMarkedListElementDAO;
+	}
+
+	/**
+	 * @param vettingHistoryDAO the vettingHistoryDAO to set
+	 */
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Document addNewDocReferenceDocument(DocReference docReference) throws ApplicationThrowable {
-		try{
-			docReference.setDocReferenceId(null);
-			docReference.setDateCreated(new Date());
-			docReference.setDocumentFrom(getDocumentDAO().find(docReference.getDocumentFrom().getEntryId()));
-			docReference.setDocumentTo(getDocumentDAO().find(docReference.getDocumentTo().getEntryId()));
-			getDocReferenceDAO().persist(docReference);
-			DocReference docReferenceInverse = new DocReference(null);
-			docReferenceInverse.setDateCreated(new Date());
-			docReferenceInverse.setDocumentFrom(getDocumentDAO().find(docReference.getDocumentTo().getEntryId()));
-			docReferenceInverse.setDocumentTo(getDocumentDAO().find(docReference.getDocumentFrom().getEntryId()));
-			getDocReferenceDAO().persist(docReferenceInverse);
+		try {
+			Document docFrom = getDocumentDAO().find(docReference.getDocumentFrom().getEntryId());
+			Document docTo = getDocumentDAO().find(docReference.getDocumentTo().getEntryId());
+			Date now = new Date();
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			// persist the doc reference
+			DocReference reference = new DocReference();
+			reference.setDateCreated(now);
+			reference.setDocumentFrom(docFrom);
+			reference.setDocumentTo(docTo);
+			getDocReferenceDAO().persist(reference);
+			docFrom.addDocReference(reference);
+			
+			// persist the inverse doc reference
+			DocReference inverseReference = new DocReference();
+			inverseReference.setDateCreated(now);
+			inverseReference.setDocumentFrom(docTo);
+			inverseReference.setDocumentTo(docFrom);
+			getDocReferenceDAO().persist(inverseReference);
+			docTo.addDocReference(inverseReference);
+			
+			// update documents "last update" details
+			User user = getCurrentUser();
+			docFrom.setLastUpdate(now);
+			docFrom.setLastUpdateBy(user);
+			docTo.setLastUpdate(now);
+			docTo.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Add new Document Reference", Action.MODIFY, Category.DOCUMENT, docReference.getDocumentFrom()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new Document Reference", Action.MODIFY, Category.DOCUMENT, docFrom));
 			
-			return docReference.getDocumentFrom();
-		}catch(Throwable th){
+			return docFrom;
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -179,18 +458,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewDocument(Document document) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			Date now = new Date();
+			User user = getCurrentUser();
 
 			document.setEntryId(null);
 
 			// We need to attach the correct volume istance by database extraction.
 			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			//Setting fields that are defined as nullable = false
-			document.setResearcher(((BiaUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setResearcher(user.getInitials());
 			document.setCreatedBy(user);
-			Date dateCreated = new Date();
-			document.setDateCreated(dateCreated);
-			document.setLastUpdate(dateCreated);
+			document.setDateCreated(now);
+			document.setLastUpdate(now);
 			document.setLastUpdateBy(user);
 			document.setNewEntry(true);
 			document.setReckoning(false);
@@ -204,34 +483,21 @@ public class DocBaseServiceImpl implements DocBaseService {
 			if (document.getDocMonthNum() != null) {
 				Month month = getMonthDAO().find(document.getDocMonthNum().getMonthNum());
 				document.setDocMonthNum(month);
-			} else {
-				document.setDocMonthNum(null);
 			}
 			document.setDocDate(DateUtils.getLuceneDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
 			
 			//We set the sortableDateInt (and the sortableDate that it's used only in the old DB)
-			if(document.getYearModern() != null){
+			if (document.getYearModern() != null) {
 				document.setSortableDateInt(DateUtils.getIntegerDate(document.getYearModern(), document.getDocMonthNum(), document.getDocDay()));
 				document.setSortableDate(DateUtils.getStringForSortableDate(document.getYearModern(), document.getDocMonthNum(), document.getDocDay()));
-			}else{
+			} else {
 				document.setSortableDateInt(DateUtils.getIntegerDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
 				document.setSortableDate(DateUtils.getStringForSortableDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
 			}
 
-			// We set InsertLet to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getInsertLet()).trim().equals("")){
-				document.setInsertLet(null);
-			} else {
-				document.setInsertLet(document.getInsertLet());
-			}
-			// We set FolioMod to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getFolioMod()).trim().equals("")) {
-				document.setFolioMod(null);
-			}
-			// We set FolioRV to null if it's an empty string. 
-			if (ObjectUtils.toString(document.getFolioRectoVerso()).trim().equals("")) {
-				document.setFolioRectoVerso(null);
-			}
+			document.setInsertNum(StringUtils.nullTrim(document.getInsertNum()));
+			document.setInsertLet(StringUtils.nullTrim(document.getInsertLet()));
+			document.setFolioMod(StringUtils.nullTrim(document.getFolioMod()));
 
 			getDocumentDAO().persist(document);
 
@@ -250,6 +516,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable {
 		try {
+			User user = getCurrentUser();
 			//this control is mandatory to prevent duplication records on forum
 			Forum forum = getForumDAO().getForumDocument(document.getEntryId());
 			
@@ -270,17 +537,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
 
-				// thisi method call is mandatory to increment topic number on parent forum
+				// this method call is mandatory to increment topic number on parent forum
 				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 				
 				// Increment the number of subforums
 				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
-			}else if(forum.getLogicalDelete()){
+			} else if(forum.getLogicalDelete()) {
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
 				forum.setLogicalDelete(Boolean.FALSE);
 				forum.setTotalViews(0);
@@ -293,8 +558,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 				// Increment the number of subforums
 				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 				
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
 				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
@@ -312,22 +575,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
+			Document document = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+			
 			synExtract.setSynExtrId(null);
-			Date dateCreated = new Date();
-			synExtract.setDateCreated(dateCreated);
-			synExtract.setLastUpdate(dateCreated);
-			synExtract.setDocument(getDocumentDAO().find(synExtract.getDocument().getEntryId()));
+			synExtract.setDateCreated(now);
+			synExtract.setLastUpdate(now);
+			synExtract.setDocument(document);
+			
 			getSynExtractDAO().persist(synExtract);
 
-			// We need to refresh linked document entity state, otherwise synExtract property will be null
-			getDocumentDAO().refresh(synExtract.getDocument());
+			document.setSynExtract(synExtract);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new extract", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Add new extract", Action.MODIFY, Category.DOCUMENT, synExtract.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtract.getDocument()));
-
-			return synExtract.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -340,20 +607,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
-			factChecks.setVetId(null);
-			factChecks.setDateInfo((new Date()).toString());
-			factChecks.setDocument(getDocumentDAO().find(factChecks.getDocument().getEntryId()));
-			getFactChecksDAO().persist(factChecks);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Add new fact checks", Action.MODIFY, Category.DOCUMENT, factChecks.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, factChecks.getDocument()));
-
-			// We need to refresh linked document entity state, otherwise factChecks property will be null
-			getDocumentDAO().refresh(factChecks.getDocument());
+			Date now = new Date();
+			User user = getCurrentUser();
 			
-			return factChecks.getDocument();
+			Document document = getDocumentDAO().find(factChecks.getDocument().getEntryId());
+			
+			factChecks.setVetId(null);
+			factChecks.setDateInfo(now.toString());
+			factChecks.setDocument(document);
+			
+			getFactChecksDAO().persist(factChecks);
+			
+			document.setFactChecks(factChecks);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new fact checks", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
+			
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -366,20 +638,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewPersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
-			epLink.setEpLinkId(null);
-			epLink.setDateCreated(new Date());
+			Date now = new Date();
+			User user = getCurrentUser();
 			
-			epLink.setDocument(getDocumentDAO().find(epLink.getDocument().getEntryId()));
+			Document document = getDocumentDAO().find(epLink.getDocument().getEntryId());
+			
+			epLink.setEpLinkId(null);
+			epLink.setDateCreated(now);
+			epLink.setDocument(document);
 			epLink.setPerson(getPeopleDAO().find(epLink.getPerson().getPersonId()));
 
 			getEpLinkDAO().persist(epLink);
+			
+			document.addEpLink(epLink);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new person", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Add new person", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLink.getDocument()));
-
-			return epLink.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -392,9 +670,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
+			Document document = getDocumentDAO().find(eplToLink.getDocument().getEntryId());
+			
 			eplToLink.setEplToId(null);
-			eplToLink.setDateCreated(new Date());
-			eplToLink.setDocument(getDocumentDAO().find(eplToLink.getDocument().getEntryId()));
+			eplToLink.setDateCreated(now);
+			eplToLink.setDocument(document);
 
 			// fill fields to update document section
 			if (eplToLink.getTopic() != null) {
@@ -413,15 +696,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEplToLinkDAO().persist(eplToLink);
 
-			// We need to refresh linked document entity state, otherwise eplToLink property will be null
-			getDocumentDAO().refresh(eplToLink.getDocument());
+			document.addEplToLink(eplToLink);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Add new topic", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Add new topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Add new topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLink.getDocument()));
-
-			return eplToLink.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -484,9 +766,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 	@Override
 	public Document checkVolumeFolio(Integer summaryId)	throws ApplicationThrowable {
-		try{
+		try {
 			return getDocumentDAO().checkVolumeFolio(summaryId);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -499,7 +781,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 
 			getUserHistoryDAO().persist(new UserHistory(user, "Compare document", Action.COMPARE, Category.DOCUMENT, document));
 
@@ -515,7 +797,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 
 			Document document = new Document();
 			// New Document must have entryId set to zero
@@ -555,25 +837,32 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteDocReferenceDocument(DocReference docReference) throws ApplicationThrowable {
-		try{
+		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
 			DocReference docReferenceToDeleteFirst = getDocReferenceDAO().find(docReference.getDocumentFrom().getEntryId(), docReference.getDocReferenceId());
 			DocReference docReferenceToDeleteSecond = getDocReferenceDAO().findFromDocuments(docReferenceToDeleteFirst.getDocumentTo().getEntryId(), docReferenceToDeleteFirst.getDocumentFrom().getEntryId());
 			
-			docReferenceToDeleteFirst.getDocumentFrom().setDocReference(null);
-			docReferenceToDeleteFirst.getDocumentTo().setDocReference(null);
+			// we remove the doc-reference from the document first (OneToMany side)
+			Document docFrom = docReferenceToDeleteFirst.getDocumentFrom();
+			Document docTo = docReferenceToDeleteFirst.getDocumentTo();
+			docFrom.removeDocReference(docReferenceToDeleteFirst);
+			docTo.removeDocReference(docReferenceToDeleteSecond);
 			
+			// then we can erase the doc-reference from the table (ManyToOne side)
 			getDocReferenceDAO().remove(docReferenceToDeleteFirst);
-			
-			docReferenceToDeleteSecond.getDocumentFrom().setDocReference(null);
-			docReferenceToDeleteSecond.getDocumentTo().setDocReference(null);
-			
 			getDocReferenceDAO().remove(docReferenceToDeleteSecond);			
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			// we update the document "last update" details
+			docFrom.setLastUpdateBy(user);
+			docFrom.setLastUpdate(now);
+			docTo.setLastUpdate(now);
+			docTo.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Unlink document ", Action.MODIFY, Category.DOCUMENT, docReferenceToDeleteFirst.getDocumentFrom()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink document", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, docReferenceToDeleteFirst.getDocumentFrom()));
-		}catch (Throwable th) {
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink document ", Action.MODIFY, Category.DOCUMENT, docFrom));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink document", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, docFrom));
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
 		
@@ -586,24 +875,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document deleteDocument(Integer entryId) throws ApplicationThrowable {
 		Document documentToDelete = null;
+		User user = getCurrentUser();
 		try {
 			documentToDelete = getDocumentDAO().find(entryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
+		documentToDelete.setLastUpdate(new Date());
+		documentToDelete.setLastUpdateBy(user);
 		documentToDelete.setLogicalDelete(Boolean.TRUE);
 
-		try {
-			getDocumentDAO().merge(documentToDelete);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Deleted document", Action.DELETE, Category.DOCUMENT, documentToDelete));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Deleted document", org.medici.bia.domain.VettingHistory.Action.DELETE, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToDelete));
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+		getUserHistoryDAO().persist(new UserHistory(user, "Deleted document", Action.DELETE, Category.DOCUMENT, documentToDelete));
+		getVettingHistoryDAO().persist(new VettingHistory(user, "Deleted document", org.medici.bia.domain.VettingHistory.Action.DELETE, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToDelete));
 		
 		return documentToDelete;
 	}
@@ -615,16 +899,22 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
+			User user = getCurrentUser();
+			
 			EpLink epLinkToDelete = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
 
-			epLinkToDelete.getDocument().setEpLink(null);
-			epLinkToDelete.getPerson().setEpLink(null);
+			Document document = epLinkToDelete.getDocument();
+			document.removeEplink(epLinkToDelete);
+			epLinkToDelete.getPerson().removeEplink(epLinkToDelete);
+			
 			getEpLinkDAO().remove(epLinkToDelete);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			// update the document "last update" details
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLink.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLink.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -637,17 +927,24 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
+			User user = getCurrentUser();
+			
 			EplToLink eplToLinkToDelete = getEplToLinkDAO().find(eplToLink.getDocument().getEntryId(), eplToLink.getEplToId());
-			getEplToLinkDAO().remove(eplToLinkToDelete);
+			
 			// LP : We need to remove the association between parent and child first, 
 			// otherwise Hibernate tries to persist the child again due to cascade = ALL
 			// Tnx to http://stackoverflow.com/questions/4748426/cannot-remove-entity-which-is-target-of-onetoone-relation
-			eplToLinkToDelete.getDocument().setEplToLink(null);
+			Document document = eplToLinkToDelete.getDocument();
+			document.removeEplToLink(eplToLinkToDelete);
+			
+			getEplToLinkDAO().remove(eplToLinkToDelete);
+			
+			// update the document "last update" details
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Unlink topic", Action.MODIFY, Category.DOCUMENT, eplToLink.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLink.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink topic", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink topic", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -660,131 +957,138 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable {
 		try {
-			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
+			Date now = new Date();
+			User user = getCurrentUser();
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			Integer docId = document.getEntryId();
+			Integer senderId = document.getSenderPeople().getPersonId();
+			Integer recipientId = document.getRecipientPeople().getPersonId();
+			
+			Document documentToUpdate = getDocumentDAO().find(docId);
 
-			// fill fields of correspondents section
-			documentToUpdate.setLastUpdate(new Date());
-			document.setLastUpdateBy(user);
-			if ((!document.getSenderPeople().getMapNameLf().equals("")) && (document.getSenderPeople().getPersonId() >0)){
-				People sender = getPeopleDAO().find(document.getSenderPeople().getPersonId());
-				documentToUpdate.setSenderPeople(sender);
-				if(document.getSenderPeople().getPersonId() != 198 && document.getSenderPeople().getPersonId() != 3905 && document.getSenderPeople().getPersonId() != 9285){
-					EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(document.getEntryId(), "S");
-					if(epLinkSender == null){
-						epLinkSender = new EpLink(null);
-						epLinkSender.setDateCreated(new Date());
-						epLinkSender.setDocRole("S");
-						epLinkSender.setDocument(documentToUpdate);
-						epLinkSender.setPerson(getPeopleDAO().find(sender.getPersonId()));
-						epLinkSender.setAssignUnsure(false);
-						epLinkSender.setPortrait(false);
-						getEpLinkDAO().persist(epLinkSender);
-					}else{
-						epLinkSender.setPerson(sender);
-						getEpLinkDAO().merge(epLinkSender);
-					}
-				}
+			// update the sender person
+			if ((!document.getSenderPeople().getMapNameLf().equals("")) && (senderId > 0)) {
+				setSenderReceiverPerson(docId, senderId, documentToUpdate, now, "S");
 			} else {
-				if ((document.getSenderPeople().getPersonId() >0)) {
+				if ((senderId > 0)) {
 					// We need to remove epLink before setting null sender...
-					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getSenderPeople().getPersonId());
-					if(epLinkToDelete != null){
-						epLinkToDelete.getDocument().setEpLink(null);
-						epLinkToDelete.getPerson().setEpLink(null);
-						getEpLinkDAO().remove(epLinkToDelete);
-
-						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
-						getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToDelete.getDocument()));
-					}
-					documentToUpdate.setSenderPeople(null);
+					unlinkPerson(docId, senderId);
+					
 					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
-				}else{
-					document.setSenderPeople(null);
 				}
+				document.setSenderPeople(null);
 			}
-				
+			
+			// update the unsure sender people
 			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
-			if (document.getSenderPlace().getPlaceAllId() > 0){
+			
+			// update the sender place
+			if (document.getSenderPlace().getPlaceAllId() > 0) {
 				/*
 				if(documentToUpdate.getSenderPlace() != null){
 					documentToUpdate.getSenderPlace().setSenderDocuments(null);
 				}*/
 				documentToUpdate.setSenderPlace(getPlaceDAO().find(document.getSenderPlace().getPlaceAllId()));
-				if(documentToUpdate.getSenderPlace().getPrefFlag().equals("V")){
+				if (documentToUpdate.getSenderPlace().getPrefFlag().equals("V")) {
 					documentToUpdate.setSenderPlace(getPlaceDAO().findPrinicipalPlace(documentToUpdate.getSenderPlace().getGeogKey()));
 				}
-			}
-			else
+			} else {
 				documentToUpdate.setSenderPlace(null);
+			}
+			
+			// update the unsure sender place
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
-			if(document.getSendNotes() != null){
+			
+			// update the send notes
+			if (document.getSendNotes() != null) {
 				documentToUpdate.setSendNotes(document.getSendNotes());
 			}
 			
-			if ((!document.getRecipientPeople().getMapNameLf().equals(""))  && (document.getRecipientPeople().getPersonId() >0)) { 
-				People recipient = getPeopleDAO().find(document.getRecipientPeople().getPersonId());
-				documentToUpdate.setRecipientPeople(recipient);
-				if(document.getRecipientPeople().getPersonId() != 198 && document.getRecipientPeople().getPersonId() != 3905 && document.getRecipientPeople().getPersonId() != 9285){
-					EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(document.getEntryId(), "R");
-					if(epLinkSender == null){
-						epLinkSender = new EpLink(null);
-						epLinkSender.setDateCreated(new Date());
-						epLinkSender.setDocRole("R");
-						epLinkSender.setDocument(documentToUpdate);
-						epLinkSender.setPerson(getPeopleDAO().find(recipient.getPersonId()));
-						epLinkSender.setAssignUnsure(false);
-						epLinkSender.setPortrait(false);
-						getEpLinkDAO().persist(epLinkSender);
-					}else{
-						epLinkSender.setPerson(recipient);
-						getEpLinkDAO().merge(epLinkSender);
-					}
-				}
+			// update the recipient person
+			if ((!document.getRecipientPeople().getMapNameLf().equals(""))  && (recipientId > 0)) { 
+				setSenderReceiverPerson(docId, recipientId, documentToUpdate, now, "R");
 			} else {
-				if (document.getRecipientPeople().getPersonId() >0) {
+				if (recipientId > 0) {
 					// We need to remove epLink before setting null recipient...
-					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getRecipientPeople().getPersonId());
-					if(epLinkToDelete != null){
-						epLinkToDelete.getDocument().setEpLink(null);
-						epLinkToDelete.getPerson().setEpLink(null);
-						getEpLinkDAO().remove(epLinkToDelete);
-
-						getUserHistoryDAO().persist(new UserHistory(user, "Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
-						getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToDelete.getDocument()));
-					}
-					documentToUpdate.setRecipientPeople(null);
+					unlinkPerson(docId, recipientId);
+					
 					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
-				}else{
-					document.setRecipientPeople(null);
 				}
+				document.setRecipientPeople(null);
 			}
 
+			// update the unsure recipient people
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
-			if (document.getRecipientPlace().getPlaceAllId() > 0){
+			
+			// update the recipient place
+			if (document.getRecipientPlace().getPlaceAllId() > 0) {
 				/*
 				if(documentToUpdate.getRecipientPlace() != null){
 					documentToUpdate.getRecipientPlace().setRecipientDocuments(null);
 				}*/
 				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
-				if(documentToUpdate.getRecipientPlace().getPrefFlag().equals("V")){
+				if (documentToUpdate.getRecipientPlace().getPrefFlag().equals("V")) {
 					documentToUpdate.setRecipientPlace(getPlaceDAO().findPrinicipalPlace(documentToUpdate.getRecipientPlace().getGeogKey()));
 				}
 			} else {
 				documentToUpdate.setRecipientPlace(null);
 			}
+			
+			// update the unsure recipient place
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
-			if(document.getRecipNotes() != null){
+			
+			// update the recipient notes
+			if (document.getRecipNotes() != null) {
 				documentToUpdate.setRecipNotes(document.getRecipNotes());
 			}
+			
+			// update document "last update" details
+			documentToUpdate.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 		
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit Correspondents", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToUpdate));
 
-			return getDocumentDAO().merge(documentToUpdate);
+			// return getDocumentDAO().merge(documentToUpdate);
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
+		}
+	}
+	private void setSenderReceiverPerson(Integer docId, Integer personId, Document documentToUpdate, Date now, String personRole) {
+		People senderReceiver = getPeopleDAO().find(personId);
+		if ("S".equals(personRole)) {
+			documentToUpdate.setSenderPeople(senderReceiver);
+		} else if ("R".equals(personRole)) {
+			documentToUpdate.setRecipientPeople(senderReceiver);
+		}
+		if (personId != 198 && personId != 3905 && personId != 9285) {
+			EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
+			if (epLinkSender == null) {
+				epLinkSender = new EpLink(null);
+				epLinkSender.setDateCreated(now);
+				epLinkSender.setDocRole(personRole);
+				epLinkSender.setDocument(documentToUpdate);
+				epLinkSender.setAssignUnsure(false);
+				epLinkSender.setPortrait(false);
+			}
+			epLinkSender.setPerson(senderReceiver);
+			//getEpLinkDAO().merge(epLinkSender);
+		}
+	}
+	private void unlinkPerson(Integer docId, Integer personId) {
+		EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(docId, personId);
+		if (epLinkToDelete != null) {
+			Document document = epLinkToDelete.getDocument();
+			People person = epLinkToDelete.getPerson();
+			document.removeEplink(epLinkToDelete);
+			person.removeEplink(epLinkToDelete);
+			
+			getEpLinkDAO().remove(epLinkToDelete);
+
+			User user = getCurrentUser();
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 		}
 	}
 
@@ -795,7 +1099,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
@@ -845,10 +1149,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setYearModern(document.getYearModern());
 			
 			//Set SortableDateInt (and the sortableDate that it's used only in the old DB)
-			if(documentToUpdate.getYearModern() != null){
+			if (documentToUpdate.getYearModern() != null) {
 				documentToUpdate.setSortableDateInt(DateUtils.getIntegerDate(documentToUpdate.getYearModern(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 				documentToUpdate.setSortableDate(DateUtils.getStringForSortableDate(documentToUpdate.getYearModern(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
-			}else{
+			} else {
 				documentToUpdate.setSortableDateInt(DateUtils.getIntegerDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 				documentToUpdate.setSortableDate(DateUtils.getStringForSortableDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 			}
@@ -859,16 +1163,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setUndated(document.getUndated());
 			documentToUpdate.setDateNotes(document.getDateNotes());
 
-			getDocumentDAO().merge(documentToUpdate);
-			
 			//Update the title of the linked forum if exist
 			Forum forum = getForumDAO().getForumDocument(document.getEntryId());
-			if(forum != null){
-				if(documentToUpdate.getFolioNum() == null){
+			if (forum != null) {
+				if (documentToUpdate.getFolioNum() == null) {
 					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio NNF");
-				}else if(documentToUpdate.getFolioMod() != null){
+				} else if (documentToUpdate.getFolioMod() != null) {
 					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio " + documentToUpdate.getFolioNum() + documentToUpdate.getFolioMod());
-				}else{
+				} else {
 					forum.setDescription("Volume " + documentToUpdate.getVolume().getMDP() + " - Folio " + documentToUpdate.getFolioNum());
 				}
 				getForumDAO().merge(forum);
@@ -890,28 +1192,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
+			Date now = new Date();
 
-			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
-			documentToUpdate.setLastUpdate(new Date());
-			documentToUpdate.setLastUpdateBy(user);
-			getDocumentDAO().merge(documentToUpdate);
-						
-			SynExtract synExtractToUpdate = documentToUpdate.getSynExtract();
+			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
 			// fill fields to update document section
-			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setLastUpdate(now);
 			synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
 		
-			getSynExtractDAO().merge(synExtractToUpdate);
-
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
-			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+			Document document = synExtractToUpdate.getDocument();
+			getDocumentDAO().refresh(document);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 			
-			return synExtractToUpdate.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -924,29 +1223,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
-			documentToUpdate.setLastUpdate(new Date());
-			documentToUpdate.setLastUpdateBy(user);
-			getDocumentDAO().merge(documentToUpdate);
+			User user = getCurrentUser();
+			Date now = new Date();
 
 			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
 			// fill fields to update document section
-			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setLastUpdate(now);
 			synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
 			synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
 		
-			getSynExtractDAO().merge(synExtractToUpdate);
-
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
-			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+			Document document = synExtractToUpdate.getDocument();
+			getDocumentDAO().refresh(document);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract or synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit extract or synopsis", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit extract or synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 			
-			return synExtractToUpdate.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -959,17 +1255,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			Document documentToUpdate = getDocumentDAO().find(factChecks.getDocument().getEntryId());
-			documentToUpdate.setLastUpdate(new Date());
-			documentToUpdate.setLastUpdateBy(user);
-			getDocumentDAO().merge(documentToUpdate);
+			User user = getCurrentUser();
 
 			FactChecks factChecksToUpdate = getFactChecksDAO().findByEntryId(factChecks.getDocument().getEntryId());
 			// fill fields to update fact check section
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
-			getFactChecksDAO().merge(factChecksToUpdate);
+			
+			Document document = factChecksToUpdate.getDocument();
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit fact checks", Action.MODIFY, Category.DOCUMENT, factChecksToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit fact checks", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, factChecksToUpdate.getDocument()));
@@ -987,17 +1281,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
+			User user = getCurrentUser();
 			EpLink epLinkToUpdate = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
-
+			
 			// fill fields to update document section
 			epLinkToUpdate.setAssignUnsure(epLink.getAssignUnsure());
 			epLinkToUpdate.setPortrait(epLink.getPortrait());
 			epLinkToUpdate.setPerson(epLink.getPerson());
-
-			getEpLinkDAO().merge(epLinkToUpdate);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
+			
+			Document document = epLinkToUpdate.getDocument();
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
+			
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit person linked", Action.MODIFY, Category.DOCUMENT, epLinkToUpdate.getDocument()));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit person linked", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, epLinkToUpdate.getDocument()));
 
@@ -1014,28 +1309,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			Document documentToUpdate = getDocumentDAO().find(synExtract.getDocument().getEntryId());
-			documentToUpdate.setLastUpdate(new Date());
-			documentToUpdate.setLastUpdateBy(user);
-			getDocumentDAO().merge(documentToUpdate);
+			Date now = new Date();
+			User user = getCurrentUser();
 
 			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
 			// fill fields to update document section
-			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setLastUpdate(now);
 			synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
 		
-			getSynExtractDAO().merge(synExtractToUpdate);
-
 			// We need to refresh linked document to refresh entity state, otherwise synExtract property will be null
-			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+			Document document = synExtractToUpdate.getDocument();
+			getDocumentDAO().refresh(document);
+			document.setLastUpdate(now);
+			document.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit synopsis", Action.MODIFY, Category.DOCUMENT, synExtractToUpdate.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, synExtractToUpdate.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit synopsis", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit synopsis", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
-			return synExtractToUpdate.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1058,24 +1350,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 			if (eplToLink.getPlace() != null) {
 				eplToLinkToUpdate.setPlace(getPlaceDAO().find(eplToLink.getPlace().getPlaceAllId()));
-				if(eplToLinkToUpdate.getPlace().getPrefFlag().equals("V")){
+				if (eplToLinkToUpdate.getPlace().getPrefFlag().equals("V")) {
 					eplToLinkToUpdate.setPlace(getPlaceDAO().findPrinicipalPlace(eplToLinkToUpdate.getPlace().getGeogKey()));
 				}
 			} else {
 				eplToLinkToUpdate.setPlace(null);
 			}
 
-			getEplToLinkDAO().merge(eplToLinkToUpdate);
-
 			// We need to refresh linked document to refresh entity state, otherwise eplToLink property will be null
-			getDocumentDAO().refresh(eplToLinkToUpdate.getDocument());
+			Document document = eplToLinkToUpdate.getDocument();
+			getDocumentDAO().refresh(document);
 			
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
+			
+			// update "last update" details of the document
+			document.setLastUpdate(new Date());
+			document.setLastUpdateBy(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit topic linked", Action.MODIFY, Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit topic linked", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, eplToLinkToUpdate.getDocument()));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit topic linked", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit topic linked", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 
-			return eplToLinkToUpdate.getDocument();
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1113,10 +1408,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			User user;			
-			if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails){
-				user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
+			User user = getCurrentUser();			
+			if (user != null) {
 				getUserHistoryDAO().persist(new UserHistory(user, "Show document", Action.VIEW, Category.DOCUMENT, document));
 			}
 
@@ -1128,18 +1421,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 	@Override
 	public List<Document> findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
-		try{
+		try {
 			return getDocumentDAO().findDocument(volNum, volLetExt, folioNum, folioMod);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
 	
 	@Override
 	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws ApplicationThrowable {
-		try{
+		try {
 			return getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1149,11 +1442,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document findDocumentFromHistory(Integer idUserHistory) throws ApplicationThrowable {
-		try{
+		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
 			return userHistory.getDocument();
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1188,7 +1481,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document findLastEntryDocument() throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 
 			UserHistory userHistory = getUserHistoryDAO().findLastEntry(user, Category.DOCUMENT);
 			
@@ -1372,7 +1665,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(user, Category.DOCUMENT, document.getEntryId());
 			
 			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(user, userHistory.getCategory(), userHistory.getIdUserHistory());
@@ -1380,7 +1673,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			logger.error(th);
 		}
 
@@ -1388,26 +1681,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
-	 * @return the docReferenceDAO
-	 */
-	public DocReferenceDAO getDocReferenceDAO() {
-		return docReferenceDAO;
-	}
-	/**
-	 * @return the documentDAO
-	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable {
-		try{
+		try {
 			return getForumDAO().getForumDocument(entryId);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1419,13 +1699,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Document> documents) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
 		try {
-			for(Document document : documents)
+			for(Document document : documents) {
 				retValue.put(DocumentUtils.toMDPInsertFolioFormat(document), Boolean.FALSE);
+			}
 			
 			List<String> documentsDigitized = getImageDAO().findDigitizedDocumentsFromImages(documents);
 			
-			for(String documentString : documentsDigitized)
+			for(String documentString : documentsDigitized) {
 				retValue.put(documentString, Boolean.TRUE);
+			}
 			
 			return retValue;
 		} catch (Throwable th) {
@@ -1433,50 +1715,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 		
 	}
-
-	/**
-	 * @return the epLinkDAO
-	 */
-	public EpLinkDAO getEpLinkDAO() {
-		return epLinkDAO;
-	}
 	
-	/**
-	 * @return the eplToLinkDAO
-	 */
-	public EplToLinkDAO getEplToLinkDAO() {
-		return eplToLinkDAO;
-	}
-
-	/**
-	 * @return the factChecksDAO
-	 */
-	public FactChecksDAO getFactChecksDAO() {
-		return factChecksDAO;
-	}
-
-	/**
-	 * @return the forumDAO
-	 */
-	public ForumDAO getForumDAO() {
-		return forumDAO;
-	}
-
-	/**
-	 * @return the forumOptionDAO
-	 */
-	public ForumOptionDAO getForumOptionDAO() {
-		return forumOptionDAO;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try{
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+		try {
+			User user = getCurrentUser();
 
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(user, Category.DOCUMENT, document.getEntryId());
 			
@@ -1485,7 +1732,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			logger.error(th);
 		}
 		
@@ -1508,7 +1755,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
 
 			return historyNavigator;
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			logger.error(th);
 		}
 
@@ -1529,27 +1776,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			logger.error(th);
 		}
 		
 		return historyNavigator;
 	}
-
-	/**
-	 * @return the imageDAO
-	 */
-	public ImageDAO getImageDAO() {
-		return imageDAO;
-	}
-
-	/**
-	 * @return the monthDAO
-	 */
-	public MonthDAO getMonthDAO() {
-		return monthDAO;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1565,101 +1798,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
 	
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-
-	/**
-	 * @return the synExtractDAO
-	 */
-	public SynExtractDAO getSynExtractDAO() {
-		return synExtractDAO;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public List<TopicList> getTopicsList() throws ApplicationThrowable {
-		try{
+		try {
 			return getTopicsListDAO().findTopicsListForUsers();
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-	/**
-	 * @return the topicsListDAO
-	 */
-	public TopicsListDAO getTopicsListDAO() {
-		return topicsListDAO;
-	}
-
-	/**
-	 * @return the userDAO
-	 */
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
 	
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
-	 * @return the userMarkedListDAO
-	 */
-	public UserMarkedListDAO getUserMarkedListDAO() {
-		return userMarkedListDAO;
-	}
-
-	/**
-	 * @return the userMarkedListElementDAO
-	 */
-	public UserMarkedListElementDAO getUserMarkedListElementDAO() {
-		return userMarkedListElementDAO;
-	}
-
-	/**
-	 * @return the volumeDAO
-	 */
-	public VolumeDAO getVolumeDAO() {
-		return volumeDAO;
-	}
-
-	/**
-	 * @param vettingHistoryDAO the vettingHistoryDAO to set
-	 */
-	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
-		this.vettingHistoryDAO = vettingHistoryDAO;
-	}
-	/**
-	 * @return the vettingHistoryDAO
-	 */
-	public VettingHistoryDAO getVettingHistoryDAO() {
-		return vettingHistoryDAO;
-	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable {
-		try{
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+		try {
+			User user = getCurrentUser();
 
 			UserMarkedList userMarkedList = getUserMarkedListDAO().getMyMarkedList(user);
 
@@ -1668,12 +1826,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 			
 			UserMarkedListElement userMarkedListElement = getUserMarkedListElementDAO().findDocumentInMarkedList(userMarkedList.getIdMarkedList(), entryId);
-			if(userMarkedListElement != null){
+			if (userMarkedListElement != null) {
 				return Boolean.TRUE;
-			}else{
+			} else {
 				return Boolean.FALSE;
 			}
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1695,9 +1853,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Page searchLinkedDocumentsTopic(String place, String topic, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
+		try {
 			return getDocumentDAO().searchLinkedDocumentsTopic(place, topic, paginationFilter);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1748,9 +1906,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Page searchTopicsRelatedDocument(Integer topicId, Integer placeAllId, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
+		try {
 			return getDocumentDAO().searchLinkedDocumentsTopic(topicId, placeAllId, paginationFilter);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1760,138 +1918,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Page searchVettingHistoryDocument(Integer entryId, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
+		try {
 			Document document = getDocumentDAO().find(entryId);
 			return getVettingHistoryDAO().getVettingHistoryDocument(document, paginationFilter);
-		}catch(Throwable th){
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @param docReferenceDAO the docReferenceDAO to set
-	 */
-	public void setDocReferenceDAO(DocReferenceDAO docReferenceDAO) {
-		this.docReferenceDAO = docReferenceDAO;
-	}
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
-	 * @param epLinkDAO the epLinkDAO to set
-	 */
-	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
-		this.epLinkDAO = epLinkDAO;
-	}
-
-	/**
-	 * @param eplToLinkDAO the eplToLinkDAO to set
-	 */
-	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
-		this.eplToLinkDAO = eplToLinkDAO;
-	}
-
-	/**
-	 * @param factChecksDAO the factChecksDAO to set
-	 */
-	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
-		this.factChecksDAO = factChecksDAO;
-	}
-
-	/**
-	 * @param forumDAO the forumDAO to set
-	 */
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-
-	/**
-	 * @param forumOptionDAO the forumOptionDAO to set
-	 */
-	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
-		this.forumOptionDAO = forumOptionDAO;
-	}
-
-	/**
-	 * @param imageDAO the imageDAO to set
-	 */
-	public void setImageDAO(ImageDAO imageDAO) {
-		this.imageDAO = imageDAO;
-	}
-
-	/**
-	 * @param monthDAO the monthDAO to set
-	 */
-	public void setMonthDAO(MonthDAO monthDAO) {
-		this.monthDAO = monthDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @param synExtractDAO the synExtractDAO to set
-	 */
-	public void setSynExtractDAO(SynExtractDAO synExtractDAO) {
-		this.synExtractDAO = synExtractDAO;
-	}
-
-	/**
-	 * @param topicsListDAO the topicsListDAO to set
-	 */
-	public void setTopicsListDAO(TopicsListDAO topicsListDAO) {
-		this.topicsListDAO = topicsListDAO;
-	}
-
-	/**
-	 * @param userDAO the userDAO to set
-	 */
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @param userMarkedListDAO the userMarkedListDAO to set
-	 */
-	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
-		this.userMarkedListDAO = userMarkedListDAO;
-	}
-
-	/**
-	 * @param userMarkedListElementDAO the userMarkedListElementDAO to set
-	 */
-	public void setUserMarkedListElementDAO(
-			UserMarkedListElementDAO userMarkedListElementDAO) {
-		this.userMarkedListElementDAO = userMarkedListElementDAO;
-	}
-
-	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
 	}
 
 	/**
@@ -1907,17 +1939,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
+		User user = getCurrentUser();
 		documentToUnDelete.setLogicalDelete(Boolean.FALSE);
-
-		try {
-			getDocumentDAO().merge(documentToUnDelete);
-
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Recovered document", Action.UNDELETE, Category.DOCUMENT, documentToUnDelete));
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+		documentToUnDelete.setLastUpdateBy(user);
+		documentToUnDelete.setLastUpdate(new Date());
+		getUserHistoryDAO().persist(new UserHistory(user, "Recovered document", Action.UNDELETE, Category.DOCUMENT, documentToUnDelete));
 		
 		return documentToUnDelete;
 	}
@@ -1946,6 +1972,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
+	}
+	
+	private User getCurrentUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails){
+			return getUserDAO().findUser((((UserDetails) principal).getUsername()));
+		}
+		return null;
 	}
 
 }

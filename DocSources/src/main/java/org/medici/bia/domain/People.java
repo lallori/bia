@@ -28,7 +28,9 @@
 package org.medici.bia.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -75,6 +77,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  * Person entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Entity
 @Indexed
@@ -1097,17 +1100,38 @@ public class People implements Serializable {
 	}
 
 	/**
-	 * @param epLink the epLink to set
+	 * Adds an {@link EpLink} to this person.
+	 * 
+	 * @param link the epLink to add
 	 */
-	public void setEpLink(Set<EpLink> epLink) {
-		this.epLink = epLink;
+	public void addEpLink(EpLink link) {
+		if (epLink == null) {
+			epLink = new HashSet<EpLink>();
+		}
+		epLink.add(link);
+	}
+	
+	/**
+	 * Removes an epLink from this person.
+	 * 
+	 * @param link the epLink to remove
+	 * @return true if the epLink has been removed from the person
+	 */
+	public boolean removeEplink(EpLink link) {
+		if (epLink == null) {
+			return false;
+		}
+		link.setPerson(null);
+		return epLink.remove(link);
 	}
 
 	/**
+	 * Returns the unmodifiable set.
+	 * 
 	 * @return the epLink
 	 */
 	public Set<EpLink> getEpLink() {
-		return epLink;
+		return Collections.unmodifiableSet(epLink);
 	}
 
 	/**

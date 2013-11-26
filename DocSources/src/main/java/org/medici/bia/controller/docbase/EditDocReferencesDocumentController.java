@@ -90,10 +90,7 @@ public class EditDocReferencesDocumentController {
 				return new ModelAndView("error/EditDocReferencesDocument", model);
 			}
 		} else {
-			// On Document creation, linked peoples to document are empty
-			Document document = new Document(command.getEntryId());
-			document.setEpLink(new HashSet<EpLink>());
-			command.setDocument(document);
+			command.setDocument(new Document(command.getEntryId()));
 		}
 
 		return new ModelAndView("docbase/EditDocReferencesDocument", model);

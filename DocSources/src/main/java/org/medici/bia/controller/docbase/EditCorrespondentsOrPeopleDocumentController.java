@@ -271,10 +271,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			command.setRecipientPlaceDescription("");
 			command.setRecipientPlaceUnsure(false);
 
-			// On Document creation, linked peoples to document are empty
-			Document document = new Document(command.getEntryId());
-			document.setEpLink(new HashSet<EpLink>());
-			command.setDocument(document);
+			command.setDocument(new Document(command.getEntryId()));
 		}
 
 		return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);

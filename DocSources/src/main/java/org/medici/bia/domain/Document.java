@@ -28,7 +28,9 @@
 package org.medici.bia.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -47,7 +49,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
@@ -81,6 +82,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Entity
 @Indexed
@@ -1036,17 +1038,38 @@ public class Document implements Serializable{
 	}
 
 	/**
-	 * @param eplToLink the eplToLink to set
+	 * Adds an {@link EplToLink} to this document.
+	 * 
+	 * @param link the eplToLink to add
 	 */
-	public void setEplToLink(Set<EplToLink> eplToLink) {
-		this.eplToLink = eplToLink;
+	public void addEplToLink(EplToLink link) {
+		if (eplToLink == null) {
+			eplToLink = new HashSet<EplToLink>();
+		}
+		eplToLink.add(link);
+	}
+	
+	/**
+	 * Removes an {@link EplToLink} from this document.
+	 * 
+	 * @param link the eplToLink to remove
+	 * @return true if the eplToLink has been removed from the document
+	 */
+	public boolean removeEplToLink(EplToLink link) {
+		if (eplToLink == null) {
+			return false;
+		}
+		link.setDocument(null);
+		return eplToLink.remove(link);
 	}
 
 	/**
+	 * Returns the unmodifiable set.
+	 * 
 	 * @return the eplToLink
 	 */
 	public Set<EplToLink> getEplToLink() {
-		return eplToLink;
+		return Collections.unmodifiableSet(eplToLink);
 	}
 
 	@Override
@@ -1057,19 +1080,40 @@ public class Document implements Serializable{
 
 		return getEntryId().toString();
 	}
-
+	
 	/**
-	 * @param epLink the epLink to set
-	 */
-	public void setEpLink(Set<EpLink> epLink) {
-		this.epLink = epLink;
-	}
-
-	/**
+	 * Returns the unmodifiable set.
+	 * 
 	 * @return the eplLink
 	 */
 	public Set<EpLink> getEpLink() {
-		return epLink;
+		return Collections.unmodifiableSet(epLink);
+	}
+
+	/**
+	 * Adds an {@link EpLink} to this document.
+	 * 
+	 * @param link the link to add
+	 */
+	public void addEpLink(EpLink link) {
+		if (epLink == null) {
+			epLink = new HashSet<EpLink>();
+		}
+		epLink.add(link);
+	}
+	
+	/**
+	 * Removes an epLink from this document.
+	 * 
+	 * @param link the epLink to remove
+	 * @return true if the epLink has been removed from the document
+	 */
+	public boolean removeEplink(EpLink link) {
+		if (epLink == null) {
+			return false;
+		}
+		link.setDocument(null);
+		return epLink.remove(link);
 	}
 
 	/**
@@ -1087,17 +1131,39 @@ public class Document implements Serializable{
 	}
 
 	/**
+	 * Returns the unmodifiable set.
+	 * 
 	 * @return the docReference
 	 */
 	public Set<DocReference> getDocReference() {
-		return docReference;
+		return Collections.unmodifiableSet(docReference);
 	}
 
 	/**
-	 * @param docReference the docReference to set
+	 * Adds a {@link DocReference} to this document references.
+	 * 
+	 * @param reference the reference to add
 	 */
-	public void setDocReference(Set<DocReference> docReference) {
-		this.docReference = docReference;
+	public void addDocReference(DocReference reference) {
+		if (docReference == null) {
+			docReference = new HashSet<DocReference>();
+		}
+		reference.setDocumentFrom(this);
+		docReference.add(reference);
+	}
+	
+	/**
+	 * Removes a doc-reference from this document references.
+	 * 
+	 * @param reference the reference to remove
+	 * @return true if the reference has been removed from the document references
+	 */
+	public boolean removeDocReference(DocReference reference) {
+		if (docReference == null) {
+			return false;
+		}
+		reference.setDocumentFrom(null);
+		return docReference.remove(reference);
 	}
 
 	/**
