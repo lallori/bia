@@ -1393,6 +1393,14 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------------------------------------------- */ 
 /*
 /*
+/* -------------------- Inline Div--------------------- */
+.inlineList {
+	display: inline;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */

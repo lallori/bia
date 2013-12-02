@@ -123,7 +123,7 @@
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.undated"/></div>
-					<div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+					<div class="value">${document.undated ? 'Yes' : 'No'}</div>
 				</div>
 				<div class="row">
 					<div class="item37"><fmt:message key="docbase.showDetailsDocument.dateNotes"/></div>
