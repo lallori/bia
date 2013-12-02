@@ -134,7 +134,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage previousPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -142,7 +142,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage nextPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 		</div>
@@ -157,7 +157,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage previousPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -165,7 +165,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage nextPage_${documentExplorer.volNum}${documentExplorer.volLetExt}"></a>
 			</c:if>
 			</div>
 		</div>
