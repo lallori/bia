@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.bia.command.docbase.TranscribeAndContextualizeDocumentCommand;
+import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Month;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -82,6 +83,8 @@ public class TranscribeAndContextualizeDocumentController {
 		try {
 			months = getDocBaseService().getMonths();
 			model.put("months", months);
+			boolean hasInserts = getDocBaseService().hasInserts(VolumeUtils.extractVolNum(command.getVolume()), VolumeUtils.extractVolLetExt(command.getVolume()));
+			model.put("hasInserts", hasInserts);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);
 		}

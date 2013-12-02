@@ -132,13 +132,51 @@ public class ShowExplorerDocumentValidator implements Validator {
 	
 	private void validateInsert(Integer volNum, String volLetExt, String insertNum, String insertLet, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (insertNum != null)
-				try {
-					if (!getVolBaseService().hasInsert(volNum, volLetExt, insertNum, insertLet))
-						errors.rejectValue("insertNum", "error.insert.notfound", new Object[]{insertNum + (insertLet != null ? " " + insertLet : "")}, null);
-				} catch (ApplicationThrowable applicationThrowable) {
-					errors.rejectValue("insertNum", "application error...please retry");
+			try  {
+				if (getDocBaseService().hasInserts(volNum, volLetExt)) {
+					if (insertNum != null) {
+						if (!getDocBaseService().hasInsert(volNum, volLetExt, insertNum, insertLet)) {
+							if (getDocBaseService().hasCandidateInsert(volNum, volLetExt, insertNum)) {
+								if (insertLet == null) {
+									// insert number exists but insert letter should be specified
+									errors.rejectValue(
+										"insertNum",
+										"error.insertletter.specify",
+										new Object[] {insertNum},
+										null);
+								} else {
+									// insert number exists but insert letter is missing
+									errors.rejectValue(
+										"insertNum",
+										"error.insertletter.notfound",
+										new  Object[] {insertLet, insertNum},
+										null);
+								}
+							} else {
+								// insert missing (with or without insert letter)
+								errors.rejectValue(
+									"insertNum",
+									"error.insert.notfound",
+									new  Object[] {insertNum},
+									null);
+							}
+							
+						}
+					} else {
+						// insert number sholud be specified
+						errors.rejectValue("insertNum", "error.insert.specify");
+					}
+				} else if (insertNum != null || insertLet != null) {
+					// the volume has no inserts so you should not specify insert details
+					errors.rejectValue(
+						"insertNum",
+						"error.volume.volumewithnoinserts",
+						new  Object[] {volNum + (volLetExt != null ? " " + insertLet : "")},
+						null);
 				}
+			} catch (ApplicationThrowable ath) {
+				errors.rejectValue("insertNum", "error.insert.validationerror");
+			}
 		}
 	}
 	

@@ -29,8 +29,10 @@ package org.medici.bia.service.volbase;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -64,19 +66,18 @@ import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.Image;
-import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.SerieList;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserHistory;
+import org.medici.bia.domain.UserHistory.Action;
+import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.UserMarkedList;
 import org.medici.bia.domain.UserMarkedListElement;
 import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.Volume;
-import org.medici.bia.domain.UserHistory.Action;
-import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.security.BiaUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -472,6 +473,42 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Set<String> checkChartaExistence(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRV) throws ApplicationThrowable {
+		Set<String> output = new HashSet<String>();
+		String insNum = org.medici.bia.common.util.StringUtils.nullTrim(insertNum);
+		String insLet = org.medici.bia.common.util.StringUtils.nullTrim(insertLet);
+		
+		String folMod = org.medici.bia.common.util.StringUtils.safeTrim(folioMod);
+		String folRV = org.medici.bia.common.util.StringUtils.safeTrim(folioRV);
+		
+		if (getImageDAO().countImages(volNum, volLetExt, ImageType.C.toString(), insNum, insLet, folioNum, "", "") <= 0) {
+			// There are no configuration with this folio number
+			return output;
+		}
+		output.add("folioNumOk");
+		
+		if (!"".equals(folMod)) {
+			if (getImageDAO().countImages(volNum, volLetExt, ImageType.C.toString(), insNum, insLet, folioNum, folMod, "") <= 0) {
+				// There are no configuration with this folio number and extension
+				return output;
+			}
+			output.add("folioModOk");
+		}
+		
+		if (!"".equals(folRV)) {
+			if (getImageDAO().countImages(volNum, volLetExt, ImageType.C.toString(), insNum, insLet, folioNum, folMod, folRV) <= 0) {
+				return output;
+			}
+			output.add("folioRVOk");
+		}
+		
+		return output;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type) throws ApplicationThrowable {
 		try{
 			Image image = getImageDAO().findImage(volNum, volLetExt, ImageType.convertFromString(type), insertNum, insertLet, folioNum, folioMod);
@@ -481,19 +518,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Boolean checkRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso) throws ApplicationThrowable {
-		try{
-			Image image = getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, ImageRectoVerso.convertFromString(folioRectoVerso));
-			return image != null;
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1095,6 +1119,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean hasCandidateInsert(Integer volNum, String volLetExt, String insNum) throws ApplicationThrowable {
+		try {
+			List<VolumeInsert> inserts = getImageDAO().findVolumeInserts(volNum, volLetExt);
+			for (VolumeInsert insert : inserts) {
+				if (insNum.equalsIgnoreCase(insert.getInsertNum())) {
+						return Boolean.TRUE;
+				}
+			}
+			return Boolean.FALSE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 	/**

@@ -30,6 +30,7 @@ package org.medici.bia.service.volbase;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.pagination.Page;
@@ -103,6 +104,32 @@ public interface VolBaseService {
 	 */
 	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable;
 	
+	/**
+	 * This method checks which hierarchical configuration of folio number, folio extension and recto/verso are
+	 * correct for the volume and insert provided. It returns a set of keys associated to the folio existance status.<br/>
+	 * The returned key-set could contain the following keys (in a hierarchical order):
+	 * <ol>
+	 * <li><b>folioNumOk</b> - folio number is OK</li>
+	 * <li><b>folioModOk</b> - folio extension is OK</li>
+	 * <li><b>folioRVOk</b> - folio recto/verso is OK</li>
+	 * </ol>
+	 * With the returned key-set we intend to indicate the maximum hierarchical configuration accepted.
+	 * So it is not possible to have returned the 'folioModOk' or 'folioRVOk' key without the 'folioNumOk' key (due to the
+	 * hierarchical relevance of every key).<br/>
+	 * Furthermore, for the folio details provided if null value is provided the check consider null value in database correspondence,
+	 * while if empty value is provided that value is not considered.
+	 * 
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param insertNum Insert Number
+	 * @param insertLet Insert Extension
+	 * @param folioNum Folio Number
+	 * @param folioMod Folio Extension
+	 * @param folioRV Folio Recto or Verso
+	 * @return maximum hierarchical configuration accepted as a key-set.
+	 * @throws ApplicationThrowable
+	 */
+	public Set<String> checkChartaExistence(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRV) throws ApplicationThrowable;
 	
 	/**
 	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
@@ -122,24 +149,6 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String type) throws ApplicationThrowable;
-	
-	/**
-	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
-	 * by its volNum and volLetExt has an insert, identified by its insertNum and insertLet, with a
-	 * folio identified by its folioNum, folioMod and folioRectoVerso. Control is implemented by searching  
-	 * {@link org.medici.bia.domain.Image} entity.
-	 * 
-	 * @param volNum Volume Number
-	 * @param volLetExt Volume Letter Extension
-	 * @param insertNum Insert Number
-	 * @param insertLet Insert Extension
-	 * @param folioNum Folio Number
-	 * @param folioMod Folio Extension
-	 * @param folioRectoVerso Folio Recto or Verso
-	 * @return Boolean, true if volume is digitized, otherwise false.
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Boolean checkRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso) throws ApplicationThrowable;
 	
 	/**
 	 * This method checks if {@link org.medici.bia.domain.Volume} identified 
@@ -377,6 +386,17 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
+	
+	/**
+	 *  This methods determines if a volume has inserts with the insert number provided (with or without insert extension).
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @return true if the volume has one or more inserts with the insert number provided 
+	 * @throws ApplicationThrowable
+	 */
+	public boolean hasCandidateInsert(Integer volNum, String volLetExt, String insNum) throws ApplicationThrowable;
 	
 	/**
 	 * This method checks if the volume provided contains the insert provided.

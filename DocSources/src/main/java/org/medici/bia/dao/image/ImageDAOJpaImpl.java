@@ -52,6 +52,7 @@ import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 import org.springframework.stereotype.Repository;
 
@@ -87,6 +88,74 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long countImages(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException {
+		String vLEFilter = org.medici.bia.common.util.StringUtils.nullTrim(volLetExt);
+		String iTypeFilter = org.medici.bia.common.util.StringUtils.safeTrim(imageType);
+		String insNumFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertNum);
+		String insLetFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertLet);
+		String folModFilter = org.medici.bia.common.util.StringUtils.safeTrim(folioMod);
+		String rvFilter = org.medici.bia.common.util.StringUtils.safeTrim(rectoVerso);
+		
+		StringBuilder sb = new StringBuilder("SELECT COUNT(*) FROM Image");
+		sb.append(" WHERE volNum = :volNum");
+		sb.append(" AND volLetExt ").append(vLEFilter != null ? "= :volLetExt" : "IS NULL");
+		if (!"".equals(iTypeFilter)) {
+			sb.append(" AND imageType ").append(iTypeFilter != null ? "= :imageType" : "IS NULL");
+		}
+		if (!"".equals(insNumFilter)) {
+			sb.append(" AND insertNum ").append(insNumFilter != null ? "= :insertNum" : "IS NULL");
+			if (!"".equals(insLetFilter)) {
+				sb.append(" AND insertLet ").append(insLetFilter != null ? "= :insertLet" : "IS NULL");
+			}
+		}
+		sb.append(" AND imageProgTypeNum ").append(folioNum != null ? "= :folioNum" : "IS NULL");
+		if (!"".equals(folModFilter)) {
+			sb.append(" AND missedNumbering ").append(folModFilter != null ? "= :folioMod" : folModFilter);
+		}
+		if (!"".equals(rvFilter)) {
+			sb.append(" AND imageRectoVerso ").append(rvFilter != null ? "= :folioRV" : "IS NULL");
+		}
+		
+		Query query = getEntityManager().createQuery(sb.toString());
+		query.setParameter("volNum", volNum);
+		if (vLEFilter != null) {
+			query.setParameter("volLetExt", vLEFilter);
+		}
+		if (isParameterFilter(iTypeFilter)) {
+			query.setParameter("imageType", ImageType.convertFromString(iTypeFilter));
+		}
+		if (isParameterFilter(insNumFilter)) {
+			query.setParameter("insertNum", insNumFilter);
+			if (isParameterFilter(insLetFilter)) {
+				query.setParameter("insertLet", insLetFilter);
+			}
+		}
+		query.setParameter("folioNum", folioNum);
+		if (isParameterFilter(folModFilter)) {
+			query.setParameter("folioMod", folModFilter);
+		}
+		if (isParameterFilter(rvFilter)) {
+			query.setParameter("folioRV", ImageRectoVerso.convertFromString(rvFilter));
+		}
+		
+		Long count;
+		try {
+			count = (Long)query.getSingleResult();
+		} catch (Exception e) {
+			throw new PersistenceException("Count Images Query problem: The query [" + sb.toString() + "] generates an error!");
+		}
+		
+		return count;
+	}
+	
+	private boolean isParameterFilter(String filter) {
+		return filter != null && !"".equals(filter);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -277,6 +346,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod) {
 		return findImage(volNum, volLetExt, imageType, insertNum, insertLet, folioNum, folioMod, null, false);
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

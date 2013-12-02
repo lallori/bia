@@ -56,4 +56,28 @@ public class StringUtils {
 		return s == null || "".equals(s.trim());
 	}
 	
+	/**
+	 * It returns true if the provided string is not null and it is empty or it only contains white spaces.
+	 * 
+	 * @param s the checked string
+	 * @return true if the string is not null and it is empty or it only contains white spaces, false otherwise.
+	 */
+	public static Boolean isBlank(String s) {
+		return s != null && "".equals(s.trim());
+	}
+	
+	/**
+	 * It returns trimmed string. The trim operation is performed in a safe way so if a null string is provided
+	 * this method returns null.
+	 *  
+	 * @param s the string to trim
+	 * @return the trimmed string
+	 */
+	public static String safeTrim(String s) {
+		if (s == null) {
+			return null;
+		}
+		return s.trim();
+	}
+	
 }

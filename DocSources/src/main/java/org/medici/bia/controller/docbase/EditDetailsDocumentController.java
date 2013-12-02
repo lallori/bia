@@ -210,11 +210,10 @@ public class EditDetailsDocumentController {
 
 			try {
 				document = getDocBaseService().findDocument(command.getEntryId());
+				model.put("document", document);
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/EditDetailsDocument", model);
-			} finally {
-				model.put("document", document);
 			}
 
 			command.setResearcher(document.getResearcher());

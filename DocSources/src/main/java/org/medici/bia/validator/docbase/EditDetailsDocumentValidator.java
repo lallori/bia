@@ -27,9 +27,10 @@
  */
 package org.medici.bia.validator.docbase;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.docbase.EditDetailsDocumentCommand;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.common.util.VolumeUtils;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
@@ -109,13 +110,18 @@ public class EditDetailsDocumentValidator implements Validator {
 		validateRectoVerso(editDetailsDocumentCommand.getTranscribeFolioRectoVerso(), true, errors);
 		boolean digitized = validateVolume(editDetailsDocumentCommand.getVolume(), errors);
 		if (digitized) {
+			Integer volNum = VolumeUtils.extractVolNum(editDetailsDocumentCommand.getVolume());
+			String volLetExt = VolumeUtils.extractVolLetExt(editDetailsDocumentCommand.getVolume());
+			
 			// validation of insert and folio must be done only for digitized volumes
-			validateInsert(editDetailsDocumentCommand.getVolume(), 
+			validateInsert(volNum,
+					volLetExt,
 					editDetailsDocumentCommand.getInsertNum(), 
 					editDetailsDocumentCommand.getInsertLet(),
 					errors);
 			// document start folio validation
-			validateFolio(editDetailsDocumentCommand.getVolume(), 
+			validateFolio(volNum,
+					volLetExt,
 					editDetailsDocumentCommand.getInsertNum(), 
 					editDetailsDocumentCommand.getInsertLet(), 
 					editDetailsDocumentCommand.getFolioNum(), 
@@ -124,7 +130,8 @@ public class EditDetailsDocumentValidator implements Validator {
 					false,
 					errors);
 			// transcription start folio validation
-			validateFolio(editDetailsDocumentCommand.getVolume(),
+			validateFolio(volNum,
+					volLetExt,
 					editDetailsDocumentCommand.getInsertNum(),
 					editDetailsDocumentCommand.getInsertLet(),
 					editDetailsDocumentCommand.getTranscribeFolioNum(),
@@ -158,16 +165,18 @@ public class EditDetailsDocumentValidator implements Validator {
 	}
 	
 	/**
-	 * This method checks if the recto/verso information provided is correct.
+	 * This method checks if the provided recto/verso detail is correct.
 	 * 
-	 * @param folioRectoVerso the recto/verso information.
+	 * @param folioRectoVerso the recto/verso detail.
 	 * @param transcribeFolioCheck true if the check is done for the transcribe folio.
 	 * @param errors
 	 */
 	private void validateRectoVerso(String folioRectoVerso, boolean transcribeFolioCheck, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (folioRectoVerso != null && !"".equals(folioRectoVerso.trim()) && !folioRectoVerso.trim().equalsIgnoreCase("R") && !folioRectoVerso.trim().equalsIgnoreCase("V"))
-				errors.rejectValue(transcribeFolioCheck ? "transcribeFolioRectoVerso" : "folioRectoVerso", "error.document.rectoVersoInvalid");
+			if (ImageRectoVerso.convertFromString(StringUtils.nullTrim(folioRectoVerso)) == null)
+				errors.rejectValue(
+					transcribeFolioCheck ? "transcribeFolioRectoVerso" : "folioRectoVerso",
+					transcribeFolioCheck ? "error.transcribefolio.rectoversoinvalid" : "error.folio.rectoversoinvalid");
 		}
 	}
 
@@ -207,30 +216,52 @@ public class EditDetailsDocumentValidator implements Validator {
 	 * @param insertLet the insert extension
 	 * @param folioNum the folio number
 	 * @param folioMod the folio extension
-	 * @param rectoVerso the folio recto/verso information
-	 * @param transcribeFolioCheck true if the above information are for the transcribe folio
+	 * @param rectoVerso the folio recto/verso
+	 * @param transcribeFolioCheck true if the above details are true for the transcribe folio
 	 * @param errors
 	 */
-	private void validateFolio(String volume, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, boolean transcribeFolioCheck, Errors errors) {
+	private void validateFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, boolean transcribeFolioCheck, Errors errors) {
 		if (!errors.hasErrors()) {
 			try  {
-				if (!getDocBaseService().checkFolio(VolumeUtils.extractVolNum(volume), 
-						VolumeUtils.extractVolLetExt(volume), 
-						insertNum.trim(), 
-						insertLet != null ? insertLet.trim() : null, 
-						folioNum, 
-						folioMod != null ? folioMod.trim() : null, 
-						rectoVerso)) {
-					errors.rejectValue(
-						transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
-						transcribeFolioCheck ? "error.transcribefolio.notfound" : "error.folio.notfound",
-						new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+				// the volume is digitized so recto/verso detail should be specified
+				boolean completeFolioCheck = getDocBaseService().checkDocumentDigitized(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
+				if (completeFolioCheck) {
+					if (StringUtils.nullTrim(rectoVerso) == null) {
+						// recto/verso is not specified
+						errors.rejectValue(
+							transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+							transcribeFolioCheck ? "error.transcribefolio.specifyrectoverso" : "error.folio.specifyrectoverso");
+					}
+				} else {
+					if (getDocBaseService().checkDocumentDigitized(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, null)) {
+						// the recto/verso detail is not correct for the existent folio
+						String rvString = StringUtils.nullTrim(rectoVerso).toUpperCase();
+						errors.rejectValue(
+							transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+							transcribeFolioCheck ? "error.transcribefolio.rectoversomissing" : "error.folio.rectoversomissing",
+							new  Object[] {
+								folioNum + " " + StringUtils.safeTrim(folioMod),
+								"R".equals(rvString) ? "Recto" : "V".equals(rvString) ? "Verso" : rvString
+							},
+							null);
+					} else {
+						// the folio is missing
+						if (folioNum != null) {
+							errors.rejectValue(
+								transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+								transcribeFolioCheck ? "error.transcribefolio.notfound" : "error.folio.notfound",
+								new  Object[] {folioNum + " " + StringUtils.safeTrim(folioMod)}, null);
+						} else {
+							errors.rejectValue(
+								transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
+								transcribeFolioCheck ? "error.transcribefolio.specifyfolio" : "error.folio.specifyfolio");
+						}
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.rejectValue(
 					transcribeFolioCheck ? "transcribeFolioNum" : "folioNum",
-					transcribeFolioCheck ? "error.transcribefolio.notfound" : "error.folio.notfound",
-					new  Object[]{(folioNum != null ? folioNum : "") + (folioMod != null ? " " + folioMod.trim() : "")}, null);
+					transcribeFolioCheck ? "error.transcribefolio.validationerror" : "error.folio.validationerror");
 			}
 		}
 	}
@@ -243,15 +274,54 @@ public class EditDetailsDocumentValidator implements Validator {
 	 * @param insertLet the insert extension
 	 * @param errors
 	 */
-	private void validateInsert(String volume, String insertNum, String insertLet, Errors errors) {
+	private void validateInsert(Integer volNum, String volLetExt, String insertNum, String insertLet, Errors errors) {
 		try  {
-			if (insertNum != null && !"".equals(insertNum.trim())) {
-				if (!getDocBaseService().checkInsert(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume), insertNum.trim(), insertLet != null ? insertLet.trim() : null)) {
-					errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+			String insNum = StringUtils.nullTrim(insertNum);
+			String insLet = StringUtils.nullTrim(insertLet);
+			
+			if (getDocBaseService().hasInserts(volNum, volLetExt)) {
+				if (insNum != null) {
+					if (!getDocBaseService().hasInsert(volNum, volLetExt, insNum, insLet)) {
+						if (getDocBaseService().hasCandidateInsert(volNum, volLetExt, insNum)) {
+							if (insLet == null) {
+								// insert number exists but insert letter should be specified
+								errors.rejectValue(
+									"insertNum",
+									"error.insertletter.specify",
+									new Object[] {insNum},
+									null);
+							} else {
+								// insert number exists but insert letter is missing
+								errors.rejectValue(
+									"insertNum",
+									"error.insertletter.notfound",
+									new  Object[] {insLet, insNum},
+									null);
+							}
+						} else {
+							// insert missing (with or without insert letter)
+							errors.rejectValue(
+								"insertNum",
+								"error.insert.notfound",
+								new  Object[] {insNum},
+								null);
+						}
+						
+					}
+				} else {
+					// insert number sholud be specified
+					errors.rejectValue("insertNum", "error.insert.specify");
 				}
+			} else if (insNum != null || insLet != null) {
+				// the volume has no inserts so you should not specify insert details
+				errors.rejectValue(
+					"insertNum",
+					"error.volume.volumewithnoinserts",
+					new  Object[] {volNum + (volLetExt != null ? " " + insLet : "")},
+					null);
 			}
 		} catch (ApplicationThrowable ath) {
-			errors.rejectValue("insertNum", "error.insert.notfound", new  Object[]{insertNum + (insertLet != null ? " " + insertLet.trim() : "")}, null);
+			errors.rejectValue("insertNum", "error.insert.validationerror");
 		}
 	}
 	
@@ -263,7 +333,7 @@ public class EditDetailsDocumentValidator implements Validator {
 	 * @return true if the volume exists and it is digitized
 	 */
 	private Boolean validateVolume(String volume, Errors errors) {
-		if (StringUtils.isEmpty(volume)) {
+		if (StringUtils.isNullableString(volume)) {
 			errors.rejectValue("volume", "error.volume.notfound");
 		} else {
 			try {
@@ -274,7 +344,7 @@ public class EditDetailsDocumentValidator implements Validator {
 					return vol.getDigitized();
 				}
 			} catch (ApplicationThrowable ath) {
-				errors.rejectValue("volume", "error.volume.notfound");
+				errors.rejectValue("volume", "error.volume.validationerror");
 			}
 		}
 		return Boolean.FALSE;

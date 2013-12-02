@@ -575,6 +575,39 @@ public interface DocBaseService {
 	public List<TopicList> getTopicsList() throws ApplicationThrowable;
 	
 	/**
+	 * This methods determines if a volume has inserts with the insert number provided (with or without insert extension).
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @return true if the volume has one or more inserts with the insert number provided 
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean hasCandidateInsert(Integer volNum, String volLetExt, String insertNum) throws ApplicationThrowable;
+	
+	/**
+	 * This methods determines if the specified volume has the specified insert (with number and extension).
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @return true if the volume has the specified insert (with number and extension)
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean hasInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable;
+	
+	/**
+	 * This method determines if the specified volume has inserts.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @return true if the specified volume has inserts, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	public boolean hasInserts(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */

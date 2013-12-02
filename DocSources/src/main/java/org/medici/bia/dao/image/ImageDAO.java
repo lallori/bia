@@ -46,6 +46,24 @@ import org.medici.bia.domain.Image.ImageType;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface ImageDAO extends Dao<Integer, Image> {
+	
+	/**
+	 * This method counts the images that correspond to the filters.<br/>
+	 * Note that null value for a filter is considered as null value in the database, while
+	 * if a filter is empty (only for string fields) it is not considered.
+	 * 
+	 * @param volNum the volume number (mandatory)
+	 * @param volLetExt the volume letter extension (mandatory or null)
+	 * @param imageType the image type
+	 * @param insertNum the insert number
+	 * @param insertLet the insert letter
+	 * @param folioNum the folio number (mandatory)
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the folio recto/verso
+	 * @return number of images that correspond to the filters
+	 * @throws PersistenceException
+	 */
+	long countImages(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
 
 	/**
 	 * 

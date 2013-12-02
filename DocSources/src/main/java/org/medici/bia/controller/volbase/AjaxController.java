@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.common.pagination.Page;
@@ -43,9 +44,9 @@ import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.domain.SerieList;
+import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.user.UserService;
@@ -142,8 +143,8 @@ public class AjaxController {
 	}
 	
 	/**
-	 * This method checks if a folio (identified by volume, insert and folio informations provided)
-	 * is stored in the system or not. If the volume provided does not exist it returns this information.
+	 * This method checks if a folio (identified by volume, insert and folio details provided)
+	 * is stored in the system or not. It also checks if the volume provided exists or not.
 	 * 
 	 * @param inputVolume Volume (number and extension letter)
 	 * @param insertNum Insert number
@@ -159,7 +160,7 @@ public class AjaxController {
 			@RequestParam(value="insertLet", required=false) String insertLet,
 			@RequestParam(value="folioNum", required=true) Integer folioNum,
 			@RequestParam(value="folioMod", required=false) String folioMod,
-			@RequestParam(value="folioRectoVerso", required=true) String folioRectoVerso) {
+			@RequestParam(value="folioRectoVerso", required=false) String folioRectoVerso) {
 		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
@@ -170,11 +171,14 @@ public class AjaxController {
 			if (volume != null) {
 				model.put("volumeDigitized", volume.getDigitized());
 				if (volume.getDigitized()) {
-					Boolean checkRectoVerso = getVolBaseService().checkRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
-					model.put("rectoVersoCheck", checkRectoVerso);
+					Set<String> existenceConfig = getVolBaseService().checkChartaExistence(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+					for (String key : existenceConfig) {
+						model.put(key, Boolean.TRUE);
+					}
 				}
-			} else
+			} else {
 				model.put("volumeNotExist", Boolean.TRUE);
+			}
 			
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

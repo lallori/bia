@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.HistoryNavigator;
@@ -46,6 +45,7 @@ import org.medici.bia.common.util.EpLinkUtils;
 import org.medici.bia.common.util.EplToLinkUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.StringUtils;
+import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.dao.docreference.DocReferenceDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.eplink.EpLinkDAO;
@@ -739,11 +739,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Boolean checkFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
-		Image.ImageRectoVerso rv = (rectoVerso != null && !"".equals(rectoVerso.trim())) ? 
-			("R".equals(rectoVerso.trim().toUpperCase()) ? Image.ImageRectoVerso.R : Image.ImageRectoVerso.V) : null;
+		Image.ImageRectoVerso rv = Image.ImageRectoVerso.convertFromString(StringUtils.nullTrim(rectoVerso));
 		if (rv != null) {
 			try {
-				return getImageDAO().findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, rv) != null;
+				return getImageDAO().findImage(
+						volNum,
+						StringUtils.nullTrim(volLetExt),
+						null,
+						StringUtils.nullTrim(insertNum),
+						StringUtils.nullTrim(insertLet),
+						folioNum,
+						StringUtils.nullTrim(folioMod),
+						rv) != null;
 			} catch (Throwable th) {
 				throw new ApplicationThrowable(th);
 			}
@@ -1053,42 +1060,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}
-	}
-	private void setSenderReceiverPerson(Integer docId, Integer personId, Document documentToUpdate, Date now, String personRole) {
-		People senderReceiver = getPeopleDAO().find(personId);
-		if ("S".equals(personRole)) {
-			documentToUpdate.setSenderPeople(senderReceiver);
-		} else if ("R".equals(personRole)) {
-			documentToUpdate.setRecipientPeople(senderReceiver);
-		}
-		if (personId != 198 && personId != 3905 && personId != 9285) {
-			EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
-			if (epLinkSender == null) {
-				epLinkSender = new EpLink(null);
-				epLinkSender.setDateCreated(now);
-				epLinkSender.setDocRole(personRole);
-				epLinkSender.setDocument(documentToUpdate);
-				epLinkSender.setAssignUnsure(false);
-				epLinkSender.setPortrait(false);
-			}
-			epLinkSender.setPerson(senderReceiver);
-			//getEpLinkDAO().merge(epLinkSender);
-		}
-	}
-	private void unlinkPerson(Integer docId, Integer personId) {
-		EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(docId, personId);
-		if (epLinkToDelete != null) {
-			Document document = epLinkToDelete.getDocument();
-			People person = epLinkToDelete.getPerson();
-			document.removeEplink(epLinkToDelete);
-			person.removeEplink(epLinkToDelete);
-			
-			getEpLinkDAO().remove(epLinkToDelete);
-
-			User user = getCurrentUser();
-			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person", Action.MODIFY, Category.DOCUMENT, document));
-			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
 		}
 	}
 
@@ -1815,6 +1786,60 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Boolean hasCandidateInsert(Integer volNum, String volLetExt, String insertNum) throws ApplicationThrowable {
+		try {
+			List<VolumeInsert> inserts = getImageDAO().findVolumeInserts(volNum, volLetExt);
+			for (VolumeInsert insert : inserts) {
+				if (insertNum.equalsIgnoreCase(insert.getInsertNum())) {
+						return Boolean.TRUE;
+				}
+			}
+			return Boolean.FALSE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean hasInsert(Integer volNum, String volLetExt, String insertNum, String insertLet) throws ApplicationThrowable {
+		try {
+			List<VolumeInsert> inserts = getImageDAO().findVolumeInserts(volNum, volLetExt);
+			for (VolumeInsert insert : inserts) {
+				if (insertNum.equalsIgnoreCase(insert.getInsertNum())) {
+					if (insertLet == null) {
+						if (insert.getInsertLet() == null)
+							return Boolean.TRUE;
+					} else { 
+						if (insertLet.equalsIgnoreCase(insert.getInsertLet()))
+							return Boolean.TRUE;
+					}
+				}
+			}
+			return Boolean.FALSE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean hasInserts(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			return getImageDAO().hasInserts(volNum, volLetExt);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable {
 		try {
 			User user = getCurrentUser();
@@ -1981,5 +2006,44 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 		return null;
 	}
+	
+	/* Privates */
+	
+	private void setSenderReceiverPerson(Integer docId, Integer personId, Document documentToUpdate, Date now, String personRole) {
+		People senderReceiver = getPeopleDAO().find(personId);
+		if ("S".equals(personRole)) {
+			documentToUpdate.setSenderPeople(senderReceiver);
+		} else if ("R".equals(personRole)) {
+			documentToUpdate.setRecipientPeople(senderReceiver);
+		}
+		if (personId != 198 && personId != 3905 && personId != 9285) {
+			EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
+			if (epLinkSender == null) {
+				epLinkSender = new EpLink(null);
+				epLinkSender.setDateCreated(now);
+				epLinkSender.setDocRole(personRole);
+				epLinkSender.setDocument(documentToUpdate);
+				epLinkSender.setAssignUnsure(false);
+				epLinkSender.setPortrait(false);
+			}
+			epLinkSender.setPerson(senderReceiver);
+			//getEpLinkDAO().merge(epLinkSender);
+		}
+	}
+	
+	private void unlinkPerson(Integer docId, Integer personId) {
+		EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(docId, personId);
+		if (epLinkToDelete != null) {
+			Document document = epLinkToDelete.getDocument();
+			People person = epLinkToDelete.getPerson();
+			document.removeEplink(epLinkToDelete);
+			person.removeEplink(epLinkToDelete);
+			
+			getEpLinkDAO().remove(epLinkToDelete);
 
+			User user = getCurrentUser();
+			getUserHistoryDAO().persist(new UserHistory(user, "Unlink person", Action.MODIFY, Category.DOCUMENT, document));
+			getVettingHistoryDAO().persist(new VettingHistory(user, "Unlink person", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, document));
+		}
+	}
 }
