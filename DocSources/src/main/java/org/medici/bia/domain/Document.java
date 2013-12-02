@@ -1069,6 +1069,9 @@ public class Document implements Serializable{
 	 * @return the eplToLink
 	 */
 	public Set<EplToLink> getEplToLink() {
+		if (eplToLink == null) {
+			eplToLink = new HashSet<EplToLink>();
+		}
 		return Collections.unmodifiableSet(eplToLink);
 	}
 
@@ -1087,6 +1090,9 @@ public class Document implements Serializable{
 	 * @return the eplLink
 	 */
 	public Set<EpLink> getEpLink() {
+		if (epLink == null) {
+			epLink = new HashSet<EpLink>();
+		}
 		return Collections.unmodifiableSet(epLink);
 	}
 
@@ -1136,6 +1142,9 @@ public class Document implements Serializable{
 	 * @return the docReference
 	 */
 	public Set<DocReference> getDocReference() {
+		if (docReference == null) {
+			docReference = new HashSet<DocReference>();
+		}
 		return Collections.unmodifiableSet(docReference);
 	}
 
