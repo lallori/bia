@@ -94,69 +94,18 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@Override
 	public long countImages(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException {
-		String vLEFilter = org.medici.bia.common.util.StringUtils.nullTrim(volLetExt);
-		String iTypeFilter = org.medici.bia.common.util.StringUtils.safeTrim(imageType);
-		String insNumFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertNum);
-		String insLetFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertLet);
-		String folModFilter = org.medici.bia.common.util.StringUtils.safeTrim(folioMod);
-		String rvFilter = org.medici.bia.common.util.StringUtils.safeTrim(rectoVerso);
-		
-		StringBuilder sb = new StringBuilder("SELECT COUNT(*) FROM Image");
-		sb.append(" WHERE volNum = :volNum");
-		sb.append(" AND volLetExt ").append(vLEFilter != null ? "= :volLetExt" : "IS NULL");
-		if (!"".equals(iTypeFilter)) {
-			sb.append(" AND imageType ").append(iTypeFilter != null ? "= :imageType" : "IS NULL");
-		}
-		if (!"".equals(insNumFilter)) {
-			sb.append(" AND insertNum ").append(insNumFilter != null ? "= :insertNum" : "IS NULL");
-			if (!"".equals(insLetFilter)) {
-				sb.append(" AND insertLet ").append(insLetFilter != null ? "= :insertLet" : "IS NULL");
-			}
-		}
-		sb.append(" AND imageProgTypeNum ").append(folioNum != null ? "= :folioNum" : "IS NULL");
-		if (!"".equals(folModFilter)) {
-			sb.append(" AND missedNumbering ").append(folModFilter != null ? "= :folioMod" : folModFilter);
-		}
-		if (!"".equals(rvFilter)) {
-			sb.append(" AND imageRectoVerso ").append(rvFilter != null ? "= :folioRV" : "IS NULL");
-		}
-		
-		Query query = getEntityManager().createQuery(sb.toString());
-		query.setParameter("volNum", volNum);
-		if (vLEFilter != null) {
-			query.setParameter("volLetExt", vLEFilter);
-		}
-		if (isParameterFilter(iTypeFilter)) {
-			query.setParameter("imageType", ImageType.convertFromString(iTypeFilter));
-		}
-		if (isParameterFilter(insNumFilter)) {
-			query.setParameter("insertNum", insNumFilter);
-			if (isParameterFilter(insLetFilter)) {
-				query.setParameter("insertLet", insLetFilter);
-			}
-		}
-		query.setParameter("folioNum", folioNum);
-		if (isParameterFilter(folModFilter)) {
-			query.setParameter("folioMod", folModFilter);
-		}
-		if (isParameterFilter(rvFilter)) {
-			query.setParameter("folioRV", ImageRectoVerso.convertFromString(rvFilter));
-		}
+		Query query = getFindImageQuery(volNum, volLetExt, imageType, insertNum, insertLet, folioNum, folioMod, rectoVerso, true);
 		
 		Long count;
 		try {
 			count = (Long)query.getSingleResult();
 		} catch (Exception e) {
-			throw new PersistenceException("Count Images Query problem: The query [" + sb.toString() + "] generates an error!");
+			throw new PersistenceException("Count Images Query problem: The query [" + query.toString() + "] generates an error!");
 		}
 		
 		return count;
 	}
 	
-	private boolean isParameterFilter(String filter) {
-		return filter != null && !"".equals(filter);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -184,7 +133,37 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	public Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException {
 		return findImage(volNum, volLetExt, null, insertNum, insertLet, folioNum, folioMod, Image.ImageRectoVerso.convertFromString(rectoVerso), rectoVerso != null);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, ImageType type) throws PersistenceException {
+		Query query = getFindImageQuery(volNum, volLetExt, type != null ? type.toString() : "", insertNum, insertLet, folioNum, folioMod, "", false);
+		List<Image> result = query.getResultList();
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, ImageRectoVerso rectoVerso, ImageType type) throws PersistenceException {
+		Query query = getFindImageQuery(volNum, volLetExt, type != null ? type.toString() : "", insertNum, insertLet, folioNum, folioMod, rectoVerso != null ? rectoVerso.toString() : "", false);
+		List<Image> result = query.getResultList();
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+		return null;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -355,46 +334,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return findImage(volNum, volLetExt, imageType, insertNum, insertLet, folioNum, folioMod, rectoVerso, true);
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso, boolean considerRectoVerso) {
-		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum = :volNum");
-		stringBuilder.append(" AND volLetExt ").append(!StringUtils.isEmpty(volLetExt) ? "= :volLetExt" : "IS NULL");
-		if (imageType != null)
-			stringBuilder.append(" AND imageType = :imageType");
-		
-		stringBuilder.append(" AND insertNum ").append(!StringUtils.isEmpty(insertNum) ? "= :insertNum" : "IS NULL");
-		stringBuilder.append(" AND insertLet ").append(!StringUtils.isEmpty(insertLet) ? "= :insertLet" : "IS NULL");
-		
-		stringBuilder.append(" AND imageProgTypeNum = :folioNum");
-		stringBuilder.append(" AND missedNumbering ").append(!StringUtils.isEmpty(folioMod) ? "= :folioMod" : "IS NULL");
-		if (considerRectoVerso)
-			stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
-		
-		Query query = getEntityManager().createQuery(stringBuilder.toString());
-		query.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
-			query.setParameter("volLetExt", volLetExt);
-		if (imageType != null)
-			query.setParameter("imageType", imageType);
-		if (!StringUtils.isEmpty(insertNum))
-			query.setParameter("insertNum", insertNum);
-		if (!StringUtils.isEmpty(insertLet))
-			query.setParameter("insertLet", insertLet);
-		query.setParameter("folioNum", folioNum);
-		if (!StringUtils.isEmpty(folioMod))
-			query.setParameter("folioMod", folioMod);
-		if (considerRectoVerso)
-			query.setParameter("imageRectoVerso", rectoVerso);
-		
-		List<Image> result = (List<Image>) query.getResultList();
-		
-		if (result.size() > 0) {
-			return result.get(0);
-		}
-        
-		return null;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1026,8 +965,146 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return findVolumeInserts(volNum, volLetExt).size() > 0;
 	}
 	
+	
+	/* Privates */
+	
 	/**
-	 * This method updates every totals in input .
+	 * This method creates the find image query.<br/>
+	 * NOTE: empty string fields are not considered in the query (only for string fields).
+	 * 
+	 * @param volNum volume number filter (mandatory)
+	 * @param volLetExt volume letter extension filter
+	 * @param imageType image type filter
+	 * @param insertNum insert number filter
+	 * @param insertLet insert letter filter
+	 * @param folioNum folio number filter (mandatory)
+	 * @param folioMod folio extension filter
+	 * @param rectoVerso recto verso filter
+	 * @param count true if coutn query is needed
+	 * @return the query
+	 */
+	private Query getFindImageQuery(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso, boolean count) {
+		String vLEFilter = org.medici.bia.common.util.StringUtils.nullTrim(volLetExt);
+		String iTypeFilter = org.medici.bia.common.util.StringUtils.safeTrim(imageType);
+		String insNumFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertNum);
+		String insLetFilter = org.medici.bia.common.util.StringUtils.safeTrim(insertLet);
+		String folModFilter = org.medici.bia.common.util.StringUtils.safeTrim(folioMod);
+		String rvFilter = org.medici.bia.common.util.StringUtils.safeTrim(rectoVerso);
+		
+		StringBuilder sb = new StringBuilder(count ? "SELECT COUNT(*) " : "");
+		sb.append("FROM Image");
+		sb.append(" WHERE volNum = :volNum");
+		sb.append(" AND volLetExt ").append(vLEFilter != null ? "= :volLetExt" : "IS NULL");
+		if (!"".equals(iTypeFilter)) {
+			sb.append(" AND imageType ").append(iTypeFilter != null ? "= :imageType" : "IS NULL");
+		}
+		if (!"".equals(insNumFilter)) {
+			sb.append(" AND insertNum ").append(insNumFilter != null ? "= :insertNum" : "IS NULL");
+			if (!"".equals(insLetFilter)) {
+				sb.append(" AND insertLet ").append(insLetFilter != null ? "= :insertLet" : "IS NULL");
+			}
+		}
+		sb.append(" AND imageProgTypeNum ").append(folioNum != null ? "= :folioNum" : "IS NULL");
+		if (!"".equals(folModFilter)) {
+			sb.append(" AND missedNumbering ").append(folModFilter != null ? "= :folioMod" : "IS NULL");
+		}
+		if (!"".equals(rvFilter)) {
+			sb.append(" AND imageRectoVerso ").append(rvFilter != null ? "= :folioRV" : "IS NULL");
+		}
+		
+		Query query = getEntityManager().createQuery(sb.toString());
+		query.setParameter("volNum", volNum);
+		if (vLEFilter != null) {
+			query.setParameter("volLetExt", vLEFilter);
+		}
+		if (isParameterFilter(iTypeFilter)) {
+			query.setParameter("imageType", ImageType.convertFromString(iTypeFilter));
+		}
+		if (isParameterFilter(insNumFilter)) {
+			query.setParameter("insertNum", insNumFilter);
+			if (isParameterFilter(insLetFilter)) {
+				query.setParameter("insertLet", insLetFilter);
+			}
+		}
+		query.setParameter("folioNum", folioNum);
+		if (isParameterFilter(folModFilter)) {
+			query.setParameter("folioMod", folModFilter);
+		}
+		if (isParameterFilter(rvFilter)) {
+			query.setParameter("folioRV", ImageRectoVerso.convertFromString(rvFilter));
+		}
+		
+		return query;
+	}
+	
+	/**
+	 * This method return the searched image.<br/>
+	 * NOTE: all the filters are considered with only one exception: recto/verso filter is not considered
+	 * if <code>considerRectoVerso</code> parameter is false.
+	 * 
+	 * @param volNum volume number
+	 * @param volLetExt volume letter exception
+	 * @param imageType imag type
+	 * @param insertNum insert number
+	 * @param insertLet insert letter
+	 * @param folioNum folio number
+	 * @param folioMod folio extension
+	 * @param rectoVerso recto/verso
+	 * @param considerRectoVerso true if recto/verso filter has to be considered
+	 * @return the searched image or null if none
+	 */
+	@SuppressWarnings("unchecked")
+	private Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, Image.ImageRectoVerso rectoVerso, boolean considerRectoVerso) {
+		StringBuilder stringBuilder = new StringBuilder(" FROM Image WHERE volNum = :volNum");
+		stringBuilder.append(" AND volLetExt ").append(!StringUtils.isEmpty(volLetExt) ? "= :volLetExt" : "IS NULL");
+		if (imageType != null)
+			stringBuilder.append(" AND imageType = :imageType");
+		
+		stringBuilder.append(" AND insertNum ").append(!StringUtils.isEmpty(insertNum) ? "= :insertNum" : "IS NULL");
+		stringBuilder.append(" AND insertLet ").append(!StringUtils.isEmpty(insertLet) ? "= :insertLet" : "IS NULL");
+		
+		stringBuilder.append(" AND imageProgTypeNum = :folioNum");
+		stringBuilder.append(" AND missedNumbering ").append(!StringUtils.isEmpty(folioMod) ? "= :folioMod" : "IS NULL");
+		if (considerRectoVerso)
+			stringBuilder.append(" AND imageRectoVerso = :imageRectoVerso");
+		
+		Query query = getEntityManager().createQuery(stringBuilder.toString());
+		query.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			query.setParameter("volLetExt", volLetExt);
+		if (imageType != null)
+			query.setParameter("imageType", imageType);
+		if (!StringUtils.isEmpty(insertNum))
+			query.setParameter("insertNum", insertNum);
+		if (!StringUtils.isEmpty(insertLet))
+			query.setParameter("insertLet", insertLet);
+		query.setParameter("folioNum", folioNum);
+		if (!StringUtils.isEmpty(folioMod))
+			query.setParameter("folioMod", folioMod);
+		if (considerRectoVerso)
+			query.setParameter("imageRectoVerso", rectoVerso);
+		
+		List<Image> result = (List<Image>) query.getResultList();
+		
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+        
+		return null;
+	}
+	
+	/**
+	 * This method checks if the string filter is null or empty.
+	 * 
+	 * @param filter the string filter
+	 * @return true if the filter is null or empty
+	 */
+	private boolean isParameterFilter(String filter) {
+		return filter != null && !"".equals(filter);
+	}
+	
+	/**
+	 * This method updates every totals in input.
 	 * 
 	 * @param explorer input object to be update.
 	 */

@@ -38,6 +38,7 @@ import org.medici.bia.common.volume.VolumeInsert;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 
 /**
@@ -88,6 +89,39 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
+	 * This method searches a document image identified by volume identifiers, insert identifiers, folio number, folio 
+	 * format and image type.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extenxion letter
+	 * @param folioNum Number of folio
+	 * @param folioMod folio format
+	 * @param type the image type
+	 * @return a document image
+	 * @throws PersistenceException
+	 */
+	Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, ImageType type) throws PersistenceException;
+	
+	/**
+	 * This method searches a document image identified by volume identifiers, insert identifiers, folio number, folio 
+	 * format, folio recto/verso and image type.
+	 * 
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extenxion letter
+	 * @param folioNum Number of folio
+	 * @param folioMod folio format
+	 * @param rectoVerso folio recto/verso
+	 * @param type the image type
+	 * @return a document image
+	 * @throws PersistenceException
+	 */
+	Image findDocumentImage(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, ImageRectoVerso rectoVerso, ImageType type) throws PersistenceException;
 
 	/**
 	 * This method searches every document images identified by volume identifiers, number of folio

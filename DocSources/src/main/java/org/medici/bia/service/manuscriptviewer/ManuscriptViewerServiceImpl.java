@@ -458,7 +458,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try {
 			if (document != null) {
 				// We extract only image based on folioNum 
-				// return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
 				return getImageDAO().findDocumentImage(
 						document.getVolume().getVolNum(), 
 						document.getVolume().getVolLetExt(), 
@@ -466,7 +465,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						document.getInsertLet(), 
 						document.getFolioNum(), 
 						document.getFolioMod(), 
-						document.getFolioRectoVerso() != null && !Document.RectoVerso.N.equals(document.getFolioRectoVerso()) ? document.getFolioRectoVerso().toString() : null);
+						ImageRectoVerso.convertFromString(document.getFolioRectoVerso() != null ? document.getFolioRectoVerso().toString() : null),
+						ImageType.C);
 			}
 			
 			return null;
