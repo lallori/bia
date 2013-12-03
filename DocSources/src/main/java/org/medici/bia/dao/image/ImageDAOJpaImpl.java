@@ -202,17 +202,16 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			for(Document doc : documents) {
 				if (!first) {
 					sb.append(" OR ");
-					first = false;
 				}
-				sb.append("(volNum=").append(doc.getVolume().getVolNum());
-				sb.append(" AND volLetExt").append(!StringUtils.isEmpty(doc.getVolume().getVolLetExt()) ? "='"+doc.getVolume().getVolLetExt()+"'" : " IS NULL");
-				sb.append(" AND insertNum").append(!StringUtils.isEmpty(doc.getInsertNum()) ? "='"+doc.getInsertNum()+"'" : " IS NULL");
-				sb.append(" AND insertLet").append(!StringUtils.isEmpty(doc.getInsertLet()) ? "='"+doc.getInsertLet()+"'" : " IS NULL");
-				sb.append(" AND insertLet").append(!StringUtils.isEmpty(doc.getInsertLet()) ? "='"+doc.getInsertLet()+"'" : " IS NULL");
-				sb.append(" AND imageProgTypeNum=").append(doc.getFolioNum());
-				sb.append(" AND missedNumbering").append(!StringUtils.isEmpty(doc.getFolioMod()) ? "='"+doc.getFolioMod()+"'" : " IS NULL");
-				sb.append(" AND imageRectoVerso").append(doc.getFolioRectoVerso() != null ? "='"+doc.getFolioRectoVerso().toString()+"'" : " IS NULL");
+				sb.append("(volNum = ").append(doc.getVolume().getVolNum());
+				sb.append(" AND volLetExt ").append(!StringUtils.isEmpty(doc.getVolume().getVolLetExt()) ? "= '"+doc.getVolume().getVolLetExt()+"'" : "IS NULL");
+				sb.append(" AND insertNum ").append(!StringUtils.isEmpty(doc.getInsertNum()) ? "= '"+doc.getInsertNum()+"'" : "IS NULL");
+				sb.append(" AND insertLet ").append(!StringUtils.isEmpty(doc.getInsertLet()) ? "= '"+doc.getInsertLet()+"'" : "IS NULL");
+				sb.append(" AND imageProgTypeNum = ").append(doc.getFolioNum());
+				sb.append(" AND missedNumbering ").append(!StringUtils.isEmpty(doc.getFolioMod()) ? "= '"+doc.getFolioMod()+"'" : " IS NULL");
+				sb.append(" AND imageRectoVerso ").append(doc.getFolioRectoVerso() != null ? "= '"+doc.getFolioRectoVerso().toString()+"'" : " IS NULL");
 				sb.append(")");
+				first = false;
 			}
 			
 			Query query = getEntityManager().createQuery(sb.toString());
