@@ -167,7 +167,7 @@ public class ShowExplorerVolumeValidator implements Validator {
 			try {
 				String errorTarget = (type != null && "R".equalsIgnoreCase(type.trim())) ? "error.rubricario.notfound" : "error.folio.notfound";
 				if (!getVolBaseService().checkFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, type))
-					errors.rejectValue("imageProgTypeNum", errorTarget, new Object[]{folioNum + (folioMod != null ? " " + folioMod : "")}, null);
+					errors.rejectValue("imageProgTypeNum", errorTarget, new Object[]{folioNum + " " + (folioMod != null ? folioMod : "")}, null);
 			} catch (ApplicationThrowable applicationThrowable) {
 				errors.rejectValue("imageProgTypeNum", "application error...please retry");
 			}	
