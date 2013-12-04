@@ -106,9 +106,9 @@ public class EditDetailsDocumentValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
 		validateDocument(editDetailsDocumentCommand.getEntryId(), errors);
-		validateRectoVerso(editDetailsDocumentCommand.getFolioRectoVerso(), false, errors);
-		validateRectoVerso(editDetailsDocumentCommand.getTranscribeFolioRectoVerso(), true, errors);
 		boolean digitized = validateVolume(editDetailsDocumentCommand.getVolume(), errors);
+		validateRectoVerso(editDetailsDocumentCommand.getFolioRectoVerso(), false, digitized, errors);
+		validateRectoVerso(editDetailsDocumentCommand.getTranscribeFolioRectoVerso(), true, digitized, errors);
 		if (digitized) {
 			Integer volNum = VolumeUtils.extractVolNum(editDetailsDocumentCommand.getVolume());
 			String volLetExt = VolumeUtils.extractVolLetExt(editDetailsDocumentCommand.getVolume());
@@ -169,11 +169,13 @@ public class EditDetailsDocumentValidator implements Validator {
 	 * 
 	 * @param folioRectoVerso the recto/verso detail.
 	 * @param transcribeFolioCheck true if the check is done for the transcribe folio.
+	 * @param isDigitized true if check is done in a digitized volume. 
 	 * @param errors
 	 */
-	private void validateRectoVerso(String folioRectoVerso, boolean transcribeFolioCheck, Errors errors) {
+	private void validateRectoVerso(String folioRectoVerso, boolean transcribeFolioCheck, boolean isDigitized, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (ImageRectoVerso.convertFromString(StringUtils.nullTrim(folioRectoVerso)) == null)
+			String rv = folioRectoVerso != null ? folioRectoVerso.trim() : "";
+			if ((isDigitized && ImageRectoVerso.convertFromString(rv) == null) || (!isDigitized && rv.length() > 0 && ImageRectoVerso.convertFromString(rv) == null))
 				errors.rejectValue(
 					transcribeFolioCheck ? "transcribeFolioRectoVerso" : "folioRectoVerso",
 					transcribeFolioCheck ? "error.transcribefolio.rectoversoinvalid" : "error.folio.rectoversoinvalid");
