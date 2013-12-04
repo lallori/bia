@@ -119,7 +119,7 @@ public class EditDocReferenceDocumentValidator implements Validator {
 		if (!errors.hasErrors()) {
 			// entryId equals zero is 'New Document', it shouldn't be validated  
 			if (entryIdTo > 0) {
-				if(entryIdTo == entryIdFrom){
+				if(entryIdTo.equals(entryIdFrom)){
 					errors.rejectValue("entryIdTo", "error.documentTo.invalid");
 				}
 				try {
