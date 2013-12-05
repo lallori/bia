@@ -976,7 +976,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 * @param imageType image type filter
 	 * @param insertNum insert number filter
 	 * @param insertLet insert letter filter
-	 * @param folioNum folio number filter (mandatory)
+	 * @param folioNum folio number filter (mandatory or null)
 	 * @param folioMod folio extension filter
 	 * @param rectoVerso recto verso filter
 	 * @param count true if coutn query is needed
@@ -1025,7 +1025,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				query.setParameter("insertLet", insLetFilter);
 			}
 		}
-		query.setParameter("folioNum", folioNum);
+		if (folioNum != null) {
+			query.setParameter("folioNum", folioNum);
+		}
 		if (isParameterFilter(folModFilter)) {
 			query.setParameter("folioMod", folModFilter);
 		}
