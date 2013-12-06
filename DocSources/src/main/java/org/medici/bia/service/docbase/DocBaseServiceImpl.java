@@ -983,7 +983,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 					
 					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
 				}
-				document.setSenderPeople(null);
+				documentToUpdate.setSenderPeople(null);
 			}
 			
 			// update the unsure sender people
@@ -1021,7 +1021,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 					
 					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
 				}
-				document.setRecipientPeople(null);
+				documentToUpdate.setRecipientPeople(null);
 			}
 
 			// update the unsure recipient people
@@ -1051,7 +1051,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			// update document "last update" details
 			documentToUpdate.setLastUpdate(now);
-			document.setLastUpdateBy(user);
+			documentToUpdate.setLastUpdateBy(user);
 		
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 			getVettingHistoryDAO().persist(new VettingHistory(user, "Edit Correspondents", org.medici.bia.domain.VettingHistory.Action.MODIFY, org.medici.bia.domain.VettingHistory.Category.DOCUMENT, documentToUpdate));
@@ -2013,23 +2013,24 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/* Privates */
 	
 	private void setSenderReceiverPerson(Integer docId, Integer personId, Document documentToUpdate, Date now, String personRole) {
-		People senderReceiver = getPeopleDAO().find(personId);
+		People person = getPeopleDAO().find(personId);
 		if ("S".equals(personRole)) {
-			documentToUpdate.setSenderPeople(senderReceiver);
+			documentToUpdate.setSenderPeople(person);
 		} else if ("R".equals(personRole)) {
-			documentToUpdate.setRecipientPeople(senderReceiver);
+			documentToUpdate.setRecipientPeople(person);
 		}
 		if (personId != 198 && personId != 3905 && personId != 9285) {
-			EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
-			if (epLinkSender == null) {
-				epLinkSender = new EpLink(null);
-				epLinkSender.setDateCreated(now);
-				epLinkSender.setDocRole(personRole);
-				epLinkSender.setDocument(documentToUpdate);
-				epLinkSender.setAssignUnsure(false);
-				epLinkSender.setPortrait(false);
+			EpLink epLink = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
+			if (epLink == null) {
+				epLink = new EpLink(null);
+				epLink.setDateCreated(now);
+				epLink.setDocRole(personRole);
+				epLink.setDocument(documentToUpdate);
+				epLink.setAssignUnsure(false);
+				epLink.setPortrait(false);
+				getEpLinkDAO().persist(epLink);
 			}
-			epLinkSender.setPerson(senderReceiver);
+			epLink.setPerson(person);
 			//getEpLinkDAO().merge(epLinkSender);
 		}
 	}
