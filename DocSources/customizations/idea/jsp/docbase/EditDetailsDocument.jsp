@@ -195,10 +195,13 @@
 			<form:errors path="insertNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="volume" cssClass="inputerrors" htmlEscape="false"/>
 
+			<div id="serverError" style="margin-top: 5px; display: none; cursor: default; color: red;"></div>
+			
 			<div style="margin-top:5px">
 				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
 				<input id="save" class="button_small fr" type="submit" value="Save"/>
 			</div>
+			
 			<c:if test="${fromTranscribe == null || !fromTranscribe}">
 				<input type="hidden" value="" id="modify" />
 			</c:if>
@@ -247,9 +250,11 @@
 		<input type="button" id="yesDQ" value="Yes" /> 
 		<input type="button" id="noDQ" value="No" /> 
 	</div>
-
+	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			var delay = 1500;
+			
 			$j.scrollTo("#EditDetailsDocumentForm");
 			
 			$j("#folioNumStored").val($j("#folioNum").val());
@@ -329,96 +334,178 @@
 			    return (RegExp('[\\?&]' + name + '=([^&#]*)').exec(url)||[,null])[1];
 			}
 			
+			
+			
+			/** ################################ CHANGE HANDLERS ######################################## **/
+			
 			/**
-			 * This function defines the change-handler of the "volume" input.
-			 * If the volume informations correspond to an existent volume it shows that volume in the Volume Explorer (inside a tab).
+			 * This function returns an ellapsed handler.
+			 *
+			 * @param handler the handler to delay
+			 * @param delay the delay (in millisecond)
+			 * @param prefix the parameter to pass to the handler
 			 */
-			var showVolumeExplorer = function () {
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />',
-					{ volume: $j("#volume").val() },
-					function(data){
-						if (data.summaryId == "") {
-							var vol = $j("#volume").val();
-							var msg = '<fmt:message key="docbase.editDetailsDocument.error.volumeNotExist"><fmt:param value="' + vol + '" /></fmt:message>';
-							displayErrorClientMsg("volume", msg);
-							resetErrorClientMsg("folio");
-							resetErrorClientMsg("transcribeFolio");
-							resetErrorClientMsg("insert");
+			function createElapsedHandler(handler, delay, prefix) {
+				var timer;
+				return function() {
+					clearTimeout(timer);
+					timer = setTimeout(function() {
+						if (typeof prefix !== "undefined") {
+							handler(prefix);
 						} else {
-							var insNumVal = $j("#insertNum").val();
-							// Launch the insert checking process if not empty
-							if (typeof insNumVal != "undefined" && insNumVal != "") {
-								$j("#insertNum").change();
+							handler();						
+						}
+					}, delay);
+				}
+			};
+			
+			
+			/**
+			 * This function defines a change handler for the folio extension inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioModChangeHandler = function(prefix) {
+				var folioSelector = $j("#" + prefix + "Num");
+				if (typeof $j(folioSelector).val() != "undefined" && !isEmpty($j(folioSelector).val())) {
+					$j(folioSelector).trigger("input");
+				}
+			}
+			
+			
+			/**
+			 * This function defines a change handler for the folio number inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioNumChangeHandler = function(prefix) {
+				if ($j("#volumeErrorClient").attr("display") == "none"  && $j("#insertErrorClient").attr("display") == "none") {
+					resetErrorClientMsg(prefix);
+					var folioNumVal = $j("#" + prefix + "Num").val();
+					if (typeof folioNumVal != "undefined" && !isEmpty(folioNumVal)) {
+						saveable(false);
+						if (isNumeric(folioNumVal)) {
+							if ($j("#volume").val() && !isEmpty($j("#volume").val())) {
+								outOfRangeFolioCheck(prefix);
 							} else {
-								var folNumVal = $j("#folioNum").val();
-								// Launch the folio checking process if not empty
-								if (typeof folNumVal != "undefined" && folNumVal != "") {
-									checkFolio("folio");
-								}
-								
-								var transFolNumVal = $j("#transcribeFolioNum").val();
-								// Launch the transcribe folio checking process if not empty
-								if (typeof transFolNumVal != "undefined" && transFolNumVal != "") {
-									checkFolio("transcribeFolio");
-								}
+								displayErrorClientMsg("volume",'<fmt:message key="docbase.editDetailsDocument.error.volumeMissing"/>');
 							}
-							
-							// Open the volume explorer if volume is digitized
-							if (data.volumeDigitized) {
-	            				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-	                    		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
-							}
+						} else {
+							var startOrTranscribe = '' + ((prefix == 'folio') ? '<fmt:message key="docbase.editDetailsDocument.error.start"/>' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe"/>');
+							var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioNotNumeric"><fmt:param value="' + startOrTranscribe + '" /></fmt:message>';
+							displayErrorClientMsg(prefix, msg);
 						}
 					}
-				);
-	 		}
-			// We attach the change-handler to the "volume" input.
-			$j("#volume").change(function() {
+				 }
+			}
+
+			
+			/**
+			 * This function defines a change handler for the folio recto/verso inputs.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var folioRectoVersoChangeHandler = function(prefix) {
+				if ($j("#volumeErrorClient").attr("display") == "none"  && $j("#insertErrorClient").attr("display") == "none") {
+					resetErrorClientMsg(prefix);
+					var folioVal = $j("#" + prefix + "Num").val();
+					if (typeof folioVal != "undefined" && !isEmpty(folioVal)) {
+						folioCheck(prefix);
+					}
+				}
+			}
+			
+			
+			/**
+			 * This function defines a change handler for the insert extension input.
+			 */
+			var insertLetChangeHandler = function() {
+				var insertSelector = $j("#insertNum"); 
+				if (typeof $j(insertSelector).val() != "undefined" && !isEmpty($j(insertSelector).val())) {
+					$j(insertSelector).trigger("input");
+				}
+			}
+			
+			
+			/**
+			 * This function defines a change handler for the insert number input.
+			 */
+			var insertNumChangeHandler = function() {
+				var vol = $j("#volume").val();
+				var insNum = $j("#insertNum").val();
+				var insLet = $j("#insertLet").val();
+				
+				resetErrorClientMsg("insert");
+				
+				if (typeof vol != "undefined" && !isEmpty(vol) && typeof insNum != "undefined" && !isEmpty(insNum)) {
+					saveable(false);
+					if ($j("#volumeErrorClient").html() == "") {
+						// Volume exists
+						$j.get('<c:url value="/src/docbase/CheckInsert.json" />',
+							{
+								volume: vol,
+								insertNum: insNum,
+								insertLet: insLet
+							},
+							function(data) {
+								if (typeof data.error === "undefined") {
+									if (data.insertOK == false) {
+										var insStr = insNum + (typeof insLet != "undefined" && !isEmpty(insLet) ? " " + insLet : "");
+										var msg = '<fmt:message key="docbase.editDetailsDocument.error.insertNotExist"><fmt:param value="' + insStr + '" /></fmt:message>';
+										displayErrorClientMsg("insert", msg);
+										resetErrorClientMsg("folio");
+										resetErrorClientMsg("transcribeFolio");
+										
+									} else {
+										folioNumChangeHandler("folio");
+										folioNumChangeHandler("transcribeFolio");
+									}
+								} else {
+									displayErrorClientMsg("insert", data.error);
+								}
+							}
+						);
+					}
+				}
+			}
+			
+			
+			/**
+			 * This function defines a change handler for the volume input.
+			 */
+			var volumeChangeHandler = function() {
 				resetErrorClientMsg("volume");
-				$j("#save").attr("disabled", "true");
-				if (!isEmpty($j(this).val())) {
+				saveable(false);
+				if (!isEmpty($j("#volume").val())) {
 					showVolumeExplorer();
 				} else {
 					// We remove all errors from the client
-					resetErrorClientMsg("folio");
-					resetErrorClientMsg("transcribeFolio");
-					resetErrorClientMsg("insert");
+					resetLowerErrorMsg("volume");
+					saveable(true);
 				}
-			});
-			
-			/**
-			 * This function enables the save button if (and only if) all the client-error sections are empty.
-			 */
-			function enableSaveIfNeeded() {
-				var saveDisabled = false;
-				$j("[id$=ErrorClient]").each(function() {
-					if ($j(this).attr("display") == "block")
-						saveDisabled = true;
-				});
-				if (!saveDisabled)
-					$j("#save").removeAttr("disabled");
 			}
 			
-			/**
-			 * This function removes the warning message from the error section and remove the save button inhibition
-			 * (only if all the client error section are empty).
-			 *
-			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
-			 */
-			function resetErrorClientMsg(prefix) {
-				if ($j("#" + prefix + "ErrorClient").length > 0) {
-					$j("#" + prefix + "ErrorClient").html("");
-					$j("#" + prefix + "ErrorClient").attr("display","none");
-				}
-				// The save button is enabled if there are no other errors
-				enableSaveIfNeeded();
-			}
+			
+			// Bind the client validation process when input data change
+			$j("#folioMod").bind("input", function() { folioModChangeHandler("folio"); });
+			$j("#folioNum").bind("input", createElapsedHandler(folioNumChangeHandler, delay, "folio"));
+			$j("#folioRectoVerso").bind("input", createElapsedHandler(folioRectoVersoChangeHandler, delay, "folio"));
+			$j("#insertLet").bind("input", function() { insertLetChangeHandler(); });
+			$j("#insertNum").bind("input", createElapsedHandler(insertNumChangeHandler, delay));
+			$j("#transcribeFolioMod").bind("input", function() { folioModChangeHandler("transcribeFolio"); });
+			$j("#transcribeFolioNum").bind("input", createElapsedHandler(folioNumChangeHandler, delay, "transcribeFolio"));
+			$j("#transcribeFolioRectoVerso").bind("input", createElapsedHandler(folioRectoVersoChangeHandler, delay, "transcribeFolio"));
+			$j("#volume").bind("input", createElapsedHandler(volumeChangeHandler, delay));
+			
+			
+			
+			/** ################################ CLIENT WARNING MESSAGES FUNCTIONS ######################################## **/
 			
 			/**
 			 * This function shows a warning message in the error section.
 			 * NOTE: this function does not inhibit the save button.
 			 *
-			 * @param prefix the prefix of the error section; possible values are 'folio' and 'transcribeFolio'
+			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
 			 * @param msg the message to show
 			 */
 			function displayErrorClientMsg(prefix,msg) {
@@ -428,39 +515,203 @@
 			
 			
 			/**
-			 * This function defines the "out of range" check for the folio number.
+			 * This function removes the warning message from the error section.
+			 * It does not change the save button state.
 			 *
-			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
 			 */
-			var outOfRangeFolioCheck = function(prefix) {
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />', 
-					{ volume: $j("#volume").val() }, 
-					function(data) {
-						var folioNumVal = $j("#" + prefix + "Num").val();
-						if (data.folioCount != "undefined" && !isEmpty(data.folioCount)) {
-							var folioNumber = parseInt(folioNumVal ,10);
-							if (folioNumber > parseInt(data.folioCount, 10)) {
-								var folioStr = '' + (prefix == 'folio' ? '<fmt:message key="docbase.editDetailsDocument.error.start" />' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe" />')
-								var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioHigher"><fmt:param value="' + folioStr + '" /><fmt:param value="' + folioNumber + '" /></fmt:message>';
-								displayErrorClientMsg(prefix,msg);
-							} else if (folioNumVal != "") {
-								folioCheck(prefix);
+			function resetError(prefix) {
+				var errorMsgSel = $j("#" + prefix + "ErrorClient");
+				if ($j(errorMsgSel).attr("display") == "block") {
+					$j(errorMsgSel).html("");
+					$j(errorMsgSel).attr("display","none");
+				}
+			}
+			
+			
+			/**
+			 * This function removes the warning message from the error section and remove the save button inhibition
+			 * (only if all the client error section are empty).
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
+			 */
+			function resetErrorClientMsg(prefix) {
+				resetError(prefix);
+				// The save button is enabled if there are no other errors
+				enableSaveIfNeeded();
+			}
+			
+			
+			/**
+			 * This function removes all the warning message of lower level than the one provided.
+			 * The level hierarchy is the following:
+			 * 		0 - volume
+			 *		1 - insert
+			 *		2 - folio/transcribeFolio
+			 *
+			 * @param prefix the prefix of the error section; possible values are 'folio', 'transcribeFolio', 'volume' and 'insert'.
+			 */
+			function resetLowerErrorMsg(prefix) {
+				var resetLevels = [];
+				if (prefix != "folio" && prefix != "transcribeFolio") {
+					resetLevels.push("folio");
+					resetLevels.push("transcribeFolio");
+				}
+				if (prefix == "insert") {
+					resetLevels.push("insert");
+				}
+				
+				for (i = 0; i < resetLevels.length; i++) {
+					resetError(resetLevels[i]);
+				}
+			}
+			
+			
+			
+			/** ################################ SAVE BUTTON AND SUBMIT MANAGEMENT ######################################## **/
+				
+			/**
+			 * This function enables the save button if (and only if) all the client-error sections are empty.
+			 */
+			function enableSaveIfNeeded() {
+				var saveDisabled = false;
+				$j("[id$=ErrorClient]").each(function() {
+					if ($j(this).attr("display") == "block") {
+						saveDisabled = true;
+					}
+				});
+				if (!saveDisabled) {
+					saveable(true);
+				}
+			}
+			
+			
+			/**
+			 * This function defines the find document callback used in the save process.
+			 */
+			var findDocumentCallback = function(data) {
+				//In this case we have a document with the same volume and folio and the link opens in a tab its record.
+				if (data.countAlreadyEntered == 1) {
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.oneDocExists"/>';
+					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
+					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDoc"/>';
+					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>"+clickHereMsg+"</u></a><br/></span>");
+					
+					$j(".compareDoc").click(function() {
+						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), false);
+						return false;
+					});
+					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
+					return false;
+				} else if (data.countAlreadyEntered > 1) {
+					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.moreDocsExist"/>';
+					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
+					var showDocumentsAlreadyURLParams = "?volNum=" + data.volNum +  "&volLetExt=" + data.volLetExt + "&insertNum=" + data.insertNum + "&insertLet=" + data.insertLet + "&folioNum=" + data.folioNum + "&folioMod=" + data.folioMod + "&folioRectoVerso=" + data.folioRectoVerso;
+					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDocs"/>';
+					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDocs\" style=\"color:red\" href=\"${ShowDocumentsAlreadyURL}" + showDocumentsAlreadyURLParams + "\"><u>"+clickHereMsg+"</u></a><br/></span>");
+					
+					$j(".compareDocs").click(function() {
+						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), true);
+						return false;
+					});
+					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
+					return false;
+				}
+				$j("#EditDetailsDocumentForm").submit();
+			}
+			
+			
+			/**
+			 * This function change the visibility of the "Save" button
+			 *
+			 * @param enable true if you want to enable the "Save" button, false otherwise 
+			 */
+			function saveable(enable) {
+				var save = $j("#save");
+				if (enable == true) {
+					$j(save).css("display","");
+					$j(save).removeAttr("disabled");
+				} else if (enable == false) {
+					$j(save).css("display","none");
+					$j(save).attr("disabled","true");
+				}
+			}
+			
+			
+			/**
+			 * This function defines the handler of the "Save" button.
+			 */
+			var saveHandler = function() {
+				$j("#serverError").css('display', 'none');
+				if ($j("#folioNum").val() == $j("#folioNumStored").val()) {
+					// An existent document is going to be modified.					
+					return true;
+				}
+				
+				$j.get('<c:url value="/src/docbase/FindDocument.json" />', 
+					{
+						volume: $j("#volume").val(), 
+						insertNum: $j("#insertNum").val(), 
+						insertLet: $j("#insertLet").val(), 
+						folioNum: $j("#folioNum").val(), 
+						folioMod: $j("#folioMod").val(), 
+						folioRectoVerso: $j("#folioRectoVerso").val()
+					},
+					findDocumentCallback
+				);
+				return false;
+			}
+			// We attach the save click-handler to the "Save" button.
+			$j("#save").click(saveHandler);
+			
+			
+			/**
+			 * This function defines the submit process.
+			 */
+			var submitHandler = function () {
+				// Disabled attributes are removed because disabled inputs are submitted with null values.
+				$j("#EditDetailsDocumentForm").find("[disabled='disabled']").each(function(index) {
+					$j(this).removeAttr("disabled");
+				});
+				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        	
+				$j.ajax(
+					{
+						type: "POST",
+						url: $j(this).attr("action"),
+						data: $j(this).serialize(),
+						async: false,
+						success: function(html) { 
+							if ($j(html).find(".inputerrors").length > 0) {
+								$j("#EditDetailsDocumentDiv").html(html);
 							} else {
-								// The save button is enabled if there are no other errors
-								enableSaveIfNeeded();
+								<c:choose> 
+									<c:when test="${command.entryId == 0}"> 
+										$j("#body_left").html(html);
+									</c:when> 
+									<c:otherwise> 
+										$j("#body_left").html(html);
+									</c:otherwise> 
+								</c:choose> 
 							}
-						} else {
-							if (!isEmpty(folioNumVal)) {
-								folioCheck(prefix);
-							} else {
-								// The save button is enabled if there are no other errors
-								enableSaveIfNeeded();
-							}
+						},
+						error: function(html) {
+							// Something wrong in the server
+							$j("#loadingDiv").css('visibility', 'hidden');
+							$j("#serverError").html('<fmt:message key="docbase.editDetailsDocument.error.serverErrorOnSave"></fmt:message>');
+							$j("#serverError").css('display','block');
 						}
 					}
 				);
+				return false;
 			}
+			// We attach the submit-handler to the form 'EditDetailsDocumentForm'.
+			$j("#EditDetailsDocumentForm").submit(submitHandler);
 			
+			
+			
+			/** ################################ VALIDATION PROCESSES ######################################## **/
 			
 			/**
 			 * This function defines the folio check process.
@@ -480,7 +731,7 @@
 				var startOrTranscribe = '' + ((prefix == 'folio') ? '<fmt:message key="docbase.editDetailsDocument.error.start"/>' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe"/>');
 				
 				// The save button is inhibited during the checking process
-				$j("#save").attr("disabled","true");
+				saveable(false);
 				
 				if (typeof volVal === "undefined" || isEmpty(volVal)) {
 					displayErrorClientMsg("volume",'<fmt:message key="docbase.editDetailsDocument.error.volumeMissing"/>');
@@ -556,165 +807,15 @@
 			
 			
 			/**
-			 * This function defines a change handler for the folio number inputs.
+			 * This function checks if input string provided is empty.
 			 *
-			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 * @param input the input string to check
+			 * @return true if the string is empty or contains only white spaces.
 			 */
-			var folioNumChangeHandler = function(prefix) {
-				resetErrorClientMsg(prefix);
-				var folioNumVal = $j("#" + prefix + "Num").val();
-				if (typeof folioNumVal != "undefined" && !isEmpty(folioNumVal)) {
-					$j("#save").attr("disabled","true");
-					if (isNumeric(folioNumVal)) {
-						if ($j("#volume").val() && !isEmpty($j("#volume").val())) {
-							outOfRangeFolioCheck(prefix);
-						} else {
-							displayErrorClientMsg("volume",'<fmt:message key="docbase.editDetailsDocument.error.volumeMissing"/>');
-						}
-					} else {
-						var startOrTranscribe = '' + ((prefix == 'folio') ? '<fmt:message key="docbase.editDetailsDocument.error.start"/>' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe"/>');
-						var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioNotNumeric"><fmt:param value="' + startOrTranscribe + '" /></fmt:message>';
-						displayErrorClientMsg(prefix, msg);
-					}
-				}
-			}
-			// We attach the change-handler to the "folioNum" input
-			$j("#folioNum").change(function() {
-				folioNumChangeHandler("folio");
-			});
-			// We attach the change-handler to the "transcribeFolioNum" input
-			$j("#transcribeFolioNum").change(function() {
-				folioNumChangeHandler("transcribeFolio");
-			});
-			
-			
-			/**
-			 * This function defines a change handler for the folio extension inputs.
-			 *
-			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
-			 */
-			var folioModChangeHandler = function(prefix) {
-				var folioSelector = $j("#" + prefix + "Num");
-				if (typeof $j(folioSelector).val() != "undefined" && !isEmpty($j(folioSelector).val())) {
-					$j(folioSelector).change();
-				}
-			}
-			// We attach the change-handler to the "folioMod" input
-			$j("#folioMod").change(function() {
-				folioModChangeHandler("folio");
-			});
-			// We attach the change-handler to the "transcribeFolioMod" input
-			$j("#transcribeFolioMod").change(function() {
-				folioModChangeHandler("transcribeFolio");
-			});
-			
-			
-			/**
-			 * This function defines a change handler for the folio recto/verso inputs.
-			 *
-			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
-			 */
-			var folioRectoVersoChangeHandler = function(prefix) {
-				resetErrorClientMsg(prefix);
-				var folioVal = $j("#" + prefix + "Num").val();
-				if (typeof folioVal != "undefined" && !isEmpty(folioVal)) {
-					folioCheck(prefix);
-				}
-			}
-			// We attach the change-handler to the "folioRectoVerso" input
-			$j("#folioRectoVerso").change(function() {
-				folioRectoVersoChangeHandler("folio");
-			});
-			// We attach the change-handler to the "transcribeFolioRectoVerso" input
-			$j("#transcribeFolioRectoVerso").change(function() {
-				folioRectoVersoChangeHandler("transcribeFolio");
-			});
-			
-			
-			/**
-			 * This function defines a change handler for the insert number input.
-			 */
-			var insertNumChangeHandler = function() {
-				var vol = $j("#volume").val();
-				var insNum = $j("#insertNum").val();
-				var insLet = $j("#insertLet").val();
-				
-				resetErrorClientMsg("insert");
-				
-				if (typeof vol != "undefined" && !isEmpty(vol) && typeof insNum != "undefined" && !isEmpty(insNum)) {
-					$j("#save").attr("disabled","true");
-					if ($j("#volumeErrorClient").html() == "") {
-						// Volume exists
-						$j.get('<c:url value="/src/docbase/CheckInsert.json" />',
-							{
-								volume: vol,
-								insertNum: insNum,
-								insertLet: insLet
-							},
-							function(data) {
-								if (typeof data.error === "undefined") {
-									if (data.insertOK == false) {
-										var insStr = insNum + (typeof insLet != "undefined" && !isEmpty(insLet) ? " " + insLet : "");
-										var msg = '<fmt:message key="docbase.editDetailsDocument.error.insertNotExist"><fmt:param value="' + insStr + '" /></fmt:message>';
-										displayErrorClientMsg("insert", msg);
-									} else {
-										$j("#folioNum").change();
-										$j("#transcribeFolioNum").change();
-									}
-								} else {
-									displayErrorClientMsg("insert", data.error);
-								}
-							}
-						);
-					}
-				}
-			}
-			// We attach the change-handler to the "insertNum" input
-			$j("#insertNum").change(insertNumChangeHandler);
-			
-			
-			/**
-			 * This function defines a change handler for the insert extension input.
-			 */
-			var insertLetChangeHandler = function() {
-				var insertSelector = $j("#insertNum"); 
-				if (typeof $j(insertSelector).val() != "undefined" && !isEmpty($j(insertSelector).val())) {
-					$j(insertSelector).change();
-				}
-			}
-			// We attach the change-handler to the "insertLet" input
-			$j("#insertLet").change(insertLetChangeHandler);
-			
-			
-			/**
-			 * This function defines the operations of the submit process.
-			 */
-			var submitHandler = function () {
-				// Disabled attributes are removed because disabled inputs are submitted with null values.
-				$j("#EditDetailsDocumentForm").find("[disabled='disabled']").each(function(index) {
-					$j(this).removeAttr("disabled");
-				});
-				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	        	
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if ($j(html).find(".inputerrors").length > 0) {
-						$j("#EditDetailsDocumentDiv").html(html);
-					} else {
-						<c:choose> 
-							<c:when test="${command.entryId == 0}"> 
-								$j("#body_left").html(html);
-							</c:when> 
-							<c:otherwise> 
-								$j("#body_left").html(html);
-							</c:otherwise> 
-						</c:choose> 
-					}
-				}});
-				return false;
-			}
-			// We attach the submit-handler to the form 'EditDetailsDocumentForm'.
-			$j("#EditDetailsDocumentForm").submit(submitHandler);
+			var isEmpty = function(input) {
+				var onlySpaces = /^ * *$/;
+				return input.match(onlySpaces);
+			};
 			
 			
 			/**
@@ -727,18 +828,6 @@
 			var isNumeric = function(input) {
 				var numbers = /^ *[0-9]* *$/;
 				return input.match(numbers);
-			};
-			
-			
-			/**
-			 * This function checks if input string provided is empty.
-			 *
-			 * @param input the input string to check
-			 * @return true if the string is empty or contains only white spaces.
-			 */
-			var isEmpty = function(input) {
-				var onlySpaces = /^ * *$/;
-				return input.match(onlySpaces);
 			};
 			
 			
@@ -756,6 +845,87 @@
 			
 			
 			/**
+			 * This function defines the "out of range" check for the folio number.
+			 *
+			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
+			 */
+			var outOfRangeFolioCheck = function(prefix) {
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', 
+					{ volume: $j("#volume").val() }, 
+					function(data) {
+						var folioNumVal = $j("#" + prefix + "Num").val();
+						if (data.folioCount != "undefined" && !isEmpty(data.folioCount)) {
+							var folioNumber = parseInt(folioNumVal ,10);
+							if (folioNumber > parseInt(data.folioCount, 10)) {
+								var folioStr = '' + (prefix == 'folio' ? '<fmt:message key="docbase.editDetailsDocument.error.start" />' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe" />')
+								var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioHigher"><fmt:param value="' + folioStr + '" /><fmt:param value="' + folioNumber + '" /></fmt:message>';
+								displayErrorClientMsg(prefix,msg);
+							} else if (folioNumVal != "") {
+								folioCheck(prefix);
+							} else {
+								// The save button is enabled if there are no other errors
+								enableSaveIfNeeded();
+							}
+						} else {
+							if (!isEmpty(folioNumVal)) {
+								folioCheck(prefix);
+							} else {
+								// The save button is enabled if there are no other errors
+								enableSaveIfNeeded();
+							}
+						}
+					}
+				);
+			};
+			
+			
+			/**
+			 * This function defines the volume check process.
+			 * If the volume informations correspond to an existent volume it shows that volume in the Volume Explorer (inside a tab).
+			 */
+			var showVolumeExplorer = function () {
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />',
+					{ volume: $j("#volume").val() },
+					function(data) {
+						if (data.summaryId == "") {
+							var vol = $j("#volume").val();
+							var msg = '<fmt:message key="docbase.editDetailsDocument.error.volumeNotExist"><fmt:param value="' + vol + '" /></fmt:message>';
+							resetLowerErrorMsg("volume");
+							displayErrorClientMsg("volume", msg);
+						} else {
+							var insNumVal = $j("#insertNum").val();
+							// Launch the insert checking process if not empty
+							if (typeof insNumVal != "undefined" && insNumVal != "") {
+								insertNumChangeHandler();
+							} else {
+								var folNumVal = $j("#folioNum").val();
+								// Launch the folio checking process if not empty
+								if (typeof folNumVal != "undefined" && folNumVal != "") {
+									checkFolio("folio");
+								}
+								
+								var transFolNumVal = $j("#transcribeFolioNum").val();
+								// Launch the transcribe folio checking process if not empty
+								if (typeof transFolNumVal != "undefined" && transFolNumVal != "") {
+									checkFolio("transcribeFolio");
+								}
+							}
+							
+							// Open the volume explorer if volume is digitized
+							if (data.volumeDigitized) {
+	            				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+	                    		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
+							}
+						}
+					}
+				);
+	 		};
+			
+			
+			
+			/** ################################ OTHER HANDLERS ######################################## **/
+			
+			/**
 			 * This object contains message and style informations of the "existentDocumentQuestion" popup.
 			 */
 			var existentDocumentPopupBlock = { 
@@ -769,69 +939,6 @@
 						} ,
 					overlayCSS: { backgroundColor: '#999' }	
 				};
-			
-			
-			/**
-			 * This function defines the find document callback used in the save process.
-			 */
-			var findDocumentCallback = function(data) {
-				//In this case we have a document with the same volume and folio and the link open in a tab its record.
-				if (data.countAlreadyEntered == 1) {
-					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.oneDocExists"/>';
-					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
-					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDoc"/>';
-					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>"+clickHereMsg+"</u></a><br/></span>");
-					
-					$j(".compareDoc").click(function() {
-						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), false);
-						return false;
-					});
-					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
-					return false;
-				} else if (data.countAlreadyEntered > 1) {
-					var msg = '<fmt:message key="docbase.editDetailsDocument.messages.moreDocsExist"/>';
-					$j("#existentDocumentQuestion .warningMessage").html("<span>"+ msg +"<br /></span>");
-					var showDocumentsAlreadyURLParams = "?volNum=" + data.volNum +  "&volLetExt=" + data.volLetExt + "&insertNum=" + data.insertNum + "&insertLet=" + data.insertLet + "&folioNum=" + data.folioNum + "&folioMod=" + data.folioMod + "&folioRectoVerso=" + data.folioRectoVerso;
-					var clickHereMsg = '<fmt:message key="docbase.editDetailsDocument.messages.clickHereDocs"/>';
-					$j("#existentDocumentQuestion .clickHere").html("<span><a class=\"compareDocs\" style=\"color:red\" href=\"${ShowDocumentsAlreadyURL}" + showDocumentsAlreadyURLParams + "\"><u>"+clickHereMsg+"</u></a><br/></span>");
-					
-					$j(".compareDocs").click(function() {
-						showAlreadyEnteredDocumentsTab(data.volNum+data.volLetExt,data.insertNum+data.insertLet,data.folioNum+data.folioMod+' '+data.folioRectoVerso, $j(this).attr("href"), true);
-						return false;
-					});
-					$j('#EditDetailsDocumentForm').block(existentDocumentPopupBlock); 
-					return false;
-				}
-				$j("#EditDetailsDocumentForm").submit();
-			}
-			
-			
-			/**
-			 * This function defines the handler of the "Save" button.
-			 */
-			var saveHandler = function() {
-				if($j("#folioNum").val() == $j("#folioNumStored").val()){
-					// An existent document is going to be modified.					
-					if ($j("#alreadyDigitized").length > 0) {
-						$j("#alreadyDigitized").remove();
-					}
-					$j("#save").removeAttr("disabled");
-					return true;
-				}
-				
-				$j.get('<c:url value="/src/docbase/FindDocument.json" />', 
-					{ volume: $j("#volume").val(), 
-					  insertNum: $j("#insertNum").val(), 
-					  insertLet: $j("#insertLet").val(), 
-					  folioNum: $j("#folioNum").val(), 
-					  folioMod: $j("#folioMod").val(), 
-					  folioRectoVerso: $j("#folioRectoVerso").val() },
-					findDocumentCallback
-				);
-				return false;
-			}
-			// We attach the save click-handler to the "Save" button.
-			$j("#save").click(saveHandler);
 			
 			
 			/**
