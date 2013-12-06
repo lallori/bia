@@ -1893,7 +1893,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
 			
-			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), query);
+			List<Integer> filteredPeople = EpLinkUtils.getPeopleIdList(epLinkList);
+			// RR: 'Person name lost...' is added to filtered people
+			filteredPeople.add(9285);
+			return getPeopleDAO().searchPersonLinkableToDocument(filteredPeople, query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
