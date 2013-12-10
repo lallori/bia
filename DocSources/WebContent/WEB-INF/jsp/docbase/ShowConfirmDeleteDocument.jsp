@@ -33,7 +33,8 @@
 				$j.ajax({ type:"GET", url: '${CheckDocumentIsDeletableURL}', async:false, success:function(json) { 
 					if (json.isDeletable == 'false') {
 						$j("#DeleteThisRecordDiv").html("");
-						$j("#DeleteThisRecordDiv").append('<h1>Please remove ALL people, places and topics indexed to this document before trying to deleting it</h1>');
+						//$j("#DeleteThisRecordDiv").append('<h1>Please remove ALL people, places and topics indexed to this document before trying to deleting it</h1>');
+						$j("#DeleteThisRecordDiv").append('<h1>This document is not deletable...if you want to delete it please contact the admin.</h1>');
 					} else {
 						$j.ajax({ type:"POST", url: '${DeleteDocumentURL}', async:false, success:function(html) {
 							$j("#DeleteThisRecordDiv").html(html);

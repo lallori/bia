@@ -28,6 +28,7 @@
 package org.medici.bia.validator.docbase;
 
 import org.medici.bia.command.docbase.EditDocReferenceDocumentCommand;
+import org.medici.bia.domain.Document;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,10 +101,10 @@ public class EditDocReferenceDocumentValidator implements Validator {
 			if (entryIdFrom > 0) {
 				try {
 					if (getDocBaseService().findDocument(entryIdFrom) == null) {
-						errors.rejectValue("entryIdFrom", "error.documentFrom.notfound");
+						errors.rejectValue("entryIdFrom", "error.documentFrom.notfound", new Object[] {entryIdFrom}, null);
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.rejectValue("entryIdFrom", "error.documentFrom.notfound");
+					errors.rejectValue("entryIdFrom", "error.documentFrom.notfound", new Object[] {entryIdFrom}, null);
 				}
 			}
 		}
@@ -120,14 +121,17 @@ public class EditDocReferenceDocumentValidator implements Validator {
 			// entryId equals zero is 'New Document', it shouldn't be validated  
 			if (entryIdTo > 0) {
 				if(entryIdTo.equals(entryIdFrom)){
-					errors.rejectValue("entryIdTo", "error.documentTo.invalid");
+					errors.rejectValue("entryIdTo", "error.documentTo.autoreference");
 				}
 				try {
-					if (getDocBaseService().findDocument(entryIdTo) == null) {
-						errors.rejectValue("entryIdTo", "error.documentTo.notfound");
+					Document docTo = getDocBaseService().findDocument(entryIdTo);
+					if (docTo == null) {
+						errors.rejectValue("entryIdTo", "error.documentTo.notfound", new Object[] {entryIdTo}, null);
+					} else if (docTo.getLogicalDelete()) {
+						errors.rejectValue("entryIdTo", "error.documentTo.deleted", new Object[] {entryIdTo}, null);
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.rejectValue("entryIdTo", "error.documentTo.notfound");
+					errors.rejectValue("entryIdTo", "error.documentTo.notfound", new Object[] {entryIdTo}, null);
 				}
 			}
 		}

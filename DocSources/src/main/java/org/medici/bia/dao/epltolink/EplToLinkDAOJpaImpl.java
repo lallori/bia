@@ -146,7 +146,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuilder stringBuilder = new StringBuilder("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE");
+		StringBuilder stringBuilder = new StringBuilder("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE document.logicalDelete = false AND ");
 		for(int i = 0; i < placeAllIds.size(); i++){
 			if(stringBuilder.indexOf("=") != -1){
 				stringBuilder.append(" or ");
@@ -220,7 +220,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		Map<String, Long> returnValues = new LinkedHashMap<String, Long>();
 		List tempValuesResult;
 		Query query = null;
-		String toSearch = new String("SELECT topic.topicTitle, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE place.placeAllId=" + placeToSearch + " GROUP BY topic.topicTitle ORDER BY topic.topicTitle ASC");
+		String toSearch = new String("SELECT topic.topicTitle, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE place.placeAllId=" + placeToSearch + " AND document.logicalDelete = false GROUP BY topic.topicTitle ORDER BY topic.topicTitle ASC");
 		
 		query = getEntityManager().createQuery(toSearch);
 		tempValuesResult = query.getResultList();

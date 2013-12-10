@@ -41,6 +41,8 @@
 			</div>
 			
 			<div id="inputerror" style="color: red; display:none"></div>
+			<form:errors path="entryIdFrom" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="entryIdTo" cssClass="inputerrors" htmlEscape="false"/>
 			
 			<div>
 				<input id="closeDocReference" class="button_small fl" type="submit" value="Close" title="do not save changes" />
@@ -119,9 +121,13 @@
 			        			data: $j(this).serialize(),
 			        			async: false, 
 			        			success: function(html) {
-									$j("#modifyDocReference").val(1);
-									$j("#EditDocReferenceDocumentDiv").empty();
-									$j("#DocReferenceDocumentDiv").load('${EditDocReferencesDocumentURL}');
+			        				if ($j(html).find(".inputerrors").length > 0) {
+										$j("#EditDocReferenceDocumentDiv").html(html);
+									} else {
+										$j("#modifyDocReference").val(1);
+										$j("#EditDocReferenceDocumentDiv").empty();
+										$j("#DocReferenceDocumentDiv").load('${EditDocReferencesDocumentURL}');
+									}
 								},
 								error: function(html) {
 									$j("#loadingDiv2").css('visibility', 'hidden');

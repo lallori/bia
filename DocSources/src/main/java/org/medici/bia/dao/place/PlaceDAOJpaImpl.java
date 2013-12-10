@@ -153,7 +153,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@Override
 	public Place findPrinicipalPlace(Integer geogKey) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='P'");
+		Query query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='P' AND logicalDelete=false");
 		query.setParameter("geogkey", geogKey);
 		
 		query.setMaxResults(1);

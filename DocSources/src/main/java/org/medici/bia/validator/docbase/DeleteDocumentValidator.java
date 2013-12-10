@@ -103,12 +103,14 @@ public class DeleteDocumentValidator implements Validator {
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
+					// RR: now we enable the document deletion even if the document is referred to people or places
+					/*
 					if (document.getEpLink().size()>0) {
 						errors.reject("entryId", "error.deleteDocument.people.found");
 					}
 					if (document.getEplToLink().size()>0) {
 						errors.reject("entryId", "error.deleteDocument.topics.found");
-					}
+					}*/
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

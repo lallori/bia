@@ -164,7 +164,9 @@ public class AjaxController {
 			Document document = getDocBaseService().findDocument(entryId);
 
 			if (document != null) {
-				Integer numberOfTopicsOnDocument = getDocBaseService().findNumberOfTopicsOnDocument(document.getEntryId());
+				// RR: now we enable the document deletion even if the document is referred to people or places
+				
+				/*Integer numberOfTopicsOnDocument = getDocBaseService().findNumberOfTopicsOnDocument(document.getEntryId());
 				model.put("topicsOnDocument", numberOfTopicsOnDocument.toString());
 				if (numberOfTopicsOnDocument>0) {
 					model.put("isDeletable", Boolean.FALSE.toString());
@@ -187,7 +189,9 @@ public class AjaxController {
 				}
 				if (document.getRecipientPlace() != null) {
 					model.put("isDeletable", Boolean.FALSE.toString());
-				}
+				}*/
+				
+				model.put("isDeletable", Boolean.TRUE.toString());
 			} else {
 				model.put("isDeletable", Boolean.FALSE.toString());
 			}

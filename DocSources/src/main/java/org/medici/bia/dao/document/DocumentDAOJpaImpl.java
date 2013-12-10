@@ -98,7 +98,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Document WHERE volume.summaryId=:summaryId ORDER BY folioNum DESC");
+		Query query = getEntityManager().createQuery("FROM Document WHERE volume.summaryId=:summaryId AND logicalDelete=false ORDER BY folioNum DESC");
 		query.setParameter("summaryId", summaryId);
 		
 		query.setMaxResults(1);
@@ -121,7 +121,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Long countDocumentsLinkedToAVolume(Integer summaryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE volume.summaryId =:summaryId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE logicalDelete=false AND volume.summaryId =:summaryId");
 		query.setParameter("summaryId", summaryId);
 		
 		return (Long) query.getSingleResult();
@@ -317,8 +317,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuilder stringBuilderSender = new StringBuilder("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
-		StringBuilder stringBuilderRecipient = new StringBuilder("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
+		StringBuilder stringBuilderSender = new StringBuilder("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE logicalDelete = false AND ");
+		StringBuilder stringBuilderRecipient = new StringBuilder("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE logicalDelete = false AND ");
 		for(int i = 0; i < placeAllIds.size(); i++){
 			if(stringBuilderSender.indexOf("=") != -1){
 				stringBuilderSender.append(" or ");

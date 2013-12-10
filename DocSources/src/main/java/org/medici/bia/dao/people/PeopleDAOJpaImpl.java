@@ -127,7 +127,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Integer findNumberOfActiveEndInPlace(Integer placeAllId)	throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd!=NULL");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd!=NULL AND logicalDelete=false");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -138,7 +138,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart!=NULL");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart!=NULL AND logicalDelete=false");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -149,7 +149,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Integer findNumberOfBirthInPlace(Integer placeAllId)	throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart=NULL");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart=NULL AND logicalDelete=false");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -160,7 +160,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Integer findNumberOfDeathInPlace(Integer placeAllId)	throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd=NULL");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd=NULL AND logicalDelete=false");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -172,8 +172,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfPeopleRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuilder stringBuilderBorn = new StringBuilder("SELECT bornPlace.placeAllId, COUNT(personId) FROM People WHERE");
-		StringBuilder stringBuilderDeath = new StringBuilder("SELECT deathPlace.placeAllId, COUNT(personId) FROM People WHERE");
+		StringBuilder stringBuilderBorn = new StringBuilder("SELECT bornPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND");
+		StringBuilder stringBuilderDeath = new StringBuilder("SELECT deathPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND");
 		for(int i=0; i < placeAllIds.size(); i++){
 			if(stringBuilderBorn.indexOf("=") != -1){
     			stringBuilderBorn.append(" or ");
@@ -230,7 +230,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd!=NULL");
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd!=NULL AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -271,7 +271,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart!=NULL");
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart!=NULL AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -312,7 +312,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart=NULL");
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart=NULL AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -388,7 +388,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd=NULL");
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd=NULL AND logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -710,7 +710,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.roleCat.roleCatId=" + roleCatToSearch + ")");
+		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.roleCat.roleCatId=" + roleCatToSearch + " AND person.logicalDelete=false)");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -855,7 +855,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Query query = null;
 		//String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.bia.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
 		//MD: The next query is builded for test if is possible order result by date of Title Occupation
-		String toSearch = new String("FROM People p, org.medici.bia.domain.PoLink t WHERE p.personId = t.person.personId AND t.titleOccList.titleOccId=" + titleOccToSearch);
+		String toSearch = new String("FROM People p, org.medici.bia.domain.PoLink t WHERE p.personId = t.person.personId AND t.titleOccList.titleOccId=" + titleOccToSearch + " AND p.logicalDelete=false");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

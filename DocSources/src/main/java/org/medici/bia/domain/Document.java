@@ -1147,6 +1147,21 @@ public class Document implements Serializable{
 		}
 		return Collections.unmodifiableSet(docReference);
 	}
+	
+	/**
+	 * Returns the active document references.
+	 * 
+	 * @return a set of active document references.
+	 */
+	public Set<DocReference> getActiveDocReferences() {
+		Set<DocReference> actives = new HashSet<DocReference>();
+		for (DocReference reference : getDocReference()) {
+			if (!reference.getDocumentTo().getLogicalDelete()) {
+				actives.add(reference);
+			}
+		}
+		return Collections.unmodifiableSet(actives);
+	}
 
 	/**
 	 * Adds a {@link DocReference} to this document references.

@@ -46,13 +46,13 @@
 			<div class="row">
 				<div class="item"><fmt:message key="docbase.showExtractOrSynopsisDocument.documentsReferredTo"/></div> 
 				<div class="value80">
-			<c:forEach items="${document.docReference}" var="currentDocument">
-			<!-- This is a method to have a value near the item with the text People. -->	
-				<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
-					<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
-				</c:url>
-				<a class="linkDocument" href="${CompareDocumentURL}" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}">#${currentDocument.documentTo.entryId}<input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a>
-			</c:forEach>
+					<c:forEach items="${document.activeDocReferences}" var="currentDocument">
+						<!-- This is a method to have a value near the item with the text Document Referred To. -->	
+						<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
+							<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />
+						</c:url>
+						<a class="linkDocument" href="${CompareDocumentURL}" id="${currentDocument.documentTo.volume.volNum}${currentDocument.documentTo.volume.volLetExt} / ${currentDocument.documentTo.folioNum}${currentDocument.documentTo.folioMod}">#${currentDocument.documentTo.entryId}<input type="hidden" style="display:none;" class="tabId" value="docId${currentDocument.documentTo.entryId}" /></a>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

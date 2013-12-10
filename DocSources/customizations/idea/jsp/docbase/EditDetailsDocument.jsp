@@ -184,7 +184,7 @@
 			<form:hidden id="dateCreated" path="dateCreated" />
 			<form:hidden id="entryId" path="entryId" />
 			
-			<form:errors path="entryId" cssClass="inputErrors" htmlEscape="false"/>
+			<form:errors path="entryId" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docDay" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="docYear" cssClass="inputerrors" htmlEscape="false"/>
