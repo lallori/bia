@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -8,13 +9,13 @@
 	
 	<style type="text/css">
 		@media print{
-			#newPage{
+			.newPage{
 				page-break-after: always;
 			}
 		}
 	</style>
 	
-	<c:forEach items="${elementsToPrint}" var="currentElement">
+	<c:forEach items="${elementsToPrint}" var="currentElement" varStatus="status">
 		<!-- Document print -->
 		<c:if test="${currentElement.document != null}">
 	
@@ -24,47 +25,114 @@
 			
 			<h4>Documentary Sources for the Arts and Humanities 1537 - 1743<br />Document Report</h4>
 		
-			<h5 class="first">Document Details</h5>
+			<h5 class="first"><fmt:message key="docbase.printDocument.title.documentDetails"/></h5>
 			<table>
-			    <tr> 
-			      <td width="25%">Vol. Number</td>
-			      <td width="30%" class="value">${currentElement.document.volume.MDP}</td>
-			      <td width="25%">Folio No.</td>
-			      <td width="30%" class="value">${currentElement.document.folioNum} <c:if test="${not empty currentElement.document.folioMod}">/ ${currentElement.document.folioMod}</c:if></td>
-		
-			    </tr>
-			    <tr>
-			      <td width="25%">Citation Format</td>
-			      <td width="70%" colspan="3" class="value">BIA: The Medici Archive Project, Doc ID# ${currentElement.document.entryId} (Archivio di Stato di Firenze, Mediceo del Principato ${currentElement.document.volume.MDP} 
-			      <c:if test="${not empty currentElement.document.folioNum}">, folio ${currentElement.document.folioNum}</c:if>
-			      <c:if test="${empty currentElement.document.folioNum}">, unnumbered folio</c:if>
-			      <c:if test="${not empty currentElement.document.folioMod}">/ ${currentElement.document.folioMod}</c:if>)</td>
-			   	</tr>
+				<tr> 
+					<td width="25%"><fmt:message key="docbase.printDocument.volumeNumber"/></td>
+					<td width="25%" class="value">${currentElement.document.volume.MDP}</td>
+					<c:choose>
+						<c:when test="${not empty document.insertNum}">
+							<td width="25%"><fmt:message key="docbase.printDocument.insertNumber"/></td>
+							<td width="25%" class="value">${currentElement.document.insertNum} <c:if test="${not empty currentElement.document.insertLet}">/ ${currentElement.document.insertLet}</c:if></td>
+						</c:when>
+						<c:otherwise>
+							<td width="25%"></td>
+							<td width="25%"></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+				<tr>
+					<td width="25%"><fmt:message key="docbase.printDocument.folioNumber"/></td>
+					<td width="25%" class="value">${currentElement.document.folioNum}<c:if test="${not empty currentElement.document.folioMod}"> / ${currentElement.document.folioMod}</c:if><c:if test="${not empty currentElement.document.folioRectoVerso}"> / ${currentElement.document.folioRectoVerso}</c:if></td>
+					<td width="25%"><fmt:message key="docbase.printDocument.transcribeFolioNumber"/></td>
+					<td width="25%" class="value">${currentElement.document.transcribeFolioNum}<c:if test="${not empty currentElement.document.transcribeFolioMod}"> / ${currentElement.document.transcribeFolioMod}</c:if><c:if test="${not empty currentElement.document.transcribeFolioRectoVerso}"> / ${currentElement.document.transcribeFolioRectoVerso}</c:if></td>
+				</tr>
+				<tr>
+					<td width="25%"><fmt:message key="docbase.printDocument.citationFormat"/></td>
+					<td width="75%" colspan="3" class="value">BIA: The Medici Archive Project, Doc ID# ${currentElement.document.entryId} (Archivio di Stato di Firenze, Mediceo del Principato ${currentElement.document.volume.MDP} 
+						<c:if test="${not empty currentElement.document.insertNum}">
+							<span>, <fmt:message key="docbase.printDocument.insert"/> ${currentElement.document.insertNum}<c:if test="${not empty currentElement.document.insertLet}"> / ${currentElement.document.insertLet}</c:if></span>
+						</c:if>
+						<c:choose>
+							<c:when test="${not empty currentElement.document.folioNum}">
+								<span>, <fmt:message key="docbase.printDocument.folio"/> ${currentElement.document.folioNum}<c:if test="${not empty currentElement.document.folioMod}">/ ${currentElement.document.folioMod}</c:if></span>
+							</c:when>
+							<c:otherwise>
+								<span>, <fmt:message key="docbase.printDocument.notnumberedfolio"/></span>
+							</c:otherwise> 
+						</c:choose>
+						<c:choose>
+							<c:when test="${not empty currentElement.document.transcribeFolioNum}">
+								<span>, <fmt:message key="docbase.printDocument.transcribefolio"/> ${currentElement.document.transcribeFolioNum}<c:if test="${not empty currentElement.document.transcribeFolioMod}">/ ${currentElement.document.transcribeFolioMod}</c:if>)</span>
+							</c:when>
+							<c:otherwise>
+								<span>, <fmt:message key="docbase.printDocument.notnumberedtranscribefolio"/>)</span>
+							</c:otherwise> 
+						</c:choose>
+				</tr>
 			</table> 
 		 
 			<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
 		
-			<h5>Correspondents/People</h5>
+			<h5><fmt:message key="docbase.printDocument.title.correspondentsPeople"/></h5>
 			
 			<table>
-			    <tr> 
-			      <td width="15%">Sender</td>
-			      <td width="40%" class="value">${currentElement.document.senderPeople.mapNameLf}</td>
-			      <td width="15%">From</td>
-			      <td width="40%" class="value">${currentElement.document.senderPlace.placeNameFull}</td>
-			    </tr>
+				<tr> 
+					<td width="15%"><fmt:message key="docbase.printDocument.sender"/></td>
+					<td width="35%" class="value">${currentElement.document.senderPeople.mapNameLf}</td>
+					<td width="15%"><fmt:message key="docbase.printDocument.senderFrom"/></td>
+					<td width="35%" class="value">${currentElement.document.senderPlace.placeNameFull}</td>
+				</tr>
+				<c:if test="${not empty currentElement.document.sendNotes}">
+					<tr>
+						<td width="15%"><fmt:message key="docbase.printDocument.senderNotes"/></td>
+						<td width="85%" colspan="3" class="value">${currentElement.document.sendNotes}</td>
+					</tr>
+				</c:if>
 			
-			    <tr> 
-			      <td width="15%">Recipient</td>
-			      <td width="40%" class="value">${currentElement.document.recipientPeople.mapNameLf}</td>
-			      <td width="15%">To</td>
-			      <td width="40%" class="value">${currentElement.document.recipientPlace.placeNameFull}</td>
-			    </tr>
-			    <tr> 
-			      <td width="15%">Date</td>
-			
-			      <td width="40%" class="value">${currentElement.document.docYear} ${currentElement.document.docMonthNum} ${currentElement.document.docDay}</td>
-			    </tr>
+				<tr> 
+					<td width="15%"><fmt:message key="docbase.printDocument.recipient"/></td>
+					<td width="35%" class="value">${currentElement.document.recipientPeople.mapNameLf}</td>
+					<td width="15%"><fmt:message key="docbase.printDocument.recipientTo"/></td>
+					<td width="35%" class="value">${currentElement.document.recipientPlace.placeNameFull}</td>
+				</tr>
+				<c:if test="${not empty currentElement.document.recipNotes}">
+					<tr>
+						<td width="15%"><fmt:message key="docbase.printDocument.recipientNotes"/></td>
+						<td width="85%" colspan="3" class="value">${currentElement.document.recipNotes}</td>
+					</tr>
+				</c:if>
+				
+				<c:if test="${not empty currentElement.document.epLink}">
+					<c:set var="anotherPerson" value="false" />
+					<td width="15%"><fmt:message key="docbase.printDocument.peopleReferredTo"/></td>
+					<td width="85%" colspan="3" class="value">
+						<c:forEach items="${currentElement.document.epLink}" var="currentPeople">
+							<c:choose>
+								<c:when test="${another && currentPeople.docRole!= 'S' && currentPeople.docRole != 'R'}">
+									<span> - ${currentPeople.person.mapNameLf}</span>
+								</c:when>
+								<c:when test="${not another && currentPeople.docRole!= 'S' && currentPeople.docRole != 'R'}">
+									<span>${currentPeople.person.mapNameLf}</span>
+									<c:set var="anotherPerson" value="true" />
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</td>
+				</c:if>
+				
+				<tr> 
+					<td width="15%"><fmt:message key="docbase.printDocument.date"/></td>
+					<td width="35%" class="value">${currentElement.document.docYear} ${currentElement.document.docMonthNum} ${currentElement.document.docDay}</td>
+				</tr>
+				<c:if test="${not empty currentElement.document.yearModern}">
+					<tr>
+						<td width="15%"><fmt:message key="docbase.printDocument.yearModern" /></td>
+						<td width="35%" class="value">${currentElement.document.yearModern}</td>
+					</tr>
+				</c:if>
 			</table> 
 			
 			<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
@@ -84,40 +152,40 @@
 			
 			--%>
 			
-			<h5>Extract/Synopsis</h5>
+			<h5><fmt:message key="docbase.printDocument.title.transcriptionSynopsis"/></h5>
 			<table>
-		        <tr> 
-		        	<td width="100%">Document Extract</td>
-		        </tr>
-		        <tr>
-		        	<td width="100%" class="value">${currentElement.document.synExtract.docExtract}</td>
-		        </tr>
-		        <tr>
-		        	<td width="100%"></td>
-		        </tr>
-		        <tr>
-					<td width="100%">Document Synopsis</td>
-		        </tr>
-		        <tr> 
-		        	<td width="100%" class="value">${currentElement.document.synExtract.synopsis}</td>
-		        </tr>
+				<tr> 
+					<td width="100%"><fmt:message key="docbase.printDocument.transcription"/></td>
+				</tr>
+				<tr>
+					<td width="100%" class="value">${currentElement.document.synExtract.docExtract}</td>
+				</tr>
+				<tr>
+					<td width="100%"></td>
+				</tr>
+				<tr>
+					<td width="100%"><fmt:message key="docbase.printDocument.synopsis"/></td>
+				</tr>
+				<tr> 
+					<td width="100%" class="value">${currentElement.document.synExtract.synopsis}</td>
+				</tr>
 			</table>
 				
 			
 			<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
 			
 			
-			<h5>Topics</h5>
+			<h5><fmt:message key="docbase.printDocument.title.topics"/></h5>
 			<table>
 				<c:forEach items="${currentElement.document.eplToLink}" var="currentTopicAndPlace">
-				<tr> 
-					<td width="60">Topic</td>
-					<td width="300" class="value">${currentTopicAndPlace.topic.topicTitle}</td>
-			    </tr>
-			    <tr> 
-					<td width="60">Topic Place</td>
-					<td width="300" class="value">${currentTopicAndPlace.place.placeNameFull}</td>
-			    </tr>
+					<tr> 
+						<td width="60"><fmt:message key="docbase.printDocument.topic"/></td>
+						<td width="300" class="value">${currentTopicAndPlace.topic.topicTitle}</td>
+					</tr>
+					<tr> 
+						<td width="60"><fmt:message key="docbase.printDocument.topicPlace"/></td>
+						<td width="300" class="value">${currentTopicAndPlace.place.placeNameFull}</td>
+					</tr>
 				</c:forEach>
 			</table> 
 			
@@ -131,7 +199,9 @@
 <!-- 				</p> -->
 <!-- 				<p> To cite content from the BIA platform in a publication, use the "citation format" near the top  of the page.</p> -->
 <!-- 			</div> -->
-<!-- 			<div id="newPage"></div> -->
+ 			<c:if test="${!status.last}">
+ 				<div class="newPage"></div>
+ 			</c:if>
 		</c:if>
 		
 		<!-- Place Print -->
@@ -339,7 +409,9 @@
 <!-- 				</p> -->
 <!-- 				<p> To cite content from the BIA platform in a publication, use the "citation format" near the top  of the page.</p> -->
 <!-- 			</div> -->
-<!-- 			<div id="newPage"></div> -->
+ 			<c:if test="${!status.last}">
+ 				<div class="newPage"></div>
+ 			</c:if>
 		</c:if>
 		
 		<!-- Person print -->
@@ -498,7 +570,9 @@
 <!-- 				</p> -->
 <!-- 				<p> To cite content from the BIA platform in a publication, use the "citation format" near the top  of the page.</p> -->
 <!-- 			</div> -->
-<!-- 			<div id="newPage"></div> -->
+ 			<c:if test="${!status.last}">
+ 				<div class="newPage"></div>
+ 			</c:if>
 		</c:if>
 		
 		<!-- Volume print -->
@@ -625,7 +699,9 @@
 <!-- 				</p> -->
 <!-- 				<p> To cite content from the BIA platform in a publication, use the "citation format" near the top  of the page.</p> -->
 <!-- 			</div> -->
-<!-- 			<div id="newPage"></div> -->
+			<c:if test="${!status.last}">
+ 				<div class="newPage"></div>
+ 			</c:if>
 		</c:if>
 
 	</c:forEach>
