@@ -148,7 +148,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException {
 		StringBuilder stringBuilder = new StringBuilder("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE document.logicalDelete = false AND ");
 		for(int i = 0; i < placeAllIds.size(); i++){
-			if(stringBuilder.indexOf("=") != -1){
+			if(i > 0){
 				stringBuilder.append(" or ");
 			}
 			stringBuilder.append("(place.placeAllId=");
@@ -159,7 +159,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValues;
-		if(stringBuilder.indexOf("=") != -1){
+		if(placeAllIds.size() > 0){
 			Query query = getEntityManager().createQuery(stringBuilder.toString());
 			tempValues = query.getResultList();
 			for(Iterator i = tempValues.iterator(); i.hasNext();){

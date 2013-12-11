@@ -172,14 +172,14 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfPeopleRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
-		StringBuilder stringBuilderBorn = new StringBuilder("SELECT bornPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND");
-		StringBuilder stringBuilderDeath = new StringBuilder("SELECT deathPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND");
+		StringBuilder stringBuilderBorn = new StringBuilder("SELECT bornPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND ");
+		StringBuilder stringBuilderDeath = new StringBuilder("SELECT deathPlace.placeAllId, COUNT(personId) FROM People WHERE logicalDelete=false AND ");
 		for(int i=0; i < placeAllIds.size(); i++){
-			if(stringBuilderBorn.indexOf("=") != -1){
-    			stringBuilderBorn.append(" or ");
+			if (i > 0){
+    			stringBuilderBorn.append(" OR ");
     		}
-			if(stringBuilderDeath.indexOf("=") != -1){
-				stringBuilderDeath.append(" or ");
+			if (i > 0){
+				stringBuilderDeath.append(" OR ");
 			}
 			stringBuilderBorn.append("(bornPlace.placeAllId=");
         	stringBuilderBorn.append(placeAllIds.get(i) + ")");
@@ -191,7 +191,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValuesBorn;
-		if(stringBuilderBorn.indexOf("=") != -1){
+		if(placeAllIds.size() > 0){
 			Query query = getEntityManager().createQuery(stringBuilderBorn.toString());
 			tempValuesBorn = query.getResultList();
 			for(Iterator i = tempValuesBorn.iterator(); i.hasNext();){
@@ -200,7 +200,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		List tempValuesDeath;
-		if(stringBuilderDeath.indexOf("=") != -1){
+		if(placeAllIds.size() > 0){
 			Query query = getEntityManager().createQuery(stringBuilderDeath.toString());
 			tempValuesDeath = query.getResultList();
 			for(Iterator i = tempValuesDeath.iterator(); i.hasNext();){

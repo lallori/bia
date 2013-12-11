@@ -320,10 +320,10 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		StringBuilder stringBuilderSender = new StringBuilder("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE logicalDelete = false AND ");
 		StringBuilder stringBuilderRecipient = new StringBuilder("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE logicalDelete = false AND ");
 		for(int i = 0; i < placeAllIds.size(); i++){
-			if(stringBuilderSender.indexOf("=") != -1){
+			if(i > 0){
 				stringBuilderSender.append(" or ");
 			}
-			if(stringBuilderRecipient.indexOf("=") != -1){
+			if(i > 0){
 				stringBuilderRecipient.append(" or ");
 			}
 			stringBuilderSender.append("(senderPlace.placeAllId=");
@@ -336,7 +336,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValuesSender;
-		if(stringBuilderSender.indexOf("=") != -1){
+		if(placeAllIds.size() > 0){
 			Query query = getEntityManager().createQuery(stringBuilderSender.toString());
 			tempValuesSender = query.getResultList();
 			for(Iterator i = tempValuesSender.iterator(); i.hasNext();){
@@ -345,7 +345,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			}
 		}
 		List tempValuesRecipient;
-		if(stringBuilderRecipient.indexOf("=") != -1){
+		if(placeAllIds.size() > 0){
 			Query query = getEntityManager().createQuery(stringBuilderRecipient.toString());
 			tempValuesRecipient = query.getResultList();
 			for(Iterator i = tempValuesRecipient.iterator(); i.hasNext();){
