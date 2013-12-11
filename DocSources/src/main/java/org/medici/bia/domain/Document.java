@@ -1065,37 +1065,42 @@ public class Document implements Serializable{
 
 	/**
 	 * Returns the unmodifiable set.
+	 * NOTE: the returned set considers the referenced Places that are not deleted.
 	 * 
-	 * @return the eplToLink
+	 * @return a set of eplToLinks
 	 */
 	public Set<EplToLink> getEplToLink() {
 		if (eplToLink == null) {
 			eplToLink = new HashSet<EplToLink>();
 		}
-		return Collections.unmodifiableSet(eplToLink);
-	}
-
-	@Override
-	public String toString() {
-		if (getEntryId() == null) {
-			return "";
+		Set<EplToLink> actives = new HashSet<EplToLink>();
+		for (EplToLink link : eplToLink) {
+			if (link.getPlace() != null && !link.getPlace().getLogicalDelete()) {
+				actives.add(link);
+			}
 		}
-
-		return getEntryId().toString();
+		return Collections.unmodifiableSet(actives);
 	}
 	
 	/**
-	 * Returns the unmodifiable set.
+	 * Returns the unmodifiable set of the epLinks.
+	 * NOTE: the returned set considers the referenced People that are not deleted.
 	 * 
-	 * @return the eplLink
+	 * @return a set of the eplLinks
 	 */
 	public Set<EpLink> getEpLink() {
 		if (epLink == null) {
 			epLink = new HashSet<EpLink>();
 		}
-		return Collections.unmodifiableSet(epLink);
+		Set<EpLink> actives = new HashSet<EpLink>();
+		for (EpLink link : epLink) {
+			if (link.getPerson() != null && !link.getPerson().getLogicalDelete()) {
+				actives.add(link);
+			}
+		}
+		return Collections.unmodifiableSet(actives);
 	}
-
+	
 	/**
 	 * Adds an {@link EpLink} to this document.
 	 * 
@@ -1137,32 +1142,24 @@ public class Document implements Serializable{
 	}
 
 	/**
-	 * Returns the unmodifiable set.
+	 * Returns the unmodifiable set of the document references.
+	 * NOTE: the returned set considers the referenced documents that are not deleted.
 	 * 
-	 * @return the docReference
+	 * @return a set of docReferences
 	 */
 	public Set<DocReference> getDocReference() {
 		if (docReference == null) {
 			docReference = new HashSet<DocReference>();
 		}
-		return Collections.unmodifiableSet(docReference);
-	}
-	
-	/**
-	 * Returns the active document references.
-	 * 
-	 * @return a set of active document references.
-	 */
-	public Set<DocReference> getActiveDocReferences() {
 		Set<DocReference> actives = new HashSet<DocReference>();
-		for (DocReference reference : getDocReference()) {
-			if (!reference.getDocumentTo().getLogicalDelete()) {
+		for (DocReference reference : docReference) {
+			if (reference.getDocumentTo() != null && !reference.getDocumentTo().getLogicalDelete()) {
 				actives.add(reference);
 			}
 		}
 		return Collections.unmodifiableSet(actives);
 	}
-
+	
 	/**
 	 * Adds a {@link DocReference} to this document references.
 	 * 
@@ -1218,6 +1215,15 @@ public class Document implements Serializable{
 		return logicalDelete;
 	}
 
+	@Override
+	public String toString() {
+		if (getEntryId() == null) {
+			return "";
+		}
+
+		return getEntryId().toString();
+	}
+	
 	/**
 	 * This enumeration manages recto verso information on folio.
 	 *  

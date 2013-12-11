@@ -26,7 +26,7 @@
 			<p><a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.documentsreferred"></fmt:message>">?</a> &nbsp <fmt:message key="docbase.editDocReferencesDocument.documentsReferredTo"/></p>
 		
 			
-				<c:forEach items="${command.document.activeDocReference}" var="currentDocument">
+				<c:forEach items="${command.document.docReference}" var="currentDocument">
 					<div class="listForm">
 						<div class="row">
 							<c:url var="DeleteDocReferenceDocumentURL" value="/de/docbase/DeleteDocReferenceDocument.do" >

@@ -1126,12 +1126,22 @@ public class People implements Serializable {
 	}
 
 	/**
-	 * Returns the unmodifiable set.
+	 * Returns an unmodifiable set of epLinks.
+	 * Note: the returned set considers the referenced documents that are not deleted.
 	 * 
-	 * @return the epLink
+	 * @return a set of epLinks
 	 */
 	public Set<EpLink> getEpLink() {
-		return Collections.unmodifiableSet(epLink);
+		if (epLink == null) {
+			epLink = new HashSet<EpLink>();
+		}
+		Set<EpLink> actives = new HashSet<EpLink>();
+		for (EpLink link : epLink) {
+			if (link.getDocument() != null && !link.getDocument().getLogicalDelete()) {
+				actives.add(link);
+			}
+		}
+		return Collections.unmodifiableSet(actives);
 	}
 
 	/**

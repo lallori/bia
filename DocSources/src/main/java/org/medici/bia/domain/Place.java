@@ -28,7 +28,9 @@
 package org.medici.bia.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -358,10 +360,48 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @return the eplToLinks
+	 * Adds an {@link EplToLink} to this place.
+	 * 
+	 * @param link the eplToLink to add
+	 */
+	public void addEplToLink(EplToLink eplToLink) {
+		if (eplToLinks == null) {
+			eplToLinks = new HashSet<EplToLink>();
+		}
+		eplToLinks.add(eplToLink);
+	}
+	
+	/**
+	 * Returns the unmodifiable set.
+	 * NOTE: the returned set considers the referenced Documents that are not deleted.
+	 * 
+	 * @return a set of eplToLinks
 	 */
 	public Set<EplToLink> getEplToLinks() {
-		return eplToLinks;
+		if (eplToLinks == null) {
+			eplToLinks = new HashSet<EplToLink>();
+		}
+		Set<EplToLink> actives = new HashSet<EplToLink>();
+		for (EplToLink eplToLink : eplToLinks) {
+			if (eplToLink.getDocument() != null && !eplToLink.getDocument().getLogicalDelete()) {
+				actives.add(eplToLink);
+			}
+		}
+		return Collections.unmodifiableSet(actives);
+	}
+	
+	/**
+	 * Removes an {@link EplToLink} from this document.
+	 * 
+	 * @param link the eplToLink to remove
+	 * @return true if the eplToLink has been removed from the document
+	 */
+	public boolean removeEplToLink(EplToLink link) {
+		if (eplToLinks == null) {
+			return false;
+		}
+		link.setDocument(null);
+		return eplToLinks.remove(link);
 	}
 	
 	/**
@@ -639,13 +679,6 @@ public class Place implements Serializable {
 		this.deathPeople = deathPeople;
 	}
 
-	/**
-	 * @param eplToLinks the eplToLinks to set
-	 */
-	public void setEplToLinks(Set<EplToLink> eplToLinks) {
-		this.eplToLinks = eplToLinks;
-	}
-	
 	/**
 	 * @param geogKey the geogKey to set
 	 */

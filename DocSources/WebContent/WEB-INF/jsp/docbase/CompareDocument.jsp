@@ -159,7 +159,7 @@
 				<div class="row">
 					<div class="item"><fmt:message key="docbase.compareDocument.documentsReferredTo"/></div> 
 					<div class="value80">
-						<c:forEach items="${document.activeDocReferences}" var="currentDocument">
+						<c:forEach items="${document.docReference}" var="currentDocument">
 							<div class="inlineList">#${currentDocument.documentTo.entryId}</div>
 						</c:forEach>
 					</div>

@@ -50,7 +50,7 @@
 			<div class="row">
 				<div class="item"><fmt:message key="docbase.showExtractOrSynopsisDocument.documentsReferredTo"/></div> 
 				<div class="value80">
-			<c:forEach items="${document.activeDocReferences}" var="currentDocument">
+			<c:forEach items="${document.docReference}" var="currentDocument">
 			<!-- This is a method to have a value near the item with the text People. -->	
 				<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
 					<c:param name="entryId"   value="${currentDocument.documentTo.entryId}" />

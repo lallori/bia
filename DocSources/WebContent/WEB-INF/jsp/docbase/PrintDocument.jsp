@@ -74,30 +74,62 @@
 	<h5><fmt:message key="docbase.printDocument.title.correspondentsPeople"/></h5>
 	
 	<table>
-	    <tr> 
-	      <td width="15%"><fmt:message key="docbase.printDocument.sender"/></td>
-	      <td width="40%" class="value">${document.senderPeople.mapNameLf}</td>
-	      <td width="15%"><fmt:message key="docbase.printDocument.senderFrom"/></td>
-	      <td width="40%" class="value">${document.senderPlace.placeNameFull}</td>
-	    </tr>
-	
-	    <tr> 
-	      <td width="15%"><fmt:message key="docbase.printDocument.recipient"/></td>
-	      <td width="40%" class="value">${document.recipientPeople.mapNameLf}</td>
-	      <td width="15%"><fmt:message key="docbase.printDocument.recipientTo"/></td>
-	      <td width="40%" class="value">${document.recipientPlace.placeNameFull}</td>
-	    </tr>
-	    <tr> 
-	      <td width="15%"><fmt:message key="docbase.printDocument.date"/></td>
-	
-	      <td width="40%" class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</td>
-	    </tr>
-	    <c:if test="${not empty document.yearModern}">
-	    	<tr>
-	    		<td width="15%"><fmt:message key="docbase.printDocument.yearModern" /></td>
-	    		<td width="40%" class="value">${document.yearModern}</td>
-	    	</tr>
-	    </c:if>
+		<tr> 
+			<td width="15%"><fmt:message key="docbase.printDocument.sender"/></td>
+			<td width="35%" class="value">${document.senderPeople.mapNameLf}</td>
+			<td width="15%"><fmt:message key="docbase.printDocument.senderFrom"/></td>
+			<td width="35%" class="value">${document.senderPlace.placeNameFull}</td>
+		</tr>
+		<c:if test="${not empty document.sendNotes}">
+			<tr>
+				<td width="15%"><fmt:message key="docbase.printDocument.senderNotes"/></td>
+				<td width="85%" colspan="3" class="value">${document.sendNotes}</td>
+			</tr>
+		</c:if>
+
+		<tr> 
+			<td width="15%"><fmt:message key="docbase.printDocument.recipient"/></td>
+			<td width="35%" class="value">${document.recipientPeople.mapNameLf}</td>
+			<td width="15%"><fmt:message key="docbase.printDocument.recipientTo"/></td>
+			<td width="35%" class="value">${document.recipientPlace.placeNameFull}</td>
+		</tr>
+		<c:if test="${not empty document.recipNotes}">
+			<tr>
+				<td width="15%"><fmt:message key="docbase.printDocument.recipientNotes"/></td>
+				<td width="85%" colspan="3" class="value">${document.recipNotes}</td>
+			</tr>
+		</c:if>
+
+		<c:if test="${not empty document.epLink}">
+			<c:set var="another" value="false" />
+			<td width="15%"><fmt:message key="docbase.printDocument.peopleReferredTo"/></td>
+			<td width="85%" colspan="3" class="value">
+				<c:forEach items="${document.epLink}" var="currentPeople">
+					<c:choose>
+						<c:when test="${another && currentPeople.docRole!= 'S' && currentPeople.docRole != 'R'}">
+							<span> - ${currentPeople.person.mapNameLf}</span>
+						</c:when>
+						<c:when test="${not another && currentPeople.docRole!= 'S' && currentPeople.docRole != 'R'}">
+							<span>${currentPeople.person.mapNameLf}</span>
+							<c:set var="another" value="true" />
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</td>
+		</c:if>
+
+		<tr> 
+			<td width="15%"><fmt:message key="docbase.printDocument.date"/></td>
+			<td width="35%" class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</td>
+		</tr>
+		<c:if test="${not empty document.yearModern}">
+			<tr>
+				<td width="15%"><fmt:message key="docbase.printDocument.yearModern" /></td>
+				<td width="35%" class="value">${document.yearModern}</td>
+			</tr>
+		</c:if>
 	</table> 
 	
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
@@ -119,21 +151,21 @@
 	
 	<h5><fmt:message key="docbase.printDocument.title.transcriptionSynopsis"/></h5>
 	<table>
-        <tr> 
-        	<td width="100%"><fmt:message key="docbase.printDocument.transcription"/></td>
-        </tr>
-        <tr>
-        	<td width="100%" class="value">${document.synExtract.docExtract}</td>
-        </tr>
-        <tr>
-        	<td width="100%"></td>
-        </tr>
-        <tr>
+		<tr> 
+			<td width="100%"><fmt:message key="docbase.printDocument.transcription"/></td>
+		</tr>
+		<tr>
+			<td width="100%" class="value">${document.synExtract.docExtract}</td>
+		</tr>
+		<tr>
+			<td width="100%"></td>
+		</tr>
+		<tr>
 			<td width="100%"><fmt:message key="docbase.printDocument.synopsis"/></td>
-        </tr>
-        <tr> 
-        	<td width="100%" class="value">${document.synExtract.synopsis}</td>
-        </tr>
+		</tr>
+		<tr> 
+			<td width="100%" class="value">${document.synExtract.synopsis}</td>
+		</tr>
 	</table>
 		
 	
@@ -143,14 +175,14 @@
 	<h5><fmt:message key="docbase.printDocument.title.topics"/></h5>
 	<table>
 		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
-		<tr> 
-			<td width="60"><fmt:message key="docbase.printDocument.topic"/></td>
-			<td width="300" class="value">${currentTopicAndPlace.topic.topicTitle}</td>
-	    </tr>
-	    <tr> 
-			<td width="60"><fmt:message key="docbase.printDocument.topicPlace"/></td>
-			<td width="300" class="value">${currentTopicAndPlace.place.placeNameFull}</td>
-	    </tr>
+			<tr> 
+				<td width="60"><fmt:message key="docbase.printDocument.topic"/></td>
+				<td width="300" class="value">${currentTopicAndPlace.topic.topicTitle}</td>
+			</tr>
+			<tr> 
+				<td width="60"><fmt:message key="docbase.printDocument.topicPlace"/></td>
+				<td width="300" class="value">${currentTopicAndPlace.place.placeNameFull}</td>
+			</tr>
 		</c:forEach>
 	</table> 
 	
