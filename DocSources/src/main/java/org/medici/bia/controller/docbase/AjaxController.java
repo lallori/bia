@@ -53,6 +53,7 @@ import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,11 +74,35 @@ public class AjaxController {
 	@Autowired
 	private DocBaseService docBaseService;
 	
+	@Autowired
+	private VolBaseService volBaseService;
+	
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
+	
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+	
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
 	}
 
 
@@ -137,8 +162,12 @@ public class AjaxController {
 				Integer volNum = VolumeUtils.extractVolNum(volume);
 				String volLetExt = VolumeUtils.extractVolLetExt(volume);
 				if (volNum != null) {
-					Boolean insertOK = getDocBaseService().checkInsert(volNum, volLetExt, insertNum, insertLet);
-					model.put("insertOK", insertOK);
+					Boolean volumeDigitized = getVolBaseService().checkVolumeDigitized(volNum, volLetExt);
+					model.put("volumeDigitized", volumeDigitized);
+					if (volumeDigitized) {
+						Boolean insertOK = getDocBaseService().checkInsert(volNum, volLetExt, insertNum, insertLet);
+						model.put("insertOK", insertOK);
+					}
 				} else {
 					model.put("error", "volume incorrect format");
 				}
@@ -316,13 +345,6 @@ public class AjaxController {
 		return paginationFilter;
 	}
 
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-	
 	/**
 	 * 
 	 * @param personId

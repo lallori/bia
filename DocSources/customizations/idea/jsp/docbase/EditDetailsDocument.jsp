@@ -406,11 +406,21 @@
 			 * @param prefix the prefix of the inputs; possible values are 'folio' and 'transcribeFolio'.
 			 */
 			var folioRectoVersoChangeHandler = function(prefix) {
-				if ($j("#volumeErrorClient").attr("display") == "none"  && $j("#insertErrorClient").attr("display") == "none") {
-					resetErrorClientMsg(prefix);
-					var folioVal = $j("#" + prefix + "Num").val();
-					if (typeof folioVal != "undefined" && !isEmpty(folioVal)) {
-						folioCheck(prefix);
+				var rectoVersoVal = $j("#" + prefix + "RectoVerso").val();
+				if (typeof rectoVersoVal != "undefined" && !isEmpty(rectoVersoVal)) {
+					if (isRectoVersoValid(rectoVersoVal)) {
+						resetErrorClientMsg(prefix);
+						if ($j("#volumeErrorClient").attr("display") == "none"  && $j("#insertErrorClient").attr("display") == "none") {
+							var folioVal = $j("#" + prefix + "Num").val();
+							if (typeof folioVal != "undefined" && !isEmpty(folioVal)) {
+								folioCheck(prefix);
+							}
+						}
+					} else {
+						saveable(false);
+						var startOrTranscribe = '' + ((prefix == 'folio') ? '<fmt:message key="docbase.editDetailsDocument.error.start"/>' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe"/>');
+						var msg = '<fmt:message key="docbase.editDetailsDocument.error.rectoVersoUnknown"><fmt:param value="' + startOrTranscribe + '" /><fmt:param value="' + rectoVersoVal + '" /></fmt:message>';
+						displayErrorClientMsg(prefix, msg);
 					}
 				}
 			}
@@ -449,7 +459,9 @@
 							},
 							function(data) {
 								if (typeof data.error === "undefined") {
-									if (data.insertOK == false) {
+									if (data.volumeDigitized == false) {
+										saveable(true);
+									} else if (data.insertOK == false) {
 										var insStr = insNum + (typeof insLet != "undefined" && !isEmpty(insLet) ? " " + insLet : "");
 										var msg = '<fmt:message key="docbase.editDetailsDocument.error.insertNotExist"><fmt:param value="' + insStr + '" /></fmt:message>';
 										displayErrorClientMsg("insert", msg);
@@ -860,7 +872,7 @@
 								var folioStr = '' + (prefix == 'folio' ? '<fmt:message key="docbase.editDetailsDocument.error.start" />' : '<fmt:message key="docbase.editDetailsDocument.error.transcribe" />')
 								var msg = '<fmt:message key="docbase.editDetailsDocument.error.folioHigher"><fmt:param value="' + folioStr + '" /><fmt:param value="' + folioNumber + '" /></fmt:message>';
 								displayErrorClientMsg(prefix,msg);
-							} else if (folioNumVal != "") {
+							} else if (!isEmpty(folioNumVal)) {
 								folioCheck(prefix);
 							} else {
 								// The save button is enabled if there are no other errors
@@ -895,18 +907,18 @@
 						} else {
 							var insNumVal = $j("#insertNum").val();
 							// Launch the insert checking process if not empty
-							if (typeof insNumVal != "undefined" && insNumVal != "") {
+							if (typeof insNumVal != "undefined" && !isEmpty(insNumVal)) {
 								insertNumChangeHandler();
 							} else {
 								var folNumVal = $j("#folioNum").val();
 								// Launch the folio checking process if not empty
-								if (typeof folNumVal != "undefined" && folNumVal != "") {
+								if (typeof folNumVal != "undefined" && !isEmpty(folNumVal)) {
 									checkFolio("folio");
 								}
 								
 								var transFolNumVal = $j("#transcribeFolioNum").val();
 								// Launch the transcribe folio checking process if not empty
-								if (typeof transFolNumVal != "undefined" && transFolNumVal != "") {
+								if (typeof transFolNumVal != "undefined" && !isEmpty(transFolNumVal)) {
 									checkFolio("transcribeFolio");
 								}
 							}
