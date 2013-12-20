@@ -43,6 +43,7 @@ import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
@@ -597,7 +598,15 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		List<Document> documents = null;
 		try {
-			documents = getDocBaseService().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, Document.RectoVerso.convertFromString(folioRectoVerso));
+			documents = getDocBaseService().findDocumentsByFolio(
+					volNum, 
+					StringUtils.nullTrim(volLetExt),
+					StringUtils.nullTrim(insertNum),
+					StringUtils.nullTrim(insertLet),
+					folioNum,
+					StringUtils.nullTrim(folioMod),
+					StringUtils.nullTrim(folioRectoVerso),
+					true);
 		} catch (ApplicationThrowable applicationThrowable){
 			logger.debug(applicationThrowable);
 		}

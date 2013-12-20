@@ -39,6 +39,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.common.volume.VolumeSummary;
@@ -520,6 +521,54 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Document> findLinkedDocumentOnStartFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().findDocumentsOnFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findLinkedDocumentOnStartFolioWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().findDocumentsOnFolioWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findLinkedDocumentOnTranscription(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioTranscribeNum, String folioTranscribeMod, String rectoVerso) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().findDocumentsOnTranscribeFolio(volNum, volLetExt, insertNum, insertLet, folioTranscribeNum, folioTranscribeMod, rectoVerso);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findLinkedDocumentOnTranscriptionWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioTranscribeNum, String folioTranscribeMod, String rectoVerso) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().findDocumentsOnTranscribeFolioWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioTranscribeNum, folioTranscribeMod, rectoVerso);
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
 		if (summaryId != null) {
 			try {
@@ -682,6 +731,42 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						}
 					}
 				}
+			}
+
+			Image image = getImageDAO().findImage(documentExplorer);
+			if (image != null) {
+				documentExplorer.setImage(image);
+			}
+			return documentExplorer;
+		} catch (Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DocumentExplorer getDocumentExplorer(Integer entryId, boolean forTranscribeFolio) throws ApplicationThrowable {
+		if (entryId == null || entryId <= 0) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER);
+		}
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			DocumentExplorer documentExplorer = new DocumentExplorer(entryId, document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+			documentExplorer.setImage(new Image());
+			boolean searchForTranscribeFolio = forTranscribeFolio && document.getTranscribeFolioNum() != null && document.getTranscribeFolioNum() > 0;
+			if (searchForTranscribeFolio || (!forTranscribeFolio && document.getFolioNum() != null && document.getFolioNum() > 0)) { 
+				documentExplorer.getImage().setInsertNum(document.getInsertNum());
+				documentExplorer.getImage().setInsertLet(document.getInsertLet());
+				documentExplorer.getImage().setImageProgTypeNum(searchForTranscribeFolio ? document.getTranscribeFolioNum() : document.getFolioNum());
+				documentExplorer.getImage().setMissedNumbering(searchForTranscribeFolio ? document.getTranscribeFolioMod() : document.getFolioMod());
+				documentExplorer.getImage().setImageType(ImageType.C);
+				documentExplorer.getImage().setImageRectoVerso(
+					searchForTranscribeFolio ?
+					(document.getTranscribeFolioRectoVerso() != null ? ImageRectoVerso.convertFromString(document.getTranscribeFolioRectoVerso().toString()) : null) :
+					(document.getFolioRectoVerso() != null ? ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()) : null)
+				);
 			}
 
 			Image image = getImageDAO().findImage(documentExplorer);

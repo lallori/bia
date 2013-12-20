@@ -103,6 +103,82 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws PersistenceException;
 	
 	/**
+	 * This method searches all the documents that satisfy the provided filters of volume, insert and folio.<br/>
+	 * <strong>NOTE:</strong> <code>volNum</code>, <code>volLetExt</code> and <code>folioNum</code> are mandatory
+	 * (<code>volLetExt</code> and <code>folioNum</code> can be null), while other parameters are optional (in
+	 * those cases they are not considered if they are equal to empty strings).
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the recto/verso
+	 * @return a list of {@link Document}, an empty list if no document is found.
+	 * @throws PersistenceException
+	 */
+	List<Document> findDocumentsOnFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
+	 * This method searches all the documents that satisfy the provided filters of volume, insert and folio.<br/>
+	 * <strong>NOTE:</strong> <code>volNum</code>, <code>volLetExt</code> and <code>folioNum</code> are mandatory
+	 * (<code>volLetExt</code> and <code>folioNum</code> can be null), while other parameters are optional (in
+	 * those cases they are not considered if they are equal to empty strings).
+	 * Furthermore, folio recto/verso filter is considered twice: with the value provided (only if it is not empty)
+	 * and then with null value.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the recto/verso
+	 * @return a list of {@link Document}, an empty list if no document is found.
+	 * @throws PersistenceException
+	 */
+	List<Document> findDocumentsOnFolioWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
+	 * This method searches all the documents that satisfy the provided filters of volume, insert and transcribe folio.<br/>
+	 * <strong>NOTE:</strong> <code>volNum</code>, <code>volLetExt</code> and <code>transcribeFolioNum</code> are mandatory
+	 * (<code>volLetExt</code> and <code>transcribeFolioNum</code> can be null), while other parameters are optional (in
+	 * those cases they are not considered if they are equal to empty strings).
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param transcribeFolioNum the transcribe folio number
+	 * @param transcribeFolioMod the transcribe folio extension
+	 * @param rectoVerso the transcribe recto/verso
+	 * @return a list of {@link Document}, an empty list if no document is found.
+	 * @throws PersistenceException
+	 */
+	List<Document> findDocumentsOnTranscribeFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer transcribeFolioNum, String transcribeFolioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
+	 * This method searches all the documents that satisfy the provided filters of volume, insert and transcribe folio.<br/>
+	 * <strong>NOTE:</strong> <code>volNum</code>, <code>volLetExt</code> and <code>transcribeFolioNum</code> are mandatory
+	 * (<code>volLetExt</code> and <code>transcribeFolioNum</code> can be null), while other parameters are optional (in
+	 * those cases they are not considered if they are equal to empty strings).
+	 * Furthermore, folio recto/verso filter is considered twice: with the value provided (only if it is not empty)
+	 * and then with null value.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param transcribeFolioNum the transcribe folio number
+	 * @param transcribeFolioMod the transcribe folio extension
+	 * @param rectoVerso the transcribe recto/verso
+	 * @return a list of {@link Document}, an empty list if no document is found.
+	 * @throws PersistenceException
+	 */
+	List<Document> findDocumentsOnTranscribeFolioWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
 	 * @param volNum the volume number
 	 * @param volLetExt the volume extension
 	 * @param folioNum the folio number

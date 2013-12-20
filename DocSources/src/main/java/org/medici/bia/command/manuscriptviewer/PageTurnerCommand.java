@@ -72,6 +72,8 @@ public class PageTurnerCommand {
 	private Boolean modeEdit;
 	/** This parameter is used to manage "jump to" form submit */
 	private Boolean formSubmitting;
+	/** This parameter is used to show Extract section */
+	private Boolean showExtract;
 	
 	/**
 	 * @return the entryId
@@ -297,17 +299,31 @@ public class PageTurnerCommand {
 	}
 	
 	/**
-	 * @param formSubmitting the modeEdit to set
+	 * @return the formSubmitting
+	 */
+	public Boolean getFormSubmitting() {
+		return formSubmitting;
+	}
+	
+	/**
+	 * @param formSubmitting the formSubmitting to set
 	 */
 	public void setFormSubmitting(Boolean formSubmitting) {
 		this.formSubmitting = formSubmitting;
 	}
 	
 	/**
-	 * @return the formSubmitting
+	 * @param showExtract the showExtract to set
 	 */
-	public Boolean getFormSubmitting() {
-		return formSubmitting;
+	public void setShowExtract(Boolean showExtract) {
+		this.showExtract = showExtract;
+	}
+	
+	/**
+	 * @return the showExtract
+	 */
+	public Boolean getShowExtract() {
+		return showExtract;
 	}
 
 }

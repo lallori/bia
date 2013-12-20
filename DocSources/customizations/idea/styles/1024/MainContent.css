@@ -1459,7 +1459,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #DocumentImageDigitDiv { /* Document image digitized or to be digitized */ 
-    width:120px;
+    width:150px;
     text-align:center;
     display:inline-block;
 }
@@ -1493,7 +1493,7 @@ p.notDigitized {
 }
 
 #documentTitle #text, #geoTitle #text {
-	width: 322px;
+	width: 292px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right:10px;
@@ -1545,6 +1545,14 @@ div#text div#icons {
 	width:50px;
 	height:55px;
 	background:url(${contextPath}/images/1024/button_openVolExplorer.png) bottom no-repeat;
+	cursor:pointer;
+	float: left;
+}
+
+#ShowTranscriptionInManuscriptViewer { /* Bottom left icon  */
+	width:50px;
+	height:55px;
+	background:url(${contextPath}/images/1024/transcription_icon.png) bottom no-repeat;
 	cursor:pointer;
 	float: left;
 }

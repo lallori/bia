@@ -71,36 +71,52 @@ public class ShowDocumentInManuscriptViewerController {
 	public ModelAndView setupPage(@ModelAttribute("requestCommand") ShowDocumentInManuscriptViewerCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
-		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), StringUtils.isEmpty(command.getVolLetExt()) ? null : command.getVolLetExt());
-		documentExplorer.setImage(new Image());
-		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
-		documentExplorer.getImage().setImageOrder(command.getImageOrder());
-		if (command.getImageOrder() == null) {
-			// FIXME do extend command
-			documentExplorer.getImage().setInsertNum("");
-			documentExplorer.getImage().setInsertLet("");
-			documentExplorer.getImage().setMissedNumbering("");
-			documentExplorer.getImage().setImageRectoVerso(null);
+		DocumentExplorer documentExplorer = null;
+		if (!Boolean.TRUE.equals(command.getShowTranscription())) {
+			documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), StringUtils.isEmpty(command.getVolLetExt()) ? null : command.getVolLetExt());
+			documentExplorer.setImage(new Image());
+			documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+			documentExplorer.getImage().setImageOrder(command.getImageOrder());
+			if (command.getImageOrder() == null) {
+				// FIXME do extend command
+				documentExplorer.getImage().setInsertNum("");
+				documentExplorer.getImage().setInsertLet("");
+				documentExplorer.getImage().setMissedNumbering("");
+				documentExplorer.getImage().setImageRectoVerso(null);
+			}
+			documentExplorer.getImage().setImageType(command.getImageType());
+			documentExplorer.setTotal(command.getTotal());
+			documentExplorer.setTotalRubricario(command.getTotalRubricario());
+			documentExplorer.setTotalCarta(command.getTotalCarta());
+			documentExplorer.setTotalAppendix(command.getTotalAppendix());
+			documentExplorer.setTotalOther(command.getTotalOther());
+			documentExplorer.setTotalGuardia(command.getTotalGuardia());
 		}
-		documentExplorer.getImage().setImageType(command.getImageType());
-		documentExplorer.setTotal(command.getTotal());
-		documentExplorer.setTotalRubricario(command.getTotalRubricario());
-		documentExplorer.setTotalCarta(command.getTotalCarta());
-		documentExplorer.setTotalAppendix(command.getTotalAppendix());
-		documentExplorer.setTotalOther(command.getTotalOther());
-		documentExplorer.setTotalGuardia(command.getTotalGuardia());
 
 		try {
-			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+			if (!Boolean.TRUE.equals(command.getShowTranscription())) {
+				documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+			} else {
+				documentExplorer = getManuscriptViewerService().getDocumentExplorer(command.getEntryId(), true);
+			}
+			
 			if (documentExplorer.getEntryId() == null) {
-				Image image = documentExplorer. getImage();
-				List<Document> documents = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
+				Image image = documentExplorer.getImage();
+				List<Document> documents = getManuscriptViewerService().findLinkedDocument(
+						command.getVolNum(),
+						command.getVolLetExt(),
+						image.getInsertNum(),
+						image.getInsertLet(),
+						image.getImageProgTypeNum(),
+						image.getMissedNumbering(),image.getImageRectoVerso().toString());
+				
 				if (documents.size() > 0) {
 					documentExplorer.setEntryId(documents.get(0).getEntryId());
 				}
 			}
 
 			model.put("documentExplorer", documentExplorer);
+			model.put("showTranscription", !Boolean.TRUE.equals(command.getShowTranscription()) ? false : true);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 		}

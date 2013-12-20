@@ -90,8 +90,9 @@ public class ShowExtractDocumentDialogController {
 					model.put("docExtract", null);
 				}
 				
-				model.put("folioNum", document.getFolioNum());
-				model.put("volNum", document.getVolume().getVolNum());
+				model.put("folio", document.getTranscribeFolioNum() != null ? document.getTranscribeFolioNum() + (document.getTranscribeFolioMod() != null ? " " + document.getTranscribeFolioMod() : "") + (document.getTranscribeFolioRectoVerso() != null ? " " + document.getTranscribeFolioRectoVerso() : "") : "NNF");
+				model.put("insert", document.getInsertNum() != null ? document.getInsertNum() + (document.getInsertLet() != null ? " " + document.getInsertLet() : "") : null);
+				model.put("volNum", document.getVolume().getMDP());
 				model.put("entryId", document.getEntryId());
 			} catch (ApplicationThrowable ath) {
 				model.put("applicationThrowable", ath);

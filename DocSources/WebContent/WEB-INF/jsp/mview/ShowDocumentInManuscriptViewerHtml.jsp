@@ -27,6 +27,7 @@
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="modeEdit" value="false" />
+		<c:param name="showExtract" value="${showTranscription}" />
 	</c:url>
 		
 		<%-- <script>
@@ -43,7 +44,7 @@
 					// Disable caching of AJAX responses */
 					cache: false
 				});
-
+				
 				// RR: Added volume informations and insert informations (if needed)
 				var volExt = "${documentExplorer.image.volLetExt}";
 				var insNum = "${documentExplorer.image.insertNum}";

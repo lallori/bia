@@ -148,147 +148,10 @@
 							$("#next").attr('href', data.nextPage);
 						}
 						
-						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
-							// We set currentImage
-							currentImage = data.imageId;
-							$j("#currentImageOrder").val(data.imageOrder);
-							if (transcribing == false) {
-								if (data.error == 'wrongType' || data.imageType == 'R') {
-									$j("#unvailableTranscribe").css('display', 'block');
-			    					$j("#alreadyTranscribe").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").removeAttr('href');
-			    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-			    					$j("#showTranscription").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-			    					$j("#notExtract").css('display', 'none');
-		    						$j("#extractTranscribe").css('display', 'none');
-			    					$j("#readyToTranscribe").css('display', 'none');
-			    					$j("#choiceThisFolioStart").css('display', 'none');
-			    				} else if (data.linkedDocument == 'true') {
-			    					if(data.isExtract == 'false'){
-			    						$j("#notExtract").css('display', 'block');
-			    						$j("#extractTranscribe").css('display', 'block');
-			    						$j("#currentEntryId").val(data.entryId);
-			    						$j("#alreadyTranscribe").css('display', 'none');
-			    						$j("#showAlreadyTranscribed").css('display', 'none');
-			    						$j("#showAlreadyTranscribedDocs").css('display', 'none');
-			    						$j("#showTranscription").css('display', 'none');
-			    						$j("#transcribeAnyway").css('display', 'none');
-			    						$j("#unvailableTranscribe").css('display', 'none');
-			    						$j("#readyToTranscribe").css('display', 'none');
-			    						$j("#choiceThisFolioStart").css('display', 'none');
-			    					}else{
-			    						if(data.countAlreadyEntered == 1){
-											$j("#alreadyTranscribe").css('display', 'block');
-											$j("#showTranscription").css('display', 'block');
-											$j("#showAlreadyTranscribed").css('display', 'none');
-											$j("#transcribeAnyway").css('display', 'block');
-											$j("#showAlreadyTranscribedDocs").css('display', 'none');
-											$j("#notExtract").css('display', 'none');
-											$j("#extractTranscribe").css('display', 'none');
-											$j("#unvailableTranscribe").css('display', 'none');
-											$j("#readyToTranscribe").css('display', 'none');
-											$j("#choiceThisFolioStart").css('display', 'none');
-											$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
-											$j("#currentEntryId").val(data.entryId);
-											//If the extract of this document is already opened, we visualize the "Show record" button
-					    					if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
-					    						if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
-					    							$j("#showTranscription").css('display', 'none');
-													$j("#showAlreadyTranscribed").css('display', 'block');
-					    						}
-					    					}
-										}else if(data.countAlreadyEntered > 1){
-											$j("#alreadyTranscribe").css('display', 'block');
-											$j("#showAlreadyTranscribed").css('display', 'none');
-											$j("#showAlreadyTranscribedDocs").css('display', 'block');
-											$j("#showTranscription").css('display', 'none');
-											$j("#transcribeAnyway").css('display', 'block');
-											$j("#notExtract").css('display', 'none');
-											$j("#extractTranscribe").css('display', 'none');
-											$j("#unvailableTranscribe").css('display', 'none');
-											$j("#readyToTranscribe").css('display', 'none');
-											$j("#choiceThisFolioStart").css('display', 'none');
-											$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
-										}
-			    					}
-			    					
-			    				} else if (data.linkedDocument == 'false') {
-			    					// Only users with special role can transcribe new document. 
-			    					if (functionParams["canTranscribe"] =='true' && data.imageType != "R") {
-			    						$j("#readyToTranscribe").css('display', 'block');
-			    					}
-			    					$j("#alreadyTranscribe").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").removeAttr('href');
-			    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-			    					$j("#showTranscription").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-			    					$j("#notExtract").css('display', 'none');
-		    						$j("#extractTranscribe").css('display', 'none');
-			    					$j("#unvailableTranscribe").css('display', 'none');
-			    					$j("#choiceThisFolioStart").css('display', 'none');
-			    				} else {
-			    					$j("#unvailableTranscribe").css('display', 'none');
-			    					$j("#alreadyTranscribe").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").css('display', 'none');
-			    					$j("#showAlreadyTranscribed").removeAttr('href');
-			    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-			    					$j("#showTranscription").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-			    					$j("#notExtract").css('display', 'none');
-		    						$j("#extractTranscribe").css('display', 'none');
-			    					$j("#readyToTranscribe").css('display', 'none');
-			    					$j("#choiceThisFolioStart").css('display', 'none');
-			    				}
-							} else {
-								if($j("#EditExtractDocumentForm").length != 0){
-									$j("#unvailableTranscribe").css('display', 'none');
-									$j("#alreadyTranscribe").css('display', 'none');
-									$j("#showAlreadyTranscribed").css('display', 'none');
-									$j("#showAlreadyTranscribedDocs").css('display', 'none');
-									$j("#showTranscription").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-									$j("#notExtract").css('display', 'none');
-									$j("#extractTranscribe").css('display', 'none');
-									$j("#readyToTranscribe").css('display', 'none');
-									$j("#choiceThisFolioStart").css('display', 'none');
-									$j("#transcribeDiv").append($j("#transcribeMode"));
-									$j("#transcribeMode").css('display', 'inline');
-								}else if(data.linkedDocument == 'true'){ 							
-									//In this case we choose the start folio to transcribe
-									$j("#unvailableTranscribe").css('display', 'none');
-									$j("#alreadyTranscribe").css('display', 'block');
-									$j("#showTranscription").css('display', 'none');
-									$j("#showAlreadyTranscribed").css('display', 'none');
-									$j("#showAlreadyTranscribedDocs").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-									$j("#notExtract").css('display', 'none');
-									$j("#extractTranscribe").css('display', 'none');
-									$j("#readyToTranscribe").css('display', 'none');
-									$j("#choiceThisFolioStart").css('display', 'block');
-									$j("#choiceThisFolioStart").css('opacity', '0.5');
-									$j("#transcribeDiv").append($j("#transcribeMode"));
-									$j("#transcribeMode").css('display', 'block');
-								}else if(data.linkedDocument == 'false'){
-									$j("#unvailableTranscribe").css('display', 'none');
-									$j("#alreadyTranscribe").css('display', 'none');
-									$j("#showTranscription").css('display', 'none');
-									$j("#showAlreadyTranscribed").css('display', 'none');
-									$j("#showAlreadyTranscribedDocs").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-									$j("#notExtract").css('display', 'none');
-									$j("#extractTranscribe").css('display', 'none');
-									$j("#readyToTranscribe").css('display', 'none');
-									$j("#choiceThisFolioStart").css('display', 'block');
-									$j("#choiceThisFolioStart").css('opacity', '1');
-									$j("#transcribeDiv").append($j("#transcribeMode"));
-									$j("#transcribeMode").css('display', 'block');
-								}
-							}
-							
+						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
+							$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
 		    			});
+						
 					}
 				});
 
@@ -324,6 +187,152 @@
         "textSpine" : "SPINE",
         "textRecto" : "recto",
         "textVerso" : "verso"
+    };
+    
+    /**
+	 * This function displays the given sections (messages or buttons).
+	 * Possible sections are:
+	 * 		#alreadyTranscribe 			-> message
+	 *		#choiceThisFolioStart 		-> button 
+	 *		#extractTranscribe			-> button
+	 *		#lettersHere				-> message
+	 *		#notExtract					-> message
+	 *		#readyToTranscribe			-> button
+	 *		#showAlreadyTranscribed		-> button
+	 *		#showAlreadyTranscribedDocs	-> button
+	 *		#showTranscription			-> button
+	 *		#transcribeAnyway			-> button
+	 *		#transcriptionsHere			-> message
+	 *		#unvailableTranscribe		-> message
+	 *
+	 * @params sections the sections to show (listed in a js-array)
+	 */
+	$.fn.display = function(sections) {
+		var notDisplayedSections = new Array(
+			"#alreadyTranscribe",
+			"#choiceThisFolioStart",
+			"#extractTranscribe",
+			"#lettersHere",
+			"#notExtract",
+			"#readyToTranscribe",
+			"#showAlreadyTranscribed",
+			"#showAlreadyTranscribedDocs",
+			"#showTranscription",
+			"#transcribeAnyway",
+			"#transcriptionsHere",
+			"#unvailableTranscribe"
+		);
+		
+		if (typeof sections !== "undefined") {
+			var sec;
+			if (Object.prototype.toString.apply(sections) !== '[object Array]') {
+				sec = new Array();
+				sec[0] = sections;
+			} else {
+				sec = sections;
+			}
+			
+			for(i = 0; i < sections.length; i++) {
+				var selector = $j(sections[i]);
+				if (typeof selector !== "undefined") {
+					var idx = notDisplayedSections.indexOf(sections[i]);
+					if (idx > -1) {
+						notDisplayedSections.splice(idx, 1);
+					}
+					$j(selector).css('display', 'block');
+				}
+			}
+		}
+		
+		for (i = 0; i < notDisplayedSections.length; i++) {
+			var selector = $j(notDisplayedSections[i]);
+			if (typeof selector !== "undefined") {
+				$j(selector).css('display', 'none');
+			}
+		}
+		
+		return $;
+    };
+    
+    $.fn.showButtonsAndMsgCallback = function(data, canTranscribe) {
+		// We set currentImage
+		currentImage = data.imageId;
+		$j("#currentImageOrder").val(data.imageOrder);
+		
+		if (transcribing == false) {
+			if (data.error == 'wrongType') {
+				$j("#showAlreadyTranscribed").removeAttr('href');
+				$.fn.display("#unvailableTranscribe");
+			} else if (data.linkedDocumentOnStartFolio == true || data.linkedDocumentOnTranscribeFolio == true) {
+				if (data.isExtract == false) {
+					$j("#currentEntryId").val(data.entryId);
+					$.fn.display(new Array("#notExtract", "#extractTranscribe"));
+				}else{
+					if(data.countAlreadyEntered == 1){
+						var isOpenExtractDoc = $j("#ShowExtractDocumentDiv").dialog("isOpen") && $j("#extractEntryId").val() == $j('#currentEntryId').val();
+						$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
+						$j("#currentEntryId").val(data.entryId);
+						
+						if (data.linkedDocumentOnStartFolio == true && data.linkedDocumentOnTranscribeFolio == true) {
+							// This is a start folio of one letter and it is already transcribed
+							$.fn.display(new Array("#alreadyTranscribe", isOpenExtractDoc ? "#showAlreadyTranscribed" : "#showTranscription", "#transcribeAnyway"));
+						} else if (data.linkedDocumentOnStartFolio == true) {
+							// This folio is a start folio of one letter
+							$.fn.display(new Array("#lettersHere", isOpenExtractDoc ? "#showAlreadyTranscribed" : "#showTranscription", "#transcribeAnyway"));
+						} else {
+							// This folio has one transcription attached
+							$.fn.display(new Array("#transcriptionsHere", isOpenExtractDoc ? "#showAlreadyTranscribed" : "#showTranscription", "#transcribeAnyway"));
+						}
+					} else if(data.countAlreadyEntered > 1) {
+						$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
+						if (data.linkedDocumentOnStartFolio == true && data.linkedDocumentOnTranscribeFolio == true) {
+							// This folio is a start folio of one or more letters and has one of more transcriptions attached
+							$.fn.display(new Array("#alreadyTranscribe","#showAlreadyTranscribedDocs","#transcribeAnyway"));
+						} else if (data.linkedDocumentOnStartFolio == true) {
+							// This folio is a start folio of more than one letter
+							$.fn.display(new Array("#lettersHere","#showAlreadyTranscribedDocs","#transcribeAnyway"));
+						} else {
+							// This folio has more than one transcription attached
+							$.fn.display(new Array("#transcriptionsHere","#showAlreadyTranscribedDocs","#transcribeAnyway"));
+						}
+					}
+				}
+				
+			} else if (data.linkedDocumentOnStartFolio == false && data.linkedDocumentOnTranscribeFolio == false) {
+				// Only users with special role can transcribe new document. 
+				$.fn.display();
+				if (canTranscribe == true) {
+					$j("#readyToTranscribe").css('display', 'block');
+				}
+				$j("#showAlreadyTranscribed").removeAttr('href');
+			} else {
+				$.fn.display();
+			}
+		} else {
+			if ($j("#EditExtractDocumentForm").length != 0) {
+				$.fn.display();
+				$j("#transcribeDiv").append($j("#transcribeMode"));
+				$j("#transcribeMode").css('display', 'inline');
+			} else if (data.linkedDocumentOnStartFolio == true || data.linkedDocumentOnTranscribeFolio == true) { 							
+				//In this case we choose the start folio to transcribe
+				$j("#choiceThisFolioStart").css('opacity', '0.5');
+				$j("#transcribeDiv").append($j("#transcribeMode"));
+				$j("#transcribeMode").css('display', 'block');
+				
+				if (data.linkedDocumentOnStartFolio == true && data.linkedDocumentOnTranscribeFolio == true) {
+					$.fn.display(new Array("#alreadyTranscribe", "#choiceThisFolioStart"));
+				} else if (data.linkedDocumentOnStartFolio == true) {
+					$.fn.display(new Array("#lettersHere", "#choiceThisFolioStart"));
+				} else {
+					$.fn.display(new Array("#transcriptionsHere", "#choiceThisFolioStart"));
+				}
+			} else if (data.linkedDocumentOnStartFolio == false && data.linkedDocumentOnTranscribeFolio == false) {
+				$.fn.display("#choiceThisFolioStart");
+				$j("#choiceThisFolioStart").css('opacity', '1');
+				$j("#transcribeDiv").append($j("#transcribeMode"));
+				$j("#transcribeMode").css('display', 'block');
+			}
+		}
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -412,145 +421,8 @@
 						$("#next").attr('href', data.nextPage);
 					}
 
-					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
-						// We set currentImage
-						currentImage = data.imageId;
-						$j("#currentImageOrder").val(data.imageOrder);
-						if (transcribing == false) {
-							if (data.error == 'wrongType') {
-		    					$j("#unvailableTranscribe").css('display', 'block');
-		    					$j("#alreadyTranscribe").css('display', 'none');
-		    					$j("#showTranscription").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").removeAttr('href');
-		    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-		    					$j("#notExtract").css('display', 'none');
-	    						$j("#extractTranscribe").css('display', 'none');
-		    					$j("#readyToTranscribe").css('display', 'none');
-		    					$j("#choiceThisFolioStart").css('display', 'none');
-		    				} else if (data.linkedDocument == 'true') {
-		    					if(data.isExtract == 'false'){
-		    						$j("#notExtract").css('display', 'block');
-		    						$j("#extractTranscribe").css('display', 'block');
-		    						$j("#currentEntryId").val(data.entryId);
-		    						$j("#alreadyTranscribe").css('display', 'none');
-		    						$j("#showAlreadyTranscribed").css('display', 'none');
-		    						$j("#showAlreadyTranscribedDocs").css('display', 'none');
-		    						$j("#showTranscription").css('display', 'none');
-									$j("#transcribeAnyway").css('display', 'none');
-		    						$j("#unvailableTranscribe").css('display', 'none');
-		    						$j("#readyToTranscribe").css('display', 'none');
-		    						$j("#choiceThisFolioStart").css('display', 'none');
-		    					}else{
-		    						if(data.countAlreadyEntered == 1){
-										$j("#alreadyTranscribe").css('display', 'block');
-										$j("#showAlreadyTranscribed").css('display', 'none');
-										$j("#showTranscription").css('display', 'block');
-										$j("#transcribeAnyway").css('display', 'block');
-										$j("#showAlreadyTranscribedDocs").css('display', 'none');
-										$j("#notExtract").css('display', 'none');
-										$j("#extractTranscribe").css('display', 'none');
-										$j("#unvailableTranscribe").css('display', 'none');
-										$j("#readyToTranscribe").css('display', 'none');
-										$j("#choiceThisFolioStart").css('display', 'none');
-										$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
-										$j("#currentEntryId").val(data.entryId);
-										//If the extract of this document is already opened, we visualize the "Show record" button
-				    					if($j("#ShowExtractDocumentDiv").dialog("isOpen")){
-				    						if($j("#extractEntryId").val() == $j('#currentEntryId').val()){
-				    							$j("#showTranscription").css('display', 'none');
-												$j("#showAlreadyTranscribed").css('display', 'block');
-				    						}
-				    					}
-									}else if(data.countAlreadyEntered > 1){
-										$j("#alreadyTranscribe").css('display', 'block');
-										$j("#showAlreadyTranscribed").css('display', 'none');
-										$j("#showAlreadyTranscribedDocs").css('display', 'block');
-										$j("#showTranscription").css('display', 'none');
-										$j("#transcribeAnyway").css('display', 'block');
-										$j("#notExtract").css('display', 'none');
-										$j("#extractTranscribe").css('display', 'none');
-										$j("#unvailableTranscribe").css('display', 'none');
-										$j("#readyToTranscribe").css('display', 'none');
-										$j("#choiceThisFolioStart").css('display', 'none');
-										$j("#showAlreadyTranscribedDocs").attr("href", data.showLinkedDocument);
-									}
-		    					}
-		    					
-		    				} else if (data.linkedDocument == 'false') {
-		    					// Only users with special role can transcribe new document. 
-		    					if (functionParams["canTranscribe"] =='true') {
-		    						$j("#readyToTranscribe").css('display', 'block');
-		    					}
-		    					$j("#alreadyTranscribe").css('display', 'none');
-		    					$j("#showTranscription").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").removeAttr('href');
-		    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-		    					$j("#notExtract").css('display', 'none');
-	    						$j("#extractTranscribe").css('display', 'none');
-		    					$j("#unvailableTranscribe").css('display', 'none');
-		    					$j("#choiceThisFolioStart").css('display', 'none');
-		    				} else {
-		    					$j("#unvailableTranscribe").css('display', 'none');
-		    					$j("#alreadyTranscribe").css('display', 'none');
-		    					$j("#showTranscription").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").css('display', 'none');
-		    					$j("#showAlreadyTranscribed").removeAttr('href');
-		    					$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-		    					$j("#notExtract").css('display', 'none');
-	    						$j("#extractTranscribe").css('display', 'none');
-		    					$j("#readyToTranscribe").css('display', 'none');
-		    					$j("#choiceThisFolioStart").css('display', 'none');
-		    				}
-						} else {
-							if($j("#EditExtractDocumentForm").length != 0){
-								$j("#unvailableTranscribe").css('display', 'none');
-								$j("#alreadyTranscribe").css('display', 'none');
-								$j("#showAlreadyTranscribed").css('display', 'none');
-								$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#showTranscription").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-								$j("#notExtract").css('display', 'none');
-								$j("#extractTranscribe").css('display', 'none');
-								$j("#readyToTranscribe").css('display', 'none');
-								$j("#choiceThisFolioStart").css('display', 'none');
-								$j("#transcribeDiv").append($j("#transcribeMode"));
-								$j("#transcribeMode").css('display', 'inline');
-							}else if(data.linkedDocument == 'true'){ 							
-								//In this case we choose the start folio to transcribe
-								$j("#unvailableTranscribe").css('display', 'none');
-								$j("#alreadyTranscribe").css('display', 'block');
-								$j("#showTranscription").css('display', 'none');
-								$j("#showAlreadyTranscribed").css('display', 'none');
-								$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-								$j("#notExtract").css('display', 'none');
-								$j("#extractTranscribe").css('display', 'none');
-								$j("#readyToTranscribe").css('display', 'none');
-								$j("#choiceThisFolioStart").css('display', 'block');
-								$j("#choiceThisFolioStart").css('opacity', '0.5');
-								$j("#transcribeDiv").append($j("#transcribeMode"));
-								$j("#transcribeMode").css('display', 'block');
-							}else if(data.linkedDocument == 'false'){
-								$j("#unvailableTranscribe").css('display', 'none');
-								$j("#alreadyTranscribe").css('display', 'none');
-								$j("#showTranscription").css('display', 'none');
-								$j("#showAlreadyTranscribed").css('display', 'none');
-								$j("#showAlreadyTranscribedDocs").css('display', 'none');
-								$j("#transcribeAnyway").css('display', 'none');
-								$j("#notExtract").css('display', 'none');
-								$j("#extractTranscribe").css('display', 'none');
-								$j("#readyToTranscribe").css('display', 'none');
-								$j("#choiceThisFolioStart").css('display', 'block');
-								$j("#choiceThisFolioStart").css('opacity', '1');
-								$j("#transcribeDiv").append($j("#transcribeMode"));
-								$j("#transcribeMode").css('display', 'block');
-							}
-						}
+					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
+						$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
 	    			});
 
 				}});

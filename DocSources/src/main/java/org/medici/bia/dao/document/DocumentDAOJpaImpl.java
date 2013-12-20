@@ -38,7 +38,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -165,7 +164,15 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws PersistenceException {
+	public List<Document> findDocument(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod, 
+			Document.RectoVerso folioRectoVerso) throws PersistenceException {
+		
 		boolean isEmptyVolLetExt = "".equals(ObjectUtils.toString(volLetExt).trim());
 		boolean isEmptyInsertNum = "".equals(ObjectUtils.toString(insertNum).trim());
 		boolean isEmptyInsertLet = "".equals(ObjectUtils.toString(insertLet).trim());
@@ -205,6 +212,66 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		List<Document> docs = query.getResultList();
 			
 		return docs;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findDocumentsOnFolio(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String rectoVerso) throws PersistenceException {
+		return findDocumentsOnFolioOrTranscribeFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso, true, false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findDocumentsOnFolioWithOrWithoutRectoVerso(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String rectoVerso) throws PersistenceException {
+		return findDocumentsWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso, true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findDocumentsOnTranscribeFolio(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer transcribeFolioNum,
+			String transcribeFolioMod,
+			String rectoVerso) throws PersistenceException {
+		return findDocumentsOnFolioOrTranscribeFolio(volNum, volLetExt, insertNum, insertLet, transcribeFolioNum, transcribeFolioMod, rectoVerso, false, false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> findDocumentsOnTranscribeFolioWithOrWithoutRectoVerso(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String rectoVerso) throws PersistenceException {
+		return findDocumentsWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso, false);
 	}
 	
 	/**
@@ -962,5 +1029,84 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	        	session.close();
 	        }
 		}
+	}
+	
+	
+	/* Privates */
+	
+	@SuppressWarnings("unchecked")
+	private List<Document> findDocumentsOnFolioOrTranscribeFolio (
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String rectoVerso,
+			boolean isFolio,
+			boolean alsoNullFolio) throws PersistenceException {
+		
+		String insNum = org.medici.bia.common.util.StringUtils.safeTrim(insertNum);
+		String insLet = org.medici.bia.common.util.StringUtils.safeTrim(insertLet);
+		String folMod = org.medici.bia.common.util.StringUtils.safeTrim(folioMod);
+		String rv = org.medici.bia.common.util.StringUtils.safeTrim(rectoVerso);
+		
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(rv) && Document.RectoVerso.convertFromString(rv) == null) {
+			throw new PersistenceException("Find document on " + (isFolio ? "" : "transcribe") + " folio query: Not possible to convert the given transcribe folio recto/verso [" + rv + "]");
+		}
+		
+		StringBuilder sb = new StringBuilder("FROM Document WHERE volume.volNum = :volNum");
+		sb.append(" AND volume.volLetExt ").append(org.medici.bia.common.util.StringUtils.isNullableString(volLetExt) ? "IS NULL" : "= :volLetExt");
+		if (insNum != "") {
+			sb.append(" AND insertNum ").append(insNum == null ? "IS NULL" : "= :insertNum");
+		}
+		if (insLet != "") {
+			sb.append(" AND insertLet ").append(insLet == null ? "IS NULL" : "= :insertLet");
+		}
+		sb.append(" AND ").append(isFolio ? "folioNum " : "transcribeFolioNum ").append(folioNum == null ? "IS NULL" : "= :folioNum");
+		if (folMod != "") {
+			sb.append(" AND ").append(isFolio ? "folioMod " : "transcribeFolioMod ").append(folMod == null ? "IS NULL" : "= :folioMod");
+		}
+		if (rv != "" || alsoNullFolio) {
+			sb.append(rv != null && alsoNullFolio ? " AND (" : " AND ").append(isFolio ? "folioRectoVerso " : "transcribeFolioRectoVerso ").append(rv == null ? "IS NULL" : "= :rectoVerso");
+			if (rv != null && alsoNullFolio) {
+				sb.append(" OR ").append(isFolio ? "folioRectoVerso " : "transcribeFolioRectoVerso ").append(" IS NULL)");
+			}
+		}
+		
+		Query query = getEntityManager().createQuery(sb.toString());
+		query.setParameter("volNum", volNum);
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(volLetExt)) {
+			query.setParameter("volLetExt", volLetExt.trim());
+		}
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(insNum)) {
+			query.setParameter("insertNum", insNum);
+		}
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(insLet)) {
+			query.setParameter("insertLet", insLet);
+		}
+		if (folioNum != null) {
+			query.setParameter("folioNum", folioNum);
+		}
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(folMod)) {
+			query.setParameter("folioMod", folMod);
+		}
+		if (!org.medici.bia.common.util.StringUtils.isNullableString(rv)) {
+			query.setParameter("rectoVerso", Document.RectoVerso.convertFromString(rv));
+		}
+		return query.getResultList();
+	}
+	
+	private List<Document> findDocumentsWithOrWithoutRectoVerso(
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String rectoVerso,
+			boolean isFolio) throws PersistenceException {
+		
+		return findDocumentsOnFolioOrTranscribeFolio(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, rectoVerso, isFolio, true);
 	}
 }

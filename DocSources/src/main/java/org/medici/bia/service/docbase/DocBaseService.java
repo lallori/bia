@@ -361,6 +361,27 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns a list of documents with the given start folio. If <code>alsoTranscribeFolio</code> is true
+	 * result list also contains documents where the transcribe folio corresponds to the given filters.<br/>
+	 * <strong>NOTE :</strong> <code>folioRectoVerso</code> filter is considered twice: with the given value (only if 
+	 * it is not empty) and then with null value.<br/>
+	 * Furthermore, the mandatory filters must be valorized (<code>volLetExt</code> can be null) while the others are
+	 * not considered if they are empty strings.
+	 * 
+	 * @param volNum the volume number (mandatory)
+	 * @param volLetExt the volume letter extension (mandatory)
+	 * @param insertNum the insert number
+	 * @param insertLet the insert letter
+	 * @param folioNum the folio/transcribe folio number (mandatory)
+	 * @param folioMod the folio/transcribe folio extension
+	 * @param folioRectoVerso the folio/transcribe folio recto/verso
+	 * @param alsoTranscribeFolio if true the documents with the given transcribe folio are added to the result list.
+	 * @return a list of {@link Document}
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findDocumentsByFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso, boolean alsoTranscribeFolio) throws ApplicationThrowable;
 
 	/**
 	 * 

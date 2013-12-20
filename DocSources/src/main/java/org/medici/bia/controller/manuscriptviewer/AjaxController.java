@@ -35,7 +35,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.pagination.DocumentExplorer;
@@ -43,7 +43,6 @@ import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
-import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -214,64 +213,96 @@ public class AjaxController {
 
 		try {
 			Integer documentId = null;
-			List<Document> documents = null;
-			Boolean isExtract = false;
+			List<Document> linkedDocumentOnStartFolio = null;
+			List<Document> linkedDocumentOnTranscribeFolio = null;
+			boolean isExtract = false;
 			Image image = new Image();
+			
+			int intersectionSize = 0;
+			int unionSize = 0;
+			
 //			if (entryId != null) {
 //				documentId = entryId;
 //			} else {
-				if ((!ObjectUtils.toString(imageType).equals("")) && (!imageType.equals("C"))) {
+				if (org.medici.bia.common.util.StringUtils.safeTrim(imageType) != null && !"C".equals(imageType.trim())) {
 					model.put("error", "wrongType");
 				} else {
 					// We extract image
 					image = getManuscriptViewerService().findVolumeImage(null, volNum, volLetExt, (imageType != null) ? ImageType.valueOf(imageType) : null, imageProgTypeNum, imageOrder);
 					
 					if (image != null) {
-						if ((!ObjectUtils.toString(image.getImageType()).equals("")) && (!image.getImageType().equals(ImageType.C))) {
-							model.put("error", "wrongType");
-						} else {
-							// We check if this image has a document linked...
-							documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString());
-							if (documents.size() == 0) {
-								// If the previous query did not find documents we search documents where 
-								// recto/verso is NULL in the database: this is the case of old processes
-								// when it was not possible to specify the recto/verso detail.
-								documents = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), ImageRectoVerso.N.toString());
-							}
-							if (documents.size() == 1) {
-								documentId = documents.get(0).getEntryId();
-							} else if (documents.size() > 1) {
-								isExtract = Boolean.TRUE;
-							}
-						}
 						model.put("imageName", image.getImageName());
 						model.put("imageId", image.getImageId());
 						model.put("imageType", image.getImageType());
 						model.put("imageOrder", image.getImageOrder());
+						
+						if (!ImageType.C.equals(image.getImageType())) {
+							model.put("error", "wrongType");
+						} else {
+							// We check if this image has linked document on start folio...
+							linkedDocumentOnStartFolio = getManuscriptViewerService().findLinkedDocumentOnStartFolioWithOrWithoutRectoVerso(
+									volNum,
+									volLetExt,
+									image.getInsertNum(),
+									image.getInsertLet(),
+									image.getImageProgTypeNum(),
+									image.getMissedNumbering(),
+									image.getImageRectoVerso() != null ? image.getImageRectoVerso().toString() : null);
+
+							// ..and on transcribe folio
+							linkedDocumentOnTranscribeFolio = getManuscriptViewerService().findLinkedDocumentOnTranscriptionWithOrWithoutRectoVerso(
+									volNum,
+									volLetExt,
+									image.getInsertNum(),
+									image.getInsertLet(),
+									image.getImageProgTypeNum(),
+									image.getMissedNumbering(),
+									image.getImageRectoVerso() != null ? image.getImageRectoVerso().toString() : null);
+								
+							if (!linkedDocumentOnStartFolio.isEmpty() && !linkedDocumentOnTranscribeFolio.isEmpty()) {
+								intersectionSize = CollectionUtils.intersection(linkedDocumentOnStartFolio, linkedDocumentOnTranscribeFolio).size();
+								unionSize = CollectionUtils.union(linkedDocumentOnStartFolio, linkedDocumentOnTranscribeFolio).size();
+							} else {
+								unionSize = Math.max(linkedDocumentOnStartFolio.size(), linkedDocumentOnTranscribeFolio.size());
+							}
+							
+							if (unionSize == 1) {
+									documentId = linkedDocumentOnStartFolio.isEmpty() ? linkedDocumentOnTranscribeFolio.iterator().next().getEntryId() : linkedDocumentOnStartFolio.iterator().next().getEntryId();
+							} else if (unionSize > 1) {
+								isExtract = true;
+							}
+						}
 					}
 				}
 //			}			
-			if(documentId != null){
+			if (documentId != null) {
 				isExtract = getManuscriptViewerService().isDocumentExtract(documentId);
 			}
 			
-			model.put("linkedDocument", (documents != null && documents.size() > 0) ? "true" : "false");
-			model.put("countAlreadyEntered", (documents != null) ? documents.size() : 0);
-			model.put("entryId", documentId );
-			if (documents != null && documents.size() == 1) {
+			// old one
+			//model.put("linkedDocument", (linkedDocumentOnStartFolio != null && linkedDocumentOnStartFolio.size() > 0) ? true : false);
+			// new ones
+			model.put("linkedDocumentOnStartFolio", (linkedDocumentOnStartFolio != null && linkedDocumentOnStartFolio.size() > 0) ? true : false);
+			model.put("linkedDocumentOnTranscribeFolio", (linkedDocumentOnTranscribeFolio != null && linkedDocumentOnTranscribeFolio.size() > 0) ? true : false);
+			model.put("countAlreadyEntered", unionSize);
+			model.put("countStartAndTranscribeHere", intersectionSize);
+			model.put("entryId", documentId);
+			if (unionSize == 1) {
 				model.put("showLinkedDocument",  HtmlUtils.showDocument(documentId));
-			} else if (documents != null && documents.size() > 1) {
+			} else if (unionSize > 1) {
 				model.put("showLinkedDocument", HtmlUtils.showSameFolioDocuments(volNum, volLetExt, image.getInsertNum(), image.getInsertLet(), image.getImageProgTypeNum(), image.getMissedNumbering(), image.getImageRectoVerso().toString()));
 			}
-			model.put("isExtract", (isExtract.equals(Boolean.TRUE)) ? "true" : "false");
+			model.put("isExtract", isExtract);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
-			model.put("linkedDocument", "false");
+			//model.put("linkedDocument", false);
+			model.put("linkedDocumentOnStartFolio", false);
+			model.put("linkedDocumentOnTranscribeFolio", false);
 			model.put("showLinkedDocument", "");
 			model.put("imageName", "");
 			model.put("imageId", "");
 			model.put("imageOrder", "");
-			model.put("isExtract", "false");
+			model.put("isExtract", false);
 		}
 		
 		return new ModelAndView("responseOK", model);

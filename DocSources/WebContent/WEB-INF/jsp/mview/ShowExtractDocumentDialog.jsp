@@ -8,15 +8,17 @@
 	
 	<c:url var="ShowSynopsisDialogURL" value="/src/mview/ShowSynopsisDocumentDialog.do" />
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
 	<div id="ShowExtractDocumentDiv">
-		<div id="content">${docExtract}</div>
-	</security:authorize>	
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-		<input id="editExtract" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.editTranscription.alt"/>"/>
-	</security:authorize>
-	<input id="showSynopsis" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.showSynopsis.alt"/>"/>
-	<input id="exitExtract" class="button_small" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.close.button"/>"/>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+			<div id="content">${docExtract}</div>
+		</security:authorize>
+		<div id="showExtractDocumentCommands" style="position: absolute; bottom: 0;">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
+				<input id="editExtract" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.editTranscription.alt"/>"/>
+			</security:authorize>
+			<input id="showSynopsis" class="button_medium" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.showSynopsis.alt"/>"/>
+			<input id="exitExtract" class="button_small" type="submit" value="<fmt:message key="mview.showExtractDocumentDialog.close.button"/>"/>
+		</div>	
     </div>
     
     <input type="hidden" id="extractEntryId" value="${entryId}" />
@@ -36,8 +38,12 @@
 // 					return false;
 // 				}
 // 			});
-			
-			$j("#ui-dialog-title-ShowExtractDocumentDiv").text("<fmt:message key="mview.showExtractDocumentDialog.showTranscriptionWindow.title"/> / <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.folio"/>: ${folioNum} - <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}");
+			var dialogCaption = '<fmt:message key="mview.showExtractDocumentDialog.showTranscriptionWindow.title"/> / <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.volume"/>: ${volNum}';
+			if (${not empty insert}) {
+				dialogCaption += ' <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.insert"/>: ${insert}';
+			}
+			dialogCaption += ' <fmt:message key="mview.showExtractDocumentDialog.youAreTranscribingFrom.folio"/>: ${folio}';
+			$j("#ui-dialog-title-ShowExtractDocumentDiv").text(dialogCaption);
 			
 			$j("#showSynopsis").click(function(){
 				$j('<div id="ShowSynopsisDocumentDiv"></div>').dialog({                                                                                                                                                                   

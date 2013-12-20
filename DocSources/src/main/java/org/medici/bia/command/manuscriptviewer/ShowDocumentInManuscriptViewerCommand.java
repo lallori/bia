@@ -62,6 +62,8 @@ public class ShowDocumentInManuscriptViewerCommand {
 	private Long totalGuardia;
 	/** This parameter is used to count appendix total */
 	private Long totalAppendix;
+	/** This parameter is used to show transcription in the manuscript viewer */
+	private Boolean showTranscription;
 	
 	/**
 	 * @return the entryId
@@ -243,5 +245,19 @@ public class ShowDocumentInManuscriptViewerCommand {
 	 */
 	public void setTotalAppendix(Long totalAppendix) {
 		this.totalAppendix = totalAppendix;
+	}
+
+	/**
+	 * @return the showTranscription
+	 */
+	public Boolean getShowTranscription() {
+		return showTranscription;
+	}
+
+	/**
+	 * @param showTranscription the showTranscription to set
+	 */
+	public void setShowTranscription(Boolean showTranscription) {
+		this.showTranscription = showTranscription;
 	}
 }

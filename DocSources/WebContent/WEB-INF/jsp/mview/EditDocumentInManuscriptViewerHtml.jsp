@@ -28,131 +28,106 @@
 		<c:param name="modeEdit" value="true" />
 	</c:url>
 	
-		<script type="text/javascript">
-			transcribing=true;
+	<script type="text/javascript">
+		transcribing = true;
 
-			// RR: Added volume informations and insert informations (if needed)
-			var volExt = "${image.volLetExt}";
-			var insNum = "${image.insertNum}";
-			var insExt = "${image.insertLet}";
-			var credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '&nbsp; - </span>';
-			if (insNum != '')
-				credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '&nbsp; -</span>';
-				
-			var imageName = "${documentExplorer.image.imageName}";
-			var annotations = new Array();
-			if ("${documentExplorer.image.imageType}" == 'R') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;</span>';
-			} else if ("${documentExplorer.image.imageType}" == 'C') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/>&nbsp;</span>';
-			} else if ("${documentExplorer.image.imageType}" == 'A') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
-			} else if ("${documentExplorer.image.imageType}" == 'G') {
-				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
-			}else if ("${documentExplorer.image.imageType}" == 'O') {
-				//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
-				if(imageName.indexOf("COPERTA") != -1){
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp</span>;';
-				}
-			} else {
-	    		credit += ' ';
-	    	}
-
-			credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+		// RR: Added volume and insert details (if needed)
+		var volExt = "${image.volLetExt}";
+		var insNum = "${image.insertNum}";
+		var insExt = "${image.insertLet}";
+		var credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '&nbsp; - </span>';
+		if (insNum != '')
+			credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '&nbsp; -</span>';
 			
-			if ("${documentExplorer.image.missedNumbering}") {
-				credit += ' ' + "${documentExplorer.image.missedNumbering}";
+		var imageName = "${documentExplorer.image.imageName}";
+		var annotations = new Array();
+		if ("${documentExplorer.image.imageType}" == 'R') {
+			credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/> &nbsp;</span>';
+		} else if ("${documentExplorer.image.imageType}" == 'C') {
+			credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/>&nbsp;</span>';
+		} else if ("${documentExplorer.image.imageType}" == 'A') {
+			credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
+		} else if ("${documentExplorer.image.imageType}" == 'G') {
+			credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
+		} else if ("${documentExplorer.image.imageType}" == 'O') {
+			// MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+			if(imageName.indexOf("COPERTA") != -1){
+				credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp</span>;';
 			}
+		} else {
+    		credit += ' ';
+    	}
 
-			if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
-				credit += '</span>' + ' recto' + '</span>';
-			} else if ("${documentExplorer.image.imageRectoVerso}" == 'V'){
-				credit += '</span>' + ' verso' + '</span>';
-			}
-			
-			//MD:The last control is to verify if the image is a spine
-			if(imageName.indexOf("SPI") != -1){
-				credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
-			}
+		credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
 		
-			iip = new IIPMooViewer( "targetframe", {
-				server: '${IIPImageServer}',
-				prefix: '${ImagePrefixURL}',
-				image: '${documentExplorer.image}',
-				credit: credit,	
-				navigation: true,
-				showNavWindow: true,
-				showNavImage: true, // this property hide navigation image
-				showNavButtons: true,
-				navWinPos: 'left',
-				winResize: true,
-				zoom: 3
-			});
-			
-			$j(document).ready(function() {
-				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
-				.dialog({                                                                                                                                                                   
-					autoOpen: true,
-					width: 355,
-					minWidth: 350,
-					minHeight: 200,                                                                                                                                                         
-					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editTranscription.windowTitle"/>',
-					position: ['center','middle'],                                                                                                                                                       
-					closeOnEscape: false,
-					maximized:false,
-					
-					open: function(event, ui) { 
-						$j(".ui-dialog-titlebar-close").hide(); 
-						$(this).load('${EditExtractDialogUrl}');
-					},
-					//drag: function(event, ui) {$j(this).append(ui.position.left);},
-					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
-					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				}).dialogExtend({"minimize" : true});
+		if ("${documentExplorer.image.missedNumbering}") {
+			credit += ' ' + "${documentExplorer.image.missedNumbering}";
+		}
 
-				var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
-				.dialog({                                                                                                                                                                   
-					autoOpen: false,
-					width: 352,
-					minWidth: 350,
-					minHeight: 200,                                                                                                                                                         
-					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editSynopsis.windowTitle"/>',
-					position: ['left','bottom'],                                                                                                                                       
-					closeOnEscape: false,
-					maximized:false,
-					
-					open: function(event, ui) { 
-						$j(".ui-dialog-titlebar-close").hide(); 
-						$(this).load('${EditSynopsisDialogUrl}');
-					},
-					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				}).dialogExtend({"minimize" : true});;
-				
-				
-// 				var $pageTurner = $j('<div id="PageTurnerDiv"></div>')
-// 				.dialog({
-// 					autoOpen: true,
-// 					resizable: false,
-// 					width: 470,
-// 					height: 112,
-// 					minWidth: 470,
-// 					minHeight: 112,                                                                                                                                                         
-// 					title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.pageTurner.windowTitle"/>',
-// 					position: ['right','middle'],                                                                                                                                                       
-// 					closeOnEscape: false,
-// 					maximized:false,
-					
-// 					open: function(event, ui) { 
-// 						$j(".ui-dialog-titlebar-close").hide(); 
-//                 		$(this).load('${PageTurnerDialogUrl}');
-//                		},
-// 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-// 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-// 				}).dialogExtend({"minimize" : true});
-			
+		if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+			credit += '</span>' + ' recto' + '</span>';
+		} else if ("${documentExplorer.image.imageRectoVerso}" == 'V'){
+			credit += '</span>' + ' verso' + '</span>';
+		}
+		
+		// MD: The last check is to verify if the image is a spine
+		if(imageName.indexOf("SPI") != -1){
+			credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
+		}
 	
-// 			});
+		iip = new IIPMooViewer( "targetframe", {
+			server: '${IIPImageServer}',
+			prefix: '${ImagePrefixURL}',
+			image: '${documentExplorer.image}',
+			credit: credit,	
+			navigation: true,
+			showNavWindow: true,
+			showNavImage: true, // this property hide navigation image
+			showNavButtons: true,
+			navWinPos: 'left',
+			winResize: true,
+			zoom: 3
+		});
+		
+		$j(document).ready(function() {
+			var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: true,
+				width: 355,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editTranscription.windowTitle"/>',
+				position: ['center','middle'],                                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide(); 
+					$(this).load('${EditExtractDialogUrl}');
+				},
+				//drag: function(event, ui) {$j(this).append(ui.position.left);},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});
+
+			var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: false,
+				width: 352,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: '<fmt:message key="mview.editDocumentInManuscriptViewerHtml.editSynopsis.windowTitle"/>',
+				position: ['left','bottom'],                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide(); 
+					$(this).load('${EditSynopsisDialogUrl}');
+				},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});;
 			
 			var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>')
 			.dialog({                                                                                                                                                                   
@@ -196,4 +171,4 @@
 
 		});
 
-		</script>
+	</script>

@@ -30,6 +30,7 @@ package org.medici.bia.service.manuscriptviewer;
 import java.util.List;
 import java.util.Map;
 
+import org.dom4j.DocumentException;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -167,6 +168,70 @@ public interface ManuscriptViewerService {
 	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering, String rectoVerso) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the documents that have the given start folio.<br/>
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the folio recto/verso
+	 * @return a list of {@link Document} that have the given start folio, an empty list if no document is found.
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findLinkedDocumentOnStartFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the documents that have the given start folio.<br/>
+	 * The folio recto/verso is considered twice: with the value provided (only if it is not empty)
+	 * and then with null value.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param folioNum the folio number
+	 * @param folioMod the folio extension
+	 * @param rectoVerso the folio recto/verso
+	 * @return a list of {@link Document} that have the given start folio, an empty list if no document is found.
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findLinkedDocumentOnStartFolioWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the documents that have the given transcribe folio.<br/>
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param transcribeFolioNum the transcribe folio number
+	 * @param transcribeFolioMod the transcribe folio extension
+	 * @param rectoVerso the transcribe folio recto/verso
+	 * @return a list of {@link Document} that have the given transcribe folio, an empty list if no document is found.
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findLinkedDocumentOnTranscription(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer transcribeFolioNum, String transcribeFolioMod, String rectoVerso) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the documents that have the given transcribe folio.<br/>
+	 * The transcribe folio recto/verso is considered twice: with the value provided (only if it is not empty)
+	 * and then with null value.
+	 * 
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param insertNum the insert number
+	 * @param insertLet the insert extension
+	 * @param transcribeFolioNum the transcribe folio number
+	 * @param transcribeFolioMod the transcribe folio extension
+	 * @param rectoVerso the transcribe folio recto/verso
+	 * @return a list of {@link Document} that have the given transcribe folio, an empty list if no document is found.
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> findLinkedDocumentOnTranscriptionWithOrWithoutRectoVerso(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioTranscribeNum, String folioTranscribeMod, String rectoVerso) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param summaryId
 	 * @param volNum
@@ -262,6 +327,18 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns a {@link DocumentExplorer} associated to the document with the <code>ntryId</code> provided.<br/>
+	 * If <code> forTranscribeFolio</code> is true the generated {@link DocumentExplorer} is associated to the transcription folio,
+	 * otherwise it is associated to the document start folio.
+	 * 
+	 * @param entryId the document identifier
+	 * @param forTranscribeFolio true if we search for the transcription folio
+	 * @return a {@link DocumentExplorer}
+	 * @throws ApplicationThrowable
+	 */
+	public DocumentExplorer getDocumentExplorer(Integer entryId, boolean forTranscribeFolio) throws ApplicationThrowable;
 	
 	/**
 	 * 

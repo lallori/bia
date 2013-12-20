@@ -24,6 +24,12 @@
 			<c:param name="entryId"			value="${document.entryId}" />
 			<c:param name="flashVersion"	value="false" />
 		</c:url>
+		
+		<c:url var="ShowTranscriptionInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+			<c:param name="entryId"				value="${document.entryId}" />
+			<c:param name="showTranscription"	value="true" />
+			<c:param name="flashVersion"		value="false" />
+		</c:url>
 	</security:authorize>
 	
 	<c:url var="ShowDocumentExplorerURL" value="/src/docbase/ShowExplorerDocument.do">
@@ -48,127 +54,124 @@
 	</c:if>
 	<%-- Editing Document Record --%>
 	<c:if test="${document.volume != null}">
-	<div id="documentTitle">
-		<div id="text">
-			<h3><fmt:message key="docbase.showSummaryDocument.volume"/>: <a href="${CompareVolumeURL}" class="linkVolume" title="<fmt:message key="docbase.showSummaryDocument.viewVolumeN"/>${document.volume.volNum}${document.volume.volLetExt} <fmt:message key="docbase.showSummaryDocument.file"/>">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
-<!-- 		Checking if folio is inside inserts or inserts with parts -->
-<!-- 		1) folio is not inside inserts-->
-			<c:if test="${document.insertNum == null}">
-				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
-					<c:choose>
-						<c:when test="${document.folioRectoVerso == 'R'}">
-							<fmt:message key="docbase.showSummaryDocument.recto"/>
-						</c:when>
-						<c:when test="${document.folioRectoVerso == 'V'}">
-							<fmt:message key="docbase.showSummaryDocument.verso"/>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-					</c:choose>
-				</h3>
+		<div id="documentTitle">
+			<div id="text">
+				<h3><fmt:message key="docbase.showSummaryDocument.volume"/>: <a href="${CompareVolumeURL}" class="linkVolume" title="<fmt:message key="docbase.showSummaryDocument.viewVolumeN"/>${document.volume.volNum}${document.volume.volLetExt} <fmt:message key="docbase.showSummaryDocument.file"/>">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
+				<!-- Checking if folio is inside inserts or inserts with parts -->
+				<!-- 	1) folio is not inside inserts-->
+				<c:if test="${document.insertNum == null}">
+					<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+						<c:choose>
+							<c:when test="${document.folioRectoVerso == 'R'}">
+								<fmt:message key="docbase.showSummaryDocument.recto"/>
+							</c:when>
+							<c:when test="${document.folioRectoVerso == 'V'}">
+								<fmt:message key="docbase.showSummaryDocument.verso"/>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</h3>
+				</c:if>
+				<!-- 	2) folio is inside inserts with no parts -->
+				<c:if test="${document.insertNum != null && document.insertLet  == null}">
+					<br>
+					<br>
+					<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum}</h3>
+					<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+						<c:choose>
+							<c:when test="${document.folioRectoVerso == 'R'}">
+								<fmt:message key="docbase.showSummaryDocument.recto"/>
+							</c:when>
+							<c:when test="${document.folioRectoVerso == 'V'}">
+								<fmt:message key="docbase.showSummaryDocument.verso"/>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</h3>
+					<br>
+					<br>
+				</c:if>
+				<!-- 	3) folio is inside inserts with parts -->
+				<c:if test="${document.insertLet  != null}">
+					<br>
+					<br>
+					<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3>
+					<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
+						<c:choose>
+							<c:when test="${document.folioRectoVerso == 'R'}">
+								<fmt:message key="docbase.showSummaryDocument.recto"/>
+							</c:when>
+							<c:when test="${document.folioRectoVerso == 'V'}">
+								<fmt:message key="docbase.showSummaryDocument.verso"/>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</h3>
+					<br>
+					<br>
+				</c:if>
+				<c:choose>
+					<%-- Recipient empty --%>
+					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+				 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
+				 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
+					</c:when>
+					<%-- Sender empty --%>
+					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+				 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+					</c:when>
+					<%-- Sender and Recipient filled in --%>
+					<c:otherwise>
+				  		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
+				  		<h4><fmt:message key="docbase.showSummaryDocument.to"/>:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+						<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${document.yearModern == null && (document.docYear != null || document.docMonthNum != null || document.docDay != null)}">
+						<h5>${document.docYear} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+					</c:when>
+					<c:when test="${document.yearModern != null}">
+						<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
+					</c:when>
+				</c:choose>
+				
+			</div>
+			<c:if test="${not empty image}">
+				<div id="DocumentImageDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+						<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+						<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="<fmt:message key="docbase.showSummaryDocument.shouldRegister"/>">
+					</security:authorize>
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+						<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="docbase.showSummaryDocument.showThisDocumentInMV"/>"></a>
+						<a id="ShowTranscriptionInManuscriptViewer" href="#" title="<fmt:message key="docbase.showSummaryDocument.showThisTranscriptionInMV"/>"></a>
+						<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="<fmt:message key="docbase.showSummaryDocument.showPreviewInRightSplitScreen"/>"></a>
+					</security:authorize>
+				</div>
 			</c:if>
-<!-- 		2) folio is inside inserts with no parts -->
-			<c:if test="${document.insertNum != null && document.insertLet  == null}">
-				<br>
-				<br>
-				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum}</h3>
-				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
-					<c:choose>
-						<c:when test="${document.folioRectoVerso == 'R'}">
-							<fmt:message key="docbase.showSummaryDocument.recto"/>
-						</c:when>
-						<c:when test="${document.folioRectoVerso == 'V'}">
-							<fmt:message key="docbase.showSummaryDocument.verso"/>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-					</c:choose>
-				</h3>
-				<br>
-				<br>
+			<c:if test="${empty image}">
+				<div id="DocumentImageNotDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+						<span><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
+						<span class="register"><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
+					</security:authorize>
+				</div>
 			</c:if>
-<!-- 		3) folio is inside inserts with parts -->
-			<c:if test="${document.insertLet  != null}">
-				<br>
-				<br>
-				<h3><fmt:message key="docbase.showSummaryDocument.insert"/>: ${document.insertNum} / ${document.insertLet}</h3>
-				<h3><fmt:message key="docbase.showSummaryDocument.folio"/>: ${document.folioNum}${document.folioMod}
-					<c:choose>
-						<c:when test="${document.folioRectoVerso == 'R'}">
-							<fmt:message key="docbase.showSummaryDocument.recto"/>
-						</c:when>
-						<c:when test="${document.folioRectoVerso == 'V'}">
-							<fmt:message key="docbase.showSummaryDocument.verso"/>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-					</c:choose>
-				</h3>
-				<br>
-				<br>
-			</c:if>
-			<c:choose>
-				<%-- Recipient empty --%>
-				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-			 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-			 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
-				</c:when>
-				<%-- Sender empty --%>
-				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-			 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
-			 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-			 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
-				</c:when>
-				<%-- Sender and Recipient filled in --%>
-				<c:otherwise>
-			  		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
-			  		<h4><fmt:message key="docbase.showSummaryDocument.to"/>:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
-				</c:otherwise>
-			</c:choose>
-			<c:choose>
-				<c:when test="${document.yearModern == null && (document.docYear != null || document.docMonthNum != null || document.docDay != null)}">
-					<h5>${document.docYear} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
-				</c:when>
-				<c:when test="${document.yearModern != null}">
-					<h5>${document.yearModern} ${document.docMonthNum} ${document.docDay} ${document.dateUns ? '(Unsure)':'' }</h5>
-				</c:when>
-			</c:choose>
-			
+				
 		</div>
-		<c:if test="${not empty image}">
-			<div id="DocumentImageDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>" title="<fmt:message key="docbase.showSummaryDocument.shouldRegister"/>">
-				</security:authorize>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="<fmt:message key="docbase.showSummaryDocument.showThisDocumentInMV"/>"></a>
-					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="<fmt:message key="docbase.showSummaryDocument.showPreviewInRightSplitScreen"/>"></a>
-				</security:authorize>
-			</div>
-		</c:if>
-		<c:if test="${empty image}">
-			<div id="DocumentImageNotDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-					<span class="register"><fmt:message key="docbase.showSummaryDocument.toBeDigitized"/></span>
-				</security:authorize>
-			</div>
-		</c:if>
-			
-		</c:if>
-			
-			
-			
-			
-	</div>
+	</c:if>
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -188,10 +191,9 @@
 				}});
 			});
 			
-			if (navigator.userAgent.indexOf('Chrome') != -1)
-				$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: window.innerWidth, height: window.innerHeight});
-			else
-				$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: screen.width, height: screen.height});
+			var $width = navigator.userAgent.indexOf('Chrome') != -1 ? window.innerWidth : screen.width;
+			var $height = navigator.userAgent.indexOf('Chrome') != -1 ? window.innerHeight : screen.height;
+			$j("#ShowDocumentInManuscriptViewer").open({windowName: "ShowDocumentInManuscriptViewer", width: $width, height: $height});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
 				var insertTitle = '';
@@ -240,6 +242,7 @@
 					return false;
 				}
 			});
+			
 			$j(".linkVolume").click(function() {
 				var tabN = $j(this).text();
 				tabName = 'Volume ' 
@@ -271,6 +274,15 @@
 					$j("#tabs").tabs("select", numTab);
 					return false;
 				}
+			});
+			
+			$j("#ShowTranscriptionInManuscriptViewer").click(function() {
+				if (${empty document.transcribeFolioNum}) {
+					alert('<fmt:message key="docbase.showSummaryDocument.warn.missingTranscribeFolio"/>');
+				} else {
+					window.open("${ShowTranscriptionInManuscriptViewerURL}", "ShowTranscriptionInManuscriptViewer", "width="+$width+",height="+$height);
+				}
+				return false;
 			});
 		});
 	</script>

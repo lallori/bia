@@ -28,11 +28,13 @@
 package org.medici.bia.service.docbase;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.HistoryNavigator;
@@ -1403,6 +1405,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public List<Document> findDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, Document.RectoVerso folioRectoVerso) throws ApplicationThrowable {
 		try {
 			return getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Document> findDocumentsByFolio(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer folioNum, String folioMod, String folioRectoVerso, boolean alsoTranscribeFolio) throws ApplicationThrowable {
+		try {
+			List<Document> startFolioDocuments = getDocumentDAO().findDocumentsOnFolioWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+			if (alsoTranscribeFolio) {
+				List<Document> transcribeFolioDocuments = getDocumentDAO().findDocumentsOnTranscribeFolioWithOrWithoutRectoVerso(volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRectoVerso);
+				Collection<Document> union = CollectionUtils.union(startFolioDocuments, transcribeFolioDocuments);
+				if (union instanceof List)
+					return (List<Document>)union;
+				return new ArrayList<Document>(union);
+			}
+			return startFolioDocuments;
 		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

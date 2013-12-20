@@ -1224,6 +1224,105 @@ public class Document implements Serializable{
 		return getEntryId().toString();
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entryId == null) ? 0 : entryId.hashCode());
+		result = prime * result
+				+ ((folioMod == null) ? 0 : folioMod.hashCode());
+		result = prime * result
+				+ ((folioNum == null) ? 0 : folioNum.hashCode());
+		result = prime * result
+				+ ((folioRectoVerso == null) ? 0 : folioRectoVerso.hashCode());
+		result = prime * result
+				+ ((insertLet == null) ? 0 : insertLet.hashCode());
+		result = prime * result
+				+ ((insertNum == null) ? 0 : insertNum.hashCode());
+		result = prime
+				* result
+				+ ((transcribeFolioMod == null) ? 0 : transcribeFolioMod
+						.hashCode());
+		result = prime
+				* result
+				+ ((transcribeFolioNum == null) ? 0 : transcribeFolioNum
+						.hashCode());
+		result = prime
+				* result
+				+ ((transcribeFolioRectoVerso == null) ? 0
+						: transcribeFolioRectoVerso.hashCode());
+		result = prime * result + ((volume == null) ? 0 : volume.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Document other = (Document) obj;
+		if (entryId == null) {
+			if (other.getEntryId() != null)
+				return false;
+		} else if (!entryId.equals(other.getEntryId())) {
+			return false;
+		} else if (entryId.equals(other.getEntryId())) {
+			// if entryIds are not null and entryIds are equal they refers to the same document 
+			return true;
+		}
+		
+		// if entryIds are null we check volume, insert, folio and transcribeFolio details
+		if (volume == null) {
+			if (other.volume != null)
+				return false;
+		} else if (!volume.equals(other.getVolume()))
+			return false;
+		
+		if (insertNum == null) {
+			if (other.getInsertNum() != null)
+				return false;
+		} else if (!insertNum.equals(other.getInsertNum()))
+			return false;
+		if (insertLet == null) {
+			if (other.getInsertLet() != null)
+				return false;
+		} else if (!insertLet.equals(other.getInsertLet()))
+			return false;
+		
+		if (folioNum == null) {
+			if (other.getFolioNum() != null)
+				return false;
+		} else if (!folioNum.equals(other.getFolioNum()))
+			return false;
+		if (folioMod == null) {
+			if (other.getFolioMod() != null)
+				return false;
+		} else if (!folioMod.equals(other.getFolioMod()))
+			return false;
+		if (folioRectoVerso != other.getFolioRectoVerso())
+			return false;
+		
+		if (transcribeFolioNum == null) {
+			if (other.getTranscribeFolioNum() != null)
+				return false;
+		} else if (!transcribeFolioNum.equals(other.getTranscribeFolioNum()))
+			return false;
+		if (transcribeFolioMod == null) {
+			if (other.getTranscribeFolioMod() != null)
+				return false;
+		} else if (!transcribeFolioMod.equals(other.getTranscribeFolioMod()))
+			return false;
+		if (transcribeFolioRectoVerso != other.getTranscribeFolioRectoVerso())
+			return false;
+		
+		return true;
+	}
+
+
+
 	/**
 	 * This enumeration manages recto verso information on folio.
 	 *  
