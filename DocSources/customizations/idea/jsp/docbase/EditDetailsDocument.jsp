@@ -904,7 +904,7 @@
 							var msg = '<fmt:message key="docbase.editDetailsDocument.error.volumeNotExist"><fmt:param value="' + vol + '" /></fmt:message>';
 							resetLowerErrorMsg("volume");
 							displayErrorClientMsg("volume", msg);
-						} else {
+						} else if (data.volumeDigitized) {
 							var insNumVal = $j("#insertNum").val();
 							// Launch the insert checking process if not empty
 							if (typeof insNumVal != "undefined" && !isEmpty(insNumVal)) {
@@ -913,21 +913,19 @@
 								var folNumVal = $j("#folioNum").val();
 								// Launch the folio checking process if not empty
 								if (typeof folNumVal != "undefined" && !isEmpty(folNumVal)) {
-									checkFolio("folio");
+									folioCheck("folio");
 								}
 								
 								var transFolNumVal = $j("#transcribeFolioNum").val();
 								// Launch the transcribe folio checking process if not empty
 								if (typeof transFolNumVal != "undefined" && !isEmpty(transFolNumVal)) {
-									checkFolio("transcribeFolio");
+									folioCheck("transcribeFolio");
 								}
 							}
 							
-							// Open the volume explorer if volume is digitized
-							if (data.volumeDigitized) {
-	            				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-	                    		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
-							}
+							// Open the volume explorer
+            				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+                    		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
 						}
 					}
 				);
