@@ -920,6 +920,10 @@
 							// Open the volume explorer
             				var showVolumeExplorerURL = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
                     		openTab(data.volNum,data.volLetExt,showVolumeExplorerURL);
+						} else {
+							// the volume is not digitized
+							resetLowerErrorMsg("volume");
+							saveable(true);
 						}
 					}
 				);
