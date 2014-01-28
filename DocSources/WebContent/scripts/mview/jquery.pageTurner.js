@@ -232,10 +232,10 @@
 				sec = sections;
 			}
 			
-			for(i = 0; i < sections.length; i++) {
-				var selector = $j(sections[i]);
+			for(i = 0; i < sec.length; i++) {
+				var selector = $j(sec[i]);
 				if (typeof selector !== "undefined") {
-					var idx = notDisplayedSections.indexOf(sections[i]);
+					var idx = notDisplayedSections.indexOf(sec[i]);
 					if (idx > -1) {
 						notDisplayedSections.splice(idx, 1);
 					}
