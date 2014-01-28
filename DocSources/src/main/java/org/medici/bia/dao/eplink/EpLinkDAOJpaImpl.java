@@ -174,30 +174,27 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
-		StringBuilder stringBuilder = new StringBuilder("SELECT person.personId, COUNT(DISTINCT document.entryId) FROM EpLink WHERE");
-		for(int i=0; i < personIds.size(); i++){
-			if(stringBuilder.indexOf("=") != -1){
-    			stringBuilder.append(" or ");
-    		}
-			stringBuilder.append("(person.personId=");
-        	stringBuilder.append(personIds.get(i) + ")");
-		}
-		stringBuilder.append(" AND document.logicalDelete = false group by person.personId");
-		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
-		List tempValues;
-		if(stringBuilder.indexOf("=") != -1){
+		
+		if (personIds != null && !personIds.isEmpty()) {
+			StringBuilder stringBuilder = new StringBuilder("SELECT person.personId, COUNT(DISTINCT document.entryId) FROM EpLink WHERE person.personId IN (");
+			for (int i = 0; i < personIds.size(); i++) {
+				if (i > 0) {
+	    			stringBuilder.append(", ");
+	    		}
+	        	stringBuilder.append(personIds.get(i));
+			}
+			stringBuilder.append(") AND document.logicalDelete = false GROUP BY person.personId");
+			
 			Query query = getEntityManager().createQuery(stringBuilder.toString());
-			tempValues = query.getResultList();
-			for(Iterator i = tempValues.iterator(); i.hasNext();){
-				Object [] data = (Object []) i.next();
+			List<Object[]> tempValues = query.getResultList();
+			for(Object[] data : tempValues){
 				returnValues.put((Integer)data[0], (Long)data[1]);
 			}
 		}
-		
 		
 		return returnValues;
 	}
