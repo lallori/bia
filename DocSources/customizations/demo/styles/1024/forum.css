@@ -338,6 +338,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 	margin-bottom: 20px;
 	position: relative;
 	min-height: 130px;
+	overflow: auto;
 }
 
 /* Table structure */

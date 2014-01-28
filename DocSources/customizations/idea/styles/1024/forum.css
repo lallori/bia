@@ -277,6 +277,7 @@ blockquote p {
 	margin-bottom: 20px;
 	position: relative;
 	min-height: 130px;
+	overflow: auto;
 }
 
 /* Table structure */
