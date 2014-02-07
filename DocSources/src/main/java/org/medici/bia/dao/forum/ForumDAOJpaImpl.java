@@ -98,12 +98,12 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		Forum forum = new Forum();
 		forum.setDateCreated(new Date());
 		forum.setTitle("DocID #" + document.getEntryId());
-		if(document.getFolioNum() == null){
-			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio NNF");
-		}else if(document.getFolioMod() != null){
-			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio " + document.getFolioNum() + document.getFolioMod());
-		}else{
-			forum.setDescription("Volume " + document.getVolume().getMDP() + " - Folio " + document.getFolioNum());
+		String insert = document.getInsertNum() != null ? document.getInsertNum() + (document.getInsertLet() != null ? document.getInsertLet() : "") : null;
+		if (document.getFolioNum() == null) {
+			forum.setDescription("Volume " + document.getVolume().getMDP() + (insert != null ? " - Insert " + insert : "") + " - Folio NNF");
+		} else {
+			String folio = document.getFolioNum() + (document.getFolioMod() != null ? document.getFolioMod() : "");
+			forum.setDescription("Volume " + document.getVolume().getMDP() + (insert != null ? " - Insert " + insert : "") + " - Folio " + folio);
 		}
 		forum.setForumParent(forumParent);
 		forum.setLastPost(null);

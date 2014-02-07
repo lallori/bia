@@ -113,6 +113,18 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 */
 	Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilterTopics) throws PersistenceException;
+	
+	/**
+	 * This method return a list of forum topics of a parent forum that are associated to a document.<br/>
+	 * NOTE: the document has to be associated to the forum topic, not to the forum.<br/>
+	 * The topics are ordered from the newer to the older (by creation date).
+	 * 
+	 * @param forumId the forum identifier
+	 * @param documentId the document identifier
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<ForumTopic> getForumTopicsByParentForumAndDocument(Integer forumId, Integer documentId) throws PersistenceException;
 
 	/**
 	 * 

@@ -169,7 +169,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forum.setForumParent(parentForum);
 			forum.setLogicalDelete(Boolean.FALSE);
 
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 			
 			getForumDAO().persist(forum);
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
@@ -192,7 +192,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
 		Date operationDate = new Date();
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			
 			forumPost.setPostId(null);
 			// forumPost.setLogicalDelete(Boolean.TRUE);
@@ -489,15 +489,18 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			recursiveSetLastPost(forum);
 
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-			user.setLastActiveForumDate(new Date());
-			user.setLastForumPostDate(new Date());
+			User user = getCurrentUser();
+			Date now = new Date();
+			user.setLastActiveForumDate(now);
+			user.setLastForumPostDate(now);
+			user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
 			getUserDAO().merge(user);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 		
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -521,7 +524,7 @@ public class CommunityServiceImpl implements CommunityService {
 //			forum.setPostsNumber(forum.getPostsNumber() - forumTopic.getTotalReplies());
 			// getForumDAO().merge(forum);
 
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 			user.setLastActiveForumDate(new Date());
 			// getUserDAO().merge(user);
 		} catch (Throwable th) {
@@ -547,7 +550,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public void deleteMessages(List<Integer> idElementsToRemove) throws ApplicationThrowable {
 		try{
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			
 			getUserMessageDAO().removeMessages(user, idElementsToRemove);
 		}catch(Throwable th){
@@ -564,7 +567,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumPost editPost(ForumPost postFromView) throws ApplicationThrowable {
 		Date operationDate = new Date();
 		try {
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 			
 			ForumPost forumPostToUpdate = getForumPostDAO().find(postFromView.getPostId());
 
@@ -627,7 +630,7 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			ForumPost forumPost = getForumPostDAO().find(id);
 			
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Show post", Action.VIEW, Category.FORUM_POST, forumPost));
 
@@ -1224,7 +1227,7 @@ public class CommunityServiceImpl implements CommunityService {
 				if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String){
 					return false;
 				}
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				User user = getCurrentUser();
 				if(user != null && getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic) != null){
 					return true;
 				}
@@ -1242,7 +1245,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public User joinUserOnForum() throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			User user = getCurrentUser();
 			
 			if (user != null) {
 				user.setForumJoinedDate(new Date());
@@ -1308,7 +1311,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getPostId());
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
@@ -1343,7 +1346,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public ReportedForumPost reportForumPost(Integer postId) throws ApplicationThrowable {
 		try{
 			ForumPost forumPost = getForumPostDAO().find(postId);
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			
 			ReportedForumPost reportForumPost = new ReportedForumPost();
 			reportForumPost.setId(null);
@@ -1522,7 +1525,7 @@ public class CommunityServiceImpl implements CommunityService {
 			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
 			
 			if (forumTopic != null) {
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				User user = getCurrentUser();
 
 				ForumTopicWatch forumTopicWatch = new ForumTopicWatch();
 				forumTopicWatch.setTopic(forumTopic);
@@ -1547,7 +1550,7 @@ public class CommunityServiceImpl implements CommunityService {
 			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
 			
 			if (forumTopic != null) {
-				User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				User user = getCurrentUser();
 				ForumTopicWatch forumTopicWatch = getForumTopicWatchDAO().findByTopicAndUser(user, forumTopic);
 				
 				if (forumTopicWatch != null) {
@@ -1568,7 +1571,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Boolean unsubscribeAllForumTopic() throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 
 			getForumTopicWatchDAO().removeUserSubscribes(user);
 			
@@ -1576,5 +1579,9 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	private User getCurrentUser() {
+		return getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 	}
 }

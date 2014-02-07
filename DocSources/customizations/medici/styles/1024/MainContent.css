@@ -601,6 +601,16 @@ item a{
 	text-align: center;
 }
 
+.button_extra_large {
+	width: 224px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_extra_large.png);
+	background-repeat: no-repeat;
+	padding: 3px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+}
+
 .showCompare {
 	width: 127px;
 	height: 22px;

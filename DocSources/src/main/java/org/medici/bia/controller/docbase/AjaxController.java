@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
@@ -45,8 +47,10 @@ import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.common.util.VolumeUtils;
+import org.medici.bia.domain.Course;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.SearchFilter.SearchType;
@@ -54,12 +58,14 @@ import org.medici.bia.domain.TopicList;
 import org.medici.bia.domain.VettingHistory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -76,6 +82,9 @@ public class AjaxController {
 	private DocBaseService docBaseService;
 	
 	@Autowired
+	private TeachingService teachingService;
+	
+	@Autowired
 	private VolBaseService volBaseService;
 	
 	/**
@@ -90,6 +99,20 @@ public class AjaxController {
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+	
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+	
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
 	}
 	
 	/**
@@ -253,6 +276,32 @@ public class AjaxController {
 			model.put("folioMax", "");
 		}
 		return new ModelAndView("responseOK", model);		
+	}
+	
+	@RequestMapping(value = "/src/docbase/CreateRoundRobinTranscription", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> createRoundRobinTranscriptionCourse(
+			@RequestParam(value="entryId", required=true) Integer docId,
+			@RequestParam(value="courseTitle", required=true) String topicTitle,
+			@RequestParam(value="courseId", required=false) Integer courseId,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			// FIXME: remove this when course management features are implemented
+			Integer cId = courseId;
+			if (courseId == null || courseId <= 0) {
+				Course course = getTeachingService().getLastActiveCourse();
+				if (course != null) {
+					cId = course.getCourseId();
+				}
+			}
+			ForumTopic courseTopic = getTeachingService().addNewCourseTopic(cId, docId, topicTitle.trim(), httpServletRequest.getRemoteAddr());
+			
+			model.put("courseTopic", courseTopic);
+		} catch (ApplicationThrowable th) {
+			model.put("error", th.toString());
+		}
+		return model;
 	}
 
 	/**

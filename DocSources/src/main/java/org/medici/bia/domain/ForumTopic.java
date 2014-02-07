@@ -293,12 +293,8 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @return the hasAttachment
+	 * @param annotation the annotation to set
 	 */
-	public boolean isHasAttachment() {
-		return hasAttachment;
-	}
-
 	public void setAnnotation(Annotation annotation) {
 		this.annotation = annotation;
 	}

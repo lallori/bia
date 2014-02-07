@@ -567,7 +567,8 @@ public class Forum implements Serializable {
 		FOLIO("FOLIO"),
 		PEOPLE("PEOPLE"),
 		PLACE("PLACE"),
-		VOLUME("VOLUME");
+		VOLUME("VOLUME"),
+		COURSE("COURSE");
 		
 		private final String subType;
 

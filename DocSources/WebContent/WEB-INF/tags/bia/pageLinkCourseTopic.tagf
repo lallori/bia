@@ -1,0 +1,17 @@
+<%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+	<c:url var="baseUrl" value="/teaching/ShowDocumentRoundRobinTranscription.do"/>
+	<c:set var="extraArgs">?topicId=${topicId}&postPageNumber=${currentPage}&postPageTotal=${page.totalPages}&postsForPage=${page.elementsForPage}&completeDOM=false</c:set>
+
+	<c:if test="${currentPage != page.thisPage}">
+		<span class="paginateButton"><a href="${baseUrl}${extraArgs}" class="pageHref ${buttonClass}">${currentPage}</a></span>
+	</c:if>
+	<c:if test="${currentPage == page.thisPage}">
+		<span class="paginateActive" href="${baseUrl}${extraArgs}">${currentPage}</span>
+	</c:if>	

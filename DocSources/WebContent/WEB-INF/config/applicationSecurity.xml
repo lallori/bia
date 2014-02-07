@@ -10,6 +10,7 @@
     <security:http auto-config="true">
         <security:intercept-url pattern="/login*" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/LoginUser" 							filters="none" />
+        <security:intercept-url pattern="/manual/**" 							filters="none" />
         <security:intercept-url pattern="/LogoutUser" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/css/**" 								access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/images/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />

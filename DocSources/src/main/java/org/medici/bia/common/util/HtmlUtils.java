@@ -399,6 +399,30 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
+	
+	/**
+	 * Returns the servlet url to show the course topic.
+	 * 
+	 * @param courseTopic the course topic to show
+	 * @return the servlet url
+	 */
+	public static String getShowCourseTopicHrefUrl(ForumTopic courseTopic) {
+		StringBuilder stringBuilder = new StringBuilder("");
+		if (courseTopic != null) {
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuilder.append("/teaching/ShowDocumentRoundRobinTranscription.do?topicId=");
+			stringBuilder.append(courseTopic.getTopicId());
+			//For generate a link to the last page of topic
+			stringBuilder.append("&postForPage=10&postPageNumber=");
+			stringBuilder.append((courseTopic.getTotalReplies() / 10) + 1);
+			stringBuilder.append("&postPageTotal=");
+			stringBuilder.append((courseTopic.getTotalReplies() / 10) + 1);
+			stringBuilder.append("&completeDOM=false");
+			
+		}
+
+		return stringBuilder.toString();
+	}
 
 	/**
 	 * Urls must be encoded.

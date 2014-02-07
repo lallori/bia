@@ -302,6 +302,19 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ForumTopic> getForumTopicsByParentForumAndDocument(Integer forumId, Integer documentId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM ForumTopic WHERE logicalDelete = false AND forum.forumId = :forumId AND document.entryId = :documentId ORDER BY dateCreated DESC");
+        query.setParameter("forumId", forumId);
+        query.setParameter("documentId", documentId);
+        
+        return (List<ForumTopic>) query.getResultList();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.

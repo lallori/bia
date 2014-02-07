@@ -13,6 +13,9 @@
 	<c:url var="ShareDocumentURL" value="/src/docbase/ShareDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
+	<c:url var="ShowChoiceCourseOrDocumentForumURL" value="/src/docbase/ShowChoiceCoursesOrDocumentsForum.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
 	<c:url var="ShowConfirmCreateDocumentForumURL" value="/src/docbase/ShowConfirmCreateDocumentForum.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
@@ -88,24 +91,38 @@
 			return false;
 		}
 		
-		$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
-			if (json.isPresent == 'true') {
-				$j("#comments").attr('href', json.forumUrlCompleteDOM);
-				$j("#comments").attr('target', '_blank');
-				if(json.discussions > 0){
-					$j("#comments").css('color', 'red');
-					$timerId = setInterval(animazione, 2000);
+		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrlCompleteDOM);
+					$j("#comments").attr('target', '_blank');
+					if(json.discussions > 0){
+						$j("#comments").css('color', 'red');
+						$timerId = setInterval(animazione, 2000);
+					}
+					
+					return false;
 				}
-				
-				return false;
-			}
-		}});
+			}});
+		</security:authorize>
 			
 		$j('#comments').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#comments").click(function() {
 			if($j(this).attr('href') == '#'){
-				Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
+				<c:choose>
+					<c:when test="${not empty image}">
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+							Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
+						</security:authorize>
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+							Modalbox.show('${ShowChoiceCourseOrDocumentForumURL}', {title: "COURSES / DISCUSSIONS", width: 470, height: 100});
+						</security:authorize>
+					</c:when>
+					<c:otherwise>
+						Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
+					</c:otherwise>
+				</c:choose>
 				return false;
 			}
 		});

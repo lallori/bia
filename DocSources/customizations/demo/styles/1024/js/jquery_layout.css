@@ -1,0 +1,41 @@
+/*
+ * Default Layout Theme
+ *
+ * Created for jquery.layout 
+ *
+ * Copyright (c) 2008 
+ *   Fabrizio Balliano (http://www.fabrizioballiano.net)
+ *   Kevin Dalman (http://allpro.net)
+ *
+ * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
+ * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
+ *
+ * Last Updated: 2009-03-04
+ * NOTE: For best code readability, view this with a fixed-space font and tabs equal to 4-chars
+ */
+
+/*
+*	BASIC PAGE COSMETICS
+*/
+.ui-layout-pane { /* all 'panes' */ 
+	background: #f6edec; 
+	border: 1px solid #DCC0BA; 
+	padding: 10px; 
+	overflow: auto;
+} 
+.ui-layout-center {padding:0; width:500px; background:#000;}
+.ui-layout-resizer { /* all 'resizer-bars' */ background: #EFE0DE; } 
+.ui-layout-toggler { /* all 'toggler-buttons' */ background: #DCC0BA;}  
+.ui-layout-toggler:hover { /* mouse-over */ background: #654c47;} 
+/* masks are usually transparent - make them visible (must 'override' default) */
+.ui-layout-mask {
+	background:	#000 !important;
+	opacity:	.20 !important;
+	filter:		alpha(opacity=20) !important;
+}
+
+.teachingModule h6 {
+	font-size: 14px;
+	margin: 0;
+	text-align: center;
+}

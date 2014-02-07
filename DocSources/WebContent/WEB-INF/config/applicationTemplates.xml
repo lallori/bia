@@ -74,6 +74,8 @@
 	<definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
 	  <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
 	</definition>
+	
+	<definition name="template.roundRobinTranscriptionDOM" template="/WEB-INF/templates/roundRobinTranscriptionDOM.jsp" />
 
 	<definition name="template.searchTitlesOrOccupations" template="/WEB-INF/templates/searchTitlesOrOccupations.jsp" />
 
@@ -620,6 +622,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShareDocument.jsp"/>	
 	</definition>
 
+	<definition name="docbase/ShowChoiceCoursesOrDocumentsForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowChoiceCoursesOrDocumentsForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="docbase/ShowConfirmCreateDocumentForumModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmCreateDocumentForumModalWindow.jsp"/>
 	</definition>
@@ -1131,8 +1137,29 @@
 	<definition name="search/SimpleSearchResult" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResult.jsp"/>	
 	</definition>
-
 	<!-- Search Module END -->
+	
+	<!-- Teaching Module START -->
+	<definition name="teaching/EditRoundRobinPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/EditRoundRobinPost.jsp"/>
+	</definition>
+	
+	<definition name="teaching/ShowCourseTopicActions" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowCourseTopicActions.jsp"/>
+	</definition>
+	
+	<definition name="teaching/ShowPreviewCourseTopicPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowPreviewCourseTopicPost.jsp"/>
+	</definition>
+	
+	<definition name="teaching/ShowRoundRobinTranscription" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinTranscription.jsp"/>
+	</definition>
+	
+	<definition name="teaching/ShowRoundRobinTranscriptionDOM" extends="template.roundRobinTranscriptionDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinTranscriptionDOM.jsp"/>
+	</definition>
+	<!-- Teaching Module END -->
 
 	<!-- VolBase Module START -->
 	<definition name="volbase/CompareVolume" extends="template.compare">

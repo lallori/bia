@@ -58,6 +58,17 @@ public class ApplicationThrowable extends Throwable {
 		initCause(null);
 		setApplicationError(applicationError);
 	}
+	
+	/**
+	 * 
+	 * @param applicationError
+	 * @param message
+	 */
+	public ApplicationThrowable(ApplicationError applicationError, String message) {
+		super(message);
+		initCause(null);
+		setApplicationError(applicationError);
+	}
 
 	/**
 	 * 
@@ -157,7 +168,7 @@ public class ApplicationThrowable extends Throwable {
 		if (getCause() != null) {
 			stringBuilder.append(getCause().getMessage());
 		} else {
-			stringBuilder.append("not available");
+			stringBuilder.append(getMessage() != null ? getMessage() : "not available");
 		}
 
 		return stringBuilder.toString();

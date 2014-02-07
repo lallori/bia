@@ -1,0 +1,364 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag for the Teaching Module 
+ */
+
+/* ------------------------------------------------- GENERAL TAG ------------------------------------------------- */
+
+body {
+	background-color: #F6EDEC;
+	margin: 0 !important;
+	padding: 0 !important;
+	height: 100%;
+	color: #6F6B69;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+body, a, input, select {
+	font-size:12px;
+}
+
+a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #CC0033;
+}
+
+a.link {  /* "Last post by" user name */
+	text-decoration: underline;
+	color: #B7958F;
+	display: inline;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+}
+
+blockquote {
+	background: #FFFFFF none no-repeat scroll 6px 8px;
+	border: 1px dashed #DBDBDB;
+	font-size: 0.95em;
+	margin: 0.5em 10px 0pt 10px;
+	overflow: auto;
+	display: block;
+	margin-left: 30px;
+	margin-right: 30px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+blockquote cite {
+	display: block;
+	font-style: normal;
+	font-weight: bold;
+	padding: 5px;
+	background-color: #DCC0BA;
+	color: #FFF;
+}
+
+blockquote cite span.quoteUser {
+	font-style: italic;
+	font-size: 1.1em;
+}
+
+h2, h2 a {
+	font-size: 16px;
+	color: #6D5C4D;
+	width: 620px;
+	display: inline-block;
+}
+
+hr {
+	width: 100%;
+	color: #DCC0BA;
+	background-color: #DCC0BA;
+	border: 0px;
+}
+
+input, select, textarea { /* INPUT text */
+	font-size: 12px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding: 3px;
+	margin: 0 3px 5px 3px;
+}
+
+/* ------------------------------------------------- CONTENT ------------------------------------------------- */
+
+a.buttonMedium:hover, a.buttonSmall:hover {
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+.buttonMedium, .button_medium {
+	width: 122px;
+	height: 22px;
+	display: inline-block;
+	background-image: url(${contextPath}/images/forum/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+}
+
+.buttonSmall { /* Button medium class */
+	width: 53px;
+	height: 22px;
+	display: inline-block;
+	background-image: url(${contextPath}/images/forum/button_small.png);
+	background-repeat: no-repeat;
+	padding-top: 3px;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+	margin: 0;
+}
+
+.post a {  /* Link inside post */
+	text-decoration: underline;
+	color: #B7958F;
+	display: inline;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0;
+}
+
+.post a.linkUpdater{ /* Updater link inside post */
+	font-size: 11px;
+	font-style: italic;
+}
+
+.postTable {
+	border: 1px solid #DCC0BA;
+	background-color: #F2E6E5;
+	width: 999px;
+	height: auto;
+	border-radius:4px;
+	margin-bottom: 20px;
+	position: relative;
+	min-height: 130px;
+	overflow: auto;
+}
+
+.postTable h2 {
+	margin-left: 10px;
+	margin-bottom: 0;
+}
+
+.postTable img {
+	border-radius: 2px;
+	margin: 0 5px 0 5px;
+	box-shadow: 0 0 6px #B7958F;
+}
+
+.postTable img.avatar {
+	vertical-align: middle;
+	border: 1px solid #B7958F;
+	margin-left: 0;
+	height: 55px;
+}
+
+.postTable p {
+	margin: 10px;
+	text-align: justify;
+	line-height: 17px;
+}
+
+.postTable p.by {
+	margin-bottom:25px;
+}
+
+.postTable span {
+}
+
+.postTable span.date {
+	display: inline;
+	margin-left: 0px;
+	font-size: 11px;
+}
+
+.postTable .post {
+	width: 770px;
+	border-right: 1px solid #DCC0BA;
+	display: inline-table;
+	height: 130px;
+}
+
+.postTable .postProfile {
+	width: 210px;
+	margin: 8px 10px 0 0;
+	display: inline-table;
+	float: right;
+}
+
+.postTable .postProfile ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	line-height: 20px;
+}
+
+.postTable .postProfile ul li {
+	font-size: 11px;
+	color: #999;
+}
+
+.postTable .postProfile ul li span {
+	margin-left: 0px;
+}
+
+#subject {
+	width: 50%;
+	min-width: 300px;
+}
+
+#subjectLabel {
+	margin-left: 20px;
+	font-weight: bold;
+	color: #6F0B09;
+}
+
+#submit {
+	border: none;
+	background-color: transparent;
+	margin: 0 0 0 800px;
+	font-weight: bold;
+	right: 0;
+}
+
+/* Topic Icons */
+
+/* ---------- Topic Icons ---------- */
+
+.topicIcons {
+	width: 130px;
+	height:25px;
+	position:absolute;
+	margin: 0 0 0 650px;
+}
+
+.topicIcons .editPost {
+	background-image:url(${contextPath}/images/forum/button_edit.png);
+	width:20px;
+	height:20px;
+	position:absolute;
+	margin:5px 0 0 0;
+}
+
+.topicIcons .deletePost {
+	background-image:url(${contextPath}/images/forum/button_delete.png);
+	width:20px;
+	height:20px;
+	position:absolute;
+	margin:5px 0 0 30px;
+}
+
+.topicIcons .reportPost {
+	background-image:url(${contextPath}/images/forum/button_report.png);
+	width:22px;
+	height:20px;
+	position:absolute;
+	margin:5px 0 0 60px;
+}
+
+.topicIcons .informationPost {
+	background-image:url(${contextPath}/images/forum/button_info.png);
+	width:20px;
+	height:20px;
+	position:absolute;
+	margin: 5px 0 0 85px;
+}
+
+.topicIcons .quotePost {
+	background-image:url(${contextPath}/images/forum/button_quote.png);
+	width:20px;
+	height:20px;
+	position:absolute;
+	margin: 5px 0 0 90px;
+}
+
+/* users */
+
+.online {
+	position:absolute;
+	top: 0;
+	right:0;
+	background-image:url(${contextPath}/images/forum/img_online.png);
+	width:60px;
+	height:60px;
+	visibility:hidden;
+}
+
+.online.visible {  /* if the user is online this class shows the "online status" */
+	visibility: visible;
+}
+
+.whoIsOnlineDiv { /* Div */
+	margin-bottom: 30px;
+}
+
+.whoIsOnlineDiv p { /* Date format */
+	padding-left: 13px;
+}
+
+.whoIsOnlineDiv .userOnline, .whoIsOnlineDiv .userRegistered, .whoIsOnlineDiv .userHidden, .whoIsOnlineDiv .userGuest {
+	font-weight:bold;
+	font-size: 13px;
+	color:#B7958F;
+}
+
+/* Pagination */
+
+#forumPaginate_upper, #forumPaginate_lower {
+    text-align: right;
+    font-size: 10px;
+    height: 50px;
+}
+
+#forumPaginate_upper a, #forumPaginate_lower a {
+    font-size: 10px;
+}
+
+#forumPaginate_upper a:hover, #forumPaginate_lower a:hover {
+    text-decoration:none;
+    color:#654C47;
+}
+
+.firstPaginateButton, .previousPaginateButton, .paginateActive, .paginateButton, .nextPaginateButton, .lastPaginateButton {
+    border: 1px solid #DCC0BA;
+	border-radius:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+    *cursor: hand;
+    background-color: #EAD9D6;
+}
+
+.firstPaginateButton, .previousPaginateButton, .paginateActive, .paginateButton, .nextPaginateButton {
+    margin: 0 3px;
+}
+
+.lastPaginateButton {
+    margin: 0;
+}
+
+.paginateActive, .firstPaginateButton:hover, .previousPaginateButton:hover, .paginateActive:hover, .paginateButton:hover, .nextPaginateButton:hover, .lastPaginateButton:hover {
+    background-color: #DCC0BA;
+}
