@@ -253,7 +253,7 @@ public class ForumTopic implements Serializable {
 	/**
 	 * @return the status
 	 */
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -388,13 +388,6 @@ public class ForumTopic implements Serializable {
 	 */
 	public void setPosts(List<ForumPost> posts) {
 		this.posts = posts;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	/**
