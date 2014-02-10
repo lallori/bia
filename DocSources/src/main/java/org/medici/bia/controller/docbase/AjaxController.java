@@ -297,7 +297,7 @@ public class AjaxController {
 			}
 			ForumTopic courseTopic = getTeachingService().addNewCourseTopic(cId, docId, topicTitle.trim(), httpServletRequest.getRemoteAddr());
 			
-			model.put("courseTopic", courseTopic);
+			model.put("courseTopicId", courseTopic.getTopicId());
 		} catch (ApplicationThrowable th) {
 			model.put("error", th.toString());
 		}

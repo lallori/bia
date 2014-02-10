@@ -104,7 +104,7 @@
 						success: function(data) {
 							if (typeof data.error === 'undefined') {
 								Modalbox.hide();
-								var url = '${ShowDocumentRoundRobinTranscriptionURL}' + '&topicId=' + data.courseTopic.topicId;
+								var url = '${ShowDocumentRoundRobinTranscriptionURL}' + '&topicId=' + data.courseTopicId;
 								window.open(url, '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
 							} else {
 								showError(data.error);
