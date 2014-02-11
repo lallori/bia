@@ -5,8 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="LoadingImageURL" value="/images/loading_autocomplete.gif"/>
+	
+	<c:url var="editDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do"/>
 
-	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
+	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit" action="${editDetailsVolumeURL}">
 		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
 		<fieldset>
@@ -73,6 +75,7 @@
 			<form:errors path="endMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="endDay" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="dateNotes" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="*" cssClass="inputerrors" htmlEscape="false"/>
 			
 			<form:hidden path="summaryId"/>
 			<form:hidden path="seriesRefNum"/>
@@ -331,7 +334,7 @@
 				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		       	$j("#loadingDiv").css('visibility', 'visible');
 
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					if ($j(html).find(".inputerrors").length > 0){
 						$j("#EditDetailsVolumeDiv").html(html);
 					} else {

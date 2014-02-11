@@ -193,7 +193,7 @@ public class EditDetailsDocumentValidator implements Validator {
 	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Errors errors) {
 		if (!errors.hasErrors()) {
 			if (startYear != null) {
-				if ((startYear < 1200) || (startYear > 1700)) {
+				if ((startYear < 1000) || (startYear > 1750)) {
 					errors.rejectValue("docYear", "error.docYear.invalid");
 				}
 			}
