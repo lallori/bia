@@ -753,6 +753,10 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}
 		try {
 			Document document = getDocumentDAO().find(entryId);
+			if (document == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR);
+			}
+			
 			DocumentExplorer documentExplorer = new DocumentExplorer(entryId, document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 			documentExplorer.setImage(new Image());
 			boolean searchForTranscribeFolio = forTranscribeFolio && document.getTranscribeFolioNum() != null && document.getTranscribeFolioNum() > 0;
@@ -768,7 +772,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					(document.getFolioRectoVerso() != null ? ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()) : null)
 				);
 			}
-
+			// RR: we set the total to null to force the volume details reloading
+			documentExplorer.setTotal(null);
+			
 			Image image = getImageDAO().findImage(documentExplorer);
 			if (image != null) {
 				documentExplorer.setImage(image);

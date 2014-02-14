@@ -154,6 +154,7 @@ var IIPMooViewer = new Class({
 		/** MEDICI ARCHIVE PROJECT START **/
 		this.navWinPos = options.navWinPos || 'right';
 		this.editEnabled = (options.enableEdit == false) ? false : true;
+		this.showHideAnnotationButton = (options.showHideAnnotationButton == false) ? false : true;
 		/** MEDICI ARCHIVE PROJECT END **/
 
 
@@ -1600,27 +1601,29 @@ var IIPMooViewer = new Class({
 
 			/** MEDICI ARCHIVE PROJECT START **/
 			//Disable button annotation
-			new Element('div', {
-				'class': 'hideAnnotation',
-				'html': '<img id="hideAnnotation" src="' + this.prefix + 'enableAnnotation.svg" title="Hide/Restore annotations">',
-				'events': {
-					click: function() {
-						if (_this.annotationsVisible) {
-							_this.container.getElementById('hideAnnotation').src = _this.prefix + 'disableAnnotation.svg';
-							_this.toggleAnnotations();
-						} else {
-							if (_this.container.getElement('div.message') != null) {
-								_this.container.getElement('div.message').style.visibility = "hidden";
+			if (this.showHideAnnotationButton) {
+				new Element('div', {
+					'class': 'hideAnnotation',
+					'html': '<img id="hideAnnotation" src="' + this.prefix + 'enableAnnotation.svg" title="Hide/Restore annotations">',
+					'events': {
+						click: function() {
+							if (_this.annotationsVisible) {
+								_this.container.getElementById('hideAnnotation').src = _this.prefix + 'disableAnnotation.svg';
+								_this.toggleAnnotations();
+							} else {
+								if (_this.container.getElement('div.message') != null) {
+									_this.container.getElement('div.message').style.visibility = "hidden";
+								}
+								_this.container.getElementById('hideAnnotation').src = _this.prefix + 'enableAnnotation.svg';
+								_this.toggleAnnotations();
 							}
-							_this.container.getElementById('hideAnnotation').src = _this.prefix + 'enableAnnotation.svg';
-							_this.toggleAnnotations();
 						}
+					},
+					'styles': {
+						position: 'absolute'
 					}
-				},
-				'styles': {
-					position: 'absolute'
-				}
-			}).inject(this.container);
+				}).inject(this.container);
+			}
 
 			new Element('div', {
 				'class': 'hideNavWindow',

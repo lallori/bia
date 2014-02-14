@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class ShowDocumentRoundRobinTranscriptionController {
-	
+
 	@Autowired
 	private TeachingService teachingService;
 	
@@ -79,27 +79,27 @@ public class ShowDocumentRoundRobinTranscriptionController {
 				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			}
 			
-			PaginationFilter filter = getPaginationFilter(command);
 			ForumTopic courseTopic = getTeachingService().getCourseTopicForView(command.getTopicId());
 			
 			model.put("topic", courseTopic);
 			//model.put("subscribed", getCommunityService().ifTopicSubscribed(courseTopic.getTopicId()));
 			
-			Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
-			model.put("postsPage", postsPage);
-			
 			//TODO: create map for user roles (teacher or student?)
+			
+			if (Boolean.FALSE.equals(command.getCompleteDOM())) {
+				PaginationFilter filter = getPaginationFilter(command);
+				Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
+				model.put("postsPage", postsPage);
+				
+				return new ModelAndView("teaching/ShowRoundRobinTranscription", model);
+			}
+			
+			return new ModelAndView("teaching/ShowRoundRobinTranscriptionDOM", model);
 			
 		} catch (ApplicationThrowable th) {
 			model.put("applicationThrowable", th);
 			return new ModelAndView("error/ShowRoundRobinTranscription", model);
 		}
-		
-		if (Boolean.FALSE.equals(command.getCompleteDOM())) {
-			return new ModelAndView("teaching/ShowRoundRobinTranscription", model);
-		}
-		
-		return new ModelAndView("teaching/ShowRoundRobinTranscriptionDOM", model);
 	}
 	
 	private PaginationFilter getPaginationFilter(ShowDocumentRoundRobinTranscriptionCommand command) {

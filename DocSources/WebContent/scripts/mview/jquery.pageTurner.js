@@ -43,6 +43,7 @@
         "retrieveAnnotationsUrl": "",
         "updateAnnotationsUrl": "",
         "annotations": new Array(),
+        "showHideAnnotationButton": true,
         "textVolume": "Volume",
         "textExtension": "Ext",
         "textInsert": "Insert",
@@ -131,6 +132,7 @@
 							winResize: true,
 							zoom: 3,
 							scale: 0,
+							showHideAnnotationButton: functionParams["showHideAnnotationButton"],
 							annotationsType: functionParams["annotationsType"],
 							retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
 							updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
@@ -148,9 +150,11 @@
 							$("#next").attr('href', data.nextPage);
 						}
 						
-						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
-							$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
-		    			});
+						if (functionParams["getLinkedDocumentUrl"] != null) {
+							$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
+								$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
+							});
+						}
 						
 					}
 				});
@@ -176,6 +180,7 @@
         "retrieveAnnotationsUrl": "",
         "updateAnnotationsUrl": "",
         "annotations": new Array(),
+        "showHideAnnotationButton": true,
         "textVolume": "Volume",
         "textExtension": "Ext",
         "textInsert": "Insert",
@@ -405,6 +410,7 @@
 						winResize: true,
 						zoom: 3,
 						scale: 0,
+						showHideAnnotationButton: functionParams["showHideAnnotationButton"],
 						annotationsType: functionParams["annotationsType"],
 						retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
 						updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
@@ -420,10 +426,12 @@
 					} else {
 						$("#next").attr('href', data.nextPage);
 					}
-
-					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
-						$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
-	    			});
+					
+					if (functionParams["getLinkedDocumentUrl"] != null) {
+						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
+							$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
+						});
+					}
 
 				}});
             });

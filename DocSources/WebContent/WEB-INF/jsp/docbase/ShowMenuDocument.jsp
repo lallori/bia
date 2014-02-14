@@ -116,7 +116,7 @@
 							Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
 						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-							Modalbox.show('${ShowChoiceCourseOrDocumentForumURL}', {title: "COURSES / DISCUSSIONS", width: 470, height: 100});
+							Modalbox.show('${ShowChoiceCourseOrDocumentForumURL}', {title: "COURSES / DISCUSSIONS", width: 520, height: 100});
 						</security:authorize>
 					</c:when>
 					<c:otherwise>

@@ -5280,7 +5280,7 @@ margin-top: 50px;
 	padding-top: 4px;
 	margin-left: 40px;
 	cursor: pointer;
-	background: url(/DocSources/images/1024/button_large.png) no-repeat;
+	background: url(${contextPath}/images/1024/button_large.png) no-repeat;
 	width: 187px;
 	height: 22px;
 	border: none;

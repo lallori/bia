@@ -27,8 +27,6 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value='/styles/1024/js/jquery_layout.css'/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
 		
-		<script type="text/javascript" src="<c:url value="/scripts/mootools-core-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mootools-more-1.3-full-compat-compressed.js"/>"></script>
 		<script type="text/javascript" src="<c:url value='/scripts/jquery.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>
@@ -45,7 +43,15 @@
 			var $j = jQuery.noConflict();
 		
 			var myLayout; // a var is required because this page utilizes: myLayout.allowOverflow() method
-		
+			
+			var adjustPageTurnerPosition = function() {
+				var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
+				if (typeof pageTurner !== 'undefined') {
+					var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).width();
+					$j(pageTurner).css('left', newLeft + 'px');
+				}
+			}
+			
 			$j(document).ready(function () {
 				
 				$j.ajaxSetup ({
@@ -63,8 +69,17 @@
 				,	west__sliderTip:			"Slide Open Menu"
 				,	west__slideTrigger_open:	"mouseover"
 				,	center__maskContents:		true // IMPORTANT - enable iframe masking
+				,	west__onresize_end:	function() {
+					setTimeout(function() {
+						var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
+						if (typeof pageTurner !== 'undefined') {
+							var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).outerWidth();
+							$j(pageTurner).css('left', newLeft + 'px');
+						}
+					}, 5);
+				}
 				});
-		
+				
 		 	});
 	
 		</script>

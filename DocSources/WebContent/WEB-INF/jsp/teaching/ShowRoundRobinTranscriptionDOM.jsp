@@ -13,6 +13,10 @@
 	<c:url var="ShowCourseTopicActionsURL" value="/teaching/ShowCourseTopicActions.do">
 		<c:param name="topicId" value="${topic.topicId}" />
 	</c:url>
+	
+	<c:url var="ShowTeachingManuscriptViewerURL" value="/teaching/ShowManuscriptViewer.do">
+		<c:param name="entryId" value="${command.entryId}"/>
+	</c:url>
 
 	<!-- <div class="ui-layout-north"></div>  -->
 	
@@ -43,7 +47,7 @@
 	</div>
 	
 	<iframe id="mainFrame" name="mainFrame" class="ui-layout-center" width="100%" height="600" frameborder="0" scrolling="auto"
-		src=""></iframe>
+		src="${ShowTeachingManuscriptViewerURL}"></iframe>
 		
 		
 	<script>

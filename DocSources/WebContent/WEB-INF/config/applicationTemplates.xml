@@ -82,6 +82,8 @@
 	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
 
 	<definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
+	
+	<definition name="template.teachingManuscriptViewerHtmlDOM" template="/WEB-INF/templates/teachingManuscriptViewerHtmlDOM.jsp" />
 
 	<definition name="template.titleOrOccupation" template="/WEB-INF/templates/titleOrOccupation.jsp" />
 
@@ -856,6 +858,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/PageTurnerDialog.jsp"/>
 	</definition>
 
+	<definition name="mview/RoundRobinPageTurnerDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/RoundRobinPageTurnerDialog.jsp"/>
+	</definition>
+
 	<definition name="mview/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
@@ -878,6 +884,10 @@
 
 	<definition name="mview/ShowSummaryVolumeDialog" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSummaryVolumeDialog.jsp"/>
+	</definition>
+
+	<definition name="mview/ShowTeachingManuscriptViewerHtml" extends="template.teachingManuscriptViewerHtmlDOM">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/RoundRobinInManuscriptViewerHtml.jsp"/>
 	</definition>
 	<!--  Manuscript Viewer END -->
 	
