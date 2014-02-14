@@ -574,6 +574,7 @@ item a{
 	text-align: center;
 	padding-top: 3px;
 	background-repeat: no-repeat;
+	display: inline-block;
 }
 
 .button_medium {
@@ -599,6 +600,7 @@ item a{
 	padding: 3px 0 0 0;
 	cursor: pointer;
 	text-align: center;
+	display: inline-block;
 }
 
 .button_extra_large {
@@ -609,6 +611,7 @@ item a{
 	padding: 3px;
 	cursor: pointer;
 	text-align: center;
+	display: inline-block;
 }
 
 .showCompare {

@@ -44,8 +44,7 @@ a.link {  /* "Last post by" user name */
 }
 
 blockquote {
-	background: #FFFFFF none no-repeat scroll 6px 8px;
-	border: 1px dashed #DBDBDB;
+	background: rgba(250, 250, 250, 0.5);
 	font-size: 0.95em;
 	margin: 0.5em 10px 0pt 10px;
 	overflow: auto;
@@ -55,6 +54,7 @@ blockquote {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border: 1px solid #DCC0BA;
 }
 
 blockquote cite {
@@ -257,40 +257,40 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	background-image:url(${contextPath}/images/forum/button_edit.png);
 	width:20px;
 	height:20px;
-	position:absolute;
-	margin:5px 0 0 0;
+	margin: 5px 0;
+	display: inline-block;
 }
 
 .topicIcons .deletePost {
 	background-image:url(${contextPath}/images/forum/button_delete.png);
 	width:20px;
 	height:20px;
-	position:absolute;
-	margin:5px 0 0 30px;
+	display: inline-block;
+	margin: 5px 0 5px 5px;
 }
 
 .topicIcons .reportPost {
 	background-image:url(${contextPath}/images/forum/button_report.png);
 	width:22px;
 	height:20px;
-	position:absolute;
-	margin:5px 0 0 60px;
+	display: inline-block;
+	margin: 5px 0 5px 5px;
 }
 
 .topicIcons .informationPost {
 	background-image:url(${contextPath}/images/forum/button_info.png);
 	width:20px;
 	height:20px;
-	position:absolute;
-	margin: 5px 0 0 85px;
+	display: inline-block;
+	margin: 5px 0 5px 5px;
 }
 
 .topicIcons .quotePost {
 	background-image:url(${contextPath}/images/forum/button_quote.png);
 	width:20px;
 	height:20px;
-	position:absolute;
-	margin: 5px 0 0 90px;
+	display: inline-block;
+	margin: 5px 0 5px 5px;
 }
 
 /* users */
@@ -329,6 +329,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
     text-align: right;
     font-size: 10px;
     height: 50px;
+    max-width: 1000px;
 }
 
 #forumPaginate_upper a, #forumPaginate_lower a {
@@ -361,4 +362,30 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 
 .paginateActive, .firstPaginateButton:hover, .previousPaginateButton:hover, .paginateActive:hover, .paginateButton:hover, .nextPaginateButton:hover, .lastPaginateButton:hover {
     background-color: #DCC0BA;
+}
+
+#roundRobinPosts #editPostContainer {
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding-top: 10px;
+	background-color: rgba(250,250,250,0.4);
+	max-width: 990px;
+}
+
+#roundRobinPosts #editPostContainer .postTable {max-width:990px}
+#roundRobinPosts #editPostContainer .postTable .postProfile {width: 200px;}
+
+#roundRobinPosts .postTable {background-color:rgba(220,192,186,0.2);}
+#roundRobinPosts #editPostContainer #submit {margin:0 10px 0 0; float:right;}
+
+#roundRobinPosts #postsContainer {
+    -moz-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
