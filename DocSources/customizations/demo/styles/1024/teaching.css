@@ -147,7 +147,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 .postTable {
 	border: 1px solid #DCC0BA;
 	background-color: #F2E6E5;
-	width: 999px;
+	width: 99%;
 	height: auto;
 	border-radius:4px;
 	margin-bottom: 20px;
@@ -194,16 +194,15 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 }
 
 .postTable .post {
-	width: 770px;
+	width: 73%;
 	border-right: 1px solid #DCC0BA;
-	display: inline-table;
-	height: 130px;
+	float: left;
+	min-height:150px;
 }
 
 .postTable .postProfile {
-	width: 210px;
-	margin: 8px 10px 0 0;
-	display: inline-table;
+	width: 25%;
+	margin: 8px 0 0 0;
 	float: right;
 }
 
@@ -329,7 +328,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
     text-align: right;
     font-size: 10px;
     height: 50px;
-    max-width: 1000px;
+    width: 98%;
 }
 
 #forumPaginate_upper a, #forumPaginate_lower a {
@@ -374,7 +373,6 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	max-width: 990px;
 }
 
-#roundRobinPosts #editPostContainer .postTable {max-width:990px}
 #roundRobinPosts #editPostContainer .postTable .postProfile {width: 200px;}
 
 #roundRobinPosts .postTable {background-color:rgba(220,192,186,0.2);}
