@@ -1941,3 +1941,11 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`,
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditRoundRobinPost', 'main', '/WEB-INF/jsp/teaching/EditRoundRobinPost.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowPreviewCourseTopicPost', 'main', '/WEB-INF/jsp/teaching/ShowPreviewCourseTopicPost.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowCourseTopicActions', 'main', '/WEB-INF/jsp/teaching/ShowCourseTopicActions.jsp', 0);
+
+-- round robin transcription -> manuscript viewer definitions
+INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.teachingManuscriptViewerHtmlDOM', '/WEB-INF/templates/teachingManuscriptViewerHtmlDOM.jsp');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('mview/ShowTeachingManuscriptViewerHtml', 'template.teachingManuscriptViewerHtmlDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('mview/RoundRobinPageTurnerDialog', 'template.partialDOM');
+
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/ShowTeachingManuscriptViewerHtml', 'manuscriptviewer', '/WEB-INF/jsp/mview/RoundRobinInManuscriptViewerHtml.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/RoundRobinPageTurnerDialog', 'main', '/WEB-INF/jsp/mview/RoundRobinPageTurnerDialog.jsp', 0);
