@@ -61,7 +61,7 @@
 			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="peoplebase.showMenuPerson.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		</security:authorize>
 		<span id="commentsOn"></span>
-		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="peoplebase.showMenuPerson.help.discussions"></fmt:message>" href="#">Discussions</a>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="peoplebase.showMenuPerson.help.discussions"></fmt:message>" href="#">Forum</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		<c:if test="${!person.logicalDelete}">
 			<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="peoplebase.showMenuPerson.help.delete"></fmt:message>" href="${DeletePersonURL}">Delete</a>
