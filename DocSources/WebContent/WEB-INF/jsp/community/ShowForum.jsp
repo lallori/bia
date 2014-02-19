@@ -195,7 +195,7 @@
 			</c:if>
 		</security:authorize>
 	
-		<c:if test="${forum.option.canHaveTopics}">
+		<c:if test="${forum.option.canHaveTopics && forum.subType != 'COURSE'}">
 			<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
 					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic"><fmt:message key="community.forum.link.newTopic" /></a>
@@ -567,6 +567,15 @@
 			            			<div class="six"><fmt:message key="community.forum.title.delete" /></div>
 			            		</security:authorize>
             				</c:when>
+            				<c:when test="${forum.subType == 'COURSE'}">
+            					<div class="one">COURSE TOPICS / DISCUSSIONS</div>
+				            	<div class="two">POSTS</div>
+				            	<div class="three"><fmt:message key="community.forum.title.views" /></div>
+				            	<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+				            	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			            			<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+			            		</security:authorize>
+            				</c:when>
             				<c:otherwise>
             					<div class="one"><fmt:message key="community.forum.title.discussions" /></div>
 				            	<div class="two"><fmt:message key="community.forum.title.replies" /></div>
@@ -611,6 +620,32 @@
 								        	</security:authorize>
 								        </div>
 									</c:when>
+									<c:when test="${forum.subType == 'COURSE'}">
+										<c:url var="ShowDocumentRoundRobinTranscriptionURL" value="/teaching/ShowDocumentRoundRobinTranscription.do">
+											<c:param name="entryId" value="${currentTopic.document.entryId}" />
+											<c:param name="topicId" value="${currentTopic.topicId}" />
+											<c:param name="completeDOM" value="true" />
+										</c:url>
+										<div class="${not status.last ? 'row' : 'rowLast'}">
+											<div class="one">
+								            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+								                <a href="${ShowDocumentRoundRobinTranscriptionURL}" class="roundRobinHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
+								            </div>
+								            <div class="two">${currentTopic.totalReplies}</div>
+								            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
+											<c:if test="${not empty currentTopic.lastPost}">
+												<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+									            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+									        </c:if>
+											<c:if test="${empty currentTopic.lastPost}">
+									            <div class="four"></div>
+									        </c:if>
+									        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+								        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+								        	</security:authorize>
+								        </div>
+								    </c:when>
 									<c:otherwise>
 										<div class="${not status.last ? 'row' : 'rowLast'}">
 											<div class="one">
@@ -733,6 +768,12 @@
 			$j('.forumHref').die();
 			$j('.forumHref').live('click', function() {
 				$j("#main").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j('.roundRobinHref').die();
+			$j('.roundRobinHref').live('click', function() {
+				window.open($j(this).attr('href'), '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
 				return false;
 			});
 			

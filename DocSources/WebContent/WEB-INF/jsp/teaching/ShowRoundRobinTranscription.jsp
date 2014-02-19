@@ -6,7 +6,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-		<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+		<c:param name="entryId" value="${topic.document.entryId}"/>
 	</c:url>
 
 	<h6>ROUND ROBIN TRANSCRIPTION</h6>
@@ -14,7 +14,7 @@
 	<h2>${topic.subject}</h2>
 	
 	<p></p>
-	<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+	<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
 	
 	<c:if test="${postsPage.list.size() eq 0}">
 		<p>You have no posts.</p>
@@ -56,36 +56,37 @@
 			</c:url>
 			
 			<div id="postTable_${currentPost.postId}" class="postTable">
-				<div class="topicIcons">
-					<c:choose>
-						<c:when test="${currentPost.user.account == account}">
-							<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-							<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-						</c:when>
-						<c:otherwise>
-							<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-								<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-								<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-							</security:authorize>
-						</c:otherwise>
-					</c:choose>
-					<!-- <a href="${ReportForumPostURL}" class="reportPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Report this post"></a> -->
-					<a id="quoteLink_${currentPost.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
-				</div>
 				<div class="post">
-					<%-- In this case we enter in "my posts page" --%>
-					<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-						<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-						<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
-					</c:url>
-					<c:choose>
-						<c:when test="${topic.topicId == null}">
-							<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
-						</c:when>
-						<c:otherwise>
-							<h2>${currentPost.subject}</h2>
-						</c:otherwise>
-					</c:choose>
+					<div class="title">
+						<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+							<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+							<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
+						</c:url>
+						<c:choose>
+							<c:when test="${topic.topicId == null}">
+								<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
+							</c:when>
+							<c:otherwise>
+								<h2>${currentPost.subject}</h2>
+							</c:otherwise>
+						</c:choose>
+						<div class="topicIcons">
+							<c:choose>
+								<c:when test="${currentPost.user.account == account}">
+									<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
+									<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
+								</c:when>
+								<c:otherwise>
+									<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+										<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
+										<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
+									</security:authorize>
+								</c:otherwise>
+							</c:choose>
+							<!-- <a href="${ReportForumPostURL}" class="reportPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Report this post"></a> -->
+							<a id="quoteLink_${currentPost.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
+						</div>
+					</div>
 					<c:choose>
 						<c:when test="${currentPost.updater == null || currentPost.user.account == currentPost.updater.account}">
 							<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>

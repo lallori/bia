@@ -154,7 +154,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	position: relative;
 	min-height: 130px;
 	overflow: auto;
-	min-width: 350px;
+	min-width: 550px;
 }
 
 #postsContainer .postTable h2 {
@@ -200,6 +200,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	border-right: 1px solid #DCC0BA;
 	float: left;
 	min-height:150px;
+	min-width: 350px;
 }
 
 .postTable .postProfile {
@@ -390,7 +391,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
     border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	width: 95%!important;
+	width: 98%!important;
 }
 
 #addNewPost {margin-left: 5px;}
