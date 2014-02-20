@@ -14,7 +14,8 @@
         </div>
         <ul>
 			<li><a target="_blank" title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualHtml"/></a><br /></li>
-            <li><a href="${UserManualURL}" target="_blank">User Manual (PDF version)</a><br /></li>
+<%--             <li><a href="${UserManualURL}" target="_blank">User Manual (PDF version)</a><br /></li> --%>
+            <li><a href="http://www.medici.org/documents/BIADataEntryManual.pdf" target="_blank">User Manual (PDF version)</a><br /></li>
             <!--<li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.userManualPdf"/></a></li>-->
             <li><a title="Soon available" style="cursor:pointer;"><fmt:message key="menu.showHelpModal.helpVideos"/></a></li>
         </ul>
