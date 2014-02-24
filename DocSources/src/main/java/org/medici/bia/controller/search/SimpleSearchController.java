@@ -116,14 +116,10 @@ public class SimpleSearchController {
 			tempString.setCharAt(tempString.lastIndexOf("\""), ' ');
 			command.setText(tempString.toString());			
 		}
-		model.put("yourSearch", command.getText());
 		
-		if(command.getText().contains("\"")){
-			command.setText(command.getText().replace("\"", "\\\""));
-		}
-		if(command.getText().contains("\\")){
-			command.setText(command.getText().replace("\\", "\\\\"));
-		}
+		model.put("yourSearch", command.getText());
+		// RR: we consider single quote equivalent to double quotes
+		model.put("textSearch", command.getText().replace("'", "%22").replace("\"", "%22"));
 		
 		// This number is used to generate an unique id for new search
 		UUID uuid = UUID.randomUUID();

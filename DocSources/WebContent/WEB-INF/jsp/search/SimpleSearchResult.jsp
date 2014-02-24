@@ -19,6 +19,29 @@
 	</c:url>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
+	
+	<div class="yourSearchDiv">
+		<p>Your search:
+		<font color="red" style="margin-left:5px">${yourSearch}</font></p>
+		<p>Total records found:
+		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
+		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
+		<a id="print${command.searchUUID}" class="print button_medium" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
+		<c:if test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
+			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
+		</c:if>
+	</div>
+
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
+		<thead>
+			<tr></tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+			</tr>
+		</tbody>
+	</table>
 
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
@@ -55,7 +78,7 @@
 				"bServerSide": true,
 				"iDisplayLength": 20,
 				"iDisplayStart": 0,
-				"oSearch": {"sSearch": "${command.text}"},
+				"oSearch": {"sSearch": '${command.text}'},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
@@ -102,7 +125,7 @@
 					var href = '${ExpandResultsURL}';
 					href += "&iDisplayStart=" + this.fnSettings()._iDisplayStart;
 					href += "&iDisplayLength=" + this.fnSettings()._iDisplayLength;
-					href += "&sSearch=" + "${command.text}";
+					href += "&sSearch=" + '${command.text}';
 					href += "&iSortingCols=" + this.fnSettings()._iSortingCols;
 					href += "&iSortCol_0=" + this.fnSettings().aaSorting[0][0];
 					href += "&sSortDir_0=" + this.fnSettings().aaSorting[0][1];
@@ -199,25 +222,4 @@
 		} );
 	</script>
 	
-	<div class="yourSearchDiv">
-		<p>Your search:
-		<font color="red" style="margin-left:5px">${yourSearch}</font></p>
-		<p>Total records found:
-		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
-		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print button_medium" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
-		<c:if test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
-			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
-		</c:if>
-	</div>
-
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
-		<thead>
-			<tr></tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
-			</tr>
-		</tbody>
-	</table>
+	

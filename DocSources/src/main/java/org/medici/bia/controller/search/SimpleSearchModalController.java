@@ -92,19 +92,20 @@ public class SimpleSearchModalController {
 		Long totalResult = new Long(0);
 		
 		try{
-			SimpleSearchDocument simpleSearchDocument = new SimpleSearchDocument(SimpleSearchPerimeter.SYNOPSIS, command.getText());
+			// RR: we consider single quote equivalent to double quotes
+			SimpleSearchDocument simpleSearchDocument = new SimpleSearchDocument(SimpleSearchPerimeter.SYNOPSIS, command.getText().replaceAll("'", "\""));
 			totalResult = getSearchService().searchCount(simpleSearchDocument);
 			model.put("documentsSynopsisCount", totalResult);
-			simpleSearchDocument = new SimpleSearchDocument(SimpleSearchPerimeter.EXTRACT, command.getText());
+			simpleSearchDocument = new SimpleSearchDocument(SimpleSearchPerimeter.EXTRACT, command.getText().replaceAll("'", "\""));
 			totalResult = getSearchService().searchCount(simpleSearchDocument);
 			model.put("documentsExtractCount", totalResult);
-			SimpleSearchVolume simpleSearchVolume = new SimpleSearchVolume(command.getText());
+			SimpleSearchVolume simpleSearchVolume = new SimpleSearchVolume(command.getText().replaceAll("'", "\""));
 			totalResult = getSearchService().searchCount(simpleSearchVolume);
 			model.put("volumesCount", totalResult);
-			SimpleSearchPeople simpleSearchPeople = new SimpleSearchPeople(command.getText());
+			SimpleSearchPeople simpleSearchPeople = new SimpleSearchPeople(command.getText().replaceAll("'", "\""));
 			totalResult = getSearchService().searchCount(simpleSearchPeople);
 			model.put("peopleCount", totalResult);
-			SimpleSearchPlace simpleSearchPlace = new SimpleSearchPlace(command.getText());
+			SimpleSearchPlace simpleSearchPlace = new SimpleSearchPlace(command.getText().replaceAll("'", "\""));
 			totalResult = getSearchService().searchCount(simpleSearchPlace);
 			model.put("placesCount", totalResult);
 		} catch (ApplicationThrowable applicationThrowable) {
@@ -113,7 +114,8 @@ public class SimpleSearchModalController {
 		}
 		
 		model.put("yourSearch", command.getText());
-		model.put("textSearch", command.getText().replace("'", "%27"));
+		// RR: we consider single quote equivalent to double quotes
+		model.put("textSearch", command.getText().replace("'", "%22").replace("\"", "%22"));
 		
 		return new ModelAndView("search/SimpleSearchModalWindow",model);
 	}
