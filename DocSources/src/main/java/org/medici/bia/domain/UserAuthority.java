@@ -64,7 +64,8 @@ public class UserAuthority implements Serializable {
 		GUESTS("GUESTS"), 
 		ONSITE_FELLOWS("ONSITE_FELLOWS"), 
 		SENIOR_DISTANCE_FELLOWS("SENIOR_DISTANCE_FELLOWS"),
-		STUDENTS("STUDENTS");
+		STUDENTS("STUDENTS"),
+		TEACHERS("TEACHERS");
 
         private String value;
 
