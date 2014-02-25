@@ -201,12 +201,12 @@
 			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm_${documentExplorer.volNum}${documentExplorer.volLetExt}">
 				<div>
 					<div class="moveToFolioTitle">
-						Go To page
+						Go To <fmt:message key="docbase.showExplorerDocument.folio"/> 
 					</div> 
 					
 					<c:if test="${hasInsert}">
 						<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
-						<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+						<label for="insertNum" id="insertNumLabel" class="folioLabel"><fmt:message key="docbase.showExplorerDocument.insert"/></label>
 						<input id="insertNum" name="insertNum" class="input_4c" type="text" value="${documentExplorer.image.insertNum}" />
 						<input id="insertLet" name="insertLet" class="input_4c" type="text" value="${documentExplorer.image.insertLet}" />
 					</c:if>
