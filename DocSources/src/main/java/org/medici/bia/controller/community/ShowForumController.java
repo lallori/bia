@@ -67,6 +67,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value={"/community/ShowForum"})
 public class ShowForumController {
+	
+	private static final Integer DEFAULT_ROWS_PER_PAGE = 10;
+	private static final Integer EXTENDED_ROWS_PER_PAGE = 30;
+	
 	@Autowired
 	private CommunityService communityService;
 	@Autowired
@@ -204,7 +208,7 @@ public class ShowForumController {
 						if (command.getForumsForPage() != null) {
 							paginationFilterForum.setElementsForPage(command.getForumsForPage());
 						} else {
-							paginationFilterForum.setElementsForPage(new Integer(10));
+							paginationFilterForum.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
 							command.setForumsForPage(paginationFilterForum.getElementsForPage());
 						}
 						if (command.getForumPageNumber() != null) {
@@ -228,7 +232,7 @@ public class ShowForumController {
 						if (command.getTopicsForPage() != null) {
 							paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
 						} else {
-							paginationFilterTopic.setElementsForPage(new Integer(10));
+							paginationFilterTopic.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
 							command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
 						}
 						if (command.getTopicPageNumber() != null) {
@@ -256,7 +260,7 @@ public class ShowForumController {
 				if (command.getTopicsForPage() != null) {
 					paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
 				} else {
-					paginationFilterTopic.setElementsForPage(new Integer(10));
+					paginationFilterTopic.setElementsForPage(new Integer(EXTENDED_ROWS_PER_PAGE));
 					command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
 				}
 				if (command.getTopicPageNumber() != null) {
