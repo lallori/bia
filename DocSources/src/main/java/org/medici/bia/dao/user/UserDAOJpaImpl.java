@@ -640,7 +640,10 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		// Number of minutes to check last update for people online
+		//DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(1);
+		
 
 		String baseQuery  = " FROM User user, AccessLog accessLog WHERE user.account = accessLog.account and (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "')";
 	
