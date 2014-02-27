@@ -24,12 +24,14 @@
 			<c:if test="${document.entryId > 0}">
 				<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="<fmt:message key="docbase.showExtractOrSynopsisDocument.editTranscSyn"/>"></a>
 				<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editSplitScreen" title="Edit with Split Screen"></a>
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<c:if test="${not empty image}">
 					<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="<fmt:message key="docbase.showExtractOrSynopsisDocument.editWithManTransc"/>"></a><span id="loading"/>
 				</c:if>
 				<c:if test="${empty image}">
 					<span class="EditDocumentInManuscriptTranscriberOff" title="Not yet digitized"></span>
 				</c:if>
+				</security:authorize>
 			</c:if>
 		</security:authorize>
 		</div>
