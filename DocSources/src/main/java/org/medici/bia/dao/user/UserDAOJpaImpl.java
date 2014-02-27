@@ -642,7 +642,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		
 		// Number of minutes to check last update for people online
 		//DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
-		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(1);
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
 		
 
 		String baseQuery  = " FROM User user, AccessLog accessLog WHERE user.account = accessLog.account and (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "')";
@@ -725,7 +725,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> whoIsOnlineForum() {
-		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(5);
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
 		Query query = getEntityManager().createQuery("SELECT DISTINCT user.account FROM User user, AccessLog accessLog WHERE user.forumJoinedDate IS NOT NULL AND user.account = accessLog.account AND (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "') AND accessLog.action LIKE '%community%'");
 		return query.getResultList();
 	}
