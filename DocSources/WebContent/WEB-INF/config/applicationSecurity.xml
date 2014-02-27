@@ -45,6 +45,7 @@
         <security:intercept-url pattern="/adm/**"   							access="ROLE_ADMINISTRATORS" />
         <security:intercept-url pattern="/de/ShowEntryMenu**" 					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/de/volbase/**" 						access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS" />
+        <security:intercept-url pattern="/de/docbase/**"    					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_STUDENTS" />
         <security:intercept-url pattern="/de/**"    							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS" />
         <security:intercept-url pattern="/digitization/**"   					access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
         <security:intercept-url pattern="/community/**"							access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS" />
