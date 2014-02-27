@@ -157,7 +157,7 @@ public class ExpandResultsAdvancedSearchController {
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
 			outputFields.add("Volume <br /> (Ins/Pa) <br /> Folio");
-			outputFields.add("Document Transcription");
+			outputFields.add("Document Synopsis");
 		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
 			outputFields = new ArrayList<String>(6);
 			outputFields.add("Sender");
