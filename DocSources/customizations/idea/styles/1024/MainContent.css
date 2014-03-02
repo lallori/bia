@@ -2084,9 +2084,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #moveToFolioForm { /* Move to folio FORM */
-	width: 110px;
-	color:#6d5c4d;
-	float:right;
+	width: auto;
+	color: #6d5c4d;
+	float: left;
+	margin-top: 15px;
 }
 
 #moveToFolioModalForm { /* Move to folio FORM in Fullscreen Mode */
@@ -2096,6 +2097,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	float:right;
 	margin:-7px 0 0 0;
 }
+
+#moveToFolioForm .moveToFolioTitle {font-weight: bold;}
+#moveToFolioForm #insertLet {margin-right: 15px;}
+#moveToFolioForm .folioLabel {position: relative;}
+#moveToFolioForm #go {margin:0}
 
 .folioLabel { /* "Move to folio" <label> ID  */
 	margin: 0;
