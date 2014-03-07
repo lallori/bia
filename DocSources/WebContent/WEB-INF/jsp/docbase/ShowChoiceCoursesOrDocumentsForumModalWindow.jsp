@@ -82,7 +82,9 @@
 
 			$j("#viewRoundRobinTranscriptionButton").click(function() {
 				var url = '${ShowDocumentRoundRobinTranscriptionURL}' + '&topicId=' + '${topic.topicId}';
-				window.open(url, '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+				// window.open(url, '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+				var tab = window.open(url, '_blank');
+				tab.focus();
 				Modalbox.hide();
 				return false;
 			});
@@ -105,7 +107,9 @@
 							if (typeof data.error === 'undefined') {
 								Modalbox.hide();
 								var url = '${ShowDocumentRoundRobinTranscriptionURL}' + '&topicId=' + data.courseTopicId;
-								window.open(url, '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+								// window.open(url, '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+								var tab = window.open(url, '_blank');
+								tab.focus();
 							} else {
 								showError(data.error);
 							}

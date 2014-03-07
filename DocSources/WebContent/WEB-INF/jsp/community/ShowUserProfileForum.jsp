@@ -20,9 +20,20 @@
 	<c:param name="forumId" value="${mostActiveForum.forumId}"/>
 </c:url>
 
-<c:url var="ShowTopicURL" value="/community/ShowTopicForum.do">
-	<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
-</c:url>
+<c:choose>
+	<c:when test="${mostActiveDiscussion.forum.subType == 'COURSE'}">
+		<c:url var="ShowTopicURL" value="/teaching/ShowDocumentRoundRobinTranscription.do">
+			<c:param name="entryId" value="${mostActiveDiscussion.document.entryId}"/>
+			<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
+			<c:param name="completeDOM" value="true" />
+		</c:url>
+	</c:when>
+	<c:otherwise>
+		<c:url var="ShowTopicURL" value="/community/ShowTopicForum.do">
+			<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
+		</c:url>
+	</c:otherwise>
+</c:choose>
 
 <c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 	<c:param name="forumId" value="1"/>
@@ -210,6 +221,9 @@
 		});
 		
 		$j(".activeTopic").click(function(){
+			if (${mostActiveDiscussion.forum.subType == 'COURSE'}) {
+				return true;
+			}
 			$j("#main").load($j(this).attr("href"));
 			return false;
 		});

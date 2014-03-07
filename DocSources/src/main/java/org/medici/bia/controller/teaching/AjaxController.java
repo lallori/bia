@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,9 @@ public class AjaxController {
 			@RequestParam(value="topicId", required=true) Integer topicId,
 			@RequestParam(value="subject", required=false) String subject,
 			@RequestParam(value="text", required=false) String text,
+			@RequestParam(value="volume", required=false) String volume,
+			@RequestParam(value="insert", required=false) String insert,
+			@RequestParam(value="folio", required=false) String folio,
 			HttpServletRequest httpServletRequest) {
 		
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -98,9 +102,22 @@ public class AjaxController {
 		try {
 			ForumPost post = null;
 			if (postId == null || new Integer(0).equals(postId)) {
-				post = getTeachingService().addNewTopicPost(topicId, subject != null ? subject.trim() : "", text != null ? text : "", httpServletRequest.getRemoteAddr());
+				post = getTeachingService().addNewTopicPost(
+						topicId, 
+						subject != null ? subject.trim() : "", 
+						text != null ? text : "",
+						volume,
+						insert,
+						folio,
+						httpServletRequest.getRemoteAddr());
 			} else {
-				post = getTeachingService().updateTopicPost(postId, subject != null ? subject.trim() : "", text != null ? text : "");
+				post = getTeachingService().updateTopicPost(
+						postId,
+						subject != null ? subject.trim() : "",
+						text != null ? text : "",
+						volume,
+						insert,
+						folio);
 			}
 			model.put("topicId", post.getTopic().getTopicId());
 			model.put("postId", post.getPostId());
@@ -109,6 +126,31 @@ public class AjaxController {
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/GetFolioFragments", method = RequestMethod.GET)
+	public Map<String, Object> getPostFolioLocation(
+			@RequestParam(value="entryId", required=true) Integer entryId,
+			@RequestParam(value="imageOrder", required=true) Integer imageOrder,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			Image image = getTeachingService().getDocumentImage(entryId, imageOrder);
+			if (image != null) {
+				model.put("volume", image.getVolNum() + (image.getVolLetExt() != null ? " " + image.getVolLetExt() : ""));
+				if (image.getInsertNum() != null) {
+					model.put("insert", image.getInsertNum() + (image.getInsertLet() != null ? " " + image.getInsertLet() : ""));
+				}
+				model.put("folio", image.getImageProgTypeNum() + (image.getMissedNumbering() != null ? " " + image.getMissedNumbering() : "") + " " + image.getImageRectoVerso().toString());
+				model.put("operation", "OK");
+			}
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		
 		return model;
 	}
 }

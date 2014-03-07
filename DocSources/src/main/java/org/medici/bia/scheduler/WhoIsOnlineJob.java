@@ -1,5 +1,5 @@
 /*
- * IWalkCallback.java
+ * WhoIsOnlineJob.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,44 +25,36 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.common.util.dom;
+package org.medici.bia.scheduler;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.Text;
+import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.medici.bia.common.context.ApplicationContextVariableManager;
+import org.medici.bia.common.util.DateUtils;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Callback for DOM navigation with {@link DOMWalker}
+ * This class implements the scheduler to determine all joined users and guests.
+ * It stores this data in {@link ApplicationContextVariableManager} so it is available everywhere at runtime.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public interface DOMWalkCallback {
+public class WhoIsOnlineJob {
 	
-	/**
-	 * This method is called when the DOM walker is exploring a {@link Element}   
-	 * 
-	 * @param n the explored node
-	 * @param path the node path
-	 * @return if this method returns false the children of the element will be not explored
-	 */
-	public boolean walkElement(Node n, SelectionPath path);
-
-	/**
-	 * This method is called when the DOM walker is exploring a {@link Text} 
-	 * 
-	 * @param t the explored element
-	 * @param path the element path
-	 */
-	public void walkTextNode(Text t, SelectionPath path);
-
-	/**
-	 * This method is called when the DOM walker is exploring a character
-	 * 
-	 * @param parent the parent node of the character
-	 * @param c the explored character
-	 * @param path the path of the character
-	 */
-	public void walkChar(Text parent, char c, SelectionPath path);
+	private static final Logger log = Logger.getLogger(WhoIsOnlineJob.class);
+	
+	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
+	@Scheduled(fixedRate=300000)
+	public void execute() {
+		long start = System.currentTimeMillis();
+		log.info("WHOISONLINEJOB starts at " + DateUtils.getMYSQLDateTime(new DateTime(start)));
+		ApplicationContextVariableManager.refreshAllJoined();
+		long end = System.currentTimeMillis();
+		log.info("WHOISONLINEJOB ends at " + DateUtils.getMYSQLDateTime(new DateTime(end)));
+		log.info("WHOISONLINEJOB work time: " + (new Float(end - start) / 1000));
+	}
 
 }

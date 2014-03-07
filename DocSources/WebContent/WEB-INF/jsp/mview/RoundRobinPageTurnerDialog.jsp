@@ -152,6 +152,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+		
+			console.log('Current image order' + ${command.imageOrder});
 			
 			var pageTurnerParams = {
 				searchUrl: '${SearchAjaxURL}', 

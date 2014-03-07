@@ -6,13 +6,14 @@
 <c:set var="pageCountToDiplay" value="5"/>
 <c:set var="pageCountToDiplayHalf" value="3"/>
 
+	<c:url var="baseUrl" value="/teaching/ShowDocumentRoundRobinTranscription.do"/>
+	
 	<c:choose>
 		<c:when test="${page.thisPage != 1}">
-			<c:url var="baseUrl" value="/teaching/ShowDocumentRoundRobinTranscription.do"/>
 			<c:set var="firstArgs">?topicId=${topicId}&postPageNumber=1&postPageTotal=${page.totalPages}&postsForPage=${page.elementsForPage}&completeDOM=false</c:set>
 			<c:set var="prevArgs">?topicId=${topicId}&postPageNumber=${page.thisPage - 1}&postPageTotal=${page.totalPages}&postsForPage=${page.elementsForPage}&completeDOM=false</c:set>
-			<span class="firstPaginateButton"><a href="${baseUrl}${firstArgs}" class="paginateForumButton ${buttonClass}">First</a></span>
-			<span class="previousPaginateButton"><a href="${baseUrl}${prevArgs}" class="paginateForumButton ${buttonClass}">Previous</a></span>
+			<a href="${baseUrl}${firstArgs}" class="firstPaginateButton paginateForumButton ${buttonClass}">First</a>
+			<a href="${baseUrl}${prevArgs}" class="previousPaginateButton paginateForumButton ${buttonClass}">Previous</a>
 		</c:when>
 		<c:otherwise>
 			<span class="firstPaginateButton">First</span>
@@ -47,11 +48,10 @@
 	
 	<c:choose>
 		<c:when test="${page.thisPage != page.totalPages}">
-			<c:url var="baseUrl" value="/teaching/ShowDocumentRoundRobinTranscription.do"/>
 			<c:set var="nextArgs">?topicId=${topicId}&postPageNumber=${page.thisPage + 1}&postPageTotal=${page.totalPages}&postsForPage=${page.elementsForPage}&completeDOM=false</c:set>
 			<c:set var="lastArgs">?topicId=${topicId}&postPageNumber=${page.totalPages}&postPageTotal=${page.totalPages}&postsForPage=${page.elementsForPage}&completeDOM=false</c:set>	
-			<span class="nextPaginateButton"><a href="${baseUrl}${nextArgs}" class="paginateForumButton ${buttonClass}">Next</a></span>
-			<span class="lastPaginateButton"><a href="${baseUrl}${lastArgs}" class="paginateForumButton ${buttonClass}">Last</a></span>
+			<a href="${baseUrl}${nextArgs}" class="nextPaginateButton paginateForumButton ${buttonClass}">Next</a>
+			<a href="${baseUrl}${lastArgs}" class="lastPaginateButton paginateForumButton ${buttonClass}">Last</a>
 		</c:when>
 		<c:otherwise>
 			<span class="nextPaginateButton">Next</span>

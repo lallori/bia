@@ -28,8 +28,10 @@
 package org.medici.bia.controller.community;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -81,6 +83,7 @@ public class ShowTopicForumController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowTopicForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -172,14 +175,12 @@ public class ShowTopicForumController {
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
 			model.put("postsPage", postsPage);
 			
-			Map<String, UserAuthority> maxAuthorities = new HashMap<String, UserAuthority>();
+			Set<String> accounts = new HashSet<String>();
+			
 			for(ForumPost post : ((List<ForumPost>)postsPage.getList())) {
-				String accountId = post.getUser().getAccount();
-				if (!maxAuthorities.containsKey(accountId)) {
-					UserAuthority maxAuthority = getCommunityService().findUserMaximumAuthority(accountId);
-					maxAuthorities.put(accountId,maxAuthority);
-				}
+				accounts.add(post.getUser().getAccount());
 			}
+			Map<String, UserAuthority> maxAuthorities = getCommunityService().findUsersMaximumAuthority(accounts);
 			model.put("maxAuthorities", maxAuthorities);
 			
 			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();

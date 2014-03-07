@@ -28,19 +28,24 @@
 package org.medici.bia.service.teaching;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.ApplicationError;
+import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.dao.course.CourseDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
+import org.medici.bia.dao.image.ImageDAO;
 import org.medici.bia.dao.user.UserDAO;
+import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.Document;
@@ -49,7 +54,9 @@ import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ForumTopicWatch;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
@@ -89,6 +96,12 @@ public class TeachingServiceImpl implements TeachingService {
 	
 	@Autowired
 	private ForumTopicWatchDAO forumTopicWatchDAO;
+	
+	@Autowired
+	private ImageDAO imageDAO;
+	
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
 	
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
@@ -144,6 +157,22 @@ public class TeachingServiceImpl implements TeachingService {
 		this.forumTopicWatchDAO = forumTopicWatchDAO;
 	}
 
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
+	}
+
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
@@ -167,7 +196,15 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumPost addNewTopicPost(Integer courseTopicId, String postSubject, String postContent, String remoteAddress) throws ApplicationThrowable {
+	public ForumPost addNewTopicPost(
+			Integer courseTopicId, 
+			String postSubject, 
+			String postContent, 
+			String volume, 
+			String insert, 
+			String folio, 
+			String remoteAddress) throws ApplicationThrowable {
+		
 		ForumTopic courseTopic = null;
 		
 		try {
@@ -187,7 +224,6 @@ public class TeachingServiceImpl implements TeachingService {
 			post.setTopic(courseTopic);
 			post.setForum(courseTopic.getForum());
 			post.setSubject(postSubject);
-			post.setText(postContent);
 			post.setIpAddress(remoteAddress);
 			
 			post.setDateCreated(now);
@@ -197,6 +233,10 @@ public class TeachingServiceImpl implements TeachingService {
 			post.setUpdater(user);
 			
 			getForumPostDAO().persist(post);
+			// calculate folio details comment after persist
+			String folioDetailsComment = "<!--" + CourseUtils.generateFolioLocationComment(post.getPostId(), volume, insert, folio) + "-->";
+			// now post text can be stored
+			post.setText(folioDetailsComment + postContent);
 			
 			courseTopic.setLastPost(post);
 			if (new Integer(0).equals(courseTopic.getTotalReplies())) {
@@ -355,6 +395,19 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Image getDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable {
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ForumTopic getCourseTopic(Integer courseTopicId) throws ApplicationThrowable {
 		try {
 			return getForumTopicDAO().find(courseTopicId);
@@ -429,13 +482,32 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String,UserAuthority> getUsersRoundRobinAuthority(Set<String> accountIds) throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getUsersRoundRobinAuthority(accountIds);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumPost updateTopicPost(Integer postId, String postSubject, String postContent) throws ApplicationThrowable {
+	public ForumPost updateTopicPost(
+			Integer postId,
+			String postSubject,
+			String postContent,
+			String volume,
+			String insert,
+			String folio) throws ApplicationThrowable {
+		
 		try {
 			ForumPost post = getForumPostDAO().find(postId);
 			
@@ -447,6 +519,15 @@ public class TeachingServiceImpl implements TeachingService {
 			User user = getCurrentUser();
 			
 			post.setSubject(postSubject);
+			String oldLocation = CourseUtils.getPostFolioLocationComment(post);
+			String newLocation = CourseUtils.generateFolioLocationComment(postId, volume, insert, folio);
+			if (!newLocation.equals(oldLocation)) {
+				if (oldLocation != null) {
+					postContent = postContent.replace(oldLocation, newLocation);
+				} else {
+					postContent = "<!--" + newLocation + "-->" + postContent;
+				}
+			}
 			post.setText(postContent);
 			post.setLastUpdate(now);
 			post.setUpdater(user);

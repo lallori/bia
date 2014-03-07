@@ -28,6 +28,8 @@
 package org.medici.bia.dao.userauthority;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -53,4 +55,22 @@ public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 	 * @return
 	 */
 	UserAuthority getMaximumAuthority(String accountId);
+	
+	/**
+	 * This method returns a map of users maximum authority
+	 * 
+	 * @param accountsId a set of account identifiers
+	 * @return the map of users maximum authority
+	 * @throws PersistenceException
+	 */
+	Map<String, UserAuthority> getMaximumAuthorities(Set<String> accountsId) throws PersistenceException;
+	
+	/**
+	 * This method returns the a map of users maximum authority for round robin transcriptions.
+	 *  
+	 * @param accountsId a set of account identifier
+	 * @return the map of users maximum authority for round robin transcriptions
+	 * @throws PersistenceException
+	 */
+	Map<String, UserAuthority> getUsersRoundRobinAuthority(Set<String> accountsId) throws PersistenceException;
 }

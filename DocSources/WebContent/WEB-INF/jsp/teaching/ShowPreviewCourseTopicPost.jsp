@@ -25,7 +25,7 @@
 	        		</c:if>
 	        		<a href="#" id="userName" class="link">${post.user.account}</a>
 	        	</li>
-	            <li><security:authentication property="principal.significantRoleDescription"/></li>
+	            <%-- <li><security:authentication property="principal.significantRoleDescription"/></li> --%>
 	            <li>Posts: <span>${post.user.forumNumberOfPost}</span></li>
 	            <li>Joined: <span>${post.user.forumJoinedDate}</span></li>
 	        </ul>

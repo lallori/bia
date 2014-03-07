@@ -31,7 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.bia.command.teaching.EditRoundRobinPostCommand;
+import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,16 +67,22 @@ public class ShowEditRoundRobinPostController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
+			ForumTopic courseTopic = getTeachingService().findCourseTopic(command.getTopicId());
 			if (command.getPostId() == null || command.getPostId().equals(0)) {
 				// new post without quoting
 				command.setPostId(0);
+				command.setSubject("Re: " + courseTopic.getSubject());
 			} else {
 				if (command.getQuote() != null && command.getQuote()) {
 					// quoting a post: the 'quoted' text is generated client-side (by post identifier)
 					command.setText(null);
+					command.setSubject("Re: " + courseTopic.getSubject());
+					// retrieving folio details from quoted post
+					setPostLocations(command, getTeachingService().getRoundRobinPost(command.getPostId()));
 				} else {
 					// edit an existent post
 					ForumPost post = getTeachingService().getRoundRobinPost(command.getPostId());
+					setPostLocations(command, post);
 					command.setSubject(post.getSubject());
 					command.setText(post.getText());
 				}
@@ -84,6 +92,15 @@ public class ShowEditRoundRobinPostController {
 		}
 		
 		return new ModelAndView("teaching/EditRoundRobinPost", model);
+	}
+	
+	private void setPostLocations(EditRoundRobinPostCommand command, ForumPost post) {
+		Map<CourseUtils.Fragment, String> locationMap = CourseUtils.getPostFolioLocation(post);
+		if (locationMap != null) {
+			command.setVolume(locationMap.get(CourseUtils.Fragment.VOLUME));
+			command.setInsert(locationMap.get(CourseUtils.Fragment.INSERT));
+			command.setFolio(locationMap.get(CourseUtils.Fragment.FOLIO));
+		}
 	}
 	
 }

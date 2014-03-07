@@ -28,8 +28,11 @@
 package org.medici.bia.common.util.dom;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.medici.bia.exception.DOMHelperException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -298,6 +301,40 @@ public class DOMHelper {
 		initDomDocument();
 		return new DOMTextExtractor(getBodyNode(document), luceneExtraction)
 				.getText();
+	}
+	
+	/**
+	 * This method returns a list of text content of all comments nodes 
+	 * 
+	 * @return the list of text content of comment nodes
+	 */
+	public List<String> getComments() {
+		initDomDocument();
+		return new DOMCommentExtractor(getBodyNode(document)).getComments();
+	}
+	
+	/**
+	 * This method returns a list of DOM nodes selected by class name (<code>class</code> attribute)
+	 * 
+	 * @param clazz
+	 *            the class name
+	 * @return the list of selected nodes
+	 */
+	public List<Node> findNodesByClass(String clazz) {
+		initDomDocument();
+		return new DOMNodeFinder(getBodyNode(document), clazz, true).getNodes();
+	}
+	
+	/**
+	 * This method returns a list of DOM nodes selected by identifier (<code>id</code> attribute)
+	 * 
+	 * @param id
+	 *            the identifier selector
+	 * @return the list of selected nodes
+	 */
+	public List<Node> findNodesById(String id) {
+		initDomDocument();
+		return new DOMNodeFinder(getBodyNode(document), id, false).getNodes();
 	}
 
 	/**

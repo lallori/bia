@@ -29,8 +29,11 @@ package org.medici.bia.common.util.dom;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.medici.bia.exception.DOMHelperException;
+import org.w3c.dom.Node;
 
 /**
  * This class implements test case for {@link DOMHelper} class.
@@ -73,5 +76,52 @@ public class DOMHelperTest {
 		DOMHelper domHelper = new DOMHelper("xxx<br/>yyy", false, true);
 		String plainText = domHelper.getAllPlainText(true);
 		assertEquals("xxx\nyyy", plainText);
+	}
+	
+	@Test
+	public void testGetComments() {
+		DOMHelper domHelper = new DOMHelper("<!-- <span class='comment'>COMMENT</span> --><p>first paragraph with comment <!-- inner comment --></p><p>second paragraph</p>", true, true);
+		List<String> comments = domHelper.getComments();
+		assertEquals(2, comments.size());
+		assertEquals(" <span class='comment'>COMMENT</span> ", comments.get(0));
+		assertEquals(" inner comment ", comments.get(1));
+	}
+	
+	@Test
+	public void testFindNodeByClass() {
+		DOMHelper domHelper = new DOMHelper("<div class='foo'><span class='foo2'>text1</span><span id='outer' class='foo2'>text2<div class='foo2'>text3</div></span></div>", true, true);
+		List<Node> nodes = domHelper.findNodesByClass("foo2");
+		assertEquals(3, nodes.size());
+		assertEquals("span", nodes.get(0).getNodeName());
+		assertEquals("text1", nodes.get(0).getTextContent());
+		assertEquals("span", nodes.get(1).getNodeName());
+		assertEquals("text2text3", nodes.get(1).getTextContent());
+		assertEquals("div", nodes.get(2).getNodeName());
+		assertEquals("text3", nodes.get(2).getTextContent());
+		
+		nodes = domHelper.findNodesByClass("foo");
+		assertEquals(1, nodes.size());
+		assertEquals("div", nodes.get(0).getNodeName());
+		
+		nodes = domHelper.findNodesByClass("foo3");
+		assertEquals(0, nodes.size());
+		
+		domHelper = new DOMHelper("<div class='other  ,  foo , foo2'>bla bla</div><span class='fooooo'>text</span>", true, true);
+		nodes = domHelper.findNodesByClass("foo");
+		assertEquals(1, nodes.size());
+		assertEquals("div", nodes.get(0).getNodeName());
+	}
+	
+	@Test
+	public void testFoundNodeById() {
+		DOMHelper domHelper = new DOMHelper("<div id='foo1'><div class='foo2'>text1</div><span id='foo2'>text2</span></div>", true, true);
+		List<Node> nodes = domHelper.findNodesById("foo1");
+		assertEquals(1, nodes.size());
+		assertEquals("div", nodes.get(0).getNodeName());
+		
+		nodes = domHelper.findNodesById("foo2");
+		assertEquals(1, nodes.size());
+		assertEquals("span", nodes.get(0).getNodeName());
+		assertEquals("text2", nodes.get(0).getTextContent());
 	}
 }

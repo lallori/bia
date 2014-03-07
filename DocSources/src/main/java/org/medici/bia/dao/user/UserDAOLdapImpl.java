@@ -44,7 +44,6 @@ import javax.persistence.PersistenceException;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.LdapUtils;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;

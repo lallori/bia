@@ -43,6 +43,12 @@ public class EditRoundRobinPostCommand {
 	private String subject;
 	
 	private String text;
+	
+	private String volume;
+	
+	private String insert;
+	
+	private String folio;
 
 	public Integer getPostId() {
 		return postId;
@@ -82,6 +88,30 @@ public class EditRoundRobinPostCommand {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public void setVolume(String volume) {
+		this.volume = volume;
+	}
+
+	public String getInsert() {
+		return insert;
+	}
+
+	public void setInsert(String insert) {
+		this.insert = insert;
+	}
+
+	public String getFolio() {
+		return folio;
+	}
+
+	public void setFolio(String folio) {
+		this.folio = folio;
 	}
 	
 }

@@ -27,13 +27,19 @@
  */
 package org.medici.bia.dao.accesslog;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.joda.time.DateTime;
+import org.medici.bia.common.user.UserAccessDetail;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.AccessLog;
+import org.medici.bia.domain.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -89,5 +95,91 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 		query.setParameter("originalAccount", originalAccount);
 
 		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Map<String, UserAccessDetail> guestsOnline() {
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
+		
+		StringBuilder sb = new StringBuilder("SELECT a.ipAddress,")
+			.append(" CASE WHEN SUM(CASE WHEN a.action LIKE '%community%' THEN 1 ELSE 0 END) > 0 THEN true ELSE false END AS onlineCommunity,")
+			.append(" CASE WHEN SUM(CASE WHEN a.action LIKE '%teaching%' THEN 1 ELSE 0 END) > 0 THEN true ELSE false END AS onlineTeaching")
+			.append(" FROM")
+			.append(" AccessLog AS a")
+			.append(" WHERE")
+			.append(" (a.idAccessLog, a.account) IN")
+			.append(" ( SELECT")
+			.append(" al.idAccessLog,")
+			.append(" al.account")
+			.append(" FROM")
+			.append(" AccessLog AS al")
+			.append(" WHERE")
+			.append(" al.dateAndTime > '").append(DateUtils.getMYSQLDateTime(dateTime)).append("' AND")
+			.append(" al.account = 'anonymousUser'")
+			.append(" )")
+			.append(" GROUP BY a.ipAddress");
+		
+		Query query = getEntityManager().createQuery(sb.toString());
+		List<Object[]> results = query.getResultList();
+		
+		Map<String, UserAccessDetail> whoIsOnlineMap = new HashMap<String, UserAccessDetail>();
+		for(Object[] detail : results) {
+			String ipAddress = (String) detail[0];
+			Boolean onlineCommunity = (Boolean) detail[1];
+			Boolean onlineTeaching = (Boolean) detail[2];
+			UserAccessDetail userDetail = UserAccessDetail.getAnonymousDetail(ipAddress);
+			userDetail.setCommunityOnline(onlineCommunity);
+			userDetail.setTeachingOnline(onlineTeaching);
+			whoIsOnlineMap.put(ipAddress, userDetail);
+		}
+		
+		return whoIsOnlineMap;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Map<String, UserAccessDetail> usersOnline() {
+		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
+		
+		StringBuilder sb = new StringBuilder("SELECT u,")
+			.append(" CASE WHEN SUM(CASE WHEN a.action LIKE '%community%' THEN 1 ELSE 0 END) > 0 THEN true ELSE false END AS onlineCommunity,")
+			.append(" CASE WHEN SUM(CASE WHEN a.action LIKE '%teaching%' THEN 1 ELSE 0 END) > 0 THEN true ELSE false END AS onlineTeaching")
+			.append(" FROM")
+			.append(" User AS u,")
+			.append(" AccessLog AS a")
+			.append(" WHERE")
+			.append(" u.account = a.account")
+			.append(" AND (a.idAccessLog, a.account) IN")
+			.append(" ( SELECT")
+			.append(" al.idAccessLog,")
+			.append(" al.account")
+			.append(" FROM")
+			.append(" AccessLog AS al")
+			.append(" WHERE")
+			.append(" al.dateAndTime > '").append(DateUtils.getMYSQLDateTime(dateTime)).append("'")
+			.append(" )")
+			.append(" GROUP BY a.account")
+			.append(" ORDER BY u.account ASC");
+		
+		Query query = getEntityManager().createQuery(sb.toString());
+		List<Object[]> results = query.getResultList();
+		
+		Map<String, UserAccessDetail> whoIsOnlineMap = new HashMap<String, UserAccessDetail>();
+		for(Object[] detail : results) {
+			User user = (User) detail[0];
+			Boolean onlineCommunity = (Boolean) detail[1];
+			Boolean onlineTeaching = (Boolean) detail[2];
+			UserAccessDetail userDetail = new UserAccessDetail(user, onlineCommunity, onlineTeaching);
+			whoIsOnlineMap.put(user.getAccount(), userDetail);
+		}
+		
+		return whoIsOnlineMap;
 	}
 }

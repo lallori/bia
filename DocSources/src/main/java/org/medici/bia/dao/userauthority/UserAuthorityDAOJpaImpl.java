@@ -27,7 +27,11 @@
  */
 package org.medici.bia.dao.userauthority;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -53,6 +57,7 @@ public class UserAuthorityDAOJpaImpl extends JpaDao<Authority, UserAuthority> im
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserAuthority> getAuthorities() throws PersistenceException {
 		String queryString = "FROM UserAuthority ORDER BY priority desc";
@@ -73,5 +78,70 @@ public class UserAuthorityDAOJpaImpl extends JpaDao<Authority, UserAuthority> im
 		query.setParameter("accountId", accountId);
 		
 		return (UserAuthority) query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, UserAuthority> getMaximumAuthorities(Set<String> accountsId) throws PersistenceException {
+		return getMaxAuthority(accountsId, null);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, UserAuthority> getUsersRoundRobinAuthority(Set<String> accountsId) throws PersistenceException {
+		UserAuthority.Authority[] filteredAuthorities = {UserAuthority.Authority.ADMINISTRATORS, UserAuthority.Authority.TEACHERS, UserAuthority.Authority.STUDENTS}; 
+		return getMaxAuthority(accountsId, filteredAuthorities);
+	}
+	
+	/* Privates */
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, UserAuthority> getMaxAuthority(Set<String> accounts, UserAuthority.Authority[] filterAuthorities) throws PersistenceException {
+		String accountsStr = "";
+		Iterator<String> accountsIter = accounts.iterator();
+		while (accountsIter.hasNext()) {
+			accountsStr += "'" + accountsIter.next() + "'";
+			if (accountsIter.hasNext()) {
+				accountsStr += ", ";
+			}
+		}
+		
+		String authorities = "";
+		if (filterAuthorities != null) {
+			for(int i = 0; i < filterAuthorities.length; i++) {
+				authorities += "'" + filterAuthorities[i].getValue() + "'";
+				if (i < filterAuthorities.length - 1) {
+					authorities += ", ";
+				}
+			}
+		}
+		
+		StringBuilder queryString = new StringBuilder("SELECT ur.user.account, ur.userAuthority FROM UserRole AS ur, UserAuthority AS uAuth")
+			.append(" WHERE ur.userAuthority = uAuth.authority ")
+			.append(" AND (ur.user.account, uAuth.priority) = (")
+			.append(" SELECT iu.user.account AS account, MIN(iuAuth.priority) AS priority")
+			.append(" FROM UserRole AS iu, UserAuthority AS iuAuth")
+			.append(" WHERE iu.user.account IN (").append(accountsStr).append(")")
+			.append(" AND iu.userAuthority = iuAuth.authority");
+		if (filterAuthorities != null) {
+			queryString.append(" AND iuAuth.authority IN (").append(authorities).append(")");
+		}
+		queryString.append(" AND iu.user.account = ur.user.account")
+			.append(" GROUP BY iu.user.account)");
+		
+		Query query = getEntityManager().createQuery(queryString.toString());
+		List<Object[]> userAuthorities = query.getResultList();
+		
+		Map<String, UserAuthority> results = new HashMap<String, UserAuthority>();
+		
+		for (Object[] current : userAuthorities) {
+			results.put((String)current[0], (UserAuthority)current[1]);
+		}
+		
+		return results;
 	}
 }

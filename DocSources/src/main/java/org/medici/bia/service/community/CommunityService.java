@@ -30,6 +30,7 @@ package org.medici.bia.service.community;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -195,6 +196,15 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	UserAuthority findUserMaximumAuthority(String accountId) throws ApplicationThrowable;
+	
+	/**
+	 * Returns a map of users maximum authority
+	 * 
+	 * @param accountsId a set of user account identifier
+	 * @return map of users maximum authority
+	 * @throws ApplicationThrowable
+	 */
+	Map<String, UserAuthority> findUsersMaximumAuthority(Set<String> accountsId) throws ApplicationThrowable;
 	
 	/**
 	 * 

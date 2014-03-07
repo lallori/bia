@@ -6,6 +6,8 @@
 
 	<c:url var="EditCourseTopicPostURL" value="/teaching/EditRoundRobinPost.json"/>
 	
+	<c:url var="GetFolioFragmentsURL" value="/teaching/GetFolioFragments.json"/>
+	
 	<c:url var="ShowPreviewCourseTopicPostURL" value="/teaching/ShowPreviewCourseTopicPost.do"/>
 	
 	<c:url var="ShowCourseTopicActionsURL" value="/teaching/ShowCourseTopicActions.do">
@@ -19,26 +21,33 @@
 			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Post Subject*</form:label>
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
+	    <div style="display: block;">
+	    	<span class="folioDetailsTitle">Folio Details </span>
+	    	<span id="volumeFragment" style="display: none" class="contentFragment">
+	    		Volume <div id="volumeIn" class="fragmentDetail">${command.volume}</div></span>
+	    	</span>
+	    	<span id="insertFragment" style="display: none" class="contentFragment">
+	    		Insert <div id="insertIn" class="fragmentDetail">${command.insert}</div></span>
+	    	</span>
+	    	<span id="folioFragment" style="display: none" class="contentFragment">
+	    		Folio <div id="folioIn" class="fragmentDetail">${command.folio}</div></span>
+	    	</span>
+	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
+	    </div>
 	    <div>
 			<form:textarea id="htmlbox" name="text" path="text" style="width:95%; height:290px; max-width:1000px;"></form:textarea>
 	    </div>
-	    
-	    <a href="#" id="preview" class="buttonSmall button_small">Preview</a>
-	    <a href="#" id="discard" class="buttonSmall button_small">Discard</a>
-	    <input type="submit" value="Submit" class="buttonSmall button_small" id="submit">
+	    <div id="editPostFormCommands">
+		    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
+		    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
+		    <input type="submit" value="Submit" class="buttonMedium button_medium" id="submit">
+	    </div>
 	    <form:hidden path="topicId"/>
 	    <form:hidden id="formPostId" path="postId"/>
 
 	</form:form>
 	
-	<div id="postTablePreview" title="Post" style="display:none; margin-top:45px">
-	</div>
-
-	<div id="messagePosted" title="Post" style="display:none"> 
-		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			This message has been posted successfully.
-		</p>
+	<div id="postTablePreview" title="Post" style="display:none;">
 	</div>
 
 	<div id="genericWarning" title="Post" style="display:none"> 
@@ -57,10 +66,53 @@
 	
 	
 	<script type="text/javascript">
+	
+		var getFolioFragmentsCallback = function() {
+			var entryId = $j('#mainFrame').contents().find('#PageTurnerVerticalDiv #currentEntryId').val();
+			var imageOrder = $j('#mainFrame').contents().find('#PageTurnerVerticalDiv #currentImageOrder').val();
+			$j.ajax({
+				type: "GET",
+				url: "${GetFolioFragmentsURL}?&entryId=" + entryId + "&imageOrder=" + imageOrder,
+				async: false,
+				success: function(data) {
+					if (data.operation == 'OK') {
+		 				$j('#volumeIn').text(data.volume);
+		 				$j('#volumeFragment').css('display', 'inline');
+		 				if (typeof data.insert !== 'undefined') {
+		 					$j('#insertIn').text(data.insert);
+			 				$j('#insertFragment').css('display', 'inline');
+		 				}
+		 				$j('#folioIn').text(data.folio);
+		 				$j('#folioFragment').css('display', 'inline');
+					} else {
+						// TODO: handle error condition
+						console.log('SERVER ERROR');
+					}
+				},
+				error: function(data) {
+					// TODO: handle error condition
+				}
+			});
+		}
 		
 		$j(document).ready(function() {
 			$j('#postsContainer').css('height','50%');
 			$j('#editPostContainer').css('height','45%');
+			var currentPageHref = $j('#postsContainer .paginateActive').first().attr('href');
+			
+			if (${empty command.volume}) {
+				// cannot read folio location from 'command'
+				getFolioFragmentsCallback();
+			} else {
+				// read post folio location from 'command'
+				$j('#volumeFragment').css('display','inline');
+				if (${not empty command.insert}) {
+					$j('#insertFragment').css('display','inline');
+				}
+				if (${not empty command.folio}) {
+					$j('#folioFragment').css('display','inline');
+				}
+			}
 			
 			if (${not empty command.quote && command.quote}) {
 				$j("#formPostId").val(0);
@@ -74,15 +126,52 @@
 				var text = $j("#htmlbox").val();
 				var subject = $j("#subject").val();
 				if (typeof subject !== 'undefined' && subject !== '' && typeof text !== 'undefined' && text !== '') {
+					var volume = $j('#volumeIn').text();
+					var insert = $j('#insertIn').text();
+					var folio = $j('#folioIn').text();
+					var urlData = "?volume=" + volume + (typeof insert !== 'undefined' ? "&insert=" + insert : "") + "&folio=" + folio;
+					var postId = $j('#formPostId').val();
 					$j.ajax({
 						type: "POST",
-						url: "${EditCourseTopicPostURL}",
+						url: "${EditCourseTopicPostURL}" + urlData,
 						data: $j("#EditCourseTopicPost").serialize(),
 						async: false,
 						success: function(data) {
 			 				if (data.operation == 'OK') {
-								$j("#messagePosted").css('display','inherit');
-								$j("#messagePosted").data('url', data.topicUrl).dialog('open');
+								var redirectUrl;
+								var isOldPost = typeof postId !== 'undefined' && postId > 0;
+								var _postId = data.postId;
+								if (isOldPost) {
+									// existent post was updated -> get the current page url from paginator (page is not changed)
+									redirectUrl = currentPageHref;
+									_postId = postId;
+								}
+								if (typeof redirectUrl === 'undefined') {
+									redirectUrl = data.topicUrl;
+								}
+								
+								$j("#postsContainer").load(redirectUrl, function(responseText, statusText, xhr) {
+									if (statusText !== 'error') {
+										setTimeout(function() {
+											if (typeof $j('#postsContainer #postTable_' + _postId).get(0) !== 'undefined') {
+												console.log('Scrolling to ' + postId);
+												$j('#postsContainer').scrollTo("#postTable_" + _postId);
+											} else {
+												
+											}
+							    		},200);
+									} else {
+										// TODO: handle error condition
+									}
+								});
+								$j("#editPostContainer").load('${ShowCourseTopicActionsURL}', function(responseText, statusText, xhr) {
+									if (statusText == 'error') {
+										$j("#errorMsg").text('There was a server error during the page load: please refresh this page!');
+										$j("#errorModal").dialog('open');
+									}
+								});
+								$j('#postsContainer').css('height','85%');
+								$j('#editPostContainer').css('height','10%');
 			 				} else {
 			 					$j("#genericWarningMsg").text('This message has not been posted successfully.');
 								$j("#genericWarning").css('display','inherit');
@@ -102,6 +191,11 @@
 			});
 			
 
+			$j('#refreshLocation').click(function() {
+				getFolioFragmentsCallback();
+				return false;
+			});
+			
 			$j('#preview').click(function() {
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 	 			$j.ajax({
@@ -138,29 +232,6 @@
 			}); 
 			
 			/** Dialogs definitions **/
-			
-			$j("#messagePosted").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 300,
-				height: 130, 
-				buttons: {
-					Ok: function() {
-						var topicUrl = $j(this).data('url');
-						$j(this).dialog("close");
-						$j("#postsContainer").load(topicUrl);
-						$j("#editPostContainer").load('${ShowCourseTopicActionsURL}', function(responseText, statusText, xhr) {
-							if (statusText == 'error') {
-								$j("#errorMsg").text('There was a server error during the page load: please refresh this page!');
-								$j("#errorModal").dialog('open');
-							}
-						});
-						$j('#postsContainer').css('height','85%');
-						$j('#editPostContainer').css('height','10%');
-					}
-				}
-			});
 			
 			$j("#genericWarning").dialog({
 				autoOpen : false,

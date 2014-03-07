@@ -1,6 +1,7 @@
 <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -13,7 +14,7 @@
 	
 	<h2>${topic.subject}</h2>
 	
-	<p></p>
+	<hr />
 	<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
 	
 	<c:if test="${postsPage.list.size() eq 0}">
@@ -58,18 +59,9 @@
 			<div id="postTable_${currentPost.postId}" class="postTable">
 				<div class="post">
 					<div class="title">
-						<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-							<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-							<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
-						</c:url>
-						<c:choose>
-							<c:when test="${topic.topicId == null}">
-								<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
-							</c:when>
-							<c:otherwise>
-								<h2>${currentPost.subject}</h2>
-							</c:otherwise>
-						</c:choose>
+					
+						<h2>${currentPost.subject}</h2>
+						
 						<div class="topicIcons">
 							<c:choose>
 								<c:when test="${currentPost.user.account == account}">
@@ -89,19 +81,24 @@
 					</div>
 					<c:choose>
 						<c:when test="${currentPost.updater == null || currentPost.user.account == currentPost.updater.account}">
-							<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
+							<table class="by" style="width: 100%;">
+								<tr>
+									<td width="50%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></td>
+									<td width="50%"><div id="postLocation_${currentPost.postId}" class="postLocation" style="margin-left: 10px;"></div></td>
+								</tr>
+							</table>
 						</c:when>
 						<c:otherwise>
 							<table class="by">
 								<tr>
-									<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
+									<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
 									<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
-									<td><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
+									<td><a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.updater.account}&completeDOM=true" target="_blank" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
+									<td><div id="postLocation_${currentPost.postId}" class="postLocation" style="margin-left: 10px;"></div></td>
 								</tr>
 							</table>
 						</c:otherwise>
 					</c:choose>
-			        
 					<div id="postText_${currentPost.postId}">${currentPost.text}</div>
 				</div>
 				<div class="postProfile">
@@ -117,19 +114,23 @@
 							<c:if test="${!currentPost.user.portrait}">
 								<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
 							</c:if>
-							<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
+							<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName" class="link">${currentPost.user.account}</a>
 						</li>
-						<%-- <li>${maxAuthorities[currentPost.user.account].description}</li> --%>
+						<c:if test="${not empty maxAuthorities[currentPost.user.account]}">
+							<li>${maxAuthorities[currentPost.user.account].description}</li>
+						</c:if>
 						<li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
 						<li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
 					</ul>
 				</div>
-<%-- 				    <c:if test="${bia:contains(onlineUsers, currentPost.user.account)}">
-				    	<div class="online visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-				    </c:if>
-				    <c:if test="${! bia:contains(onlineUsers, currentPost.user.account)}">
+				<c:choose>
+					<c:when test="${bia:getAccessDetail(currentPost.user.account).isTeachingOnline()}">
+						<div class="online visible"></div>
+					</c:when>
+					<c:otherwise>
 				    	<div class="online"></div>
-				    </c:if> --%>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 		</c:forEach>
@@ -145,10 +146,30 @@
 	
 	<script>
 		$j(document).ready(function() {
+			var _this = this;
+			
+			$j(".postLocation").each(function() {
+				var postLocId = $j(this).attr('id');
+				var id = postLocId.substring(postLocId.indexOf('_') + 1, postLocId.length);
+				var comment = $j("#postText_" + id).contents().filter(function() {
+					return this.nodeType === 8; 
+				}).first();
+				if (typeof $j(comment).get(0) !== 'undefined') {
+					$j(this).html($j(comment).get(0).nodeValue);
+				} else {
+					$j(this).html('<div class="folioDetailsContainer">No folio details</div>');
+					console.log('No folio details in post [' + id + ']');
+				}
+			});
 			
 			$j("#clientEditing").val(${editingMode});
 			
 			/** Button and anchor links handler definitions **/
+			
+			$j('.deletePost').click(function(){
+				$j('#deletePostModal').data('deleteUrl', $j(this).attr('href')).dialog('open');
+				return false;
+			});
 			
 			$j(".editPost").click(function() {
 				var addNewPostSel = $j("#addNewPost");
@@ -165,10 +186,26 @@
 				return false;
 			});
 			
-			$j('.deletePost').click(function(){
-				$j('#deletePostModal').data('deleteUrl', $j(this).attr('href')).dialog('open');
+			$j(".intercepted").click(function() {
+				$j("#postsContainer").load($j(this).attr('href')+'&editingMode='+$j("#clientEditing").val(), function(responseText, statusText, xhr) {
+					var _this = $j(this);
+					if (statusText !== 'error') {
+						setTimeout(function() {
+							console.log('Scrolling to top');
+							_this.scrollTo(0, 0);
+			    		},200);
+					} else {
+						// TODO: handle error
+					}
+				});
 				return false;
 			});
+			
+			/*$j(".link,.linkUpdater").click(function(){
+				_this.title = '${fn2:getApplicationProperty("project.name")}';
+				$j("body").load($j(this).attr("href") + "&completeDOM=true");
+				return false;
+			});*/
 			
 			$j(".quotePost").click(function() {
 				var _this = $j(this);
@@ -193,11 +230,6 @@
 						}
 					});
 				}
-				return false;
-			});
-			
-			$j(".intercepted").click(function() {
-				$j("#postsContainer").load($j(this).attr('href')+'&editingMode='+$j("#clientEditing").val());
 				return false;
 			});
 			

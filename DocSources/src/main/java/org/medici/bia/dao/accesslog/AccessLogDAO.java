@@ -27,8 +27,11 @@
  */
 package org.medici.bia.dao.accesslog;
 
+import java.util.Map;
+
 import javax.persistence.PersistenceException;
 
+import org.medici.bia.common.user.UserAccessDetail;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.AccessLog;
 
@@ -45,6 +48,8 @@ public interface AccessLogDAO extends Dao<Integer, AccessLog> {
 	 */
 	Long countGuestsForum();
 	
+	Map<String, UserAccessDetail> guestsOnline();
+	
 	/**
 	 * 
 	 * @param originalAccount
@@ -53,4 +58,6 @@ public interface AccessLogDAO extends Dao<Integer, AccessLog> {
 	 * @throws PersistenceException
 	 */
 	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+	
+	Map<String, UserAccessDetail> usersOnline();
 }

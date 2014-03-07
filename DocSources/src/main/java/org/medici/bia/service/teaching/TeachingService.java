@@ -27,12 +27,17 @@
  */
 package org.medici.bia.service.teaching;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -48,11 +53,21 @@ public interface TeachingService {
 	 * @param courseTopicId the course topic identifier
 	 * @param postSubject the post subject
 	 * @param postContent the post content (html)
+	 * @param volume the volume detail (number and extension letter)
+	 * @param insert the insert detail (number and extension)
+	 * @param folio the folio detail (number, extension and recto/verso)
 	 * @param remoteAddress the current user address
 	 * @return the created post (as {@link ForumPost})
 	 * @throws ApplicationThrowable
 	 */
-	ForumPost addNewTopicPost(Integer courseTopicId, String postSubject, String postContent, String remoteAddress) throws ApplicationThrowable;
+	ForumPost addNewTopicPost(
+			Integer courseTopicId,
+			String postSubject,
+			String postContent,
+			String volume,
+			String insert,
+			String folio,
+			String remoteAddress) throws ApplicationThrowable;
 	
 	/**
 	 * This method creates a new course topic.
@@ -99,6 +114,8 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	ForumTopic findCourseTopic(Integer topicId) throws ApplicationThrowable;
+	
+	Image getDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the course topic by its identifier.<br/>
@@ -155,15 +172,26 @@ public interface TeachingService {
 	 */
 	ForumPost getRoundRobinPost(Integer postId) throws ApplicationThrowable;
 	
+	Map<String,UserAuthority> getUsersRoundRobinAuthority(Set<String> accountIds) throws ApplicationThrowable;
+	
 	/**
 	 * This method updates subject and text of a course topic post.
 	 * 
 	 * @param postId the post identifier
 	 * @param postSubject the post subject
 	 * @param postContent the post text
+	 * @param volume the volume detail (number and extension letter)
+	 * @param insert the insert detail (number and extension)
+	 * @param folio the folio detail (number, extension and recto/verso)
 	 * @return the course topic post
 	 * @throws ApplicationThrowable
 	 */
-	ForumPost updateTopicPost(Integer postId, String postSubject, String postContent) throws ApplicationThrowable;
+	ForumPost updateTopicPost(
+			Integer postId,
+			String postSubject,
+			String postContent,
+			String volume,
+			String insert,
+			String folio) throws ApplicationThrowable;
 
 }

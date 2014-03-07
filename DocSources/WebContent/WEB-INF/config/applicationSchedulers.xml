@@ -64,4 +64,6 @@
 	<bean id="sendEmailMessageUserJob" class="org.medici.bia.scheduler.SendEmailMessageUserJob"/>
 
 	<bean id="sitemapGeneratorJob" class="org.medici.bia.scheduler.SitemapGeneratorJob"/>
+
+	<bean id="whoIsOnlineJob" class="org.medici.bia.scheduler.WhoIsOnlineJob"/>
 </beans>

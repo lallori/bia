@@ -1,5 +1,5 @@
 /*
- * DOMWalker.java
+ * CommentExtractor.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,63 +27,47 @@
  */
 package org.medici.bia.common.util.dom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
 /**
- * This class explores the elements of a DOM.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
- * 
+ *
  */
-public class DOMWalker {
-
-	private Node root;
-
-	private DOMWalkCallback callback;
-	private SelectionPath selectionPath;
-
-	public DOMWalker(Node root) {
-		this.root = root;
+public class DOMCommentExtractor implements DOMWalkCallback {
+	
+	private List<String> comments;
+	
+	public DOMCommentExtractor(Node root) {
+		this.comments = new ArrayList<String>();
+		new DOMWalker(root).walk(this);
+	}
+	
+	public List<String> getComments() {
+		return comments;
 	}
 
-	/**
-	 * This method starts the DOM exploration
-	 * 
-	 * @param callback
-	 *            the callback called by the DOM exploration events
-	 */
-	public void walk(DOMWalkCallback callback) {
-		this.callback = callback;
-		this.selectionPath = SelectionPath.getRoot();
-		walk(root);
-	}
-
-	private void walk(Node node) {
-		if (node.getNodeType() == Node.TEXT_NODE) {
-			callback.walkTextNode((Text) node, selectionPath);
-			walkTextNode((Text) node);
-		} else {
-			if (callback.walkElement((Node) node, selectionPath)) {
-				walkChildren(node);
-			}
+	@Override
+	public boolean walkElement(Node n, SelectionPath path) {
+		if (n.getNodeType() == Node.COMMENT_NODE) {
+			comments.add(n.getTextContent());
+			return false;
 		}
+		return true;
 	}
 
-	private void walkChildren(Node node) {
-		for (int i = 0, size = node.getChildNodes().getLength(); i < size; i++) {
-			Node child = node.getChildNodes().item(i);
-			selectionPath = selectionPath.append(i);
-			walk(child);
-			selectionPath = selectionPath.getParentPath();
-		}
+	@Override
+	public void walkTextNode(Text t, SelectionPath path) {
+		// nop
 	}
 
-	private void walkTextNode(Text node) {
-		String content = node.getTextContent();
-		for (int i = 0, size = content.length(); i < size; i++) {
-			callback.walkChar(node, content.charAt(i), selectionPath.append(i));
-		}
+	@Override
+	public void walkChar(Text parent, char c, SelectionPath path) {
+		// nop
 	}
 
 }

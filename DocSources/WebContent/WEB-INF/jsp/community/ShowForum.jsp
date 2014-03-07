@@ -771,11 +771,11 @@
 				return false;
 			});
 			
-			$j('.roundRobinHref').die();
+			/*$j('.roundRobinHref').die();
 			$j('.roundRobinHref').live('click', function() {
 				window.open($j(this).attr('href'), '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
 				return false;
-			});
+			});*/
 			
 			$j('.row').die();
 			$j('.row').live('click', function(){

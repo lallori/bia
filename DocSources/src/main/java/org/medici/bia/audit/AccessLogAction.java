@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
+import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.util.GrantedAuthorityUtils;
 import org.medici.bia.common.util.HttpUtils;
 import org.medici.bia.domain.AccessLog;
@@ -112,6 +113,26 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		if (httpServletRequest.getAttribute("persistentAccessLogDisabled") == null) {
 			try {
 				getLogService().traceAccessLog(accessLog);
+				
+				if (!accessLog.getAccount().equalsIgnoreCase("anonymoususer")) {
+					// update user access detail in the application context
+					if (accessLog.getAction().contains("/community/")) {
+						ApplicationContextVariableManager.updateUserAccessDetail(accessLog.getAccount(), ApplicationContextVariableManager.AccessDetailType.COMMUNITY);
+					} else if (accessLog.getAction().contains("/teaching/")) {
+						ApplicationContextVariableManager.updateUserAccessDetail(accessLog.getAccount(), ApplicationContextVariableManager.AccessDetailType.TEACHING);
+					} else {
+						ApplicationContextVariableManager.updateUserAccessDetail(accessLog.getAccount(), ApplicationContextVariableManager.AccessDetailType.DEFAULT);
+					}
+				} else {
+					// update guest access detail in the application context
+					if (accessLog.getAction().contains("/community/")) {
+						ApplicationContextVariableManager.addGuestUser(accessLog.getIpAddress(), ApplicationContextVariableManager.AccessDetailType.COMMUNITY);
+					} else if (accessLog.getAction().contains("/teaching/")) {
+						ApplicationContextVariableManager.addGuestUser(accessLog.getIpAddress(), ApplicationContextVariableManager.AccessDetailType.TEACHING);
+					} else {
+						ApplicationContextVariableManager.addGuestUser(accessLog.getIpAddress(), ApplicationContextVariableManager.AccessDetailType.DEFAULT);
+					}
+				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				logger.debug(applicationThrowable);
 			}

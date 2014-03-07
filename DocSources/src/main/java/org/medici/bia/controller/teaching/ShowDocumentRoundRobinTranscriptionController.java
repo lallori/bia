@@ -28,12 +28,17 @@
 package org.medici.bia.controller.teaching;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.medici.bia.command.teaching.ShowDocumentRoundRobinTranscriptionCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +69,7 @@ public class ShowDocumentRoundRobinTranscriptionController {
 		this.teachingService = teachingService;
 	}
 
-	//@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/teaching/ShowDocumentRoundRobinTranscription", method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowDocumentRoundRobinTranscriptionCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -84,12 +89,20 @@ public class ShowDocumentRoundRobinTranscriptionController {
 			model.put("topic", courseTopic);
 			//model.put("subscribed", getCommunityService().ifTopicSubscribed(courseTopic.getTopicId()));
 			
-			//TODO: create map for user roles (teacher or student?)
-			
 			if (Boolean.FALSE.equals(command.getCompleteDOM())) {
 				PaginationFilter filter = getPaginationFilter(command);
 				Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
 				model.put("postsPage", postsPage);
+
+				Set<String> accountIds = new HashSet<String>();
+				for(ForumPost post : ((List<ForumPost>)postsPage.getList())) {
+					accountIds.add(post.getUser().getAccount());
+				}
+				Map<String, UserAuthority> maxAuthorities = new HashMap<String, UserAuthority>();
+				if (accountIds.size() > 0) {
+					maxAuthorities = getTeachingService().getUsersRoundRobinAuthority(accountIds);
+				}
+				model.put("maxAuthorities", maxAuthorities);
 				
 				return new ModelAndView("teaching/ShowRoundRobinTranscription", model);
 			}

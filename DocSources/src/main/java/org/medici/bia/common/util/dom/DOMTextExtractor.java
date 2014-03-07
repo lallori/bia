@@ -29,7 +29,6 @@ package org.medici.bia.common.util.dom;
 
 import java.util.Stack;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
@@ -99,7 +98,7 @@ public class DOMTextExtractor implements DOMWalkCallback {
 	}
 
 	@Override
-	public boolean walkElement(Element n, SelectionPath path) {
+	public boolean walkElement(Node n, SelectionPath path) {
 		boolean matched = updateActiveExtraction(n, path);
 		if (parents.size() > 0)
 			checkPathAndPutSeparator(path, matched || activedExtraction);

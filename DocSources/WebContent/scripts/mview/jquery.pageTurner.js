@@ -433,6 +433,8 @@
 						});
 					}
 
+					$j("#currentImageOrder").val(data.imageOrder);
+
 				}});
             });
             

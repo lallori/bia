@@ -20,14 +20,14 @@
 
 	<!-- <div class="ui-layout-north"></div>  -->
 	
-	<div id="roundRobinPosts" class="ui-layout-west">
+	<div id="roundRobinPosts" class="ui-layout-west" style="overflow: auto;">
 	
-		<div id="postsContainer" style="width:100%; height:85%; overflow:auto;">
+		<div id="postsContainer" style="width:100%; height:85%; min-height: 300px; overflow:auto;">
 		</div>
 		
 		<hr />
 		
-		<div id="editPostContainer" style="width:100%; height:10%; min-height: 50px; overflow:auto;">
+		<div id="editPostContainer" style="width:100%; height:10%; min-height: 55px; overflow:auto;">
 		</div>
 		
 	</div>
@@ -52,6 +52,7 @@
 		
 	<script>
 		$j(document).ready(function() {
+			this.title = '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>';
 			$j('#postsContainer').load('${ShowDocumentRoundRobinTranscriptionURL}');
 			$j('#editPostContainer').load('${ShowCourseTopicActionsURL}');
 			

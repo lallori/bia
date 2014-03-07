@@ -144,9 +144,50 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	font-style: italic;
 }
 
+.postLocation:after {
+	content: "}";
+	color: #6F6B69;
+}
+
+.postLocation:before {
+	content: "{";
+	color: #6F6B69;
+}
+
+.postLocation .folioDetailsContainer {
+	color: #6F6B69;
+	display: inline;
+}
+
+.postLocation .folioDetailsContainer .volumeFragment, .postLocation .folioDetailsContainer .insertFragment, .postLocation .folioDetailsContainer .folioFragment {
+	color: #CC8585;
+	font-weight: bold;
+}
+
+#postsContainer {
+    -moz-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	width: 98%!important;
+}
+
+#postsContainer h2 {
+	max-width: 100%;
+}
+
+#postsContainer .postTable h2 {
+	margin-left: 10px;
+	margin-bottom: 0;
+	max-width: 50%;
+}
+
 .postTable {
 	border: 1px solid #DCC0BA;
-	background-color: #F2E6E5;
+	background-color: rgba(220,192,186,0.2);
 	width: 99%;
 	height: auto;
 	border-radius:4px;
@@ -155,12 +196,6 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	min-height: 130px;
 	overflow: auto;
 	min-width: 550px;
-}
-
-#postsContainer .postTable h2 {
-	margin-left: 10px;
-	margin-bottom: 0;
-	max-width: 50%;
 }
 
 .postTable img {
@@ -225,15 +260,13 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	margin-left: 0px;
 }
 
+#roundRobinPosts.ui-layout-pane {
+	overflow: hidden;
+}
+
 #subject {
 	width: 50%;
 	min-width: 300px;
-}
-
-#subjectLabel {
-	margin-left: 20px;
-	font-weight: bold;
-	color: #6F0B09;
 }
 
 #submit {
@@ -244,9 +277,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	right: 0;
 }
 
-/* Topic Icons */
-
-/* ---------- Topic Icons ---------- */
+/* ------------------------------------------------- Topic Icons ------------------------------------------------- */
 
 .topicIcons {
 	max-width: 50%;
@@ -296,7 +327,7 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	margin: 5px 0 5px 5px;
 }
 
-/* users */
+/* ------------------------------------------------- users ------------------------------------------------- */
 
 .online {
 	position:absolute;
@@ -326,13 +357,15 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	color:#B7958F;
 }
 
-/* Pagination */
+/* ------------------------------------------------- Pagination ------------------------------------------------- */
 
 #forumPaginate_upper, #forumPaginate_lower {
     text-align: right;
     font-size: 10px;
-    height: 50px;
+    height: 30px;
+    margin-top: 5px;
     width: 98%;
+    min-width: 300px;
 }
 
 #forumPaginate_upper a, #forumPaginate_lower a {
@@ -367,7 +400,13 @@ a.buttonMedium:hover, a.buttonSmall:hover {
     background-color: #DCC0BA;
 }
 
-#roundRobinPosts #editPostContainer {
+/* ------------------------------------------------- Edit post container ------------------------------------------------- */
+
+#addNewPost {
+	margin-left: 5px;
+}
+
+#editPostContainer {
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -378,22 +417,67 @@ a.buttonMedium:hover, a.buttonSmall:hover {
 	width: 99%!important;
 }
 
-#roundRobinPosts #editPostContainer .postTable .postProfile {width: 200px;}
-
-#roundRobinPosts .postTable {background-color:rgba(220,192,186,0.2);}
-#roundRobinPosts #editPostContainer #submit {margin:0 10px 0 0; float:right;}
-
-#roundRobinPosts #postsContainer {
-    -moz-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
-    -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
-    padding: 10px;
-    border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	width: 98%!important;
+#editPostContainer .postTable h2 {
+	margin-left: 10px;
+	margin-bottom: 0;
+	max-width: 50%;
 }
 
-#addNewPost {margin-left: 5px;}
-#roundRobinPosts.ui-layout-pane {overflow: hidden;}
-#postsContainer h2 {max-width: 100%;}
+#editPostContainer #EditCourseTopicPost .contentFragment {
+	margin-left: 20px;
+	font-weight: bold;
+}
+
+#editPostContainer #EditCourseTopicPost .fragmentDetail {
+	min-width: 25px;
+	display: inline-block;
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	background-color: #FBF7F4;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	color: #A89C91;
+	font: -moz-field;
+	font: -webkit-small-control;
+	font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 12px;
+	margin: 0 3px 5px;
+	padding: 3px;
+}
+
+#editPostContainer #EditCourseTopicPost #refreshLocation {
+	margin-left: 50px;
+}
+
+#editPostContainer #EditCourseTopicPost #refreshLocation span {
+	background-image: url("${contextPath}/images/forum/icon_refresh.png");
+    background-repeat: no-repeat;
+    height: 17px;
+    padding-left: 25px;
+    width: 15px;
+}
+
+#editPostContainer #editPostFormCommands {
+	min-width: 500px;
+}
+
+#editPostContainer #postTablePreview {
+	margin-top: 45px;
+	margin-left: 7px;
+}
+
+#editPostContainer #preview, #editPostContainer #discard {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#editPostContainer #submit {
+	margin: 0 50px 0 0;
+	float: right;
+}
+
+#subjectLabel, .folioDetailsTitle {
+	margin-left: 20px;
+	font-weight: bold;
+	color: #6F0B09;
+}

@@ -239,12 +239,14 @@
 	            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
 	        </ul>
 	    </div>
-	    <c:if test="${bia:contains(onlineUsers, currentPost.user.account)}">
-	    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-	    </c:if>
-	    <c:if test="${! bia:contains(onlineUsers, currentPost.user.account)}">
-	    	<div id="online"></div>
-	    </c:if>
+	    <c:choose>
+		    <c:when test="${bia:getAccessDetail(currentPost.user.account).isCommunityOnline()}">
+		    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+		    </c:when>
+		    <c:otherwise>
+		    	<div id="online"></div>
+		    </c:otherwise>
+	    </c:choose>
 	</div>
 </c:forEach>
 

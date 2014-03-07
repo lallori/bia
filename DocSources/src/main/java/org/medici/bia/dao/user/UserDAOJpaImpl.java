@@ -40,7 +40,6 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.PaginationFilter.Order;
 import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
-import org.medici.bia.common.search.UserSearch;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;

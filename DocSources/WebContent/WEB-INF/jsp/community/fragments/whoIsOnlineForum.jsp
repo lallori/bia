@@ -8,7 +8,7 @@
 					
 					<div id="whoIsOnlineDiv">
 						<h1>WHO IS ONLINE</h1>
-						<p>In total there is <span id="userOnline">${whoIsOnlineHashMap['onlineUsers'].size() + whoIsOnlineHashMap['guestUsers'] }</span> user online: <span id="userRegistered">${whoIsOnlineHashMap['onlineUsers'].size()}</span> registered and <span id="userGuest">${whoIsOnlineHashMap['guestUsers'] }</span> guest (based on users active over the past 5 minutes)</p>
+						<p>In total there is <span id="userOnline">${whoIsOnlineHashMap['onlineUsers'].size() + whoIsOnlineHashMap['guestUsers'] }</span> user online: <span id="userRegistered">${whoIsOnlineHashMap['onlineUsers'].size()}</span> registered and <span id="userGuest">${whoIsOnlineHashMap['guestUsers'] }</span> guest (based on users active over the past 30 minutes)</p>
 					</div>
 
 					<script type="text/javascript">

@@ -33,7 +33,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AdvancedSearchAbstract;
@@ -673,6 +675,18 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, UserAuthority> findUsersMaximumAuthority(Set<String> accountsId) throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getMaximumAuthorities(accountsId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1060,8 +1074,10 @@ public class CommunityServiceImpl implements CommunityService {
 	public Map<String, Object> getForumWhoIsOnline() throws ApplicationThrowable {
 		try {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>(0);
-			hashMap.put("onlineUsers", getUserDAO().whoIsOnlineForum());
-			hashMap.put("guestUsers", getAccessLogDAO().countGuestsForum());
+			hashMap.put("onlineUsers", ApplicationContextVariableManager.getCommunityOnlineUsers());
+			// hashMap.put("onlineUsers", getUserDAO().whoIsOnlineForum());
+			hashMap.put("guestUsers", ApplicationContextVariableManager.countOnlineGuests());
+			// hashMap.put("guestUsers", getAccessLogDAO().countGuestsForum());
 			return hashMap;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

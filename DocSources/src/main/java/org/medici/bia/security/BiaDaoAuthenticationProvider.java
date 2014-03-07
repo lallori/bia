@@ -32,9 +32,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.MDC;
+import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.bia.common.util.GrantedAuthorityUtils;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.user.UserDAO;
@@ -215,9 +214,13 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 			accessLog.setAuthorities(UserRoleUtils.toString(userRoles));
 			accessLog.setExecutionTime(System.currentTimeMillis() - startTime);
 			accessLog.setHttpMethod(HttpMethod.POST.toString());
-
+			
 			try {
 				getLogService().traceAccessLog(accessLog);
+				
+				// Update the online users in "application context variable"
+				ApplicationContextVariableManager.addOnlineUser(user);
+				
 			} catch (ApplicationThrowable applicationThrowable) {
 				logger.error(applicationThrowable);
 			}
