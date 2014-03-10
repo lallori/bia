@@ -84,7 +84,8 @@
         <security:intercept-url pattern="/user/UpdateUser.do"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
         <security:intercept-url pattern="/user/FindCountries.json"				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS" />
 
-		<security:intercept-url pattern="/user/**.do" 			access="ROLE_ADMINISTRATORS" />
+		<security:intercept-url pattern="/user/**.do"							access="ROLE_ADMINISTRATORS" />
+		<security:intercept-url pattern="/teaching/**"							access="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS" />
 
         <security:form-login always-use-default-target="true"
         			login-page="/LoginUser.do"
