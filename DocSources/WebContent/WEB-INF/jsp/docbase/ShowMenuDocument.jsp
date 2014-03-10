@@ -66,7 +66,7 @@
 		</security:authorize>	
 <!-- 		<span id="commentsOn"></span> -->
 <%-- 		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a> --%>
-		<security:authorize ifNotGranted="ROLE_GUESTS">
+		<security:authorize ifAnyGranted="ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS">
 			<span id="commentsOn"></span>
 		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a>
 		</security:authorize>
