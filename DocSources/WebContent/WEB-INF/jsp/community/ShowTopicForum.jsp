@@ -240,7 +240,7 @@
 	        </ul>
 	    </div>
 	    <c:choose>
-		    <c:when test="${bia:getAccessDetail(currentPost.user.account).isCommunityOnline()}">
+		    <c:when test="${bia:contains(onlineUsers, currentPost.user.account)}">
 		    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
 		    </c:when>
 		    <c:otherwise>

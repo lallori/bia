@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.medici.bia.common.context.ApplicationContextVariableManager;
+import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.AdvancedSearchAbstract;
@@ -103,6 +103,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
+	private ApplicationAccessContainer applicationAccessContainer;
+	
+	@Autowired
 	private AccessLogDAO accessLogDAO;
 	
 	@Autowired
@@ -155,6 +158,13 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private UserRoleDAO userRoleDAO;   
 
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1074,9 +1084,9 @@ public class CommunityServiceImpl implements CommunityService {
 	public Map<String, Object> getForumWhoIsOnline() throws ApplicationThrowable {
 		try {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>(0);
-			hashMap.put("onlineUsers", ApplicationContextVariableManager.getCommunityOnlineUsers());
+			hashMap.put("onlineUsers", applicationAccessContainer.getCommunityOnlineUsers());
 			// hashMap.put("onlineUsers", getUserDAO().whoIsOnlineForum());
-			hashMap.put("guestUsers", ApplicationContextVariableManager.countOnlineGuests());
+			hashMap.put("guestUsers", applicationAccessContainer.countOnlineGuests());
 			// hashMap.put("guestUsers", getAccessLogDAO().countGuestsForum());
 			return hashMap;
 		} catch (Throwable th) {

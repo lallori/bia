@@ -35,7 +35,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.joda.time.DateTime;
-import org.medici.bia.common.user.UserAccessDetail;
+import org.medici.bia.common.access.AccessDetail;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.AccessLog;
@@ -102,7 +102,7 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Map<String, UserAccessDetail> guestsOnline() {
+	public Map<String, AccessDetail> guestsOnline() {
 		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
 		
 		StringBuilder sb = new StringBuilder("SELECT a.ipAddress,")
@@ -126,12 +126,12 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 		Query query = getEntityManager().createQuery(sb.toString());
 		List<Object[]> results = query.getResultList();
 		
-		Map<String, UserAccessDetail> whoIsOnlineMap = new HashMap<String, UserAccessDetail>();
+		Map<String, AccessDetail> whoIsOnlineMap = new HashMap<String, AccessDetail>();
 		for(Object[] detail : results) {
 			String ipAddress = (String) detail[0];
 			Boolean onlineCommunity = (Boolean) detail[1];
 			Boolean onlineTeaching = (Boolean) detail[2];
-			UserAccessDetail userDetail = UserAccessDetail.getAnonymousDetail(ipAddress);
+			AccessDetail userDetail = AccessDetail.getAnonymousDetail(ipAddress);
 			userDetail.setCommunityOnline(onlineCommunity);
 			userDetail.setTeachingOnline(onlineTeaching);
 			whoIsOnlineMap.put(ipAddress, userDetail);
@@ -145,7 +145,7 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Map<String, UserAccessDetail> usersOnline() {
+	public Map<String, AccessDetail> usersOnline() {
 		DateTime dateTime = (new DateTime(System.currentTimeMillis())).minusMinutes(30);
 		
 		StringBuilder sb = new StringBuilder("SELECT u,")
@@ -171,12 +171,12 @@ public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements A
 		Query query = getEntityManager().createQuery(sb.toString());
 		List<Object[]> results = query.getResultList();
 		
-		Map<String, UserAccessDetail> whoIsOnlineMap = new HashMap<String, UserAccessDetail>();
+		Map<String, AccessDetail> whoIsOnlineMap = new HashMap<String, AccessDetail>();
 		for(Object[] detail : results) {
 			User user = (User) detail[0];
 			Boolean onlineCommunity = (Boolean) detail[1];
 			Boolean onlineTeaching = (Boolean) detail[2];
-			UserAccessDetail userDetail = new UserAccessDetail(user, onlineCommunity, onlineTeaching);
+			AccessDetail userDetail = new AccessDetail(user, onlineCommunity, onlineTeaching);
 			whoIsOnlineMap.put(user.getAccount(), userDetail);
 		}
 		

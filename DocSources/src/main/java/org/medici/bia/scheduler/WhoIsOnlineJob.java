@@ -29,15 +29,16 @@ package org.medici.bia.scheduler;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.medici.bia.common.context.ApplicationContextVariableManager;
+import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.util.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class implements the scheduler to determine all joined users and guests.
- * It stores this data in {@link ApplicationContextVariableManager} so it is available everywhere at runtime.
+ * It stores this data in {@link ApplicationAccessContainer} so it is available everywhere at runtime.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
@@ -45,13 +46,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class WhoIsOnlineJob {
 	
 	private static final Logger log = Logger.getLogger(WhoIsOnlineJob.class);
+
+	@Autowired
+	private ApplicationAccessContainer applicationAccessContainer;
 	
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
+	}
+
 	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=300000)
 	public void execute() {
 		long start = System.currentTimeMillis();
 		log.info("WHOISONLINEJOB starts at " + DateUtils.getMYSQLDateTime(new DateTime(start)));
-		ApplicationContextVariableManager.refreshAllJoined();
+		applicationAccessContainer.refreshAllJoined();
 		long end = System.currentTimeMillis();
 		log.info("WHOISONLINEJOB ends at " + DateUtils.getMYSQLDateTime(new DateTime(end)));
 		log.info("WHOISONLINEJOB work time: " + (new Float(end - start) / 1000));

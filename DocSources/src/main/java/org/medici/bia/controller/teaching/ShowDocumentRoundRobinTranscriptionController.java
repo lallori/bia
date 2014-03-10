@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.medici.bia.command.teaching.ShowDocumentRoundRobinTranscriptionCommand;
+import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.ForumPost;
@@ -57,6 +58,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class ShowDocumentRoundRobinTranscriptionController {
+	
+	@Autowired
+	private ApplicationAccessContainer applicationAccessContainer;
 
 	@Autowired
 	private TeachingService teachingService;
@@ -103,6 +107,7 @@ public class ShowDocumentRoundRobinTranscriptionController {
 					maxAuthorities = getTeachingService().getUsersRoundRobinAuthority(accountIds);
 				}
 				model.put("maxAuthorities", maxAuthorities);
+				model.put("onlineUsers", applicationAccessContainer.getTeachingOnlineUsers());
 				
 				return new ModelAndView("teaching/ShowRoundRobinTranscription", model);
 			}

@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.medici.bia.common.context.ApplicationContextVariableManager;
+import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.dao.lockeduser.LockedUserDAO;
@@ -70,6 +70,9 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	 * 
 	 */
 	private static final long serialVersionUID = 5824046280716934036L;
+	
+	@Autowired
+	private ApplicationAccessContainer applicationAccessContainer;
 
 	@Autowired
 	private LockedUserDAO lockedUserDAO;
@@ -80,6 +83,15 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 	@Autowired
 	private UserRoleDAO userRoleDAO;
 	
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
+	}
+
 	/**
 	 * @return the userRoleDAO
 	 */
@@ -219,7 +231,7 @@ public  class BiaDaoAuthenticationProvider extends DaoAuthenticationProvider imp
 				getLogService().traceAccessLog(accessLog);
 				
 				// Update the online users in "application context variable"
-				ApplicationContextVariableManager.addOnlineUser(user);
+				applicationAccessContainer.addOnlineUser(user);
 				
 			} catch (ApplicationThrowable applicationThrowable) {
 				logger.error(applicationThrowable);

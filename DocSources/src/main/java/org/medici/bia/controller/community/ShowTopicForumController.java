@@ -37,6 +37,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowTopicForumCommand;
+import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -72,6 +73,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/community/ShowTopicForum")
 public class ShowTopicForumController {
+	@Autowired
+	private ApplicationAccessContainer applicationAccessContainer;
 	@Autowired
 	private CommunityService communityService;
 	@Autowired
@@ -183,9 +186,7 @@ public class ShowTopicForumController {
 			Map<String, UserAuthority> maxAuthorities = getCommunityService().findUsersMaximumAuthority(accounts);
 			model.put("maxAuthorities", maxAuthorities);
 			
-			Map<String, Object> whoIsOnlineHashMap = getCommunityService().getForumWhoIsOnline();
-			List<String> onlineUsers = (List<String>) whoIsOnlineHashMap.get("onlineUsers");
-			model.put("onlineUsers",onlineUsers);
+			model.put("onlineUsers", applicationAccessContainer.getCommunityOnlineUsers());
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);
 			return new ModelAndView("error/ShowTopicForum", model);
@@ -196,6 +197,15 @@ public class ShowTopicForumController {
 		} else {
 			return new ModelAndView("community/ShowTopicForum", model);
 		}
+	}
+
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
 	}
 
 	/**

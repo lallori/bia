@@ -33,14 +33,13 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.bia.common.user.UserAccessDetail;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 
 /**
   * Utility class to provides custom jstl functions.
+  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
@@ -151,9 +150,5 @@ public final class JSTLFunctions {
      */
     public static Boolean contains(List<Object> list, Object object) {
     	return list.contains(object);
-    }
-    
-    public static UserAccessDetail getAccessDetail(String userAccount) {
-    	return ApplicationContextVariableManager.getUserAccessDetail(userAccount);
     }
 }

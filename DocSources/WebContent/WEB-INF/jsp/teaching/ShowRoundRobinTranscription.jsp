@@ -124,7 +124,7 @@
 					</ul>
 				</div>
 				<c:choose>
-					<c:when test="${bia:getAccessDetail(currentPost.user.account).isTeachingOnline()}">
+					<c:when test="${bia:contains(onlineUsers, currentPost.user.account)}">
 						<div class="online visible"></div>
 					</c:when>
 					<c:otherwise>
