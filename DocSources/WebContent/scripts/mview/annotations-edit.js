@@ -272,6 +272,9 @@ IIPMooViewer.implement({
 						// delete _this.annotations[id].edit;
 						delete _this.annotations[currentIndex].edit;
 					}
+					_this.stopZoom = false;
+					_this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity=1;
+					_this.container.getElement('div.navbuttons').getElement('img.zoomOut').style.opacity=1;
 					/** MEDICI ARCHIVE PROJECT END **/
 					_this.updateAnnotations();
 				}

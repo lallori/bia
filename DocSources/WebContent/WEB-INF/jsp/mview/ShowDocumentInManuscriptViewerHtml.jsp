@@ -130,7 +130,7 @@
 				$j("input[name=category]:radio").die();
 				$j("input[name=category]:radio").live('change', function(){
 					if ($j("input[name=category]:checked").val() == 'GENERAL') {
-						$j(".annotation form").parent().css("background-color", "rgba(255, 255, 0, 0.2)");0
+						$j(".annotation form").parent().css("background-color", "rgba(255, 255, 0, 0.2)");
 						$j("#annotationTextarea").css("display", "inherit");
 					} else if($j("input[name=category]:checked").val() == 'PALEOGRAPHY') {
 						$j(".annotation form").parent().css("background-color", "rgba(255, 130, 0, 0.2)");
