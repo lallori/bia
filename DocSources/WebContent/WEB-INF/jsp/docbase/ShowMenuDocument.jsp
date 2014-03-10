@@ -56,8 +56,6 @@
 			</c:if>
 		</security:authorize>
 			<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
-		<span id="commentsOn"></span>
-		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS">
 			<c:if test="${!document.logicalDelete}">
 				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="docbase.showMenuDocument.help.delete"></fmt:message>" href="${DeleteDocumentURL}"><fmt:message key="docbase.showMenuDocument.delete"/></a>
@@ -65,6 +63,16 @@
 			<c:if test="${document.logicalDelete}">
 				<a id="undeleteAction" class="button_bodyleft_small"  title="<fmt:message key="docbase.showMenuDocument.help.undelete"></fmt:message>" href="${UndeleteDocumentURL}"><fmt:message key="docbase.showMenuDocument.undelete"/></a>
 			</c:if>	
+		</security:authorize>	
+<!-- 		<span id="commentsOn"></span> -->
+<%-- 		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a> --%>
+		<security:authorize ifNotGranted="ROLE_GUESTS">
+			<span id="commentsOn"></span>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussions"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussions"/></a>
+		</security:authorize>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+			<span id="commentsOn"></span>
+		<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="docbase.showMenuDocument.help.discussionsplusteaching"></fmt:message>" href="#"><fmt:message key="docbase.showMenuDocument.discussionsplusteaching"/></a>
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="<fmt:message key="docbase.showMenuDocument.help.print"></fmt:message>"></a>
 		<c:if test="${inMarkedList == 'false'}">
