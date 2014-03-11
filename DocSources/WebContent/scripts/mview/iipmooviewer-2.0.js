@@ -1924,7 +1924,9 @@ var IIPMooViewer = new Class({
 						}
 					}).inject(navbuttons);
 				});
-			} else {
+			} 
+			// RR: why cannot we show drawAnnotation button when window size is less than 1000 px?
+			/*else {
 				['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each(function(k) {
 
 					new Element('img', {
@@ -1938,7 +1940,7 @@ var IIPMooViewer = new Class({
 						}
 					}).inject(navbuttons);
 				});
-			}
+			}*/
 			/** MEDICI ARCHIVE PROJECT END **/
 
 			//navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
