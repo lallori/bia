@@ -78,6 +78,7 @@ import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.UserMessage;
@@ -1226,6 +1227,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UserRole> getUserRoles(String account) throws ApplicationThrowable {
+		try{
+			return getUserRoleDAO().findUserRoles(account);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

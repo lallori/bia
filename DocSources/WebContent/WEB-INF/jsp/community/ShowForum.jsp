@@ -5,6 +5,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+	<!--
+	    #### March 12th, 2014 - RR ###
+		This page does not include security controls for 'category' and 'forum' types because page 
+		could become too big-sized.
+		We prefer to filter accesses and visibility in the controller (ShowForumController) so in 
+		this page it should be considered:
+		  1 - the showed categories and forums are the only allowed for the connected user
+		  2 - if connected user, even anonymous one, has few privileges the page is not showed and 
+		      the user is redirected to 'access denied page'.
+	 -->
 	
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 		<c:param name="forumId" value="${category.forumId}"/>

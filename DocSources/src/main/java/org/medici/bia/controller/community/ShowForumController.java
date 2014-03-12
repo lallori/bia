@@ -29,8 +29,10 @@ package org.medici.bia.controller.community;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +48,9 @@ import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
@@ -89,8 +94,14 @@ public class ShowForumController {
 
 		try {
 			User userInformation = (User) httpSession.getAttribute("user");
+			
+			// RR (March 12th, 2014): we filter forum access in this controller so ShowForum.jsp is maintained pretty compact.
+			// --> First we calculate the user authorities (none for anonymous user) and then we filter what to show or we
+			// redirect to 'accessDenied' page.
+			Set<Authority> userAuthorities = null;
 
 			if (userInformation != null) {
+				userAuthorities = getUserAuthorities(userInformation);
 				if (userInformation.getForumJoinedDate() == null) {
 					userInformation = getCommunityService().joinUserOnForum();
 					httpSession.setAttribute("user", userInformation);
@@ -108,11 +119,13 @@ public class ShowForumController {
 
 				if (forum.getOption().getCanHaveSubCategory()) {
 					List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getForumId()));
-					model.put("subCategories", subCategories);
+					// We filter forums with special access credentials
+					List<Forum> visibleSubcategories = filterForumsForCurrentUser(subCategories, userAuthorities);
+					model.put("subCategories", visibleSubcategories);
 
 					//SubForums are extracted only if category is enabled to subForum...
 					List<Integer> subCategoriesIdsEnabledToSubForums = new ArrayList<Integer>(0);
-					for (Forum category : subCategories) {
+					for (Forum category : visibleSubcategories) {
 						if (category.getOption().getCanHaveSubForum()) {
 							subCategoriesIdsEnabledToSubForums.add(category.getForumId());
 						}
@@ -151,107 +164,115 @@ public class ShowForumController {
 					}
 				}
 			} else if (forum.getType().equals(Type.FORUM)) {
-				model.put("forum", forum);
-				//MD: Prepare the Manuscript Viewer
-				if (forum.getDocument() != null) {
-					Document document = forum.getDocument();
-					if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
-						DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
-						documentExplorer.setImage(new Image());
-						documentExplorer.getImage().setInsertNum(document.getInsertNum());
-						documentExplorer.getImage().setInsertLet(document.getInsertLet());
-						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
-						documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
-						documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() == null ? null : Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
-						documentExplorer.getImage().setImageType(ImageType.C);
-						documentExplorer.setTotal(null);
+				
+				if (canAccessToForum(forum, userAuthorities)) {
 					
-						try {
-							documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
-							model.put("documentExplorer", documentExplorer);
-						} catch (ApplicationThrowable applicationThrowable) {
-							model.put("applicationThrowable", applicationThrowable);
-							return new ModelAndView("error/ShowForum", model);
-						}
-					} else {
-						model.put("documentExplorer", null);
-					}
-				} else if(forum.getVolume() != null) {
-					Volume volume = forum.getVolume();
-					if (volume.getDigitized()) {
-						VolumeExplorer volumeExplorer = new VolumeExplorer(volume.getSummaryId(), volume.getVolNum(), volume.getVolLetExt());
-						if (getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()) != null) {
-							volumeExplorer.setImage(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()));
+					model.put("forum", forum);
+					//MD: Prepare the Manuscript Viewer
+					if (forum.getDocument() != null) {
+						Document document = forum.getDocument();
+						if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
+							DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+							documentExplorer.setImage(new Image());
+							documentExplorer.getImage().setInsertNum(document.getInsertNum());
+							documentExplorer.getImage().setInsertLet(document.getInsertLet());
+							documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+							documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
+							documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() == null ? null : Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
+							documentExplorer.getImage().setImageType(ImageType.C);
+							documentExplorer.setTotal(null);
+							
+							try {
+								documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+								model.put("documentExplorer", documentExplorer);
+							} catch (ApplicationThrowable applicationThrowable) {
+								model.put("applicationThrowable", applicationThrowable);
+								return new ModelAndView("error/ShowForum", model);
+							}
 						} else {
-							volumeExplorer.setImage(new Image());
-							volumeExplorer.getImage().setImageOrder(1);
-							volumeExplorer.getImage().setImageType(ImageType.C);
+							model.put("documentExplorer", null);
 						}
-						volumeExplorer.setTotal(null);
-						
-						try {
-							volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
-							model.put("volumeExplorer", volumeExplorer);
-						} catch (ApplicationThrowable applicationThrowable) {
-							model.put("applicationThrowable", applicationThrowable);
-							return new ModelAndView("error/ShowForum", model);
+					} else if(forum.getVolume() != null) {
+						Volume volume = forum.getVolume();
+						if (volume.getDigitized()) {
+							VolumeExplorer volumeExplorer = new VolumeExplorer(volume.getSummaryId(), volume.getVolNum(), volume.getVolLetExt());
+							if (getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()) != null) {
+								volumeExplorer.setImage(getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt()));
+							} else {
+								volumeExplorer.setImage(new Image());
+								volumeExplorer.getImage().setImageOrder(1);
+								volumeExplorer.getImage().setImageType(ImageType.C);
+							}
+							volumeExplorer.setTotal(null);
+							
+							try {
+								volumeExplorer = getManuscriptViewerService().getVolumeExplorer(volumeExplorer);
+								model.put("volumeExplorer", volumeExplorer);
+							} catch (ApplicationThrowable applicationThrowable) {
+								model.put("applicationThrowable", applicationThrowable);
+								return new ModelAndView("error/ShowForum", model);
+							}
+						} else {
+							model.put("volumeExplorer", null);
 						}
-					} else {
-						model.put("volumeExplorer", null);
 					}
+					
+					if (forum.getOption().getCanHaveSubForum()) {
+						// All forum have group by excepted document...
+						if (forum.getOption().getGroupBySubForum()) {
+							PaginationFilter paginationFilterForum = new PaginationFilter();
+							if (command.getForumsForPage() != null) {
+								paginationFilterForum.setElementsForPage(command.getForumsForPage());
+							} else {
+								paginationFilterForum.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
+								command.setForumsForPage(paginationFilterForum.getElementsForPage());
+							}
+							if (command.getForumPageNumber() != null) {
+								paginationFilterForum.setThisPage(command.getForumPageNumber());
+							} else {
+								paginationFilterForum.setThisPage(new Integer(1));
+								command.setForumPageNumber(paginationFilterForum.getThisPage());
+							}
+							if (command.getForumPageTotal() != null) {
+								paginationFilterForum.setPageTotal(command.getForumPageTotal());
+							} else {
+								paginationFilterForum.setPageTotal(null);
+							}
+							paginationFilterForum.addSortingCriteria("lastPost", "desc");
+							
+							Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
+							model.put("subForumsPage", page);
+						} else {
+							// paginationFilter to manage topics results..
+							PaginationFilter paginationFilterTopic = new PaginationFilter();
+							if (command.getTopicsForPage() != null) {
+								paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
+							} else {
+								paginationFilterTopic.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
+								command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
+							}
+							if (command.getTopicPageNumber() != null) {
+								paginationFilterTopic.setThisPage(command.getTopicPageNumber());
+							} else {
+								paginationFilterTopic.setThisPage(new Integer(1));
+								command.setTopicPageNumber(paginationFilterTopic.getThisPage());
+							}
+							if (command.getTopicPageTotal() != null) {
+								paginationFilterTopic.setPageTotal(command.getTopicPageTotal());
+							} else {
+								paginationFilterTopic.setPageTotal(null);
+							}
+							paginationFilterTopic.addSortingCriteria("lastPost", "desc");
+							
+							Page topicPage = getCommunityService().getForumTopicsByParentForum(forum, paginationFilterTopic);
+							model.put("subForumsTopicsPage", topicPage);
+						}
+					}
+				} else {
+					// TODO
+					return new ModelAndView("403", model);
 				}
-
-				if (forum.getOption().getCanHaveSubForum()) {
-					// All forum have group by excepted document...
-					if (forum.getOption().getGroupBySubForum()) {
-						PaginationFilter paginationFilterForum = new PaginationFilter();
-						if (command.getForumsForPage() != null) {
-							paginationFilterForum.setElementsForPage(command.getForumsForPage());
-						} else {
-							paginationFilterForum.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
-							command.setForumsForPage(paginationFilterForum.getElementsForPage());
-						}
-						if (command.getForumPageNumber() != null) {
-							paginationFilterForum.setThisPage(command.getForumPageNumber());
-						} else {
-							paginationFilterForum.setThisPage(new Integer(1));
-							command.setForumPageNumber(paginationFilterForum.getThisPage());
-						}
-						if (command.getForumPageTotal() != null) {
-							paginationFilterForum.setPageTotal(command.getForumPageTotal());
-						} else {
-							paginationFilterForum.setPageTotal(null);
-						}
-						paginationFilterForum.addSortingCriteria("lastPost", "desc");
-						
-						Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
-						model.put("subForumsPage", page);
-					} else {
-						// paginationFilter to manage topics results..
-						PaginationFilter paginationFilterTopic = new PaginationFilter();
-						if (command.getTopicsForPage() != null) {
-							paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
-						} else {
-							paginationFilterTopic.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
-							command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
-						}
-						if (command.getTopicPageNumber() != null) {
-							paginationFilterTopic.setThisPage(command.getTopicPageNumber());
-						} else {
-							paginationFilterTopic.setThisPage(new Integer(1));
-							command.setTopicPageNumber(paginationFilterTopic.getThisPage());
-						}
-						if (command.getTopicPageTotal() != null) {
-							paginationFilterTopic.setPageTotal(command.getTopicPageTotal());
-						} else {
-							paginationFilterTopic.setPageTotal(null);
-						}
-						paginationFilterTopic.addSortingCriteria("lastPost", "desc");
-			
-						Page topicPage = getCommunityService().getForumTopicsByParentForum(forum, paginationFilterTopic);
-						model.put("subForumsTopicsPage", topicPage);
-					}
-				}
+				
 			}
 
 			if (forum.getOption().getCanHaveTopics()) {
@@ -324,5 +345,46 @@ public class ShowForumController {
 	 */
 	public ManuscriptViewerService getManuscriptViewerService() {
 		return manuscriptViewerService;
+	}
+	
+	@SuppressWarnings("serial")
+	private boolean canAccessToForum(final Forum forum, Set<Authority> authorities) {
+		return filterForumsForCurrentUser(new ArrayList<Forum>() {{add(forum);}}, authorities).size() == 1;
+	}
+	
+	private List<Forum> filterForumsForCurrentUser(List<Forum> all, Set<Authority> authorities) {
+		List<Forum> allowed = new ArrayList<Forum>();
+		for (Forum current : all) {
+			switch (current.getSubType()) {
+				case COURSE:
+					if (authorities != null && authorities.size() > 0 && 
+						(authorities.contains(Authority.ADMINISTRATORS) 
+						|| authorities.contains(Authority.TEACHERS)
+						|| authorities.contains(Authority.STUDENTS))) {
+						
+						allowed.add(current);
+					}
+					break;
+				default:
+					allowed.add(current);
+					break;
+			}
+		}
+		return allowed;
+	}
+	
+	private Set<UserAuthority.Authority> getUserAuthorities(User user) {
+		Set<UserAuthority.Authority> authorities = new HashSet<UserAuthority.Authority>();
+		if (user != null) {
+			try {
+				List<UserRole> roles = getCommunityService().getUserRoles(user.getAccount());
+				for(UserRole role : roles) {
+					authorities.add(role.getUserAuthority().getAuthority());
+				}
+			} catch (ApplicationThrowable e) {
+				// TODO: what to do?
+			}
+		}
+		return authorities;
 	}
 }

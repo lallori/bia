@@ -38,14 +38,15 @@ import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserMessage;
-import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -429,6 +430,15 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	Long getSubForumsNumberWithTopics(Integer forumId) throws ApplicationThrowable;
+	
+	/**
+	 * Returns the list of user roles for the provided account.
+	 * 
+	 * @param account the user account
+	 * @return the list of {@link UserRole}
+	 * @throws ApplicationThrowable
+	 */
+	List<UserRole> getUserRoles(String account) throws ApplicationThrowable;
 
 	/**
 	 * 
