@@ -290,7 +290,7 @@ IIPMooViewer.implement({
 				e.stop();
 				_this.canvas.getElements('div.commandBtn').addClass('hidden');
 				_this.editAnnotation(annotation);
-			})
+			});
 			delta++;
 		}
 		

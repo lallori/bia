@@ -30,21 +30,21 @@ IIPMooViewer.implement({
 	 *  Create a new annotation, add it to our list and edit it
 	 */
 	newAnnotation: function(canvas) {
-
+		
 		// Create new ID for annotation
 		var id = String.uniqueID();
     
 		this.canvas = canvas;
 		
 		this.renderCommands(false);
-
+		
 		// Create default annotation and insert into our annotation array
 		var a = {
 				id: id,
 				x: (this.wid < this.view.w) ? 0.25 : (this.view.x + this.view.w / 4) / this.wid,
 				y: (this.hei < this.view.h) ? 0.25 : (this.view.y + this.view.h / 4) / this.hei,
-				w: (this.wid < this.view.w) ? 0.5 : (this.view.w / (2 * this.wid)),
-				h: (this.hei < this.view.h) ? 0.5 : (this.view.h / (2 * this.hei)),
+				w: (this.wid < this.view.w) ? 0.5 : (this.view.w / (4 * this.wid)),
+				h: (this.hei < this.view.h) ? 0.125 : (this.view.h / (8 * this.hei)),
 				type: '',
 				title: '',
 				text: '',
@@ -87,7 +87,12 @@ IIPMooViewer.implement({
 	 * Edit an existing annotation
 	 */
 	editAnnotation: function(annotation) {
-	  
+		
+		/** MEDICI ARCHIVE PROJECT START **/
+		this.annotationEditing = true;
+		this.setCommandButtonsOpacity(0.1);
+		/** MEDICI ARCHIVE PROJECT END **/
+		
 		// Disable key bindings on container
 		this.container.removeEvents('keydown');
 		if (this.annotationTip) {
@@ -105,7 +110,7 @@ IIPMooViewer.implement({
 		this.canvas.getChildren('div.annotation div.handle').destroy();
 
 		annotation.addClass('edit');
-		/** MEDICI ARCHIVE PROJECT START **/
+		
 		// we use the index of the annotations array instead of the id of the annotation
 		var currentIndex;
 		for (var count = 0; count < this.annotations.length; count++) {
@@ -257,24 +262,14 @@ IIPMooViewer.implement({
 					/** MEDICI ARCHIVE PROJECT START **/
 					_this.updateAnnotations();
 					_this.fireEvent('annotationChange', _this.annotations);
-					_this.stopZoom = false;
+					_this.annotationEditing = false;
 					_this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity=1;
 					_this.container.getElement('div.navbuttons').getElement('img.zoomOut').style.opacity=1;
 					/** MEDICI ARCHIVE PROJECT END **/
 				},
 				'reset': function() {
 					/** MEDICI ARCHIVE PROJECT START **/
-					if (_this.annotations[currentIndex].newAnnotation) {
-						// RR: if we remove a new annotation we have to remove it from the array
-						_this.annotations.splice(currentIndex, 1);
-					} else {
-						// RR: we remove the edit property for a stored annotation
-						// delete _this.annotations[id].edit;
-						delete _this.annotations[currentIndex].edit;
-					}
-					_this.stopZoom = false;
-					_this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity=1;
-					_this.container.getElement('div.navbuttons').getElement('img.zoomOut').style.opacity=1;
+					_this.stopEditClientAnnotation(currentIndex);
 					/** MEDICI ARCHIVE PROJECT END **/
 					_this.updateAnnotations();
 				}
@@ -374,6 +369,38 @@ IIPMooViewer.implement({
 		}
 
 	},
+	
+	/** MEDICI ARCHIVE PROJECT START **/
+	/**
+	 * Remove an annotation from the client
+	 * 
+	 * @param index the index of the annotation in the annotation array
+	 */
+	stopEditClientAnnotation: function(index) {
+		if (typeof index === 'undefined') {
+			for(i = 0; i < this.annotations.length; i++) {
+				if (typeof this.annotations[i].newAnnotation !== 'undefined'
+					|| typeof this.annotations[i].edit !== 'undefined') {
+					index = i;
+					break;
+				}
+			}
+		}
+		
+		if (typeof index !== 'undefined') {
+			if (this.annotations[index].newAnnotation) {
+				// RR: if we remove a new annotation we have to remove it from the array
+				this.annotations.splice(index, 1);
+			} else {
+				// RR: we remove the edit property for a stored annotation
+				// delete _this.annotations[id].edit;
+				delete this.annotations[index].edit;
+			}
+			this.annotationEditing = false;
+			this.setCommandButtonsOpacity(1);
+		}
+	},
+	/** MEDICI ARCHIVE PROJECT END **/
 
 
 

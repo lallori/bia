@@ -142,8 +142,8 @@ var IIPMooViewer = new Class({
 
 		/** MEDICI ARCHIVE PROJECT START **/
 		this.initialZoom = options.zoom || 1;
-		//To disable the zoom when a user create an annotation
-		this.stopZoom = false;
+		// To disable zoom and rotate functions when a user is creating an annotation
+		this.annotationEditing = false;
 		/** MEDICI ARCHIVE PROJECT END **/
 
 		// Navigation window options
@@ -298,8 +298,7 @@ var IIPMooViewer = new Class({
 		// Load us up when the DOM is fully loaded!
 		window.addEvent('domready', this.load.bind(this));
 	},
-
-
+	
 
 	/**
 	 *  Create the appropriate CGI strings and change the image sources
@@ -976,12 +975,16 @@ var IIPMooViewer = new Class({
 
 		// Stop all mousewheel events in order to prevent stray scrolling events
 		event.stop();
+		/** MEDICI ARCHIVE PROJECT START **/
+		// Stop default action in order to prevent malfunctions during annotation editing
+		event.preventDefault();
+		/** MEDICI ARCHIVE PROJECT END **/
 
 		// Set z to +1 if zooming in and -1 if zooming out
 		var z = 1;
 
 		/** MEDICI ARCHIVE PROJECT START **/
-		if (!this.stopZoom) {
+		if (!this.annotationEditing) {
 		/** MEDICI ARCHIVE PROJECT END **/
 			if (event.wheel && event.wheel < 0) {
 				// For mouse scrolls
@@ -1058,7 +1061,10 @@ var IIPMooViewer = new Class({
 	 * Zoom in by a factor of 2
 	 */
 	zoomIn: function() {
-		if (this.view.res < this.num_resolutions - 1) {
+		/** MEDICI ARCHIV PROJECT START **/
+		if (this.view.res < this.num_resolutions - 1 && !this.annotationEditing) {
+		// if (this.view.res < this.num_resolutions - 1) {
+		/** MEDICI ARCHIVE PROJECT END **/
 			this.zoomTo(this.view.res + 1);
 		}
 	},
@@ -1069,7 +1075,10 @@ var IIPMooViewer = new Class({
 	 * Zoom out by a factor of 2
 	 */
 	zoomOut: function() {
-		if (this.view.res > 0) {
+		/** MEDICI ARCHIV PROJECT START **/
+		if (this.view.res > 0 && !this.annotationEditing) {
+		// if (this.view.res > 0) {
+		/** MEDICI ARCHIVE PROJECT END **/
 			this.zoomTo(this.view.res - 1);
 		}
 	},
@@ -1172,9 +1181,9 @@ var IIPMooViewer = new Class({
 
 		/** MEDICI ARCHIVE PROJECT START **/
 		// Navigation window in Manuscript Transcriber
-		if (this.view.w > 1000) {
+		//if (this.view.w > 1000) {
 			thumb_width = this.view.w / 8;
-		}
+		//}
 		/** MEDICI ARCHIVE PROJECT END **/
 
 		// Make sure our height is not more than 50% of view height
@@ -1201,9 +1210,9 @@ var IIPMooViewer = new Class({
 
 		/** MEDICI ARCHIVE PROJECT START **/
 		// Navigation window in Manuscript Transcriber
-		if (this.view.w > 1000) {
+		//if (this.view.w > 1000) {
 			thumb_width = this.view.w / 8;
-		}
+		//}
 		/** MEDICI ARCHIVE PROJECT END **/
 
 		// Calculate our navigation window size
@@ -1607,15 +1616,17 @@ var IIPMooViewer = new Class({
 					'html': '<img id="hideAnnotation" src="' + this.prefix + 'enableAnnotation.svg" title="Hide/Restore annotations">',
 					'events': {
 						click: function() {
-							if (_this.annotationsVisible) {
-								_this.container.getElementById('hideAnnotation').src = _this.prefix + 'disableAnnotation.svg';
-								_this.toggleAnnotations();
-							} else {
-								if (_this.container.getElement('div.message') != null) {
-									_this.container.getElement('div.message').style.visibility = "hidden";
+							if (!_this.annotationEditing) {
+								if (_this.annotationsVisible) {
+									_this.container.getElementById('hideAnnotation').src = _this.prefix + 'disableAnnotation.svg';
+									_this.toggleAnnotations();
+								} else {
+									if (_this.container.getElement('div.message') != null) {
+										_this.container.getElement('div.message').style.visibility = "hidden";
+									}
+									_this.container.getElementById('hideAnnotation').src = _this.prefix + 'enableAnnotation.svg';
+									_this.toggleAnnotations();
 								}
-								_this.container.getElementById('hideAnnotation').src = _this.prefix + 'enableAnnotation.svg';
-								_this.toggleAnnotations();
 							}
 						}
 					},
@@ -1908,11 +1919,10 @@ var IIPMooViewer = new Class({
 			var prefix = this.prefix;
 			/** MEDICI ARCHIVE PROJECT START **/
 			//['reset','zoomIn','zoomOut'].each(function(k) {
-			//Disable Annotation Button
-			if (this.view.w > 1000) {
-
+			// RR: why cannot we show drawAnnotation button when window size is less than 1000 px?
+			if (this.editEnabled) {
 				['zoomIn','zoomOut','rotateLeft','rotateRight','reset','drawAnnotation'].each(function(k) {
-
+					
 					new Element('img', {
 						'src': prefix + k + (Browser.buggy?'.png':'.svg'),
 						'class': k,
@@ -1924,11 +1934,9 @@ var IIPMooViewer = new Class({
 						}
 					}).inject(navbuttons);
 				});
-			} 
-			// RR: why cannot we show drawAnnotation button when window size is less than 1000 px?
-			/*else {
+			} else {
 				['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each(function(k) {
-
+					
 					new Element('img', {
 						'src': prefix + k + (Browser.buggy?'.png':'.svg'),
 						'class': k,
@@ -1940,7 +1948,7 @@ var IIPMooViewer = new Class({
 						}
 					}).inject(navbuttons);
 				});
-			}*/
+			}
 			/** MEDICI ARCHIVE PROJECT END **/
 
 			//navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
@@ -1961,8 +1969,7 @@ var IIPMooViewer = new Class({
 			navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
 			navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
 			navbuttons.getElement('img.reset').set('title', 'Refresh Image');
-			if (this.view.w > 1000) {
-				//Disable annotation button
+			if (this.editEnabled) {
 				navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
 			}
       
@@ -1970,7 +1977,7 @@ var IIPMooViewer = new Class({
 
 			// Add events to our buttons
 			navbuttons.getElement('img.zoomIn').addEvent('click', function() {
-				if (!this.stopZoom) {
+				if (!this.annotationEditing) {
 					IIPMooViewer.windows(this).each(function(el) {
 						el.zoomIn();
 					});
@@ -1979,7 +1986,7 @@ var IIPMooViewer = new Class({
 			}.bind(this));
 
 			navbuttons.getElement('img.zoomOut').addEvent('click', function() {
-				if (!this.stopZoom) {
+				if (!this.annotationEditing) {
 					IIPMooViewer.windows(this).each(function(el) {
 						el.zoomOut();
 					});
@@ -1988,50 +1995,50 @@ var IIPMooViewer = new Class({
 			}.bind(this));
 
 			navbuttons.getElement('img.reset').addEvent('click', function() {
-				IIPMooViewer.windows(this).each(function(el) {
-					el.reload();
-				});
-				this.reload();
+				if (!this.annotationEditing) {
+					IIPMooViewer.windows(this).each(function(el) {
+						el.reload();
+					});
+					this.reload();
+				}
 			}.bind(this));
 
 			/** MEDICI ARCHIVE PROJECT START **/
 			navbuttons.getElement('img.rotateRight').addEvent('click', function() {
-				var r = this.view.rotation;
-				r += 45 % 360;
-				IIPMooViewer.windows(this).each(function(el) {
-					el.rotate(r);
-				});
-				this.rotate(r);
+				if (!this.annotationEditing) {
+					var r = this.view.rotation;
+					r += 45 % 360;
+					IIPMooViewer.windows(this).each(function(el) {
+						el.rotate(r);
+					});
+					this.rotate(r);
+				}
 			}.bind(this));
 
 			navbuttons.getElement('img.rotateLeft').addEvent('click', function() {
-				var r = this.view.rotation;
-				r -= 45 % 360;
-				IIPMooViewer.windows(this).each(function(el) {
-					el.rotate(r);
-				});
-				this.rotate(r);
+				if (!this.annotationEditing) {
+					var r = this.view.rotation;
+					r -= 45 % 360;
+					IIPMooViewer.windows(this).each(function(el) {
+						el.rotate(r);
+					});
+					this.rotate(r);
+				}
 			}.bind(this));
 
-			if (this.view.w > 1000) {
-				//Disable annotation button
+			if (this.editEnabled) {
+				// RR: why cannot we show drawAnnotation button when window size is less than 1000 px?
 				navbuttons.getElement('img.drawAnnotation').addEvent('click', function() {
-					// 'Cause event should be attach to window, we proceed only if we aren't located into form annotation
-					/** MEDICI ARCHIVE PROJECT START **/
 					// RR: why should we get the newAnnotation function from the window element instead from the iipmooviewer object?
 					// if (typeof(window.iip.newAnnotation) == "function") {
 					if (typeof(this.newAnnotation) == "function") {
-					/** MEDICI ARCHIVE PROJECT END **/
-						this.stopZoom = true;
-						navbuttons.getElement('img.zoomIn').style.opacity = 0.5;
-						navbuttons.getElement('img.zoomOut').style.opacity = 0.5;
-						/** MEDICI ARCHIVE PROJECT START **/
-						// RR: why should we get the newAnnotation function from the window element instead from the iipmooviewer object?
-						// window.iip.newAnnotation(this.canvas);
-						this.newAnnotation(this.canvas);
-						/** MEDICI ARCHIVE PROJECT END **/
+						if (!this.annotationEditing) {
+							// RR: why should we get the newAnnotation function from the window element instead from the iipmooviewer object?
+							// window.iip.newAnnotation(this.canvas);
+							this.newAnnotation(this.canvas);
+						}
 					} else {
-						console.log("IIPMoviewer script must be assigned in page to a variable called iip");
+						console.log("annotation-edit script has not been loaded...");
 					}
 				}.bind(this));
 			}
@@ -2086,9 +2093,28 @@ var IIPMooViewer = new Class({
 
 	},
 
+	
+	/**
+	 * Sets opacity of Navigation Buttons.
+	 * NOTE: lower opacities are for not enabled buttons.
+	 * 
+	 * @param opacity the opacity level
+	 */
+	setCommandButtonsOpacity: function(opacity) {
+		this.container.getElement('div.navbuttons').getElement('img.zoomIn').style.opacity = opacity;
+		this.container.getElement('div.navbuttons').getElement('img.zoomOut').style.opacity = opacity;
+		this.container.getElement('div.navbuttons').getElement('img.rotateLeft').style.opacity = opacity;
+		this.container.getElement('div.navbuttons').getElement('img.rotateRight').style.opacity = opacity;
+		this.container.getElement('div.navbuttons').getElement('img.reset').style.opacity = opacity;
+		this.container.getElement('div.hideAnnotation').getElement('img').style.opacity = opacity;
+		if (this.editEnabled) {
+			this.container.getElement('div.navbuttons').getElement('img.drawAnnotation').style.opacity = opacity;
+		}
+	},
+
 
 	/**
-	 * Create annotations if they are contained within our current view
+	 * Creates annotations if they are contained within our current view
 	 */ 
 	createAnnotations: function() {
 
@@ -2357,6 +2383,13 @@ var IIPMooViewer = new Class({
 	 * Reflow our viewer after a resize
 	 */
 	reflow: function() {
+		
+		/** MEDICI ARCHIVE PROJECT START **/
+		// RR: we have to stop the annotation editing before
+		if (this.annotationEditing && typeof this.stopEditClientAnnotation === 'function') {
+			this.stopEditClientAnnotation();
+		}
+		/** MEDICI ARCHIVE PROJECT END **/
 
 		var target_size = this.container.getSize();
 		this.view.w = target_size.x;
