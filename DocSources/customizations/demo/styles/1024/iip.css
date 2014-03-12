@@ -284,14 +284,15 @@
 
 .iipmooviewer .canvas .annotation.handle {
   cursor: se-resize;
-  background: none repeat scroll 0 0 white;
-  border: 1px solid black;
+  background: url(${contextPath}/images/mview/resize_annotation.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) repeat scroll 0 0 white;
+  border: 2px solid black;
   bottom: 0;
-  height: 5px;
+  height: 10px;
   margin: -2px;
   position: absolute;
   right: 0;
-  width: 5px;
+  width: 10px;
+  border-radius: 1px;
 }
 
 .iipmooviewer .canvas .annotation.form {
