@@ -156,7 +156,7 @@ IIPMooViewer.implement({
 			var titleEditable = this.annotations[currentIndex].newAnnotation || this.annotations[currentIndex].type == "PERSONAL";
 			
 			// Create our input fields
-			var html = '<table><tr><td>Annotation Title</td><td><input type="text" name="title" autofocus';
+			var html = '<table><tr><td>Annotation Title</td><td><input id="annotationTitle" type="text" name="title" autofocus';
 			if (this.annotations[currentIndex].title ) {
 				html += ' value="' + this.annotations[currentIndex].title + '"';
 				if (!titleEditable) {
@@ -219,6 +219,12 @@ IIPMooViewer.implement({
 				'class': 'button',
 				'value': 'cancel'
 			}).inject(form);
+			
+			new Element('div', {
+				'id': 'annotationError',
+				'style': 'margin-left: 10px; color: #FF1C1C; display: none;',
+				'text': 'Highlighted fields cannot be empty'
+			}).inject(form);
 	
 			/** MEDICI ARCHIVE PROJECT START **/
 			//To position the form
@@ -232,6 +238,28 @@ IIPMooViewer.implement({
 				'submit': function(e) {
 					e.stop();
 					/** MEDICI ARCHIVE PROJECT START **/
+					var title = e.target['title'].value;
+					var text = e.target['text'].value;
+					var empty = false;
+					var onlySpaces = /^ * *$/;
+					if (title.match(onlySpaces)) {
+						this.getElement('#annotationTitle').style.backgroundColor = '#FFFAAD';
+						empty = true;
+					} else {
+						this.getElement('#annotationTitle').style.backgroundColor = '#FFF';
+					}
+					if (text.match(onlySpaces)) {
+						this.getElement('#annotationTextarea').style.backgroundColor = '#FFFAAD';
+						empty = true;
+					} else {
+						this.getElement('#annotationTextarea').style.backgroundColor = '#FFF';
+					}
+					if (empty) {
+						this.getElement('#annotationError').style.display = 'inline-block';
+						return false;
+					} else {
+						this.getElement('#annotationError').style.display = 'none';
+					}
 					// RR: now we use the index of the annotations array
 					// _this.updateShape(this.getParent());
 					_this.updateShape(this.getParent(),currentIndex);
@@ -258,8 +286,6 @@ IIPMooViewer.implement({
 					_this.annotations[currentIndex].title = e.target['title'].value;
 					_this.annotations[currentIndex].text = e.target['text'].value;
 					delete _this.annotations[currentIndex].edit;
-					/** MEDICI ARCHIVE PROJECT END **/
-					/** MEDICI ARCHIVE PROJECT START **/
 					_this.updateAnnotations();
 					_this.fireEvent('annotationChange', _this.annotations);
 					_this.annotationEditing = false;
