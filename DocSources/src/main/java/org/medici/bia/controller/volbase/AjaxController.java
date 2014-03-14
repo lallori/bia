@@ -115,10 +115,10 @@ public class AjaxController {
 				Boolean digitized = getVolBaseService().checkVolumeDigitized(summaryId);
 				
 				model.put("summaryId", summaryId.toString());
-				model.put("digitized", digitized.toString());
+				model.put("digitized", digitized);
 			} catch (ApplicationThrowable aex) {
 				model.put("summaryId", summaryId.toString());
-				model.put("digitized", "false");
+				model.put("digitized", Boolean.FALSE);
 				model.put("error", aex.getApplicationError().toString());
 			}
 		} else if (volNum != null){
@@ -127,15 +127,15 @@ public class AjaxController {
 				
 				model.put("volNum", volNum.toString());
 				model.put("volLetExt", volLetExt);
-				model.put("digitized", digitized.toString());
+				model.put("digitized", digitized);
 			} catch (ApplicationThrowable aex) {
 				model.put("volNum", volNum.toString());
 				model.put("volLetExt", volLetExt);
-				model.put("digitized", "false");
+				model.put("digitized", Boolean.FALSE);
 				model.put("error", aex.getApplicationError().toString());
 			}
 		} else {
-			model.put("digitized", "false");
+			model.put("digitized", Boolean.FALSE);
 			model.put("error", "incorrect call");
 		}
 		
@@ -239,13 +239,13 @@ public class AjaxController {
 			model.put("volNum", volNum.toString());
 			model.put("volLetExt", volLetExt);
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
-			model.put("volumeDigitized", (volume != null) ? volume.getDigitized() : "false");
+			model.put("volumeDigitized", (volume != null) ? volume.getDigitized() : Boolean.FALSE);
 		} catch (ApplicationThrowable aex) {
 			model.put("volNum", (volNum != null) ? volNum.toString() : "");
 			model.put("volLetExt", (volLetExt != null) ? volLetExt : "");
 			model.put("summaryId", "");
 			model.put("folioCount", "");
-			model.put("volumeDigitized", "false");
+			model.put("volumeDigitized", Boolean.FALSE);
 		}
 
 		return new ModelAndView("responseOK", model);

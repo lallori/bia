@@ -81,6 +81,8 @@
 			<form:hidden path="seriesRefNum"/>
 
 			<div>
+				<span id="volExist" class="inputerrorsVolumeExist" style="display: none;"><p>Volume <span id="volNumError" style="font-weight: bold; color: black;"></span> is already present, you cannot add again this volume. Save is disabled.</p></span>
+				
 				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
 				<input id="save" class="button_small fr" type="submit" value="Save" />
 			</div>
@@ -100,6 +102,8 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			var delay = 800;
+			
 			$j("#EditContextVolume").css('visibility', 'hidden'); 
 	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
@@ -117,73 +121,90 @@
 					$j("#volLetExt").attr("disabled","true");
     			</c:if>
 			</security:authorize>
-
-			var showVolumeExplorer = function (){
-				if($j(".inputerrorsForm").length > 0){
-					$j(".inputerrorsForm").remove();
-				}
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), summaryId: '${command.summaryId}' },
-					function(data){
-						if (data.summaryId == "") {
-							if ($j("#volExist").length > 0) {
-								$j("#volExist").remove();
-							}
-							$j("#save").removeAttr("disabled");
-
-							$j.get('${CheckVolumeDigitizedURL}', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() }, function(data){
-									if (data.digitized == "true") {
-				            			var tabName = "Explore Volume " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
-				            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
-				                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
-				                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-				            		}
-								}
-								 
-							);
-						} else {
-							if(data.summaryId != '${command.summaryId}'){
-								if ($j("#volExist").length == 0) {
-									$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
-								}
-								$j("#save").attr("disabled","true");
-							}else{
-								if($j("#volExist").length > 0){
-									$j("#volExist").remove();
-								}
-								$j("#save").removeAttr("disabled");
-							}
-						}
-					}
-				);
-	 		}
-			$j("#volNum").change(showVolumeExplorer);
-			$j("#volLetExt").change(showVolumeExplorer);
 			
-			$j("#volNum").keyup(function(){
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), summaryId: '${command.summaryId}' },
-						function(data){
+			/**
+			 * This function returns an ellapsed handler.
+			 *
+			 * @param handler the handler to delay
+			 * @param delay the delay (in millisecond)
+			 * @param args arguments to pass to the handler
+			 */
+			function createElapsedHandler(handler, delay, args) {
+				var timer;
+				return function() {
+					clearTimeout(timer);
+					timer = setTimeout(function() {
+						if (typeof args !== "undefined") {
+							handler(args);
+						} else {
+							handler();						
+						}
+					}, delay);
+				}
+			};
+			
+			/**
+			 * This function checks if input string provided is empty.
+			 *
+			 * @param input the input string to check
+			 * @return true if the string is empty or contains only white spaces.
+			 */
+			var isEmpty = function(input) {
+				var onlySpaces = /^ * *$/;
+				return input.match(onlySpaces);
+			};
+			
+			var checkVolume = function() {
+				var vNum = $j("#volNum").val();
+				var vLExt = $j("#volLetExt").val();
+				var volMDP = vNum + (isEmpty(vLExt) ? '' : ' ' + vLExt);
+				if (!isEmpty(vNum)) {
+					$j.get('<c:url value="/de/volbase/FindVolume.json" />', 
+						{ 
+							volNum: vNum,
+							volLetExt: $j("#volLetExt").val(), 
+							summaryId: '${command.summaryId}'
+						},
+						function(data) {
 							if (data.summaryId == "") {
-								if ($j("#volExist").length > 0) {
-									$j("#volExist").remove();
-								}
+								$j("#volExist").hide();
 								$j("#save").removeAttr("disabled");
-							}
-							else {
-								if(data.summaryId != '${command.summaryId}'){
-									if ($j("#volExist").length == 0) {
-										$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
+								
+								// Check if non existent volume has been digitized
+								$j.get('${CheckVolumeDigitizedURL}', 
+									{
+										volNum: vNum,
+										volLetExt: $j("#volLetExt").val()
+									},
+									function(data) {
+										if (data.digitized === true) {
+					            			var tabName = "Explore Volume " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+					            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+					                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+					                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					            		}
 									}
+								);
+							} else {
+								if (data.summaryId !== '${command.summaryId}') {
+									$j("#volNumError").text(volMDP);
+									$j("#volExist").show();
 									$j("#save").attr("disabled","true");
-								}else{
-									if($j("#volExist").length > 0){
-										$j("#volExist").remove();
-									}
+								} else {
+									$j("#volExist").hide();
 									$j("#save").removeAttr("disabled");
 								}
 							}
-					});
-						
-			});
+						}
+					);
+				} else {
+					$j("#volExist").hide();
+					$j("#save").removeAttr("disabled");
+				}
+			}
+			
+			$j("#volNum").bind("input", createElapsedHandler(checkVolume, delay));
+			$j("#volLetExt").bind("input", createElapsedHandler(checkVolume, delay));
 
 			var a = $j('#seriesRefDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
