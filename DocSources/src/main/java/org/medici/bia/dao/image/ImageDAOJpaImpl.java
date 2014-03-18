@@ -695,12 +695,13 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 
 		// Calculating missing folios start
-		stringBuilder = new StringBuilder("SELECT distinct(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+		stringBuilder = new StringBuilder("SELECT DISTINCT(imageProgTypeNum) FROM Image WHERE volNum = :volNum AND volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
         	stringBuilder.append(" = :volLetExt");
         else
-        	stringBuilder.append(" is null");
-    	stringBuilder.append(" order by imageProgTypeNum ASC");
+        	stringBuilder.append(" IS NULL");
+        stringBuilder.append(" AND imageType = 'C'");	// we search only for folios
+    	stringBuilder.append(" ORDER BY imageProgTypeNum ASC");
     	
         query = getEntityManager().createQuery(stringBuilder.toString());
         query.setParameter("volNum", volNum);

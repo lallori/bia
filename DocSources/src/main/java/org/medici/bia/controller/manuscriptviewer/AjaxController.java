@@ -128,7 +128,7 @@ public class AjaxController {
 				Image image = getManuscriptViewerService().findImage(
 						volNum,
 						volLetExt,
-						null, 
+						ImageType.C, 
 						org.medici.bia.common.util.StringUtils.nullTrim(insertNum),
 						org.medici.bia.common.util.StringUtils.nullTrim(insertLet),
 						folioNum,
