@@ -58,24 +58,30 @@
 				</c:if>
 			</div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
-				<c:if test="${not empty image}">
-				<div id="SpineVolumeDigitDiv">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-					<b><fmt:message key="volbase.showDetailsVolume.volumeSpine"/></b>
-					<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
-					<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
-				</div>
-				</c:if>
-				<c:if test="${empty image && volume.digitized == false}">
-					<div id="SpineVolumeNotDigitDiv">
-						<span><fmt:message key="volbase.showDetailsVolume.toBeDigitized"/></span>
-					</div>
-				</c:if>
-				<c:if test="${empty image && volume.digitized == true}">
-					<div id="SpineVolumeNotDigitDiv">
-						<span><fmt:message key="volbase.showDetailsVolume.spineNotAvailable"/></span>						
-					</div>
-				</c:if>
+				<c:choose>
+					<c:when test="${volume.digitized == true and not empty image}">
+						<div id="SpineVolumeDigitDiv">
+							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+							<b><fmt:message key="volbase.showDetailsVolume.volumeSpine"/></b>
+							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
+							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
+						</div>
+					</c:when>
+					<c:when test="${volume.digitized == true and empty image}">
+						<div id="SpineVolumeDigitDiv">
+							<div id="SpineVolumeNotDigitDiv">
+								<span><fmt:message key="volbase.showDetailsVolume.spineNotAvailable"/></span>
+							</div>
+							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
+							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div id="SpineVolumeNotDigitDiv">
+							<span><fmt:message key="volbase.showDetailsVolume.toBeDigitized"/></span>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</security:authorize>
 				<!-- <div id="SpineVolumeDiv">
 				<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
