@@ -79,7 +79,7 @@ public class EditRecaptchaPropertiesValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditRecaptchaPropertiesCommand editRecaptchaPropertiesCommand = (EditRecaptchaPropertiesCommand) object;
+		// EditRecaptchaPropertiesCommand editRecaptchaPropertiesCommand = (EditRecaptchaPropertiesCommand) object;
 		// TODO : implement validation logic
 	}
 }

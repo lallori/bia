@@ -61,7 +61,7 @@ public class ShowAccessLogSearchValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		ShowAccessLogSearchCommand showAccessLogSearchCommand = (ShowAccessLogSearchCommand) object;
-		
+		// ShowAccessLogSearchCommand showAccessLogSearchCommand = (ShowAccessLogSearchCommand) object;
+		// TODO
 	}
 }

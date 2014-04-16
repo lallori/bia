@@ -31,11 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.search.ExpandResultsAdvancedSearchCommand;
 import org.medici.bia.common.search.AdvancedSearchDocument;
 import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;

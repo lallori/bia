@@ -33,11 +33,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.bia.command.docbase.EditDocReferenceDocumentCommand;
-import org.medici.bia.command.docbase.EditPersonDocumentCommand;
 import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EpLink;
-import org.medici.bia.domain.People;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;

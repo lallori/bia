@@ -30,7 +30,6 @@ package org.medici.bia.common.util;
 import java.util.List;
 
 import org.apache.commons.lang.WordUtils;
-import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserRole;
 
 /**

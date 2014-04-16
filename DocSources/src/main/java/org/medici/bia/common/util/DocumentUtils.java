@@ -27,9 +27,6 @@
  */
 package org.medici.bia.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.bia.domain.Document;

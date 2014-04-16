@@ -44,7 +44,6 @@ import org.medici.bia.dao.schedone.SchedoneDAO;
 import org.medici.bia.dao.serieslist.SeriesListDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Digitization;
-import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.SerieList;

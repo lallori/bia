@@ -48,7 +48,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.bia.command.search.AdvancedSearchCommand;
 import org.medici.bia.command.search.SimpleSearchCommand;
-import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.VolumeUtils;
 

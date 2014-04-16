@@ -88,7 +88,6 @@ public class HttpUtils {
 	 * @return String rappresentation of all http parameters (format is
 	 *         parameter1Name=parameter1Value&parameter2Name=parameter2Value).
 	 */
-	@SuppressWarnings("unchecked")
 	public static String retrieveHttpParametersAsString(HttpServletRequest req) {
 		if (req == null) {
 			return "";
@@ -119,7 +118,6 @@ public class HttpUtils {
 	 * @return String rappresentation of all http parameters (format is 
 	 *         parameter1Name=parameter1Value&parameter2Name=parameter2Value).
 	 */
-	@SuppressWarnings("unchecked")
 	public static String retrieveHttpParametersAsString(HttpServletRequest req, boolean encodeParameterName, boolean encodeParameterValue) {
 		if (req == null) {
 			return "";

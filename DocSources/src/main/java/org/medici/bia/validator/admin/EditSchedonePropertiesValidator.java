@@ -79,7 +79,7 @@ public class EditSchedonePropertiesValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditSchedonePropertiesCommand editSchedonePropertiesCommand = (EditSchedonePropertiesCommand) object;
+		// EditSchedonePropertiesCommand editSchedonePropertiesCommand = (EditSchedonePropertiesCommand) object;
 		// TODO : implement validation logic
 	}
 }

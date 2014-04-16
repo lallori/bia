@@ -72,13 +72,14 @@ public class ApplicationPropertyDAOJpaImpl extends JpaDao<String, ApplicationPro
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getApplicationProperty(String id) {
 		try {
 	        Query query = getEntityManager().createQuery("FROM ApplicationProperty where id=:id");
 	        query.setParameter("id", id);
 	
-	        List<ApplicationProperty> list = query.getResultList();
+	        List<ApplicationProperty> list = (List<ApplicationProperty>)query.getResultList();
 	        
 	        if (list.size() ==1) {
 	        	return ((ApplicationProperty)list.get(0)).getValue();
@@ -97,12 +98,13 @@ public class ApplicationPropertyDAOJpaImpl extends JpaDao<String, ApplicationPro
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getApplicationPropertiesNames() {
 		try {
 	        Query query = getEntityManager().createQuery("SELECT id FROM ApplicationProperty ORDER by id ASC ");
 
-	         return query.getResultList();
+	         return (List<String>)query.getResultList();
 		} catch(PersistenceException persistenceException) {
 			logger.error("Exception during reading application properties names ", persistenceException);
 			return new ArrayList<String>(0);

@@ -28,16 +28,15 @@
 package org.medici.bia.controller.docbase;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.People;

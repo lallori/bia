@@ -30,7 +30,6 @@ package org.medici.bia.service.manuscriptviewer;
 import java.util.List;
 import java.util.Map;
 
-import org.dom4j.DocumentException;
 import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;

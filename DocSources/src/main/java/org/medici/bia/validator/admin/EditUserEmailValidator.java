@@ -80,7 +80,7 @@ public class EditUserEmailValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditUserEmailCommand editUserEmailCommand = (EditUserEmailCommand) object;
+		// EditUserEmailCommand editUserEmailCommand = (EditUserEmailCommand) object;
 		// TODO : implement validation logic
 	}
 }

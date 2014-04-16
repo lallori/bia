@@ -79,7 +79,7 @@ public class ApproveUserValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		ApproveUserCommand approveUserCommand = (ApproveUserCommand) object;
+		// ApproveUserCommand approveUserCommand = (ApproveUserCommand) object;
 		// TODO : implement validation logic
 	}
 }

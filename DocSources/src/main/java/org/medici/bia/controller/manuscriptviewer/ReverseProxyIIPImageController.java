@@ -103,7 +103,6 @@ public class ReverseProxyIIPImageController {
 	 * @param httpServletRequest
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private String getConnectUrlServer099(HttpServletRequest httpServletRequest) {
 		// "GET /fcgi-bin/iipsrv.fcgi?FIF=1/MDP5/0899_C_494_R.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number
 		// "GET http://localhost/fcgi-bin/iipsrv.fcgi?FIF=1/MDP5/0899_C_494_R.tif&CNT=1&SDS=0,90&JTL=3,2

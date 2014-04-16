@@ -79,7 +79,7 @@ public class EditGeneralPropertiesValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditGeneralPropertiesCommand editGeneralPropertiesCommand = (EditGeneralPropertiesCommand) object;
+		// EditGeneralPropertiesCommand editGeneralPropertiesCommand = (EditGeneralPropertiesCommand) object;
 		// TODO : implement validation logic
 	}
 }

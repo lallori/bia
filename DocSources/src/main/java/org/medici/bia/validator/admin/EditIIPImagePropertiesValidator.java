@@ -79,7 +79,7 @@ public class EditIIPImagePropertiesValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditIIPImagePropertiesCommand editIIPImagePropertiesCommand = (EditIIPImagePropertiesCommand) object;
+		// EditIIPImagePropertiesCommand editIIPImagePropertiesCommand = (EditIIPImagePropertiesCommand) object;
 		// TODO : implement validation logic
 	}
 }

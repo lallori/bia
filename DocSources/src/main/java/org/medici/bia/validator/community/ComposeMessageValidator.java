@@ -28,8 +28,6 @@
 package org.medici.bia.validator.community;
 
 import org.medici.bia.command.community.ComposeMessageCommand;
-import org.medici.bia.command.community.EditForumPostCommand;
-import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -83,8 +81,8 @@ public class ComposeMessageValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		ComposeMessageCommand composeMessageCommand = (ComposeMessageCommand) object;
-		
+		// ComposeMessageCommand composeMessageCommand = (ComposeMessageCommand) object;
+		// TODO
 		
 	}
 

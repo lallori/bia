@@ -27,37 +27,24 @@
  */
 package org.medici.bia.controller.search;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.command.search.PrintSearchCommand;
-import org.medici.bia.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.Marriage;
-import org.medici.bia.domain.People;
-import org.medici.bia.domain.Place;
 import org.medici.bia.domain.SearchFilter;
-import org.medici.bia.domain.UserMarkedList;
-import org.medici.bia.domain.UserMarkedListElement;
-import org.medici.bia.domain.SearchFilter.SearchType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.geobase.GeoBaseService;
 import org.medici.bia.service.peoplebase.PeopleBaseService;
 import org.medici.bia.service.search.SearchService;
-import org.medici.bia.service.user.UserService;
-import org.medici.bia.service.usermarkedlist.UserMarkedListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**

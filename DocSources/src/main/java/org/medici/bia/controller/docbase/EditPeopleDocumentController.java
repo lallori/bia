@@ -28,12 +28,10 @@
 package org.medici.bia.controller.docbase;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.medici.bia.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.bia.domain.Document;
-import org.medici.bia.domain.EpLink;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;

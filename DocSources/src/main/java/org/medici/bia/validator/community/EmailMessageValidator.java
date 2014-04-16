@@ -81,8 +81,8 @@ public class EmailMessageValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EmailMessageCommand emailMessageCommand = (EmailMessageCommand) object;
-		
+		// EmailMessageCommand emailMessageCommand = (EmailMessageCommand) object;
+		// TODO
 		
 	}
 

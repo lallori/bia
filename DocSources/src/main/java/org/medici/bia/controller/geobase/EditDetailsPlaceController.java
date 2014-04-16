@@ -37,7 +37,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.log4j.Logger;
 import org.medici.bia.command.geobase.EditDetailsPlaceCommand;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.util.HtmlUtils;
