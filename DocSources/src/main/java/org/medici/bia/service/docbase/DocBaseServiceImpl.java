@@ -2135,8 +2135,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} else if ("R".equals(personRole)) {
 			documentToUpdate.setRecipientPeople(person);
 		}
+		EpLink epLink = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
 		if (personId != 198 && personId != 3905 && personId != 9285) {
-			EpLink epLink = getEpLinkDAO().findByEntryIdAndRole(docId, personRole);
 			if (epLink == null) {
 				epLink = new EpLink(null);
 				epLink.setDateCreated(now);
@@ -2147,7 +2147,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 				getEpLinkDAO().persist(epLink);
 			}
 			epLink.setPerson(person);
-			//getEpLinkDAO().merge(epLinkSender);
+		} else if (epLink != null) {
+			// we have to remove the old EpLink
+			getEpLinkDAO().remove(epLink);
 		}
 	}
 	
