@@ -34,8 +34,6 @@ import javax.persistence.Query;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.User;
@@ -152,20 +150,8 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		String objectsQuery = "FROM Annotation WHERE type = 'Personal' AND user = :user AND logicalDelete = false";
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC "));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				}
-			}
-		}
 		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("user", user);

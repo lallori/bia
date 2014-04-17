@@ -95,8 +95,15 @@ public class ShowVolumeController {
 				model.put("schedone", schedone);
 
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
+				if (volume.getDigitized()) {
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
-				model.put("image", image);
+					if (image != null) {
+						model.put("spine", image);
+					} else {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), null, null, null, null, 1);
+						model.put("image", image);
+					}
+				}
 
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
 				

@@ -22,7 +22,7 @@
 
 <c:choose>
 	<c:when test="${mostActiveDiscussion.forum.subType == 'COURSE'}">
-		<c:url var="ShowTopicURL" value="/teaching/ShowDocumentRoundRobinTranscription.do">
+		<c:url var="ShowTopicURL" value="/teaching/ShowCourseTranscription.do">
 			<c:param name="entryId" value="${mostActiveDiscussion.document.entryId}"/>
 			<c:param name="topicId" value="${mostActiveDiscussion.topicId}"/>
 			<c:param name="completeDOM" value="true" />

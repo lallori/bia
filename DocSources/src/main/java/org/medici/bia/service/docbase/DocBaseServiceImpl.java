@@ -41,15 +41,14 @@ import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
-import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.EpLinkUtils;
 import org.medici.bia.common.util.EplToLinkUtils;
+import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.common.volume.VolumeInsert;
-import org.medici.bia.dao.course.CourseDAO;
 import org.medici.bia.dao.docreference.DocReferenceDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.eplink.EpLinkDAO;
@@ -70,7 +69,6 @@ import org.medici.bia.dao.usermarkedlist.UserMarkedListDAO;
 import org.medici.bia.dao.usermarkedlistelement.UserMarkedListElementDAO;
 import org.medici.bia.dao.vettinghistory.VettingHistoryDAO;
 import org.medici.bia.dao.volume.VolumeDAO;
-import org.medici.bia.domain.Course;
 import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
@@ -78,7 +76,6 @@ import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.FactChecks;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumOption;
-import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
@@ -115,8 +112,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
-	@Autowired
-	private CourseDAO courseDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
@@ -158,12 +153,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private VettingHistoryDAO vettingHistoryDAO;
 	
-	/**
-	 * @return the documentDAO
-	 */
-	public CourseDAO getCourseDAO() {
-		return courseDAO;
-	}
 	/**
 	 * @return the docReferenceDAO
 	 */
@@ -298,12 +287,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return volumeDAO;
 	}
 
-	/**
-	 * @param courseDAO the courseDAO to set
-	 */
-	public void setCourseDAO(CourseDAO courseDAO) {
-		this.courseDAO = courseDAO;
-	}
 	/**
 	 * @param docReferenceDAO the docReferenceDAO to set
 	 */
@@ -557,13 +540,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
 				getForumDAO().merge(forum);
 
-				ForumOption forumOption = new ForumOption(forum);
-				forumOption.setGroupBySubForum(Boolean.TRUE);
-				forumOption.setCanHaveTopics(Boolean.TRUE);
-				forumOption.setCanDeletePosts(Boolean.TRUE);
-				forumOption.setCanDeleteTopics(Boolean.TRUE);
-				forumOption.setCanEditPosts(Boolean.TRUE);
-				forumOption.setCanPostReplys(Boolean.TRUE);
+				ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(forum);
 				getForumOptionDAO().persist(forumOption);
 
 				// this method call is mandatory to increment topic number on parent forum
@@ -1683,19 +1660,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Course> getActiveCourses(Integer documentId) throws ApplicationThrowable {
-		try {
-			return getCourseDAO().getActiveCoursesByDocument(documentId);
-		} catch (Throwable th) {
-			logger.error(th);
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
@@ -1726,22 +1690,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ForumTopic> getDocumentTopicsFromCourse(Integer entryId, Integer courseId) throws ApplicationThrowable {
-		try {
-			Course course = getCourseDAO().find(courseId);
-			if (course == null) {
-				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR);
-			}
-			return getForumTopicDAO().getForumTopicsByParentForumAndDocument(course.getForum().getForumId(), entryId);
-		} catch(Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1831,19 +1779,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 		
 		return historyNavigator;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Course getLastActiveCourse(Integer documentId) throws ApplicationThrowable {
-		try {
-			return getCourseDAO().getLastActiveCourseByDocument(documentId);
-		} catch (Throwable th) {
-			logger.error(th);
-			throw new ApplicationThrowable(th);
-		}
 	}
 	
 	/**
@@ -1949,30 +1884,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 				return Boolean.FALSE;
 			}
 		} catch(Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isInActiveCourse(Integer entryId) throws ApplicationThrowable {
-		try {
-			return getCourseDAO().isInActiveCourse(entryId);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isInCourse(Integer entryId) throws ApplicationThrowable {
-		try {
-			return getCourseDAO().isInCourse(entryId);
-		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}

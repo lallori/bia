@@ -32,8 +32,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.common.util.HtmlUtils;
-import org.medici.bia.domain.ForumPost;
+import org.medici.bia.common.util.StringUtils;
+import org.medici.bia.domain.CourseCheckPoint;
+import org.medici.bia.domain.CoursePostExt;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -43,6 +47,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * AJAX Controller for the Teaching module.
@@ -64,6 +69,97 @@ public class AjaxController {
 		this.teachingService = teachingService;
 	}
 	
+	@RequestMapping(value = "/teaching/CreateCourseTranscription", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> createCourseTranscription(
+			@RequestParam(value="entryId", required=true) Integer docId,
+			@RequestParam(value="courseTitle", required=true) String topicTitle,
+			@RequestParam(value="courseId", required=true) Integer courseId,
+			@RequestParam(value="transcriptionMode", required=false) String mode,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			CourseTopicMode topicMode = null;
+			try {
+				topicMode = StringUtils.isNullableString(mode) ? CourseTopicMode.I : CourseTopicMode.valueOf(mode.trim());
+			} catch (Exception e) {
+				topicMode = CourseTopicMode.I; 
+			}
+			ForumTopic courseTopic = getTeachingService().addCourseTopic(
+					courseId, 
+					docId, 
+					topicTitle.trim(), 
+					topicMode, 
+					httpServletRequest.getRemoteAddr());
+			
+			model.put("courseTopicId", courseTopic.getTopicId());
+		} catch (ApplicationThrowable th) {
+			model.put("error", th.toString());
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/DeleteCheckPointPost", method = RequestMethod.POST)
+	public Map<String, Object> deleteCheckPointPost(
+			@RequestParam(value="topicId", required=true) Integer topicId,
+			@RequestParam(value="postId", required=true) Integer postId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			CourseCheckPoint checkPoint = getTeachingService().getCheckPointByPost(postId);
+			if (checkPoint != null && checkPoint.getCheckPointPost().getPost().getPostId().equals(postId)) {
+				// the post to delete is a check point post: we can delete it only if there are no other posts
+				// associated to that check point
+				Long checkPointPostsCount = getTeachingService().countCheckPointPosts(checkPoint.getCheckPointId());
+				if (checkPointPostsCount > 1) {
+					model.put("error", "Cannot delete the course post because this is a check point with related posts");
+				} else {
+					// nothing to do: check point has to be invalidated by setting logical deletion on its post
+				}
+			}
+			getTeachingService().deleteCourseTranscriptionPost(postId, CourseTopicMode.C);
+			ForumTopic courseTopic = getTeachingService().findCourseTopic(topicId);
+			model.put("topicId", topicId);
+			model.put("operation", "OK");
+			if (courseTopic != null){
+				model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(courseTopic));
+			}
+		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
+			model.put("operation", "KO");
+		}
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/DeleteIncrementalPost", method = RequestMethod.POST)
+	public Map<String, Object> deleteIncrementalPost(
+			@RequestParam(value="topicId", required=true) Integer topicId,
+			@RequestParam(value="postId", required=true) Integer postId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getTeachingService().deleteCourseTranscriptionPost(postId, CourseTopicMode.I);
+			ForumTopic courseTopic = getTeachingService().findCourseTopic(topicId);
+			model.put("topicId", topicId);
+			model.put("operation", "OK");
+			if (courseTopic != null){
+				model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(courseTopic));
+			}
+		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/DeleteRoundRobinPost", method = RequestMethod.POST)
 	public Map<String, Object> deleteRoundRobinPost(
 			@RequestParam(value="topicId", required=true) Integer topicId,
@@ -73,16 +169,112 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
-			getTeachingService().deleteCourseTopicPost(postId);
-			ForumTopic courseTopic = getTeachingService().getCourseTopic(topicId);
+			getTeachingService().deleteCourseTranscriptionPost(postId, CourseTopicMode.R);
+			ForumTopic courseTopic = getTeachingService().findCourseTopic(topicId);
 			model.put("topicId", topicId);
 			model.put("operation", "OK");
 			if (courseTopic != null){
-				model.put("topicUrl", HtmlUtils.getShowCourseTopicHrefUrl(courseTopic));
+				model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(courseTopic));
 			}
 		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
 			model.put("operation", "KO");
 		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/EditCheckPointPost", method = RequestMethod.POST)
+	public Map<String, Object> editCheckPointPost(
+			@RequestParam(value="postId", required=false) Integer postId, 
+			@RequestParam(value="topicId", required=true) Integer topicId,
+			@RequestParam(value="subject", required=false) String subject,
+			@RequestParam(value="text", required=false) String text,
+			@RequestParam(value="transcription", required=false) String transcription,
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRV", required=false) String folioRV,
+			@RequestParam(value="checkPointPostId", required=false) Integer checkPointPostId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			CoursePostExt postExt = doEditPost(
+					postId, 
+					topicId, 
+					subject, 
+					text, 
+					StringUtils.nullTrim(transcription), 
+					volNum, 
+					volLetExt, 
+					insertNum, 
+					insertLet, 
+					folioNum, 
+					folioMod, 
+					folioRV,
+					httpServletRequest.getRemoteAddr(),
+					CourseTopicMode.I,
+					checkPointPostId);
+			model.put("topicId", postExt.getPost().getTopic().getTopicId());
+			model.put("postId", postExt.getPost().getPostId());
+			model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(postExt.getPost().getTopic()));
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/EditIncrementalPost", method = RequestMethod.POST)
+	public Map<String, Object> editIncrementalPost(
+			@RequestParam(value="postId", required=false) Integer postId, 
+			@RequestParam(value="topicId", required=true) Integer topicId,
+			@RequestParam(value="subject", required=false) String subject,
+			@RequestParam(value="text", required=false) String text,
+			@RequestParam(value="transcription", required=false) String transcription,
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRV", required=false) String folioRV,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			CoursePostExt postExt = doEditPost(
+					postId, 
+					topicId, 
+					subject, 
+					text, 
+					StringUtils.nullTrim(transcription), 
+					volNum, 
+					volLetExt, 
+					insertNum, 
+					insertLet, 
+					folioNum, 
+					folioMod, 
+					folioRV,
+					httpServletRequest.getRemoteAddr(),
+					CourseTopicMode.I,
+					null);
+			model.put("topicId", postExt.getPost().getTopic().getTopicId());
+			model.put("postId", postExt.getPost().getPostId());
+			model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(postExt.getPost().getTopic()));
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		
 		return model;
 	}
 	
@@ -92,40 +284,42 @@ public class AjaxController {
 			@RequestParam(value="topicId", required=true) Integer topicId,
 			@RequestParam(value="subject", required=false) String subject,
 			@RequestParam(value="text", required=false) String text,
-			@RequestParam(value="volume", required=false) String volume,
-			@RequestParam(value="insert", required=false) String insert,
-			@RequestParam(value="folio", required=false) String folio,
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="insertNum", required=false) String insertNum,
+			@RequestParam(value="insertLet", required=false) String insertLet,
+			@RequestParam(value="folioNum", required=false) Integer folioNum,
+			@RequestParam(value="folioMod", required=false) String folioMod,
+			@RequestParam(value="folioRV", required=false) String folioRV,
 			HttpServletRequest httpServletRequest) {
 		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
-			ForumPost post = null;
-			if (postId == null || new Integer(0).equals(postId)) {
-				post = getTeachingService().addNewTopicPost(
-						topicId, 
-						subject != null ? subject.trim() : "", 
-						text != null ? text : "",
-						volume,
-						insert,
-						folio,
-						httpServletRequest.getRemoteAddr());
-			} else {
-				post = getTeachingService().updateTopicPost(
-						postId,
-						subject != null ? subject.trim() : "",
-						text != null ? text : "",
-						volume,
-						insert,
-						folio);
-			}
-			model.put("topicId", post.getTopic().getTopicId());
-			model.put("postId", post.getPostId());
-			model.put("topicUrl", HtmlUtils.getShowCourseTopicHrefUrl(post.getTopic()));
+			CoursePostExt postExt = doEditPost(
+					postId, 
+					topicId, 
+					subject, 
+					text, 
+					null, 
+					volNum, 
+					volLetExt, 
+					insertNum, 
+					insertLet, 
+					folioNum, 
+					folioMod, 
+					folioRV,
+					httpServletRequest.getRemoteAddr(),
+					CourseTopicMode.R,
+					null);
+			model.put("topicId", postExt.getPost().getTopic().getTopicId());
+			model.put("postId", postExt.getPost().getPostId());
+			model.put("topicUrl", HtmlUtils.getCourseTranscriptionTopicHrefUrl(postExt.getPost().getTopic()));
 			model.put("operation", "OK");
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 		}
+		
 		return model;
 	}
 	
@@ -140,11 +334,23 @@ public class AjaxController {
 		try {
 			Image image = getTeachingService().getDocumentImage(entryId, imageOrder);
 			if (image != null) {
-				model.put("volume", image.getVolNum() + (image.getVolLetExt() != null ? " " + image.getVolLetExt() : ""));
-				if (image.getInsertNum() != null) {
-					model.put("insert", image.getInsertNum() + (image.getInsertLet() != null ? " " + image.getInsertLet() : ""));
+				model.put("volNum", image.getVolNum()); 
+				if (image.getVolLetExt() != null) {
+					model.put("volLetExt", image.getVolLetExt());
 				}
-				model.put("folio", image.getImageProgTypeNum() + (image.getMissedNumbering() != null ? " " + image.getMissedNumbering() : "") + " " + image.getImageRectoVerso().toString());
+				if (image.getInsertNum() != null) {
+					model.put("insertNum", image.getInsertNum());
+					if (image.getInsertLet() != null) {
+						model.put("insertLet", image.getInsertLet());
+					}
+				}
+				model.put("folioNum", image.getImageProgTypeNum());
+				if (image.getMissedNumbering() != null) {
+					model.put("folioMod", image.getMissedNumbering());
+				}
+				if (image.getImageRectoVerso() != null) {
+					model.put("folioRV", image.getImageRectoVerso().toString());
+				}
 				model.put("operation", "OK");
 			}
 		} catch (ApplicationThrowable applicationThrowable) {
@@ -152,5 +358,107 @@ public class AjaxController {
 		}
 		
 		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/GetExtendedFolioFragments", method = RequestMethod.GET)
+	public Map<String, Object> getExtendedPostFolioLocation(
+			@RequestParam(value="entryId", required=false) Integer entryId,
+			@RequestParam(value="imageOrder", required=false) Integer imageOrder,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			Image image = null;
+			if (entryId != null && imageOrder != null) {
+				image = getTeachingService().getDocumentImage(entryId, imageOrder);
+			}
+			if (image != null) {
+				model.put("volNum", image.getVolNum());
+				model.put("volLetExt", image.getVolLetExt());
+				model.put("insertNum", image.getInsertNum());
+				model.put("insertLet", image.getInsertLet());
+				model.put("folioNum", image.getImageProgTypeNum());
+				model.put("folioMod", image.getMissedNumbering());
+				model.put("folioRV", image.getImageRectoVerso());
+				model.put("imageFound", true);
+			}
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/ShowCurrentTranscription", method = RequestMethod.GET)
+	public Map<String, Object> showCurrenttranscription(
+			@RequestParam(value="topicId", required=true) Integer topicId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			CourseCheckPoint checkPoint = getTeachingService().getLastCheckPoint(topicId);
+			model.put("transcription", checkPoint != null ? checkPoint.getCheckPointPost().getTranscription() : null);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}	
+	
+	/* Privates */
+	
+	private CoursePostExt doEditPost(
+			Integer postId, 
+			Integer topicId,
+			String subject,
+			String text,
+			String transcription,
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String folioRV,
+			String remoteAddr,
+			CourseTopicMode mode,
+			Integer checkPointPostId) throws ApplicationThrowable {
+		
+		CoursePostExt postExt;
+		if (postId == null || postId == 0) {
+			postExt = getTeachingService().addCourseTranscriptionPost(
+					topicId, 
+					StringUtils.nullTrim(subject),
+					StringUtils.nullTrim(text),
+					CourseUtils.encodeCourseTranscriptionSafely(StringUtils.nullTrim(transcription)),
+					volNum,
+					StringUtils.nullTrim(volLetExt),
+					StringUtils.nullTrim(insertNum),
+					StringUtils.nullTrim(insertLet),
+					folioNum,
+					StringUtils.nullTrim(folioMod),
+					StringUtils.nullTrim(folioRV),
+					remoteAddr,
+					mode,
+					checkPointPostId);
+		} else {
+			postExt = getTeachingService().updateCourseTranscriptionPost(
+					postId,
+					StringUtils.nullTrim(subject),
+					StringUtils.nullTrim(text),
+					CourseUtils.encodeCourseTranscriptionSafely(StringUtils.nullTrim(transcription)),
+					volNum,
+					StringUtils.nullTrim(volLetExt),
+					StringUtils.nullTrim(insertNum),
+					StringUtils.nullTrim(insertLet),
+					folioNum,
+					StringUtils.nullTrim(folioMod),
+					StringUtils.nullTrim(folioRV),
+					mode);
+		}
+		
+		return postExt;
 	}
 }

@@ -13,7 +13,7 @@
 	<c:url var="ShareDocumentURL" value="/src/docbase/ShareDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
-	<c:url var="ShowChoiceCourseOrDocumentForumURL" value="/src/docbase/ShowChoiceCoursesOrDocumentsForum.do">
+	<c:url var="ShowChoiceCourseOrDocumentForumURL" value="/src/docbase/ShowChoiceCoursesOrDocumentsForumModalWindow.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	<c:url var="ShowConfirmCreateDocumentForumURL" value="/src/docbase/ShowConfirmCreateDocumentForum.do">
@@ -122,7 +122,7 @@
 							Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "DISCUSSIONS", width: 470, height: 100});
 						</security:authorize>
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-							Modalbox.show('${ShowChoiceCourseOrDocumentForumURL}', {title: "COURSES / DISCUSSIONS", width: 520, height: 100});
+							Modalbox.show('${ShowChoiceCourseOrDocumentForumURL}', {title: "COURSES / DISCUSSIONS", width: 470, height: 170});
 						</security:authorize>
 					</c:when>
 					<c:otherwise>

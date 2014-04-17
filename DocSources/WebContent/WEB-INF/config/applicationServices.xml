@@ -63,6 +63,10 @@
         <description>Service that manages user's marked list.</description>
     </bean>
 
+    <bean id="teachingService" class="org.medici.bia.service.teaching.TeachingServiceImpl">
+        <description>Service that manages teaching module operations.</description>
+    </bean>
+
     <bean id="userService" class="org.medici.bia.service.user.UserServiceImpl">
         <description>Service that manages user's information.</description>
     </bean>

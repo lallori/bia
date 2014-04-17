@@ -41,6 +41,7 @@ import org.medici.bia.domain.UserAuthority.Authority;
  * User Authority DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 
@@ -66,11 +67,21 @@ public interface UserAuthorityDAO extends Dao<Authority, UserAuthority> {
 	Map<String, UserAuthority> getMaximumAuthorities(Set<String> accountsId) throws PersistenceException;
 	
 	/**
-	 * This method returns the a map of users maximum authority for round robin transcriptions.
-	 *  
-	 * @param accountsId a set of account identifier
-	 * @return the map of users maximum authority for round robin transcriptions
+	 * This method returns the user maximum authority for course transcriptions.
+	 * 
+	 * @param account the account identifier
+	 * @return the user maximum authority for course transcriptions
 	 * @throws PersistenceException
 	 */
-	Map<String, UserAuthority> getUsersRoundRobinAuthority(Set<String> accountsId) throws PersistenceException;
+	UserAuthority getUserCourseAuthority(String account) throws PersistenceException;
+	
+	/**
+	 * This method returns the a map of users maximum authority for course transcriptions.
+	 *  
+	 * @param accountsId a set of account identifier
+	 * @return the map of users maximum authority for course transcriptions
+	 * @throws PersistenceException
+	 */
+	Map<String, UserAuthority> getUsersCourseAuthority(Set<String> accountsId) throws PersistenceException;
+
 }

@@ -253,7 +253,7 @@ public class CommunityServiceImpl implements CommunityService {
 				ForumTopic forumTopic = getForumTopicDAO().find(forumPost.getTopic().getTopicId());
 				forumPost.setTopic(forumTopic);
 				//To set the parent post Id
-				ForumPost parentPost = getForumPostDAO().findFirstPostByTopicId(forumPost.getTopic().getTopicId());
+				ForumPost parentPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(forumPost.getTopic().getTopicId());
 				if(parentPost != null) {
 					forumPost.setParentPost(getForumPostDAO().find(parentPost.getPostId()));
 				} else if (forumTopic.getAnnotation() != null) {
@@ -456,7 +456,7 @@ public class CommunityServiceImpl implements CommunityService {
 			getForumDAO().merge(forum);
 			getForumDAO().deleteForumFromParent(forum.getForumId());
 			getForumTopicDAO().deleteForumTopicsFromForum(forum.getForumId());
-			getForumPostDAO().deleteForumPostsFromForum(forum.getForumId());
+			getForumPostDAO().deleteAllForumPosts(forum.getForumId());
 			if(forum.getForumParent() != null){
 				//MD: Update the last Post and the number of posts
 				Forum forumParent = forum.getForumParent();
@@ -491,7 +491,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 			getForumPostDAO().merge(forumPost);
 
-			ForumPost lastPost = getForumPostDAO().findLastPostFromForumTopic(forumTopic);
+			ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(forumTopic);
 			forumTopic.setLastPost(lastPost);
 			forumTopic.setTotalReplies(forumTopic.getTotalReplies()-1);
 			getForumTopicDAO().merge(forumTopic);
@@ -528,7 +528,7 @@ public class CommunityServiceImpl implements CommunityService {
 			}
 			
 			// getForumTopicDAO().merge(forumTopic);
-			getForumPostDAO().deleteForumPostsFromForumTopic(forumTopic.getTopicId());
+			getForumPostDAO().deleteAllForumTopicPosts(forumTopic.getTopicId());
 
 			Forum forum = forumTopic.getForum();
 			recursiveSetLastPost(forum);
@@ -627,7 +627,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost findFirstPostTopic(Integer topicId) throws ApplicationThrowable {
 		try {
-			ForumPost forumPost = getForumPostDAO().findFirstPostByTopicId(topicId);
+			ForumPost forumPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(topicId);
 			
 			return forumPost;
 		} catch (Throwable th) {
@@ -904,7 +904,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost getForumPost(Integer postId) throws ApplicationThrowable {
 		try {
-			return getForumPostDAO().getForumPost(postId);
+			return getForumPostDAO().find(postId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -930,7 +930,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Page getForumPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
 		try {
-			return getForumPostDAO().findPostsFromTopic(forumTopic, paginationFilterPost);
+			return getForumPostDAO().getForumTopicPosts(forumTopic, paginationFilterPost);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1247,7 +1247,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Boolean ifPostIsParent(Integer postId) throws ApplicationThrowable {
 		try{
-			return getForumPostDAO().findIfPostIsParent(postId);
+			return getForumPostDAO().isParentPost(postId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -1305,7 +1305,7 @@ public class CommunityServiceImpl implements CommunityService {
 			return;
 		}
 
-		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
+		ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum);
 		forum.setLastPost(lastPost);
 		//last update must be updated to obtain a correct indexing of forum
 		forum.setLastUpdate(new Date());

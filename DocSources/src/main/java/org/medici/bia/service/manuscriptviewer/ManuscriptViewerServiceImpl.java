@@ -876,7 +876,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public Boolean isDeletableAnnotation(Annotation annotation) {
 		if (annotation.getForumTopic() != null) {
-			return getForumPostDAO().countPostsFromTopic(annotation.getForumTopic().getTopicId()) == 0;
+			return getForumPostDAO().countTopicPosts(annotation.getForumTopic().getTopicId()) == 0;
 		}
 		return Boolean.TRUE;
 	}
@@ -1036,7 +1036,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					annotationTopic.setLogicalDelete(Boolean.TRUE);
 					// annotationTopic.setAnnotation(null);
 					// getForumTopicDAO().merge(topicAnnotation);
-					getForumPostDAO().deleteForumPostsFromForumTopic(annotationTopic.getTopicId());
+					getForumPostDAO().deleteAllForumTopicPosts(annotationTopic.getTopicId());
 					Forum forum = annotationTopic.getForum();
 					recursiveSetLastPost(forum);
 					getForumDAO().recursiveDecreasePostsNumber(forum, annotationTopic.getTotalReplies());
@@ -1061,7 +1061,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			return;
 		}
 
-		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(forum);
+		ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum);
 		forum.setLastPost(lastPost);
 		//last update must be updated to obtain a correct indexing of forum
 		forum.setLastUpdate(new Date());

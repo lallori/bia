@@ -38,8 +38,6 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
@@ -395,20 +393,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(jpql + orderBySQL);
+		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -605,20 +590,8 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 
 		// We manage sorting (this manages sorting on multiple fields)
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  
@@ -657,22 +630,8 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 
 		// We manage sorting (this manages sorting on multiple fields)
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append("user.");
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
-				orderBySQL.append(" ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		String jpql = "SELECT DISTINCT(user) " +baseQuery + orderBySQL.toString();
+		String jpql = "SELECT DISTINCT(user) " +baseQuery + getOrderByQuery(paginationFilter.getSortingCriterias(), "user");
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  

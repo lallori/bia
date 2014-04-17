@@ -39,6 +39,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.DocumentUtils;
+import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.epltolink.EplToLinkDAO;
@@ -419,13 +420,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place")));
 				forum = getForumDAO().addNewPlaceForum(parentForum, place);
 				
-				ForumOption forumOption = new ForumOption(forum);
-				forumOption.setGroupBySubForum(Boolean.TRUE);
-				forumOption.setCanHaveTopics(Boolean.TRUE);
-				forumOption.setCanDeletePosts(Boolean.TRUE);
-				forumOption.setCanDeleteTopics(Boolean.TRUE);
-				forumOption.setCanEditPosts(Boolean.TRUE);
-				forumOption.setCanPostReplys(Boolean.TRUE);
+				ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(forum);
 				getForumOptionDAO().persist(forumOption);
 
 				// we need to set new FullPath for recursive functions...

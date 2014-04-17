@@ -83,8 +83,15 @@ public class ShowLastEntryVolumeController {
 				model.put("volumeSummary", volumeSummary);
 				
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
-				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
-				model.put("image", image);
+				if (volume.getDigitized()) {
+					Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+					if (image != null) {
+						model.put("spine", image);
+					} else {
+						image = getManuscriptViewerService().findVolumeImage(volume.getSummaryId(), null, null, null, null, 1);
+						model.put("image", image);
+					}
+				}
 				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
 				
 				if(getVolBaseService().ifVolumeAlreadyPresentInMarkedList(volume.getSummaryId())){

@@ -154,6 +154,16 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
+	
+	/**
+	 * Returns all subforums of a forum associated to a document.
+	 * 
+	 * @param parentForumId the parent forum identifier
+	 * @param entryId the document identifier
+	 * @return the list of subforums found, or empty list if none
+	 * @throws PersistenceException
+	 */
+	List<Forum> findSubForumsByDocument(Integer parentForumId, Integer entryId) throws PersistenceException;
 
 	/**
 	 * 

@@ -34,14 +34,12 @@ import java.util.Map;
 import org.medici.bia.common.pagination.HistoryNavigator;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.domain.Course;
 import org.medici.bia.domain.DocReference;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.EpLink;
 import org.medici.bia.domain.EplToLink;
 import org.medici.bia.domain.FactChecks;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Month;
 import org.medici.bia.domain.People;
@@ -532,33 +530,6 @@ public interface DocBaseService {
 	public boolean ifDocumentAlreadyPresentInMarkedList(Integer entryId) throws ApplicationThrowable;
 	
 	/**
-	 * This method determines if a document is associated to an active course (by a course topic).
-	 * 
-	 * @param entryId the document identifier
-	 * @return true if the document is associated to an active course, false otherwise
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public boolean isInActiveCourse(Integer entryId) throws ApplicationThrowable;
-	
-	/**
-	 * This method determines if a document is associated to a course (by a course topic).
-	 * 
-	 * @param entryId the document identifier
-	 * @return true if the document is associated to a course, false otherwise
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public boolean isInCourse(Integer entryId) throws ApplicationThrowable;
-	
-	/**
-	 * This method returns a list of active courses where a document is used in one or more topics.
-	 * 
-	 * @param documentId the document identifier
-	 * @return a list of courses, empty list if none is found
-	 * @throws ApplicationThrowable
-	 */
-	public List<Course> getActiveCourses(Integer documentId) throws ApplicationThrowable;
-	
-	/**
 	 * 
 	 * @param document
 	 * @return
@@ -573,16 +544,6 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable;
-	
-	/**
-	 * This method returns a list of course topic of a document associated to a course (as a forum).
-	 *  
-	 * @param entryId the document identifier
-	 * @param courseId the course identifier
-	 * @return the list of course topic found
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
-	 */
-	public List<ForumTopic> getDocumentTopicsFromCourse(Integer entryId, Integer courseId) throws ApplicationThrowable;
 	
 	/**
 	 * This method checks if the documents provided are digitized or not
@@ -618,19 +579,9 @@ public interface DocBaseService {
 	public HistoryNavigator getHistoryNavigator(UserHistory historyLog) throws ApplicationThrowable;
 	
 	/**
-	 * This method returns the last active course where a document is used in a topic.
-	 * 
-	 * @param documentId the document identifier
-	 * @return the last active course found
-	 * @throws ApplicationThrowable
-	 */
-	public Course getLastActiveCourse(Integer documentId) throws ApplicationThrowable;
-
-	/**
 	 * Extracts all months available.
 	 *  
-	 * @return {@link java.util.List} of {@link org.medici.bia.domain.Month}
-	 * object
+	 * @return {@link java.util.List} of {@link org.medici.bia.domain.Month} object
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */

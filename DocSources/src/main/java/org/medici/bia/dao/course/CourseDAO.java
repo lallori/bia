@@ -51,6 +51,14 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	Long countActiveCourses() throws PersistenceException;
 	
 	/**
+	 * This method returns all active courses.
+	 * 
+	 * @return the list of active courses
+	 * @throws PersistenceException
+	 */
+	List<Course> getActiveCourses() throws PersistenceException;
+	
+	/**
 	 * This method returns a list of active courses where a document is used in some topics.
 	 * 
 	 * @param docId the document identifier

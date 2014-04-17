@@ -34,6 +34,7 @@ import java.util.Map;
 
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 
@@ -196,5 +197,22 @@ public class ForumUtils {
 			}
 			return returnText.toString();
 		}
+	}
+	
+	/**
+	 * Returns the {@link ForumOption} for a {@link Forum} container of {@link ForumTopic}.
+	 * 
+	 * @param forum the forum topi container
+	 * @return the forum option
+	 */
+	public static ForumOption getForumOptionForForumTopicContainer(Forum forum) {
+		ForumOption forumOption = new ForumOption(forum);
+		forumOption.setGroupBySubForum(Boolean.TRUE);
+		forumOption.setCanHaveTopics(Boolean.TRUE);
+		forumOption.setCanDeletePosts(Boolean.TRUE);
+		forumOption.setCanDeleteTopics(Boolean.TRUE);
+		forumOption.setCanEditPosts(Boolean.TRUE);
+		forumOption.setCanPostReplys(Boolean.TRUE);
+		return forumOption;
 	}
 }

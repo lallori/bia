@@ -566,20 +566,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -606,20 +593,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -632,6 +607,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Document> searchDocumentsToPrint(Search searchContainer) throws PersistenceException{
 		Query query = null;
 		// We set size of result.
@@ -642,20 +618,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		// We manage sorting (this manages sorting on multiple fields)
 		PaginationFilter paginationFilter = new PaginationFilter(0, 0, 2, "asc", SearchType.DOCUMENT); 
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		
@@ -685,20 +649,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -727,20 +678,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -768,20 +706,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -809,20 +734,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -850,20 +762,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -891,20 +790,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -932,20 +818,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

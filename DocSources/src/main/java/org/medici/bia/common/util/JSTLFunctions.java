@@ -30,6 +30,7 @@ package org.medici.bia.common.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -150,5 +151,14 @@ public final class JSTLFunctions {
      */
     public static Boolean contains(List<Object> list, Object object) {
     	return list.contains(object);
+    }
+    
+    /**
+     * @param map
+     * @param key
+     * @return
+     */
+    public static Object getValue(Map<Object, Object> map, Object key) {
+    	return map.get(key);
     }
 }

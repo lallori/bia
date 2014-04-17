@@ -8,9 +8,16 @@
 		<c:param name="topicId" value="${command.topicId}" />
 	</c:url>
 	
+	<c:url var="ShowCourseResourcesURL" value="/community/ShowForum.do">
+		<c:param name="forumId" value="${resourcesForum}" />
+		<c:param name="completeDOM" value="true" />
+	</c:url>
+	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
 	<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
+	
+	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
 	
 	<script>
 		$j(document).ready(function() {
@@ -22,7 +29,7 @@
 				$j("#editPostContainer").load('${EditRoundRobinPostURL}', function(responseText, statusText, xhr) {
 					if (statusText == 'success') {
 						$j(_this).unbind();
-						// from ShowRoundRobintranscriptionDOM
+						// from ShowRoundRobinCourseTranscriptionDOM
 						setEditMode(true);
 					} else {
 						$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');

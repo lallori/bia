@@ -5,13 +5,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowDocumentRoundRobinTranscriptionURL" value="/teaching/ShowDocumentRoundRobinTranscription.do">
-		<c:param name="topicId" value="${topic.topicId}" />
+	<c:url var="ShowCourseTranscriptionURL" value="/teaching/ShowCourseTranscription.do">
+		<c:param name="topicId" value="${command.topicId}" />
 		<c:param name="completeDOM" value="false" />
+		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
-	<c:url var="ShowCourseTopicActionsURL" value="/teaching/ShowCourseTopicActions.do">
-		<c:param name="topicId" value="${topic.topicId}" />
+	<c:url var="ShowCourseTranscriptionActionsURL" value="/teaching/ShowCourseTranscriptionActions.do">
+		<c:param name="topicId" value="${command.topicId}" />
+		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
 	<c:url var="ShowTeachingManuscriptViewerURL" value="/teaching/ShowManuscriptViewer.do">
@@ -52,9 +54,9 @@
 		
 	<script>
 		$j(document).ready(function() {
-			this.title = '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>';
-			$j('#postsContainer').load('${ShowDocumentRoundRobinTranscriptionURL}');
-			$j('#editPostContainer').load('${ShowCourseTopicActionsURL}');
+			this.title = '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.courseTranscription"/>';
+			$j('#postsContainer').load('${ShowCourseTranscriptionURL}');
+			$j('#editPostContainer').load('${ShowCourseTranscriptionActionsURL}');
 			
 			window.setEditMode = function(editMode) {
 				if (typeof editMode !== 'undefined') {

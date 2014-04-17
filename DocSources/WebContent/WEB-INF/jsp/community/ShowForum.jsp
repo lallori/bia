@@ -609,76 +609,88 @@
 								<c:param name="topicId" value="${currentTopic.topicId}" />
 							</c:url>
 							<c:choose>
-									<c:when test="${forum.subType == 'DOCUMENT'}">
-										<div class="${not status.last ? 'row' : 'rowLast'}">
-											<div class="one">
-								            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-								                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
-								            </div>
-								            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
-								            <div class="three">${currentTopic.totalReplies - 1}</div>
-								            <div class="four">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
-											<c:if test="${not empty currentTopic.lastPost}">
-												<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									            <div class="five"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
-									        </c:if>
-											<c:if test="${empty currentTopic.lastPost}">
-									            <div class="five"></div>
-									        </c:if>
-									        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-								        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-								        	</security:authorize>
-								        </div>
-									</c:when>
-									<c:when test="${forum.subType == 'COURSE'}">
-										<c:url var="ShowDocumentRoundRobinTranscriptionURL" value="/teaching/ShowDocumentRoundRobinTranscription.do">
-											<c:param name="entryId" value="${currentTopic.document.entryId}" />
-											<c:param name="topicId" value="${currentTopic.topicId}" />
-											<c:param name="completeDOM" value="true" />
-										</c:url>
-										<div class="${not status.last ? 'row' : 'rowLast'}">
-											<div class="one">
-								            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-								                <a href="${ShowDocumentRoundRobinTranscriptionURL}" class="roundRobinHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
-								            </div>
-								            <div class="two">${currentTopic.totalReplies}</div>
-								            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
-											<c:if test="${not empty currentTopic.lastPost}">
-												<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
-									        </c:if>
-											<c:if test="${empty currentTopic.lastPost}">
-									            <div class="four"></div>
-									        </c:if>
-									        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-								        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-								        	</security:authorize>
-								        </div>
-								    </c:when>
-									<c:otherwise>
-										<div class="${not status.last ? 'row' : 'rowLast'}">
-											<div class="one">
-								            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-								                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
-								            </div>
-								            <div class="two">${currentTopic.totalReplies - 1}</div>
-								            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
-											<c:if test="${not empty currentTopic.lastPost}">
-												<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
-									        </c:if>
-											<c:if test="${empty currentTopic.lastPost}">
-									            <div class="four"></div>
-									        </c:if>
-									        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-								        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
-								        	</security:authorize>
-								        </div>
-								    </c:otherwise>
-								</c:choose>     
+								<c:when test="${forum.subType == 'DOCUMENT'}">
+									<div class="${not status.last ? 'row' : 'rowLast'}">
+										<div class="one">
+							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+							            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
+							            </div>
+							            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
+							            <div class="three">${currentTopic.totalReplies - 1}</div>
+							            <div class="four">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
+										<c:if test="${not empty currentTopic.lastPost}">
+											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+								            <div class="five"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+								        </c:if>
+										<c:if test="${empty currentTopic.lastPost}">
+								            <div class="five"></div>
+								        </c:if>
+								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+							        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        	</security:authorize>
+							        </div>
+								</c:when>
+								<c:when test="${forum.subType == 'COURSE'}">
+									<c:choose>
+										<c:when test="${not empty topicsMap and (bia:getValue(topicsMap, currentTopic.topicId) != 'Q' and bia:getValue(topicsMap, currentTopic.topicId) != 'D')}">
+											<c:url var="ShowCourseFragmentURL" value="/teaching/ShowCourseTranscription.do">
+												<c:param name="topicId" value="${currentTopic.topicId}" />
+												<c:param name="entryId" value="${currentTopic.document.entryId}" />
+												<c:param name="transcriptionMode" value="${bia:getValue(topicsMap, currentTopic.topicId)}" />
+												<c:param name="completeDOM" value="true" />
+											</c:url>
+										</c:when>
+										<c:when test="${not empty topicsMap and bia:getValue(topicsMap, currentTopic.topicId) == 'Q'}">
+											<%-- QUESTION WITH ANNOTATION --%>
+										</c:when>
+										<c:otherwise>
+											<%-- GENERAL DISCUSSION --%>
+											
+										</c:otherwise>
+									</c:choose>
+									<div class="${not status.last ? 'row' : 'rowLast'}">
+										<div class="one">
+							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+							            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+							                <a href="${ShowCourseFragmentURL}" class="courseFragmentHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
+							            </div>
+							            <div class="two">${currentTopic.totalReplies}</div>
+							            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
+										<c:if test="${not empty currentTopic.lastPost}">
+											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+								            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+								        </c:if>
+										<c:if test="${empty currentTopic.lastPost}">
+								            <div class="four"></div>
+								        </c:if>
+								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+							        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        	</security:authorize>
+							        </div>
+							    </c:when>
+								<c:otherwise>
+									<div class="${not status.last ? 'row' : 'rowLast'}">
+										<div class="one">
+							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+							            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
+							            </div>
+							            <div class="two">${currentTopic.totalReplies - 1}</div>
+							            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
+										<c:if test="${not empty currentTopic.lastPost}">
+											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+								            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+								        </c:if>
+										<c:if test="${empty currentTopic.lastPost}">
+								            <div class="four"></div>
+								        </c:if>
+								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+							        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        	</security:authorize>
+							        </div>
+							    </c:otherwise>
+							</c:choose>     
 					    </c:forEach>
            			</c:if>
            		</div>
@@ -782,9 +794,9 @@
 				return false;
 			});
 			
-			/*$j('.roundRobinHref').die();
-			$j('.roundRobinHref').live('click', function() {
-				window.open($j(this).attr('href'), '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.roundRobinTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
+			/*$j('.courseFragment').die();
+			$j('.courseFragment').live('click', function() {
+				window.open($j(this).attr('href'), '<fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.title.courseTranscription"/>', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=no');
 				return false;
 			});*/
 			

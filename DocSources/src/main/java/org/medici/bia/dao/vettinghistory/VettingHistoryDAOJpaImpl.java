@@ -27,15 +27,11 @@
  */
 package org.medici.bia.dao.vettinghistory;
 
-import java.util.List;
-
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.people.PeopleDAO;
@@ -146,20 +142,8 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 		}
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -186,20 +170,8 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 		}
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -226,20 +198,8 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 		}
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -266,20 +226,8 @@ public class VettingHistoryDAOJpaImpl extends JpaDao<Integer, VettingHistory> im
 		}
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

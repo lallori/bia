@@ -9,6 +9,10 @@
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 		<c:param name="entryId" value="${topic.document.entryId}"/>
 	</c:url>
+	
+	<c:url var="baseUrl" value="/teaching/ShowCourseTranscription.do">
+		<c:param name="transcriptionMode" value="R" />
+	</c:url>
 
 	<h6>ROUND ROBIN TRANSCRIPTION</h6>
 	
@@ -18,53 +22,53 @@
 	<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
 	
 	<c:if test="${postsPage.list.size() eq 0}">
-		<p>You have no posts.</p>
+		<p>There are no posts.</p>
 	</c:if>
-		
+	
 	<c:if test="${postsPage.list.size() gt 0}">
 	
 		<div id="forumPaginate_upper">
 		    <c:set var="paginationData">
-				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" />
+				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="false"/>
 			</c:set>
 			${paginationData}
 		</div>
 		
 		<input:hidden id="clientEditing" />
 		
-		<c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
+		<c:forEach items="${postsPage.list}" var="extendedPost" varStatus="status">
 			<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
-				<c:param name="postId" value="${currentPost.postId}"/>
-				<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+				<c:param name="postId" value="${extendedPost.post.postId}"/>
+				<c:param name="forumId" value="${extendedPost.post.forum.forumId}"/>
+				<c:param name="topicId" value="${extendedPost.post.topic.topicId}"/>
 			</c:url>
 		
 			<c:url var="ReplyWithQuotePostURL" value="/teaching/ShowEditRoundRobinPost.do">
-				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-				<c:param name="postId" value="${currentPost.postId}"/>
+				<c:param name="topicId" value="${extendedPost.post.topic.topicId}"/>
+				<c:param name="postId" value="${extendedPost.post.postId}"/>
 				<c:param name="quote" value="true"/>
 			</c:url>
 			
 			<c:url var="EditForumPostURL" value="/teaching/ShowEditRoundRobinPost.do">
-				<c:param name="postId" value="${currentPost.postId}"/>
-				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+				<c:param name="postId" value="${extendedPost.post.postId}"/>
+				<c:param name="topicId" value="${extendedPost.post.topic.topicId}"/>
 				<c:param name="quote" value="false"/>
 			</c:url>
 			
 			<c:url var="DeleteForumPostURL" value="/teaching/DeleteRoundRobinPost.json">
-				<c:param name="postId" value="${currentPost.postId}"/>
-				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+				<c:param name="postId" value="${extendedPost.post.postId}"/>
+				<c:param name="topicId" value="${extendedPost.post.topic.topicId}"/>
 			</c:url>
 			
-			<div id="postTable_${currentPost.postId}" class="postTable">
+			<div id="postTable_${extendedPost.post.postId}" class="postTable">
 				<div class="post">
 					<div class="title">
 					
-						<h2>${currentPost.subject}</h2>
+						<h2>${extendedPost.post.subject}</h2>
 						
 						<div class="topicIcons">
 							<c:choose>
-								<c:when test="${currentPost.user.account == account}">
+								<c:when test="${extendedPost.post.user.account == account}">
 									<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
 									<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
 								</c:when>
@@ -76,55 +80,68 @@
 								</c:otherwise>
 							</c:choose>
 							<!-- <a href="${ReportForumPostURL}" class="reportPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Report this post"></a> -->
-							<a id="quoteLink_${currentPost.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
+							<a id="quoteLink_${extendedPost.post.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
 						</div>
 					</div>
-					<c:choose>
-						<c:when test="${currentPost.updater == null || currentPost.user.account == currentPost.updater.account}">
-							<table class="by" style="width: 100%;">
-								<tr>
-									<td width="50%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></td>
-									<td width="50%"><div id="postLocation_${currentPost.postId}" class="postLocation" style="margin-left: 10px;"></div></td>
-								</tr>
-							</table>
-						</c:when>
-						<c:otherwise>
-							<table class="by">
-								<tr>
-									<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
-									<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
-									<td><a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.updater.account}&completeDOM=true" target="_blank" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
-									<td><div id="postLocation_${currentPost.postId}" class="postLocation" style="margin-left: 10px;"></div></td>
-								</tr>
-							</table>
-						</c:otherwise>
-					</c:choose>
-					<div id="postText_${currentPost.postId}">${currentPost.text}</div>
+					<table class="by" style="width: 100%;">
+						<tr>
+							<td width="40%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="yyyy-MM-dd HH:mm:ss" /></span></p></td>
+							<td width="20%">
+								<c:choose>
+									<c:when test="${extendedPost.post.updater == null || extendedPost.post.user.account == extendedPost.post.updater.account}">
+									</c:when>
+									<c:otherwise>
+										<a title='<fmt:message key="community.forum.topic.editedByAdministrator" />' href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.updater.account}&completeDOM=true" target="_blank" class="linkUpdater" id="updaterName_postId_${extendedPost.post.postId}">${extendedPost.post.updater.account}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td width="40%">
+								<div id="postLocation_${extendedPost.post.postId}" class="postLocation" style="margin-left: 10px;">
+									<div class="folioDetailsContainer">
+										<c:choose>
+											<c:when test="${extendedPost.getVolumeFragment() != null}">
+												Volume&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
+												<c:if test="${extendedPost.getInsertFragment() != null}">
+													-&nbsp;Insert&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
+												</c:if>
+												-&nbsp;Folio&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
+											</c:when>
+											<c:otherwise>
+												No folio details
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<hr/>
+					<div id="postText_${extendedPost.post.postId}">${extendedPost.post.text}</div>
 				</div>
 				<div class="postProfile">
 					<ul>
 						<li>
-							<c:if test="${currentPost.user.portrait}">
+							<c:if test="${extendedPost.post.user.portrait}">
 								<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
-									<c:param name="account" value="${currentPost.user.account}" />
+									<c:param name="account" value="${extendedPost.post.user.account}" />
 									<c:param name="time" value="${time}" />
 								</c:url>
 								<img src="${ShowPortraitUserURL}" class="avatar"/>
 							</c:if>
-							<c:if test="${!currentPost.user.portrait}">
+							<c:if test="${!extendedPost.post.user.portrait}">
 								<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
 							</c:if>
-							<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentPost.user.account}&completeDOM=true" target="_blank" id="userName" class="link">${currentPost.user.account}</a>
+							<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName" class="link">${extendedPost.post.user.account}</a>
 						</li>
-						<c:if test="${not empty maxAuthorities[currentPost.user.account]}">
-							<li>${maxAuthorities[currentPost.user.account].description}</li>
+						<c:if test="${not empty maxAuthorities[extendedPost.post.user.account]}">
+							<li>${maxAuthorities[extendedPost.post.user.account].description}</li>
 						</c:if>
-						<li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-						<li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
+						<li>Posts: <span>${extendedPost.post.user.forumNumberOfPost}</span></li>
+						<li>Joined: <span>${extendedPost.post.user.forumJoinedDate}</span></li>
 					</ul>
 				</div>
 				<c:choose>
-					<c:when test="${bia:contains(onlineUsers, currentPost.user.account)}">
+					<c:when test="${bia:contains(onlineUsers, extendedPost.post.user.account)}">
 						<div class="online visible"></div>
 					</c:when>
 					<c:otherwise>
@@ -137,7 +154,7 @@
 		
 		<div id="forumPaginate_lower">
 			<c:set var="paginationData">
-				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" />
+				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted"  baseUrl="${baseUrl}" onlyInnerArgs="false"/>
 			</c:set>
 			${paginationData}
 		</div>
@@ -148,7 +165,7 @@
 		$j(document).ready(function() {
 			var _this = this;
 			
-			$j(".postLocation").each(function() {
+			/*$j(".postLocation").each(function() {
 				var postLocId = $j(this).attr('id');
 				var id = postLocId.substring(postLocId.indexOf('_') + 1, postLocId.length);
 				var comment = $j("#postText_" + id).contents().filter(function() {
@@ -160,7 +177,7 @@
 					$j(this).html('<div class="folioDetailsContainer">No folio details</div>');
 					console.log('No folio details in post [' + id + ']');
 				}
-			});
+			});*/
 			
 			$j("#clientEditing").val(${editingMode});
 			
@@ -266,7 +283,11 @@
 							},
 							error: function(data) {
 								$j("#deletePostModal").dialog('close');
-								$j("#errorMsg").text('Post was not deleted due to a server error...please retry!');
+								if (typeof data.error !== 'undefined') {
+									$j("#errorMsg").text('Post was not deleted: ' + data.error);
+								} else {
+									$j("#errorMsg").text('Post was not deleted due to a server error...please retry!');
+								}
 								$j("#errorModal").dialog('open');
 							}
 						});

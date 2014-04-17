@@ -858,10 +858,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/mview/PageTurnerDialog.jsp"/>
 	</definition>
 
-	<definition name="mview/RoundRobinPageTurnerDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/mview/RoundRobinPageTurnerDialog.jsp"/>
-	</definition>
-
 	<definition name="mview/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
@@ -887,7 +883,11 @@
 	</definition>
 
 	<definition name="mview/ShowTeachingManuscriptViewerHtml" extends="template.teachingManuscriptViewerHtmlDOM">
-		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/RoundRobinInManuscriptViewerHtml.jsp"/>
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/TeachingInManuscriptViewerHtml.jsp"/>
+	</definition>
+	
+	<definition name="mview/TeachingPageTurnerDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/TeachingPageTurnerDialog.jsp"/>
 	</definition>
 	<!--  Manuscript Viewer END -->
 	
@@ -1154,20 +1154,20 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/teaching/EditRoundRobinPost.jsp"/>
 	</definition>
 	
-	<definition name="teaching/ShowCourseTopicActions" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowCourseTopicActions.jsp"/>
+	<definition name="teaching/ShowRoundRobinActions" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinActions.jsp"/>
 	</definition>
 	
-	<definition name="teaching/ShowPreviewCourseTopicPost" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowPreviewCourseTopicPost.jsp"/>
+	<definition name="teaching/ShowRoundRobinPostPreview" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinPostPreview.jsp"/>
 	</definition>
 	
-	<definition name="teaching/ShowRoundRobinTranscription" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinTranscription.jsp"/>
+	<definition name="teaching/ShowRoundRobinCourseTranscription" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinCourseTranscription.jsp"/>
 	</definition>
 	
-	<definition name="teaching/ShowRoundRobinTranscriptionDOM" extends="template.roundRobinTranscriptionDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinTranscriptionDOM.jsp"/>
+	<definition name="teaching/ShowRoundRobinCourseTranscriptionDOM" extends="template.roundRobinTranscriptionDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/teaching/ShowRoundRobinCourseTranscriptionDOM.jsp"/>
 	</definition>
 	<!-- Teaching Module END -->
 

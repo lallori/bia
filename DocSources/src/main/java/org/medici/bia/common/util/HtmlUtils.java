@@ -389,7 +389,7 @@ public class HtmlUtils {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
 			stringBuilder.append(forumTopic.getTopicId());
-			//For generate a link to the last page of topic
+			// link to the last topic page
 			stringBuilder.append("&postForPage=10&postPageNumber=");
 			stringBuilder.append((forumTopic.getTotalReplies() / 10) + 1);
 			stringBuilder.append("&postPageTotal=");
@@ -401,18 +401,18 @@ public class HtmlUtils {
 	}
 	
 	/**
-	 * Returns the servlet url to show the course topic.
+	 * Returns the servlet url to show the course transcription topic.
 	 * 
 	 * @param courseTopic the course topic to show
 	 * @return the servlet url
 	 */
-	public static String getShowCourseTopicHrefUrl(ForumTopic courseTopic) {
+	public static String getCourseTranscriptionTopicHrefUrl(ForumTopic courseTopic) {
 		StringBuilder stringBuilder = new StringBuilder("");
 		if (courseTopic != null) {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuilder.append("/teaching/ShowDocumentRoundRobinTranscription.do?topicId=");
+			stringBuilder.append("/teaching/ShowCourseTranscription.do?topicId=");
 			stringBuilder.append(courseTopic.getTopicId());
-			//For generate a link to the last page of topic
+			// link to the last topic page
 			stringBuilder.append("&postForPage=10&postPageNumber=");
 			stringBuilder.append((courseTopic.getTotalReplies() / 10) + 1);
 			stringBuilder.append("&postPageTotal=");
@@ -423,7 +423,7 @@ public class HtmlUtils {
 
 		return stringBuilder.toString();
 	}
-
+	
 	/**
 	 * Urls must be encoded.
 	 * 
@@ -571,6 +571,7 @@ public class HtmlUtils {
 	 * @param idAccessLog
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Object showAccessLog(List inputList, Integer idAccessLog) {
 		if (inputList == null) {
 			return null;

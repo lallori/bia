@@ -1,5 +1,5 @@
 /*
- * ShowCourseTopicActionsCommand.java
+ * IncrementalEditPostCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,16 +32,16 @@ package org.medici.bia.command.teaching;
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class ShowCourseTopicActionsCommand {
+public class IncrementalEditPostCommand extends AbstractEditPostCommand {
 	
-	private Integer topicId;
+	private String transcription;
 
-	public Integer getTopicId() {
-		return topicId;
+	public String getTranscription() {
+		return transcription;
 	}
 
-	public void setTopicId(Integer topicId) {
-		this.topicId = topicId;
+	public void setTranscription(String transcription) {
+		this.transcription = transcription;
 	}
 
 }

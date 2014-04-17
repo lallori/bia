@@ -240,20 +240,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -281,20 +268,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -322,20 +296,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -398,20 +359,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -453,20 +401,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -720,20 +655,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery(toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -866,20 +788,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		//MD: We have a pagination filter already parameterized
 		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		query = getEntityManager().createQuery("SELECT t.person " + toSearch + orderBySQL);
+		query = getEntityManager().createQuery("SELECT t.person " + toSearch + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

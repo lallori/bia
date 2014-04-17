@@ -1,5 +1,5 @@
 /*
- * EditRoundRobinPostCommand.java
+ * AbstractPostPreviewCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,28 +27,34 @@
  */
 package org.medici.bia.command.teaching;
 
+import org.medici.bia.domain.CoursePostExt.RectoVerso;
+
 /**
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class EditRoundRobinPostCommand {
+public abstract class AbstractPostPreviewCommand {
 	
 	private Integer postId;
-	
-	private Boolean quote;
-	
-	private Integer topicId;
 	
 	private String subject;
 	
 	private String text;
 	
-	private String volume;
+	private Integer volNum;
 	
-	private String insert;
+	private String volLetExt;
 	
-	private String folio;
+	private String insertNum;
+	
+	private String insertLet;
+	
+	private Integer folioNum;
+	
+	private String folioMod;
+	
+	private RectoVerso folioRV;
 
 	public Integer getPostId() {
 		return postId;
@@ -56,22 +62,6 @@ public class EditRoundRobinPostCommand {
 
 	public void setPostId(Integer postId) {
 		this.postId = postId;
-	}
-
-	public Boolean getQuote() {
-		return quote;
-	}
-
-	public void setQuote(Boolean quote) {
-		this.quote = quote;
-	}
-
-	public Integer getTopicId() {
-		return topicId;
-	}
-
-	public void setTopicId(Integer topicId) {
-		this.topicId = topicId;
 	}
 
 	public String getSubject() {
@@ -90,28 +80,60 @@ public class EditRoundRobinPostCommand {
 		this.text = text;
 	}
 
-	public String getVolume() {
-		return volume;
+	public Integer getVolNum() {
+		return volNum;
 	}
 
-	public void setVolume(String volume) {
-		this.volume = volume;
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
 	}
 
-	public String getInsert() {
-		return insert;
+	public String getVolLetExt() {
+		return volLetExt;
 	}
 
-	public void setInsert(String insert) {
-		this.insert = insert;
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
 
-	public String getFolio() {
-		return folio;
+	public String getInsertNum() {
+		return insertNum;
 	}
 
-	public void setFolio(String folio) {
-		this.folio = folio;
+	public void setInsertNum(String insertNum) {
+		this.insertNum = insertNum;
 	}
-	
+
+	public String getInsertLet() {
+		return insertLet;
+	}
+
+	public void setInsertLet(String insertLet) {
+		this.insertLet = insertLet;
+	}
+
+	public Integer getFolioNum() {
+		return folioNum;
+	}
+
+	public void setFolioNum(Integer folioNum) {
+		this.folioNum = folioNum;
+	}
+
+	public String getFolioMod() {
+		return folioMod;
+	}
+
+	public void setFolioMod(String folioMod) {
+		this.folioMod = folioMod;
+	}
+
+	public RectoVerso getFolioRV() {
+		return folioRV;
+	}
+
+	public void setFolioRV(RectoVerso folioRV) {
+		this.folioRV = folioRV;
+	}
+
 }

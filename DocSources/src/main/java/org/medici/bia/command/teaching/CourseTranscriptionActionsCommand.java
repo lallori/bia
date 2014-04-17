@@ -1,5 +1,5 @@
 /*
- * ShowDocumentRoundRobinTranscriptionCommand.java
+ * CourseTranscriptionActionsCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,39 +32,11 @@ package org.medici.bia.command.teaching;
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class ShowDocumentRoundRobinTranscriptionCommand {
-
-	private Integer entryId;
-	
-	private String courseTitle;
+public class CourseTranscriptionActionsCommand {
 	
 	private Integer topicId;
 	
-	private Boolean completeDOM;
-	
-	private Integer postsForPage;
-	
-	private Integer postPageNumber;
-	
-	private Integer postPageTotal;
-	
-	private Boolean editingMode;
-
-	public Integer getEntryId() {
-		return entryId;
-	}
-
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
-	}
-
-	public String getCourseTitle() {
-		return courseTitle;
-	}
-
-	public void setCourseTitle(String courseTitle) {
-		this.courseTitle = courseTitle;
-	}
+	private String transcriptionMode;
 
 	public Integer getTopicId() {
 		return topicId;
@@ -74,43 +46,12 @@ public class ShowDocumentRoundRobinTranscriptionCommand {
 		this.topicId = topicId;
 	}
 
-	public Boolean getCompleteDOM() {
-		return completeDOM;
+	public String getTranscriptionMode() {
+		return transcriptionMode;
 	}
 
-	public void setCompleteDOM(Boolean completeDOM) {
-		this.completeDOM = completeDOM;
+	public void setTranscriptionMode(String transcriptionMode) {
+		this.transcriptionMode = transcriptionMode;
 	}
 
-	public Integer getPostsForPage() {
-		return postsForPage;
-	}
-
-	public void setPostsForPage(Integer postsForPage) {
-		this.postsForPage = postsForPage;
-	}
-
-	public Integer getPostPageNumber() {
-		return postPageNumber;
-	}
-
-	public void setPostPageNumber(Integer postPageNumber) {
-		this.postPageNumber = postPageNumber;
-	}
-
-	public Integer getPostPageTotal() {
-		return postPageTotal;
-	}
-
-	public void setPostPageTotal(Integer postPageTotal) {
-		this.postPageTotal = postPageTotal;
-	}
-
-	public Boolean getEditingMode() {
-		return editingMode;
-	}
-
-	public void setEditingMode(Boolean editingMode) {
-		this.editingMode = editingMode;
-	}
 }

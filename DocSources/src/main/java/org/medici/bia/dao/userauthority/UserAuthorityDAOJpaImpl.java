@@ -28,6 +28,7 @@
 package org.medici.bia.dao.userauthority;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,17 @@ public class UserAuthorityDAOJpaImpl extends JpaDao<Authority, UserAuthority> im
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, UserAuthority> getUsersRoundRobinAuthority(Set<String> accountsId) throws PersistenceException {
+	public UserAuthority getUserCourseAuthority(String account) throws PersistenceException {
+		Set<String> accounts = new HashSet<String>();
+		accounts.add(account);
+		return getUsersCourseAuthority(accounts).get(account);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, UserAuthority> getUsersCourseAuthority(Set<String> accountsId) throws PersistenceException {
 		UserAuthority.Authority[] filteredAuthorities = {UserAuthority.Authority.ADMINISTRATORS, UserAuthority.Authority.TEACHERS, UserAuthority.Authority.STUDENTS}; 
 		return getMaxAuthority(accountsId, filteredAuthorities);
 	}

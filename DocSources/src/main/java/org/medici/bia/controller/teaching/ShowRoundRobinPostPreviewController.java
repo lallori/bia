@@ -1,5 +1,5 @@
 /*
- * EditRoundRobinPostController.java
+ * ShowRoundRobinPostPreviewController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,13 +27,16 @@
  */
 package org.medici.bia.controller.teaching;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.bia.command.teaching.EditRoundRobinPostCommand;
-import org.medici.bia.common.util.CourseUtils;
+import javax.servlet.http.HttpSession;
+
+import org.medici.bia.command.teaching.RoundRobinPostPreviewCommand;
+import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.ForumPost;
-import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +52,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class ShowEditRoundRobinPostController {
+@RequestMapping(value = "/teaching/ShowRoundRobinPostPreview")
+public class ShowRoundRobinPostPreviewController {
 	
 	@Autowired
 	private TeachingService teachingService;
@@ -62,45 +66,41 @@ public class ShowEditRoundRobinPostController {
 		this.teachingService = teachingService;
 	}
 
-	@RequestMapping(value="/teaching/ShowEditRoundRobinPost", method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditRoundRobinPostCommand command) {
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@ModelAttribute("command") RoundRobinPostPreviewCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-		
+		User user = (User) httpSession.getAttribute("user");
+
 		try {
-			ForumTopic courseTopic = getTeachingService().findCourseTopic(command.getTopicId());
-			if (command.getPostId() == null || command.getPostId().equals(0)) {
-				// new post without quoting
-				command.setPostId(0);
-				command.setSubject("Re: " + courseTopic.getSubject());
-			} else {
-				if (command.getQuote() != null && command.getQuote()) {
-					// quoting a post: the 'quoted' text is generated client-side (by post identifier)
-					command.setText(null);
-					command.setSubject("Re: " + courseTopic.getSubject());
-					// retrieving folio details from quoted post
-					setPostLocations(command, getTeachingService().getRoundRobinPost(command.getPostId()));
-				} else {
-					// edit an existent post
-					ForumPost post = getTeachingService().getRoundRobinPost(command.getPostId());
-					setPostLocations(command, post);
-					command.setSubject(post.getSubject());
-					command.setText(post.getText());
-				}
+			if (user == null) {
+				user = getTeachingService().getCurrentUser();
 			}
-		} catch (ApplicationThrowable th) {
 			
+		} catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("error/ShowRoundRobinPostPreview", model);
 		}
 		
-		return new ModelAndView("teaching/EditRoundRobinPost", model);
+		
+		Date now = new Date();
+		ForumPost post = new ForumPost(command.getPostId());
+		post.setText(command.getText());
+		post.setSubject(command.getSubject());
+		post.setDateCreated(now);
+		post.setLastUpdate(now);
+		post.setUser(user);
+		
+		CoursePostExt extendedPost = new CoursePostExt();
+		extendedPost.setPost(post);
+		extendedPost.setVolNum(command.getVolNum());
+		extendedPost.setVolLetExt(command.getVolLetExt());
+		extendedPost.setInsertNum(command.getInsertNum());
+		extendedPost.setInsertLet(command.getInsertLet());
+		extendedPost.setFolioNum(command.getFolioNum());
+		extendedPost.setFolioMod(command.getFolioMod());
+		extendedPost.setFolioRV(command.getFolioRV());
+
+		model.put("extendedPost", extendedPost);
+
+		return new ModelAndView("teaching/ShowRoundRobinPostPreview", model);
 	}
-	
-	private void setPostLocations(EditRoundRobinPostCommand command, ForumPost post) {
-		Map<CourseUtils.Fragment, String> locationMap = CourseUtils.getPostFolioLocation(post);
-		if (locationMap != null) {
-			command.setVolume(locationMap.get(CourseUtils.Fragment.VOLUME));
-			command.setInsert(locationMap.get(CourseUtils.Fragment.INSERT));
-			command.setFolio(locationMap.get(CourseUtils.Fragment.FOLIO));
-		}
-	}
-	
 }

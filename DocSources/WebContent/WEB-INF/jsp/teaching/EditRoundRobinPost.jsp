@@ -4,37 +4,50 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="EditCourseTopicPostURL" value="/teaching/EditRoundRobinPost.json"/>
+	<c:url var="EditRoundRobinPostURL" value="/teaching/EditRoundRobinPost.json"/>
 	
 	<c:url var="GetFolioFragmentsURL" value="/teaching/GetFolioFragments.json"/>
 	
-	<c:url var="ShowPreviewCourseTopicPostURL" value="/teaching/ShowPreviewCourseTopicPost.do"/>
+	<c:url var="ShowPostPreviewURL" value="/teaching/ShowRoundRobinPostPreview.do"/>
 	
-	<c:url var="ShowCourseTopicActionsURL" value="/teaching/ShowCourseTopicActions.do">
+	<c:url var="ShowCourseTranscriptionActionsURL" value="/teaching/ShowCourseTranscriptionActions.do">
 		<c:param name="topicId" value="${command.topicId}" />
+		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
 	<h6 style="margin-bottom: 10px;">EDIT YOUR POST</h6>
 
-	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditCourseTopicPostURL}" style="max-width: 1000px;">
-		<div>
+	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditRoundRobinPostURL}" style="max-width: 1000px;">
+		<div id="subjectSection">
 			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Post Subject*</form:label>
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
-	    <div style="display: block;">
-	    	<span class="folioDetailsTitle">Folio Details </span>
-	    	<span id="volumeFragment" style="display: none" class="contentFragment">
-	    		Volume <div id="volumeIn" class="fragmentDetail">${command.volume}</div></span>
+	    <div id="folioDetailsSection" style="display: block;">
+	    	<div id="hiddenFolioLocation" style="display: none;">
+		    	<form:input id="volNum" path="volNum" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="volLetExt" path="volLetExt" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="insertNum" path="insertNum" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="insertLet" path="insertLet" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="folioNum" path="folioNum" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="folioMod" path="folioMod" cssClass="noStyle" readonly="true"></form:input>
+		    	<form:input id="folioRV" path="folioRV" cssClass="noStyle" readonly="true"></form:input>
+		    </div>
+	    	<span class="folioDetailsTitle">Folio Details</span>
+	    	<span id="volumeFragment" style="display: none;" class="contentFragment">
+	    		Volume
+    			<span id="volume" class="fragmentDetail"></span>
 	    	</span>
-	    	<span id="insertFragment" style="display: none" class="contentFragment">
-	    		Insert <div id="insertIn" class="fragmentDetail">${command.insert}</div></span>
+	    	<span id="insertFragment" style="display: none;" class="contentFragment">
+    			Insert
+	    		<span id="insert" class="fragmentDetail"></span>
 	    	</span>
-	    	<span id="folioFragment" style="display: none" class="contentFragment">
-	    		Folio <div id="folioIn" class="fragmentDetail">${command.folio}</div></span>
+	    	<span id="folioFragment" style="display: none;" class="contentFragment">
+	    		Folio
+	    		<span id="folio" class="fragmentDetail"></span>
 	    	</span>
 	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
 	    </div>
-	    <div>
+	    <div id="postTextArea">
 			<form:textarea id="htmlbox" name="text" path="text" style="width:95%; height:290px; max-width:1000px;"></form:textarea>
 	    </div>
 	    <div id="editPostFormCommands">
@@ -76,14 +89,7 @@
 				async: false,
 				success: function(data) {
 					if (data.operation == 'OK') {
-		 				$j('#volumeIn').text(data.volume);
-		 				$j('#volumeFragment').css('display', 'inline');
-		 				if (typeof data.insert !== 'undefined') {
-		 					$j('#insertIn').text(data.insert);
-			 				$j('#insertFragment').css('display', 'inline');
-		 				}
-		 				$j('#folioIn').text(data.folio);
-		 				$j('#folioFragment').css('display', 'inline');
+						showFolioFragments(data);
 					} else {
 						// TODO: handle error condition
 						console.log('SERVER ERROR');
@@ -95,22 +101,68 @@
 			});
 		}
 		
+		var showFolioFragments = function(data) {
+			$j('#volNum').val(data.volNum);
+			$j('#volume').text(' ' + data.volNum);
+			if (typeof data.volLetExt !== 'undefined') {
+				$j('#volLetExt').val(data.volLetExt);
+				$j('#volume').append(' ' + data.volLetExt);
+			}
+			$j('#volumeFragment').css('display', 'inline');
+			
+			if (typeof data.insertNum !== 'undefined') {
+				$j('#insertNum').val(data.insertNum);
+				$j('#insert').text(data.insertNum);
+				if (typeof data.insertLet !== 'undefined') {
+					$j('#insertLet').val(data.insertLet);
+					$j("#insert").append(' ' + data.insertLet);
+				}
+				$j('#insertFragment').css('display', 'inline');
+			}
+			
+			$j('#folioNum').val(data.folioNum);
+			$j('#folio').text('' + data.folioNum);
+			if (typeof data.folioMod !== 'undefined') {
+				$j('#folioMod').val(data.folioMod);
+				$j('#folio').append(' ' + data.folioMod);
+			}
+			if (typeof data.folioRV !== 'undefined') {
+				$j('#folioRV').val(data.folioRV);
+				$j('#folio').append(' ' + data.folioRV);
+			}
+			$j('#folioFragment').css('display', 'inline');
+		}
+		
 		$j(document).ready(function() {
 			$j('#postsContainer').css('height','50%');
 			$j('#editPostContainer').css('height','45%');
 			var currentPageHref = $j('#postsContainer .paginateActive').first().attr('href');
 			
-			if (${empty command.volume}) {
+			if (${empty command.volNum}) {
 				// cannot read folio location from 'command'
 				getFolioFragmentsCallback();
 			} else {
 				// read post folio location from 'command'
-				$j('#volumeFragment').css('display','inline');
-				if (${not empty command.insert}) {
-					$j('#insertFragment').css('display','inline');
+				var data = new Object();
+				data.volNum = '${command.volNum}';
+				if (${not empty command.volLetExt}) {
+					data.volLetExt = '${command.volLetExt}';
 				}
-				if (${not empty command.folio}) {
-					$j('#folioFragment').css('display','inline');
+				if (${not empty command.insertNum}) {
+					data.insertNum = '${command.insertNum}';
+					if (${not empty command.insertLet}) {
+						data.insertLet = '${command.insertLet}';
+					}
+				}
+				if (${not empty command.folioNum}) {
+					data.folioNum = '${command.folioNum}';
+					if (${not empty command.folioMod}) {
+						data.folioMod = '${command.folioMod}';
+					}
+					if (${not empty command.folioRV}) {
+						data.folioRV = '${command.folioRV}';
+					}
+					showFolioFragments(data);
 				}
 			}
 			
@@ -122,18 +174,13 @@
 			
 			$j('#submit').click(function() {
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
-				//MD: In variable 'text' I control if the user has inserted no words in the textarea
 				var text = $j("#htmlbox").val();
 				var subject = $j("#subject").val();
 				if (typeof subject !== 'undefined' && subject !== '' && typeof text !== 'undefined' && text !== '') {
-					var volume = $j('#volumeIn').text();
-					var insert = $j('#insertIn').text();
-					var folio = $j('#folioIn').text();
-					var urlData = "?volume=" + volume + (typeof insert !== 'undefined' ? "&insert=" + insert : "") + "&folio=" + folio;
 					var postId = $j('#formPostId').val();
 					$j.ajax({
 						type: "POST",
-						url: "${EditCourseTopicPostURL}" + urlData,
+						url: "${EditRoundRobinPostURL}",
 						data: $j("#EditCourseTopicPost").serialize(),
 						async: false,
 						success: function(data) {
@@ -164,7 +211,7 @@
 										// TODO: handle error condition
 									}
 								});
-								$j("#editPostContainer").load('${ShowCourseTopicActionsURL}', function(responseText, statusText, xhr) {
+								$j("#editPostContainer").load('${ShowCourseTranscriptionActionsURL}', function(responseText, statusText, xhr) {
 									if (statusText == 'error') {
 										$j("#errorMsg").text('There was a server error during the page load: please refresh this page!');
 										$j("#errorModal").dialog('open');
@@ -200,7 +247,7 @@
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 	 			$j.ajax({
 	 				type: "POST",
-	 				url: "${ShowPreviewCourseTopicPostURL}",
+	 				url: "${ShowPostPreviewURL}",
 	 				data: $j("#EditCourseTopicPost").serialize(),
 	 				async: false,
 	 				success: function(html) {
@@ -255,7 +302,7 @@
 				buttons: {
 					Yes: function() {
 						$j(this).dialog("close");
-						$j("#editPostContainer").load('${ShowCourseTopicActionsURL}', function(responseText, statusText, xhr) {
+						$j("#editPostContainer").load('${ShowCourseTranscriptionActionsURL}', function(responseText, statusText, xhr) {
 							if (statusText == 'error') {
 								$j("#errorMsg").text('There was a server error during the page load: please refresh this page!');
 								$j("#errorModal").dialog('open');

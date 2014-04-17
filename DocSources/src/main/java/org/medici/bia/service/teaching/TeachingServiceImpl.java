@@ -27,7 +27,11 @@
  */
 package org.medici.bia.service.teaching;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,10 +40,15 @@ import javax.persistence.PersistenceException;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.ApplicationError;
-import org.medici.bia.common.util.CourseUtils;
+import org.medici.bia.common.util.ForumUtils;
+import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.dao.course.CourseDAO;
+import org.medici.bia.dao.coursecheckpoint.CourseCheckPointDAO;
+import org.medici.bia.dao.coursepostext.CoursePostExtDAO;
+import org.medici.bia.dao.coursetopicoption.CourseTopicOptionDAO;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
+import org.medici.bia.dao.forumoption.ForumOptionDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
@@ -48,9 +57,14 @@ import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.domain.Course;
+import org.medici.bia.domain.CourseCheckPoint;
+import org.medici.bia.domain.CoursePostExt;
+import org.medici.bia.domain.CourseTopicOption;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ForumTopicWatch;
@@ -76,45 +90,68 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional(readOnly=true, rollbackFor=ApplicationThrowable.class)
 public class TeachingServiceImpl implements TeachingService {
 	
 	@Autowired
+	private CourseCheckPointDAO courseCheckPointDAO;
+	@Autowired
 	private CourseDAO courseDAO;
-	
+	@Autowired
+	private CoursePostExtDAO coursePostExtDAO;
+	@Autowired
+	private CourseTopicOptionDAO courseTopicOptionDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
-	
 	@Autowired
 	private ForumDAO forumDAO;
-	
+	@Autowired
+	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ForumPostDAO forumPostDAO;
-	
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;
-	
 	@Autowired
 	private ForumTopicWatchDAO forumTopicWatchDAO;
-	
 	@Autowired
 	private ImageDAO imageDAO;
-	
 	@Autowired
 	private UserAuthorityDAO userAuthorityDAO;
-	
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
-	
 	@Autowired
 	private UserDAO userDAO;
 	
+	public CourseCheckPointDAO getCourseCheckPointDAO() {
+		return courseCheckPointDAO;
+	}
+
+	public void setCourseCheckPointDAO(CourseCheckPointDAO courseCheckPointDAO) {
+		this.courseCheckPointDAO = courseCheckPointDAO;
+	}
+
 	public CourseDAO getCourseDAO() {
 		return courseDAO;
 	}
 
 	public void setCourseDAO(CourseDAO courseDAO) {
 		this.courseDAO = courseDAO;
+	}
+
+	public CoursePostExtDAO getCoursePostExtDAO() {
+		return coursePostExtDAO;
+	}
+
+	public void setCoursePostExtDAO(CoursePostExtDAO coursePostExtDAO) {
+		this.coursePostExtDAO = coursePostExtDAO;
+	}
+
+	public CourseTopicOptionDAO getCourseTopicOptionDAO() {
+		return courseTopicOptionDAO;
+	}
+
+	public void setCourseTopicOptionDAO(CourseTopicOptionDAO courseTopicOptionDAO) {
+		this.courseTopicOptionDAO = courseTopicOptionDAO;
 	}
 
 	public DocumentDAO getDocumentDAO() {
@@ -131,6 +168,14 @@ public class TeachingServiceImpl implements TeachingService {
 
 	public void setForumDAO(ForumDAO forumDAO) {
 		this.forumDAO = forumDAO;
+	}
+
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
 	}
 
 	public ForumPostDAO getForumPostDAO() {
@@ -196,66 +241,17 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumPost addNewTopicPost(
-			Integer courseTopicId, 
-			String postSubject, 
-			String postContent, 
-			String volume, 
-			String insert, 
-			String folio, 
-			String remoteAddress) throws ApplicationThrowable {
-		
-		ForumTopic courseTopic = null;
-		
-		try {
-			courseTopic = getForumTopicDAO().find(courseTopicId);
-			if (courseTopic == null) {
-				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "ADD NEW POST TO COURSE TOPIC --> course topic is missing");
-			}
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+	public CourseCheckPoint addCourseCheckPoint(Integer topicId, CoursePostExt extendedPost, Date date) throws ApplicationThrowable {
+		CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(topicId);
+		if (option == null) {
+			throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Cannot retrieve course option for topic [" + topicId +"]....add course check point ABORTED!!!");
 		}
+		CourseCheckPoint checkPoint = new CourseCheckPoint(option, extendedPost);
+		checkPoint.setCheckPointTime(date != null ? date : new Date());
 		
-		Date now = new Date();
-		User user = getCurrentUser();
+		getCourseCheckPointDAO().persist(checkPoint);
 		
-		try {
-			ForumPost post = new ForumPost();
-			post.setTopic(courseTopic);
-			post.setForum(courseTopic.getForum());
-			post.setSubject(postSubject);
-			post.setIpAddress(remoteAddress);
-			
-			post.setDateCreated(now);
-			post.setLastUpdate(now);
-			post.setLogicalDelete(Boolean.FALSE);
-			post.setUser(user);
-			post.setUpdater(user);
-			
-			getForumPostDAO().persist(post);
-			// calculate folio details comment after persist
-			String folioDetailsComment = "<!--" + CourseUtils.generateFolioLocationComment(post.getPostId(), volume, insert, folio) + "-->";
-			// now post text can be stored
-			post.setText(folioDetailsComment + postContent);
-			
-			courseTopic.setLastPost(post);
-			if (new Integer(0).equals(courseTopic.getTotalReplies())) {
-				courseTopic.setFirstPost(post);
-			}
-			courseTopic.setTotalReplies(courseTopic.getTotalReplies() + 1);
-			
-			getForumDAO().recursiveIncreasePostsNumber(courseTopic.getForum());
-			recursiveSetLastPost(courseTopic.getForum(), post, now);
-			
-			// Changing the user last forum dates and number of post
-			user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
-			user.setLastActiveForumDate(now);
-			user.setLastForumPostDate(now);
-			
-			return post;
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
-		}
+		return checkPoint;
 	}
 	
 	/**
@@ -263,7 +259,7 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumTopic addNewCourseTopic(Integer courseId, Integer documentId, String topicTitle, String remoteAddress) throws ApplicationThrowable {
+	public ForumTopic addCourseTopic(Integer courseId, Integer documentId, String topicTitle, CourseTopicMode mode, String remoteAddress) throws ApplicationThrowable {
 		Course course = null;
 		Document document = null;
 		try {
@@ -279,16 +275,49 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(e);
 		}
 		
-		if (topicTitle == null || "".equals(topicTitle.trim())) {
+		if (StringUtils.isNullableString(topicTitle)) {
 			throw new ApplicationThrowable(ApplicationError.MISSING_PARAMETER, "ADD NEW COURSE TOPIC --> course topic title is missing");
+		}
+		
+		if (mode == null) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_PARAMETER, "ADD NEW COURSE TOPIC --> course topic mode is missing");
 		}
 		
 		Date now = new Date();
 		User user = getCurrentUser();
 		
 		try {
+			// Forum container creation
+			Forum container = new Forum();
+			
+			container.setTitle(topicTitle.trim() + " resources");
+			container.setDescription("Resources of " + topicTitle.trim());
+			container.setDocument(document);
+			container.setForumParent(course.getForum());
+			container.setFullPath(course.getForum().getFullPath()); // To do not violate the table constraint
+			container.setHierarchyLevel(0);
+			container.setDispositionOrder(0);
+			container.setStatus(Forum.Status.ONLINE);
+			container.setType(Forum.Type.FORUM);
+			container.setSubType(Forum.SubType.COURSE);
+			container.setDateCreated(now);
+			container.setLastUpdate(now);
+			container.setPostsNumber(0);
+			container.setTopicsNumber(1);
+			container.setLogicalDelete(Boolean.FALSE);
+
+			getForumDAO().persist(container);
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, container));
+
+			container.setFullPath(container.getFullPath() + container.getForumId() + ".");
+			getForumDAO().recursiveIncreaseSubForumsNumber(course.getForum());
+			
+			ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(container);
+			getForumOptionDAO().persist(forumOption);
+			
+			// Course Topic creation
 			ForumTopic courseTopic = new ForumTopic();
-			courseTopic.setForum(course.getForum());
+			courseTopic.setForum(container);
 			courseTopic.setDocument(document);
 			courseTopic.setSubject(topicTitle.trim());
 			courseTopic.setDateCreated(now);
@@ -303,6 +332,13 @@ public class TeachingServiceImpl implements TeachingService {
 			courseTopic.setLogicalDelete(Boolean.FALSE);
 			
 			getForumTopicDAO().persist(courseTopic);
+			
+			// Course Topic Option creation
+			CourseTopicOption courseTopicOption = new CourseTopicOption();
+			courseTopicOption.setCourseTopic(courseTopic);
+			courseTopicOption.setMode(mode);
+			
+			getCourseTopicOptionDAO().persist(courseTopicOption);
 			
 			//Increment the topicsNumber in course
 			getForumDAO().recursiveIncreaseTopicsNumber(course.getForum());
@@ -323,6 +359,85 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public CoursePostExt addCourseTranscriptionPost(
+			Integer courseTopicId, 
+			String postSubject, 
+			String postContent,
+			String transcription,
+			Integer volNum, 
+			String volLetExt, 
+			String insertNum,
+			String insertLet, 
+			Integer folioNum, 
+			String folioMod,
+			String folioRV, 
+			String remoteAddr,
+			CourseTopicMode mode,
+			Integer relatedCheckPointPostId) throws ApplicationThrowable {
+		
+		CourseTopicOption option = checkCourseTopicConsistency(courseTopicId, mode);
+		
+		User user = getCurrentUser();
+		Date now = new Date();
+		
+		try {
+			CoursePostExt extendedPost = doAddCourseTranscrioptionPost(
+					option.getCourseTopic(), 
+					postSubject, 
+					postContent, 
+					transcription, 
+					volNum, 
+					volLetExt, 
+					insertNum, 
+					insertLet, 
+					folioNum, 
+					folioMod, 
+					folioRV, 
+					remoteAddr, 
+					now, 
+					user);
+			
+			switch (mode) {
+				case I:
+					CourseCheckPoint checkPoint = getCourseCheckPointDAO().getLastCheckPointByTopicId(courseTopicId);
+					if (checkPoint == null) {
+						checkPoint = new CourseCheckPoint(option, extendedPost);
+						checkPoint.setCheckPointTime(now);
+						getCourseCheckPointDAO().persist(checkPoint);
+					} else {
+						checkPoint.setCheckPointPost(extendedPost);
+						checkPoint.setCheckPointTime(now);
+					}
+					break;
+				case R:
+					// nothing to do
+					break;
+				case C:
+					if (relatedCheckPointPostId == null || relatedCheckPointPostId <= 0) {
+						CourseCheckPoint newCheckPoint = new CourseCheckPoint(option, extendedPost);
+						newCheckPoint.setCheckPointTime(now);
+						
+						getCourseCheckPointDAO().persist(newCheckPoint);
+						extendedPost.setRelatedCheckPoint(newCheckPoint);
+					} else {
+						CourseCheckPoint relatedCheckPoint = getCourseCheckPointDAO().getCheckPointByPost(relatedCheckPointPostId);
+						extendedPost.setRelatedCheckPoint(relatedCheckPoint);
+					}
+					break;
+			}
+			
+			return extendedPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		} 
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Long countActiveCourses() throws ApplicationThrowable {
 		try {
@@ -335,36 +450,104 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Long countCheckPointPosts(Integer checkPointId) throws ApplicationThrowable {
+		try {
+			return getCoursePostExtDAO().countCheckPointPosts(checkPointId);
+		} catch (PersistenceException e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
+		
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void deleteCourseTopicPost(Integer postId) throws ApplicationThrowable {
+	public void deleteCourseTranscriptionPost(Integer postId, CourseTopicMode mode) throws ApplicationThrowable {
+		
+		ForumPost post;
+		ForumTopic courseTopic;
+		Forum courseForum;
+		
+			try {
+				post = getForumPostDAO().find(postId);
+				courseTopic = post.getTopic();
+				courseForum = post.getForum();
+			} catch (Throwable th) {
+				throw new ApplicationThrowable(th);
+			}
+			
+		checkCourseTopicConsistency(post.getTopic().getTopicId(), mode);
+		
 		Date now = new Date();
+		User user = getCurrentUser();
+		
 		try {
-			User user = getCurrentUser();
+			doDeleteCourseTranscriptionPost(post, now, user);
 			
-			ForumPost post = getForumPostDAO().find(postId);
-			Forum courseForum = post.getForum();
-			ForumTopic courseTopic = post.getTopic();
-			post.setLogicalDelete(new Boolean(Boolean.TRUE));
-			post.setLastUpdate(now);
-			post.setUpdater(user);
-
-			ForumPost lastPost = getForumPostDAO().findLastPostFromForumTopic(courseTopic);
-			courseTopic.setLastPost(lastPost);
-			courseTopic.setTotalReplies(courseTopic.getTotalReplies() - 1);
-			
-			getForumDAO().recursiveDecreasePostsNumber(courseForum);
-			
-			recursiveSetLastPost(courseForum, now);
-
-			// Changing the user last forum dates and number of post
-			user.setLastActiveForumDate(now);
-			user.setLastForumPostDate(now);
-			user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
+			ForumPost firstTopicPost = null;
+			ForumPost lastTopicPost = null;
+			ForumPost lastForumPost = null;
+			switch (mode) {
+				case I:
+					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
+						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByLastUpdate(courseTopic.getTopicId());
+					}
+					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
+						lastTopicPost = getForumPostDAO().getLastForumTopicPostByLastUpdate(courseTopic);
+					}
+					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
+						CoursePostExt lastPostOfTopic = getCoursePostExtDAO().getLastPostInTopic(courseTopic.getTopicId(), false);
+						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
+						if (lastPostOfTopic != null && lastPostOfTopic.getPost().getLastUpdate().after(lastForumPost.getDateCreated())) {
+							lastForumPost = lastPostOfTopic.getPost();
+						}
+					}
+					CourseCheckPoint checkPoint = getLastCheckPoint(courseTopic.getTopicId());
+					if (checkPoint != null && checkPoint.getCheckPointPost().getPost().getPostId().equals(postId)) {
+						updateCheckPointToLastTopicPost(checkPoint, false);
+					} else if (checkPoint == null) {
+						// something is bad...we create new check point to fix the course topic status
+						CoursePostExt lastPost = getLastPostOfTopic(courseTopic.getTopicId(), false);
+						addCourseCheckPoint(courseTopic.getTopicId(), lastPost, null);
+					}
+					break;
+				case R:
+					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
+						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(courseTopic.getTopicId());
+					}
+					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
+						lastTopicPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
+					}
+					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
+						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
+					}
+					break;
+				case C:
+					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
+						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(courseTopic.getTopicId());
+					}
+					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
+						lastTopicPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
+					}
+					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
+						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
+					}
+					break;
+			}
+			if (firstTopicPost != null) {
+				courseTopic.setFirstPost(firstTopicPost);
+			}
+			if (lastTopicPost != null) {
+				courseTopic.setLastPost(lastTopicPost);
+			}
+			if (lastForumPost != null) {
+				recursiveSetLastPost(courseForum, lastForumPost, now);
+			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-		
 	}
 	
 	/**
@@ -395,10 +578,9 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image getDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable {
+	public List<Course> getActiveCourses() throws ApplicationThrowable {
 		try {
-			Document document = getDocumentDAO().find(entryId);
-			return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+			return getCourseDAO().getActiveCourses();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -408,10 +590,34 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForumTopic getCourseTopic(Integer courseTopicId) throws ApplicationThrowable {
+	public List<Course> getActiveCourses(Integer entryId) throws ApplicationThrowable {
 		try {
-			return getForumTopicDAO().find(courseTopicId);
-		} catch(Throwable th) {
+			return getCourseDAO().getActiveCoursesByDocument(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CourseCheckPoint getCheckPointByPost(Integer postId) throws ApplicationThrowable {
+		try {
+			return getCourseCheckPointDAO().getCheckPointByPost(postId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CoursePostExt getCoursePostByForumPostId(Integer postId) throws ApplicationThrowable {
+		try {
+			return getCoursePostExtDAO().getExtendedPostByForumPost(postId);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -439,10 +645,100 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public CourseTopicMode getCourseTopicMode(Integer topicId) throws ApplicationThrowable {
+		try {
+			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(topicId);
+			return option != null ? option.getMode() : null; 
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, CourseTopicMode> getCourseTopicsMode(List<ForumTopic> topics) throws ApplicationThrowable {
+		try {
+			Set<Integer> topicIds = new HashSet<Integer>();
+			for(ForumTopic topic : topics) {
+				topicIds.add(topic.getTopicId());
+			}
+			List<CourseTopicOption> options = getCourseTopicOptionDAO().findOptions(topicIds);
+			Map<Integer, CourseTopicMode> topicsMode = new HashMap<Integer, CourseTopicOption.CourseTopicMode>();
+			for(CourseTopicOption option : options) {
+				Integer topicId = option.getCourseTopic().getTopicId();
+				topicsMode.put(topicId, option.getMode());
+				topicIds.remove(topicId);
+			}
+			// Not found topics are considered general discussions
+			for(Integer notFoundId : topicIds) {
+				topicsMode.put(notFoundId, CourseTopicMode.D);
+			}
+			return topicsMode;
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getCourseTranscriptionResourcesForum(Integer topicId) throws ApplicationThrowable {
+		try {
+			ForumTopic courseTopic = getForumTopicDAO().find(topicId);
+			if (courseTopic == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Unable to find course topic [" + topicId + "]");
+			}
+			return courseTopic.getForum().getForumId();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User getCurrentUser() throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image getDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable {
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForumTopic> getDocumentTopicsFromCourse(Integer entryId, Integer courseId) throws ApplicationThrowable {
+		try {
+			Course course = getCourseDAO().find(courseId);
+			if (course == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR);
+			}
+			List<Forum> courseFragmentsContainers = getForumDAO().findSubForumsByDocument(course.getForum().getForumId(), entryId);
+			List<ForumTopic> topics = new ArrayList<ForumTopic>();
+			for(Forum container : courseFragmentsContainers) {
+				topics.addAll(getForumTopicDAO().getForumTopicsByParentForumAndDocument(container.getForumId(), entryId));
+			}
+			return topics;
+		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -463,9 +759,57 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Course getLastActiveCourse(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().getLastActiveCourseByDocument(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CourseCheckPoint getLastCheckPoint(Integer topicId) throws ApplicationThrowable {
+		try {
+			return getCourseCheckPointDAO().getLastCheckPointByTopicId(topicId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CoursePostExt getLastPostOfTopic(Integer topicId, boolean byDateCreated) throws ApplicationThrowable {
+		try {
+			return getCoursePostExtDAO().getLastPostInTopic(topicId, byDateCreated);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseTopicOptionDAO().findOptionsByDocumentInActiveCourses(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page getPostsFromCourseTopic(ForumTopic courseTopic, PaginationFilter filter) throws ApplicationThrowable {
 		try {
-			return getForumPostDAO().findPostsFromTopic(courseTopic, filter);
+			return getCoursePostExtDAO().getExtendedCourseTopicPosts(courseTopic, filter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -487,91 +831,319 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String,UserAuthority> getUsersRoundRobinAuthority(Set<String> accountIds) throws ApplicationThrowable {
+	public List<CourseCheckPoint> getTopicCheckPoints(Integer topicId) throws ApplicationThrowable {
 		try {
-			return getUserAuthorityDAO().getUsersRoundRobinAuthority(accountIds);
+			return getCourseCheckPointDAO().getCheckPointsByTopic(topicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserAuthority getUserCourseAuthority(String account) throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getUserCourseAuthority(account);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String,UserAuthority> getUsersCourseAuthority(Set<String> accountIds) throws ApplicationThrowable {
+		try {
+			return getUserAuthorityDAO().getUsersCourseAuthority(accountIds);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isInActiveCourse(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().isInActiveCourse(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isInCourse(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().isInCourse(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public ForumPost updateTopicPost(
-			Integer postId,
-			String postSubject,
-			String postContent,
-			String volume,
-			String insert,
-			String folio) throws ApplicationThrowable {
-		
+	public CourseCheckPoint setIncrementalTranscription(CoursePostExt postExt) throws ApplicationThrowable {
 		try {
-			ForumPost post = getForumPostDAO().find(postId);
-			
-			if (post == null) {
-				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Corse Topic Post [" + postId + "] not found!");
+			if (getCoursePostExtDAO().find(postExt.getPostExtId()) == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Extended post [" + postExt.getPostExtId() + "] is missing...");
+			}
+			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(postExt.getPost().getTopic().getTopicId());
+			if (option == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course Topic Option is missing for topic [" + postExt.getPost().getTopic().getTopicId() + "]...");
+			}
+			CourseCheckPoint checkPoint = getCourseCheckPointDAO().getLastCheckPointByTopicId(postExt.getPost().getTopic().getTopicId());
+			if (checkPoint == null) {
+				checkPoint = new CourseCheckPoint(option, postExt);
+				checkPoint.setCheckPointTime(postExt.getPost().getLastUpdate());
+				getCourseCheckPointDAO().persist(checkPoint);
+			} else {
+				checkPoint.setCheckPointPost(postExt);
+				checkPoint.setCheckPointTime(postExt.getPost().getLastUpdate());
 			}
 			
-			Date now = new Date();
-			User user = getCurrentUser();
-			
-			post.setSubject(postSubject);
-			String oldLocation = CourseUtils.getPostFolioLocationComment(post);
-			String newLocation = CourseUtils.generateFolioLocationComment(postId, volume, insert, folio);
-			if (!newLocation.equals(oldLocation)) {
-				if (oldLocation != null) {
-					postContent = postContent.replace(oldLocation, newLocation);
-				} else {
-					postContent = "<!--" + newLocation + "-->" + postContent;
-				}
-			}
-			post.setText(postContent);
-			post.setLastUpdate(now);
-			post.setUpdater(user);
-			
-			// Changing the user last forum
-			user.setLastActiveForumDate(now);
-			user.setLastForumPostDate(now);
-
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit course topic post", Action.MODIFY, Category.FORUM_POST, post));
-			
-			return post;
+			return checkPoint;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
 	
-
-	/* Privates */
-	
-	private void recursiveSetLastPost(Forum course, Date now) throws ApplicationThrowable {
-		if(course.getType().equals(Type.CATEGORY)){
-			return;
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public CoursePostExt updateCourseTranscriptionPost(
+			Integer postId,
+			String postSubject, 
+			String postContent, 
+			String transcription, 
+			Integer volNum,
+			String volLetExt, 
+			String insertNum, 
+			String insertLet,
+			Integer folioNum, 
+			String folioMod, 
+			String folioRV,
+			CourseTopicMode mode) throws ApplicationThrowable {
+		
+		CoursePostExt postExt = getCoursePostExtDAO().getExtendedPostByForumPost(postId);
+		
+		if (postExt == null) {
+			throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Corse Topic Post [" + postId + "] not found!");
+		}
+		
+		Date now = new Date();
+		User user = getCurrentUser();
+		
+		checkCourseTopicConsistency(postExt.getPost().getTopic().getTopicId(), mode);
+		
+		doUpdateCourseTranscriptionPost(postSubject, postContent, transcription, volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRV, postExt, now, user);
+		
+		switch (mode) {
+			case I:
+				postExt.getPost().getTopic().setLastPost(postExt.getPost());
+				// in the incremental transcription every updated post become the last post
+				recursiveSetLastPost(postExt.getPost().getForum(), postExt.getPost(), now);
+				break;
+			case R:
+				// nothing to do
+				break;
+			case C:
+				// TODO
+				break;
 		}
 
-		ForumPost lastPost = getForumPostDAO().findLastPostFromForum(course);
-		course.setLastPost(lastPost);
-		//last update must be updated to obtain a correct indexing of forum
-		course.setLastUpdate(now);
-		getForumDAO().merge(course);
-
-		recursiveSetLastPost(course.getForumParent(), lastPost, now);
+		return postExt;
 	}
 	
-	private void recursiveSetLastPost(Forum course, ForumPost post, Date now) throws ApplicationThrowable {
-		if(course.getType().equals(Type.CATEGORY)){
+	/* Privates */
+	
+	private CourseTopicOption checkCourseTopicConsistency(Integer courseTopicId, CourseTopicMode mode) throws ApplicationThrowable {
+		try {
+			ForumTopic courseTopic = getForumTopicDAO().find(courseTopicId);
+			if (courseTopic == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, this.getClass().getName() + "#addCourseTranscriptionPost --> course topic [" + courseTopicId + "] is missing");
+			}
+			
+			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(courseTopicId);
+			if (option != null && (mode != null && !option.getMode().equals(mode))) {
+				throw new ApplicationThrowable(ApplicationError.ILLEGAL_STATUS, "Course topic [" + courseTopicId + "] was defined with {" + option.getMode() + "} mode, so it is not allowed to add a post with {" + mode + "} mode");
+			} else if (option == null) {
+				// Bad course topic status (no option defined)
+				throw new ApplicationThrowable(ApplicationError.ILLEGAL_STATUS, "Course topic [" + courseTopicId + "] has no topic option defined...it is not possible to manage this topic. Please contact the admin!!!");
+			}
+			
+			if (!CourseTopicMode.I.equals(option.getMode()) && 
+					!CourseTopicMode.C.equals(option.getMode()) &&
+					!CourseTopicMode.R.equals(option.getMode())) {
+				throw new ApplicationThrowable(ApplicationError.ILLEGAL_CALL, this.getClass().getName() + "#addCourseTranscriptionPost cannot be called for a topic with {" + option.getMode() + "} mode");
+			}
+			
+			return option;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	private CoursePostExt doAddCourseTranscrioptionPost(
+			ForumTopic courseTopic, 
+			String postSubject, 
+			String postContent,
+			String transcription,
+			Integer volNum,
+			String volLetExt,
+			String insertNum,
+			String insertLet,
+			Integer folioNum,
+			String folioMod,
+			String folioRV,
+			String remoteAddr,
+			Date now,
+			User user) throws PersistenceException {
+		
+		ForumPost post = new ForumPost();
+		post.setTopic(courseTopic);
+		post.setForum(courseTopic.getForum());
+		post.setSubject(postSubject);
+		post.setText(postContent);
+		post.setIpAddress(remoteAddr);
+		
+		post.setDateCreated(now);
+		post.setLastUpdate(now);
+		post.setLogicalDelete(Boolean.FALSE);
+		post.setUser(user);
+		post.setUpdater(user);
+		
+		getForumPostDAO().persist(post);
+		
+		CoursePostExt coursePostExt = new CoursePostExt(post);
+		coursePostExt.setTranscription(transcription);
+		coursePostExt.setVolNum(volNum);
+		coursePostExt.setVolLetExt(StringUtils.safeTrim(volLetExt));
+		coursePostExt.setInsertNum(StringUtils.safeTrim(insertNum));
+		coursePostExt.setInsertLet(StringUtils.safeTrim(insertLet));
+		coursePostExt.setFolioNum(folioNum);
+		coursePostExt.setFolioMod(StringUtils.safeTrim(folioMod));
+		coursePostExt.setFolioRV(CoursePostExt.RectoVerso.find(StringUtils.safeTrim(folioRV)));
+		
+		getCoursePostExtDAO().persist(coursePostExt);
+		
+		if (courseTopic.getTotalReplies() == null || courseTopic.getTotalReplies() <= 0) {
+			courseTopic.setFirstPost(post);
+			courseTopic.setTotalReplies(1);
+		} else {
+			courseTopic.setTotalReplies(courseTopic.getTotalReplies() + 1);
+		}
+		courseTopic.setLastPost(post);
+		courseTopic.setLastUpdate(now);
+		
+		getForumDAO().recursiveIncreasePostsNumber(courseTopic.getForum());
+		recursiveSetLastPost(courseTopic.getForum(), post, now);
+		
+		// Changing the user last forum dates and number of post
+		user.setLastActiveForumDate(now);
+		user.setLastForumPostDate(now);
+		user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
+		
+		return coursePostExt;
+	}
+	
+	private void doDeleteCourseTranscriptionPost(ForumPost post, Date now, User user) throws PersistenceException {
+		Forum courseForum = post.getForum();
+		ForumTopic courseTopic = post.getTopic();
+		post.setLogicalDelete(Boolean.TRUE);
+		post.setLastUpdate(now);
+		post.setUpdater(user);
+		
+		ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
+		courseTopic.setLastPost(lastPost);
+		if (courseTopic.getTotalReplies() != null && courseTopic.getTotalReplies() > 1) {
+			courseTopic.setTotalReplies(courseTopic.getTotalReplies() - 1);
+		} else {
+			courseTopic.setTotalReplies(0);
+		}
+		
+		getForumDAO().recursiveDecreasePostsNumber(courseForum);
+		
+		// Changing the user last forum dates and number of post
+		user.setLastActiveForumDate(now);
+		user.setLastForumPostDate(now);
+		user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
+	}
+	
+	private CoursePostExt doUpdateCourseTranscriptionPost(
+			String postSubject, 
+			String postContent, 
+			String transcription, 
+			Integer volNum,
+			String volLetExt, 
+			String insertNum, 
+			String insertLet,
+			Integer folioNum, 
+			String folioMod, 
+			String folioRV,
+			CoursePostExt postExt,
+			Date now,
+			User user) throws PersistenceException {
+		
+		// update post
+		postExt.getPost().setSubject(postSubject);
+		postExt.getPost().setText(postContent);
+		postExt.getPost().setLastUpdate(now);
+		postExt.getPost().setUpdater(user);
+
+		// update topic
+		postExt.getPost().getTopic().setLastUpdate(now);
+		
+		// update post extensions
+		postExt.setTranscription(transcription);
+		postExt.setVolNum(volNum);
+		postExt.setVolLetExt(StringUtils.safeTrim(volLetExt));
+		postExt.setInsertNum(StringUtils.safeTrim(insertNum));
+		postExt.setInsertLet(StringUtils.safeTrim(insertLet));
+		postExt.setFolioNum(folioNum);
+		postExt.setFolioMod(StringUtils.safeTrim(folioMod));
+		postExt.setFolioRV(CoursePostExt.RectoVerso.find(StringUtils.safeTrim(folioRV)));
+		
+		return postExt;
+	}
+	
+	/**
+	 * This method updates the association between the provided check point and the last post of its topic.<br/>
+	 * If the check point cannot be associated with a post (there are no post in the topic) it is removed.
+	 * 
+	 * @param checkPoint the check point
+	 * @param byCreationDate if true the last post is considered by creation date, otherwise by last update
+	 * @throws ApplicationThrowable
+	 */
+	private void updateCheckPointToLastTopicPost(CourseCheckPoint checkPoint, boolean byCreationDate) throws PersistenceException {
+		CoursePostExt lastPost = getCoursePostExtDAO().getLastPostInTopic(checkPoint.getCheckPointPost().getPost().getTopic().getTopicId(), byCreationDate);
+		if (lastPost == null) {
+			getCourseCheckPointDAO().remove(checkPoint);
+		} else {
+			checkPoint.setCheckPointPost(lastPost);
+		}
+	}
+	
+	private void recursiveSetLastPost(Forum forum, ForumPost post, Date now) throws PersistenceException {
+		if (Type.CATEGORY.equals(forum.getType())) {
 			return;
 		}
 		
-		course.setLastPost(post);
-		//last update must be updated to obtain a correct indexing of forum
-		course.setLastUpdate(now);
-		getForumDAO().merge(course);
+		forum.setLastPost(post);
+		forum.setLastUpdate(now);
 		
-		recursiveSetLastPost(course.getForumParent(), post, now);
+		recursiveSetLastPost(forum.getForumParent(), post, now);
 	}
 	
 }

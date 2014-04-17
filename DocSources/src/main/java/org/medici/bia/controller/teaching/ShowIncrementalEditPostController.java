@@ -1,5 +1,5 @@
 /*
- * ShowCourseTopicActions.java
+ * ShowIncrementalEditPostController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -30,8 +30,12 @@ package org.medici.bia.controller.teaching;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.bia.command.teaching.ShowCourseTopicActionsCommand;
+import org.medici.bia.command.teaching.IncrementalEditPostCommand;
+import org.medici.bia.common.util.CourseUtils;
+import org.medici.bia.domain.CourseCheckPoint;
+import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class ShowCourseTopicActionsController {
+public class ShowIncrementalEditPostController {
 	
 	@Autowired
 	private TeachingService teachingService;
@@ -60,25 +64,41 @@ public class ShowCourseTopicActionsController {
 		this.teachingService = teachingService;
 	}
 	
-	@RequestMapping(value= "/teaching/ShowCourseTopicActions", method = RequestMethod.GET)
-	public ModelAndView showCourseTopicActions(@ModelAttribute("command") ShowCourseTopicActionsCommand command) {
+	@RequestMapping(value="/teaching/ShowIncrementalEditPost", method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("command") IncrementalEditPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		ForumTopic courseTopic = null;
 		try {
-			if (command.getTopicId() != null) {
-				courseTopic = getTeachingService().findCourseTopic(command.getTopicId());
-			}
-			
-			if (courseTopic != null) {
-				return new ModelAndView("teaching/ShowCourseTopicActions", model);
+			ForumTopic courseTopic = getTeachingService().findCourseTopic(command.getTopicId());
+			if (command.getPostId() == null || command.getPostId().equals(0)) {
+				// new post
+				command.setPostId(0);
+				command.setSubject("Re: " + courseTopic.getSubject());
+				CourseCheckPoint checkPoint = getTeachingService().getLastCheckPoint(command.getTopicId());
+				command.setTranscription(checkPoint != null ? CourseUtils.decodeCourseTranscriptionSafely(checkPoint.getCheckPointPost().getTranscription()) : null);
 			} else {
-				return new ModelAndView("error/ShowCourseTopicActions", model);
+				// edit an existent post
+				CoursePostExt extendedPost = getTeachingService().getCoursePostByForumPostId(command.getPostId());
+				command.setSubject(extendedPost.getPost().getSubject());
+				command.setText(extendedPost.getPost().getText());
+				command.setTranscription(CourseUtils.decodeCourseTranscriptionSafely(extendedPost.getTranscription()));
+				command.setVolNum(extendedPost.getVolNum());
+				command.setVolLetExt(extendedPost.getVolLetExt());
+				command.setInsertNum(extendedPost.getInsertNum());
+				command.setInsertLet(extendedPost.getInsertLet());
+				command.setFolioNum(extendedPost.getFolioNum());
+				command.setFolioMod(extendedPost.getFolioMod());
+				command.setFolioRV(extendedPost.getFolioRV());
+				
+				Authority postUserAuthority = getTeachingService().getUserCourseAuthority(extendedPost.getPost().getUser().getAccount()).getAuthority();
+				boolean isTeacherPost = Authority.ADMINISTRATORS.equals(postUserAuthority) || Authority.TEACHERS.equals(postUserAuthority);
+				model.put("editingStudentPost", !isTeacherPost);
 			}
 		} catch (ApplicationThrowable th) {
-			return new ModelAndView("errro/EditRoundRobinPost", model);
+			return new ModelAndView("error/EditIncrementalPost", model);
 		}
 		
+		return new ModelAndView("teaching/EditIncrementalPost", model);
 	}
 
 }

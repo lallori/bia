@@ -42,9 +42,12 @@ import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.SubType;
 import org.medici.bia.domain.Forum.Type;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.domain.User;
@@ -55,6 +58,7 @@ import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,6 +72,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 @Controller
 @RequestMapping(value={"/community/ShowForum"})
@@ -80,13 +85,59 @@ public class ShowForumController {
 	private CommunityService communityService;
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private TeachingService teachingService;
 	
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+	
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+	
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+	
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
 	/**
 	 * 
 	 * @param request
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -131,34 +182,14 @@ public class ShowForumController {
 						}
 					}
 
-					Map<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
-					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
+					Map<Integer, List<Forum>> forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					//MD: To show the number of subforums that have one or more topics for the document forum
 					model.put("documentSubForumsWithTopics", getCommunityService().getSubForumsNumberWithTopics(5));
 					
 					model.put("forumsBySubCategories", forumsHashMap);
 					
 					if (forum.getOption().getCanHaveSubForum()) {
-						PaginationFilter paginationFilterForum = new PaginationFilter();
-						if (command.getForumsForPage() != null) {
-							paginationFilterForum.setElementsForPage(command.getForumsForPage());
-						} else {
-							paginationFilterForum.setElementsForPage(new Integer(10));
-							command.setForumsForPage(paginationFilterForum.getElementsForPage());
-						}
-						if (command.getForumPageNumber() != null) {
-							paginationFilterForum.setThisPage(command.getForumPageNumber());
-						} else {
-							paginationFilterForum.setThisPage(new Integer(1));
-							command.setForumPageNumber(paginationFilterForum.getThisPage());
-						}
-						if (command.getForumPageTotal() != null) {
-							paginationFilterForum.setPageTotal(command.getForumPageTotal());
-						} else {
-							paginationFilterForum.setPageTotal(null);
-						}
-						paginationFilterForum.addSortingCriteria("dispositionOrder", "asc");
-						
+						PaginationFilter paginationFilterForum = getPaginationFilter(command, 10, "dispositionOrder", true, true);
 						Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
 						model.put("subForumsPage", page);
 					}
@@ -169,7 +200,7 @@ public class ShowForumController {
 					
 					model.put("forum", forum);
 					//MD: Prepare the Manuscript Viewer
-					if (forum.getDocument() != null) {
+					if (forum.getDocument() != null && !SubType.COURSE.equals(forum.getSubType())) {
 						Document document = forum.getDocument();
 						if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
 							DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
@@ -220,50 +251,12 @@ public class ShowForumController {
 					if (forum.getOption().getCanHaveSubForum()) {
 						// All forum have group by excepted document...
 						if (forum.getOption().getGroupBySubForum()) {
-							PaginationFilter paginationFilterForum = new PaginationFilter();
-							if (command.getForumsForPage() != null) {
-								paginationFilterForum.setElementsForPage(command.getForumsForPage());
-							} else {
-								paginationFilterForum.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
-								command.setForumsForPage(paginationFilterForum.getElementsForPage());
-							}
-							if (command.getForumPageNumber() != null) {
-								paginationFilterForum.setThisPage(command.getForumPageNumber());
-							} else {
-								paginationFilterForum.setThisPage(new Integer(1));
-								command.setForumPageNumber(paginationFilterForum.getThisPage());
-							}
-							if (command.getForumPageTotal() != null) {
-								paginationFilterForum.setPageTotal(command.getForumPageTotal());
-							} else {
-								paginationFilterForum.setPageTotal(null);
-							}
-							paginationFilterForum.addSortingCriteria("lastPost", "desc");
-							
+							PaginationFilter paginationFilterForum = getPaginationFilter(command, DEFAULT_ROWS_PER_PAGE, "lastPost", false, true);
 							Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
 							model.put("subForumsPage", page);
 						} else {
 							// paginationFilter to manage topics results..
-							PaginationFilter paginationFilterTopic = new PaginationFilter();
-							if (command.getTopicsForPage() != null) {
-								paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
-							} else {
-								paginationFilterTopic.setElementsForPage(new Integer(DEFAULT_ROWS_PER_PAGE));
-								command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
-							}
-							if (command.getTopicPageNumber() != null) {
-								paginationFilterTopic.setThisPage(command.getTopicPageNumber());
-							} else {
-								paginationFilterTopic.setThisPage(new Integer(1));
-								command.setTopicPageNumber(paginationFilterTopic.getThisPage());
-							}
-							if (command.getTopicPageTotal() != null) {
-								paginationFilterTopic.setPageTotal(command.getTopicPageTotal());
-							} else {
-								paginationFilterTopic.setPageTotal(null);
-							}
-							paginationFilterTopic.addSortingCriteria("lastPost", "desc");
-							
+							PaginationFilter paginationFilterTopic = getPaginationFilter(command, DEFAULT_ROWS_PER_PAGE, "lastPost", false, false);
 							Page topicPage = getCommunityService().getForumTopicsByParentForum(forum, paginationFilterTopic);
 							model.put("subForumsTopicsPage", topicPage);
 						}
@@ -277,28 +270,14 @@ public class ShowForumController {
 
 			if (forum.getOption().getCanHaveTopics()) {
 				// paginationFilter to manage topics results..
-				PaginationFilter paginationFilterTopic = new PaginationFilter();
-				if (command.getTopicsForPage() != null) {
-					paginationFilterTopic.setElementsForPage(command.getTopicsForPage());
-				} else {
-					paginationFilterTopic.setElementsForPage(new Integer(EXTENDED_ROWS_PER_PAGE));
-					command.setTopicsForPage(paginationFilterTopic.getElementsForPage());
-				}
-				if (command.getTopicPageNumber() != null) {
-					paginationFilterTopic.setThisPage(command.getTopicPageNumber());
-				} else {
-					paginationFilterTopic.setThisPage(new Integer(1));
-					command.setTopicPageNumber(paginationFilterTopic.getThisPage());
-				}
-				if (command.getTopicPageTotal() != null) {
-					paginationFilterTopic.setPageTotal(command.getTopicPageTotal());
-				} else {
-					paginationFilterTopic.setPageTotal(null);
-				}
-				paginationFilterTopic.addSortingCriteria("lastPost", "desc");
-	
+				PaginationFilter paginationFilterTopic = getPaginationFilter(command, EXTENDED_ROWS_PER_PAGE, "lastPost", false, false);
 				Page topicPage = getCommunityService().getForumTopics(forum, paginationFilterTopic);
 				model.put("topicsPage", topicPage);
+				
+				if (SubType.COURSE.equals(forum.getSubType())) {
+					Map<Integer, CourseTopicMode> topicsMap = getTeachingService().getCourseTopicsMode((List<ForumTopic>)topicPage.getList());
+					model.put("topicsMap", topicsMap);
+				}
 			}
 
 			Map<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
@@ -317,35 +296,9 @@ public class ShowForumController {
 			return new ModelAndView("community/ShowForum", model);
 		}
 	}
+	
 
-	/**
-	 * @param communityService the communityService to set
-	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(
-			ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the communityService
-	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
-	}
+	/* Privates */
 	
 	@SuppressWarnings("serial")
 	private boolean canAccessToForum(final Forum forum, Set<Authority> authorities) {
@@ -371,6 +324,50 @@ public class ShowForumController {
 			}
 		}
 		return allowed;
+	}
+	
+	private PaginationFilter getPaginationFilter(ShowForumCommand command, Integer defaultRowsPerPage, String sortingField, boolean ascSorting, boolean isForumFilter) {
+		PaginationFilter paginationFilter = new PaginationFilter();
+		if (!isForumFilter) {
+			if (command.getTopicsForPage() != null) {
+				paginationFilter.setElementsForPage(command.getTopicsForPage());
+			} else {
+				paginationFilter.setElementsForPage(defaultRowsPerPage);
+				command.setTopicsForPage(paginationFilter.getElementsForPage());
+			}
+			if (command.getTopicPageNumber() != null) {
+				paginationFilter.setThisPage(command.getTopicPageNumber());
+			} else {
+				paginationFilter.setThisPage(1);
+				command.setTopicPageNumber(paginationFilter.getThisPage());
+			}
+			if (command.getTopicPageTotal() != null) {
+				paginationFilter.setPageTotal(command.getTopicPageTotal());
+			} else {
+				paginationFilter.setPageTotal(null);
+			}
+		} else {
+			if (command.getForumsForPage() != null) {
+				paginationFilter.setElementsForPage(command.getForumsForPage());
+			} else {
+				paginationFilter.setElementsForPage(defaultRowsPerPage);
+				command.setForumsForPage(paginationFilter.getElementsForPage());
+			}
+			if (command.getForumPageNumber() != null) {
+				paginationFilter.setThisPage(command.getForumPageNumber());
+			} else {
+				paginationFilter.setThisPage(1);
+				command.setForumPageNumber(paginationFilter.getThisPage());
+			}
+			if (command.getForumPageTotal() != null) {
+				paginationFilter.setPageTotal(command.getForumPageTotal());
+			} else {
+				paginationFilter.setPageTotal(null);
+			}
+		}
+		
+		paginationFilter.addSortingCriteria(sortingField, ascSorting ? "asc" : "desc");
+		return paginationFilter;
 	}
 	
 	private Set<UserAuthority.Authority> getUserAuthorities(User user) {

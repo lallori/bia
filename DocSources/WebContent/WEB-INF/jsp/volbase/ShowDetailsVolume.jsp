@@ -59,27 +59,27 @@
 			</div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 				<c:choose>
-					<c:when test="${volume.digitized == true and not empty image}">
+					<c:when test="${not empty spine}">
 						<div id="SpineVolumeDigitDiv">
-							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${spine}&WID=120"/>">
 							<b><fmt:message key="volbase.showDetailsVolume.volumeSpine"/></b>
 							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
 							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
 						</div>
 					</c:when>
-					<c:when test="${volume.digitized == true and empty image}">
+					<c:when test="${not empty image}">
 						<div id="SpineVolumeDigitDiv">
-							<div id="SpineVolumeNotDigitDiv">
-								<span><fmt:message key="volbase.showDetailsVolume.spineNotAvailable"/></span>
-							</div>
+							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
 							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div id="SpineVolumeNotDigitDiv">
-							<span><fmt:message key="volbase.showDetailsVolume.toBeDigitized"/></span>
-						</div>
+						<c:if test="${volume.digitized == false}">
+							<div id="SpineVolumeNotDigitDiv">
+								<span><fmt:message key="volbase.showDetailsVolume.toBeDigitized"/></span>
+							</div>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
 			</security:authorize>

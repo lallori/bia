@@ -8,7 +8,7 @@
 	
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 
-	<c:url var="PageTurnerDialogUrl" value="/src/mview/RoundRobinPageTurnerDialog.do" >
+	<c:url var="PageTurnerDialogUrl" value="/src/mview/TeachingPageTurnerDialog.do" >
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
 		<c:param name="volNum" value="${documentExplorer.volNum}" />
 		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />

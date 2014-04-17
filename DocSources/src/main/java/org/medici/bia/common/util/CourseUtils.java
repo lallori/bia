@@ -27,81 +27,35 @@
  */
 package org.medici.bia.common.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.medici.bia.common.util.dom.DOMHelper;
-import org.medici.bia.domain.ForumPost;
-import org.w3c.dom.Node;
 
 /**
+ * Static method utilities to manage Teaching jobs.
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
 public class CourseUtils {
 	
-	public static String generateFolioLocationComment(Integer postId, String volume, String insert, String folio) {
-		String comment = "";
-		comment += "<div class='folioDetailsContainer folioDetailsComment_" + postId + "'>Volume <span class='volumeFragment'>" + volume + "</span>";
-		if (insert != null && insert.length() > 0) {
-			comment += " - Insert <span class='insertFragment'>" + insert + "</span>";
-		}
-		comment += " - Folio <span class='folioFragment'>" + folio + "</span></div>";
-		return comment + "";
+	/**
+	 * Returns encoded transcription (it substitutes carriage returns with html break row).<br/>
+	 * If null is provided it returns null. 
+	 * 
+	 * @param decodedTranscription the decoded transcription (with carriage returns)
+	 * @return the encoded transcription
+	 */
+	public static String encodeCourseTranscriptionSafely(String decodedTranscription) {
+		return decodedTranscription != null ? decodedTranscription.replaceAll("\r\n", "<br/>") : null;
 	}
 	
-	public static Map<Fragment, String> getPostFolioLocation(ForumPost courseTopicPost) {
-		Map<Fragment, String> returnMap = new HashMap<Fragment, String>();
-		String comment = getPostFolioLocationComment(courseTopicPost);
-		if (comment != null) {
-			DOMHelper domHelper = new DOMHelper(comment, true, true);
-			for (Fragment fragment : Fragment.values()) {
-				String frag = getFragmentContent(fragment.getName(), domHelper);
-				if (frag != null) {
-					returnMap.put(fragment, frag);
-				}
-			}
-		}
-		return returnMap.entrySet().size() > 0 ? returnMap : null;
+	/**
+	 * Returns decoded transcription (it substitutes html break rows with carriage returns).<br/>
+	 * if null is provided it returns null.
+	 * 
+	 * @param encodedTranscription the encoded transcription (with html break rows)
+	 * @return the decoded transcription
+	 */
+	public static String decodeCourseTranscriptionSafely(String encodedTranscription) {
+		return encodedTranscription != null ? encodedTranscription.replaceAll("<br/>", "\r\n") : null;
 	}
-	
-	public static String getPostFolioLocationComment(ForumPost courseTopicPost) {
-		if (courseTopicPost != null) {
-			String text = courseTopicPost.getText();
-			DOMHelper domHelper = new DOMHelper(text, true, true);
-			List<String> comments = domHelper.getComments();
-			if (comments.size() > 0) {
-				for(String comment : comments) {
-					if (comment.contains("folioDetailsComment_" + courseTopicPost.getPostId())) {
-						return comment;
-					}
-				}
-			}
-		}
-		return null;
-	}
-	
-	private static String getFragmentContent(String fragmentName, DOMHelper domHelper) {
-		List<Node> fragments = domHelper.findNodesByClass(fragmentName + "Fragment");
-		return fragments.size() > 0 ? fragments.get(0).getTextContent() :null;
-	}
-	
-	public static enum Fragment {
-		VOLUME("volume"),
-		INSERT("insert"),
-		FOLIO("folio");
-		
-		private String name;
-		
-		private Fragment(String name) {
-			this.name = name;
-		}
-		
-		public String getName() {
-			return name;
-		}
-	}
-
 }

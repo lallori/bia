@@ -1,5 +1,5 @@
 /*
- * ShowPreviewCourseTopicPost.java
+ * ShowIncrementalPostPreviewController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -33,7 +33,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.medici.bia.command.teaching.ShowPreviewCourseTopicPostCommand;
+import org.medici.bia.command.teaching.IncrementalPostPreviewCommand;
+import org.medici.bia.common.util.CourseUtils;
+import org.medici.bia.common.util.StringUtils;
+import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -51,8 +54,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value={"/teaching/ShowPreviewCourseTopicPost"})
-public class ShowPreviewCourseTopicPostController {
+@RequestMapping(value = "/teaching/ShowIncrementalPostPreview")
+public class ShowIncrementalPostPreviewController {
 	
 	@Autowired
 	private TeachingService teachingService;
@@ -66,7 +69,7 @@ public class ShowPreviewCourseTopicPostController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") ShowPreviewCourseTopicPostCommand command, HttpSession httpSession) {
+	public ModelAndView processSubmit(@ModelAttribute("command") IncrementalPostPreviewCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		User user = (User) httpSession.getAttribute("user");
 
@@ -76,20 +79,32 @@ public class ShowPreviewCourseTopicPostController {
 			}
 			
 		} catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("error/ShowPreviewCourseTopicPost", model);
+			return new ModelAndView("error/ShowIncrementalPostPreview", model);
 		}
 		
 		
 		Date now = new Date();
-		ForumPost courseTopicPost = new ForumPost(command.getId());
-		courseTopicPost.setText(command.getText());
-		courseTopicPost.setSubject(command.getSubject());
-		courseTopicPost.setDateCreated(now);
-		courseTopicPost.setLastUpdate(now);
-		courseTopicPost.setUser(user);
+		ForumPost post = new ForumPost(command.getPostId());
+		post.setText(StringUtils.nullTrim(command.getText()));
+		post.setSubject(StringUtils.nullTrim(command.getSubject()));
+		post.setDateCreated(now);
+		post.setLastUpdate(now);
+		post.setUser(user);
+		
+		CoursePostExt extendedPost = new CoursePostExt();
+		extendedPost.setPost(post);
+		extendedPost.setTranscription(CourseUtils.encodeCourseTranscriptionSafely(StringUtils.nullTrim(command.getTranscription())));
+		extendedPost.setVolNum(command.getVolNum());
+		extendedPost.setVolLetExt(command.getVolLetExt());
+		extendedPost.setInsertNum(command.getInsertNum());
+		extendedPost.setInsertLet(command.getInsertLet());
+		extendedPost.setFolioNum(command.getFolioNum());
+		extendedPost.setFolioMod(command.getFolioMod());
+		extendedPost.setFolioRV(command.getFolioRV());
 
-		model.put("post", courseTopicPost);
+		model.put("extendedPost", extendedPost);
 
-		return new ModelAndView("teaching/ShowPreviewCourseTopicPost", model);
+		return new ModelAndView("teaching/ShowIncrementalPostPreview", model);
 	}
+
 }

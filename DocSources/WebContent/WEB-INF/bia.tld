@@ -41,6 +41,12 @@
         <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String getApplicationProperty(java.lang.String)</function-signature>
     </function>
+    
+    <function>
+        <name>getValue</name>
+        <function-class>org.medici.bia.common.util.JSTLFunctions</function-class>
+        <function-signature>java.lang.Object getValue(java.util.Map, java.lang.Object)</function-signature>
+    </function>
 
     <function>
         <name>substring</name>

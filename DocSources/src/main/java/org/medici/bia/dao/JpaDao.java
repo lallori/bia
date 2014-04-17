@@ -86,6 +86,22 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	private EntityManager entityManager;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+	
+	/**
+	 * 
+	 * @param entityManager
+	 */
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
 	/**
 	 * 
@@ -162,6 +178,18 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		fullTextQuery.setProjection(outputFields);
 
 		return fullTextQuery; 
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException {
+		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+
+		Query query = getEntityManager().createQuery(countQuery);
+		
+		return new Long((Long) query.getSingleResult());
 	}
 
 	/**
@@ -543,11 +571,53 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 
 	/**
-	 * 
-	 * @return
+	 * Returns the first result of the provided query in a safe mode (it does not
+	 * throw exceptions if no result is found).
+	 *  
+	 * @param query the query
+	 * @return the first result found
 	 */
-	public EntityManager getEntityManager() {
-		return entityManager;
+	@SuppressWarnings("unchecked")
+	protected E getFirst(Query query) {
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+		
+		List<E> results = (List<E>)query.getResultList();
+		
+		return results.size() == 1 ? results.get(0) : null;
+	}
+	
+	/**
+	 * Returns the &quot;order by&quot; clause starting from a list of sorting criteria.
+	 * 
+	 * @param sortingCriterias list of sorting criterias
+	 * @return the &quot;order by&quot; clause
+	 */
+	protected String getOrderByQuery(List<SortingCriteria> sortingCriterias) {
+		return getOrderByQuery(sortingCriterias, null);
+	}
+	
+	/**
+	 * Returns the &quot;order by&quot; clause starting from a list of sorting criteria.
+	 * 
+	 * @param sortingCriterias list of sorting criterias
+	 * @param masterEntity the name of the entity to prepend to sorting columns
+	 * @return the &quot;order by&quot; clause
+	 */
+	protected String getOrderByQuery(List<SortingCriteria> sortingCriterias, String masterEntity) {
+		StringBuilder orderBySQL = new StringBuilder(0);
+		if (sortingCriterias != null && sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			int count = 1;
+			for(SortingCriteria criteria : sortingCriterias) {
+				orderBySQL.append(masterEntity != null && !"".equals(masterEntity.trim()) ? masterEntity.trim() + "." : "")
+					.append(criteria.getColumn())
+					.append(Order.ASC.equals(criteria.getOrder()) ? " ASC " : " DESC ")
+					.append(count < sortingCriterias.size() ? ", " : "");
+				count++;
+			}
+		}
+		return orderBySQL.toString();
 	}
 
 	/**
@@ -677,20 +747,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 		// We manage sorting (this manages sorting on multiple fields)
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
 		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  
@@ -703,26 +761,6 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		return page;
 	}
 		
-	/**
-	 * 
-	 */
-	@Override
-	public Long countSearchMYSQL(org.medici.bia.common.search.Search searchContainer) throws PersistenceException {
-		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
-
-		Query query = getEntityManager().createQuery(countQuery);
-		
-		return new Long((Long) query.getSingleResult());
-	}
-
-	/**
-	 * 
-	 * @param entityManager
-	 */
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	/**
 	 * 
 	 * @param fromDate

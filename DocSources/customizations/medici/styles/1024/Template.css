@@ -748,7 +748,7 @@ $('.searchResult').live('click', function() {
 
 /* ENTRY MENU - MODAL WINDOW */
 
-#EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1, #savedSearchFiltersDiv h1, #DeleteThisRecordDiv h1, #YesDeleteThisRecordDiv h1, #showChoiceContent h1{
+#EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1, #savedSearchFiltersDiv h1, #DeleteThisRecordDiv h1, #YesDeleteThisRecordDiv h1 {
 	text-align:center;
 	font-size: 12px;
 	font-weight:normal;

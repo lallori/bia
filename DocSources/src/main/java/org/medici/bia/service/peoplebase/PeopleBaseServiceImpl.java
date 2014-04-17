@@ -34,7 +34,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,6 +53,7 @@ import org.medici.bia.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.EpLinkUtils;
+import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.PersonUtils;
 import org.medici.bia.dao.altname.AltNameDAO;
@@ -762,13 +762,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				forum.setFullPath(parentForum.getFullPath() + forum.getForumId() + ".");
 				getForumDAO().merge(forum);
 
-				ForumOption forumOption = new ForumOption(forum);
-				forumOption.setGroupBySubForum(Boolean.TRUE);
-				forumOption.setCanHaveTopics(Boolean.TRUE);
-				forumOption.setCanDeletePosts(Boolean.TRUE);
-				forumOption.setCanDeleteTopics(Boolean.TRUE);
-				forumOption.setCanEditPosts(Boolean.TRUE);
-				forumOption.setCanPostReplys(Boolean.TRUE);
+				ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(forum);
 				getForumOptionDAO().persist(forumOption);
 
 				// this method call is mandatory to increment topic number on parent forum

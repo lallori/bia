@@ -1924,28 +1924,42 @@ INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`) VALUES ('openannot
 INSERT INTO bia.tblApplicationTemplate (`name`, `template`) VALUES ('template.annotationDOM', '/WEB-INF/templates/annotationDOM.jsp');
 INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('openannotation/ShowOpenAnnotations', 'main', '/WEB-INF/jsp/openannotation/ShowOpenAnnotations.jsp', 0);
 
--- round robin transcription -> template and pages definitions
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('docbase/ShowChoiceCoursesOrDocumentsForumModalWindow', 'template.partialDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.roundRobinTranscriptionDOM', '/WEB-INF/templates/roundRobinTranscriptionDOM.jsp');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinTranscriptionDOM', 'template.roundRobinTranscriptionDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinTranscription', 'template.partialDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/EditRoundRobinPost', 'template.partialDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowPreviewCourseTopicPost', 'template.partialDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowCourseTopicActions', 'template.partialDOM');
-
+-- teaching module -> general definitions
 ALTER TABLE `tblApplicationTemplateAttributes` CHANGE COLUMN `templateName` `templateName` VARCHAR(255) NOT NULL FIRST;
 
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('docbase/ShowChoiceCoursesOrDocumentsForumModalWindow', 'main', '/WEB-INF/jsp/docbase/ShowChoiceCoursesOrDocumentsForumModalWindow.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinTranscriptionDOM', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinTranscriptionDOM.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinTranscription', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinTranscription.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditRoundRobinPost', 'main', '/WEB-INF/jsp/teaching/EditRoundRobinPost.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowPreviewCourseTopicPost', 'main', '/WEB-INF/jsp/teaching/ShowPreviewCourseTopicPost.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowCourseTopicActions', 'main', '/WEB-INF/jsp/teaching/ShowCourseTopicActions.jsp', 0);
-
--- round robin transcription -> manuscript viewer definitions
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('docbase/ShowChoiceCoursesOrDocumentsForumModalWindow', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.teachingManuscriptViewerHtmlDOM', '/WEB-INF/templates/teachingManuscriptViewerHtmlDOM.jsp');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('mview/ShowTeachingManuscriptViewerHtml', 'template.teachingManuscriptViewerHtmlDOM');
-INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('mview/RoundRobinPageTurnerDialog', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('mview/TeachingPageTurnerDialog', 'template.partialDOM');
 
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/ShowTeachingManuscriptViewerHtml', 'manuscriptviewer', '/WEB-INF/jsp/mview/RoundRobinInManuscriptViewerHtml.jsp', 0);
-INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/RoundRobinPageTurnerDialog', 'main', '/WEB-INF/jsp/mview/RoundRobinPageTurnerDialog.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('docbase/ShowChoiceCoursesOrDocumentsForumModalWindow', 'main', '/WEB-INF/jsp/docbase/ShowChoiceCoursesOrDocumentsForumModalWindow.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/ShowTeachingManuscriptViewerHtml', 'manuscriptviewer', '/WEB-INF/jsp/mview/TeachingInManuscriptViewerHtml.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('mview/TeachingPageTurnerDialog', 'main', '/WEB-INF/jsp/mview/TeachingPageTurnerDialog.jsp', 0);
+
+-- teaching module - Round Robin Transcription -> templates and page definitions
+INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.roundRobinCourseTranscriptionDOM', '/WEB-INF/templates/roundRobinCourseTranscriptionDOM.jsp');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinCourseTranscriptionDOM', 'template.roundRobinCourseTranscriptionDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/EditRoundRobinPost', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinActions', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinCourseTranscription', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowRoundRobinPostPreview', 'template.partialDOM');
+
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinCourseTranscriptionDOM', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinCourseTranscriptionDOM.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditRoundRobinPost', 'main', '/WEB-INF/jsp/teaching/EditRoundRobinPost.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinActions', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinActions.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinCourseTranscription.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowRoundRobinPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowRoundRobinPostPreview.jsp', 0);
+
+-- teaching module - Incremental Transcription -> templates and page definitions
+INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.incrementalCourseTranscriptionDOM', '/WEB-INF/templates/incrementalCourseTranscriptionDOM.jsp');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalCourseTranscriptionDOM', 'template.incrementalCourseTranscriptionDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/EditIncrementalPost', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalActions', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalPostPreview', 'template.partialDOM');
+
+INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscriptionDOM', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscriptionDOM.jsp', 0);
+INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditIncrementalPost', 'main', '/WEB-INF/jsp/teaching/EditIncrementalPost.jsp', 0);
+INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalActions', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalActions.jsp', 0);
+INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscription.jsp', 0);
+INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalPostPreview.jsp', 0);

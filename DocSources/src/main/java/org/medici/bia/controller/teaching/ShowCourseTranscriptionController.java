@@ -1,5 +1,5 @@
 /*
- * ShowDocumentRoundRobinTranscription.java
+ * ShowCourseTranscriptionController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -33,11 +33,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.medici.bia.command.teaching.ShowDocumentRoundRobinTranscriptionCommand;
+import org.medici.bia.command.teaching.CourseTranscriptionCommand;
 import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.CoursePostExt;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -57,14 +58,23 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class ShowDocumentRoundRobinTranscriptionController {
-	
+public class ShowCourseTranscriptionController {
+
 	@Autowired
 	private ApplicationAccessContainer applicationAccessContainer;
 
 	@Autowired
 	private TeachingService teachingService;
 	
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
+	}
+
 	public TeachingService getTeachingService() {
 		return teachingService;
 	}
@@ -72,55 +82,84 @@ public class ShowDocumentRoundRobinTranscriptionController {
 	public void setTeachingService(TeachingService teachingService) {
 		this.teachingService = teachingService;
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/teaching/ShowDocumentRoundRobinTranscription", method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowDocumentRoundRobinTranscriptionCommand command) {
+	@RequestMapping(value = "/teaching/ShowCourseTranscription", method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("command") CourseTranscriptionCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try {
 			model.put("editingMode", command.getEditingMode() != null ? command.getEditingMode() : Boolean.FALSE);
 			
-			// Control to anonymous access
-			if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().getName().equals("java.lang.String")) {
-				model.put("account", null);
+			ForumTopic courseTopic;
+			if (!Boolean.FALSE.equals(command.getCompleteDOM())) {
+				courseTopic = getTeachingService().getCourseTopicForView(command.getTopicId());
 			} else {
-				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+				courseTopic = getTeachingService().findCourseTopic(command.getTopicId());
 			}
+			model.put("resourcesForum", courseTopic.getForum().getForumId());
 			
-			ForumTopic courseTopic = getTeachingService().getCourseTopicForView(command.getTopicId());
-			
-			model.put("topic", courseTopic);
-			//model.put("subscribed", getCommunityService().ifTopicSubscribed(courseTopic.getTopicId()));
+			CourseTopicMode transcriptionMode = CourseTopicMode.findByName(command.getTranscriptionMode());
+			if (transcriptionMode == null) {
+				transcriptionMode = getTeachingService().getCourseTopicMode(command.getTopicId());
+			}
 			
 			if (Boolean.FALSE.equals(command.getCompleteDOM())) {
-				PaginationFilter filter = getPaginationFilter(command);
+				// User cannot be anonymous due to security access controls
+				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+				model.put("topic", courseTopic);
+				
+				PaginationFilter filter = getPaginationFilter(command, CourseTopicMode.I.equals(transcriptionMode) ? "lastUpdate" : "post.postId", true);
 				Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
 				model.put("postsPage", postsPage);
-
-				Set<String> accountIds = new HashSet<String>();
-				for(ForumPost post : ((List<ForumPost>)postsPage.getList())) {
-					accountIds.add(post.getUser().getAccount());
-				}
-				Map<String, UserAuthority> maxAuthorities = new HashMap<String, UserAuthority>();
-				if (accountIds.size() > 0) {
-					maxAuthorities = getTeachingService().getUsersRoundRobinAuthority(accountIds);
-				}
-				model.put("maxAuthorities", maxAuthorities);
+				model.put("maxAuthorities", getMaxAuthorities((List<CoursePostExt>)postsPage.getList()));
 				model.put("onlineUsers", applicationAccessContainer.getTeachingOnlineUsers());
 				
-				return new ModelAndView("teaching/ShowRoundRobinTranscription", model);
+				switch (transcriptionMode) {
+					case C:
+						return new ModelAndView("teaching/ShowCheckPointCourseTranscription", model);
+					case I:
+						return new ModelAndView("teaching/ShowIncrementalCourseTranscription", model);
+					case R:
+						return new ModelAndView("teaching/ShowRoundRobinCourseTranscription", model);
+					default:
+						return new ModelAndView("error/ShowCourseTranscription", model);
+				}
 			}
 			
-			return new ModelAndView("teaching/ShowRoundRobinTranscriptionDOM", model);
+			switch (transcriptionMode) {
+				case C:
+					return new ModelAndView("teaching/ShowCheckPointCourseTranscriptionDOM", model);
+				case I:
+					return new ModelAndView("teaching/ShowIncrementalCourseTranscriptionDOM", model);
+				case R:
+					return new ModelAndView("teaching/ShowRoundRobinCourseTranscriptionDOM", model);
+				default:
+					return new ModelAndView("error/ShowCourseTranscriptionDOM", model);
+				
+			}
 			
 		} catch (ApplicationThrowable th) {
 			model.put("applicationThrowable", th);
-			return new ModelAndView("error/ShowRoundRobinTranscription", model);
+			return new ModelAndView("error/CourseTranscription", model);
 		}
 	}
 	
-	private PaginationFilter getPaginationFilter(ShowDocumentRoundRobinTranscriptionCommand command) {
+	/* Privates */
+
+	private Map<String, UserAuthority> getMaxAuthorities(List<CoursePostExt> posts) throws ApplicationThrowable {
+		Set<String> accountIds = new HashSet<String>();
+		for(CoursePostExt post : posts) {
+			accountIds.add(post.getPost().getUser().getAccount());
+		}
+		Map<String, UserAuthority> maxAuthorities = new HashMap<String, UserAuthority>();
+		if (accountIds.size() > 0) {
+			maxAuthorities = getTeachingService().getUsersCourseAuthority(accountIds);
+		}
+		return maxAuthorities;
+	}
+	
+	private PaginationFilter getPaginationFilter(CourseTranscriptionCommand command, String sortingField, boolean ascending) {
 		if (command.getPostsForPage() == null) {
 			command.setPostsForPage(10);
 		}
@@ -132,9 +171,8 @@ public class ShowDocumentRoundRobinTranscriptionController {
 		paginationFilterTopic.setElementsForPage(command.getPostsForPage());
 		paginationFilterTopic.setThisPage(command.getPostPageNumber());
 		paginationFilterTopic.setPageTotal(command.getPostPageTotal());
-		paginationFilterTopic.addSortingCriteria("postId", "asc");
+		paginationFilterTopic.addSortingCriteria(sortingField, ascending ? "ASC" : "DESC");
 		
 		return paginationFilterTopic;
 	}
-
 }

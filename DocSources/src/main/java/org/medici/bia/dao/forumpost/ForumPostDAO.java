@@ -55,7 +55,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @param forumTopicId the forum topic identifier
 	 * @return the number of active posts
 	 */
-	long countPostsFromTopic(Integer forumTopicId);
+	long countTopicPosts(Integer forumTopicId);
 
 	/**
 	 * 
@@ -63,7 +63,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException;
+	Integer deleteAllForumPosts(Integer forumId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -71,49 +71,7 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param topicId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param postId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	Boolean findIfPostIsParent(Integer postId) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param forum
-	 * @return
-	 * @throws PersistenceException
-	 */
-	ForumPost findLastPostFromForum(Forum forum) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param forumTopic
-	 * @return
-	 * @throws PersistenceException
-	 */
-	ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException;
-
-	/**
-	 * Returns list of posts on a specific topic.
-	 * 
-	 * @param forumTopic
-	 * @param paginationFilterPost
-	 * @return
-	 * @throws PersistenceException
-	 */
-	Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
+	Integer deleteAllForumTopicPosts(Integer topicId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -123,12 +81,68 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
 	
 	/**
+	 * Returns the first created post of a topic.
 	 * 
-	 * @param postId
-	 * @return
+	 * @param topicId the topic identifier
+	 * @return the first post
 	 * @throws PersistenceException
 	 */
-	ForumPost getForumPost(Integer postId) throws PersistenceException;
+	ForumPost getFirstForumTopicPostByCreationDate(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * Returns the first modified post of a topic.
+	 *  
+	 * @param topicId the topic identifier
+	 * @return the first post
+	 * @throws PersistenceException
+	 */
+	ForumPost getFirstForumTopicPostByLastUpdate(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * Returns a paginated list of topic posts.
+	 * 
+	 * @param forumTopic the forum topic
+	 * @param paginationFilterPost the pagination filter
+	 * @return the paginated list of topic posts
+	 * @throws PersistenceException
+	 */
+	Page getForumTopicPosts(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * Retrieves the last created post in a forum.
+	 * 
+	 * @param forum the forum
+	 * @return the last post found
+	 * @throws PersistenceException
+	 */
+	ForumPost getLastForumPostByCreationDate(Forum forum) throws PersistenceException;
+	
+	/**
+	 * Retrieves the last modified post in a forum.
+	 * 
+	 * @param forum the forum
+	 * @return the last post found
+	 * @throws PersistenceException
+	 */
+	ForumPost getLastForumPostByLastUpdate(Forum forum) throws PersistenceException;
+	
+	/**
+	 * Returns the last created post of a topic.
+	 * 
+	 * @param forumTopic the topic
+	 * @return the last post of the topic
+	 * @throws PersistenceException
+	 */
+	ForumPost getLastForumTopicPostByCreationDate(ForumTopic forumTopic) throws PersistenceException;
+	
+	/**
+	 * Returns the last modified post of a topic.
+	 * 
+	 * @param forumTopic the topic
+	 * @return the last post of the topic
+	 * @throws PersistenceException
+	 */
+	ForumPost getLastForumTopicPostByLastUpdate(ForumTopic forumTopic) throws PersistenceException;
 
 	/**
 	 * 
@@ -145,6 +159,14 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param postId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Boolean isParentPost(Integer postId) throws PersistenceException;
 
 	/**
 	 * 
@@ -154,4 +176,5 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	 * @throws PersistenceException
 	 */
 	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
 }

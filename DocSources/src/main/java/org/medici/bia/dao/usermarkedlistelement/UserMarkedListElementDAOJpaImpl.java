@@ -35,8 +35,6 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.people.PeopleDAO;
@@ -129,20 +127,8 @@ public class UserMarkedListElementDAOJpaImpl extends JpaDao<Integer, UserMarkedL
 		String objectsQuery = "FROM UserMarkedListElement WHERE idMarkedList IN (SELECT idMarkedList FROM UserMarkedList WHERE user=:user)";
 		
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC "));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				}
-			}
-		}
 		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.debug("JPQL Query : " + jpql);
 
         Query query = getEntityManager().createQuery(jpql);

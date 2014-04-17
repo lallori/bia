@@ -49,8 +49,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value={"/src/mview/RoundRobinPageTurnerDialog"})
-public class RoundRobinPageTurnerDialogController {
+@RequestMapping(value={"/src/mview/TeachingPageTurnerDialog"})
+public class TeachingPageTurnerDialogController {
 	
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
@@ -99,6 +99,6 @@ public class RoundRobinPageTurnerDialogController {
 			model.put("applicationThrowable", applicationThrowable);
 		}
 		
-		return new ModelAndView("mview/RoundRobinPageTurnerDialog", model);
+		return new ModelAndView("mview/TeachingPageTurnerDialog", model);
 	}
 }

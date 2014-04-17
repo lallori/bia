@@ -37,8 +37,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.PageUtils;
@@ -284,20 +282,7 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		String objectsQuery = userMessageSearch.toJPAQuery();
 		paginationFilter = generatePaginationFilterMYSQL(userMessageSearch, paginationFilter);
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		String jpql = objectsQuery + orderBySQL.toString();
+		String jpql = objectsQuery + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql );
 		// We set pagination  

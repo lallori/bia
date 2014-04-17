@@ -17,7 +17,7 @@
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 	</c:url>
 	
-	<c:url var="currentPage" value="/src/mview/RoundRobinPageTurnerDialog.do">
+	<c:url var="currentPage" value="/src/mview/TeachingPageTurnerDialog.do">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />

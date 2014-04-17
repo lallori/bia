@@ -40,8 +40,6 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
@@ -56,6 +54,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+ * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  * 
  * @see org.medici.bia.domain.ForumPost
  * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
@@ -89,8 +88,8 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long countPostsFromTopic(Integer forumTopicId) {
-		Query query = getEntityManager().createQuery("SELECT COUNT(*) FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false");
+	public long countTopicPosts(Integer forumTopicId) {
+		Query query = getEntityManager().createQuery("SELECT COUNT(*) FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete = false");
 		query.setParameter("topicId", forumTopicId);
 		try {
 			return (Long) query.getSingleResult();
@@ -103,8 +102,8 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer deleteForumPostsFromForum(Integer forumId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE forum.forumId=:forumId");
+	public Integer deleteAllForumPosts(Integer forumId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE forum.forumId = :forumId");
 		query.setParameter("forumId", forumId);
 		
 		return query.executeUpdate();
@@ -114,8 +113,8 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer deleteForumPostsFromForumTopic(Integer topicId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE topic.topicId=:topicId");
+	public Integer deleteAllForumTopicPosts(Integer topicId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE topic.topicId = :topicId");
 		query.setParameter("topicId", topicId);
 		
 		return query.executeUpdate();
@@ -126,196 +125,8 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ForumPost findFirstPostByTopicId(Integer topicId) throws PersistenceException {
-		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false order by dateCreated asc";
-
-		if (topicId == null) {
-			return null;
-		}
-		
-		Query query = null;
-		logger.debug("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", topicId);
-
-        // We set pagination  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ForumPost getForumPost(Integer postId) throws PersistenceException {
-		if (postId == null) {
-			return null;
-		}
-		
-		String jpql = "FROM ForumPost WHERE postId=:postId";
-
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("postId", postId);
-		logger.debug("JPQL Query : " + jpql);
-
-        // We set pagination  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Boolean findIfPostIsParent(Integer postId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM ForumPost WHERE parentPost.postId=:postId AND logicalDelete=false ");
-		query.setParameter("postId", postId);
-		
-		List<ForumPost> result = query.getResultList();
-		if(result.size() > 0) {
-			return Boolean.TRUE;
-		} else {
-			return Boolean.FALSE;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ForumPost findLastPostFromForum(Forum forum) throws PersistenceException {
-		StringBuffer jpql = new StringBuffer("FROM ForumPost  WHERE forum.fullPath LIKE '%.");
-		jpql.append(forum.getForumId());
-		jpql.append(".%' AND logicalDelete=false order by dateCreated desc");
-		
-		Query query = getEntityManager().createQuery(jpql.toString());
-
-        // We set pagination to obtain first post...  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public ForumPost findLastPostFromForumTopic(ForumTopic forumTopic) throws PersistenceException {
-		String jpql = "FROM ForumPost  WHERE topic.topicId = :topicId AND logicalDelete=false order by dateCreated desc";
-
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", forumTopic.getTopicId());
-
-        // We set pagination to obtain first post...  
-		query.setFirstResult(0);
-		query.setMaxResults(1);
-
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		if (list.size() == 1) {
-			return list.get(0);
-		}
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
-		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete=false ";
-
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		if (forumTopic == null) {
-			return page;
-		}
-		
-		Query query = null;
-		// We set size of result.
-		if (paginationFilter.getPageTotal() == null) {
-			String countQuery = "SELECT COUNT(*) " + queryString;
-	        
-			query = getEntityManager().createQuery(countQuery);
-	        query.setParameter("topicId", forumTopic.getTopicId());
-
-			page.setTotal(new Long((Long) query.getSingleResult()));
-			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
-		} else {
-			page.setTotal(paginationFilter.getTotal());
-			page.setTotalPages(paginationFilter.getPageTotal());
-		}
-
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		String jpql = queryString + orderBySQL.toString();
-		logger.debug("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", forumTopic.getTopicId());
-
-        // We set pagination  
-		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
-		query.setMaxResults(page.getElementsForPage());
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
-
-		// We set search result on return method
-		page.setList(list);
-		
-		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
 	public Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException {
-		String jpql = "SELECT topic.topicId, ROUND(count(postId)/10), lastUpdate from ForumPost where logicalDelete = 0 GROUP BY topic ORDER BY lastUpdate ASC";
+		String jpql = "SELECT topic.topicId, ROUND(COUNT(postId)/10), lastUpdate FROM ForumPost WHERE logicalDelete = false GROUP BY topic ORDER BY lastUpdate ASC";
 
 		Query query = getEntityManager().createQuery(jpql );
 		query.setFirstResult(PageUtils.calculeStart(page, numberOfTopicsForPage));
@@ -335,14 +146,110 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 
         return retValue;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getFirstForumTopicPostByCreationDate(Integer topicId) throws PersistenceException {
+		return getFirstForumTopicPost(topicId, true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getFirstForumTopicPostByLastUpdate(Integer topicId) throws PersistenceException {
+		return getFirstForumTopicPost(topicId, false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page getForumTopicPosts(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
+		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete = false ";
 
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		if (forumTopic == null) {
+			return page;
+		}
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getPageTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+	        
+			query = getEntityManager().createQuery(countQuery);
+	        query.setParameter("topicId", forumTopic.getTopicId());
+
+			page.setTotal((Long) query.getSingleResult());
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(paginationFilter.getPageTotal());
+		}
+
+		String jpql = queryString + getOrderByQuery(paginationFilter.getSortingCriterias());
+		logger.debug("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("topicId", forumTopic.getTopicId());
+
+        // We set pagination  
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		// We set search result on return method
+		page.setList(list);
+		
+		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getLastForumPostByCreationDate(Forum forum) throws PersistenceException {
+		return getLastForumPost(forum.getForumId(), true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getLastForumPostByLastUpdate(Forum forum) throws PersistenceException {
+		return getLastForumPost(forum.getForumId(), false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getLastForumTopicPostByCreationDate(ForumTopic forumTopic) throws PersistenceException {
+		return getLastForumTopicPost(forumTopic.getTopicId(), true);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost getLastForumTopicPostByLastUpdate(ForumTopic forumTopic) throws PersistenceException {
+		return getLastForumTopicPost(forumTopic.getTopicId(), false);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getMostActiveForumByUser(User user) throws PersistenceException {
-		String jpql = "SELECT p.forum FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.forum ORDER BY count(*) DESC";
+		String jpql = "SELECT p.forum FROM ForumPost p WHERE p.user.account = :account AND p.logicalDelete = false GROUP BY p.forum ORDER BY COUNT(*) DESC";
 
 		Query query = getEntityManager().createQuery(jpql);
         query.setParameter("account", user.getAccount());
@@ -366,7 +273,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	@SuppressWarnings("unchecked")
 	@Override
 	public ForumTopic getMostActiveTopicByUser(User user) throws PersistenceException {
-		String jpql = "SELECT p.topic FROM ForumPost p WHERE p.user.account =:account AND p.logicalDelete=false GROUP BY p.topic ORDER BY count(*) DESC";
+		String jpql = "SELECT p.topic FROM ForumPost p WHERE p.user.account = :account AND p.logicalDelete = false GROUP BY p.topic ORDER BY COUNT(*) DESC";
 
 		Query query = getEntityManager().createQuery(jpql);
         query.setParameter("account", user.getAccount());
@@ -383,6 +290,32 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isParentPost(Integer postId) throws PersistenceException {
+		String jpql = "SELECT COUNT(*) FROM ForumPost WHERE parentPost.postId = :postId AND logicalDelete = false ";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("postId", postId);
+		
+		Long count = (Long)query.getSingleResult();
+		return count > 0;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE ForumPost SET user.account = :newAccount WHERE user.account = :originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -398,48 +331,17 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 			String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
 	        
 			query = getEntityManager().createQuery(countQuery);
-			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotal((Long) query.getSingleResult());
 			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
 		}
 
-		String objectsQuery = searchContainer.toJPAQuery();
-//		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
-		
-//		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-//		StringBuilder orderBySQL = new StringBuilder(0);
-//		if (sortingCriterias.size() > 0) {
-//			orderBySQL.append(" ORDER BY ");
-//			for (int i=0; i<sortingCriterias.size(); i++) {
-//				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-//				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-//				if (i<(sortingCriterias.size()-1)) {
-//					orderBySQL.append(", ");
-//				} 
-//			}
-//		}
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for(int i = 0; i < sortingCriterias.size(); i++){
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if(i < (sortingCriterias.size() - 1)){
-					orderBySQL.append(", ");
-				}
-			}
-		}
-		
-		String jpql = objectsQuery + orderBySQL.toString();
-//		String jpql = objectsQuery;
+		String jpql = searchContainer.toJPAQuery() + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql );
+		query = getEntityManager().createQuery(jpql);
 		// We set pagination  
 		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
 		query.setMaxResults(page.getElementsForPage());
 
-		// We manage sorting (this manages sorting on multiple fields)
-		
 		// We set search result on return method
 		page.setList(query.getResultList());
 		
@@ -447,17 +349,59 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	}
 
 
+	/* Privates */
+	
 	/**
-	 * {@inheritDoc}
+	 * Returns the first post of a topic (by creation date or by last update).
+	 * 
+	 * @param topicId the topic identifier
+	 * @param byCreationDate if true the creation date is considered, otherwise the last update date is considered
+	 * @return the first post of the topic
+	 * @throws PersistenceException
 	 */
-	@Override
-	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
-		String jpql = "UPDATE ForumPost SET user.account=:newAccount WHERE user.account=:originalAccount";
+	private ForumPost getFirstForumTopicPost(Integer topicId, boolean byCreationDate) throws PersistenceException {
+		return getForumTopicBoundPost(topicId, byCreationDate, true);
+	}
+	
+	/**
+	 * Returns the last post of a topic (by creation date or by last update).
+	 * 
+	 * @param topicId the topic identifier
+	 * @param byCreationDate if true the creation date is considered, otherwise the last update date is considered
+	 * @return the last post of the topic
+	 * @throws PersistenceException
+	 */
+	private ForumPost getLastForumTopicPost(Integer topicId, boolean byCreationDate) throws PersistenceException {
+		return getForumTopicBoundPost(topicId, byCreationDate, false);
+	}
+	
+	private ForumPost getForumTopicBoundPost(Integer topicId, boolean byCreationDate, boolean first) throws PersistenceException {
+		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete = false ORDER BY ";
+		jpql += byCreationDate ? "dateCreated " : "lastUpdate ";
+		jpql += first ? "ASC" : "DESC";
+		
 		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("newAccount", newAccount);
-		query.setParameter("originalAccount", originalAccount);
-
-		return query.executeUpdate();
+		query.setParameter("topicId", topicId);
+		
+		return getFirst(query);
+	}
+	
+	/**
+	 * Returns the first post of a forum (by creation date or by last update).
+	 * 
+	 * @param forum the forum
+	 * @param byCreationDate if true the creation date is considered, otherwise the last update date is considered
+	 * @return the first post of the forum
+	 */
+	private ForumPost getLastForumPost(Integer forumId, boolean byCreationDate) {
+		StringBuffer jpql = new StringBuffer("FROM ForumPost WHERE forum.fullPath LIKE '%.");
+		jpql.append(forumId)
+			.append(".%' AND logicalDelete = false ORDER BY ")
+			.append(byCreationDate ? "dateCreated DESC" : "lastUpdate DESC");
+		
+		Query query = getEntityManager().createQuery(jpql.toString());
+		
+		return getFirst(query);
 	}
 
 }

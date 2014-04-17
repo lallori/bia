@@ -24,14 +24,16 @@
 		
 		<link rel="stylesheet" type="text/css" href="<c:url value='/styles/1024/js/jquery-ui.css'/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/teaching.css"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/incrementalTranscription.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value='/styles/1024/js/jquery_layout.css'/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/modalbox-custom.css" />" />
 		
 		<script type="text/javascript" src="<c:url value='/scripts/jquery.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/scripts/jquery-ui.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value='/scripts/teaching/jquery.layout.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/scripts/teaching/teaching.commons.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/scripts/teaching/teaching.commons.js'/>"></script> <!-- ??? -->
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js" />"></script>

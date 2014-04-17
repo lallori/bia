@@ -35,9 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
@@ -47,10 +44,8 @@ import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.ListBeanUtils;
 import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.common.util.VolumeUtils;
-import org.medici.bia.domain.Course;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
-import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.SearchFilter.SearchType;
@@ -65,7 +60,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -278,32 +272,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);		
 	}
 	
-	@RequestMapping(value = "/src/docbase/CreateRoundRobinTranscription", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> createRoundRobinTranscriptionCourse(
-			@RequestParam(value="entryId", required=true) Integer docId,
-			@RequestParam(value="courseTitle", required=true) String topicTitle,
-			@RequestParam(value="courseId", required=false) Integer courseId,
-			HttpServletRequest httpServletRequest) {
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		try {
-			// FIXME: remove this when course management features are implemented
-			Integer cId = courseId;
-			if (courseId == null || courseId <= 0) {
-				Course course = getTeachingService().getLastActiveCourse();
-				if (course != null) {
-					cId = course.getCourseId();
-				}
-			}
-			ForumTopic courseTopic = getTeachingService().addNewCourseTopic(cId, docId, topicTitle.trim(), httpServletRequest.getRemoteAddr());
-			
-			model.put("courseTopicId", courseTopic.getTopicId());
-		} catch (ApplicationThrowable th) {
-			model.put("error", th.toString());
-		}
-		return model;
-	}
-
 	/**
 	 * 	
 	 * @param volNum
@@ -349,52 +317,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
-	/**
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-			switch (sortingColumnNumber) {
-			case 0:
-				paginationFilter.addSortingCriteria("place.placeName", sortingDirection);
-				break;
-			case 1:
-				paginationFilter.addSortingCriteria("document.senderPeople.mapNameLf", sortingDirection);
-				break;
-			case 2:
-				paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
-				break;
-			case 3:
-				paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
-				//Month is an entity, so we don't have field with suffix 
-				paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
-				paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
-				break;
-			case 4:
-				paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
-				paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
-				paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
-				paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
-				break;
-			default:
-				paginationFilter.addSortingCriteria("docYear", sortingDirection);
-				paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection);
-				paginationFilter.addSortingCriteria("docDay", sortingDirection);
-				break;
-			}		
-		}
-		
-		return paginationFilter;
-	}
-
 	/**
 	 * 
 	 * @param personId
@@ -724,7 +646,7 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
-	public ModelAndView ShowTopicsRelatedDocument(
+	public ModelAndView showTopicsRelatedDocument(
 			@RequestParam(value="sSearch") String alias,
 			@RequestParam(value="topicId") Integer topicId,
 			@RequestParam(value="placeAllId") Integer placeAllId,
@@ -847,7 +769,7 @@ public class AjaxController {
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/docbase/ShowVettingHistoryDocument.json", method = RequestMethod.GET)
-	public ModelAndView ShowVettingHistoryDocument(
+	public ModelAndView showVettingHistoryDocument(
 			@RequestParam(value="entryId") Integer entryId,
 			@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			@RequestParam(value="sSortDir_0", required=false) String sortingDirection,

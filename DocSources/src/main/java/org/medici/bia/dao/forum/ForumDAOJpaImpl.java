@@ -40,8 +40,6 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.common.pagination.PaginationFilter.Order;
-import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
@@ -374,6 +372,27 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         return (List<Forum>) query.getResultList();
 	}
+	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Forum> findSubForumsByDocument(Integer parentForumId, Integer entryId) throws PersistenceException {
+		if (parentForumId == null || entryId == null) {
+			return new ArrayList<Forum>(0);
+		}
+		
+		String jpql = "FROM Forum WHERE document.entryId = :entryId AND type = :forumType AND forumParent.forumId = :parentForumId AND forumParent.type = :forumParentType ORDER BY lastUpdate DESC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("entryId", entryId);
+        query.setParameter("forumType", Type.FORUM);
+        query.setParameter("parentForumId", parentForumId);
+        query.setParameter("forumParentType", Type.FORUM);
+
+        return (List<Forum>) query.getResultList();
+	}
 
 	/**
 	 * {@inheritDoc} 
@@ -427,20 +446,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 			page.setTotalPages(paginationFilter.getPageTotal());
 		}
 
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuilder orderBySQL = new StringBuilder(0);
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		String jpql = queryString + orderBySQL.toString();
+		String jpql = queryString + getOrderByQuery(paginationFilter.getSortingCriterias());
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
         query.setParameter("typeForum", Type.FORUM);

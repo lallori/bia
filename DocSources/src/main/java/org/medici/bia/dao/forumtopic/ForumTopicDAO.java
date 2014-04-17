@@ -96,7 +96,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws ApplicationThrowable;
+	List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws PersistenceException;
 
 	/**
 	 * 
@@ -105,7 +105,7 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws ApplicationThrowable
 	 */
 	List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param forum
@@ -134,4 +134,5 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
 }
