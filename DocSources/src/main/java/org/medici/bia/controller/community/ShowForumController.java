@@ -79,7 +79,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowForumController {
 	
 	private static final Integer DEFAULT_ROWS_PER_PAGE = 10;
-	private static final Integer EXTENDED_ROWS_PER_PAGE = 30;
 	
 	@Autowired
 	private CommunityService communityService;
@@ -189,7 +188,7 @@ public class ShowForumController {
 					model.put("forumsBySubCategories", forumsHashMap);
 					
 					if (forum.getOption().getCanHaveSubForum()) {
-						PaginationFilter paginationFilterForum = getPaginationFilter(command, 10, "dispositionOrder", true, true);
+						PaginationFilter paginationFilterForum = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "dispositionOrder", true, true);
 						Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
 						model.put("subForumsPage", page);
 					}
@@ -251,12 +250,12 @@ public class ShowForumController {
 					if (forum.getOption().getCanHaveSubForum()) {
 						// All forum have group by excepted document...
 						if (forum.getOption().getGroupBySubForum()) {
-							PaginationFilter paginationFilterForum = getPaginationFilter(command, DEFAULT_ROWS_PER_PAGE, "lastPost", false, true);
+							PaginationFilter paginationFilterForum = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "lastPost", false, true);
 							Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
 							model.put("subForumsPage", page);
 						} else {
 							// paginationFilter to manage topics results..
-							PaginationFilter paginationFilterTopic = getPaginationFilter(command, DEFAULT_ROWS_PER_PAGE, "lastPost", false, false);
+							PaginationFilter paginationFilterTopic = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "lastPost", false, false);
 							Page topicPage = getCommunityService().getForumTopicsByParentForum(forum, paginationFilterTopic);
 							model.put("subForumsTopicsPage", topicPage);
 						}
@@ -270,7 +269,7 @@ public class ShowForumController {
 
 			if (forum.getOption().getCanHaveTopics()) {
 				// paginationFilter to manage topics results..
-				PaginationFilter paginationFilterTopic = getPaginationFilter(command, EXTENDED_ROWS_PER_PAGE, "lastPost", false, false);
+				PaginationFilter paginationFilterTopic = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "lastUpdate", false, false);
 				Page topicPage = getCommunityService().getForumTopics(forum, paginationFilterTopic);
 				model.put("topicsPage", topicPage);
 				

@@ -79,6 +79,8 @@ public class ForumOption implements Serializable {
 	private Boolean canDeletePosts;
 	@Column (name="\"canDeleteTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canDeleteTopics;
+	@Column (name="\"pageLength\"", length=4, nullable=true)
+	private Integer pageLength;
 
 	/**
 	 * Default constructor. 
@@ -209,6 +211,20 @@ public class ForumOption implements Serializable {
 	public void setCanHaveSubForum(Boolean canHaveSubForum) {
 		this.canHaveSubForum = canHaveSubForum;
 	}
+	
+	/**
+	 * @return the groupBySubForum
+	 */
+	public Boolean getGroupBySubForum() {
+		return groupBySubForum;
+	}
+	
+	/**
+	 * @param groupBySubForum the groupBySubForum to set
+	 */
+	public void setGroupBySubForum(Boolean groupBySubForum) {
+		this.groupBySubForum = groupBySubForum;
+	}
 
 	/**
 	 * @return the canHaveTopics
@@ -337,6 +353,20 @@ public class ForumOption implements Serializable {
 	}
 
 	/**
+	 * @return the pageLength
+	 */
+	public Integer getPageLength() {
+		return pageLength;
+	}
+
+	/**
+	 * @param pageLength the pageLength to set
+	 */
+	public void setPageLength(Integer pageLength) {
+		this.pageLength = pageLength;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -372,17 +402,12 @@ public class ForumOption implements Serializable {
 		stringBuilder.append(getCanDeleteTopics());
 		stringBuilder.append(", canDeletePosts=");
 		stringBuilder.append(getCanDeletePosts());
+		stringBuilder.append(", pageLength=");
+		stringBuilder.append(getPageLength());
 		stringBuilder.append(']');
 
 		return stringBuilder.toString();
 	}
 
-	public void setGroupBySubForum(Boolean groupBySubForum) {
-		this.groupBySubForum = groupBySubForum;
-	}
-
-	public Boolean getGroupBySubForum() {
-		return groupBySubForum;
-	}
 }
 
