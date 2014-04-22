@@ -130,9 +130,9 @@ public class Schedone {
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_TIFF\"")
 	private Integer numeroTotaleImmaginiTiff;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_TIFF\"")
-	private Long dimMediaImmaginiTiff;
+	private Float dimMediaImmaginiTiff;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_TIFF\"")
-	private Long dimTotaleImmaginiTiff;
+	private Float dimTotaleImmaginiTiff;
 	@Column (name="\"COMPRESSIONE_TIFF\"", length=50)
 	private String compressioneTiff;
 	@Column (name="\"FORMATO_MEDIA_IMMAGINI_TIFF\"", length=2)
@@ -144,9 +144,9 @@ public class Schedone {
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_JPEG\"")
 	private Integer numeroTotaleImmaginiJpeg;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_JPEG\"")
-	private Long dimMediaImmaginiJpeg;
+	private Float dimMediaImmaginiJpeg;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_JPEG\"")
-	private Long dimTotaleImmaginiJpeg;
+	private Float dimTotaleImmaginiJpeg;
 	@Column (name="\"COMPRESSIONE_JPEG\"", length=50)
 	private String compressioneJpeg;
 	@Column (name="\"FORMATO_MEDIA_IMMAGINI_JPEG\"", length=2)
@@ -158,9 +158,9 @@ public class Schedone {
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_PDF\"")
 	private Integer numeroTotaleImmaginiPdf;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_PDF\"")
-	private Long dimMediaImmaginiPdf;
+	private Float dimMediaImmaginiPdf;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_PDF\"")
-	private Long dimTotaleImmaginiPdf;
+	private Float dimTotaleImmaginiPdf;
 	@Column (name="\"COMPRESSIONE_PDF\"", length=50)
 	private String compressionePdf;
 	@Column (name="\"FORMATO_MEDIA_IMMAGINI_PDF\"", length=2)
@@ -690,28 +690,28 @@ public class Schedone {
 	/**
 	 * @return the dimMediaImmaginiTiff
 	 */
-	public Long getDimMediaImmaginiTiff() {
+	public Float getDimMediaImmaginiTiff() {
 		return dimMediaImmaginiTiff;
 	}
 
 	/**
 	 * @param dimMediaImmaginiTiff the dimMediaImmaginiTiff to set
 	 */
-	public void setDimMediaImmaginiTiff(Long dimMediaImmaginiTiff) {
+	public void setDimMediaImmaginiTiff(Float dimMediaImmaginiTiff) {
 		this.dimMediaImmaginiTiff = dimMediaImmaginiTiff;
 	}
 
 	/**
 	 * @return the dimTotaleImmaginiTiff
 	 */
-	public Long getDimTotaleImmaginiTiff() {
+	public Float getDimTotaleImmaginiTiff() {
 		return dimTotaleImmaginiTiff;
 	}
 
 	/**
 	 * @param dimTotaleImmaginiTiff the dimTotaleImmaginiTiff to set
 	 */
-	public void setDimTotaleImmaginiTiff(Long dimTotaleImmaginiTiff) {
+	public void setDimTotaleImmaginiTiff(Float dimTotaleImmaginiTiff) {
 		this.dimTotaleImmaginiTiff = dimTotaleImmaginiTiff;
 	}
 
@@ -760,28 +760,28 @@ public class Schedone {
 	/**
 	 * @return the dimMediaImmaginiJpeg
 	 */
-	public Long getDimMediaImmaginiJpeg() {
+	public Float getDimMediaImmaginiJpeg() {
 		return dimMediaImmaginiJpeg;
 	}
 
 	/**
 	 * @param dimMediaImmaginiJpeg the dimMediaImmaginiJpeg to set
 	 */
-	public void setDimMediaImmaginiJpeg(Long dimMediaImmaginiJpeg) {
+	public void setDimMediaImmaginiJpeg(Float dimMediaImmaginiJpeg) {
 		this.dimMediaImmaginiJpeg = dimMediaImmaginiJpeg;
 	}
 
 	/**
 	 * @return the dimTotaleImmaginiJpeg
 	 */
-	public Long getDimTotaleImmaginiJpeg() {
+	public Float getDimTotaleImmaginiJpeg() {
 		return dimTotaleImmaginiJpeg;
 	}
 
 	/**
 	 * @param dimTotaleImmaginiJpeg the dimTotaleImmaginiJpeg to set
 	 */
-	public void setDimTotaleImmaginiJpeg(Long dimTotaleImmaginiJpeg) {
+	public void setDimTotaleImmaginiJpeg(Float dimTotaleImmaginiJpeg) {
 		this.dimTotaleImmaginiJpeg = dimTotaleImmaginiJpeg;
 	}
 
@@ -830,28 +830,28 @@ public class Schedone {
 	/**
 	 * @return the dimMediaImmaginiPdf
 	 */
-	public Long getDimMediaImmaginiPdf() {
+	public Float getDimMediaImmaginiPdf() {
 		return dimMediaImmaginiPdf;
 	}
 
 	/**
 	 * @param dimMediaImmaginiPdf the dimMediaImmaginiPdf to set
 	 */
-	public void setDimMediaImmaginiPdf(Long dimMediaImmaginiPdf) {
+	public void setDimMediaImmaginiPdf(Float dimMediaImmaginiPdf) {
 		this.dimMediaImmaginiPdf = dimMediaImmaginiPdf;
 	}
 
 	/**
 	 * @return the dimTotaleImmaginiPdf
 	 */
-	public Long getDimTotaleImmaginiPdf() {
+	public Float getDimTotaleImmaginiPdf() {
 		return dimTotaleImmaginiPdf;
 	}
 
 	/**
 	 * @param dimTotaleImmaginiPdf the dimTotaleImmaginiPdf to set
 	 */
-	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
+	public void setDimTotaleImmaginiPdf(Float dimTotaleImmaginiPdf) {
 		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
 	}
 

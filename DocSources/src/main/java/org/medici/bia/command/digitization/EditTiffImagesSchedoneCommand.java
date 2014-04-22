@@ -38,8 +38,8 @@ import org.medici.bia.domain.Schedone.Formato;
 public class EditTiffImagesSchedoneCommand {
 	private Integer schedoneId;
 	private Integer numeroTotaleImmaginiTiff;
-	private Long dimMediaImmaginiTiff;
-	private Long dimTotaleImmaginiTiff;
+	private Float dimMediaImmaginiTiff;
+	private Float dimTotaleImmaginiTiff;
 	private String compressioneTiff;
 	private Formato formatoMediaImmaginiTiff;
 	private Formato formatoTotaleImmaginiTiff;
@@ -71,25 +71,25 @@ public class EditTiffImagesSchedoneCommand {
 	/**
 	 * @return the dimMediaImmaginiTiff
 	 */
-	public Long getDimMediaImmaginiTiff() {
+	public Float getDimMediaImmaginiTiff() {
 		return dimMediaImmaginiTiff;
 	}
 	/**
 	 * @param dimMediaImmaginiTiff the dimMediaImmaginiTiff to set
 	 */
-	public void setDimMediaImmaginiTiff(Long dimMediaImmaginiTiff) {
+	public void setDimMediaImmaginiTiff(Float dimMediaImmaginiTiff) {
 		this.dimMediaImmaginiTiff = dimMediaImmaginiTiff;
 	}
 	/**
 	 * @return the dimTotaleImmaginiTiff
 	 */
-	public Long getDimTotaleImmaginiTiff() {
+	public Float getDimTotaleImmaginiTiff() {
 		return dimTotaleImmaginiTiff;
 	}
 	/**
 	 * @param dimTotaleImmaginiTiff the dimTotaleImmaginiTiff to set
 	 */
-	public void setDimTotaleImmaginiTiff(Long dimTotaleImmaginiTiff) {
+	public void setDimTotaleImmaginiTiff(Float dimTotaleImmaginiTiff) {
 		this.dimTotaleImmaginiTiff = dimTotaleImmaginiTiff;
 	}
 	/**

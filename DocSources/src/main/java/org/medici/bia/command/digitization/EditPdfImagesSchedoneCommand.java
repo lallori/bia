@@ -38,8 +38,8 @@ import org.medici.bia.domain.Schedone.Formato;
 public class EditPdfImagesSchedoneCommand {
 	private Integer schedoneId;
 	private Integer numeroTotaleImmaginiPdf;
-	private Long dimMediaImmaginiPdf;
-	private Long dimTotaleImmaginiPdf;
+	private Float dimMediaImmaginiPdf;
+	private Float dimTotaleImmaginiPdf;
 	private String compressionePdf;
 	private Formato formatoMediaImmaginiPdf;
 	private Formato formatoTotaleImmaginiPdf;
@@ -71,25 +71,25 @@ public class EditPdfImagesSchedoneCommand {
 	/**
 	 * @return the dimMediaImmaginiPdf
 	 */
-	public Long getDimMediaImmaginiPdf() {
+	public Float getDimMediaImmaginiPdf() {
 		return dimMediaImmaginiPdf;
 	}
 	/**
 	 * @param dimMediaImmaginiPdf the dimMediaImmaginiPdf to set
 	 */
-	public void setDimMediaImmaginiPdf(Long dimMediaImmaginiPdf) {
+	public void setDimMediaImmaginiPdf(Float dimMediaImmaginiPdf) {
 		this.dimMediaImmaginiPdf = dimMediaImmaginiPdf;
 	}
 	/**
 	 * @return the dimTotaleImmaginiPdf
 	 */
-	public Long getDimTotaleImmaginiPdf() {
+	public Float getDimTotaleImmaginiPdf() {
 		return dimTotaleImmaginiPdf;
 	}
 	/**
 	 * @param dimTotaleImmaginiPdf the dimTotaleImmaginiPdf to set
 	 */
-	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
+	public void setDimTotaleImmaginiPdf(Float dimTotaleImmaginiPdf) {
 		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
 	}
 	/**

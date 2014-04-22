@@ -1963,3 +1963,13 @@ INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`,
 INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalActions', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalActions.jsp', 0);
 INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscription.jsp', 0);
 INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalPostPreview.jsp', 0);
+
+-- schedone: change column type
+ALTER TABLE `tblSchedone`
+	CHANGE COLUMN `DIM_MEDIA_IMMAGINI_JPEG` `DIM_MEDIA_IMMAGINI_JPEG` FLOAT NULL DEFAULT NULL AFTER `DESCRIZIONE_CONTENUTO_ENG`,
+	CHANGE COLUMN `DIM_MEDIA_IMMAGINI_PDF` `DIM_MEDIA_IMMAGINI_PDF` FLOAT NULL DEFAULT NULL AFTER `DIM_MEDIA_IMMAGINI_JPEG`,
+	CHANGE COLUMN `DIM_MEDIA_IMMAGINI_TIFF` `DIM_MEDIA_IMMAGINI_TIFF` FLOAT NULL DEFAULT NULL AFTER `DIM_MEDIA_IMMAGINI_PDF`,
+	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_JPEG` `DIM_TOTALE_IMMAGINI_JPEG` FLOAT NULL DEFAULT NULL AFTER `DIM_MEDIA_IMMAGINI_TIFF`,
+	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_PDF` `DIM_TOTALE_IMMAGINI_PDF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_JPEG`,
+	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_TIFF` `DIM_TOTALE_IMMAGINI_TIFF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_PDF`;
+
