@@ -35,7 +35,7 @@ import org.medici.bia.common.util.ApplicationError;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public class ApplicationThrowable extends Throwable {
+public class ApplicationThrowable extends RuntimeException {
 	/**
 	 * 
 	 */

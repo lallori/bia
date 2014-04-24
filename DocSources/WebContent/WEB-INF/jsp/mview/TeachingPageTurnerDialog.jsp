@@ -165,6 +165,7 @@
 				updateAnnotationsUrl: null,
 				annotations: null,
 				showHideAnnotationButton: false,  // Show/Hide Annotation Button is disabled
+				enableEdit: false, // edit annotations is disabled
 				textVolume: '<fmt:message key="mview.credits.volume"/>',
 			    textExtension: '<fmt:message key="mview.credits.extension"/>',
 			    textInsert: '<fmt:message key="mview.credits.insert"/>',

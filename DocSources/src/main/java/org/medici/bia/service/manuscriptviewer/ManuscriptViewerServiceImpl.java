@@ -423,12 +423,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			Document document = getDocumentDAO().find(entryId);
 			
 			if (document != null) {
-				// eilink not null is image linked to document
-				/*if (document.getEiLink() != null) {
-					return new ArrayList<Image>(0);
-				} else {
-					return getImageDAO().findDocumentImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
-				}*/
 				return getImageDAO().findDocumentImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
 			} else {
 				return new ArrayList<Image>(0);
@@ -445,7 +439,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
-			
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -495,8 +488,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering) throws ApplicationThrowable {
 		try {
-			Image image = getImageDAO().findImage(volNum, volLetExt, imageType, insertNum, insertLet, imageProgTypeNum, missedNumbering);
-			return image;
+			return getImageDAO().findImage(volNum, volLetExt, imageType, insertNum, insertLet, imageProgTypeNum, missedNumbering);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -509,8 +501,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public List<Document> findLinkedDocument(Integer volNum, String volLetExt, String insertNum, String insertLet, Integer imageProgTypeNum, String missedNumbering, String rectoVerso) throws ApplicationThrowable {
 		try {
 			RectoVerso rv = RectoVerso.convertFromString(rectoVerso);
-			List<Document> documents = getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, imageProgTypeNum, missedNumbering, rv);
-			return documents;
+			return getDocumentDAO().findDocument(volNum, volLetExt, insertNum, insertLet, imageProgTypeNum, missedNumbering, rv);
 
 		} catch (Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
@@ -822,13 +813,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public List<Annotation> getImageAnnotations(String imageName) throws ApplicationThrowable {
 		try {
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			return getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
 		} catch(Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -836,7 +827,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName) throws ApplicationThrowable {
 		try {
 			Map<Annotation, Boolean> resultMap = new HashMap<Annotation, Boolean>();
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			List<Annotation> result = getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
 			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(user.getAccount());
 			UserRole mostSignificantRole = UserRoleUtils.getMostSignificantRole(userRoles);
@@ -909,7 +900,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				return null;
 			}
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			annotation.setUser(user);
 			annotation.setImage(image);
 			if(annotation.getAnnotationId() == 0){
@@ -940,7 +931,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				return new HashMap<Annotation, Integer>(0);
 			}
 
-			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			User user = getCurrentUser();
 			
 			List<Annotation> persistedAnnotations = getAnnotationDAO().findAnnotationByImageAndUser(image.getImageName(), user);
 			
@@ -1055,6 +1046,10 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 	
 	/* Privates */
+	
+	private User getCurrentUser() {
+		return getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+	}
 	
 	private void recursiveSetLastPost(Forum forum) throws ApplicationThrowable {
 		if(forum.getType().equals(Type.CATEGORY)){

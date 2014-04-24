@@ -654,6 +654,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public Forum findForum(Integer id) throws ApplicationThrowable {
+		try {
+			return getForumDAO().find(id);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -838,24 +850,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public Forum getForum(Integer id) throws ApplicationThrowable {
-		try {
-			return getForumDAO().find(id);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
 	 * @return the forumDAO
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1076,6 +1076,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public ForumTopicWatchDAO getForumTopicWatchDAO() {
 		return forumTopicWatchDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumTopic getForumTopicByAnnotation(Integer annotationId) throws ApplicationThrowable {
+		try {
+			return getForumTopicDAO().getForumTopicByAnnotation(annotationId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 	/**

@@ -182,11 +182,19 @@ public interface CommunityService {
 	ForumPost findPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
-	 * Given in input user account, this method returns the user object.
 	 * 
-	 * @param account the {@link java.lang.String} user account that we are searching 
+	 * @param id
 	 * @return
-	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 * @throws ApplicationThrowable
+	 */
+	Forum findForum(Integer id) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the user by its account.
+	 * 
+	 * @param account the user account 
+	 * @return the {@link User} found
+	 * @throws ApplicationThrowable if an error is occured
 	 */
 	User findUser(String account) throws ApplicationThrowable;
 	
@@ -260,14 +268,6 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	Forum getForum(Integer id) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
 	Forum getForumForView(Integer id) throws ApplicationThrowable;
 
 	/**
@@ -334,6 +334,15 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	Map<String, List<?>> getForumStatistics(Integer numberOfElements) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the forum linked to an annotation.
+	 * 
+	 * @param annotationId the annotation identifier
+	 * @return the {@link Forum} found
+	 * @throws ApplicationThrowable
+	 */
+	ForumTopic getForumTopicByAnnotation(Integer annotationId) throws ApplicationThrowable;
 	
 	/**
 	 * 

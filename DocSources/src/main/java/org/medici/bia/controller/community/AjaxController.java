@@ -281,7 +281,7 @@ public class AjaxController {
 		
 		try{
 			if (forumId != null ) {
-				forum = getCommunityService().getForum(forumId);
+				forum = getCommunityService().findForum(forumId);
 			} else {
 				forum = getCommunityService().getFirstCategory();
 			}

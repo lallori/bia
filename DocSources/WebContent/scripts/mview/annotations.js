@@ -140,6 +140,18 @@ IIPMooViewer.implement({
 					}
 				}).inject(this.canvas);
 				
+				/** MEDICI ARCHIVE PROJECT START **/
+				// Redirect, by simple click on annotation area, to the forum topic associated to the current annotation
+				if (typeof annotation_array[i].forumTopicURL !== 'undefined') {
+					var topicUrl = annotation_array[i].forumTopicURL;
+					annotation.addEvent('click', function(e) {
+						var event = new DOMEvent(e);
+						event.stop();
+						window.open(topicUrl,'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+					});
+				}
+				/** MEDICI ARCHIVE PROJECT END */
+				
 				var annotationCommandOpenClose = null;
 				if (this.editEnabled) {
 					annotationCommandOpenClose = this.initAnnotationCommands(annotation, annotId);
@@ -176,8 +188,8 @@ IIPMooViewer.implement({
 				className: 'tip', // We need this to force the tip in front of nav window
 				fixed: true,
 				offset: {
-					x: 30,
-					y: 30
+					x: 0,
+					y: -60
 				},
 				hideDelay: 300,
 				link: 'chain',
@@ -404,8 +416,8 @@ IIPMooViewer.implement({
 								title: responseJSON.annotations[i].title,
 								text: responseJSON.annotations[i].text,
 								deletable: responseJSON.annotations[i].deletable,
-								updatable: responseJSON.annotations[i].updatable
-								//Add Link To Forum
+								updatable: responseJSON.annotations[i].updatable,
+								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
 							});
 						}
 					}.bind(this),
@@ -440,8 +452,10 @@ IIPMooViewer.implement({
 								title: responseJSON.annotations[i].title,
 								text: responseJSON.annotations[i].text,
 								deletable: responseJSON.annotations[i].deletable,
-								updatable: responseJSON.annotations[i].updatable
-								//Add Link To Forum
+								updatable: responseJSON.annotations[i].updatable,
+								// forumTopicURL: responseJSON.annotations[i].forumTopicURL 
+								// Link To Forum: not enabled because this feature has not to be enabled in
+								// the annotation forum
 							});
 						}
 		        	}.bind(this),

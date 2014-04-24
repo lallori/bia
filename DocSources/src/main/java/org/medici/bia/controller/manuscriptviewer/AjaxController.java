@@ -45,6 +45,7 @@ import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,15 +69,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("ManuscriptViewerAjaxController")
 public class AjaxController {
 	@Autowired
+	private CommunityService communityService;
+	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
 	@Autowired
 	private UserService userService;
 	
 	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 * @return the communityService
 	 */
-	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
 	}
 
 	/**
@@ -84,6 +94,13 @@ public class AjaxController {
 	 */
 	public ManuscriptViewerService getManuscriptViewerService() {
 		return manuscriptViewerService;
+	}
+	
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
 	}
 
 	/**
@@ -515,7 +532,7 @@ public class AjaxController {
 		List<Object> resultList = new ArrayList<Object>();
 		for (Annotation currentAnnotation : annotations) {
 			Map<String, Object> singleRow = new HashMap<String, Object>(0);
-			if (annotationId == null || (annotationId != null && annotationId == currentAnnotation.getAnnotationId())) {
+			if (annotationId == null || (annotationId != null && annotationId.equals(currentAnnotation.getAnnotationId()))) {
 				singleRow.put("annotationId", currentAnnotation.getAnnotationId());
 				singleRow.put("x", currentAnnotation.getX());
 				singleRow.put("y", currentAnnotation.getY());
@@ -526,6 +543,9 @@ public class AjaxController {
 				singleRow.put("text", currentAnnotation.getText());
 				singleRow.put("deletable", annotationId == null && getManuscriptViewerService().isDeletableAnnotation(currentAnnotation) ? true : false);
 				singleRow.put("updatable", annotationId == null && (account.equals(currentAnnotation.getUser().getAccount()) || administrator) ? true : false);
+				if (currentAnnotation.getForumTopic() != null) {
+					singleRow.put("forumTopicURL", HtmlUtils.getShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
+				}
 				resultList.add(singleRow);
 			}
 		}

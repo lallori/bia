@@ -89,7 +89,7 @@ public class EditForumPostValidator implements Validator {
 	public void validateForum(Integer forumId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getCommunityService().getForum(forumId) == null) {
+				if (getCommunityService().findForum(forumId) == null) {
 					errors.reject("forumId", "error.forum.notfound");
 				}
 			} catch (ApplicationThrowable ath) {

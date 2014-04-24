@@ -56,7 +56,7 @@
 					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
 				} else if ("${documentExplorer.image.imageType}" == 'G') {
 					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
-				}else if ("${documentExplorer.image.imageType}" == 'O') {
+				} else if ("${documentExplorer.image.imageType}" == 'O') {
 					//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
 					if(imageName.indexOf("COPERTA") != -1){
 						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp;</span>;';

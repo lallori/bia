@@ -1,7 +1,7 @@
 /**
 *  Ajax Page Turner for jQuery, version 1.0
  * 
- * Developed by Medici Archive Project (2010-2012).
+ * Developed by Medici Archive Project (2010-2014).
  * 
  * This file is part of DocSources.
  * 
@@ -25,130 +25,64 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  * 
- * Last Review: 11/26/2010
+ * Last Review: 04/23/2014
 */
 (function ($) {
+	
+	$.defaultParams = {
+		"searchUrl":  "/DocSources/src/mview/SearchCarta.json",
+		"getLinkedDocumentUrl":  "/DocSources/src/mview/GetLinkedDocument.json",
+		"IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
+		"imagePrefix": "/DocSources/images/mview",
+		"status":      "no",
+		"canTranscribe":  "false",
+		"scale": "0",
+		"annotationsType": "remote",
+		"retrieveAnnotationsUrl": "",
+		"updateAnnotationsUrl": "",
+		"annotations": new Array(),
+		"showHideAnnotationButton": true,
+		"enableEdit": true,
+		"textVolume": "Volume",
+		"textExtension": "Ext",
+		"textInsert": "Insert",
+		"textIndexOfNames": "index of names &nbsp;",
+		"textFolio": "folio &nbsp; &nbsp;",
+		"textAttachment": "allegato &nbsp; &nbsp;",
+		"textGuardia" : "guardia &nbsp; &nbsp;",
+		"textCoperta" : "coperta &nbsp; &nbsp;",
+		"textSpine" : "SPINE",
+		"textRecto" : "recto",
+		"textVerso" : "verso"	
+	};
 
-    $.pageTurnerForm = {};
+	$.pageTurnerForm = {};
 
-    $.pageTurnerForm.defaultParams = {
-        "searchUrl":  "/DocSources/src/mview/SearchCarta.json",
-        "getLinkedDocumentUrl":  "/DocSources/src/mview/GetLinkedDocument.json",
-        "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
-        "imagePrefix": "/DocSources/images/mview",
-        "status":      "no",
-        "canTranscribe":  "false",
-        "scale": "0",
-        "annotationsType": "remote",
-        "retrieveAnnotationsUrl": "",
-        "updateAnnotationsUrl": "",
-        "annotations": new Array(),
-        "showHideAnnotationButton": true,
-        "textVolume": "Volume",
-        "textExtension": "Ext",
-        "textInsert": "Insert",
-        "textIndexOfNames": "index of names &nbsp;",
-        "textFolio": "folio &nbsp; &nbsp;",
-        "textAttachment": "allegato &nbsp; &nbsp;",
-        "textGuardia" : "guardia &nbsp; &nbsp;",
-        "textCoperta" : "coperta &nbsp; &nbsp;",
-        "textSpine" : "SPINE",
-        "textRecto" : "recto",
-        "textVerso" : "verso"
-    };
+	$.pageTurnerForm.defaultParams = $.defaultParams;
 
-    $.fn.pageTurnerForm = function (params) {
-    	var functionParams = $.extend($.pageTurnerForm.defaultParams, params);
+	$.fn.pageTurnerForm = function (params) {
+		var functionParams = $.extend($.pageTurnerForm.defaultParams, params);
 
-        // Loop over all matching elements
-        this.each(function (){
+		// Loop over all matching elements
+		this.each(function (){
 
-            // Add an onClick behavior to this element
-            $(this).submit(function (event) {
-                // Prevent the browser's default onClick handler
-                event.preventDefault();
-                
-                var parameters = '';
-                $(this).find('input').each(function() {
-                	parameters += $(this).attr('id') + '=' + $(this).val() + '&';
-                });
+			// Add an onClick behavior to this element
+			$(this).submit(function (event) {
+				// Prevent the browser's default onClick handler
+				event.preventDefault();
 				
-                $.get(functionParams["searchUrl"], parameters, function(data){
+				var parameters = '';
+				$(this).find('input').each(function() {
+					parameters += $(this).attr('id') + '=' + $(this).val() + '&';
+				});
+				
+				$.get(functionParams["searchUrl"], parameters, function(data){
 					if (data.error) {
 						$j('#notFound').dialog('open');
 					} else {
 						$("#targetframe").html('');
-
-						// RR: Added volume informations and insert informations (if needed)
-						var volExt = data.volLetExt != null ? data.volLetExt : '';
-						var insNum = data.insertNum != null ? data.insertNum : '';
-						var insExt = data.insertExt != null ? data.insertExt : '';
-						var credit = '<span style=\'font-size:16px\'>' + functionParams["textVolume"] + ' ' + data.volNum + (volExt != '' ? ' ' + functionParams["textExtension"] + ' ' + volExt : '') + '&nbsp; - </span>';
-						if (insNum != '')
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
 						
-						if (data.imageType == 'R') {
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"];
-						}  else if (data.imageType == 'C') {
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"];
-						} else if (data.imageType == 'A') {
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"];
-						} else if (data.imageType == 'G') {
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"];
-						}else if (data.imageType == 'O') {
-							//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
-							if(data.imageName.indexOf("COPERTA") != -1){
-								credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"];
-							}
-						} else {
-	                		credit += ' ';
-	                	}
-						
-						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
-						if (data.missedNumbering) {
-							credit += ' ' + data.missedNumbering;
-						}
-						if (data.imageRectoVerso == 'R') {
-							credit += '</span> ' + functionParams["textRecto"] + '</span>';
-						} else if(data.imageRectoVerso == 'V'){
-							credit += '</span> ' + functionParams["textVerso"] + '</span>';
-						}
-						
-						//MD:The last control is to verify if the image is a spine
-						if(data.imageName.indexOf("SPI") != -1){
-							credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
-						}
-
-						iipMooViewer = new IIPMooViewer( "targetframe", {
-							server: functionParams["IIPImageServer"],
-							image: data.imageCompleteName,
-							prefix: functionParams["imagePrefix"],
-							credit: credit, 
-							navWinPos: 'left',
-							navigation: true,
-							showNavWindow: true,
-							showNavImage: true, // this property hide navigation image
-							showNavButtons: true,
-							winResize: true,
-							zoom: 3,
-							scale: 0,
-							showHideAnnotationButton: functionParams["showHideAnnotationButton"],
-							annotationsType: functionParams["annotationsType"],
-							retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-							updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-							annotations: functionParams["annotations"]
-						});
-
-						if (data.previousPage == '') {
-							$("#previous").removeAttr('href');
-						} else {
-							$("#previous").attr('href', data.previousPage);
-						}
-						if (data.nextPage == '') {
-							$("#next").removeAttr('href');
-						} else {
-							$("#next").attr('href', data.nextPage);
-						}
+						$.fn.initIIPMooviewer(functionParams, data);
 						
 						if (functionParams["getLinkedDocumentUrl"] != null) {
 							$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
@@ -158,40 +92,51 @@
 						
 					}
 				});
+				
+			});
+			
+		});
 
+		return $;
+	};
+
+	$.pageTurnerPage = {};
+
+	$.pageTurnerPage.defaultParams = $.defaultParams;
+	
+	$.fn.pageTurnerPage = function (params) {
+		var functionParams = $.extend($.pageTurnerPage.defaultParams, params);
+		
+		// Loop over all matching elements
+		this.each(function (){
+
+			// Add an onClick behavior to this element
+			$(this).click(function (event) {
+				// Prevent the browser's default onClick handler
+				event.preventDefault();
+
+				// We extract parameter from page link...
+				var parameters = $j(this).attr("href").substring($j(this).attr("href").indexOf("?"));
+
+				$.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
+					$("#targetframe").html('');
+					
+					$.fn.initIIPMooviewer(functionParams, data);
+					
+					if (functionParams["getLinkedDocumentUrl"] != null) {
+						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
+							$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
+						});
+					}
+
+					$j("#currentImageOrder").val(data.imageOrder);
+
+				}});
             });
             
         });
 
         return $;
-    };
-
-    $.pageTurnerPage = {};
-
-    $.pageTurnerPage.defaultParams = {
-        "searchUrl":  "/DocSources/src/mview/SearchCarta.json",
-        "getLinkedDocumentUrl":  "/DocSources/src/mview/GetLinkedDocument.json",
-        "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
-        "imagePrefix": "/DocSources/images/mview",
-        "status":      "no",
-        "canTranscribe":  "false",
-        "scale": "0",
-        "annotationsType": "remote",
-        "retrieveAnnotationsUrl": "",
-        "updateAnnotationsUrl": "",
-        "annotations": new Array(),
-        "showHideAnnotationButton": true,
-        "textVolume": "Volume",
-        "textExtension": "Ext",
-        "textInsert": "Insert",
-        "textIndexOfNames": "index of names &nbsp;",
-        "textFolio": "folio &nbsp; &nbsp;",
-        "textAttachment": "allegato &nbsp; &nbsp;",
-        "textGuardia" : "guardia &nbsp; &nbsp;",
-        "textCoperta" : "coperta &nbsp; &nbsp;",
-        "textSpine" : "SPINE",
-        "textRecto" : "recto",
-        "textVerso" : "verso"
     };
     
     /**
@@ -254,6 +199,82 @@
 			if (typeof selector !== "undefined") {
 				$j(selector).css('display', 'none');
 			}
+		}
+		
+		return $;
+    };
+    
+    $.fn.initIIPMooviewer = function(functionParams, data) {
+    	// RR: Added volume informations and insert informations (if needed)
+		var volExt = data.volLetExt != null ? data.volLetExt : '';
+		var insNum = data.insertNum != null ? data.insertNum : '';
+		var insExt = data.insertExt != null ? data.insertExt : '';
+		var credit = '<span style=\'font-size:16px\'>' + functionParams["textVolume"] + ' ' + data.volNum + (volExt != '' ? ' ' + functionParams["textExtension"] + ' ' + volExt : '') + '&nbsp; - </span>';
+		if (insNum != '')
+			credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
+		
+		if (data.imageType == 'R') {
+			credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"] + '</span>';
+		}  else if (data.imageType == 'C') {
+			credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"] + '</span>';
+		} else if (data.imageType == 'A') {
+			credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"] + '</span>';
+		} else if (data.imageType == 'G') {
+			credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"] + '</span>';
+		} else if (data.imageType == 'O') {
+			//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+			if(data.imageName.indexOf("COPERTA") != -1){
+				credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"] + '</span>';
+			}
+		} else {
+    		credit += ' ';
+    	}
+		
+		credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+		if (data.missedNumbering) {
+			credit += ' ' + data.missedNumbering;
+		}
+		if (data.imageRectoVerso == 'R') {
+			credit += '</span> ' + functionParams["textRecto"] + '</span>';
+		} else if(data.imageRectoVerso == 'V'){
+			credit += '</span> ' + functionParams["textVerso"] + '</span>';
+		}
+		
+		//MD:The last control is to verify if the image is a spine
+		if(data.imageName.indexOf("SPI") != -1){
+			credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
+		}
+
+		iipMooViewer = new IIPMooViewer( "targetframe", {
+			server: functionParams["IIPImageServer"],
+			image: data.imageCompleteName,
+			prefix: functionParams["imagePrefix"],
+			credit: credit, 
+			navWinPos: 'left',
+			navigation: true,
+			showNavWindow: true,
+			showNavImage: true, // this property hide navigation image
+			showNavButtons: true,
+			winResize: true,
+			zoom: 3,
+			scale: 0,
+			showHideAnnotationButton: functionParams["showHideAnnotationButton"],
+			enableEdit: functionParams["enableEdit"],
+			annotationsType: functionParams["annotationsType"],
+			retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+			updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
+			annotations: functionParams["annotations"]
+		});
+
+		if (data.previousPage == '') {
+			$("#previous").removeAttr('href');
+		} else {
+			$("#previous").attr('href', data.previousPage);
+		}
+		if (data.nextPage == '') {
+			$("#next").removeAttr('href');
+		} else {
+			$("#next").attr('href', data.nextPage);
 		}
 		
 		return $;
@@ -340,106 +361,4 @@
 		}
     };
 
-    $.fn.pageTurnerPage = function (params) {
-        var functionParams = $.extend($.pageTurnerPage.defaultParams, params);
-        
-        // Loop over all matching elements
-        this.each(function (){
-
-            // Add an onClick behavior to this element
-            $(this).click(function (event) {
-                // Prevent the browser's default onClick handler
-                event.preventDefault();
-
-                // We extract parameter from page link...
-                var parameters = $j(this).attr("href").substring($j(this).attr("href").indexOf("?"));
-
-                $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
-					$("#targetframe").html('');
-					
-					// RR: Added volume informations and insert informations (if needed)
-					var volExt = data.volLetExt != null ? data.volLetExt : '';
-					var insNum = data.insertNum != null ? data.insertNum : '';
-					var insExt = data.insertExt != null ? data.insertExt : '';
-					var credit = '<span style=\'font-size:16px\'>' + functionParams["textVolume"] + ' ' + data.volNum + (volExt != '' ? ' ' + functionParams["textExtension"] + ' ' + volExt : '') + '&nbsp; - </span>';
-					if (insNum != '')
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textInsert"] + ' ' + insNum + (insExt != '' ? ' ' + functionParams["textExtension"] + ' ' + insExt : '') + '&nbsp; - </span>';
-					
-					if (data.imageType == 'R') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textIndexOfNames"] + '</span>';
-					}  else if (data.imageType == 'C') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textFolio"] + '</span>';
-					} else if (data.imageType == 'A') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textAttachment"] + '</span>';
-					} else if (data.imageType == 'G') {
-						credit += '<span style=\'font-size:16px\'>' + functionParams["textGuardia"] + '</span>';
-					}else if (data.imageType == 'O') {
-						//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
-						if(data.imageName.indexOf("COPERTA") != -1){
-							credit += '<span style=\'font-size:16px\'>' + functionParams["textCoperta"] + '</span>';
-						}
-					} else {
-                		credit += ' ';
-                	}
-					
-					credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
-					if (data.missedNumbering) {
-						credit += ' ' + data.missedNumbering;
-					}
-					if (data.imageRectoVerso == 'R') {
-						credit += '</span> ' + functionParams["textRecto"] + '</span>';
-					} else if(data.imageRectoVerso == 'V'){
-						credit += '</span> ' + functionParams["textVerso"] + '</span>';
-					}
-					
-					//MD:The last control is to verify if the image is a spine
-					if(data.imageName.indexOf("SPI") != -1){
-						credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
-					}
-					
-					iipMooViewer = new IIPMooViewer( "targetframe", {
-						server: functionParams["IIPImageServer"],
-						image: data.imageCompleteName,
-						prefix: functionParams["imagePrefix"],
-						credit: credit, 
-						navigation: true,
-						showNavWindow: true,
-						navWinPos: 'left',
-						showNavImage: true, // this property hide navigation image
-						showNavButtons: true,
-						winResize: true,
-						zoom: 3,
-						scale: 0,
-						showHideAnnotationButton: functionParams["showHideAnnotationButton"],
-						annotationsType: functionParams["annotationsType"],
-						retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-						updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-						annotations: functionParams["annotations"]
-					});
-					if (data.previousPage == '') {
-						$("#previous").removeAttr('href');
-					} else {
-						$("#previous").attr('href', data.previousPage);
-					}
-					if (data.nextPage == '') {
-						$("#next").removeAttr('href');
-					} else {
-						$("#next").attr('href', data.nextPage);
-					}
-					
-					if (functionParams["getLinkedDocumentUrl"] != null) {
-						$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data) {
-							$.fn.showButtonsAndMsgCallback(data, functionParams['canTranscribe'] == 'true');
-						});
-					}
-
-					$j("#currentImageOrder").val(data.imageOrder);
-
-				}});
-            });
-            
-        });
-
-        return $;
-    };
 })(jQuery);

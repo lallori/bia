@@ -116,6 +116,20 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	public ForumTopic getForumTopicByAnnotation(Integer annotationId) throws PersistenceException {
+		String jpql = "FROM ForumTopic WHERE annotation.annotationId = :annotationId";
+		
+		logger.debug("JPQL Query : " + jpql);
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("annotationId", annotationId);
+        
+        return getFirst(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ForumTopic findForumTopicById(Integer forumTopicId) throws PersistenceException {
 		String queryString = "FROM ForumTopic WHERE topicId = :topicId AND logicalDelete = false ";
 

@@ -72,6 +72,15 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
 	
 	/**
+	 * This method returns the forum linked to an annotation.
+	 * 
+	 * @param annotationId the annotation identifier
+	 * @return the {@link Forum} found
+	 * @throws PersistenceException
+	 */
+	ForumTopic getForumTopicByAnnotation(Integer annotationId) throws PersistenceException;
+	
+	/**
 	 * Returns a specific forum topic by its identifier.
 	 * 
 	 * @param froumTopicId
