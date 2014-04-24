@@ -378,7 +378,8 @@ public class Marriage implements Serializable {
 	public static enum MarriageTerm {
 		Death("Death"),
 		Divorce("Divorce"),
-		Annulment("Annulment");
+		Annulment("Annulment"),
+		Unknown("Unknown");
 		
 		private final String marriageTerm;
 

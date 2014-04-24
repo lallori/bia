@@ -22,21 +22,25 @@
 
 		<div class="list">
 			<c:forEach items="${marriages}" var="currentMarriage">
+				<c:choose>
+					<c:when test="${command.personId == currentMarriage.husband.personId}">
+						<c:set var="spouse" value="${currentMarriage.wife}" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="spouse" value="${currentMarriage.husband}" />
+					</c:otherwise>
+				</c:choose>
 				<div class="row">
-					<c:if test="${person.personId == currentMarriage.husband.personId}">
-						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-							<c:param name="personId"   value="${currentMarriage.wife.personId}" />
-						</c:url>
-						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.wife}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.wife.personId}" /></a></div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
-					</c:if>
-					<c:if test="${person.personId == currentMarriage.wife.personId}">
-						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-							<c:param name="personId"   value="${currentMarriage.husband.personId}" />
-						</c:url>
-						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.husband}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.husband.personId}" /></a></div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
-					</c:if>
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${spouse.personId}" />
+					</c:url>
+					<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${spouse}<input type="hidden" style="display:none;" class="tabId" value="peopleId${spouse.personId}" /></a></div>
+					<div class="info">
+						Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear}
+						<c:if test="${not empty currentMarriage.marTerm and currentMarriage.marTerm != 'Unknown'}">
+						| ${currentMarriage.marTerm}
+						</c:if>
+					</div>
 				</div>
 			</c:forEach>
 		</div>
