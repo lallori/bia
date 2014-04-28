@@ -10,6 +10,10 @@
 	
 	<c:url var="ShowPreviewCourseTopicPostURL" value="/teaching/ShowIncrementalPostPreview.do"/>
 	
+	<c:url var="ShowCurrentTranscriptionURL" value="/teaching/ShowCurrentTranscription.json">
+		<c:param name="topicId" value="${command.topicId}" />
+	</c:url>
+	
 	<c:url var="ShowCourseTranscriptionActionsURL" value="/teaching/ShowCourseTranscriptionActions.do">
 		<c:param name="topicId" value="${command.topicId}" />
 		<c:param name="transcriptionMode" value="I" />
@@ -53,6 +57,7 @@
 	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
 	    </div>
 	    <div id="transcriptionSection">
+	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large" style="float: right; margin-right: 30px;">Current Transcription</a>
 	    	<form:label id="textboxLabel" for="textbox" path="transcription" cssErrorClass="error">Transcription Area</form:label>
 	    	<form:textarea id="textbox" name="transcription" path="transcription" style="width:95%; height:150px; max-width:1000px; margin: 10px 10px 40px 10px;" title="Edit your transcription"></form:textarea>
 	    </div>
@@ -286,6 +291,32 @@
 	 			});
 
 	 			$j('#postTablePreview').css('display','inherit');
+				return false;
+			});
+			
+			$j("#showCurrentTranscription").click(function() {
+				$j.ajax({
+					type: "GET",
+					url: "${ShowCurrentTranscriptionURL}",
+					async: false,
+					success: function(data) {
+						if (data.operation === 'OK') {
+							if (data.transcription !== null && data.transcription !== '') {
+								$j("#transcriptionContent").html(data.transcription);
+							} else {
+								$j("#transcriptionContent").html("{ <b>Empty transcription</b> }");
+							}
+							$j("#transcriptionDialog").dialog('open');
+						} else {
+							$j("#errorMsg").text('There was a server error during this operation: please retry!');
+							$j("#errorModal").dialog('open');
+						}
+					},
+					error: function(data) {
+						$j("#errorMsg").text('There was a server error during this operation: please retry!');
+						$j("#errorModal").dialog('open');
+					}
+				});
 				return false;
 			});
 			

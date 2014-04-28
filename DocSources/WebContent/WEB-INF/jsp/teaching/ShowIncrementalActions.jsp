@@ -19,11 +19,11 @@
 	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
-	<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
+	<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
 	
-	<a href="#" id="showCurrentTranscription" class="buttonMedium button_medium">Show Transcription</a>
+	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 	
-	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
+	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>  -->
 	
 	<script>
 		$j(document).ready(function() {

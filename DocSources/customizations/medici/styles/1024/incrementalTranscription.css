@@ -113,6 +113,10 @@
 
 /* ------------------------------------------------- Edit post container ----------------------------------------- */
 
+#addNewPost {
+	font-weight: bold;
+}
+
 #textboxLabel, #htmlboxLabel {
 	margin-left: 20px;
 	font-weight: bold;

@@ -10,16 +10,25 @@
 		<c:param name="entryId" value="${topic.document.entryId}"/>
 	</c:url>
 	
+	<c:url var="ShowCourseResourcesURL" value="/community/ShowForum.do">
+		<c:param name="forumId" value="${topic.forum.forumId}" />
+		<c:param name="completeDOM" value="true" />
+	</c:url>
+	
 	<c:url var="baseUrl" value="/teaching/ShowCourseTranscription.do">
 		<c:param name="transcriptionMode" value="I" />
 	</c:url>
 
 	<h6>COURSE TRANSCRIPTION</h6>
 	
-	<h2>${topic.subject}</h2>
+	<div id="titleSection">
+		<h2>${topic.subject}</h2>
+		
+		<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
+		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium" style="float: right">Course Resources</a>
+	</div>
 	
 	<hr />
-	<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
 	
 	<c:if test="${postsPage.list.size() eq 0}">
 		<p>There are no posts.</p>

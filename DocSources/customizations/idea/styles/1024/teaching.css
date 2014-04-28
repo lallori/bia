@@ -66,7 +66,7 @@ input, select, textarea {
 
 /* ------------------------------------------------- CONTENT ------------------------------------------------- */
 
-a.buttonMedium:hover, a.buttonSmall:hover {
+a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
     text-decoration: none;
     color: #6F6B69;
 }
@@ -81,6 +81,18 @@ a.buttonMedium:hover, a.buttonSmall:hover {
     text-align: center;
     border: none;
     background-color: transparent;
+}
+
+.buttonLarge, .button_large {
+	width: 182px;
+	height: 22px;
+	display: inline-block;
+	background-image: url(${contextPath}/images/1024/button_large.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	text-align: center;
+	border: none;
+	background-color: transparent;
 }
  
 .buttonSmall { /* Button medium class */
