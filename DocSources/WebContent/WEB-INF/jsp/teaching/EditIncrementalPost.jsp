@@ -57,15 +57,15 @@
 	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
 	    </div>
 	    <div id="transcriptionSection">
-	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large" style="float: right; margin-right: 30px;">Current Transcription</a>
+	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 	    	<form:label id="textboxLabel" for="textbox" path="transcription" cssErrorClass="error">Transcription Area</form:label>
-	    	<form:textarea id="textbox" name="transcription" path="transcription" style="width:95%; height:150px; max-width:1000px; margin: 10px 10px 40px 10px;" title="Edit your transcription"></form:textarea>
+	    	<form:textarea id="textbox" name="transcription" path="transcription" title="Edit your transcription"></form:textarea>
 	    </div>
 	    <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 	    	<c:if test="${empty editingStudentPost or editingStudentPost == false}">
 			    <div id="postTextArea">
 			    	<form:label id="htmlboxLabel" for="htmlbox" path="text" cssErrorClass="error">Post Area</form:label>
-					<form:textarea id="htmlbox" class="htmlbox" name="text" path="text" style="width:95%; height:250px; max-width:1000px;" title="Edit your post"></form:textarea>
+					<form:textarea id="htmlbox" class="htmlbox" name="text" path="text" title="Edit your post"></form:textarea>
 			    </div>
 		    </c:if>
 	    </security:authorize>
@@ -106,7 +106,8 @@
 			var isStudent = true;
 		</security:authorize>
 		
-		var cannotLeaveEmptyText = isStudent === false && ${empty editingStudentPost or editingStudentPost == false};
+		// empty post text is allowed
+		var cannotLeaveEmptyText = /*isStudent === false && ${empty editingStudentPost or editingStudentPost == false}*/ false;
 		var cannotLeaveEmptyTranscription = isStudent === true;
 	
 		var getFolioFragmentsCallback = function() {

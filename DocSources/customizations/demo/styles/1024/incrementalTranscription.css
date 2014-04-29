@@ -117,11 +117,29 @@
 	font-weight: bold;
 }
 
+#postTextArea #htmlbox {
+	width:95%;
+	height:250px;
+	max-width:1000px;
+}
+
 #textboxLabel, #htmlboxLabel {
 	margin-left: 20px;
 	font-weight: bold;
 	color: #6F0B09;
 	display: block;
+}
+
+#transcriptionSection #showCurrentTranscription {
+	float: right;
+	margin-right: 30px;
+}
+
+#transcriptionSection #textbox {
+	width:95%;
+	height:150px;
+	max-width:1000px;
+	margin: 0px 10px 20px;
 }
 
 /* ------------------------------------------------- Transcription Dialog ---------------------------------------- */
