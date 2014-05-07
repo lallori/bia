@@ -153,6 +153,7 @@ IIPMooViewer.implement({
 							window.open(topicUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
 						}
 					});
+					annotation.setStyle('cursor', 'pointer');
 				}
 				/** MEDICI ARCHIVE PROJECT END */
 				
@@ -408,7 +409,7 @@ IIPMooViewer.implement({
 					},
 
 					onSuccess: function(responseJSON, responseText) {
-						if (responseJSON.operation === 'OK') {
+						if (typeof responseJSON.operation === 'undefined' || responseJSON.operation === 'OK') {
 							for (i = 0; i < responseJSON.annotations.length; i++) {
 								this.annotations.push({
 									annotationId: responseJSON.annotations[i].annotationId.toInt(),

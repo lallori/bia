@@ -705,6 +705,9 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Map<String, UserAuthority> findUsersMaximumAuthority(Set<String> accountsId) throws ApplicationThrowable {
 		try {
+			if (accountsId == null || accountsId.size() == 0) {
+				return new HashMap<String, UserAuthority>();
+			}
 			return getUserAuthorityDAO().getMaximumAuthorities(accountsId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
