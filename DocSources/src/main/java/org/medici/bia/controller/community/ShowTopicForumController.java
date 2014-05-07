@@ -183,7 +183,7 @@ public class ShowTopicForumController {
 			for(ForumPost post : ((List<ForumPost>)postsPage.getList())) {
 				accounts.add(post.getUser().getAccount());
 			}
-			Map<String, UserAuthority> maxAuthorities = getCommunityService().findUsersMaximumAuthority(accounts);
+			Map<String, UserAuthority> maxAuthorities = accounts.size() > 0 ? getCommunityService().findUsersMaximumAuthority(accounts) : new HashMap<String, UserAuthority>();
 			model.put("maxAuthorities", maxAuthorities);
 			
 			model.put("onlineUsers", applicationAccessContainer.getCommunityOnlineUsers());
