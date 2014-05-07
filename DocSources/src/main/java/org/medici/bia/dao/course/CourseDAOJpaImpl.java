@@ -148,9 +148,9 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	private String getParametrizedCourseSubQuery(String docIdName, String subTypeName, String modeName) {
 		StringBuilder subquery = new StringBuilder("SELECT DISTINCT forum.forumParent FROM Forum as forum, ForumTopic as topic, CourseTopicOption as topicOption WHERE");
 		subquery.append(" forum.subType = :").append(subTypeName)
-			.append(" AND forum.document.entryId = :").append(docIdName)
 			.append(" AND forum.logicalDelete = false")
 			.append(" AND topic.forum = forum")
+			.append(" AND topic.document.entryId = :").append(docIdName)
 			.append(" AND topic = topicOption.courseTopic")
 			.append(" AND topicOption.mode IN (:").append(modeName).append(")");
 		return subquery.toString();
