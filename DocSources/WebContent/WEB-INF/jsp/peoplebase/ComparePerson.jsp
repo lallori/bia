@@ -5,46 +5,46 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 
-<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
-	<c:param name="personId" value="${person.personId}" />
-</c:url>
-
-<c:url var="CompareBirthURL" value="/src/geobase/ComparePlace.do">
-	<c:param name="placeAllId" value="${person.bornPlace.placeAllId}" />
-</c:url>
-
-<c:url var="CompareDeathURL" value="/src/geobase/ComparePlace.do">
-	<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
-</c:url>
-
-<c:url var="ShowDocumentsPersonURL" value="/src/peoplebase/ShowDocumentsPerson.do">
+	<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 		<c:param name="personId" value="${person.personId}" />
-</c:url>
+	</c:url>
 	
-<c:url var="ShowSenderDocumentsPersonURL" value="/src/peoplebase/ShowSenderDocumentsPerson.do">
-	<c:param name="personId" value="${person.personId}" />
-</c:url>
+	<c:url var="CompareBirthURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${person.bornPlace.placeAllId}" />
+	</c:url>
 	
-<c:url var="ShowRecipientDocumentsPersonURL" value="/src/peoplebase/ShowRecipientDocumentsPerson.do">
-	<c:param name="personId" value="${person.personId}" />
-</c:url>
+	<c:url var="CompareDeathURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
+	</c:url>
 	
-<c:url var="ShowReferringToDocumentsPersonURL" value="/src/peoplebase/ShowReferringToDocumentsPerson.do">
-	<c:param name="personId" value="${person.personId}" />
-</c:url>
+	<c:url var="ShowDocumentsPersonURL" value="/src/peoplebase/ShowDocumentsPerson.do">
+			<c:param name="personId" value="${person.personId}" />
+	</c:url>
+		
+	<c:url var="ShowSenderDocumentsPersonURL" value="/src/peoplebase/ShowSenderDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+		
+	<c:url var="ShowRecipientDocumentsPersonURL" value="/src/peoplebase/ShowRecipientDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+		
+	<c:url var="ShowReferringToDocumentsPersonURL" value="/src/peoplebase/ShowReferringToDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
+		<div>
+			<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showOrEditCompare button_large">Show or Edit this Person</a>
+		</div>
+	</security:authorize>
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
+		<div>
+			<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showCompare button_medium">Show this Person</a>
+		</div>
+	</security:authorize>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-	<div>
-		<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showOrEditCompare button_large">Show or Edit this Person</a>
-	</div>
-</security:authorize>
-<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-	<div>
-		<a href="${ShowPersonURL}" id="editLink${person.personId}" class="showCompare button_medium">Show this Person</a>
-	</div>
-</security:authorize>
-
-<div id="personDiv">
+	<div id="personDiv">
 		<c:if test="${person.personId == 0}">
 		<div id="personTitle">
 			<h2>ADD New - Person Record</h2>
@@ -100,74 +100,74 @@
 				</div>				
 			</div>	
 		</c:if>	
-		</div>
-
-<div id="EditDetailsPersonDiv" class="background">
-	<div class="title">
-		<h5>PERSON DETAILS</h5>
 	</div>
-	
-	<div class="list">
-		<div class="row">
-			<div class="item">Name</div> <div class="value">${person.mapNameLf}</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="item">Gender</div> <div class="value">${person.gender}</div>
-		</div>
-		<div class="row">
-			<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
-		</div>
-		<div class="row">
-			<div class="item">Birth Place</div><div class="value"><a class="linkPlaceCompare" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
-		</div>
-		<div class="row">
-			<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
-		</div>
-		<div class="row">
-			<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
-		</div>
-		<div class="row">
-			<div class="item">Death Place</div> <div class="value"><a class="linkPlaceCompare" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
-		</div>
-		<div class="row">
-			<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
-		</div>
-	</div>
-</div>
 
-
-<div id="EditNamesPersonDiv" class="background">
-	<div class="title">
-		<h5>NAMES </h5>
-	</div>
-	<div class="list">
-		<c:forEach items="${person.altName}" var="currentName">
+	<div id="EditDetailsPersonDiv" class="background">
+		<div class="title">
+			<h5>PERSON DETAILS</h5>
+		</div>
+		
+		<div class="list">
 			<div class="row">
-				<div class="item">${currentName.nameType}</div> 
-				<c:if test="${currentName.nameType == 'Family' }">
-					<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
-						<c:param name="nameId" value="${currentName.nameId}" />
-						<c:param name="altName" value="${currentName.altName}" />
-					</c:url>
-						<div class="value"><a class="linkFamilyCompare ${person.personId}" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
-				</c:if>
-				<c:if test="${currentName.nameType != 'Family' }"> 
-					<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
-				</c:if>  
+				<div class="item">Name</div> <div class="value">${person.mapNameLf}</div>
 			</div>
-		</c:forEach>
-	</div>	
-</div>
-
-
-<div id="EditTitlesOrOccupationsPersonDiv" class="background">
-	<div class="title">	
-		<h5>TITLES / OCCUPATIONS</h5>
+			<br>
+			<div class="row">
+				<div class="item">Gender</div> <div class="value">${person.gender}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
+			</div>
+			<div class="row">
+				<div class="item">Birth Place</div><div class="value"><a class="linkPlaceCompare" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
+			</div>
+			<div class="row">
+				<div class="item">Death Place</div> <div class="value"><a class="linkPlaceCompare" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
+			</div>
+		</div>
 	</div>
-	
-	<div class="list">
-		<c:forEach items="${person.poLink}" var="currentPoLink">
+
+
+	<div id="EditNamesPersonDiv" class="background">
+		<div class="title">
+			<h5>NAMES </h5>
+		</div>
+		<div class="list">
+			<c:forEach items="${person.altName}" var="currentName">
+				<div class="row">
+					<div class="item">${currentName.nameType}</div> 
+					<c:if test="${currentName.nameType == 'Family' }">
+						<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
+							<c:param name="nameId" value="${currentName.nameId}" />
+							<c:param name="altName" value="${currentName.altName}" />
+						</c:url>
+							<div class="value"><a class="linkFamilyCompare ${person.personId}" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
+					</c:if>
+					<c:if test="${currentName.nameType != 'Family' }"> 
+						<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
+					</c:if>  
+				</div>
+			</c:forEach>
+		</div>	
+	</div>
+
+
+	<div id="EditTitlesOrOccupationsPersonDiv" class="background">
+		<div class="title">	
+			<h5>TITLES / OCCUPATIONS</h5>
+		</div>
+		
+		<div class="list">
+			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
 					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
 				</c:url>
@@ -181,105 +181,138 @@
 					<c:if test="${!currentPoLink.preferredRole}">
 						<div class="value5"></div>
 					</c:if>
-					<div class="value60"><a class="linkOccupationCompare ${person.personId}" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
-					<a class="linkOccupationCompare ${person.personId}" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
+					<div class="value60">
+						<a class="linkOccupationCompare ${person.personId}" href="${ShowTitlesOrOccupationsPeoplePersonURL}">
+							<b>${currentPoLink.titleOccList.titleOcc}</b>
+						</a>
+						<br>
+						<a class="linkOccupationCompare ${person.personId}" href="${ShowRoleCatPeoplePersonURL}">
+							${currentPoLink.titleOccList.roleCat.roleCatMinor}
+						</a>
+					</div> 
 					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
 				</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
 	</div>
-</div>
 
 
-<div id="EditParentsPersonDiv" class="background">
-	<div class="title">	
-		<h5>PARENTS</h5>
-	</div>
-	<div class="list">
-		<div class="row">
+	<div id="EditParentsPersonDiv" class="background">
+		<div class="title">	
+			<h5>PARENTS</h5>
+		</div>
+		<div class="list">
+			<div class="row">
 				<div class="item">Father</div> 
-		<c:forEach items="${person.parents}" var="currentParent">
-			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentParent.parent.personId}" />
-			</c:url>
-			<c:if test="${currentParent.parent.gender == 'M'}">
-				<div class="value"><a class="linkParentCompare ${person.personId}" href="${ComparePersonURL}">${currentParent.parent}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" /></a></div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
-			</c:if>				
-		</c:forEach>
+				<c:forEach items="${person.parents}" var="currentParent">
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${currentParent.parent.personId}" />
+					</c:url>
+					<c:if test="${currentParent.parent.gender == 'M'}">
+						<div class="value">
+							<a class="linkParentCompare ${person.personId}" href="${ComparePersonURL}">
+								${currentParent.parent}
+								<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" />
+							</a>
+						</div> 
+						<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+					</c:if>				
+				</c:forEach>
 			</div>
 			<div class="row">
 				<div class="item">Mother</div> 
-		<c:forEach items="${person.parents}" var="currentParent">
-			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentParent.parent.personId}" />
-			</c:url>
-			<c:if test="${currentParent.parent.gender == 'F'}">
-				<div class="value"><a class="linkParentCompare ${person.personId}" href="${ComparePersonURL}">${currentParent.parent}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" /></a></div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
-			</c:if>				
-		</c:forEach>
+				<c:forEach items="${person.parents}" var="currentParent">
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${currentParent.parent.personId}" />
+					</c:url>
+					<c:if test="${currentParent.parent.gender == 'F'}">
+						<div class="value">
+							<a class="linkParentCompare ${person.personId}" href="${ComparePersonURL}">
+								${currentParent.parent}
+								<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" />
+							</a>
+						</div> 
+						<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+					</c:if>				
+				</c:forEach>
 			</div>
+		</div>
 	</div>
-</div>
 
-<div id="EditChildrenPersonDiv" class="background">
-	<div class="title">	
-		<h5>CHILDREN</h5>
-	</div>
-	<div class="list">
-	<c:forEach items="${children}" var="currentChild">
+	<div id="EditChildrenPersonDiv" class="background">
+		<div class="title">	
+			<h5>CHILDREN</h5>
+		</div>
+		<div class="list">
+			<c:forEach items="${children}" var="currentChild">
 				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 					<c:param name="personId"   value="${currentChild.child.personId}" />
 				</c:url>
 				<div class="row">
-					<div class="value"><a class="linkChildCompare ${person.personId}" href="${ComparePersonURL}">${currentChild.child}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentChild.child.personId}" /></a></div> 
+					<div class="value">
+						<a class="linkChildCompare ${person.personId}" href="${ComparePersonURL}">
+							${currentChild.child}
+							<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentChild.child.personId}" />
+						</a>
+					</div> 
 					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
 				</div>
-	</c:forEach>
+			</c:forEach>
+		</div>
 	</div>
-</div>
 
-<div id="EditSpousesPersonDiv" class="background">
-	<div class="title">	
-		<h5>SPOUSES</h5>
-	</div>
-	<div class="list">
-	<c:forEach items="${marriages}" var="currentMarriage">
+	<div id="EditSpousesPersonDiv" class="background">
+		<div class="title">	
+			<h5>SPOUSES</h5>
+		</div>
+		<div class="list">
+			<c:forEach items="${marriages}" var="currentMarriage">
 				<div class="row">
-					<c:if test="${person.personId == currentMarriage.husband.personId}">
+					<c:choose>
+						<c:when test="${person.personId == currentMarriage.husband.personId}">
+							<c:set var="spouse" value="${currentMarriage.wife}" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="spouse" value="${currentMarriage.husband}" />
+						</c:otherwise>
+					</c:choose>
+					<div class="row">
 						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-							<c:param name="personId"   value="${currentMarriage.wife.personId}" />
+							<c:param name="personId"   value="${spouse.personId}" />
 						</c:url>
-						<div class="value"><a class="linkSpouseCompare ${person.personId}" href="${ComparePersonURL}">${currentMarriage.wife}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.wife.personId}" /></a></div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
-					</c:if>
-					<c:if test="${person.personId == currentMarriage.wife.personId}">
-						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-							<c:param name="personId"   value="${currentMarriage.husband.personId}" />
-						</c:url>
-						<div class="value"><a class="linkSpouseCompare ${person.personId}" href="${ComparePersonURL}">${currentMarriage.husband}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentMarriage.husband.personId}" /></a></div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
-					</c:if>
+						<div class="value">
+							<a class="linkSpouseCompare ${person.personId}" href="${ComparePersonURL}">
+								${spouse}
+								<input type="hidden" style="display:none;" class="tabId" value="peopleId${spouse.personId}" />
+							</a>
+						</div>
+						<div class="info">
+							Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear}
+							<c:if test="${not empty currentMarriage.marTerm and currentMarriage.marTerm != 'Unknown'}">
+							| ${currentMarriage.marTerm}
+							</c:if>
+						</div>
+					</div>
 				</div>
 			</c:forEach>
-	</div>
-</div>
-
-<div id="EditResearchNotesPersonDiv" class="background">
-	<div class="title">	
-	<h5>RESEARCH NOTES</h5>
+		</div>
 	</div>
 
-	<div class="list">
-		<div class="row">
-			<div class="value">
-				${person.bioNotes}
+	<div id="EditResearchNotesPersonDiv" class="background">
+		<div class="title">	
+			<h5>RESEARCH NOTES</h5>
+		</div>
+	
+		<div class="list">
+			<div class="row">
+				<div class="value">
+					${person.bioNotes}
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		$j(document).ready(function(){
 			$j("#editLink${person.personId}").click(function(){
 				$j("#body_left").load($j(this).attr("href"));

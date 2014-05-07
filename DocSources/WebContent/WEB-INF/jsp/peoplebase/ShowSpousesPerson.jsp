@@ -15,7 +15,8 @@
 			<h5>SPOUSES</h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${person.personId > 0}">
-			<a id="EditSpousesPerson" href="${EditSpousesPersonURL}" class="editButton"></a><span id="loading"/>
+				<a id="EditSpousesPerson" href="${EditSpousesPersonURL}" class="editButton" />
+				<span id="loading"/>
 			</c:if>
 		</security:authorize>
 		</div>
@@ -23,7 +24,7 @@
 		<div class="list">
 			<c:forEach items="${marriages}" var="currentMarriage">
 				<c:choose>
-					<c:when test="${command.personId == currentMarriage.husband.personId}">
+					<c:when test="${person.personId == currentMarriage.husband.personId}">
 						<c:set var="spouse" value="${currentMarriage.wife}" />
 					</c:when>
 					<c:otherwise>
@@ -34,7 +35,12 @@
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${spouse.personId}" />
 					</c:url>
-					<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${spouse}<input type="hidden" style="display:none;" class="tabId" value="peopleId${spouse.personId}" /></a></div>
+					<div class="value">
+						<a class="linkSpouse" href="${ComparePersonURL}">
+							${spouse}
+							<input type="hidden" style="display:none;" class="tabId" value="peopleId${spouse.personId}" />
+						</a>
+					</div>
 					<div class="info">
 						Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear}
 						<c:if test="${not empty currentMarriage.marTerm and currentMarriage.marTerm != 'Unknown'}">
