@@ -1,5 +1,5 @@
 /*
- * ShowTeachingManuscriptViewerCommand.java
+ * TeachingPageTurnerCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -33,29 +33,9 @@ package org.medici.bia.command.manuscriptviewer;
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public class ShowTeachingManuscriptViewerCommand {
-	
-	private Integer entryId;
-	
-	private Integer topicId;
+public class TeachingPageTurnerCommand extends PageTurnerCommand {
 	
 	private Integer resourcesForum;
-	
-	public Integer getEntryId() {
-		return entryId;
-	}
-
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
-	}
-
-	public Integer getTopicId() {
-		return topicId;
-	}
-
-	public void setTopicId(Integer topicId) {
-		this.topicId = topicId;
-	}
 
 	public Integer getResourcesForum() {
 		return resourcesForum;

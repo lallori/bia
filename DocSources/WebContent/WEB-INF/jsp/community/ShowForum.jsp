@@ -632,40 +632,80 @@
 							        </div>
 								</c:when>
 								<c:when test="${forum.subType == 'COURSE'}">
+									<c:set var="topicType" value="${bia:getValue(topicsMap, currentTopic.topicId)}" />
 									<c:choose>
-										<c:when test="${not empty topicsMap and (bia:getValue(topicsMap, currentTopic.topicId) != 'Q' and bia:getValue(topicsMap, currentTopic.topicId) != 'D')}">
+										<c:when test="${not empty topicsMap and topicType != 'Q' and topicType != 'D'}">
 											<c:url var="ShowCourseFragmentURL" value="/teaching/ShowCourseTranscription.do">
 												<c:param name="topicId" value="${currentTopic.topicId}" />
 												<c:param name="entryId" value="${currentTopic.document.entryId}" />
-												<c:param name="transcriptionMode" value="${bia:getValue(topicsMap, currentTopic.topicId)}" />
+												<c:param name="transcriptionMode" value="${topicType}" />
 												<c:param name="completeDOM" value="true" />
 											</c:url>
 										</c:when>
-										<c:when test="${not empty topicsMap and bia:getValue(topicsMap, currentTopic.topicId) == 'Q'}">
+										<c:when test="${not empty topicsMap and topicType == 'Q'}">
 											<%-- QUESTION WITH ANNOTATION --%>
+											<c:url var="ShowCourseFragmentURL" value="/community/ShowTopicForum.do">
+												<c:param name="topicId" value="${currentTopic.topicId}"/>
+												<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+												<c:param name="completeDOM" value="true" />
+											</c:url>
 										</c:when>
 										<c:otherwise>
 											<%-- GENERAL DISCUSSION --%>
-											
+											<c:url var="ShowCourseFragmentURL" value="/community/ShowTopicForum.do">
+												<c:param name="topicId" value="${currentTopic.topicId}"/>
+												<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+												<c:param name="completeDOM" value="true" />
+											</c:url>
 										</c:otherwise>
 									</c:choose>
 									<div class="${not status.last ? 'row' : 'rowLast'}">
 										<div class="one">
-							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-							            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-							                <a href="${ShowCourseFragmentURL}" class="courseFragmentHref">${currentTopic.subject}</a><span><fmt:message key="community.forum.text.createdBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a></span>
+								            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">${currentTopic.subject}</a>
+							            	<span>
+							            		Topic Type:&nbsp;
+							            		 <c:choose>
+							            		 	<c:when test="${topicType == 'Q'}">
+							            		 		Question
+							            		 	</c:when>
+							            		 	<c:when test="${topicType == 'D'}">
+							            		 		Discussion
+							            		 	</c:when>
+							            		 	<c:otherwise>
+							            		 		<b>Transcription</b>
+							            		 	</c:otherwise>
+							            		 </c:choose>
+							            	</span>
+							            	<span>
+							            		<fmt:message key="community.forum.text.createdBy" />&nbsp;
+												<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+							            		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+							            	</span>
 							            </div>
-							            <div class="two">${currentTopic.totalReplies}</div>
-							            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
+							            <div class="two">
+							            	${currentTopic.totalReplies}
+							            </div>
+							            <div class="three">
+							            	${currentTopic.totalViews != null ? currentTopic.totalViews : ''}
+							            </div>
 										<c:if test="${not empty currentTopic.lastPost}">
 											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-								            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+								            <div class="four">
+								            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
+								            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
+								            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
+								            </div>
 								        </c:if>
 										<c:if test="${empty currentTopic.lastPost}">
 								            <div class="four"></div>
 								        </c:if>
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-							        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        		<div class="five">
+							        			<a href="${DeleteTopicForumURL}" class="button_delete">
+							        				<img src="<c:url value="/images/forum/button_delete.png"/>"/>
+							        			</a>
+							        		</div>
 							        	</security:authorize>
 							        </div>
 							    </c:when>

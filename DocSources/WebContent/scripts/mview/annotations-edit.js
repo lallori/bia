@@ -171,24 +171,26 @@ IIPMooViewer.implement({
 			var changeableType = id.lastIndexOf("annotation_", 0) != 0;
 			
 			if (changeableType) {
-				/*html += '<tr><td>Annotation Type</td><td><input type="text" name="category"';
-				html += '<tr><td>Annotation Type</td><td><select name="category"><option value="general">General Annotation</option><option value="paleography">Paleography Annotation</option><option value="personal">Personal Annotation</option>';*/
-				html += '<tr><td>Annotation Type</td><td><input name="category" type="radio" value="GENERAL"';
-				if (this.annotations[currentIndex].type == 'GENERAL' || this.annotations[currentIndex].type == '') {
-					html += 'checked="true"';
-				}
-				html +=	'>General<br><input name="category" type="radio" value="PALEOGRAPHY"';
-				if (this.annotations[currentIndex].type == 'PALEOGRAPHY') {
-					html += 'checked="true"';
-				}
-				html +=	'>Paleography<br><input id="defaultAnnotation" name="category" type="radio" value="PERSONAL"';
-				if (this.annotations[currentIndex].type == 'PERSONAL') {
-					html += 'checked="true"';
-				}
-				html +=	'>Personal';
+				var count = 0;
+				var defaultType = this.editMode === 'teaching' ? 'TEACHING' : 'PERSONAL';
 				
-				/*if( this.annotations[id].type ) html += ' value="' + this.annotations[id].type + '"';
-				html += '/></td></tr>';*/
+				html += '<tr><td>Annotation Type</td><td>';
+				if (this.editMode === 'default' || this.editMode === 'all') {
+					html += this.getHtmlRadio(this.annotations[currentIndex], 'GENERAL', 'General', count, defaultType);
+					count++;
+				}
+				if (this.editMode === 'default' || this.editMode === 'all') {
+					html += this.getHtmlRadio(this.annotations[currentIndex], 'PALEOGRAPHY', 'Paleography', count, defaultType);
+					count++;
+				}
+				if (this.editMode === 'default' || this.editMode === 'all') {
+					html += this.getHtmlRadio(this.annotations[currentIndex], 'PERSONAL', 'Personal', count, defaultType);
+					count++;
+				}
+				if (this.editMode === 'teaching' || this.editMode === 'all') {
+					html += this.getHtmlRadio(this.annotations[currentIndex], 'TEACHING', 'Course Question', count, defaultType);
+					count++;
+				}
 				html += '</td></tr>';
 			} else {
 				html += '<tr><td>Annotation Type</td><td>' + this.annotations[currentIndex].type + '</td></tr>';
@@ -199,7 +201,6 @@ IIPMooViewer.implement({
 				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			} else {
 				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea" readonly="readonly">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
-				//html += '<tr><td colspan="2"><textarea name="text" rows="5" style="display:none;" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			}
 	
 			html += '<input type="hidden" name="annotationId" value="' + this.annotations[currentIndex].annotationId + '">';
@@ -261,16 +262,19 @@ IIPMooViewer.implement({
 						this.getElement('#annotationError').style.display = 'none';
 					}
 					// RR: now we use the index of the annotations array
-					// _this.updateShape(this.getParent());
-					_this.updateShape(this.getParent(),currentIndex);
+					_this.updateShape(this.getParent(), currentIndex);
 					/** MEDICI ARCHIVE PROJECT END **/
 					var selectedCategory;
 					if (changeableType) {
 						var categoryArray = e.target['category'];
-						for (var i = 0; i < categoryArray.length; i++) {
-							if (categoryArray[i].checked == true) {
-								selectedCategory = categoryArray[i].value;
+						if (typeof categoryArray.length === 'number') {
+							for (var i = 0; i < categoryArray.length; i++) {
+								if (categoryArray[i].checked == true) {
+									selectedCategory = categoryArray[i].value;
+								}
 							}
+						} else {
+							selectedCategory = categoryArray.value;
 						}
 					} else {
 						selectedCategory = _this.annotations[currentIndex].type;
@@ -278,10 +282,6 @@ IIPMooViewer.implement({
 	
 					/** MEDICI ARCHIVE PROJECT START **/
 					// RR: now we use the index of the annotations array
-					// _this.annotations[id].type = selectedCategory;
-					// _this.annotations[id].title = e.target['title'].value;
-					// _this.annotations[id].text = e.target['text'].value;
-					// delete _this.annotations[id].edit;
 					_this.annotations[currentIndex].type = selectedCategory;
 					_this.annotations[currentIndex].title = e.target['title'].value;
 					_this.annotations[currentIndex].text = e.target['text'].value;
@@ -386,7 +386,7 @@ IIPMooViewer.implement({
 			});
 			
 			/** MEDICI ARCHIVE PROJECT START **/
-			// RR: The default annotation type ('PERSONAL') is selected for new annotations
+			// RR: The default annotation type is selected for new annotations
 			if (this.annotations[currentIndex].newAnnotation) {
 				document.getElementById('defaultAnnotation').click();
 			}
@@ -396,6 +396,32 @@ IIPMooViewer.implement({
 	},
 	
 	/** MEDICI ARCHIVE PROJECT START **/
+	/**
+	 * Get the html radio button
+	 * 
+	 * @param annotation the current annotation
+	 * @param type the value of the radio button
+	 * @param label the label of the radio button
+	 * @param level the radio button level (0 for first)
+	 * @param defaultType the preselected type
+	 * @returns the html radio button
+	 */
+	getHtmlRadio: function(annotation, type, label, level, defaultType) {
+		var html = '';
+		if (level > 0) {
+			html += '<br>';
+		}
+		html += '<input name="category" type="radio" value="' + type + '"';
+		if (type === defaultType) {
+			html += ' id="defaultAnnotation"';
+		}
+		if (annotation.type === type || (annotation.type === '' && type === defaultType)) {
+			html += ' checked';
+		}
+		html += '>' + label;
+		return html;
+	},
+	
 	/**
 	 * Remove an annotation from the client
 	 * 

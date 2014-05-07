@@ -327,33 +327,31 @@ public class AjaxController {
 	
 	/**
 	 * 
-	 * @param entryId Document identifier
-	 * @param volNum Volume Number
-	 * @param volLetExt Volume Letter Extension
-	 * @param imageType 
-	 * @param imageProgTypeNum
-	 * @param firstRecord This is input parameter for Carta Form
-	 * @param secondRecord This is input parameter for Rubricario Form
-	 * @param imageOrder Unique id identifier inside volume.
-	 * @param total Global total of volume.
-	 * @param totalRubricario Total count page in rubricario section.
-	 * @param totalCarta Total count page in carta section.
-	 * @param totalAppendix Total count page in appendix section.
-	 * @param totalOther
-	 * @param totalGuardia
-	 * @param modeEdit
+	 * @param imageName the image name
+	 * @param annotationId the annotation identifier to show (if none all image annotations are retrieved)
 	 * @return
 	 */
 	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
-	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName,
-											@RequestParam(value="annotationId", required=false) Integer annotationId) {
+	public ModelAndView getImageAnnotation(
+			@RequestParam(value="imageName", required=false) String imageName,
+			@RequestParam(value="annotationId", required=false) Integer annotationId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			List<Annotation> annotations = getManuscriptViewerService().getImageAnnotations(imageName);	
+			List<Annotation> annotations;
+			if (annotationId != null) {
+				annotations = new ArrayList<Annotation>();
+				Annotation annotation = getManuscriptViewerService().getImageAnnotation(imageName, annotationId);
+				if (annotation != null) {
+					annotations.add(annotation);
+				}
+			} else {
+				annotations = getManuscriptViewerService().getImageAnnotations(imageName, null);	
+			}
 			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
 			model.put("annotations", resultList);
 		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("responseKO", model);
 		}
 	
 		return new ModelAndView("responseOK", model);
@@ -473,7 +471,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			// In this controller we get input parameter at low level beacause 
+			// In this controller we get input parameter at low level because 
 			// there is a bug in spring which construct a wrong list of 
 			// annotations in case of client send 1 single annotation 
 			//String imageName = httpServletRequest.getParameter("imageName");
@@ -551,4 +549,5 @@ public class AjaxController {
 		}
 		return resultList;
 	}
+	
 }

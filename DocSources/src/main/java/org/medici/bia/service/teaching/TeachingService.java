@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
 import org.medici.bia.domain.CoursePostExt;
@@ -317,7 +318,7 @@ public interface TeachingService {
 	 * @return the list of {@link CourseTopicOption} found
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
-	List<CourseTopicOption> getOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable;
+	List<CourseTopicOption> getMasterOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns a Page of extended posts of the course topic provided.
@@ -348,6 +349,18 @@ public interface TeachingService {
 	List<CourseCheckPoint> getTopicCheckPoints(Integer topicId) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the list of annotations of the provided type that are associated to provided image.
+	 * Annotations are filtered by topics contained in the provided forum.
+	 * 
+	 * @param imageName the name of the image
+	 * @param forumId the forum container identifier
+	 * @param type the annotation type
+	 * @return the list of annotations found
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
+	 */
+	List<Annotation> getTopicImageAnnotations(String imageName, Integer forumId, Annotation.Type type) throws ApplicationThrowable;
+	
+	/**
 	 * This method returns the user maximum authority for course transcriptions.
 	 * 
 	 * @param account the account identifier
@@ -364,6 +377,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	Map<String,UserAuthority> getUsersCourseAuthority(Set<String> accountIds) throws ApplicationThrowable;
+	
+	/**
+	 * This method determines if the provided annotation is deletable.
+	 * 
+	 * @param annotation the annotation
+	 * @return true if the annotation is deletable, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable;
 	
 	/**
 	 * This method determines if a document is associated to an active course (by a course topic).
@@ -391,6 +413,23 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	CourseCheckPoint setIncrementalTranscription(CoursePostExt postExt) throws ApplicationThrowable;
+	
+	/**
+	 * This method updates the 'TEACHING' annotations of an image.
+	 * The considered annotations are the ones whose topic is contained in the container forum provided.
+	 * 
+	 * @param imageId the image identifier
+	 * @param forumContainerId the container forum identifier
+	 * @param fromViewAnnotations the list of annotations from the client
+	 * @param ipAddress the user address
+	 * @return the map of annotations and its topic identifier
+	 * @throws ApplicationThrowable
+	 */
+	Map<Annotation, Integer> updateAnnotations(
+			Integer imageId, 
+			Integer forumContainerId,
+			List<Annotation> fromViewAnnotations, 
+			String ipAddress) throws ApplicationThrowable;
 	
 	/**
 	 * This method updates the existent post of a course topic (for Course Transcription Topic).

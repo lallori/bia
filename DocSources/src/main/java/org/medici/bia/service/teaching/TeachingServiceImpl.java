@@ -42,6 +42,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.StringUtils;
+import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.course.CourseDAO;
 import org.medici.bia.dao.coursecheckpoint.CourseCheckPointDAO;
 import org.medici.bia.dao.coursepostext.CoursePostExtDAO;
@@ -56,14 +57,15 @@ import org.medici.bia.dao.image.ImageDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
 import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.CourseTopicOption;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
-import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
+import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
@@ -94,6 +96,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeachingServiceImpl implements TeachingService {
 	
 	@Autowired
+	private AnnotationDAO annotationDAO;
+	@Autowired
 	private CourseCheckPointDAO courseCheckPointDAO;
 	@Autowired
 	private CourseDAO courseDAO;
@@ -122,6 +126,14 @@ public class TeachingServiceImpl implements TeachingService {
 	@Autowired
 	private UserDAO userDAO;
 	
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
 	public CourseCheckPointDAO getCourseCheckPointDAO() {
 		return courseCheckPointDAO;
 	}
@@ -292,7 +304,8 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			container.setTitle(topicTitle.trim() + " resources");
 			container.setDescription("Resources of " + topicTitle.trim());
-			container.setDocument(document);
+			// the forum container must not have a document, it is only a topic container
+			// container.setDocument(document);
 			container.setForumParent(course.getForum());
 			container.setFullPath(course.getForum().getFullPath()); // To do not violate the table constraint
 			container.setHierarchyLevel(0);
@@ -795,9 +808,9 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CourseTopicOption> getOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable {
+	public List<CourseTopicOption> getMasterOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable {
 		try {
-			return getCourseTopicOptionDAO().findOptionsByDocumentInActiveCourses(entryId);
+			return getCourseTopicOptionDAO().findMasterOptionsByDocumentInActiveCourses(entryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -843,6 +856,18 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Annotation> getTopicImageAnnotations(String imageName, Integer forumId, Annotation.Type type) throws ApplicationThrowable {
+		try {
+			return getAnnotationDAO().getTopicImageAnnotations(imageName, forumId, type);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public UserAuthority getUserCourseAuthority(String account) throws ApplicationThrowable {
 		try {
 			return getUserAuthorityDAO().getUserCourseAuthority(account);
@@ -861,6 +886,17 @@ public class TeachingServiceImpl implements TeachingService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable {
+		if (annotation.getForumTopic() != null) {
+			return getForumPostDAO().countTopicPosts(annotation.getForumTopic().getTopicId()) == 0;
+		}
+		return Boolean.TRUE;
 	}
 	
 	/**
@@ -914,6 +950,135 @@ public class TeachingServiceImpl implements TeachingService {
 			return checkPoint;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Map<Annotation, Integer> updateAnnotations(
+			Integer imageId, 
+			Integer forumContainerId,
+			List<Annotation> fromViewAnnotations, 
+			String ipAddress) throws ApplicationThrowable {
+		try {
+			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
+			Image image = getImageDAO().find(imageId);
+			if (image == null) {
+				return new HashMap<Annotation, Integer>(0);
+			}
+
+			User user = getCurrentUser();
+			
+			List<Annotation> persistedAnnotations = getAnnotationDAO().getTopicImageAnnotations(image.getImageName(), forumContainerId, Annotation.Type.TEACHING);
+			
+			Date operationDate = new Date();
+
+			for (Annotation viewAnnotation : fromViewAnnotations) {
+				Annotation annotation = getAnnotationDAO().findByAnnotationId(viewAnnotation.getAnnotationId());
+				
+				boolean isChanged = annotation == null || (annotation != null && 
+						(!annotation.getTitle().equals(viewAnnotation.getTitle()) 
+							|| !annotation.getText().equals(viewAnnotation.getText())
+							|| !annotation.getX().equals(viewAnnotation.getX())
+							|| !annotation.getY().equals(viewAnnotation.getY())
+							|| !annotation.getWidth().equals(viewAnnotation.getWidth())
+							|| !annotation.getHeight().equals(viewAnnotation.getHeight())));
+				
+				if (annotation == null) {
+					annotation = new Annotation();
+				} 
+				
+				if (isChanged) {
+					// We set general annotation details
+					annotation.setLastUpdate(operationDate);
+					annotation.setTitle(viewAnnotation.getTitle());
+					annotation.setText(viewAnnotation.getText());
+					annotation.setX(viewAnnotation.getX());
+					annotation.setY(viewAnnotation.getY());
+					annotation.setWidth(viewAnnotation.getWidth());
+					annotation.setHeight(viewAnnotation.getHeight());
+				}
+				
+				if (annotation.getAnnotationId() != null) {
+					// The annotation already exists in the database, we remove it from the persistedAnnotation list
+					for (int i = persistedAnnotations.size() - 1 ; i >= 0; i--) {
+						if (persistedAnnotations.get(i).getAnnotationId() == annotation.getAnnotationId()) {
+							persistedAnnotations.remove(i);
+							break;
+						}
+					}
+					
+					returnMap.put(annotation, -1);
+				} else {
+					// This is a new annotation
+					annotation.setDateCreated(operationDate);
+					annotation.setLogicalDelete(Boolean.FALSE);
+					annotation.setUser(user);
+					annotation.setImage(image);
+					annotation.setType(Annotation.Type.TEACHING);
+					
+					getAnnotationDAO().persist(annotation);
+					
+					Forum forum = getForumDAO().find(forumContainerId);
+					image = getImageDAO().find(imageId);
+					
+					ForumTopic topicAnnotation = new ForumTopic(null);
+					topicAnnotation.setForum(forum);
+					topicAnnotation.setDateCreated(operationDate);
+					topicAnnotation.setLastUpdate(operationDate);
+					topicAnnotation.setIpAddress(ipAddress);
+					topicAnnotation.setUser(user);
+					topicAnnotation.setSubject(annotation.getTitle() + " (Question)");
+					topicAnnotation.setTotalReplies(0);
+					topicAnnotation.setTotalViews(0);
+					topicAnnotation.setLastPost(null);
+					topicAnnotation.setFirstPost(null);
+					topicAnnotation.setLogicalDelete(Boolean.FALSE);
+					
+					topicAnnotation.setAnnotation(annotation);
+					getForumTopicDAO().persist(topicAnnotation);
+					
+					getForumDAO().recursiveIncreaseTopicsNumber(forum);
+					if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+						ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
+						getForumTopicWatchDAO().persist(forumTopicWatch);
+					}
+					annotation.setForumTopic(topicAnnotation);
+					returnMap.put(annotation, topicAnnotation.getTopicId());
+					
+					// we have to add a course topic option
+					CourseTopicOption option = new CourseTopicOption();
+					option.setCourseTopic(topicAnnotation);
+					option.setMode(CourseTopicMode.Q);
+					
+					getCourseTopicOptionDAO().persist(option);
+				}
+			}
+			
+			// We remove the old persisted annotations that are still in the list
+			for(Annotation toRemoveAnnotation : persistedAnnotations) {
+				if (toRemoveAnnotation.getForumTopic() != null) {
+					// RR: It should not be possible to remove an annotation associated to a topic
+					ForumTopic annotationTopic = toRemoveAnnotation.getForumTopic();
+					annotationTopic.setLogicalDelete(Boolean.TRUE);
+
+					getForumPostDAO().deleteAllForumTopicPosts(annotationTopic.getTopicId());
+					Forum forum = annotationTopic.getForum();
+					ForumPost lastPost = getForumPostDAO().getLastForumPostByLastUpdate(forum);
+					recursiveSetLastPost(forum, lastPost, operationDate);
+					getForumDAO().recursiveDecreasePostsNumber(forum, annotationTopic.getTotalReplies());
+					getForumDAO().recursiveDecreaseTopicsNumber(forum);
+				}
+				toRemoveAnnotation.setLastUpdate(operationDate);
+				toRemoveAnnotation.setLogicalDelete(Boolean.TRUE);
+			}
+			
+			return returnMap;
+		} catch (Throwable throwable){
+			throw new ApplicationThrowable(throwable);
 		}
 	}
 	

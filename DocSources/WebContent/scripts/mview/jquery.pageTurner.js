@@ -40,6 +40,7 @@
 		"annotationsType": "remote",
 		"retrieveAnnotationsUrl": "",
 		"updateAnnotationsUrl": "",
+		"openAnnotationTopicMode": "_self",
 		"annotations": new Array(),
 		"showHideAnnotationButton": true,
 		"enableEdit": true,
@@ -244,6 +245,15 @@
 		if(data.imageName.indexOf("SPI") != -1){
 			credit = '<span style=\'font-size:16px\'>' + functionParams["textSpine"] + '</span>';
 		}
+		
+		var retrieveAnnotationsURL = functionParams["retrieveAnnotationsUrl"];
+		if (retrieveAnnotationsURL != null) {
+			retrieveAnnotationsURL += (retrieveAnnotationsURL.indexOf("?") > -1 ?  "&" : "?" ) + "imageId=" + data.imageId + "&imageName=" + data.imageName;
+		}
+		var updateAnnotationsURL = functionParams["updateAnnotationsUrl"];
+		if (updateAnnotationsURL != null) {
+			updateAnnotationsURL += (updateAnnotationsURL.indexOf("?") > -1 ?  "&" : "?" ) + "imageId=" + data.imageId + "&imageName=" + data.imageName;
+		}
 
 		iipMooViewer = new IIPMooViewer( "targetframe", {
 			server: functionParams["IIPImageServer"],
@@ -260,10 +270,12 @@
 			scale: 0,
 			showHideAnnotationButton: functionParams["showHideAnnotationButton"],
 			enableEdit: functionParams["enableEdit"],
+			editMode: functionParams["editMode"],
 			annotationsType: functionParams["annotationsType"],
-			retrieveAnnotationsUrl: functionParams["retrieveAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-			updateAnnotationsUrl: functionParams["updateAnnotationsUrl"] + "?imageId=" + data.imageId + "&imageName=" + data.imageName,
-			annotations: functionParams["annotations"]
+			retrieveAnnotationsUrl: retrieveAnnotationsURL,
+			updateAnnotationsUrl: updateAnnotationsURL,
+			annotations: functionParams["annotations"],
+			openAnnotationTopicMode: functionParams["openAnnotationTopicMode"]
 		});
 
 		if (data.previousPage == '') {

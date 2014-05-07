@@ -60,25 +60,6 @@ public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	 * @return the list of {@link CourseTopicOption} found
 	 * @throws PersistenceException
 	 */
-	List<CourseTopicOption> findOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException;
-
-	/**
-	 * Returns the {@link CourseTopicOption} associated to the provided document in active courses.
-	 * 
-	 * @param entryId the document identifier
-	 * @return the list of {@link CourseTopicOption} found
-	 * @throws PersistenceException
-	 */
-	List<CourseTopicOption> findOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException;
-
-	/**
-	 * Returns the {@link CourseTopicOption} associated to the provided document and course.
-	 * 
-	 * @param entryId the document identifier
-	 * @param courseId the course identifier
-	 * @return the list of {@link CourseTopicOption} found
-	 * @throws PersistenceException
-	 */
 	List<CourseTopicOption> findMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException;
 
 	/**

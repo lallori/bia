@@ -16,7 +16,9 @@
 	</c:url>
 	
 	<c:url var="ShowTeachingManuscriptViewerURL" value="/teaching/ShowManuscriptViewer.do">
-		<c:param name="entryId" value="${command.entryId}"/>
+		<c:param name="entryId" value="${command.entryId}" />
+		<c:param name="topicId" value="${command.topicId}" />
+		<c:param name="resourcesForum" value="${resourcesForum}" />
 	</c:url>
 
 	<!-- <div class="ui-layout-north"></div>  -->

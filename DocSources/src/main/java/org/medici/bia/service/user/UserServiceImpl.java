@@ -1256,7 +1256,7 @@ public class UserServiceImpl implements UserService {
 		try{
 			User user = getUserDAO().findUser((((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			
-			return getAnnotationDAO().findPersonalAnnotations(user, paginationFilter);
+			return getAnnotationDAO().getPersonalAnnotations(user, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

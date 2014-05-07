@@ -91,7 +91,7 @@ public class ShowChoiceCoursesOrDocumentsForumModalWindowController {
 			List<Course> courses = getTeachingService().getActiveCourses(command.getEntryId());
 			if (courses.size() > 0) {
 				model.put("courses", courses);
-				List<CourseTopicOption> extendedTopics = getTeachingService().getOptionsByDocumentForActiveCourses(command.getEntryId());
+				List<CourseTopicOption> extendedTopics = getTeachingService().getMasterOptionsByDocumentForActiveCourses(command.getEntryId());
 				model.put("extendedTopics", extendedTopics);
 			}
 			

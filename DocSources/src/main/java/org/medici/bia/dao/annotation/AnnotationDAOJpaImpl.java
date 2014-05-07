@@ -69,53 +69,48 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -6882494398469472058L;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND logicalDelete = false order by annotationId desc";
-    	
-        Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("imageName", imageName);
-
-		return (List<Annotation>) query.getResultList();
-	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account = :account)) AND logicalDelete = false order by annotationId desc";
-		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("imageName", imageName);
-        query.setParameter("account", user.getAccount());
-
-		return (List<Annotation>) query.getResultList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Annotation findByAnnotationId(Integer annotationId) throws PersistenceException {
-		String jpql = "FROM Annotation WHERE annotationId = :annotationId and logicalDelete = false";
+		String jpql = "FROM Annotation WHERE annotationId = :annotationId AND logicalDelete = false";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("annotationId", annotationId);
 
-		List<Annotation> resultList = (List<Annotation>) query.getResultList();
-		
-		if (resultList.size() == 1){
-			return resultList.get(0);
-		}
-		
-		return null;
+		return getFirst(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Annotation getAnnotation(String imageName, Integer annotationId) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE annotationId = :annotationId AND logicalDelete = false AND image.imageName = :imageName";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("imageName", imageName);
+        query.setParameter("annotationId", annotationId);
+
+		return getFirst(query);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Annotation> getAnnotations(String imageName) throws PersistenceException {
+		return getAnnotations(imageName, null, null);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Annotation> getAnnotations(String imageName, User user) throws PersistenceException {
+		return getAnnotations(imageName, user, null);
 	}
 	
 	/**
@@ -123,20 +118,49 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Annotation> findForumAnnotations() throws PersistenceException {
+	public List<Annotation> getAnnotations(String imageName, User user, List<Annotation.Type> notConsideredTypes) {
+		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND logicalDelete = false";
+		if (user != null) {
+			jpql += " AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account = :account))";
+		}
+		if (notConsideredTypes != null && notConsideredTypes.size() > 0) {
+			jpql += " AND type NOT IN (";
+			boolean first = true;
+			for (Annotation.Type type : notConsideredTypes) {
+				jpql += (!first ? ", " : "") + "'" + type + "'";
+				first = false;
+			}
+			jpql += ")";
+		}
+		jpql += " ORDER BY annotationId DESC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("imageName", imageName);
+        if (user != null) {
+        	query.setParameter("account", user.getAccount());
+        }
+
+		return (List<Annotation>) query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Annotation> getForumAnnotations() throws PersistenceException {
 		String jpql = "FROM Annotation WHERE type IN ('" + Annotation.Type.GENERAL + "','" + Annotation.Type.PALEOGRAPHY + "') AND logicalDelete = false ORDER BY user ASC";
 		
 		Query query = getEntityManager().createQuery(jpql);
 
-		List<Annotation> resultList = (List<Annotation>) query.getResultList();
-		return resultList;
+		return (List<Annotation>) query.getResultList();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page getPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		if(paginationFilter.getTotal() == null){
@@ -160,6 +184,40 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		page.setList(query.getResultList());
 
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Annotation> getTopicImageAnnotations(String imageName, Integer forumId, Annotation.Type type) throws PersistenceException {
+		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND logicalDelete = false AND forumTopic.forum.forumId = :forumId";
+		if (type != null) {
+			jpql += " AND type = :type";
+		}
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("imageName", imageName);
+		query.setParameter("forumId", forumId);
+		if (type != null) {
+			query.setParameter("type", type);
+		}
+		
+		return (List<Annotation>) query.getResultList();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
+		String jpql = "UPDATE Annotation SET user.account = :newAccount WHERE user.account = :originalAccount";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("newAccount", newAccount);
+		query.setParameter("originalAccount", originalAccount);
+
+		return query.executeUpdate();
 	}
 	
 	/**
@@ -195,18 +253,5 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		}
 
 		return paginationFilter;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
-		String jpql = "UPDATE Annotation SET user.account = :newAccount WHERE user.account = :originalAccount";
-		Query query = getEntityManager().createQuery(jpql);
-		query.setParameter("newAccount", newAccount);
-		query.setParameter("originalAccount", originalAccount);
-
-		return query.executeUpdate();
 	}
 }

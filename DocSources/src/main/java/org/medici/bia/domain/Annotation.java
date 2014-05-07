@@ -329,7 +329,8 @@ public class Annotation implements Serializable {
 	public static enum Type {
 		GENERAL("GENERAL"),
 		PALEOGRAPHY("PALEOGRAPHY"), 
-		PERSONAL("PERSONAL");
+		PERSONAL("PERSONAL"),
+		TEACHING("TEACHING");
 		
 		private final String type;
 

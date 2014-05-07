@@ -154,7 +154,22 @@ var IIPMooViewer = new Class({
 		/** MEDICI ARCHIVE PROJECT START **/
 		this.navWinPos = options.navWinPos || 'right';
 		this.editEnabled = (options.enableEdit == false) ? false : true;
+		// The 'editMode' defines which annotations can be edited. Possible values are:
+		// 1) default: general, paleography and personal annotations
+		// 2) teaching: course transcription annotations
+		// 3) all: all possible annotations
+		// If no editMode is defined the 'default' is selected.
+		this.editMode = typeof options.editMode !== 'undefined' ? options.editMode : 'default';
+		if (this.editMode !== 'default' && this.editMode !== 'teaching' && this.ednitMode !== 'all') {
+			alert('The edit modality [' + this.editMode + '] is unknown');
+		}
 		this.showHideAnnotationButton = (options.showHideAnnotationButton == false) ? false : true;
+		// The 'openAnnotationTopicMode' defines in which window the annotation topic is opened (during annotation topic creation phase).
+		// Possible values are:
+		// 1) '_self' : in the current window/iframe (default)
+		// 2) '_parent' : in the parent iframe
+		// 3) '_blank' : in another window
+		this.openAnnotationTopicMode = typeof options.openAnnotationTopicMode !== 'undefined' ? options.openAnnotationTopicMode : "_self";
 		/** MEDICI ARCHIVE PROJECT END **/
 
 
@@ -176,7 +191,6 @@ var IIPMooViewer = new Class({
 			default:
 				this.protocol = new Protocols.IIP();
 		}
-
 
 		// Preload tiles surrounding view window?
 		this.preload = (options.preload == true) ? true : false;
@@ -241,7 +255,7 @@ var IIPMooViewer = new Class({
 							/*var popupWindow = window.opener.open(responseJSON.links[i].forum, "_blank", "scrollbars=yes");
 							popupWindow.focus();
 							window.close(); */
-							window.open(responseJSON.links[i].forum, "_self", "scrollbars=yes");
+							window.open(responseJSON.links[i].forum, _this.openAnnotationTopicMode, "scrollbars=yes");
 						}
 					}
 				}).send();

@@ -50,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/EditForumPostAnnotation"})
+@RequestMapping(value={"/community/EditForumPostAnnotation", "/teaching/EditForumPostAnnotation"})
 public class EditForumPostAnnotationController {
 	@Autowired
 	private CommunityService communityService;
@@ -83,7 +83,7 @@ public class EditForumPostAnnotationController {
 				command.setParentPostId(forumPost.getParentPost().getId());
 			}*/
 			command.setSubject(topicAnnotation.getSubject());
-			// RR: we initialize the post with the text of the annotation
+			// RR: the post is initialized with the annotation text
 			command.setText(topicAnnotation.getAnnotation().getText());
 		}
 

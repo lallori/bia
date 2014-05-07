@@ -40,6 +40,8 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.ApplicationError;
+import org.medici.bia.common.util.ManuscriptViewerUtils;
+import org.medici.bia.common.util.ManuscriptViewerUtils.ManuscriptMode;
 import org.medici.bia.common.util.UserRoleUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.common.volume.VolumeSummary;
@@ -806,15 +808,14 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Annotation> getImageAnnotations(String imageName) throws ApplicationThrowable {
+	public Annotation getImageAnnotation(String imageName, Integer annotationId) throws ApplicationThrowable {
 		try {
-			User user = getCurrentUser();
-			return getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
+			return getAnnotationDAO().getAnnotation(imageName, annotationId);
 		} catch(Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -824,11 +825,31 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName) throws ApplicationThrowable {
+	public List<Annotation> getImageAnnotations(String imageName, ManuscriptMode mode) throws ApplicationThrowable {
 		try {
-			Map<Annotation, Boolean> resultMap = new HashMap<Annotation, Boolean>();
+			if (mode == null) {
+				mode = ManuscriptMode.COMMUNITY;
+			}
 			User user = getCurrentUser();
-			List<Annotation> result = getAnnotationDAO().findAnnotationByImageAndUser(imageName, user);
+			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(mode);
+			return getAnnotationDAO().getAnnotations(imageName, user, filteredTypes);
+		} catch(Throwable throwable) {
+			throw new ApplicationThrowable(throwable);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName, User user, ManuscriptMode mode) throws ApplicationThrowable {
+		try {
+			if (mode == null) {
+				mode = ManuscriptMode.COMMUNITY;
+			}
+			Map<Annotation, Boolean> resultMap = new HashMap<Annotation, Boolean>();
+			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(mode);
+			List<Annotation> result = getAnnotationDAO().getAnnotations(imageName, user, filteredTypes);
 			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(user.getAccount());
 			UserRole mostSignificantRole = UserRoleUtils.getMostSignificantRole(userRoles);
 			for(Annotation currentAnnotation : result){
@@ -895,7 +916,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Override
 	public Annotation updateAnnotation(Integer imageId, Annotation annotation) throws ApplicationThrowable {
 		try {
-			Image image = getImageDAO().findImageByImageId(imageId);
+			Image image = getImageDAO().find(imageId);
 			if (image == null) {
 				return null;
 			}
@@ -926,14 +947,15 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable {
 		try {
 			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
-			Image image = getImageDAO().findImageByImageId(imageId);
+			Image image = getImageDAO().find(imageId);
 			if (image == null) {
 				return new HashMap<Annotation, Integer>(0);
 			}
 
 			User user = getCurrentUser();
 			
-			List<Annotation> persistedAnnotations = getAnnotationDAO().findAnnotationByImageAndUser(image.getImageName(), user);
+			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(ManuscriptMode.COMMUNITY);
+			List<Annotation> persistedAnnotations = getAnnotationDAO().getAnnotations(image.getImageName(), user, filteredTypes);
 			
 			Date operationDate = new Date();
 
@@ -990,13 +1012,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						
 						ForumTopic topicAnnotation = new ForumTopic(null);
 						topicAnnotation.setForum(forum);
-						topicAnnotation.setDateCreated(new Date());
-						topicAnnotation.setLastUpdate(topicAnnotation.getDateCreated());
+						topicAnnotation.setDateCreated(operationDate);
+						topicAnnotation.setLastUpdate(operationDate);
 						topicAnnotation.setIpAddress(ipAddress);
 						topicAnnotation.setUser(user);
 						topicAnnotation.setSubject(annotation.getTitle() + " (Annotation)");
-						topicAnnotation.setTotalReplies(new Integer(0));
-						topicAnnotation.setTotalViews(new Integer(0));
+						topicAnnotation.setTotalReplies(0);
+						topicAnnotation.setTotalViews(0);
 						topicAnnotation.setLastPost(null);
 						topicAnnotation.setFirstPost(null);
 						topicAnnotation.setLogicalDelete(Boolean.FALSE);

@@ -8,7 +8,7 @@
 	
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 
-	<c:url var="PageTurnerDialogUrl" value="/src/mview/TeachingPageTurnerDialog.do" >
+	<c:url var="PageTurnerDialogUrl" value="/teaching/TeachingPageTurnerDialog.do" >
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
 		<c:param name="volNum" value="${documentExplorer.volNum}" />
 		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
@@ -21,6 +21,18 @@
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="modeEdit" value="false" />
 		<c:param name="showExtract" value="false" />
+		<c:param name="resourcesForum" value="${resourcesForum}" />
+	</c:url>
+	
+	<c:url var="GetImageAnnotationURL" value="/teaching/GetImageAnnotation.json">
+		<c:param name="imageName" value="${documentExplorer.image.imageName}" />
+		<c:param name="resourcesForum" value="${resourcesForum}" />
+	</c:url>
+	
+	<c:url var="UpdateAnnotationsURL" value="/teaching/UpdateAnnotations.json">
+		<c:param name="imageId" value="${documentExplorer.image.imageId}" />
+		<c:param name="imageName" value="${documentExplorer.image.imageName}" />
+		<c:param name="resourcesForum" value="${resourcesForum}" />
 	</c:url>
 		
 		<%-- <script>
@@ -86,6 +98,10 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
+					annotationsType: 'remote',
+					retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+					openAnnotationTopicMode: '_parent',
 					zoom: 3,
 					credit: credit,
 					navWinPos: 'left',
@@ -93,8 +109,10 @@
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
-					showHideAnnotationButton: false,
-					enableEdit: false
+					showHideAnnotationButton: true,
+					enableEdit: true,
+					editMode: 'teaching',
+					annotations: new Array()
 				});
 				
 				var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>').dialog({                                                                                                                                                                   

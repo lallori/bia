@@ -46,51 +46,89 @@ import org.medici.bia.domain.User;
  *         @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  */
 public interface AnnotationDAO extends Dao<Integer, Annotation> {
-
-	/**
-	 * 
-	 * @param imageName
-	 * @return
-	 * @throws PersistenceException
-	 */
-	List<Annotation> findAnnotationsByImage(String imageName) throws PersistenceException;
 	
 	/**
-	 * This method retrieves annotations associated to the provided image.<br/>
-	 * It retrieves also personal annotation associated to the provided owner.
+	 * Returns the not deleted annotation with provided identifier.
 	 * 
-	 * @param imageName the name of the image
-	 * @param user the owner of the annotations
-	 * @return a list of annotations associated to the provided image and owner (for personal annotations)
-	 * @throws PersistenceException
-	 */
-	List<Annotation> findAnnotationByImageAndUser(String imageName, User user) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param annotationId
-	 * @return
+	 * @param annotationId annotation identifier
+	 * @return the annotation found
 	 * @throws PersistenceException
 	 */
 	Annotation findByAnnotationId(Integer annotationId) throws PersistenceException;
 	
 	/**
+	 * Returns the annotation by its identifier in the provided image.
 	 * 
-	 * @param user
-	 * @param paginationFilter
-	 * @return
+	 * @param imageName the image name
+	 * @param annotationId the annotation identifier
+	 * @return the annotation found
 	 * @throws PersistenceException
 	 */
-	Page findPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	Annotation getAnnotation(String imageName, Integer annotationId) throws PersistenceException;
+
+	/**
+	 * Returns the not deleted annotations linked to the provided image.
+	 * 
+	 * @param imageName the image name
+	 * @return the list of annotations found
+	 * @throws PersistenceException
+	 */
+	List<Annotation> getAnnotations(String imageName) throws PersistenceException;
 	
 	/**
-	 * This method retrieves the annotations associated to a forum topic.
+	 * Returns the not deleted annotations linked to the provided image.<br/>
+	 * Also returns personal annotation associated to the provided owner.
 	 * 
-	 * @return a list of annotations
+	 * @param imageName the image name
+	 * @param user the personal annotations owner
+	 * @return the list of annotations found
 	 * @throws PersistenceException
 	 */
-	List<Annotation> findForumAnnotations() throws PersistenceException;
+	List<Annotation> getAnnotations(String imageName, User user) throws PersistenceException;
+	
+	/**
+	 * Returns the not deleted annotations linked to the provided image.<br/>
+	 * Also returns personal annotation associated to the provided owner and does not consider the provided types.
+	 * 
+	 * @param imageName the image name
+	 * @param user the personal annotations owner
+	 * @param notConsideredTypes the not considered annotation types
+	 * @return the list of annotations found
+	 * @throws PersistenceException
+	 */
+	List<Annotation> getAnnotations(String imageName, User user, List<Annotation.Type> notConsideredTypes) throws PersistenceException;
+	
+	/**
+	 * Returns the annotations linked to a community forum topic.
+	 * 
+	 * @return the list of annotations found
+	 * @throws PersistenceException
+	 */
+	List<Annotation> getForumAnnotations() throws PersistenceException;
 
+	/**
+	 * Returns the not deleted personal annotations associated to the provided user.
+	 * 
+	 * @param user the personal annotations owner
+	 * @param paginationFilter the pagination filter
+	 * @return the {@link Page} with the annotations found
+	 * @throws PersistenceException
+	 */
+	Page getPersonalAnnotations(User user, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * Returns the list of annotations associated to the image provided.
+	 * The annotations are filtered by topics contained in the provided forum (so personal annotations are never returned).
+	 * Annotations could also filtered by a specific type.
+	 * 
+	 * @param imageName the image name
+	 * @param forumId the forum container identifier
+	 * @param type the annotation type
+	 * @return the list of annotations found
+	 * @throws PersistenceException
+	 */
+	List<Annotation> getTopicImageAnnotations(String imageName, Integer forumId, Annotation.Type type) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param originalAccount
@@ -99,4 +137,5 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	 * @throws PersistenceException
 	 */
 	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
 }

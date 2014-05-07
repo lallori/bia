@@ -34,11 +34,13 @@ import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.util.ManuscriptViewerUtils.ManuscriptMode;
 import org.medici.bia.common.volume.VolumeSummary;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -340,28 +342,39 @@ public interface ManuscriptViewerService {
 	public DocumentExplorer getDocumentExplorer(Integer entryId, boolean forTranscribeFolio) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the annotation by its identifier in the provided image.
 	 * 
-	 * @param pageTurner
-	 * @return
+	 * @param imageName the image name
+	 * @param annotationId the annotation identifier
+	 * @return the annotation found
 	 * @throws ApplicationThrowable
 	 */
-	public VolumeExplorer getVolumeExplorer(VolumeExplorer pageTurner) throws ApplicationThrowable;
+	public Annotation getImageAnnotation(String imageName, Integer annotationId) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the list of annotations linked to the provided image.
+	 * The annotations returned correspond to the provided manuscript mode ({@link ManuscriptMode}).
+	 * If null mode is provided then 'COMMUNITY' mode is considered. 
 	 * 
-	 * @param imageName
-	 * @return
+	 * @param imageName the image name
+	 * @param mode the manuscript mode
+	 * @return the list of annotation found
 	 * @throws ApplicationThrowable
 	 */
-	public List<Annotation> getImageAnnotations(String imageName)throws ApplicationThrowable;
+	public List<Annotation> getImageAnnotations(String imageName, ManuscriptMode mode)throws ApplicationThrowable;
 	
 	/**
+	 * This method determines which image annotations are editable from the provided user.
+	 * The annotations are filtered by the provided manuscript mode ({@link ManuscriptMode}).
+	 * If null mode is provided then 'COMMUNITY' mode is considered.
 	 * 
-	 * @param imageName
-	 * @return
+	 * @param imageName the image name
+	 * @param user the user
+	 * @param mode the manuscript mode
+	 * @return a map with annotation editable details
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName)throws ApplicationThrowable;
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName, User user, ManuscriptMode mode)throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -372,6 +385,14 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param pageTurner
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeExplorer getVolumeExplorer(VolumeExplorer pageTurner) throws ApplicationThrowable;
 
 	/**
 	 * This method determines if an annotation is deletable or not.<br/>
@@ -408,4 +429,5 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable;
+	
 }

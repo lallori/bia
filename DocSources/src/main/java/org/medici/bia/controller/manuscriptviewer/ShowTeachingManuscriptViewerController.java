@@ -70,6 +70,7 @@ public class ShowTeachingManuscriptViewerController {
 		try {
 			DocumentExplorer documentExplorer = getManuscriptViewerService().getDocumentExplorer(command.getEntryId(), true);
 			model.put("documentExplorer", documentExplorer);
+			model.put("resourcesForum", command.getResourcesForum());
 			
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("applicationThrowable", applicationThrowable);

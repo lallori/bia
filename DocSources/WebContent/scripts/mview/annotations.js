@@ -78,6 +78,8 @@ IIPMooViewer.implement({
 	 */
 	createAnnotations: function() {
 		
+		var _this = this;
+		
 		// If there are no annotations, simply return
 		if (!this.annotations || this.annotations.length == 0) {
 			return;
@@ -146,8 +148,10 @@ IIPMooViewer.implement({
 					var topicUrl = annotation_array[i].forumTopicURL;
 					annotation.addEvent('click', function(e) {
 						var event = new DOMEvent(e);
-						event.stop();
-						window.open(topicUrl,'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+						if (_this.annotationEditing != true) {
+							event.stop();
+							window.open(topicUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+						}
 					});
 				}
 				/** MEDICI ARCHIVE PROJECT END */
@@ -404,26 +408,32 @@ IIPMooViewer.implement({
 					},
 
 					onSuccess: function(responseJSON, responseText) {
-						for (i = 0; i < responseJSON.annotations.length; i++) {
-							this.annotations.push({
-								annotationId: responseJSON.annotations[i].annotationId.toInt(),
-								id: responseJSON.annotations[i].id,
-								x: responseJSON.annotations[i].x.toFloat(), 
-								y: responseJSON.annotations[i].y.toFloat(), 
-								w: responseJSON.annotations[i].w.toFloat(), 
-								h: responseJSON.annotations[i].h.toFloat(),
-								type: responseJSON.annotations[i].type,
-								title: responseJSON.annotations[i].title,
-								text: responseJSON.annotations[i].text,
-								deletable: responseJSON.annotations[i].deletable,
-								updatable: responseJSON.annotations[i].updatable,
-								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
-							});
+						if (responseJSON.operation === 'OK') {
+							for (i = 0; i < responseJSON.annotations.length; i++) {
+								this.annotations.push({
+									annotationId: responseJSON.annotations[i].annotationId.toInt(),
+									id: responseJSON.annotations[i].id,
+									x: responseJSON.annotations[i].x.toFloat(), 
+									y: responseJSON.annotations[i].y.toFloat(), 
+									w: responseJSON.annotations[i].w.toFloat(), 
+									h: responseJSON.annotations[i].h.toFloat(),
+									type: responseJSON.annotations[i].type,
+									title: responseJSON.annotations[i].title,
+									text: responseJSON.annotations[i].text,
+									deletable: responseJSON.annotations[i].deletable,
+									updatable: responseJSON.annotations[i].updatable,
+									forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
+								});
+							}
+						} else {
+							console.log('error');
+							alert('Error during annotations retrieving...');
 						}
 					}.bind(this),
 
 					onError: function(text, error) {
 						console.log('error!!!' + text + ' - error : ' + error);
+						alert('Error: annotation retrieving server call failed!!!');
 					}
 					
 				}).get('');

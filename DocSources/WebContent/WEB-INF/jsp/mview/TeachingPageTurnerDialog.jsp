@@ -12,12 +12,20 @@
 
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
+	<c:url var="GetImageAnnotationURL" value="/teaching/GetImageAnnotation.json">
+		<c:param name="resourcesForum" value="${command.resourcesForum}" />
+	</c:url>
+	
+	<c:url var="UpdateAnnotationsURL" value="/teaching/UpdateAnnotations.json">
+		<c:param name="resourcesForum" value="${command.resourcesForum}" />
+	</c:url>
+	
 	<c:url var="VolumeSummaryDialogURL" value="/src/mview/ShowSummaryVolumeDialog.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 	</c:url>
 	
-	<c:url var="currentPage" value="/src/mview/TeachingPageTurnerDialog.do">
+	<c:url var="currentPage" value="/teaching/TeachingPageTurnerDialog.do">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -155,17 +163,21 @@
 		
 			console.log('Current image order' + ${command.imageOrder});
 			
+			var annotations = new Array();
+			
 			var pageTurnerParams = {
 				searchUrl: '${SearchAjaxURL}', 
 		        getLinkedDocumentUrl:  null,
 				imagePrefix: '${ImagePrefixURL}', 
 				IIPImageServer: '${IIPImageServerURL}', 
 				annotationsType: 'remote',
-				retrieveAnnotationsUrl: null,
-				updateAnnotationsUrl: null,
-				annotations: null,
-				showHideAnnotationButton: false,  // Show/Hide Annotation Button is disabled
-				enableEdit: false, // edit annotations is disabled
+				retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
+				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
+				annotations: annotations,
+				openAnnotationTopicMode: "_parent",
+				showHideAnnotationButton: true,  // Show/Hide Annotation button is enabled
+				enableEdit: true, // edit annotations is enabled
+				editMode: 'teaching',
 				textVolume: '<fmt:message key="mview.credits.volume"/>',
 			    textExtension: '<fmt:message key="mview.credits.extension"/>',
 			    textInsert: '<fmt:message key="mview.credits.insert"/>',

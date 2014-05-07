@@ -115,7 +115,7 @@ public class AnnotationServiceImpl implements AnnotationService {
 		if (!checkOAPath(true)) {
 			logger.error("It is not possible to access to the open annotation path");
 		}
-		List<Annotation> forumAnnotations = getAnnotationDAO().findForumAnnotations();
+		List<Annotation> forumAnnotations = getAnnotationDAO().getForumAnnotations();
 		if (forumAnnotations != null && forumAnnotations.size() > 0) {
 			List<OASerializable> openAnnotations = new ArrayList<OASerializable>(getOpenAnnotations(forumAnnotations));
 			writeToFile(openAnnotations);

@@ -71,7 +71,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-@RequestMapping("/community/ShowTopicForum")
+@RequestMapping(value={"/community/ShowTopicForum", "teaching/ShowTopicForum"})
 public class ShowTopicForumController {
 	@Autowired
 	private ApplicationAccessContainer applicationAccessContainer;

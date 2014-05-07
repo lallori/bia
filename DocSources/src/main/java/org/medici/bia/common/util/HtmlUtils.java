@@ -384,16 +384,28 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static String getShowTopicForumHrefUrl(ForumTopic forumTopic) {
+		return getShowTopicHrefUrl(forumTopic, true);
+	}
+	
+	/**
+	 * @param courseTopic
+	 * @return
+	 */
+	public static String getTeachingShowTopicForumHrefUrl(ForumTopic courseTopic) {
+		return getShowTopicHrefUrl(courseTopic, false);
+	}
+	
+	private static String getShowTopicHrefUrl(ForumTopic topic, boolean community) {
 		StringBuilder stringBuilder = new StringBuilder("");
-		if (forumTopic != null) {
+		if (topic != null) {
 			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuilder.append("/community/ShowTopicForum.do?topicId=");
-			stringBuilder.append(forumTopic.getTopicId());
+			stringBuilder.append((community ? "/community" : "/teaching") + "/ShowTopicForum.do?topicId=");
+			stringBuilder.append(topic.getTopicId());
 			// link to the last topic page
 			stringBuilder.append("&postForPage=10&postPageNumber=");
-			stringBuilder.append((forumTopic.getTotalReplies() / 10) + 1);
+			stringBuilder.append((topic.getTotalReplies() / 10) + 1);
 			stringBuilder.append("&postPageTotal=");
-			stringBuilder.append((forumTopic.getTotalReplies() / 10) + 1);
+			stringBuilder.append((topic.getTotalReplies() / 10) + 1);
 			
 		}
 

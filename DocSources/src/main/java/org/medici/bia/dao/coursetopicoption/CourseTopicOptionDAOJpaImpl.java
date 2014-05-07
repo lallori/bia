@@ -77,24 +77,8 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CourseTopicOption> findOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException {
-		return findOptionsForDocument(entryId, courseId, false);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<CourseTopicOption> findOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException {
-		return findOptionsForDocument(entryId, null, false);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<CourseTopicOption> findMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException {
-		return findOptionsForDocument(entryId, courseId, true);
+		return findOptionsForDocument(entryId, courseId);
 	}
 	
 	/**
@@ -102,7 +86,7 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 */
 	@Override
 	public List<CourseTopicOption> findMasterOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException {
-		return findOptionsForDocument(entryId, null, true);
+		return findOptionsForDocument(entryId, null);
 	}
 	
 	/**
@@ -125,17 +109,15 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	/* Privates */
 	
 	@SuppressWarnings("unchecked")
-	private List<CourseTopicOption> findOptionsForDocument(Integer entryId, Integer courseId, boolean filterToMasterFragments) throws PersistenceException {
+	private List<CourseTopicOption> findOptionsForDocument(Integer entryId, Integer courseId) throws PersistenceException {
 		StringBuilder jpql = new StringBuilder("SELECT option FROM CourseTopicOption AS option, Forum AS forum, ForumTopic AS topic, Course AS course WHERE ");
-		jpql.append(" forum.subType = :type")
-			.append(" AND forum.document.entryId = :entryId")
-			.append(" AND forum.logicalDelete = false")
+		jpql.append(" topic.document IS NOT NULL AND topic.document.entryId = :entryId")
 			.append(" AND topic.forum = forum")
-			.append(" AND topic = option.courseTopic");
-		if (filterToMasterFragments) {
-			jpql.append(" AND option.mode IN (:modeList)");
-		}
-		jpql.append(" AND course.forum = forum.forumParent");
+			.append(" AND forum.logicalDelete = false")
+			.append(" AND forum.subType = :type")
+			.append(" AND topic = option.courseTopic")
+			.append(" AND option.mode IN (:modeList)")
+			.append(" AND course.forum = forum.forumParent");
 		if (courseId != null) {
 			jpql.append(" AND course.courseId = :courseId");
 		} else {
@@ -144,13 +126,12 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 		
 		Query query = getEntityManager().createQuery(jpql.toString(), CourseTopicOption.class);
 		query.setParameter("entryId", entryId);
+		query.setParameter("type", SubType.COURSE);
 		if (courseId != null) {
 			query.setParameter("courseId", courseId);
 		}
-		query.setParameter("type", SubType.COURSE);
-		if (filterToMasterFragments) {
-			query.setParameter("modeList", getFilteredModes());
-		}
+		query.setParameter("modeList", getFilteredModes());
+
 		return (List<CourseTopicOption>)query.getResultList();
 	}
 	

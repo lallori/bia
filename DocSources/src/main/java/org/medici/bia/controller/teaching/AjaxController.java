@@ -27,14 +27,19 @@
  */
 package org.medici.bia.controller.teaching;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.StringUtils;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.CourseCheckPoint;
 import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
@@ -42,12 +47,17 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
+import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * AJAX Controller for the Teaching module.
@@ -60,6 +70,8 @@ public class AjaxController {
 	
 	@Autowired
 	private TeachingService teachingService;
+	@Autowired
+	private UserService userService;
 
 	public TeachingService getTeachingService() {
 		return teachingService;
@@ -69,6 +81,14 @@ public class AjaxController {
 		this.teachingService = teachingService;
 	}
 	
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 	@RequestMapping(value = "/teaching/CreateCourseTranscription", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> createCourseTranscription(
 			@RequestParam(value="entryId", required=true) Integer docId,
@@ -323,6 +343,31 @@ public class AjaxController {
 		return model;
 	}
 	
+	/**
+	 * 
+	 * @param imageName the image name
+	 * @param topicId the course topic identifier
+	 * @return
+	 */
+	@RequestMapping(value = "/teaching/GetImageAnnotation.json", method = RequestMethod.GET)
+	public Map<String, Object> getCourseTopicAnnotation(
+			@RequestParam(value="imageName", required=false) String imageName,
+			@RequestParam(value="resourcesForum", required=true) Integer forumId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			List<Annotation> annotations = getTeachingService().getTopicImageAnnotations(imageName, forumId, Annotation.Type.TEACHING);	
+			List<Object> resultList = getAnnotationsForView(annotations); 
+			model.put("annotations", resultList);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable ath) {
+			model.put("operation", "KO");
+			return model;
+		}
+	
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/GetFolioFragments", method = RequestMethod.GET)
 	public Map<String, Object> getPostFolioLocation(
 			@RequestParam(value="entryId", required=true) Integer entryId,
@@ -405,7 +450,66 @@ public class AjaxController {
 			model.put("operation", "KO");
 		}
 		return model;
-	}	
+	}
+	
+	/**
+	 * This method update the annotations of the folio presented in the manuscript viewer.
+	 * 
+	 * @param httpServletRequest the request
+	 * @return
+	 */
+	@RequestMapping(value = {"/teaching/UpdateAnnotations.json"}, method = RequestMethod.POST)
+	public Map<String, Object> updateAnnotations(HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+
+		try {
+			// In this controller we get input parameter at low level beacause 
+			// there is a bug in spring which construct a wrong list of 
+			// annotations in case of client send 1 single annotation 
+			//String imageName = httpServletRequest.getParameter("imageName");
+			Integer imageId = NumberUtils.toInt(httpServletRequest.getParameter("imageId"));
+			String forumContainerIdFromView = httpServletRequest.getParameter("resourcesForum");
+			Integer forumContainerId = forumContainerIdFromView != null ? NumberUtils.toInt(forumContainerIdFromView) : null;
+			String[] annotationsFormView = httpServletRequest.getParameterValues("annotations");
+			List<Annotation> annotationsList = new ArrayList<Annotation>(0);
+			List<Object> resultList = new ArrayList<Object>();
+
+			if (annotationsFormView != null) {
+				for (String string : annotationsFormView) {
+					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
+					String[] splitted = org.apache.commons.lang.StringUtils.splitPreserveAllTokens(string, ",");
+					Annotation annotation = new Annotation();
+					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
+					annotation.setX(NumberUtils.toDouble(splitted[2]));
+					annotation.setY(NumberUtils.toDouble(splitted[3]));
+					annotation.setWidth(NumberUtils.toDouble(splitted[4]));
+					annotation.setHeight(NumberUtils.toDouble(splitted[5]));
+					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
+					annotation.setTitle(splitted[7]);
+					annotation.setText(splitted[8]);
+					annotationsList.add(annotation);
+				}
+			}
+			Map<Annotation, Integer> imageAnnotationsMap = getTeachingService().updateAnnotations(imageId, forumContainerId, annotationsList, httpServletRequest.getRemoteAddr());
+			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
+				Map<String, Object> singleRow = new HashMap<String, Object>(0);
+				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
+					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/teaching/EditForumPostAnnotation.do?topicId=" + imageAnnotationsMap.get(currentAnnotation));
+					resultList.add(singleRow);
+				}
+			}
+			// links -> only new annotations associated to a forum 
+			model.put("links", resultList);
+			// annotation -> all of the annotations associated to the current image
+			model.put("annotations", getAnnotationsForView(imageAnnotationsMap.keySet()));
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;
+		}
+		
+		model.put("operation", "OK");
+		return model;
+	}
 	
 	/* Privates */
 	
@@ -461,4 +565,37 @@ public class AjaxController {
 		
 		return postExt;
 	}
+	
+	/**
+	 * This method creates a list of view annotations to be sent to the view level.
+	 * 
+	 * @param annotations a list of annotations
+	 * @return a list of view annotations
+	 * @throws ApplicationThrowable
+	 */
+	private List<Object> getAnnotationsForView(Collection<Annotation> annotations) throws ApplicationThrowable {
+		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		Boolean administrator = getUserService().isAccountAdministrator(account);
+		
+		List<Object> resultList = new ArrayList<Object>();
+		for (Annotation currentAnnotation : annotations) {
+			Map<String, Object> row = new HashMap<String, Object>(0);
+			row.put("annotationId", currentAnnotation.getAnnotationId());
+			row.put("x", currentAnnotation.getX());
+			row.put("y", currentAnnotation.getY());
+			row.put("w", currentAnnotation.getWidth());
+			row.put("h", currentAnnotation.getHeight());
+			row.put("type", currentAnnotation.getType());
+			row.put("title", currentAnnotation.getTitle());
+			row.put("text", currentAnnotation.getText());
+			row.put("deletable", getTeachingService().isDeletableAnnotation(currentAnnotation));
+			row.put("updatable", account.equals(currentAnnotation.getUser().getAccount()) || administrator ? true : false);
+			if (currentAnnotation.getForumTopic() != null) {
+				row.put("forumTopicURL", HtmlUtils.getTeachingShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
+			}
+			resultList.add(row);
+		}
+		return resultList;
+	}
+	
 }

@@ -30,7 +30,7 @@ package org.medici.bia.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.bia.command.manuscriptviewer.PageTurnerCommand;
+import org.medici.bia.command.manuscriptviewer.TeachingPageTurnerCommand;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
@@ -49,7 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value={"/src/mview/TeachingPageTurnerDialog"})
+@RequestMapping(value={"/teaching/TeachingPageTurnerDialog"})
 public class TeachingPageTurnerDialogController {
 	
 	@Autowired
@@ -87,7 +87,7 @@ public class TeachingPageTurnerDialogController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("command") TeachingPageTurnerCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {

@@ -67,14 +67,6 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	long countImages(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
 
 	/**
-	 * 
-	 * @param imageId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	Image findImageByImageId(Integer imageId) throws PersistenceException;
-
-	/**
 	 * This method searches a document image identified by volume identifiers, insert identifiers, number of folio
 	 * and folio format, folio recto/verso.
 	 *  
