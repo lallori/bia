@@ -197,7 +197,7 @@
 			}
 			
 			$j('#submit').click(function() {
-				if (cannotLeaveEmptyText) {
+				if (!isStudent) {
 					$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 				}
 				var text = $j("#htmlbox").val();
@@ -274,7 +274,7 @@
 			});
 			
 			$j('#preview').click(function() {
-				if (cannotLeaveEmptyText) {
+				if (!isStudent) {
 					$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 				}
 	 			$j.ajax({
