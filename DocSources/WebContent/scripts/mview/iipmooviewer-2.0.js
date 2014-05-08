@@ -246,8 +246,8 @@ var IIPMooViewer = new Class({
 								title: responseJSON.annotations[i].title,
 								text: responseJSON.annotations[i].text,
 								deletable: responseJSON.annotations[i].deletable,
-								updatable: responseJSON.annotations[i].updatable
-								//Add Link To Forum
+								updatable: responseJSON.annotations[i].updatable,
+								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
 							});
 						}
 						_this.reload();
