@@ -100,17 +100,21 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	Page findForumTopics(Forum forum, PaginationFilter paginationFilterTopic) throws PersistenceException;
 
 	/**
+	 * This method returns the list of forum topics with the most recent users activity.
+	 * It does not consider topics of the course section.
 	 * 
-	 * @param numberOfElements
-	 * @return
+	 * @param numberOfElements the number of topics to retrieve
+	 * @return the list of forum topics found
 	 * @throws ApplicationThrowable
 	 */
 	List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws PersistenceException;
 
 	/**
+	 * This method returns the list of forum topics with the maximum number of post.
+	 * It does not consider topics of the course section.
 	 * 
-	 * @param numberOfElements
-	 * @return
+	 * @param numberOfElements the number of topics to retrieve
+	 * @return the list of forum topics found
 	 * @throws ApplicationThrowable
 	 */
 	List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws ApplicationThrowable;

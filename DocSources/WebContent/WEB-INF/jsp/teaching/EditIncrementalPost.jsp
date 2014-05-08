@@ -56,19 +56,19 @@
 	    	</span>
 	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
 	    </div>
+	    <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+	    	<c:if test="${empty editingStudentPost or editingStudentPost == false}">
+			    <div id="postTextArea">
+			    	<form:label id="htmlboxLabel" for="htmlbox" path="text" cssErrorClass="error">Message Area</form:label>
+					<form:textarea id="htmlbox" class="htmlbox" name="text" path="text" title="Edit your message"></form:textarea>
+			    </div>
+		    </c:if>
+	    </security:authorize>
 	    <div id="transcriptionSection">
 	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 	    	<form:label id="textboxLabel" for="textbox" path="transcription" cssErrorClass="error">Transcription Area</form:label>
 	    	<form:textarea id="textbox" name="transcription" path="transcription" title="Edit your transcription"></form:textarea>
 	    </div>
-	    <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-	    	<c:if test="${empty editingStudentPost or editingStudentPost == false}">
-			    <div id="postTextArea">
-			    	<form:label id="htmlboxLabel" for="htmlbox" path="text" cssErrorClass="error">Post Area</form:label>
-					<form:textarea id="htmlbox" class="htmlbox" name="text" path="text" title="Edit your post"></form:textarea>
-			    </div>
-		    </c:if>
-	    </security:authorize>
 	    <div id="editPostFormCommands">
 		    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
 		    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>

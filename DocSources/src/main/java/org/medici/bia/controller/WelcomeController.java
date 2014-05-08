@@ -30,13 +30,16 @@ package org.medici.bia.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.LocalDate;
 import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,11 +56,42 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/Welcome")
 public class WelcomeController {
-	@Autowired
-	private UserService userService;
+	
 	@Autowired 
 	private CommunityService communityService;
+	@Autowired 
+	private TeachingService teachingService;
+	@Autowired
+	private UserService userService;
 	
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+	
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
 	/**
 	 * @return the userService
 	 */
@@ -79,9 +113,22 @@ public class WelcomeController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-		try {			
-			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(5);
+		try {
+			String account = null;
+			User user = (User) httpSession.getAttribute("user");
+			if (user != null) {
+				account = user.getAccount();
+			}
+			
+			boolean canAccessTeaching = getUserService().canAccessTeachingModule(account);
+
+			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(10);
 			model.put("forumStatistics", forumStatistics);
+			
+			if (canAccessTeaching) {
+				Map<String, List<?>> teachingForumStatistics = getTeachingService().getTeachingForumStatistics(10, account);
+				model.put("teachingForumStatistics", teachingForumStatistics);
+			}
 			
 			LocalDate now = new LocalDate();
 			now.minusMonths(1).toDateMidnight().toDate();
@@ -107,11 +154,4 @@ public class WelcomeController {
 		return new ModelAndView("Welcome", model);
 	}
 
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
 }

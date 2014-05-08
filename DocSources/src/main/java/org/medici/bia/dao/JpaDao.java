@@ -619,6 +619,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		}
 		return orderBySQL.toString();
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected List<E> getResultList(Query query) {
+		return (List<E>) query.getResultList();
+	}
 
 	/**
 	 * 

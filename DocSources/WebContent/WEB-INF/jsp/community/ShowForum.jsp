@@ -644,7 +644,7 @@
 										</c:when>
 										<c:when test="${not empty topicsMap and topicType == 'Q'}">
 											<%-- QUESTION WITH ANNOTATION --%>
-											<c:url var="ShowCourseFragmentURL" value="/community/ShowTopicForum.do">
+											<c:url var="ShowCourseFragmentURL" value="/teaching/ShowTopicForum.do">
 												<c:param name="topicId" value="${currentTopic.topicId}"/>
 												<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 												<c:param name="completeDOM" value="true" />
@@ -652,7 +652,7 @@
 										</c:when>
 										<c:otherwise>
 											<%-- GENERAL DISCUSSION --%>
-											<c:url var="ShowCourseFragmentURL" value="/community/ShowTopicForum.do">
+											<c:url var="ShowCourseFragmentURL" value="/teaching/ShowTopicForum.do">
 												<c:param name="topicId" value="${currentTopic.topicId}"/>
 												<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 												<c:param name="completeDOM" value="true" />

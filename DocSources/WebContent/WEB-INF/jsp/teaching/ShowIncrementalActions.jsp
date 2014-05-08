@@ -19,7 +19,14 @@
 	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
-	<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
+	<c:choose>
+		<c:when test="${postsNumber == 0}">
+			<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
+		</c:when>
+		<c:otherwise>
+			<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
+		</c:otherwise>
+	</c:choose>
 	
 	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 	

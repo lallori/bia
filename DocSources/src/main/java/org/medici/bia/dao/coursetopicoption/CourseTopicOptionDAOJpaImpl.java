@@ -52,13 +52,65 @@ import org.springframework.stereotype.Repository;
 public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOption> implements CourseTopicOptionDAO {
 
 	private static final long serialVersionUID = -6595014972924741276L;
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException {
+		return findOptionsForDocument(entryId, courseId);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getMasterOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException {
+		return findOptionsForDocument(entryId, null);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getMostRecentExtendedCourseTopics(Integer numberOfElements, String account) throws PersistenceException {
+		// TODO: add account filtering (when course topic accesses are implemented)
+		String jpql = "SELECT option FROM CourseTopicOption AS option, ForumTopic AS topic WHERE ";
+		jpql += "option.courseTopic = topic AND topic.logicalDelete = false AND topic.forum.logicalDelete = false AND topic.forum.subType = 'COURSE' ";
+		jpql += "ORDER BY topic.lastUpdate desc";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(numberOfElements);
+		
+		return getResultList(query);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CourseTopicOption> findOptions(Set<Integer> topicIds) throws PersistenceException {
+	public CourseTopicOption getOption(Integer topicId) throws PersistenceException {
+		String jpql = "FROM CourseTopicOption WHERE courseTopic.topicId = :topicId";
+		Query query = getEntityManager().createQuery(jpql.toString(), CourseTopicOption.class);
+		query.setParameter("topicId", topicId);
+		
+		List<CourseTopicOption> options = (List<CourseTopicOption>)query.getResultList();
+		if (options.size() == 0) {
+			return null;
+		}
+		return options.get(0);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CourseTopicOption> getOptions(Set<Integer> topicIds) throws PersistenceException {
 		String ids = null;
 		for(Integer id : topicIds) {
 			if (ids == null) {
@@ -71,39 +123,6 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 		
 		Query query = getEntityManager().createQuery(jpql, CourseTopicOption.class);
 		return (List<CourseTopicOption>)query.getResultList();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<CourseTopicOption> findMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException {
-		return findOptionsForDocument(entryId, courseId);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<CourseTopicOption> findMasterOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException {
-		return findOptionsForDocument(entryId, null);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public CourseTopicOption findTopicOption(Integer topicId) throws PersistenceException {
-		String jpql = "FROM CourseTopicOption WHERE courseTopic.topicId = :topicId";
-		Query query = getEntityManager().createQuery(jpql.toString(), CourseTopicOption.class);
-		query.setParameter("topicId", topicId);
-		
-		List<CourseTopicOption> options = (List<CourseTopicOption>)query.getResultList();
-		if (options.size() == 0) {
-			return null;
-		}
-		return options.get(0);
 	}
 	
 	/* Privates */

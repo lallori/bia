@@ -96,6 +96,15 @@ public interface UserService {
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable;
 	
 	/**
+	 * Checks if the provided user can access to the teaching module resources.
+	 * 
+	 * @param account the user account
+	 * @return true if user can access to teaching module resources
+	 * @throws ApplicationThrowable
+	 */
+	public boolean canAccessTeachingModule(String account) throws ApplicationThrowable;
+	
+	/**
 	 * Check if inputPassword is equals to user password
 	 * @param user
 	 * @param newPassword

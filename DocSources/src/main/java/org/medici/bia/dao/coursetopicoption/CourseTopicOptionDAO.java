@@ -44,15 +44,6 @@ import org.medici.bia.domain.CourseTopicOption;
 public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	
 	/**
-	 * Returns the {@link CourseTopicOption} associated to the provided set of topic identifiers.
-	 * 
-	 * @param topicIds set of topic identifiers
-	 * @return the list of {@link CourseTopicOption} found
-	 * @throws PersistenceException
-	 */
-	List<CourseTopicOption> findOptions(Set<Integer> topicIds) throws PersistenceException;
-
-	/**
 	 * Returns the {@link CourseTopicOption} associated to the provided document and course.
 	 * 
 	 * @param entryId the document identifier
@@ -60,7 +51,7 @@ public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	 * @return the list of {@link CourseTopicOption} found
 	 * @throws PersistenceException
 	 */
-	List<CourseTopicOption> findMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException;
+	List<CourseTopicOption> getMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException;
 
 	/**
 	 * Returns the {@link CourseTopicOption} associated to the provided document in active courses.
@@ -69,8 +60,18 @@ public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	 * @return the list of {@link CourseTopicOption} found
 	 * @throws PersistenceException
 	 */
-	List<CourseTopicOption> findMasterOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException;
-
+	List<CourseTopicOption> getMasterOptionsByDocumentInActiveCourses(Integer entryId) throws PersistenceException;
+	
+	/**
+	 * Returns the last <code>n</code> elements of extended course topics where users activity has been recorded.
+	 * The available returned extended topics are the only ones where the provided user can access.
+	 * 
+	 * @param numberOfElements the number
+	 * @param account the user account
+	 * @return last elements of extended course topics found
+	 */
+	List<CourseTopicOption> getMostRecentExtendedCourseTopics(Integer numberOfElements, String account) throws PersistenceException;
+	
 	/**
 	 * Returns the {@link CourseTopicOption} associated to the provided course topic.
 	 * 
@@ -78,6 +79,15 @@ public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	 * @return the {@link CourseTopicOption} found
 	 * @throws PersistenceException
 	 */
-	CourseTopicOption findTopicOption(Integer topicId) throws PersistenceException;
+	CourseTopicOption getOption(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * Returns the {@link CourseTopicOption} associated to the provided set of topic identifiers.
+	 * 
+	 * @param topicIds set of topic identifiers
+	 * @return the list of {@link CourseTopicOption} found
+	 * @throws PersistenceException
+	 */
+	List<CourseTopicOption> getOptions(Set<Integer> topicIds) throws PersistenceException;
 
 }

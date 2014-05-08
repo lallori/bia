@@ -254,7 +254,7 @@ public class TeachingServiceImpl implements TeachingService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public CourseCheckPoint addCourseCheckPoint(Integer topicId, CoursePostExt extendedPost, Date date) throws ApplicationThrowable {
-		CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(topicId);
+		CourseTopicOption option = getCourseTopicOptionDAO().getOption(topicId);
 		if (option == null) {
 			throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Cannot retrieve course option for topic [" + topicId +"]....add course check point ABORTED!!!");
 		}
@@ -660,7 +660,7 @@ public class TeachingServiceImpl implements TeachingService {
 	@Override
 	public CourseTopicMode getCourseTopicMode(Integer topicId) throws ApplicationThrowable {
 		try {
-			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(topicId);
+			CourseTopicOption option = getCourseTopicOptionDAO().getOption(topicId);
 			return option != null ? option.getMode() : null; 
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -677,7 +677,7 @@ public class TeachingServiceImpl implements TeachingService {
 			for(ForumTopic topic : topics) {
 				topicIds.add(topic.getTopicId());
 			}
-			List<CourseTopicOption> options = getCourseTopicOptionDAO().findOptions(topicIds);
+			List<CourseTopicOption> options = getCourseTopicOptionDAO().getOptions(topicIds);
 			Map<Integer, CourseTopicMode> topicsMode = new HashMap<Integer, CourseTopicOption.CourseTopicMode>();
 			for(CourseTopicOption option : options) {
 				Integer topicId = option.getCourseTopic().getTopicId();
@@ -810,7 +810,19 @@ public class TeachingServiceImpl implements TeachingService {
 	@Override
 	public List<CourseTopicOption> getMasterOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable {
 		try {
-			return getCourseTopicOptionDAO().findMasterOptionsByDocumentInActiveCourses(entryId);
+			return getCourseTopicOptionDAO().getMasterOptionsByDocumentInActiveCourses(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CourseTopicOption getOptionByCourseTopic(Integer topicId) throws ApplicationThrowable {
+		try {
+			return getCourseTopicOptionDAO().getOption(topicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -835,6 +847,21 @@ public class TeachingServiceImpl implements TeachingService {
 	public ForumPost getRoundRobinPost(Integer postId) throws ApplicationThrowable {
 		try {
 			return getForumPostDAO().find(postId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, List<?>> getTeachingForumStatistics(Integer numberOfElements, String account) throws ApplicationThrowable {
+		Map<String, List<?>> returnMap = new HashMap<String, List<?>>();
+		try {
+			List<CourseTopicOption> mostRecentOptions = getCourseTopicOptionDAO().getMostRecentExtendedCourseTopics(numberOfElements, account);
+			returnMap.put("MOST RECENT COURSE TOPICS", mostRecentOptions);
+			return returnMap;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -933,7 +960,7 @@ public class TeachingServiceImpl implements TeachingService {
 			if (getCoursePostExtDAO().find(postExt.getPostExtId()) == null) {
 				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Extended post [" + postExt.getPostExtId() + "] is missing...");
 			}
-			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(postExt.getPost().getTopic().getTopicId());
+			CourseTopicOption option = getCourseTopicOptionDAO().getOption(postExt.getPost().getTopic().getTopicId());
 			if (option == null) {
 				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course Topic Option is missing for topic [" + postExt.getPost().getTopic().getTopicId() + "]...");
 			}
@@ -1140,7 +1167,7 @@ public class TeachingServiceImpl implements TeachingService {
 				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, this.getClass().getName() + "#addCourseTranscriptionPost --> course topic [" + courseTopicId + "] is missing");
 			}
 			
-			CourseTopicOption option = getCourseTopicOptionDAO().findTopicOption(courseTopicId);
+			CourseTopicOption option = getCourseTopicOptionDAO().getOption(courseTopicId);
 			if (option != null && (mode != null && !option.getMode().equals(mode))) {
 				throw new ApplicationThrowable(ApplicationError.ILLEGAL_STATUS, "Course topic [" + courseTopicId + "] was defined with {" + option.getMode() + "} mode, so it is not allowed to add a post with {" + mode + "} mode");
 			} else if (option == null) {

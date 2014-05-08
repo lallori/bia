@@ -233,6 +233,19 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canAccessTeachingModule(String account) throws ApplicationThrowable {
+		try {
+			UserAuthority userCourseAuthority = getUserAuthorityDAO().getUserCourseAuthority(account);
+			return userCourseAuthority != null;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

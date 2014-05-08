@@ -149,7 +149,6 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Page findForumTopics(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
 		String queryString = "FROM ForumTopic WHERE forum.forumId = :forumId AND logicalDelete=false ";
@@ -186,7 +185,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
+		List<ForumTopic> list = getResultList(query);
 
 		// We set search result on return method
 		page.setList(list);
@@ -197,10 +196,9 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ForumTopic> findMostRecentForumTopics(Integer numberOfElements) throws PersistenceException {
-		String jpql = "FROM ForumTopic WHERE logicalDelete = false ORDER BY lastUpdate desc";
+		String jpql = "FROM ForumTopic WHERE logicalDelete = false AND forum.type = 'FORUM' AND forum.subType != 'COURSE' ORDER BY lastUpdate desc";
 
 		Query query = getEntityManager().createQuery(jpql);
 		
@@ -208,16 +206,15 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		query.setFirstResult(0);
 		query.setMaxResults(numberOfElements);
 		
-		return (List<ForumTopic>) query.getResultList();
+		return getResultList(query);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ForumTopic> findTopForumTopics(Integer numberOfElements) throws PersistenceException {
-		String jpql = "FROM ForumTopic WHERE logicalDelete = false ORDER BY totalReplies desc";
+		String jpql = "FROM ForumTopic WHERE logicalDelete = false AND forum.type = 'FORUM' AND forum.subType != 'COURSE' ORDER BY totalReplies desc";
 
 		Query query = getEntityManager().createQuery(jpql);
 		
@@ -225,13 +222,12 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		query.setFirstResult(0);
 		query.setMaxResults(numberOfElements);
 		
-		return (List<ForumTopic>) query.getResultList();
+		return getResultList(query);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Page getForumTopicsByParentForum(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
 		String queryString = "FROM ForumTopic WHERE logicalDelete = false AND forum.forumParent.forumId = :forumId AND logicalDelete=false ";
@@ -268,7 +264,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		query.setMaxResults(page.getElementsForPage());
 
 		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
+		List<ForumTopic> list = getResultList(query);
 
 		// We set search result on return method
 		page.setList(list);
@@ -279,14 +275,13 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ForumTopic> getForumTopicsByParentForumAndDocument(Integer forumId, Integer documentId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("FROM ForumTopic WHERE logicalDelete = false AND forum.forumId = :forumId AND document.entryId = :documentId ORDER BY dateCreated DESC");
         query.setParameter("forumId", forumId);
         query.setParameter("documentId", documentId);
         
-        return (List<ForumTopic>) query.getResultList();
+        return getResultList(query);
 	}
 	
 	/**

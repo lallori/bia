@@ -321,6 +321,15 @@ public interface TeachingService {
 	List<CourseTopicOption> getMasterOptionsByDocumentForActiveCourses(Integer entryId) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the {@link CourseTopicOption} associated to the provided topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @return the {@link CourseTopicOption} found
+	 * @throws ApplicationThrowable
+	 */
+	CourseTopicOption getOptionByCourseTopic(Integer topicId) throws ApplicationThrowable;
+	
+	/**
 	 * This method returns a Page of extended posts of the course topic provided.
 	 * 
 	 * @param courseTopic the course topic
@@ -338,6 +347,23 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	ForumPost getRoundRobinPost(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the statistics for the last course topics.
+	 * Statistics are filtered by the user account provided.<br/>
+	 * Statistics are returned as a map where keys are the name of the statistics and values are the correspondent
+	 * list of course topics found. Statistic names are:
+	 * <ul>
+	 * 	<li><b>MOST RECENT COURSE TOPICS</b></li>
+	 * </ul>
+	 * 
+	 * @param numberOfElements the number of elements to return
+	 * @param account the user account
+	 * @return a map where the keys are the name of the statistics and values are the list of extended course topics 
+	 * found (as {@link CourseTopicOption}).
+	 * @throws ApplicationThrowable
+	 */
+	Map<String, List<?>> getTeachingForumStatistics(Integer numberOfElements, String account) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the list of check points associated to the provided topic.
