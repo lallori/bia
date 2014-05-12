@@ -57,6 +57,48 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 * {@inheritDoc}
 	 */
 	@Override
+	public CourseTopicOption determineExtendedTopicWithLastPost(Integer forumId) throws PersistenceException {
+		
+		// We consider every last post of course fragment's topics whose course forum container has the provided identifier.
+		// The last update date is considered for the incremental course transcription ('I') topic ; for the other topics the
+		// creation date of the last post is considered.
+		String jpql = "FROM CourseTopicOption "
+				+ "WHERE "
+				+ "courseTopic.forum.forumId = :forumId AND "
+				+ "courseTopic.logicalDelete = false AND "
+				+ "courseTopic.lastPost IS NOT NULL "
+				+ "ORDER BY "
+				+ "CASE WHEN mode = 'I' THEN courseTopic.lastPost.lastUpdate ELSE courseTopic.lastPost.dateCreated END DESC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("forumId", forumId);
+		
+		return getFirst(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CourseTopicOption getCourseTranscriptionOptionFromForum(Integer forumId) throws PersistenceException {
+		List<CourseTopicMode> transcriptionModes = new ArrayList<CourseTopicMode>();
+		transcriptionModes.add(CourseTopicMode.I);
+		transcriptionModes.add(CourseTopicMode.C);
+		transcriptionModes.add(CourseTopicMode.R);
+		
+		String jpql = "FROM CourseTopicOption WHERE courseTopic.forum.forumId = :forumId AND courseTopic.logicalDelete = false AND mode IN (:transcriptionModes)";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("forumId", forumId);
+		query.setParameter("transcriptionModes", transcriptionModes);
+		
+		return (CourseTopicOption)query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<CourseTopicOption> getMasterOptionsByDocumentAndCourse(Integer entryId, Integer courseId) throws PersistenceException {
 		return findOptionsForDocument(entryId, courseId);
 	}

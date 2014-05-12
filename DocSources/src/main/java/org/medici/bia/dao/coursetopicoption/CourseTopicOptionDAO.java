@@ -44,6 +44,25 @@ import org.medici.bia.domain.CourseTopicOption;
 public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	
 	/**
+	 * Determines the extended topic that contains the last post of the course fragment.
+	 * The considered course fragment must have the provided identifier.
+	 * 
+	 * @param forumId the forum identifier
+	 * @return the {@link CourseTopicOption} found
+	 * @throws PersistenceException
+	 */
+	CourseTopicOption determineExtendedTopicWithLastPost(Integer forumId) throws PersistenceException;
+	
+	/**
+	 * Returns the {@link CourseTopicOption} of a course forum resources container.
+	 * 
+	 * @param forumId the course forum resources container
+	 * @return the {@link CourseTopicOption} found
+	 * @throws PersistenceException
+	 */
+	CourseTopicOption getCourseTranscriptionOptionFromForum(Integer forumId) throws PersistenceException;
+	
+	/**
 	 * Returns the {@link CourseTopicOption} associated to the provided document and course.
 	 * 
 	 * @param entryId the document identifier

@@ -27,6 +27,11 @@
  */
 package org.medici.bia.common.util;
 
+import org.medici.bia.domain.CourseTopicOption;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 
 /**
@@ -57,5 +62,18 @@ public class CourseUtils {
 	 */
 	public static String decodeCourseTranscriptionSafely(String encodedTranscription) {
 		return encodedTranscription != null ? encodedTranscription.replaceAll("<br/>", "\r\n") : null;
+	}
+	
+	public static String getCourseTranscriptionURL(CourseTopicOption courseTranscriptionOption) {
+		if (courseTranscriptionOption == null ||
+				CourseTopicMode.D.equals(courseTranscriptionOption.getMode()) ||
+				CourseTopicMode.Q.equals(courseTranscriptionOption.getMode())) {
+			return null;
+		}
+		return ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath()
+				+ "/teaching/ShowCourseTranscription.do?topicId=" + courseTranscriptionOption.getCourseTopic().getTopicId()
+				+ "&entryId=" + courseTranscriptionOption.getCourseTopic().getDocument().getEntryId()
+				+ "&transcriptionMode=" + courseTranscriptionOption.getMode().name()
+				+ "&completeDOM=true";
 	}
 }

@@ -146,6 +146,14 @@
 <!--     <a href="#" id="printButton" class="buttonMedium button_medium"><span class="button_print">Print discussion</span></a> -->
 </div>
 
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+	<c:if test="${not empty courseTranscriptionURL}">
+		<div id="goToCourseTranscription">
+			<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
+		</div>
+	</c:if>
+</security:authorize>
+
 <c:if test="${isEmpty == null}">
 <c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
 	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">

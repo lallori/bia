@@ -156,6 +156,22 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/DeleteCourseFragmentTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> deleteCourseFragmentTopic(
+			@RequestParam(value="topicId", required=false) Integer topicId,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			getTeachingService().deleteCourseFragmentTopic(topicId);
+			model.put("operation", "OK");
+			
+			return model;		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;		
+		}
+	}
+	
 	@RequestMapping(value = "/teaching/DeleteIncrementalPost", method = RequestMethod.POST)
 	public Map<String, Object> deleteIncrementalPost(
 			@RequestParam(value="topicId", required=true) Integer topicId,
@@ -494,7 +510,11 @@ public class AjaxController {
 			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
 				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
-					singleRow.put("forum", ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath() + "/teaching/EditForumPostAnnotation.do?topicId=" + imageAnnotationsMap.get(currentAnnotation));
+					String topicForumURL = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+					topicForumURL += "/teaching/ShowTopicForum.do?topicId=" + currentAnnotation.getForumTopic().getTopicId();
+					topicForumURL += "&forumId=" + currentAnnotation.getForumTopic().getForum().getForumId();
+					topicForumURL += "&completeDOM=true";
+					singleRow.put("forum", topicForumURL);
 					resultList.add(singleRow);
 				}
 			}

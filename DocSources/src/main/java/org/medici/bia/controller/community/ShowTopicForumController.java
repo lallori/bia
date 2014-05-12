@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.bia.command.community.ShowTopicForumCommand;
@@ -42,7 +42,9 @@ import org.medici.bia.common.pagination.DocumentExplorer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
+import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.domain.Annotation;
+import org.medici.bia.domain.CourseTopicOption;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
@@ -53,10 +55,12 @@ import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -79,6 +83,54 @@ public class ShowTopicForumController {
 	private CommunityService communityService;
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private TeachingService teachingService;
+	
+	public ApplicationAccessContainer getApplicationAccessContainer() {
+		return applicationAccessContainer;
+	}
+
+	public void setApplicationAccessContainer(
+			ApplicationAccessContainer applicationAccessContainer) {
+		this.applicationAccessContainer = applicationAccessContainer;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
+
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
 	
 	/**
 	 * 
@@ -88,16 +140,17 @@ public class ShowTopicForumController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowTopicForumCommand command, HttpSession httpSession) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowTopicForumCommand command, BindingResult result, HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
-			User user = (User) httpSession.getAttribute("user");
+			User user = (User) httpServletRequest.getSession().getAttribute("user");
+					//httpSession.getAttribute("user");
 
 			if (user != null) {
 				if (user.getForumJoinedDate() == null) {
 					user = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("user", user);
+					httpServletRequest.getSession().setAttribute("user", user);
 				}
 			}
 			
@@ -157,6 +210,7 @@ public class ShowTopicForumController {
 				} else {
 					model.put("documentExplorer", null);
 				}
+				
 			} else if(forumTopic.getAnnotation() != null) {
 				Annotation annotation = forumTopic.getAnnotation();
 				Image image = new Image();
@@ -172,6 +226,13 @@ public class ShowTopicForumController {
 				} catch (ApplicationThrowable applicationThrowable) {
 					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/ShowTopic", model);
+				}
+				
+				if (httpServletRequest.getServletPath().startsWith("/teaching")) {
+					CourseTopicOption option = getTeachingService().getCourseTranscriptionTopicOption(forumTopic.getForum().getForumId());
+					if (option != null) {
+						model.put("courseTranscriptionURL", CourseUtils.getCourseTranscriptionURL(option));
+					}
 				}
 			}
 			
@@ -199,41 +260,4 @@ public class ShowTopicForumController {
 		}
 	}
 
-	public ApplicationAccessContainer getApplicationAccessContainer() {
-		return applicationAccessContainer;
-	}
-
-	public void setApplicationAccessContainer(
-			ApplicationAccessContainer applicationAccessContainer) {
-		this.applicationAccessContainer = applicationAccessContainer;
-	}
-
-	/**
-	 * @param communityService the communityService to set
-	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	/**
-	 * @param manuscriptViewerService the manuscriptViewerService to set
-	 */
-	public void setManuscriptViewerService(
-			ManuscriptViewerService manuscriptViewerService) {
-		this.manuscriptViewerService = manuscriptViewerService;
-	}
-
-	/**
-	 * @return the communityService
-	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
-
-	/**
-	 * @return the manuscriptViewerService
-	 */
-	public ManuscriptViewerService getManuscriptViewerService() {
-		return manuscriptViewerService;
-	}
 }

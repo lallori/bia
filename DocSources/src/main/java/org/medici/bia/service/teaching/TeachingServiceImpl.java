@@ -471,6 +471,47 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(e);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteCourseFragmentTopic(Integer topicId) throws ApplicationThrowable {
+		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
+			ForumTopic courseTopic = getForumTopicDAO().find(topicId);
+			courseTopic.setLogicalDelete(Boolean.TRUE);
+			courseTopic.setLastUpdate(now);
+			
+			if (courseTopic.getAnnotation() != null) {
+				courseTopic.getAnnotation().setLogicalDelete(Boolean.TRUE);
+			}
+			
+			Forum forum = courseTopic.getForum();
+
+			getForumPostDAO().deleteAllForumTopicPosts(courseTopic.getTopicId());
+			getForumDAO().recursiveDecreasePostsNumber(forum, courseTopic.getTotalReplies());
+			// update only the topics number of the course fragment forum container 
+			forum.setTopicsNumber(forum.getTopicsNumber() - 1);
+			
+			// update forum last post
+			if (forum.getLastPost() != null && forum.getLastPost().getTopic().equals(courseTopic)) {
+				CourseTopicOption option = getCourseTopicOptionDAO().determineExtendedTopicWithLastPost(forum.getForumId());
+				if (option != null) {
+					recursiveSetLastPost(forum, option.getCourseTopic().getLastPost(), now);
+				} else {
+					forum.setLastPost(null);
+				}
+			}
+			
+			user.setLastActiveForumDate(now);
+		} catch (PersistenceException e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
 		
 	/**
 	 * {@inheritDoc}
@@ -705,6 +746,18 @@ public class TeachingServiceImpl implements TeachingService {
 				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Unable to find course topic [" + topicId + "]");
 			}
 			return courseTopic.getForum().getForumId();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CourseTopicOption getCourseTranscriptionTopicOption(Integer forumId) throws ApplicationThrowable {
+		try {
+			return getCourseTopicOptionDAO().getCourseTranscriptionOptionFromForum(forumId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1058,7 +1111,7 @@ public class TeachingServiceImpl implements TeachingService {
 					topicAnnotation.setLastUpdate(operationDate);
 					topicAnnotation.setIpAddress(ipAddress);
 					topicAnnotation.setUser(user);
-					topicAnnotation.setSubject(annotation.getTitle() + " (Question)");
+					topicAnnotation.setSubject(annotation.getTitle()/* + " (Question)"*/);
 					topicAnnotation.setTotalReplies(0);
 					topicAnnotation.setTotalViews(0);
 					topicAnnotation.setLastPost(null);
@@ -1068,13 +1121,42 @@ public class TeachingServiceImpl implements TeachingService {
 					topicAnnotation.setAnnotation(annotation);
 					getForumTopicDAO().persist(topicAnnotation);
 					
-					getForumDAO().recursiveIncreaseTopicsNumber(forum);
+					annotation.setForumTopic(topicAnnotation);
+					returnMap.put(annotation, topicAnnotation.getTopicId());
+					
+					// we save first post of annotation topic
+					ForumPost annotationPost = new ForumPost();
+					annotationPost.setForum(forum);
+					annotationPost.setTopic(topicAnnotation);
+					annotationPost.setDateCreated(operationDate);
+					annotationPost.setLastUpdate(operationDate);
+					annotationPost.setUser(user);
+					annotationPost.setUpdater(user);
+					annotationPost.setIpAddress(ipAddress);
+					annotationPost.setLogicalDelete(Boolean.FALSE);
+					annotationPost.setSubject(annotation.getTitle());
+					annotationPost.setText("<p>" + annotation.getText() + "</p>");
+					
+					getForumPostDAO().persist(annotationPost);
+					
+					topicAnnotation.setFirstPost(annotationPost);
+					topicAnnotation.setLastPost(annotationPost);
+					topicAnnotation.setTotalReplies(1);
+					
+					forum.setLastPost(annotationPost);
+					forum.setLastUpdate(operationDate);
+					
+					// we increase the course fragment resources topics number
+					// we do not have to increase parent forum topics number
+					forum.setTopicsNumber(forum.getTopicsNumber() + 1);
+					
+					// we increase the number of forum posts number
+					getForumDAO().recursiveIncreasePostsNumber(forum);
+
 					if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
 						ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
 						getForumTopicWatchDAO().persist(forumTopicWatch);
 					}
-					annotation.setForumTopic(topicAnnotation);
-					returnMap.put(annotation, topicAnnotation.getTopicId());
 					
 					// we have to add a course topic option
 					CourseTopicOption option = new CourseTopicOption();

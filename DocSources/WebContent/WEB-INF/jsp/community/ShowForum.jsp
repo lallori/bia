@@ -601,15 +601,15 @@
            			
            			<c:if test="${not empty topicsPage.list}">
            				<c:forEach items="${topicsPage.list}" var="currentTopic" varStatus="status">
-							<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-								<c:param name="topicId" value="${currentTopic.topicId}"/>
-								<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
-							</c:url>
-							<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
-								<c:param name="topicId" value="${currentTopic.topicId}" />
-							</c:url>
 							<c:choose>
 								<c:when test="${forum.subType == 'DOCUMENT'}">
+									<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+										<c:param name="topicId" value="${currentTopic.topicId}"/>
+										<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+									</c:url>
+									<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
+										<c:param name="topicId" value="${currentTopic.topicId}" />
+									</c:url>
 									<div class="${not status.last ? 'row' : 'rowLast'}">
 										<div class="one">
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
@@ -632,6 +632,9 @@
 							        </div>
 								</c:when>
 								<c:when test="${forum.subType == 'COURSE'}">
+									<c:url var="DeleteCourseTopicURL" value="/teaching/DeleteCourseFragmentTopic.json">
+										<c:param name="topicId" value="${currentTopic.topicId}" />
+									</c:url>
 									<c:set var="topicType" value="${bia:getValue(topicsMap, currentTopic.topicId)}" />
 									<c:choose>
 										<c:when test="${not empty topicsMap and topicType != 'Q' and topicType != 'D'}">
@@ -702,14 +705,24 @@
 								        </c:if>
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 							        		<div class="five">
-							        			<a href="${DeleteTopicForumURL}" class="button_delete">
-							        				<img src="<c:url value="/images/forum/button_delete.png"/>"/>
-							        			</a>
+							        			<c:if test="${topicType == 'Q' or topicType == 'D'}">
+							        				<!-- Cannot delete course transcription fragment: delete course fragment resources forum instead (if needed) -->
+								        			<a href="${DeleteCourseTopicURL}" class="button_delete">
+								        				<img src="<c:url value="/images/forum/button_delete.png"/>"/>
+								        			</a>
+							        			</c:if>
 							        		</div>
 							        	</security:authorize>
 							        </div>
 							    </c:when>
 								<c:otherwise>
+									<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+										<c:param name="topicId" value="${currentTopic.topicId}"/>
+										<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
+									</c:url>
+									<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
+										<c:param name="topicId" value="${currentTopic.topicId}" />
+									</c:url>
 									<div class="${not status.last ? 'row' : 'rowLast'}">
 										<div class="one">
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
@@ -996,41 +1009,50 @@
 			
 			$j('.button_delete').click(function(){
 				var deleteUrl = $j(this).attr('href');
-				$j( "#deleteModal" ).dialog({
-					  autoOpen : false,
-					  modal: true,
-					  resizable: false,
-					  width: 300,
-					  height: 130, 
-					  buttons: {
-						  Yes: function() {
-							  $j.ajax({ type:"POST", url:deleteUrl, async:false, success:function(json) {
-					 			    if (json.operation == 'OK') {
-					 					 $j("#main").load('${ShowForumRefreshURL}');
-										 $j( "#deleteModal" ).dialog('close');
-										 $j("#deleteModal").dialog("destroy");
-										 $j(this).appendTo("#main").css("display", "none");
-										 return false;
+				$j("#deleteModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130, 
+					buttons: {
+						Yes: function() {
+							$j.ajax({ 
+								type: "POST", 
+								url: deleteUrl, 
+								async: false, 
+								success: function(json) {
+					 				if (json.operation == 'OK') {
+					 					$j("#main").load('${ShowForumRefreshURL}');
+										$j( "#deleteModal" ).dialog('close');
+										$j("#deleteModal").dialog("destroy");
+										$j(this).appendTo("#main").css("display", "none");
 					 				} else {
-					 					//MD: In this case the delete operation returns a problem
+					 					$j("#deleteModal").dialog('close');
+					 					alert('The operation failed on server...cannot proceed!!!');
 					 				}
-								}});
-								return false;
-						  },
-						  No: function() {
-							  $j( "#deleteModal" ).dialog('close');
-							  $j("#deleteModal").dialog("destroy");
-							  $j(this).appendTo("#main").css("display", "none");
-							  return false;
-						  }
-					  },
-					  close: function(event, ui){
-						  $j("#deleteModal").dialog("destroy");
-						  //MD: This instruction is for move the div back after closing
-						  $j("#deleteModal").appendTo("#main").css("display", "none");
-						  return false;
-					  }
-				  });
+								},
+								error: function(data) {
+									$j("#deleteModal").dialog('close');
+									alert('Server error...operation aborted!!!');
+								}
+							});
+							return false;
+						},
+						No: function() {
+							$j("#deleteModal").dialog('close');
+							$j("#deleteModal").dialog("destroy");
+							$j(this).appendTo("#main").css("display", "none");
+							return false;
+						}
+					},
+					close: function(event, ui){
+						$j("#deleteModal").dialog("destroy");
+						//MD: This instruction is for move the div back after closing
+						$j("#deleteModal").appendTo("#main").css("display", "none");
+						return false;
+					}
+				});
 				$j('#deleteModal').dialog('open');
 				return false;
 			});

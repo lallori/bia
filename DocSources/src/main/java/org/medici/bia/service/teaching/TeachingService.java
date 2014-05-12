@@ -146,6 +146,14 @@ public interface TeachingService {
 	Long countCheckPointPosts(Integer checkPointId) throws ApplicationThrowable;
 	
 	/**
+	 * This method removes the course fragment topic by its identifier.
+	 * It also removes the topic posts and it decreases course fragment forum container topics number.
+	 * 
+	 * @param topicId the course fragment topic identifier
+	 */
+	void deleteCourseFragmentTopic(Integer topicId) throws ApplicationThrowable;
+	
+	/**
 	 * This method removes logically a course topic post.<br/>
 	 * It also updates course topic and course forum details.
 	 * 
@@ -245,6 +253,16 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	Integer getCourseTranscriptionResourcesForum(Integer topicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the extended transcription topic (as {@link CourseTopicOption}) of a
+	 * course forum resources container.
+	 *  
+	 * @param forumId the course forum resources container identifier
+	 * @return the extended course transcription topic found
+	 * @throws ApplicationThrowable
+	 */
+	CourseTopicOption getCourseTranscriptionTopicOption(Integer forumId) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the session user.
