@@ -332,26 +332,84 @@
 			
 			/** ################################ CHANGE HANDLERS ######################################## **/
 			
+			/*** ---------- CustomInputHandler class ---------- ***/
+			
 			/**
-			 * This function returns an ellapsed handler.
+			 * The CustomInpuHandler class manages any input changes.
+			 * This class has two ways in managing changes:
+			 *   - handle the change after a delay
+			 *   - handle the change instantaneously
+			 * The second way interrupts the delayed handler if exists.
 			 *
-			 * @param handler the handler to delay
-			 * @param delay the delay (in millisecond)
-			 * @param prefix the parameter to pass to the handler
+			 * To create an instance of this class call constructor with:
+		     * @param target the input target
+		     * @param handler the handler to call
+		     * @param handlerParams the parameters to provide to the handler
 			 */
-			function createElapsedHandler(handler, delay, prefix) {
-				var timer;
+			function CustomInputHandler(target, handler, handlerParams) {
+				this.target = target;
+				this.doHandle = function() {
+					var current = $j(target).val();
+					if (current !== this.value) {
+						this.value = current;
+						return (typeof handlerParams !== 'undefined' && handlerParams != null) ? handler(handlerParams) : handler();
+					} else {
+						console.log('Skipped');
+					}
+				}
+				this.timer = null;
+				this.value = $j(target).val();
+			}
+			
+			/**
+			 * The 'elapseHandle' defines the delayed managing.
+			 *
+			 * @params delay the delay in milliseconds
+			 */
+			CustomInputHandler.prototype.elapsedHandle = function(delay) {
+				var _this = this;
 				return function() {
-					clearTimeout(timer);
-					timer = setTimeout(function() {
-						if (typeof prefix !== "undefined") {
-							handler(prefix);
-						} else {
-							handler();						
-						}
+					clearTimeout(_this.timer);
+					_this.timer = setTimeout(function() {
+						console.log('Launch handler after delay');
+						_this.doHandle();
 					}, delay);
 				}
-			};
+			}
+			
+			/**
+			 * The 'instantaneousHandle' defines the instantaneous managing.
+			 */
+			CustomInputHandler.prototype.instantaneousHandle = function() {
+				if (typeof this.timer !== 'undefined' && this.timer != null) {
+					clearTimeout(this.timer);
+					this.timer = null;
+				}
+				console.log("Launch handler directly");
+				this.doHandle();
+			}
+			
+			/*** ---------- end of class CustomInputHandler ---------- ***/
+			
+			
+			/**
+			 * This function binds the change listener to the targeted input.
+			 * The change listener is defined by an elapsed input change handler and by the blur event.
+			 *
+			 * @param targetInput the targeted input
+			 * @param delay the delay time (in milliseconds)
+			 * @param changeHandler the callback
+			 * @changeParams the parameters to provide to the callback 
+			 */
+			var bindInputListener = function(targetInput, delay, changeHandler, changeParams) {
+				var handler = (typeof changeParams === 'undefined' || changeParams == null) ? 
+						new CustomInputHandler($j(targetInput), changeHandler) : 
+						new CustomInputHandler($j(targetInput), changeHandler, changeParams);
+				$j(targetInput).bind("input", handler.elapsedHandle(delay));
+				$j(targetInput).blur(function() {
+					handler.instantaneousHandle();
+				})
+			}
 			
 			
 			/**
@@ -362,7 +420,7 @@
 			var folioModChangeHandler = function(prefix) {
 				var folioSelector = $j("#" + prefix + "Num");
 				if (typeof $j(folioSelector).val() != "undefined" && !isEmpty($j(folioSelector).val())) {
-					$j(folioSelector).trigger("input");
+					folioNumChangeHandler(prefix);
 				}
 			}
 			
@@ -426,7 +484,7 @@
 			var insertLetChangeHandler = function() {
 				var insertSelector = $j("#insertNum"); 
 				if (typeof $j(insertSelector).val() != "undefined" && !isEmpty($j(insertSelector).val())) {
-					$j(insertSelector).trigger("input");
+					insertNumChangeHandler();
 				}
 			}
 			
@@ -491,18 +549,16 @@
 				}
 			}
 			
-			
 			// Bind the client validation process when input data change
-			$j("#folioMod").bind("input", function() { folioModChangeHandler("folio"); });
-			$j("#folioNum").bind("input", createElapsedHandler(folioNumChangeHandler, delay, "folio"));
-			$j("#folioRectoVerso").bind("input", createElapsedHandler(folioRectoVersoChangeHandler, delay, "folio"));
-			$j("#insertLet").bind("input", function() { insertLetChangeHandler(); });
-			$j("#insertNum").bind("input", createElapsedHandler(insertNumChangeHandler, delay));
-			$j("#transcribeFolioMod").bind("input", function() { folioModChangeHandler("transcribeFolio"); });
-			$j("#transcribeFolioNum").bind("input", createElapsedHandler(folioNumChangeHandler, delay, "transcribeFolio"));
-			$j("#transcribeFolioRectoVerso").bind("input", createElapsedHandler(folioRectoVersoChangeHandler, delay, "transcribeFolio"));
-			$j("#volume").bind("input", createElapsedHandler(volumeChangeHandler, delay));
-			
+			bindInputListener('#folioNum', delay, folioNumChangeHandler, "folio");
+			bindInputListener('#folioMod', delay, folioModChangeHandler, "folio");
+			bindInputListener('#folioRectoVerso', delay, folioRectoVersoChangeHandler, "folio");
+			bindInputListener('#transcribeFolioNum', delay, folioNumChangeHandler, "transcribeFolio");
+			bindInputListener('#transcribeFolioMod', delay, folioModChangeHandler, "transcribeFolio");
+			bindInputListener('#transcribeFolioRectoVerso', delay, folioRectoVersoChangeHandler, "transcribeFolio");
+			bindInputListener('#insertNum', delay, insertNumChangeHandler);
+			bindInputListener('#insertLet', delay, insertLetChangeHandler);
+			bindInputListener('#volume', delay, volumeChangeHandler);
 			
 			
 			/** ################################ CLIENT WARNING MESSAGES FUNCTIONS ######################################## **/
