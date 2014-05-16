@@ -38,6 +38,22 @@
 					            </div>
 				            </form>
 				        </div>
+				        <div class="listAdvSearch">
+				        	<form id="insertSearchForm" method="post" class="edit">
+				        		<div class="row">
+				        			<div class="col_l">
+				        				<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.insert"></fmt:message>">?</a>
+				        				<span>Insert Number</span>
+				        			</div>
+				        			<div class="col_l"><input type="text" id="insert" name="insert" class="input_5c"/></div>
+									<div class="col_l"></div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchVolumes.addToYourSearchFilter.alt"/>">
+										<input type="hidden" id="category" value="Insert">
+									</div>
+				        		</div>
+				        	</form>
+				        </div>
 				        
 						<hr />
 						
@@ -376,6 +392,10 @@
 		});
 
 		$j("#volumeSearchForm").advancedSearchForm({
+			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+			consoleLog : false
+		});
+		$j("#insertSearchForm").advancedSearchForm({
 			AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 			consoleLog : false
 		});

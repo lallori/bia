@@ -94,7 +94,7 @@
 						hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
 						$('#' + formName).find('#' + fieldName).val("");
 					} 
-				}else if(isAutocompleterForm(formName, fieldName)){
+				} else if(isAutocompleterForm(formName, fieldName)) {
 					//MD: In this case we have a select with an autocompleter field. For example the section "Birth/Death Place" in Person search.
 					//MD: Changed the searchType to have the correct category Search.
 					if(isTopicForm(formName)){
@@ -538,6 +538,16 @@
 	 */
 	function isFolioForm(formName) {
 		if (formName.indexOf("folio") >= 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * This method checks if form manage insert
+	 */
+	function isInsertForm(formName) {
+		if (formName.indexOf("insert") >= 0)
 			return true;
 		else
 			return false;

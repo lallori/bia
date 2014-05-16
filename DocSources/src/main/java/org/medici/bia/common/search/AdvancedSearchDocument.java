@@ -34,7 +34,6 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
@@ -86,6 +85,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<FolioType> foliosTypes;
 	private List<String> from;
 	private List<Integer> fromId;
+	private List<String> insertNums;
 	private Boolean logicalDelete;
 	private List<String> person;
 	private List<Integer> personId;
@@ -158,6 +158,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+		insertNums = new ArrayList<String>(0);
 		folios = new ArrayList<String>(0);
 		foliosBetween = new ArrayList<String>(0);
 		foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(0);
@@ -780,6 +781,17 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			volumesBetween = new ArrayList<String>(0);
 		}
 		
+		// Insert
+		if ((command.getInsert() != null && command.getInsert().size() > 0)) {
+			insertNums = new ArrayList<String>(command.getInsert().size());
+			
+			for(String insert : command.getInsert()) {
+				insertNums.add(insert);
+			}
+		} else {
+			insertNums = new ArrayList<String>(0);
+		}
+		
 		//Folio
 		if((command.getFolio() != null) && (command.getFolio().size() > 0)){
 			foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(command.getFolio().size());
@@ -910,6 +922,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				(datesTypes.size()>0) ||
 				(datesLastUpdateTypes.size()>0) ||
 				(volumes.size()>0) ||
+				(insertNums.size()>0) ||
 				(folios.size()>0) ||
 				(folioMods.size()>0) ||
 				(docIds.size()>0) ||
@@ -1024,6 +1037,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getFromId() {
 		return fromId;
+	}
+	
+	/**
+	 * @return the insertNums
+	 */
+	public List<String> getInsertNums() {
+		return insertNums;
 	}
 
 	/**
@@ -1305,6 +1325,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public void setFromId(List<Integer> fromId) {
 		this.fromId = fromId;
 	}
+	
+	/**
+	 * @param insertNums the insertNums to set
+	 */
+	public void setInsertNums(List<String> insertNums) {
+		this.insertNums = insertNums;
+	}
 
 	/**
 	 * @param logicalDelete the logicalDelete to set
@@ -1552,918 +1579,75 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public String toJPAQuery() {
 		StringBuilder jpaQuery = new StringBuilder("FROM Document WHERE ");
 
-		if (words.size()>0) {
-			StringBuilder wordsQuery = new StringBuilder("(");
-			for (int i=0; i<words.size(); i++) {
-				String currentWords = words.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf("\"");
-					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleWordSearch = StringUtils.split(currentWords, " ");
-				if (wordsQuery.length()>1) {
-					wordsQuery.append(" AND ");
-				}
-				if (wordsTypes.get(i).equals(WordType.Extract)) {
-					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("(synExtract.docExtract like '% ");
-						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append(" %')");
-						if(j < (exactWords.size() - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
-						wordsQuery.append(" AND ");
-					}
-					for(int j = 0; j < wordsSingleWordSearch.length; j++){
-						wordsQuery.append("(synExtract.docExtract like '%");
-						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
-						wordsQuery.append("%')");
-						if(j < (wordsSingleWordSearch.length - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
-					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("(synExtract.synopsis like '% ");
-						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append(" %')");
-						if(j < (exactWords.size() - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
-						wordsQuery.append(" AND ");
-					}
-					for(int j = 0; j < wordsSingleWordSearch.length; j++){
-						wordsQuery.append("(synExtract.synopsis like '%");
-						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
-						wordsQuery.append("%')");
-						if(j < (wordsSingleWordSearch.length - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
-					for(int j = 0; j < exactWords.size(); j++){
-						wordsQuery.append("((synExtract.docExtract like '% ");
-						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append(" %') OR ");
-						wordsQuery.append("(synExtract.synopsis like '% ");
-						wordsQuery.append(exactWords.get(j).replace("'", "''"));
-						wordsQuery.append(" %'))");
-						if(j < (exactWords.size() - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-					if(exactWords.size() > 0 && wordsSingleWordSearch.length > 0){
-						wordsQuery.append(" AND ");
-					}					
-					for(int j = 0; j < wordsSingleWordSearch.length; j++){
-						wordsQuery.append("((synExtract.docExtract like '%");
-						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
-						wordsQuery.append("%') or ");
-						wordsQuery.append("(synExtract.synopsis like '%");
-						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
-						wordsQuery.append("%'))");
-						if(j < (wordsSingleWordSearch.length - 1)){
-							wordsQuery.append(" AND ");
-						}
-					}
-				}
-			}
-			wordsQuery.append(')');
-			if (!wordsQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(wordsQuery);
-			}
-		}
+		// Words
+		appendToJpaQuery(jpaQuery, getWordSubQuery());
 
-		// person;
-		if (personId.size() >0) {
-			StringBuilder personIdQuery = new StringBuilder("(");
-			StringBuilder personQuery = new StringBuilder("(");
-			for (int i=0; i<personId.size(); i++) {
-				if (personId.get(i) > 0) {
-					if (personIdQuery.length()>1) {
-						personIdQuery.append(" AND ");
-					}
-					
-					personIdQuery.append("(entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=");
-					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(") or senderPeople.personId=");
-					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(" or recipientPeople.personId=");
-					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(')');
-				} else {
-					if (personQuery.length()>1) {
-						personQuery.append(" AND ");
-					}
-					
-					personQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf like '%");
-					personQuery.append(person.get(i).toLowerCase().replace("'", "''"));
-					personQuery.append("%')"); 
-					/*personQuery.append("%') or altName.altName like '%'");
-					personQuery.append(person.get(i).toLowerCase());
-					personQuery.append("%')");*/
-				}
-			}
-			personIdQuery.append(')');
-			personQuery.append(')');
-			if (!personIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(personIdQuery);
-			}
-			if (!personQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(personQuery);
-			}
-		}
+		// Person
+		appendToJpaQuery(jpaQuery, getPersonSubQuery());
 
-		// place;
-		if (placeId.size() >0) {
-			StringBuilder placeIdQuery = new StringBuilder("(");
-			StringBuilder placeQuery = new StringBuilder("(");
-			for (int i=0; i<placeId.size(); i++) {
-				if (placeId.get(i) > 0) {
-					if (placeIdQuery.length()>1) {
-						placeIdQuery.append(" AND ");
-					}
-					
-					placeIdQuery.append("(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(") or recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(") or entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(")))");
-				} else {
-					if (placeQuery.length()>1) {
-						placeQuery.append(" AND ");
-					}
-					
-					placeQuery.append("(senderPlace.placeName like '%");
-					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
-					placeQuery.append("%' or recipientPlace.placeName like '%'");
-					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
-					placeQuery.append("%' or entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%'");
-					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
-					placeQuery.append("%'))");
-				}
-			}
-			placeIdQuery.append(')');
-			placeQuery.append(')');
-			if (!placeIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(placeIdQuery);
-			}
-			if (!placeQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(placeQuery);
-			}
-		}
+		// Place
+		appendToJpaQuery(jpaQuery, getPlaceSubQuery());
 		
-		//sender
-		if (senderId.size() >0) {
-			StringBuilder senderIdQuery = new StringBuilder("(");
-			StringBuilder senderQuery = new StringBuilder("(");
-			for (int i=0; i<senderId.size(); i++) {
-				if (senderId.get(i) > 0) {
-					if (senderIdQuery.length()>1) {
-						senderIdQuery.append(" AND ");
-					}
-					
-					senderIdQuery.append("(senderPeople.personId=");
-					senderIdQuery.append(senderId.get(i).toString());
-					senderIdQuery.append(')');
-				} else {
-					if (senderQuery.length()>1) {
-						senderQuery.append(" AND ");
-					}
-					
-					senderQuery.append("(senderPeople.mapNameLf like '%");
-					senderQuery.append(sender.get(i).toLowerCase().replace("'", "''"));
-					senderQuery.append("%')");
-				}
-			}
-			senderIdQuery.append(')');
-			senderQuery.append(')');
-			if (!senderIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(senderIdQuery);
-			}
-			if (!senderQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(senderQuery);
-			}
-		}
+		// Sender
+		appendToJpaQuery(jpaQuery, getSenderSubQuery());
 
-		// from;
-		if (fromId.size() >0) {
-			StringBuilder fromIdQuery = new StringBuilder("(");
-			StringBuilder fromQuery = new StringBuilder("(");
-			for (int i=0; i<fromId.size(); i++) {
-				if (fromId.get(i) > 0) {
-					if (fromIdQuery.length()>1) {
-						fromIdQuery.append(" AND ");
-					}
-					
-					fromIdQuery.append("(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					fromIdQuery.append(fromId.get(i).toString());
-					fromIdQuery.append("))");
-				} else {
-					if (fromQuery.length()>1) {
-						fromQuery.append(" AND ");
-					}
-					
-					fromQuery.append("(senderPlace.placeNameFull like '%");
-					fromQuery.append(from.get(i).toLowerCase().replace("'", "''"));
-					fromQuery.append("%')");
-				}
-			}
-			fromIdQuery.append(')');
-			fromQuery.append(')');
-			if (!fromIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(fromIdQuery);
-			}
-			if (!fromQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(fromQuery);
-			}
-		}
+		// From
+		appendToJpaQuery(jpaQuery, getFromSubQuery());
 
-		// recipient;
-		if (recipient.size() >0) {
-			StringBuilder recipientIdQuery = new StringBuilder("(");
-			StringBuilder recipientQuery = new StringBuilder("(");
-			for (int i=0; i<recipientId.size(); i++) {
-				if (recipientId.get(i) > 0) {
-					if (recipientIdQuery.length()>1) {
-						recipientQuery.append(" AND ");
-					}
-					
-					recipientIdQuery.append("(recipientPeople.personId=");
-					recipientIdQuery.append(recipientId.get(i).toString());
-					recipientIdQuery.append(')');
-				} else {
-					if (recipientQuery.length()>1) {
-						recipientQuery.append(" AND ");
-					}
-					
-					recipientQuery.append("(recipientPeople.mapNameLf like '%");
-					recipientQuery.append(recipient.get(i).toLowerCase().replace("'", "''"));
-					recipientQuery.append("%')");
-				}
-			}
-			recipientIdQuery.append(')');
-			recipientQuery.append(')');
-			if (!recipientIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(recipientIdQuery);
-			}
-			if (!recipientQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(recipientQuery);
-			}
-		}
+		// Recipient
+		appendToJpaQuery(jpaQuery, getRecipientSubQuery());
 
-		// to;
-		if (to.size() >0) {
-			StringBuilder toIdQuery = new StringBuilder("(");
-			StringBuilder toQuery = new StringBuilder("(");
-			for (int i=0; i<toId.size(); i++) {
-				if (toId.get(i) > 0) {
-					if (toIdQuery.length()>1) {
-						toIdQuery.append(" AND ");
-					}
-					
-					toIdQuery.append("(recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-					toIdQuery.append(toId.get(i).toString());
-					toIdQuery.append("))");
-				} else {
-					if (toQuery.length()>0) {
-						toQuery.append(" AND ");
-					}
-					
-					toQuery.append("(recipientPlace.placeNameFull like '%");
-					toQuery.append(from.get(i).toLowerCase().replace("'", "''"));
-					toQuery.append("%')");
-				}
-			}
-			toIdQuery.append(')');
-			toQuery.append(')');
-			if (!toIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(toIdQuery);
-			}
-			if (!toQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(toQuery);
-			}
-		}
+		// To
+		appendToJpaQuery(jpaQuery, getToSubQuery());
 
-		//refersTo
-		if (refersTo.size() >0) {
-			StringBuilder refersToIdQuery = new StringBuilder("(");
-			StringBuilder refersToQuery = new StringBuilder("(");
-			for (int i=0; i<refersToId.size(); i++) {
-				if (refersToId.get(i) > 0) {
-					if (refersToIdQuery.length()>1) {
-						refersToIdQuery.append(" AND ");
-					}
-					
-					refersToIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId=");
-					refersToIdQuery.append(refersToId.get(i).toString());
-					refersToIdQuery.append(" AND docRole IS NULL))");
-				} else {
-					if (refersToQuery.length()>1) {
-						refersToQuery.append(" AND ");
-					}
-					
-					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf like '%");
-					refersToQuery.append(refersTo.get(i).toLowerCase().replace("'", "''"));
-					refersToQuery.append("%' AND docRole IS NULL))");
-				}
-			}
-			refersToIdQuery.append(')');
-			refersToQuery.append(')');
-			if (!refersToIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(refersToIdQuery);
-			}
-			if (!refersToQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(refersToQuery);
-			}
-		}
+		// RefersTo
+		appendToJpaQuery(jpaQuery, getRefersToSubQuery());
 
 		// Extract
-		if (extract.size()>0) {
-			StringBuilder extractQuery = new StringBuilder("(");
-			for (int i=0; i<extract.size(); i++) {
-				String currentWords = extract.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(extractQuery.length() > 1){
-					extractQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf("\"");
-					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleExtract = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					extractQuery.append("(synExtract.docExtract like '% ");
-					extractQuery.append(exactWords.get(j).replace("'", "''"));
-					extractQuery.append(" %')");
-					if(j < (exactWords.size() - 1)){
-						extractQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleExtract.length > 0){
-					extractQuery.append(" AND ");
-				}
-				for (int j=0; j<wordsSingleExtract.length; j++) {
-					extractQuery.append("(synExtract.docExtract like '%");
-					extractQuery.append(wordsSingleExtract[j].replace("'", "''"));
-					extractQuery.append("%')");
-					if (j< (wordsSingleExtract.length-1)) {
-						extractQuery.append(" AND ");
-					}
-				}
-			}
-			extractQuery.append(')');
-			if (!extractQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(extractQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getExtractSubQuery());
 		
-		// synopsis;
-		if (synopsis.size() >0) {
-			StringBuilder synopsisQuery = new StringBuilder("(");
-			for (int i=0; i<synopsis.size(); i++) {
-				String currentWords = synopsis.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(synopsisQuery.length() > 1){
-					synopsisQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf("\"");
-					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleSynopsis = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					synopsisQuery.append("(synExtract.synopsis like '% ");
-					synopsisQuery.append(exactWords.get(j).replace("'", "''"));
-					synopsisQuery.append(" %')");
-					if(j < (exactWords.size() - 1)){
-						synopsisQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleSynopsis.length > 0){
-					synopsisQuery.append(" AND ");
-				}
-				for (int j=0; j<wordsSingleSynopsis.length; j++) {
-					synopsisQuery.append("(synExtract.synopsis like '%");
-					synopsisQuery.append(wordsSingleSynopsis[j].replace("'", "''"));
-					synopsisQuery.append("%')");
-					if (j< (wordsSingleSynopsis.length-1)) {
-						synopsisQuery.append(" AND ");
-					}
-				}
-			}
-			synopsisQuery.append(')');
-			if (!synopsisQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(synopsisQuery);
-			}
-		}
+		// Synopsis
+		appendToJpaQuery(jpaQuery, getSynopsisSubQuery());
 
-		// topics;
-		if (topicsId.size() >0) {
-			StringBuilder topicsIdQuery = new StringBuilder("(");
-			for (int i=0; i<topicsId.size(); i++) {
-				if (topicsId.get(i) > 0) {
-					if (topicsIdQuery.length()>1) {
-						topicsIdQuery.append(" AND ");
-					}
-					
-					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId=");
-					topicsIdQuery.append(topicsId.get(i).toString());
-					if(topicsPlaceId.size() > 0 && topicsPlaceId.get(i) != 0){
-						topicsIdQuery.append(" AND place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-						topicsIdQuery.append(topicsPlaceId.get(i).toString());
-						topicsIdQuery.append(')');
-					}
-					topicsIdQuery.append(')');
-				} 
-			}
-			topicsIdQuery.append(')');
-			if (!topicsIdQuery.toString().equals("()")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(topicsIdQuery);
-			}
-		}
+		// Topics
+		appendToJpaQuery(jpaQuery, getTopicSubQuery());
 		
-		//Topic Place
-//		if (topicsPlaceId.size() > 0){
-//			StringBuilder topicsPlaceIdQuery = new StringBuilder("(");
-//			StringBuilder topicsPlaceQuery = new StringBuilder("(");
-//			for(int i = 0;i < topicsPlaceId.size(); i++){
-//				if(topicsPlaceIdQuery.length() > 1){
-//					topicsPlaceIdQuery.append(" AND ");
-//				}
-//				if(topicsPlaceId.get(i) > 0){
-//					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
-//					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
-//					topicsPlaceIdQuery.append("))");
-//				}else{
-//					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%");
-//					topicsPlaceQuery.append(topicsPlace.get(i));
-//					topicsPlaceQuery.append("%')");
-//				}
-//			}
-//			topicsPlaceIdQuery.append(')');
-//			topicsPlaceQuery.append(')');
-//			if (!topicsPlaceIdQuery.toString().equals("()")) {
-//				if(jpaQuery.length() > 20){
-//					jpaQuery.append(" AND ");
-//				}
-//				jpaQuery.append(topicsPlaceIdQuery);
-//			}
-//			if (!topicsPlaceQuery.toString().equals("()")) {
-//				if(jpaQuery.length() > 20){
-//					jpaQuery.append(" AND ");
-//				}
-//				jpaQuery.append(topicsPlaceQuery);
-//			}
-//		}
+		// Topic Place
+//		appendToJpaQuery(jpaQuery, getTopicPlaceSubQuery());
 
 		// Date
-		if (datesTypes.size()>0) {
-			StringBuilder datesQuery = new StringBuilder("(");
-			for (int i=0; i<datesTypes.size(); i++) {
-				if (datesTypes.get(i) == null) {
-					continue;
-				} 
-				
-				if (datesQuery.length()>1) {
-					datesQuery.append(" AND ");
-				}
-
-				if (datesTypes.get(i).equals(DateType.From)) {
-					datesQuery.append("(sortableDateInt >=");
-					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(')');
-				} else if (datesTypes.get(i).equals(DateType.Before)) {
-					datesQuery.append("(sortableDateInt <");
-					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(')');
-				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					if (datesYear.get(i) != null && datesYearBetween.get(i) != null) {
-						datesQuery.append("(sortableDateInt >=");
-						datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-						datesQuery.append(") AND (sortableDateInt <");
-						datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-						datesQuery.append(')');
-					} else {
-						// RR: Months are specified due to client validation
-						boolean moreThanOneMonth = !datesMonth.get(i).equals(datesMonthBetween.get(i)) || (datesDay.get(i) != null && datesDayBetween.get(i) != null && (datesDay.get(i) > datesDayBetween.get(i)));
-						int mFrom = datesMonth.get(i) < 12 ? datesMonth.get(i) + 1 : 1;
-						if (moreThanOneMonth && mFrom != datesMonthBetween.get(i)) {
-							int mTo = datesMonthBetween.get(i) > 1 ? datesMonthBetween.get(i) - 1 : 12;
-							datesQuery.append("(docMonthNum >= " + mFrom + " AND docMonthNum <= " +  mTo + " OR ");
-						}
-						
-						// FIXME: RR - include deleted conditions only when it is necessary to include not dated documents in the results
-						datesQuery.append("(docMonthNum = " + datesMonth.get(i) /* + " OR docMonthNum IS NULL " */);
-						if (datesDay.get(i) != null)
-							datesQuery.append(" AND docDay >= " + datesDay.get(i) /* + " OR docDay IS NULL " */);
-						if (moreThanOneMonth)
-							datesQuery.append(") OR (docMonthNum = " + datesMonthBetween.get(i) /* + " OR docMonthNum IS NULL " */);
-						datesQuery.append(datesDayBetween.get(i) != null ? (" AND docDay <= " + datesDayBetween.get(i) /* + " OR docDay IS NULL " */) + ")" : ")");
-						if (moreThanOneMonth)
-							datesQuery.append(")");
-					}
-					
-				}else if (datesTypes.get(i).equals(DateType.InOn)){
-					if(datesYear.get(i) != null){
-						datesQuery.append("(yearModern =");
-						datesQuery.append(datesYear.get(i) + " OR (docYear =");
-						datesQuery.append(datesYear.get(i) + " AND yearModern IS NULL))");
-						if(datesMonth.get(i) != null || datesDay.get(i) != null){
-							datesQuery.append(" AND ");
-						}
-					}
-					if(datesMonth.get(i) != null){
-						datesQuery.append("(docMonthNum =");
-						datesQuery.append(datesMonth.get(i) + " )");
-						if(datesDay.get(i) != null){
-							datesQuery.append(" AND ");
-						}
-					}
-					if(datesDay.get(i) != null){
-						datesQuery.append("(docDay =");
-						datesQuery.append(datesDay.get(i) + " )");
-					}
-				}
-			}
-			datesQuery.append(')');
-			if (!datesQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getDateSubQuery());
 
 		// Last update
-		if (datesLastUpdateTypes.size()>0) {
-			StringBuilder datesLastUpdateQuery = new StringBuilder("(");
-			for (int i=0; i<datesLastUpdateTypes.size(); i++) {
-				if (datesLastUpdateTypes.get(i) == null) {
-					continue;
-				} 
-				
-				if (datesLastUpdateQuery.length()>1) {
-					datesLastUpdateQuery.append(" AND ");
-				}
+		appendToJpaQuery(jpaQuery, getLastUpdateSubQuery());
 
-				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') >= '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append(')');
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') <= '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append(')');
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') between '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append("' AND '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)));
-					datesLastUpdateQuery.append("')");
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.InOn)){
-					
-				}
-			}
-			datesLastUpdateQuery.append(')');
-			if (!datesLastUpdateQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesLastUpdateQuery);
-			}
-		}
-
-		// date created
-		if (datesCreatedTypes.size()>0) {
-			StringBuilder datesCreatedQuery = new StringBuilder("(");
-			for (int i=0; i<datesCreatedTypes.size(); i++) {
-				if (datesCreatedTypes.get(i) == null) {
-					continue;
-				} 
-				
-				if (datesCreatedQuery.length()>1) {
-					datesCreatedQuery.append(" AND ");
-				}
-
-				if (datesCreatedTypes.get(i).equals(DateType.From)) {
-					datesCreatedQuery.append("(dateCreated >= '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append(')');
-				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
-					datesCreatedQuery.append("(dateCreated <= '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append(')');
-				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
-					datesCreatedQuery.append("(dateCreated between '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append("' AND '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)));
-					datesCreatedQuery.append("')");
-				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
-					
-				}
-			}
-			datesCreatedQuery.append(')');
-			if (!datesCreatedQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesCreatedQuery);
-			}
-		}
+		// Date created
+		appendToJpaQuery(jpaQuery, getDateCreatedSubQuery());
 
 		// Volume
-		if (volumes.size()>0) {
-			StringBuilder volumesQuery = new StringBuilder("(");
-			for (int i=0; i<volumes.size(); i++) {
-				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
-					if (volumesQuery.length()>1) {
-						//MD: I need to append an "OR" clause instead an "AND"
-						volumesQuery.append(" OR ");
-					}
-
-					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
-						if (StringUtils.isNumeric(volumes.get(i))) {
-							volumesQuery.append("(volume.volNum=");
-							volumesQuery.append(volumes.get(i));
-							volumesQuery.append(')');
-						} else {
-							volumesQuery.append("(volume.volNum=");
-							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)));
-							volumesQuery.append(" AND volume.volLetExt='");
-							volumesQuery.append(VolumeUtils.extractVolLetExt(volumes.get(i)));
-							volumesQuery.append("')");
-						}
-					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
-						volumesQuery.append("(volume.volNum>=");
-						volumesQuery.append(volumes.get(i));
-						volumesQuery.append(" AND volume.volNum<=");
-						volumesQuery.append(volumesBetween.get(i));
-						volumesQuery.append(')');
-					}
-				} else {
-					// if volume value is not in volume format we discard it!
-					continue;
-				}
-			}
-			volumesQuery.append(')');
-			if (!volumesQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(volumesQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getVolumeSubQuery());
 		
-		//Folio
-		if(folios.size() > 0){
-			StringBuilder foliosQuery = new StringBuilder("(");
-			for(int i = 0; i < folios.size(); i++){
-				if(StringUtils.isNumeric(folios.get(i))){
-					if(foliosQuery.length() > 1){
-						//MD: I need to append an "OR" clause instead an "AND"
-						foliosQuery.append(" OR ");
-					}
-					
-					if(foliosTypes.get(i).equals(FolioType.Exactly)){
-						foliosQuery.append("(folioNum=");
-						foliosQuery.append(folios.get(i));
-						foliosQuery.append(')');
-					}else if(foliosTypes.get(i).equals(FolioType.Between)){
-						foliosQuery.append("(folioNum>=");
-						foliosQuery.append(folios.get(i));
-						foliosQuery.append(" AND folioNum<=");
-						foliosQuery.append(foliosBetween.get(i));
-						foliosQuery.append(')');
-					}
-				}else{
-					continue;
-				}
-			}
-			foliosQuery.append(')');
-			if(!foliosQuery.toString().equals("")){
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(foliosQuery);
-			}
-		}
+		// Insert
+		appendToJpaQuery(jpaQuery, getInsertSubQuery());
 		
-		//FolioMod
-		if(folioMods.size() > 0){
-			StringBuilder folioModsQuery = new StringBuilder("(");
-			for(int i = 0; i < folioMods.size(); i++){
-				if(folioModsQuery.length() > 1){
-					folioModsQuery.append(" AND ");
-				}
-				String[] wordsFolioMods = StringUtils.split(folioMods.get(i), " ");
-				for(int j = 0; j < wordsFolioMods.length; j++){
-					if(j > 0){
-						folioModsQuery.append(" AND ");
-					}
-					if(wordsFolioMods[j].equalsIgnoreCase("bis")){
-						folioModsQuery.append("(folioMod LIKE 'bis')");
-					}
-					if(wordsFolioMods[j].equalsIgnoreCase("ter")){
-						folioModsQuery.append("(folioMod LIKE 'ter')");
-					}
-					if(wordsFolioMods[j].equalsIgnoreCase("other")){
-						folioModsQuery.append("(folioMod IS NOT NULL AND folioMod NOT LIKE 'bis' AND folioMod NOT LIKE 'ter')");
-					}
-				}
-			}
-			folioModsQuery.append(")");
-			if(folioModsQuery.length() > 2){
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(folioModsQuery);
-			}
-		}
+		// Folio
+		appendToJpaQuery(jpaQuery, getFolioSubQuery());
 		
-		//EntryId
-		if(docIds.size() > 0){
-			StringBuilder docIdQuery = new StringBuilder("(");
-			for(int i = 0; i < docIds.size(); i++){
-				if(StringUtils.isNumeric(docIds.get(i))){
-					if(docIdQuery.length() > 1){
-						//MD: I need to append an "OR" clause instead an "AND"
-						docIdQuery.append(" OR ");
-					}
-					docIdQuery.append("(entryId=");
-					docIdQuery.append(docIds.get(i));
-					docIdQuery.append(')');
-				}else{
-					continue;
-				}
-			}
-			docIdQuery.append(')');
-			if(!docIdQuery.toString().equals("")){
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(docIdQuery);
-			}
-		}
+		// FolioMod
+		appendToJpaQuery(jpaQuery, getFolioModSubQuery());
 		
-		//User
-		if(users.size() > 0) {
-			StringBuilder usersQuery = new StringBuilder("(");
-			for (int i=0; i<users.size(); i++) {
-				if (usersQuery.length()>1) {
-					usersQuery.append(" AND ");
-				}
-
-				if (userActionTypes.get(i).equals(UserActionType.CreatedBy)) {
-					usersQuery.append("(createdBy=");
-					usersQuery.append("'").append(users.get(i)).append("'");
-					usersQuery.append(')');
-				} else if (userActionTypes.get(i).equals(UserActionType.LastUpdateBy)) {
-					usersQuery.append("(lastUpdateBy=");
-					usersQuery.append("'").append(users.get(i)).append("'");
-					usersQuery.append(')');
-				}
-			}
-			usersQuery.append(')');
-			if (!usersQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(usersQuery);
-			}
-		}
+		// EntryId
+		appendToJpaQuery(jpaQuery, getDocIdsSubQuery());
 		
-		//LogicalDelete
-		if(!ObjectUtils.toString(logicalDelete).equals("")){
-			StringBuilder logicalDeleteQuery = new StringBuilder("(");
-			if(logicalDelete.equals(Boolean.TRUE)){
-				logicalDeleteQuery.append("(logicalDelete = true)");
-			}else if(logicalDelete.equals(Boolean.FALSE)){
-				logicalDeleteQuery.append("(logicalDelete = false)");
-			}
-			logicalDeleteQuery.append(')');
-			if(!logicalDeleteQuery.toString().equals("")){
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(logicalDeleteQuery);
-			}
-		}else{
-			if(jpaQuery.length() > 20){
-				jpaQuery.append(" AND ");
-			}
-			jpaQuery.append(" logicalDelete = false");
-		}
+		// User
+		appendToJpaQuery(jpaQuery, getUserSubQuery());
+		
+		// LogicalDelete
+		appendToJpaQuery(jpaQuery, getLogicalDeleteSubQuery());
 
 		return jpaQuery.toString();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -2851,315 +2035,623 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public String toString(){
 		StringBuilder stringBuilder = new StringBuilder(0);
-		if(!words.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Words: ");
-			for(int i = 0; i < words.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(words.get(i));
-				stringBuilder.append(' ');
-			}
-		}
+		appendToStringBuilder(stringBuilder, words, "Words: ");
+
+		appendToStringBuilder(stringBuilder, extract, "Transcription: ");
+
+		appendToStringBuilder(stringBuilder, synopsis, "Synopsis: ");
+
+		appendToStringBuilder(stringBuilder, person, "Person: ");
+
+		appendToStringBuilder(stringBuilder, place, "Place: ");
+
+		appendToStringBuilder(stringBuilder, sender, "Sender: ");
+		appendToStringBuilder(stringBuilder, from, "From: ");
 		
-		if(!extract.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Transcritption: ");
-			for(int i = 0; i < extract.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(extract.get(i));
-				stringBuilder.append(' ');
-			}
-		}
+		appendToStringBuilder(stringBuilder, recipient, "Recipient: ");
+		appendToStringBuilder(stringBuilder, to, "To: ");
 		
-		if(!synopsis.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Synopsis: ");
-			for(int i = 0; i < synopsis.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(synopsis.get(i));
-				stringBuilder.append(' ');
-			}
-		}
+		appendToStringBuilder(stringBuilder, refersTo, "Refers to: ");
 		
-		if(!person.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Person: ");
-			for(int i = 0; i < person.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(person.get(i));
-				stringBuilder.append(' ');
-			}
-		}
+		appendToStringBuilder(stringBuilder, topics, topicsPlace, "Topics: ");
+
+		appendToStringBuilder(stringBuilder, datesYear, "Date Year: ");
+		appendToStringBuilder(stringBuilder, datesMonth, "Date Month: ");
+		appendToStringBuilder(stringBuilder, datesDay, "Date Day: ");
+		appendToStringBuilder(stringBuilder, datesYearBetween, "Between Date Year: ");
+		appendToStringBuilder(stringBuilder, datesMonthBetween, "Between Date Month: ");
+		appendToStringBuilder(stringBuilder, datesDayBetween, "Between Date Day");
+
+		appendToStringBuilder(stringBuilder, volumes, "Volumes: ");
+		appendToStringBuilder(stringBuilder, volumesBetween, "Between Volumes: ");
+
+		appendToStringBuilder(stringBuilder, insertNums, "Inserts: ");
+
+		appendToStringBuilder(stringBuilder, folios, "Folios: ");
+		appendToStringBuilder(stringBuilder, foliosBetween, "Between Folios: ");
+		appendToStringBuilder(stringBuilder, folioMods, "Folio Mod: ");
 		
-		if(!place.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Place: ");
-			for(int i = 0; i < place.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(place.get(i) + " ");
-			}
-		}
-		
-		if(!sender.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Sender: ");
-			for(int i = 0; i < sender.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(sender.get(i) + " ");
-			}
-		}
-		
-		if(!from.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("From: ");
-			for(int i = 0; i < from.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(from.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!recipient.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Recipient: ");
-			for(int i = 0; i < recipient.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(recipient.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!to.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("To: ");
-			for(int i = 0; i < to.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(to.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!refersTo.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Refers to: ");
-			for(int i = 0; i < refersTo.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(refersTo.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!topics.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Topics: ");
-			for(int i = 0; i < topics.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(topics.get(i));
-				if(!topicsPlace.isEmpty() && topicsPlace.size() > i){
-					stringBuilder.append(" - " + topicsPlace.get(i));
-				}
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesYear.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Date Year: ");
-			for(int i = 0; i < datesYear.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesYear.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesMonth.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Date Month: ");
-			for(int i = 0; i < datesMonth.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesMonth.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesDay.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Date Day: ");
-			for(int i = 0; i < datesDay.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesDay.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesYearBetween.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Between Date Year: ");
-			for(int i = 0; i < datesYearBetween.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesYearBetween.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesMonthBetween.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Between Date Month: ");
-			for(int i = 0; i < datesMonthBetween.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesMonthBetween.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!datesDayBetween.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Between Date Day: ");
-			for(int i = 0; i < datesDayBetween.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(datesDayBetween.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!volumes.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Volumes: ");
-			for(int i = 0; i < volumes.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(volumes.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!volumesBetween.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Between Volumes: ");
-			for(int i = 0; i < volumesBetween.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(volumesBetween.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		
-		if(!folios.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Folios: ");
-			for(int i = 0; i < folios.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(folios.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!foliosBetween.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Between Folios: ");
-			for(int i = 0; i < foliosBetween.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(foliosBetween.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!folioMods.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Folio Mod: ");
-			for(int i = 0; i < folioMods.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(folioMods.get(i));
-				stringBuilder.append(' ');
-			}
-		}
-		if(!docIds.isEmpty()){
-			if(stringBuilder.length()>0){
-				stringBuilder.append("AND ");
-			}
-			stringBuilder.append("Doc ID: ");
-			for(int i = 0; i < docIds.size(); i++){
-				if(i > 0){
-					stringBuilder.append("AND ");
-				}
-				stringBuilder.append(docIds.get(i));
-				stringBuilder.append(' ');
-			}
-		}
+		appendToStringBuilder(stringBuilder, docIds, "Doc ID: ");
 		
 		return stringBuilder.toString();
+	}
+	
+	/* Privates */
+	
+	private String getWordSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (words.size() > 0) {
+			for (int i = 0; i < words.size(); i++) {
+				String currentWords = words.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				//MD: This code is to identify the words between double quotes
+				while (currentWords.contains("\"")) {
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if (to != -1) {
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					} else {
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleWordSearch = StringUtils.split(currentWords, " ");
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				if (wordsTypes.get(i).equals(WordType.Extract)) {
+					for (int j = 0; j < exactWords.size(); j++) {
+						builder.append("(synExtract.docExtract LIKE '% ")
+							.append(exactWords.get(j).replace("'", "''"))
+							.append(" %')");
+						if (j < (exactWords.size() - 1)) {
+							builder.append(" AND ");
+						}
+					}
+					if (exactWords.size() > 0 && wordsSingleWordSearch.length > 0) {
+						builder.append(" AND ");
+					}
+					for (int j = 0; j < wordsSingleWordSearch.length; j++) {
+						builder.append("(synExtract.docExtract LIKE '%")
+							.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"))
+							.append("%')");
+						if (j < (wordsSingleWordSearch.length - 1)) {
+							builder.append(" AND ");
+						}
+					}
+				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
+					for (int j = 0; j < exactWords.size(); j++) {
+						builder.append("(synExtract.synopsis LIKE '% ")
+							.append(exactWords.get(j).replace("'", "''"))
+							.append(" %')");
+						if (j < (exactWords.size() - 1)) {
+							builder.append(" AND ");
+						}
+					}
+					if (exactWords.size() > 0 && wordsSingleWordSearch.length > 0) {
+						builder.append(" AND ");
+					}
+					for (int j = 0; j < wordsSingleWordSearch.length; j++) {
+						builder.append("(synExtract.synopsis LIKE '%")
+							.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"))
+							.append("%')");
+						if (j < (wordsSingleWordSearch.length - 1)) {
+							builder.append(" AND ");
+						}
+					}
+				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
+					for (int j = 0; j < exactWords.size(); j++) {
+						builder.append("((synExtract.docExtract LIKE '% ")
+							.append(exactWords.get(j).replace("'", "''"))
+							.append(" %') OR ")
+							.append("(synExtract.synopsis LIKE '% ")
+							.append(exactWords.get(j).replace("'", "''"))
+							.append(" %'))");
+						if (j < (exactWords.size() - 1)) {
+							builder.append(" AND ");
+						}
+					}
+					if (exactWords.size() > 0 && wordsSingleWordSearch.length > 0) {
+						builder.append(" AND ");
+					}					
+					for (int j = 0; j < wordsSingleWordSearch.length; j++) {
+						builder.append("((synExtract.docExtract LIKE '%")
+							.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"))
+							.append("%') OR ")
+							.append("(synExtract.synopsis LIKE '%")
+							.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"))
+							.append("%'))");
+						if (j < (wordsSingleWordSearch.length - 1)) {
+							builder.append(" AND ");
+						}
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getPersonSubQuery() {
+		String personIdQuery = "(entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId = :xxx) OR senderPeople.personId = :xxx OR recipientPeople.personId = :xxx)";
+		String personNameQuery = "entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf like '%:yyy%')" /*"%') or altName.altName like '%':yyy%')*/;
+		return getIdOrNamesToJpa(personId, personIdQuery, ":xxx", person, personNameQuery, ":yyy");
+	}
+	
+	private String getPlaceSubQuery() {
+		String placeIdQuery = "(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx)" +
+				" OR recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx)" +
+				" OR entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx)))";
+		String placeNameQuery = "(senderPlace.placeName LIKE '%:yyy%'" +
+				" OR recipientPlace.placeName LIKE '%':yyy%'" +
+				" OR entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName LIKE '%:yyy'%'))";
+		return getIdOrNamesToJpa(placeId, placeIdQuery, ":xxx",
+				place, placeNameQuery, ":yyy");
+	}
+	
+	private String getSenderSubQuery() {
+		return getIdOrNamesToJpa(senderId, "(senderPeople.personId = :xxx)", ":xxx",
+				sender, "(senderPeople.mapNameLf LIKE '%:yyy%')", ":yyy");
+	}
+	
+	private String getFromSubQuery() {
+		return getIdOrNamesToJpa(fromId, "(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx))", ":xxx", 
+				from, "(senderPlace.placeNameFull LIKE '%:yyy%')", ":yyy");
+	}
+	
+	private String getRecipientSubQuery() {
+		return getIdOrNamesToJpa(recipientId, "(recipientPeople.personId = :xxx)", ":xxx", 
+				recipient, "(recipientPeople.mapNameLf LIKE '%:yyy%')", ":yyy");
+	}
+	
+	private String getToSubQuery() {
+		return getIdOrNamesToJpa(toId, "(recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx))", ":xxx", 
+				to, "(recipientPlace.placeNameFull LIKE '%:yyy%')", ":yyy");
+	}
+	
+	private String getRefersToSubQuery() {
+		return getIdOrNamesToJpa(refersToId, "entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.personId = :xxx AND docRole IS NULL))", ":xxx", 
+				refersTo, "entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EpLink WHERE person.mapNameLf LIKE '%:yyy%' AND docRole IS NULL))", ":yyy");
+	}
+	
+	private String getExtractSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (extract.size() > 0) {
+			for (int i = 0; i < extract.size(); i++) {
+				String currentWords = extract.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				
+				//MD: This code is to identify the words between double quotes
+				while (currentWords.contains("\"")) {
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if (to != -1) {
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					} else {
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleExtract = StringUtils.split(currentWords, " ");
+				for (int j = 0; j < exactWords.size(); j++) {
+					builder.append("(synExtract.docExtract LIKE '% ");
+					builder.append(exactWords.get(j).replace("'", "''"));
+					builder.append(" %')");
+					if (j < (exactWords.size() - 1)) {
+						builder.append(" AND ");
+					}
+				}
+				if (exactWords.size() > 0 && wordsSingleExtract.length > 0) {
+					builder.append(" AND ");
+				}
+				for (int j = 0; j < wordsSingleExtract.length; j++) {
+					builder.append("(synExtract.docExtract LIKE '%");
+					builder.append(wordsSingleExtract[j].replace("'", "''"));
+					builder.append("%')");
+					if ( j< (wordsSingleExtract.length - 1)) {
+						builder.append(" AND ");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getSynopsisSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (synopsis.size() > 0) {
+			for (int i = 0; i < synopsis.size(); i++) {
+				String currentWords = synopsis.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				
+				//MD: This code is to identify the words between double quotes
+				while (currentWords.contains("\"")) {
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if (to != -1) {
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					} else {
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				
+				String[] wordsSingleSynopsis = StringUtils.split(currentWords, " ");
+				for (int j = 0; j < exactWords.size(); j++) {
+					builder.append("(synExtract.synopsis LIKE '% ");
+					builder.append(exactWords.get(j).replace("'", "''"));
+					builder.append(" %')");
+					if(j < (exactWords.size() - 1)){
+						builder.append(" AND ");
+					}
+				}
+				if (exactWords.size() > 0 && wordsSingleSynopsis.length > 0) {
+					builder.append(" AND ");
+				}
+				for (int j = 0; j < wordsSingleSynopsis.length; j++) {
+					builder.append("(synExtract.synopsis LIKE '%");
+					builder.append(wordsSingleSynopsis[j].replace("'", "''"));
+					builder.append("%')");
+					if (j < (wordsSingleSynopsis.length - 1)) {
+						builder.append(" AND ");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getTopicSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (topicsId.size() > 0) {
+			for (int i=0; i < topicsId.size(); i++) {
+				if (topicsId.get(i) > 0) {
+					if (builder.length() > 0) {
+						builder.append(" AND ");
+					}
+					
+					builder.append("entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE topic.topicId = ")
+						.append(topicsId.get(i).toString());
+					if (topicsPlaceId.size() > 0 && topicsPlaceId.get(i) != 0) {
+						builder.append(" AND place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = ")
+							.append(topicsPlaceId.get(i).toString())
+							.append(")");
+					}
+					builder.append(")");
+				} 
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getTopicPlaceSubQuery() {
+		return getIdOrNamesToJpa(topicsPlaceId, "entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId = :xxx))", ":xxx",
+				topicsPlace, "entryId IN (SELECT document.entryId FROM org.medici.bia.domain.EplToLink WHERE place.placeName like '%:yyy%')", ":yyy");
+	}
+	
+	private String getDateSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesTypes.size() > 0) {
+			for (int i = 0; i < datesTypes.size(); i++) {
+				if (datesTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (datesTypes.get(i).equals(DateType.From)) {
+					builder.append("(sortableDateInt >= ")
+						.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+						.append(")");
+				} else if (datesTypes.get(i).equals(DateType.Before)) {
+					builder.append("(sortableDateInt < ")
+						.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+						.append(")");
+				} else if (datesTypes.get(i).equals(DateType.Between)) {
+					if (datesYear.get(i) != null && datesYearBetween.get(i) != null) {
+						builder.append("(sortableDateInt >= ")
+							.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+							.append(") AND (sortableDateInt < ")
+							.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)))
+							.append(")");
+					} else {
+						// RR: Months are specified due to client validation
+						boolean moreThanOneMonth = !datesMonth.get(i).equals(datesMonthBetween.get(i)) || (datesDay.get(i) != null && datesDayBetween.get(i) != null && (datesDay.get(i) > datesDayBetween.get(i)));
+						int mFrom = datesMonth.get(i) < 12 ? datesMonth.get(i) + 1 : 1;
+						if (moreThanOneMonth && mFrom != datesMonthBetween.get(i)) {
+							int mTo = datesMonthBetween.get(i) > 1 ? datesMonthBetween.get(i) - 1 : 12;
+							builder.append("(docMonthNum >= " + mFrom + " AND docMonthNum <= " +  mTo + " OR ");
+						}
+						
+						// FIXME: RR - include deleted conditions only when it is necessary to include not dated documents in the results
+						builder.append("(docMonthNum = " + datesMonth.get(i) /* + " OR docMonthNum IS NULL " */);
+						if (datesDay.get(i) != null)
+							builder.append(" AND docDay >= " + datesDay.get(i) /* + " OR docDay IS NULL " */);
+						if (moreThanOneMonth)
+							builder.append(") OR (docMonthNum = " + datesMonthBetween.get(i) /* + " OR docMonthNum IS NULL " */);
+						builder.append(datesDayBetween.get(i) != null ? (" AND docDay <= " + datesDayBetween.get(i) /* + " OR docDay IS NULL " */) + ")" : ")");
+						if (moreThanOneMonth)
+							builder.append(")");
+					}
+					
+				} else if (datesTypes.get(i).equals(DateType.InOn)) {
+					if (datesYear.get(i) != null) {
+						builder.append("(yearModern = ")
+							.append(datesYear.get(i) + " OR (docYear = ")
+							.append(datesYear.get(i) + " AND yearModern IS NULL))");
+						if(datesMonth.get(i) != null || datesDay.get(i) != null){
+							builder.append(" AND ");
+						}
+					}
+					if (datesMonth.get(i) != null) {
+						builder.append("(docMonthNum = ")
+							.append(datesMonth.get(i) + " )");
+						if(datesDay.get(i) != null){
+							builder.append(" AND ");
+						}
+					}
+					if (datesDay.get(i) != null) {
+						builder.append("(docDay = ")
+							.append(datesDay.get(i) + " )");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getLastUpdateSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesLastUpdateTypes.size() > 0) {
+			for (int i = 0; i < datesLastUpdateTypes.size(); i++) {
+				if (datesLastUpdateTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') >= '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append(")");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') <= '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append(")");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') BETWEEN '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append("' AND '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)))
+						.append("')");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getDateCreatedSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesCreatedTypes.size() > 0) {
+			for (int i = 0; i < datesCreatedTypes.size(); i++) {
+				if (datesCreatedTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (datesCreatedTypes.get(i).equals(DateType.From)) {
+					builder.append("(dateCreated >= '").append(DateUtils.getMYSQLDate(datesCreated.get(i))).append(")");
+				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
+					builder.append("(dateCreated <= '").append(DateUtils.getMYSQLDate(datesCreated.get(i))).append(")");
+				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
+					builder.append("(dateCreated BETWEEN '")
+						.append(DateUtils.getMYSQLDate(datesCreated.get(i))).append("' AND '").append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)))
+						.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getVolumeSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (volumes.size() > 0) {
+			for (int i = 0; i < volumes.size(); i++) {
+				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
+					if (builder.length() > 0) {
+						//MD: I need to append an "OR" clause instead an "AND"
+						builder.append(" OR ");
+					}
+
+					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
+						if (StringUtils.isNumeric(volumes.get(i))) {
+							builder.append("(volume.volNum = ")
+								.append(volumes.get(i))
+								.append(" AND volLetExt IS NULL)");
+						} else {
+							builder.append("(volume.volNum = ")
+								.append(VolumeUtils.extractVolNum(volumes.get(i)))
+								.append(" AND volume.volLetExt = '")
+								.append(VolumeUtils.extractVolLetExt(volumes.get(i)))
+								.append("')");
+						}
+					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
+						builder.append("(volume.volNum >= ")
+							.append(volumes.get(i))
+							.append(" AND volume.volNum <= ")
+							.append(volumesBetween.get(i))
+							.append(")");
+					}
+				} else {
+					// if volume value is not in volume format we discard it!
+					continue;
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getInsertSubQuery() {
+		return listStringEqualsToJpa(insertNums, "insertNum", false);
+	}
+	
+	private String getFolioSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (folios.size() > 0) {
+			for(int i = 0; i < folios.size(); i++) {
+				if (StringUtils.isNumeric(folios.get(i))) {
+					if (builder.length() > 0) {
+						//MD: I need to append an "OR" clause instead an "AND"
+						builder.append(" OR ");
+					}
+					
+					if (foliosTypes.get(i).equals(FolioType.Exactly)) {
+						builder.append("(folioNum = ").append(folios.get(i)).append(")");
+					} else if (foliosTypes.get(i).equals(FolioType.Between)) {
+						builder.append("(folioNum >= ").append(folios.get(i)).append(" AND folioNum <= ").append(foliosBetween.get(i)).append(")");
+					}
+				} else {
+					continue;
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getFolioModSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (folioMods.size() > 0) {
+			for(int i = 0; i < folioMods.size(); i++) {
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				String[] wordsFolioMods = StringUtils.split(folioMods.get(i), " ");
+				for (int j = 0; j < wordsFolioMods.length; j++) {
+					if (j > 0) {
+						builder.append(" AND ");
+					}
+					if (wordsFolioMods[j].equalsIgnoreCase("bis")) {
+						builder.append("(folioMod LIKE 'bis')");
+					}
+					if (wordsFolioMods[j].equalsIgnoreCase("ter")) {
+						builder.append("(folioMod LIKE 'ter')");
+					}
+					if (wordsFolioMods[j].equalsIgnoreCase("other")) {
+						builder.append("(folioMod IS NOT NULL AND folioMod NOT LIKE 'bis' AND folioMod NOT LIKE 'ter')");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getDocIdsSubQuery() {
+		return listIntegerToJpa(docIds, "entryId", false);
+	}
+	
+	private String getLogicalDeleteSubQuery() {
+		return booleanToJPA(logicalDelete == null ? Boolean.FALSE : logicalDelete, "logicalDelete");
+	}
+	
+	private String getUserSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (users.size() > 0) {
+			for (int i = 0; i < users.size(); i++) {
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (userActionTypes.get(i).equals(UserActionType.CreatedBy)) {
+					builder.append("(createdBy = ")
+						.append("'").append(users.get(i)).append("'")
+						.append(")");
+				} else if (userActionTypes.get(i).equals(UserActionType.LastUpdateBy)) {
+					builder.append("(lastUpdateBy = ")
+						.append("'").append(users.get(i)).append("'")
+						.append(")");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private void appendToJpaQuery(StringBuilder jpaQuery, String subQuery) {
+		if (subQuery.length() > 0) {
+			if (jpaQuery.length() > 20) {
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append("(").append(subQuery).append(")");
+		}
+	}
+	
+	private void appendToStringBuilder(StringBuilder stringBuilder, List<?> list, String title) {
+		if (list != null && !list.isEmpty()) {
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append(title);
+			for (int i = 0; i < list.size(); i++) {
+				if (i > 0) {
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(list.get(i)).append(" ");
+			}
+		}
+	}
+	
+	private void appendToStringBuilder(StringBuilder stringBuilder, List<?> masterList, List<?> slaveList, String title) {
+		if (masterList != null && !masterList.isEmpty()) {
+			if (stringBuilder.length()>0) {
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append(title);
+			for (int i = 0; i < masterList.size(); i++) {
+				if (i > 0) {
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(masterList.get(i));
+				if (!slaveList.isEmpty() && slaveList.size() > i) {
+					stringBuilder.append(" - ").append(slaveList.get(i));
+				}
+				stringBuilder.append(" ");
+			}
+		}
 	}
 }
 

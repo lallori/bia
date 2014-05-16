@@ -83,6 +83,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<VolumeType> volumesTypes;
 	private List<String> volumes;
 	private List<String> volumesBetween;
+	private List<String> insertNums;
 	private Boolean digitized;
 	private List<String> languages;
 	private List<String> otherLang;
@@ -121,6 +122,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+		insertNums = new ArrayList<String>(0);
 		volumesId = new ArrayList<String>(0);
 		digitized = null;
 		languages = new ArrayList<String>(0);
@@ -259,6 +261,17 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			volumesTypes = new ArrayList<VolumeType>(0);
 			volumes = new ArrayList<String>(0);
 			volumesBetween = new ArrayList<String>(0);
+		}
+		
+		//Insert
+		if ((command.getInsert() != null && command.getInsert().size() > 0)) {
+			insertNums = new ArrayList<String>(command.getInsert().size());
+			
+			for(String insert : command.getInsert()) {
+				insertNums.add(insert);
+			}
+		} else {
+			insertNums = new ArrayList<String>(0);
 		}
 		
 		//Digitized
@@ -618,6 +631,20 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the insertNums
+	 */
+	public List<String> getInsertNums() {
+		return insertNums;
+	}
+
+	/**
+	 * @param insertNums the insertNums to set
+	 */
+	public void setInsertNums(List<String> insertNums) {
+		this.insertNums = insertNums;
+	}
+
+	/**
 	 * @return the volumesId
 	 */
 	public List<String> getVolumesId() {
@@ -845,554 +872,56 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		StringBuilder jpaQuery = new StringBuilder("FROM Volume WHERE ");
 		
 		// Volume
-		if(volumes.size() > 0){
-			StringBuilder volumesQuery = new StringBuilder("(");
-			for(int i = 0; i < volumes.size(); i++){
-				if(VolumeUtils.isVolumeFormat(volumes.get(i))){
-					if(volumesQuery.length() > 1){
-						//MD: I need to append an "OR" clause instead an "AND"
-						volumesQuery.append(" OR ");
-					}
-					
-					if(volumesTypes.get(i).equals(VolumeType.Exactly)){
-						if(StringUtils.isNumeric(volumes.get(i))){
-							volumesQuery.append("(volNum=");
-							volumesQuery.append(volumes.get(i));
-							volumesQuery.append(')');
-						}else{
-							volumesQuery.append("(volNum=");
-							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)));
-							volumesQuery.append(" AND volLetExt='");
-							volumesQuery.append(VolumeUtils.extractVolLetExt(volumes.get(i)));
-							volumesQuery.append("')");
-						}
-					}else if(volumesTypes.get(i).equals(VolumeType.Between)){
-						volumesQuery.append("(volNum>=");
-						volumesQuery.append(volumes.get(i));
-						volumesQuery.append(" AND volNum<=");
-						volumesQuery.append(volumesBetween.get(i));
-						volumesQuery.append(')');
-					}
-				}else{
-					continue;
-				}
-			}
-			volumesQuery.append(')');
-			if(!volumesQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(volumesQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getVolumeSubQuery());
+		
+		// Insert
+		appendToJpaQuery(jpaQuery, getInsertSubQuery());
 		
 		// Date
-		if(datesTypes.size() > 0){
-			StringBuilder datesQuery = new StringBuilder("(");
-			for(int i=0; i < datesTypes.size(); i++){
-				if(datesTypes.get(i) == null){
-					continue;
-				}
-				if(datesQuery.length() > 1){
-					datesQuery.append(" AND ");
-				}
-				
-				if(datesTypes.get(i).equals(DateType.From)){
-					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(')');
-				}else if(datesTypes.get(i).equals(DateType.Before)){
-					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')<");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(')');
-				}else if(datesTypes.get(i).equals(DateType.Between)){
-					datesQuery.append("((STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(") AND (STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')<");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-					datesQuery.append("))");
-				}
-			}
-			datesQuery.append(')');
-			if(!datesQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesQuery);
-			}
-		}
-		
+		appendToJpaQuery(jpaQuery, getDateSubQuery());
 
 		// date created
-		if (datesCreatedTypes.size()>0) {
-			StringBuilder datesCreatedQuery = new StringBuilder("(");
-			for (int i=0; i<datesCreatedTypes.size(); i++) {
-				if (datesCreatedTypes.get(i) == null) {
-					continue;
-				} 
-				
-				if (datesCreatedQuery.length()>1) {
-					datesCreatedQuery.append(" AND ");
-				}
-
-				if (datesCreatedTypes.get(i).equals(DateType.From)) {
-					datesCreatedQuery.append("(dateCreated >= '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append(')');
-				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
-					datesCreatedQuery.append("(dateCreated <= '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append(')');
-				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
-					datesCreatedQuery.append("(dateCreated between '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreated.get(i)));
-					datesCreatedQuery.append("' AND '");
-					datesCreatedQuery.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)));
-					datesCreatedQuery.append("')");
-				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
-					
-				}
-			}
-			datesCreatedQuery.append(')');
-			if (!datesCreatedQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesCreatedQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getDateCreatedSubQuery());
 
 		// Last update
-		if (datesLastUpdateTypes.size()>0) {
-			StringBuilder datesLastUpdateQuery = new StringBuilder("(");
-			for (int i=0; i<datesLastUpdateTypes.size(); i++) {
-				if (datesLastUpdateTypes.get(i) == null) {
-					continue;
-				} 
-				
-				if (datesLastUpdateQuery.length()>1) {
-					datesLastUpdateQuery.append(" AND ");
-				}
-
-				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') >= '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append(')');
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') <= '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append(')');
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
-					datesLastUpdateQuery.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') between '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)));
-					datesLastUpdateQuery.append("' AND '");
-					datesLastUpdateQuery.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)));
-					datesLastUpdateQuery.append("')");
-				} else if (datesLastUpdateTypes.get(i).equals(DateType.InOn)){
-					
-				}
-			}
-			datesLastUpdateQuery.append(')');
-			if (!datesLastUpdateQuery.toString().equals("")) {
-				if(jpaQuery.length() > 20){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(datesLastUpdateQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getLastUpdateSubQuery());
 
 		// Digitized
-		if(!ObjectUtils.toString(digitized).equals("")){
-			StringBuilder digitizedQuery = new StringBuilder("(");
-			if(digitized.equals(Boolean.TRUE)){
-				digitizedQuery.append("(digitized=true)");
-			}else if(digitized.equals(Boolean.FALSE)){
-				digitizedQuery.append("(digitized=false)");
-			}
-			digitizedQuery.append(')');
-			if(!digitizedQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(digitizedQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getDigitizedSubQuery());
 		
 		//Languages
-		if(languages.size() > 0){
-			StringBuilder languagesQuery = new StringBuilder("(");
-			for(int i = 0; i < languages.size(); i++){
-				if(languagesQuery.length() > 1){
-					languagesQuery.append(" AND ");
-				}
-				String[] worldSingleLanguages = StringUtils.split(languages.get(i), " ");
-				for(int j = 0; j < worldSingleLanguages.length; j++){
-					if(j > 0){
-						languagesQuery.append(" AND ");
-					}
-					if(worldSingleLanguages[j].equals("Italian")){
-						languagesQuery.append("(italian!=false)");
-					}
-					if(worldSingleLanguages[j].equals("French")){
-						languagesQuery.append("(french!=false)");
-					}
-					if(worldSingleLanguages[j].equals("German")){
-						languagesQuery.append("(german!=false)");
-					}
-					if(worldSingleLanguages[j].equals("Spanish")){
-						languagesQuery.append("(spanish!=false)");
-					}
-					if(worldSingleLanguages[j].equals("Latin")){
-						languagesQuery.append("(latin!=false)");
-					}
-					if(worldSingleLanguages[j].equals("English")){
-						languagesQuery.append("(english!=false)");
-					}
-				}
-			}
-			languagesQuery.append(')');
-			if(!languagesQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(languagesQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getLanguagesSubQuery());
 		
 		//Other Languages
-		if(otherLang.size() > 0){
-			StringBuilder otherLangQuery = new StringBuilder("(");
-			for(int i = 0; i < otherLang.size(); i++){
-				if(otherLangQuery.length() > 1){
-					otherLangQuery.append(" AND ");
-				}
-				otherLangQuery.append("otherLang LIKE '%");
-				otherLangQuery.append(otherLang.get(i));
-				otherLangQuery.append("%'");
-			}
-			otherLangQuery.append(')');
-			if(!otherLangQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(otherLangQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getOtherLanguagesSubQuery());
 		
 		// Cipher
-		if(cipher.length() > 0){
-			StringBuilder cipherQuery = new StringBuilder("(");
-			if(cipher.equals("Yes")){
-				cipherQuery.append("(cipher!=false)");
-			}else if(cipher.equals("No")){
-				cipherQuery.append("(cipher=false)");
-			}
-			cipherQuery.append(')');
-			if(!cipherQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(cipherQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getCipherSubQuery());
 		
 		// Index of Names
-		if(index.length() > 0){
-			StringBuilder indexQuery = new StringBuilder("(");
-			if(index.equals("Yes")){
-				indexQuery.append("(oldAlphaIndex=true)");
-			}else if(index.equals("No")){
-				indexQuery.append("(oldAlphaIndex=false)");
-			}
-			indexQuery.append(')');
-			if(!indexQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(indexQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getIndexSubQuery());
 		
 		// From
-		if(fromVolume.size() > 0){
-			StringBuilder fromVolumeQuery = new StringBuilder("(");
-			for(int i = 0; i < fromVolume.size(); i++){
-				String currentWords = fromVolume.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(fromVolumeQuery.length() > 1){
-					fromVolumeQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf('\"');
-					//Second double quote
-					int to = currentWords.indexOf('\"', from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleFromVolume = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					fromVolumeQuery.append("(senders like '%");
-					fromVolumeQuery.append(exactWords.get(j).replace("'", "''"));
-					fromVolumeQuery.append("%')");
-					if(j < (exactWords.size() - 1)){
-						fromVolumeQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleFromVolume.length > 0){
-					fromVolumeQuery.append(" AND ");
-				}
-				for(int j = 0; j < wordsSingleFromVolume.length; j++){
-					if(j > 0){
-						fromVolumeQuery.append(" AND ");
-					}
-					fromVolumeQuery.append("(senders like '%");
-					fromVolumeQuery.append(wordsSingleFromVolume[j].replace("'", "''"));
-					fromVolumeQuery.append("%')");
-				}
-			}
-			fromVolumeQuery.append(')');
-			if(!fromVolumeQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(fromVolumeQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getFromSubQuery());
 		
 		// To
-		if(toVolume.size() > 0){
-			StringBuilder toVolumeQuery = new StringBuilder("(");
-			for(int i = 0; i < toVolume.size(); i++){
-				String currentWords = toVolume.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(toVolumeQuery.length() > 1){
-					toVolumeQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf('\"');
-					//Second double quote
-					int to = currentWords.indexOf('\"', from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleToVolume = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					toVolumeQuery.append("(recips like '%");
-					toVolumeQuery.append(exactWords.get(j).replace("'", "''"));
-					toVolumeQuery.append("%')");
-					if(j < (exactWords.size() - 1)){
-						toVolumeQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleToVolume.length > 0){
-					toVolumeQuery.append(" AND ");
-				}
-				for(int j = 0; j < wordsSingleToVolume.length; j++){
-					if(j > 0){
-						toVolumeQuery.append(" AND ");
-					}
-					toVolumeQuery.append("(recips like '%");
-					toVolumeQuery.append(wordsSingleToVolume[j].replace("'", "''"));
-					toVolumeQuery.append("%')");
-				}
-			}
-			toVolumeQuery.append(')');
-			if(!toVolumeQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(toVolumeQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getToSubQuery());
 		
 		// Context
-		if(context.size() > 0){
-			StringBuilder contextQuery = new StringBuilder("(");
-			for(int i = 0; i < context.size(); i++){
-				String currentWords = context.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(contextQuery.length() > 1){
-					contextQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf('\"');
-					//Second double quote
-					int to = currentWords.indexOf('\"', from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				
-				String[] wordsSingleContext = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					contextQuery.append("(ccontext like '%");
-					contextQuery.append(exactWords.get(j).replace("'", "''"));
-					contextQuery.append("%')");
-					if(j < (exactWords.size() - 1)){
-						contextQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleContext.length > 0){
-					contextQuery.append(" AND ");
-				}
-				for(int j = 0; j < wordsSingleContext.length; j++){
-					if(j > 0){
-						contextQuery.append(" AND ");
-					}
-					contextQuery.append("(ccontext like '%");
-					contextQuery.append(wordsSingleContext[j].replace("'", "''"));
-					contextQuery.append("%')");
-				}
-			}
-			contextQuery.append(')');
-			if(!contextQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(contextQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getContextSubQuery());
 		
 		// Inventario
-		if(inventario.size() > 0){
-			StringBuilder inventarioQuery = new StringBuilder("(");
-			for(int i = 0; i < inventario.size(); i++){
-				String currentWords = inventario.get(i);
-				List<String> exactWords = new ArrayList<String>();
-				
-				if(inventarioQuery.length() > 1){
-					inventarioQuery.append(" AND ");
-				}
-				
-				//MD: This code is to identify the words between double quotes
-				while(currentWords.contains("\"")){
-					//First double quote
-					int from = currentWords.indexOf("\"");
-					//Second double quote
-					int to = currentWords.indexOf("\"", from + 1);
-					//If there is the second double quote or not
-					if(to != -1){
-						//Add the exact words to the list and remove them from the string
-						exactWords.add(currentWords.substring(from + 1, to));
-						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
-					}else{
-						currentWords = currentWords.replace("\"", " ");
-						
-					}
-				}
-				String[] wordsSingleInventario = StringUtils.split(currentWords, " ");
-				for(int j = 0; j < exactWords.size(); j++){
-					inventarioQuery.append("(inventarioSommarioDescription like '%");
-					inventarioQuery.append(exactWords.get(j).replace("'", "''"));
-					inventarioQuery.append("%')");
-					if(j < (exactWords.size() - 1)){
-						inventarioQuery.append(" AND ");
-					}
-				}
-				if(exactWords.size() > 0 && wordsSingleInventario.length > 0){
-					inventarioQuery.append(" AND ");
-				}
-				for(int j = 0; j < wordsSingleInventario.length; j++){
-					if(j > 0){
-						inventarioQuery.append(" AND ");
-					}
-					inventarioQuery.append("(inventarioSommarioDescription like '%");
-					inventarioQuery.append(wordsSingleInventario[j].replace("'", "''"));
-					inventarioQuery.append("%')");
-				}
-			}
-			inventarioQuery.append(')');
-			if(!inventarioQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(inventarioQuery);
-			}
-		}
+		appendToJpaQuery(jpaQuery, getInventarioSubQuery());
 		
-		//SummaryId
-		if(volumesId.size() > 0){
-			StringBuilder volumesIdQuery = new StringBuilder("(");
-			for(int i = 0; i < volumesId.size(); i++){
-				if(StringUtils.isNumeric(volumesId.get(i))){
-					if(volumesIdQuery.length() > 1){
-						volumesIdQuery.append(" OR ");
-					}
-					volumesIdQuery.append("(summaryId=");
-					volumesIdQuery.append(volumesId.get(i));
-					volumesIdQuery.append(")");
-				}else{
-					continue;
-				}
-			}
-			volumesIdQuery.append(")");
-			if(!volumesIdQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(volumesIdQuery);
-			}
-		}
+		// SummaryId
+		appendToJpaQuery(jpaQuery, getVolumeIdsSubQuery());
 		
-		//LogicalDelete
-		if(!ObjectUtils.toString(logicalDelete).equals("")){
-			StringBuilder logicalDeleteQuery = new StringBuilder("(");
-			if(logicalDelete.equals(Boolean.TRUE)){
-				logicalDeleteQuery.append("(logicalDelete = true)");
-			}else if(logicalDelete.equals(Boolean.FALSE)){
-				logicalDeleteQuery.append("(logicalDelete = false)");
-			}
-			logicalDeleteQuery.append(')');
-			if(!logicalDeleteQuery.toString().equals("")){
-				if(jpaQuery.length() > 18){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(logicalDeleteQuery);
-			}
-		} else {
-			if(jpaQuery.length() > 18){
-				jpaQuery.append(" AND ");
-			}
-			jpaQuery.append(" logicalDelete = false");
-		}
+		// LogicalDelete
+		appendToJpaQuery(jpaQuery, getLogicalDeleteSubQuery());
 		
 		return jpaQuery.toString();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1675,205 +1204,44 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	
 	public String toString(){
 		StringBuilder toString = new StringBuilder();
-		if(!words.isEmpty()){
-			if(toString.length() > 0){
-				toString.append(" AND ");
-			}
-			toString.append("Words: ");
-			for(int i = 0; i < words.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(words.get(i) + " ");
-			}
+		
+		appendToStringBuilder(toString, words, "Words: ");
+		appendToStringBuilder(toString, datesYear, "Date Year: ");
+		appendToStringBuilder(toString, datesMonth, "Date Month: ");
+		appendToStringBuilder(toString, datesDay, "Date Day: ");
+		appendToStringBuilder(toString, datesYearBetween, "Between Date Year: ");
+		appendToStringBuilder(toString, datesMonthBetween, "Between Date Month: ");
+		appendToStringBuilder(toString, datesDayBetween, "Between Date Day: ");
+		appendToStringBuilder(toString, volumes, "Volumes: ");
+		if (!volumesBetween.isEmpty() && !(volumesBetween.size() == 1 && volumesBetween.get(0).equals("0"))) {
+			appendToStringBuilder(toString, volumesBetween, "Volumes: ");
 		}
-		if(!datesYear.isEmpty()){
-			if(toString.length() > 0){
+		appendToStringBuilder(toString, insertNums, "Inserts: ");
+		if (!ObjectUtils.toString(digitized).equals("")) {
+			if (toString.length() > 0) {
 				toString.append("AND ");
 			}
-			toString.append("Date Year: ");
-			for(int i = 0; i < datesYear.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append((datesYear.get(i) + " "));
-			}
+			toString.append("Digitized: ").append(digitized).append(" ");
 		}
-		if(!datesMonth.isEmpty()){
-			if(toString.length() > 0){
+		appendToStringBuilder(toString, languages, "Languages: ");
+		if (!cipher.isEmpty()) {
+			if (toString.length() > 0) {
 				toString.append("AND ");
 			}
-			toString.append("Date Month: ");
-			for(int i = 0; i < datesMonth.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(datesMonth.get(i) + " ");
-			}
+			toString.append("Cypher: ").append(cipher).append(" ");
 		}
-		if(!datesDay.isEmpty()){
-			if(toString.length() > 0){
+		if (!index.isEmpty()) {
+			if (toString.length() > 0) {
 				toString.append("AND ");
 			}
-			toString.append("Date Day: ");
-			for(int i = 0; i < datesDay.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(datesDay.get(i) + " ");
-			}
+			toString.append("Index: ").append(index).append(" ");
 		}
-		if(!datesYearBetween.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Between Date Year: ");
-			for(int i = 0; i < datesYearBetween.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(datesYearBetween.get(i) + " ");
-			}
-		}
-		if(!datesMonthBetween.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Between Date Month: ");
-			for(int i = 0; i < datesMonthBetween.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(datesMonthBetween.get(i) + " ");
-			}
-		}
-		if(!datesDayBetween.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Between Date Day: ");
-			for(int i = 0; i < datesDayBetween.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(datesDayBetween.get(i) + " ");
-			}
-		}
-		if(!volumes.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Volumes: ");
-			for(int i = 0; i < volumes.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(volumes.get(i) + " ");
-			}
-		}
-		if(!volumesBetween.isEmpty() && !(volumesBetween.size() == 1 && volumesBetween.get(0).equals("0"))) {
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Between Volumes: ");
-			for(int i = 0; i < volumesBetween.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(volumesBetween.get(i) + " ");
-			}
-		}
-		if(!ObjectUtils.toString(digitized).equals("")){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Digitized: " + digitized + " ");
-		}
-		if(!languages.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Languages: ");
-			for(int i = 0; i < languages.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(languages.get(i) + " ");
-			}
-		}
-		if(!cipher.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Cypher: " + cipher + " ");
-		}
-		if(!index.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Index: " + index + " ");
-		}
-		if(!fromVolume.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("From Volume: ");
-			for(int i = 0; i < fromVolume.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(fromVolume.get(i) + " ");
-			}
-		}
-		if(!toVolume.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("To Volume: ");
-			for(int i = 0; i < toVolume.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(toVolume.get(i) + " ");
-			}
-		}
-		if(!context.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Context: ");
-			for(int i = 0; i < context.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(context.get(i) + " ");
-			}
-		}
-		if(!inventario.isEmpty()){
-			if(toString.length() > 0){
-				toString.append("AND ");
-			}
-			toString.append("Inventario: ");
-			for(int i = 0; i < inventario.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(inventario.get(i) + " ");
-			}
-		}
-		if(!volumesId.isEmpty()){
-			if(toString.length()>0){
-				toString.append("AND ");
-			}
-			toString.append("Volume ID: ");
-			for(int i = 0; i < volumesId.size(); i++){
-				if(i > 0){
-					toString.append("AND ");
-				}
-				toString.append(volumesId.get(i));
-				toString.append(' ');
-			}
-		}	
+		appendToStringBuilder(toString, fromVolume, "From Volume: ");
+		appendToStringBuilder(toString, toVolume, "To Volume: ");
+		appendToStringBuilder(toString, context, "Context: ");
+		appendToStringBuilder(toString, inventario, "Inventario: ");
+		appendToStringBuilder(toString, volumesId, "Volume ID: ");
+			
 		return toString.toString();
 	}
 
@@ -1897,6 +1265,261 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				return Boolean.FALSE;
 			}
 		return Boolean.TRUE;
+	}
+	
+	/* Privates */
+	
+	private void appendToJpaQuery(StringBuilder jpaQuery, String subQuery) {
+		if (subQuery.length() > 0) {
+			if (jpaQuery.length() > 18) {
+				jpaQuery.append(" AND ");
+			}
+			jpaQuery.append("(").append(subQuery).append(")");
+		}
+	}
+	
+	private void appendToStringBuilder(StringBuilder stringBuilder, List<?> list, String title) {
+		if (list != null && !list.isEmpty()) {
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append("AND ");
+			}
+			stringBuilder.append(title);
+			for (int i = 0; i < list.size(); i++) {
+				if (i > 0) {
+					stringBuilder.append("AND ");
+				}
+				stringBuilder.append(list.get(i)).append(" ");
+			}
+		}
+	}
+	
+	private String getVolumeSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (volumes.size() > 0) {
+			for (int i = 0; i < volumes.size(); i++) {
+				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
+					if (builder.length() > 0) {
+						//MD: I need to append an "OR" clause instead an "AND"
+						builder.append(" OR ");
+					}
+					
+					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
+						if (StringUtils.isNumeric(volumes.get(i))) {
+							builder.append("(volNum = ")
+								.append(volumes.get(i))
+								.append(" AND volLetExt IS NULL)");
+						} else {
+							builder.append("(volNum = ")
+								.append(VolumeUtils.extractVolNum(volumes.get(i)))
+								.append(" AND volLetExt = '")
+								.append(VolumeUtils.extractVolLetExt(volumes.get(i)))
+								.append("')");
+						}
+					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
+						builder.append("(volNum >= ")
+							.append(volumes.get(i))
+							.append(" AND volNum <= ")
+							.append(volumesBetween.get(i))
+							.append(")");
+					}
+				} else {
+					continue;
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getInsertSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (insertNums.size() > 0) {
+			for (int i = 0; i < insertNums.size(); i++) {
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				builder.append("(")
+					.append("(summaryId IN (SELECT DISTINCT volume.summaryId FROM org.medici.bia.domain.Document WHERE volume.logicalDelete = false AND insertNum = '")
+					.append(insertNums.get(i))
+					.append("')) OR ")
+					.append("( (volNum, volLetExt) IN (SELECT DISTINCT volNum, volLetExt FROM org.medici.bia.domain.Image WHERE insertNum = '")
+					.append(insertNums.get(i))
+					.append("'))")
+					.append(")");
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getDateSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesTypes.size() > 0) {
+			for (int i = 0; i < datesTypes.size(); i++) {
+				if (datesTypes.get(i) == null) {
+					continue;
+				}
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				
+				if (datesTypes.get(i).equals(DateType.From)) {
+					builder.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d') >= ")
+						.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+						.append(")");
+				} else if(datesTypes.get(i).equals(DateType.Before)) {
+					builder.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d') < ")
+						.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+						.append(")");
+				} else if(datesTypes.get(i).equals(DateType.Between)) {
+					builder.append("((STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d') >= ")
+						.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)))
+						.append(") AND (STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d') < ")
+						.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)))
+						.append("))");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getDateCreatedSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesCreatedTypes.size() > 0) {
+			for (int i = 0; i < datesCreatedTypes.size(); i++) {
+				if (datesCreatedTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (datesCreatedTypes.get(i).equals(DateType.From)) {
+					builder.append("(dateCreated >= '")
+						.append(DateUtils.getMYSQLDate(datesCreated.get(i)))
+						.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.Before)) {
+					builder.append("(dateCreated <= '")
+						.append(DateUtils.getMYSQLDate(datesCreated.get(i)))
+						.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.Between)) {
+					builder.append("(dateCreated BETWEEN '")
+						.append(DateUtils.getMYSQLDate(datesCreated.get(i)))
+						.append("' AND '")
+						.append(DateUtils.getMYSQLDate(datesCreatedBetween.get(i)))
+						.append("')");
+				} else if (datesCreatedTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getLastUpdateSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (datesLastUpdateTypes.size() > 0) {
+			for (int i = 0; i < datesLastUpdateTypes.size(); i++) {
+				if (datesLastUpdateTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+
+				if (datesLastUpdateTypes.get(i).equals(DateType.From)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') >= '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append("')");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Before)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') <= '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append("')");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.Between)) {
+					builder.append("(DATE_FORMAT(lastUpdate, '%Y-%m-%d') BETWEEN '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdate.get(i)))
+						.append("' AND '")
+						.append(DateUtils.getMYSQLDate(datesLastUpdateBetween.get(i)))
+						.append("')");
+				} else if (datesLastUpdateTypes.get(i).equals(DateType.InOn)){
+					
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getDigitizedSubQuery() {
+		return booleanToJPA(digitized, "digitized");
+	}
+	
+	private String getLanguagesSubQuery() {
+		StringBuilder builder = new StringBuilder("");
+		if (languages.size() > 0) {
+			for (int i = 0; i < languages.size(); i++) {
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				String[] worldSingleLanguages = StringUtils.split(languages.get(i), " ");
+				for (int j = 0; j < worldSingleLanguages.length; j++) {
+					if (j > 0) {
+						builder.append(" AND ");
+					}
+					if ("Italian".equals(worldSingleLanguages[j])) {
+						builder.append("(italian != false)");
+					} else if ("French".equals(worldSingleLanguages[j])) {
+						builder.append("(french != false)");
+					} else if("German".equals(worldSingleLanguages[j])) {
+						builder.append("(german != false)");
+					} else if ("Spanish".equals(worldSingleLanguages[j])) {
+						builder.append("(spanish != false)");
+					} else if("Latin".equals(worldSingleLanguages[j])) {
+						builder.append("(latin != false)");
+					} else if ("English".equals(worldSingleLanguages[j])) {
+						builder.append("(english != false)");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	private String getOtherLanguagesSubQuery() {
+		return listStringLikeToJpa(otherLang, "otherLang", true);
+	}
+	
+	private String getCipherSubQuery() {
+		Boolean cipherBoolean = "Yes".equals(cipher) ? Boolean.TRUE : "No".equals(cipher) ? Boolean.FALSE : null;
+		return booleanToJPA(cipherBoolean, "cipher");
+	}
+	
+	private String getIndexSubQuery() {
+		Boolean indexBoolean = "Yes".equals(index) ? Boolean.TRUE : "No".equals(index) ? Boolean.FALSE : null;
+		return booleanToJPA(indexBoolean, "oldAlphaIndex");
+	}
+	
+	private String getFromSubQuery() {
+		return listWordsToJpa(fromVolume, "senders");
+	}
+	
+	private String getToSubQuery() {
+		return listWordsToJpa(toVolume, "recips");
+	}
+	
+	private String getContextSubQuery() {
+		return listWordsToJpa(context, "ccontext");
+	}
+	
+	private String getInventarioSubQuery() {
+		return listWordsToJpa(inventario, "inventarioSommarioDescription");
+	}
+	
+	private String getVolumeIdsSubQuery() {
+		return listIntegerToJpa(volumesId, "summaryId", false);
+	}
+	
+	private String getLogicalDeleteSubQuery() {
+		return booleanToJPA(logicalDelete == null ? Boolean.FALSE : logicalDelete, "logicalDelete");
 	}
 }
 

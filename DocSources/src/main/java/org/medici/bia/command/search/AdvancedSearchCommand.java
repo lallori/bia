@@ -49,6 +49,7 @@ public class AdvancedSearchCommand {
 	private List<String> docId;
 	private List<String> word;
 	private List<String> volume;
+	private List<String> insert;
 	private List<String> folio;
 	private List<String> folioMod;
 	private List<String> date;
@@ -227,6 +228,14 @@ public class AdvancedSearchCommand {
 		this.volume = volume;
 	}
 	
+	public List<String> getInsert() {
+		return insert;
+	}
+
+	public void setInsert(List<String> insert) {
+		this.insert = insert;
+	}
+
 	/**
 	 * @return the folio
 	 */

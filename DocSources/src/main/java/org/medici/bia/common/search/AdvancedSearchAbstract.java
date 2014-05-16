@@ -27,6 +27,11 @@
  */
 package org.medici.bia.common.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -177,5 +182,133 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	    public String toString(){
 	        return accountActionType;
 	    }
+	}
+	
+	protected String getIdOrNamesToJpa(List<Integer> ids, String idQuery, String idPlaceHolder, List<String> names, String nameQuery, String namePlaceHolder) {
+		StringBuilder builderId = new StringBuilder("");
+		StringBuilder builderName = new StringBuilder("");
+		if (ids.size() > 0) {
+			for (int i = 0; i < ids.size(); i++) {
+				if (ids.get(i) > 0) {
+					if (builderId.length() > 0) {
+						builderId.append(" AND ");
+					}
+					
+					String subq = idQuery.replaceAll(idPlaceHolder, ids.get(i).toString());
+					builderId.append(subq);
+				} else {
+					if (builderName.length() > 0) {
+						builderName.append(" AND ");
+					}
+					
+					String subq = nameQuery.replaceAll(namePlaceHolder, names.get(i).toLowerCase().replace("'","''"));
+					builderName.append(subq);
+				}
+			}
+		}
+		return builderId.length() > 0
+				? builderName.length() > 0
+						? "(" + builderId.append(") AND (").append(builderName.toString()).append(")").toString()
+						: builderId.toString()
+				: builderName.length() > 0
+						? builderName.toString()
+						: "";
+	}
+	
+	protected String listStringLikeToJpa(List<String> values, String field, boolean and) {
+		StringBuilder builder = new StringBuilder("");
+		for(String value : values) {
+			if (builder.length() > 0) {
+				builder.append(and ? " AND " : " OR ");
+			}
+			builder.append("(").append(field).append(" LIKE '%").append(value).append("%')");
+		}
+		return builder.toString();
+	}
+	
+	protected String listStringEqualsToJpa(List<String> values, String field, boolean and) {
+		StringBuilder builder = new StringBuilder("");
+		for(String value : values) {
+			if (builder.length() > 0) {
+				builder.append(and ? " AND " : " OR ");
+			}
+			builder.append("(").append(field).append(" = '").append(value).append("')");
+		}
+		return builder.toString();
+	}
+	
+	protected String listIntegerToJpa(List<String> values, String field, boolean and) {
+		StringBuilder builder = new StringBuilder("");
+		for(String value : values) {
+			if (StringUtils.isNumeric(value)) {
+				if (builder.length() > 0) {
+					builder.append(and ? " AND " : " OR ");
+				}
+				builder.append("(").append(field).append(" = ").append(value).append(")");
+			} else {
+				continue;
+			}
+		}
+		return builder.toString();
+	}
+	
+	protected String listWordsToJpa(List<String> list, String field) {
+		StringBuilder builder = new StringBuilder("");
+		if (list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				String currentWords = list.get(i);
+				List<String> exactWords = new ArrayList<String>();
+				
+				if (builder.length() > 0) {
+					builder.append(" AND ");
+				}
+				
+				//MD: This code is to identify the words between double quotes
+				while (currentWords.contains("\"")) {
+					//First double quote
+					int from = currentWords.indexOf("\"");
+					//Second double quote
+					int to = currentWords.indexOf("\"", from + 1);
+					//If there is the second double quote or not
+					if (to != -1) {
+						//Add the exact words to the list and remove them from the string
+						exactWords.add(currentWords.substring(from + 1, to));
+						currentWords = currentWords.substring(0, from) + currentWords.substring(to + 1, currentWords.length());
+					} else {
+						currentWords = currentWords.replace("\"", " ");
+						
+					}
+				}
+				String[] wordsSingle = StringUtils.split(currentWords, " ");
+				for (int j = 0; j < exactWords.size(); j++) {
+					builder.append("(").append(field).append(" LIKE '%")
+						.append(exactWords.get(j).replace("'", "''"))
+						.append("%')");
+					if (j < (exactWords.size() - 1)) {
+						builder.append(" AND ");
+					}
+				}
+				if (exactWords.size() > 0 && wordsSingle.length > 0) {
+					builder.append(" AND ");
+				}
+				for (int j = 0; j < wordsSingle.length; j++) {
+					if (j > 0) {
+						builder.append(" AND ");
+					}
+					builder.append("(").append(field).append(" LIKE '%")
+						.append(wordsSingle[j].replace("'", "''"))
+						.append("%')");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	protected String booleanToJPA(Boolean value, String field) {
+		StringBuilder builder = new StringBuilder("");
+		if (value != null) {
+			builder.append(field).append(Boolean.TRUE.equals(value) ? " = true" : " = false");
+		}
+		return builder.toString();
 	}
 }

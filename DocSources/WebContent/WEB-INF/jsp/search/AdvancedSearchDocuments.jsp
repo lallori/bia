@@ -288,26 +288,44 @@
 					
 					<h1 id="volumeSearch"><a><fmt:message key="search.advancedSearchDocuments.volumeAndFolio.title"/></a></h1>
 					<div class="documents">
-						<h3><fmt:message key="search.advancedSearchDocuments.volume.title"/></h3>
 						<div class="listAdvSearch">
+						
+							<h3><fmt:message key="search.advancedSearchDocuments.volume.title"/></h3>
 							<form id="volumeSearchForm" method="post" class="edit">
-					           	<div class="row">
-					               	<div class="col_l">
-					               		<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.volume"></fmt:message>">?</a>
+								<div class="row">
+									<div class="col_l">
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.volume"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
 											<option value="Exactly" selected="selected"><fmt:message key="search.advancedSearchDocuments.volume.exactly"/></option>
 											<option value="Between"><fmt:message key="search.advancedSearchDocuments.volume.between"/></option>
 										</select>
-					               	</div>
-					               	<div class="col_l"><input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE --></div>
-					               	<div class="col_l"><p class="invisibleVol"><fmt:message key="search.advancedSearchDocuments.volume.betweenAnd"/></p></div>
-					               	<div class="col_l"><input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
-					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="volumeAdd button_small" disabled="disabled">
+									</div>
+									<div class="col_l"><input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE --></div>
+									<div class="col_l"><p class="invisibleVol"><fmt:message key="search.advancedSearchDocuments.volume.betweenAnd"/></p></div>
+									<div class="col_l"><input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>" class="volumeAdd button_small" disabled="disabled">
 										<input type="hidden" id="category" value="Volume">
-					               	</div>
-					            </div>
-					        </form>
+									</div>
+								</div>
+							</form>
+							
+							<h3><fmt:message key="search.advancedSearchDocuments.insert.title"/></h3>
+							<form id="insertSearchForm" method="post" class="edit">
+								<div class="row">
+									<div class="col_l">
+										<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.insert"></fmt:message>">?</a>
+										<span>Insert Number</span>
+									</div>
+									<div class="col_l"><input type="text" id="insert" name="insert" class="input_5c"/></div>
+									<div class="col_l"></div>
+									<div class="col_l"></div>
+									<div class="col_r">
+										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchDocuments.addToYourSearchFilter.alt"/>">
+										<input type="hidden" id="category" value="Insert">
+									</div>
+								</div>
+							</form>
 					            
 					        <h3><fmt:message key="search.advancedSearchDocuments.folio.title"/></h3>
 					        <form id="folioSearchForm" method="post" class="edit">
@@ -684,6 +702,10 @@
 				consoleLog : false
 			});
 			$j("#volumeSearchForm").advancedSearchForm({
+				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
+				consoleLog : false
+			});
+			$j("#insertSearchForm").advancedSearchForm({
 				AdvancedSearchCountURL : "${AdvancedSearchCountURL}",
 				consoleLog : false
 			});
