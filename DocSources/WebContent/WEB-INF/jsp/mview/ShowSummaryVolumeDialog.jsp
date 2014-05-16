@@ -6,7 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<div style="width: auto; min-height: 0px; height: 566.4px;" id="volumeSummaryWindow" title="VOLUME SUMMARY" class="ui-dialog-content ui-widget-content"> 
+	<div style="width: auto; min-height: 0px; height: 566.4px; overflow: auto;" id="volumeSummaryWindow" title="VOLUME SUMMARY" class="ui-dialog-content ui-widget-content"> 
 		<h5>Volume ${volumeSummary.volNum} ${volumeSummary.volLetExt}</h5>
 		<h3>${volumeSummary.carteggio}</h3>
 		<div class="list">
