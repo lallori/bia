@@ -27,7 +27,9 @@
 IIPMooViewer.implement({
 	
 	/**
-	 *  Create a new annotation, add it to our list and edit it
+	 *  Creates a new annotation, adds it to our list and edits it.
+	 *  
+	 *  @param canvas the canvas element
 	 */
 	newAnnotation: function(canvas) {
 		
@@ -84,7 +86,9 @@ IIPMooViewer.implement({
 
 
 	/**
-	 * Edit an existing annotation
+	 * Edits an existing annotation.
+	 * 
+	 * @param annotation the edited annotation DOM element
 	 */
 	editAnnotation: function(annotation) {
 		
@@ -111,6 +115,7 @@ IIPMooViewer.implement({
 
 		annotation.addClass('edit');
 		
+		/** MEDICI ARCHIVE PROJECT START **/
 		// we use the index of the annotations array instead of the id of the annotation
 		var currentIndex;
 		for (var count = 0; count < this.annotations.length; count++) {
@@ -122,13 +127,6 @@ IIPMooViewer.implement({
 				delete this.annotations[count].edit;
 			}
 		}
-		/*for (var a in this.annotations) {
-			if (a == id) {
-				this.annotations[a].edit = true;
-			} else {
-				delete this.annotations[a].edit;
-			}
-		}*/
 		/** MEDICI ARCHIVE PROJECT END **/
 
 		if (this.editEnabled && typeof(currentIndex) != "null" && typeof(currentIndex) != "undefined") {
@@ -228,7 +226,7 @@ IIPMooViewer.implement({
 			}).inject(form);
 	
 			/** MEDICI ARCHIVE PROJECT START **/
-			//To position the form
+			// Place the form
 			if (annotation.getPosition().y + annotation.getSize().y + form.getSize().y > window.innerHeight) {
 				form.setStyle('top',  - form.getSize().y - 3);
 			}
@@ -301,24 +299,6 @@ IIPMooViewer.implement({
 			});
 	
 			/** MEDICI ARCHIVE PROJECT START **/
-			// Make it draggable and resizable, but prevent this interfering with our canvas drag
-			// Update on completion of movement
-			/*var draggable = annotation.makeDraggable({
-				stopPropagation: true,
-				preventDefault: true,
-				container: this.canvas,
-			});
-	
-			var resizable = annotation.makeResizable({
-				handle: handle,
-				stopPropagation: true,
-				preventDefault: true,
-				// Keep our form attached to the annotation
-				onDrag: function() {
-					form.setStyle('top', this.element.getSize().y);
-				}
-			});*/
-	
 			// Make it draggable and resizable, but prevent this interfering with our canvas drag
 			// Update on completion of movement
 			var draggable = annotation.makeDraggable({
@@ -396,8 +376,9 @@ IIPMooViewer.implement({
 	},
 	
 	/** MEDICI ARCHIVE PROJECT START **/
+	
 	/**
-	 * Get the html radio button
+	 * Gets the html radio button
 	 * 
 	 * @param annotation the current annotation
 	 * @param type the value of the radio button
@@ -423,7 +404,7 @@ IIPMooViewer.implement({
 	},
 	
 	/**
-	 * Remove an annotation from the client
+	 * Removes an annotation from the client
 	 * 
 	 * @param index the index of the annotation in the annotation array
 	 */
@@ -456,15 +437,12 @@ IIPMooViewer.implement({
 
 
 	/**
-	 * Update the coordinates of the annotation
+	 * Updates the annotation coordinates.
+	 * 
+	 * @param el the DOM element correspondent to the annotation
+	 * @param index the annotation index in the annotation array
 	 */
-	/** MEDICI ARCHIVE PROJECT START **/
-	// RR: we provide the index of the annotations array
-	// updateShape: function(el) {
 	updateShape: function(el, index) {
-
-		//var id = el.get('id');
-
 		// Update our list entry
 		var parent = el.getParent();
 		this.annotations[index].x = el.getPosition(parent).x / this.wid;
@@ -474,6 +452,9 @@ IIPMooViewer.implement({
 	},
 
 
+	/**
+	 * Refreshes the annotations.
+	 */
 	updateAnnotations: function() {
 		this.destroyAnnotations();
 		this.createAnnotations();

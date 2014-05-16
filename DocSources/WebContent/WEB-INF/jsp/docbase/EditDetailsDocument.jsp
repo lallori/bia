@@ -273,7 +273,7 @@
 					$j("#volume").attr("disabled","true");
     			</c:if>
 			</security:authorize>
-
+			
 			/**
 			 * This function open the tab that shows the volume explorer of the volume indicated as a param 
 			 * of the url (href) or the one that has the id specificated in idTab (if the url does not contain
@@ -332,84 +332,76 @@
 			
 			/** ################################ CHANGE HANDLERS ######################################## **/
 			
-			/*** ---------- CustomInputHandler class ---------- ***/
+			/*** ---------- Scheduler class ---------- ***/
 			
 			/**
-			 * The CustomInpuHandler class manages any input changes.
-			 * This class has two ways in managing changes:
-			 *   - handle the change after a delay
-			 *   - handle the change instantaneously
-			 * The second way interrupts the delayed handler if exists.
+			 * This class schedules a callback.
+			 * The callback can be fired:
+			 *   - after a delay
+			 *   - instantaneously
+			 * The second way interrupts the delayed scheduling (if exists).
 			 *
-			 * To create an instance of this class call constructor with:
-		     * @param target the input target
-		     * @param handler the handler to call
-		     * @param handlerParams the parameters to provide to the handler
+			 * The class constructor only wants:
+		     * @param callback the callback to fire
 			 */
-			function CustomInputHandler(target, handler, handlerParams) {
-				this.target = target;
-				this.doHandle = function() {
-					var current = $j(target).val();
-					if (current !== this.value) {
-						this.value = current;
-						return (typeof handlerParams !== 'undefined' && handlerParams != null) ? handler(handlerParams) : handler();
-					} else {
-						console.log('Skipped');
-					}
-				}
+			function Scheduler(callback) {
+				this.doHandle = callback;
 				this.timer = null;
-				this.value = $j(target).val();
-			}
+			};
 			
 			/**
-			 * The 'elapseHandle' defines the delayed managing.
+			 * It defines the delayed scheduling.
 			 *
 			 * @params delay the delay in milliseconds
 			 */
-			CustomInputHandler.prototype.elapsedHandle = function(delay) {
-				var _this = this;
-				return function() {
-					clearTimeout(_this.timer);
-					_this.timer = setTimeout(function() {
-						console.log('Launch handler after delay');
-						_this.doHandle();
-					}, delay);
-				}
-			}
+			Scheduler.prototype.scheduleDelayed = function(delay) {
+				clearTimeout(this.timer);
+				this.timer = setTimeout(function() {
+					this.doHandle();
+				}.bind(this), delay);
+			};
 			
 			/**
-			 * The 'instantaneousHandle' defines the instantaneous managing.
+			 * It defines the instantaneous scheduling.
 			 */
-			CustomInputHandler.prototype.instantaneousHandle = function() {
-				if (typeof this.timer !== 'undefined' && this.timer != null) {
+			Scheduler.prototype.scheduleNow = function() {
+				if (this.timer != null) {
 					clearTimeout(this.timer);
 					this.timer = null;
 				}
-				console.log("Launch handler directly");
 				this.doHandle();
-			}
+			};
 			
-			/*** ---------- end of class CustomInputHandler ---------- ***/
+			/*** ---------- end of class Scheduler ---------- ***/
 			
 			
 			/**
-			 * This function binds the change listener to the targeted input.
+			 * It binds the change listener to the targeted input.
 			 * The change listener is defined by an elapsed input change handler and by the blur event.
 			 *
 			 * @param targetInput the targeted input
 			 * @param delay the delay time (in milliseconds)
 			 * @param changeHandler the callback
-			 * @changeParams the parameters to provide to the callback 
 			 */
-			var bindInputListener = function(targetInput, delay, changeHandler, changeParams) {
-				var handler = (typeof changeParams === 'undefined' || changeParams == null) ? 
-						new CustomInputHandler($j(targetInput), changeHandler) : 
-						new CustomInputHandler($j(targetInput), changeHandler, changeParams);
-				$j(targetInput).bind("input", handler.elapsedHandle(delay));
+			function bindInputListener(targetInput, delay, changeHandler) {
+				var callback = function() {
+					var current = $j(targetInput).val();
+					if (current != value) {
+						changeHandler();
+						value = current;
+					}
+				};
+
+				var handler = new Scheduler(callback.bind(this));
+				$j(targetInput).bind("input", function() {
+					handler.scheduleDelayed(delay);
+				});
 				$j(targetInput).blur(function() {
-					handler.instantaneousHandle();
-				})
-			}
+					handler.scheduleNow();
+				});
+				
+				var value = "";
+			};
 			
 			
 			/**
@@ -550,15 +542,15 @@
 			}
 			
 			// Bind the client validation process when input data change
-			bindInputListener('#folioNum', delay, folioNumChangeHandler, "folio");
-			bindInputListener('#folioMod', delay, folioModChangeHandler, "folio");
-			bindInputListener('#folioRectoVerso', delay, folioRectoVersoChangeHandler, "folio");
-			bindInputListener('#transcribeFolioNum', delay, folioNumChangeHandler, "transcribeFolio");
-			bindInputListener('#transcribeFolioMod', delay, folioModChangeHandler, "transcribeFolio");
-			bindInputListener('#transcribeFolioRectoVerso', delay, folioRectoVersoChangeHandler, "transcribeFolio");
-			bindInputListener('#insertNum', delay, insertNumChangeHandler);
-			bindInputListener('#insertLet', delay, insertLetChangeHandler);
-			bindInputListener('#volume', delay, volumeChangeHandler);
+			bindInputListener('#folioNum', delay, function() {folioNumChangeHandler("folio")});
+			bindInputListener('#folioMod', delay, function() {folioModChangeHandler("folio")});
+			bindInputListener('#folioRectoVerso', delay, function() {folioRectoVersoChangeHandler("folio")});
+			bindInputListener('#transcribeFolioNum', delay, function() {folioNumChangeHandler("transcribeFolio")});
+			bindInputListener('#transcribeFolioMod', delay, function() {folioModChangeHandler("transcribeFolio")});
+			bindInputListener('#transcribeFolioRectoVerso', delay, function() {folioRectoVersoChangeHandler("transcribeFolio")});
+			bindInputListener('#insertNum', delay, function() {insertNumChangeHandler()});
+			bindInputListener('#insertLet', delay, function() {insertLetChangeHandler()});
+			bindInputListener('#volume', delay, function() {volumeChangeHandler()});
 			
 			
 			/** ################################ CLIENT WARNING MESSAGES FUNCTIONS ######################################## **/
@@ -626,7 +618,7 @@
 				for (i = 0; i < resetLevels.length; i++) {
 					resetError(resetLevels[i]);
 				}
-			}
+			};
 			
 			
 			
@@ -645,7 +637,7 @@
 				if (!saveDisabled) {
 					saveable(true);
 				}
-			}
+			};
 			
 			
 			/**
@@ -680,7 +672,7 @@
 					return false;
 				}
 				$j("#EditDetailsDocumentForm").submit();
-			}
+			};
 			
 			
 			/**
@@ -697,7 +689,7 @@
 					$j(save).css("display","none");
 					$j(save).attr("disabled","true");
 				}
-			}
+			};
 			
 			
 			/**
@@ -722,7 +714,7 @@
 					findDocumentCallback
 				);
 				return false;
-			}
+			};
 			// We attach the save click-handler to the "Save" button.
 			$j("#save").click(saveHandler);
 			
@@ -767,7 +759,7 @@
 					}
 				);
 				return false;
-			}
+			};
 			// We attach the submit-handler to the form 'EditDetailsDocumentForm'.
 			$j("#EditDetailsDocumentForm").submit(submitHandler);
 			
@@ -865,7 +857,7 @@
 					);
 				}
 				
-			}
+			};
 			
 			
 			/**
