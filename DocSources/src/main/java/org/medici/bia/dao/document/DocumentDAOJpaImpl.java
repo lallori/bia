@@ -109,8 +109,19 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Long countDocumentCreatedAfterDate(Date inputDate) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE dateCreated>=:inputDate");
+		Query query = getEntityManager().createQuery("SELECT COUNT(*) FROM Document WHERE dateCreated >= :inputDate");
 		query.setParameter("inputDate", inputDate);
+
+		return (Long) query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countDocumentCreatedBeforeDate(Date date) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(*) FROM Document WHERE dateCreated <= :inputDate");
+		query.setParameter("inputDate", date);
 
 		return (Long) query.getSingleResult();
 	}
@@ -504,7 +515,38 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	        }
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<Integer, Integer> getAssociatedImage(List<Integer> entryIds) throws PersistenceException {
+		String jpql = "SELECT doc.entryId, img.imageId FROM Document AS doc, Image AS img WHERE"
+				+ " doc.entryId IN (:docIds)"
+				+ " AND doc.volume.volNum = img.volNum"
+				+ " AND ((doc.volume.volLetExt IS NULL AND img.volLetExt IS NULL) OR (doc.volume.volLetExt = img.volLetExt))"
+				+ " AND ((doc.insertNum IS NULL AND img.insertNum IS NULL) OR (doc.insertNum = img.insertNum))"
+				+ " AND ((doc.insertLet IS NULL AND img.insertLet IS NULL) OR (doc.insertLet = img.insertLet))"
+				+ " AND doc.folioNum IS NOT NULL"
+				+ " AND ((doc.folioMod IS NULL AND img.missedNumbering IS NULL) OR (doc.folioMod = img.missedNumbering))"
+				+ " AND (doc.folioRectoVerso IS NULL OR doc.folioRectoVerso = img.imageRectoVerso)"
+				+ " AND img.imageType = 'C'"
+				+ " GROUP BY doc.entryId"
+				+ " ORDER BY doc.entryId ASC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("docIds", entryIds);
+		List<Object[]> results = (List<Object[]>)query.getResultList();
+		
+		Map<Integer, Integer> resultMap = new HashMap<Integer, Integer>();
+		for (Object[] result : results) {
+			resultMap.put((Integer)result[0], (Integer)result[1]);
+		}
+		
+		return resultMap;
+	}
+	
 	/**
 	 * 
 	 */
@@ -544,6 +586,34 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		// We set search result on return method
 		page.setList(fullTextQuery.list());
+		
+		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDocumentsCreatedBefore(Date date, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		String jpql = "FROM Document WHERE dateCreated <= :dateTime";
+		Query query = null;
+		
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			query.setParameter("dateTime", date);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		query.setParameter("dateTime", date);
+
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
 		
 		return page;
 	}

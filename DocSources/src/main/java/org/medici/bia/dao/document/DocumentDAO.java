@@ -64,6 +64,13 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	Long countDocumentCreatedAfterDate(Date inputDate) throws PersistenceException;
 	
 	/**
+	 * @param inputDate
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Long countDocumentCreatedBeforeDate(Date inputDate) throws PersistenceException;
+	
+	/**
 	 * This method is used to count how many documents are linked to a volume.
 	 * 
 	 * @param summaryId
@@ -246,6 +253,16 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	Map<Integer, Long> findNumbersOfDocumentsRelatedPlace(List<Integer> placeAllIds) throws PersistenceException;
 	
 	/**
+	 * This method returns the association between a document and the correspondent image based on the
+	 * letter starting folio.
+	 * 
+	 * @param entryIds a list of document identifiers
+	 * @return the association between document and image as a map
+	 * @throws PersistenceException
+	 */
+	Map<Integer, Integer> getAssociatedImage(List<Integer> entryIds) throws PersistenceException;
+	
+	/**
 	 * This method searches documents which contains the parameters set in {@link org.medici.bia.common.search}
 	 * object and return a result page.
 	 * 
@@ -255,6 +272,17 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This method retrieves all documents created before the specified date. 
+	 * Documents retrieved are returned in a result page.
+	 * 
+	 * @param date the date
+	 * @param paginationFilter the filter
+	 * @return the documents found in a result page
+	 * @throws PersistenceException
+	 */
+	Page searchDocumentsCreatedBefore(Date date, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 

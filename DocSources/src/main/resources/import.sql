@@ -1958,11 +1958,11 @@ INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/Sh
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowIncrementalPostPreview', 'template.partialDOM');
 
-INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscriptionDOM', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscriptionDOM.jsp', 0);
-INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditIncrementalPost', 'main', '/WEB-INF/jsp/teaching/EditIncrementalPost.jsp', 0);
-INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalActions', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalActions.jsp', 0);
-INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscription.jsp', 0);
-INSERT INTO `tblapplicationtemplateattributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalPostPreview.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscriptionDOM', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscriptionDOM.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/EditIncrementalPost', 'main', '/WEB-INF/jsp/teaching/EditIncrementalPost.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalActions', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalActions.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscription.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalPostPreview.jsp', 0);
 
 -- schedone: change column type
 ALTER TABLE `tblSchedone`
@@ -1973,3 +1973,5 @@ ALTER TABLE `tblSchedone`
 	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_PDF` `DIM_TOTALE_IMMAGINI_PDF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_JPEG`,
 	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_TIFF` `DIM_TOTALE_IMMAGINI_TIFF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_PDF`;
 
+-- europeana
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.path', 'Europeana output path', '/data/europeana/');

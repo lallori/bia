@@ -28,6 +28,7 @@
 package org.medici.bia.dao.image;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -104,6 +105,24 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 		
 		return count;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countImagesCreatedBeforeDate(Date timeStamp, List<ImageType> types) throws PersistenceException {
+		String jpql = "SELECT count(*) FROM Image WHERE dateCreated <= :timeStamp";
+		if (types != null && types.size() > 0) {
+			jpql += " AND imageType IN (:types)";
+		}
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("timeStamp", timeStamp);
+		if (types != null && types.size() > 0) {
+			query.setParameter("types", types);
+		}
+		
+		return (Long)query.getSingleResult();
 	}
 	
 	/**
@@ -408,6 +427,19 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		} catch (NoResultException noResultExcepion) { }
 
         return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findImages(List<Integer> imageIds) throws PersistenceException {
+		String jpql = "FROM Image WHERE imageId IN (:imageIds) ORDER BY imageId";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("imageIds", imageIds);
+		
+		return getResultList(query);
 	}
 
 	/**
@@ -945,6 +977,44 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return findVolumeInserts(volNum, volLetExt).size() > 0;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchImagesCreatedBefore(Date timeStamp, List<ImageType> types, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		String jpql = "FROM Image WHERE dateCreated <= :timeStamp";
+		if (types != null && types.size() > 0) {
+			jpql += " AND imageType IN (:types)";
+		}
+		
+		Query query = null;
+		
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			query.setParameter("timeStamp", timeStamp);
+			if (types != null && types.size() > 0) {
+				query.setParameter("types", types);
+			}
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		query.setParameter("timeStamp", timeStamp);
+		if (types != null && types.size() > 0) {
+			query.setParameter("types", types);
+		}
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+	
 	
 	/* Privates */
 	
@@ -1167,4 +1237,5 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			}
 		}
 	}
+	
 }

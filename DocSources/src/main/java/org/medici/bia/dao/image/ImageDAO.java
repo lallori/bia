@@ -27,7 +27,9 @@
  */
 package org.medici.bia.dao.image;
 
+import java.util.Date;
 import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
@@ -65,6 +67,15 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	long countImages(Integer volNum, String volLetExt, String imageType, String insertNum, String insertLet, Integer folioNum, String folioMod, String rectoVerso) throws PersistenceException;
+	
+	/**
+	 * This method counts images of the provided types that are created before the provided date.
+	 * 
+	 * @param timeStamp the time stamp
+	 * @param types the image type to filter
+	 * @return the number of images found
+	 */
+	Long countImagesCreatedBeforeDate(Date timeStamp, List<ImageType> types) throws PersistenceException;
 
 	/**
 	 * This method searches a document image identified by volume identifiers, insert identifiers, number of folio
@@ -210,6 +221,15 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	<T extends VolumeExplorer> Image findImage(T explorer) throws PersistenceException;
+	
+	/**
+	 * This method returns all the images with the provided identifiers.
+	 * 
+	 * @param imageIds the image identifiers
+	 * @return the images found
+	 * @throws PersistenceException
+	 */
+	List<Image> findImages(List<Integer> imageIds) throws PersistenceException;
 
 	/**
 	 * This method returns a list of Images linked to a specific volume.
@@ -350,4 +370,14 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @return true if the volume contains inserts.
 	 */
 	Boolean hasInserts(Integer volNum, String volLetExt);
+
+	/**
+	 * @param timeStamp
+	 * @param types
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page searchImagesCreatedBefore(Date timeStamp, List<ImageType> types, PaginationFilter paginationFilter) throws PersistenceException;
+
 }

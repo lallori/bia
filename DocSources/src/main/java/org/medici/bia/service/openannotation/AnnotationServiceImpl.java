@@ -53,6 +53,8 @@ import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of services associated to open annotations features.
@@ -60,6 +62,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
+@Service
+@Transactional(readOnly=true)
 public class AnnotationServiceImpl implements AnnotationService {
 	
 	private final static String FILENAME = "BiaAnnotations";
