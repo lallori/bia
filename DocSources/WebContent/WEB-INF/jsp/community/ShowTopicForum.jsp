@@ -588,12 +588,11 @@
 							success: function(json) {
 				 				if (json.operation == 'OK') {
 				 					$j("#topicTitle_${topic.topicId}").text(newTitle);
-				 					safeCloseAndDestroyModal("#changeTitleModal");
 				 				} else {
 				 					$j("#changeTitleError").hide();
-				 					$j("#changeTitleModal").dialog('close');
 				 					alert('The operation failed on server...cannot proceed!!!');
 				 				}
+				 				$j("#changeTitleModal").dialog('close');
 							},
 							error: function(data) {
 								$j("#changeTitleError").hide();
@@ -610,7 +609,7 @@
 				},
 				close: function(event, ui) {
 					$j("#changeTitleError").hide();
-					safeCloseAndDestroyModal("#changeTitleModal");
+					$j("#changeTitleModal").dialog('close');
 					return false;
 				}
 			});
@@ -764,20 +763,5 @@
 			//MD: Fix a problem with tinyMCE alert when change page.
 			window.onbeforeunload = function() {};
 			
-			function safeCloseAndDestroyModal(sel) {
-				$j(sel).dialog('close');
-				safeDestroyModal(sel);
-			};
-			
-			function safeDestroyModal(sel) {
-				try {
-					$j(sel).dialog("destroy");
-				} catch (err) {
-					console.log("Cannot destroy modal [" + sel + "]");
-				}
-				//MD: move the div back after closing
-				$j(sel).appendTo("#main").css("display", "none");
-			};
-
 		});
 	</script>
