@@ -469,7 +469,26 @@ public interface CommunityService {
 	 * 
 	 * @throws ApplicationThrowable
 	 */
-	User joinUserOnForum()throws ApplicationThrowable;
+	User joinUserOnForum() throws ApplicationThrowable;
+	
+	/**
+	 * Renames a forum.
+	 * 
+	 * @param forumId the forum identifier
+	 * @param title the title to set
+	 * @param description the description to set
+	 * @throws ApplicationThrowable
+	 */
+	void renameForum(Integer forumId, String title, String description) throws ApplicationThrowable;
+	
+	/**
+	 * Renames a forum topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @param title the title to set
+	 * @throws ApplicationThrowable
+	 */
+	void renameForumTopic(Integer topicId, String title) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -542,4 +561,5 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	Boolean unsubscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable;
+
 }

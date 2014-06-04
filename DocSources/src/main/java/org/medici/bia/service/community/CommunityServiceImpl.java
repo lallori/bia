@@ -1348,6 +1348,50 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void renameForum(Integer forumId, String title, String description) throws ApplicationThrowable {
+		try {
+			Date now = new Date();
+			Forum forum = getForumDAO().find(forumId);
+			if (forum == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Cannot retrieve forum [" + forumId + "]: impossible to complete the operation!");
+			}
+			forum.setTitle(title);
+			forum.setDescription(description);
+			forum.setLastUpdate(now);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void renameForumTopic(Integer topicId, String title) throws ApplicationThrowable {
+		try {
+			Date now = new Date();
+			ForumTopic topic = getForumTopicDAO().find(topicId);
+			if (topic == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Cannot retrieve topic [" + topicId + "]: impossible to complete the operation!");
+			}
+			topic.setSubject(title);
+			topic.setLastUpdate(now);
+			
+			if (topic.getAnnotation() != null) {
+				topic.getAnnotation().setTitle(title);
+				topic.getAnnotation().setLastUpdate(now);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub

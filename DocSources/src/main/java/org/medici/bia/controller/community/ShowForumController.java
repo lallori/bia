@@ -151,6 +151,7 @@ public class ShowForumController {
 			Set<Authority> userAuthorities = null;
 
 			if (userInformation != null) {
+				model.put("account", userInformation.getAccount());
 				userAuthorities = getUserAuthorities(userInformation);
 				if (userInformation.getForumJoinedDate() == null) {
 					userInformation = getCommunityService().joinUserOnForum();

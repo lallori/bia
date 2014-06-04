@@ -152,9 +152,9 @@ IIPMooViewer.implement({
 			}).inject(annotation);
 			
 			var titleEditable = this.annotations[currentIndex].newAnnotation || this.annotations[currentIndex].type == "PERSONAL";
-			
+			var title = this.editMode === 'teaching' ? 'Comment Title' : 'Annotation Title';
 			// Create our input fields
-			var html = '<table><tr><td>Annotation Title</td><td><input id="annotationTitle" type="text" name="title" autofocus';
+			var html = '<table><tr><td>' + title + '</td><td><input id="annotationTitle" type="text" name="title" autofocus';
 			if (this.annotations[currentIndex].title ) {
 				html += ' value="' + this.annotations[currentIndex].title + '"';
 				if (!titleEditable) {
@@ -162,7 +162,7 @@ IIPMooViewer.implement({
 				}
 			}
 			html += '/></td></tr>';
-	
+			
 			/** MEDICI ARCHIVE PROJECT START **/
 			// RR: It is not possible to modify the type of stored annotations!
 			//     Stored annotations have "annotation_" at the beginning of the id. 
@@ -172,7 +172,10 @@ IIPMooViewer.implement({
 				var count = 0;
 				var defaultType = this.editMode === 'teaching' ? 'TEACHING' : 'PERSONAL';
 				
-				html += '<tr><td>Annotation Type</td><td>';
+				if (this.editMode !== 'teaching') {
+					html += '<tr><td>Annotation Type</td><td>';
+				}
+				
 				if (this.editMode === 'default' || this.editMode === 'all') {
 					html += this.getHtmlRadio(this.annotations[currentIndex], 'GENERAL', 'General', count, defaultType);
 					count++;
@@ -186,33 +189,39 @@ IIPMooViewer.implement({
 					count++;
 				}
 				if (this.editMode === 'teaching' || this.editMode === 'all') {
-					html += this.getHtmlRadio(this.annotations[currentIndex], 'TEACHING', 'Course Question', count, defaultType);
+					html += this.getHtmlRadio(this.annotations[currentIndex], 'TEACHING', 'Course Question', count, defaultType, this.editMode !== 'teaching');
 					count++;
 				}
 				html += '</td></tr>';
 			} else {
-				html += '<tr><td>Annotation Type</td><td>' + this.annotations[currentIndex].type + '</td></tr>';
+				if (this.editMode !== 'teaching') {
+					html += '<tr><td>Annotation Type</td><td>' + this.annotations[currentIndex].type + '</td></tr>';
+				}
 			}
 			
-	
+			if (this.editMode === 'teaching') {
+				html += '<tr><td>Comment Text</td></tr>';
+			}
+			
+			
 			if (this.annotations[currentIndex].newAnnotation || this.annotations[currentIndex].type == 'PERSONAL') {
 				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			} else {
 				html += '<tr><td colspan="2"><textarea name="text" rows="5" id="annotationTextarea" readonly="readonly">' + (this.annotations[currentIndex].text || '') + '</textarea></td></tr></table>';
 			}
-	
+			
 			html += '<input type="hidden" name="annotationId" value="' + this.annotations[currentIndex].annotationId + '">';
 			html += '<input type="hidden" name="type" value="' + this.annotations[currentIndex].type + '">';
 			/** MEDICI ARCHIVE PROJECT END **/
-	
+			
 			form.set('html', html);
-	
+			
 			new Element('input', {
 				'type': 'submit',
 				'class': 'button',
 				'value': 'ok'
 			}).inject(form);
-	
+			
 			new Element('input', {
 				'type': 'reset',
 				'class': 'button',
@@ -224,14 +233,14 @@ IIPMooViewer.implement({
 				'style': 'margin-left: 10px; color: #FF1C1C; display: none;',
 				'text': 'Highlighted fields cannot be empty'
 			}).inject(form);
-	
+			
 			/** MEDICI ARCHIVE PROJECT START **/
 			// Place the form
 			if (annotation.getPosition().y + annotation.getSize().y + form.getSize().y > window.innerHeight) {
 				form.setStyle('top',  - form.getSize().y - 3);
 			}
 			/** MEDICI ARCHIVE PROJECT END **/
-	
+			
 			// Add update event for our list of annotations
 			form.addEvents({
 				'submit': function(e) {
@@ -247,10 +256,15 @@ IIPMooViewer.implement({
 					} else {
 						this.getElement('#annotationTitle').style.backgroundColor = '#FFF';
 					}
-					if (text.match(onlySpaces)) {
+					// RR: in the teaching module is allowed to leave empty annotation (comment) text.
+					// In that case comment text becomes the same as title
+					if (text.match(onlySpaces) && _this.editMode !== 'teaching') {
 						this.getElement('#annotationTextarea').style.backgroundColor = '#FFFAAD';
 						empty = true;
 					} else {
+						if (text.match(onlySpaces) && _this.editMode === 'teaching' && !empty) {
+							e.target['text'].value = e.target['title'].value;
+						}
 						this.getElement('#annotationTextarea').style.backgroundColor = '#FFF';
 					}
 					if (empty) {
@@ -387,9 +401,9 @@ IIPMooViewer.implement({
 	 * @param defaultType the preselected type
 	 * @returns the html radio button
 	 */
-	getHtmlRadio: function(annotation, type, label, level, defaultType) {
+	getHtmlRadio: function(annotation, type, label, level, defaultType, show) {
 		var html = '';
-		if (level > 0) {
+		if (level > 0 && (show === 'undefined' || show == true)) {
 			html += '<br>';
 		}
 		html += '<input name="category" type="radio" value="' + type + '"';
@@ -399,7 +413,11 @@ IIPMooViewer.implement({
 		if (annotation.type === type || (annotation.type === '' && type === defaultType)) {
 			html += ' checked';
 		}
-		html += '>' + label;
+		if (show === 'undefined' || show == true) {
+			html += '>' + label;
+		} else {
+			html += ' style="display: none;">';
+		}
 		return html;
 	},
 	

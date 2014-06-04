@@ -308,7 +308,7 @@ public class TeachingServiceImpl implements TeachingService {
 			// container.setDocument(document);
 			container.setForumParent(course.getForum());
 			container.setFullPath(course.getForum().getFullPath()); // To do not violate the table constraint
-			container.setHierarchyLevel(0);
+			container.setHierarchyLevel(course.getForum().getHierarchyLevel() + 1);
 			container.setDispositionOrder(0);
 			container.setStatus(Forum.Status.ONLINE);
 			container.setType(Forum.Type.FORUM);

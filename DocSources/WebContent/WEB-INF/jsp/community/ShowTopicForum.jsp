@@ -14,6 +14,8 @@
 	<c:param name="topicId" value="${topic.topicId}"/>
 </c:url>
 
+<c:url var="RenameForumTopicURL" value="/de/community/RenameForumTopic.json" />
+
 <c:url var="BIAHomeURL" value="/Home.do" />
 
 <div id="urlActions">
@@ -21,7 +23,10 @@
 	<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
 </div>
 
-<h2>${topic.subject }</h2>
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+	<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+</security:authorize>
+<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 	<c:if test="${topic.forum.document != null && not empty documentExplorer}">
@@ -348,6 +353,18 @@
 	<input id="linkToCopy" type="text" value="" size="50"/>
 </div>
 
+<div id="changeTitleModal" title='<fmt:message key="community.forum.tooltip.changeTitle" />' style="display:none">
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+		<fmt:message key="community.forum.messages.changeTitleMessage" />
+		<form id="changeTitleModalForm" method="post">
+			<input id="title" name="title" type="text" style="width: 98%" value="" />
+			<input id="topicId" name="topicId" type="hidden" value="" />
+		</form>
+		<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+	</p>
+</div>
+
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -537,6 +554,67 @@
 				return false;
 			});
 			
+			$j("#changeTopicTitle").click(function() {
+				var topicId = ${topic.topicId};
+				
+				// set the topic identifier in the changeTitleModalForm
+				$j("#changeTitleModalForm #topicId").val(topicId);
+				// ...and set the beginning title
+				$j("#changeTitleModalForm #title").val($j("#topicTitle_" + topicId).text());
+				
+				$j("#changeTitleModal").dialog('open');
+				return false;
+				
+			});
+			
+			$j("#changeTitleModal").dialog({
+				autoOpen : false,
+				modal: true,
+				resizable: false,
+				width: 350,
+				height: 170,
+				buttons: {
+					Ok: function() {
+						var newTitle = $j("#changeTitleModalForm #title").val();
+						if (newTitle === "") {
+							$j("#changeTitleError").show();
+							return;
+						}
+						$j.ajax({ 
+							type: "POST", 
+							url: "${RenameForumTopicURL}",
+							data: $j("#changeTitleModalForm").serialize(),
+							async: false, 
+							success: function(json) {
+				 				if (json.operation == 'OK') {
+				 					$j("#topicTitle_${topic.topicId}").text(newTitle);
+				 					safeCloseAndDestroyModal("#changeTitleModal");
+				 				} else {
+				 					$j("#changeTitleError").hide();
+				 					$j("#changeTitleModal").dialog('close');
+				 					alert('The operation failed on server...cannot proceed!!!');
+				 				}
+							},
+							error: function(data) {
+								$j("#changeTitleError").hide();
+								$j("#changeTitleModal").dialog('close');
+								alert('Server error...operation aborted!!!');
+							}
+						});
+						return false;	
+					},
+					Cancel: function() {
+						$j("#changeTitleError").hide();
+						$j("#changeTitleModal").dialog('close');
+					}
+				},
+				close: function(event, ui) {
+					$j("#changeTitleError").hide();
+					safeCloseAndDestroyModal("#changeTitleModal");
+					return false;
+				}
+			});
+			
 			$j( "#reportPostModal" ).dialog({
 				  autoOpen : false,
 				  modal: true,
@@ -685,6 +763,21 @@
 			
 			//MD: Fix a problem with tinyMCE alert when change page.
 			window.onbeforeunload = function() {};
+			
+			function safeCloseAndDestroyModal(sel) {
+				$j(sel).dialog('close');
+				safeDestroyModal(sel);
+			};
+			
+			function safeDestroyModal(sel) {
+				try {
+					$j(sel).dialog("destroy");
+				} catch (err) {
+					console.log("Cannot destroy modal [" + sel + "]");
+				}
+				//MD: move the div back after closing
+				$j(sel).appendTo("#main").css("display", "none");
+			};
 
 		});
 	</script>

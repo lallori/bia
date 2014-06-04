@@ -13,10 +13,22 @@
 	<c:url var="baseUrl" value="/teaching/ShowCourseTranscription.do">
 		<c:param name="transcriptionMode" value="R" />
 	</c:url>
+	
+	<c:url var="RenameTopicURL" value="/de/community/RenameForumTopic.json" />
 
 	<h6>ROUND ROBIN TRANSCRIPTION</h6>
 	
-	<h2>${topic.subject}</h2>
+	<c:choose>
+		<c:when test="${topic.user.account == account}">
+			<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+		</c:when>
+		<c:otherwise>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+				<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+			</security:authorize>
+		</c:otherwise>
+	</c:choose>
+	<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 	
 	<hr />
 	<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
@@ -161,6 +173,18 @@
 		
 	</c:if>
 	
+	<div id="changeTitleModal" title='<fmt:message key="community.forum.tooltip.changeTitle" />' style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.messages.changeTitleMessage" />
+			<form id="changeTitleModalForm" method="post">
+				<input id="title" name="title" type="text" style="width: 98%" value="" />
+				<input id="topicId" name="topicId" type="hidden" value="" />
+			</form>
+			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+		</p>
+	</div>
+	
 	<script>
 		$j(document).ready(function() {
 			var _this = this;
@@ -182,6 +206,19 @@
 			$j("#clientEditing").val(${editingMode});
 			
 			/** Button and anchor links handler definitions **/
+			
+			$j("#changeTopicTitle").click(function() {
+				var topicId = ${topic.topicId};
+				
+				// set the topic identifier in the changeTitleModalForm
+				$j("#changeTitleModalForm #topicId").val(topicId);
+				// ...and set the beginning title
+				$j("#changeTitleModalForm #title").val($j("#topicTitle_" + topicId).text());
+				
+				$j("#changeTitleModal").dialog('open');
+				return false;
+				
+			});
 			
 			$j('.deletePost').click(function(){
 				$j('#deletePostModal').data('deleteUrl', $j(this).attr('href')).dialog('open');
@@ -252,6 +289,54 @@
 			
 			/** Dialogs definitions **/
 			
+			$j("#changeTitleModal").dialog({
+				autoOpen : false,
+				modal: true,
+				resizable: false,
+				width: 350,
+				height: 170,
+				buttons: {
+					Ok: function() {
+						var newTitle = $j("#changeTitleModalForm #title").val();
+						if (newTitle === "") {
+							$j("#changeTitleError").show();
+							return;
+						}
+						$j.ajax({ 
+							type: "POST", 
+							url: "${RenameTopicURL}",
+							data: $j("#changeTitleModalForm").serialize(),
+							async: false, 
+							success: function(json) {
+				 				if (json.operation == 'OK') {
+				 					$j("#topicTitle_${topic.topicId}").text(newTitle);
+				 				} else {
+				 					$j("#changeTitleError").hide();
+				 					alert('The operation failed on server...cannot proceed!!!');
+				 				}
+				 				$j("#changeTitleModal").dialog('close');
+							},
+							error: function(data) {
+								$j("#changeTitleError").hide();
+								$j("#changeTitleModal").dialog('close');
+								alert('Server error...operation aborted!!!');
+							}
+						});
+						return false;	
+					},
+					Cancel: function() {
+						$j("#changeTitleError").hide();
+						$j("#changeTitleModal").dialog('close');
+						return false;
+					}
+				},
+				close: function(event, ui) {
+					$j("#changeTitleError").hide();
+					$j("#changeTitleModal").dialog('close');
+					return false;
+				}
+			});
+			
 			$j("#deletePostModal").dialog({
 				autoOpen : false,
 				modal: true,
@@ -311,6 +396,7 @@
 					}
 				}
 			});
+			
 		});
 	</script>
 	

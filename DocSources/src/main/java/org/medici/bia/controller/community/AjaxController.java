@@ -296,6 +296,41 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);		
 	}
+	
+	@RequestMapping(value = "/de/community/RenameForum", method = RequestMethod.POST)
+	public ModelAndView renameForum(
+			@RequestParam(value="forumId", required = true) Integer forumId,
+			@RequestParam(value="title", required = true) String title,
+			@RequestParam(value="description", required = true) String description,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			getCommunityService().renameForum(forumId, title, description);
+			model.put("operation", "OK");
+			
+			return new ModelAndView("responseOK", model);		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
+	
+	@RequestMapping(value = "/de/community/RenameForumTopic", method = RequestMethod.POST)
+	public ModelAndView renameForumTopic(
+			@RequestParam(value="topicId", required = true) Integer topicId,
+			@RequestParam(value="title", required = true) String title,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			getCommunityService().renameForumTopic(topicId, title);
+			model.put("operation", "OK");
+			
+			return new ModelAndView("responseOK", model);		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);		
+		}
+	}
 
 	/**
 	 * 
