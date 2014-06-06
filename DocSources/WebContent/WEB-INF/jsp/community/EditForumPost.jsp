@@ -10,45 +10,62 @@
 	
 	<c:url var="ShowPreviewForumPostURL" value="/community/ShowPreviewForumPost.do"/>
 	
+	<c:if test="${not empty command.annotationId}">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+			<c:param name="summaryId" value="${command.summaryId}"/>
+			<c:param name="volNum" value="${command.volNum}"/>
+			<c:param name="volLetExt" value="${command.volLetExt}"/>
+			<c:param name="annotationId" value="${command.annotationId}" />
+			<c:param name="imageOrder" value="${command.imageOrder}" />
+			<c:param name="flashVersion"   value="false" />
+			<c:param name="showHelp" value="true" />
+			<c:param name="showThumbnail" value="true" />
+		</c:url>
+		
+		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+		<div id="spacer" style="height: 15px;" />
+	</c:if>
+	
 	<!-- Post to reply -->
 	<c:if test="${not empty postToReply}">
-	<div id="postTable">
-		<div id="post">
-			<h2>${postToReply.subject}</h2>
-            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> &#xbb <span class="date">${postToReply.lastUpdate}</span></p>
-        	<p>${postToReply.text}</p>
-    	</div>
-    	<div id="postProfile">
-    		<ul>
-        		<li>
-        			<c:if test="${postToReply.user.portrait}">
-        				<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
-							<c:param name="account" value="${postToReply.user.account}" />
-							<c:param name="time" value="${time}" />
-						</c:url>
-        				<img src="${ShowPortraitUserURL}" class="avatar"/>
-        			</c:if>
-        			<c:if test="${!postToReply.user.portrait}">
-        				<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
-        			</c:if>
-        			<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a>
-        		</li>
-            	<li>Community User</li>
-            	<li>Posts: <span>${postToReply.user.forumNumberOfPost}</span></li>
-            	<li>Joined: <span>${postToReply.user.forumJoinedDate}</span></li>
-        	</ul>
-    	</div>
-    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-	</div>
+		<div id="postTable">
+			<div id="post">
+				<h2>${postToReply.subject}</h2>
+	            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> &#xbb <span class="date">${postToReply.lastUpdate}</span></p>
+	        	<p>${postToReply.text}</p>
+	    	</div>
+	    	<div id="postProfile">
+	    		<ul>
+	        		<li>
+	        			<c:if test="${postToReply.user.portrait}">
+	        				<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+								<c:param name="account" value="${postToReply.user.account}" />
+								<c:param name="time" value="${time}" />
+							</c:url>
+	        				<img src="${ShowPortraitUserURL}" class="avatar"/>
+	        			</c:if>
+	        			<c:if test="${!postToReply.user.portrait}">
+	        				<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
+	        			</c:if>
+	        			<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a>
+	        		</li>
+	            	<li>Community User</li>
+	            	<li>Posts: <span>${postToReply.user.forumNumberOfPost}</span></li>
+	            	<li>Joined: <span>${postToReply.user.forumJoinedDate}</span></li>
+	        	</ul>
+	    	</div>
+	    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+		</div>
 	</c:if>
 
-	<c:if test="${command.topicId == '0'}">
-	<h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
-	</c:if>
-
-	<c:if test="${command.topicId != '0'}">
-	<h1 style="margin-bottom:20px;">POST REPLY</h1>
-	</c:if>
+	<c:choose>
+		<c:when test="${command.topicId == 0}">
+			<h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
+		</c:when>
+		<c:otherwise>
+			<h1 style="margin-bottom:20px;">POST REPLY</h1>
+		</c:otherwise>
+	</c:choose>
 
 	<form:form id="EditForumPost" method="POST" class="edit" action="${EditForumPostURL}">
 		<div>
@@ -59,21 +76,57 @@
 			<form:textarea id="htmlbox" name="text" path="text" style="width:970px; height:300px"></form:textarea>
 	    </div>
 	    
-	    <a href="#" id="preview" class="buttonSmall button_small">Preview</a>
-	    <a href="#" id="discard" class="buttonSmall button_small">Discard</a>
-	    <input type="submit" value="Submit" class="buttonSmall button_small" id="submit" onclick="instance.post();">
+	    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
+	    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
+	    <input type="submit" value="Submit" class="buttonMedium button_medium" id="submit" onclick="instance.post();">
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>
 	    <form:hidden path="postId"/>
 
 	</form:form>
-<script type="text/javascript">
+	
+	<div id="postTablePreviewContainer" title="Post" style="display:none; margin-top:45px">
+		<h1>PREVIEW</h1>
+		<div id="postTablePreview"></div>
+		<a href="#" id="closePreview" class="buttonMedium button_medium">Close Preview</a>
+	</div>
+
+	<div id="messagePosted" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			This message has been posted successfully.
+		</p>
+	</div>
+
+	<div id="messageNotPosted" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			This message has not been posted successfully.
+		</p>
+	</div>
+	
+	<div id="messageNotValid" title="Post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			Write subject and text in this message!
+		</p>
+	</div>
+	
+	<div id="question" title="Discard" style="display:none; cursor: default"> 
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
+			Discard changes?
+		</p> 
+	</div>
+	
+	<script type="text/javascript">
 		tinyMCE.init({
 			// General options
 			mode : "textareas",
 			theme : "advanced",
 			skin : "o2k7",
+			content_css: "../styles/1024/forumMCE.css",
 			plugins : "autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,inlinepopups,autosave",
 			language : "en",
 		
@@ -105,6 +158,7 @@
 		});
 		
 		$j(document).ready(function() {
+			
 			$j('#submit').click(function(){
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 				//MD: In variable 'text' I control if the user has inserted no words in the textarea
@@ -172,80 +226,46 @@
 				}
 			});
 
-			$j('#preview').click(function(){
+			$j("#preview").click(function(){
 				$j("#htmlbox").text(tinyMCE.get('htmlbox').getContent());
 	 			$j.ajax({ type:"POST", url:"${ShowPreviewForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(html) {
 	 				$j("#postTablePreview").html(html);
+	 				setTimeout(function() {
+						$j.scrollTo("#postTablePreview", 800);
+		    		},200);
 				}});
-
-	 			$j('#postTablePreview').css('display','inherit');
-				$j.scrollTo({top:'300px',left:'0px'}, 800 );
+	 			$j('#postTablePreviewContainer').show();
 				return false;
 			});
 			
-			$j('#discard').click(function(){
-				$j('#main').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
+			$j("#closePreview").click(function() {
+				$j('#postTablePreview').html("");
+				$j('#postTablePreviewContainer').hide();
+				return false;
+			});
+			
+			$j("#discard").click(function(){
+				$j("#question").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130, 
+					buttons: {
+						Yes: function() {
+							$j(this).dialog("close");
+							$j("#main").load($j("#prevUrl").val());
+						},
+						No: function() {
+							$j(this).dialog("close");
+						}
+					}
+				});
+				$j("#question").dialog('open');
 				return false;
 			});
 			
 			//MD: Fix a problem with tinyMCE alert when change page.
 			window.onbeforeunload = function() {};
 		});
-</script>
-
-	<div id="postTablePreview" title="Post" style="display:none; margin-top:45px">
-	</div>
-
-	<div id="messagePosted" title="Post" style="display:none"> 
-		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			This message has been posted successfully.
-		</p>
-	</div>
-
-	<div id="messageNotPosted" title="Post" style="display:none"> 
-		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			This message has not been posted successfully.
-		</p>
-	</div>
-	
-	<div id="messageNotValid" title="Post" style="display:none"> 
-		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			Write subject and text in this message!
-		</p>
-	</div>
-	
-	<div id="question" style="display:none; cursor: default"> 
-		<p>Discard changes?</p> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
-	</div>
-	
-	<script type="text/javascript">
-	$j(document).ready(function() {
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			$j("#question").hide();
-			$j("#main").append($j("#question"));
-			$j(".blockUI").remove();
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			$j("#main").load($j("#prevUrl").val());				
-			return false; 
-		}); 
-     
-	});
 	</script>

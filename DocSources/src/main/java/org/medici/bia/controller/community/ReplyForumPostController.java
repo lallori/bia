@@ -133,7 +133,7 @@ public class ReplyForumPostController {
 			command.setText("");
 		}else{
 			command.setSubject("RE: " + firstPostTopicToReply.getSubject());
-			command.setText("<blockquote>" + firstPostTopicToReply.getText() + "</blockquote><br />");
+			command.setText("<blockquote><cite class=\"mceNonEditable postCite\">" + firstPostTopicToReply.getUser().getAccount() + " wrote:</cite><div class=\"postContent\">" + firstPostTopicToReply.getText() + "</div></blockquote><p>&nbsp;</p>");
 		}
 		
 

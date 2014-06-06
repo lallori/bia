@@ -6,364 +6,442 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
-	<c:param name="forumId" value="${topic.forum.forumId}"/>
-</c:url>
+	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
+		<c:param name="forumId" value="${topic.forum.forumId}"/>
+	</c:url>
+	
+	<c:url var="ShowTopicRefreshURL" value="/community/ShowTopicForum.do">
+		<c:param name="topicId" value="${topic.topicId}"/>
+	</c:url>
+	
+	<c:url var="RenameForumTopicURL" value="/de/community/RenameForumTopic.json" />
+	
+	<c:url var="BIAHomeURL" value="/Home.do" />
 
-<c:url var="ShowTopicRefreshURL" value="/community/ShowTopicForum.do">
-	<c:param name="topicId" value="${topic.topicId}"/>
-</c:url>
-
-<c:url var="RenameForumTopicURL" value="/de/community/RenameForumTopic.json" />
-
-<c:url var="BIAHomeURL" value="/Home.do" />
-
-<div id="urlActions">
-	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-	<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
-</div>
-
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-	<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-</security:authorize>
-<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
-
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
-	<c:if test="${topic.forum.document != null && not empty documentExplorer}">
-		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="entryId" value="${documentExplorer.entryId}"/>
-			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-			<c:param name="flashVersion"   value="false" />
-			<c:param name="showHelp" value="true" />
-			<c:param name="showThumbnail" value="true" />
-		</c:url>
+	<c:if test="${not empty topic}">
+		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
 		
-		<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
-		
-		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId" value="${topic.forum.document.entryId}"/>
-		</c:url>
-		
-		
-		
-		<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
-		<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
-		
-		<p>${topic.forum.description}</p>
-		<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
-		<div id="prevNextButtons" class="thread">
-	    	<c:if test="${documentExplorer.image.imageOrder == 1}">
-	    		<div id="previousPage">
-	        		<a href="#" style="visibility:hidden;"></a>
-	    		</div>
-	    	</c:if>
-	    	<c:if test="${documentExplorer.image.imageOrder > 1}">
-	    		<div id="previousPage">
-	        		<a href="#"></a>
-	    		</div>
-	    	</c:if>
-	    	<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total}">
-	    		<div id="nextPage">
-	        		<a href="#" style="visibility:hidden;"></a>
-	    		</div>
-	    	</c:if>
-	    	<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total}">
-	    		<div id="nextPage">
-	        		<a href="#"></a>
-	    		</div>
-	    	</c:if>
+		<div id="urlActions">
+			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+			<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
 		</div>
-				
-		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
-	</c:if>
-	<c:if test="${topic.forum.document != null && empty documentExplorer}">
-		<p></p>
-		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId" value="${topic.forum.document.entryId}"/>
-		</c:url>
-		<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>		
-	</c:if>
-	<c:if test="${topic.annotation != null}">
-		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
-			<c:param name="volNum" value="${volumeExplorer.volNum}"/>
-			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
-			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
-			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
-			<c:param name="flashVersion"   value="false" />
-			<c:param name="showHelp" value="true" />
-			<c:param name="showThumbnail" value="true" />
-		</c:url>
 		
-		<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
-	</c:if>
-	<c:if test="${topic.forum.place != null}">
-		<p></p>
-		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
-			<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
-		</c:url>
-		<a href="${ShowPlaceURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
-	</c:if>
-	<c:if test="${topic.forum.person != null}">
-		<p></p>
-		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
-			<c:param name="personId" value="${topic.forum.person.personId}"/>
-		</c:url>
-		<a href="${ShowPersonURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
-	</c:if>
-	<c:if test="${topic.forum.volume != null}">
-		<p></p>
-		<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
-			<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
-		</c:url>
-		<a href="${ShowVolumeURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
-	</c:if>
-		
-</security:authorize>
-
-<div id="topicActions">
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
-		<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-			<c:param name="postId" value="0"/>
-			<c:param name="forumId" value="${topic.forum.forumId}"/>
-			<c:param name="topicId" value="${topic.topicId}"/>
-		</c:url>
-		<c:if test="${!subscribed}">
-			<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
-				<c:param name="forumTopicId" value="${topic.topicId}"/>
-			</c:url>
-			<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
-		</c:if>
-		<c:if test="${subscribed}">
-			<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
-				<c:param name="forumTopicId" value="${topic.topicId}"/>
-			</c:url>
-			<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
-		</c:if>
-		<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
-	</security:authorize>
-    <div id="searchThisForumFormDiv">
-    	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
-            <input id="searchForumThisText" class="button_small" name="searchInForum" type="text" value="Search this forum...">
-            <input id="search" type="submit" title="Search" value="Search"/>
-        </form>
-    </div>
-<!--     <a href="#" id="printButton" class="buttonMedium button_medium"><span class="button_print">Print discussion</span></a> -->
-</div>
-
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-	<c:if test="${not empty courseTranscriptionURL}">
-		<div id="goToCourseTranscription">
-			<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
-		</div>
-	</c:if>
-</security:authorize>
-
-<c:if test="${isEmpty == null}">
-<c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
-	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
-		<c:param name="postId" value="${currentPost.postId}"/>
-		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-	</c:url>
-
-	<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReplyForumPost.do">
-		<c:param name="postId" value="0"/>
-		<c:param name="parentPostId" value="${currentPost.postId}"/>
-		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-	</c:url>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+			<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+		</security:authorize>
+		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 	
-	<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
-		<c:param name="postId" value="${currentPost.postId}"/>
-		<c:param name="forumId" value="${currentPost.forum.forumId}"/>
-		<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-	</c:url>
-	
-	<c:url var="DeleteForumPostURL" value="/community/DeletePost.json">
-		<c:param name="postId" value="${currentPost.postId}"/>
-	</c:url>
-	
-	<div id="postTable">
-		<div id="topicIcons">
+
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:choose>
-				<c:when test="${currentPost.user.account == account}">
-					<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
-					<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+				<c:when test="${not empty topic.forum.document && not empty documentExplorer}">
+					<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+						<c:param name="entryId" value="${documentExplorer.entryId}"/>
+						<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+						<c:param name="flashVersion"   value="false" />
+						<c:param name="showHelp" value="true" />
+						<c:param name="showThumbnail" value="true" />
+					</c:url>
+					
+					<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
+					
+					<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+						<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+					</c:url>
+					
+					<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
+					<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
+					
+					<p>${topic.forum.description}</p>
+					<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+					<div id="prevNextButtons" class="thread">
+				    	<c:if test="${documentExplorer.image.imageOrder == 1}">
+				    		<div id="previousPage">
+				        		<a href="#" style="visibility:hidden;"></a>
+				    		</div>
+				    	</c:if>
+				    	<c:if test="${documentExplorer.image.imageOrder > 1}">
+				    		<div id="previousPage">
+				        		<a href="#"></a>
+				    		</div>
+				    	</c:if>
+				    	<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total}">
+				    		<div id="nextPage">
+				        		<a href="#" style="visibility:hidden;"></a>
+				    		</div>
+				    	</c:if>
+				    	<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total}">
+				    		<div id="nextPage">
+				        		<a href="#"></a>
+				    		</div>
+				    	</c:if>
+					</div>
+							
+					<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+				</c:when>
+				<c:when test="${not empty topic.forum.document && empty documentExplorer}">
+					<p></p>
+					<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+						<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+					</c:url>
+					<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>		
+				</c:when>
+				<c:when test="${not empty topic.annotation}">
+					<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+						<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+						<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+						<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+						<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+						<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+						<c:param name="flashVersion"   value="false" />
+						<c:param name="showHelp" value="true" />
+						<c:param name="showThumbnail" value="true" />
+					</c:url>
+					
+					<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+				</c:when>
+				<c:when test="${not empty topic.forum.place}">
+					<p></p>
+					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+						<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
+					</c:url>
+					<a href="${ShowPlaceURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+				</c:when>
+				<c:when test="${not empty topic.forum.person}">
+					<p></p>
+					<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+						<c:param name="personId" value="${topic.forum.person.personId}"/>
+					</c:url>
+					<a href="${ShowPersonURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+				</c:when>
+				<c:when test="${not empty topic.forum.volume}">
+					<p></p>
+					<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
+						<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
+					</c:url>
+					<a href="${ShowVolumeURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
 				</c:when>
 				<c:otherwise>
-					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-						<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
-						<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
-					</security:authorize>
 				</c:otherwise>
 			</c:choose>
-	        <a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
-	        <a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
-	    </div>
-	    <div id="post">
-			<%-- In this case we enter in "my posts page" --%>
-			<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
-				<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
-			</c:url>
-	    	<c:choose>
-	    		<c:when test="${topic.topicId == null}">
-	    			<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
-	    		</c:when>
-	    		<c:otherwise>
-	        		<h2>${currentPost.subject}</h2>
-	        	</c:otherwise>
-	        </c:choose>
-	        <c:choose>
-	        	<c:when test="${currentPost.updater == null || currentPost.user.account == currentPost.updater.account}">
-	        		<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
-	        	</c:when>
-	        	<c:otherwise>
-	        		<table class="by">
-	        			<tr>
-	        				<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
-	        				<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
-	        				<td><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
-	        			</tr>
-			        </table>
-	        	</c:otherwise>
-	        </c:choose>
-	        
-	        <p>${currentPost.text}</p>
-	    </div>
-	    <div id="postProfile">
-	    	<ul>
-	        	<li>
-	        		<c:if test="${currentPost.user.portrait}">
-	        			<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
-							<c:param name="account" value="${currentPost.user.account}" />
-							<c:param name="time" value="${time}" />
+		</security:authorize>
+	
+		<div id="topicActions">
+		
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+				<c:choose>
+					<c:when test="${not empty topic.annotation}">
+						<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
+							<c:param name="postId" value="0"/>
+							<c:param name="forumId" value="${topic.forum.forumId}"/>
+							<c:param name="topicId" value="${topic.topicId}"/>
+							<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+							<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+							<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+							<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+							<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 						</c:url>
-	        			<img src="${ShowPortraitUserURL}" class="avatar"/>
-	        		</c:if>
-	        		<c:if test="${!currentPost.user.portrait}">
-	        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
-	        		</c:if>
-	        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
-	        	</li>
-	            <li>${maxAuthorities[currentPost.user.account].description}</li>
-	            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-	            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
-	        </ul>
-	    </div>
-	    <c:choose>
-		    <c:when test="${bia:contains(onlineUsers, currentPost.user.account)}">
-		    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
-		    </c:when>
-		    <c:otherwise>
-		    	<div id="online"></div>
-		    </c:otherwise>
-	    </c:choose>
-	</div>
-</c:forEach>
-
-
-<!-- <div id="topicActions"> -->
-<%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
-<%-- 	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do"> --%>
-<%-- 			<c:param name="postId" value="0"/> --%>
-<%-- 			<c:param name="forumId" value="${topic.forum.forumId}"/> --%>
-<%-- 			<c:param name="topicId" value="${topic.topicId}"/> --%>
-<%-- 	</c:url> --%>
-<%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a> --%>
-<%-- 	</security:authorize> --%>
-<!-- </div> -->
-
-<div id="forumPaginate">
-    <c:set var="paginationData">
-		<bia:paginationForum page="${postsPage}"/>
-	</c:set>
+					</c:when>
+					<c:otherwise>
+						<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
+							<c:param name="postId" value="0"/>
+							<c:param name="forumId" value="${topic.forum.forumId}"/>
+							<c:param name="topicId" value="${topic.topicId}"/>
+						</c:url>
+					</c:otherwise>
+				</c:choose>
+		
+				<c:if test="${!subscribed}">
+					<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
+						<c:param name="forumTopicId" value="${topic.topicId}"/>
+					</c:url>
+					<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
+				</c:if>
+				<c:if test="${subscribed}">
+					<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
+						<c:param name="forumTopicId" value="${topic.topicId}"/>
+					</c:url>
+					<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
+				</c:if>
+				
+				<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+			</security:authorize>
+			
+		    <div id="searchThisForumFormDiv">
+		    	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
+		            <input id="searchForumThisText" class="button_small" name="searchInForum" type="text" value="Search this forum...">
+		            <input id="search" type="submit" title="Search" value="Search"/>
+		        </form>
+		    </div>
+		<!--     <a href="#" id="printButton" class="buttonMedium button_medium"><span class="button_print">Print discussion</span></a> -->
+		</div>
 	
-	<div id="jumpToDiv">
-    	Jump to:
-        <select id="selectForum" name="selectForum" class="selectform_long">
-        	<option value="" selected="selected">Select a Forum</option>
-        </select>
-        <input id="go" type="submit" title="go" value="Go" class="buttonMini button_mini">
-    </div>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+			<c:if test="${not empty courseTranscriptionURL}">
+				<div id="goToCourseTranscription">
+					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
+				</div>
+			</c:if>
+		</security:authorize>
 	
-	${paginationData}
- 
-</div>
+	</c:if>
 
-</c:if>
-<c:if test="${isEmpty != null && topic.topicId == null}">
-	<p>You have no posts.</p>
-</c:if>
+	<c:if test="${empty isEmpty}">
+		<c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
+			<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
+				<c:param name="postId" value="${currentPost.postId}"/>
+				<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+				<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+			</c:url>
+			
+			<c:url var="DeleteForumPostURL" value="/community/DeletePost.json">
+				<c:param name="postId" value="${currentPost.postId}"/>
+			</c:url>
+			
+			<c:choose>
+				<c:when test="${not empty topic.annotation}">
+					<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReplyForumPost.do">
+						<c:param name="postId" value="0"/>
+						<c:param name="parentPostId" value="${currentPost.postId}"/>
+						<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+						<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+						<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+						<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+						<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+						<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+						<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+					</c:url>
+					
+					<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
+						<c:param name="postId" value="${currentPost.postId}"/>
+						<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+						<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+						<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+						<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+						<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+						<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+						<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+					</c:url>
+				</c:when>
+				<c:otherwise>
+					<c:url var="ReplyWithQuoteForumPostURL" value="/community/ReplyForumPost.do">
+						<c:param name="postId" value="0"/>
+						<c:param name="parentPostId" value="${currentPost.postId}"/>
+						<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+						<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+					</c:url>
+					
+					<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
+						<c:param name="postId" value="${currentPost.postId}"/>
+						<c:param name="forumId" value="${currentPost.forum.forumId}"/>
+						<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+					</c:url>
+				</c:otherwise>
+			</c:choose>
+		
+			<div id="postTable">
+				<c:if test="${not empty topic}">
+					<div id="topicIcons">
+						<c:choose>
+							<c:when test="${currentPost.user.account == account}">
+								<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+								<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+							</c:when>
+							<c:otherwise>
+								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+									<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+									<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+								</security:authorize>
+							</c:otherwise>
+						</c:choose>
+						<a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
+						<a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
+					</div>
+				</c:if>
+			    <div id="post">
+					<%-- In this case we enter in "my posts page" --%>
+					<c:choose>
+						<c:when test="${currentPost.topic.forum.subType == 'COURSE' and not empty currentPost.topic.document}">
+							<c:url var="ShowTopicForumURL" value="/teaching/ShowCourseTranscription.do">
+								<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+								<c:param name="entryId" value="${currentPost.topic.document.entryId}"/>
+								<c:param name="completeDOM" value="true"/>
+							</c:url>
+						</c:when>
+						<c:when test="${currentPost.topic.forum.subType == 'COURSE'}">
+							<c:url var="ShowTopicForumURL" value="/teaching/ShowTopicForum.do">
+								<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+								<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
+								<c:param name="completeDOM" value="true"/>
+							</c:url>
+						</c:when>
+						<c:otherwise>
+							<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+								<c:param name="topicId" value="${currentPost.topic.topicId}"/>
+								<c:param name="forumId" value="${currentPost.topic.forum.forumId}"/>
+								<c:param name="completeDOM" value="true"/>
+							</c:url>
+						</c:otherwise>
+					</c:choose>
+			    	<c:choose>
+			    		<c:when test="${topic.topicId == null}">
+			    			<h2>${currentPost.subject} <i>in</i> <a href="${ShowTopicForumURL}" class="linkTopic">${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</a></h2>
+			    		</c:when>
+			    		<c:otherwise>
+			        		<h2>${currentPost.subject}</h2>
+			        	</c:otherwise>
+			        </c:choose>
+			        <c:choose>
+			        	<c:when test="${empty currentPost.updater || currentPost.user.account == currentPost.updater.account}">
+			        		<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
+			        	</c:when>
+			        	<c:otherwise>
+			        		<table class="by">
+			        			<tr>
+			        				<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
+			        				<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
+			        				<td><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
+			        			</tr>
+					        </table>
+			        	</c:otherwise>
+			        </c:choose>
+			        
+			        <p>${currentPost.text}</p>
+			    </div>
+			    <div id="postProfile">
+			    	<ul>
+			        	<li>
+			        		<c:if test="${currentPost.user.portrait}">
+			        			<c:url var="ShowPortraitUserURL" value="/user/ShowPortraitUser.do">
+									<c:param name="account" value="${currentPost.user.account}" />
+									<c:param name="time" value="${time}" />
+								</c:url>
+			        			<img src="${ShowPortraitUserURL}" class="avatar"/>
+			        		</c:if>
+			        		<c:if test="${!currentPost.user.portrait}">
+			        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
+			        		</c:if>
+			        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
+			        	</li>
+			            <li>${maxAuthorities[currentPost.user.account].description}</li>
+			            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
+			            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
+			        </ul>
+			    </div>
+			    <c:choose>
+				    <c:when test="${not empty onlineUsers and bia:contains(onlineUsers, currentPost.user.account)}">
+				    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
+				    </c:when>
+				    <c:otherwise>
+				    	<div id="online"></div>
+				    </c:otherwise>
+			    </c:choose>
+			</div>
+		</c:forEach>
+		
+		
+		<!-- <div id="topicActions"> -->
+		<%-- 	<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS"> --%>
+		<%-- 	<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do"> --%>
+		<%-- 			<c:param name="postId" value="0"/> --%>
+		<%-- 			<c:param name="forumId" value="${topic.forum.forumId}"/> --%>
+		<%-- 			<c:param name="topicId" value="${topic.topicId}"/> --%>
+		<%-- 	</c:url> --%>
+		<%-- 	<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" class="postReply"><span class="button_reply">Post a <b>reply</b></span></a> --%>
+		<%-- 	</security:authorize> --%>
+		<!-- </div> -->
+		
+		<div id="forumPaginate">
+		    <c:set var="paginationData">
+				<bia:paginationForum page="${postsPage}"/>
+			</c:set>
+			
+			<c:if test="${not empty topic}">
+				<div id="jumpToDiv">
+			    	Jump to:
+			        <select id="selectForum" name="selectForum" class="selectform_long">
+			        	<option value="" selected="selected">Select a Forum</option>
+			        </select>
+			        <input id="go" type="submit" title="go" value="Go" class="buttonMini button_mini">
+			    </div>
+		    </c:if>
+			
+			${paginationData}
+		 
+		</div>
+	
+	</c:if>
+	<c:if test="${not empty isEmpty and (empty topic or empty topic.topicId)}">
+		<p>You have no posts.</p>
+	</c:if>
 					
 
 
-<c:url var="ShowForumOfTopicURL" value="/community/ShowForum.do">
-	<c:param name="forumId" value="${topic.forum.forumId}"></c:param>
-</c:url>
-<a href="${ShowForumOfTopicURL}" class="returnTo">&larr; Return to <span>${topic.forum.title}</span> Forum</a>
-
-
-<div id="deletePostModal" title="Delete post" style="display:none"> 
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to delete this post?
-	</p>
+	<c:url var="ShowForumOfTopicURL" value="/community/ShowForum.do">
+		<c:param name="forumId" value="${topic.forum.forumId}"></c:param>
+	</c:url>
+	<a href="${ShowForumOfTopicURL}" class="returnTo">&larr; Return to <span>${topic.forum.title}</span> Forum</a>
 	
-	<input type="hidden" value="" id="deleteUrl"/>
-</div>
-
-<div id="reportPostModal" title="Report post" style="display:none"> 
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to report this post?
-	</p>
 	
-	<input type="hidden" value="" id="reportUrl"/>
-</div>
-
-<div id="subscribeModal" title="Subscribe topic" style="display:none"> 
-	<p>
-		<fmt:message key="community.forum.topic.subscribed.yes"/>
-	</p>
-</div>
-
-<div id="unsubscribeModal" title="Unsubscribe topic" style="display:none"> 
-	<p>
-		<fmt:message key="community.forum.topic.subscribed.no"/>
-	</p>
-</div>
-
-<div id="notDeletePost" title="Delete post" style="display:none"> 
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Not deleted
-	</p>
-</div>
-
-<div id="notReportPost" title="Report post" style="display:none"> 
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Not reported
-	</p>
-</div>
-
-<div id="copyLink" title="Copy Link" style="display:none"> 
-	<input id="linkToCopy" type="text" value="" size="50"/>
-</div>
-
-<div id="changeTitleModal" title='<fmt:message key="community.forum.tooltip.changeTitle" />' style="display:none">
-	<p>
-		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		<fmt:message key="community.forum.messages.changeTitleMessage" />
-		<form id="changeTitleModalForm" method="post">
-			<input id="title" name="title" type="text" style="width: 98%" value="" />
-			<input id="topicId" name="topicId" type="hidden" value="" />
-		</form>
-		<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
-	</p>
-</div>
+	<div id="deletePostModal" title="Delete post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Are you sure you want to delete this post?
+		</p>
+		
+		<input type="hidden" value="" id="deleteUrl"/>
+	</div>
+	
+	<div id="reportPostModal" title="Report post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Are you sure you want to report this post?
+		</p>
+		
+		<input type="hidden" value="" id="reportUrl"/>
+	</div>
+	
+	<div id="subscribeModal" title="Subscribe topic" style="display:none"> 
+		<p>
+			<fmt:message key="community.forum.topic.subscribed.yes"/>
+		</p>
+	</div>
+	
+	<div id="unsubscribeModal" title="Unsubscribe topic" style="display:none"> 
+		<p>
+			<fmt:message key="community.forum.topic.subscribed.no"/>
+		</p>
+	</div>
+	
+	<div id="notDeletePost" title="Delete post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Not deleted
+		</p>
+	</div>
+	
+	<div id="notReportPost" title="Report post" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Not reported
+		</p>
+	</div>
+	
+	<div id="copyLink" title="Copy Link" style="display:none"> 
+		<input id="linkToCopy" type="text" value="" size="50"/>
+	</div>
+	
+	<div id="changeTitleModal" title='<fmt:message key="community.forum.tooltip.changeTitle" />' style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.messages.changeTitleMessage" />
+			<form id="changeTitleModalForm" method="post">
+				<input id="title" name="title" type="text" style="width: 98%" value="" />
+				<input id="topicId" name="topicId" type="hidden" value="" />
+			</form>
+			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+		</p>
+	</div>
 
 
 	<script type="text/javascript">
@@ -433,11 +511,6 @@
 			$j('.quotePost').click(function (){
 				$j("#main").load($j(this).attr("href"));
 				$j("#prevUrl").val($j(".paginateActive").attr("href"));
-				return false;
-			});
-			
-			$j('.linkTopic').click(function(){
-				$j("#main").load($j(this).attr("href"));
 				return false;
 			});
 			
@@ -554,65 +627,69 @@
 				return false;
 			});
 			
-			$j("#changeTopicTitle").click(function() {
-				var topicId = ${topic.topicId};
-				
-				// set the topic identifier in the changeTitleModalForm
-				$j("#changeTitleModalForm #topicId").val(topicId);
-				// ...and set the beginning title
-				$j("#changeTitleModalForm #title").val($j("#topicTitle_" + topicId).text());
-				
-				$j("#changeTitleModal").dialog('open');
-				return false;
-				
-			});
+			<c:if test="${not empty topic}">
 			
-			$j("#changeTitleModal").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 350,
-				height: 170,
-				buttons: {
-					Ok: function() {
-						var newTitle = $j("#changeTitleModalForm #title").val();
-						if (newTitle === "") {
-							$j("#changeTitleError").show();
-							return;
-						}
-						$j.ajax({ 
-							type: "POST", 
-							url: "${RenameForumTopicURL}",
-							data: $j("#changeTitleModalForm").serialize(),
-							async: false, 
-							success: function(json) {
-				 				if (json.operation == 'OK') {
-				 					$j("#topicTitle_${topic.topicId}").text(newTitle);
-				 				} else {
-				 					$j("#changeTitleError").hide();
-				 					alert('The operation failed on server...cannot proceed!!!');
-				 				}
-				 				$j("#changeTitleModal").dialog('close');
-							},
-							error: function(data) {
-								$j("#changeTitleError").hide();
-								$j("#changeTitleModal").dialog('close');
-								alert('Server error...operation aborted!!!');
+				$j("#changeTopicTitle").click(function() {
+					var topicId = ${topic.topicId};
+					
+					// set the topic identifier in the changeTitleModalForm
+					$j("#changeTitleModalForm #topicId").val(topicId);
+					// ...and set the beginning title
+					$j("#changeTitleModalForm #title").val($j("#topicTitle_" + topicId).text());
+					
+					$j("#changeTitleModal").dialog('open');
+					return false;
+					
+				});
+				
+				$j("#changeTitleModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 350,
+					height: 170,
+					buttons: {
+						Ok: function() {
+							var newTitle = $j("#changeTitleModalForm #title").val();
+							if (newTitle === "") {
+								$j("#changeTitleError").show();
+								return;
 							}
-						});
-						return false;	
+							$j.ajax({ 
+								type: "POST", 
+								url: "${RenameForumTopicURL}",
+								data: $j("#changeTitleModalForm").serialize(),
+								async: false, 
+								success: function(json) {
+					 				if (json.operation == 'OK') {
+					 					$j("#topicTitle_${topic.topicId}").text(newTitle);
+					 				} else {
+					 					$j("#changeTitleError").hide();
+					 					alert('The operation failed on server...cannot proceed!!!');
+					 				}
+					 				$j("#changeTitleModal").dialog('close');
+								},
+								error: function(data) {
+									$j("#changeTitleError").hide();
+									$j("#changeTitleModal").dialog('close');
+									alert('Server error...operation aborted!!!');
+								}
+							});
+							return false;	
+						},
+						Cancel: function() {
+							$j("#changeTitleError").hide();
+							$j("#changeTitleModal").dialog('close');
+						}
 					},
-					Cancel: function() {
+					close: function(event, ui) {
 						$j("#changeTitleError").hide();
 						$j("#changeTitleModal").dialog('close');
+						return false;
 					}
-				},
-				close: function(event, ui) {
-					$j("#changeTitleError").hide();
-					$j("#changeTitleModal").dialog('close');
-					return false;
-				}
-			});
+				});
+				
+			</c:if>
 			
 			$j( "#reportPostModal" ).dialog({
 				  autoOpen : false,

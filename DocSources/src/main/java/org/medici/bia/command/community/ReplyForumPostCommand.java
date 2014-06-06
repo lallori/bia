@@ -39,6 +39,11 @@ public class ReplyForumPostCommand {
 	private Integer forumId;
 	private String subject;
 	private String text;
+	private Integer summaryId;
+	private Integer volNum;
+	private String volLetExt;
+	private Integer annotationId;
+	private Integer imageOrder;
 	
 	/**
 	 * @param postId the postId to set
@@ -122,6 +127,46 @@ public class ReplyForumPostCommand {
 	 */
 	public String getSubject() {
 		return subject;
+	}
+
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+
+	public Integer getVolNum() {
+		return volNum;
+	}
+
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
+	}
+
+	public String getVolLetExt() {
+		return volLetExt;
+	}
+
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
+	}
+
+	public Integer getAnnotationId() {
+		return annotationId;
+	}
+
+	public void setAnnotationId(Integer annotationId) {
+		this.annotationId = annotationId;
+	}
+
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
 	}
 
 }
