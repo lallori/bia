@@ -62,7 +62,7 @@ public class EuropeanaJob {
 	}
 	
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(cron = "0 35 15 ? * FRI")
+	@Scheduled(cron = "0 0 3 ? * SUN")
 	public void execute() {
 		MDC.put("europeana", "threadeuropeana");
 		try {
