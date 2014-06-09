@@ -188,7 +188,7 @@
 	
 	<c:if test="${empty isEmpty}">
 	
-		<div id="forumPaginate">
+		<div id="forumPaginate_upper">
 		    <c:set var="paginationData">
 				<bia:paginationForum page="${postsPage}"/>
 			</c:set>
@@ -361,7 +361,7 @@
 		<%-- 	</security:authorize> --%>
 		<!-- </div> -->
 		
-		<div id="forumPaginate">
+		<div id="forumPaginate_lower">
 		    <c:set var="paginationData">
 				<bia:paginationForum page="${postsPage}"/>
 			</c:set>

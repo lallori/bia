@@ -661,17 +661,17 @@ a.returnTo {
 
 /* ---------- Forum Paginate ---------- */
 
-#forumPaginate {
+#forumPaginate, #forumPaginate_upper, #forumPaginate_lower {
     text-align: right;
     font-size: 10px;
     height: 50px;
 }
 
-#forumPaginate a{
+#forumPaginate a, #forumPaginate_upper a, #forumPaginate_lower a {
     font-size: 10px;
 }
 
-#forumPaginate a:hover{
+#forumPaginate a:hover, #forumPaginate_upper a:hover, #forumPaginate_lower a:hover {
     text-decoration:none;
     color:#654C47;
 }
