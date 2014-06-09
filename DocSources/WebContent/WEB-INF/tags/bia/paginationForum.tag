@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="page" required="true" type="org.medici.bia.common.pagination.Page" %>
-<c:set var="pageCountToDiplay" value="5"/>
-<c:set var="pageCountToDiplayHalf" value="3"/>
+<c:set var="pageCountToDisplay" value="5"/>
+<c:set var="pageCountToDisplayHalf" value="3"/>
 
 	<c:choose>
 		<c:when test="${page.thisPage != 1 and not empty searchResultPage}">
@@ -87,23 +87,21 @@
 				<c:param name="topicsForPage" value="${command.topicsForPage}" />
 			</c:url>
 		</c:when>
-		<c:when test="${page.thisPage != 1 and not empty postsPage and not empty forum and not empty topic}">
+		<c:when test="${page.thisPage != 1 and not empty postsPage and not empty topic}">
 			<c:url var="firstUrl" value="/community/ShowTopicForum.do">
-				<c:param name="forumId" value="${forum.forumId}" />
 				<c:param name="topicId" value="${topic.topicId}" />
 				<c:param name="postPageNumber" value="1" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
 				<c:param name="postsForPage" value="${command.postsForPage}" />
 			</c:url>
 			<c:url var="previousUrl" value="/community/ShowTopicForum.do">
-				<c:param name="forumId" value="${forum.forumId}" />
 				<c:param name="topicId" value="${topic.topicId}" />
 				<c:param name="postPageNumber" value="${page.thisPage - 1}" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
 				<c:param name="postsForPage" value="${command.postsForPage}" />
 			</c:url>
 		</c:when>
-		<c:when test="${page.thisPage != 1 and not empty postsPage and (empty forum or empty topic)}">
+		<c:when test="${page.thisPage != 1 and not empty postsPage and empty forum and empty topic}">
 			<c:url var="firstUrl" value="/community/ShowMyForumPost.do">
 				<c:param name="postPageNumber" value="1" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
@@ -216,23 +214,21 @@
 				<c:param name="topicsForPage" value="${command.topicsForPage}" />
 			</c:url>
 		</c:when>
-		<c:when test="${page.thisPage != page.totalPages and not empty postsPage and not empty forum and not empty topic}">
+		<c:when test="${page.thisPage != page.totalPages and not empty postsPage and not empty topic}">
 			<c:url var="nextUrl" value="/community/ShowTopicForum.do">
-				<c:param name="forumId" value="${forum.forumId}" />
 				<c:param name="topicId" value="${topic.topicId}" />
 				<c:param name="postPageNumber" value="${page.thisPage + 1}" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
 				<c:param name="postsForPage" value="${command.postsForPage}" />
 			</c:url>
 			<c:url var="lastUrl" value="/community/ShowTopicForum.do">
-				<c:param name="forumId" value="${forum.forumId}" />
 				<c:param name="topicId" value="${topic.topicId}" />
 				<c:param name="postPageNumber" value="${page.totalPages}" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
 				<c:param name="postsForPage" value="${command.postsForPage}" />
 			</c:url>
 		</c:when>
-		<c:when test="${page.thisPage != page.totalPages and not empty postsPage and (empty forum or empty topic)}">
+		<c:when test="${page.thisPage != page.totalPages and not empty postsPage and empty forum and empty topic}">
 			<c:url var="nextUrl" value="/community/ShowMyForumPost.do">
 				<c:param name="postPageNumber" value="${page.thisPage + 1}" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
@@ -264,34 +260,34 @@
 	
 	<c:choose>
 		<c:when test="${not empty firstUrl and not empty previousUrl}">
-			<a id="firstPaginateButton" href="${firstUrl}" class="paginateForumButton">First</a>
-			<a id="previousPaginateButton" href="${previousUrl}" class="paginateForumButton">Previous</a>
+			<a href="${firstUrl}" class="paginateForumButton firstPaginateButton">First</a>
+			<a href="${previousUrl}" class="paginateForumButton previousPaginateButton">Previous</a>
 		</c:when>
 		<c:otherwise>
-			<span id="firstPaginateButton">First</span>
-			<span id="previousPaginateButton">Previous</span>
+			<span class="paginateForumButton firstPaginateButton">First</span>
+			<span class="paginateForumButton previousPaginateButton">Previous</span>
 		</c:otherwise>
 	</c:choose>
 
 	<span>
 		<c:choose>
-		  	<c:when test="${page.totalPages <= pageCountToDiplay}">
+		  	<c:when test="${page.totalPages <= pageCountToDisplay}">
 				<c:forEach begin="1" end="${page.totalPages}" var="currentPage">
 					<%@ include file="pageLinkForum.tagf" %>
 				</c:forEach>
 			</c:when>
-		  	<c:when test="${page.thisPage <= pageCountToDiplayHalf}">
-				<c:forEach begin="1" end="${pageCountToDiplay}" var="currentPage">
+		  	<c:when test="${page.thisPage <= pageCountToDisplayHalf}">
+				<c:forEach begin="1" end="${pageCountToDisplay}" var="currentPage">
 					<%@ include file="pageLinkForum.tagf" %>
 				</c:forEach>
-			</c:when>	
-		  	<c:when test="${page.thisPage >= (page.totalPages-pageCountToDiplayHalf)}">
-				<c:forEach begin="${page.totalPages-pageCountToDiplay+1}" end="${page.totalPages}" var="currentPage">
+			</c:when>
+		  	<c:when test="${page.thisPage >= (page.totalPages-pageCountToDisplayHalf)}">
+				<c:forEach begin="${page.totalPages-pageCountToDisplay+1}" end="${page.totalPages}" var="currentPage">
 					<%@ include file="pageLinkForum.tagf" %>
 				</c:forEach>
-			</c:when>	
+			</c:when>
 			<c:otherwise>
-				<c:forEach begin="${page.thisPage-(pageCountToDiplay/2)+1}" end="${(page.thisPage-(pageCountToDiplay/2)+1)+pageCountToDiplay-1}" var="currentPage">
+				<c:forEach begin="${page.thisPage-(pageCountToDisplay/2)+1}" end="${(page.thisPage-(pageCountToDisplay/2)+1)+pageCountToDisplay-1}" var="currentPage">
 					<%@ include file="pageLinkForum.tagf" %>
 				</c:forEach>
 		 	</c:otherwise>
@@ -300,12 +296,12 @@
 
 	<c:choose>
 		<c:when test="${not empty nextUrl and not empty lastUrl}">
-			<a id="nextPaginateButton" href="${nextUrl}" class="paginateForumButton">Next</a>
-			<a id="lastPaginateButton" href="${lastUrl}" class="paginateForumButton">Last</a>
+			<a href="${nextUrl}" class="paginateForumButton nextPaginateButton">Next</a>
+			<a href="${lastUrl}" class="paginateForumButton lastPaginateButton">Last</a>
 		</c:when>
 		<c:otherwise>
-			<span id="nextPaginateButton">Next</span>
-			<span id="lastPaginateButton">Last</span>
+			<span class="paginateForumButton nextPaginateButton">Next</span>
+			<span class="paginateForumButton lastPaginateButton">Last</span>
 		</c:otherwise>
 	</c:choose>
 

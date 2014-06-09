@@ -185,8 +185,18 @@
 		</security:authorize>
 	
 	</c:if>
-
+	
 	<c:if test="${empty isEmpty}">
+	
+		<div id="forumPaginate">
+		    <c:set var="paginationData">
+				<bia:paginationForum page="${postsPage}"/>
+			</c:set>
+			
+			${paginationData}
+		 
+		</div>
+		
 		<c:forEach items="${postsPage.list}" var="currentPost" varStatus="status">
 			<c:url var="ReportForumPostURL" value="/community/ReportForumPost.json">
 				<c:param name="postId" value="${currentPost.postId}"/>

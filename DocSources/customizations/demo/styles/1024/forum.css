@@ -676,7 +676,7 @@ a.returnTo {
     color:#654C47;
 }
 
-#firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton, #lastPaginateButton {
+.paginateForumButton, .paginateActive, .paginateButton {
     border: 1px solid #DCC0BA;
 	border-radius:5px;
     -webkit-border-radius: 5px;
@@ -687,15 +687,15 @@ a.returnTo {
     background-color: #EAD9D6;
 }
 
-#firstPaginateButton, #previousPaginateButton, .paginateActive, .paginateButton, #nextPaginateButton {
+.firstPaginateButton, .previousPaginateButton, .paginateActive, .paginateButton, .nextPaginateButton {
     margin: 0 3px;
 }
 
-#lastPaginateButton {
+.lastPaginateButton {
     margin: 0;
 }
 
-.paginateActive, #firstPaginateButton:hover, #previousPaginateButton:hover, .paginateActive:hover, .paginateButton:hover, #nextPaginateButton:hover, #lastPaginateButton:hover {
+.paginateActive, .paginateForumButton:hover, .paginateButton:hover {
     background-color: #DCC0BA;
 }
 

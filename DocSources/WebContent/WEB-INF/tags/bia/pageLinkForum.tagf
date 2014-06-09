@@ -32,9 +32,8 @@
 				<c:param name="topicsForPage" value="${command.topicsForPage}" />
 			</c:url>
 		</c:when>
-		<c:when test="${not empty postsPage and (not empty forum or not empty topic)}">
+		<c:when test="${not empty postsPage and not empty topic}">
 			<c:url var="currentUrl" value="/community/ShowTopicForum.do">
-				<c:param name="forumId" value="${forum.forumId}" />
 				<c:param name="topicId" value="${topic.topicId}" />
 				<c:param name="postPageNumber" value="${currentPage}" />
 				<c:param name="postPageTotal" value="${page.totalPages}" />
