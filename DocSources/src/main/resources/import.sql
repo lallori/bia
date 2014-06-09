@@ -1973,5 +1973,6 @@ ALTER TABLE `tblSchedone`
 	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_PDF` `DIM_TOTALE_IMMAGINI_PDF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_JPEG`,
 	CHANGE COLUMN `DIM_TOTALE_IMMAGINI_TIFF` `DIM_TOTALE_IMMAGINI_TIFF` FLOAT NULL DEFAULT NULL AFTER `DIM_TOTALE_IMMAGINI_PDF`;
 
--- europeana
+-- europeana (to active the europeana job set the value of 'europeana.active' key to 'true' (case insensitive) 
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.path', 'Europeana output path', '/data/europeana/');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.active', 'Europeana activation flag', 'false');

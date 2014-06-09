@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,9 +71,12 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 	private static Logger logger = Logger.getLogger(EuropeanaServiceImpl.class);
 	
 	private static final int GROUP_SIZE = 25;
-	private static final String BACKUP_FILE = "Europeana.old";
-	private static final String TMP_FILE = "EuropeanaTmp.txt";
-	private static final String FILE = "Europeana.xml";
+	private static final String BASE_NAME = "Europeana";
+	private static final String BACKUP_FILE = BASE_NAME + ".old";
+	private static final String TMP_FILE = BASE_NAME + ".tmp";
+	private static final String FILE = BASE_NAME + ".xml";
+	
+	private Map<Class<?>, EuropeanaSerializer<?>> serializerMap;
 	
 	@Autowired
 	private DocumentDAO documentDAO;
@@ -105,12 +109,18 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		}
 		
 		try {
-			String path = ApplicationPropertyManager.getApplicationProperty("europeana.path") + File.separator;
+			String path = ApplicationPropertyManager.getApplicationProperty("europeana.path");
+			if (!path.endsWith(File.separator)) {
+				path += File.separator;
+			}
 			Date timeStamp = new Date();
 			initWriter(path + TMP_FILE);
+			initSerializers();
 			
 			String lastLine = writeOpenContainer();
+			logger.info("Europeana file generation...phase 1 of 2 (document to xml generation)");
 			writeDocuments(timeStamp);
+			logger.info("Europeana file generation...phase 2 of 2 (image to xml generation)");
 			writeImages(timeStamp);
 			writeLastLine(lastLine);
 			
@@ -155,7 +165,12 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		}
 	}
 	
-	private <T> String doSerialize(EuropeanaSerializer<T> serializer, T item, String pre) throws EuropeanaException {
+	@SuppressWarnings("unchecked")
+	private <T> String doSerialize(Class<T> clazz, T item, String pre) throws EuropeanaException {
+		EuropeanaSerializer<T> serializer = (EuropeanaSerializer<T>)serializerMap.get(clazz);
+		if (serializer == null) {
+			throw new EuropeanaException("Cannot retrieve serializer for class [" + clazz.toString() + "]");
+		}
 		String res = pre != null ? pre : "";
 		serializer.addData(item);
 		res += serializer.next();
@@ -175,6 +190,14 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		EuropeanaSerializer<S> ser = new EuropeanaSerializer<S>();
 		ser.init(clazz);
 		return ser;
+	}
+	
+	private void initSerializers()  throws EuropeanaException {
+		serializerMap = new HashMap<Class<?>, EuropeanaSerializer<?>>();
+		serializerMap.put(EuropeanaResourceContainer.class, getSerializer(EuropeanaResourceContainer.class));
+		serializerMap.put(ProvidedCHO.class, getSerializer(ProvidedCHO.class));
+		serializerMap.put(WebResource.class, getSerializer(WebResource.class));
+		serializerMap.put(Aggregation.class, getSerializer(Aggregation.class));
 	}
 	
 	private void initWriter(String fileName) throws EuropeanaException {
@@ -217,6 +240,9 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 				writeToFile(items, EuropeanaItem.class);
 			}
 			
+			float completed = ((float)group * GROUP_SIZE) / ((float)count);
+			logger.info("Europeana file generation [phase 1 of 2]: " +  String.format("%.2f", completed) + "%");
+			
 		} while (group * GROUP_SIZE < count);
 		
 	}
@@ -245,6 +271,9 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 			
 			writeToFile(items, EuropeanaItem.class);
 			
+			float completed = ((float)group * GROUP_SIZE) / ((float)count);
+			logger.info("Europeana file generation [phase 2 of 2]: " +  String.format("%.2f", completed) + "%");
+			
 		} while (group * GROUP_SIZE < count);
 	}
 	
@@ -265,18 +294,14 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		String notWrite = "";
 		String ser = "";
 		if (EuropeanaItem.class.equals(clazz)) {
-			EuropeanaSerializer<ProvidedCHO> choSer = getSerializer(ProvidedCHO.class);
-			EuropeanaSerializer<WebResource> wrSer = getSerializer(WebResource.class);
-			EuropeanaSerializer<Aggregation> aggSer = getSerializer(Aggregation.class);
 			for (T item : items) {
 				EuropeanaItem i = (EuropeanaItem) item;
-				ser += doSerialize(choSer, i.getCho(), "\n<!-- " + i.getItemComment() + " -->\n");
-				ser += doSerialize(wrSer, i.getWebResource(), null);
-				ser += doSerialize(aggSer, i.getAggregation(), null);
+				ser += doSerialize(ProvidedCHO.class, i.getCho(), "\n<!-- " + i.getItemComment() + " -->\n");
+				ser += doSerialize(WebResource.class, i.getWebResource(), null);
+				ser += doSerialize(Aggregation.class, i.getAggregation(), null);
 			}
 		} else if (EuropeanaResourceContainer.class.equals(clazz)) {
-			EuropeanaSerializer<EuropeanaResourceContainer> contSer = getSerializer(EuropeanaResourceContainer.class);
-			ser = doSerialize(contSer, (EuropeanaResourceContainer)items.get(0), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			ser = doSerialize(EuropeanaResourceContainer.class, (EuropeanaResourceContainer)items.get(0), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 			ser = ser.substring(0, ser.lastIndexOf("/>")) + ">\n</rdf:RDF>";
 		}
 		if (leaveOpen) {
@@ -286,5 +311,4 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		doWriteFile(ser);
 		return notWrite;
 	}
-	
 }

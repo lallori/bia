@@ -32,6 +32,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.europeana.EuropeanaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,14 +66,18 @@ public class EuropeanaJob {
 	@Scheduled(cron = "0 0 3 ? * SUN")
 	public void execute() {
 		MDC.put("europeana", "threadeuropeana");
-		try {
-			String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-			logger.info("Europeana Job starts at " + now);
-			getEuropeanaService().writeEuropeanaFile();
-			now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-			logger.info("Europeana Job ends at " + now);
-		} catch (ApplicationThrowable ath) {
-			logger.error("Europeana Job fails...", ath);
+		if (Boolean.valueOf(ApplicationPropertyManager.getApplicationProperty("europeana.active"))) {
+			try {
+				String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				logger.info("Europeana Job starts at " + now);
+				getEuropeanaService().writeEuropeanaFile();
+				now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				logger.info("Europeana Job ends at " + now);
+			} catch (ApplicationThrowable ath) {
+				logger.error("Europeana Job fails...", ath);
+			}
+		} else {
+			logger.info("Europeana Job is not active so it has been skipped!");
 		}
 	}
 
