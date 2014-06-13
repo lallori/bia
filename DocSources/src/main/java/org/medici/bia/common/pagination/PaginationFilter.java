@@ -174,6 +174,10 @@ public class PaginationFilter {
 	public Integer getFirstRecord() {
 		return firstRecord;
 	}
+	
+	public void setFirstRecord(Integer firstRecord) {
+		this.firstRecord = firstRecord;
+	}
 
 	public Integer getLength() {
 		return length;

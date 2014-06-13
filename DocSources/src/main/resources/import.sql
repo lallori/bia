@@ -1976,3 +1976,7 @@ ALTER TABLE `tblSchedone`
 -- europeana (to active the europeana job set the value of 'europeana.active' key to 'true' (case insensitive) 
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.path', 'Europeana output path', '/data/europeana/');
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.active', 'Europeana activation flag', 'false');
+
+INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.administratorBackOfficeDOM', '/WEB-INF/templates/administratorBackOfficeDOM.jsp');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`, `preparer`, `template`) VALUES ('europeana/ShowEuropeanaView', 'template.administratorBackOfficeDOM', NULL, NULL);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('europeana/ShowEuropeanaView', 'main', NULL, '/WEB-INF/jsp/europeana/ShowEuropeanaView.jsp', 0, NULL);

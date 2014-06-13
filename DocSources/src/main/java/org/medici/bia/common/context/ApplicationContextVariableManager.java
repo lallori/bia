@@ -39,6 +39,8 @@ import java.util.Map;
  */
 public class ApplicationContextVariableManager {
 	
+	public static final String EUROPEANA_JOB = "europeanaJob";
+	
 	private final Map<String, Object> variablesMap = new HashMap<String, Object>();
 	
 	/**
@@ -69,7 +71,7 @@ public class ApplicationContextVariableManager {
 	}
 	
 	/**
-	 * Removes the variable correspondign to the provided key.
+	 * Removes the variable corresponding to the provided key.
 	 * 
 	 * @param key the key of the variable
 	 * @return the variable

@@ -1,5 +1,5 @@
 /*
- * EuropeanaService.java
+ * ExceptionUtils.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,30 +25,22 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.service.europeana;
-
-import java.io.OutputStream;
-
-import org.medici.bia.exception.ApplicationThrowable;
+package org.medici.bia.common.util;
 
 /**
  * 
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-public interface EuropeanaService {
+public class ExceptionUtils {
 	
-	static final String CURRENT_PHASE = "EUROPEANA_CURRENT_PHASE";
-	static final String ERROR = "EUROPEANA_ERROR";
-	static final String PHASES = "EUROPEANA_PHASES";
-	static final String PROGRESS = "EUROPEANA_PROGRESS";
-
-	long downladFile(OutputStream outputStream) throws ApplicationThrowable;
-	
-	String getEuropeanaFileSize() throws ApplicationThrowable;
-	
-	void writeEuropeanaFile() throws ApplicationThrowable;
-	
-	void writeEuropeanaFileAsync() throws ApplicationThrowable;
+	public static String stackTraceToString(Throwable e) {
+	    StringBuilder sb = new StringBuilder();
+	    for (StackTraceElement element : e.getStackTrace()) {
+	        sb.append(element.toString());
+	        sb.append("\n");
+	    }
+	    return sb.toString();
+	}
 
 }

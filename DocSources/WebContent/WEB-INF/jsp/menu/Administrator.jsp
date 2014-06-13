@@ -10,7 +10,7 @@
 			<script type="text/javascript">
 			$j(document).ready(function(){
 				$j("#administrationModule").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.administrator.open"/>", width: 270, height: 280});
+					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.administrator.open"/>", width: 270, height: 320});
 					return false;
 				}						
 				);

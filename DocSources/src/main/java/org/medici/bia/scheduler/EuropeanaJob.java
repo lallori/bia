@@ -32,6 +32,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
+import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.europeana.EuropeanaService;
@@ -53,6 +54,8 @@ public class EuropeanaJob {
 	
 	@Autowired
 	private EuropeanaService europeanaService;
+	@Autowired
+	private ApplicationContextVariableManager applicationContextVariableManager;
 
 	public EuropeanaService getEuropeanaService() {
 		return europeanaService;
@@ -62,12 +65,23 @@ public class EuropeanaJob {
 		this.europeanaService = europeanaService;
 	}
 	
+	public ApplicationContextVariableManager getApplicationContextVariableManager() {
+		return applicationContextVariableManager;
+	}
+
+	public void setApplicationContextVariableManager(
+			ApplicationContextVariableManager applicationContextVariableManager) {
+		this.applicationContextVariableManager = applicationContextVariableManager;
+	}
+
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(cron = "0 0 3 ? * SUN")
 	public void execute() {
 		MDC.put("europeana", "threadeuropeana");
-		if (Boolean.valueOf(ApplicationPropertyManager.getApplicationProperty("europeana.active"))) {
+		if (Boolean.valueOf(ApplicationPropertyManager.getApplicationProperty("europeana.active"))
+				&& getApplicationContextVariableManager().get(ApplicationContextVariableManager.EUROPEANA_JOB) == null) {
 			try {
+				getApplicationContextVariableManager().add(ApplicationContextVariableManager.EUROPEANA_JOB, "running");
 				String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 				logger.info("Europeana Job starts at " + now);
 				getEuropeanaService().writeEuropeanaFile();
@@ -76,8 +90,11 @@ public class EuropeanaJob {
 			} catch (ApplicationThrowable ath) {
 				logger.error("Europeana Job fails...", ath);
 			}
-		} else {
+			getApplicationContextVariableManager().remove(ApplicationContextVariableManager.EUROPEANA_JOB);
+		} else if (getApplicationContextVariableManager().get(ApplicationContextVariableManager.EUROPEANA_JOB) == null) {
 			logger.info("Europeana Job is not active so it has been skipped!");
+		} else {
+			logger.info("Europeana Job cannot be fired because the task is currently running!");
 		}
 	}
 

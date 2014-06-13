@@ -25,6 +25,10 @@
 	<div id="whoIsOnlineDiv">
         <a id="whoIsOnline" class="button_large" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
 	</div>
+	
+	<div id="europeanaManagerDiv">
+        <a id="europeana" class="button_large" href="<c:url value="/europeana/europeanaView.do" />">Manage Europeana Job</a>
+	</div>
 
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
@@ -81,6 +85,12 @@
 				$j("#tabs").tabs("select", numTab);
 			}
 
+			Modalbox.hide();
+			return false;
+		});
+		
+		$j("#europeana").click(function() {
+			window.open($j(this).attr("href"));
 			Modalbox.hide();
 			return false;
 		});

@@ -29,13 +29,17 @@ package org.medici.bia.service.europeana;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.PersistenceException;
+
 import org.apache.log4j.Logger;
+import org.medici.bia.common.context.ApplicationContextVariableManager;
 import org.medici.bia.common.europeana.EuropeanaException;
 import org.medici.bia.common.europeana.EuropeanaItem;
 import org.medici.bia.common.europeana.model.Aggregation;
@@ -47,6 +51,7 @@ import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.util.ApplicationError;
 import org.medici.bia.common.util.EuropeanaConverter;
 import org.medici.bia.common.util.EuropeanaSerializer;
+import org.medici.bia.common.util.ExceptionUtils;
 import org.medici.bia.common.util.FileUtils;
 import org.medici.bia.common.util.FileWriterHelper;
 import org.medici.bia.dao.document.DocumentDAO;
@@ -56,6 +61,7 @@ import org.medici.bia.domain.Image;
 import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +88,8 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 	private DocumentDAO documentDAO;
 	@Autowired
 	private ImageDAO imageDAO;
+	@Autowired
+	private ApplicationContextVariableManager applicationContextVariableManager;
 	
 	private FileWriterHelper writer;
 	
@@ -100,49 +108,54 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
 	}
+	
+	public ApplicationContextVariableManager getApplicationContextVariableManager() {
+		return applicationContextVariableManager;
+	}
+
+	public void setApplicationContextVariableManager(
+			ApplicationContextVariableManager applicationContextVariableManager) {
+		this.applicationContextVariableManager = applicationContextVariableManager;
+	}
+
+	@Override
+	public long downladFile(OutputStream outputStream) throws ApplicationThrowable {
+		String path = ApplicationPropertyManager.getApplicationProperty("europeana.path");
+		if (!path.endsWith(File.separator)) {
+			path += File.separator;
+		}
+		try {
+			if (FileUtils.exists(path + FILE)) {
+				return FileUtils.getContent(new File(path + FILE), outputStream);
+			}
+		} catch (Exception e) {
+			throw new ApplicationThrowable(e);
+		}
+		return -1;
+	}
+	
+	@Override
+	public String getEuropeanaFileSize() throws ApplicationThrowable {
+		String path = ApplicationPropertyManager.getApplicationProperty("europeana.path");
+		if (!path.endsWith(File.separator)) {
+			path += File.separator;
+		}
+		try {
+			return FileUtils.fileSize(new File(path + FILE));
+		} catch (Exception e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
 
 	@Override
 	public void writeEuropeanaFile() throws ApplicationThrowable {
-		if (!checkPath()) {
-			logger.error("It is not possible to access to the europeana path");
-			throw new ApplicationThrowable(ApplicationError.GENERIC_ERROR, "It is not possible to access to the europeana path");
-		}
-		
-		try {
-			String path = ApplicationPropertyManager.getApplicationProperty("europeana.path");
-			if (!path.endsWith(File.separator)) {
-				path += File.separator;
-			}
-			Date timeStamp = new Date();
-			initWriter(path + TMP_FILE);
-			initSerializers();
-			
-			String lastLine = writeOpenContainer();
-			logger.info("Europeana file generation...phase 1 of 2 (document to xml generation)");
-			writeDocuments(timeStamp);
-			logger.info("Europeana file generation...phase 2 of 2 (image to xml generation)");
-			writeImages(timeStamp);
-			writeLastLine(lastLine);
-			
-			if (FileUtils.exists(path + FILE)) {
-				FileUtils.renameTo(path + FILE, path + BACKUP_FILE);
-			}
-			FileUtils.renameTo(path + TMP_FILE, path + FILE);
-			
-			closeWriter();
-		} catch (EuropeanaException exc) {
-			throw new ApplicationThrowable(exc);
-		} catch (IOException exc) {
-			throw new ApplicationThrowable(exc);
-		} finally {
-			if (writer != null && writer.isInitialized()) {
-				try {
-					writer.close();
-				} catch (IOException e) {
-					// do noting
-				}
-			}
-		}
+		doWriteEuropeanaFile();
+	}
+	
+	@Override
+	@Async
+	public void writeEuropeanaFileAsync() throws ApplicationThrowable {
+		doWriteEuropeanaFile();
 	}
 	
 	/* Privates */
@@ -174,7 +187,84 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		String res = pre != null ? pre : "";
 		serializer.addData(item);
 		res += serializer.next();
+		// it is important to empty serializer data in order to prevent memory leaks when large amount of items are processed
+		serializer.clearData();
 		return res + "\n";
+	}
+	
+	private void doWriteEuropeanaFile() throws ApplicationThrowable {
+		getApplicationContextVariableManager().add(ApplicationContextVariableManager.EUROPEANA_JOB, "running");
+		getApplicationContextVariableManager().remove(EuropeanaService.ERROR);
+		
+		if (!checkPath()) {
+			logger.error("It is not possible to access to the europeana path");
+			throw new ApplicationThrowable(ApplicationError.GENERIC_ERROR, "It is not possible to access to the europeana path");
+		}
+		
+		String lastLine = null;
+		try {
+			String path = ApplicationPropertyManager.getApplicationProperty("europeana.path");
+			if (!path.endsWith(File.separator)) {
+				path += File.separator;
+			}
+			Date timeStamp = new Date();
+			initWriter(path + TMP_FILE);
+			initSerializers();
+			
+			getApplicationContextVariableManager().add(EuropeanaService.PHASES, (int)2);
+			lastLine = writeOpenContainer();
+			logger.info("Europeana file generation...phase 1 of 2 (document to xml generation)");
+			getApplicationContextVariableManager().add(EuropeanaService.CURRENT_PHASE, (int)1);
+			boolean stop = writeDocuments(timeStamp);
+			if (!stop) {
+				logger.info("Europeana file generation...phase 2 of 2 (image to xml generation)");
+				getApplicationContextVariableManager().add(EuropeanaService.CURRENT_PHASE, (int)2);
+				stop = writeImages(timeStamp);
+			}
+			if (stop) {
+				writeInterruptComment(true);
+			}
+			writeLastLine(lastLine);
+			lastLine = null;
+			
+			// The writer has to be closed before the target file is renamed.
+			closeWriter();
+			if (!stop) {
+				if (FileUtils.exists(path + FILE)) {
+					FileUtils.renameTo(path + FILE, path + BACKUP_FILE);
+				}
+				FileUtils.renameTo(path + TMP_FILE, path + FILE);
+			}
+			
+			getApplicationContextVariableManager().remove(ApplicationContextVariableManager.EUROPEANA_JOB);
+			getApplicationContextVariableManager().remove(EuropeanaService.PHASES);
+			getApplicationContextVariableManager().remove(EuropeanaService.CURRENT_PHASE);
+			getApplicationContextVariableManager().remove(EuropeanaService.PROGRESS);
+		} catch (Exception exc) {
+			String stackTrace = ExceptionUtils.stackTraceToString(exc);
+			getApplicationContextVariableManager().add(EuropeanaService.ERROR, "Europeana Job failed for:\n" + stackTrace);
+			getApplicationContextVariableManager().remove(ApplicationContextVariableManager.EUROPEANA_JOB);
+			getApplicationContextVariableManager().remove(EuropeanaService.PHASES);
+			getApplicationContextVariableManager().remove(EuropeanaService.CURRENT_PHASE);
+			getApplicationContextVariableManager().remove(EuropeanaService.PROGRESS);
+			throw new ApplicationThrowable(exc);
+		} finally {
+			try {
+				if (lastLine != null) {
+					writeInterruptComment(false);
+					writeLastLine(lastLine);
+				}
+			} catch (EuropeanaException e) {
+				// cannot close tmp file correctly
+			}
+			if (writer != null && writer.isInitialized()) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					// do noting
+				}
+			}
+		}
 	}
 	
 	private void doWriteFile(String toWrite) throws EuropeanaException {
@@ -210,22 +300,38 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		}
 	}
 	
+	private void logProgress(String prefix, float progress) {
+		try {
+			String format = String.format("%.2f", progress);
+			logger.info(prefix +  format + "%");
+		} catch (Exception e) {
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
-	private void writeDocuments(Date timeStamp) throws EuropeanaException {
+	private boolean writeDocuments(Date timeStamp) throws EuropeanaException, PersistenceException {
 		Long count = getDocumentDAO().countDocumentCreatedBeforeDate(timeStamp);
 		
 		EuropeanaConverter converter = new EuropeanaConverter();
+		PaginationFilter paginationFilter = new PaginationFilter(0, GROUP_SIZE, count);
+		paginationFilter.addSortingCriteria("dateCreated", "ASC");
+		
 		int group = 0;
+		boolean stop = false;
 		do {
 			group++;
-			PaginationFilter paginationFilter = new PaginationFilter((group - 1) * GROUP_SIZE, GROUP_SIZE, count);
-			paginationFilter.addSortingCriteria("dateCreated", "ASC");
+			paginationFilter.setFirstRecord((group - 1) * GROUP_SIZE);
+			
+			// clean up the entity manager for performance purposes
+			getDocumentDAO().clear();
 			List<Document> candidates = (List<Document>) getDocumentDAO().searchDocumentsCreatedBefore(timeStamp, paginationFilter).getList();
 			
 			List<Integer> slice = new ArrayList<Integer>();
+			List<Document> validDocs = new ArrayList<Document>();
 			for (Document document : candidates) {
 				if (document.getLogicalDelete() != null && Boolean.FALSE.equals(document.getLogicalDelete())) {
 					slice.add(document.getEntryId());
+					validDocs.add(document);
 				}
 			}
 			
@@ -233,22 +339,28 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 				Map<Integer, Integer> associatedImage = getDocumentDAO().getAssociatedImage(slice);
 				
 				List<EuropeanaItem> items = new ArrayList<EuropeanaItem>();
-				for (Document document : candidates) {
+				for (Document document : validDocs) {
 					items.add(converter.toEuropeanaItem(document, associatedImage.get(document.getEntryId())));
 				}
 	
 				writeToFile(items, EuropeanaItem.class);
 			}
 			
-			float completed = ((float)group * GROUP_SIZE) / ((float)count);
-			logger.info("Europeana file generation [phase 1 of 2]: " +  String.format("%.2f", completed) + "%");
+			float completed = ((float)group * GROUP_SIZE * 100) / ((float)count);
+			logProgress("Europeana file generation [phase 1 of 2]: ", completed);
 			
-		} while (group * GROUP_SIZE < count);
+			// We check if the execution has been externally stopped
+			stop = getApplicationContextVariableManager().get(ApplicationContextVariableManager.EUROPEANA_JOB) == null;
+			getApplicationContextVariableManager().add(EuropeanaService.PROGRESS, completed);
+			
+		} while (group * GROUP_SIZE < count && !stop);
+		
+		return stop;
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void writeImages(Date timeStamp) throws EuropeanaException {
+	private boolean writeImages(Date timeStamp) throws EuropeanaException, PersistenceException {
 		List<ImageType> imageTypes = new ArrayList<ImageType>();
 		imageTypes.add(ImageType.C);
 		imageTypes.add(ImageType.R);
@@ -257,11 +369,18 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		Long count = getImageDAO().countImagesCreatedBeforeDate(timeStamp, imageTypes);
 		
 		EuropeanaConverter converter = new EuropeanaConverter();
+		
+		PaginationFilter paginationFilter = new PaginationFilter(0, GROUP_SIZE, count);
+		paginationFilter.addSortingCriteria("imageId", "ASC");
+		
 		int group = 0;
+		boolean stop = false;
 		do {
 			group++;
-			PaginationFilter paginationFilter = new PaginationFilter((group - 1) * GROUP_SIZE, GROUP_SIZE, count);
-			paginationFilter.addSortingCriteria("imageId", "ASC");
+			paginationFilter.setFirstRecord((group - 1) * GROUP_SIZE);
+			
+			// clean up the entity manager for performance purposes
+			getImageDAO().clear();
 			List<Image> images = (List<Image>) getImageDAO().searchImagesCreatedBefore(timeStamp, imageTypes, paginationFilter).getList();
 			
 			List<EuropeanaItem> items = new ArrayList<EuropeanaItem>();
@@ -271,10 +390,21 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 			
 			writeToFile(items, EuropeanaItem.class);
 			
-			float completed = ((float)group * GROUP_SIZE) / ((float)count);
-			logger.info("Europeana file generation [phase 2 of 2]: " +  String.format("%.2f", completed) + "%");
+			float completed = ((float)group * GROUP_SIZE * 100) / ((float)count);
+			logProgress("Europeana file generation [phase 2 of 2]: ", completed);
 			
-		} while (group * GROUP_SIZE < count);
+			// We check if the execution has been externally stopped
+			stop = getApplicationContextVariableManager().get(ApplicationContextVariableManager.EUROPEANA_JOB) == null;
+			getApplicationContextVariableManager().add(EuropeanaService.PROGRESS, completed);
+			
+		} while (group * GROUP_SIZE < count && !stop);
+		
+		return stop;
+	}
+	
+	private void writeInterruptComment(boolean stop) throws EuropeanaException {
+		String message = "Task aborted: " + (stop ? "the task was externally stopped" : "internal error occurred");
+		doWriteFile("\n<!-- " + message + " -->\n");
 	}
 	
 	private void writeLastLine(String lastLine) throws EuropeanaException {
@@ -311,4 +441,5 @@ public class EuropeanaServiceImpl implements EuropeanaService {
 		doWriteFile(ser);
 		return notWrite;
 	}
+
 }

@@ -1,0 +1,95 @@
+
+#biaImg {
+	float: left;
+	margin-left: 40px;
+	margin-right: 20px;
+}
+
+.button_large {
+	width: 187px;
+	height: 22px;
+	background: url("/DocSources/images/1024/button_large.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border: medium none;
+	clear: both;
+	cursor: pointer;
+	padding-top: 4px;
+	text-align: center;
+}
+
+#pageTitle {
+	font-size: 3em;
+	margin-top: 20px;
+	padding-top: 30px;
+	text-align: left;
+	width: 850px;
+}
+
+.notifyMsg {
+}
+
+/* Progress Bar */
+
+#progress {
+	height: 20px;
+	position: relative;
+	display: inline-block;
+	border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	background-color: #61A5D0;
+}
+
+#progressBar {
+	width: 95%;
+	height: 20px;
+	position: relative;
+	border: 1px solid #453680;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background-color: #CCCCCC;
+}
+
+#progressText {
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	margin-top: 2px;
+	text-align: center;
+	color: white;
+}
+
+/* Europeana Admin Page */
+
+.errorLbl {
+	color: red;
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 30px;
+}
+
+#errorPre {
+	width: 100%;
+	height: 150px;
+	max-width: 800px;
+	margin-left: 25px;
+	padding: 10px;
+	background-color: white;
+	border: solid 1px #E3C7BF;
+	overflow: auto;
+}
+
+.europeanaError {
+	width: 96%;
+	margin: 20px;
+}
+
+.europeanaTable {
+	width: 50%;
+	min-width: 1000px;
+	clear: both;
+	margin-left: 40px;
+}

@@ -30,6 +30,10 @@
     <bean id="docBaseService" class="org.medici.bia.service.docbase.DocBaseServiceImpl">
     	<description>Service that manages documents informations.</description>
     </bean>
+    
+    <bean id="europeanaService" class="org.medici.bia.service.europeana.EuropeanaServiceImpl">
+    	<description>Service that manages europeana tasks.</description>
+    </bean>
 
     <bean id="geoBaseService" class="org.medici.bia.service.geobase.GeoBaseServiceImpl">
     	<description>Service that manages Geographics locations.</description>

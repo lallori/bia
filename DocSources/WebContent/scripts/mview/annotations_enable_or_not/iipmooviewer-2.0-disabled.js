@@ -142,8 +142,8 @@ var IIPMooViewer = new Class({
 
 		/** MEDICI ARCHIVE PROJECT START **/
 		this.initialZoom = options.zoom || 1;
-		//To disable the zoom when a user create an annotation
-		this.stopZoom = false;
+		// To disable zoom and rotate functions when a user create an annotation
+		this.annotationEditing = false;
 		/** MEDICI ARCHIVE PROJECT END **/
 
 		// Navigation window options
@@ -954,7 +954,7 @@ var IIPMooViewer = new Class({
 		var z = 1;
 
 		/** MEDICI ARCHIVE PROJECT START **/
-		if (!this.stopZoom) {
+		if (!this.annotationEditing) {
 		/** MEDICI ARCHIVE PROJECT END **/
 			if (event.wheel && event.wheel < 0) {
 				// For mouse scrolls
@@ -1939,7 +1939,7 @@ var IIPMooViewer = new Class({
 
 			// Add events to our buttons
 			navbuttons.getElement('img.zoomIn').addEvent('click', function() {
-				if (!this.stopZoom) {
+				if (!this.annotationEditing) {
 					IIPMooViewer.windows(this).each(function(el) {
 						el.zoomIn();
 					});
@@ -1948,7 +1948,7 @@ var IIPMooViewer = new Class({
 			}.bind(this));
 
 			navbuttons.getElement('img.zoomOut').addEvent('click', function() {
-				if (!this.stopZoom) {
+				if (!this.annotationEditing) {
 					IIPMooViewer.windows(this).each(function(el) {
 						el.zoomOut();
 					});
@@ -1991,7 +1991,7 @@ var IIPMooViewer = new Class({
 					// if (typeof(window.iip.newAnnotation) == "function") {
 					//if (typeof(this.newAnnotation) == "function") {
 					/** MEDICI ARCHIVE PROJECT END **/
-						/*this.stopZoom = true;
+						/*this.annotationEditing = true;
 						navbuttons.getElement('img.zoomIn').style.opacity = 0.5;
 						navbuttons.getElement('img.zoomOut').style.opacity = 0.5;*/
 						/** MEDICI ARCHIVE PROJECT START **/

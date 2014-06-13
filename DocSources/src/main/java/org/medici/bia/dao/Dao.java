@@ -47,6 +47,14 @@ import org.medici.bia.common.search.Search;
 public interface Dao<K, E> extends Serializable {
 	
 	/**
+	 * Clear the persistence context, causing all managed entities to become detached. 
+	 * Changes made to entities that have not been flushed to the database will not be persisted.
+	 * 
+	 * @throws IllegalStateException if the EntityManager has been closed
+	 */
+	void clear() throws IllegalStateException;
+	
+	/**
 	 * This method is used to count advanced search functions.
 	 * 
 	 * @param searchContainer

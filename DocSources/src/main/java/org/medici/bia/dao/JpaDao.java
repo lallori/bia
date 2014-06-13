@@ -180,6 +180,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		return fullTextQuery; 
 	}
 	
+	@Override
+	public void clear() throws IllegalStateException {
+		getEntityManager().clear();
+	}
+	
 	/**
 	 * 
 	 */

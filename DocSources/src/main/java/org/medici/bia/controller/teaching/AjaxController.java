@@ -46,7 +46,6 @@ import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.exception.ApplicationThrowable;
-import org.medici.bia.service.europeana.EuropeanaService;
 import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +72,6 @@ public class AjaxController {
 	private TeachingService teachingService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private EuropeanaService europeanaService;
 
 	public TeachingService getTeachingService() {
 		return teachingService;
@@ -92,28 +89,6 @@ public class AjaxController {
 		this.userService = userService;
 	}
 	
-	public EuropeanaService getEuropeanaService() {
-		return europeanaService;
-	}
-
-	public void setEuropeanaService(EuropeanaService europeanaService) {
-		this.europeanaService = europeanaService;
-	}
-
-	@RequestMapping(value = "/teaching/Europeana", method = RequestMethod.POST)
-	public Map<String, Object> doEuropeanaTask() {
-		
-		Map<String, Object> model = new HashMap<String, Object>(0);
-		
-		try {
-			getEuropeanaService().writeEuropeanaFile();
-		} catch (ApplicationThrowable th) {
-			model.put("error", th.toString());
-		}
-		
-		return model;
-	}
-
 	@RequestMapping(value = "/teaching/CreateCourseTranscription", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> createCourseTranscription(
 			@RequestParam(value="entryId", required=true) Integer docId,

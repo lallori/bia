@@ -27,8 +27,13 @@
  */
 package org.medici.bia.common.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 /**
  * Utilities for manages file system files and paths.
@@ -37,6 +42,11 @@ import java.io.IOException;
  *
  */
 public class FileUtils {
+	
+	/**
+     * Size of a byte buffer to read/write file
+     */
+	private static final int BUFFER_SIZE = 4096;
 	
 	/**
 	 * Checks the existence of a path.
@@ -55,6 +65,39 @@ public class FileUtils {
 			return oaPath.mkdirs();
 		}
 		return oaPath.exists();
+	}
+	
+	public static long getContent(File file, OutputStream output) throws FileNotFoundException, IOException {
+		if (!file.exists()) {
+			throw new FileNotFoundException("File [" + (file != null ? file.getAbsolutePath() : "???") + "] does not exist");
+		}
+		BufferedReader reader = null;
+		try {
+			FileInputStream input = new FileInputStream(file);
+			reader = new BufferedReader(new InputStreamReader(input));
+			byte[] buffer = new byte[BUFFER_SIZE];
+	        int bytesRead = -1;
+			while ((bytesRead = input.read(buffer)) != -1) {
+				output.write(buffer, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			throw new IOException(e);
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return file.length();
+	}
+	
+	public static String fileSize(File file) {
+		if (file == null || !file.exists() || file.isDirectory()) {
+			return null;
+		}
+		return convertFileSize(file.length(), false);
 	}
 	
 	/**
@@ -89,6 +132,16 @@ public class FileUtils {
 	 */
 	public static boolean exists(String fileName) throws IOException {
 		return new File(fileName).exists();
+	}
+	
+	/* Privates */
+	
+	private static String convertFileSize(long bytes, boolean si) {
+	    int unit = si ? 1000 : 1024;
+	    if (bytes < unit) return bytes + " B";
+	    int exp = (int) (Math.log(bytes) / Math.log(unit));
+	    String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+	    return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
 
 }
