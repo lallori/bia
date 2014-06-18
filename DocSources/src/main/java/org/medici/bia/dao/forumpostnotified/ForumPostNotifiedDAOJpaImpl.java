@@ -27,13 +27,11 @@
  */
 package org.medici.bia.dao.forumpostnotified;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.ForumPostNotified;
 import org.springframework.stereotype.Repository;
@@ -70,25 +68,28 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 	 */
 	private static final long serialVersionUID = -954510449538455917L;
 
-	private final Logger logger = Logger.getLogger(this.getClass());
-
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ForumPostNotified> findForumPostRepliedNotNotified() throws PersistenceException {
-		String jpql = "FROM ForumPostNotified WHERE mailSended=:mailSended";
+		String jpql = "FROM ForumPostNotified WHERE mailSended = :mailSended";
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("mailSended", Boolean.FALSE);
 
-		List<ForumPostNotified> result = query.getResultList();
+		return getResultList(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPostNotified getForumPostNotifiedByPost(Integer forumPostId) throws PersistenceException {
+		String jpql = "FROM ForumPostNotified WHERE postId = :postId";
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("postId", forumPostId);
 		
-		if (result.size() ==0) {
-			return new ArrayList<ForumPostNotified>(0);
-		}
-		
-		return result;
+		return getFirst(query);
 	}
 
 

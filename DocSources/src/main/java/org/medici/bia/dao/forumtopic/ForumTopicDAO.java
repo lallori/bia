@@ -63,15 +63,6 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
 
 	/**
-	 * Returns a specific forum topic.
-	 * 
-	 * @param forumTopic
-	 * @return
-	 * @throws PersistenceException
-	 */
-	ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException;
-	
-	/**
 	 * This method returns the forum linked to an annotation.
 	 * 
 	 * @param annotationId the annotation identifier
@@ -83,11 +74,11 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	/**
 	 * Returns a specific forum topic by its identifier.
 	 * 
-	 * @param froumTopicId
+	 * @param forumTopicId
 	 * @return
 	 * @throws PersistenceException
 	 */
-	ForumTopic findForumTopicById(Integer froumTopicId) throws PersistenceException;
+	ForumTopic getNotDeletedForumTopic(Integer forumTopicId) throws PersistenceException;
 
 	/**
 	 * Returns list of topics on a specific forum.

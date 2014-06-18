@@ -368,11 +368,11 @@ public interface CommunityService {
 	
 	/**
 	 * 
-	 * @param forumTopic
+	 * @param forumTopicId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	ForumTopic getForumTopicForView(ForumTopic forumTopic) throws ApplicationThrowable;
+	ForumTopic getForumTopicForView(Integer forumTopicId) throws ApplicationThrowable;
 	
 	/**
 	 * 

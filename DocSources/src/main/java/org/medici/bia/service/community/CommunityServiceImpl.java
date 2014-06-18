@@ -1006,7 +1006,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable {
 		try {
-			return getForumTopicDAO().findForumTopic(forumTopic);
+			return getForumTopicDAO().getNotDeletedForumTopic(forumTopic.getTopicId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1018,7 +1018,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumTopic getForumTopicById(Integer forumTopicId) throws ApplicationThrowable {
 		try {
-			return getForumTopicDAO().findForumTopicById(forumTopicId);
+			return getForumTopicDAO().getNotDeletedForumTopic(forumTopicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1035,9 +1035,9 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForumTopic getForumTopicForView(ForumTopic forumTopic)throws ApplicationThrowable {
+	public ForumTopic getForumTopicForView(Integer forumTopicId)throws ApplicationThrowable {
 		try{
-			ForumTopic topic = getForumTopicDAO().findForumTopic(forumTopic);
+			ForumTopic topic = getForumTopicDAO().getNotDeletedForumTopic(forumTopicId);
 			if(topic.getTotalViews() == null){
 				topic.setTotalViews(1);
 			}else{
@@ -1274,7 +1274,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Boolean ifTopicSubscribed(Integer forumTopicId) throws ApplicationThrowable {
 		try{
-			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			ForumTopic forumTopic = getForumTopicDAO().getNotDeletedForumTopic(forumTopicId);
 			
 			if (forumTopic != null) {
 				//This control is for anonymous user that look a topic 
@@ -1620,7 +1620,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Boolean subscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable {
 		try {
-			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			ForumTopic forumTopic = getForumTopicDAO().getNotDeletedForumTopic(forumTopicId);
 			
 			if (forumTopic != null) {
 				User user = getCurrentUser();
@@ -1645,7 +1645,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Boolean unsubscribeForumTopic(Integer forumTopicId) throws ApplicationThrowable {
 		try {
-			ForumTopic forumTopic = getForumTopicDAO().findForumTopic(new ForumTopic(forumTopicId));
+			ForumTopic forumTopic = getForumTopicDAO().getNotDeletedForumTopic(forumTopicId);
 			
 			if (forumTopic != null) {
 				User user = getCurrentUser();

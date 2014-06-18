@@ -19,6 +19,37 @@
 	float: left;
 }
 
+#csSection {
+	position: relative;
+	width: 100%;
+}
+
+#csSection a {
+	float: right;
+}
+
+#csSection h6 {
+	width: 98%;
+	position: absolute;
+	z-index: -1; /* to avoid overlaying buttons */
+}
+
+#editPostContainer {
+	width: 100%;
+	min-width: 560px;
+	height: 10%;
+	min-height: 55px;
+	overflow: auto;
+}
+
+#postsContainer {
+	width: 100%;
+	min-width: 560px;
+	height: 83%;
+	min-height: 300px;
+	overflow: auto;
+}
+
 #postsContainer .postTable h2 {
 	max-width: 86%;
 	margin-top: 10px;
@@ -79,6 +110,34 @@
 .titleContainer {
 	width: 37%;
 	float: left;
+}
+
+#topicTitleSection {
+	clear: both;
+	width: 100%;
+	position: relative;
+}
+
+#topicTitleSection h2 {
+	position: absolute;
+	max-width: 500px;
+	margin-left: 20px;
+	margin-top: 0px;
+	z-index: -1; /* to avoid overlaying buttons */
+}
+
+#topicTitleSection #changeTopicTitle {
+	padding-left: 5px;
+	float: left;
+}
+
+#topicTitleSection #goCourseResources {
+	float: right;
+}
+
+#upperSeparator {
+	clear: both;
+	margin-bottom: 15px;
 }
 
 .volumeContainer {

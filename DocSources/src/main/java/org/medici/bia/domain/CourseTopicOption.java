@@ -121,6 +121,10 @@ public class CourseTopicOption implements Serializable {
 				return null;
 			}
 		}
+		
+		public static boolean isCourseTranscriptionMode(CourseTopicMode mode) {
+			return C.equals(mode) || R.equals(mode) || I.equals(mode);
+		}
 	}
 
 }

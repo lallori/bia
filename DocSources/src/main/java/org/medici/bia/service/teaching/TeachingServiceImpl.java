@@ -51,6 +51,7 @@ import org.medici.bia.dao.document.DocumentDAO;
 import org.medici.bia.dao.forum.ForumDAO;
 import org.medici.bia.dao.forumoption.ForumOptionDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
+import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.forumtopic.ForumTopicDAO;
 import org.medici.bia.dao.forumtopicwatch.ForumTopicWatchDAO;
 import org.medici.bia.dao.image.ImageDAO;
@@ -68,6 +69,7 @@ import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
 import org.medici.bia.domain.ForumOption;
 import org.medici.bia.domain.ForumPost;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Image;
@@ -113,6 +115,8 @@ public class TeachingServiceImpl implements TeachingService {
 	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ForumPostDAO forumPostDAO;
+	@Autowired
+	private ForumPostNotifiedDAO forumPostNotifiedDAO;
 	@Autowired
 	private ForumTopicDAO forumTopicDAO;
 	@Autowired
@@ -196,6 +200,14 @@ public class TeachingServiceImpl implements TeachingService {
 
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
 		this.forumPostDAO = forumPostDAO;
+	}
+
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
+	}
+
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
 	}
 
 	public ForumTopicDAO getForumTopicDAO() {
@@ -1006,6 +1018,30 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Boolean isSubscribedToCourseTranscription(Integer topicId) throws ApplicationThrowable {
+		try {
+			ForumTopic courseTopic = getForumTopicDAO().getNotDeletedForumTopic(topicId);
+			
+			if (courseTopic != null) {
+				//This control is for anonymous user that look a topic 
+				if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
+					return null;
+				}
+				User user = getCurrentUser();
+				if (user != null && getForumTopicWatchDAO().findByTopicAndUser(user, courseTopic) != null) {
+					return true;
+				}
+			}
+			return false;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public CourseCheckPoint setIncrementalTranscription(CoursePostExt postExt) throws ApplicationThrowable {
@@ -1028,6 +1064,56 @@ public class TeachingServiceImpl implements TeachingService {
 			}
 			
 			return checkPoint;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean subscribeCourseTopic(Integer courseTopicId) throws ApplicationThrowable {
+		try {
+			ForumTopic forumTopic = getForumTopicDAO().getNotDeletedForumTopic(courseTopicId);
+			User user = getCurrentUser();
+			
+			if (forumTopic == null || user == null) {
+				return Boolean.FALSE;
+			}
+
+			ForumTopicWatch forumTopicWatch = new ForumTopicWatch();
+			forumTopicWatch.setTopic(forumTopic);
+			forumTopicWatch.setUser(user);
+			
+			getForumTopicWatchDAO().persist(forumTopicWatch);
+			return Boolean.TRUE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean unsubscribeForumTopic(Integer courseTopicId) throws ApplicationThrowable {
+		try {
+			ForumTopic courseTopic = getForumTopicDAO().getNotDeletedForumTopic(courseTopicId);
+			
+			if (courseTopic != null) {
+				User user = getCurrentUser();
+				ForumTopicWatch courseTopicWatch = getForumTopicWatchDAO().findByTopicAndUser(user, courseTopic);
+				
+				if (courseTopicWatch != null) {
+					getForumTopicWatchDAO().remove(courseTopicWatch);
+				}
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1324,6 +1410,12 @@ public class TeachingServiceImpl implements TeachingService {
 		getForumDAO().recursiveIncreasePostsNumber(courseTopic.getForum());
 		recursiveSetLastPost(courseTopic.getForum(), post, now);
 		
+		// add a forum post notification for email submission
+		ForumPostNotified forumPostNotified = new ForumPostNotified(post.getPostId());
+		forumPostNotified.setMailSended(Boolean.FALSE);
+			
+		getForumPostNotifiedDAO().persist(forumPostNotified);
+		
 		// Changing the user last forum dates and number of post
 		user.setLastActiveForumDate(now);
 		user.setLastForumPostDate(now);
@@ -1338,6 +1430,12 @@ public class TeachingServiceImpl implements TeachingService {
 		post.setLogicalDelete(Boolean.TRUE);
 		post.setLastUpdate(now);
 		post.setUpdater(user);
+		
+		// if mails (for subscribed users) are still not sent, the forum post notification is removed
+		ForumPostNotified forumPostNotified = getForumPostNotifiedDAO().getForumPostNotifiedByPost(post.getPostId());
+		if (Boolean.FALSE.equals(forumPostNotified.getMailSended())) {
+			getForumPostNotifiedDAO().remove(forumPostNotified);
+		}
 		
 		ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
 		courseTopic.setLastPost(lastPost);

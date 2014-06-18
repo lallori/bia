@@ -117,7 +117,7 @@ public class ReplyForumPostController {
 			}
 			//To load the last post
 			if(command.getParentPostId() == null && command.getTopicId() != null){
-				ForumTopic topic = getCommunityService().getForumTopicForView(new ForumTopic(command.getTopicId()));
+				ForumTopic topic = getCommunityService().getForumTopicForView(command.getTopicId());
 				model.put("postToReply", topic.getLastPost());
 			}else if(command.getParentPostId() != null){
 				model.put("postToReply", firstPostTopicToReply);

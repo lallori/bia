@@ -25,12 +25,12 @@
 	
 	<div id="roundRobinPosts" class="ui-layout-west" style="overflow: auto;">
 	
-		<div id="postsContainer" style="width:100%; height:85%; min-height: 300px; overflow:auto;">
+		<div id="postsContainer">
 		</div>
 		
 		<hr />
 		
-		<div id="editPostContainer" style="width:100%; height:10%; min-height: 55px; overflow:auto;">
+		<div id="editPostContainer">
 		</div>
 		
 	</div>

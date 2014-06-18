@@ -59,7 +59,8 @@
 							<c:url var="forumURL" value="/community/ShowForum.do">
 								<c:param name="forumId" value="${currentForum.forumId}" />
 							</c:url>
-							<div class="${not status.last ? 'row' : 'rowLast'}">
+							<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->
+							<div class="row">
 								<div class="one">
 									<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />' />
 									<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
@@ -258,7 +259,8 @@
 								<c:url var="DeleteForumURL" value="/de/community/DeleteForum.json">
 									<c:param name="forumId" value="${currentForum.forumId}" />
 								</c:url>
-								<div class="${not status.last ? 'row' : 'rowLast'}">						            
+								<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->						            
+								<div class="row">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 										<a href="${ShowForumURL}" class="forumHref">${currentForum.title}</a>
@@ -408,7 +410,8 @@
 									</c:url>
 									<c:choose>
 										<c:when test="${forum.subType == 'DOCUMENT'}">
-											<div class="${not status.last ? 'row' : 'rowLast'}">						            
+											<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->						            
+											<div class="row">						            
 												<div class="one">
 										            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 													<a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
@@ -438,7 +441,8 @@
 									        </div>
 										</c:when>
 										<c:otherwise>
-											<div class="${not status.last ? 'row' : 'rowLast'}">						            
+											<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->						            
+											<div class="row">						            
 												<div class="one">
 								            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 									                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
@@ -642,7 +646,8 @@
 									<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
 										<c:param name="topicId" value="${currentTopic.topicId}" />
 									</c:url>
-									<div class="${not status.last ? 'row' : 'rowLast'}">
+									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
+									<div class="row">
 										<div class="one">
 						            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 											<a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
@@ -702,7 +707,8 @@
 											</c:url>
 										</c:otherwise>
 									</c:choose>
-									<div class="${not status.last ? 'row' : 'rowLast'}">
+									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
+									<div class="row">
 										<div class="one">
 								            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">${currentTopic.subject}</a>
@@ -763,7 +769,8 @@
 									<c:url var="DeleteTopicForumURL" value="/de/community/DeleteForumTopic.json">
 										<c:param name="topicId" value="${currentTopic.topicId}" />
 									</c:url>
-									<div class="${not status.last ? 'row' : 'rowLast'}">
+									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
+									<div class="row">
 										<div class="one">
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
@@ -903,8 +910,14 @@
 			
 			$j('.row').die();
 			$j('.row').live('click', function(){
-				if($j(this).children().find("a").attr('href') != '')
-					$j("#main").load($j(this).children().find("a").attr('href'));
+				var rowUrl = $j(this).children().find("a").attr('href');
+				if (rowUrl != '') {
+					if ($j(this).children().find("a").hasClass('courseFragmentHref')) {
+						window.location = rowUrl;
+					} else {
+						$j("#main").load($j(this).children().find("a").attr('href'));
+					}
+				}
 			});
 
 			$j('.pageHref').die();

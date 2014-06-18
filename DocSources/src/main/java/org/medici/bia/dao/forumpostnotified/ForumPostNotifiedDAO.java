@@ -48,4 +48,13 @@ public interface ForumPostNotifiedDAO extends Dao<Integer, ForumPostNotified> {
 	 * @throws PersistenceException
 	 */
 	List<ForumPostNotified> findForumPostRepliedNotNotified() throws PersistenceException;
+	
+	/**
+	 * Returns the {@link ForumPostNotified} by the forum post identifier provided.
+	 * 
+	 * @param forumPostId the forum post identifier
+	 * @return the {@link ForumPostNotified} found
+	 * @throws PersistenceException
+	 */
+	ForumPostNotified getForumPostNotifiedByPost(Integer forumPostId) throws PersistenceException;
 }

@@ -133,18 +133,13 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public CourseTopicOption getOption(Integer topicId) throws PersistenceException {
 		String jpql = "FROM CourseTopicOption WHERE courseTopic.topicId = :topicId";
 		Query query = getEntityManager().createQuery(jpql.toString(), CourseTopicOption.class);
 		query.setParameter("topicId", topicId);
 		
-		List<CourseTopicOption> options = (List<CourseTopicOption>)query.getResultList();
-		if (options.size() == 0) {
-			return null;
-		}
-		return options.get(0);
+		return getFirst(query);
 	}
 	
 	/**

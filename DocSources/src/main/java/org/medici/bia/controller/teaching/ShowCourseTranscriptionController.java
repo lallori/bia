@@ -114,6 +114,10 @@ public class ShowCourseTranscriptionController {
 				model.put("postsPage", postsPage);
 				model.put("maxAuthorities", getMaxAuthorities((List<CoursePostExt>)postsPage.getList()));
 				model.put("onlineUsers", applicationAccessContainer.getTeachingOnlineUsers());
+				Boolean isSubscribed = getTeachingService().isSubscribedToCourseTranscription(command.getTopicId());
+				if (isSubscribed != null) {
+					model.put("subscribed", isSubscribed);
+				}
 				
 				switch (transcriptionMode) {
 					case C:

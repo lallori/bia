@@ -84,8 +84,7 @@ public class ShowUserSearchController {
 	}
 	
 	/**
-	 * This method return a list of output fields by simpleSearchPerimeter
-	 * @param simpleSearchPerimeter
+	 * This method return a list of output fields
 	 * @return
 	 */
 	private List<String> getOutputFields() {

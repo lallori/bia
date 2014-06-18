@@ -181,7 +181,7 @@ public class ShowTopicForumController {
 			}
 			paginationFilterTopic.addSortingCriteria("postId", "asc");
 
-			ForumTopic forumTopic = getCommunityService().getForumTopicForView(new ForumTopic(command.getTopicId()));
+			ForumTopic forumTopic = getCommunityService().getForumTopicForView(command.getTopicId());
 			model.put("topic", forumTopic);
 			
 			model.put("subscribed", getCommunityService().ifTopicSubscribed(forumTopic.getTopicId()));

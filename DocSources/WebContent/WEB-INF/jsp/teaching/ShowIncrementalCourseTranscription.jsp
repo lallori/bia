@@ -21,28 +21,43 @@
 		<c:param name="transcriptionMode" value="I" />
 	</c:url>
 
-	<h6>COURSE TRANSCRIPTION</h6>
+	<div id="csSection">
+		<h6>COURSE TRANSCRIPTION</h6>
+		<c:if test="${!subscribed}">
+			<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
+				<c:param name="topicId" value="${topic.topicId}"/>
+			</c:url>
+			<a id="subscribe" href="${SubscribeForumTopicURL}" class="buttonMedium button_medium">Subscribe</a>
+		</c:if>
+		<c:if test="${subscribed}">
+			<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
+				<c:param name="topicId" value="${topic.topicId}"/>
+			</c:url>
+			<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
+		</c:if>
+	</div>
 	
-	<div id="titleSection">
+	<div id="topicTitleSection">
 		<c:choose>
 			<c:when test="${topic.user.account == account}">
-				<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+				<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
 			</c:when>
 			<c:otherwise>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-					<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+					<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
 				</security:authorize>
 			</c:otherwise>
 		</c:choose>
 		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 		
 		<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
-		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium" style="float: right">Course Resources</a>
+		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
 	</div>
 	
-	<hr />
+	<hr id="upperSeparator"/>
 	
 	<c:if test="${postsPage.list.size() eq 0}">
+		<span class="paginateActive" style="display: none;" href="${baseUrl}&topicId=${topic.topicId}&entryId=${topic.document.entryId}&completeDOM=false" />
 		<p>There are no posts.</p>
 	</c:if>
 	
@@ -154,6 +169,18 @@
 		
 	</c:if>
 	
+	<div id="subscribeModal" title="Subscribe topic" style="display: none;"> 
+		<p>
+			<fmt:message key="community.forum.topic.subscribed.yes"/>
+		</p>
+	</div>
+	
+	<div id="unsubscribeModal" title="Unsubscribe topic" style="display: none;"> 
+		<p>
+			<fmt:message key="community.forum.topic.subscribed.no"/>
+		</p>
+	</div>
+	
 	<div id="changeTitleModal" title='<fmt:message key="community.forum.tooltip.changeTitle" />' style="display:none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
@@ -202,6 +229,63 @@
 						$j(addNewPostSel).unbind();
 						// from CourseTranscriptionDOM -> to disable CRUD post buttons
 						setEditMode(true);
+					}
+				});
+				return false;
+			});
+			
+			
+			$j("#subscribe").click(function() {
+				$j.ajax({
+					type: "POST",
+					url: $j(this).attr('href'),
+					async: false,
+					success: function(json) {
+						if (json.subscription) {
+							$j("#subscribeModal").dialog({
+								  autoOpen : false,
+								  modal: true,
+								  resizable: false,
+								  width: 300,
+								  height: 130, 
+								  buttons: {
+									  Ok: function() {
+										  $j(this).dialog("close");
+										  $j("#postsContainer").load($j(".paginateActive").attr('href'));
+										  return false;
+									  }
+								  }
+							  });
+							$j("#subscribeModal").dialog('open');
+						}
+					}
+				});
+				return false;
+			});
+			
+			$j("#unsubscribe").click(function() {
+				$j.ajax({
+					type: "POST",
+					url: $j(this).attr('href'),
+					async: false, 
+					success: function(json) {
+						if (json.subscription) {
+							$j("#unsubscribeModal").dialog({
+								  autoOpen : false,
+								  modal: true,
+								  resizable: false,
+								  width: 300,
+								  height: 130, 
+								  buttons: {
+									  Ok: function() {
+										  $j(this).dialog("close");
+										  $j("#postsContainer").load($j(".paginateActive").attr('href'));
+										  return false;
+									  }
+								  }
+							  });
+							$j("#unsubscribeModal").dialog('open');
+						}
 					}
 				});
 				return false;

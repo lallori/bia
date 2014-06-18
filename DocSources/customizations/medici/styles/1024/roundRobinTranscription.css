@@ -40,6 +40,14 @@ blockquote cite span.quoteUser {
 
 /* ------------------------------------------------- CONTENT ------------------------------------------------- */
 
+#editPostContainer {
+	width: 98%;
+	min-width: 560px;
+	height: 10%;
+	min-height: 55px;
+	overflow: auto;
+}
+
 .postLocation:after {
 	content: "}";
 	color: #6F6B69;
@@ -69,6 +77,10 @@ blockquote cite span.quoteUser {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	width: 98%!important;
+	min-width: 560px;
+	height: 83%;
+	min-height: 300px;
+	overflow: auto;
 }
 
 #postsContainer h2 {
@@ -94,6 +106,34 @@ blockquote cite span.quoteUser {
 	width: 25%;
 	margin: 8px 0 0 0;
 	float: right;
+}
+
+#topicTitleSection {
+	clear: both;
+	width: 100%;
+	position: relative;
+}
+
+#topicTitleSection h2 {
+	position: absolute;
+	max-width: 500px;
+	margin-left: 20px;
+	margin-top: 0px;
+	z-index: -1; /* to avoid overlaying buttons */
+}
+
+#topicTitleSection #changeTopicTitle {
+	padding-left: 5px;
+	float: left;
+}
+
+#topicTitleSection #subscribe, #topicTitleSection #unsubscribe {
+	float: right;
+}
+
+#upperSeparator {
+	clear: both;
+	margin-bottom: 15px;
 }
 
 /* ------------------------------------------------- Topic Icons ------------------------------------------------- */

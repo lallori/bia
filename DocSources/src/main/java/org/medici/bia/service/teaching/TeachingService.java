@@ -450,6 +450,16 @@ public interface TeachingService {
 	boolean isInCourse(Integer entryId) throws ApplicationThrowable;
 	
 	/**
+	 * This method determines if the current user is subscribed to the provided course transcription topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @return true if current user is subscribed, false if current user is not subscribed, null if
+	 * current user is anonymous
+	 * @throws ApplicationThrowable
+	 */
+	Boolean isSubscribedToCourseTranscription(Integer topicId) throws ApplicationThrowable;
+	
+	/**
 	 * This method defines the current transcription status for incremental course transcription.
 	 * 
 	 * @param postExt the extended post ({@link CoursePostExt})
@@ -457,6 +467,24 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	CourseCheckPoint setIncrementalTranscription(CoursePostExt postExt) throws ApplicationThrowable;
+	
+	/**
+	 * This method subscribes the session user to the provided course topic.
+	 * 
+	 * @param courseTopicId the course topic identifier
+	 * @return true if operation has success, false otherwise 
+	 * @throws ApplicationThrowable
+	 */
+	Boolean subscribeCourseTopic(Integer courseTopicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method un-subscribes the session user from the provided course topic.
+	 * 
+	 * @param courseTopicId the course topic identifier
+	 * @return true if operation has success, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	Boolean unsubscribeForumTopic(Integer courseTopicId) throws ApplicationThrowable;
 	
 	/**
 	 * This method updates the 'TEACHING' annotations of an image.

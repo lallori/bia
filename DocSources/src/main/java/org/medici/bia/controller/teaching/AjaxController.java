@@ -468,6 +468,43 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/SubscribeForumTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> subscribeForumTopic(
+			@RequestParam(value="topicId", required=true) Integer courseTopicId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Boolean subscription = Boolean.FALSE;
+		
+		try {
+			subscription = getTeachingService().subscribeCourseTopic(courseTopicId);
+
+			model.put("topicId", courseTopicId);
+			model.put("subscription", subscription);
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/UnsubscribeForumTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> unsubscribeForumTopic(@RequestParam(value="topicId", required=false) Integer courseTopicId) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		Boolean unsubscription = Boolean.FALSE;
+		
+		try {
+			unsubscription = getTeachingService().unsubscribeForumTopic(courseTopicId);
+
+			model.put("topicId", courseTopicId);
+			model.put("subscription", unsubscription);
+		} catch (ApplicationThrowable th) {
+			model.put("error", th.getMessage());
+		}
+
+		return model;
+	}
+	
 	/**
 	 * This method update the annotations of the folio presented in the manuscript viewer.
 	 * 
