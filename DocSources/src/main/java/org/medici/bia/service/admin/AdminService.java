@@ -45,6 +45,7 @@ import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
+import org.medici.bia.scheduler.ForumPostReplyMailJob;
 
 /**
  * 
@@ -111,8 +112,8 @@ public interface AdminService {
 
 
 	/**
-	 * This method searchs for user to be activated. The condition is composed
-	 * of "active" flag equals false and "mail sended" flag equals false.
+	 * This method searches for user to be activated. The condition is composed
+	 * of "active" flag equals false and "mail sent" flag equals false.
 	 *
 	 * @return The {@link java.util.List} of users that needs to be activated 
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
@@ -209,6 +210,22 @@ public interface AdminService {
 	 * 
 	 */
 	List<Month> getMonths() throws ApplicationThrowable;
+	
+	/**
+	 * This method removes all {@link ForumPostNotified} that cannot be processed.
+	 * Possible causes of bad {@link ForumPostNotified} elements are:
+	 * <ul>
+	 * <li>the post relative to the {@link ForumPostNotified} has been deleted</li>
+	 * <li>the topic of the post relative to the {@link ForumPostNotified} has been deleted</li>
+	 * <li>all user subscriptions of a topic have been removed (and the {@link ForumPostReplyMailJob}
+	 * is not yet been fired)</li>
+	 * <li>all subscribed users of a topic have not mail in their own accounts</li>
+	 * </ul>
+	 * 
+	 * @return the number of removed {@link ForumPostNotified}
+	 * @throws ApplicationThrowable
+	 */
+	Integer removeBadForumPostNotified() throws ApplicationThrowable;
 
 	/**
 	 * 

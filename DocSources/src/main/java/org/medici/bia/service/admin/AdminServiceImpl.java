@@ -98,82 +98,253 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
-	@Autowired
-	private AccessLogDAO accessLogDAO;
-
-	@Autowired
-	private AccessLogStatisticsDAO accessLogStatisticsDAO;
-
-	@Autowired
-	private ActivationUserDAO activationUserDAO;
-	
-	@Autowired
-	private AnnotationDAO annotationDAO;
-
-	@Autowired
-	private ApplicationPropertyDAO applicationPropertyDAO;
-
-	@Autowired
-	private ApprovationUserDAO approvationUserDAO;
-	
-	@Autowired
-	private EmailMessageUserDAO emailMessageUserDAO;
-	
-	@Autowired
-	private ForumTopicDAO forumTopicDAO;
-	
-	@Autowired
-	private ForumTopicWatchDAO forumTopicWatchDAO;
-
-	@Autowired
-	private ForumPostDAO forumPostDAO;
-
-	@Autowired
-	private ForumPostNotifiedDAO forumPostNotifiedDAO;
-	
-	@Autowired
-	private LockedUserDAO lockedUserDAO;
-
-	@Autowired
-	private MonthDAO monthDAO;
-	
-	@Autowired
-	private PasswordChangeRequestDAO passwordChangeRequestDAO;
-
-	@Autowired
-	@Qualifier("passwordEncoder")
-	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private PersistentLoginDAO persistentLoginDAO;
-	
-	@Autowired
-	private UserAuthorityDAO userAuthorityDAO;
-
-	@Autowired(required = false)
-	@Qualifier("userDAOJpaImpl")
-	private UserDAO userDAO;
-
-	@Autowired
-	private UserHistoryDAO userHistoryDAO;
-
-	@Autowired
-	private UserMarkedListDAO userMarkedListDAO;
-	
-	@Autowired
-	private UserMessageDAO userMessageDAO;
-	
-	@Autowired
-	private UserPersonalNotesDAO userPersonalNotesDAO;
-	
-	@Autowired
-	private UserRoleDAO userRoleDAO;
-
-	@Autowired
-	private VettingHistoryDAO vettingHistoryDAO;
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
+	@Autowired
+	private AccessLogDAO accessLogDAO;
+	@Autowired
+	private AccessLogStatisticsDAO accessLogStatisticsDAO;
+	@Autowired
+	private ActivationUserDAO activationUserDAO;
+	@Autowired
+	private AnnotationDAO annotationDAO;
+	@Autowired
+	private ApplicationPropertyDAO applicationPropertyDAO;
+	@Autowired
+	private ApprovationUserDAO approvationUserDAO;
+	@Autowired
+	private EmailMessageUserDAO emailMessageUserDAO;
+	@Autowired
+	private ForumTopicDAO forumTopicDAO;
+	@Autowired
+	private ForumTopicWatchDAO forumTopicWatchDAO;
+	@Autowired
+	private ForumPostDAO forumPostDAO;
+	@Autowired
+	private ForumPostNotifiedDAO forumPostNotifiedDAO;
+	@Autowired
+	private LockedUserDAO lockedUserDAO;
+	@Autowired
+	private MonthDAO monthDAO;
+	@Autowired
+	private PasswordChangeRequestDAO passwordChangeRequestDAO;
+	@Autowired
+	@Qualifier("passwordEncoder")
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PersistentLoginDAO persistentLoginDAO;
+	@Autowired
+	private UserAuthorityDAO userAuthorityDAO;
+	@Autowired(required = false)
+	@Qualifier("userDAOJpaImpl")
+	private UserDAO userDAO;
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
+	@Autowired
+	private UserMarkedListDAO userMarkedListDAO;
+	@Autowired
+	private UserMessageDAO userMessageDAO;
+	@Autowired
+	private UserPersonalNotesDAO userPersonalNotesDAO;
+	@Autowired
+	private UserRoleDAO userRoleDAO;
+	@Autowired
+	private VettingHistoryDAO vettingHistoryDAO;
+	
+	public AccessLogDAO getAccessLogDAO() {
+		return accessLogDAO;
+	}
+
+	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
+		this.accessLogDAO = accessLogDAO;
+	}
+
+	public AccessLogStatisticsDAO getAccessLogStatisticsDAO() {
+		return accessLogStatisticsDAO;
+	}
+
+	public void setAccessLogStatisticsDAO(
+			AccessLogStatisticsDAO accessLogStatisticsDAO) {
+		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
+	}
+
+	public ActivationUserDAO getActivationUserDAO() {
+		return activationUserDAO;
+	}
+
+	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
+		this.activationUserDAO = activationUserDAO;
+	}
+
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+
+	public ApplicationPropertyDAO getApplicationPropertyDAO() {
+		return applicationPropertyDAO;
+	}
+
+	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
+		this.applicationPropertyDAO = applicationPropertyDAO;
+	}
+
+	public ApprovationUserDAO getApprovationUserDAO() {
+		return approvationUserDAO;
+	}
+
+	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
+		this.approvationUserDAO = approvationUserDAO;
+	}
+
+	public EmailMessageUserDAO getEmailMessageUserDAO() {
+		return emailMessageUserDAO;
+	}
+
+	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
+		this.emailMessageUserDAO = emailMessageUserDAO;
+	}
+
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
+	}
+
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
+
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
+	}
+
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
+	}
+
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+
+	public LockedUserDAO getLockedUserDAO() {
+		return lockedUserDAO;
+	}
+
+	public void setLockedUserDAO(LockedUserDAO lockedUserDAO) {
+		this.lockedUserDAO = lockedUserDAO;
+	}
+
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
+		return passwordChangeRequestDAO;
+	}
+
+	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
+		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public PersistentLoginDAO getPersistentLoginDAO() {
+		return persistentLoginDAO;
+	}
+
+	public void setPersistentLoginDAO(PersistentLoginDAO persistentLoginDAO) {
+		this.persistentLoginDAO = persistentLoginDAO;
+	}
+
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	public UserMarkedListDAO getUserMarkedListDAO() {
+		return userMarkedListDAO;
+	}
+
+	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
+		this.userMarkedListDAO = userMarkedListDAO;
+	}
+
+	public UserMessageDAO getUserMessageDAO() {
+		return userMessageDAO;
+	}
+
+	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
+		this.userMessageDAO = userMessageDAO;
+	}
+
+	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
+		return userPersonalNotesDAO;
+	}
+
+	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
+		this.userPersonalNotesDAO = userPersonalNotesDAO;
+	}
+
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	public VettingHistoryDAO getVettingHistoryDAO() {
+		return vettingHistoryDAO;
+	}
+
+	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
+		this.vettingHistoryDAO = vettingHistoryDAO;
+	}
+
 	@Override
 	public LockedUser addLockedUser(User user) throws ApplicationThrowable {
 		try{
@@ -666,49 +837,6 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @return the accessLogDAO
-	 */
-	public AccessLogDAO getAccessLogDAO() {
-		return accessLogDAO;
-	}
-
-	/**
-	 * @return the accessLogStatisticsDAO
-	 */
-	public AccessLogStatisticsDAO getAccessLogStatisticsDAO() {
-		return accessLogStatisticsDAO;
-	}
-
-	/**
-	 * @return the activationUserDAO
-	 */
-	public ActivationUserDAO getActivationUserDAO() {
-		return activationUserDAO;
-	}
-
-	/**
-	 * @return the annotationDAO
-	 */
-	public AnnotationDAO getAnnotationDAO() {
-		return annotationDAO;
-	}
-
-	/**
-	 * @return the applicationPropertyDAO
-	 */
-	public ApplicationPropertyDAO getApplicationPropertyDAO() {
-		return applicationPropertyDAO;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public ApprovationUserDAO getApprovationUserDAO() {
-		return approvationUserDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -718,62 +846,6 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the emailMessageUserDAO
-	 */
-	public EmailMessageUserDAO getEmailMessageUserDAO() {
-		return emailMessageUserDAO;
-	}
-
-	/**
-	 * @return the forumPostNotifiedDAO
-	 */
-	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
-		return forumPostNotifiedDAO;
-	}
-
-	/**
-	 * @return the forumTopicDAO
-	 */
-	public ForumTopicDAO getForumTopicDAO() {
-		return forumTopicDAO;
-	}
-
-	/**
-	 * @return the forumTopicWatchDAO
-	 */
-	public ForumTopicWatchDAO getForumTopicWatchDAO() {
-		return forumTopicWatchDAO;
-	}
-
-	/**
-	 * @param forumPostDAO the forumPostDAO to set
-	 */
-	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
-		this.forumPostDAO = forumPostDAO;
-	}
-
-	/**
-	 * @return the forumPostDAO
-	 */
-	public ForumPostDAO getForumPostDAO() {
-		return forumPostDAO;
-	}
-
-	/**
-	 * @return the lockedUserDAO
-	 */
-	public LockedUserDAO getLockedUserDAO() {
-		return lockedUserDAO;
-	}
-
-	/**
-	 * @return the monthDAO
-	 */
-	public MonthDAO getMonthDAO() {
-		return monthDAO;
 	}
 
 	/**
@@ -793,75 +865,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @return the passwordChangeRequestDAO
+	 * {@inheritDoc}
 	 */
-	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
-		return passwordChangeRequestDAO;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
-	}
-
-	/**
-	 * @return the userAuthorityDAO
-	 */
-	public UserAuthorityDAO getUserAuthorityDAO() {
-		return userAuthorityDAO;
-	}
-
-	/**
-	 * @return the userDAO
-	 */
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
-	 * @return the userMarkedListDAO
-	 */
-	public UserMarkedListDAO getUserMarkedListDAO() {
-		return userMarkedListDAO;
-	}
-
-	/**
-	 * @return the userMessageDAO
-	 */
-	public UserMessageDAO getUserMessageDAO() {
-		return userMessageDAO;
-	}
-
-	/**
-	 * @return the userPersonalNotesDAO
-	 */
-	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
-		return userPersonalNotesDAO;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public UserRoleDAO getUserRoleDAO() {
-		return userRoleDAO;
-	}
-
-	/**
-	 * @return the vettingHistoryDAO
-	 */
-	public VettingHistoryDAO getVettingHistoryDAO() {
-		return vettingHistoryDAO;
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Integer removeBadForumPostNotified() throws ApplicationThrowable {
+		try {
+			return getForumPostNotifiedDAO().removeBadElements();
+		} catch(Throwable th) {
+			logger.error("");
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -993,174 +1007,6 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 
-	/**
-	 * @param accessLogDAO the accessLogDAO to set
-	 */
-	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
-		this.accessLogDAO = accessLogDAO;
-	}
-
-	/**
-	 * @param accessLogStatisticsDAO the accessLogStatisticsDAO to set
-	 */
-	public void setAccessLogStatisticsDAO(AccessLogStatisticsDAO accessLogStatisticsDAO) {
-		this.accessLogStatisticsDAO = accessLogStatisticsDAO;
-	}
-
-	/**
-	 * @param activationUserDAO the activationUserDAO to set
-	 */
-	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
-		this.activationUserDAO = activationUserDAO;
-	}
-
-	/**
-	 * @param annotationDAO the annotationDAO to set
-	 */
-	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
-		this.annotationDAO = annotationDAO;
-	}
-
-	/**
-	 * @param applicationPropertyDAO
-	 *            the applicationPropertyDAO to set
-	 */
-	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
-		this.applicationPropertyDAO = applicationPropertyDAO;
-	}
-
-	/**
-	 * 
-	 * @param approvationUserDAO
-	 */
-	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
-		this.approvationUserDAO = approvationUserDAO;
-	}
-
-	/**
-	 * @param emailMessageUserDAO the emailMessageUserDAO to set
-	 */
-	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
-		this.emailMessageUserDAO = emailMessageUserDAO;
-	}
-
-	/**
-	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
-	 */
-	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
-		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
-	}
-
-	/**
-	 * @param forumTopicDAO the forumTopicDAO to set
-	 */
-	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
-		this.forumTopicDAO = forumTopicDAO;
-	}
-
-	/**
-	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
-	 */
-	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
-		this.forumTopicWatchDAO = forumTopicWatchDAO;
-	}
-
-	/**
-	 * @param lockedUserDAO the lockedUserDAO to set
-	 */
-	public void setLockedUserDAO(LockedUserDAO lockedUserDAO) {
-		this.lockedUserDAO = lockedUserDAO;
-	}
-
-	/**
-	 * @param monthDAO the monthDAO to set
-	 */
-	public void setMonthDAO(MonthDAO monthDAO) {
-		this.monthDAO = monthDAO;
-	}
-
-	/**
-	 * @param passwordChangeRequestDAO the passwordChangeRequestDAO to set
-	 */
-	public void setPasswordChangeRequestDAO(
-			PasswordChangeRequestDAO passwordChangeRequestDAO) {
-		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
-	}
-
-	/**
-	 * 
-	 * @param passwordEncoder
-	 */
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
-	/**
-	 * @param persistentLoginDAO the persistentLoginDAO to set
-	 */
-	public void setPersistentLoginDAO(PersistentLoginDAO persistentLoginDAO) {
-		this.persistentLoginDAO = persistentLoginDAO;
-	}
-
-	/**
-	 * @return the persistentLoginDAO
-	 */
-	public PersistentLoginDAO getPersistentLoginDAO() {
-		return persistentLoginDAO;
-	}
-
-	/**
-	 * @param userAuthorityDAO the userAuthorityDAO to set
-	 */
-	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
-		this.userAuthorityDAO = userAuthorityDAO;
-	}
-
-	/**
-	 * @param userDAO the userDAO to set
-	 */
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-	
-	/**
-	 * @param userMarkedListDAO the userMarkedListDAO to set
-	 */
-	public void setUserMarkedListDAO(UserMarkedListDAO userMarkedListDAO) {
-		this.userMarkedListDAO = userMarkedListDAO;
-	}
-	
-	/**
-	 * @param userMessageDAO the userMessageDAO to set
-	 */
-	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
-		this.userMessageDAO = userMessageDAO;
-	}
-	
-	/**
-	 * @param userPersonalNotesDAO the userPersonalNotesDAO to set
-	 */
-	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
-		this.userPersonalNotesDAO = userPersonalNotesDAO;
-	}
-
-	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-		this.userRoleDAO = userRoleDAO;
-	}
-
-	/**
-	 * @param vettingHistoryDAO the vettingHistoryDAO to set
-	 */
-	public void setVettingHistoryDAO(VettingHistoryDAO vettingHistoryDAO) {
-		this.vettingHistoryDAO = vettingHistoryDAO;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */

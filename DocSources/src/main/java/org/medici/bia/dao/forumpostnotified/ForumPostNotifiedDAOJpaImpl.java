@@ -91,6 +91,37 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 		
 		return getFirst(query);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeBadElements()  throws PersistenceException {
+		String jpqlFirst = "DELETE FROM ForumPostNotified AS notified "
+				+ "WHERE notified.mailSended = false AND "
+				+ "notified.postId IN "
+				+ "(SELECT DISTINCT post.postId FROM "
+				+ "ForumPost AS post, "
+				+ "ForumTopicWatch AS watch "
+				+ "WHERE "
+				+ "post.topic.topicId NOT IN (SELECT DISTINCT topicWatchId FROM ForumTopicWatch))";
+		
+		int removedFirst = getEntityManager().createQuery(jpqlFirst).executeUpdate();
+		
+		String jpqlSecond = "DELETE FROM ForumPostNotified AS notified "
+				+ "WHERE notified.mailSended = false AND "
+				+ "notified.postId IN "
+				+ "(SELECT post.postId FROM "
+				+ "ForumPost AS post, "
+				+ "ForumTopicWatch AS watch "
+				+ "WHERE "
+				+ "watch.topicWatchId = post.topic.topicId AND "
+				+ "(post.logicalDelete = true OR post.topic.logicalDelete = true OR watch.user.mail IS NULL OR watch.user.mail = ''))";
+		
+		int removedSecond = getEntityManager().createQuery(jpqlSecond).executeUpdate();
+		
+		return removedFirst + removedSecond;
+	}
 
 
 }

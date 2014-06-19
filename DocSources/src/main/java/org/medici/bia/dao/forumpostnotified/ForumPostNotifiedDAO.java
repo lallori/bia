@@ -33,6 +33,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.ForumPostNotified;
+import org.medici.bia.scheduler.ForumPostReplyMailJob;
 
 /**
  * ForumPostNotified DAO.
@@ -57,4 +58,20 @@ public interface ForumPostNotifiedDAO extends Dao<Integer, ForumPostNotified> {
 	 * @throws PersistenceException
 	 */
 	ForumPostNotified getForumPostNotifiedByPost(Integer forumPostId) throws PersistenceException;
+
+	/**
+	 * Removes all bad {@link ForumPostNotified} elements.
+	 * Possible causes are:
+	 * <ul>
+	 * <li>the post relative to the {@link ForumPostNotified} has been deleted</li>
+	 * <li>the topic of the post relative to the {@link ForumPostNotified} has been deleted</li>
+	 * <li>all user subscriptions of a topic have been removed (and the {@link ForumPostReplyMailJob}
+	 * is not yet been fired)</li>
+	 * <li>all subscribed users of a topic have not mail in their own accounts</li>
+	 * </ul>
+	 * 
+	 * @return number of removed elements
+	 * @throws PersistenceException
+	 */
+	Integer removeBadElements()  throws PersistenceException;
 }
