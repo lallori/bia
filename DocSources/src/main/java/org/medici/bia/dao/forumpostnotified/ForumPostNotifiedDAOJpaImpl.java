@@ -104,7 +104,7 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 				+ "ForumPost AS post, "
 				+ "ForumTopicWatch AS watch "
 				+ "WHERE "
-				+ "post.topic.topicId NOT IN (SELECT DISTINCT topicWatchId FROM ForumTopicWatch))";
+				+ "post.topic NOT IN (SELECT DISTINCT topic FROM ForumTopicWatch))";
 		
 		int removedFirst = getEntityManager().createQuery(jpqlFirst).executeUpdate();
 		
@@ -115,7 +115,7 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 				+ "ForumPost AS post, "
 				+ "ForumTopicWatch AS watch "
 				+ "WHERE "
-				+ "watch.topicWatchId = post.topic.topicId AND "
+				+ "watch.topic = post.topic AND "
 				+ "(post.logicalDelete = true OR post.topic.logicalDelete = true OR watch.user.mail IS NULL OR watch.user.mail = ''))";
 		
 		int removedSecond = getEntityManager().createQuery(jpqlSecond).executeUpdate();
