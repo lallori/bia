@@ -4,20 +4,29 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowForumURL" value="/community/ShowForum.do">
-		<c:param name="forumId"          value="${forum.forumId}" />
-		<c:param name="CompleteDOM" value="true"/>
-	</c:url>
-	
-	<div id="ConfirmCreateForum">
-		<h1>A Discussion Forum for this Person has been created.</h1>
-		<a id="open" href="${ShowForumURL}" target="_blank" class="button_medium">OPEN FORUM</a>
-	</div>
-
-	<script>
-		$j(document).ready(function() {
-			$j("#open").click(function(){
-				Modalbox.hide();
-			});
-		});
-	</script>
+	<c:choose>
+		<c:when test="${empty applicationThrowable}">
+			<c:url var="ShowForumURL" value="/community/ShowForum.do">
+				<c:param name="forumId" value="${forum.forumId}" />
+				<c:param name="CompleteDOM" value="true"/>
+			</c:url>
+			
+			<div id="ConfirmCreateForum">
+				<h1>A Discussion Forum for this Person has been created.</h1>
+				<a id="open" href="${ShowForumURL}" target="_blank" class="button_medium">OPEN FORUM</a>
+			</div>
+		
+			<script>
+				$j(document).ready(function() {
+					$j("#open").click(function(){
+						Modalbox.hide();
+					});
+				});
+			</script>
+		</c:when>
+		<c:otherwise>
+			<div id="ConfirmCreateForum">
+				<h1>The Discussion Forum for this Person has NOT been created due to a server error. Please contact the admin!</h1>
+			</div>
+		</c:otherwise>
+	</c:choose>

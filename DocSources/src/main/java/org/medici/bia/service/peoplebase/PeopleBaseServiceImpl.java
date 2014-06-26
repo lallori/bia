@@ -775,7 +775,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
-				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}else if(forum.getLogicalDelete()){
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
 				
@@ -788,7 +788,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				getForumDAO().recursiveIncreaseSubForumsNumber(parentForum);
 				
 				getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, forum));
-				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.PEOPLE, forum));
+				getVettingHistoryDAO().persist(new VettingHistory(user, "Create new forum", org.medici.bia.domain.VettingHistory.Action.CREATE, org.medici.bia.domain.VettingHistory.Category.FORUM, forum));
 			}
 
 			return forum;
