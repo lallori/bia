@@ -423,6 +423,15 @@ public interface TeachingService {
 	Map<String,UserAuthority> getUsersCourseAuthority(Set<String> accountIds) throws ApplicationThrowable;
 	
 	/**
+	 * This method adds student {@link UserAuthority} to the provided account.
+	 * 
+	 * @param account the user account
+	 * @return true if the operation has success, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	Boolean grantStudentPermission(String account) throws ApplicationThrowable;
+	
+	/**
 	 * This method determines if the provided annotation is deletable.
 	 * 
 	 * @param annotation the annotation
@@ -458,6 +467,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	Boolean isSubscribedToCourseTranscription(Integer topicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method removes student {@link UserAuthority} from the provided account.
+	 * 
+	 * @param account the user account
+	 * @return true if the operation has success, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	Boolean revokeStudentPermission(String account) throws ApplicationThrowable;
 	
 	/**
 	 * This method defines the current transcription status for incremental course transcription.

@@ -236,6 +236,7 @@ public class AjaxController {
 	@RequestMapping(value = "/admin/SearchUser.json", method = RequestMethod.GET)
 	public ModelAndView searchUser(@RequestParam(value="fullName") String fullName,
 								@RequestParam(value="userName") String userName,
+								@RequestParam(value="isTeaching", required=false) Boolean isTeaching,
 								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -277,7 +278,11 @@ public class AjaxController {
 			} else {
 				singleRow.add("");
 			}
-			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
+			if (Boolean.TRUE.equals(isTeaching)) {
+				resultList.add(HtmlUtils.showUserForTeaching(singleRow, currentUser.getAccount()));
+			} else {
+				resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
+			}
 		}
 
 		model.put("iEcho", 1);

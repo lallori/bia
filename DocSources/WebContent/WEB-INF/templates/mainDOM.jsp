@@ -119,33 +119,32 @@
             <div id="communityForumsPointer"></div>
             <div id="communityForumsPointer_guest"></div>
 			<div id="top_top">
-<tiles:insertAttribute name="searchForm"/>
-<tiles:insertAttribute name="lastEntryMenu" />
-
+				<tiles:insertAttribute name="searchForm"/>
+				<tiles:insertAttribute name="lastEntryMenu" />
 			</div>
 			<div id="top_middle">
 				<div id="mainmenu" class="menumain">
 					<ul>
-<tiles:insertAttribute name="advancedSearchMenu" />					
-<tiles:insertAttribute name="dataEntryMenu" />
-<tiles:insertAttribute name="communityForumsMenu" />
-<tiles:insertAttribute name="historyMenu" />
-<tiles:insertAttribute name="helpMenu" />
-<tiles:insertAttribute name="logoutMenu" />
+						<tiles:insertAttribute name="advancedSearchMenu" />					
+						<tiles:insertAttribute name="dataEntryMenu" />
+						<tiles:insertAttribute name="communityForumsMenu" />
+						<tiles:insertAttribute name="historyMenu" />
+						<tiles:insertAttribute name="helpMenu" />
+						<tiles:insertAttribute name="logoutMenu" />
 					</ul>
 				</div>
 			</div>
 			<div id="top_bottom" class="docs">
-			<ul>
-<tiles:insertAttribute name="administratorMenu"/>
-<tiles:insertAttribute name="digitizationMenu"/>
-<tiles:insertAttribute name="messagesMenu" />
-<tiles:insertAttribute name="personalDirectoryMenu"  />
-<tiles:insertAttribute name="markedListMenu" />
-			</ul>
-<tiles:insertAttribute name="whoAmIMenu"/>
+				<ul>
+					<tiles:insertAttribute name="administratorMenu"/>
+					<tiles:insertAttribute name="teachingMenu"/>
+					<tiles:insertAttribute name="digitizationMenu"/>
+					<tiles:insertAttribute name="messagesMenu" />
+					<tiles:insertAttribute name="personalDirectoryMenu"  />
+					<tiles:insertAttribute name="markedListMenu" />
+				</ul>
+				<tiles:insertAttribute name="whoAmIMenu"/>
 			</div>
-<tiles:insertAttribute name="main"/>
+			<tiles:insertAttribute name="main"/>
 		</div>
-	</body>
 </html>

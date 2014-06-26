@@ -1921,10 +1921,10 @@ ALTER TABLE bia.tblAnnotations ADD COLUMN `logicalDelete` TINYINT(4) NOT NULL DE
 -- open annotation path definition
 INSERT INTO bia.tblApplicationProperty (`id`, `help`, `value`) VALUES ('openannotation.path', 'Open Annotation output path', '/data/openannotation/');
 
--- show open annotation view definition -> it extends template annotationDOM
-INSERT INTO bia.tblApplicationTemplate (`name`, `parentName`) VALUES ('openannotation/ShowOpenAnnotations', 'template.annotationDOM');
-INSERT INTO bia.tblApplicationTemplate (`name`, `template`) VALUES ('template.annotationDOM', '/WEB-INF/templates/annotationDOM.jsp');
-INSERT INTO bia.tblApplicationTemplateAttributes (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('openannotation/ShowOpenAnnotations', 'main', '/WEB-INF/jsp/openannotation/ShowOpenAnnotations.jsp', 0);
+-- show open annotation view definition -> it extends template administratorBackOfficeDOM
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('openannotation/ShowOpenAnnotations', 'template.administratorBackOfficeDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.administratorBackOfficeDOM', '/WEB-INF/templates/administratorBackOfficeDOM.jsp');
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('openannotation/ShowOpenAnnotations', 'main', '/WEB-INF/jsp/openannotation/ShowOpenAnnotations.jsp', 0);
 
 -- teaching module -> general definitions
 ALTER TABLE `tblApplicationTemplateAttributes` CHANGE COLUMN `templateName` `templateName` VARCHAR(255) NOT NULL FIRST;
@@ -1966,6 +1966,18 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`,
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalCourseTranscription', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalCourseTranscription.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowIncrementalPostPreview', 'main', '/WEB-INF/jsp/teaching/ShowIncrementalPostPreview.jsp', 0);
 
+-- teaching module - Administrator's pages
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowTeachingModuleModalWindow', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowTeachingUserSearch', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowUser', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/TeachingUserSearchResult', 'template.partialDOM');
+
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('template.mainDOM', 'teachingMenu', '/WEB-INF/jsp/menu/Teaching.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowTeachingModuleModalWindow', 'main', '/WEB-INF/jsp/teaching/ShowTeachingModuleModalWindow.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowTeachingUserSearch', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUserSearch.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowUser', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUser.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/TeachingUserSearchResult', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUserSearchResult.jsp', 0);
+
 -- schedone: change column type
 ALTER TABLE `tblSchedone`
 	CHANGE COLUMN `DIM_MEDIA_IMMAGINI_JPEG` `DIM_MEDIA_IMMAGINI_JPEG` FLOAT NULL DEFAULT NULL AFTER `DESCRIZIONE_CONTENUTO_ENG`,
@@ -1979,6 +1991,5 @@ ALTER TABLE `tblSchedone`
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.path', 'Europeana output path', '/data/europeana/');
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.active', 'Europeana activation flag', 'false');
 
-INSERT INTO `tblApplicationTemplate` (`name`, `template`) VALUES ('template.administratorBackOfficeDOM', '/WEB-INF/templates/administratorBackOfficeDOM.jsp');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`, `preparer`, `template`) VALUES ('europeana/ShowEuropeanaView', 'template.administratorBackOfficeDOM', NULL, NULL);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('europeana/ShowEuropeanaView', 'main', NULL, '/WEB-INF/jsp/europeana/ShowEuropeanaView.jsp', 0, NULL);

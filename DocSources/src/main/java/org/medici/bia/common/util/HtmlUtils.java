@@ -1477,10 +1477,23 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param inputList
-	 * @param entryId
+	 * @param account
 	 * @return
 	 */
 	public static List<String> showUser(List<String> inputList, String account) {
+		return showUser(inputList, account, false);
+	}
+	
+	/**
+	 * @param inputList
+	 * @param account
+	 * @return
+	 */
+	public static List<String> showUserForTeaching(List<String> inputList, String account) {
+		return showUser(inputList, account, true);
+	}
+	
+	private static List<String> showUser(List<String> inputList, String account, boolean forTeaching) {
 		if (inputList == null)
 			return null;
 
@@ -1488,7 +1501,7 @@ public class HtmlUtils {
 		
 		String anchorBegin = "<a class=\"searchResult\" href=\"";
 		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
-		anchorBegin += "/admin/ShowUser.do?account=";
+		anchorBegin += "/" + (forTeaching ? "teaching" : "admin") + "/ShowUser.do?account=";
 		anchorBegin += account;
 		anchorBegin += "\">";
 		String hrefEnd = "</a>";

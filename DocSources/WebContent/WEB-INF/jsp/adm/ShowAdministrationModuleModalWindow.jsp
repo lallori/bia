@@ -6,28 +6,36 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 		
 <div id="administrationModalDiv">
-	<div id="systemWideDiv">
+	<div id="systemWideDiv" class="adminModalButtonContainer">
         <a id="systemWide" class="button_large" href="<c:url value="/admin/ShowApplicationProperties.do" />">System-Wide Properties</a>
 	</div>
     
-	<div id="userManagementDiv">
+	<div id="userManagementDiv" class="adminModalButtonContainer">
         <a id="userManagement" class="button_large" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
 	</div>
     
-	<div id="memoryUsageDiv">
+	<div id="memoryUsageDiv" class="adminModalButtonContainer">
         <a id="memoryUsage" class="button_large" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
 	</div>
 
-	<div id="accessLogDiv">
+	<div id="accessLogDiv" class="adminModalButtonContainer">
         <a id="accessLog" class="button_large" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
 	</div>
 	
-	<div id="whoIsOnlineDiv">
+	<div id="whoIsOnlineDiv" class="adminModalButtonContainer">
         <a id="whoIsOnline" class="button_large" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
 	</div>
 	
-	<div id="europeanaManagerDiv">
-        <a id="europeana" class="button_large" href="<c:url value="/europeana/europeanaView.do" />">Manage Europeana Job</a>
+	<div id="teachingModuleDiv" class="adminModalButtonContainer">
+        <a id="teachingModule" class="button_large" href="<c:url value="/teaching/ShowTeachingModule.do" />">Teaching Module</a>
+	</div>
+	
+	<div id="openAnnotationCollaborationDiv" class="adminModalButtonContainer">
+        <a id="openAnnotationCollaboration" class="button_large" href="<c:url value="/src/openannotation/annotationsView.do" />">OAC Module</a>
+	</div>
+	
+	<div id="europeanaManagerDiv" class="adminModalButtonContainer">
+        <a id="europeana" class="button_large" href="<c:url value="/europeana/europeanaView.do" />">Europeana Management</a>
 	</div>
 
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>
@@ -57,6 +65,7 @@
 			Modalbox.hide();
 			return false;
 		});
+		
 		$j("#whoIsOnline").click(function(){
 			var tabName = 'Who is Online' 
 			var numTab = 0;
@@ -85,6 +94,17 @@
 				$j("#tabs").tabs("select", numTab);
 			}
 
+			Modalbox.hide();
+			return false;
+		});
+		
+		$j("#teachingModule").click(function() {
+			Modalbox.show($j(this).attr("href"), {title: "TEACHING MODULE", width: 270, height: 170});
+			return false;
+		});
+		
+		$j("#openAnnotationCollaboration").click(function() {
+			window.open($j(this).attr("href"));
 			Modalbox.hide();
 			return false;
 		});

@@ -43,7 +43,14 @@ import org.medici.bia.domain.UserRole;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface UserRoleDAO extends Dao<Integer, UserRole> {
-
+	
+	/**
+	 * 
+	 * @param userRoles
+	 * @throws PersistenceException
+	 */
+	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param account
@@ -51,21 +58,7 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 * @throws PersistenceException
 	 */
 	List<UserRole> findUserRoles(String account) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param account
-	 * @throws PersistenceException
-	 */
-	Integer removeAllUserRoles(String account) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param userRoles
-	 * @throws PersistenceException
-	 */
-	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param userAuthority
@@ -73,6 +66,13 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 * @throws PersistenceException
 	 */
 	List<User> findUsers(UserAuthority userAuthority) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param account
+	 * @throws PersistenceException
+	 */
+	Integer removeAllUserRoles(String account) throws PersistenceException;
 
 	/**
 	 * 

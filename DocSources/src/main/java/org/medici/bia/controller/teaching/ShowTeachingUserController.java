@@ -1,5 +1,5 @@
 /*
- * ShowUserController.java
+ * ShowTeachingUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,7 +25,7 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.bia.controller.admin;
+package org.medici.bia.controller.teaching;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +33,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.medici.bia.command.admin.ShowUserCommand;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,17 +55,17 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-@RequestMapping("/admin/ShowUser")
-public class ShowUserController {
+@RequestMapping("/teaching/ShowUser")
+public class ShowTeachingUserController {
 	@Autowired
 	private AdminService adminService;
 
-	/**
-	 * 
-	 * @return
-	 */
 	public AdminService getAdminService() {
 		return adminService;
+	}
+	
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 
 	/**
@@ -80,6 +82,20 @@ public class ShowUserController {
 		if (StringUtils.isNotBlank(command.getAccount())) {
 			try {
 				user = getAdminService().findUser(command.getAccount());
+				Authority adminTeach = null;
+				Authority student = null;
+				for (UserRole role : user.getUserRoles()) {
+					if (Authority.ADMINISTRATORS.equals(role.getUserAuthority().getAuthority()) ||
+							Authority.TEACHERS.equals(role.getUserAuthority().getAuthority())) {
+						adminTeach = role.getUserAuthority().getAuthority();
+					}
+					if (Authority.STUDENTS.equals(role.getUserAuthority().getAuthority())) {
+						student = role.getUserAuthority().getAuthority();
+					}
+				}
+				if (adminTeach != null || student != null) {
+					model.put("teachingPolicy", adminTeach != null ? adminTeach.getValue() : student.getValue());
+				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				model.put("applicationThrowable", applicationThrowable);
 				return new ModelAndView("error/ShowUser", model);
@@ -90,14 +106,7 @@ public class ShowUserController {
 
 		model.put("user", user);
 		
-		return new ModelAndView("admin/ShowUser", model);
+		return new ModelAndView("teaching/ShowUser", model);
 	}
 
-	/**
-	 * 
-	 * @param adminService
-	 */
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
-	}
 }

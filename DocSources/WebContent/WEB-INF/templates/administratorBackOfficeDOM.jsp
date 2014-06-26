@@ -14,7 +14,6 @@
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Ronny Rinaldi &lt;rinaldi.ronny@gmail.com&gt;"/>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg" />"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/AdministratorBackOffice.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" />

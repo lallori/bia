@@ -4,16 +4,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 			
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule"><fmt:message key="menu.administrator.button"/></a></li>
+		<security:authorize ifAnyGranted="ROLE_TEACHERS" ifNotGranted="ROLE_ADMINISTRATORS">
+			<li><a href="<c:url value="/teaching/ShowTeachingModule.do" />" id="teachingModule">Teaching Module</a></li>
 			
 			<script type="text/javascript">
 			$j(document).ready(function(){
-				$j("#administrationModule").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "<fmt:message key="menu.administrator.open"/>", width: 270, height: 380});
+				$j("#teachingModule").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "Teaching Module", width: 270, height: 170});
 					return false;
 				}						
 				);
 			});
 			</script>
-		</security:authorize>			
+		</security:authorize>		

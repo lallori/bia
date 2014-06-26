@@ -58,6 +58,7 @@ import org.medici.bia.dao.image.ImageDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
+import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
@@ -76,8 +77,10 @@ import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -129,6 +132,8 @@ public class TeachingServiceImpl implements TeachingService {
 	private UserHistoryDAO userHistoryDAO;
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private UserRoleDAO userRoleDAO;
 	
 	public AnnotationDAO getAnnotationDAO() {
 		return annotationDAO;
@@ -258,8 +263,16 @@ public class TeachingServiceImpl implements TeachingService {
 		this.userDAO = userDAO;
 	}
 	
-	/* Service API implementations */
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
 	
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+	
+	/* Service API implementations */
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -983,6 +996,37 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean grantStudentPermission(String account) throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser(account);
+			
+			if (user != null) {
+				boolean found = false;
+				for (UserRole role : user.getUserRoles()) {
+					if (Authority.STUDENTS.equals(role.getUserAuthority().getAuthority())) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					UserAuthority studentAuthority = getUserAuthorityDAO().find(Authority.STUDENTS);
+					UserRole studentRole = new UserRole(user, studentAuthority);
+					getUserRoleDAO().persist(studentRole);
+					user.getUserRoles().add(studentRole);
+					return Boolean.TRUE;
+				}
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		return Boolean.FALSE;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable {
 		if (annotation.getForumTopic() != null) {
@@ -1037,6 +1081,35 @@ public class TeachingServiceImpl implements TeachingService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean revokeStudentPermission(String account) throws ApplicationThrowable {
+		try {
+			User user = getUserDAO().findUser(account);
+			
+			if (user != null) {
+				UserRole studentUserRole = null;
+				for (UserRole role : user.getUserRoles()) {
+					if (Authority.STUDENTS.equals(role.getUserAuthority().getAuthority())) {
+						studentUserRole = role;
+						break;
+					}
+				}
+				if (studentUserRole != null) {
+					user.getUserRoles().remove(studentUserRole);
+					getUserRoleDAO().remove(studentUserRole);
+					return Boolean.TRUE;
+				}
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		return Boolean.FALSE;
 	}
 	
 	/**

@@ -7,15 +7,15 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 
 <div id="userManagementDiv">
-	<div id="addNewDiv">
+	<div id="addNewDiv" class="adminModalButtonContainer">
         <a id="addNew" class="button_large" href="<c:url value="/admin/CreateUser.do" />">Add New User</a>
 	</div>
     
-	<div id="editOrShowDiv">
+	<div id="editOrShowDiv" class="adminModalButtonContainer">
         <a id="editOrShow" class="button_large" href="<c:url value="/admin/ShowUserSearch.do" />">Edit or Show Existing User</a>
 	</div>
     
-    <div id="globalPropertiesDiv">
+    <div id="globalPropertiesDiv" class="adminModalButtonContainer">
         <a id="globalProperties" class="button_large" href="#">Global User Properties</a>
     </div>
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>

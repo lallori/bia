@@ -958,7 +958,7 @@ public class UserServiceImpl implements UserService {
 			User userToLock = getUserDAO().findUser(user.getAccount());
 			userToLock.setLocked(Boolean.TRUE);
 
-			getUserDAO().removeAllUserRoles(user.getAccount());
+			// getUserDAO().removeAllUserRoles(user.getAccount());
 			
 			getUserDAO().merge(userToLock);
 		} catch (Throwable th) {

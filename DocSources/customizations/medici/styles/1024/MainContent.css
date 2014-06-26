@@ -4543,11 +4543,12 @@ ul#network a {
 
 /* ---------------- Modal Window ------------- */
 
-#administrationModalDiv #close {
-    margin-left: 95px; 
+#administrationModalDiv .adminModalButtonContainer {
+	width: 215px;
+	margin: 15px 0 0 20px;
 }
 
-#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide, #administrationModalDiv #memoryUsage, #administrationModalDiv #accessLog, #administrationModalDiv #whoIsOnline, #administrationModalDiv #europeana {
+#administrationModalDiv .adminModalButtonContainer a {
 	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4557,15 +4558,35 @@ ul#network a {
 	display:block;
 }
 
+#administrationModalDiv #close {
+    margin-left: 95px; 
+}
+
 #systemWide p, #userManagement p, #reportsRevisions p {
 	margin: 0px;
 }
 
-#systemWideDiv, #userManagementDiv, #memoryUsageDiv, #accessLogDiv, #whoIsOnlineDiv, #europeanaManagerDiv {
+/* ---------------- Teaching Module ------------- */
+/* Modal */
+
+#teachingModalDiv .adminModalButtonContainer {
 	width: 215px;
 	margin: 15px 0 0 20px;
 }
 
+#teachingModalDiv .adminModalButtonContainer a {
+	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+	display:block;
+}
+
+#teachingModalDiv #close {
+    margin-left: 95px; 
+}
 
 /* ---------------- User Management ------------- */
 
@@ -4578,7 +4599,7 @@ ul#network a {
 	margin: 0;
 }
 
-#userManagementDiv #addNew, #userManagementDiv #editOrShow, #userManagementDiv #globalProperties{
+#userManagementDiv .adminModalButtonContainer a {
 	background:url(${contextPath}/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4587,7 +4608,7 @@ ul#network a {
 	height:22px;
 }
 
-#userManagementDiv #addNewDiv, #userManagementDiv #editOrShowDiv, #userManagementDiv #globalPropertiesDiv {
+#userManagementDiv .adminModalButtonContainer {
 	width:200px;
 	margin:10px 0 0 10px; 
 }
@@ -4657,6 +4678,23 @@ h3.systemManagement {
 	text-align: center;
 }
 
+h4.userSearchSubTitle {
+	padding: 0 0 10px 10px;
+	width: 450px;
+}
+
+#grantButton, #revokeButton {
+	background-image: url("/DocSources/images/1024/button_medium.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 22px;
+    padding: 2px 0 0;
+    text-align: center;
+    width: 127px;
+    display: inline-block;
+    text-decoration: none;
+    color: #6f6b69;
+}
 
 /* User Search Table (body_right) */
 
@@ -5235,52 +5273,3 @@ margin-top: 50px;
 }
 
 /* -------------------------------------------------------------------------- */
-/*
-/*
-/* -------------------------------------------------- OPEN ANNOTATION --------------------------------------------------------- */
-
-.bodyContent {
-	width: 100%;
-	height: 95%;
-}
-
-.containerView {
-	width: width: 100%;
-	height: 90%;
-}
-
-.annotationViewTitle {
-	font-size: 3em; 
-	margin-top: 20px; 
-	padding-top: 30px; 
-	width: 850px; 
-	text-align: left;
-}
-
-.annotationViewImg {
-	float: left;
-	margin-left: 40px;
-	margin-right: 20px;
-}
-
-.annotationViewContent {
-	width: 95%;
-	height: 70%;
-	overflow: auto;
-	text-align:left;
-	background-color: white;
-	margin: 40px;
-}
-
-.annotationDownloadButton {
-	clear: both;
-	float: left;
-	text-align: center;
-	padding-top: 4px;
-	margin-left: 40px;
-	cursor: pointer;
-	background: url(${contextPath}/images/1024/button_large.png) no-repeat;
-	width: 187px;
-	height: 22px;
-	border: none;
-}

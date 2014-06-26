@@ -38,6 +38,8 @@ import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserRole;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -55,13 +57,14 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException {
 		for (UserRole userRole : userRoles) {
 			getEntityManager().persist(userRole);
 		}
     }
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -91,6 +94,7 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Integer removeAllUserRoles(String account) throws PersistenceException {
 		String jpql = "DELETE FROM UserRole WHERE account=:account";
@@ -104,6 +108,7 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
 		String jpql = "UPDATE UserRole SET user.account=:newAccount WHERE user.account=:originalAccount";

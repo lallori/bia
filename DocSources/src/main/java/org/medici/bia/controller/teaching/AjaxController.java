@@ -452,6 +452,36 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/GrantStudentPermission.json", method = RequestMethod.POST)
+	public Map<String, Object> grantStudentPermission(
+			@RequestParam(value="account", required=true) String account,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getTeachingService().grantStudentPermission(account);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/RevokeStudentPermission.json", method = RequestMethod.POST)
+	public Map<String, Object> revokeStudentPermission(
+			@RequestParam(value="account", required=true) String account,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getTeachingService().revokeStudentPermission(account);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/ShowCurrentTranscription", method = RequestMethod.GET)
 	public Map<String, Object> showCurrenttranscription(
 			@RequestParam(value="topicId", required=true) Integer topicId,
