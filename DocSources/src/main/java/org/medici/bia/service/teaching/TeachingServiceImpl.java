@@ -1506,7 +1506,7 @@ public class TeachingServiceImpl implements TeachingService {
 		
 		// if mails (for subscribed users) are still not sent, the forum post notification is removed
 		ForumPostNotified forumPostNotified = getForumPostNotifiedDAO().getForumPostNotifiedByPost(post.getPostId());
-		if (Boolean.FALSE.equals(forumPostNotified.getMailSended())) {
+		if (forumPostNotified != null && Boolean.FALSE.equals(forumPostNotified.getMailSended())) {
 			getForumPostNotifiedDAO().remove(forumPostNotified);
 		}
 		
