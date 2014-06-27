@@ -20,19 +20,19 @@
 		
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				$j("#grantUsers").click(function(){
+				$j("#grantUsers").click(function() {
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;
 				});
 		
-				$j("#manageCourses").click(function(){
+				$j("#manageCourses").click(function() {
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;
 				});
 				
-				$j("#close").click(function(){
+				$j("#close").click(function() {
 					Modalbox.hide();
 					return false;
 				});

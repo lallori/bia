@@ -414,6 +414,18 @@ public interface TeachingService {
 	UserAuthority getUserCourseAuthority(String account) throws ApplicationThrowable;
 	
 	/**
+	 * This method retrieves paginated users with the provided filters.
+	 * 
+	 * @param user user filter (with fullName and userName filters)
+	 * @param studentRoleSearch this filter bound search results on students (if true), no students (if false)
+	 * or everybody (if null)
+	 * @param paginationFilter the pagination filter
+	 * @return paginated users
+	 * @throws ApplicationThrowable
+	 */
+	Page getUsers(User user, Boolean studentRoleSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
 	 * This method returns the a map of users maximum authority for course transcriptions.
 	 *  
 	 * @param accountsId a set of account identifier

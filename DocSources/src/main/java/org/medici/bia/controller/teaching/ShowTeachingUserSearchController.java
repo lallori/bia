@@ -34,7 +34,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.bia.command.admin.ShowUserSearchCommand;
+import org.medici.bia.command.teaching.ShowTeachingUserSearchCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -75,7 +75,7 @@ public class ShowTeachingUserSearchController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowUserSearchCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ShowTeachingUserSearchCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -92,8 +92,10 @@ public class ShowTeachingUserSearchController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowUserSearchCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowTeachingUserSearchCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
+		// set the default value of student radio button
+		command.setRole(ShowTeachingUserSearchCommand.ALL);
 		return new ModelAndView("teaching/ShowTeachingUserSearch", model);
 	}
 	

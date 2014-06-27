@@ -985,6 +985,22 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page getUsers(User user, Boolean studentRoleSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			Set<Authority> authoritiesToSearch = new HashSet<Authority>();
+			if (studentRoleSearch != null) {
+				authoritiesToSearch.add(Authority.STUDENTS);
+			}
+			return getUserDAO().findUsers(user, authoritiesToSearch, Boolean.TRUE.equals(studentRoleSearch), paginationFilter);
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}	
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Map<String,UserAuthority> getUsersCourseAuthority(Set<String> accountIds) throws ApplicationThrowable {
 		try {
 			return getUserAuthorityDAO().getUsersCourseAuthority(accountIds);

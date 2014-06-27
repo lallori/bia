@@ -47,6 +47,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.LdapUtils;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.TooManyUsersException;
 import org.medici.bia.security.LdapConfiguration;
@@ -327,6 +328,12 @@ public class UserDAOLdapImpl implements UserDAO {
 		AndFilter filter = getSearchFilter(user);
 		
 		return new Page(getLdapTemplate().search(DistinguishedName.EMPTY_PATH,  filter.encode(), getUserContextMapper()), pageNumber, pageSize);
+	}
+	
+	@Override
+	public Page findUsers(User user, Set<Authority> authorities, boolean searchAuthorities, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -678,4 +685,5 @@ public class UserDAOLdapImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

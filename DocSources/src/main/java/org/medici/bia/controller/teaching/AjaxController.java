@@ -29,6 +29,7 @@ package org.medici.bia.controller.teaching;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.medici.bia.command.teaching.ShowTeachingUserSearchCommand;
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.common.util.HtmlUtils;
 import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.CourseCheckPoint;
 import org.medici.bia.domain.CoursePostExt;
+import org.medici.bia.domain.User;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
@@ -49,6 +54,8 @@ import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -58,6 +65,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * AJAX Controller for the Teaching module.
@@ -480,6 +488,69 @@ public class AjaxController {
 			model.put("operation", "KO");
 		}
 		return model;
+	}
+	
+	/**
+	 * 
+	 * @param alias
+	 * @param model
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/teaching/SearchUser.json", method = RequestMethod.GET)
+	public ModelAndView searchUser(@RequestParam(value="fullName") String fullName,
+								@RequestParam(value="userName") String userName,
+								@RequestParam(value="role") String role,
+								@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+					   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Page page = null;
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		User user = new User();
+		if(userName != null && userName.length() > 0) {
+			user.setAccount(userName);
+		}
+
+		if(fullName != null && fullName.length() > 0){
+			user.setFirstName(fullName);
+		}
+
+		try {
+			// Paging results...
+			page = getTeachingService().getUsers(user, ShowTeachingUserSearchCommand.ALL.equals(role) ? null : ShowTeachingUserSearchCommand.STUDENT.equals(role) ? true : false, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		// Ordering results... 
+		// LP : la gestione dell'ordinamento va spostata nel blocco metodo del dao invocato nel service
+		PropertyComparator.sort(page.getList(), new MutableSortDefinition("firstName", true, true));
+		page.setList(Collections.unmodifiableList(page.getList()));
+
+		List resultList = new ArrayList(0);
+		for(User currentUser : (List<User>) page.getList()){
+			List singleRow = new ArrayList(0);
+			singleRow.add(currentUser.getFirstName() + " " + currentUser.getLastName());
+			singleRow.add(currentUser.getMail());
+			singleRow.add(currentUser.getCity());
+			singleRow.add(currentUser.getCountry());
+			if (currentUser.getLastLoginDate() != null) {
+				singleRow.add(currentUser.getLastLoginDate().toString());
+			} else {
+				singleRow.add("");
+			}
+			resultList.add(HtmlUtils.showUserForTeaching(singleRow, currentUser.getAccount()));
+		}
+
+		model.put("iEcho", 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+
+		return new ModelAndView("responseOK",model);
 	}
 	
 	@RequestMapping(value = "/teaching/ShowCurrentTranscription", method = RequestMethod.GET)

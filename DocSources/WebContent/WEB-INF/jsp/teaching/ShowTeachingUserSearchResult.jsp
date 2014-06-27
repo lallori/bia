@@ -5,10 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowUserSearchResultURL" value="/admin/SearchUser.json">
+	<c:url var="ShowUserSearchResultURL" value="/teaching/SearchUser.json">
 		<c:param name="fullName" value="${command.fullName}" />
 		<c:param name="userName" value="${command.userName}" />
-		<c:param name="isTeaching" value="true" />
+		<c:param name="role" value="${command.role}" />
 	</c:url>
 	
 	<div id="editOrShowDiv">

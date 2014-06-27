@@ -28,6 +28,7 @@
 package org.medici.bia.dao.user;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -43,6 +44,7 @@ import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.TooManyUsersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -370,6 +372,64 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) {
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findUsers(User user, Set<Authority> authorities, boolean searchAuthorities, PaginationFilter paginationFilter) {
+		boolean authFilter = authorities != null && authorities.size() > 0;
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		String jpql = "FROM User ";
+		String condition = getConditionOnUser(authFilter ? "user" : null, user);
+		
+		if (authFilter) {
+			jpql += "AS user, UserRole AS role ";
+		}
+		
+		if (!StringUtils.equals(condition, "")) {
+			jpql = jpql + "WHERE " + condition;
+		}
+		
+		if (authFilter) {
+			if (!jpql.contains("WHERE")) {
+				jpql += "WHERE ";
+			} else {
+				jpql += " AND ";
+			}
+			jpql += "user = role.user AND ";
+			if (searchAuthorities) {
+				jpql += "role.userAuthority.authority IN (:authorities)";
+			} else {
+				jpql += "NOT EXISTS (SELECT r FROM UserRole AS r WHERE r.user = user AND r.userAuthority.authority IN (:authorities))";
+			}
+		}
+		
+		if (paginationFilter.getTotal() == null){
+			String countQuery = (authFilter ? "SELECT COUNT(user) " : "SELECT COUNT(*) ") + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			if (authFilter) {
+				query.setParameter("authorities", authorities);
+			}
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		query = getEntityManager().createQuery((authFilter ? "SELECT DISTINCT user " : "") + jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		
+		if (authFilter) {
+			query.setParameter("authorities", authorities);
+		}
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -434,19 +494,28 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		return paginationFilter;
 	}
 	
+	private String getConditionOnUser(User user) {
+		return getConditionOnUser(null, user);
+	}
+	
 	/**
 	 * 
 	 * @param user
 	 * @return
 	 */
-	private String getConditionOnUser(User user) {
+	private String getConditionOnUser(String prefix, User user) {
+		if (prefix == null) {
+			prefix = "";
+		} else if (!prefix.endsWith(".")) {
+			prefix += ".";
+		}
 		if (user ==null) {
 			return "";
 		}
 
 		StringBuilder conditionBuffer = new StringBuilder("");
 		if (user.getAccount() != null) {
-			conditionBuffer.append("account like '%");
+			conditionBuffer.append(prefix + "account like '%");
 			conditionBuffer.append(user.getAccount());
 			conditionBuffer.append("%'");
 		}
@@ -454,7 +523,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("initials like '%");
+			conditionBuffer.append(prefix + "initials like '%");
 			conditionBuffer.append(user.getInitials());
 			conditionBuffer.append("%'");
 		}
@@ -462,9 +531,9 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("(firstName like '%");
+			conditionBuffer.append("(" + prefix + "firstName like '%");
 			conditionBuffer.append(user.getFirstName());
-			conditionBuffer.append("%' or lastName like '%");
+			conditionBuffer.append("%' or "+ prefix + "lastName like '%");
 			conditionBuffer.append(user.getFirstName());
 			conditionBuffer.append("%')");
 		}
@@ -472,7 +541,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("lastName like '%");
+			conditionBuffer.append(prefix + "lastName like '%");
 			conditionBuffer.append(user.getLastName());
 			conditionBuffer.append("%'");
 		}
@@ -480,7 +549,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("organization like '%");
+			conditionBuffer.append(prefix + "organization like '%");
 			conditionBuffer.append(user.getOrganization());
 			conditionBuffer.append("%'");
 		}
@@ -488,7 +557,7 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			if (conditionBuffer.length() >0) {
 				conditionBuffer.append(" AND ");
 			}
-			conditionBuffer.append("mail like '%");
+			conditionBuffer.append(prefix + "mail like '%");
 			conditionBuffer.append(user.getMail());
 			conditionBuffer.append("%'");
 		}

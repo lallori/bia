@@ -29,12 +29,14 @@ package org.medici.bia.dao.user;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.TooManyUsersException;
 
@@ -118,6 +120,15 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	Page findUsers(User user, Integer pageNumber, Integer pageSize);
+	
+	/**
+	 * @param user
+	 * @param authorities
+	 * @param searchAuthorities
+	 * @param paginationFilter
+	 * @return
+	 */
+	Page findUsers(User user, Set<Authority> authorities, boolean searchAuthorities, PaginationFilter paginationFilter);
 	
 	/**
 	 * 

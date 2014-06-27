@@ -20,9 +20,24 @@
 						<div class="col_r"><form:input path="fullName" cssClass="input_25c"/></div>	
 					</div>	
 					<div class="row">
-							<div class="col_l"><form:label path="userName" for="userName">User name</form:label></div>
-							<div class="col_r"><input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/></div>
-					        <div class="col_r"><form:input path="userName" cssClass="input_25c"/></div>
+						<div class="col_l"><form:label path="userName" for="userName">User name</form:label></div>
+						<div class="col_r"><input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/></div>
+				        <div class="col_r"><form:input path="userName" cssClass="input_25c"/></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><form:label path="role" for="role">User Role</form:label></div>
+						<div class="col_r"><form:radiobutton path="role" value="All"/></div>
+				        <div class="col_l">All</div>
+					</div>
+					<div class="row">
+						<div class="col_l"></div>
+						<div class="col_r"><form:radiobutton path="role" value="Stud"/></div>
+				        <div class="col_l">Only Students</div>
+					</div>
+					<div class="row">
+						<div class="col_l"></div>
+						<div class="col_r"><form:radiobutton path="role" value="NoStud"/></div>
+				        <div class="col_l">No Students</div>
 					</div>
 				</div>	
 			<input class="search button_small fl" type="submit" value="Search" />
@@ -31,6 +46,10 @@
 	
 	<script>
 		$j(document).ready(function() {
+			
+			$j(".studRadio").click(function() {
+				
+			});
 					
 			$j("#userSearchForm").submit(function() {
 				var title = "Teaching User Search";
