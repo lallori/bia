@@ -202,7 +202,7 @@ public class ForumUtils {
 	/**
 	 * Returns the {@link ForumOption} for a {@link Forum} container of {@link ForumTopic}.
 	 * 
-	 * @param forum the forum topi container
+	 * @param forum the forum topic container
 	 * @return the forum option
 	 */
 	public static ForumOption getForumOptionForForumTopicContainer(Forum forum) {
@@ -213,6 +213,19 @@ public class ForumUtils {
 		forumOption.setCanDeleteTopics(Boolean.TRUE);
 		forumOption.setCanEditPosts(Boolean.TRUE);
 		forumOption.setCanPostReplys(Boolean.TRUE);
+		return forumOption;
+	}
+
+	/**
+	 * Returns the {@link ForumOption} for a course forum container.
+	 * 
+	 * @param forum the course forum container
+	 * @return the forum option
+	 */
+	public static ForumOption getForumOptionForCourseForum(Forum forum) {
+		ForumOption forumOption = new ForumOption(forum);
+		forumOption.setGroupBySubForum(Boolean.TRUE);
+		forumOption.setCanHaveSubForum(Boolean.TRUE);
 		return forumOption;
 	}
 }

@@ -146,6 +146,25 @@ public interface TeachingService {
 	Long countCheckPointPosts(Integer checkPointId) throws ApplicationThrowable;
 	
 	/**
+	 * This method creates a new course.
+	 * 
+	 * @param title the new course title
+	 * @param description the course description
+	 * @return the created {@link Course}
+	 * @throws ApplicationThrowable
+	 */
+	Course createCourse(String title, String description) throws ApplicationThrowable;
+	
+	/**
+	 * This method deactivates the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @return true if operation has success, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	boolean deactivateCourse(Integer courseId) throws ApplicationThrowable;
+	
+	/**
 	 * This method removes the course fragment topic by its identifier.
 	 * It also removes the topic posts and it decreases course fragment forum container topics number.
 	 * 
@@ -162,6 +181,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	void deleteCourseTranscriptionPost(Integer postId, CourseTopicMode mode) throws ApplicationThrowable;
+	
+	/**
+	 * This method activates the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @return true if operation has success, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	boolean doActivateCourse(Integer courseId) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the course by its identifier.
@@ -198,6 +226,16 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	List<Course> getActiveCourses(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns paginated courses.
+	 * 
+	 * @param onlyActives if true it returns only active course 
+	 * @param paginationFilter the pagination filter
+	 * @return found courses
+	 * @throws ApplicationThrowable
+	 */
+	Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * Returns the check point associated to the provided post.
@@ -263,6 +301,16 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	CourseTopicOption getCourseTranscriptionTopicOption(Integer forumId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns paginated courses elements (if course is not active no elements are found).
+	 * 
+	 * @param courseForumId the course forum identifier 
+	 * @param paginationFilterForum the pagination filter
+	 * @return paginated course elements
+	 * @throws ApplicationThrowable
+	 */
+	Page getCoursesElements(Integer courseForumId, PaginationFilter paginationFilterForum) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the session user.
@@ -451,6 +499,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable;
+	
+	/**
+	 * This method determines if the provided forum is contained in an active course.
+	 * 
+	 * @param forumId the forum identifier
+	 * @return true if the forum is contained in an active course, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	boolean isForumInActiveCourse(Integer forumId) throws ApplicationThrowable;
 	
 	/**
 	 * This method determines if a document is associated to an active course (by a course topic).

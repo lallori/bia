@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Course;
 
@@ -66,6 +68,16 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	 * @throws PersistenceException
 	 */
 	List<Course> getActiveCoursesByDocument(Integer docId) throws PersistenceException;
+	
+	/**
+	 * This method returns paginated courses.
+	 * 
+	 * @param onlyActives if true it returns only active course 
+	 * @param paginationFilter the pagination filter
+	 * @return the found courses
+	 * @throws PersistenceException
+	 */
+	Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * This method returns a list of courses associated to a document.
@@ -110,4 +122,5 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	 * @throws PersistenceException
 	 */
 	boolean isInCourse(Integer docId) throws PersistenceException;
+
 }

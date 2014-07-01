@@ -112,7 +112,7 @@
 				<input id="title" name="title" type="text" value=""/>
 				
 				<c:choose>
-					<c:when test="${activeCourse != null}">
+					<c:when test="${not empty activeCourse}">
 						<div>
 							<span>linked to Course</span>
 							<span>${activeCourse.forum.title}</span>
@@ -121,7 +121,7 @@
 					<c:otherwise>
 						<div>
 							<span>linked to Course</span>
-							<select id="linkedCourse">
+							<select id="linkedCourses">
 								<c:forEach items="${activeCourses}" var="course">
 									<option value="${course.courseId}">${course.forum.title}</option>
 								</c:forEach>
@@ -140,6 +140,10 @@
 	<script>
 		$j(document).ready(function() {
 			//$j("#MB_content").css("height", "150px");
+			var linkedCourse;
+			if (${empty activeCourses and not empty activeCourse}) {
+				linkedCourse = '${activeCourse.courseId}';
+			}
 			
 			$j("#close,#cancel,#abort").click(function(){
 				Modalbox.hide();
@@ -171,12 +175,6 @@
 			
 			$j("#createCourseButton").click(function() {
 				var courseTitle = $j("#title").val();
-				var linkedCourse;
-				if (${empty activeCourses && activeCourse != null}) {
-					linkedCourse = ${activeCourse.courseId};
-				} else {
-					linkedCourse = $j("#linkedCourse").find(":selected").val();
-				}
 				if (!isEmpty(courseTitle)) {
 					// TODO: handle course typo
 					var mode = "I";
@@ -184,7 +182,7 @@
 						type: "POST", 
 						url: "${CreateCourseTranscriptionURL}",
 						cache: false,
-						data: "entryId=" + ${command.entryId} + "&courseTitle=" + $j("#title").val() + "&courseId=" + linkedCourse + "&transcriptionMode=" + mode,
+						data: "entryId=" + ${command.entryId} + "&courseTitle=" + $j("#title").val() + "&courseId=" + (typeof linkedCourse === 'undefined' || linkedCourse == null ? $j("#linkedCourses").find(":selected").val() : linkedCourse) + "&transcriptionMode=" + mode,
 						async: false,
 						success: function(data) {
 							if (typeof data.error === 'undefined') {

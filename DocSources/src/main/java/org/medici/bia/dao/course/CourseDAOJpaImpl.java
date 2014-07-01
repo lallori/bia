@@ -33,6 +33,8 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.bia.common.pagination.Page;
+import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
@@ -76,6 +78,31 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 		query.setParameter("mode", getFilteredModes());
 		
 		return query.getResultList();
+	}
+	
+	@Override
+	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		String jpql = "FROM Course ";
+		if (Boolean.TRUE.equals(onlyActives)) {
+			jpql += "WHERE active = true";
+		}
+		
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 	
 	@Override

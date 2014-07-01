@@ -99,7 +99,7 @@
 		});
 		
 		$j("#teachingModule").click(function() {
-			Modalbox.show($j(this).attr("href"), {title: "TEACHING MODULE", width: 270, height: 170});
+			Modalbox.show($j(this).attr("href"), {title: "TEACHING MODULE", width: 270, height: 210});
 			return false;
 		});
 		

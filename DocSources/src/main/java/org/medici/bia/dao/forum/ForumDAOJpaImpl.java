@@ -276,6 +276,63 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 			
 		return query.executeUpdate();		
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page findCoursesElements(Integer courseForumId, boolean isCourseForum, PaginationFilter paginationFilter) throws PersistenceException {
+		String queryString = "FROM Forum AS courseForum, Course AS course "
+				+ "WHERE " + (isCourseForum ? "courseForum" : "courseForum.forumParent") + " = course.forum AND "
+				+ "course.active = true AND "
+				+ "courseForum.logicalDelete = false AND "
+				+ "courseForum.type = :typeForum AND "
+				+ "courseForum.subType = :subType AND "
+				+ "courseForum.forumParent.id = :courseForumId AND " 
+				+ "courseForum.forumParent.type = :forumParentTypeForum";
+
+				// We prepare object of return method.
+				Page page = new Page(paginationFilter);
+				
+				Query query = null;
+				// We set size of result.
+				if (paginationFilter.getPageTotal() == null) {
+					String countQuery = "SELECT COUNT(courseForum) " + queryString;
+			        
+					query = getEntityManager().createQuery(countQuery);
+			        query.setParameter("typeForum", Type.FORUM);
+			        query.setParameter("subType", SubType.COURSE);
+			        query.setParameter("courseForumId", courseForumId);
+			        query.setParameter("forumParentTypeForum", Type.FORUM);
+
+					page.setTotal(new Long((Long) query.getSingleResult()));
+					page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+				} else {
+					page.setTotal(paginationFilter.getTotal());
+					page.setTotalPages(paginationFilter.getPageTotal());
+				}
+
+				String jpql = "SELECT courseForum " + queryString + getOrderByQuery(paginationFilter.getSortingCriterias());
+				logger.info("JPQL Query : " + jpql);
+				query = getEntityManager().createQuery(jpql);
+		        query.setParameter("typeForum", Type.FORUM);
+		        query.setParameter("subType", SubType.COURSE);
+		        query.setParameter("courseForumId", courseForumId);
+		        query.setParameter("forumParentTypeForum", Type.FORUM);
+
+		        // We set pagination  
+				query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+				query.setMaxResults(page.getElementsForPage());
+
+				// We manage sorting (this manages sorting on multiple fields)
+				List<Forum> list = (List<Forum>) query.getResultList();
+
+				// We set search result on return method
+				page.setList(list);
+				
+				return page;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -541,6 +598,22 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 			return (Forum) query.getResultList().get(0);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getCoursesContainer() throws PersistenceException {
+		String jpql = "FROM Forum WHERE logicalDelete = false AND type = :type AND subType = :subType and forumParent.type = :parentType AND forumParent.subType = :parentSubType AND forumParent.logicalDelete = false";
+		
+		Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("type", Type.FORUM);
+        query.setParameter("subType", SubType.COURSE);
+        query.setParameter("parentType", Type.CATEGORY);
+        query.setParameter("parentSubType", SubType.COURSE);
+        
+        return getFirst(query);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -703,6 +776,21 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         retValue.put("postsNumber", new Long ((Integer)statisticsResult[1]));
 
         return retValue;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isInActiveCourse(Integer forumId) throws PersistenceException {
+		if (forumId == null)
+			return false;
+		
+		String queryString = "SELECT count(forum) FROM Forum AS forum, Course AS course WHERE forum.forumId = :forumId AND (forum = course.forum OR forum.forumParent = course.forum) AND course.active = true";
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("forumId", forumId);
+		
+		return (Long) query.getSingleResult() > 0;
 	}
 
 	/**

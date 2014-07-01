@@ -36,6 +36,7 @@ import javax.persistence.PersistenceException;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
+import org.medici.bia.domain.Course;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
@@ -112,6 +113,15 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException;
+	
+	/**
+	 * @param courseForumId
+	 * @param isCourseForum
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Page findCoursesElements(Integer courseForumId, boolean isCourseForum, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -198,6 +208,12 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	Forum getCategory(Forum category) throws PersistenceException;
+	
+	/**
+	 * @return
+	 * @throws PersistenceException
+	 */
+	Forum getCoursesContainer() throws PersistenceException;
 
 	/**
 	 * 
@@ -260,6 +276,15 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	Map<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
+	
+	/**
+	 * This method determines if the provided forum is contained in an active {@link Course}.
+	 * 
+	 * @param forumId the forum identifier
+	 * @return true if the forum is contained in an active course, false otherwise
+	 * @throws PersistenceException
+	 */
+	boolean isInActiveCourse(Integer forumId) throws PersistenceException;
 
 	/**
 	 * 
@@ -317,4 +342,5 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	void recursiveIncreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+
 }

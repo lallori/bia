@@ -117,8 +117,8 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	@Override
 	public List<CourseTopicOption> getMostRecentExtendedCourseTopics(Integer numberOfElements, String account) throws PersistenceException {
 		// TODO: add account filtering (when course topic accesses are implemented)
-		String jpql = "SELECT option FROM CourseTopicOption AS option, ForumTopic AS topic WHERE ";
-		jpql += "option.courseTopic = topic AND topic.logicalDelete = false AND topic.forum.logicalDelete = false AND topic.forum.subType = 'COURSE' ";
+		String jpql = "SELECT option FROM CourseTopicOption AS option, ForumTopic AS topic, Course AS course WHERE ";
+		jpql += "topic.logicalDelete = false AND topic.forum.logicalDelete = false AND topic.forum.subType = 'COURSE' AND topic.forum.forumParent = course.forum AND course.active = true AND topic = option.courseTopic ";
 		jpql += "ORDER BY topic.lastUpdate desc";
 		
 		Query query = getEntityManager().createQuery(jpql);

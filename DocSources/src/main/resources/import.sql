@@ -1971,12 +1971,16 @@ INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/Sh
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowTeachingUserSearch', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowUser', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/TeachingUserSearchResult', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowManageCourses', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowCreateCourse', 'template.partialDOM');
 
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('template.mainDOM', 'teachingMenu', '/WEB-INF/jsp/menu/Teaching.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowTeachingModuleModalWindow', 'main', '/WEB-INF/jsp/teaching/ShowTeachingModuleModalWindow.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowTeachingUserSearch', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUserSearch.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowUser', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUser.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/TeachingUserSearchResult', 'main', '/WEB-INF/jsp/teaching/ShowTeachingUserSearchResult.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowManageCourses', 'main', '/WEB-INF/jsp/teaching/ShowManageCourses.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowCreateCourse', 'main', '/WEB-INF/jsp/teaching/ShowCreateCourse.jsp', 0);
 
 -- schedone: change column type
 ALTER TABLE `tblSchedone`

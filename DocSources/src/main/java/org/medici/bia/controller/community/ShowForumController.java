@@ -162,6 +162,13 @@ public class ShowForumController {
 			if (command.getForumId() == null){
 				forum = getCommunityService().getFirstCategory();
 			} else {
+				forum = getCommunityService().findForum(command.getForumId());
+				if (Boolean.TRUE.equals(forum.getLogicalDelete()) ||
+						(SubType.COURSE.equals(forum.getSubType()) && !Type.CATEGORY.equals(forum.getForumParent().getType()) && !getTeachingService().isForumInActiveCourse(command.getForumId()))) {
+					// the forum to show was deleted or it is correspondent to a deactivated course
+					return new ModelAndView("404", model); 
+				}
+				// we can update forum access informations
 				forum = getCommunityService().getForumForView(command.getForumId());
 			}
 
@@ -251,8 +258,15 @@ public class ShowForumController {
 					if (forum.getOption().getCanHaveSubForum()) {
 						// All forum have group by excepted document...
 						if (forum.getOption().getGroupBySubForum()) {
-							PaginationFilter paginationFilterForum = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "lastPost", false, true);
-							Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
+							PaginationFilter paginationFilterForum = null;
+							Page page = null;
+							if (SubType.COURSE.equals(forum.getSubType())) {
+								paginationFilterForum = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "courseForum.lastPost", false, true);
+								page = getTeachingService().getCoursesElements(forum.getForumId(), paginationFilterForum);
+							} else {
+								paginationFilterForum = getPaginationFilter(command, forum.getOption().getPageLength() != null ? forum.getOption().getPageLength() : DEFAULT_ROWS_PER_PAGE, "lastPost", false, true);
+								page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
+							}
 							model.put("subForumsPage", page);
 						} else {
 							// paginationFilter to manage topics results..

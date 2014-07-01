@@ -342,6 +342,7 @@ public class TeachingServiceImpl implements TeachingService {
 			container.setLastUpdate(now);
 			container.setPostsNumber(0);
 			container.setTopicsNumber(1);
+			container.setSubForumsNumber(0);
 			container.setLogicalDelete(Boolean.FALSE);
 
 			getForumDAO().persist(container);
@@ -502,6 +503,81 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public Course createCourse(String title, String description) throws ApplicationThrowable {
+		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
+			
+			Forum coursesContainer = getForumDAO().getCoursesContainer();
+			
+			if (coursesContainer == null) {
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course container not found!!!");
+			}
+			
+			Forum container = new Forum();
+			container.setDescription(description);
+			container.setTitle(title);
+			container.setDateCreated(now);
+			container.setLastUpdate(now);
+			container.setForumParent(coursesContainer);
+			container.setHierarchyLevel(coursesContainer.getHierarchyLevel() + 1);
+			container.setFullPath(coursesContainer.getFullPath());
+			container.setDispositionOrder(0);
+			container.setStatus(Forum.Status.ONLINE);
+			container.setType(Forum.Type.FORUM);
+			container.setSubType(Forum.SubType.COURSE);
+			container.setPostsNumber(0);
+			container.setTopicsNumber(0);
+			container.setSubForumsNumber(0);
+			container.setLogicalDelete(Boolean.FALSE);
+			
+
+			getForumDAO().persist(container);
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new course", Action.CREATE, Category.FORUM, container));
+
+			container.setFullPath(coursesContainer.getFullPath() + container.getForumId() + ".");
+			
+			ForumOption forumOption = ForumUtils.getForumOptionForCourseForum(container);
+			getForumOptionDAO().persist(forumOption);
+			
+			getForumDAO().recursiveIncreaseSubForumsNumber(coursesContainer);
+			
+			Course course = new Course();
+			course.setActive(Boolean.TRUE);
+			course.setForum(container);
+			
+			getCourseDAO().persist(course);
+			
+			return course;
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public boolean deactivateCourse(Integer courseId) throws ApplicationThrowable {
+		try {
+			Course course = getCourseDAO().find(courseId);
+			if (course == null) {
+				return false;
+			}
+			course.setActive(false);
+			return true;
+		} catch (PersistenceException e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public void deleteCourseFragmentTopic(Integer topicId) throws ApplicationThrowable {
 		try {
 			Date now = new Date();
@@ -632,6 +708,24 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public boolean doActivateCourse(Integer courseId) throws ApplicationThrowable {
+		try {
+			Course course = getCourseDAO().find(courseId);
+			if (course == null) {
+				return false;
+			}
+			course.setActive(true);
+			return true;
+		} catch (PersistenceException e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Course findCourse(Integer courseId) throws ApplicationThrowable {
 		try {
@@ -672,6 +766,18 @@ public class TeachingServiceImpl implements TeachingService {
 	public List<Course> getActiveCourses(Integer entryId) throws ApplicationThrowable {
 		try {
 			return getCourseDAO().getActiveCoursesByDocument(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().getCourses(onlyActives, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -783,6 +889,24 @@ public class TeachingServiceImpl implements TeachingService {
 	public CourseTopicOption getCourseTranscriptionTopicOption(Integer forumId) throws ApplicationThrowable {
 		try {
 			return getCourseTopicOptionDAO().getCourseTranscriptionOptionFromForum(forumId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getCoursesElements(Integer courseForumId, PaginationFilter paginationFilterForum) throws ApplicationThrowable {
+		try {
+			Forum container = getForumDAO().find(courseForumId);
+			if (container != null && Type.CATEGORY.equals(container.getForumParent().getType())) {
+				// container is a course
+				return getForumDAO().findCoursesElements(courseForumId, true, paginationFilterForum);
+			}
+			// container is a course fragment
+			return getForumDAO().findCoursesElements(courseForumId, false, paginationFilterForum);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1049,6 +1173,18 @@ public class TeachingServiceImpl implements TeachingService {
 			return getForumPostDAO().countTopicPosts(annotation.getForumTopic().getTopicId()) == 0;
 		}
 		return Boolean.TRUE;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isForumInActiveCourse(Integer forumId) throws ApplicationThrowable {
+		try {
+			return getForumDAO().isInActiveCourse(forumId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 	/**

@@ -15,6 +15,10 @@
 		        <a id="manageCourses" class="button_large" href="<c:url value="/teaching/ShowManageCourses.do" />">Manage Courses</a>
 			</div>
 		    
+			<div id="createCoursesDiv" class="adminModalButtonContainer">
+		        <a id="createCourses" class="button_large" href="<c:url value="/teaching/ShowCreateCourse.do" />">Create Course</a>
+			</div>
+		    
 			<input id="close" class="button_small" type="submit" title="Close Teaching Module window" value="Close"/>
 		</div>
 		
@@ -27,6 +31,12 @@
 				});
 		
 				$j("#manageCourses").click(function() {
+					$j("#body_left").load($j(this).attr("href"));
+					Modalbox.hide();
+					return false;
+				});
+		
+				$j("#createCourses").click(function() {
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;

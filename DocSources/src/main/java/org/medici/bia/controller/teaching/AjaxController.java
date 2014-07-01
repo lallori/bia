@@ -127,6 +127,26 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/deactivateCourse", method = RequestMethod.POST)
+	public Map<String, Object> deactivateCourse(
+			@RequestParam(value="courseId", required=true) Integer courseId, 
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			getTeachingService().deactivateCourse(courseId);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
+			model.put("operation", "KO");
+		}
+		
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/DeleteCheckPointPost", method = RequestMethod.POST)
 	public Map<String, Object> deleteCheckPointPost(
 			@RequestParam(value="topicId", required=true) Integer topicId,
@@ -226,6 +246,26 @@ public class AjaxController {
 			}
 			model.put("operation", "KO");
 		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/doActivateCourse", method = RequestMethod.POST)
+	public Map<String, Object> doActivateCourse(
+			@RequestParam(value="courseId", required=true) Integer courseId, 
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			getTeachingService().doActivateCourse(courseId);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
+			model.put("operation", "KO");
+		}
+		
 		return model;
 	}
 	
