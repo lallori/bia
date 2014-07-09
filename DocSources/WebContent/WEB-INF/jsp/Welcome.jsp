@@ -13,9 +13,8 @@
 	  	<h1><fmt:message key="welcome.activityForums"/></h1>
     
    		<div id="topDiscussions">
-   		
+   	
    			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-<!--     			<br />	 -->
     			<h5><fmt:message key="welcome.most.teaching"/></h5>
     			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT COURSE TOPICS']}">
     				<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
@@ -53,8 +52,10 @@
     			</c:forEach>
     		</security:authorize>
     		
+    		<br />
+   			
    			<h5><fmt:message key="welcome.most"/></h5>
-			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
+   			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
 	    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
 	    			<c:param name="forumId" value="${discussion.forum.forumId}"/>
 	    			<c:param name="topicId" value="${discussion.topicId}"/>
