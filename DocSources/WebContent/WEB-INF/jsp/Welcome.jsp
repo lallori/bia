@@ -13,6 +13,46 @@
 	  	<h1><fmt:message key="welcome.activityForums"/></h1>
     
    		<div id="topDiscussions">
+   		
+   			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+<!--     			<br />	 -->
+    			<h5><fmt:message key="welcome.most.teaching"/></h5>
+    			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT COURSE TOPICS']}">
+    				<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
+		    			<c:param name="account" value="${extendedTopic.courseTopic.lastPost.user.account}"/>
+		    			<c:param name="completeDOM" value="true"/>
+		    		</c:url>
+    				<c:choose>
+    					<c:when test="${extendedTopic.mode == 'Q' || extendedTopic.mode == 'D'}">
+    						<c:url var="courseTopicURL" value="/teaching/ShowTopicForum.do">
+    							<c:param name="forumId" value="${extendedTopic.courseTopic.forum.forumId}" />
+    							<c:param name="topicId" value="${extendedTopic.courseTopic.topicId}" />
+    							<c:param name="completeDOM" value="true" />
+    						</c:url>
+    					</c:when>
+    					<c:otherwise>
+    						<c:url var="courseTopicURL" value="/teaching/ShowCourseTranscription.do">
+								<c:param name="topicId" value="${extendedTopic.courseTopic.topicId}" />
+								<c:param name="entryId" value="${extendedTopic.courseTopic.document.entryId}" />
+								<c:param name="transcriptionMode" value="${extendedTopic.mode}" />
+								<c:param name="completeDOM" value="true" />
+							</c:url>
+    					</c:otherwise>
+    				</c:choose>
+    				<div class="discussion">
+		            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
+		            	<br />
+		            	<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
+		            	<span>
+		            		<fmt:message key="welcome.lastPost"/>
+		            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
+		            		<span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${extendedTopic.courseTopic.lastUpdate}" /></span>
+		            	</span>
+		        	</div>
+    			</c:forEach>
+    		</security:authorize>
+    		
    			<h5><fmt:message key="welcome.most"/></h5>
 			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
 	    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
@@ -63,45 +103,6 @@
 	        	</div>
     		</c:forEach>
     		
-    		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-    			<br />
-    			
-    			<h5><fmt:message key="welcome.most.teaching"/></h5>
-    			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT COURSE TOPICS']}">
-    				<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
-		    			<c:param name="account" value="${extendedTopic.courseTopic.lastPost.user.account}"/>
-		    			<c:param name="completeDOM" value="true"/>
-		    		</c:url>
-    				<c:choose>
-    					<c:when test="${extendedTopic.mode == 'Q' || extendedTopic.mode == 'D'}">
-    						<c:url var="courseTopicURL" value="/teaching/ShowTopicForum.do">
-    							<c:param name="forumId" value="${extendedTopic.courseTopic.forum.forumId}" />
-    							<c:param name="topicId" value="${extendedTopic.courseTopic.topicId}" />
-    							<c:param name="completeDOM" value="true" />
-    						</c:url>
-    					</c:when>
-    					<c:otherwise>
-    						<c:url var="courseTopicURL" value="/teaching/ShowCourseTranscription.do">
-								<c:param name="topicId" value="${extendedTopic.courseTopic.topicId}" />
-								<c:param name="entryId" value="${extendedTopic.courseTopic.document.entryId}" />
-								<c:param name="transcriptionMode" value="${extendedTopic.mode}" />
-								<c:param name="completeDOM" value="true" />
-							</c:url>
-    					</c:otherwise>
-    				</c:choose>
-    				<div class="discussion">
-		            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
-		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
-		            	<br />
-		            	<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
-		            	<span>
-		            		<fmt:message key="welcome.lastPost"/>
-		            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
-		            		<span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${extendedTopic.courseTopic.lastUpdate}" /></span>
-		            	</span>
-		        	</div>
-    			</c:forEach>
-    		</security:authorize>
     	</div>
         
     
