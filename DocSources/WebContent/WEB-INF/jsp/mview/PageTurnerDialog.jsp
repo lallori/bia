@@ -207,7 +207,7 @@
 				
 				<c:if test="${hasInsert}">
 					<a class="helpIcon" title="Specify the insert number in the first input text and the insert extension in the second one (only if needed)">?</a>
-					<label for="insertNum" id="insertNumLabel" class="folioLabel">Insert:</label>
+					<label for="insertNum" id="insertNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.insert"/>:</label>
 					<div class="labels">
 						<input id="insertNum" name="insertNum" class="input_4c" type="text" value="" />
 						<input id="insertLet" name="insertLet" class="input_4c" type="text" value="" />
@@ -215,7 +215,7 @@
 				</c:if>
 				
 				<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.insert"/>:</label>
 				<div class="labels">
 					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
 					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" />

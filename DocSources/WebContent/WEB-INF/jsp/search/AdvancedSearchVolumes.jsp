@@ -43,7 +43,7 @@
 				        		<div class="row">
 				        			<div class="col_l">
 				        				<a class="helpIcon" title="<fmt:message key="search.advancedSearchVolumes.help.insert"></fmt:message>">?</a>
-				        				<span>Insert Number</span>
+				        				<span><fmt:message key="search.advancedSearchVolumes.volume.insert"/></span>
 				        			</div>
 				        			<div class="col_l"><input type="text" id="insert" name="insert" class="input_5c"/></div>
 									<div class="col_l"></div>
