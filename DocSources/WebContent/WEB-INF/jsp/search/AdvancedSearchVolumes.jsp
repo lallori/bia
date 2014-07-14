@@ -49,7 +49,7 @@
 									<div class="col_l"></div>
 									<div class="col_r">
 										<input type="submit" id="addSearchFilter" class="button_small" value="Add" title="<fmt:message key="search.advancedSearchVolumes.addToYourSearchFilter.alt"/>">
-										<input type="hidden" id="category" value="Insert">
+										<input type="hidden" id="category" value="search.advancedSearchVolumes.volume.insert">
 									</div>
 				        		</div>
 				        	</form>
