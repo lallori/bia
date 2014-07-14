@@ -26,7 +26,7 @@
 
 	<div id="DocSourcesContent">
 		<div id="body_left">
-			<h1 class="welcome">The Medici Archive Project Scholarly Community</h1>
+			<h1 class="welcome"><fmt:message key="home.community"/></h1>
 			<div id="colte_of_arms"></div>
 		</div>
 		<div id="body_right">
