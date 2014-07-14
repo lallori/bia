@@ -2,38 +2,51 @@
 body {
 	margin: 0;
 	background-color: black;
-	font-size: 12px;
-	font-family:Georgia, "Times New Roman", Times, serif;
-}
-
-/* BUTTONS */
-
-.button_mini, .button_small, .button_medium, .button_large, .button_bodyleft_small, .button_bodyleft_medium, .button_bodyleft_medium2, .button_bodyleft_large, .button_Xlarge {
-    background: url(${contextPath}/images/mview/nav_buttons.png) transparent no-repeat;
-    cursor:pointer;
-    text-align:center;
-    padding-top: 4px;
-    border:none;
-    color:#D6C8AF;
-    outline: none;
 }
 
 .button_mini {
-	width: 23px;
+	width:22px;
 	height:22px;
-	background-position: 0 2px;
+	background-image:url(${contextPath}/images/1024/button_mini.png);
+	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
 }
 
 .button_small {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(${contextPath}/images/1024/button_small.png);
 	width:52px;
 	height:22px;
-	background-position: -1px -25px;
+	border:none;
+	text-align: center;
+	padding-top: 4px;
+	background-repeat: no-repeat;
+	border: none;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
 }
 
 .button_medium {
-	width: 127px;
+	width: 126px;
 	height: 22px;
-	background-position: 0 -52px;
+	background-image: url(${contextPath}/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+	text-decoration: none;
+	color: #6F6B69;
 }
 
 input[type=submit].button_medium, input[type=submit].button_small {
@@ -41,12 +54,13 @@ input[type=submit].button_medium, input[type=submit].button_small {
 }
 
 input { /* INPUT text */
-	border: 1px solid #698EA3; /* #DCC0BA */
-	background-color: #EFF4F7; /* #fbf7f4 */
-	color: #13325F; /* #6d5c4d */
+	font-size: 12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
-	-webkit-border-radius:4px;
+	background-color: #fbf7f4;
+	color: #6d5c4d;
 	padding:3px;
 	margin: 5px 0 5px 5px;
 }
@@ -84,12 +98,14 @@ html version
 */
 
 #EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
-	border: 1px solid #698EA3;
-	background-color: #EFF4F7;
-	color: #13325F;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
-	-webkit-border-radius:4px;
+	font-size: 12px;
+	color: #000000;
 	width: 98%;
 	height:90%;
 	text-align:justify;
@@ -103,13 +119,27 @@ html version
 	font-size: 12px;
 }
 
+#prevButton, #nextButton {
+	display: inline-block;
+}
+
+#prevNextButtons {
+	position: relative;
+	margin: 0 auto;
+	width: 80px;
+}
+
 #PageTurnerVerticalDiv {
 	position:relative;
 	margin:0 auto 0 auto;
-	height: 95%;
+	height: auto!important;
 	font-size: 12px;
 	overflow:hidden;
+	display: inline-block;
+	display: inline-block;
 }
+
+.ui-dialog[aria-labelledby=ui-dialog-title-PageTurnerVerticalDiv] {height:auto!important;}
 
 div.hideAnnotation {
     bottom: 85px;
@@ -137,9 +167,9 @@ div.hideNavWindow {
 
 #rotateVertical:hover, #rotateHorizontal:hover {
 	cursor: pointer;
-	border: 1px solid #698EA3;
+	border: 1px solid #DCC0BA;
 	border-radius: 4px;
-	background-color:#EFF4F7;
+	background-color:#f4e9e8;
 }
 
 /* ---------- Buttons --------- */
@@ -149,18 +179,10 @@ div.hideNavWindow {
 #PageTurnerHorizontalDiv #prevNextButtons {
 	width: 80px;
 	margin-top:8px;
-	position:absolute;
 }
 
 #PageTurnerHorizontalDiv #prevNextButtons.transcribe {
 	margin: 3px 0 0 215px;
-}
-
-#PageTurnerVerticalDiv #prevNextButtons {
-	width: 90px;
-	margin-top: 130px;
-	margin-left: 15px;
-	position: absolute;
 }
 
 #PageTurnerHorizontalDiv #prevButton img, #PageTurnerHorizontalDiv #nextButton img, #PageTurnerHorizontalDiv #personalNotesDiv img, #PageTurnerHorizontalDiv #exitDiv img{
@@ -259,6 +281,7 @@ a.transcribe {
 	margin: 35px 0 0 226px;
 	position: absolute;
 }	
+
 
 /* ---- Trascription ----- */
 #showSynopsis {
@@ -373,7 +396,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 
-
 /* ---------------- */
 /*
 /* -- Rubricario -- */
@@ -400,7 +422,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-size:10px;
 	margin:0 0 0 -50px;
 	position:absolute;
-	color:#13325F;
+	color:#6d5c4d;
 }
 
 #PageTurnerHorizontalDiv #rubricarioMoveTo .input_4cRucricario { /* "Move to rubricario" <input> ID  */
@@ -408,11 +430,27 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	position:absolute;
 	width: 30px;
 	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
 }
 
 #PageTurnerHorizontalDiv #rubricarioMoveTo #goR { /* "Move to rubricario" <input> GO button ID  */
 	margin:-5px 0 0 140px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
 	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
 }
 
 /* ---------------- */
@@ -458,7 +496,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-size: 12px;
 	margin:0;
 	position:absolute;
-	color:#13325F;
+	color:#6d5c4d;
 }
 
 #PageTurnerHorizontalDiv #folioMoveTo .input_4cFolio { /* "Move to folio" <input> ID  */
@@ -492,10 +530,30 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 #PageTurnerHorizontalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID  */
 	margin: -5px 0 0 110px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
+	font-size: 12px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
 }
 
 #PageTurnerVerticalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID in VERTICAL MODE  */
 	margin: -5px 0 0 92px;
+	width:22px;
+	height:22px;
+	background-image:url(${contextPath}/images/mview/button_mini.png);
+	font-size: 12px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
 }
 
 
@@ -504,7 +562,8 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Personal Notes ----- */
 
 #PageTurnerHorizontalDiv #personalNotesDiv a{
-	margin: -5px 0 0 110px;
+	margin:8px 0 0 455px;
+	position:absolute;
 	background:url(${contextPath}/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
@@ -541,6 +600,14 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #exitDiv a{
 	margin:47px 0 0 455px;
 	position:absolute;
+	background:url(${contextPath}/images/mview/button_small.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:52px;
+	height:22px;
+	font-size: 12px;
 	text-transform:capitalize;
 }
 
@@ -561,7 +628,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerHorizontalDiv #line {
 	width:1px;
 	height:70px;
-	background-color:#BED3E0;
+	background-color:#E6D0C6;
 	margin:6px 0 0 200px;
 	position:absolute;
 }
@@ -573,7 +640,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerHorizontalDiv #line2 {
 	width:1px;
 	height:70px;
-	background-color:#BED3E0;
+	background-color:#E6D0C6;
 	margin:6px 0 0 441px;
 	position:absolute;
 }
@@ -585,17 +652,8 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #PageTurnerVerticalDiv #line, #PageTurnerVerticalDiv #line2 {
 	width:120px;
 	height:1px;
-	background-color:#BED3E0;
-}
-
-#PageTurnerVerticalDiv #line {
-	position:absolute;
-	margin-top: 110px;
-}
-
-#PageTurnerVerticalDiv #line2 {
-	position:absolute;
-	margin-top: 280px;
+	background-color:#E6D0C6;
+	margin: 10px 0;
 }
 
 /* ---------------- */
@@ -614,6 +672,14 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditExtractDocumentDiv #saveExtract {
 	float:left;
 	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
 }
 
 #EditExtractDocumentDiv #saveAndEditSynopsis {
@@ -640,11 +706,27 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditSynopsisDocumentDiv #saveSynopsis {
 	float:left;
 	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
 }
 
 #EditSynopsisDocumentDiv #saveSynopsisExit {
 	float:right;	
 	display:inline;
+	background:url(${contextPath}/images/mview/button_large.png) no-repeat;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:182px;
+	height:22px;
+	font-size: 12px;
+	border:none;
 }
 
 /* ---------------- */
@@ -654,11 +736,31 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #DialogPersonalNotesDiv #saveNotes {
 	float:left;
 	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding:2px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+	cursor:pointer;
 }
 
 #DialogPersonalNotesDiv #cleanNotes {
 	float:right;	
 	display:inline;
+	background:url(${contextPath}/images/mview/button_medium.png) no-repeat;
+	padding: 4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:122px;
+	height:22px;
+	font-size: 12px;
+	border:none;
+	cursor:pointer;
 }
 
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
@@ -677,6 +779,25 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #ShowSynopsisDocumentDiv, #ShowExtractDocumentDiv {
     max-height: 485px;
 }
+
+/* Go to page */
+.goToPage span {display:block; margin-bottom:8px}
+a.helpIcon {
+	border: 1px solid #6D5C4D;
+	color: #6D5C4D;
+	font-size: 12px;
+	background-color: #DCC0BA;
+	padding-left: 5px;
+	padding-right: 4px;
+	font-weight: bold;
+	text-decoration: none;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	cursor: default;
+}
+.input_4c {width: 35px;}
+.goToPage .labels {margin-left:15px}
+.goToPage #go {margin-left: 92px;}
 
 
 
@@ -712,14 +833,15 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* Interaction states
 ----------------------------------*/
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(${contextPath}/images/mview/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(/${contextPath}/images/mview/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(${contextPath}/images/mview/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(/${contextPath}/images/mview/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
 
 
 /* jQuery UI Dialog 1.8.9 */
 
-.ui-dialog .ui-dialog-title { margin: 5px 0 5px 0; color:#916D2A; } 
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative; background-color: #E9D5D1; border: none;}
+.ui-dialog .ui-dialog-title { margin: 5px 0 5px 0; color:#6d5c4d; } 
 .ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background-color: #f3e7e2; overflow: auto; zoom: 1; }
 .ui-dialog .ui-dialog-buttonpane { 
 	text-align: left; 
