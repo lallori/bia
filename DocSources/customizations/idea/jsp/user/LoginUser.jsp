@@ -46,14 +46,11 @@
 				</form>
 				
 			</div>
-
-<%--      
+     
 			<div class="buttons">
 				<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
-				
-				<a href="http://courses.medici.org/" id="onlineCourses"></a><!-- MAP online COURSES -->
 			</div>
---%>		
+
 <%--
  			<div id="guest">
 	 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
