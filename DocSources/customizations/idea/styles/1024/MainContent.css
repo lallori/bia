@@ -13,7 +13,7 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding: 0 5px 0 10px;
+	padding: 0 5px 0 9px;
 	font-size: 16px;
 	font-style: italic;
 	color: #0B4F86;
