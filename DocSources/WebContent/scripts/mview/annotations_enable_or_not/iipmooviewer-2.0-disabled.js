@@ -1932,7 +1932,7 @@ var IIPMooViewer = new Class({
 			navbuttons.getElement('img.reset').set('title', 'Refresh Image');
 			/*if (this.view.w > 1000) {
 				//Disable annotation button
-				navbuttons.getElement('img.drawAnnotation').set('title','Insert annotation');
+				navbuttons.getElement('img.drawAnnotation').set('title','Create annotation/Ask Question');
 			}*/
       
 			/** MEDICI ARCHIVE PROJECT END**/
