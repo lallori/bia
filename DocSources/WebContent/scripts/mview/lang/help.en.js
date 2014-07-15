@@ -6,7 +6,7 @@ IIPMooViewer.lang = {
 	'zoomOut': 'To zoom out: shift + double click or use the mouse wheel',
 	'rotate': 'To rotate image clockwise and anticlockwise: press the rotate buttons',
 	'fullscreen': 'For fullscreen: press the "f" key',
-	'annotations': 'To toggle any annotations: press the annatation button',
+	'annotations': 'To toggle any annotations: press the annotation button',
 	'navigation': 'To show/hide navigation window press the hide/restore button on bottom left',
 	'more': 'For more information visit',
 	'exitFullscreen': 'Press "Esc" to exit fullscreen mode',
