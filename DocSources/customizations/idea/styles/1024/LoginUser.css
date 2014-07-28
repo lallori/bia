@@ -72,6 +72,16 @@ input[type="text"], input[type="password"] {
 	display:none;
 }
 
+.archivioMantova {
+	position: absolute; 
+	margin: 100px 0 0 60px;
+}
+
+.ucsc {
+	position: absolute;
+	margin: 100px 0 0 300px;
+}
+
 .delmas {
 	display: none;
 }

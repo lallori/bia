@@ -57,6 +57,14 @@ body {
 	position: absolute;
 }
 
+.archivioMantova {
+	display:none;
+}
+
+.ucsc {
+	display:none;
+}
+
 .delmas {
 	margin: 48px 0 0 235px;
 	position: absolute;
