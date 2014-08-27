@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.PersistenceException;
@@ -52,6 +53,8 @@ import org.medici.bia.domain.People;
 import org.medici.bia.domain.Place;
 import org.medici.bia.domain.Schedone;
 import org.medici.bia.domain.Volume;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -87,6 +90,9 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	private static final long serialVersionUID = 5977718269527833285L;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
+
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * {@inheritDoc}
@@ -224,7 +230,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 			forum.setDescription(volume.getSerieList().toString());
 		}
 		 if (schedone == null) {
-			 	forum.setTitle("Mediceo del Principato: Volume n. " + volume.toString());
+			 	forum.setTitle(getMessageSource().getMessage("volume.forumPrefix", new Object[0], Locale.ENGLISH) + " Volume n. " + volume.toString());
 	        } 
 		 else {
 			 	forum.setTitle(schedone.getFondo() + ": Volume n. " + volume.toString());
@@ -911,5 +917,13 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		merge(forum);
 		
 		recursiveIncreaseTopicsNumber(forum.getForumParent());
+	}
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
 	}
 }

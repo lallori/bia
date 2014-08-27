@@ -71,7 +71,7 @@
 			$j(document).ready( function(){
 				if ($j.browser.msie) {
 				    alert( "WARNING! Microsoft Internet Explorer is NOT supported by BIA, please use Mozilla Firefox or Google Chrome." );
-				    window.location.replace("http://www.medici.org");
+				    window.location.replace("http://isabelladeste.ucsc.edu/");
 				  }
 				$j("#login").submit(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
 				$j("#RegisterUser").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '100px'}});});
