@@ -167,9 +167,6 @@ public class ShowCourseTranscriptionController {
 		if (command.getPostsForPage() == null) {
 			command.setPostsForPage(10);
 		}
-		if (command.getPostPageNumber() == null) {
-			command.setPostPageNumber(1);
-		}
 		
 		PaginationFilter paginationFilterTopic = new PaginationFilter();
 		paginationFilterTopic.setElementsForPage(command.getPostsForPage());

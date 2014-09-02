@@ -97,6 +97,10 @@ public class CoursePostExtDAOJpaImpl extends JpaDao<Integer, CoursePostExt> impl
         query.setParameter("topicId", courseTopic.getTopicId());
 
         // We set pagination  
+        if (paginationFilter.getThisPage() == null) {
+        	// RR: if pagination filter has no page number we set the last one
+        	page.setThisPage(page.getTotalPages());
+        }
 		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
 		query.setMaxResults(page.getElementsForPage());
 
