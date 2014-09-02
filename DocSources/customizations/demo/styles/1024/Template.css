@@ -412,6 +412,11 @@ a {
 	float:right;
 	padding-right: 10px;
 	font-size: 11px;
+	width: 245px;
+	text-align: right;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #top_bottom p:hover{ 
