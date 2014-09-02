@@ -145,14 +145,7 @@ IIPMooViewer.implement({
 				/** MEDICI ARCHIVE PROJECT START **/
 				// Redirect, by simple click on annotation area, to the forum topic associated to the current annotation
 				if (typeof annotation_array[i].forumTopicURL !== 'undefined') {
-					var topicUrl = annotation_array[i].forumTopicURL;
-					annotation.addEvent('click', function(e) {
-						var event = new DOMEvent(e);
-						if (_this.annotationEditing != true) {
-							event.stop();
-							window.open(topicUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
-						}
-					});
+					this.initAnnotationClickHandler(annotation, annotation_array[i].forumTopicURL);
 					annotation.setStyle('cursor', 'pointer');
 				}
 				/** MEDICI ARCHIVE PROJECT END */
@@ -238,6 +231,25 @@ IIPMooViewer.implement({
 				}
 			});
 		}
+	},
+	
+	/** MEDICI ARCHIVE PROJECT START **/
+	
+	/**
+	 * Initializes the click handler of the annotation area.
+	 *  
+	 * @param annotation the annotation 'div' element
+	 * @param redirectUrl the url to open when someone clicks on the annotation div
+	 */
+	initAnnotationClickHandler: function(annotation, redirectUrl) {
+		var _this = this;
+		annotation.addEvent('click', function(e) {
+			var event = new DOMEvent(e);
+			if (_this.annotationEditing != true) {
+				event.stop();
+				window.open(redirectUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+			}
+		});
 	},
 	
 	/**
@@ -349,6 +361,8 @@ IIPMooViewer.implement({
 			});
 		}
 	},
+	
+	/** MEDICI ARCHIVE PROJECT END **/
 	
 	/**
 	 * Toggle visibility of any annotations
