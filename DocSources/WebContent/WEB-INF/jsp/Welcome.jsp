@@ -42,12 +42,19 @@
 		            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
 		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
 		            	<br />
-		            	<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
-		            	<span>
-		            		<fmt:message key="welcome.lastPost"/>
-		            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
-		            		<span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${extendedTopic.courseTopic.lastUpdate}" /></span>
-		            	</span>
+		            	<c:choose>
+		            		<c:when test="${extendedTopic.courseTopic.totalReplies > 0}">
+		            			<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
+		            			<span>
+				            		<fmt:message key="welcome.lastPost"/>
+				            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
+				            		<span class="date"><fmt:formatDate pattern="MM/dd/yyyy" value="${extendedTopic.courseTopic.lastUpdate}" /></span>
+				            	</span>
+		            		</c:when>
+		            		<c:otherwise>
+		            			<span style="margin-left:23px;">(0 <fmt:message key="welcome.replies"/>)</span>
+		            		</c:otherwise>
+		            	</c:choose>
 		        	</div>
     			</c:forEach>
     		</security:authorize>
