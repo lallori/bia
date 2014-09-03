@@ -143,11 +143,11 @@ public class SimpleSearchPlace extends SimpleSearch {
 			}
 			
 			for(int i = 0; i < exactWords.size(); i++){
-				jpaQuery.append("((placeNameFull LIKE '%");
-				jpaQuery.append(exactWords.get(i).replace("'", "''"));
-				jpaQuery.append("%') OR (termAccent LIKE '%");
-				jpaQuery.append(exactWords.get(i).replace("'", "''"));
-				jpaQuery.append("%'))");
+				jpaQuery.append("((placeNameFull LIKE '% ");
+				jpaQuery.append(exactWords.get(i).trim().replace("'", "''"));
+				jpaQuery.append(" %') OR (termAccent LIKE '% ");
+				jpaQuery.append(exactWords.get(i).trim().replace("'", "''"));
+				jpaQuery.append(" %'))");
 				if(i < exactWords.size() - 1){
 					jpaQuery.append(" AND ");
 				}

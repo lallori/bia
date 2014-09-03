@@ -161,7 +161,7 @@ public class SimpleSearchDocument extends SimpleSearch {
 			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
 				for(int i = 0; i < exactWords.size(); i++){
 					jpaQuery.append("(synExtract.docExtract LIKE '% ");
-					jpaQuery.append(exactWords.get(i).replace("'", "''"));
+					jpaQuery.append(exactWords.get(i).trim().replace("'", "''"));
 					jpaQuery.append(" %')");
 					if(i < exactWords.size() - 1){
 						jpaQuery.append(" AND ");
@@ -181,12 +181,15 @@ public class SimpleSearchDocument extends SimpleSearch {
 			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
 				for(int i = 0; i < exactWords.size(); i++){
 					jpaQuery.append("(synExtract.synopsis LIKE '% ");
-					jpaQuery.append(exactWords.get(i).replace("'", "''"));
+					jpaQuery.append(exactWords.get(i).trim().replace("'", "''"));
 					jpaQuery.append(" %')");
 					if(i < exactWords.size() - 1){
 						jpaQuery.append(" AND ");
 					}
-				}		
+				}
+				if (exactWords.size() > 0 && words.length > 0) {
+					jpaQuery.append(" AND ");
+				}
 				for(int i = 0; i < words.length; i++){
 					jpaQuery.append("(synExtract.synopsis like '%");
 					jpaQuery.append(words[i].replace("'", "''"));
