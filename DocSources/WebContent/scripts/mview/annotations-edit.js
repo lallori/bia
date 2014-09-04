@@ -166,7 +166,9 @@ IIPMooViewer.implement({
 			/** MEDICI ARCHIVE PROJECT START **/
 			// RR: It is not possible to modify the type of stored annotations!
 			
-			if (this.annotations[currentIndex].newAnnotation) {
+			var changeableType = this.annotations[currentIndex].newAnnotation;
+			
+			if (changeableType) {
 				var count = 0;
 				var defaultType = this.editMode === 'teaching' ? 'TEACHING' : 'PERSONAL';
 				
