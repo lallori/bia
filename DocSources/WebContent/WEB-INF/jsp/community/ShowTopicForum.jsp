@@ -21,6 +21,14 @@
 	<c:if test="${not empty topic}">
 		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
 		
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+			<c:if test="${not empty courseTranscriptionURL}">
+				<div id="goToCourseTranscription_upper">
+					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
+				</div>
+			</c:if>
+		</security:authorize>
+		
 		<div id="urlActions">
 			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
 			<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
@@ -178,7 +186,7 @@
 	
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 			<c:if test="${not empty courseTranscriptionURL}">
-				<div id="goToCourseTranscription">
+				<div id="goToCourseTranscription_lower">
 					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
 				</div>
 			</c:if>
