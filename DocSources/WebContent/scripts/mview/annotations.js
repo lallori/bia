@@ -151,7 +151,7 @@ IIPMooViewer.implement({
 				/** MEDICI ARCHIVE PROJECT END */
 				
 				var annotationCommandOpenClose = null;
-				if (this.editEnabled) {
+				if (this.editEnabled && (typeof this.annotationEditing === 'undefined' || !this.annotationEditing)) {
 					annotationCommandOpenClose = this.initAnnotationCommands(annotation, annotId);
 				}
 			

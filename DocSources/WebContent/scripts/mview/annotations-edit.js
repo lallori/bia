@@ -119,7 +119,7 @@ IIPMooViewer.implement({
 		// we use the index of the annotations array instead of the id of the annotation
 		var currentIndex;
 		for (var count = 0; count < this.annotations.length; count++) {
-			if (this.annotations[count].id == id	// new annotation
+			if (this.annotations[count].newAnnotation	// new annotation
 					|| "annotation_" + this.annotations[count].annotationId == id) {	// stored annotations 
 				currentIndex = count;
 				this.annotations[count].edit = true;
@@ -165,10 +165,8 @@ IIPMooViewer.implement({
 			
 			/** MEDICI ARCHIVE PROJECT START **/
 			// RR: It is not possible to modify the type of stored annotations!
-			//     Stored annotations have "annotation_" at the beginning of the id. 
-			var changeableType = id.lastIndexOf("annotation_", 0) != 0;
 			
-			if (changeableType) {
+			if (this.annotations[currentIndex].newAnnotation) {
 				var count = 0;
 				var defaultType = this.editMode === 'teaching' ? 'TEACHING' : 'PERSONAL';
 				
