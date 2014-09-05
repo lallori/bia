@@ -171,9 +171,19 @@ IIPMooViewer.implement({
 			
 				// Add our annotation text
 				var text = annotation_array[i].text;
-				if (annotation_array[i].title) {
-					text = '<h1>'+annotation_array[i].title+'</h1>' + text;
+				/** MEDICI ARCHIVE PROJECT START **/
+				if (text.length > 30) {
+					text = text.substring(0, 29) + '&hellip;';
 				}
+				var title = annotation_array[i].title || 'No title';
+				if (title.length > 15) {
+					title = title.substring(0, 14) + '&hellip;';
+				}
+				annotation.store('tip:title', '<h1>'+title+'</h1>');
+				/*if (annotation_array[i].title) {
+					text = '<h1>'+annotation_array[i].title+'</h1>' + text;
+				}*/
+				/** MEDICI ARCHIVE PROJECT END */
 				annotation.store('tip:text', text);
 	    	}
 	
