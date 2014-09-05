@@ -95,7 +95,7 @@ public class Annotation implements Serializable {
 	private Double height;
 	@Column (name="\"title\"", nullable=true) 
 	private String title;
-	@Column (name="\"text\"", nullable=true) 
+	@Column (name="\"text\"", length=75000, nullable=true)
 	private String text;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

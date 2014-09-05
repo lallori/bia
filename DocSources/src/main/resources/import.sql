@@ -1997,3 +1997,6 @@ INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('europeana.
 
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`, `preparer`, `template`) VALUES ('europeana/ShowEuropeanaView', 'template.administratorBackOfficeDOM', NULL, NULL);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `type`, `value`, `cascadeAttribute`, `parentAttribute`) VALUES ('europeana/ShowEuropeanaView', 'main', NULL, '/WEB-INF/jsp/europeana/ShowEuropeanaView.jsp', 0, NULL);
+
+-- annotations: text column has to be LONGTEXT
+ALTER TABLE `tblAnnotations` CHANGE COLUMN `text` `text` LONGTEXT NULL DEFAULT NULL AFTER `lastUpdate`;
