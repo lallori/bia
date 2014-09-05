@@ -57,6 +57,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/Welcome")
 public class WelcomeController {
 	
+	// TODO: when it is possible convert these constants to database parameters
+	private static final int MAX_NUMBER_OF_MOST_RECENT_COLLABORATIVE_TRANSCRIPTIONS = 3;
+	private static final int MAX_NUMBER_OF_MOST_RECENT_COURSE_QUESTIONS = 10;
+	private static final int MAX_NUMBER_OF_MOST_RECENT_FORUM_DISCUSSIONS = 10;
+	
+	
 	@Autowired 
 	private CommunityService communityService;
 	@Autowired 
@@ -122,11 +128,12 @@ public class WelcomeController {
 			
 			boolean canAccessTeaching = getUserService().canAccessTeachingModule(account);
 
-			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(10);
+			Map<String, List<?>> forumStatistics = getCommunityService().getForumStatistics(MAX_NUMBER_OF_MOST_RECENT_FORUM_DISCUSSIONS);
 			model.put("forumStatistics", forumStatistics);
 			
 			if (canAccessTeaching) {
-				Map<String, List<?>> teachingForumStatistics = getTeachingService().getTeachingForumStatistics(10, account);
+				Map<String, List<?>> teachingForumStatistics = getTeachingService().
+						getTeachingForumStatistics(MAX_NUMBER_OF_MOST_RECENT_COLLABORATIVE_TRANSCRIPTIONS, MAX_NUMBER_OF_MOST_RECENT_COURSE_QUESTIONS, 10, account);
 				model.put("teachingForumStatistics", teachingForumStatistics);
 			}
 			

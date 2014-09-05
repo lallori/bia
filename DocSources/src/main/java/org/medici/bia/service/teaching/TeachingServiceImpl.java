@@ -1058,11 +1058,12 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<?>> getTeachingForumStatistics(Integer numberOfElements, String account) throws ApplicationThrowable {
+	public Map<String, List<?>> getTeachingForumStatistics(Integer numberOfTranscriptions, Integer numberOfQuestions, Integer numberOfTopics, String account) throws ApplicationThrowable {
 		Map<String, List<?>> returnMap = new HashMap<String, List<?>>();
 		try {
-			List<CourseTopicOption> mostRecentOptions = getCourseTopicOptionDAO().getMostRecentExtendedCourseTopics(numberOfElements, account);
-			returnMap.put("MOST RECENT COURSE TOPICS", mostRecentOptions);
+			returnMap.put("MOST RECENT COURSE TOPICS", getCourseTopicOptionDAO().getMostRecentExtendedCourseTopics(numberOfTopics, account));
+			returnMap.put("MOST RECENT TRANSCRIPTION TOPICS", getCourseTopicOptionDAO().getMostRecentCollaborativeTranscriptionTopics(numberOfTranscriptions, account));
+			returnMap.put("MOST RECENT COURSE QUESTIONS", getCourseTopicOptionDAO().getMostRecentCourseQuestions(numberOfQuestions, account));
 			return returnMap;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

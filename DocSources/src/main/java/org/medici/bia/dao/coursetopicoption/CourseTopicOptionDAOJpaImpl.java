@@ -81,16 +81,11 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 */
 	@Override
 	public CourseTopicOption getCourseTranscriptionOptionFromForum(Integer forumId) throws PersistenceException {
-		List<CourseTopicMode> transcriptionModes = new ArrayList<CourseTopicMode>();
-		transcriptionModes.add(CourseTopicMode.I);
-		transcriptionModes.add(CourseTopicMode.C);
-		transcriptionModes.add(CourseTopicMode.R);
-		
 		String jpql = "FROM CourseTopicOption WHERE courseTopic.forum.forumId = :forumId AND courseTopic.logicalDelete = false AND mode IN (:transcriptionModes)";
 		
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("forumId", forumId);
-		query.setParameter("transcriptionModes", transcriptionModes);
+		query.setParameter("transcriptionModes", getFilteredModes());
 		
 		return (CourseTopicOption)query.getSingleResult();
 	}
@@ -116,18 +111,26 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 */
 	@Override
 	public List<CourseTopicOption> getMostRecentExtendedCourseTopics(Integer numberOfElements, String account) throws PersistenceException {
-		// TODO: add account filtering (when course topic accesses are implemented)
-		String jpql = "SELECT option FROM CourseTopicOption AS option, ForumTopic AS topic, Course AS course WHERE ";
-		jpql += "topic.logicalDelete = false AND topic.forum.logicalDelete = false AND topic.forum.subType = 'COURSE' AND topic.forum.forumParent = course.forum AND course.active = true AND topic = option.courseTopic ";
-		jpql += "ORDER BY topic.lastUpdate desc";
+		return getMostRecentCourseTopics(numberOfElements, null, account);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getMostRecentCollaborativeTranscriptionTopics(Integer numberOfElements, String account) throws PersistenceException {
+		return getMostRecentCourseTopics(numberOfElements, getFilteredModes(), account);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CourseTopicOption> getMostRecentCourseQuestions(Integer numberOfElements, String account) throws PersistenceException {
+		List<CourseTopicMode> transcriptionTypes = new ArrayList<CourseTopicMode>();
+		transcriptionTypes.add(CourseTopicMode.Q);
 		
-		Query query = getEntityManager().createQuery(jpql);
-		
-        // We set pagination  
-		query.setFirstResult(0);
-		query.setMaxResults(numberOfElements);
-		
-		return getResultList(query);
+		return getMostRecentCourseTopics(numberOfElements, transcriptionTypes, account);
 	}
 	
 	/**
@@ -197,5 +200,31 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 		modes.add(CourseTopicMode.C);
 		modes.add(CourseTopicMode.R);
 		return modes;
+	}
+	
+	private List<CourseTopicOption> getMostRecentCourseTopics(Integer numberOfElements, List<CourseTopicMode> courseTopicTypes, String account) throws PersistenceException {
+		// TODO: add account filtering (when course topic accesses are implemented)
+		String jpql = "SELECT option FROM CourseTopicOption AS option, ForumTopic AS topic, Course AS course WHERE "
+				+ "topic.logicalDelete = false AND "
+				+ "topic.forum.logicalDelete = false AND "
+				+ "topic.forum.subType = 'COURSE' AND "
+				+ "topic.forum.forumParent = course.forum AND "
+				+ "course.active = true AND "
+				+ "topic = option.courseTopic ";
+		if (courseTopicTypes != null && courseTopicTypes.size() > 0) {
+			jpql += "AND option.mode IN(:courseTopicTypes) ";
+		}
+		jpql += "ORDER BY topic.lastUpdate desc";
+			
+		Query query = getEntityManager().createQuery(jpql);
+		if (courseTopicTypes != null && courseTopicTypes.size() > 0) {
+			query.setParameter("courseTopicTypes", courseTopicTypes);
+		}
+		
+        // We set pagination  
+		query.setFirstResult(0);
+		query.setMaxResults(numberOfElements);
+		
+		return getResultList(query);
 	}
 }
