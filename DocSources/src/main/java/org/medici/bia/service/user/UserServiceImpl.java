@@ -930,7 +930,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -945,6 +945,27 @@ public class UserServiceImpl implements UserService {
 				return Boolean.TRUE;
 			else
 				throw applicationException;
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isAccountTeacher(String account) throws ApplicationThrowable {
+		try{
+			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(account);
+			int i = 0;
+			Boolean teacher = Boolean.FALSE;
+			while(i < userRoles.size() && !teacher){
+				if(userRoles.get(i).containsAuthority(Authority.TEACHERS)){
+					teacher = Boolean.TRUE;
+				}
+				i++;
+			}
+			return teacher;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
 		}
 	}
 	

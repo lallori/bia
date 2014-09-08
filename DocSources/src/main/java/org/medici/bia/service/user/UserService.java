@@ -340,6 +340,13 @@ public interface UserService {
 	 * @throws org.medici.bia.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
+	
+	/**
+	 * @param account
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean isAccountTeacher(String account) throws ApplicationThrowable;
 
 	/**
 	 * 

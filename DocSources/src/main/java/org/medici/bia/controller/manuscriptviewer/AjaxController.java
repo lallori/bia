@@ -331,7 +331,7 @@ public class AjaxController {
 	 * @param annotationId the annotation identifier to show (if none all image annotations are retrieved)
 	 * @return
 	 */
-	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
 	public ModelAndView getImageAnnotation(
 			@RequestParam(value="imageName", required=false) String imageName,
 			@RequestParam(value="annotationId", required=false) Integer annotationId) {
@@ -539,7 +539,7 @@ public class AjaxController {
 				singleRow.put("type", currentAnnotation.getType());
 				singleRow.put("title", currentAnnotation.getTitle());
 				singleRow.put("text", currentAnnotation.getText());
-				singleRow.put("deletable", annotationId == null && getManuscriptViewerService().isDeletableAnnotation(currentAnnotation) ? true : false);
+				singleRow.put("deletable", annotationId == null && (administrator || getManuscriptViewerService().isDeletableAnnotation(currentAnnotation)) ? true : false);
 				singleRow.put("updatable", annotationId == null && (account.equals(currentAnnotation.getUser().getAccount()) || administrator) ? true : false);
 				if (currentAnnotation.getForumTopic() != null) {
 					singleRow.put("forumTopicURL", HtmlUtils.getShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");

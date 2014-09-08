@@ -774,6 +774,10 @@ public class AjaxController {
 	private List<Object> getAnnotationsForView(Collection<Annotation> annotations) throws ApplicationThrowable {
 		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 		Boolean administrator = getUserService().isAccountAdministrator(account);
+		Boolean teacher = Boolean.FALSE;
+		if (Boolean.FALSE.equals(administrator)) {
+			teacher = getUserService().isAccountTeacher(account);
+		}
 		
 		List<Object> resultList = new ArrayList<Object>();
 		for (Annotation currentAnnotation : annotations) {
@@ -786,7 +790,7 @@ public class AjaxController {
 			row.put("type", currentAnnotation.getType());
 			row.put("title", currentAnnotation.getTitle());
 			row.put("text", currentAnnotation.getText());
-			row.put("deletable", getTeachingService().isDeletableAnnotation(currentAnnotation));
+			row.put("deletable", administrator || teacher || getTeachingService().isDeletableAnnotation(currentAnnotation));
 			row.put("updatable", account.equals(currentAnnotation.getUser().getAccount()) || administrator ? true : false);
 			if (currentAnnotation.getForumTopic() != null) {
 				row.put("forumTopicURL", HtmlUtils.getTeachingShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
