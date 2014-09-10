@@ -554,6 +554,46 @@ a.logo:link, a.logo:visited {
   transition: opacity 0.3s linear;
 }
 
+.iipmooviewer .canvas .hideBtn {
+  margin-left: -22px;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #888;
+  border-bottom: 2px solid #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  background-image:url('${contextPath}/images/1024/button_hideAnnotation.png');
+  background-size:20px 20px;
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  -ms-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+.iipmooviewer .canvas .showBtn {
+  margin-left: -22px;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #888;
+  border-bottom: 2px solid #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  background-image:url('${contextPath}/images/1024/button_showAnnotation.png');
+  background-size:20px 20px;
+  background-color: rgba(255,255,255,0.8);
+  background-repeat: no-repeat;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  -ms-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
 .iipmooviewer .canvas .updateBtn {
   margin-left: -22px;
   width: 20px;

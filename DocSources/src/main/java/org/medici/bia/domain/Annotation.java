@@ -103,6 +103,9 @@ public class Annotation implements Serializable {
 	@IndexedEmbedded
 	private ForumTopic forumTopic;
 	
+	@Column (name="\"visible\"", length=1, columnDefinition="tinyint default 1", nullable=true)
+	private Boolean visible;
+	
 	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean logicalDelete;
 	
@@ -307,6 +310,20 @@ public class Annotation implements Serializable {
 		this.forumTopic = forumTopic;
 	}
 	
+	/**
+	 * @return the visible
+	 */
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	/**
+	 * @param visible the visible to set
+	 */
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
 	/**
 	 * @return the logicalDelete
 	 */

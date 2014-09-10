@@ -425,9 +425,10 @@ public interface ManuscriptViewerService {
 	 * @param imageId the image identifier
 	 * @param fromViewAnnotations the list of annotations retrieved from the view level
 	 * @param ipAddress the ip address
+	 * @param adminMode if true the update process consider that operation is performed by admin users
 	 * @return a map with all the annotations (key) of the current image associated to a forum identifier (value greather than -1 only for new annotations)
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable;
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress, boolean adminMode) throws ApplicationThrowable;
 	
 }

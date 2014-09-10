@@ -69,6 +69,34 @@ public class AjaxController {
 	private CommunityService communityService;
 	@Autowired
 	private UserService userService;
+	
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	/**
 	 * 	
@@ -219,20 +247,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-	/**
-	 * @return the communityService
-	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
-	
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
-	}
-	
 	@RequestMapping(value = "/community/ReportForumPost", method = RequestMethod.POST)
 	public ModelAndView reportForumPost(	@RequestParam(value="postId", required=false) Integer postId, 
 										@RequestParam(value="forumId", required=false) Integer forumId,
@@ -255,20 +269,6 @@ public class AjaxController {
 		}
 	}
 	
-	/**
-	 * @param communityService the communityService to set
-	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	/**
-	 * @param userService the userService to set
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
 	/**
 	 * 
 	 * @param id
@@ -330,6 +330,21 @@ public class AjaxController {
 			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
 		}
+	}
+	
+	@RequestMapping(value = "/community/ShowHideAnnotation.json", method = RequestMethod.POST)
+	public Map<String, Object> showHideAnnotation(
+			@RequestParam(value="annotationId", required = true) Integer annotationId,
+			@RequestParam(value="show", required = true) Boolean show,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getCommunityService().showHideAnnotation(annotationId, show);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
 	}
 
 	/**

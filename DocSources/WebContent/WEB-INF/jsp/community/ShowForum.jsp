@@ -717,6 +717,11 @@
 							            		 <c:choose>
 							            		 	<c:when test="${topicType == 'Q'}">
 							            		 		Comment
+							            		 		<c:if test="${not currentTopic.annotation.visible}">
+								            		 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+								            		 			&nbsp;&lt;<i>hidden</i>&gt;
+								            		 		</security:authorize>
+							            		 		</c:if>
 							            		 	</c:when>
 							            		 	<c:when test="${topicType == 'D'}">
 							            		 		Discussion
@@ -773,7 +778,13 @@
 									<div class="row">
 										<div class="one">
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}
+								                <c:if test="${not empty currentTopic.annotation and not currentTopic.annotation.visible}">
+						            		 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+						            		 			&nbsp;&lt;<i>hidden</i>&gt;
+						            		 		</security:authorize>
+					            		 		</c:if>
+				            		 		</a>
 							                <span>
 							                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
 								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->

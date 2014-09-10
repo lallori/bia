@@ -423,6 +423,7 @@ public class AjaxController {
 			List<Annotation> annotations = getTeachingService().getTopicImageAnnotations(imageName, forumId, Annotation.Type.TEACHING);	
 			List<Object> resultList = getAnnotationsForView(annotations); 
 			model.put("annotations", resultList);
+			model.put("adminPrivileges", isAdminOrTeacher());
 			model.put("operation", "OK");
 		} catch (ApplicationThrowable ath) {
 			model.put("operation", "KO");
@@ -655,8 +656,10 @@ public class AjaxController {
 	@RequestMapping(value = {"/teaching/UpdateAnnotations.json"}, method = RequestMethod.POST)
 	public Map<String, Object> updateAnnotations(HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-
+		
 		try {
+			Boolean isAdminOrTeacher = isAdminOrTeacher();
+			
 			// In this controller we get input parameter at low level beacause 
 			// there is a bug in spring which construct a wrong list of 
 			// annotations in case of client send 1 single annotation 
@@ -681,10 +684,16 @@ public class AjaxController {
 					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
 					annotation.setTitle(splitted[7]);
 					annotation.setText(splitted[8]);
+					annotation.setVisible(Boolean.valueOf(splitted[11]));
 					annotationsList.add(annotation);
 				}
 			}
-			Map<Annotation, Integer> imageAnnotationsMap = getTeachingService().updateAnnotations(imageId, forumContainerId, annotationsList, httpServletRequest.getRemoteAddr());
+			Map<Annotation, Integer> imageAnnotationsMap = getTeachingService().updateAnnotations(
+																					imageId, 
+																					forumContainerId, 
+																					annotationsList, 
+																					httpServletRequest.getRemoteAddr(), 
+																					isAdminOrTeacher);
 			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
 				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
@@ -700,6 +709,7 @@ public class AjaxController {
 			model.put("links", resultList);
 			// annotation -> all of the annotations associated to the current image
 			model.put("annotations", getAnnotationsForView(imageAnnotationsMap.keySet()));
+			model.put("adminPrivileges", isAdminOrTeacher);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 			return model;
@@ -773,11 +783,7 @@ public class AjaxController {
 	 */
 	private List<Object> getAnnotationsForView(Collection<Annotation> annotations) throws ApplicationThrowable {
 		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-		Boolean administrator = getUserService().isAccountAdministrator(account);
-		Boolean teacher = Boolean.FALSE;
-		if (Boolean.FALSE.equals(administrator)) {
-			teacher = getUserService().isAccountTeacher(account);
-		}
+		Boolean isAdminOrTeacher = isAdminOrTeacher();
 		
 		List<Object> resultList = new ArrayList<Object>();
 		for (Annotation currentAnnotation : annotations) {
@@ -790,14 +796,31 @@ public class AjaxController {
 			row.put("type", currentAnnotation.getType());
 			row.put("title", currentAnnotation.getTitle());
 			row.put("text", currentAnnotation.getText());
-			row.put("deletable", administrator || teacher || getTeachingService().isDeletableAnnotation(currentAnnotation));
-			row.put("updatable", account.equals(currentAnnotation.getUser().getAccount()) || administrator ? true : false);
+			row.put("deletable", isAdminOrTeacher || getTeachingService().isDeletableAnnotation(currentAnnotation));
+			row.put("updatable", account.equals(currentAnnotation.getUser().getAccount()) || isAdminOrTeacher ? true : false);
+			if (isAdminOrTeacher || Boolean.TRUE.equals(currentAnnotation.getVisible())) {
+				row.put("visibility", currentAnnotation.getVisible());
+			}
 			if (currentAnnotation.getForumTopic() != null) {
 				row.put("forumTopicURL", HtmlUtils.getTeachingShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
 			}
 			resultList.add(row);
 		}
 		return resultList;
+	}
+	
+	private boolean isAdminOrTeacher() throws ApplicationThrowable {
+		try {
+			String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			Boolean administrator = getUserService().isAccountAdministrator(account);
+			Boolean teacher = Boolean.FALSE;
+			if (Boolean.FALSE.equals(administrator)) {
+				teacher = getUserService().isAccountTeacher(account);
+			}
+			return administrator || teacher;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 }

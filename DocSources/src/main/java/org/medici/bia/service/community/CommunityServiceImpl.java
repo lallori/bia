@@ -159,13 +159,236 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private UserRoleDAO userRoleDAO;   
 
+	/**
+	 * @return the applicationAccessContainer
+	 */
 	public ApplicationAccessContainer getApplicationAccessContainer() {
 		return applicationAccessContainer;
 	}
+	/**
+	 * @param applicationAccessContainer the applicationAccessContainer to set
+	 */
 	public void setApplicationAccessContainer(
 			ApplicationAccessContainer applicationAccessContainer) {
 		this.applicationAccessContainer = applicationAccessContainer;
 	}
+	/**
+	 * @return the accessLogDAO
+	 */
+	public AccessLogDAO getAccessLogDAO() {
+		return accessLogDAO;
+	}
+	/**
+	 * @param accessLogDAO the accessLogDAO to set
+	 */
+	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
+		this.accessLogDAO = accessLogDAO;
+	}
+	/**
+	 * @return the annotationDAO
+	 */
+	public AnnotationDAO getAnnotationDAO() {
+		return annotationDAO;
+	}
+	/**
+	 * @param annotationDAO the annotationDAO to set
+	 */
+	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
+		this.annotationDAO = annotationDAO;
+	}
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+	/**
+	 * @return the emailMessageUserDAO
+	 */
+	public EmailMessageUserDAO getEmailMessageUserDAO() {
+		return emailMessageUserDAO;
+	}
+	/**
+	 * @param emailMessageUserDAO the emailMessageUserDAO to set
+	 */
+	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
+		this.emailMessageUserDAO = emailMessageUserDAO;
+	}
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+	/**
+	 * @return the forumPostDAO
+	 */
+	public ForumPostDAO getForumPostDAO() {
+		return forumPostDAO;
+	}
+	/**
+	 * @param forumPostDAO the forumPostDAO to set
+	 */
+	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
+		this.forumPostDAO = forumPostDAO;
+	}
+	/**
+	 * @return the forumPostNotifiedDAO
+	 */
+	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
+		return forumPostNotifiedDAO;
+	}
+	/**
+	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
+	 */
+	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+	/**
+	 * @return the forumTopicDAO
+	 */
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
+	}
+	/**
+	 * @param forumTopicDAO the forumTopicDAO to set
+	 */
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
+	}
+	/**
+	 * @return the forumTopicWatchDAO
+	 */
+	public ForumTopicWatchDAO getForumTopicWatchDAO() {
+		return forumTopicWatchDAO;
+	}
+	/**
+	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
+	 */
+	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
+		this.forumTopicWatchDAO = forumTopicWatchDAO;
+	}
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
+	}
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+	/**
+	 * @return the reportedForumPostDAO
+	 */
+	public ReportedForumPostDAO getReportedForumPostDAO() {
+		return reportedForumPostDAO;
+	}
+	/**
+	 * @param reportedForumPostDAO the reportedForumPostDAO to set
+	 */
+	public void setReportedForumPostDAO(ReportedForumPostDAO reportedForumPostDAO) {
+		this.reportedForumPostDAO = reportedForumPostDAO;
+	}
+	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+	/**
+	 * @param userDAO the userDAO to set
+	 */
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+	/**
+	 * @return the userAuthorityDAO
+	 */
+	public UserAuthorityDAO getUserAuthorityDAO() {
+		return userAuthorityDAO;
+	}
+	/**
+	 * @param userAuthorityDAO the userAuthorityDAO to set
+	 */
+	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
+		this.userAuthorityDAO = userAuthorityDAO;
+	}
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+	/**
+	 * @return the userMessageDAO
+	 */
+	public UserMessageDAO getUserMessageDAO() {
+		return userMessageDAO;
+	}
+	/**
+	 * @param userMessageDAO the userMessageDAO to set
+	 */
+	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
+		this.userMessageDAO = userMessageDAO;
+	}
+	/**
+	 * @return the userRoleDAO
+	 */
+	public UserRoleDAO getUserRoleDAO() {
+		return userRoleDAO;
+	}
+	/**
+	 * @param userRoleDAO the userRoleDAO to set
+	 */
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -742,19 +965,6 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-	/**
-	 * @return the accessLogDAO
-	 */
-	public AccessLogDAO getAccessLogDAO() {
-		return accessLogDAO;
-	}
-	/**
-	 * @return the annotationDAO
-	 */
-	public AnnotationDAO getAnnotationDAO() {
-		return annotationDAO;
-	}
 	
 	/**
 	 * {@inheritDoc}
@@ -828,19 +1038,6 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the documentDAO
-	 */
-	public DocumentDAO getDocumentDAO() {
-		return documentDAO;
-	}
-
-	/**
-	 * @return the emailMessageUserDAO
-	 */
-	public EmailMessageUserDAO getEmailMessageUserDAO() {
-		return emailMessageUserDAO;
-	}
-	/**
 	 * {@inheritDoc} 
 	 */
 	@Override
@@ -850,13 +1047,6 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-	
-	/**
-	 * @return the forumDAO
-	 */
-	public ForumDAO getForumDAO() {
-		return forumDAO;
 	}
 	
 	/**
@@ -911,20 +1101,6 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-	
-	/**
-	 * @return the forumPostDAO
-	 */
-	public ForumPostDAO getForumPostDAO() {
-		return forumPostDAO;
-	}
-
-	/**
-	 * @return the forumPostNotifiedDAO
-	 */
-	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
-		return forumPostNotifiedDAO;
 	}
 
 	/**
@@ -1025,13 +1201,6 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the forumTopicDAO
-	 */
-	public ForumTopicDAO getForumTopicDAO() {
-		return forumTopicDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1072,13 +1241,6 @@ public class CommunityServiceImpl implements CommunityService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	/**
-	 * @return the forumTopicWatchDAO
-	 */
-	public ForumTopicWatchDAO getForumTopicWatchDAO() {
-		return forumTopicWatchDAO;
 	}
 	
 	/**
@@ -1135,27 +1297,6 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
-	}
-	
-	/**
-	 * @return the placeDAO
-	 */
-	public PlaceDAO getPlaceDAO() {
-		return placeDAO;
-	}
-	
-	/**
-	 * @return the reportedForumPostDAO
-	 */
-	public ReportedForumPostDAO getReportedForumPostDAO() {
-		return reportedForumPostDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1203,47 +1344,6 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 
-	/**
-	 * @return the userDAO
-	 */
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	/**
-	 * @return the userAuthorityDAO
-	 */
-	public UserAuthorityDAO getUserAuthorityDAO() {
-		return userAuthorityDAO;
-	}
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
-	 * @return the userMessageDAO
-	 */
-	public UserMessageDAO getUserMessageDAO() {
-		return userMessageDAO;
-	}
-
-	/**
-	 * @return the userRoleDAO
-	 */
-	public UserRoleDAO getUserRoleDAO() {
-		return userRoleDAO;
-	}
-	
-	/**
-	 * @return the volumeDAO
-	 */
-	public VolumeDAO getVolumeDAO() {
-		return volumeDAO;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1495,125 +1595,24 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-	/**
-	 * @param accessLogDAO the accessLogDAO to set
-	 */
-	public void setAccessLogDAO(AccessLogDAO accessLogDAO) {
-		this.accessLogDAO = accessLogDAO;
-	}
-	/**
-	 * @param annotationDAO the annotationDAO to set
-	 */
-	public void setAnnotationDAO(AnnotationDAO annotationDAO) {
-		this.annotationDAO = annotationDAO;
-	}
-
-	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
-	 * @param emailMessageUserDAO the emailMessageUserDAO to set
-	 */
-	public void setEmailMessageUserDAO(EmailMessageUserDAO emailMessageUserDAO) {
-		this.emailMessageUserDAO = emailMessageUserDAO;
-	}
-	/**
-	 * @param forumDAO the forumDAO to set
-	 */
-	public void setForumDAO(ForumDAO forumDAO) {
-		this.forumDAO = forumDAO;
-	}
-	/**
-	 * @param forumPostDAO the forumPostDAO to set
-	 */
-	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
-		this.forumPostDAO = forumPostDAO;
-	}
-	/**
-	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
-	 */
-	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
-		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
-	}
-
-	/**
-	 * @param forumTopicDAO the forumTopicDAO to set
-	 */
-	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
-		this.forumTopicDAO = forumTopicDAO;
-	}
-	/**
-	 * @param forumTopicWatchDAO the forumTopicWatchDAO to set
-	 */
-	public void setForumTopicWatchDAO(ForumTopicWatchDAO forumTopicWatchDAO) {
-		this.forumTopicWatchDAO = forumTopicWatchDAO;
-	}
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
-	 * @param reportedForumPostDAO the reportedForumPostDAO to set
-	 */
-	public void setReportedForumPostDAO(ReportedForumPostDAO reportedForumPostDAO) {
-		this.reportedForumPostDAO = reportedForumPostDAO;
-	}
-
-	/**
-	 * @param userDAO the userDAO to set
-	 */
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	/**
-	 * @param userAuthorityDAO the userAuthorityDAO to set
-	 */
-	public void setUserAuthorityDAO(UserAuthorityDAO userAuthorityDAO) {
-		this.userAuthorityDAO = userAuthorityDAO;
-	}
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @param userMessageDAO the userMessageDAO to set
-	 */
-	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
-		this.userMessageDAO = userMessageDAO;
-	}
-
-	/**
-	 * @param userRoleDAO the userRoleDAO to set
-	 */
-	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-		this.userRoleDAO = userRoleDAO;
-	}
-	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
-	}
 	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public void showHideAnnotation(Integer annotationId, Boolean show) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			Annotation annotation = getAnnotationDAO().find(annotationId);
+			if (!show.equals(annotation.getVisible())) {
+				annotation.setVisible(show);
+				annotation.setLastUpdate(now);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

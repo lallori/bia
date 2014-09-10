@@ -52,7 +52,8 @@ IIPMooViewer.implement({
 				text: '',
 				deletable: true,
 				updatable: true,
-				newAnnotation: true
+				newAnnotation: true,
+				visibility: true
 		};
 
 		// Create an array if we don't have one and push a new annotation to it

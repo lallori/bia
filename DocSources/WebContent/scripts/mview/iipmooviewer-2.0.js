@@ -234,8 +234,10 @@ var IIPMooViewer = new Class({
 						console.log('notified annotation change to server.');
 						// RR: update annotations details in the client
 						_this.annotations = new Array();
+						_this.adminPrivileges = responseJSON.adminPrivileges;
+						var data = new Array();  // temporary data array
 						for (i = 0; i < responseJSON.annotations.length; i++) {
-							_this.annotations.push({
+							data[i] = {
 								annotationId: responseJSON.annotations[i].annotationId.toInt(),
 								id: responseJSON.annotations[i].id,
 								x: responseJSON.annotations[i].x.toFloat(), 
@@ -247,8 +249,12 @@ var IIPMooViewer = new Class({
 								text: responseJSON.annotations[i].text,
 								deletable: responseJSON.annotations[i].deletable,
 								updatable: responseJSON.annotations[i].updatable,
-								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
-							});
+								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum	
+							};
+							if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
+								data[i]["visibility"] = responseJSON.annotations[i].visibility;
+							}
+							_this.annotations.push(data[i]);
 						}
 						_this.reload();
 						for (i = 0; i < responseJSON.links.length; i++) {
@@ -2167,9 +2173,19 @@ var IIPMooViewer = new Class({
 				}
 
 				var text = this.annotations[i].text;
-				if (this.annotations[i].title) {
-					text = '<h1>' + this.annotations[i].title + '</h1>' + text;
+				/** MEDICI ARCHIVE PROJECT START **/
+				if (text.length > 30) {
+					text = text.substring(0, 29) + '&hellip;';
 				}
+				var title = annotation_array[i].title || 'No title';
+				if (title.length > 15) {
+					title = title.substring(0, 14) + '&hellip;';
+				}
+				annotation.store('tip:title', '<h1>'+title+'</h1>');
+				/*if (annotation_array[i].title) {
+					text = '<h1>'+annotation_array[i].title+'</h1>' + text;
+				}*/
+				/** MEDICI ARCHIVE PROJECT END */
 				annotation.store('tip:text', text);
 			}
 		}
@@ -2650,6 +2666,8 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
 			retValue += annotation_array[i].deletable;
 			retValue += ",";
 			retValue += annotation_array[i].updatable;
+			retValue += ",";
+			retValue += annotation_array[i].visibility;
 			retValue += "&";
 		}
 	}

@@ -1354,7 +1354,8 @@ public class TeachingServiceImpl implements TeachingService {
 			Integer imageId, 
 			Integer forumContainerId,
 			List<Annotation> fromViewAnnotations, 
-			String ipAddress) throws ApplicationThrowable {
+			String ipAddress,
+			boolean teacherMode) throws ApplicationThrowable {
 		try {
 			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
 			Image image = getImageDAO().find(imageId);
@@ -1377,7 +1378,8 @@ public class TeachingServiceImpl implements TeachingService {
 							|| !annotation.getX().equals(viewAnnotation.getX())
 							|| !annotation.getY().equals(viewAnnotation.getY())
 							|| !annotation.getWidth().equals(viewAnnotation.getWidth())
-							|| !annotation.getHeight().equals(viewAnnotation.getHeight())));
+							|| !annotation.getHeight().equals(viewAnnotation.getHeight()))
+							|| !annotation.getVisible().equals(viewAnnotation.getVisible()));
 				
 				if (annotation == null) {
 					annotation = new Annotation();
@@ -1392,6 +1394,7 @@ public class TeachingServiceImpl implements TeachingService {
 					annotation.setY(viewAnnotation.getY());
 					annotation.setWidth(viewAnnotation.getWidth());
 					annotation.setHeight(viewAnnotation.getHeight());
+					annotation.setVisible(viewAnnotation.getVisible());
 				}
 				
 				if (annotation.getAnnotationId() != null) {
@@ -1411,6 +1414,7 @@ public class TeachingServiceImpl implements TeachingService {
 					annotation.setUser(user);
 					annotation.setImage(image);
 					annotation.setType(Annotation.Type.TEACHING);
+					annotation.setVisible(Boolean.TRUE);
 					
 					getAnnotationDAO().persist(annotation);
 					
@@ -1481,6 +1485,12 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			// We remove the old persisted annotations that are still in the list
 			for(Annotation toRemoveAnnotation : persistedAnnotations) {
+				if (!teacherMode && Boolean.FALSE.equals(toRemoveAnnotation.getVisible())) {
+					// RR: Non admin/teacher users do not return not visible annotations from the view,
+					// so those annotations have not to be removed
+					returnMap.put(toRemoveAnnotation, -1);
+					continue;
+				}
 				if (toRemoveAnnotation.getForumTopic() != null) {
 					// RR: It should not be possible to remove an annotation associated to a topic
 					ForumTopic annotationTopic = toRemoveAnnotation.getForumTopic();

@@ -96,7 +96,14 @@ IIPMooViewer.implement({
 		}*/
 		for (var count = 0; count < this.annotations.length; count++) {
 			this.annotations[count].id = count;
-			annotation_array.push(this.annotations[count]);
+			if (typeof this.annotations[count].visibility !== 'undefined') {
+				// RR: if annotation has visibility property it can be showed:
+				// if true it can be showed in full color, if false it
+				// can be showed in transparency (eg. for administrator users);
+				// If annotation has not visibility property it cannot be showed
+				// (eg. it has to be hidden for non admin users)
+				annotation_array.push(this.annotations[count]);
+			}
 		}
 		/** MEDICI ARCHIVE PROJECT END */
 	
@@ -138,7 +145,8 @@ IIPMooViewer.implement({
 						left: Math.round(this.wid * annotation_array[i].x),
 						top: Math.round(this.hei * annotation_array[i].y),
 						width: Math.round(this.wid * annotation_array[i].w),
-						height: Math.round(this.hei * annotation_array[i].h)
+						height: Math.round(this.hei * annotation_array[i].h),
+						opacity: annotation_array[i].visibility ? 1.0 : 0.5  
 					}
 				}).inject(this.canvas);
 				
@@ -279,77 +287,129 @@ IIPMooViewer.implement({
 			}
 			idx++;
 		}
-		var annotationCommandOpenClose = new Element('div', {
-			'id': ('commandBtn_' + annotationId),
-			'class': 'commandBtn moreBtn',
-			'styles': {
-				left: 0,
-				top: 0
-			},
-			'title': 'open/close annotation commands'
-		}).inject(annotation);
 		
-		var delta = 0;
+		var isDeletable = this.annotations[idx].deletable == true;
+		var isUpdatable = this.annotations[idx].updatable == true;
+		var canChangeVisibility = typeof this.adminPrivileges !== 'undefined' && this.adminPrivileges &&
+									typeof this.annotations[idx].visibility !== 'undefined' && this.annotations[idx].visibility != null;
 		
-		if (this.annotations[idx].deletable == true) {
-			var annotationDelete = new Element('div', {
-				'id': ('deleteBtn_' + annotationId),
-				'class': 'commandBtn deleteBtn hidden',
+		if (isDeletable || isUpdatable || canChangeVisibility) {
+			var annotationCommandOpenClose = new Element('div', {
+				'id': ('commandBtn_' + annotationId),
+				'class': 'commandBtn moreBtn',
 				'styles': {
-					left: 20,
-					top: delta * 22
+					left: 0,
+					top: 0
 				},
-				'title': 'delete this annotation'
+				'title': 'open/close annotation commands'
 			}).inject(annotation);
 			
-			annotationDelete.addEvent('click', function(e) {
+			var delta = 0;
+			
+			if (isDeletable) {
+				var annotationDelete = new Element('div', {
+					'id': ('deleteBtn_' + annotationId),
+					'class': 'commandBtn deleteBtn hidden',
+					'styles': {
+						left: 20,
+						top: delta * 22
+					},
+					'title': 'delete this annotation'
+				}).inject(annotation);
+				
+				annotationDelete.addEvent('click', function(e) {
+					var event = new DOMEvent(e);
+					event.stop();
+					if (confirm('Do you want to delete this annotation?')) {
+						_this.annotations.splice(idx, 1);
+						_this.updateAnnotations();
+						_this.fireEvent('annotationChange', _this.annotations);
+					}
+				});
+				delta++;
+			}
+			
+			if (isUpdatable) {
+				var annotationUpdate = new Element('div', {
+					'id': ('updateBtn_' + annotationId),
+					'class': 'commandBtn updateBtn hidden',
+					'styles': {
+						left: 20,
+						top: delta * 22
+					},
+					'title': 'modify this annotation'
+				}).inject(annotation);
+				
+				annotationUpdate.addEvent('click', function(e) {
+					e.stop();
+					_this.canvas.getElements('div.commandBtn').addClass('hidden');
+					_this.editAnnotation(annotation);
+				});
+				delta++;
+			}
+			
+			if (canChangeVisibility) {
+				if (this.annotations[idx].visibility === true) {
+					var annotationHide = new Element('div', {
+						'id': ('hideBtn_' + annotationId),
+						'class': 'commandBtn hideBtn hidden',
+						'styles': {
+							left: 20,
+							top: delta * 22
+						},
+						'title': 'hide this annotation'
+					}).inject(annotation);
+					
+					annotationHide.addEvent('click', function(e) {
+						e.stop();
+						_this.annotations[idx].visibility = false;
+						_this.updateAnnotations();
+						_this.fireEvent('annotationChange', _this.annotations);
+					});
+					delta++;
+				} else {
+					var annotationShow = new Element('div', {
+						'id': ('showBtn_' + annotationId),
+						'class': 'commandBtn showBtn hidden',
+						'styles': {
+							left: 20,
+							top: delta * 22
+						},
+						'title': 'show this annotation'
+					}).inject(annotation);
+					
+					annotationShow.addEvent('click', function(e) {
+						e.stop();
+						_this.annotations[idx].visibility = true;
+						_this.updateAnnotations();
+						_this.fireEvent('annotationChange', _this.annotations);
+					});
+					delta++;
+				}
+			}
+			
+			annotationCommandOpenClose.addEvent('click', function(e) {
 				var event = new DOMEvent(e);
 				event.stop();
-				if (confirm('Do you want to delete this annotation?')) {
-					_this.annotations.splice(idx, 1);
-					_this.updateAnnotations();
-					_this.fireEvent('annotationChange', _this.annotations);
+				var annotationId = this.id.substring(11, this.id.length);
+				if (this.hasClass('moreBtn')) {
+					this.removeClass('moreBtn');
+					this.addClass('lessBtn');
+					_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId + ',#hideBtn_' + annotationId + ',#showBtn_' + annotationId).removeClass('hidden');
+				} else if (this.hasClass('lessBtn')) {
+					this.removeClass('lessBtn');
+					this.addClass('moreBtn');
+					_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId + ',#hideBtn_' + annotationId + ',#showBtn_' + annotationId).addClass('hidden');
 				}
 			});
-			delta++;
-		}
-		
-		if (this.annotations[idx].updatable == true) {
-			var annotationUpdate = new Element('div', {
-				'id': ('updateBtn_' + annotationId),
-				'class': 'commandBtn updateBtn hidden',
-				'styles': {
-					left: 20,
-					top: delta * 22
-				},
-				'title': 'modify this annotation'
-			}).inject(annotation);
 			
-			annotationUpdate.addEvent('click', function(e) {
-				e.stop();
-				_this.canvas.getElements('div.commandBtn').addClass('hidden');
-				_this.editAnnotation(annotation);
-			});
-			delta++;
+			return annotationCommandOpenClose;
 		}
 		
-		annotationCommandOpenClose.addEvent('click', function(e) {
-			var event = new DOMEvent(e);
-			event.stop();
-			var annotationId = this.id.substring(11, this.id.length);
-			if (this.hasClass('moreBtn')) {
-				this.removeClass('moreBtn');
-				this.addClass('lessBtn');
-				_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId).removeClass('hidden');
-			} else if (this.hasClass('lessBtn')) {
-				this.removeClass('lessBtn');
-				this.addClass('moreBtn');
-				_this.canvas.getElements('#updateBtn_' + annotationId + ',#deleteBtn_' + annotationId).addClass('hidden');
-			}
-		});
-		
-		return annotationCommandOpenClose;
+		return null;
 	},
+	
+	
 	
 	/**
 	 * Renders or hides the commands associated to annotations
@@ -434,8 +494,10 @@ IIPMooViewer.implement({
 
 					onSuccess: function(responseJSON, responseText) {
 						if (typeof responseJSON.operation === 'undefined' || responseJSON.operation === 'OK') {
+							this.adminPrivileges = responseJSON.adminPrivileges;
+							var data = new Array();  // temporary data array
 							for (i = 0; i < responseJSON.annotations.length; i++) {
-								this.annotations.push({
+								data[i] = {
 									annotationId: responseJSON.annotations[i].annotationId.toInt(),
 									id: responseJSON.annotations[i].id,
 									x: responseJSON.annotations[i].x.toFloat(), 
@@ -448,7 +510,11 @@ IIPMooViewer.implement({
 									deletable: responseJSON.annotations[i].deletable,
 									updatable: responseJSON.annotations[i].updatable,
 									forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
-								});
+								};
+								if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
+									data[i]["visibility"] = responseJSON.annotations[i].visibility;
+								}
+								this.annotations.push(data[i]);
 							}
 						} else {
 							console.log('error');
@@ -475,6 +541,7 @@ IIPMooViewer.implement({
 					},
 					
 					onSuccess: function(responseJSON, responseText) {
+						this.adminPrivileges = responseJSON.adminPrivileges;
 						for (i=0; i<responseJSON.annotations.length; i++) {
 							this.annotations.push({
 								annotationId: responseJSON.annotations[i].annotationId.toInt(),
@@ -488,6 +555,7 @@ IIPMooViewer.implement({
 								text: responseJSON.annotations[i].text,
 								deletable: responseJSON.annotations[i].deletable,
 								updatable: responseJSON.annotations[i].updatable,
+								visibility: true // for annotation forum topic visibility cannot be hidden
 								// forumTopicURL: responseJSON.annotations[i].forumTopicURL 
 								// Link To Forum: not enabled because this feature has not to be enabled in
 								// the annotation forum

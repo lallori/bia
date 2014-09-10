@@ -538,6 +538,13 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * @param annotationId
+	 * @param show
+	 * @throws ApplicationThrowable
+	 */
+	void showHideAnnotation(Integer annotationId, Boolean show) throws ApplicationThrowable;
 
 	/**
 	 * 

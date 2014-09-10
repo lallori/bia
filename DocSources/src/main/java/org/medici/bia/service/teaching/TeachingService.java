@@ -585,6 +585,7 @@ public interface TeachingService {
 	 * @param forumContainerId the container forum identifier
 	 * @param fromViewAnnotations the list of annotations from the client
 	 * @param ipAddress the user address
+	 * @param teacherMode if true the update process consider that operation is performed by admin/teacher users
 	 * @return the map of annotations and its topic identifier
 	 * @throws ApplicationThrowable
 	 */
@@ -592,7 +593,8 @@ public interface TeachingService {
 			Integer imageId, 
 			Integer forumContainerId,
 			List<Annotation> fromViewAnnotations, 
-			String ipAddress) throws ApplicationThrowable;
+			String ipAddress,
+			boolean teacherMode) throws ApplicationThrowable;
 	
 	/**
 	 * This method updates the existent post of a course topic (for Course Transcription Topic).

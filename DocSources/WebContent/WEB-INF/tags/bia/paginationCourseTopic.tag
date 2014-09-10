@@ -25,8 +25,8 @@
 			<a href="${baseUrl}${prevArgs}" class="previousPaginateButton paginateForumButton ${buttonClass}">Previous</a>
 		</c:when>
 		<c:otherwise>
-			<span class="firstPaginateButton">First</span>
-			<span class="previousPaginateButton">Previous</span>
+			<span class="firstPaginateButton paginateForumButton">First</span>
+			<span class="previousPaginateButton paginateForumButton">Previous</span>
 		</c:otherwise>
 	</c:choose>
 	
@@ -63,7 +63,7 @@
 			<a href="${baseUrl}${lastArgs}" class="lastPaginateButton paginateForumButton ${buttonClass}">Last</a>
 		</c:when>
 		<c:otherwise>
-			<span class="nextPaginateButton">Next</span>
-			<span class="lastPaginateButton">Last</span>
+			<span class="nextPaginateButton paginateForumButton">Next</span>
+			<span class="lastPaginateButton paginateForumButton">Last</span>
 		</c:otherwise>
 	</c:choose>

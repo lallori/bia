@@ -944,7 +944,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress) throws ApplicationThrowable {
+	public Map<Annotation, Integer> updateAnnotations(Integer imageId, List<Annotation> fromViewAnnotations, String ipAddress, boolean adminMode) throws ApplicationThrowable {
 		try {
 			Map<Annotation, Integer> returnMap = new HashMap<Annotation, Integer>();
 			Image image = getImageDAO().find(imageId);
@@ -968,7 +968,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 							|| !annotation.getX().equals(viewAnnotation.getX())
 							|| !annotation.getY().equals(viewAnnotation.getY())
 							|| !annotation.getWidth().equals(viewAnnotation.getWidth())
-							|| !annotation.getHeight().equals(viewAnnotation.getHeight())));
+							|| !annotation.getHeight().equals(viewAnnotation.getHeight()))
+							|| !annotation.getVisible().equals(viewAnnotation.getVisible()));
 				
 				if (annotation == null) {
 					annotation = new Annotation();
@@ -983,6 +984,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					annotation.setY(viewAnnotation.getY());
 					annotation.setWidth(viewAnnotation.getWidth());
 					annotation.setHeight(viewAnnotation.getHeight());
+					annotation.setVisible(viewAnnotation.getVisible());
 				}
 				
 				if (annotation.getAnnotationId() != null) {
@@ -1002,6 +1004,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					annotation.setUser(user);
 					annotation.setImage(image);
 					annotation.setType(viewAnnotation.getType() != null ? viewAnnotation.getType() : Annotation.Type.GENERAL);
+					annotation.setVisible(Boolean.TRUE);
 					
 					getAnnotationDAO().persist(annotation);
 					
@@ -1042,6 +1045,12 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			
 			// We remove the old persisted annotations that are still in the list
 			for(Annotation toRemoveAnnotation : persistedAnnotations) {
+				if (!adminMode && Boolean.FALSE.equals(toRemoveAnnotation.getVisible())) {
+					// RR: Non admin users do not return not visible annotations from the view,
+					// so those annotations have not to be removed
+					returnMap.put(toRemoveAnnotation, -1);
+					continue;
+				}
 				if (toRemoveAnnotation.getForumTopic() != null) {
 					// RR: It should not be possible to remove an annotation associated to a topic
 					//ForumTopic annotationTopic = getForumTopicDAO().find(toRemoveAnnotation.getForumTopic().getTopicId());

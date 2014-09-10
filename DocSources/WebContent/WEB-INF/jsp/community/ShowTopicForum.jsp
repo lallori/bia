@@ -17,6 +17,12 @@
 	<c:url var="RenameForumTopicURL" value="/de/community/RenameForumTopic.json" />
 	
 	<c:url var="BIAHomeURL" value="/Home.do" />
+	
+	<c:if test="${not empty topic.annotation}">
+		<c:url var="ShowHideAnnotationURL" value="/community/ShowHideAnnotation.json">
+			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+		</c:url>
+	</c:if>
 
 	<c:if test="${not empty topic}">
 		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
@@ -38,6 +44,39 @@
 			<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
 		</security:authorize>
 		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
+		
+		<c:if test="${not empty topic.annotation and not empty courseTranscriptionURL}">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+				<c:choose>
+					<c:when test="${topic.annotation.visible}">
+						<div style="display: inline-block; float: right;">
+							<a href="#" class="buttonMedium button_medium" id="hideAnnotation" title="The related annotation is visible">Make hidden</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="display: inline-block; float: right;">
+							<a href="#" class="buttonMedium button_medium" id="showAnnotation" title="The related annotation is hidden">Make visible</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</security:authorize>
+		</c:if>
+		<c:if test="${not empty topic.annotation and empty courseTranscriptionURL}">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+				<c:choose>
+					<c:when test="${topic.annotation.visible}">
+						<div style="display: inline-block; float: right;">
+							<a href="#" class="buttonMedium button_medium" id="hideAnnotation" title="The related annotation is visible">Make hidden</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="display: inline-block; float: right;">
+							<a href="#" class="buttonMedium button_medium" id="showAnnotation" title="The related annotation is hidden">Make visible</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</security:authorize>
+		</c:if>
 	
 
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
@@ -198,7 +237,15 @@
 	
 		<div id="forumPaginate_upper">
 		    <c:set var="paginationData">
-				<bia:paginationForum page="${postsPage}"/>
+				<c:choose>
+		    		<c:when test="${not empty courseTranscriptionURL}">
+		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do" />
+		    			<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="true"/>
+		    		</c:when>
+		    		<c:otherwise>
+						<bia:paginationForum page="${postsPage}"/>
+		    		</c:otherwise>
+		    	</c:choose>
 			</c:set>
 			
 			${paginationData}
@@ -371,7 +418,15 @@
 		
 		<div id="forumPaginate_lower">
 		    <c:set var="paginationData">
-				<bia:paginationForum page="${postsPage}"/>
+		    	<c:choose>
+		    		<c:when test="${not empty courseTranscriptionURL}">
+		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do" />
+		    			<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="true"/>
+		    		</c:when>
+		    		<c:otherwise>
+						<bia:paginationForum page="${postsPage}"/>
+		    		</c:otherwise>
+		    	</c:choose>
 			</c:set>
 			
 			<c:if test="${not empty topic}">
@@ -458,6 +513,20 @@
 				<input id="topicId" name="topicId" type="hidden" value="" />
 			</form>
 			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+		</p>
+	</div>
+	
+	<div id="hideAnnotationModal" title="<fmt:message key='community.forum.topic.annotation.makeHidden' />" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.topic.annotation.hideQuestion" />
+		</p>
+	</div>
+	
+	<div id="showAnnotationModal" title="<fmt:message key='community.forum.topic.annotation.makeVisible' />" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.topic.annotation.showQuestion" />
 		</p>
 	</div>
 
@@ -854,6 +923,87 @@
 				  });
 				$j("#copyLink").dialog('open');
 			});
+			
+			<c:if test="${not empty topic.annotation and not topic.annotation.visible}">
+				$j("#showAnnotation").die();
+				$j("#showAnnotation").live('click', function() {
+					$j("#showAnnotationModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${ShowHideAnnotationURL}' + '&show=true',
+									async: false,
+									success: function(json) {
+										if (json.operation = 'OK') {
+											$j("#showAnnotationModal").dialog("close");
+											$j("#main").load($j(".paginateActive").attr('href'));
+										} else {
+											$j("#showAnnotationModal").dialog("close");
+											alert('Operation error...please retry or contact the admin!');
+										}
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#showAnnotationModal").dialog('open');
+				});
+			</c:if>
+			
+			<c:if test="${not empty topic.annotation and topic.annotation.visible}">
+				$j("#hideAnnotation").die();
+				$j("#hideAnnotation").live('click', function() {
+					$j("#hideAnnotationModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${ShowHideAnnotationURL}' + '&show=false',
+									async: false,
+									success: function(json) {
+										if (json.operation = 'OK') {
+											$j("#hideAnnotationModal").dialog("close");
+											$j("#main").load($j(".paginateActive").attr('href'));
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+											$j("#hideAnnotationModal").dialog("close");
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#hideAnnotationModal").dialog('open');
+				});
+			</c:if>
 			
 			//MD: Fix a problem with tinyMCE alert when change page.
 			window.onbeforeunload = function() {};

@@ -338,6 +338,9 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 
 		try {
+			String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			Boolean administrator = getUserService().isAccountAdministrator(account);
+			
 			List<Annotation> annotations;
 			if (annotationId != null) {
 				annotations = new ArrayList<Annotation>();
@@ -350,6 +353,7 @@ public class AjaxController {
 			}
 			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
 			model.put("annotations", resultList);
+			model.put("adminPrivileges", administrator);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("responseKO", model);
 		}
@@ -469,7 +473,10 @@ public class AjaxController {
 	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
 	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-
+		
+		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		Boolean administrator = getUserService().isAccountAdministrator(account);
+		
 		try {
 			// In this controller we get input parameter at low level because 
 			// there is a bug in spring which construct a wrong list of 
@@ -493,10 +500,15 @@ public class AjaxController {
 					annotation.setType(Annotation.Type.valueOf(splitted[6].toUpperCase()));
 					annotation.setTitle(splitted[7]);
 					annotation.setText(splitted[8]);
+					annotation.setVisible(Boolean.valueOf(splitted[11]));
 					annotationsList.add(annotation);
 				}
 			}
-			Map<Annotation, Integer> imageAnnotationsMap = getManuscriptViewerService().updateAnnotations(imageId, annotationsList, httpServletRequest.getRemoteAddr());
+			Map<Annotation, Integer> imageAnnotationsMap = getManuscriptViewerService().updateAnnotations(
+																							imageId, 
+																							annotationsList, 
+																							httpServletRequest.getRemoteAddr(), 
+																							administrator);
 			for (Annotation currentAnnotation : imageAnnotationsMap.keySet()) {
 				Map<String, Object> singleRow = new HashMap<String, Object>(0);
 				if (imageAnnotationsMap.get(currentAnnotation) > -1) {
@@ -508,6 +520,7 @@ public class AjaxController {
 			model.put("links", resultList);
 			// annotation -> all of the annotations associated to the current image
 			model.put("annotations", getAnnotationsForView(null, imageAnnotationsMap.keySet()));
+			model.put("adminPrivileges", administrator);
 		} catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("responseKO", model);
 		}
@@ -541,6 +554,9 @@ public class AjaxController {
 				singleRow.put("text", currentAnnotation.getText());
 				singleRow.put("deletable", annotationId == null && (administrator || getManuscriptViewerService().isDeletableAnnotation(currentAnnotation)) ? true : false);
 				singleRow.put("updatable", annotationId == null && (account.equals(currentAnnotation.getUser().getAccount()) || administrator) ? true : false);
+				if (annotationId != null || administrator || Boolean.TRUE.equals(currentAnnotation.getVisible())) {
+					singleRow.put("visibility", annotationId == null ? currentAnnotation.getVisible() : true);
+				}
 				if (currentAnnotation.getForumTopic() != null) {
 					singleRow.put("forumTopicURL", HtmlUtils.getShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
 				}
