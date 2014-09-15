@@ -201,6 +201,10 @@ IIPMooViewer.implement({
 			}
 			
 			if (this.editMode === 'teaching') {
+				if (this.adminPrivileges) {
+					// RR: prepare the color palette container
+					html += '<tr><td colspan="2"><div id="colorPalette"></div><td></tr>';
+				}
 				html += '<tr><td>Comment Text</td></tr>';
 			}
 			
@@ -229,13 +233,37 @@ IIPMooViewer.implement({
 				'value': 'cancel'
 			}).inject(form);
 			
+			/** MEDICI ARCHIVE PROJECT START **/
+			
 			new Element('div', {
 				'id': 'annotationError',
 				'style': 'margin-left: 10px; color: #FF1C1C; display: none;',
 				'text': 'Highlighted fields cannot be empty'
 			}).inject(form);
 			
-			/** MEDICI ARCHIVE PROJECT START **/
+			if (this.editMode === 'teaching' && this.adminPrivileges) {
+				var colorPalette = form.getElementById('colorPalette');
+				this.initColorPalette(colorPalette, this.annotations[currentIndex].color, "#FFFF00");
+				
+				colorPalette.getElements('span.colorButton').each(function(button) {
+					button.addEvent('click', function(e) {
+						var oldSelected = colorPalette.getElement('span.selected');
+						if (this.getProperty('id') !== oldSelected.getProperty('id')) {
+							// modify button status
+							this.addClass('selected');
+							oldSelected.removeClass('selected');
+							this.setStyle('background-color', '#606060');
+							oldSelected.setStyle('background-color', '');
+							
+							// modify annotation color
+							var color = this.getProperty('value');
+							_this.annotations[currentIndex].color = color;
+							annotation.setStyle('background-color', IIPMooViewer.convertRgbColorToRGBA(color, '0.2'));
+						}
+					});
+				});
+			}
+			
 			// Place the form
 			if (annotation.getPosition().y + annotation.getSize().y + form.getSize().y > window.innerHeight) {
 				form.setStyle('top',  - form.getSize().y - 3);
@@ -391,6 +419,56 @@ IIPMooViewer.implement({
 	},
 	
 	/** MEDICI ARCHIVE PROJECT START **/
+	
+	/**
+	 * Inizializes the color palette buttons
+	 * 
+	 * @param container the buttons color container
+	 * @param annotationColor the current annotation color 
+	 * @param defaultColor the default color (if the annotation color is not defined)
+	 */
+	initColorPalette: function(container, annotationColor, defaultColor) {
+		container.grab(this.getColorButton(annotationColor === "#FF0000" || (defaultColor === "#FF0000" && typeof annotationColor === 'undefined'), "#FF0000", "Red"));
+		container.grab(this.getColorButton(annotationColor === "#FF8000" || (defaultColor === "#FF8000" && typeof annotationColor === 'undefined'), "#FF8000", "Orange"));
+		container.grab(this.getColorButton(annotationColor === "#FFFF00" || (defaultColor === "#FFFF00" && typeof annotationColor === 'undefined'), "#FFFF00", "Yellow"));
+		container.grab(this.getColorButton(annotationColor === "#00FF00" || (defaultColor === "#00FF00" && typeof annotationColor === 'undefined'), "#00FF00", "Green"));
+		container.grab(this.getColorButton(annotationColor === "#00FFFF" || (defaultColor === "#00FFFF" && typeof annotationColor === 'undefined'), "#00FFFF", "Cyan"));
+		container.grab(this.getColorButton(annotationColor === "#0000FF" || (defaultColor === "#0000FF" && typeof annotationColor === 'undefined'), "#0000FF", "Blue"));
+		container.grab(this.getColorButton(annotationColor === "#7F00FF" || (defaultColor === "#7F00FF" && typeof annotationColor === 'undefined'), "#7F00FF", "Violet"));
+		container.grab(this.getColorButton(annotationColor === "#FF007F" || (defaultColor === "#FF007F" && typeof annotationColor === 'undefined'), "#FF007F", "Lilac"));
+	},
+	
+	/**
+	 * Initializes a color button
+	 * 
+	 * @param selected true if this button is selected, false otherwise
+	 * @param rgbColor the color of the button in the rgb format (#xxxxxx)
+	 * @param text the title of the button
+	 * @returns the button DOM element
+	 */
+	getColorButton: function(selected, rgbColor, text) {
+		var style = 'display: inline-block; '
+			+ 'margin-right: 1px; '
+			+ (selected ? 'background-color: #606060; ' : '')
+			+ 'width: 20px; '
+			+ 'height: 20px; '
+			+ 'cursor: pointer';
+		
+		var button = new Element('span', {
+				'id': '_' + rgbColor,
+				'style': style,
+				'class': 'colorButton' + (selected ? ' selected' : ''),
+				'title': text,
+				'value': rgbColor
+			}
+		);
+		
+		new Element('span', {
+			'style': 'background-color: ' + rgbColor + '; display: block; width: 16px; height: 16px; margin: 2px;'
+		}).inject(button);
+		
+		return button;
+	},
 	
 	/**
 	 * Gets the html radio button

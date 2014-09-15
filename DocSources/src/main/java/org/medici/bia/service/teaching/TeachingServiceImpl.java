@@ -1379,7 +1379,9 @@ public class TeachingServiceImpl implements TeachingService {
 							|| !annotation.getY().equals(viewAnnotation.getY())
 							|| !annotation.getWidth().equals(viewAnnotation.getWidth())
 							|| !annotation.getHeight().equals(viewAnnotation.getHeight()))
-							|| !annotation.getVisible().equals(viewAnnotation.getVisible()));
+							|| !annotation.getVisible().equals(viewAnnotation.getVisible())
+							|| (annotation.getRgbColor() == null && viewAnnotation.getRgbColor() != null)
+							|| (annotation.getRgbColor() != null && !annotation.getRgbColor().equals(viewAnnotation.getRgbColor())));
 				
 				if (annotation == null) {
 					annotation = new Annotation();
@@ -1395,6 +1397,7 @@ public class TeachingServiceImpl implements TeachingService {
 					annotation.setWidth(viewAnnotation.getWidth());
 					annotation.setHeight(viewAnnotation.getHeight());
 					annotation.setVisible(viewAnnotation.getVisible());
+					annotation.setRgbColor(viewAnnotation.getRgbColor());
 				}
 				
 				if (annotation.getAnnotationId() != null) {

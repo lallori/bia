@@ -251,6 +251,9 @@ var IIPMooViewer = new Class({
 								updatable: responseJSON.annotations[i].updatable,
 								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum	
 							};
+							if (typeof responseJSON.annotations[i].color !== 'undefined') {
+								data[i]["color"] = responseJSON.annotations[i].color;
+							}
 							if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
 								data[i]["visibility"] = responseJSON.annotations[i].visibility;
 							}
@@ -267,6 +270,9 @@ var IIPMooViewer = new Class({
 				}).send();
 			});
 			
+			this.addEvent('annotationColor', function(annotation) {
+				annotation
+			});
 		} else {
 			console.log("Annotation-edit.js is not included in main page. Please correct import");
 		}
@@ -2167,6 +2173,12 @@ var IIPMooViewer = new Class({
 						height: Math.round(this.hei * this.annotations[i].h)
 					}
 				}).inject(this.canvas);
+				
+				/** MEDICI ARCHIVE PROJECT START **/
+				if (this.adminPrivileges && typeof this.annotations[i].color !== 'undefined') {
+					annotation.setStyle('background-color', IIPMooViewer.convertRgbColorToRGBA(this.annotations[i].color, '0.2'));
+				}
+				/** MEDICI ARCHIVE PROJECT END **/
 
 				if (this.annotationsVisible == false) {
 					annotation.addClass('hidden');
@@ -2668,16 +2680,29 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
 			retValue += annotation_array[i].updatable;
 			retValue += ",";
 			retValue += annotation_array[i].visibility;
+			retValue += ",";
+			retValue += (typeof annotation_array[i].color !== 'undefined' ? annotation_array[i].color : 'none');
 			retValue += "&";
 		}
 	}
 
 	return retValue;
 };
+
+/**
+ * Static function converts an rgb color in #xxxxxx format to the css format rgba.
+ */
+IIPMooViewer.convertRgbColorToRGBA = function(rgbColor, opacity) {
+	var color = rgbColor.charAt(0) === "#" ? rgbColor.substring(1,7) : rgbColor;
+	var red = parseInt(color.substring(0,2),16);
+	var green = parseInt(color.substring(2,4),16);
+	var blue = parseInt(color.substring(4,6),16);
+	return "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";
+};
 /** MEDICI ARCHOVE PROJECT END **/
 
 /**
- * Static function get get an array of the windows that are synchronized to this one
+ * Static function get an array of the windows that are synchronized to this one
  */
 IIPMooViewer.windows = function(s) {
 	if (!this.sync) {

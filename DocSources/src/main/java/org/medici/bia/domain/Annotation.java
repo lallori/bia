@@ -97,6 +97,8 @@ public class Annotation implements Serializable {
 	private String title;
 	@Column (name="\"text\"", length=75000, nullable=true)
 	private String text;
+	@Column (name="\"rgbColor\"", nullable=true)
+	private String rgbColor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"topicId\"")
@@ -286,6 +288,20 @@ public class Annotation implements Serializable {
 	 */
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	/**
+	 * @return the rgbColor
+	 */
+	public String getRgbColor() {
+		return rgbColor;
+	}
+
+	/**
+	 * @param rgbColor the rgbColor to set
+	 */
+	public void setRgbColor(String rgbColor) {
+		this.rgbColor = rgbColor;
 	}
 
 	public void setUser(User user) {

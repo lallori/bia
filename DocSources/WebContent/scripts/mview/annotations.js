@@ -149,6 +149,9 @@ IIPMooViewer.implement({
 						opacity: annotation_array[i].visibility ? 1.0 : 0.5  
 					}
 				}).inject(this.canvas);
+				if (this.adminPrivileges && typeof annotation_array[i].color !== 'undefined') {
+					annotation.setStyle('background-color', IIPMooViewer.convertRgbColorToRGBA(annotation_array[i].color, '0.2'));
+				}
 				
 				/** MEDICI ARCHIVE PROJECT START **/
 				// Redirect, by simple click on annotation area, to the forum topic associated to the current annotation
@@ -511,6 +514,9 @@ IIPMooViewer.implement({
 									updatable: responseJSON.annotations[i].updatable,
 									forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum
 								};
+								if (typeof responseJSON.annotations[i].color !== 'undefined') {
+									data[i]["color"] = responseJSON.annotations[i].color;
+								}
 								if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
 									data[i]["visibility"] = responseJSON.annotations[i].visibility;
 								}

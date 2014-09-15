@@ -595,7 +595,7 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value = "/teaching/ShowCurrentTranscription", method = RequestMethod.GET)
-	public Map<String, Object> showCurrenttranscription(
+	public Map<String, Object> showCurrentTranscription(
 			@RequestParam(value="topicId", required=true) Integer topicId,
 			HttpServletRequest httpServletRequest) {
 		
@@ -685,6 +685,7 @@ public class AjaxController {
 					annotation.setTitle(splitted[7]);
 					annotation.setText(splitted[8]);
 					annotation.setVisible(Boolean.valueOf(splitted[11]));
+					annotation.setRgbColor("none".equals(splitted[12]) ? null : splitted[12]);
 					annotationsList.add(annotation);
 				}
 			}
@@ -800,6 +801,9 @@ public class AjaxController {
 			row.put("updatable", account.equals(currentAnnotation.getUser().getAccount()) || isAdminOrTeacher ? true : false);
 			if (isAdminOrTeacher || Boolean.TRUE.equals(currentAnnotation.getVisible())) {
 				row.put("visibility", currentAnnotation.getVisible());
+			}
+			if (currentAnnotation.getRgbColor() != null) {
+				row.put("color", currentAnnotation.getRgbColor());
 			}
 			if (currentAnnotation.getForumTopic() != null) {
 				row.put("forumTopicURL", HtmlUtils.getTeachingShowTopicForumHrefUrl(currentAnnotation.getForumTopic()) + "&completeDOM=true");
