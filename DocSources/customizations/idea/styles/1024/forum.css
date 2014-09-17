@@ -140,6 +140,11 @@ blockquote cite span.quoteUser {
 	font-size: 1.1em;
 }
 
+span.topicClosed {
+	display: inline !important;
+	color: #B7958F;
+}
+
 /* ------------------------------------------------- STRUCTURE ------------------------------------------------- */ 
 
 #layout {

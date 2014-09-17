@@ -29,6 +29,9 @@
 					</c:url>
     				<div class="discussion">
 		            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+		            	<c:if test="${extendedTopic.courseTopic.locked}">
+		            		<img src="<c:url value="/images/forum/img_locked.png"/>" title="closed transcription" />
+		            	</c:if>
 		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
 		            	<br />
 		            	<c:choose>
@@ -62,6 +65,9 @@
 					</c:url>
     				<div class="discussion">
 		            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+		            	<c:if test="${extendedTopic.courseTopic.locked}">
+		            		<img src="<c:url value="/images/forum/img_locked.png"/>" title="closed discussion" />
+		            	</c:if>
 		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
 		            	<br />
 		            	<c:choose>
@@ -96,6 +102,9 @@
 	    		</c:url>
 	       		<div class="discussion">
 	            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+	            	<c:if test="${discussion.locked}">
+	            		<img src="<c:url value="/images/forum/img_locked.png"/>" title="closed discussion" />
+	            	</c:if>
 	            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a>
 	            	<br />
 	            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
@@ -122,6 +131,9 @@
 	    		</c:url>
 	     		<div class="discussion">
 	            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
+	            	<c:if test="${discussion.locked}">
+	            		<img src="<c:url value="/images/forum/img_locked.png"/>" title="closed discussion" />
+	            	</c:if>
 	            	<a href="${forumURL}" class="forumHref" target="_blank" title="${discussion.subject}"><bia:textFormatter inputText="${discussion.subject}" size="60"/></a> 
 	            	<br />
 	            	<span style="margin-left:23px;">(${discussion.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>

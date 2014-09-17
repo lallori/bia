@@ -20,15 +20,22 @@
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
 	<c:choose>
-		<c:when test="${postsNumber == 0}">
-			<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
+		<c:when test="${not closed}">
+			<c:choose>
+				<c:when test="${postsNumber == 0}">
+					<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
+				</c:when>
+				<c:otherwise>
+					<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
+				</c:otherwise>
+			</c:choose>
+			
+			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 		</c:when>
 		<c:otherwise>
-			<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
+			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Final Transcription</a>
 		</c:otherwise>
 	</c:choose>
-	
-	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
 	
 	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>  -->
 	
@@ -37,20 +44,22 @@
 			$j('#editPostContainer').css('height','10%');
 			$j('#postsContainer').css('height','85%');
 			
-			$j("#addNewPost").click(function() {
-				var _this = $j(this);
-				$j("#editPostContainer").load('${EditIncrementalPostURL}', function(responseText, statusText, xhr) {
-					if (statusText == 'success') {
-						$j(_this).unbind();
-						// from ShowIncrementalCourseTranscriptionDOM
-						setEditMode(true);
-					} else {
-						$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
-						$j("#errorModal").dialog('open');
-					}
+			if ($j("#addNewPost").length > 0) {
+				$j("#addNewPost").click(function() {
+					var _this = $j(this);
+					$j("#editPostContainer").load('${EditIncrementalPostURL}', function(responseText, statusText, xhr) {
+						if (statusText == 'success') {
+							$j(_this).unbind();
+							// from ShowIncrementalCourseTranscriptionDOM
+							setEditMode(true);
+						} else {
+							$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
+							$j("#errorModal").dialog('open');
+						}
+					});
+					return false;
 				});
-				return false;
-			});
+			}
 			
 			$j("#showCurrentTranscription").click(function() {
 				$j.ajax({

@@ -10,38 +10,60 @@
 		<c:param name="entryId" value="${topic.document.entryId}"/>
 	</c:url>
 	
+	<c:url var="OpenCloseCourseTopicURL" value="/teaching/OpenCloseCourseTopic.json">
+		<c:param name="courseTopicId" value="${command.topicId}" />
+	</c:url>
+	
 	<c:url var="baseUrl" value="/teaching/ShowCourseTranscription.do">
 		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
 	<c:url var="RenameTopicURL" value="/de/community/RenameForumTopic.json" />
 
-	<h6>ROUND ROBIN TRANSCRIPTION</h6>
+	<h6>
+		ROUND ROBIN TRANSCRIPTION
+		<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585">[CLOSED]</span></c:if>
+	</h6>
 	
 	<div id="topicTitleSection">
 		<c:choose>
-			<c:when test="${topic.user.account == account}">
-				<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+			<c:when test="${not topic.locked}">
+				<a id="closeCourseTranscription" href="#" title="Round-Robin transcription is opened: click to close it!">
+					<img src="<c:url value="/images/forum/img_unlocked.png"/>" />
+				</a>
+				<c:choose>
+					<c:when test="${topic.user.account == account}">
+						<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+					</c:when>
+					<c:otherwise>
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+							<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+						</security:authorize>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-					<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-				</security:authorize>
+				<a id="openCourseTranscription" href="#" title="Round-Robin transcription is closed: click to re-open it!">
+					<img src="<c:url value="/images/forum/img_locked.png"/>" />
+				</a>
 			</c:otherwise>
 		</c:choose>
+		
 		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 		
-		<c:if test="${!subscribed}">
-			<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
-				<c:param name="topicId" value="${topic.topicId}"/>
-			</c:url>
-			<a href="${SubscribeForumTopicURL}" id="subscribe" class="buttonMedium button_medium">Subscribe</a>
-		</c:if>
-		<c:if test="${subscribed}">
-			<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
-				<c:param name="topicId" value="${topic.topicId}"/>
-			</c:url>
-			<a href="${UnsubscribeForumTopicURL}" id="unsubscribe" class="buttonMedium button_medium">Unsubscribe</a>
+		<c:if test="${not topic.locked}">
+			<c:if test="${!subscribed}">
+				<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
+					<c:param name="topicId" value="${topic.topicId}"/>
+				</c:url>
+				<a href="${SubscribeForumTopicURL}" id="subscribe" class="buttonMedium button_medium">Subscribe</a>
+			</c:if>
+			<c:if test="${subscribed}">
+				<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
+					<c:param name="topicId" value="${topic.topicId}"/>
+				</c:url>
+				<a href="${UnsubscribeForumTopicURL}" id="unsubscribe" class="buttonMedium button_medium">Unsubscribe</a>
+			</c:if>
 		</c:if>
 	</div>
 	
@@ -94,20 +116,22 @@
 						<h2>${extendedPost.post.subject}</h2>
 						
 						<div class="topicIcons">
-							<c:choose>
-								<c:when test="${extendedPost.post.user.account == account}">
-									<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-									<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-								</c:when>
-								<c:otherwise>
-									<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+							<c:if test="${not topic.locked}">
+								<c:choose>
+									<c:when test="${extendedPost.post.user.account == account}">
 										<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
 										<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-									</security:authorize>
-								</c:otherwise>
-							</c:choose>
-							<!-- <a href="${ReportForumPostURL}" class="reportPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Report this post"></a> -->
-							<a id="quoteLink_${extendedPost.post.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
+									</c:when>
+									<c:otherwise>
+										<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+											<a href="${EditForumPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
+											<a href="${DeleteForumPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
+										</security:authorize>
+									</c:otherwise>
+								</c:choose>
+								<!-- <a href="${ReportForumPostURL}" class="reportPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Report this post"></a> -->
+								<a id="quoteLink_${extendedPost.post.postId}" href="${ReplyWithQuotePostURL}" class="quotePost" title="Quote this post"></a>
+							</c:if>
 						</div>
 					</div>
 					<table class="by" style="width: 100%;">
@@ -212,6 +236,20 @@
 		</p>
 	</div>
 	
+	<div id="openCourseTopicModal" title="Open Round-Robin Transcription" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Do you want to re-open the round-robin transcription?
+		</p>
+	</div>
+	
+	<div id="closeCourseTopicModal" title="Close Round-Robin Transcription" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Do you want to close the round-robin transcription?
+		</p>
+	</div>
+	
 	<script>
 		$j(document).ready(function() {
 			var _this = this;
@@ -247,25 +285,29 @@
 				
 			});
 			
-			$j('.deletePost').click(function(){
-				$j('#deletePostModal').data('deleteUrl', $j(this).attr('href')).dialog('open');
-				return false;
-			});
-			
-			$j(".editPost").click(function() {
-				var addNewPostSel = $j("#addNewPost");
-				$j("#editPostContainer").load($j(this).attr('href'), function(responseText, statusText, xhr) {
-					if (statusText == 'error') {
-						$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
-						$j("#errorModal").dialog('open');
-					} else {
-						$j(addNewPostSel).unbind();
-						// from ShowRoundRobintranscriptionDOM -> to disable CRUD post buttons
-						setEditMode(true);
-					}
+			if ($j('.deletePost').length > 0) {
+				$j('.deletePost').click(function(){
+					$j('#deletePostModal').data('deleteUrl', $j(this).attr('href')).dialog('open');
+					return false;
 				});
-				return false;
-			});
+			}
+			
+			if ($j('.editPost').length > 0) {
+				$j(".editPost").click(function() {
+					var addNewPostSel = $j("#addNewPost");
+					$j("#editPostContainer").load($j(this).attr('href'), function(responseText, statusText, xhr) {
+						if (statusText == 'error') {
+							$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
+							$j("#errorModal").dialog('open');
+						} else {
+							$j(addNewPostSel).unbind();
+							// from ShowRoundRobintranscriptionDOM -> to disable CRUD post buttons
+							setEditMode(true);
+						}
+					});
+					return false;
+				});
+			}
 			
 			$j(".intercepted").click(function() {
 				$j("#postsContainer").load($j(this).attr('href')+'&editingMode='+$j("#clientEditing").val(), function(responseText, statusText, xhr) {
@@ -288,87 +330,173 @@
 				return false;
 			});*/
 			
-			$j(".quotePost").click(function() {
-				var _this = $j(this);
-				var addNewPostSel = $j("#addNewPost");
-				var isEditingMode = $j("#clientEditing").val();
-				if (typeof isEditingMode !== 'undefined' && isEditingMode === true) {
-					var linkId = $j(this).attr('id');
-					var id = linkId.substring(linkId.indexOf('_') + 1, linkId.length);
-					var quotePost = new QuotePostGenerator().getQuotePost(id);
-					tinyMCE.execInstanceCommand('htmlbox', "mceInsertContent", false, quotePost);
-				} else {
-					$j("#editPostContainer").load($j(this).attr('href'), function(responseText, statusText, xhr) {
-						if (statusText == 'error') {
-							$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
-							$j("#errorModal").dialog('open');
-						} else {
-							if (typeof addNewPostSel !== 'undefined' && addNewPostSel != null) {
-								$j(addNewPostSel).unbind();
+			if ($j('.quotePost').length > 0) {
+				$j(".quotePost").click(function() {
+					var _this = $j(this);
+					var addNewPostSel = $j("#addNewPost");
+					var isEditingMode = $j("#clientEditing").val();
+					if (typeof isEditingMode !== 'undefined' && isEditingMode === true) {
+						var linkId = $j(this).attr('id');
+						var id = linkId.substring(linkId.indexOf('_') + 1, linkId.length);
+						var quotePost = new QuotePostGenerator().getQuotePost(id);
+						tinyMCE.execInstanceCommand('htmlbox', "mceInsertContent", false, quotePost);
+					} else {
+						$j("#editPostContainer").load($j(this).attr('href'), function(responseText, statusText, xhr) {
+							if (statusText == 'error') {
+								$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
+								$j("#errorModal").dialog('open');
+							} else {
+								if (typeof addNewPostSel !== 'undefined' && addNewPostSel != null) {
+									$j(addNewPostSel).unbind();
+								}
+								// from ShowRoundRobintranscriptionDOM -> to disable CRUD post buttons
+								setEditMode(true);
 							}
-							// from ShowRoundRobintranscriptionDOM -> to disable CRUD post buttons
-							setEditMode(true);
+						});
+					}
+					return false;
+				});
+			}
+			
+			if ($j("#subscribe").length > 0) {
+				$j("#subscribe").click(function() {
+					$j.ajax({
+						type: "POST",
+						url: $j(this).attr('href'),
+						async: false,
+						success: function(json) {
+							if (json.subscription) {
+								$j("#subscribeModal").dialog({
+									  autoOpen : false,
+									  modal: true,
+									  resizable: false,
+									  width: 300,
+									  height: 130, 
+									  buttons: {
+										  Ok: function() {
+											  $j(this).dialog("close");
+											  $j("#postsContainer").load($j(".paginateActive").attr('href'));
+											  return false;
+										  }
+									  }
+								  });
+								$j("#subscribeModal").dialog('open');
+							}
 						}
 					});
-				}
-				return false;
-			});
-			
-			$j("#subscribe").click(function() {
-				$j.ajax({
-					type: "POST",
-					url: $j(this).attr('href'),
-					async: false,
-					success: function(json) {
-						if (json.subscription) {
-							$j("#subscribeModal").dialog({
-								  autoOpen : false,
-								  modal: true,
-								  resizable: false,
-								  width: 300,
-								  height: 130, 
-								  buttons: {
-									  Ok: function() {
-										  $j(this).dialog("close");
-										  $j("#postsContainer").load($j(".paginateActive").attr('href'));
-										  return false;
-									  }
-								  }
-							  });
-							$j("#subscribeModal").dialog('open');
-						}
-					}
+					return false;
 				});
-				return false;
-			});
+			}
 			
-			$j("#unsubscribe").click(function() {
-				$j.ajax({
-					type: "POST",
-					url: $j(this).attr('href'),
-					async: false, 
-					success: function(json) {
-						if (json.subscription) {
-							$j("#unsubscribeModal").dialog({
-								  autoOpen : false,
-								  modal: true,
-								  resizable: false,
-								  width: 300,
-								  height: 130, 
-								  buttons: {
-									  Ok: function() {
-										  $j(this).dialog("close");
-										  $j("#postsContainer").load($j(".paginateActive").attr('href'));
-										  return false;
+			if ($j("#unsubscribe").length > 0) {
+				$j("#unsubscribe").click(function() {
+					$j.ajax({
+						type: "POST",
+						url: $j(this).attr('href'),
+						async: false, 
+						success: function(json) {
+							if (json.subscription) {
+								$j("#unsubscribeModal").dialog({
+									  autoOpen : false,
+									  modal: true,
+									  resizable: false,
+									  width: 300,
+									  height: 130, 
+									  buttons: {
+										  Ok: function() {
+											  $j(this).dialog("close");
+											  $j("#postsContainer").load($j(".paginateActive").attr('href'));
+											  return false;
+										  }
 									  }
-								  }
-							  });
-							$j("#unsubscribeModal").dialog('open');
+								  });
+								$j("#unsubscribeModal").dialog('open');
+							}
 						}
-					}
+					});
+					return false;
 				});
-				return false;
-			});
+			}
+			
+			if ($j("#openCourseTranscription").length > 0) {
+				$j("#openCourseTranscription").die();
+				$j("#openCourseTranscription").live('click', function() {
+					$j("#openCourseTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseCourseTopicURL}' + '&close=false',
+									async: false,
+									success: function(json) {
+										$j("#openCourseTopicModal").dialog("close");
+										if (json.operation = 'OK') {
+											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#openCourseTopicModal").dialog('open');
+				});
+			}
+			
+			if ($j("#closeCourseTranscription").length > 0) {
+				$j("#closeCourseTranscription").die();
+				$j("#closeCourseTranscription").live('click', function() {
+					$j("#closeCourseTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseCourseTopicURL}' + '&close=true',
+									async: false,
+									success: function(json) {
+										$j("#closeCourseTopicModal").dialog("close");
+										if (json.operation = 'OK') {
+											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#closeCourseTopicModal").dialog('open');
+				});
+			}
 			
 			/** Dialogs definitions **/
 			

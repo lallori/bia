@@ -44,6 +44,14 @@
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
+			<c:choose>
+				<c:when test="${closed}">
+					var edit = false;
+				</c:when>
+				<c:otherwise>
+					var edit = true;
+				</c:otherwise>
+			</c:choose>
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses */
@@ -110,7 +118,7 @@
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
 					showHideAnnotationButton: true,
-					enableEdit: true,
+					enableEdit: edit,
 					editMode: 'teaching',
 					annotations: new Array()
 				});
@@ -128,7 +136,7 @@
 					closeOnEscape: false,
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide();
-                		$(this).load('${PageTurnerDialogUrl}');
+                		$(this).load('${PageTurnerDialogUrl}' + '&editEnabled=' + edit);
                			},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}

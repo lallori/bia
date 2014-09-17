@@ -516,6 +516,23 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/OpenCloseCourseTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> openCloseCourseTranscription(
+			@RequestParam(value="courseTopicId", required = true) Integer courseTopicId,
+			@RequestParam(value="close", required = true) Boolean close,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			getTeachingService().openCloseCourseTopic(courseTopicId, close);
+			model.put("operation", "OK");
+			
+			return model;		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;		
+		}
+	}
+	
 	@RequestMapping(value = "/teaching/RevokeStudentPermission.json", method = RequestMethod.POST)
 	public Map<String, Object> revokeStudentPermission(
 			@RequestParam(value="account", required=true) String account,

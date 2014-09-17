@@ -76,6 +76,7 @@ public class ShowCourseTranscriptionActionsController {
 			}
 			
 			model.put("resourcesForum", courseTopic.getForum().getForumId());
+			model.put("closed", courseTopic.getLocked());
 			
 			switch (CourseTopicMode.findByName(command.getTranscriptionMode())) {
 			case I:

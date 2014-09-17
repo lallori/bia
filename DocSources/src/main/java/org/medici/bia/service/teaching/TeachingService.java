@@ -542,6 +542,15 @@ public interface TeachingService {
 	Boolean isSubscribedToCourseTranscription(Integer topicId) throws ApplicationThrowable;
 	
 	/**
+	 * This method locks or unlocks a course topic.
+	 * 
+	 * @param courseTopicId the course topic identifier
+	 * @param close if true locks the course topic, otherwise unlocks it
+	 * @throws ApplicationThrowable
+	 */
+	void openCloseCourseTopic(Integer courseTopicId, Boolean close) throws ApplicationThrowable;
+	
+	/**
 	 * This method removes student {@link UserAuthority} from the provided account.
 	 * 
 	 * @param account the user account

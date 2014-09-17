@@ -15,7 +15,9 @@
 	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
-	<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
+	<c:if test="${not closed}">
+		<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
+	</c:if>
 	
 	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
 	
@@ -24,19 +26,21 @@
 			$j('#editPostContainer').css('height','10%');
 			$j('#postsContainer').css('height','85%');
 			
-			$j("#addNewPost").click(function() {
-				var _this = $j(this);
-				$j("#editPostContainer").load('${EditRoundRobinPostURL}', function(responseText, statusText, xhr) {
-					if (statusText == 'success') {
-						$j(_this).unbind();
-						// from ShowRoundRobinCourseTranscriptionDOM
-						setEditMode(true);
-					} else {
-						$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
-						$j("#errorModal").dialog('open');
-					}
+			if ($j("#addNewPost").length > 0) {
+				$j("#addNewPost").click(function() {
+					var _this = $j(this);
+					$j("#editPostContainer").load('${EditRoundRobinPostURL}', function(responseText, statusText, xhr) {
+						if (statusText == 'success') {
+							$j(_this).unbind();
+							// from ShowRoundRobinCourseTranscriptionDOM
+							setEditMode(true);
+						} else {
+							$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
+							$j("#errorModal").dialog('open');
+						}
+					});
+					return false;
 				});
-				return false;
-			});
+			}
 		});
 	</script>

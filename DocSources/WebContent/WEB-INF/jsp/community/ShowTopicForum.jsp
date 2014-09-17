@@ -27,6 +27,10 @@
 	<c:if test="${not empty topic}">
 		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
 		
+		<c:url var="OpenCloseTopicURL" value="/community/OpenCloseTopic.json">
+			<c:param name="topicId" value="${topic.topicId}" />
+		</c:url>
+		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 			<c:if test="${not empty courseTranscriptionURL}">
 				<div id="goToCourseTranscription_upper">
@@ -40,45 +44,65 @@
 			<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
 		</div>
 		
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-		</security:authorize>
-		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
+		<c:choose>
+			<c:when test="${empty courseTranscriptionURL}">
+				<!-- RR: not in teaching module section -->
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					<c:choose>
+						<c:when test="${topic.locked}">
+							<a id="openTopic" href="#" title="closed discussion: click to re-open it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
+						</c:when>
+						<c:otherwise>
+							<a id="closeTopic" href="#" title="opened discussion: click to close it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${not empty topic.annotation}">
+						<c:choose>
+							<c:when test="${topic.annotation.visible}">
+								<a id="hideAnnotation" href="#" title="The related annotation is visible: make it hidden" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
+							</c:when>
+							<c:otherwise>
+								<a id="showAnnotation" href="#" title="The related annotation is hidden: make it visible" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${not topic.locked}">
+						<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+					</c:if>
+				</security:authorize>
+			</c:when>
+			<c:otherwise>
+				<!-- RR: teaching module section -->
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+					<c:choose>
+						<c:when test="${topic.locked}">
+							<a id="openTopic" href="#" title="closed discussion: click to re-open it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
+						</c:when>
+						<c:otherwise>
+							<a id="closeTopic" href="#" title="opened discussion: click to close it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${not empty topic.annotation}">
+						<c:choose>
+							<c:when test="${topic.annotation.visible}">
+								<a id="hideAnnotation" href="#" title="The related annotation is visible: make it hidden" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
+							</c:when>
+							<c:otherwise>
+								<a id="showAnnotation" href="#" title="The related annotation is hidden: make it visible" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${not topic.locked}">
+						<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+					</c:if>
+				</security:authorize>
+			</c:otherwise>
+		</c:choose>
+		<h2 id="topicTitle_${topic.topicId}">
+			${topic.subject}
+			<c:if test="${topic.locked}">&nbsp;[CLOSED]</c:if>
+		</h2>
 		
-		<c:if test="${not empty topic.annotation and not empty courseTranscriptionURL}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-				<c:choose>
-					<c:when test="${topic.annotation.visible}">
-						<div style="display: inline-block; float: right;">
-							<a href="#" class="buttonMedium button_medium" id="hideAnnotation" title="The related annotation is visible">Make hidden</a>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div style="display: inline-block; float: right;">
-							<a href="#" class="buttonMedium button_medium" id="showAnnotation" title="The related annotation is hidden">Make visible</a>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</security:authorize>
-		</c:if>
-		<c:if test="${not empty topic.annotation and empty courseTranscriptionURL}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<c:choose>
-					<c:when test="${topic.annotation.visible}">
-						<div style="display: inline-block; float: right;">
-							<a href="#" class="buttonMedium button_medium" id="hideAnnotation" title="The related annotation is visible">Make hidden</a>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div style="display: inline-block; float: right;">
-							<a href="#" class="buttonMedium button_medium" id="showAnnotation" title="The related annotation is hidden">Make visible</a>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</security:authorize>
-		</c:if>
-	
-
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:choose>
 				<c:when test="${not empty topic.forum.document && not empty documentExplorer}">
@@ -175,44 +199,45 @@
 	
 		<div id="topicActions">
 		
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
-				<c:choose>
-					<c:when test="${not empty topic.annotation}">
-						<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-							<c:param name="postId" value="0"/>
-							<c:param name="forumId" value="${topic.forum.forumId}"/>
-							<c:param name="topicId" value="${topic.topicId}"/>
-							<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
-							<c:param name="volNum" value="${volumeExplorer.volNum}"/>
-							<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
-							<c:param name="annotationId" value="${topic.annotation.annotationId}" />
-							<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+			<c:if test="${not topic.locked}">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+					<c:choose>
+						<c:when test="${not empty topic.annotation}">
+							<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
+								<c:param name="postId" value="0"/>
+								<c:param name="forumId" value="${topic.forum.forumId}"/>
+								<c:param name="topicId" value="${topic.topicId}"/>
+								<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+								<c:param name="volNum" value="${volumeExplorer.volNum}"/>
+								<c:param name="volLetExt" value="${volumeExplorer.volLetExt}"/>
+								<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+								<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+							</c:url>
+						</c:when>
+						<c:otherwise>
+							<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
+								<c:param name="postId" value="0"/>
+								<c:param name="forumId" value="${topic.forum.forumId}"/>
+								<c:param name="topicId" value="${topic.topicId}"/>
+							</c:url>
+						</c:otherwise>
+					</c:choose>
+			
+					<c:if test="${!subscribed}">
+						<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
+							<c:param name="forumTopicId" value="${topic.topicId}"/>
 						</c:url>
-					</c:when>
-					<c:otherwise>
-						<c:url var="ReplyForumPostURL" value="/community/ReplyForumPost.do">
-							<c:param name="postId" value="0"/>
-							<c:param name="forumId" value="${topic.forum.forumId}"/>
-							<c:param name="topicId" value="${topic.topicId}"/>
+						<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
+					</c:if>
+					<c:if test="${subscribed}">
+						<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
+							<c:param name="forumTopicId" value="${topic.topicId}"/>
 						</c:url>
-					</c:otherwise>
-				</c:choose>
-		
-				<c:if test="${!subscribed}">
-					<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
-						<c:param name="forumTopicId" value="${topic.topicId}"/>
-					</c:url>
-					<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
-				</c:if>
-				<c:if test="${subscribed}">
-					<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
-						<c:param name="forumTopicId" value="${topic.topicId}"/>
-					</c:url>
-					<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
-				</c:if>
-				
-				<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
-			</security:authorize>
+						<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
+					</c:if>
+					<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+				</security:authorize>
+			</c:if>
 			
 		    <div id="searchThisForumFormDiv">
 		    	<form id="SearchForumThis" action="<c:url value="/community/SimpleSearchForumPost.do"/>" method="post">
@@ -307,20 +332,22 @@
 			<div id="postTable">
 				<c:if test="${not empty topic}">
 					<div id="topicIcons">
-						<c:choose>
-							<c:when test="${currentPost.user.account == account}">
-								<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
-								<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
-							</c:when>
-							<c:otherwise>
-								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+						<c:if test="${not topic.locked}">
+							<c:choose>
+								<c:when test="${currentPost.user.account == account}">
 									<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
 									<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
-								</security:authorize>
-							</c:otherwise>
-						</c:choose>
-						<a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
-						<a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
+								</c:when>
+								<c:otherwise>
+									<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+										<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
+										<a href="${DeleteForumPostURL}" class="deletePost" title="Delete post"></a>
+									</security:authorize>
+								</c:otherwise>
+							</c:choose>
+							<a href="${ReportForumPostURL}" class="reportPost" title="Report this post"></a>
+							<a href="${ReplyWithQuoteForumPostURL}" class="quotePost" title="Reply with quote"></a>
+						</c:if>
 					</div>
 				</c:if>
 			    <div id="post">
@@ -530,7 +557,20 @@
 		</p>
 	</div>
 
-
+	<div id="openTopicModal" title="<fmt:message key='community.forum.topic.openTopic' />" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.topic.openTopicQuestion" />
+		</p>
+	</div>
+	
+	<div id="closeTopicModal" title="<fmt:message key='community.forum.topic.closeTopic' />" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.topic.closeTopicQuestion" />
+		</p>
+	</div>
+	
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
@@ -924,7 +964,7 @@
 				$j("#copyLink").dialog('open');
 			});
 			
-			<c:if test="${not empty topic.annotation and not topic.annotation.visible}">
+			if ($j("#showAnnotation").length > 0) {
 				$j("#showAnnotation").die();
 				$j("#showAnnotation").live('click', function() {
 					$j("#showAnnotationModal").dialog({
@@ -962,9 +1002,9 @@
 					});
 					$j("#showAnnotationModal").dialog('open');
 				});
-			</c:if>
+			}
 			
-			<c:if test="${not empty topic.annotation and topic.annotation.visible}">
+			if ($j("#hideAnnotation").length > 0) {
 				$j("#hideAnnotation").die();
 				$j("#hideAnnotation").live('click', function() {
 					$j("#hideAnnotationModal").dialog({
@@ -1003,7 +1043,89 @@
 					});
 					$j("#hideAnnotationModal").dialog('open');
 				});
-			</c:if>
+			}
+			
+			if ($j("#openTopic").length > 0) {
+				$j("#openTopic").die();
+				$j("#openTopic").live('click', function() {
+					$j("#openTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseTopicURL}' + '&close=false',
+									async: false,
+									success: function(json) {
+										if (json.operation = 'OK') {
+											$j("#openTopicModal").dialog("close");
+											$j("#main").load($j(".paginateActive").attr('href'));
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+											$j("#openTopicModal").dialog("close");
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#openTopicModal").dialog('open');
+				});
+			}
+			
+			if ($j("#closeTopic").length > 0) {
+				$j("#closeTopic").die();
+				$j("#closeTopic").live('click', function() {
+					$j("#closeTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseTopicURL}' + '&close=true',
+									async: false,
+									success: function(json) {
+										if (json.operation = 'OK') {
+											$j("#closeTopicModal").dialog("close");
+											$j("#main").load($j(".paginateActive").attr('href'));
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+											$j("#closeTopicModal").dialog("close");
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#closeTopicModal").dialog('open');
+				});
+			}
 			
 			//MD: Fix a problem with tinyMCE alert when change page.
 			window.onbeforeunload = function() {};

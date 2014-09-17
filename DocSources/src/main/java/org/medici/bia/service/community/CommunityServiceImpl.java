@@ -1411,6 +1411,21 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void openCloseTopic(Integer topicId, Boolean closed) throws ApplicationThrowable {
+		try {
+			ForumTopic topic = getForumTopicDAO().find(topicId);
+			if (!closed.equals(topic.getLocked())) {
+				topic.setLastUpdate(new Date());
+				topic.setLocked(closed);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

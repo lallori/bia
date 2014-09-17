@@ -414,7 +414,10 @@
 											<div class="row">						            
 												<div class="one">
 										            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-													<a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+													<a href="${ShowTopicForumURL}" class="forumHref">
+														${currentTopic.subject}
+														<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+													</a>
 									                <span>
 									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
 										            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
@@ -436,7 +439,11 @@
 										            <div class="five"></div>
 										        </c:if>
 										        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-									        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+									        		<div class="six">
+									        			<c:if test="${not currentTopic.locked}">
+									        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+									        			</c:if>
+									        		</div>
 									        	</security:authorize>
 									        </div>
 										</c:when>
@@ -445,7 +452,10 @@
 											<div class="row">						            
 												<div class="one">
 								            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-									                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+									                <a href="${ShowTopicForumURL}" class="forumHref">
+									                	${currentTopic.subject}
+									                	<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+									                </a>
 									                <span>
 									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
 										            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
@@ -466,7 +476,11 @@
 										            <div class="four"></div>
 										        </c:if>
 										        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-									        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+									        		<div class="five">
+									        			<c:if test="${not currentTopic.locked}">
+									        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+									        			</c:if>
+									        		</div>
 									        	</security:authorize>
 									        </div>
 									    </c:otherwise>
@@ -650,7 +664,10 @@
 									<div class="row">
 										<div class="one">
 						            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-											<a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
+											<a href="${ShowTopicForumURL}" class="forumHref">
+												${currentTopic.subject}
+												<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+											</a>
 											<span>
 											<fmt:message key="community.forum.text.createdBy" />&nbsp;
 								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
@@ -672,7 +689,11 @@
 								            <div class="five"></div>
 								        </c:if>
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-							        		<div class="six"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        		<div class="six">
+							        			<c:if test="${not currentTopic.locked}">
+							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+							        			</c:if>
+							        		</div>
 							        	</security:authorize>
 							        </div>
 								</c:when>
@@ -711,7 +732,10 @@
 									<div class="row">
 										<div class="one">
 								            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">${currentTopic.subject}</a>
+											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">
+												${currentTopic.subject}
+												<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+											</a>
 							            	<span>
 							            		Topic Type:&nbsp;
 							            		 <c:choose>
@@ -756,7 +780,7 @@
 								        </c:if>
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 							        		<div class="five">
-							        			<c:if test="${topicType == 'Q' or topicType == 'D'}">
+							        			<c:if test="${not cuurentTopic.locked and (topicType == 'Q' or topicType == 'D')}">
 							        				<!-- Cannot delete course transcription fragment: delete course fragment resources forum instead (if needed) -->
 								        			<a href="${DeleteCourseTopicURL}" class="button_delete">
 								        				<img src="<c:url value="/images/forum/button_delete.png"/>"/>
@@ -778,7 +802,9 @@
 									<div class="row">
 										<div class="one">
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-							                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}
+							                <a href="${ShowTopicForumURL}" class="forumHref">
+							                	${currentTopic.subject}
+							                	<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
 								                <c:if test="${not empty currentTopic.annotation and not currentTopic.annotation.visible}">
 						            		 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 						            		 			&nbsp;&lt;<i>hidden</i>&gt;
@@ -805,7 +831,11 @@
 								            <div class="four"></div>
 								        </c:if>
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-							        		<div class="five"><a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        		<div class="five">
+							        			<c:if test="${not currentTopic.locked}">
+							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+							        			</c:if>
+							        		</div>
 							        	</security:authorize>
 							        </div>
 							    </c:otherwise>

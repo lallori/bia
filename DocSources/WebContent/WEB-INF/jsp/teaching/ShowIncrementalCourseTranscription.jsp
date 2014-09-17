@@ -17,35 +17,56 @@
 	
 	<c:url var="RenameTopicURL" value="/de/community/RenameForumTopic.json" />
 	
+	<c:url var="OpenCloseCourseTopicURL" value="/teaching/OpenCloseCourseTopic.json">
+		<c:param name="courseTopicId" value="${command.topicId}" />
+	</c:url>
+	
 	<c:url var="baseUrl" value="/teaching/ShowCourseTranscription.do">
 		<c:param name="transcriptionMode" value="I" />
 	</c:url>
-
+	
 	<div id="csSection">
-		<h6>COURSE TRANSCRIPTION</h6>
-		<c:if test="${!subscribed}">
-			<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
-				<c:param name="topicId" value="${topic.topicId}"/>
-			</c:url>
-			<a id="subscribe" href="${SubscribeForumTopicURL}" class="buttonMedium button_medium">Subscribe</a>
-		</c:if>
-		<c:if test="${subscribed}">
-			<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
-				<c:param name="topicId" value="${topic.topicId}"/>
-			</c:url>
-			<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
+		<h6>
+			COURSE TRANSCRIPTION
+			<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585">[CLOSED]</span></c:if>
+		</h6>
+		<c:if test="${not topic.locked}">
+			<c:if test="${!subscribed}">
+				<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
+					<c:param name="topicId" value="${topic.topicId}"/>
+				</c:url>
+				<a id="subscribe" href="${SubscribeForumTopicURL}" class="buttonMedium button_medium">Subscribe</a>
+			</c:if>
+			<c:if test="${subscribed}">
+				<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
+					<c:param name="topicId" value="${topic.topicId}"/>
+				</c:url>
+				<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
+			</c:if>
 		</c:if>
 	</div>
 	
 	<div id="topicTitleSection">
 		<c:choose>
-			<c:when test="${topic.user.account == account}">
-				<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+			<c:when test="${not topic.locked}">
+				<a id="closeCourseTranscription" href="#" title="course transcription is opened: click to close it!">
+					<img src="<c:url value="/images/forum/img_unlocked.png"/>" />
+				</a>
+				<c:choose>
+					<c:when test="${topic.user.account == account}">
+						<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+					</c:when>
+					<c:otherwise>
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+							<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+						</security:authorize>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-					<a id="changeTopicTitle" href="${RenameTopicURL}" title="change topic title"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-				</security:authorize>
+				<a id="openCourseTranscription" href="#" title="course transcription is closed: click to re-open it!">
+					<img src="<c:url value="/images/forum/img_locked.png"/>" />
+				</a>
 			</c:otherwise>
 		</c:choose>
 		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
@@ -126,18 +147,20 @@
 						</c:choose>
 					</div>
 						<div class="topicIcons">
-							<c:choose>
-								<c:when test="${extendedPost.post.user.account == account}">
-									<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-									<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-								</c:when>
-								<c:otherwise>
-									<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+							<c:if test="${not topic.locked}">
+								<c:choose>
+									<c:when test="${extendedPost.post.user.account == account}">
 										<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
 										<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-									</security:authorize>
-								</c:otherwise>
-							</c:choose>
+									</c:when>
+									<c:otherwise>
+										<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+											<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
+											<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
+										</security:authorize>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</div>
 				</div>
 				<div class="post">
@@ -190,6 +213,20 @@
 				<input id="topicId" name="topicId" type="hidden" value="" />
 			</form>
 			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+		</p>
+	</div>
+	
+	<div id="openCourseTopicModal" title="Open Course Transcription" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Do you want to re-open the course transcription?
+		</p>
+	</div>
+	
+	<div id="closeCourseTopicModal" title="Close Course Transcription" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			Do you want to close the course transcription?
 		</p>
 	</div>
 	
@@ -403,5 +440,84 @@
 				}
 			});
 			
+			if ($j("#openCourseTranscription").length > 0) {
+				$j("#openCourseTranscription").die();
+				$j("#openCourseTranscription").live('click', function() {
+					$j("#openCourseTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseCourseTopicURL}' + '&close=false',
+									async: false,
+									success: function(json) {
+										$j("#openCourseTopicModal").dialog("close");
+										if (json.operation = 'OK') {
+											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#openCourseTopicModal").dialog('open');
+				});
+			}
+			
+			if ($j("#closeCourseTranscription").length > 0) {
+				$j("#closeCourseTranscription").die();
+				$j("#closeCourseTranscription").live('click', function() {
+					$j("#closeCourseTopicModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 130, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${OpenCloseCourseTopicURL}' + '&close=true',
+									async: false,
+									success: function(json) {
+										$j("#closeCourseTopicModal").dialog("close");
+										if (json.operation = 'OK') {
+											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#closeCourseTopicModal").dialog('open');
+				});
+			}
 		});
 	</script>

@@ -297,6 +297,23 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);		
 	}
 	
+	@RequestMapping(value = "/community/OpenCloseTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> openCloseTopic(
+			@RequestParam(value="topicId", required = true) Integer topicId,
+			@RequestParam(value="close", required = true) Boolean close,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try{
+			getCommunityService().openCloseTopic(topicId, close);
+			model.put("operation", "OK");
+			
+			return model;		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;		
+		}
+	}
+	
 	@RequestMapping(value = "/de/community/RenameForum", method = RequestMethod.POST)
 	public ModelAndView renameForum(
 			@RequestParam(value="forumId", required = true) Integer forumId,

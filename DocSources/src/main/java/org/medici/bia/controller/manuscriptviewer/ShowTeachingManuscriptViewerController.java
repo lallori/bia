@@ -32,8 +32,10 @@ import java.util.Map;
 
 import org.medici.bia.command.manuscriptviewer.ShowTeachingManuscriptViewerCommand;
 import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,6 +55,8 @@ public class ShowTeachingManuscriptViewerController {
 	
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private TeachingService teachingService;
 	
 	public ManuscriptViewerService getManuscriptViewerService() {
 		return manuscriptViewerService;
@@ -63,6 +67,14 @@ public class ShowTeachingManuscriptViewerController {
 		this.manuscriptViewerService = manuscriptViewerService;
 	}
 
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTeachingManuscriptViewerCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -70,6 +82,8 @@ public class ShowTeachingManuscriptViewerController {
 		try {
 			DocumentExplorer documentExplorer = getManuscriptViewerService().getDocumentExplorer(command.getEntryId(), true);
 			model.put("documentExplorer", documentExplorer);
+			ForumTopic topic = getTeachingService().findCourseTopic(command.getTopicId());
+			model.put("closed", topic.getLocked());
 			model.put("resourcesForum", command.getResourcesForum());
 			
 		} catch (ApplicationThrowable applicationThrowable) {

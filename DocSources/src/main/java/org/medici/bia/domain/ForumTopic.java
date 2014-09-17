@@ -113,6 +113,9 @@ public class ForumTopic implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"imageId\"", nullable=true)
 	private Image image;
+	
+	@Column (name="\"locked\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean locked;
 
 	@Column (name="\"logicalDelete\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean logicalDelete;
@@ -206,6 +209,13 @@ public class ForumTopic implements Serializable {
 	 */
 	public Image getImage() {
 		return image;
+	}
+
+	/**
+	 * @return the locked
+	 */
+	public Boolean getLocked() {
+		return locked;
 	}
 
 	/**
@@ -346,6 +356,13 @@ public class ForumTopic implements Serializable {
 	 */
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 	/**

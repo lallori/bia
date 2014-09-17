@@ -176,7 +176,7 @@
 				annotations: annotations,
 				openAnnotationTopicMode: "_parent",
 				showHideAnnotationButton: true,  // Show/Hide Annotation button is enabled
-				enableEdit: true, // edit annotations is enabled
+				enableEdit: ${command.editEnabled}, // if topic is locked we cannot edit annotations
 				editMode: 'teaching',
 				textVolume: '<fmt:message key="mview.credits.volume"/>',
 			    textExtension: '<fmt:message key="mview.credits.extension"/>',

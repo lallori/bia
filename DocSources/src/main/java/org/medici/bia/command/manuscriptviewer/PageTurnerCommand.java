@@ -74,6 +74,8 @@ public class PageTurnerCommand {
 	private Boolean formSubmitting;
 	/** This parameter is used to show Extract section */
 	private Boolean showExtract;
+	/** This parameter is used to show Extract section */
+	private Boolean editEnabled;
 	
 	/**
 	 * @return the entryId
@@ -324,6 +326,20 @@ public class PageTurnerCommand {
 	 */
 	public Boolean getShowExtract() {
 		return showExtract;
+	}
+
+	/**
+	 * @return the editEnabled
+	 */
+	public Boolean getEditEnabled() {
+		return editEnabled;
+	}
+
+	/**
+	 * @param editEnabled the editEnabled to set
+	 */
+	public void setEditEnabled(Boolean editEnabled) {
+		this.editEnabled = editEnabled;
 	}
 
 }

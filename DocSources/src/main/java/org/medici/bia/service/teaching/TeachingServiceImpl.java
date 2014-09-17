@@ -1241,6 +1241,23 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public void openCloseCourseTopic(Integer courseTopicId, Boolean close) throws ApplicationThrowable {
+		try {
+			ForumTopic courseTopic = getForumTopicDAO().find(courseTopicId);
+			if (!courseTopic.getLocked().equals(close)) {
+				courseTopic.setLastUpdate(new Date());
+				courseTopic.setLocked(close);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public Boolean revokeStudentPermission(String account) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser(account);

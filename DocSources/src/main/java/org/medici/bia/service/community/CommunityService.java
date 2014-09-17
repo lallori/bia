@@ -472,6 +472,15 @@ public interface CommunityService {
 	User joinUserOnForum() throws ApplicationThrowable;
 	
 	/**
+	 * Locks or unlocks the topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @param close if true locks the topic, otherwise it unlocks the topic
+	 * @throws ApplicationThrowable
+	 */
+	void openCloseTopic(Integer topicId, Boolean close) throws ApplicationThrowable;
+	
+	/**
 	 * Renames a forum.
 	 * 
 	 * @param forumId the forum identifier
