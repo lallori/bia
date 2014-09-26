@@ -118,7 +118,7 @@ public class DocumentUtils {
 			if (!"".equals(ObjectUtils.toString(insertLet)))
 				s.append(" ").append(insertLet);
 		} else
-			s.append(" / NNF");
+			s.append(" / -");
 		if (folioNum != null) {
 			s.append(" / ").append(folioNum);
 			if (!"".equals(ObjectUtils.toString(folioMod)))

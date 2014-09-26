@@ -11,7 +11,7 @@
 	</security:authorize>
 	
 	<c:choose>
-		<c:when test="${fromTranscribe == null || !fromTranscribe}">
+		<c:when test="${empty fromTranscribe or not fromTranscribe}">
 			<c:set var="transcribe" value="false" />
 		</c:when>
 		<c:otherwise>
@@ -196,24 +196,26 @@
 				<input id="save" class="button_small fr" type="submit" value="Save"/>
 			</div>
 			
-			<c:if test="${fromTranscribe == null || !fromTranscribe}">
-				<input type="hidden" value="" id="modify" />
-			</c:if>
-			<c:if test="${fromTranscribe != null && fromTranscribe}">
-				<input type="hidden" value="1" id="modify" />
-				<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
-					<c:param name="volNum"	value="${document.volume.volNum}" />
-					<c:param name="volLetExt"	value="${document.volume.volLetExt}" />
-					<c:param name="imageOrder"	value="${command.imageOrder}" />
-					<c:param name="total"	value="${command.total}" />
-					<c:param name="totalRubricario"	value="${command.totalRubricario}" />
-					<c:param name="totalCarta"	value="${command.totalCarta}" />
-					<c:param name="totalAppendix"	value="${command.totalAppendix}" />
-					<c:param name="totalGuardia"	value="${command.totalGuardia}" />
-					<c:param name="totalOther"	value="${command.totalOther}" />
-				</c:url>
-				<input type="hidden" id="returnToManuscriptViewer" value="${ShowDocumentInManuscriptViewerURL}" />
-			</c:if>
+			<c:choose>
+				<c:when test="${not transcribe}">
+					<input type="hidden" value="" id="modify" />
+				</c:when>
+				<c:otherwise>
+					<input type="hidden" value="1" id="modify" />
+					<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+						<c:param name="volNum"	value="${document.volume.volNum}" />
+						<c:param name="volLetExt"	value="${document.volume.volLetExt}" />
+						<c:param name="imageOrder"	value="${command.imageOrder}" />
+						<c:param name="total"	value="${command.total}" />
+						<c:param name="totalRubricario"	value="${command.totalRubricario}" />
+						<c:param name="totalCarta"	value="${command.totalCarta}" />
+						<c:param name="totalAppendix"	value="${command.totalAppendix}" />
+						<c:param name="totalGuardia"	value="${command.totalGuardia}" />
+						<c:param name="totalOther"	value="${command.totalOther}" />
+					</c:url>
+					<input type="hidden" id="returnToManuscriptViewer" value="${ShowDocumentInManuscriptViewerURL}" />
+				</c:otherwise>
+			</c:choose>
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
 		<input type="hidden" id="folioNumStored" value=""/>
