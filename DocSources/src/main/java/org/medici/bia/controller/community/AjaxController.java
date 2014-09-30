@@ -42,6 +42,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.UserMessageSearch;
 import org.medici.bia.common.util.ForumUtils;
 import org.medici.bia.common.util.HtmlUtils;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
@@ -220,6 +221,31 @@ public class AjaxController {
 			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
 		}
+	}
+	
+	@RequestMapping(value = "/community/exportAnnotationDiscussion.json", method = RequestMethod.POST)
+	public Map<String, Object> exportAnnotationDiscussion(
+			@RequestParam(value="annotationId", required=true) Integer annotationId, 
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			Annotation annotation = getCommunityService().findAnnotation(annotationId);
+			if (annotation == null) {
+				model.put("error", "The annotation with [" + annotationId + "] identifier was not found!");
+				model.put("operation", "KO");
+			} else {
+				getCommunityService().exportAnnotationDiscussion(annotation, httpServletRequest.getRemoteAddr());
+				model.put("operation", "OK");
+			}
+		} catch (ApplicationThrowable th) {
+			if (th.getApplicationError() != null) {
+				model.put("error", th.getMessage());
+			}
+			model.put("operation", "KO");
+		}
+		
+		return model;
 	}
 	
 	@RequestMapping(value="/community/EraseMessages", method = RequestMethod.POST)

@@ -16,6 +16,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/forum.css"/>" />
         <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui.css"/>" />
+        <link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/modalbox.css" />" />
         
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>	
@@ -25,6 +26,9 @@
 <%--         <script type="text/javascript" src="<c:url value="/scripts/forum/htmlbox.full.js"/>"></script> --%>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/tiny_mce.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/packed.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
         
         <script type="text/javascript">
             var $j = jQuery.noConflict();

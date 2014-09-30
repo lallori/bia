@@ -38,6 +38,7 @@ import java.util.Set;
 import org.medici.bia.common.access.ApplicationAccessContainer;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.common.search.AdvancedSearchAbstract;
 import org.medici.bia.common.search.AdvancedSearchAbstract.DateType;
 import org.medici.bia.common.search.AdvancedSearchDocument;
@@ -78,11 +79,11 @@ import org.medici.bia.domain.ReportedForumPost;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserHistory;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -797,7 +798,6 @@ public class CommunityServiceImpl implements CommunityService {
 	/**
 	 * {@inheritDoc}
 	 */
-
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public ForumPost editPost(ForumPost postFromView) throws ApplicationThrowable {
@@ -839,6 +839,129 @@ public class CommunityServiceImpl implements CommunityService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, postFromView));
 			
 			return forumPostToUpdate;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void exportAnnotationDiscussion(Annotation annotation, String ipAddress) throws ApplicationThrowable {
+		String generalQuestionForumIdString = ApplicationPropertyManager.getApplicationProperty("forum.identifier.general");
+		Integer generalQuestionForumId = Integer.valueOf(generalQuestionForumIdString);
+		if (annotation.getForumTopic().getForum().equals(generalQuestionForumId)) {
+			return;
+		}
+		
+		Forum generalQuestionForum = getForumDAO().find(generalQuestionForumId);
+		Date now = new Date();
+		User user = getCurrentUser();
+		
+		ForumTopic clonedDiscussion = new ForumTopic();
+		Annotation annotationClone = new Annotation();
+		
+		// export the topic
+		try {
+			// annotation's reference and posts will be added after
+			clonedDiscussion.setDateCreated(now);
+			clonedDiscussion.setLastUpdate(now);
+			clonedDiscussion.setUser(user);
+			clonedDiscussion.setIpAddress(ipAddress);
+			clonedDiscussion.setForum(generalQuestionForum);
+			clonedDiscussion.setLocked(Boolean.TRUE);
+			clonedDiscussion.setLogicalDelete(Boolean.FALSE);
+			clonedDiscussion.setSubject(annotation.getForumTopic().getSubject());
+			clonedDiscussion.setTotalReplies(annotation.getForumTopic().getTotalReplies());
+			clonedDiscussion.setTotalViews(annotation.getForumTopic().getTotalViews());
+			
+			getForumTopicDAO().persist(clonedDiscussion);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		// export the annotation
+		try {
+			annotationClone.setDateCreated(now);
+			annotationClone.setLastUpdate(now);
+			annotationClone.setUser(user);
+			annotationClone.setLogicalDelete(Boolean.FALSE);
+			annotationClone.setTranscribed(Boolean.TRUE);
+			annotationClone.setVisible(Boolean.TRUE);
+			annotationClone.setType(Annotation.Type.GENERAL);
+			annotationClone.setForumTopic(clonedDiscussion);
+			annotationClone.setTitle(annotation.getTitle());
+			annotationClone.setText(annotation.getText());
+			annotationClone.setImage(annotation.getImage());
+			annotationClone.setHeight(annotation.getHeight());
+			annotationClone.setWidth(annotation.getWidth());
+			annotationClone.setX(annotation.getX());
+			annotationClone.setY(annotation.getY());
+			
+			getAnnotationDAO().persist(annotationClone);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		// adjust references
+		clonedDiscussion.setAnnotation(annotationClone);
+		annotation.setExportedTo(annotationClone);
+		
+		// export topic posts
+		try {
+			Map<ForumPost, ForumPost> postCorrenspondencesMap = new HashMap<ForumPost, ForumPost>();
+			List<ForumPost> topicPosts = new ArrayList<ForumPost>();
+			for(ForumPost currentPost : getForumPostDAO().getAllNotDeletedForumTopicPosts(annotation.getForumTopic().getTopicId())) {
+				ForumPost clonedPost = new ForumPost();
+				clonedPost.setDateCreated(currentPost.getDateCreated());
+				clonedPost.setLastUpdate(currentPost.getLastUpdate());
+				clonedPost.setLogicalDelete(Boolean.FALSE);
+				clonedPost.setSubject(currentPost.getSubject());
+				clonedPost.setText(currentPost.getText());
+				clonedPost.setForum(generalQuestionForum);
+				clonedPost.setTopic(clonedDiscussion);
+				clonedPost.setUser(currentPost.getUser());
+				clonedPost.setIpAddress(currentPost.getIpAddress());
+				clonedPost.setUpdater(currentPost.getUpdater());
+				clonedPost.setReplyNumber(currentPost.getReplyNumber());
+				// parent post is temporary set to the original one: correct association is adjusted after
+				clonedPost.setParentPost(currentPost.getParentPost());
+				
+				getForumPostDAO().persist(clonedPost);
+				
+				topicPosts.add(clonedPost);
+				postCorrenspondencesMap.put(currentPost, clonedPost);
+			}
+			
+			// set topic posts
+			clonedDiscussion.setFirstPost(postCorrenspondencesMap.get(annotation.getForumTopic().getFirstPost()));
+			clonedDiscussion.setLastPost(postCorrenspondencesMap.get(annotation.getForumTopic().getLastPost()));
+			
+			// adjust parent post references
+			for(ForumPost post : topicPosts) {
+				if (post.getParentPost() != null) {
+					post.setParentPost(postCorrenspondencesMap.get(post.getParentPost()));
+				}
+			}
+			
+			// increment 'General Questions' forum topics number and posts number
+			generalQuestionForum.setTopicsNumber(generalQuestionForum.getTopicsNumber() + 1);
+			generalQuestionForum.setPostsNumber(generalQuestionForum.getPostsNumber() + topicPosts.size());
+			
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Annotation findAnnotation(Integer annotationId) throws ApplicationThrowable {
+		try {
+			return getAnnotationDAO().find(annotationId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1407,6 +1530,48 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			getUserDAO().merge(user);
 			return user;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Annotation markAsNotTranscribed(Integer annotationId) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			Annotation annotation = getAnnotationDAO().find(annotationId);
+			annotation.setLastUpdate(now);
+			annotation.setTranscribed(Boolean.FALSE);
+			
+			return annotation;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Annotation markAsTranscribed(Integer annotationId, String title) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			Annotation annotation = getAnnotationDAO().find(annotationId);
+			annotation.setLastUpdate(now);
+			annotation.setTitle(title);
+			annotation.setTranscribed(Boolean.TRUE);
+			
+			// update the topic title and lock the topic
+			annotation.getForumTopic().setLastUpdate(now);
+			annotation.getForumTopic().setSubject(title);
+			annotation.getForumTopic().setLocked(Boolean.TRUE);
+			
+			return annotation;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

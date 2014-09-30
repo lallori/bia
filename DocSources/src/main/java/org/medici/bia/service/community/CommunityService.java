@@ -36,6 +36,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.common.search.UserMessageSearch;
+import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
@@ -164,6 +165,25 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable;
+	
+	/**
+	 * Exports the discussion related to an annotation in the 'General Questions' community section.
+	 * If the discussion is already in the 'General Question' this method does nothing.
+	 * 
+	 * @param annotation the annotation to export
+	 * @param ipAddress the user ip address
+	 * @throws ApplicationThrowable
+	 */
+	void exportAnnotationDiscussion(Annotation annotation, String ipAddress) throws ApplicationThrowable;
+	
+	/**
+	 * Finds the annotation by its identifier.
+	 * 
+	 * @param annotationId the annotation identifier
+	 * @return the found annotation
+	 * @throws ApplicationThrowable
+	 */
+	Annotation findAnnotation(Integer annotationId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -470,6 +490,25 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	User joinUserOnForum() throws ApplicationThrowable;
+	
+	/**
+	 * Marks the provided annotation as not transcribed.
+	 * 
+	 * @param annotationId the annotation identifier
+	 * @return the not transcribed annotation
+	 * @throws ApplicationThrowable
+	 */
+	Annotation markAsNotTranscribed(Integer annotationId) throws ApplicationThrowable;
+	
+	/**
+	 * Marks the provided annotation as transcribed.
+	 * 
+	 * @param annotationId the annotation identifier
+	 * @param title the new annotation title
+	 * @return the transcribed annotation
+	 * @throws ApplicationThrowable
+	 */
+	Annotation markAsTranscribed(Integer annotationId, String title) throws ApplicationThrowable;
 	
 	/**
 	 * Locks or unlocks the topic.

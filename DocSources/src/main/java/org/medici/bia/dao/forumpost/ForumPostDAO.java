@@ -81,6 +81,15 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException;
 	
 	/**
+	 * Returns the list of not deleted posts of a topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @return the list of not deleted posts of a topic
+	 * @throws PersistenceException
+	 */
+	List<ForumPost> getAllNotDeletedForumTopicPosts(Integer topicId) throws PersistenceException;
+	
+	/**
 	 * Returns the first created post of a topic.
 	 * 
 	 * @param topicId the topic identifier

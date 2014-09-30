@@ -22,10 +22,35 @@
 		<c:url var="ShowHideAnnotationURL" value="/community/ShowHideAnnotation.json">
 			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
 		</c:url>
+		
+		<c:url var="ShowMakeTranscribedModalURL" value="/annotation/ShowMakeTranscribedModalWindow.do">
+			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+			<c:param name="transcribed" value="true" />
+		</c:url>
+		
+		<c:url var="ShowMakeNotTranscribedModalURL" value="/annotation/ShowMakeTranscribedModalWindow.do">
+			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+			<c:param name="transcribed" value="false" />
+		</c:url>
 	</c:if>
 
 	<c:if test="${not empty topic}">
 		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
+		
+		<c:choose>
+			<c:when test="${empty courseTranscriptionURL}">
+				<!-- RR: not in teaching module section -->
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+					<c:set var="adminOK" value="true" />
+				</security:authorize>
+			</c:when>
+			<c:otherwise>
+				<!-- RR: teaching module section -->
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+					<c:set var="adminTeacherOK" value="true" />
+				</security:authorize>
+			</c:otherwise>
+		</c:choose>
 		
 		<c:url var="OpenCloseTopicURL" value="/community/OpenCloseTopic.json">
 			<c:param name="topicId" value="${topic.topicId}" />
@@ -41,67 +66,70 @@
 		
 		<div id="urlActions">
 			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-			<a href="#" class="buttonMedium button_medium" id="button_link" title="Use this to copy and paste url for citations"><span>Copy <b>link</b></span></a>
+			<a href="#" class="buttonMedium button_medium" id="button_link" title="<fmt:message key='community.forum.topic.tooltip.copyLink' />"><span>Copy <b>link</b></span></a>
 		</div>
 		
 		<c:choose>
-			<c:when test="${empty courseTranscriptionURL}">
-				<!-- RR: not in teaching module section -->
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					<c:choose>
-						<c:when test="${topic.locked}">
-							<a id="openTopic" href="#" title="closed discussion: click to re-open it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
-						</c:when>
-						<c:otherwise>
-							<a id="closeTopic" href="#" title="opened discussion: click to close it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
-						</c:otherwise>
-					</c:choose>
-					<c:if test="${not empty topic.annotation}">
-						<c:choose>
-							<c:when test="${topic.annotation.visible}">
-								<a id="hideAnnotation" href="#" title="The related annotation is visible: make it hidden" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
-							</c:when>
-							<c:otherwise>
-								<a id="showAnnotation" href="#" title="The related annotation is hidden: make it visible" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-					<c:if test="${not topic.locked}">
-						<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-					</c:if>
-				</security:authorize>
+			<c:when test="${empty adminOK and empty adminTeacherOK}">
+				<c:choose>
+					<c:when test="${topic.locked}">
+						<img title="<fmt:message key='community.forum.topic.tooltip.discussionClosed' />" src="<c:url value='/images/forum/img_locked.png' />" class="marginLR_0_10" />
+					</c:when>
+					<c:otherwise>
+						<img title="<fmt:message key='community.forum.topic.tooltip.discussionOpened' />" src="<c:url value='/images/forum/img_unlocked.png' />" class="marginLR_0_10" />
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<!-- RR: teaching module section -->
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+				<c:choose>
+					<c:when test="${topic.locked}">
+						<a id="openTopic" href="#" title="<fmt:message key='community.forum.topic.tooltip.locked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
+					</c:when>
+					<c:otherwise>
+						<a id="closeTopic" href="#" title="<fmt:message key='community.forum.topic.tooltip.unlocked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
+					</c:otherwise>
+				</c:choose>
+				<c:if test="${not empty topic.annotation}">
 					<c:choose>
-						<c:when test="${topic.locked}">
-							<a id="openTopic" href="#" title="closed discussion: click to re-open it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
+						<c:when test="${topic.annotation.visible}">
+							<a id="hideAnnotation" href="#" title="<fmt:message key='community.forum.topic.tooltip.visible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
 						</c:when>
 						<c:otherwise>
-							<a id="closeTopic" href="#" title="opened discussion: click to close it" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
+							<a id="showAnnotation" href="#" title="<fmt:message key='community.forum.topic.tooltip.unvisible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
 						</c:otherwise>
 					</c:choose>
-					<c:if test="${not empty topic.annotation}">
-						<c:choose>
-							<c:when test="${topic.annotation.visible}">
-								<a id="hideAnnotation" href="#" title="The related annotation is visible: make it hidden" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
-							</c:when>
-							<c:otherwise>
-								<a id="showAnnotation" href="#" title="The related annotation is hidden: make it visible" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
-							</c:otherwise>
-						</c:choose>
+					<c:choose>
+						<c:when test="${empty topic.annotation.transcribed or not topic.annotation.transcribed}">
+							<a id="makeTranscribed" href="${ShowMakeTranscribedModalURL}" title="<fmt:message key='community.forum.topic.tooltip.notTranscribed' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_notTranscribed.png"/>"/></a>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${topic.locked}">
+									<img src="<c:url value="/images/forum/img_transcribed.png"/>" title="<fmt:message key='community.forum.topic.tooltip.transcribedLocked' />" class="marginLR_0_10"/>
+									<c:if test="${topic.annotation.type eq 'TEACHING' and empty topic.annotation.exportedTo}">
+										<c:url var="ExportAnnotationDiscussionURL" value="/community/exportAnnotationDiscussion.json">
+											<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+										</c:url>
+										<a id="exportAnnotationDiscussion" href="#" title="<fmt:message key='community.forum.topic.tooltip.exportToGeneralQuestions' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/button_exportTo.png"/>"/></a>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<a id="makeNotTranscribed" href="${ShowMakeNotTranscribedModalURL}" title="<fmt:message key='community.forum.topic.tooltip.transcribed' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_transcribed.png"/>"/></a>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${not empty topic.annotation.exportedTo}">
+						<img src="<c:url value="/images/forum/img_exported.png"/>" title="<fmt:message key='community.forum.topic.tooltip.exported' />" class="marginLR_0_10" />
 					</c:if>
-					<c:if test="${not topic.locked}">
-						<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="change topic title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
-					</c:if>
-				</security:authorize>
+				</c:if>
+				<c:if test="${not topic.locked}">
+					<a id="changeTopicTitle" href="${RenameForumTopicURL}" title="<fmt:message key='community.forum.topic.tooltip.changeTitle' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+				</c:if>
 			</c:otherwise>
 		</c:choose>
-		<h2 id="topicTitle_${topic.topicId}">
-			${topic.subject}
-			<c:if test="${topic.locked}">&nbsp;[CLOSED]</c:if>
-		</h2>
+		
+		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:choose>
@@ -571,6 +599,13 @@
 		</p>
 	</div>
 	
+	<div id="exportAnnotationDiscussionModal" title="<fmt:message key='community.forum.topic.annotation.exportDiscussion' />" style="display:none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
+			<fmt:message key="community.forum.topic.annotation.exportDiscussionQuestion" />
+		</p>
+	</div>
+	
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
@@ -964,6 +999,22 @@
 				$j("#copyLink").dialog('open');
 			});
 			
+			if ($j("#makeTranscribed").length > 0) {
+				$j("#makeTranscribed").die();
+				$j("#makeTranscribed").live('click', function() {
+					Modalbox.show($j(this).attr("href"), {title: "Mark as transcribed", width: 350, height: 120});
+					return false;
+				});
+			}
+			
+			if ($j("#makeNotTranscribed").length > 0) {
+				$j("#makeNotTranscribed").die();
+				$j("#makeNotTranscribed").live('click', function() {
+					Modalbox.show($j(this).attr("href"), {title: "Mark as not transcribed", width: 350, height: 120});
+					return false;
+				});
+			}
+			
 			if ($j("#showAnnotation").length > 0) {
 				$j("#showAnnotation").die();
 				$j("#showAnnotation").live('click', function() {
@@ -1083,6 +1134,47 @@
 						}
 					});
 					$j("#openTopicModal").dialog('open');
+				});
+			}
+			
+			if ($j("#exportAnnotationDiscussion").length > 0) {
+				$j("#exportAnnotationDiscussion").die();
+				$j("#exportAnnotationDiscussion").live('click', function() {
+					$j("#exportAnnotationDiscussionModal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						scrollable: false,
+						width: 310,
+						height: 160, 
+						buttons: {
+							Yes: function() {
+								$j.ajax({ 
+									type:'POST', 
+									url: '${ExportAnnotationDiscussionURL}',
+									async: false,
+									success: function(json) {
+										if (json.operation = 'OK') {
+											$j("#exportAnnotationDiscussionModal").dialog("close");
+											$j("#main").load($j(".paginateActive").attr('href'));
+										} else {
+											alert('Operation error...please retry or contact the admin!');
+											$j("#exportAnnotationDiscussionModal").dialog("close");
+										}
+										return false;
+									},
+									error: function() {
+										alert('Server error...please retry or contact the admin!');
+									}
+								});
+								return false;
+							},
+							No: function() {
+								$j(this).dialog("close");
+							}
+						}
+					});
+					$j("#exportAnnotationDiscussionModal").dialog('open');
 				});
 			}
 			

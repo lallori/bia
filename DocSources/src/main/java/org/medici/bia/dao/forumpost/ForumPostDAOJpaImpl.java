@@ -151,6 +151,19 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<ForumPost> getAllNotDeletedForumTopicPosts(Integer topicId) throws PersistenceException {
+		String jpql = "FROM ForumPost WHERE topic.topicId = :topicId AND logicalDelete = false ORDER BY postId ASC";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("topicId", topicId);
+		
+		return getResultList(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ForumPost getFirstForumTopicPostByCreationDate(Integer topicId) throws PersistenceException {
 		return getFirstForumTopicPost(topicId, true);
 	}

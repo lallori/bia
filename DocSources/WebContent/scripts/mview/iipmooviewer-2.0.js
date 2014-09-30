@@ -269,10 +269,6 @@ var IIPMooViewer = new Class({
 					}
 				}).send();
 			});
-			
-			this.addEvent('annotationColor', function(annotation) {
-				annotation
-			});
 		} else {
 			console.log("Annotation-edit.js is not included in main page. Please correct import");
 		}

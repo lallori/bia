@@ -416,7 +416,9 @@
 										            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 													<a href="${ShowTopicForumURL}" class="forumHref">
 														${currentTopic.subject}
-														<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+														<c:if test="${currentTopic.locked}">
+															<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+														</c:if>
 													</a>
 									                <span>
 									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
@@ -454,7 +456,9 @@
 								            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 									                <a href="${ShowTopicForumURL}" class="forumHref">
 									                	${currentTopic.subject}
-									                	<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+									                	<c:if test="${currentTopic.locked}">
+															<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+														</c:if>
 									                </a>
 									                <span>
 									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
@@ -666,7 +670,9 @@
 						            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 											<a href="${ShowTopicForumURL}" class="forumHref">
 												${currentTopic.subject}
-												<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+												<c:if test="${currentTopic.locked}">
+													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+												</c:if>
 											</a>
 											<span>
 											<fmt:message key="community.forum.text.createdBy" />&nbsp;
@@ -734,18 +740,28 @@
 								            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">
 												${currentTopic.subject}
-												<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
+												<c:if test="${currentTopic.locked}">
+													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+												</c:if>
+												<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+													<c:if test="${not empty currentTopic.annotation}">
+														<c:if test="${not currentTopic.annotation.visible}">
+																<img src="<c:url value="/images/forum/img_hidden.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
+														</c:if>
+														<c:if test="${currentTopic.annotation.transcribed and empty currentTopic.annotation.exportedTo}">
+															<img src="<c:url value="/images/forum/img_transcribed(ext).png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
+														</c:if>
+														<c:if test="${not empty currentTopic.annotation.exportedTo}">
+															<img src="<c:url value="/images/forum/img_exported.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
+														</c:if>
+													</c:if>
+												</security:authorize>
 											</a>
 							            	<span>
 							            		Topic Type:&nbsp;
 							            		 <c:choose>
 							            		 	<c:when test="${topicType == 'Q'}">
 							            		 		Comment
-							            		 		<c:if test="${not currentTopic.annotation.visible}">
-								            		 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-								            		 			&nbsp;&lt;<i>hidden</i>&gt;
-								            		 		</security:authorize>
-							            		 		</c:if>
 							            		 	</c:when>
 							            		 	<c:when test="${topicType == 'D'}">
 							            		 		Discussion
@@ -804,12 +820,22 @@
 							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
 							                <a href="${ShowTopicForumURL}" class="forumHref">
 							                	${currentTopic.subject}
-							                	<c:if test="${currentTopic.locked}">&nbsp;<span class="topicClosed">[CLOSED]</span></c:if>
-								                <c:if test="${not empty currentTopic.annotation and not currentTopic.annotation.visible}">
-						            		 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-						            		 			&nbsp;&lt;<i>hidden</i>&gt;
-						            		 		</security:authorize>
-					            		 		</c:if>
+							                	<c:if test="${currentTopic.locked}">
+													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+												</c:if>
+												<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+													<c:if test="${not empty currentTopic.annotation}">
+														<c:if test="${not currentTopic.annotation.visible}">
+																<img src="<c:url value="/images/forum/img_hidden.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
+														</c:if>
+														<c:if test="${currentTopic.annotation.transcribed and empty currentTopic.annotation.exportedTo}">
+															<img src="<c:url value="/images/forum/img_transcribed(ext).png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
+														</c:if>
+														<c:if test="${not empty currentTopic.annotation.exportedTo}">
+															<img src="<c:url value="/images/forum/img_exported.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
+														</c:if>
+													</c:if>
+												</security:authorize>
 				            		 		</a>
 							                <span>
 							                	<fmt:message key="community.forum.text.createdBy" />&nbsp;

@@ -39,6 +39,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -99,6 +100,11 @@ public class Annotation implements Serializable {
 	private String text;
 	@Column (name="\"rgbColor\"", nullable=true)
 	private String rgbColor;
+	@Column (name="\"transcribed\"", nullable=true)
+	private Boolean transcribed;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name="\"exportedTo\"", nullable=true)
+	private Annotation exportedTo;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"topicId\"")
@@ -302,6 +308,34 @@ public class Annotation implements Serializable {
 	 */
 	public void setRgbColor(String rgbColor) {
 		this.rgbColor = rgbColor;
+	}
+
+	/**
+	 * @return the transcribed
+	 */
+	public Boolean getTranscribed() {
+		return transcribed;
+	}
+
+	/**
+	 * @param transcribed the transcribed to set
+	 */
+	public void setTranscribed(Boolean transcribed) {
+		this.transcribed = transcribed;
+	}
+	
+	/**
+	 * @return the exportedTo
+	 */
+	public Annotation getExportedTo() {
+		return exportedTo;
+	}
+
+	/**
+	 * @param exportedTo the exportedTo to set
+	 */
+	public void setExportedTo(Annotation exportedTo) {
+		this.exportedTo = exportedTo;
 	}
 
 	public void setUser(User user) {

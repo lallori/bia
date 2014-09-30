@@ -551,7 +551,8 @@ public class AjaxController {
 				singleRow.put("h", currentAnnotation.getHeight());
 				singleRow.put("type", currentAnnotation.getType());
 				singleRow.put("title", currentAnnotation.getTitle());
-				singleRow.put("text", currentAnnotation.getText());
+				// RR: we do not show annotation text if it is transcribed
+				singleRow.put("text", currentAnnotation.getTranscribed() != null && currentAnnotation.getTranscribed() ? "" : currentAnnotation.getText());
 				singleRow.put("deletable", annotationId == null && (administrator || getManuscriptViewerService().isDeletableAnnotation(currentAnnotation)) ? true : false);
 				singleRow.put("updatable", annotationId == null && (account.equals(currentAnnotation.getUser().getAccount()) || administrator) ? true : false);
 				if (annotationId != null || administrator || Boolean.TRUE.equals(currentAnnotation.getVisible())) {
