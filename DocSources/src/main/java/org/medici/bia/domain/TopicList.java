@@ -205,7 +205,7 @@ public class TopicList implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((topicId == null) ? 0 : topicId.hashCode());
+		result = prime * result + ((getTopicId() == null) ? 0 : getTopicId().hashCode());
 		return result;
 	}
 
@@ -227,11 +227,11 @@ public class TopicList implements Serializable {
 		}
 
 		TopicList other = (TopicList) obj;
-		if (topicId == null) {
-			if (other.topicId != null) {
+		if (getTopicId() == null) {
+			if (other.getTopicId() != null) {
 				return false;
 			}
-		} else if (!topicId.equals(other.topicId)) {
+		} else if (!getTopicId().equals(other.getTopicId())) {
 			return false;
 		}
 		return true;

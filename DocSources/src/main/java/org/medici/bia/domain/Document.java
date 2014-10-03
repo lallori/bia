@@ -1228,30 +1228,30 @@ public class Document implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((entryId == null) ? 0 : entryId.hashCode());
+		result = prime * result + ((getEntryId() == null) ? 0 : getEntryId().hashCode());
 		result = prime * result
-				+ ((folioMod == null) ? 0 : folioMod.hashCode());
+				+ ((getFolioMod() == null) ? 0 : getFolioMod().hashCode());
 		result = prime * result
-				+ ((folioNum == null) ? 0 : folioNum.hashCode());
+				+ ((getFolioNum() == null) ? 0 : getFolioNum().hashCode());
 		result = prime * result
-				+ ((folioRectoVerso == null) ? 0 : folioRectoVerso.hashCode());
+				+ ((getFolioRectoVerso() == null) ? 0 : getFolioRectoVerso().hashCode());
 		result = prime * result
-				+ ((insertLet == null) ? 0 : insertLet.hashCode());
+				+ ((getInsertLet() == null) ? 0 : getInsertLet().hashCode());
 		result = prime * result
-				+ ((insertNum == null) ? 0 : insertNum.hashCode());
+				+ ((getInsertNum() == null) ? 0 : getInsertNum().hashCode());
 		result = prime
 				* result
-				+ ((transcribeFolioMod == null) ? 0 : transcribeFolioMod
+				+ ((getTranscribeFolioMod() == null) ? 0 : getTranscribeFolioMod()
 						.hashCode());
 		result = prime
 				* result
-				+ ((transcribeFolioNum == null) ? 0 : transcribeFolioNum
+				+ ((getTranscribeFolioNum() == null) ? 0 : getTranscribeFolioNum()
 						.hashCode());
 		result = prime
 				* result
-				+ ((transcribeFolioRectoVerso == null) ? 0
-						: transcribeFolioRectoVerso.hashCode());
-		result = prime * result + ((volume == null) ? 0 : volume.hashCode());
+				+ ((getTranscribeFolioRectoVerso() == null) ? 0
+						: getTranscribeFolioRectoVerso().hashCode());
+		result = prime * result + ((getVolume() == null) ? 0 : getVolume().hashCode());
 		return result;
 	}
 
@@ -1264,58 +1264,58 @@ public class Document implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Document other = (Document) obj;
-		if (entryId == null) {
+		if (getEntryId() == null) {
 			if (other.getEntryId() != null)
 				return false;
-		} else if (!entryId.equals(other.getEntryId())) {
+		} else if (!getEntryId().equals(other.getEntryId())) {
 			return false;
-		} else if (entryId.equals(other.getEntryId())) {
+		} else if (getEntryId().equals(other.getEntryId())) {
 			// if entryIds are not null and entryIds are equal they refers to the same document 
 			return true;
 		}
 		
 		// if entryIds are null we check volume, insert, folio and transcribeFolio details
-		if (volume == null) {
-			if (other.volume != null)
+		if (getVolume() == null) {
+			if (other.getVolume() != null)
 				return false;
-		} else if (!volume.equals(other.getVolume()))
+		} else if (!getVolume().equals(other.getVolume()))
 			return false;
 		
-		if (insertNum == null) {
+		if (getInsertNum() == null) {
 			if (other.getInsertNum() != null)
 				return false;
-		} else if (!insertNum.equals(other.getInsertNum()))
+		} else if (!getInsertNum().equals(other.getInsertNum()))
 			return false;
-		if (insertLet == null) {
+		if (getInsertLet() == null) {
 			if (other.getInsertLet() != null)
 				return false;
-		} else if (!insertLet.equals(other.getInsertLet()))
+		} else if (!getInsertLet().equals(other.getInsertLet()))
 			return false;
 		
-		if (folioNum == null) {
+		if (getFolioNum() == null) {
 			if (other.getFolioNum() != null)
 				return false;
-		} else if (!folioNum.equals(other.getFolioNum()))
+		} else if (!getFolioNum().equals(other.getFolioNum()))
 			return false;
-		if (folioMod == null) {
+		if (getFolioMod() == null) {
 			if (other.getFolioMod() != null)
 				return false;
-		} else if (!folioMod.equals(other.getFolioMod()))
+		} else if (!getFolioMod().equals(other.getFolioMod()))
 			return false;
-		if (folioRectoVerso != other.getFolioRectoVerso())
+		if (!getFolioRectoVerso().equals(other.getFolioRectoVerso()))
 			return false;
 		
-		if (transcribeFolioNum == null) {
+		if (getTranscribeFolioNum() == null) {
 			if (other.getTranscribeFolioNum() != null)
 				return false;
-		} else if (!transcribeFolioNum.equals(other.getTranscribeFolioNum()))
+		} else if (!getTranscribeFolioNum().equals(other.getTranscribeFolioNum()))
 			return false;
-		if (transcribeFolioMod == null) {
+		if (getTranscribeFolioMod() == null) {
 			if (other.getTranscribeFolioMod() != null)
 				return false;
-		} else if (!transcribeFolioMod.equals(other.getTranscribeFolioMod()))
+		} else if (!getTranscribeFolioMod().equals(other.getTranscribeFolioMod()))
 			return false;
-		if (transcribeFolioRectoVerso != other.getTranscribeFolioRectoVerso())
+		if (!getTranscribeFolioRectoVerso().equals(other.getTranscribeFolioRectoVerso()))
 			return false;
 		
 		return true;

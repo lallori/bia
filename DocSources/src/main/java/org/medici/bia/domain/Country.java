@@ -87,7 +87,7 @@ public class Country implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
 		return result;
 	}
 	
@@ -109,11 +109,11 @@ public class Country implements Serializable {
 		}
 		
 		Country other = (Country) obj;
-		if (code == null) {
-			if (other.code != null) {
+		if (getCode() == null) {
+			if (other.getCode() != null) {
 				return false;
 			}
-		} else if (!code.equals(other.code)) {
+		} else if (!getCode().equals(other.getCode())) {
 			return false;
 		}
 		

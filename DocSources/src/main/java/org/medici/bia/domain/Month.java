@@ -171,7 +171,7 @@ public class Month implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((monthNum == null) ? 0 : monthNum.hashCode());
+		result = prime * result + ((getMonthNum() == null) ? 0 : getMonthNum().hashCode());
 		return result;
 	}
 
@@ -193,11 +193,11 @@ public class Month implements Serializable {
 		}
 
 		Month other = (Month) obj;
-		if (monthNum == null) {
-			if (other.monthNum != null) {
+		if (getMonthNum() == null) {
+			if (other.getMonthNum() != null) {
 				return false;
 			}
-		} else if (!monthNum.equals(other.monthNum)) {
+		} else if (!getMonthNum().equals(other.getMonthNum())) {
 			return false;
 		}
 

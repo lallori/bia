@@ -181,7 +181,7 @@ public class DocReference implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((docReferenceId == null) ? 0 : docReferenceId.hashCode());
+		result = prime * result + ((getDocReferenceId() == null) ? 0 : getDocReferenceId().hashCode());
 		return result;
 	}
 
@@ -203,11 +203,11 @@ public class DocReference implements Serializable{
 		}
 
 		DocReference other = (DocReference) obj;
-		if (docReferenceId == null) {
-			if (other.docReferenceId != null) {
+		if (getDocReferenceId() == null) {
+			if (other.getDocReferenceId() != null) {
 				return false;
 			}
-		} else if (!docReferenceId.equals(other.docReferenceId)) {
+		} else if (!getDocReferenceId().equals(other.getDocReferenceId())) {
 			return false;
 		}
 		

@@ -1306,7 +1306,7 @@ public class People implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((personId == null) ? 0 : personId.hashCode());
+		result = prime * result + ((getPersonId() == null) ? 0 : getPersonId().hashCode());
 		return result;
 	}
 
@@ -1327,11 +1327,11 @@ public class People implements Serializable {
 			return false;
 		}
 		People other = (People) obj;
-		if (personId == null) {
-			if (other.personId != null) {
+		if (getPersonId() == null) {
+			if (other.getPersonId() != null) {
 				return false;
 			}
-		} else if (!personId.equals(other.personId)) {
+		} else if (!getPersonId().equals(other.getPersonId())) {
 			return false;
 		}
 	

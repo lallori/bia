@@ -201,7 +201,7 @@ public class EplToLink implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((eplToId == null) ? 0 : eplToId.hashCode());
+		result = prime * result + ((getEplToId() == null) ? 0 : getEplToId().hashCode());
 		return result;
 	}
 
@@ -223,11 +223,11 @@ public class EplToLink implements Serializable{
 		}
 		
 		EplToLink other = (EplToLink) obj;
-		if (eplToId == null) {
-			if (other.eplToId != null) {
+		if (getEplToId() == null) {
+			if (other.getEplToId() != null) {
 				return false;
 			}
-		} else if (!eplToId.equals(other.eplToId)) {
+		} else if (!getEplToId().equals(other.getEplToId())) {
 			return false;
 		}
 

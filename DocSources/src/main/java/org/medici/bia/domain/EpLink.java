@@ -232,7 +232,7 @@ public class EpLink implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((epLinkId == null) ? 0 : epLinkId.hashCode());
+		result = prime * result + ((getEpLinkId() == null) ? 0 : getEpLinkId().hashCode());
 		return result;
 	}
 
@@ -254,11 +254,11 @@ public class EpLink implements Serializable{
 		}
 
 		EpLink other = (EpLink) obj;
-		if (epLinkId == null) {
-			if (other.epLinkId != null) {
+		if (getEpLinkId() == null) {
+			if (other.getEpLinkId() != null) {
 				return false;
 			}
-		} else if (!epLinkId.equals(other.epLinkId)) {
+		} else if (!getEpLinkId().equals(other.getEpLinkId())) {
 			return false;
 		}
 		

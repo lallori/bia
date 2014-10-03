@@ -169,11 +169,11 @@ public class SerieList implements Serializable{
 		}
 
 		SerieList other = (SerieList) obj;
-		if (seriesRefNum == null) {
-			if (other.seriesRefNum != null) {
+		if (getSeriesRefNum() == null) {
+			if (other.getSeriesRefNum() != null) {
 				return false;
 			}
-		} else if (!seriesRefNum.equals(other.seriesRefNum)) {
+		} else if (!getSeriesRefNum().equals(other.getSeriesRefNum())) {
 			return false;
 		}
 
@@ -225,7 +225,7 @@ public class SerieList implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((seriesRefNum == null) ? 0 : seriesRefNum.hashCode());
+		result = prime * result + ((getSeriesRefNum() == null) ? 0 : getSeriesRefNum().hashCode());
 		return result;
 	}
 
