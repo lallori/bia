@@ -36,6 +36,7 @@ import javax.persistence.PersistenceException;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.TooManyUsersException;
@@ -95,6 +96,13 @@ public interface UserDAO extends Serializable {
 	 *         search find more than one user.
 	 */
 	User findUser(User user) throws TooManyUsersException;
+	
+	/**
+	 * @param userAuthority
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<User> findUsers(UserAuthority userAuthority) throws PersistenceException;
 
 	/**
 	 * 

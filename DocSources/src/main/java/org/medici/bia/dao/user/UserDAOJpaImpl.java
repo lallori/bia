@@ -43,6 +43,7 @@ import org.medici.bia.common.util.DateUtils;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.exception.TooManyUsersException;
@@ -363,6 +364,17 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 			
 			return null;
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> findUsers(UserAuthority userAuthority) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT u.user FROM UserRole u WHERE u.userAuthority=:userAuthority");
+		query.setParameter("userAuthority", userAuthority);
+		
+		return getResultList(query);
 	}
 
 	/**

@@ -211,11 +211,11 @@ public class User implements Serializable, Cloneable {
 			return false;
 		}
 		User other = (User) obj;
-		if (account == null) {
-			if (other.account != null) {
+		if (getAccount() == null) {
+			if (other.getAccount() != null) {
 				return false;
 			}
-		} else if (!account.equals(other.account)) {
+		} else if (!getAccount().equals(other.getAccount())) {
 			return false;
 		}
 	

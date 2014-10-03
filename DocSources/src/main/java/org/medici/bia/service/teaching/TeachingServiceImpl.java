@@ -369,6 +369,7 @@ public class TeachingServiceImpl implements TeachingService {
 			courseTopic.setLastPost(null);
 			courseTopic.setFirstPost(null);
 			courseTopic.setLogicalDelete(Boolean.FALSE);
+			courseTopic.setLocked(Boolean.FALSE);
 			
 			getForumTopicDAO().persist(courseTopic);
 			
@@ -384,9 +385,12 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, courseTopic));
 			
-			if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
-				ForumTopicWatch courseTopicWatch = new ForumTopicWatch(courseTopic, user);
-				getForumTopicWatchDAO().persist(courseTopicWatch);
+			// topic subscription
+			for(UserRole personRole : getCoursePeople(course)) {
+				if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
+					ForumTopicWatch personTopicWatch = new ForumTopicWatch(courseTopic, personRole.getUser());
+					getForumTopicWatchDAO().persist(personTopicWatch);
+				}
 			}
 			
 			return courseTopic;
@@ -422,7 +426,7 @@ public class TeachingServiceImpl implements TeachingService {
 		Date now = new Date();
 		
 		try {
-			CoursePostExt extendedPost = doAddCourseTranscrioptionPost(
+			CoursePostExt extendedPost = doAddCourseTranscriptionPost(
 					option.getCourseTopic(), 
 					postSubject, 
 					postContent, 
@@ -1453,6 +1457,7 @@ public class TeachingServiceImpl implements TeachingService {
 					topicAnnotation.setLastPost(null);
 					topicAnnotation.setFirstPost(null);
 					topicAnnotation.setLogicalDelete(Boolean.FALSE);
+					topicAnnotation.setLocked(Boolean.FALSE);
 					
 					topicAnnotation.setAnnotation(annotation);
 					getForumTopicDAO().persist(topicAnnotation);
@@ -1489,17 +1494,43 @@ public class TeachingServiceImpl implements TeachingService {
 					// we increase the number of forum posts number
 					getForumDAO().recursiveIncreasePostsNumber(forum);
 
-					if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
-						ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
-						getForumTopicWatchDAO().persist(forumTopicWatch);
-					}
-					
 					// we have to add a course topic option
 					CourseTopicOption option = new CourseTopicOption();
 					option.setCourseTopic(topicAnnotation);
 					option.setMode(CourseTopicMode.Q);
 					
 					getCourseTopicOptionDAO().persist(option);
+					
+					Course course = getCourseDAO().find(forum.getForumParent().getForumId());
+					
+					// topic subscription
+					if (isStudent(user)) {
+						// a student has created an annotation: subscription for the current student and for teachers only
+						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
+							getForumTopicWatchDAO().persist(forumTopicWatch);
+						}
+						
+						for(UserRole teacher : getCourseTeachers(course)) {
+							if (teacher.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
+								ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, teacher.getUser());
+								getForumTopicWatchDAO().persist(forumTopicWatch);
+							}
+						}
+					} else {
+						// a teacher or admin has created an annotation: subscription for all the people of the course
+						for(UserRole coursePerson : getCoursePeople(course)) {
+							if (coursePerson.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
+								ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, coursePerson.getUser());
+								getForumTopicWatchDAO().persist(forumTopicWatch);
+							}
+						}
+					}
+					
+					// annotation post notification
+					ForumPostNotified annotationForumPostNotified = new ForumPostNotified(annotationPost.getPostId());
+					annotationForumPostNotified.setMailSended(Boolean.FALSE);
+					getForumPostNotifiedDAO().persist(annotationForumPostNotified);
 				}
 			}
 			
@@ -1611,7 +1642,7 @@ public class TeachingServiceImpl implements TeachingService {
 		}
 	}
 	
-	private CoursePostExt doAddCourseTranscrioptionPost(
+	private CoursePostExt doAddCourseTranscriptionPost(
 			ForumTopic courseTopic, 
 			String postSubject, 
 			String postContent,
@@ -1744,6 +1775,41 @@ public class TeachingServiceImpl implements TeachingService {
 		postExt.setFolioRV(CoursePostExt.RectoVerso.find(StringUtils.safeTrim(folioRV)));
 		
 		return postExt;
+	}
+	
+	private List<UserRole> getCoursePeople(Course course) {
+		// FIXME: when CoursePeople table will be managed we will have to retrieve
+		// course people from that. Now we retrieve roles from UserRole table.
+		List<UserRole> studentsRoles = getUserRoleDAO().filterUserRoles(Authority.STUDENTS);
+		List<UserRole> teachersRoles = getUserRoleDAO().filterUserRoles(Authority.TEACHERS);
+		List<UserRole> roles = new ArrayList<UserRole>();
+		roles.addAll(studentsRoles);
+		roles.addAll(teachersRoles);
+		
+		// we suppose if current user is an administrator it cannot also be a teacher.
+		for (UserRole role : getCurrentUser().getUserRoles()) {
+			if (role.getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS)) {
+				roles.add(role);
+				break;
+			}
+		}
+		
+		return roles;
+	}
+	
+	private List<UserRole> getCourseTeachers(Course course) {
+		// FIXME: when CoursePeople table will be managed we will have to retrieve
+		// teachers from that. Now we retrieve roles from UserRole table.
+		return getUserRoleDAO().filterUserRoles(Authority.TEACHERS);
+	}
+	
+	private boolean isStudent(User user) {
+		for(UserRole role : user.getUserRoles()) {
+			if (role.getUserAuthority().getAuthority().equals(Authority.STUDENTS)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**

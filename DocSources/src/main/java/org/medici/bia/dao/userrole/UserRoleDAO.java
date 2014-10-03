@@ -33,8 +33,7 @@ import java.util.Set;
 import javax.persistence.PersistenceException;
 
 import org.medici.bia.dao.Dao;
-import org.medici.bia.domain.User;
-import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserRole;
 
 /**
@@ -52,6 +51,15 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
 	
 	/**
+	 * Returns all user roles filtered by the provided {@link Authority}.
+	 * 
+	 * @param authority the authority to filter
+	 * @return the user roles found
+	 * @throws PersistenceException
+	 */
+	List<UserRole> filterUserRoles(Authority authority) throws PersistenceException;
+	
+	/**
 	 * 
 	 * @param account
 	 * @return
@@ -59,14 +67,6 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 */
 	List<UserRole> findUserRoles(String account) throws PersistenceException;
 	
-	/**
-	 * 
-	 * @param userAuthority
-	 * @return
-	 * @throws PersistenceException
-	 */
-	List<User> findUsers(UserAuthority userAuthority) throws PersistenceException;
-
 	/**
 	 * 
 	 * @param account
@@ -82,4 +82,5 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 * @throws PersistenceException
 	 */
 	Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException;
+
 }

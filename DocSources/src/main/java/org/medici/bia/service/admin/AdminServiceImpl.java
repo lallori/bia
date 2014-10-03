@@ -920,7 +920,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void sendApprovationMessage(List<ApprovationUser> approvationUsers) throws ApplicationThrowable {
 		try {
-			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
+			List<User> administratorUsers = getUserDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
 
 			for (ApprovationUser currentApprovationUser : approvationUsers) {
 				for (User currentAdministator : administratorUsers) {
@@ -972,7 +972,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void sendLockedMessage(User user) throws ApplicationThrowable {
 		try{			
-			List<User> administratorUsers = getUserRoleDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
+			List<User> administratorUsers = getUserDAO().findUsers(getUserAuthorityDAO().find(Authority.ADMINISTRATORS));
 
 			for (User currentAdministator : administratorUsers) {
 				try {

@@ -274,6 +274,14 @@ public class UserDAOLdapImpl implements UserDAO {
 
 		return (User) users.get(0);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> findUsers(UserAuthority userAuthority) throws PersistenceException {
+		return null;
+	}
 
 	/**
 	 * 
