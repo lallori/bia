@@ -39,12 +39,15 @@ import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
+import org.medici.bia.dao.coursetopicoption.CourseTopicOptionDAO;
 import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
+import org.medici.bia.domain.CourseTopicOption;
+import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.EmailMessageUser;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
@@ -83,7 +86,9 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private EmailMessageUserDAO emailMessageUserDAO;
 	@Autowired
-	private ForumPostNotifiedDAO ForumPostNotifiedDAO;
+	private ForumPostNotifiedDAO forumPostNotifiedDAO;
+	@Autowired
+	private CourseTopicOptionDAO courseTopicOptionDAO;
 	@Autowired
 	private JavaMailSender javaMailSender; 
 	@Autowired
@@ -144,14 +149,28 @@ public class MailServiceImpl implements MailService {
 	 * @return the forumPostNotifiedDAO
 	 */
 	public ForumPostNotifiedDAO getForumPostNotifiedDAO() {
-		return ForumPostNotifiedDAO;
+		return forumPostNotifiedDAO;
 	}
 	
 	/**
 	 * @param forumPostNotifiedDAO the forumPostNotifiedDAO to set
 	 */
 	public void setForumPostNotifiedDAO(ForumPostNotifiedDAO forumPostNotifiedDAO) {
-		ForumPostNotifiedDAO = forumPostNotifiedDAO;
+		this.forumPostNotifiedDAO = forumPostNotifiedDAO;
+	}
+	
+	/**
+	 * @return the courseTopicOptionDAO
+	 */
+	public CourseTopicOptionDAO getCourseTopicOptionDAO() {
+		return courseTopicOptionDAO;
+	}
+
+	/**
+	 * @param courseTopicOptionDAO the courseTopicOptionDAO to set
+	 */
+	public void setCourseTopicOptionDAO(CourseTopicOptionDAO courseTopicOptionDAO) {
+		this.courseTopicOptionDAO = courseTopicOptionDAO;
 	}
 
 	/**
@@ -383,13 +402,14 @@ public class MailServiceImpl implements MailService {
 							},
 							"{",
 							"}"));
+					CourseTopicOption courseTopicOption = getCourseTopicOptionDAO().getOption(forumPost.getTopic().getTopicId());
 					message.setText(
 							ApplicationPropertyManager.getApplicationProperty("mail.courseTranscriptionNotification.text", 
 							new String[] {
 								forumPost.getUser().getFirstName(),
 								forumPost.getUser().getLastName(),
 								forumPost.getTopic().getSubject(),
-								getCourseTranscriptionUrl(forumPost.getTopic())
+								getCourseTopicUrl(courseTopicOption)
 							},
 							"{",
 							"}"));
@@ -527,12 +547,14 @@ public class MailServiceImpl implements MailService {
 				+ "&completeDOM=true";
 	}
 	
-	private String getCourseTranscriptionUrl(ForumTopic forumTopic) {
+	private String getCourseTopicUrl(CourseTopicOption topicOption) {
+		boolean isCourseTranscription = CourseTopicMode.I.equals(topicOption.getMode()) ||
+				CourseTopicMode.R.equals(topicOption.getMode());
 		return ApplicationPropertyManager.getApplicationProperty("website.protocol") + "://"
 				+ ApplicationPropertyManager.getApplicationProperty("website.domain")
 				+ ApplicationPropertyManager.getApplicationProperty("website.contextPath")
-				+ "teaching/ShowCourseTranscription.do?topicId=" + forumTopic.getTopicId()
-				+ "&entryId=" + forumTopic.getDocument().getEntryId()
+				+ (isCourseTranscription ? "teaching/ShowCourseTranscription.do?topicId=" : "teaching/ShowTopicForum.do?topicId=") + topicOption.getCourseTopic().getTopicId()
+				+ (isCourseTranscription ? "&entryId=" + topicOption.getCourseTopic().getDocument().getEntryId() : "")
 				+ "&completeDOM=true";		
 	}
 
