@@ -218,8 +218,8 @@
 				<a class="helpIcon" title="Specify here the folio number you want to jump to without recto or verso">?</a>
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.folio"/>:</label>
 				<div class="labels">
-					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" style="display:none" />
-<!-- 					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" /> -->
+					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
+ 					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" style="display:none" value="" />
 				</div>
 				<input id="go" class="button_mini" type="submit" value="Go" onclick="return validateForm();"/>
 			</div>
