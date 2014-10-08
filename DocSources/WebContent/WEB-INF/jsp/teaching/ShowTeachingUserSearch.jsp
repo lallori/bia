@@ -37,7 +37,7 @@
 					<div class="row">
 						<div class="col_l"></div>
 						<div class="col_r"><form:radiobutton path="role" value="NoStud"/></div>
-				        <div class="col_l">No Students</div>
+				        <div class="col_l">Not Students</div>
 					</div>
 				</div>	
 			<input class="search button_small fl" type="submit" value="Search" />
