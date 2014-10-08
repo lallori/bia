@@ -215,7 +215,7 @@
 				</c:if>
 				
 				<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.insert"/>:</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel"><fmt:message key="mview.pageTurnerDialog.folio"/>:</label>
 				<div class="labels">
 					<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
 					<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" />
