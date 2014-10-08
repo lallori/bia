@@ -149,7 +149,7 @@ IIPMooViewer.implement({
 						opacity: annotation_array[i].visibility ? 1.0 : 0.5  
 					}
 				}).inject(this.canvas);
-				if (this.adminPrivileges && typeof annotation_array[i].color !== 'undefined') {
+				if (typeof annotation_array[i].color !== 'undefined') {
 					annotation.setStyle('background-color', IIPMooViewer.convertRgbColorToRGBA(annotation_array[i].color, '0.2'));
 				}
 				
