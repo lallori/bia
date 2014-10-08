@@ -124,11 +124,12 @@
 						</div>
 					</c:if>
 					
-					<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a>
+<!-- 					<a class="helpIcon" title="Specify the folio number in the first input text and the folio extension in the second one (only if needed)">?</a> -->
+					<a class="helpIcon" title="Specify here the folio number you want to jump to without recto or verso">?</a>
 					<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
 					<div class="labels">
 						<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-						<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" />
+<!-- 						<input id="missedNumbering" name="missedNumbering" class="input_4c" type="text" value="" /> -->
 					</div>
 					<input id="go" class="button_mini" type="submit" value="Go" onclick="return validateForm();"/>
 				</div>
