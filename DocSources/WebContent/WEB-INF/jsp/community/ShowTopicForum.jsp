@@ -292,8 +292,13 @@
 		    <c:set var="paginationData">
 				<c:choose>
 		    		<c:when test="${not empty courseTranscriptionURL}">
-		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do" />
-		    			<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="true"/>
+		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do">
+		    				<c:param name="topicId" value="${topic.topicId}" />
+		    				<c:param name="completeDOM" value="false" />
+		    			</c:url>
+		    			<bia:paginator page="${postsPage}" url="${baseUrl}"
+		    				thisPageAlias="postPageNumber" totalPagesAlias="postPageTotal" elementsForPageAlias="postsForPage"
+		    				pageViewId="main" buttonClass="paginateButton" activeButtonClass="paginateActive"/>
 		    		</c:when>
 		    		<c:otherwise>
 						<bia:paginationForum page="${postsPage}"/>
@@ -475,8 +480,13 @@
 		    <c:set var="paginationData">
 		    	<c:choose>
 		    		<c:when test="${not empty courseTranscriptionURL}">
-		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do" />
-		    			<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="true"/>
+		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do">
+		    				<c:param name="topicId" value="${topic.topicId}" />
+		    				<c:param name="completeDOM" value="false" />
+		    			</c:url>
+		    			<bia:paginator page="${postsPage}" url="${baseUrl}"
+		    				thisPageAlias="postPageNumber" totalPagesAlias="postPageTotal" elementsForPageAlias="postsForPage"
+		    				pageViewId="main" buttonClass="paginateButton" activeButtonClass="paginateActive"/>
 		    		</c:when>
 		    		<c:otherwise>
 						<bia:paginationForum page="${postsPage}"/>

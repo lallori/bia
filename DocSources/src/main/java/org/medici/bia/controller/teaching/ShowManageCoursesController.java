@@ -28,13 +28,11 @@
 package org.medici.bia.controller.teaching;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.medici.bia.command.teaching.ShowManageCoursesCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
-import org.medici.bia.domain.Course;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +50,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/teaching/ShowManageCourses")
 public class ShowManageCoursesController {
 	
+	private static final int ELEMENTS_FOR_PAGE = 20;
+	
 	@Autowired
 	private TeachingService teachingService;
 	
@@ -63,20 +63,37 @@ public class ShowManageCoursesController {
 		this.teachingService = teachingService;
 	}
 
-	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowManageCoursesCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		// FIXME: now we set page length to 100 elements because page do not provide pagination buttons
-		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord() != null ? command.getFirstRecord() : 0, command.getLength() != null ? command.getLength() : 100, command.getTotal());
+		PaginationFilter paginationFilter = new PaginationFilter(
+				command.getFirstRecord() != null ? command.getFirstRecord() : 0, 
+				command.getElementsForPage() != null ? command.getElementsForPage() : ELEMENTS_FOR_PAGE, 
+				command.getTotal());
+		
+		if (paginationFilter.getElementsForPage() == null) {
+			paginationFilter.setElementsForPage(ELEMENTS_FOR_PAGE);
+		}
+		paginationFilter.setThisPage(command.getThisPage() != null ? command.getThisPage() : 1);
+		
+		if (command.getOrderByTableField() != null && command.getAscendingOrder() != null) {
+			paginationFilter.addSortingCriteria(convertTableField(command.getOrderByTableField()), command.getAscendingOrder() ? "ASC" : "DESC");
+		}
 
 		Page coursesPage = getTeachingService().getCourses(command.getShowActives(), paginationFilter);
-		
-		if (coursesPage.getList() != null && coursesPage.getList().size() > 0) {
-			model.put("courses", (List<Course>) coursesPage.getList());
-		}
+		model.put("coursesPage", coursesPage);
+
 		return new ModelAndView("teaching/ShowManageCourses", model);
+	}
+	
+	private String convertTableField(Integer tableFieldIndex) {
+		switch (tableFieldIndex) {
+			case 0: return "courseId";
+			case 1: return "forum.dateCreated";
+			case 2: return "forum.title";
+			default: return "courseId";
+		}
 	}
 
 }

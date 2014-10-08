@@ -36,13 +36,17 @@ public class ShowManageCoursesCommand {
 	
 	private Integer firstRecord;
 	
-	private Integer length;
+	private Integer elementsForPage;
 	
 	private Integer thisPage;
 	
 	private Long total;
 	
 	private Boolean showActives;
+	
+	private Integer orderByTableField;
+	
+	private Boolean ascendingOrder;
 
 	public Integer getFirstRecord() {
 		return firstRecord;
@@ -52,12 +56,12 @@ public class ShowManageCoursesCommand {
 		this.firstRecord = firstRecord;
 	}
 
-	public Integer getLength() {
-		return length;
+	public Integer getElementsForPage() {
+		return elementsForPage;
 	}
 
-	public void setLength(Integer length) {
-		this.length = length;
+	public void setElementsForPage(Integer elementsForPage) {
+		this.elementsForPage = elementsForPage;
 	}
 
 	public Integer getThisPage() {
@@ -82,6 +86,34 @@ public class ShowManageCoursesCommand {
 
 	public void setShowActives(Boolean showActives) {
 		this.showActives = showActives;
+	}
+
+	/**
+	 * @return the orderByTableField
+	 */
+	public Integer getOrderByTableField() {
+		return orderByTableField;
+	}
+
+	/**
+	 * @param orderByTableField the orderByTableField to set
+	 */
+	public void setOrderByTableField(Integer orderByTableField) {
+		this.orderByTableField = orderByTableField;
+	}
+
+	/**
+	 * @return the acendingOrder
+	 */
+	public Boolean getAscendingOrder() {
+		return ascendingOrder;
+	}
+
+	/**
+	 * @param ascendingOrder the acendingOrder to set
+	 */
+	public void setAscendingOrder(Boolean ascendingOrder) {
+		this.ascendingOrder = ascendingOrder;
 	}
 
 }

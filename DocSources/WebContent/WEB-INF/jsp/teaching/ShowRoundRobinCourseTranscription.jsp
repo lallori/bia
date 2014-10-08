@@ -77,10 +77,9 @@
 	<c:if test="${postsPage.list.size() gt 0}">
 	
 		<div id="forumPaginate_upper">
-		    <c:set var="paginationData">
-				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted" baseUrl="${baseUrl}" onlyInnerArgs="false"/>
-			</c:set>
-			${paginationData}
+		    <bia:paginator page="${postsPage}" url="${baseUrl}&topicId=${topic.topicId}&completeDOM=false"
+   				thisPageAlias="postPageNumber" totalPagesAlias="postPageTotal" elementsForPageAlias="postsForPage"
+   				buttonClass="paginateButton intercepted" activeButtonClass="paginateActive"/>
 		</div>
 		
 		<input:hidden id="clientEditing" />
@@ -204,10 +203,9 @@
 		</c:forEach>
 		
 		<div id="forumPaginate_lower">
-			<c:set var="paginationData">
-				<bia:paginationCourseTopic page="${postsPage}" topicId="${topic.topicId}" buttonClass="intercepted"  baseUrl="${baseUrl}" onlyInnerArgs="false"/>
-			</c:set>
-			${paginationData}
+	    	<bia:paginator page="${postsPage}" url="${baseUrl}&topicId=${topic.topicId}&completeDOM=false"
+   				thisPageAlias="postPageNumber" totalPagesAlias="postPageTotal" elementsForPageAlias="postsForPage"
+   				buttonClass="paginateButton intercepted" activeButtonClass="paginateActive"/>
 		</div>
 		
 	</c:if>
@@ -310,17 +308,19 @@
 			}
 			
 			$j(".intercepted").click(function() {
-				$j("#postsContainer").load($j(this).attr('href')+'&editingMode='+$j("#clientEditing").val(), function(responseText, statusText, xhr) {
-					var _this = $j(this);
-					if (statusText !== 'error') {
-						setTimeout(function() {
-							console.log('Scrolling to top');
-							_this.scrollTo(0, 0);
-			    		},200);
-					} else {
-						// TODO: handle error
-					}
-				});
+				if (typeof $j(this).attr('href') !== 'undefined') {
+					$j("#postsContainer").load($j(this).attr('href')+'&editingMode='+$j("#clientEditing").val(), function(responseText, statusText, xhr) {
+						var _this = $j(this);
+						if (statusText !== 'error') {
+							setTimeout(function() {
+								console.log('Scrolling to top');
+								_this.scrollTo(0, 0);
+				    		},200);
+						} else {
+							// TODO: handle error
+						}
+					});
+				}
 				return false;
 			});
 			

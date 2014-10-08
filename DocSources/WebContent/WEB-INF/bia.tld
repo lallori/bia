@@ -10,13 +10,13 @@
     <uri>http://bia.medici.org/jsp:jstl</uri>
 
 	<tag-file>
-		<name>paginationCourseTopic</name>
-		<path>/WEB-INF/tags/bia/paginationCourseTopic.tag</path>
+		<name>paginationForum</name>
+		<path>/WEB-INF/tags/bia/paginationForum.tag</path>
 	</tag-file>
 
 	<tag-file>
-		<name>paginationForum</name>
-		<path>/WEB-INF/tags/bia/paginationForum.tag</path>
+		<name>paginator</name>
+		<path>/WEB-INF/tags/bia/paginator.tag</path>
 	</tag-file>
 	
 	<tag-file>

@@ -35,6 +35,7 @@ import javax.persistence.Query;
 
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
@@ -92,13 +93,18 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 		if (paginationFilter.getTotal() == null) {
 			String countQuery = "SELECT COUNT(*) " + jpql;
 			query = getEntityManager().createQuery(countQuery);
+
 			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(PageUtils.calculeTotalPages(paginationFilter.getTotal(), paginationFilter.getElementsForPage()));
 		}
 		
 		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
 		
-		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
 		
 		page.setList(query.getResultList());
 		

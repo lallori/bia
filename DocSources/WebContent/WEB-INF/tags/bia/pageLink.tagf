@@ -1,0 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+	<c:set var="extraArgs" value="${thisPage}=${currentPage}&${totalPages}=${page.totalPages}&${elementsForPage}=${page.elementsForPage}" />
+
+	<c:choose>
+		<c:when test="${currentPage != page.thisPage}">
+			<a class="${buttonClass} paginatorBtn" href="${url}${urlSeparator}${extraArgs}">${currentPage}</a>
+		</c:when>
+		<c:otherwise>
+			<span class="${activeButtonClass}" href="${url}${urlSeparator}${extraArgs}">${currentPage}</span>
+		</c:otherwise>
+	</c:choose>
