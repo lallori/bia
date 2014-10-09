@@ -56,13 +56,25 @@
 			<c:param name="topicId" value="${topic.topicId}" />
 		</c:url>
 		
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-			<c:if test="${not empty courseTranscriptionURL}">
-				<div id="goToCourseTranscription_upper">
-					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
-				</div>
+		<div id="otherTopicActions">
+			<c:if test="${not topic.locked and not subscribed}">
+				<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
+					<c:param name="forumTopicId" value="${topic.topicId}"/>
+				</c:url>
+				<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
 			</c:if>
-		</security:authorize>
+			<c:if test="${not topic.locked and subscribed}">
+				<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
+					<c:param name="forumTopicId" value="${topic.topicId}"/>
+				</c:url>
+				<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
+			</c:if>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+				<c:if test="${not empty courseTranscriptionURL}">
+					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
+				</c:if>
+			</security:authorize>
+		</div>
 		
 		<div id="urlActions">
 			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
@@ -176,7 +188,9 @@
 				    	</c:if>
 					</div>
 							
-					<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+					<iframe class="iframeVolumeExplorer" onload="iFrameHasLoaded();" 
+						scrolling="no" marginheight="0" marginwidth="0" 
+						src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 				</c:when>
 				<c:when test="${not empty topic.forum.document && empty documentExplorer}">
 					<p></p>
@@ -196,9 +210,11 @@
 						<c:param name="showHelp" value="true" />
 						<c:param name="showThumbnail" value="true" />
 					</c:url>
-					
-					<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
-				</c:when>
+
+				<iframe class="iframeVolumeExplorer" onload="iFrameHasLoaded();"
+					scrolling="no" marginheight="0" marginwidth="0"
+					src="${manuscriptViewerURL}" style="z-index: 100"></iframe>
+			</c:when>
 				<c:when test="${not empty topic.forum.place}">
 					<p></p>
 					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
@@ -251,18 +267,6 @@
 						</c:otherwise>
 					</c:choose>
 			
-					<c:if test="${!subscribed}">
-						<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
-							<c:param name="forumTopicId" value="${topic.topicId}"/>
-						</c:url>
-						<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
-					</c:if>
-					<c:if test="${subscribed}">
-						<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
-							<c:param name="forumTopicId" value="${topic.topicId}"/>
-						</c:url>
-						<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
-					</c:if>
 					<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 				</security:authorize>
 			</c:if>
@@ -275,14 +279,6 @@
 		    </div>
 		<!--     <a href="#" id="printButton" class="buttonMedium button_medium"><span class="button_print">Print discussion</span></a> -->
 		</div>
-	
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-			<c:if test="${not empty courseTranscriptionURL}">
-				<div id="goToCourseTranscription_lower">
-					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To Transcription Topic</span></a>
-				</div>
-			</c:if>
-		</security:authorize>
 	
 	</c:if>
 	
@@ -1227,6 +1223,22 @@
 					});
 					$j("#closeTopicModal").dialog('open');
 				});
+			}
+			
+			<c:if test="${not empty courseTranscriptionURL}">
+				// RR: This function scrolls the browser to the 'PostReply' button after the
+				// manuscript viewer has loaded (only for teaching module).
+				var scrollToPostsSection = function() {
+					setTimeout(function() {
+						$j('body').scrollTo('#postReply');
+		    		},200);
+				};
+			</c:if>
+			
+			window.iFrameHasLoaded = function() {
+				if (typeof scrollToPostsSection === 'function') {
+					scrollToPostsSection();
+				}
 			}
 			
 			//MD: Fix a problem with tinyMCE alert when change page.

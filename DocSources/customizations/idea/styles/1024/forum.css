@@ -263,6 +263,15 @@ span.topicClosed {
 	margin-bottom:10px;
 }
 
+#courseTranscription {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#followTopic{
+	display: inline-block;
+}
+
 #userDiv { /* User profile Div */
 	width: 500px;
 	display: inline;
@@ -278,8 +287,13 @@ span.topicClosed {
 	float: right;
 }
 
+#otherTopicActions {
+	float: right;
+}
+
 #urlActions {
     margin-bottom: 40px;
+    clear: both;
 }
 
 #urlActions a#button_refresh span {
