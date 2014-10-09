@@ -339,6 +339,7 @@ div.iipmooviewer div.info div div {
   width: 95%;
   height: auto;
   display: block;
+  font-size: 12px;
 }
 div.iipmooviewer div.info div a {
   color: #B7958F;
@@ -363,7 +364,7 @@ div.iipmooviewer div.info div h2 {
 }
 div.iipmooviewer div.info div ul {
   width: 95%;
-  font-size: 11px;
+  font-size: 12px;
   text-align: justify;
   padding-left: 20px;
   margin-bottom: 0;
