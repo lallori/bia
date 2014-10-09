@@ -369,8 +369,7 @@ public class MailServiceImpl implements MailService {
 				SimpleMailMessage message = new SimpleMailMessage();
 				message.setFrom(getMailFrom());
 				message.setTo(currentUser.getMail());
-				if (!Forum.SubType.COURSE.equals(forumPost.getForum().getSubType()) ||
-						forumPost.getTopic().getDocument() == null) {
+				if (!Forum.SubType.COURSE.equals(forumPost.getForum().getSubType())) {
 					// message for a reply post
 					message.setSubject(
 							ApplicationPropertyManager.getApplicationProperty("mail.forumPostReplyNotification.subject",
@@ -392,7 +391,7 @@ public class MailServiceImpl implements MailService {
 							"{",
 							"}"));
 				} else {
-					// message for a course transcription post
+					// message for a course transcription post or a course question post
 					message.setSubject(
 							ApplicationPropertyManager.getApplicationProperty("mail.courseTranscriptionNotification.subject",
 							new String[] {

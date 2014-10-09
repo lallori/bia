@@ -122,10 +122,17 @@ public class ForumPostReplyMailJob {
 				
 				for (ForumTopicWatch forumTopicWatch : forumPost.getTopic().getTopicWatch()) {
 					User currentUser = forumTopicWatch.getUser();
+					log.info("ForumPostReplyMailJob: check if [" + currentUser.getAccount() + "] has to receive a mail...");
 
 					// we exclude user who write new post
 					if (!currentUser.equals(forumPost.getUser())) {
-						getMailService().sendForumPostReplyNotificationMail(forumPostReplied, forumPost, currentUser);
+						try {
+							log.info("ForumPostReplyMailJob: sending mail to [" + currentUser.getAccount() + "] for post [" + forumPost.getPostId() + "]");
+							getMailService().sendForumPostReplyNotificationMail(forumPostReplied, forumPost, currentUser);
+							log.info("ForumPostReplyMailJob: a mail has been sent to [" + currentUser.getAccount() + "]");
+						} catch (Exception e) {
+							log.error("ForumPostReplyMailJob: error during the mail delivery to [" + currentUser.getAccount() + "]");
+						}
 					}
 				}
 			}
