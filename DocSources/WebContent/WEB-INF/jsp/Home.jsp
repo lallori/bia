@@ -7,7 +7,7 @@
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 		<c:param name="entryId" value="${command.entryId}"/>
 	</c:url>
-
+	
 	<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 		<c:param name="placeAllId" value="${command.placeAllId}"/>
 	</c:url>
