@@ -1351,7 +1351,7 @@ var IIPMooViewer = new Class({
 					this.fade('out');
 				}
 			},
-			'html': '<div><div><h2><a href="http://iipimage.sourceforge.net"><img src="' +
+			'html': '<div><div><h2><a href="http://iipimage.sourceforge.net" target="_blan><img src="' +
 				this.prefix +
 				'iip.32x32.png"/></a>IIPMooViewer</h2>IIPImage HTML5 Ajax High Resolution Image Viewer - Version ' +
 				this.version +
@@ -1371,7 +1371,7 @@ var IIPMooViewer = new Class({
 				IIPMooViewer.lang.navigation +
 				'</li></ul><br/>' +
 				IIPMooViewer.lang.more +
-				' <a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a></div></div>'
+				' <a href="http://iipimage.sourceforge.net" target="_blank">http://iipimage.sourceforge.net</a></div></div>'
 		}).inject(this.container);
 
 		// Create our main window target div, add our events and inject inside the frame
