@@ -53,7 +53,7 @@
 	    <div id="editPostFormCommands">
 		    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
 		    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
-		    <input type="submit" value="Submit" class="buttonMedium button_medium" id="submit">
+		    <a href="#" id="submit" class="buttonMedium button_medium">Submit</a>
 	    </div>
 	    <form:hidden path="topicId"/>
 	    <form:hidden id="formPostId" path="postId"/>

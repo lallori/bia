@@ -1,6 +1,7 @@
 <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -44,6 +45,7 @@
 				<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
 			</c:if>
 		</c:if>
+		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
 	</div>
 	
 	<div id="topicTitleSection">
@@ -72,17 +74,17 @@
 		<h2 id="topicTitle_${topic.topicId}">${topic.subject}</h2>
 		
 		<!-- <a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a> -->
-		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
+		
 	</div>
 	
 	<hr id="upperSeparator"/>
 	
-	<c:if test="${postsPage.list.size() eq 0}">
+	<c:if test="${empty postsPage.list}">
 		<span class="paginateActive" style="display: none;" href="${baseUrl}&topicId=${topic.topicId}&entryId=${topic.document.entryId}&completeDOM=false" />
 		<p>There are no posts.</p>
 	</c:if>
 	
-	<c:if test="${postsPage.list.size() gt 0}">
+	<c:if test="${not empty postsPage.list}">
 	
 		<div id="forumPaginate_upper">
 			<bia:paginator page="${postsPage}" url="${baseUrl}&topicId=${topic.topicId}&completeDOM=false"
@@ -90,7 +92,7 @@
    				buttonClass="paginateButton intercepted" activeButtonClass="paginateActive"/>
 		</div>
 		
-		<input:hidden id="clientEditing" />
+		<input:hidden id="clientEditing"></input:hidden>
 		
 		<c:forEach items="${postsPage.list}" var="extendedPost" varStatus="status">
 			<c:url var="EditIncrementalPostURL" value="/teaching/ShowIncrementalEditPost.do">
@@ -232,6 +234,14 @@
 		$j(document).ready(function() {
 			var _this = this;
 			
+			<c:if test="${openToTheLast}">
+				setTimeout(function() {
+					console.log('scrolling to the last post');
+					var postId = ${postsPage.list[fn:length(postsPage.list)-1].post.postId};
+					$j("#postsContainer").scrollTo("#postTable_" + postId);
+				}, 500);
+			</c:if>
+			
 			$j("#clientEditing").val(${editingMode});
 			
 			/** Button and anchor links handler definitions **/
@@ -256,6 +266,9 @@
 			
 			$j(".editPost").click(function() {
 				var addNewPostSel = $j("#addNewPost");
+				if (typeof window.checkLastPostIdTimer !== 'undefined') {
+					clearInterval(window.checkLastPostIdTimer);
+				}
 				$j("#editPostContainer").load($j(this).attr('href'), function(responseText, statusText, xhr) {
 					if (statusText == 'error') {
 						$j("#errorMsg").text('There was a server error during the page load: please refresh this page and retry!');
@@ -519,5 +532,6 @@
 					$j("#closeCourseTopicModal").dialog('open');
 				});
 			}
+			
 		});
 	</script>

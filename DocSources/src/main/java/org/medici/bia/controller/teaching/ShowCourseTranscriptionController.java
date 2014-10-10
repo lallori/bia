@@ -112,6 +112,7 @@ public class ShowCourseTranscriptionController {
 				PaginationFilter filter = getPaginationFilter(command, CourseTopicMode.I.equals(transcriptionMode) ? "lastUpdate" : "post.postId", true);
 				Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
 				model.put("postsPage", postsPage);
+				model.put("openToTheLast", command.getPostPageNumber() == null ? true : false);
 				model.put("maxAuthorities", getMaxAuthorities((List<CoursePostExt>)postsPage.getList()));
 				model.put("onlineUsers", applicationAccessContainer.getTeachingOnlineUsers());
 				Boolean isSubscribed = getTeachingService().isSubscribedToCourseTranscription(command.getTopicId());

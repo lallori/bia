@@ -31,8 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.bia.command.teaching.CourseTranscriptionActionsCommand;
-import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.common.property.ApplicationPropertyManager;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
+import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,9 @@ public class ShowCourseTranscriptionActionsController {
 			}
 			
 			model.put("resourcesForum", courseTopic.getForum().getForumId());
+			model.put("refreshUrl", getCourseTranscriptionUrl(courseTopic, command.getTranscriptionMode()));
 			model.put("closed", courseTopic.getLocked());
+			model.put("lastPostId", courseTopic.getLastPost().getPostId());
 			
 			switch (CourseTopicMode.findByName(command.getTranscriptionMode())) {
 			case I:
@@ -94,6 +97,14 @@ public class ShowCourseTranscriptionActionsController {
 			return new ModelAndView("error/ShowCourseTranscriptionActions", model);
 		}
 		
+	}
+	
+	private String getCourseTranscriptionUrl(ForumTopic courseTopic, String mode) {
+		return ApplicationPropertyManager.getApplicationProperty("website.contextPath")
+				+ "/teaching/ShowCourseTranscription.do?topicId=" + courseTopic.getTopicId() 
+				+ "&entryId=" + courseTopic.getDocument().getEntryId()
+				+ "&transcriptionMode=" + mode
+				+ "&completeDOM=true";
 	}
 
 }

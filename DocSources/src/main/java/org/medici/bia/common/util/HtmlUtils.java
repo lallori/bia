@@ -421,15 +421,16 @@ public class HtmlUtils {
 	public static String getCourseTranscriptionTopicHrefUrl(ForumTopic courseTopic) {
 		StringBuilder stringBuilder = new StringBuilder("");
 		if (courseTopic != null) {
-			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuilder.append("/teaching/ShowCourseTranscription.do?topicId=");
-			stringBuilder.append(courseTopic.getTopicId());
-			// link to the last topic page
-			stringBuilder.append("&postForPage=10&postPageNumber=");
-			stringBuilder.append((courseTopic.getTotalReplies() / 10) + 1);
-			stringBuilder.append("&postPageTotal=");
-			stringBuilder.append((courseTopic.getTotalReplies() / 10) + 1);
-			stringBuilder.append("&completeDOM=false");
+			int pageNumber = courseTopic.getTotalReplies() < 2 ? 1 : (((courseTopic.getTotalReplies() - 1) / 10) + 1);
+			stringBuilder.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath())
+				.append("/teaching/ShowCourseTranscription.do?topicId=")
+				.append(courseTopic.getTopicId())
+				// link to the last topic page
+				.append("&postForPage=10&postPageNumber=")
+				.append(pageNumber)
+				.append("&postPageTotal=")
+				.append(pageNumber)
+				.append("&completeDOM=false");
 			
 		}
 

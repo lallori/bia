@@ -516,6 +516,22 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/getLastPostId.json", method = RequestMethod.GET)
+	public Map<String, Object> getLastPostId(
+			@RequestParam(value="courseTopicId", required=true) Integer courseTopicId,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			CoursePostExt postExt = getTeachingService().getLastPostOfTopic(courseTopicId, true);
+			model.put("lastPostId", postExt.getPost().getPostId());
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/OpenCloseCourseTopic.json", method = RequestMethod.POST)
 	public Map<String, Object> openCloseCourseTranscription(
 			@RequestParam(value="courseTopicId", required = true) Integer courseTopicId,

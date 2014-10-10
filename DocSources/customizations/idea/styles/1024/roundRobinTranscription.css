@@ -177,6 +177,14 @@ blockquote cite span.quoteUser {
 
 /* ------------------------------------------------- Edit post container ----------------------------------------- */
 
+#editPostContainer a#button_refresh span {
+	background-image: url(${contextPath}/images/forum/icon_refresh.png);
+	height: 17px;
+	width: 15px;
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+
 #editPostContainer .postTable h2 {
 	max-width: 50%;
 }

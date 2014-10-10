@@ -1,6 +1,7 @@
 <%@ taglib prefix="bia" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fn2" uri="http://bia.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -69,12 +70,12 @@
 	
 	<hr id="upperSeparator"/>
 	
-	<c:if test="${postsPage.list.size() eq 0}">
+	<c:if test="${empty postsPage.list}">
 		<span class="paginateActive" style="display: none;" href="${baseUrl}&topicId=${topic.topicId}&entryId=${topic.document.entryId}&completeDOM=false" />
 		<p>There are no posts.</p>
 	</c:if>
 	
-	<c:if test="${postsPage.list.size() gt 0}">
+	<c:if test="${not empty postsPage}">
 	
 		<div id="forumPaginate_upper">
 		    <bia:paginator page="${postsPage}" url="${baseUrl}&topicId=${topic.topicId}&completeDOM=false"
@@ -252,6 +253,14 @@
 		$j(document).ready(function() {
 			var _this = this;
 			
+			<c:if test="${openToTheLast}">
+				setTimeout(function() {
+					console.log('scrolling to the last post');
+					var postId = ${postsPage.list[fn:length(postsPage.list)-1].post.postId};
+					$j("#postsContainer").scrollTo("#postTable_" + postId);
+				}, 500);
+			</c:if>
+			
 			/*$j(".postLocation").each(function() {
 				var postLocId = $j(this).attr('id');
 				var id = postLocId.substring(postLocId.indexOf('_') + 1, postLocId.length);
@@ -313,7 +322,7 @@
 						var _this = $j(this);
 						if (statusText !== 'error') {
 							setTimeout(function() {
-								console.log('Scrolling to top');
+								// Scrolling to top
 								_this.scrollTo(0, 0);
 				    		},200);
 						} else {

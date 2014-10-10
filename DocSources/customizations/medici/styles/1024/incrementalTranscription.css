@@ -25,8 +25,12 @@
 	width: 100%;
 }
 
-#csSection a {
+#csSection a#goCourseResources {
 	float: right;
+}
+
+#csSection a#unsubscribe {
+	float: left;
 }
 
 #csSection h6 {
@@ -174,6 +178,14 @@
 
 #addNewPost {
 	font-weight: bold;
+}
+
+#editPostContainer a#button_refresh span {
+	background-image: url(${contextPath}/images/forum/icon_refresh.png);
+	height: 17px;
+	width: 15px;
+	background-repeat: no-repeat;
+	padding-left: 25px;
 }
 
 #postTextArea #htmlbox {
