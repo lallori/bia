@@ -1592,7 +1592,7 @@ public class TeachingServiceImpl implements TeachingService {
 		Date now = new Date();
 		User user = getCurrentUser();
 		
-		checkCourseTopicConsistency(postExt.getPost().getTopic().getTopicId(), mode);
+		CourseTopicOption courseTopicOption = checkCourseTopicConsistency(postExt.getPost().getTopic().getTopicId(), mode);
 		
 		doUpdateCourseTranscriptionPost(postSubject, postContent, transcription, volNum, volLetExt, insertNum, insertLet, folioNum, folioMod, folioRV, postExt, now, user);
 		
@@ -1601,6 +1601,17 @@ public class TeachingServiceImpl implements TeachingService {
 				postExt.getPost().getTopic().setLastPost(postExt.getPost());
 				// in the incremental transcription every updated post become the last post
 				recursiveSetLastPost(postExt.getPost().getForum(), postExt.getPost(), now);
+				
+				// updates the course checkpoint
+				CourseCheckPoint checkPoint = getCourseCheckPointDAO().getLastCheckPointByTopicId(postExt.getPost().getTopic().getTopicId());
+				if (checkPoint == null) {
+					checkPoint = new CourseCheckPoint(courseTopicOption, postExt);
+					checkPoint.setCheckPointTime(now);
+					getCourseCheckPointDAO().persist(checkPoint);
+				} else if (checkPoint.getCheckPointPost().getPost().getPostId() != postId){
+					checkPoint.setCheckPointPost(postExt);
+					checkPoint.setCheckPointTime(now);
+				}
 				break;
 			case R:
 				// nothing to do
