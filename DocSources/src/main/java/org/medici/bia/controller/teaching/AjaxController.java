@@ -519,11 +519,12 @@ public class AjaxController {
 	@RequestMapping(value = "/teaching/getLastPostId.json", method = RequestMethod.GET)
 	public Map<String, Object> getLastPostId(
 			@RequestParam(value="courseTopicId", required=true) Integer courseTopicId,
+			@RequestParam(value="byCreationDate", required=true) Boolean byCreationDate,
 			HttpServletRequest httpServletRequest) {
 		
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		try {
-			CoursePostExt postExt = getTeachingService().getLastPostOfTopic(courseTopicId, true);
+			CoursePostExt postExt = getTeachingService().getLastPostOfTopic(courseTopicId, byCreationDate != null ? byCreationDate : true);
 			model.put("lastPostId", postExt.getPost().getPostId());
 			model.put("operation", "OK");
 		} catch (ApplicationThrowable applicationThrowable) {

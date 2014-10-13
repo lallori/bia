@@ -15,6 +15,7 @@
 	
 	<c:url var="LastCourseTranscriptionPostURL" value="/teaching/getLastPostId.json">
 		<c:param name="courseTopicId" value="${command.topicId}" />
+		<c:param name="byCreationDate" value="true" />
 	</c:url>
 	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>

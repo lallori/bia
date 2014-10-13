@@ -19,6 +19,8 @@
 	
 	<c:url var="LastCourseTranscriptionPostURL" value="/teaching/getLastPostId.json">
 		<c:param name="courseTopicId" value="${command.topicId}" />
+		<%-- Change the following parameter to true when the topic ordering will be by creation date --%>
+		<c:param name="byCreationDate" value="false" />
 	</c:url>
 	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
@@ -50,6 +52,7 @@
 			// RR: this scheduler searches for new course transcription topic post and
 			// changes the css style of the refresh button
 			window.checkLastPostIdTimer = setInterval(function() {
+				console.log('Last post identifier is ' + ${lastPostId});
 				console.log('...check for new posts');
 				var _this = this;
 				$j.ajax({
@@ -58,6 +61,7 @@
 					async: true,
 					success: function(json) {
 						if (json.operation === 'OK') {
+							console.log('Server said the last post is ' + json.lastPostId);
 							if (json.lastPostId !== ${lastPostId}) {
 								$j("#button_refresh").css('color', 'red');
 								clearInterval(window.checkLastPostIdTimer);
