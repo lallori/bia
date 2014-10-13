@@ -149,18 +149,10 @@
 					</div>
 						<div class="topicIcons">
 							<c:if test="${not topic.locked}">
-								<c:choose>
-									<c:when test="${extendedPost.post.user.account == account}">
-										<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-										<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-									</c:when>
-									<c:otherwise>
-										<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-											<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
-											<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
-										</security:authorize>
-									</c:otherwise>
-								</c:choose>
+								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+									<a href="${EditIncrementalPostURL}" class="editPost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Edit this post"></a>
+									<a href="${DeleteIncrementalPostURL}" class="deletePost notEditMode" style="${editingMode ? 'display: none;' : ''}" title="Delete post"></a>
+								</security:authorize>
 							</c:if>
 						</div>
 				</div>
