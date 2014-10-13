@@ -136,7 +136,7 @@
 					</div>
 					<table class="by" style="width: 100%;">
 						<tr>
-							<td width="40%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="yyyy-MM-dd HH:mm:ss" /></span></p></td>
+							<td width="40%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></p></td>
 							<td width="20%">
 								<c:choose>
 									<c:when test="${extendedPost.post.updater == null || extendedPost.post.user.account == extendedPost.post.updater.account}">
