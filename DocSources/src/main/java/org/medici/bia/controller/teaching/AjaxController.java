@@ -97,6 +97,37 @@ public class AjaxController {
 		this.userService = userService;
 	}
 	
+	@RequestMapping(value = "/teaching/askAQuestion.json", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> askAQuestion(
+			@RequestParam(value="courseTranscriptionTopicId", required=false) Integer courseTranscriptionTopicId,
+			@RequestParam(value="forumContainerId", required=false) Integer forumContainerId,
+			@RequestParam(value="questionTitle", required=true) String questionTitle,
+			@RequestParam(value="questionText", required=true) String questionText,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			if (forumContainerId != null || courseTranscriptionTopicId != null) {
+				ForumTopic courseTopic = getTeachingService().askAQuestion(
+						forumContainerId, 
+						courseTranscriptionTopicId,
+						questionTitle, 
+						questionText, 
+						httpServletRequest.getRemoteAddr());
+				
+				model.put("redirectURL", HtmlUtils.getTeachingShowTopicForumHrefUrl(courseTopic) + "&completeDOM=true");
+				model.put("operation", "OK");
+			} else {
+				model.put("error", "no forum container nor course transcription topic provided!");
+				model.put("operation", "KO");
+			}
+		} catch (ApplicationThrowable th) {
+			model.put("error", th.toString());
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/CreateCourseTranscription", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> createCourseTranscription(
 			@RequestParam(value="entryId", required=true) Integer docId,

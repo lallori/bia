@@ -547,6 +547,18 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		return resultMap;
 	}
 	
+	@Override
+	public Document getTeachingDocument(Integer forumContainerId) throws PersistenceException {
+		String jpql = "SELECT option.courseTopic.document FROM CourseTopicOption AS option " +
+			"WHERE (option.mode = 'I' or option.mode = 'R') AND " +
+			"courseTopic.forum.forumId = :containerId";
+				
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("containerId", forumContainerId);
+		
+		return getFirst(query);
+	}
+	
 	/**
 	 * 
 	 */

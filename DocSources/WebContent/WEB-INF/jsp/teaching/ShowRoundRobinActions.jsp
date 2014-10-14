@@ -18,15 +18,40 @@
 		<c:param name="byCreationDate" value="true" />
 	</c:url>
 	
+	<c:url var="AskAQuestionURL" value="/teaching/askAQuestion.json" />
+	
 	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
 
 	<c:if test="${not closed}">
 		<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
 	</c:if>
 	
+	<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b>Ask a Question</b></a>
+	
 	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
 	
 	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
+	
+	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
+		<p>
+			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span>
+			Are you sure you want to ask a question?
+		</p>
+	</div>
+	
+	<div id="askAQuestionStep2Modal" title="Ask a Question" style="display:none"> 
+		<form id="askAQuestionForm">
+			<div>
+				<label id="questionTitleLabel" for="questionTitle" style="display:block;">Type the title of the question</label>
+				<input id="questionTitle" type="text" name="questionTitle" style="width: 98%"/>
+			</div>
+			<div>
+				<label id="questionTextLabel" for="questionText" style="display:block;">Type the question</label>
+				<input id="questionText" type="text" name="questionText" style="width: 98%"/>
+			</div>
+			<input type="hidden" id="courseTranscriptionTopicId" name="courseTranscriptionTopicId" value="${command.topicId}" />
+		</form>
+	</div>
 	
 	<script>
 		$j(document).ready(function() {
@@ -81,5 +106,61 @@
 				return false;
 			});
 			
+			$j('#askAQuestion').click(function() {
+				$j("#askAQuestionStep1Modal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130, 
+					buttons: {
+						Ok: function() {
+							$j(this).dialog("close");
+							$j("#askAQuestionStep2Modal").dialog({
+								autoOpen : false,
+								modal: true,
+								resizable: false,
+								width: 300,
+								height: 180, 
+								buttons: {
+									Ok: function() {
+										$j(this).dialog("close");
+										$j.ajax({
+											type: "POST",
+											url: "${AskAQuestionURL}",
+											data: $j("#askAQuestionForm").serialize(),
+											cache: false,
+											async: false,
+											success: function(json) {
+												if (json.operation === 'OK') {
+													window.location.href = json.redirectURL;
+													return false;
+												}
+												alert('There was a problem during this operation...please contact the admin!');
+											},
+											error: function(data) {
+												alert('Server error...please contact the admin!');
+											}
+										  });
+										  return false;
+									  },
+									  Cancel: function() {
+										  $j(this).dialog("close");
+										  return false;
+									  }
+								  }
+							  });
+							  $j("#askAQuestionStep2Modal").dialog('open');
+							  return false;
+						  },
+						  No: function() {
+							  $j(this).dialog("close");
+							  return false;
+						  }
+					  }
+				  });
+				$j("#askAQuestionStep1Modal").dialog('open');
+				return false;
+			});
 		});
 	</script>

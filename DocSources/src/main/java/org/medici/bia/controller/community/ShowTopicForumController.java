@@ -188,7 +188,7 @@ public class ShowTopicForumController {
 			
 			if (forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null) {
 				//MD: Prepare the Manuscript Viewer
-				Document document = forumTopic.getForum().getDocument();
+				Document document = forumTopic.getDocument() != null ? forumTopic.getDocument() : forumTopic.getForum().getDocument();
 				if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
 					DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 					documentExplorer.setImage(new Image());
@@ -227,12 +227,12 @@ public class ShowTopicForumController {
 					model.put("applicationThrowable", applicationThrowable);
 					return new ModelAndView("error/ShowTopic", model);
 				}
-				
-				if (httpServletRequest.getServletPath().startsWith("/teaching")) {
-					CourseTopicOption option = getTeachingService().getCourseTranscriptionTopicOption(forumTopic.getForum().getForumId());
-					if (option != null) {
-						model.put("courseTranscriptionURL", CourseUtils.getCourseTranscriptionURL(option));
-					}
+			}
+			
+			if (httpServletRequest.getServletPath().startsWith("/teaching")) {
+				CourseTopicOption option = getTeachingService().getCourseTranscriptionTopicOption(forumTopic.getForum().getForumId());
+				if (option != null) {
+					model.put("courseTranscriptionURL", CourseUtils.getCourseTranscriptionURL(option));
 				}
 			}
 			

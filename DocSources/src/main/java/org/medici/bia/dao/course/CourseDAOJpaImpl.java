@@ -82,6 +82,14 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	}
 	
 	@Override
+	public Course getCourseByCourseFragment(Integer courseFragmentContainerIdentifier) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Course WHERE forumId = (SELECT forumParent FROM Forum WHERE forumId = :forumId)");
+		query.setParameter("forumId", courseFragmentContainerIdentifier);
+		
+		return (Course)query.getSingleResult();
+	}
+	
+	@Override
 	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		Query query = null;

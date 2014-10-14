@@ -263,6 +263,15 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	Map<Integer, Integer> getAssociatedImage(List<Integer> entryIds) throws PersistenceException;
 	
 	/**
+	 * This method returns the document relative to the course transcription container.
+	 * 
+	 * @param forumContainerId the course transcription container identifier
+	 * @return the document found
+	 * @throws PersistenceException
+	 */
+	Document getTeachingDocument(Integer forumContainerId) throws PersistenceException;
+	
+	/**
 	 * This method searches documents which contains the parameters set in {@link org.medici.bia.common.search}
 	 * object and return a result page.
 	 * 
@@ -378,4 +387,5 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	void updateIndex(Date fromDate) throws PersistenceException;
+	
 }

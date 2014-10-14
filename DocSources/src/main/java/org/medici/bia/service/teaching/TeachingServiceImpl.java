@@ -481,6 +481,99 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public ForumTopic askAQuestion(Integer forumContainerId, Integer courseTranscriptionTopicId, String questionTitle, String questionText, String remoteAddr) throws ApplicationThrowable {
+		try {
+			Date now = new Date();
+			User user = getCurrentUser();
+			
+			// search the course associated to this course fragment and retrieve the course resources container
+			Forum container = null;
+			Document document = null;
+			Course course = null;
+			if (courseTranscriptionTopicId != null) {
+				ForumTopic courseTranscriptionTopic = getForumTopicDAO().find(courseTranscriptionTopicId);
+				container = courseTranscriptionTopic.getForum();
+				document = courseTranscriptionTopic.getDocument();
+				course = getCourseDAO().getCourseByCourseFragment(container.getForumId());
+			} else {
+				container = getForumDAO().find(forumContainerId);
+				document = getDocumentDAO().getTeachingDocument(forumContainerId);
+				course = getCourseDAO().getCourseByCourseFragment(forumContainerId);
+			}
+			
+			// question topic creation			
+			ForumTopic questionTopic = new ForumTopic();
+			questionTopic.setDateCreated(now);
+			questionTopic.setLastUpdate(now);
+			questionTopic.setUser(user);
+			questionTopic.setForum(container);
+			questionTopic.setDocument(document);
+			questionTopic.setSubject(questionTitle);
+			questionTopic.setIpAddress(remoteAddr);
+			questionTopic.setTotalReplies(0);
+			questionTopic.setTotalViews(0);
+			questionTopic.setLogicalDelete(Boolean.FALSE);
+			questionTopic.setLocked(Boolean.FALSE);
+			
+			getForumTopicDAO().persist(questionTopic);
+			
+			// question topic option
+			CourseTopicOption topicOption = new CourseTopicOption();
+			topicOption.setCourseTopic(questionTopic);
+			topicOption.setMode(CourseTopicMode.D);
+			
+			getCourseTopicOptionDAO().persist(topicOption);
+			
+			// first post of the new topic
+			ForumPost firstPost = new ForumPost();
+			firstPost.setDateCreated(now);
+			firstPost.setLastUpdate(now);
+			firstPost.setSubject(questionTitle);
+			firstPost.setText(questionText);
+			firstPost.setTopic(questionTopic);
+			firstPost.setIpAddress(remoteAddr);
+			firstPost.setLogicalDelete(Boolean.FALSE);
+			firstPost.setUser(user);
+			firstPost.setUpdater(user);
+			
+			getForumPostDAO().persist(firstPost);
+			
+			// adjust the first and the last post of the new topic
+			questionTopic.setFirstPost(firstPost);
+			questionTopic.setLastPost(firstPost);
+			
+			// topic subscription -> to all course people
+			for(UserRole personRole : getCoursePeople(course)) {
+				if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
+					ForumTopicWatch personTopicWatch = new ForumTopicWatch(questionTopic, personRole.getUser());
+					getForumTopicWatchDAO().persist(personTopicWatch);
+				}
+			}
+			
+			// add a forum post notification for email submission
+			ForumPostNotified forumPostNotified = new ForumPostNotified(firstPost.getPostId());
+			forumPostNotified.setMailSended(Boolean.FALSE);
+				
+			getForumPostNotifiedDAO().persist(forumPostNotified);
+			
+			// Changing the user last forum dates and number of post
+			user.setLastActiveForumDate(now);
+			user.setLastForumPostDate(now);
+			user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, questionTopic));
+			
+			return questionTopic;
+		} catch (PersistenceException e) {
+			throw new ApplicationThrowable(e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Long countActiveCourses() throws ApplicationThrowable {
 		try {

@@ -129,6 +129,19 @@ public interface TeachingService {
 			Integer relatedCheckPointPostId) throws ApplicationThrowable;
 	
 	/**
+	 * This method creates a new question topic relative to a transcription topic.
+	 * 
+	 * @param forumContainerId the forum container identifier
+	 * @param courseTranscriptionTopicId the course transcription topic identifier
+	 * @param questionTitle the question title (this is the topic title and the first post subject)
+	 * @param questionText the question text (this is the first post text)
+	 * @param remoteAddr the user address
+	 * @return the new question topic
+	 * @throws ApplicationThrowable
+	 */
+	ForumTopic askAQuestion(Integer forumContainerId, Integer courseTranscriptionTopicId, String questionTitle, String questionText, String remoteAddr) throws ApplicationThrowable;
+	
+	/**
 	 * This method counts the active courses.
 	 * 
 	 * @return the current number of active courses

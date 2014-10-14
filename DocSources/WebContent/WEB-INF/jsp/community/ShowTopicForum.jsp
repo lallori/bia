@@ -145,7 +145,8 @@
 		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
 			<c:choose>
-				<c:when test="${not empty topic.forum.document && not empty documentExplorer}">
+				<c:when test="${(not empty topic.document or not empty topic.forum.document) && not empty documentExplorer}">
+					<c:set var="document" value="${not empty topic.document ? topic.document : topic.forum.document}" />
 					<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 						<c:param name="entryId" value="${documentExplorer.entryId}"/>
 						<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
@@ -157,7 +158,7 @@
 					<c:url var="PageTurnerURL" value="/src/ShowManuscriptViewer.do"/>
 					
 					<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-						<c:param name="entryId" value="${topic.forum.document.entryId}"/>
+						<c:param name="entryId" value="${document.entryId}"/>
 					</c:url>
 					
 					<input type="hidden" id="currentPage" value="${documentExplorer.image.imageOrder}"/>
@@ -192,7 +193,7 @@
 						scrolling="no" marginheight="0" marginwidth="0" 
 						src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 				</c:when>
-				<c:when test="${not empty topic.forum.document && empty documentExplorer}">
+				<c:when test="${(not empty topic.document or not empty topic.forum.document) && empty documentExplorer}">
 					<p></p>
 					<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 						<c:param name="entryId" value="${topic.forum.document.entryId}"/>
@@ -211,10 +212,10 @@
 						<c:param name="showThumbnail" value="true" />
 					</c:url>
 
-				<iframe class="iframeVolumeExplorer" onload="iFrameHasLoaded();"
-					scrolling="no" marginheight="0" marginwidth="0"
-					src="${manuscriptViewerURL}" style="z-index: 100"></iframe>
-			</c:when>
+					<iframe class="iframeVolumeExplorer" onload="iFrameHasLoaded();"
+						scrolling="no" marginheight="0" marginwidth="0"
+						src="${manuscriptViewerURL}" style="z-index: 100"></iframe>
+				</c:when>
 				<c:when test="${not empty topic.forum.place}">
 					<p></p>
 					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
