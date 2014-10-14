@@ -525,7 +525,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		try {
 			CoursePostExt postExt = getTeachingService().getLastPostOfTopic(courseTopicId, byCreationDate != null ? byCreationDate : true);
-			model.put("lastPostId", postExt.getPost().getPostId());
+			model.put("lastPostId", postExt != null ? postExt.getPost().getPostId() : -1);
 			model.put("operation", "OK");
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");

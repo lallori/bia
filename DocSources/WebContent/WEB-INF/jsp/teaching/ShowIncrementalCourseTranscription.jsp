@@ -226,7 +226,7 @@
 		$j(document).ready(function() {
 			var _this = this;
 			
-			<c:if test="${openToTheLast}">
+			<c:if test="${openToTheLast and fn:length(postsPage.list) > 0}">
 				setTimeout(function() {
 					console.log('scrolling to the last post');
 					var postId = ${postsPage.list[fn:length(postsPage.list)-1].post.postId};
