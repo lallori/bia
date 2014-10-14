@@ -79,7 +79,7 @@ public class ShowCourseTranscriptionActionsController {
 			model.put("resourcesForum", courseTopic.getForum().getForumId());
 			model.put("refreshUrl", getCourseTranscriptionUrl(courseTopic, command.getTranscriptionMode()));
 			model.put("closed", courseTopic.getLocked());
-			model.put("lastPostId", courseTopic.getLastPost().getPostId());
+			model.put("lastPostId", courseTopic.getLastPost() != null ? courseTopic.getLastPost().getPostId() : -1);
 			
 			switch (CourseTopicMode.findByName(command.getTranscriptionMode())) {
 			case I:
