@@ -349,7 +349,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 }
 
 #otherTopicActions {
-	float: right;
+/* 	float: right; */
 }
 
 #urlActions {
@@ -768,6 +768,7 @@ a.returnTo {
 
 #followTopic { /* Button to subscribe/unsubscribe */
 	display: block;
+	float: right;
 }
 
 

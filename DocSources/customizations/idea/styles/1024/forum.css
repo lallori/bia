@@ -270,6 +270,7 @@ span.topicClosed {
 
 #followTopic{
 	display: inline-block;
+	float: right;
 }
 
 #userDiv { /* User profile Div */
@@ -288,7 +289,7 @@ span.topicClosed {
 }
 
 #otherTopicActions {
-	float: right;
+/* 	float: right; */
 }
 
 #urlActions {
