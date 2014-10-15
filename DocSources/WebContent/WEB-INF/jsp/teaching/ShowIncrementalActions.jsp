@@ -49,7 +49,7 @@
 		</c:otherwise>
 	</c:choose>
 	
-	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>  -->
+	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>  -->
 	
 	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
 		<p>

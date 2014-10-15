@@ -45,7 +45,7 @@
 				<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
 			</c:if>
 		</c:if>
-		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Course Resources</a>
+		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>
 	</div>
 	
 	<div id="topicTitleSection">
