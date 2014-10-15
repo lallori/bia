@@ -71,7 +71,7 @@
 			</c:if>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 				<c:if test="${not empty courseTranscriptionURL}">
-					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span><b>Back To Transcription</b></span></a>
+					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To <b>Transcription</b></span></a>
 				</c:if>
 			</security:authorize>
 		</div>
@@ -475,7 +475,7 @@
 		<div id="topicActions2">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 					<c:if test="${not empty courseTranscriptionURL}">
-						<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span><b>Back To Transcription</b></span></a>
+						<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To <b>Transcription</b></span></a>
 					</c:if>
 			</security:authorize>
 		</div>
