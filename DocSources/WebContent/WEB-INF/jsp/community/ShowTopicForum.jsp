@@ -479,7 +479,7 @@
 					</c:if>
 			</security:authorize>
 		</div>
-		
+		<br>
 		<div id="forumPaginate_lower">
 		    <c:set var="paginationData">
 		    	<c:choose>
