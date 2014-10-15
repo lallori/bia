@@ -543,7 +543,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID in VERTICAL MODE  */
-	margin: -5px 0 0 92px;
+	margin: -5px 0 0 0;
 	width:22px;
 	height:22px;
 	background-image:url(${contextPath}/images/mview/button_mini.png);
