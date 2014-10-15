@@ -739,7 +739,7 @@ public class AjaxController {
 			if (annotationsFormView != null) {
 				for (String string : annotationsFormView) {
 					//Next code is instructed on code of javascript IIPMooViewer.annotationsAsQueryParameterString
-					String[] splitted = org.apache.commons.lang.StringUtils.splitPreserveAllTokens(string, ",");
+					String[] splitted = org.apache.commons.lang.StringUtils.splitPreserveAllTokens(string, "¥");
 					Annotation annotation = new Annotation();
 					annotation.setAnnotationId(NumberUtils.toInt(splitted[0]));
 					annotation.setX(NumberUtils.toDouble(splitted[2]));

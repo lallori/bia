@@ -2654,31 +2654,32 @@ IIPMooViewer.annotationsAsQueryParameterString = function(annotations) {
 	for (var i = 0; i < annotation_array.length; i++) {
 		// we need to control typeOf beacause in annotation there are also functions...
 		if (typeof(annotation_array[i]) == "object") {
+			var separator = "¥";
 			retValue += "annotations=";
 			retValue += annotation_array[i].annotationId;
-    		retValue += ",";
+    		retValue += separator;
 			retValue += annotation_array[i].id;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].x;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].y;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].w;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].h;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].type;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].title;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].text;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].deletable;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].updatable;
-			retValue += ",";
+			retValue += separator;
 			retValue += annotation_array[i].visibility;
-			retValue += ",";
+			retValue += separator;
 			retValue += (typeof annotation_array[i].color !== 'undefined' ? annotation_array[i].color : 'none');
 			retValue += "&";
 		}
