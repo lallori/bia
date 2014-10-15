@@ -326,7 +326,7 @@ a.buttonMedium:hover, a.buttonSmall:hover, a.buttonMedium:hover, a.buttonLarge:h
 
 #courseTranscription {
 	display: inline-block;
-	margin-left: 10px;
+/* 	margin-left: 10px; */
 }
 
 #followTopic{
