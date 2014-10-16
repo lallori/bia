@@ -356,25 +356,25 @@ public interface ManuscriptViewerService {
 	 * The annotations returned correspond to the provided manuscript mode ({@link ManuscriptMode}).
 	 * If null mode is provided then 'COMMUNITY' mode is considered. 
 	 * 
-	 * @param imageName the image name
+	 * @param imageId the image identifier
 	 * @param mode the manuscript mode
 	 * @return the list of annotation found
 	 * @throws ApplicationThrowable
 	 */
-	public List<Annotation> getImageAnnotations(String imageName, ManuscriptMode mode)throws ApplicationThrowable;
+	public List<Annotation> getImageAnnotations(Integer imageId, ManuscriptMode mode)throws ApplicationThrowable;
 	
 	/**
 	 * This method determines which image annotations are editable from the provided user.
 	 * The annotations are filtered by the provided manuscript mode ({@link ManuscriptMode}).
 	 * If null mode is provided then 'COMMUNITY' mode is considered.
 	 * 
-	 * @param imageName the image name
+	 * @param imageId the image identifier
 	 * @param user the user
 	 * @param mode the manuscript mode
 	 * @return a map with annotation editable details
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName, User user, ManuscriptMode mode)throws ApplicationThrowable;
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(Integer imageId, User user, ManuscriptMode mode)throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -101,16 +101,16 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Annotation> getAnnotations(String imageName) throws PersistenceException {
-		return getAnnotations(imageName, null, null);
+	public List<Annotation> getAnnotations(Integer imageId) throws PersistenceException {
+		return getAnnotations(imageId, null, null);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Annotation> getAnnotations(String imageName, User user) throws PersistenceException {
-		return getAnnotations(imageName, user, null);
+	public List<Annotation> getAnnotations(Integer imageId, User user) throws PersistenceException {
+		return getAnnotations(imageId, user, null);
 	}
 	
 	/**
@@ -118,8 +118,8 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Annotation> getAnnotations(String imageName, User user, List<Annotation.Type> notConsideredTypes) {
-		String jpql = "FROM Annotation WHERE image.imageName = :imageName AND logicalDelete = false";
+	public List<Annotation> getAnnotations(Integer imageId, User user, List<Annotation.Type> notConsideredTypes) {
+		String jpql = "FROM Annotation WHERE image.imageId = :imageId AND logicalDelete = false";
 		if (user != null) {
 			jpql += " AND (type != 'PERSONAL' OR (type = 'PERSONAL' AND user.account = :account))";
 		}
@@ -135,7 +135,7 @@ public class AnnotationDAOJpaImpl extends JpaDao<Integer, Annotation> implements
 		jpql += " ORDER BY annotationId DESC";
 		
 		Query query = getEntityManager().createQuery(jpql);
-        query.setParameter("imageName", imageName);
+        query.setParameter("imageId", imageId);
         if (user != null) {
         	query.setParameter("account", user.getAccount());
         }

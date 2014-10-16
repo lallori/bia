@@ -825,14 +825,14 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Annotation> getImageAnnotations(String imageName, ManuscriptMode mode) throws ApplicationThrowable {
+	public List<Annotation> getImageAnnotations(Integer imageId, ManuscriptMode mode) throws ApplicationThrowable {
 		try {
 			if (mode == null) {
 				mode = ManuscriptMode.COMMUNITY;
 			}
 			User user = getCurrentUser();
 			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(mode);
-			return getAnnotationDAO().getAnnotations(imageName, user, filteredTypes);
+			return getAnnotationDAO().getAnnotations(imageId, user, filteredTypes);
 		} catch(Throwable throwable) {
 			throw new ApplicationThrowable(throwable);
 		}
@@ -842,14 +842,14 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Annotation, Boolean> getImageAnnotationsToEdit(String imageName, User user, ManuscriptMode mode) throws ApplicationThrowable {
+	public Map<Annotation, Boolean> getImageAnnotationsToEdit(Integer imageId, User user, ManuscriptMode mode) throws ApplicationThrowable {
 		try {
 			if (mode == null) {
 				mode = ManuscriptMode.COMMUNITY;
 			}
 			Map<Annotation, Boolean> resultMap = new HashMap<Annotation, Boolean>();
 			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(mode);
-			List<Annotation> result = getAnnotationDAO().getAnnotations(imageName, user, filteredTypes);
+			List<Annotation> result = getAnnotationDAO().getAnnotations(imageId, user, filteredTypes);
 			List<UserRole> userRoles = getUserRoleDAO().findUserRoles(user.getAccount());
 			UserRole mostSignificantRole = UserRoleUtils.getMostSignificantRole(userRoles);
 			for(Annotation currentAnnotation : result){
@@ -955,7 +955,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			User user = getCurrentUser();
 			
 			List<Annotation.Type> filteredTypes = ManuscriptViewerUtils.getNotConsideredTypes(ManuscriptMode.COMMUNITY);
-			List<Annotation> persistedAnnotations = getAnnotationDAO().getAnnotations(image.getImageName(), user, filteredTypes);
+			List<Annotation> persistedAnnotations = getAnnotationDAO().getAnnotations(imageId, user, filteredTypes);
 			
 			Date operationDate = new Date();
 

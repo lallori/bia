@@ -333,6 +333,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
 	public ModelAndView getImageAnnotation(
+			@RequestParam(value="imageId", required=false) Integer imageId,
 			@RequestParam(value="imageName", required=false) String imageName,
 			@RequestParam(value="annotationId", required=false) Integer annotationId) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
@@ -349,7 +350,7 @@ public class AjaxController {
 					annotations.add(annotation);
 				}
 			} else {
-				annotations = getManuscriptViewerService().getImageAnnotations(imageName, null);	
+				annotations = getManuscriptViewerService().getImageAnnotations(imageId, null);	
 			}
 			List<Object> resultList = getAnnotationsForView(annotationId, annotations); 
 			model.put("annotations", resultList);

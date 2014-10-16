@@ -69,34 +69,34 @@ public interface AnnotationDAO extends Dao<Integer, Annotation> {
 	/**
 	 * Returns the not deleted annotations linked to the provided image.
 	 * 
-	 * @param imageName the image name
+	 * @param imageId the image identifier
 	 * @return the list of annotations found
 	 * @throws PersistenceException
 	 */
-	List<Annotation> getAnnotations(String imageName) throws PersistenceException;
+	List<Annotation> getAnnotations(Integer imageId) throws PersistenceException;
 	
 	/**
 	 * Returns the not deleted annotations linked to the provided image.<br/>
 	 * Also returns personal annotation associated to the provided owner.
 	 * 
-	 * @param imageName the image name
+	 * @param imageId the image identifier
 	 * @param user the personal annotations owner
 	 * @return the list of annotations found
 	 * @throws PersistenceException
 	 */
-	List<Annotation> getAnnotations(String imageName, User user) throws PersistenceException;
+	List<Annotation> getAnnotations(Integer imageId, User user) throws PersistenceException;
 	
 	/**
 	 * Returns the not deleted annotations linked to the provided image.<br/>
 	 * Also returns personal annotation associated to the provided owner and does not consider the provided types.
 	 * 
-	 * @param imageName the image name
+	 * @param imageId the image identifier
 	 * @param user the personal annotations owner
 	 * @param notConsideredTypes the not considered annotation types
 	 * @return the list of annotations found
 	 * @throws PersistenceException
 	 */
-	List<Annotation> getAnnotations(String imageName, User user, List<Annotation.Type> notConsideredTypes) throws PersistenceException;
+	List<Annotation> getAnnotations(Integer imageId, User user, List<Annotation.Type> notConsideredTypes) throws PersistenceException;
 	
 	/**
 	 * Returns the annotations linked to a community forum topic.
