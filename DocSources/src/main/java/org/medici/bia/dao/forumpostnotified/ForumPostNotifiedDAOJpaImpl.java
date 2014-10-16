@@ -111,12 +111,12 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 		String jpqlSecond = "DELETE FROM ForumPostNotified AS notified "
 				+ "WHERE notified.mailSended = false AND "
 				+ "notified.postId IN "
-				+ "(SELECT post.postId FROM "
+				+ "(SELECT DISTINCT post.postId FROM "
 				+ "ForumPost AS post, "
 				+ "ForumTopicWatch AS watch "
 				+ "WHERE "
 				+ "watch.topic = post.topic AND "
-				+ "(post.logicalDelete = true OR post.topic.logicalDelete = true OR watch.user.mail IS NULL OR watch.user.mail = ''))";
+				+ "(post.logicalDelete = true OR post.topic.logicalDelete = true))";
 		
 		int removedSecond = getEntityManager().createQuery(jpqlSecond).executeUpdate();
 		

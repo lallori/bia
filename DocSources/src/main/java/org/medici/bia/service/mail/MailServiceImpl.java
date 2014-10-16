@@ -415,11 +415,13 @@ public class MailServiceImpl implements MailService {
 				}
 				getJavaMailSender().send(message);
 	
-				forumPostReplied.setMailSended(Boolean.TRUE);
-				forumPostReplied.setMailSendedDate(new Date());
 			} else {
 				logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
 			}
+			
+			forumPostReplied.setMailSended(Boolean.TRUE);
+			forumPostReplied.setMailSendedDate(new Date());
+			
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
 			logger.error(throwable);
