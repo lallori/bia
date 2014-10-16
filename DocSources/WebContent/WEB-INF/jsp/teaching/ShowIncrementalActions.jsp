@@ -38,9 +38,9 @@
 				</c:otherwise>
 			</c:choose>
 			
-			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
+			<a href="#" id="showCurrentTranscription" class="buttonMedium button_Medium">Current Transcription</a>
 			
-			<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b>Ask a Question</b></a>
+			<a href="#" id="askAQuestion" class="buttonLarge button_large"><b>Classroom Discussion</b></a>
 			
 			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b>Refresh</b> page</span></a>
 		</c:when>
@@ -54,18 +54,18 @@
 	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to ask a question?
+			Are you sure you want to create a post in the Classroom Discussion forum?
 		</p>
 	</div>
 	
 	<div id="askAQuestionStep2Modal" title="Ask a Question" style="display:none"> 
 		<form id="askAQuestionForm">
 			<div>
-				<label id="questionTitleLabel" for="questionTitle" style="display:block;">Type the title of the question</label>
+				<label id="questionTitleLabel" for="questionTitle" style="display:block;">Type in here your question title</label>
 				<input id="questionTitle" type="text" name="questionTitle" style="width: 98%"/>
 			</div>
 			<div>
-				<label id="questionTextLabel" for="questionText" style="display:block;">Type the question</label>
+				<label id="questionTextLabel" for="questionText" style="display:block;">Type in here your question</label>
 				<input id="questionText" type="text" name="questionText" style="width: 98%"/>
 			</div>
 			<input type="hidden" id="courseTranscriptionTopicId" name="courseTranscriptionTopicId" value="${command.topicId}" />

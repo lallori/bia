@@ -15,7 +15,7 @@
 		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
-	<h6 style="margin-bottom: 10px;">EDIT YOUR POST</h6>
+	<h6 style="margin-bottom: 10px;">EDIT POST</h6>
 
 	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditRoundRobinPostURL}" style="max-width: 1000px;">
 		<div id="subjectSection">

@@ -20,10 +20,10 @@
 	</c:url>
 	
 	<security:authorize ifAnyGranted="ROLE_STUDENTS">
-		<h6 style="margin-bottom: 10px;">EDIT YOUR TRANSCRIPTION</h6>
+		<h6 style="margin-bottom: 10px;">EDIT TRANSCRIPTION</h6>
 	</security:authorize>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-		<h6 style="margin-bottom: 10px;">EDIT YOUR POST</h6>
+		<h6 style="margin-bottom: 10px;">EDIT POST</h6>
 	</security:authorize>
 
 	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditIncrementalPostURL}" style="max-width: 1000px;">
