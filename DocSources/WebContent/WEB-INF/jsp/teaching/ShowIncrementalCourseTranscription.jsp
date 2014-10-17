@@ -28,7 +28,7 @@
 	
 	<div id="csSection">
 		<h6>
-			COURSE TRANSCRIPTION
+			COLLABORATIVE TRANSCRIPTION
 			<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585">[CLOSED]</span></c:if>
 		</h6>
 		<c:if test="${not topic.locked}">
