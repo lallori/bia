@@ -19,6 +19,7 @@
 			var imageName = "${image.imageName}";
 			
 			// RR: Added volume informations and insert informations (if needed)
+			var volNum = "${image.volNum}"
 			var volExt = "${image.volLetExt}";
 			var insNum = "${image.insertNum}";
 			var insExt = "${image.insertLet}";
