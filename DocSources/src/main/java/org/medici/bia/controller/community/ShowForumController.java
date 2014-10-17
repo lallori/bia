@@ -291,6 +291,10 @@ public class ShowForumController {
 				if (SubType.COURSE.equals(forum.getSubType())) {
 					Map<Integer, CourseTopicMode> topicsMap = getTeachingService().getCourseTopicsMode((List<ForumTopic>)topicPage.getList());
 					model.put("topicsMap", topicsMap);
+					if (topicsMap.containsValue(CourseTopicMode.I) || topicsMap.containsValue(CourseTopicMode.R) || topicsMap.containsValue(CourseTopicMode.C)) {
+						// the topicsMap contains a course transcription (the help resources does not contain transcriptions)
+						model.put("containsTranscriptionTopic", true);
+					}
 				}
 			}
 

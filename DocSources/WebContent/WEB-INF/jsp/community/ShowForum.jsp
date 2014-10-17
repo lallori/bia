@@ -224,9 +224,26 @@
 		</security:authorize>
 	
 		<c:if test="${forum.option.canHaveTopics && forum.subType != 'COURSE'}">
-			<security:authorize ifAnyGranted="ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
 					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic"><fmt:message key="community.forum.link.newTopic" /></a>
+				</div>
+			</security:authorize>
+		</c:if>
+		
+		<c:if test="${forum.option.canHaveTopics && forum.subType == 'COURSE'}">
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
+				<div id="topicActions">
+					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic">
+						<c:choose>
+							<c:when test="${not empty containsTranscriptionTopic and containsTranscriptionTopic}">
+								Classroom Discussion
+							</c:when>
+							<c:otherwise>
+								Course Discussion
+							</c:otherwise>
+						</c:choose>
+					</a>
 				</div>
 			</security:authorize>
 		</c:if>
@@ -763,8 +780,11 @@
 							            		 	<c:when test="${topicType == 'Q'}">
 							            		 		Highlighted Question
 							            		 	</c:when>
-							            		 	<c:when test="${topicType == 'D'}">
+							            		 	<c:when test="${topicType == 'D' and not empty containsTranscriptionTopic and containsTranscriptionTopic}">
 							            		 		Classroom Discussion
+							            		 	</c:when>
+							            		 	<c:when test="${topicType == 'D' and (empty containsTranscriptionTopic or not containsTranscriptionTopic)}">
+							            		 		Course Discussion
 							            		 	</c:when>
 							            		 	<c:otherwise>
 							            		 		<b>Collaborative Transcription</b>

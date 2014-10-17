@@ -36,7 +36,6 @@ import javax.persistence.PersistenceException;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
-import org.medici.bia.domain.Course;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.Forum.Type;
@@ -277,15 +276,6 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 */
 	Map<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
 	
-	/**
-	 * This method determines if the provided forum is contained in an active {@link Course}.
-	 * 
-	 * @param forumId the forum identifier
-	 * @return true if the forum is contained in an active course, false otherwise
-	 * @throws PersistenceException
-	 */
-	boolean isInActiveCourse(Integer forumId) throws PersistenceException;
-
 	/**
 	 * 
 	 * @param parentForum

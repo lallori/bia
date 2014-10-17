@@ -33,6 +33,7 @@ import java.util.Map;
 import org.medici.bia.command.teaching.ShowManageCoursesCommand;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
+import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,24 +68,27 @@ public class ShowManageCoursesController {
 	public ModelAndView setupForm(@ModelAttribute("command") ShowManageCoursesCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
-		PaginationFilter paginationFilter = new PaginationFilter(
-				command.getFirstRecord() != null ? command.getFirstRecord() : 0, 
-				command.getElementsForPage() != null ? command.getElementsForPage() : ELEMENTS_FOR_PAGE, 
-				command.getTotal());
-		
-		if (paginationFilter.getElementsForPage() == null) {
-			paginationFilter.setElementsForPage(ELEMENTS_FOR_PAGE);
+		try {
+			PaginationFilter paginationFilter = new PaginationFilter(
+					command.getFirstRecord() != null ? command.getFirstRecord() : 0, 
+					command.getElementsForPage() != null ? command.getElementsForPage() : ELEMENTS_FOR_PAGE, 
+					command.getTotal());
+			
+			if (paginationFilter.getElementsForPage() == null) {
+				paginationFilter.setElementsForPage(ELEMENTS_FOR_PAGE);
+			}
+			paginationFilter.setThisPage(command.getThisPage() != null ? command.getThisPage() : 1);
+			
+			if (command.getOrderByTableField() != null && command.getAscendingOrder() != null) {
+				paginationFilter.addSortingCriteria(convertTableField(command.getOrderByTableField()), command.getAscendingOrder() ? "ASC" : "DESC");
+			}
+	
+			Page coursesPage = getTeachingService().getCourses(command.getShowActives(), paginationFilter);
+			model.put("coursesPage", coursesPage);
+			return new ModelAndView("teaching/ShowManageCourses", model);
+		} catch (ApplicationThrowable th) {
+			return new ModelAndView("error/ShowManageCourses", model);
 		}
-		paginationFilter.setThisPage(command.getThisPage() != null ? command.getThisPage() : 1);
-		
-		if (command.getOrderByTableField() != null && command.getAscendingOrder() != null) {
-			paginationFilter.addSortingCriteria(convertTableField(command.getOrderByTableField()), command.getAscendingOrder() ? "ASC" : "DESC");
-		}
-
-		Page coursesPage = getTeachingService().getCourses(command.getShowActives(), paginationFilter);
-		model.put("coursesPage", coursesPage);
-
-		return new ModelAndView("teaching/ShowManageCourses", model);
 	}
 	
 	private String convertTableField(Integer tableFieldIndex) {

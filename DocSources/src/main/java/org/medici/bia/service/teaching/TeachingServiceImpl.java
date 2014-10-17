@@ -77,8 +77,8 @@ import org.medici.bia.domain.ForumTopicWatch;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.UserRole;
@@ -486,6 +486,104 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
+		Date operationDate = new Date();
+		try {
+			User user = getCurrentUser();
+			
+			forumPost.setPostId(null);
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
+			// the help resources course forum is not a course fragment but in this case
+			// it is consider as a course fragment
+			Course course = getCourseDAO().getCourseByCourseFragment(forum.getForumId());
+
+			if (forumPost.getTopic().getTopicId() == 0) {
+				//Create the first post of a new topic
+				ForumTopic forumTopic = new ForumTopic(null);
+				forumTopic.setForum(forum);
+				forumTopic.setDateCreated(operationDate);
+				forumTopic.setLastUpdate(operationDate);
+				forumTopic.setIpAddress(forumPost.getIpAddress());
+				
+				forumTopic.setUser(user);
+				forumTopic.setSubject(forumPost.getSubject());
+				forumTopic.setTotalReplies(0);
+				forumTopic.setTotalViews(0);
+				forumTopic.setLastPost(null);
+				forumTopic.setFirstPost(null);
+				forumTopic.setLogicalDelete(Boolean.FALSE);
+				forumTopic.setLocked(Boolean.FALSE);
+				
+				getForumTopicDAO().persist(forumTopic);
+				
+				CourseTopicOption transcriptionOption = getCourseTopicOptionDAO().getCourseTranscriptionOptionFromForum(forum.getForumId());
+				if (transcriptionOption != null) {
+					forumTopic.setDocument(transcriptionOption.getCourseTopic().getDocument());
+				}
+				
+				CourseTopicOption topicOption = new CourseTopicOption();
+				topicOption.setCourseTopic(forumTopic);
+				topicOption.setMode(CourseTopicMode.D);
+				
+				getCourseTopicOptionDAO().persist(topicOption);
+				
+				forumPost.setTopic(forumTopic);
+				
+				// increase the topicsNumber in forum
+				getForumDAO().recursiveIncreaseTopicsNumber(forum);
+				
+				// topic subscription -> to all course people
+				for(UserRole personRole : getCoursePeople(course)) {
+					if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
+						ForumTopicWatch personTopicWatch = new ForumTopicWatch(forumTopic, personRole.getUser());
+						getForumTopicWatchDAO().persist(personTopicWatch);
+					}
+				}
+				
+			} else {
+				ForumTopic forumTopic = getForumTopicDAO().find(forumPost.getTopic().getTopicId());
+				forumPost.setTopic(forumTopic);
+			}
+			forumPost.setDateCreated(operationDate);
+			forumPost.setLogicalDelete(Boolean.FALSE);
+			forumPost.setLastUpdate(operationDate);
+			forumPost.setUser(user);
+			forumPost.setUpdater(user);
+			getForumPostDAO().persist(forumPost);
+			
+			// update forum data
+			getForumDAO().recursiveIncreasePostsNumber(forum);
+			recursiveSetLastPost(forum, forumPost, operationDate);
+			
+			// update topic data
+			forumPost.getTopic().setLastPost(forumPost);
+			forumPost.getTopic().setLastUpdate(operationDate);
+			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() + 1);
+			
+			// forum post notification
+			ForumPostNotified forumPostNotified = new ForumPostNotified(forumPost.getPostId());
+			forumPostNotified.setMailSended(Boolean.FALSE);
+			
+			getForumPostNotifiedDAO().persist(forumPostNotified);
+
+			// update number of post of the user 
+			user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
+			user.setLastActiveForumDate(operationDate);
+			user.setLastForumPostDate(operationDate);
+
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public ForumTopic askAQuestion(Integer forumContainerId, Integer courseTranscriptionTopicId, String questionTitle, String questionText, String remoteAddr) throws ApplicationThrowable {
 		try {
 			Date now = new Date();
@@ -615,39 +713,67 @@ public class TeachingServiceImpl implements TeachingService {
 				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course container not found!!!");
 			}
 			
-			Forum container = new Forum();
-			container.setDescription(description);
-			container.setTitle(title);
-			container.setDateCreated(now);
-			container.setLastUpdate(now);
-			container.setForumParent(coursesContainer);
-			container.setHierarchyLevel(coursesContainer.getHierarchyLevel() + 1);
-			container.setFullPath(coursesContainer.getFullPath());
-			container.setDispositionOrder(0);
-			container.setStatus(Forum.Status.ONLINE);
-			container.setType(Forum.Type.FORUM);
-			container.setSubType(Forum.SubType.COURSE);
-			container.setPostsNumber(0);
-			container.setTopicsNumber(0);
-			container.setSubForumsNumber(0);
-			container.setLogicalDelete(Boolean.FALSE);
+			Forum courseForum = new Forum();
+			courseForum.setDescription(description);
+			courseForum.setTitle(title);
+			courseForum.setDateCreated(now);
+			courseForum.setLastUpdate(now);
+			courseForum.setForumParent(coursesContainer);
+			courseForum.setHierarchyLevel(coursesContainer.getHierarchyLevel() + 1);
+			courseForum.setFullPath(coursesContainer.getFullPath());
+			courseForum.setDispositionOrder(0);
+			courseForum.setStatus(Forum.Status.ONLINE);
+			courseForum.setType(Forum.Type.FORUM);
+			courseForum.setSubType(Forum.SubType.COURSE);
+			courseForum.setPostsNumber(0);
+			courseForum.setTopicsNumber(0);
+			courseForum.setSubForumsNumber(0); // the help resources subforum will be added later
+			courseForum.setLogicalDelete(Boolean.FALSE);
 			
 
-			getForumDAO().persist(container);
-			getUserHistoryDAO().persist(new UserHistory(user, "Create new course", Action.CREATE, Category.FORUM, container));
+			getForumDAO().persist(courseForum);
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new course", Action.CREATE, Category.FORUM, courseForum));
 
-			container.setFullPath(coursesContainer.getFullPath() + container.getForumId() + ".");
+			courseForum.setFullPath(coursesContainer.getFullPath() + courseForum.getForumId() + ".");
 			
-			ForumOption forumOption = ForumUtils.getForumOptionForCourseForum(container);
+			ForumOption forumOption = ForumUtils.getForumOptionForCourseForum(courseForum);
 			getForumOptionDAO().persist(forumOption);
 			
 			getForumDAO().recursiveIncreaseSubForumsNumber(coursesContainer);
 			
 			Course course = new Course();
 			course.setActive(Boolean.TRUE);
-			course.setForum(container);
+			course.setForum(courseForum);
 			
 			getCourseDAO().persist(course);
+			
+			// help resources container
+			Forum helpResources = new Forum();
+			
+			helpResources.setTitle("Help resources");
+			helpResources.setDescription("Help resources of " + title.trim());
+			helpResources.setForumParent(courseForum);
+			helpResources.setFullPath(courseForum.getFullPath()); // To do not violate the table constraint
+			helpResources.setHierarchyLevel(courseForum.getHierarchyLevel() + 1);
+			helpResources.setDispositionOrder(0);
+			helpResources.setStatus(Forum.Status.ONLINE);
+			helpResources.setType(Forum.Type.FORUM);
+			helpResources.setSubType(Forum.SubType.COURSE);
+			helpResources.setDateCreated(now);
+			helpResources.setLastUpdate(now);
+			helpResources.setPostsNumber(0);
+			helpResources.setTopicsNumber(0);
+			helpResources.setSubForumsNumber(0);
+			helpResources.setLogicalDelete(Boolean.FALSE);
+
+			getForumDAO().persist(helpResources);
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, helpResources));
+
+			helpResources.setFullPath(helpResources.getFullPath() + helpResources.getForumId() + ".");
+			getForumDAO().recursiveIncreaseSubForumsNumber(courseForum);
+			
+			ForumOption helpResourcesOption = ForumUtils.getForumOptionForForumTopicContainer(helpResources);
+			getForumOptionDAO().persist(helpResourcesOption);
 			
 			return course;
 		} catch(Throwable th) {
@@ -800,6 +926,46 @@ public class TeachingServiceImpl implements TeachingService {
 			if (lastForumPost != null) {
 				recursiveSetLastPost(courseForum, lastForumPost, now);
 			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteForumPost(Integer postId) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			User user = getCurrentUser();
+			
+			ForumPost forumPost = getForumPostDAO().find(postId);
+			Forum forum = forumPost.getForum();
+			forumPost.setLastUpdate(now);
+			forumPost.setUpdater(user);
+			forumPost.setLogicalDelete(new Boolean(Boolean.TRUE));
+
+			ForumTopic forumTopic = forumPost.getTopic();
+			ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(forumTopic);
+			forumTopic.setLastPost(lastPost);
+			forumTopic.setTotalReplies(forumTopic.getTotalReplies() - 1);
+			
+			getForumDAO().recursiveDecreasePostsNumber(forum);
+			
+			recursiveSetLastPost(forum, lastPost, now);
+			
+			ForumPostNotified mailNotification = getForumPostNotifiedDAO().find(postId);
+			if (mailNotification != null && Boolean.FALSE.equals(mailNotification.getMailSended())) {
+				getForumPostNotifiedDAO().remove(mailNotification);
+			}
+
+			user.setLastActiveForumDate(now);
+			user.setLastForumPostDate(now);
+			user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete post", Action.DELETE, Category.FORUM_POST, forumPost));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1280,9 +1446,33 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean isDocumentInActiveCourse(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().isDocumentInActiveCourse(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isDocumentInCourse(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().isDocumentInCourse(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean isForumInActiveCourse(Integer forumId) throws ApplicationThrowable {
 		try {
-			return getForumDAO().isInActiveCourse(forumId);
+			return getCourseDAO().isForumInActiveCourse(forumId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1292,21 +1482,9 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isInActiveCourse(Integer entryId) throws ApplicationThrowable {
+	public boolean isForumInCourse(Integer forumId) throws ApplicationThrowable {
 		try {
-			return getCourseDAO().isInActiveCourse(entryId);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isInCourse(Integer entryId) throws ApplicationThrowable {
-		try {
-			return getCourseDAO().isInCourse(entryId);
+			return getCourseDAO().isForumInCourse(forumId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1348,6 +1526,52 @@ public class TeachingServiceImpl implements TeachingService {
 				courseTopic.setLastUpdate(new Date());
 				courseTopic.setLocked(close);
 			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable {
+		Date operationDate = new Date();
+		try {
+			forumPost.setPostId(null);
+			
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
+			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getPostId());
+			User user = getCurrentUser();
+	
+			forumPost.setForum(forum);
+			forumPost.setDateCreated(operationDate);
+			forumPost.setLastUpdate(operationDate);
+			forumPost.setParentPost(parentPost);
+			forumPost.setUser(user);
+			
+			getForumPostDAO().persist(forumPost);
+			
+			parentPost.setReplyNumber(parentPost.getReplyNumber() + 1);
+	
+			getForumDAO().recursiveIncreasePostsNumber(forum);
+			
+			// forum post notification
+			ForumPostNotified postNotified = new ForumPostNotified();
+			postNotified.setPostId(forumPost.getPostId());
+			postNotified.setMailSended(Boolean.FALSE);
+			
+			getForumPostNotifiedDAO().persist(postNotified);
+	
+			// Update number of post 
+			user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
+			user.setLastActiveForumDate(operationDate);
+			user.setLastForumPostDate(operationDate);
+	
+			getUserHistoryDAO().persist(new UserHistory(user, "Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -121,7 +121,7 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	 * @return true if an active course is found, false otherwise
 	 * @throws PersistenceException
 	 */
-	boolean isInActiveCourse(Integer docId) throws PersistenceException;
+	boolean isDocumentInActiveCourse(Integer docId) throws PersistenceException;
 
 	/**
 	 * This method determines if a document is associated to a course (by a course topic).
@@ -130,6 +130,24 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	 * @return true if a course (active or not) is found, false otherwise
 	 * @throws PersistenceException
 	 */
-	boolean isInCourse(Integer docId) throws PersistenceException;
+	boolean isDocumentInCourse(Integer docId) throws PersistenceException;
+
+	/**
+	 * This method determines if a forum is contained in an active {@link Course}.
+	 * 
+	 * @param forumId the forum identifier
+	 * @return true if the forum is contained in an active course, false otherwise
+	 * @throws PersistenceException
+	 */
+	boolean isForumInActiveCourse(Integer forumId) throws PersistenceException;
+
+	/**
+	 * This method determines if a forum is contained in a {@link Course}.
+	 * 
+	 * @param forumId the forum identifier
+	 * @return true if the forum is contained in a course, false otherwise
+	 * @throws PersistenceException
+	 */
+	boolean isForumInCourse(Integer forumId) throws PersistenceException;
 
 }

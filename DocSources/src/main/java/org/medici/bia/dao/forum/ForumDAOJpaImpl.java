@@ -788,21 +788,6 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isInActiveCourse(Integer forumId) throws PersistenceException {
-		if (forumId == null)
-			return false;
-		
-		String queryString = "SELECT count(forum) FROM Forum AS forum, Course AS course WHERE forum.forumId = :forumId AND (forum = course.forum OR forum.forumParent = course.forum) AND course.active = true";
-		Query query = getEntityManager().createQuery(queryString);
-		query.setParameter("forumId", forumId);
-		
-		return (Long) query.getSingleResult() > 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void recursiveDecreasePostsNumber(Forum forum) throws PersistenceException {
 		if (forum == null) {
 			return;

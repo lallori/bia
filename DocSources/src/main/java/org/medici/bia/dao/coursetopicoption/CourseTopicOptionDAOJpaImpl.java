@@ -87,7 +87,7 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 		query.setParameter("forumId", forumId);
 		query.setParameter("transcriptionModes", getFilteredModes());
 		
-		return (CourseTopicOption)query.getSingleResult();
+		return getFirst(query);
 	}
 	
 	/**

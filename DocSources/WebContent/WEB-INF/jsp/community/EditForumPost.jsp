@@ -26,6 +26,26 @@
 		<div id="spacer" style="height: 15px;" />
 	</c:if>
 	
+	<c:choose>
+		<c:when test="${not empty documentExplorerError}">
+			<div id="error" style="color: red;">It was not possible to retrieve the document view</div>
+		</c:when>
+		<c:when test="${not empty documentExplorer}">
+			<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+				<c:param name="entryId" value="${documentExplorer.entryId}"/>
+				<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+				<c:param name="flashVersion"   value="false" />
+				<c:param name="showHelp" value="true" />
+				<c:param name="showThumbnail" value="true" />
+			</c:url>
+			
+			<iframe class="iframeVolumeExplorer" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
+			<div id="spacer" style="height: 15px;" />
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	
 	<!-- Post to reply -->
 	<c:if test="${not empty postToReply}">
 		<div id="postTable">
@@ -78,7 +98,7 @@
 	    
 	    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
 	    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
-	    <input type="submit" value="Submit" class="buttonMedium button_medium" id="submit" onclick="instance.post();">
+	    <a href="#" id="submit" class="buttonMedium button_medium">Submit</a>
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>

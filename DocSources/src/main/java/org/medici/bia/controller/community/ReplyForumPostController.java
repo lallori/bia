@@ -39,6 +39,7 @@ import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -61,10 +62,54 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReplyForumPostController {
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private TeachingService teachingService;
 	@Autowired(required = false)
 	@Qualifier("replyForumPostValidator")
 	private Validator validator;
 	
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
 	/**
 	 * 
 	 * @param command
@@ -87,7 +132,8 @@ public class ReplyForumPostController {
 			forumPost.setForum(new Forum(command.getForumId()));
 
 			try {
-				forumPost = getCommunityService().replyPost(forumPost);
+				boolean isInCourse = getTeachingService().isForumInCourse(command.getForumId());
+				forumPost = !isInCourse ? getCommunityService().replyPost(forumPost) : getTeachingService().replyPost(forumPost);
 				model.put("forumPost", forumPost);
 				return new ModelAndView("response/ForumPostMessageOK", model);
 			} catch (ApplicationThrowable applicationThrowable) {
@@ -140,31 +186,4 @@ public class ReplyForumPostController {
 		return new ModelAndView("community/EditForumPost", model);
 	}
 
-	/**
-	 * @param communityService the communityService to set
-	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	/**
-	 * @return the communityService
-	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
-
-	/**
-	 * @param validator the validator to set
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
 }

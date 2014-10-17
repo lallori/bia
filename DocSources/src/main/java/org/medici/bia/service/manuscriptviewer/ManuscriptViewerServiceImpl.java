@@ -1025,6 +1025,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 						topicAnnotation.setLastPost(null);
 						topicAnnotation.setFirstPost(null);
 						topicAnnotation.setLogicalDelete(Boolean.FALSE);
+						topicAnnotation.setLocked(Boolean.FALSE);
 						
 						topicAnnotation.setAnnotation(annotation);
 						getForumTopicDAO().persist(topicAnnotation);

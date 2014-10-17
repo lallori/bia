@@ -34,11 +34,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.medici.bia.command.community.EditForumPostCommand;
+import org.medici.bia.common.pagination.DocumentExplorer;
+import org.medici.bia.domain.CourseTopicOption;
+import org.medici.bia.domain.Document;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
+import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageType;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.manuscriptviewer.ManuscriptViewerService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -60,10 +67,71 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditForumPostController {
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
+	@Autowired
+	private TeachingService teachingService;
 	@Autowired(required = false)
 	@Qualifier("editForumPostValidator")
 	private Validator validator;
 	
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
 	/**
 	 * 
 	 * @param command
@@ -87,7 +155,8 @@ public class EditForumPostController {
 
 			try {
 				if (command.getPostId().equals(0)) {
-					forumPost = getCommunityService().addNewPost(forumPost);
+					boolean isInCourse = getTeachingService().isForumInCourse(command.getForumId());
+					forumPost = !isInCourse ? getCommunityService().addNewPost(forumPost) : getTeachingService().addNewPost(forumPost);
 					model.put("forumPost", forumPost);
 				} else {
 					forumPost = getCommunityService().editPost(forumPost);
@@ -128,6 +197,32 @@ public class EditForumPostController {
 			command.setSubject(forumPost.getSubject());
 			command.setText(forumPost.getText());
 		} else {
+			if (command.getForumId() != null) {
+				CourseTopicOption courseTranscriptionOption = getTeachingService().getCourseTranscriptionTopicOption(command.getForumId());
+				if (courseTranscriptionOption != null) {
+					// the forum is a course transcription container and 'courseTranscriptionOption' is linked to the course transcription topic 
+					Document document = courseTranscriptionOption.getCourseTopic().getDocument();
+					if (getManuscriptViewerService().findDocumentImageThumbnail(document) != null) {
+						DocumentExplorer documentExplorer = new DocumentExplorer(document.getEntryId(), document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+						documentExplorer.setImage(new Image());
+						documentExplorer.getImage().setInsertNum(document.getInsertNum());
+						documentExplorer.getImage().setInsertLet(document.getInsertLet());
+						documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+						documentExplorer.getImage().setMissedNumbering(document.getFolioMod());
+						documentExplorer.getImage().setImageRectoVerso(document.getFolioRectoVerso() == null ? null : Image.ImageRectoVerso.convertFromString(document.getFolioRectoVerso().toString()));
+						documentExplorer.getImage().setImageType(ImageType.C);
+						documentExplorer.setTotal(null);
+						
+						try {
+							documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+							model.put("documentExplorer", documentExplorer);
+						} catch (ApplicationThrowable applicationThrowable) {
+							model.put("documentExplorerError", applicationThrowable);
+						}
+					}
+				}
+				
+			}
 			command.setSubject("");
 			command.setText("");
 		}
@@ -135,31 +230,4 @@ public class EditForumPostController {
 		return new ModelAndView("community/EditForumPost", model);
 	}
 
-	/**
-	 * @param communityService the communityService to set
-	 */
-	public void setCommunityService(CommunityService communityService) {
-		this.communityService = communityService;
-	}
-
-	/**
-	 * @return the communityService
-	 */
-	public CommunityService getCommunityService() {
-		return communityService;
-	}
-
-	/**
-	 * @param validator the validator to set
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
 }

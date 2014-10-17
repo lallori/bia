@@ -450,6 +450,7 @@ public class CommunityServiceImpl implements CommunityService {
 				forumTopic.setLastPost(null);
 				forumTopic.setFirstPost(null);
 				forumTopic.setLogicalDelete(Boolean.FALSE);
+				forumTopic.setLocked(Boolean.FALSE);
 				
 				//MD: To attach entity from forum to topic
 				if(forum.getDocument() != null){
@@ -732,6 +733,8 @@ public class CommunityServiceImpl implements CommunityService {
 			user.setLastForumPostDate(now);
 			user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
 			getUserDAO().merge(user);
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete post", Action.DELETE, Category.FORUM_POST, forumPost));
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

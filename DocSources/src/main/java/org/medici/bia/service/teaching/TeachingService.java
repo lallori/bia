@@ -129,6 +129,16 @@ public interface TeachingService {
 			Integer relatedCheckPointPostId) throws ApplicationThrowable;
 	
 	/**
+	 * This method creates a new post in a discussion topic.
+	 * If the provided post has no reference to a topic (the topic identifier is zero) a new topic is created. 
+	 * 
+	 * @param post the post to add
+	 * @return the persisted post
+	 * @throws ApplicationThrowable
+	 */
+	ForumPost addNewPost(ForumPost post) throws ApplicationThrowable;
+	
+	/**
 	 * This method creates a new question topic relative to a transcription topic.
 	 * 
 	 * @param forumContainerId the forum container identifier
@@ -194,6 +204,14 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	void deleteCourseTranscriptionPost(Integer postId, CourseTopicMode mode) throws ApplicationThrowable;
+	
+	/**
+	 * This method remove a post from a course topic discussion (not for the course transcription topic).
+	 * 
+	 * @param postId the post identifier
+	 * @throws ApplicationThrowable
+	 */
+	void deleteForumPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
 	 * This method activates the provided course.
@@ -518,6 +536,24 @@ public interface TeachingService {
 	Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable;
 	
 	/**
+	 * This method determines if a document is associated to an active course (by a course topic).
+	 * 
+	 * @param entryId the document identifier
+	 * @return true if the document is associated to an active course, false otherwise
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
+	 */
+	boolean isDocumentInActiveCourse(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * This method determines if a document is associated to a course (by a course topic).
+	 * 
+	 * @param entryId the document identifier
+	 * @return true if the document is associated to a course, false otherwise
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
+	 */
+	boolean isDocumentInCourse(Integer entryId) throws ApplicationThrowable;
+	
+	/**
 	 * This method determines if the provided forum is contained in an active course.
 	 * 
 	 * @param forumId the forum identifier
@@ -527,22 +563,12 @@ public interface TeachingService {
 	boolean isForumInActiveCourse(Integer forumId) throws ApplicationThrowable;
 	
 	/**
-	 * This method determines if a document is associated to an active course (by a course topic).
-	 * 
-	 * @param entryId the document identifier
-	 * @return true if the document is associated to an active course, false otherwise
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
+	 * This method determines if the provided forum is contained in a course.
+	 * @param forumId the forum identifier
+	 * @return true if the forum is contained in a course, false otherwise
+	 * @throws ApplicationThrowable
 	 */
-	boolean isInActiveCourse(Integer entryId) throws ApplicationThrowable;
-	
-	/**
-	 * This method determines if a document is associated to a course (by a course topic).
-	 * 
-	 * @param entryId the document identifier
-	 * @return true if the document is associated to a course, false otherwise
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
-	 */
-	boolean isInCourse(Integer entryId) throws ApplicationThrowable;
+	boolean isForumInCourse(Integer forumId) throws ApplicationThrowable;
 	
 	/**
 	 * This method determines if the current user is subscribed to the provided course transcription topic.
@@ -562,6 +588,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	void openCloseCourseTopic(Integer courseTopicId, Boolean close) throws ApplicationThrowable;
+	
+	/**
+	 * This method replies to a post with the provided post (only for discussions).
+	 * 
+	 * @param forumPost the new post
+	 * @return the persisted post
+	 * @throws ApplicationThrowable
+	 */
+	ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
 	
 	/**
 	 * This method removes student {@link UserAuthority} from the provided account.
