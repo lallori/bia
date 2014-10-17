@@ -761,10 +761,10 @@
 							            		Topic Type:&nbsp;
 							            		 <c:choose>
 							            		 	<c:when test="${topicType == 'Q'}">
-							            		 		Comment
+							            		 		Highlighted Question
 							            		 	</c:when>
 							            		 	<c:when test="${topicType == 'D'}">
-							            		 		Discussion
+							            		 		Classroom Discussion
 							            		 	</c:when>
 							            		 	<c:otherwise>
 							            		 		<b>Collaborative Transcription</b>
