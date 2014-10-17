@@ -22,7 +22,7 @@
 			var volExt = "${image.volLetExt}";
 			var insNum = "${image.insertNum}";
 			var insExt = "${image.insertLet}";
-			var credit = '';
+			var credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/>';
 			if (insNum != '')
 				credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showManuscriptViewerHtml.extension"/> '+insExt : '') + ' &nbsp; - </span>';
 				
