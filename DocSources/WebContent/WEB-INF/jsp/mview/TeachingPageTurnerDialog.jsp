@@ -176,6 +176,7 @@
 				updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 				annotations: annotations,
 				openAnnotationTopicMode: "_parent",
+				openCreatedAnnotationMode: "_top",
 				showHideAnnotationButton: true,  // Show/Hide Annotation button is enabled
 				enableEdit: ${command.editEnabled}, // if topic is locked we cannot edit annotations
 				editMode: 'teaching',

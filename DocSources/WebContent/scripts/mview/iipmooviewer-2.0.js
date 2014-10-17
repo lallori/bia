@@ -170,6 +170,13 @@ var IIPMooViewer = new Class({
 		// 2) '_parent' : in the parent iframe
 		// 3) '_blank' : in another window
 		this.openAnnotationTopicMode = typeof options.openAnnotationTopicMode !== 'undefined' ? options.openAnnotationTopicMode : "_self";
+		
+		// The 'openCreatedAnnotationMode' defines in which window the created annotation topic is opened.
+		// Possible values are:
+		// 1) '_self' : in the current window/iframe
+		// 1) '_top' : in the current window
+		// 3) '_blank' : in another window (default)
+		this.openCreatedAnnotationMode = typeof options.openCreatedAnnotationMode !== 'undefined' ? options.openCreatedAnnotationMode : "_blank";
 		/** MEDICI ARCHIVE PROJECT END **/
 
 

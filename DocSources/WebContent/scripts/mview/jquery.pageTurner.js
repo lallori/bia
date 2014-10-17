@@ -41,6 +41,7 @@
 		"retrieveAnnotationsUrl": "",
 		"updateAnnotationsUrl": "",
 		"openAnnotationTopicMode": "_self",
+		"openCreatedAnnotationMode": "_blank",
 		"annotations": new Array(),
 		"showHideAnnotationButton": true,
 		"enableEdit": true,
@@ -275,7 +276,8 @@
 			retrieveAnnotationsUrl: retrieveAnnotationsURL,
 			updateAnnotationsUrl: updateAnnotationsURL,
 			annotations: functionParams["annotations"],
-			openAnnotationTopicMode: functionParams["openAnnotationTopicMode"]
+			openAnnotationTopicMode: functionParams["openAnnotationTopicMode"],
+			openCreatedAnnotationMode: functionParams["openCreatedAnnotationMode"]
 		});
 
 		if (data.previousPage == '') {

@@ -268,7 +268,11 @@ IIPMooViewer.implement({
 			var event = new DOMEvent(e);
 			if (_this.annotationEditing != true) {
 				event.stop();
-				window.open(redirectUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+				if (_this.openCreatedAnnotationMode !== '_blank') {
+					window.open(redirectUrl, _this.openCreatedAnnotationMode, "scrollbars=yes");
+				} else {
+					window.open(redirectUrl, 'Forum', 'width=' + screen.width + ', height=' + screen.height + ', scrollbars=yes');
+				}
 			}
 		});
 	},

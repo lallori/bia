@@ -110,6 +110,7 @@
 					retrieveAnnotationsUrl: '${GetImageAnnotationURL}',
 					updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 					openAnnotationTopicMode: '_parent',
+					openCreatedAnnotationMode: '_top',
 					zoom: 3,
 					credit: credit,
 					navWinPos: 'left',
