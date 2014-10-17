@@ -27,6 +27,7 @@
  */
 package org.medici.bia.service.teaching;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -326,9 +327,11 @@ public class TeachingServiceImpl implements TeachingService {
 		try {
 			// Forum container creation
 			Forum container = new Forum();
-			
+			SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+			String nowdate = date.format(new Date()); 
 			container.setTitle(topicTitle.trim() + " resources");
-			container.setDescription("Resources of " + topicTitle.trim());
+//			container.setDescription("Resources of " + topicTitle.trim());
+			container.setDescription("Created " + nowdate);
 			// the forum container must not have a document, it is only a topic container
 			// container.setDocument(document);
 			container.setForumParent(course.getForum());
