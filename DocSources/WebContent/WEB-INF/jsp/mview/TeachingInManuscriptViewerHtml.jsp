@@ -113,7 +113,7 @@
 					openCreatedAnnotationMode: '_top',
 					zoom: 3,
 					credit: credit,
-					navWinPos: 'left',
+					navWinPos: 'right',
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
