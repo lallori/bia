@@ -1363,7 +1363,6 @@ var IIPMooViewer = new Class({
 				'iip.32x32.png"/></a>IIPMooViewer</h2>IIPImage HTML5 Ajax High Resolution Image Viewer - Version ' +
 				this.version + 
 				'<br> all the transcription and volume browsing tools have been added <br> by the Medici Archive Project' +
-				'<a href="http://iipimage.sourceforge.net" target="_blank">' +
 				'<br/><ul><li>' +
 				IIPMooViewer.lang.navigate +
 				'</li><li>' +
@@ -1380,7 +1379,8 @@ var IIPMooViewer = new Class({
 				IIPMooViewer.lang.navigation +
 				'</li></ul><br/>' +
 				IIPMooViewer.lang.more +
-				' <a href="http://iipimage.sourceforge.net" target="_blank">http://iipimage.sourceforge.net</a></div></div>'
+				'<a href="http://iipimage.sourceforge.net" target="_blank">http://iipimage.sourceforge.net</a></div></div> and' +
+				'<a href="http://www.medici.org" target="_blank">http://www.medici.org</a></div></div>' 
 		}).inject(this.container);
 
 		// Create our main window target div, add our events and inject inside the frame
