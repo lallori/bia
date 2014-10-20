@@ -248,12 +248,14 @@ IIPMooViewer.implement({
 				colorPalette.getElements('span.colorButton').each(function(button) {
 					button.addEvent('click', function(e) {
 						var oldSelected = colorPalette.getElement('span.selected');
-						if (this.getProperty('id') !== oldSelected.getProperty('id')) {
+						if (oldSelected == null || this.getProperty('id') !== oldSelected.getProperty('id')) {
 							// modify button status
 							this.addClass('selected');
-							oldSelected.removeClass('selected');
 							this.setStyle('background-color', '#606060');
-							oldSelected.setStyle('background-color', '');
+							if (oldSelected != null) {
+								oldSelected.removeClass('selected');
+								oldSelected.setStyle('background-color', '');
+							}
 							
 							// modify annotation color
 							var color = this.getProperty('value');
@@ -262,6 +264,9 @@ IIPMooViewer.implement({
 						}
 					});
 				});
+
+				// perform red color button selection
+				document.getElementById("colorButton_#FF0000").click();
 			}
 			
 			// Place the form
@@ -429,8 +434,9 @@ IIPMooViewer.implement({
 	 */
 	initColorPalette: function(container, annotationColor, defaultColor) {
 		container.grab(this.getColorButton(annotationColor === "#FF0000" || (defaultColor === "#FF0000" && typeof annotationColor === 'undefined'), "#FF0000", "Red"));
+		container.grab(this.getColorButton(annotationColor === "#991C00" || (defaultColor === "#991C00" && typeof annotationColor === 'undefined'), "#991C00", "Brown"));
 		container.grab(this.getColorButton(annotationColor === "#FF8000" || (defaultColor === "#FF8000" && typeof annotationColor === 'undefined'), "#FF8000", "Orange"));
-		container.grab(this.getColorButton(annotationColor === "#FFFF00" || (defaultColor === "#FFFF00" && typeof annotationColor === 'undefined'), "#FFFF00", "Yellow"));
+		//container.grab(this.getColorButton(annotationColor === "#FFFF00" || (defaultColor === "#FFFF00" && typeof annotationColor === 'undefined'), "#FFFF00", "Yellow"));
 		container.grab(this.getColorButton(annotationColor === "#00FF00" || (defaultColor === "#00FF00" && typeof annotationColor === 'undefined'), "#00FF00", "Green"));
 		container.grab(this.getColorButton(annotationColor === "#007F00" || (defaultColor === "#007F00" && typeof annotationColor === 'undefined'), "#007F00", "Dark Green"));
 		container.grab(this.getColorButton(annotationColor === "#00FFFF" || (defaultColor === "#00FFFF" && typeof annotationColor === 'undefined'), "#00FFFF", "Cyan"));
@@ -440,7 +446,6 @@ IIPMooViewer.implement({
 		container.grab(this.getColorButton(annotationColor === "#FF007F" || (defaultColor === "#FF007F" && typeof annotationColor === 'undefined'), "#FF007F", "Lilac"));
 		container.grab(this.getColorButton(annotationColor === "#FFC0CB" || (defaultColor === "#FFC0CB" && typeof annotationColor === 'undefined'), "#FFC0CB", "Pink"));
 		container.grab(this.getColorButton(annotationColor === "#FFFFFF" || (defaultColor === "#FFFFFF" && typeof annotationColor === 'undefined'), "#FFFFFF", "White"));
-		container.grab(this.getColorButton(annotationColor === "#991C00" || (defaultColor === "#991C00" && typeof annotationColor === 'undefined'), "#991C00", "Brown"));
 	},
 	
 	/**
@@ -460,7 +465,7 @@ IIPMooViewer.implement({
 			+ 'cursor: pointer';
 		
 		var button = new Element('span', {
-				'id': '_' + rgbColor,
+				'id': 'colorButton_' + rgbColor,
 				'style': style,
 				'class': 'colorButton' + (selected ? ' selected' : ''),
 				'title': text,
