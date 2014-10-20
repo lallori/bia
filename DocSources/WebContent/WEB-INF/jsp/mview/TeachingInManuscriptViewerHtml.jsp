@@ -124,26 +124,26 @@
 					annotations: new Array()
 				});
 				
-// 				var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>').dialog({                                                                                                                                                                   
-// 					autoOpen: true,
-// 					resizable: false,
-// 					width: 145,
-// 					height: 380, 
-// 					minWidth: 145,
-// 					maxWidth: 145,
-// 					maxHeight: 380,
-// 					title: '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.pageTurnerWindow.title"/>',
-// 					position: ['right','top'],                                                                                                                                                       
-// 					closeOnEscape: false,
-// 					open: function(event, ui) { 
-// 						$j(".ui-dialog-titlebar-close").hide();
-//                 		$(this).load('${PageTurnerDialogUrl}' + '&editEnabled=' + edit);
-//                			},
-// 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-// 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-// 				}).dialogExtend({"minimize" : true}); 
+				/* var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>').dialog({                                                                                                                                                                   
+					autoOpen: true,
+					resizable: false,
+					width: 145,
+					height: 380, 
+					minWidth: 145,
+					maxWidth: 145,
+					maxHeight: 380,
+					title: '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.pageTurnerWindow.title"/>',
+					position: ['right','top'],                                                                                                                                                       
+					closeOnEscape: false,
+					open: function(event, ui) { 
+						$j(".ui-dialog-titlebar-close").hide();
+                 		$(this).load('${PageTurnerDialogUrl}' + '&editEnabled=' + edit);
+                			},
+ 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+ 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+ 				}).dialogExtend({"minimize" : true});  */
 				
-// 			});
+ 			});
 		</script> 
 
 		  
