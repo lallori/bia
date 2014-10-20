@@ -11,7 +11,9 @@
 			<c:url var="markAsTranscribedURL" value="/annotation/markAsTranscribed.json" />
 			
 			<div id="makeAsTranscribedModalQuestion" style="display: none;">
-				<p style="width: 100%; text-align: center;">Do you want to mark the relative annotation as transcribed?</p>
+				<p style="width: 100%; text-align: center;">Do you want transcribe this highlighted word/abbreviation?</p>
+				<p style="width: 100%; text-align: center;">By doing so you will be able to make the trascription of this</p>
+				<p style="width: 100%; text-align: center;">word/abbreviation available through the main BIA system</p>
 				<div style="width: 100%; text-align: center;  margin-top: 10px;">
 					<div id="markAsTranscribedYesBtn" class="buttonSmall button_small" style="display: inline-block;">Yes</div>
 					<div id="markAsTranscribedNoBtn" class="buttonSmall button_small" style="display: inline-block; margin-left: 20px;">No</div>
@@ -21,7 +23,7 @@
 			<div id="makeAsTranscribedModalFormDiv" style="display: none;">
 				<form:form id="makeAsTranscribedModalForm" method="post" action="${markAsTranscribedURL}">
 					<div style="display: block;">
-						<form:label id="annotationTitleLabel" path="annotationTitle" for="annotationTitle">Title of the transcribed annotation</form:label>
+						<form:label id="annotationTitleLabel" path="annotationTitle" for="annotationTitle">Transcription of the word/sentence</form:label>
 						<form:input id="annotationTitle" path="annotationTitle" cssStyle="margin-top: 3px; width: 80%; display: inline-block;" type="text"/>
 						<a title="Adjust the title of the transcribed annotation. You should write the correct transcription only!"
 							style="float: right; margin-right: 30px; margin-top: 5px; border-radius: 8px; font-size: 12px; padding-left: 5px; padding-right: 4px; font-weight: bold; border: 1px solid #2e83ff; color: #363636; background-color: #ebf3ff; opacity: 0.9;">?</a>
@@ -29,7 +31,7 @@
 					<c:if test="${annotation.type eq 'TEACHING'}">
 						<br/>
 						<div style="display: block;">
-							<form:label id="exportCheckLabel" path="export" for="exportCheck">Export to 'General Questions'</form:label>
+							<form:label id="exportCheckLabel" path="export" for="exportCheck">Export the discussion to 'General Questions'</form:label>
 							<form:checkbox id="exportCheck" path="export" cssStyle="margin: 0 5px 0 0;" />
 							<a title="Put the check to export this discussion to 'General Question' section. Note that you cannot export this twice (the exported discussion is a snapshot of the current one)!"
 								style="float: right; margin-right: 30px; border-radius: 8px; font-size: 12px; padding-left: 5px; padding-right: 4px; font-weight: bold; border: 1px solid #2e83ff; color: #363636; background-color: #ebf3ff; opacity: 0.9;">?</a>
@@ -55,13 +57,13 @@
 				<div id="makeAsNotTranscribedModalQuestionDiv">
 					<c:choose>
 						<c:when test="${empty annotation.exportedTo}">
-							<p style="width: 100%; text-align: center;">Do you want to mark the relative annotation as not transcribed?</p>
+							<p style="width: 100%; text-align: center;">Do you want to untranscribe the highlighted word/abbreviation?</p>
 						</c:when>
 						<c:otherwise>
 							<p style="width: 100%; text-align: center;">
 								This discussion is already exported to 'General Questions' forum.
 								<br/>
-								Do you want to mark the relative annotation as not transcribed anyway?
+								Do you want to untranscribe the highlighted word/abbreviation anyway?
 							</p>
 						</c:otherwise>
 					</c:choose>

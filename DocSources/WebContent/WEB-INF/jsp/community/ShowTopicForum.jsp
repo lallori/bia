@@ -1016,7 +1016,7 @@
 			if ($j("#makeTranscribed").length > 0) {
 				$j("#makeTranscribed").die();
 				$j("#makeTranscribed").live('click', function() {
-					Modalbox.show($j(this).attr("href"), {title: "Mark as transcribed", width: 350, height: 120});
+					Modalbox.show($j(this).attr("href"), {title: "Transcribe this highlighted section", width: 350, height: 120});
 					return false;
 				});
 			}
@@ -1024,7 +1024,7 @@
 			if ($j("#makeNotTranscribed").length > 0) {
 				$j("#makeNotTranscribed").die();
 				$j("#makeNotTranscribed").live('click', function() {
-					Modalbox.show($j(this).attr("href"), {title: "Mark as not transcribed", width: 350, height: 120});
+					Modalbox.show($j(this).attr("href"), {title: "Untranscribe this highlighted section", width: 350, height: 120});
 					return false;
 				});
 			}
