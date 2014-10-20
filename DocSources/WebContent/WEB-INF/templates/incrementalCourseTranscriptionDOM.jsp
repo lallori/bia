@@ -46,13 +46,13 @@
 		
 			var myLayout; // a var is required because this page utilizes: myLayout.allowOverflow() method
 			
-			var adjustPageTurnerPosition = function() {
-				var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
-				if (typeof pageTurner !== 'undefined') {
-					var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).width();
-					$j(pageTurner).css('left', newLeft + 'px');
-				}
-			}
+// 			var adjustPageTurnerPosition = function() {
+// 				var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
+// 				if (typeof pageTurner !== 'undefined') {
+// 					var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).width();
+// 					$j(pageTurner).css('left', newLeft + 'px');
+// 				}
+// 			}
 			
 			$j(document).ready(function () {
 				
@@ -73,11 +73,11 @@
 				,	center__maskContents:		true // IMPORTANT - enable iframe masking
 				,	west__onresize_end:	function() {
 					setTimeout(function() {
-						var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
-						if (typeof pageTurner !== 'undefined') {
-							var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).outerWidth();
-							$j(pageTurner).css('left', newLeft + 'px');
-						}
+// 						var pageTurner = $j("#mainFrame").contents().find("#PageTurnerVerticalDiv").parent();
+// 						if (typeof pageTurner !== 'undefined') {
+// 							var newLeft = $j("#mainFrame").contents().find("body").width() - $j(pageTurner).outerWidth();
+// 							$j(pageTurner).css('left', newLeft + 'px');
+// 						}
 					}, 5);
 				}
 				});
