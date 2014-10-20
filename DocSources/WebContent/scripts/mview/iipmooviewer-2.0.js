@@ -1358,12 +1358,12 @@ var IIPMooViewer = new Class({
 					this.fade('out');
 				}
 			},
-			'html': '<div><div><h2><a href="http://iipimage.sourceforge.net" target="_blank><img src="' +
+			'html': '<div><div><h2><a href="http://iipimage.sourceforge.net" target="_blank"><img src="' +
 				this.prefix +
 				'iip.32x32.png"/></a>IIPMooViewer</h2>IIPImage HTML5 Ajax High Resolution Image Viewer - Version ' +
 				this.version + 
 				'<br> all the transcription and volume browsing tools have been added <br> by the Medici Archive Project' +
-				'<a href="http://iipimage.sourceforge.net" target="_blank>' +
+				'<a href="http://iipimage.sourceforge.net" target="_blank">' +
 				'<br/><ul><li>' +
 				IIPMooViewer.lang.navigate +
 				'</li><li>' +
