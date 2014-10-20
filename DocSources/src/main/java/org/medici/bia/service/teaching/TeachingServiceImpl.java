@@ -634,6 +634,7 @@ public class TeachingServiceImpl implements TeachingService {
 			firstPost.setSubject(questionTitle);
 			firstPost.setText(questionText);
 			firstPost.setTopic(questionTopic);
+			firstPost.setForum(container);
 			firstPost.setIpAddress(remoteAddr);
 			firstPost.setLogicalDelete(Boolean.FALSE);
 			firstPost.setUser(user);
