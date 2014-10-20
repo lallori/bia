@@ -432,10 +432,15 @@ IIPMooViewer.implement({
 		container.grab(this.getColorButton(annotationColor === "#FF8000" || (defaultColor === "#FF8000" && typeof annotationColor === 'undefined'), "#FF8000", "Orange"));
 		container.grab(this.getColorButton(annotationColor === "#FFFF00" || (defaultColor === "#FFFF00" && typeof annotationColor === 'undefined'), "#FFFF00", "Yellow"));
 		container.grab(this.getColorButton(annotationColor === "#00FF00" || (defaultColor === "#00FF00" && typeof annotationColor === 'undefined'), "#00FF00", "Green"));
+		container.grab(this.getColorButton(annotationColor === "#007F00" || (defaultColor === "#007F00" && typeof annotationColor === 'undefined'), "#007F00", "Dark Green"));
 		container.grab(this.getColorButton(annotationColor === "#00FFFF" || (defaultColor === "#00FFFF" && typeof annotationColor === 'undefined'), "#00FFFF", "Cyan"));
+		container.grab(this.getColorButton(annotationColor === "#007FFF" || (defaultColor === "#007FFF" && typeof annotationColor === 'undefined'), "#007FFF", "Light Blue"));
 		container.grab(this.getColorButton(annotationColor === "#0000FF" || (defaultColor === "#0000FF" && typeof annotationColor === 'undefined'), "#0000FF", "Blue"));
 		container.grab(this.getColorButton(annotationColor === "#7F00FF" || (defaultColor === "#7F00FF" && typeof annotationColor === 'undefined'), "#7F00FF", "Violet"));
 		container.grab(this.getColorButton(annotationColor === "#FF007F" || (defaultColor === "#FF007F" && typeof annotationColor === 'undefined'), "#FF007F", "Lilac"));
+		container.grab(this.getColorButton(annotationColor === "#FFC0CB" || (defaultColor === "#FFC0CB" && typeof annotationColor === 'undefined'), "#FFC0CB", "Pink"));
+		container.grab(this.getColorButton(annotationColor === "#FFFFFF" || (defaultColor === "#FFFFFF" && typeof annotationColor === 'undefined'), "#FFFFFF", "White"));
+		container.grab(this.getColorButton(annotationColor === "#991C00" || (defaultColor === "#991C00" && typeof annotationColor === 'undefined'), "#991C00", "Brown"));
 	},
 	
 	/**
