@@ -46,8 +46,8 @@
 <%-- Existing Volume Record --%>
 <c:if test="${person.personId != 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby"><fmt:message key="people.showMenuPerson.createdBy"/> ${person.createdBy.firstName} ${person.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
-		<div id="id"><fmt:message key="people.showMenuPerson.personId"/> ${person.personId}</div>
+		<div id="createdby"><fmt:message key="peoplebase.showMenuPerson.createdBy"/> ${person.createdBy.firstName} ${person.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
+		<div id="id"><fmt:message key="peoplebase.showMenuPerson.personId"/> ${person.personId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowPersonURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
