@@ -22,41 +22,41 @@
 	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend>
-				<b>PARENTS</b>
+				<b><fmt:message key="peoplebase.editParentsPerson.parentsCaps"/></b>
 			</legend>
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><b>Father:</b></div>
+						<div class="col_l"><b><fmt:message key="peoplebase.editParentsPerson.father"/></b></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l"><form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error"><fmt:message key="peoplebase.editParentsPerson.name"/></form:label></div>
 						<div class="col_l"><form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_30c" /></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><u>Birth:</u></div>
-						<div class="col_r"><form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather">Year</form:label></div>
+						<div class="col_l"><u><fmt:message key="peoplebase.editParentsPerson.birth"/></u></div>
+						<div class="col_r"><form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather"><fmt:message key="peoplebase.editParentsPerson.year"/></form:label></div>
 						<div class="col_l"><form:input path="bornYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
-						<div class="col_r"><form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather">Month</form:label></div>
+						<div class="col_r"><form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather"><fmt:message key="peoplebase.editParentsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="bornMonthFather" disabled="disabled" path="bornMonthFather" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label id="bornDayLabelFather" for="bornDayFather" path="bornDayFather">Day</form:label></div>
+						<div class="col_r"><form:label id="bornDayLabelFather" for="bornDayFather" path="bornDayFather"><fmt:message key="peoplebase.editParentsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input path="bornDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><u>Death:</u></div>
-						<div class="col_r"><form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather">Year</form:label></div>
+						<div class="col_l"><u><fmt:message key="peoplebase.editParentsPerson.death"/></u></div>
+						<div class="col_r"><form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather"><fmt:message key="peoplebase.editParentsPerson.year"/></form:label></div>
 						<div class="col_l"><form:input path="deathYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
-						<div class="col_r"><form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather">Month</form:label></div>
+						<div class="col_r"><form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather"><fmt:message key="peoplebase.editParentsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="deathMonthFather" disabled="disabled" path="deathMonthFather" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label id="deathDayLabelFather" for="deathDayFather" path="deathDayFather">Day</form:label></div>
+						<div class="col_r"><form:label id="deathDayLabelFather" for="deathDayFather" path="deathDayFather"><fmt:message key="peoplebase.editParentsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input path="deathDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
-					<div class="row"><form:label id="bioNotesLabelFather" for="bioNotesFather" path="bioNotesFather">Bio notes:</form:label></div>
+					<div class="row"><form:label id="bioNotesLabelFather" for="bioNotesFather" path="bioNotesFather"><fmt:message key="peoplebase.editParentsPerson.bioNotes"/></form:label></div>
 					<div class="row"><form:textarea path="bioNotesFather" readonly="true" cssClass="txtarea_disabled" /></div>
 				</div>
 				
@@ -64,37 +64,37 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><b>Mother:</b></div>
+						<div class="col_l"><b><fmt:message key="peoplebase.editParentsPerson.mother"/></b></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l"><form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error"><fmt:message key="peoplebase.editParentsPerson.name"/></form:label></div>
 						<div class="col_l"><form:input id="motherAutocompleter" path="motherDescription" cssClass="input_30c" /></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><u>Birth:</u></div>
-						<div class="col_r"><form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother">Year</form:label></div>
+						<div class="col_l"><u><fmt:message key="peoplebase.editParentsPerson.birth"/></u></div>
+						<div class="col_r"><form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother"><fmt:message key="peoplebase.editParentsPerson.year"/></form:label></div>
 						<div class="col_l"><form:input path="bornYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
-						<div class="col_r"><form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother">Month</form:label></div>
+						<div class="col_r"><form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother"><fmt:message key="peoplebase.editParentsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="bornMonthMother" disabled="disabled" path="bornMonthMother" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label id="bornDayLabelMother" for="bornDayMother" path="bornDayMother">Day</form:label></div>
+						<div class="col_r"><form:label id="bornDayLabelMother" for="bornDayMother" path="bornDayMother"><fmt:message key="peoplebase.editParentsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input path="bornDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><u>Death:</u></div>
-						<div class="col_r"><form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother">Year</form:label></div>
+						<div class="col_l"><u><fmt:message key="peoplebase.editParentsPerson.death"/></u></div>
+						<div class="col_r"><form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother"><fmt:message key="peoplebase.editParentsPerson.year"/></form:label></div>
 						<div class="col_l"><form:input path="deathYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
-						<div class="col_r"><form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother">Month</form:label></div>
+						<div class="col_r"><form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother"><fmt:message key="peoplebase.editParentsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="deathMonthMother" disabled="disabled" path="deathMonthMother" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label id="deathDayLabelMother" for="deathDayMother" path="deathDayMother">Day</form:label></div>
+						<div class="col_r"><form:label id="deathDayLabelMother" for="deathDayMother" path="deathDayMother"><fmt:message key="peoplebase.editParentsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input path="deathDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
-					<div class="row"><form:label id="bioNotesLabelMother" for="bioNotesMother" path="bioNotesMother">Bio notes:</form:label></div>
+					<div class="row"><form:label id="bioNotesLabelMother" for="bioNotesMother" path="bioNotesMother"><fmt:message key="peoplebase.editParentsPerson.bioNotes"/></form:label></div>
 					<div class="row"><form:textarea path="bioNotesMother" readonly="true" cssClass="txtarea_disabled" /></div>
 				</div>	
 
@@ -296,18 +296,18 @@
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>Discard changes?</h1> 
+		<h1><fmt:message key="peoplebase.editParentsPerson.discardChangesQuestion"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>
 	
 	<div id="questionGenderFather" class="differentGender" style="display:none; cursor: default">
-		<h1>A father can't be a female or a corporate identity</h1>
+		<h1><fmt:message key="peoplebase.editParentsPerson.fatherCantBe"/></h1>
 		<input type="button" id="okFather" class="ok" value="Ok" />
 	</div>
 	
 	<div id="questionGenderMother" class="differentGender" style="display:none; cursor: default">
-		<h1>A mother can't be a male or a corporate identity</h1>
+		<h1><fmt:message key="peoplebase.editParentsPerson.motherCantBe"/></h1>
 		<input type="button" id="okMother" class="ok" value="Ok" />
 	</div>
 	

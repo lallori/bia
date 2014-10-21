@@ -22,17 +22,17 @@
 		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
 			<fieldset>
-			<legend><b>PERSON DETAILS</b></legend>
+			<legend><b><fmt:message key="peoplebase.editDetailsPerson.personDetailsCaps"/></b></legend>
 				<div class="listForm">
 					<div class="row">
 						<div class="col_l">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.firstname"></fmt:message>">?</a>
-							<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error"><u>First Name</u></form:label>
+							<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error"><u><fmt:message key="peoplebase.editDetailsPerson.firstName"/></u></form:label>
 						</div>
 						<div class="col_l"><form:input path="first" id="first" cssClass="input_14c" /></div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.successnumber"></fmt:message>">?</a>
-							<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error">Succes. Number</form:label>
+							<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.successDotNumber"/></form:label>
 						</div>
 						<div class="col_r"><form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/></div>
 					</div>
@@ -42,36 +42,36 @@
 					<div class="row">
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixpatronimic"></fmt:message>">?</a>
-							<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error">Prefix</form:label>
+							<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.prefix"/></form:label>
 						</div>
 						<div class="col_l"><form:input path="midPrefix" id="midPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.patronymic"></fmt:message>">?</a>
-							<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error">Patronymic</form:label>
+							<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.patronymic"/></form:label>
 						</div>
 						<div class="col_r"><form:input path="middle" id="middle" cssClass="input_20c" /></div>
 					</div>
 					<div class="row">
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixfamilyname"></fmt:message>">?</a>
-							<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error">Prefix</form:label>
+							<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.prefix"/></form:label>
 						</div>
 						<div class="col_l"><form:input path="lastPrefix" id="lastPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.familyname"></fmt:message>">?</a>
-							<form:label for="last" id="lastLabel" path="last" cssErrorClass="error"><u>Family Name</u></form:label>
+							<form:label for="last" id="lastLabel" path="last" cssErrorClass="error"><u><fmt:message key="peoplebase.editDetailsPerson.familyName"/></u></form:label>
 						</div>
 						<div class="col_r"><form:input path="last" id="last" cssClass="input_20c" /></div>
 					</div>
 					<div class="row">
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.prefixappellative"></fmt:message>">?</a>
-							<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error">Prefix</form:label>
+							<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.prefix"/></form:label>
 						</div>
 						<div class="col_l"><form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_4c" maxlength="5"/></div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.appellative"></fmt:message>">?</a>
-							<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error">Appellative</form:label>
+							<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.appellative"/></form:label>
 						</div>
 						<div class="col_r"><form:input path="postLast" id="postLast" cssClass="input_20c"/></div>
 					</div>
@@ -81,7 +81,7 @@
 					<div class="row">
 						<div class="col_l">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.gender"></fmt:message>">?</a>
-							<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
+							<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.gender"/></form:label>
 							<security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
 								<c:if test="${command.personId > 0}">
 									<form:input path="gender" id="gender" cssClass="input_2c_disabled" disabled="true"/>
@@ -104,9 +104,9 @@
 						<div class="col_l"><b>Birth:</b></div>
 						<div class="col_r"><form:label for="bornYear" id="bornYearLabel" path="bornYear" cssErrorClass="error"></form:label></div>
 						<div class="col_l"><form:input id="bornYear" path="bornYear" cssClass="input_4c" maxlength="4"/></div>
-						<div class="col_r"><form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error">Month</form:label></div>
+						<div class="col_r"><form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="bornMonth" path="bornMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error">Day</form:label></div>
+						<div class="col_r"><form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input id="bornDay" path="bornDay" cssClass="input_2c" maxlength="2"/></div>
 					</div>
 				</div>
@@ -114,12 +114,12 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_r">
-							<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx.</form:label>
+							<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.approx"/></form:label>
 							<form:checkbox path="bornApprox" id="bornApprox1"/>
 						</div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.birthbc"></fmt:message>">?</a>
-							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">B.C.?</form:label>
+							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.bcQuestion"/></form:label>
 							<form:checkbox id="bornDateBc1" path="bornDateBc"/>
 						</div>
 					</div>
@@ -127,7 +127,7 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_r"><form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error">Place</form:label></div>
+						<div class="col_r"><form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.place"/></form:label></div>
 						<div class="col_r"><form:input id="bornPlaceAutoCompleter" path="bornPlaceDescription" cssClass="input_25c"/></div>
 					</div>
 					<div class="row">
@@ -137,7 +137,7 @@
 						</div>
 						<div class="col_l"><form:input id="activeStart" path="activeStart" cssClass="input_10c"/></div>
 						<div class="col_r">
-							<form:label for="bornPlaceUnsure" id="bornPlaceUnsureLabel" path="bornPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+							<form:label for="bornPlaceUnsure" id="bornPlaceUnsureLabel" path="bornPlaceUnsure" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.unsureQuestion"/></form:label>
 							<form:checkbox id="bornPlaceUnsure1" path="bornPlaceUnsure" />
 						</div>
 					</div>
@@ -147,12 +147,12 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><b>Death:</b></div>
+						<div class="col_l"><b><fmt:message key="peoplebase.editDetailsPerson.death"/></b></div>
 						<div class="col_r"><form:label for="deathYear" id="deathYearLabel" path="deathYear" cssErrorClass="error"></form:label></div>
 						<div class="col_l"><form:input id="deathYear" path="deathYear" cssClass="input_4c" maxlength="4"/></div>
-						<div class="col_r"><form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label></div>
+						<div class="col_r"><form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.month"/></form:label></div>
 						<div class="col_l"><form:select id="deathMonth" path="deathMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-						<div class="col_r"><form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error">Day</form:label></div>
+						<div class="col_r"><form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.day"/></form:label></div>
 						<div class="col_l"><form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/></div>
 					</div>
 				</div>
@@ -160,12 +160,12 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_r">
-							<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx.</form:label>
+							<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.approx"/></form:label>
 							<form:checkbox path="deathApprox" id="deathApprox" />
 						</div>
 						<div class="col_r">
 							<a class="helpIcon" title="<fmt:message key="peoplebase.editDetailsPerson.help.deathbc"></fmt:message>">?</a>
-							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">B.C.?</form:label>
+							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.bcQuestion"/></form:label>
 							<form:checkbox id="deathDateBc" path="deathDateBc"/>
 						</div>
 					</div>
@@ -173,7 +173,7 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_r"><form:label for="deathPlaceDescription" id="deathPlaceDescriptionLabel" path="deathPlaceDescription" cssErrorClass="error">Place</form:label></div>
+						<div class="col_r"><form:label for="deathPlaceDescription" id="deathPlaceDescriptionLabel" path="deathPlaceDescription" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.place"/></form:label></div>
 						<div class="col_l"><form:input id="deathPlaceAutoCompleter" path="deathPlaceDescription" cssClass="input_25c"/></div>
 					</div>
 					<div class="row">
@@ -183,7 +183,7 @@
 						</div>
 						<div class="col_l"><form:input id="activeEnd" path="activeEnd" cssClass="input_10c"/></div>
 						<div class="col_r">
-							<form:label for="deathPlaceUnsure" id="deathPlaceUnsureLabel" path="deathPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+							<form:label for="deathPlaceUnsure" id="deathPlaceUnsureLabel" path="deathPlaceUnsure" cssErrorClass="error"><fmt:message key="peoplebase.editDetailsPerson.unsureQuestion"/></form:label>
 							<form:checkbox id="deathPlaceUnsure" path="deathPlaceUnsure" />
 						</div>
 					</div>
@@ -473,17 +473,17 @@
 
 
 	<div id="questionGender" class="notGender" style="display:none; cursor: default">
-		<h1>Please select a gender</h1>
+		<h1><fmt:message key="peoplebase.editDetailsPerson.pleaseSelectGender"/></h1>
 		<input type="button" id="okGender" value="Ok" />
 	</div>
 	
 	<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
-		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
+		<h1><fmt:message key="peoplebase.editDetailsPerson.thisNameClassifiedAsVariantWillBeAdjusted"/></h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>Discard changes?</h1> 
+		<h1><fmt:message key="peoplebase.editDetailsPerson.discardChangesQuestion"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>

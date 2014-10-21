@@ -12,11 +12,11 @@
 	</c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Recipient Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
-		<p>Total records found: <span id="recipientRecordsNum${personId}" class="recordsNum"></span></p>
+		<p><fmt:message key=“people.showRecipientDocumentsPerson.recipientDocumentsIndexedTo”/> <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
+		<p><fmt:message key=“people.showRecipientDocumentsPerson.totalRecordsFound”/> <span id="recipientRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
-	<a id="refineRecipient${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
+	<a id="refineRecipient${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key=“people.showRecipientDocumentsPerson.refineThisSearch”/></a>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPersonId${personId}">
 		<thead>

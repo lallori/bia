@@ -24,27 +24,27 @@
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.childId}"> 
-				<b>ADD NEW CHILD</b>
+				<b><fmt:message key="peoplebase.editChildPerson.addNewChildCaps"/></b>
 			</c:if>
 			<c:if test="${command.childId > 0}">
-				<b>Edit CHILD</b>
+				<b><fmt:message key="peoplebase.editChildPerson.editChild"/></b>
 			</c:if>
 			</legend>
 			<div class="listForm">
 				<div class="row">
 					<a class="helpIcon" title="<fmt:message key="peoplebase.editChildPerson.help.name"></fmt:message>">?</a>
-					<div class="col_r"><form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name</form:label></div>
+					<div class="col_r"><form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error"><fmt:message key="peoplebase.editChildPerson.name"/></form:label></div>
 					<div class="col_l"><form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_30c" /></div>
 				</div>
 			</div>
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born</form:label></div>
+					<div class="col_r"><form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error"><fmt:message key="peoplebase.editChildPerson.born"/></form:label></div>
 					<div class="col_l"><form:input path="bornYear" cssClass="input_4c_disabled" maxlength="4"/></div>
-					<div class="col_r"><form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died</form:label></div>
+					<div class="col_r"><form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error"><fmt:message key="peoplebase.editChildPerson.died"/></form:label></div>
 					<div class="col_l"><form:input path="deathYear" cssClass="input_4c_disabled" maxlength="4"/></div>
-					<div class="col_r"><form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death</form:label></div>
+					<div class="col_r"><form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error"><fmt:message key="peoplebase.editChildPerson.ageAtDeath"/></form:label></div>
 					<div class="col_l"><form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/></div>
 				</div>
 			</div>
@@ -125,7 +125,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="peoplebase.editChildPerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

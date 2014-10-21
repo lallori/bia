@@ -41,7 +41,7 @@
 	
 	<ul id="network">
        <div class="fb-like" data-send="false" data-layout="button_count" data-width="500" data-show-faces="false" style="display:inline;"></div>
-	   <a href="https://twitter.com/share" class="twitter-share-button" data-text=" ">Tweet</a>
+	   <a href="https://twitter.com/share" class="twitter-share-button" data-text=" "><fmt:message key=“people.sharePerson.tweet”/></a>
 	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	   <div class="g-plusone" data-size="medium" style="display:inline"></div>
 	   <script type="text/javascript">
@@ -63,22 +63,22 @@
 					</c:if>
 				</c:forEach>			
 				<c:if test="${person.activeStart != null}">
-					<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
+					<h7><fmt:message key=“people.sharePerson.activeStart”/> <span class="h7"> ${person.activeStart}</span></h7>
 				</c:if>
 				<c:if test="${person.activeStart == null}">
-					<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
+					<h7><fmt:message key=“people.sharePerson.birth”/> <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
 				</c:if>		
 				<c:if test="${person.activeEnd != null}">
-					<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
+					<h7><fmt:message key=“people.sharePerson.activeEnd”/><span class="h7"> ${person.activeEnd}</span></h7>
 				</c:if>
 				<c:if test="${person.activeEnd == null}">
-					<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
+					<h7><fmt:message key=“people.sharePerson.death”/> <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 				</c:if>
 				<c:if test="${docsRelated != 0 && docsRelated != 1}">
-					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span></p>
+					<p><fmt:message key=“people.sharePerson.documentsRelatedToThisPersonEntry”/> <span class="num_docs">${docsRelated}</span></p>
 				</c:if>
 				<c:if test="${docsRelated == 1}">
-					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span></p>
+					<p><fmt:message key=“people.sharePerson.documentsRelatedToThisPersonEntry”/> <span class="num_docs">${docsRelated}</span></p>
 				</c:if>
 			</div>
 			<div id="EditPortraitPersonDiv">
@@ -105,32 +105,32 @@
 		
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
-				<h5>PERSON DETAILS</h5>
+				<h5><fmt:message key=“people.sharePerson.personDetails”/></h5>
 			</div>
 			
 			<div class="listDetails">
 				<div class="row">
-						<div class="item">Gender</div> <div class="value">${person.gender}</div>
+						<div class="item"><fmt:message key=“people.sharePerson.gender”/></div> <div class="value">${person.gender}</div>
 					</div>
 					<div class="row">
-						<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
+						<div class="item"><fmt:message key=“people.sharePerson.dateOfBirth”/></div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 					</div>
 					<div class="row">
-						<div class="item">Birth Place</div>
+						<div class="item"><fmt:message key=“people.sharePerson.birthPlace”/></div>
 						<div class="value">${person.bornPlace.placeNameFull}</div>
 					</div>
 					<div class="row">
-						<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
+						<div class="item"><fmt:message key=“people.sharePerson.activeStart”/></div> <div class="value">${person.activeStart}</div>
 					</div>
 					<div class="row">
-						<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
+						<div class="item"><fmt:message key=“people.sharePerson.dateOfDeath”/></div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 					</div>
 					<div class="row">
-						<div class="item">Death Place</div>
+						<div class="item"><fmt:message key=“people.sharePerson.deathPlace”/></div>
 						<div class="value">${person.deathPlace.placeNameFull}</div>
 					</div>
 					<div class="row">
-						<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
+						<div class="item"><fmt:message key=“people.sharePerson.activeEnd”/></div> <div class="value">${person.activeEnd}</div>
 					</div>
 			</div>
 			
@@ -142,7 +142,7 @@
 	
 	<div id="EditNamesPersonDiv" class="background">
 		<div class="title">
-			<h5>NAMES</h5>
+			<h5><fmt:message key=“people.sharePerson.names”/></h5>
 		</div>
 		
 		<div class="list">
@@ -160,7 +160,7 @@
 	
 	<div id="EditTitlesOccupationsPersonDiv" class="background">
 		<div class="title">
-			<h5>TITLES / OCCUPATIONS</h5>
+			<h5><fmt:message key=“people.sharePerson.titlesOccupations”/></h5>
 		</div>
 		
 		<div class="list">
@@ -174,7 +174,7 @@
 					</c:if>
 					<div class="value60"><b>${currentPoLink.titleOccList.titleOcc}</b><br>
 					${currentPoLink.titleOccList.roleCat.roleCatMinor}</div> 
-					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
+					<div class="info"><fmt:message key=“people.sharePerson.start”/> ${currentPoLink.startDate} | <fmt:message key=“people.sharePerson.end”/> ${currentPoLink.endDate}</div>
 				</div>
 			</c:forEach>
 		</div>	
@@ -185,26 +185,26 @@
 	
 	<div id="EditParentsPersonDiv" class="background">
 		<div class="title">
-			<h5>PARENTS</h5>
+			<h5><fmt:message key=“people.sharePerson.parents”/></h5>
 			<br />
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Father</div> 
+				<div class="item"><fmt:message key=“people.sharePerson.father”/></div> 
 		<c:forEach items="${person.parents}" var="currentParent">
 			<c:if test="${currentParent.parent.gender == 'M'}">
 				<div class="value">${currentParent.parent}</div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+				<div class="info"><fmt:message key=“people.sharePerson.born”/> ${currentParent.parent.bornYear} | <fmt:message key=“people.sharePerson.death”/> ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
 			</div>
 			<div class="row">
-				<div class="item">Mother</div> 
+				<div class="item"><fmt:message key=“people.sharePerson.mother”/></div> 
 		<c:forEach items="${person.parents}" var="currentParent">
 			<c:if test="${currentParent.parent.gender == 'F'}">
 				<div class="value">${currentParent.parent}</div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+				<div class="info"><fmt:message key=“people.sharePerson.born”/> ${currentParent.parent.bornYear} | <fmt:message key=“people.sharePerson.death”/> ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
 			</div>
@@ -215,14 +215,14 @@
 	
 	<div id="EditChildrenPersonDiv" class="background">
 		<div class="title">
-			<h5>CHILDREN</h5>
+			<h5><fmt:message key=“people.sharePerson.children”/></h5>
 		</div>
 		
 		<div class="list">
 			<c:forEach items="${children}" var="currentChild">
 				<div class="row">
 					<div class="value">${currentChild.child}</div> 
-					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
+					<div class="info"><fmt:message key=“people.sharePerson.born”/> ${currentChild.child.bornYear} | <fmt:message key=“people.sharePerson.death”/> ${currentChild.child.deathYear}</div>
 				</div>
 			</c:forEach>
 		</div>
@@ -232,7 +232,7 @@
 	
 	<div id="EditSpousesPersonDiv"class="background">
 		<div class="title">
-			<h5>SPOUSES</h5>
+			<h5><fmt:message key=“people.sharePerson.spouses”/></h5>
 		</div>
 		
 		<div class="list">
@@ -240,11 +240,11 @@
 				<div class="row">
 					<c:if test="${person.personId == currentMarriage.husband.personId}">
 						<div class="value">${currentMarriage.wife}</div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+						<div class="info"><fmt:message key=“people.sharePerson.marriage”/> ${currentMarriage.startYear} - ${currentMarriage.endYear} | <fmt:message key=“people.sharePerson.death”/> ${currentMarriage.wife.deathYear}</div>
 					</c:if>
 					<c:if test="${person.personId == currentMarriage.wife.personId}">
 						<div class="value">${currentMarriage.husband}</div> 
-						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
+						<div class="info"><fmt:message key=“people.sharePerson.marriage”/> ${currentMarriage.startYear} - ${currentMarriage.endYear} | <fmt:message key=“people.sharePerson.death”/> ${currentMarriage.husband.deathYear}</div>
 					</c:if>
 				</div>
 			</c:forEach>
@@ -256,7 +256,7 @@
 	
 	<div id="EditResearchNotesPersonDiv" class="background">
 		<div class="title">
-			<h5>RESEARCH NOTES</h5>
+			<h5><fmt:message key=“people.sharePerson.researchNotes”/></h5>
 		</div>
 		
 		<div class="list">

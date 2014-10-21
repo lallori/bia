@@ -17,7 +17,8 @@
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
 		<fieldset>
-			<legend><b>RESEARCH NOTES</b></legend>
+			<legend><b><fmt:message key="peoplebase.editResearchNotesPerson.researchNotes"/>
+</b></legend>
 			<div class="listForm">
 				<div class="row"><a class="helpIcon" title="<fmt:message key="peoplebase.editResearchNotes.help.edit"></fmt:message>">?</a></div>
 				<div class="row"><form:textarea id="bioNotes" path="bioNotes" class="txtarea_big" /></div>
@@ -82,7 +83,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="peoplebase.editResearchNotesPerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

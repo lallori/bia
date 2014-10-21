@@ -15,11 +15,11 @@
 	</c:url>
 
 	<div id="DeleteThisRecordDiv">
-		<h1>Are you sure you want to delete this record?</h1>
+		<h1><fmt:message key=“people.showConfirmDeletePerson.areYouSure”/></h1>
 		
-		<a id="yes" class="button_small" href="${DeletePersonURL}">YES</a>
+		<a id="yes" class="button_small" href="${DeletePersonURL}"><fmt:message key=“people.showConfirmDeletePerson.yes”/></a>
 	
-		<a id="no" class="button_small" href="#">NO</a>
+		<a id="no" class="button_small" href="#"><fmt:message key=“people.showConfirmDeletePerson.no”/></a>
 	</div>
 
 	<script>

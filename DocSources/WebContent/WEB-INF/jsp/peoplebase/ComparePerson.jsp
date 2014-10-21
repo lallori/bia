@@ -47,7 +47,7 @@
 	<div id="personDiv">
 		<c:if test="${person.personId == 0}">
 		<div id="personTitle">
-			<h2>ADD New - Person Record</h2>
+			<h2><fmt:message key="peoplebase.showDocumentsPerson.documentsIndexedTo"/></h2>
 		</c:if>
 		<c:if test="${person.personId != 0}">
 		<div id="personTitle">
@@ -59,16 +59,16 @@
 					</c:if>
 				</c:forEach>			
 				<c:if test="${person.activeStart != null}">
-					<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
+					<h7><fmt:message key="peoplebase.comparePerson.activeStartCaps"/> <span class="h7"> ${person.activeStart}</span></h7>
 				</c:if>
 				<c:if test="${person.activeStart == null}">
-					<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
+					<h7><fmt:message key="peoplebase.comparePerson.birth"/> <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
 				</c:if>		
 				<c:if test="${person.activeEnd != null}">
-					<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
+					<h7><fmt:message key="peoplebase.comparePerson.activeEndCaps"/> <span class="h7"> ${person.activeEnd}</span></h7>
 				</c:if>
 				<c:if test="${person.activeEnd == null}">
-					<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
+					<h7><fmt:message key="peoplebase.comparePerson.death0"/> <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 				</c:if>
 				<%-- Documents Related Section --%>
 				<c:if test="${docsRelated != 0 && docsRelated != 1}">
@@ -81,10 +81,10 @@
 					</div>
 				</c:if>
 				<c:if test="${docsRelated == 0}">	
-					<p>Documents related to this person entry: <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
+					<p><fmt:message key="peoplebase.comparePerson.documentsRelatedToThisPersonEntry"/> <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
 				</c:if>
 				<c:if test="${docsRelated == 1}">
-					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
+					<p><fmt:message key="peoplebase.comparePerson.documentsRelatedToThisPersonEntry"/> <span class="num_docs">${docsRelated}</span>
 					<div style="margin-left:28px">
 						(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="View all the documents related to this person">View it</a>)
 					</div>	
@@ -104,34 +104,34 @@
 
 	<div id="EditDetailsPersonDiv" class="background">
 		<div class="title">
-			<h5>PERSON DETAILS</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.personDetails"/></h5>
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Name</div> <div class="value">${person.mapNameLf}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.name"/></div> <div class="value">${person.mapNameLf}</div>
 			</div>
 			<br>
 			<div class="row">
-				<div class="item">Gender</div> <div class="value">${person.gender}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.gender"/></div> <div class="value">${person.gender}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.birthDate"/></div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Birth Place</div><div class="value"><a class="linkPlaceCompare" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.birthPlace"/></div><div class="value"><a class="linkPlaceCompare" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.activeStart"/></div> <div class="value">${person.activeStart}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.deathDate"/></div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Death Place</div> <div class="value"><a class="linkPlaceCompare" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.deathPlace"/></div> <div class="value"><a class="linkPlaceCompare" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
+				<div class="item"><fmt:message key="peoplebase.comparePerson.activeEnd"/></div> <div class="value">${person.activeEnd}</div>
 			</div>
 		</div>
 	</div>
@@ -139,7 +139,7 @@
 
 	<div id="EditNamesPersonDiv" class="background">
 		<div class="title">
-			<h5>NAMES </h5>
+			<h5><fmt:message key="peoplebase.comparePerson.names"/> </h5>
 		</div>
 		<div class="list">
 			<c:forEach items="${person.altName}" var="currentName">
@@ -163,7 +163,7 @@
 
 	<div id="EditTitlesOrOccupationsPersonDiv" class="background">
 		<div class="title">	
-			<h5>TITLES / OCCUPATIONS</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.titlesOccupations"/></h5>
 		</div>
 		
 		<div class="list">
@@ -199,11 +199,11 @@
 
 	<div id="EditParentsPersonDiv" class="background">
 		<div class="title">	
-			<h5>PARENTS</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.parents"/></h5>
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item">Father</div> 
+				<div class="item"><fmt:message key="peoplebase.comparePerson.father"/></div> 
 				<c:forEach items="${person.parents}" var="currentParent">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentParent.parent.personId}" />
@@ -215,12 +215,12 @@
 								<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" />
 							</a>
 						</div> 
-						<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+						<div class="info"><fmt:message key="peoplebase.comparePerson.born"/> ${currentParent.parent.bornYear} | <fmt:message key="peoplebase.comparePerson.death1"/> ${currentParent.parent.deathYear}</div>
 					</c:if>				
 				</c:forEach>
 			</div>
 			<div class="row">
-				<div class="item">Mother</div> 
+				<div class="item"><fmt:message key="peoplebase.comparePerson.mother"/></div> 
 				<c:forEach items="${person.parents}" var="currentParent">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentParent.parent.personId}" />
@@ -232,7 +232,7 @@
 								<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" />
 							</a>
 						</div> 
-						<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+						<div class="info"><fmt:message key="peoplebase.comparePerson.born"/> ${currentParent.parent.bornYear} | <fmt:message key="peoplebase.comparePerson.death1"/> ${currentParent.parent.deathYear}</div>
 					</c:if>				
 				</c:forEach>
 			</div>
@@ -241,7 +241,7 @@
 
 	<div id="EditChildrenPersonDiv" class="background">
 		<div class="title">	
-			<h5>CHILDREN</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.children"/></h5>
 		</div>
 		<div class="list">
 			<c:forEach items="${children}" var="currentChild">
@@ -255,7 +255,7 @@
 							<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentChild.child.personId}" />
 						</a>
 					</div> 
-					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
+					<div class="info"><fmt:message key="peoplebase.comparePerson.born"/> ${currentChild.child.bornYear} | <fmt:message key="peoplebase.comparePerson.death1"/> ${currentChild.child.deathYear}</div>
 				</div>
 			</c:forEach>
 		</div>
@@ -263,7 +263,7 @@
 
 	<div id="EditSpousesPersonDiv" class="background">
 		<div class="title">	
-			<h5>SPOUSES</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.spouses"/></h5>
 		</div>
 		<div class="list">
 			<c:forEach items="${marriages}" var="currentMarriage">
@@ -287,7 +287,7 @@
 							</a>
 						</div>
 						<div class="info">
-							Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear}
+							<fmt:message key="peoplebase.comparePerson.marriageDates"/> ${currentMarriage.startYear} - ${currentMarriage.endYear}
 							<c:if test="${not empty currentMarriage.marTerm and currentMarriage.marTerm != 'Unknown'}">
 							| ${currentMarriage.marTerm}
 							</c:if>
@@ -300,7 +300,7 @@
 
 	<div id="EditResearchNotesPersonDiv" class="background">
 		<div class="title">	
-			<h5>RESEARCH NOTES</h5>
+			<h5><fmt:message key="peoplebase.comparePerson.researchNotes"/></h5>
 		</div>
 	
 		<div class="list">

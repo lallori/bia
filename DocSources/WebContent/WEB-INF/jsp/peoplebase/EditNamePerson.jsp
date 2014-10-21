@@ -19,22 +19,22 @@
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.nameId}"> 
-				<b>ADD NEW NAME</b>
+				<b><fmt:message key="peoplebase.editNamePerson.addNewName"/></b>
 			</c:if>
 			<c:if test="${command.nameId > 0}">
-				<b>Edit NAME</b>
+				<b><fmt:message key="peoplebase.editNamePerson.editName"/></b>
 			</c:if> 
 			</legend>
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="<fmt:message key="peoplebase.editNamePerson.help.name"></fmt:message>">?</a>
-						<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name</form:label>
+						<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error"><fmt:message key="peoplebase.editNamePerson.name"/></form:label>
 					</div>
 					<div class="col_l"><form:input path="altName" class="input_30c" /></div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType</form:label></div>
+					<div class="col_l"><form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error"><fmt:message key="peoplebase.editNamePerson.nameType"/></form:label></div>
 					<div class="col_l"><form:select path="nameType" cssClass="selectform_Mlong" items="${nameTypes}"/></div>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="peoplebase.editNamePerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

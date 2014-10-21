@@ -19,7 +19,7 @@
 
 	<form:form id="EditTitlesOrOccupationsPersonForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>TITLES / OCCUPATIONS</b></legend>
+		<legend><b><fmt:message key="peoplebase.editTitlesOrOccupationsPerson.titlesOccupations”/></b></legend>
 		<c:forEach items="${person.poLink}" var="currentTitleOrOccupation">
 			<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
 				<c:param name="prfLinkId" value="${currentTitleOrOccupation.prfLinkId}" />
@@ -143,7 +143,7 @@
 	
 	
 	<div class="question" style="display:none; cursor: default"> 
-		<h1>Delete this Occupation entry?</h1> 
+		<h1><fmt:message key="peoplebase.editTitlesOrOccupationsPerson.deleteThisOccupationEntry”/></h1> 
 		<input type="button" class="yes" value="Yes" /> 
 		<input type="button" class="no" value="No" /> 
 	</div>

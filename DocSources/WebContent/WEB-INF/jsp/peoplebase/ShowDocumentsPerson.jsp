@@ -12,8 +12,8 @@
 	</c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
-		<p>Total records found: <span id="allDocRecordsNum${personId}" class="recordsNum"></span></p>
+		<p><fmt:message key="peoplebase.showDocumentsPerson.documentsIndexedTo"/> <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
+		<p><fmt:message key="peoplebase.showDocumentsPerson.totalRecordsFound"/> <span id="allDocRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
 	<a id="refineAll${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>

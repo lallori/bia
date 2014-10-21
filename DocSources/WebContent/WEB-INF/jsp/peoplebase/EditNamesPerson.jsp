@@ -19,7 +19,7 @@
 
 	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>NAMES</b></legend>
+		<legend><b><fmt:message key="peoplebase.editNamesPerson.names"/></b></legend>
 		<c:forEach items="${person.altName}" var="currentName">
 			<c:url var="EditNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
 				<c:param name="personId" value="${command.personId}" />
@@ -123,7 +123,7 @@
 	</script>
 	
 	<div class="question" style="display:none; cursor: default"> 
-		<h1>Are you sure you want to delete this name variant?</h1> 
+		<h1><fmt:message key="peoplebase.editNamesPerson.deleteNameVariantQuestion"/></h1> 
 		<input type="button" class="yes" value="Yes" /> 
 		<input type="button" class="no" value="No" /> 
 	</div>

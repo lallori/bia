@@ -20,7 +20,7 @@
 
 	<form:form id="EditChildrenPersonForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>CHILDREN</b></legend>
+		<legend><b><fmt:message key="peoplebase.editChildrenPerson.childrenCaps"/></b></legend>
 		<c:forEach items="${children}" var="currentChild">
 			<c:url var="EditChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
 				<c:param name="id" value="${currentChild.id}" />
@@ -185,7 +185,7 @@
 	</script>
 	
 	<div class="question" style="display:none; cursor: default"> 
-		<h1>Delete this Child entry?</h1> 
+		<h1><fmt:message key="peoplebase.editChildrenPerson.deleteChildEntryQuestion"/></h1> 
 		<input type="button" class="yes" value="Yes" /> 
 		<input type="button" class="no" value="No" /> 
 	</div>

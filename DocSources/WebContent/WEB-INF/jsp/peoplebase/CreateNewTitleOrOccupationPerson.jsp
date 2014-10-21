@@ -17,12 +17,12 @@
 	<div id="loadingDiv"></div>
 		<fieldset>
 			<div>
-				<form:label id="titleOccupationNameLabel" for="titleOcc" path="titleOcc" cssErrorClass="error">Title/Occupation Name</form:label>
+				<form:label id="titleOccupationNameLabel" for="titleOcc" path="titleOcc" cssErrorClass="error"><fmt:message key="peoplebase.createNewTitleOrOccupationPerson.titleOccupationName"/></form:label>
 				<form:input id="titleOccupationName" path="titleOcc" cssClass="input_29c" type="text" value=""/>
 			</div>
 			<div>
-				<b>Role Categories</b><br />
-				<form:label id="ordByMajorLabel" for="roleCatId" path="roleCatId">Ordered by Role Category Mayor</form:label>
+				<b><fmt:message key="peoplebase.createNewTitleOrOccupationPerson.roleCategories"/></b><br />
+				<form:label id="ordByMajorLabel" for="roleCatId" path="roleCatId"><fmt:message key="peoplebase.createNewTitleOrOccupationPerson.orderedByRoleCategoryMayor"/></form:label>
 				<form:select id="ordByMajor" cssClass="selectform_XLong" path="roleCatId">
 					<form:option value="" label="-Please Select" />
 					<c:forEach var="roleCatMinor" items="${roleCat}">
@@ -91,13 +91,13 @@
 	</script>
 	
 <div id="questionDialog" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="peoplebase.createNewTitleOrOccupationPerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yesDialog" value="Yes" /> 
 	<input type="button" id="noDialog" value="No" /> 
 </div>
 
 <div id="questionError" style="display:none; cursor:default">
-	<h1>Please select the Role Category</h1>
+	<h1><fmt:message key="peoplebase.createNewTitleOrOccupationPerson.pleaseSelectRoleCategory"/></h1>
 	<input type="button" id="ok" value="Ok" />
 </div>
 

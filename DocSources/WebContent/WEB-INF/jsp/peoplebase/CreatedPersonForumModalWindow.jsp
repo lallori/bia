@@ -12,7 +12,7 @@
 			</c:url>
 			
 			<div id="ConfirmCreateForum">
-				<h1>A Discussion Forum for this Person has been created.</h1>
+				<h1><fmt:message key="peoplebase.createdPersonForumModalWindow.discussionCreatedForPerson"/></h1>
 				<a id="open" href="${ShowForumURL}" target="_blank" class="button_medium">OPEN FORUM</a>
 			</div>
 		
@@ -26,7 +26,7 @@
 		</c:when>
 		<c:otherwise>
 			<div id="ConfirmCreateForum">
-				<h1>The Discussion Forum for this Person has NOT been created due to a server error. Please contact the admin!</h1>
+				<h1><fmt:message key="peoplebase.createdPersonForumModalWindow.discussionNotCreatedForPerson"/></h1>
 			</div>
 		</c:otherwise>
 	</c:choose>

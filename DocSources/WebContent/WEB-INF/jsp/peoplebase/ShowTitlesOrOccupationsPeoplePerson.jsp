@@ -8,8 +8,8 @@
 	<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Title / Occupation : <font color="red" style="margin-left:5px">"${titleOcc}"</font></p>
-		<p>Total records found: <span id="recordsNum${titleOccId}" class="recordsNum"></span></p>
+		<p><fmt:message key=“people.showTitlesOrOccupationsPeoplePerson.titleOccupation”/> <font color="red" style="margin-left:5px">"${titleOcc}"</font></p>
+		<p><fmt:message key=“people.showTitlesOrOccupationsPeoplePerson.totalRecordsFound”/> <span id="recordsNum${titleOccId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showTitlesOrOccupationsPeopleTitleOccId${titleOccId}">

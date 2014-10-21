@@ -12,7 +12,7 @@
 
 	<div id="EditTitlesOrOccupationsPersonDiv" class="background">
 		<div class="title">
-			<h5>TITLES / OCCUPATIONS </h5>
+			<h5><fmt:message key=“people.showTitlesOrOccupationsPerson.titlesOccupations”/> </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<c:if test="${person.personId > 0}">
 				<a id="EditTitlesOrOccupationsPerson" href="${EditTitlesOrOccupationsPersonURL}" class="editButton"></a><span id="loading"/>
@@ -36,7 +36,7 @@
 					</c:if>
 					<div class="value60"><a class="linkOccupation" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
 					<a class="linkOccupation" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
-					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
+					<div class="info"><fmt:message key=“people.showTitlesOrOccupationsPerson.start”/> ${currentPoLink.startDate} | <fmt:message key=“people.showTitlesOrOccupationsPerson.end”/> ${currentPoLink.endDate}</div>
 				</div>
 			</c:forEach>
 		</div>

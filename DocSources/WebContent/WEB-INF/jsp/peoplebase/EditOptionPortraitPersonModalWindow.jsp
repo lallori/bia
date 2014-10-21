@@ -16,7 +16,8 @@
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
-					<form:label for="portraitAuthor" id="portraitAuthorLable" path="portraitAuthor">Author</form:label>
+					<form:label for="portraitAuthor" id="portraitAuthorLable" path="portraitAuthor"><fmt:message key="peoplebase.people.editOptionPortraitPersonModalWindow.author"/>
+</form:label>
 				</div>
 				<div class="col_l">
 					<form:input id="portraitAuthor" name="portraitAuthor" path="portraitAuthor" class="input_40c" type="text" />
@@ -24,7 +25,8 @@
 			</div>
 			<div class="row">
 				<div class="col_l">
-					<form:label for="portraitSubject" id="portraitSubjectLabel" path="portraitSubject">Subject</form:label>
+					<form:label for="portraitSubject" id="portraitSubjectLabel" path="portraitSubject"><fmt:message key="peoplebase.people.editOptionPortraitPersonModalWindow.subject"/>
+</form:label>
 				</div>
 				<div class="col_l">
 					<form:input id="portraitSubject" name="portraitSubject" path="portraitSubject" class="input_28c" type="text" value="" size="30" />

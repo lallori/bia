@@ -12,7 +12,7 @@
 
 	<div id="EditParentsPersonDiv" class="background">
 		<div class="title">	
-			<h5>PARENTS</h5>
+			<h5><fmt:message key=“people.showParentsPerson.parents”/></h5>
 		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 		 		<c:if test="${person.personId > 0}">
 				<a id="EditParentsPerson" href="${EditParentsPersonURL}" class="editButton"></a><span id="loading"/>
@@ -21,26 +21,26 @@
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item">Father</div> 
+				<div class="item"><fmt:message key=“people.showParentsPerson.father”/></div> 
 		<c:forEach items="${person.parents}" var="currentParent">
 			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 				<c:param name="personId"   value="${currentParent.parent.personId}" />
 			</c:url>
 			<c:if test="${currentParent.parent.gender == 'M'}">
 				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" /></a></div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+				<div class="info"><fmt:message key=“people.showParentsPerson.born”/> ${currentParent.parent.bornYear} | <fmt:message key=“people.showParentsPerson.death”/> ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
 			</div>
 			<div class="row">
-				<div class="item">Mother</div> 
+				<div class="item"><fmt:message key=“people.showParentsPerson.mother”/></div> 
 		<c:forEach items="${person.parents}" var="currentParent">
 			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 				<c:param name="personId"   value="${currentParent.parent.personId}" />
 			</c:url>
 			<c:if test="${currentParent.parent.gender == 'F'}">
 				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentParent.parent.personId}" /></a></div> 
-				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+				<div class="info"><fmt:message key=“people.showParentsPerson.born”/> ${currentParent.parent.bornYear} | <fmt:message key=“people.showParentsPerson.death”/> ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
 			</div>

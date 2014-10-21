@@ -19,18 +19,18 @@
 		<!--- Loading div when saving the form -->
 		<div id="loadingDiv"></div>
             <fieldset>
-            	<legend><b>EDIT TITLES / OCCUPATIONS</b></legend>
+            	<legend><b><fmt:message key="peoplebase.editTitleOrOccupation.editTitlesOccupations”/></b></legend>
                 <div class="listForm">
                     <div class="row">
                         <div class="col_l">
-                            <form:label for="titleOcc" id="titleOccupationNameLabel" path="titleOcc">Title/Occupation Name</form:label>
+                            <form:label for="titleOcc" id="titleOccupationNameLabel" path="titleOcc"><fmt:message key="peoplebase.editTitleOrOccupation.titleOccupationName”/></form:label>
                         </div>
                         <div class="col_r">
                             <form:input id="titleOccupationName" name="titleOcc" path="titleOcc" class="input_33c" type="text" value="" />
                         </div>
                    </div>
                 	<div class="row">
-                    	<div class="col_l">Role Categories</div>
+                    	<div class="col_l"><fmt:message key="peoplebase.editTitleOrOccupation.roleCategories”/></div>
                     	<div class="col_r">
 							<form:select id="ordByMajor" cssClass="selectform_XXLlong" path="roleCatId">
 								<form:option value="" label="-Please Select" />
@@ -89,7 +89,7 @@
 	</script>
 	
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="peoplebase.editTitleOrOccupation.discardChangesQuestion”/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

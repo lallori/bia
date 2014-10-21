@@ -23,7 +23,7 @@
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
-					<form:label for="link" id="linkLabel" path="link">Link</form:label>
+					<form:label for="link" id="linkLabel" path="link"><fmt:message key=“people.showUploadPortraitPersonModalWindow.link”/></form:label>
 				</div>
 				<div class="col_l">
 					<form:input id="link" name="link" class="input_40c" type="text" path="link"/>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="row">
 				<div class="col_l">
-					<form:label for="browse" id="browseLabel" path="browse">Browse</form:label>
+					<form:label for="browse" id="browseLabel" path="browse"><fmt:message key=“people.showUploadPortraitPersonModalWindow.browse”/></form:label>
 				</div>
 				<div class="col_l">
 					<form:input id="browse" name="browse" class="input_28c" type="file" value="" size="30" path="browse"/>
@@ -42,7 +42,7 @@
 		<form:errors path="browse" cssClass="inputerrors" htmlEscape="false"/>
 		<div>
 			<input type="hidden" name="personId" value="${person.personId}" />
-			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium">Reset Portrait</a>
+			<a id="resetPortrait" href="${DeletePortraitPersonURL}" class="button_medium"><fmt:message key=“people.showUploadPortraitPersonModalWindow.resetPortrait”/></a>
 			<input id="save" type="submit" class="savePortrait button_small"  value="Save" />
 		</div>
 	

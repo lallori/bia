@@ -12,18 +12,18 @@
 
 	<div id="EditTitleOccupationDiv" class="background">
 		<div class="title">
-			<h5>TITLES / OCCUPATIONS </h5>
+			<h5><fmt:message key=“people.showTitleOrOccupation.titlesOccupations”/> </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="EditTitleOccupation" href="${EditTitleOrOccupationURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item37">Title/Occupation Name</div>
+				<div class="item37"><fmt:message key=“people.showTitleOrOccupation.titleOccupationName”/></div>
 				<div class="value">${titleOccsList.titleOcc}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Role</div>
+				<div class="item37"><fmt:message key=“people.showTitleOrOccupation.role”/></div>
 				<div class="value">${titleOccsList.roleCat.roleCatMajor}/${titleOccsList.roleCat.roleCatMinor}</div>
 			</div>
 		</div>
