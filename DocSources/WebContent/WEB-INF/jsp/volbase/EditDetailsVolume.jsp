@@ -27,7 +27,7 @@
 				<div class="row">
 					<div class="col_r"><form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.volume"/></form:label></div>
 					<div class="col_l"><form:input path="volNum" cssClass="input_5c" maxlength="5"/></div>
-					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.volumeextension"/>">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDetailsVolume.help.volumeextension"/>">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error"><fmt:message key="volbase.editDetailsVolume.volumeExtension"/></form:label></div>
 					<div class="col_r"><form:input path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/></div>
 				</div>
 			</div>
@@ -81,7 +81,7 @@
 			<form:hidden path="seriesRefNum"/>
 
 			<div>
-				<span id="volExist" class="inputerrorsVolumeExist" style="display: none;"><p>Volume <span id="volNumError" style="font-weight: bold; color: black;"></span> is already present, you cannot add again this volume. Save is disabled.</p></span>
+				<span id="volExist" class="inputerrorsVolumeExist" style="display: none;"><p><fmt:message key="volbase.editDetailsVolume.volume"/> <span id="volNumError" style="font-weight: bold; color: black;"></span> <fmt:message key="volbase.editDetailsVolume.isAlreadyPresent"/></p></span>
 				
 				<input id="close" class="button_small fl" type="submit" value="Close" title="do not save changes" />
 				<input id="save" class="button_small fr" type="submit" value="Save" />
@@ -376,18 +376,18 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="volbase.editDetailsVolume.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>
 
 <div id="questionEndDate" class="wrongEndDate" style="display:none; cursor: default">
-		<h1>Volume End Year should not be dated before the Volume Start Year</h1>
+		<h1><fmt:message key="volbase.editDetailsVolume.volumeEndYear"/></h1>
 		<input type="button" id="okEndDate" value="Ok" />
 </div>
 
 <div id="questionFormatDate" class="wrongFormatDate" style="display:none; cursor: default">
-		<h1>Date format is incorrect</h1>
+		<h1><fmt:message key="volbase.editDetailsVolume.dateFormatWrong"/></h1>
 		<input type="button" id="okFormatDate" value="Ok" />
 </div>
 

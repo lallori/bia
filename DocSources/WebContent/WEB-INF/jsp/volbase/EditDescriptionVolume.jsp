@@ -31,15 +31,15 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_r"><form:label id="boundLabel" for="bound" path="bound" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.bound"/></form:label></div>
-					<div class="col_l"><form:select path="bound" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="bound" cssClass="inputerrors"/></div>
+					<div class="col_l"><form:select path="bound" cssClass="selectform_short"><form:option value="true"><fmt:message key="volbase.editDescriptionVolume.yes"/></form:option><form:option value="false"><fmt:message key="volbase.editDescriptionVolume.no"/></form:option></form:select><form:errors path="bound" cssClass="inputerrors"/></div>
 					<div class="col_r"><form:label id="folsNumbrdLabel" for="folsNumbrd" path="folsNumbrd" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.foliosNumbered"/></form:label></div>
-					<div class="col_r"><form:select path="folsNumbrd" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/></div>
+					<div class="col_r"><form:select path="folsNumbrd" cssClass="selectform_short"><form:option value="true"><fmt:message key="volbase.editDescriptionVolume.yes"/></form:option><form:option value="false"><fmt:message key="volbase.editDescriptionVolume.no"/></form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/></div>
 				</div>
 				<div class="row">
 					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.editDescriptionVolume.help.foliocount"/>">?</a><form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.folioCount"/></form:label></div>
 					<div class="col_l"><form:input path="folioCount" cssClass="input_10c"/><form:errors path="ccondition" cssClass="inputerrors"/></div>
 					<div class="col_r"><form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.indexOfNames"/></form:label></div>
-					<div class="col_r"><form:select path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/></div>
+					<div class="col_r"><form:select path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true"><fmt:message key="volbase.editDescriptionVolume.yes"/></form:option><form:option value="false"><fmt:message key="volbase.editDescriptionVolume.no"/></form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/></div>
 				</div>
 			</div>
 	
@@ -110,8 +110,8 @@
 					<div class="col_l">
 						<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error"><fmt:message key="volbase.editDescriptionVolume.someDocsInCipher"/></form:label>
 						<form:select path="cipher" cssClass="selectform_short">
-							<form:option value="true">Yes</form:option>
-							<form:option value="false">No</form:option>
+							<form:option value="true"><fmt:message key="volbase.editDescriptionVolume.yes"/></form:option>
+							<form:option value="false"><fmt:message key="volbase.editDescriptionVolume.no"/></form:option>
 						</form:select>
 						<form:errors path="cipher" cssClass="inputerrors"/>
 					</div>
@@ -225,7 +225,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="volbase.editDescriptionVolume.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

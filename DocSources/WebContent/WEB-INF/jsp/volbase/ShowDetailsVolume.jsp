@@ -48,13 +48,13 @@
 				<h4>${volume.serieList}</h4>
 				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} <fmt:message key="volbase.showDetailsVolume.to"/> ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated">Show documents</a></p>
+					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" id="showDocumentsRelated" title="View all the documents related to this Volume record" id="showDocumentsRelated"><fmt:message key="volbase.showDetailsVolume.showDocuments"/></a></p>
 				</c:if>
 				<c:if test="${volDocsRelated == 0}">
 					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">0</font></p>
 				</c:if>
 				<c:if test="${volDocsRelated == 1}">
-					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated">Show document</a></p>
+					<p style="margin:10px 0 8px 10px;"><fmt:message key="volbase.showDetailsVolume.documentsRelated"/>: <font color="#900">${volDocsRelated}</font><a href="${ShowDocumentsVolumeURL}" class="button_medium" title="View the document related to this Volume record" id="showDocumentsRelated"><fmt:message key="volbase.showDetailsVolume.showDocument"/></a></p>
 				</c:if>
 			</div>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_COMMUNITY_USERS">
