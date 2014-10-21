@@ -12,7 +12,7 @@
 
 	<div id="EditChildrenPersonDiv" class="background">
 		<div class="title">
-			<h5><fmt:message key=“people.showChildrenPerson.children”/></h5>
+			<h5><fmt:message key="peoplebase.showChildrenPerson.children"/></h5>
 	 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 	 		<c:if test="${person.personId > 0}">
 			<a id="EditChildrenPerson" href="${EditChildrenPersonURL}" class="editButton"></a><span id="loading"/>
@@ -26,7 +26,7 @@
 				</c:url>
 				<div class="row">
 					<div class="value"><a class="linkChild" href="${ComparePersonURL}">${currentChild.child}<input type="hidden" style="display:none;" class="tabId" value="peopleId${currentChild.child.personId}" /></a></div> 
-					<div class="info"><fmt:message key=“people.showChildrenPerson.birth”/> ${currentChild.child.bornYear} | <fmt:message key=“people.showChildrenPerson.death”/> ${currentChild.child.deathYear}</div> 
+					<div class="info"><fmt:message key="peoplebase.showChildrenPerson.birth"/> ${currentChild.child.bornYear} | <fmt:message key="peoplebase.showChildrenPerson.death"/> ${currentChild.child.deathYear}</div> 
 				</div>
 			</c:forEach>
 		</div>

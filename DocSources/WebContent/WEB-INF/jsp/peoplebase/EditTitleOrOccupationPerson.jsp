@@ -22,23 +22,23 @@
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.prfLinkId}"> 
-				<b><fmt:message key="peoplebase.editTitleOrOccupationPerson.addNewTitle”/></b>
+				<b><fmt:message key="peoplebase.editTitleOrOccupationPerson.addNewTitle"/></b>
 			</c:if>
 			<c:if test="${command.prfLinkId > 0}">
-				<b><fmt:message key="peoplebase.editTitleOrOccupationPerson.editTitle”/></b>
+				<b><fmt:message key="peoplebase.editTitleOrOccupationPerson.editTitle"/></b>
 			</c:if>
 			</legend>
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.editTitleOrOccupationPerson.help.edit"></fmt:message>">?</a><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.addTitleWeird”/></form:label></div>
+					<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.editTitleOrOccupationPerson.help.edit"></fmt:message>">?</a><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.addTitleWeird"/></form:label></div>
 					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_29c"/></div>
 				</div>
 				<div class="row">
 					<div class="col_l"></div>
 					<div class="col_r">
 						<a class="helpIcon" title="<fmt:message key="peoplebase.editTitleOrOccupationPerson.help.preferredrol"></fmt:message>">?</a>
-						<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.preferredRole”/></form:label>
+						<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.preferredRole"/></form:label>
 						<form:checkbox id="preferredRole1" path="preferredRole" />
 					</div>
 				</div>
@@ -46,21 +46,21 @@
 			
 			<hr />
 			
-			<div><b><fmt:message key="peoplebase.editTitleOrOccupationPerson.start”/></b></div>
+			<div><b><fmt:message key="peoplebase.editTitleOrOccupationPerson.start"/></b></div>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.year”/></form:label></div>
+					<div class="col_r"><form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.year"/></form:label></div>
 					<div class="col_l"><form:input path="startYear" cssClass="input_4c" maxlength="4" id="startYear"/></div>
-					<div class="col_r"><form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.month”/></form:label></div>
+					<div class="col_r"><form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.month"/></form:label></div>
 					<div class="col_l"><form:select id="startMonthNum" path="startMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.day”/></form:label></div>
+					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.day"/></form:label></div>
 					<div class="col_l"><form:input path="startDay" cssClass="input_2c" maxlength="2"/></div>
 					<div class="col_r">
-						<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.approx”/></form:label>
+						<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.approx"/></form:label>
 						<form:checkbox path="startApprox" id="startApprox1"/>
 					</div>
 					<div class="col_r">
-						<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.uns”/></form:label>
+						<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.uns"/></form:label>
 						<form:checkbox path="startUns" id="startUns1"/>
 					</div>
 				</div>
@@ -68,21 +68,21 @@
 				
 			<hr />
 			
-			<div><b><fmt:message key="peoplebase.editTitleOrOccupationPerson.end”/></b></div>
+			<div><b><fmt:message key="peoplebase.editTitleOrOccupationPerson.end"/></b></div>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.year”/></form:label></div>
+					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.year"/></form:label></div>
 					<div class="col_l"><form:input path="endYear" cssClass="input_4c" maxlength="4" id="endYear"/></div>
-					<div class="col_r"><form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.month”/></form:label></div>
+					<div class="col_r"><form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.month"/></form:label></div>
 					<div class="col_l"><form:select id="endMonthNum" path="endMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-					<div class="col_r"><form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.day”/></form:label></div>
+					<div class="col_r"><form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.day"/></form:label></div>
 					<div class="col_l"><form:input path="endDay" cssClass="input_2c" maxlength="2"/></div>
 					<div class="col_r">
-						<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.approx”/></form:label>
+						<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.approx"/></form:label>
 						<form:checkbox path="endApprox" id="endApprox1"/>
 					</div>
 					<div class="col_r">
-						<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.uns”/></form:label>
+						<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error"><fmt:message key="peoplebase.editTitleOrOccupationPerson.uns"/></form:label>
 						<form:checkbox path="endUns" id="endUns1"/>
 					</div>
 				</div>
@@ -228,7 +228,7 @@
 	</script>
 	
 <div id="question" style="display:none; cursor: default"> 
-	<h1><fmt:message key="peoplebase.editTitleOrOccupationPerson.discardChangesQuestion”/></h1> 
+	<h1><fmt:message key="peoplebase.editTitleOrOccupationPerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

@@ -21,16 +21,16 @@
 	<form:form id="EditSpousePersonForm" action="${EditSpousePersonURL}" method="post" cssClass="edit">
 		<fieldset>
 			<c:if test="${command.marriageId == 0}"> 
-				<legend><b><fmt:message key="peoplebase.editSpousePerson.addNew”/></b></legend>
+				<legend><b><fmt:message key="peoplebase.editSpousePerson.addNew"/></b></legend>
 			</c:if>
 			<c:if test="${command.marriageId > 0}">
-				<legend><b><fmt:message key="peoplebase.editSpousePerson.edit”/></b></legend>
+				<legend><b><fmt:message key="peoplebase.editSpousePerson.edit"/></b></legend>
 			</c:if>
 			<%-- We manage fields for husband --%>
 			<c:if test="${command.personId == command.wifeId}">
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.editSpousePerson.help.name"></fmt:message>">?</a><form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error"><fmt:message key="peoplebase.editSpousePerson.name”/></form:label></div>
+						<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.editSpousePerson.help.name"></fmt:message>">?</a><form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error"><fmt:message key="peoplebase.editSpousePerson.name"/></form:label></div>
 						<div class="col_l">
 							<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
 							<form:hidden path="husbandId"/>
@@ -43,7 +43,7 @@
 			<c:if test="${command.personId == command.husbandId}">
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error"><fmt:message key="peoplebase.editSpousePerson.name”/></form:label></div>
+						<div class="col_l"><form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error"><fmt:message key="peoplebase.editSpousePerson.name"/></form:label></div>
 						<div class="col_l">
 							<form:input id="spouseDescriptionAutoCompleter" path="wifeDescription" cssClass="input_25c" />
 							<form:hidden path="wifeId"/>
@@ -55,11 +55,11 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_l"><form:label id="startYearLabel" for="startYear" path="startYear"><fmt:message key="peoplebase.editSpousePerson.startYear”/></form:label></div>
+					<div class="col_l"><form:label id="startYearLabel" for="startYear" path="startYear"><fmt:message key="peoplebase.editSpousePerson.startYear"/></form:label></div>
 					<div class="col_l"><form:input path="startYear" cssClass="input_4c"/></div>
-					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear"><fmt:message key="peoplebase.editSpousePerson.endYear”/></form:label></div>
+					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear"><fmt:message key="peoplebase.editSpousePerson.endYear"/></form:label></div>
 					<div class="col_l"><form:input path="endYear" cssClass="input_4c"/></div>
-					<div class="col_r"><form:label id="marriageTermLabel" for="marriageTerm" path="marriageTerm"><fmt:message key="peoplebase.editSpousePerson.reason”/></form:label></div>
+					<div class="col_r"><form:label id="marriageTermLabel" for="marriageTerm" path="marriageTerm"><fmt:message key="peoplebase.editSpousePerson.reason"/></form:label></div>
 					<div class="col_l"><form:select cssClass="selectform_long" path="marriageTerm" items="${marriageTerms}"/></div>
 				</div>
 			</div>
@@ -171,12 +171,12 @@
 	</script>
 	
 	<div id="questionGender" class="differentGender" style="display:none; cursor: default">
-		<h1><fmt:message key="peoplebase.editSpousePerson.wrongGender”/></h1>
+		<h1><fmt:message key="peoplebase.editSpousePerson.wrongGender"/></h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1><fmt:message key="peoplebase.editSpousePerson.discardChangesQuestion”/></h1> 
+	<h1><fmt:message key="peoplebase.editSpousePerson.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

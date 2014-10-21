@@ -12,11 +12,11 @@
 	</c:url>
 	
 	<div id="DeleteThisRecordDiv">
-		<h1><fmt:message key=“people.showConfirmUndeletePerson.areYouSure”/></h1>
+		<h1><fmt:message key="peoplebase.showConfirmUndeletePerson.areYouSure"/></h1>
 		
-		<a id="yes" class="button_small" href="${UndeletePersonURL}"><fmt:message key=“people.showConfirmUndeletePerson.yes”/></a>
+		<a id="yes" class="button_small" href="${UndeletePersonURL}"><fmt:message key="peoplebase.showConfirmUndeletePerson.yes"/></a>
 	
-		<a id="no" class="button_small" href="#"><fmt:message key=“people.showConfirmUndeletePerson.no”/></a>
+		<a id="no" class="button_small" href="#"><fmt:message key="peoplebase.showConfirmUndeletePerson.no"/></a>
 	</div>
 
 	<script>

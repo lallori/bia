@@ -9,11 +9,11 @@
 	</c:url>
 	
 	<div id="ConfirmCreateForum">
-		<h1><fmt:message key=“people.showConfirmCreatePersonForumModalWindow.creationQuestion”/></h1>
+		<h1><fmt:message key="peoplebase.showConfirmCreatePersonForumModalWindow.creationQuestion"/></h1>
 		
-		<a id="yes" href="${ShowConfirmCreatePersonForumURL}" class="button_small"><fmt:message key=“people.showConfirmCreatePersonForumModalWindow.yes”/></a>
+		<a id="yes" href="${ShowConfirmCreatePersonForumURL}" class="button_small"><fmt:message key="peoplebase.showConfirmCreatePersonForumModalWindow.yes"/></a>
 	
-		<a id="no" href="#" class="button_small"><fmt:message key=“people.showConfirmCreatePersonForumModalWindow.no”/></a>			
+		<a id="no" href="#" class="button_small"><fmt:message key="peoplebase.showConfirmCreatePersonForumModalWindow.no"/></a>			
 	</div>
 
 	<script>

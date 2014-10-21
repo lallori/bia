@@ -12,7 +12,7 @@
 	
 	<div id="EditNamesPersonDiv" class="background">
 		<div class="title">
-			<h5><fmt:message key=“people.showNamesPerson.names”/> </h5>
+			<h5><fmt:message key="peoplebase.showNamesPerson.names"/> </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<c:if test="${person.personId > 0}">
 				<a id="EditNamesPerson" href="${EditNamesPersonURL}" class="editButton"></a><span id="loading"/>

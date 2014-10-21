@@ -76,7 +76,7 @@
 
 	
 	<div class="yourSearchDiv">
-		<p><fmt:message key=“people.showSearchResultTitlesOrOccupations.totalRecordsFound”/> <span id="titlesOrOccupationsRecordsNum${command.searchUUID}" class="recordsNum"></span></p>
+		<p><fmt:message key="peoplebase.showSearchResultTitlesOrOccupations.totalRecordsFound"/> <span id="titlesOrOccupationsRecordsNum${command.searchUUID}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">

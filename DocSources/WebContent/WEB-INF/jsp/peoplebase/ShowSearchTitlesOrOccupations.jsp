@@ -17,7 +17,7 @@
                         <!-- se usi uno si disattiva l'altro -->
                         <div class="row">
                             <div class="col_l">
-                                <label for="roleCategories" id="roleCategoriesLabel"><fmt:message key=“people.showSearchTitlesOrOccupations.roleCategories”/></label>
+                                <label for="roleCategories" id="roleCategoriesLabel"><fmt:message key="peoplebase.showSearchTitlesOrOccupations.roleCategories"/></label>
                             </div>
                             <div class="col_l">
 								<form:select id="ordByMajor" cssClass="selectform_XLong" path="roleCatId">

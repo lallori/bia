@@ -43,7 +43,7 @@
 	
 	<div id="personDiv">
 		<c:if test="${person.personId == 0}">
-			<h2 class="addNew"><fmt:message key=“people.showDetailsPerson.addNewPersonRecord”/></h2>
+			<h2 class="addNew"><fmt:message key="peoplebase.showDetailsPerson.addNewPersonRecord"/></h2>
 		</c:if>
 		<c:if test="${person.personId != 0}">
 		<div id="personTitle">
@@ -55,49 +55,49 @@
 					</c:if>
 				</c:forEach>			
 				<c:if test="${person.activeStart != null}">
-					<h7><fmt:message key=“people.showDetailsPerson.activeStart0”/> <span class="h7"> ${person.activeStart}</span></h7>
+					<h7><fmt:message key="peoplebase.showDetailsPerson.activeStart0"/> <span class="h7"> ${person.activeStart}</span></h7>
 				</c:if>
 				<c:if test="${person.activeStart == null}">
-					<h7><fmt:message key=“people.showDetailsPerson.birth”/> <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
+					<h7><fmt:message key="peoplebase.showDetailsPerson.birth"/> <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
 				</c:if>		
 				<c:if test="${person.activeEnd != null}">
-					<h7><fmt:message key=“people.showDetailsPerson.activeEnd0”/><span class="h7"> ${person.activeEnd}</span></h7>
+					<h7><fmt:message key="peoplebase.showDetailsPerson.activeEnd0"/><span class="h7"> ${person.activeEnd}</span></h7>
 				</c:if>
 				<c:if test="${person.activeEnd == null}">
-					<h7><fmt:message key=“people.showDetailsPerson.death”/> <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
+					<h7><fmt:message key="peoplebase.showDetailsPerson.death"/> <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 				</c:if>
 				<%-- Documents Related Section --%>
 				<c:if test="${docsRelated != 0 && docsRelated != 1}">
-					<p><fmt:message key=“people.showDetailsPerson.documentsRelated”/> <span class="num_docs">${docsRelated}</span>
+					<p><fmt:message key="peoplebase.showDetailsPerson.documentsRelated"/> <span class="num_docs">${docsRelated}</span>
 					<div style="margin:10px 0 0 10px">
-						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="View all documents related to this person "><fmt:message key=“people.showDetailsPerson.viewAll”/></a> | 
+						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="View all documents related to this person "><fmt:message key="peoplebase.showDetailsPerson.viewAll"/></a> | 
 						<c:if test="${senderDocsRelated != 0}">
-							<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="View the letters SENT BY this person"><fmt:message key=“people.showDetailsPerson.sender”/></a> <span class="num_docs">${senderDocsRelated}</span> |
+							<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="View the letters SENT BY this person"><fmt:message key="peoplebase.showDetailsPerson.sender"/></a> <span class="num_docs">${senderDocsRelated}</span> |
 						</c:if>
 						<c:if test="${senderDocsRelated == 0}">
-							<p class="no_docs"><fmt:message key=“people.showDetailsPerson.sender”/></p> |
+							<p class="no_docs"><fmt:message key="peoplebase.showDetailsPerson.sender"/></p> |
 						</c:if>
 						<c:if test="${recipientDocsRelated != 0}">
-							<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="View the letters RECEIVED BY this person"><fmt:message key=“people.showDetailsPerson.recipient”/></a> <span class="num_docs">${recipientDocsRelated}</span> |
+							<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="View the letters RECEIVED BY this person"><fmt:message key="peoplebase.showDetailsPerson.recipient"/></a> <span class="num_docs">${recipientDocsRelated}</span> |
 						</c:if>
 						<c:if test="${recipientDocsRelated == 0}">
-							<p class="no_docs"><fmt:message key=“people.showDetailsPerson.recipient”/></p> |
+							<p class="no_docs"><fmt:message key="peoplebase.showDetailsPerson.recipient"/></p> |
 						</c:if>
 						<c:if test="${referringDocsRelated != 0}">
-							<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="View the documents in which this person is mentioned"><fmt:message key=“people.showDetailsPerson.referringTo”/></a> <span class="num_docs">${referringDocsRelated}</span>)
+							<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="View the documents in which this person is mentioned"><fmt:message key="peoplebase.showDetailsPerson.referringTo"/></a> <span class="num_docs">${referringDocsRelated}</span>)
 						</c:if>
 						<c:if test="${referringDocsRelated == 0}">
-							<p class="no_docs"><fmt:message key=“people.showDetailsPerson.referringTo”/></p>)
+							<p class="no_docs"><fmt:message key="peoplebase.showDetailsPerson.referringTo"/></p>)
 						</c:if>
 					</div>
 				</c:if>
 				<c:if test="${docsRelated == 0}">	
-					<p><fmt:message key=“people.showDetailsPerson.documentsRelated”/> <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
+					<p><fmt:message key="peoplebase.showDetailsPerson.documentsRelated"/> <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
 				</c:if>
 				<c:if test="${docsRelated == 1}">
-					<p><fmt:message key=“people.showDetailsPerson.documentsRelated”/> <span class="num_docs">${docsRelated}</span>
+					<p><fmt:message key="peoplebase.showDetailsPerson.documentsRelated"/> <span class="num_docs">${docsRelated}</span>
 					<div style="margin:10px 0 0 10px;">
-						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="View all the documents related to this person "><fmt:message key=“people.showDetailsPerson.viewIt”/></a>)
+						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="View all the documents related to this person "><fmt:message key="peoplebase.showDetailsPerson.viewIt"/></a>)
 					</div>	
 				</c:if>
 			</div>
@@ -124,7 +124,7 @@
 <!-- 				<p style="text-align:center"><b>Portrait</b></p> -->
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, COMMUNITY_USERS">
 				<c:if test="${person.personId != 0}">
-					<a id="uploadPortrait" class="button_medium" href="${UploadPortraitWindowURL}"><fmt:message key=“people.showDetailsPerson.uploadPortrait”/></a>
+					<a id="uploadPortrait" class="button_medium" href="${UploadPortraitWindowURL}"><fmt:message key="peoplebase.showDetailsPerson.uploadPortrait"/></a>
 				</c:if>
 				</security:authorize>
 			</div>	
@@ -133,7 +133,7 @@
 		
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
-				<h5><fmt:message key=“people.showDetailsPerson.personDetails”/></h5>
+				<h5><fmt:message key="peoplebase.showDetailsPerson.personDetails"/></h5>
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 					<a id="EditDetailsPerson" href="${EditDetailsPersonURL}" class="editButton"></a><span id="loading"/>
 				</security:authorize>
@@ -141,17 +141,17 @@
 			
 			<div class="listDetails">			
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.name”/></div> <div class="value">${person.mapNameLf}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.name"/></div> <div class="value">${person.mapNameLf}</div>
 				</div>
 				<br>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.gender”/></div> <div class="value">${person.gender}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.gender"/></div> <div class="value">${person.gender}</div>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.dOfB”/></div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.dOfB"/></div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.birthPlace”/></div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.birthPlace"/></div>
 					<c:if test="${person.bornPlace.placeAllId != 53384 && person.bornPlace.placeAllId != 55627 && person.bornPlace.placeAllId != 54332}">
 						<div class="value"><a class="linkSearch" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
 					</c:if>
@@ -160,13 +160,13 @@
 					</c:if>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.activeStart1”/></div> <div class="value">${person.activeStart}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.activeStart1"/></div> <div class="value">${person.activeStart}</div>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.dOfD”/></div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.dOfD"/></div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.deathPlace”/></div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.deathPlace"/></div>
 					<c:if test="${person.deathPlace.placeAllId != 53384 && person.deathPlace.placeAllId != 55627 && person.deathPlace.placeAllId != 54332}">
 						<div class="value"><a class="linkSearch" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
 					</c:if>
@@ -175,7 +175,7 @@
 					</c:if>
 				</div>
 				<div class="row">
-					<div class="item"><fmt:message key=“people.showDetailsPerson.activeEnd1”/></div> <div class="value">${person.activeEnd}</div>
+					<div class="item"><fmt:message key="peoplebase.showDetailsPerson.activeEnd1"/></div> <div class="value">${person.activeEnd}</div>
 				</div>
 			</div>
 		</div>

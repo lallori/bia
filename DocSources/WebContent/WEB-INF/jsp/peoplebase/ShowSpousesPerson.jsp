@@ -12,7 +12,7 @@
 
 	<div id="EditSpousesPersonDiv" class="background">
 		<div class="title">
-			<h5><fmt:message key=“people.showSpousesPerson.spouses”/></h5>
+			<h5><fmt:message key="peoplebase.showSpousesPerson.spouses"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${person.personId > 0}">
 				<a id="EditSpousesPerson" href="${EditSpousesPersonURL}" class="editButton" />
@@ -42,7 +42,7 @@
 						</a>
 					</div>
 					<div class="info">
-						<fmt:message key=“people.showSpousesPerson.marriage”/> ${currentMarriage.startYear} - ${currentMarriage.endYear}
+						<fmt:message key="peoplebase.showSpousesPerson.marriage"/> ${currentMarriage.startYear} - ${currentMarriage.endYear}
 						<c:if test="${not empty currentMarriage.marTerm and currentMarriage.marTerm != 'Unknown'}">
 						| ${currentMarriage.marTerm}
 						</c:if>

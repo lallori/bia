@@ -467,7 +467,7 @@ public class ProvidedCHO extends EDMResource {
 	 * The identifier of another resource from which the described CHO has been derived. E.g. the identifier of Moby 
 	 * Dick when the Italian translation is the described CHO.<br/><br/>
 	 * Example:<br/>
-	 * <code>&lt;edm:isDerivativeOf rdf:resource=“http://www.identifier/SourceResource” /&gt;</code>
+	 * <code>&lt;edm:isDerivativeOf rdf:resource=“http://www.identifier/SourceResource" /&gt;</code>
 	 */
 	@XmlElement(name = EDMConstants.EDM_PREFIX + ":isDerivativeOf", type = ReferenceableResource.class)
 	private List<ReferenceableResource> isDerivativeOf  = new ArrayList<ReferenceableResource>();

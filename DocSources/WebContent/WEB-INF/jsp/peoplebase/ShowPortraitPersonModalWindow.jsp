@@ -10,7 +10,7 @@
 	</c:url>
 	<div>
 		<img src="${ShowPortraitPersonURL}" width="111" height="145"/>
-		<a id="close" href="#" title="Close Portrait window"><fmt:message key=“people.showPortraitPersonModalWindow.close”/></a>
+		<a id="close" href="#" title="Close Portrait window"><fmt:message key="peoplebase.showPortraitPersonModalWindow.close"/></a>
 	</div>
 
 		

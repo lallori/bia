@@ -13,12 +13,12 @@
 		
 	<div id="ActionsMenuDiv">
 		<c:if test="${!person.logicalDelete}">
-			<h1><fmt:message key=“people.showMenuActionsPerson.areYouSureDelete”/></h1>		
-			<a id="deletePeopleBase" href="${DeletePersonURL}"><fmt:message key=“people.showMenuActionsPerson.doItDelete”/></a>
+			<h1><fmt:message key="peoplebase.showMenuActionsPerson.areYouSureDelete"/></h1>		
+			<a id="deletePeopleBase" href="${DeletePersonURL}"><fmt:message key="peoplebase.showMenuActionsPerson.doItDelete"/></a>
 		</c:if>	
 		<c:if test="${person.logicalDelete}">
-			<h1><fmt:message key=“people.showMenuActionsPerson.areYouSureUndelete”/></h1>
-			<a id="undeletePeopleBase" href="${UndeletePersonURL}"><fmt:message key=“people.showMenuActionsPerson.doItUndelete”/></a>
+			<h1><fmt:message key="peoplebase.showMenuActionsPerson.areYouSureUndelete"/></h1>
+			<a id="undeletePeopleBase" href="${UndeletePersonURL}"><fmt:message key="peoplebase.showMenuActionsPerson.doItUndelete"/></a>
 		</c:if>	
 		<br>
 		<br>				
