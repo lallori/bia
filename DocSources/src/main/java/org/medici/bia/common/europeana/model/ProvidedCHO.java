@@ -271,7 +271,7 @@ public class ProvidedCHO extends EDMResource {
 	 * Another, later resource that is a version, edition or adaptation of the CHO demonstrating substantive changes
 	 * in content rather than format.<br/><br/>
 	 * Example:<br/>
-	 * <code>&lt;dcterms:hasVersion&gt;The Sorcerer’s Apprentice (translation by Edwin Zeydel, 1955)&lt;/dcterms:hasVersion&gt;</code><br/>
+	 * <code>&lt;dcterms:hasVersion&gt;The Sorcerer's Apprentice (translation by Edwin Zeydel, 1955)&lt;/dcterms:hasVersion&gt;</code><br/>
 	 * In this example the 1955 translation is a version of the described resource.
 	 */
 	@XmlElement(name = EDMConstants.DCTERMS_PREFIX + ":hasVersion", type = LiteralOrReference.class)
@@ -341,8 +341,8 @@ public class ProvidedCHO extends EDMResource {
 	 * Another, earlier resource of which the CHO is a version, edition or adaptation, demonstrating substantive
 	 * changes in content rather than format.<br/><br/>
 	 * Example:<br/>
-	 * <code>&lt;dcterms:isVersionOf&gt;The Sorcerer’s Apprentice&lt;dcterms:isVersionOf&gt;</code><br/>
-	 * In this example The Sorcerer’s Apprentice (translation by Edwin Zeydel, 1955) is the resource being described. 
+	 * <code>&lt;dcterms:isVersionOf&gt;The Sorcerer's Apprentice&lt;dcterms:isVersionOf&gt;</code><br/>
+	 * In this example The Sorcerer's Apprentice (translation by Edwin Zeydel, 1955) is the resource being described. 
 	 */
 	@XmlElement(name = EDMConstants.DCTERMS_PREFIX + ":isVersionOf", type = LiteralOrReference.class)
 	private List<LiteralOrReference> isVersionOf = new ArrayList<LiteralOrReference>();
@@ -439,7 +439,7 @@ public class ProvidedCHO extends EDMResource {
 	 * in its life.<br/><br/>
 	 * Examples:<br/>
 	 * <code>&lt;edm:hasMet rdf:resource="http://viaf.org/viaf/96994048"/&gt;</code> (identifier for William Shakespeare)<br/>
-	 * <code>&lt;edm:hasMet rdf:resource="http://sws.geonames.org/6620265"/&gt;</code> (location identifier for Shakespeare’s Globe theatre)
+	 * <code>&lt;edm:hasMet rdf:resource="http://sws.geonames.org/6620265"/&gt;</code> (location identifier for Shakespeare's Globe theatre)
 	 */
 	@XmlElement(name = EDMConstants.EDM_PREFIX + ":hasMet", type = ReferenceableResource.class)
 	private List<ReferenceableResource> hasMet  = new ArrayList<ReferenceableResource>();
@@ -456,7 +456,7 @@ public class ProvidedCHO extends EDMResource {
 	
 	/**
 	 * The identifier of another resource that is incorporated in the described CHO. E.g. the movie "A Clockwork 
-	 * Orange" incorporates Rossini’s "La Gazza Ladra" in its soundtrack.<br/><br/>
+	 * Orange" incorporates Rossini's "La Gazza Ladra" in its soundtrack.<br/><br/>
 	 * Example:<br/>
 	 * <code>&lt;edm:incorporates rdf:resource="http://www.identifier/IncorporatedResource" /&gt;</code>
 	 */
@@ -467,7 +467,7 @@ public class ProvidedCHO extends EDMResource {
 	 * The identifier of another resource from which the described CHO has been derived. E.g. the identifier of Moby 
 	 * Dick when the Italian translation is the described CHO.<br/><br/>
 	 * Example:<br/>
-	 * <code>&lt;edm:isDerivativeOf rdf:resource=“http://www.identifier/SourceResource" /&gt;</code>
+	 * <code>&lt;edm:isDerivativeOf rdf:resource="http://www.identifier/SourceResource" /&gt;</code>
 	 */
 	@XmlElement(name = EDMConstants.EDM_PREFIX + ":isDerivativeOf", type = ReferenceableResource.class)
 	private List<ReferenceableResource> isDerivativeOf  = new ArrayList<ReferenceableResource>();

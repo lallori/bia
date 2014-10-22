@@ -173,7 +173,7 @@ public class WebResource extends EDMResource {
 	 * ore:Aggregation table) are implemented in the Europeana portal. Future implementations will be able to use 
 	 * the edm:rights associated with individual WebResources so it is strongly!recommended that a value is 
 	 * supplied for this property for each instance of a WebResource.  The rights statement specified at the level of 
-	 * the web resource will ‘override’ the statement specified at the level of the aggregation.<br/>
+	 * the web resource will 'override' the statement specified at the level of the aggregation.<br/>
 	 * The value in this element is a URI taken from the set of those defined for use in Europeana. A list of these can 
 	 * be found <a href="http://pro.europeana.eu/web/availableVrightsVstatements">here</a>.<br/><br/>
 	 * Examples:<br/>
