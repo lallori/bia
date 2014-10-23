@@ -124,7 +124,7 @@
 					annotations: new Array()
 				});
 				
-				/* var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>').dialog({                                                                                                                                                                   
+				var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>').dialog({                                                                                                                                                                   
 					autoOpen: true,
 					resizable: false,
 					width: 145,
@@ -141,7 +141,11 @@
                 			},
  					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
  					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
- 				}).dialogExtend({"minimize" : true});  */
+ 				}).dialogExtend({"minimize" : true});
+				
+				// RR: the page turner has to be included in the view because it contains the entryId and 
+				//the image datas. With the following code we only hide it
+				$j($pageTurner).parent().hide();
 				
  			});
 		</script> 
