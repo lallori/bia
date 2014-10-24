@@ -23,8 +23,12 @@
 	
 	<!-- Main Forum Page -->
 	<div id="urlActions">
-		<a href="#" class="buttonMedium button_medium" id="button_refresh"><fmt:message key="community.forum.link.refreshPage" /></a>
-		<a href="#" class="buttonMedium button_medium" id="button_link" title='<fmt:message key="community.forum.tooltip.copyLink" />'><fmt:message key="community.forum.link.copyLink" /></a>
+		<a href="#" class="buttonMedium button_medium" id="button_refresh">
+			<fmt:message key='community.forum.link.refreshPage' />
+		</a>
+		<a href="#" class="buttonMedium button_medium" id="button_link" title="<fmt:message key='community.forum.tooltip.copyLink' />">
+			<fmt:message key='community.forum.link.copyLink' />
+		</a>
 	</div>
 	
 	<!-- Category TYPE -->
@@ -40,17 +44,28 @@
 					<div class="list">
 						<div class="rowFirst">
 							<div class="one">${currentCategory.title}</div>
-							<!-- MD: Hide the second column if the category hasn't threads-->
-							<c:choose>
-								<c:when test="${currentCategory.dispositionOrder != 1}">
-									<div class="two"></div>
-								</c:when>
-								<c:otherwise>
-									<div class="two"><fmt:message key="community.forum.title.threads" /></div>
-								</c:otherwise>
-							</c:choose>
-							<div class="three"><fmt:message key="community.forum.title.discussions" /></div>
-							<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+							<div class="two">
+								<c:choose>
+									<c:when test="${currentCategory.dispositionOrder == 1}">
+										<fmt:message key='community.forum.title.threads' />
+									</c:when>
+									<c:otherwise>
+										<%-- MD: the category has no threads --%>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="three">
+								<c:choose>
+									<c:when test="${currentCategory.subType == 'COURSE'}">
+										<%-- RR: Courses category --%>
+										COURSES
+									</c:when>
+									<c:otherwise>
+										<fmt:message key='community.forum.title.discussions' />
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 						</div>
 
 						<c:set var="forums" value="${forumsBySubCategories[currentCategory.forumId]}"/>
@@ -59,32 +74,46 @@
 							<c:url var="forumURL" value="/community/ShowForum.do">
 								<c:param name="forumId" value="${currentForum.forumId}" />
 							</c:url>
-							<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->
 							<div class="row">
 								<div class="one">
-									<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />' />
+									<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />" />
 									<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
-										<span>${currentForum.description}</span>
+									<span>${currentForum.description}</span>
 								</div>
-								<!-- MD: Hide the second column if the category hasn't threads -->
-								<c:if test="${currentCategory.dispositionOrder != 1}">
-									<div class="two"></div>
-								</c:if>
-								<c:if test="${currentCategory.dispositionOrder == 1 && currentForum.forumId != bia:getApplicationProperty('forum.identifier.document')}">
-									<div class="two">${currentForum.subForumsNumber}</div>
-								</c:if>
-								<c:if test="${currentCategory.dispositionOrder == 1 && currentForum.forumId == bia:getApplicationProperty('forum.identifier.document')}">
-									<div class="two"></div>
-								</c:if>
-	<%-- 							<div class="two"><span>${currentForum.topicsNumber}</span></div> --%>
-								<div class="three">${currentForum.topicsNumber}</div>
-								<c:if test="${not empty currentForum.lastPost}">
-									<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									<div class="four"><fmt:message key="community.forum.text.lastPostBy" /> <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName_lastPostId_${currentForum.lastPost.postId}" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
-								</c:if>
-								<c:if test="${empty currentForum.lastPost}">
-									<div class="four"><fmt:message key="community.forum.text.emptyForum" /></div>
-								</c:if>
+								<div class="two">
+									<c:choose>
+										<c:when test="${currentCategory.dispositionOrder == 1 && currentForum.forumId != bia:getApplicationProperty('forum.identifier.document')}">
+											${currentForum.subForumsNumber}
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="three">
+									<c:choose>
+										<c:when test="${currentCategory.subType == 'COURSE'}">
+											${currentForum.subForumsNumber}
+										</c:when>
+										<c:otherwise>
+											${currentForum.topicsNumber}
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="four">
+									<c:choose>
+										<c:when test="${not empty currentForum.lastPost}">
+											<fmt:message key='community.forum.text.lastPostBy' />
+											<a id="userName_lastPostId_${currentForum.lastPost.postId}" class="link"
+												href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentForum.lastPost.user.account}">
+												${currentForum.lastPost.user.account}
+											</a>
+											<span class="date"><fmt:formatDate value="${currentForum.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
+										</c:when>
+										<c:otherwise>
+											<fmt:message key='community.forum.text.emptyForum' />
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
                          </c:forEach>
 					</div>
@@ -116,12 +145,16 @@
 			<c:choose>
 				<c:when test="${forum.subType == 'COURSE'}">
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-						<a id="changeForumTitle" href="${RenameForumURL}" title="change forum title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+						<a id="changeForumTitle" href="${RenameForumURL}" title="change forum title" style="margin-left: 0px; margin-right: 10px;">
+							<img src="<c:url value='/images/forum/button_edit.png'/>"/>
+						</a>
 					</security:authorize>
 				</c:when>
 				<c:otherwise>
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-						<a id="changeForumTitle" href="${RenameForumURL}" title="change forum title" style="margin-left: 0px; margin-right: 10px;"><img src="<c:url value="/images/forum/button_edit.png"/>"/></a>
+						<a id="changeForumTitle" href="${RenameForumURL}" title="change forum title" style="margin-left: 0px; margin-right: 10px;">
+							<img src="<c:url value='/images/forum/button_edit.png'/>"/>
+						</a>
 					</security:authorize>
 				</c:otherwise>
 			</c:choose>
@@ -133,11 +166,18 @@
 				<c:url var="LoginURL" value="/LoginUser.do" />
 				<c:url var="RegisterURL" value="/user/RegisterUser.do" />
 				<div>
-					<fmt:message key="community.forum.text.notLoggedIn" />&nbsp;
-					<fmt:message key="community.forum.text.logIn" />&nbsp;<a href="${LoginURL}" target="_self" class="link"><fmt:message key="community.forum.link.here" /></a>
+					<fmt:message key='community.forum.text.notLoggedIn' />&nbsp;
+					<fmt:message key='community.forum.text.logIn' />&nbsp;
+					<a href="${LoginURL}" target="_self" class="link">
+						<fmt:message key='community.forum.link.here' />
+					</a>
 					<br />
-					<fmt:message key="community.forum.text.notRegistered" />&nbsp;
-					<fmt:message key="community.forum.text.subscribe" />&nbsp;<a href="${RegisterURL}" target="_self" class="link"><fmt:message key="community.forum.link.here" /></a>&nbsp;<fmt:message key="community.forum.text.forFree" />
+					<fmt:message key='community.forum.text.notRegistered' />&nbsp;
+					<fmt:message key='community.forum.text.subscribe' />&nbsp;
+					<a href="${RegisterURL}" target="_self" class="link">
+						<fmt:message key='community.forum.link.here' />
+					</a>&nbsp;
+					<fmt:message key='community.forum.text.forFree' />
 				</div>
 			</c:if>
 		</security:authorize>
@@ -226,7 +266,7 @@
 		<c:if test="${forum.option.canHaveTopics && forum.subType != 'COURSE'}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 				<div id="topicActions">
-					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic"><fmt:message key="community.forum.link.newTopic" /></a>
+					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic"><fmt:message key='community.forum.link.newTopic' /></a>
 				</div>
 			</security:authorize>
 		</c:if>
@@ -260,12 +300,12 @@
 					<div id="forumTable">
 						<div class="list">
 							<div class="rowFirst">
-					            <div class="one"><fmt:message key="community.forum.title.thread" /></div>
-					            <div class="two"><fmt:message key="community.forum.title.discussions" /></div>
-					            <div class="three"><fmt:message key="community.forum.title.views" /></div>
-					            <div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+					            <div class="one"><fmt:message key='community.forum.title.thread' /></div>
+					            <div class="two"><fmt:message key='community.forum.title.discussions' /></div>
+					            <div class="three"><fmt:message key='community.forum.title.views' /></div>
+					            <div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 					            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-					            	<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+					            	<div class="five"><fmt:message key='community.forum.title.delete' /></div>
 					            </security:authorize>
 					        </div>
 					        
@@ -276,25 +316,42 @@
 								<c:url var="DeleteForumURL" value="/de/community/DeleteForum.json">
 									<c:param name="forumId" value="${currentForum.forumId}" />
 								</c:url>
-								<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->						            
 								<div class="row">						            
 									<div class="one">
-						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+						            	<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 										<a href="${ShowForumURL}" class="forumHref">${currentForum.title}</a>
 						                <span>${currentForum.description}</span>
 						            </div>
-			<%-- 			            <div class="two">${fn:length(currentForum.forumTopics)}</div> --%>
-									<div class="two">${currentForum.topicsNumber}</div>
-						            <div class="three">${currentForum.totalViews == null ? '0' : currentForum.totalViews}</div>
+									<div class="two">
+										<c:choose>
+											<c:when test="${currentForum.subType != 'COURSE' or (currentForum.subType == 'COURSE' and currentForum.option.canHaveTopics)}">
+												${currentForum.topicsNumber}
+											</c:when>
+											<c:otherwise>
+												${currentForum.subForumsNumber}
+											</c:otherwise>
+										</c:choose>
+									</div>
+						            <div class="three">${empty currentForum.totalViews ? '0' : currentForum.totalViews}</div>
 									<c:if test="${not empty currentForum.lastPost}">
 										<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-							            <div class="four"><fmt:message key="community.forum.text.lastPostBy" />&nbsp;<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentForum.lastPost.user.account}" id="userName_lastPostId_${currentForum.lastPost.postId}" class="link">${currentForum.lastPost.user.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+							            <div class="four">
+							            	<fmt:message key='community.forum.text.lastPostBy' />
+							            	&nbsp;
+							            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentForum.lastPost.user.account}" id="userName_lastPostId_${currentForum.lastPost.postId}" class="link">
+							            		${currentForum.lastPost.user.account}
+							            	</a>
+							            	<span class="date"><fmt:formatDate value="${currentForum.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></div>
 							        </c:if>
 									<c:if test="${empty currentForum.lastPost}">
 							            <div class="four"></div>
 							        </c:if>
 							        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-							        	<div class="five"><a href="${DeleteForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a></div>
+							        	<div class="five">
+							        		<a href="${DeleteForumURL}" class="button_delete">
+							        			<img src="<c:url value='/images/forum/button_delete.png'/>"/>
+							        		</a>
+							        	</div>
 							        </security:authorize>
 						        </div>
 						    </c:forEach>
@@ -302,11 +359,11 @@
 					</div>
 					<div id="forumPaginate">
 					    <div id="jumpToDiv">
-					    	<fmt:message key="community.forum.text.jumpTo" />
+					    	<fmt:message key='community.forum.text.jumpTo' />
 					    	<select id="selectForum" name="selectForum" class="selectform_long">
-					        	<option value="" selected="selected"><fmt:message key="community.forum.options.selectAForum" /></option>
+					        	<option value="" selected="selected"><fmt:message key='community.forum.options.selectAForum' /></option>
 					        </select>
-					        <input id="go" type="submit" title='<fmt:message key="community.forum.tooltip.go" />' value='<fmt:message key="community.forum.inputValue.go" />' class="buttonMini">
+					        <input id="go" type="submit" title="<fmt:message key='community.forum.tooltip.go' />" value="<fmt:message key='community.forum.inputValue.go' />" class="buttonMini">
 					    </div>
 						<c:set var="paginationData">
 							<bia:paginationForum page="${subForumsPage}"/>
@@ -324,30 +381,30 @@
 					</c:if>
 					
 					<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
-						<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
+						<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
 					</c:if>
 				</c:when>
 				<c:when test="${forum.option.groupBySubForum=='true' && empty subForumsPage.list}">
 					<div id="forumTable">
 						<div class="list">
 							<div class="rowFirst">
-								<div class="one"><fmt:message key="community.forum.title.thread" /></div>
-								<div class="two"><fmt:message key="community.forum.title.discussions" /></div>
-								<div class="three"><fmt:message key="community.forum.title.views" /></div>
-								<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+								<div class="one"><fmt:message key='community.forum.title.thread' /></div>
+								<div class="two"><fmt:message key='community.forum.title.discussions' /></div>
+								<div class="three"><fmt:message key='community.forum.title.views' /></div>
+								<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-									<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+									<div class="five"><fmt:message key='community.forum.title.delete' /></div>
 								</security:authorize>
 							</div>
 							<div class="rowLast">						            
 								<div class="one">
-									<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-									<a id="viewTopic"><fmt:message key="community.forum.text.noForum" /></a>
+									<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
+									<a id="viewTopic"><fmt:message key='community.forum.text.noForum' /></a>
 									<span>${currentForum.description}</span>
 								</div>
 								<div class="two">0</div>
 								<div class="three">0</div>
-								<div class="four"><fmt:message key="community.forum.text.emptyForum" /></div>
+								<div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 									<div class="five"></div>
 								</security:authorize>
@@ -359,12 +416,12 @@
 						<c:param name="forumId" value="${forum.forumParent.forumId}" />
 					</c:url>
 					
-					<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
-						<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key="community.forum.link.returnTo" /><span>${forum.forumParent.title}</span></a>
+					<c:if test="${not empty forum.forumParent and forum.forumParent.type != 'CATEGORY'}">
+						<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key='community.forum.link.returnTo' /><span>${forum.forumParent.title}</span></a>
 					</c:if>
 					
-					<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
-						<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo"><fmt:message key="community.forum.link.returnToBoardIndex" /></a>
+					<c:if test="${not empty forum.forumParent and forum.forumParent.type == 'CATEGORY'}">
+						<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo"><fmt:message key='community.forum.link.returnToBoardIndex' /></a>
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -374,12 +431,12 @@
 					</c:url>
 					<c:if test="${forum.title == 'Documents'}">
 						<div id="searchDocument">
-	   						<p><fmt:message key="community.forum.messages.documents" /></p>
+	   						<p><fmt:message key='community.forum.messages.documents' /></p>
 	    					<div id="topicActions">
 	        					<div id="searchThisForumFormDiv">
 	            					<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
-	                					<input id="searchForumThisText" name="searchForumThisText" type="text" value='<fmt:message key="community.forum.inputValue.searchDocument" />'>
-	                					<input id="searchDocuments" type="submit" title='<fmt:message key="community.forum.tooltip.search" />' value='<fmt:message key="community.forum.inputValue.search" />' class="buttonSmall button_small" disabled="disabled"/>
+	                					<input id="searchForumThisText" name="searchForumThisText" type="text" value="<fmt:message key='community.forum.inputValue.searchDocument' />">
+	                					<input id="searchDocuments" type="submit" title="<fmt:message key='community.forum.tooltip.search' />" value="<fmt:message key='community.forum.inputValue.search' />" class="buttonSmall button_small" disabled="disabled"/>
 	                					<input type="hidden" name="displayResults" value="Topics"/>
 	                					<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
 	                					<input type="hidden" name="newSearch" value="true"/>
@@ -396,22 +453,22 @@
             				<div class="rowFirst">
             					<c:choose>
 	            					<c:when test="${forum.subType == 'DOCUMENT'}">
-	            						<div class="one"><fmt:message key="community.forum.title.discussion" /></div>
-					        			<div class="two"><fmt:message key="community.forum.title.docId" /></div>
-					        			<div class="three"><fmt:message key="community.forum.title.replies" /></div>
-					        			<div class="four"><fmt:message key="community.forum.title.views" /></div>
-					        			<div class="five"><fmt:message key="community.forum.title.lastPost" /></div>
+	            						<div class="one"><fmt:message key='community.forum.title.discussion' /></div>
+					        			<div class="two"><fmt:message key='community.forum.title.docId' /></div>
+					        			<div class="three"><fmt:message key='community.forum.title.replies' /></div>
+					        			<div class="four"><fmt:message key='community.forum.title.views' /></div>
+					        			<div class="five"><fmt:message key='community.forum.title.lastPost' /></div>
 					        			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				            				<div class="six"><fmt:message key="community.forum.title.delete" /></div>
+				            				<div class="six"><fmt:message key='community.forum.title.delete' /></div>
 				            			</security:authorize>
 	            					</c:when>
 	            					<c:otherwise>
-	            						<div class="one"><fmt:message key="community.forum.title.discussions" /></div>
-					            		<div class="two"><fmt:message key="community.forum.title.replies" /></div>
-					            		<div class="three"><fmt:message key="community.forum.title.views" /></div>
-					            		<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+	            						<div class="one"><fmt:message key='community.forum.title.discussions' /></div>
+					            		<div class="two"><fmt:message key='community.forum.title.replies' /></div>
+					            		<div class="three"><fmt:message key='community.forum.title.views' /></div>
+					            		<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 					            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				            				<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+				            				<div class="five"><fmt:message key='community.forum.title.delete' /></div>
 				            			</security:authorize>
 	            					</c:otherwise>
             					</c:choose>
@@ -427,70 +484,75 @@
 									</c:url>
 									<c:choose>
 										<c:when test="${forum.subType == 'DOCUMENT'}">
-											<!-- <div class="${not status.last ? 'row' : 'rowLast'}">  -->						            
 											<div class="row">						            
 												<div class="one">
-										            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+										            <img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 													<a href="${ShowTopicForumURL}" class="forumHref">
 														${currentTopic.subject}
 														<c:if test="${currentTopic.locked}">
-															<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+															<img src="<c:url value='/images/forum/img_locked.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
 														</c:if>
 													</a>
 									                <span>
-									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
+									                	<fmt:message key='community.forum.text.createdBy' />&nbsp;
 										            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									                	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+									                	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
 									                </span>
 									            </div>
 									            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
 									            <div class="three">${currentTopic.totalReplies - 1}</div>
 									            <div class="four">${currentTopic.totalViews}</div>
-												<c:if test="${not empty currentTopic.lastPost}">
-										            <div class="five">
-										            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
-														<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-										            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
-										            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
-										            </div>
-										        </c:if>
-												<c:if test="${empty currentTopic.lastPost}">
-										            <div class="five"></div>
-										        </c:if>
+									            <div class="five">
+									            	<c:choose>
+														<c:when test="${not empty currentTopic.lastPost}">
+											            	<fmt:message key='community.forum.text.lastPostBy' />&nbsp;
+															<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
+											            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.lastPost.user.account}" id="userName_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
+											            	<span class="date"><fmt:formatDate value="${currentTopic.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
+												        </c:when>
+									            		<c:otherwise>
+									            		</c:otherwise>
+									            	</c:choose>
+									            </div>
 										        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 									        		<div class="six">
 									        			<c:if test="${not currentTopic.locked}">
-									        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+									        				<a href="${DeleteTopicForumURL}" class="button_delete">
+									        					<img src="<c:url value='/images/forum/button_delete.png'/>"/>
+									        				</a>
 									        			</c:if>
 									        		</div>
 									        	</security:authorize>
 									        </div>
 										</c:when>
 										<c:otherwise>
-											<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->						            
 											<div class="row">						            
 												<div class="one">
-								            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+								            		<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 									                <a href="${ShowTopicForumURL}" class="forumHref">
 									                	${currentTopic.subject}
 									                	<c:if test="${currentTopic.locked}">
-															<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+															<img src="<c:url value='/images/forum/img_locked.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
 														</c:if>
 									                </a>
 									                <span>
-									                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
+									                	<fmt:message key='community.forum.text.createdBy' />&nbsp;
 										            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-									                	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+									                	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">
+									                		${currentTopic.user.account}
+									                	</a>
 									                </span>
 									            </div>
 									            <div class="two">${currentTopic.totalReplies - 1}</div>
 									            <div class="three">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
 												<c:if test="${not empty currentTopic.lastPost}">
 										            <div class="four">
-										            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
+										            	<fmt:message key='community.forum.text.lastPostBy' />&nbsp;
 														<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-										            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
-										            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
+										            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">
+										            		${currentTopic.lastPost.user.account}
+										            	</a>
+										            	<span class="date"><fmt:formatDate value="${currentTopic.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
 										            </div>
 										        </c:if>
 												<c:if test="${empty currentTopic.lastPost}">
@@ -499,7 +561,9 @@
 										        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 									        		<div class="five">
 									        			<c:if test="${not currentTopic.locked}">
-									        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+									        				<a href="${DeleteTopicForumURL}" class="button_delete">
+									        					<img src="<c:url value='/images/forum/button_delete.png'/>"/>
+									        				</a>
 									        			</c:if>
 									        		</div>
 									        	</security:authorize>
@@ -517,11 +581,11 @@
 							</c:set>
 							
 							<div id="jumpToDiv">
-						    	<fmt:message key="community.forum.text.jumpTo" />
+						    	<fmt:message key='community.forum.text.jumpTo' />
 						    	<select id="selectForum" name="selectForum" class="selectform_long">
-						        	<option value="" selected="selected"><fmt:message key="community.forum.options.selectAForum" /></option>
+						        	<option value="" selected="selected"><fmt:message key='community.forum.options.selectAForum' /></option>
 						        </select>
-						        <input id="go" type="submit" title='<fmt:message key="community.forum.tooltip.go" />' value='<fmt:message key="community.forum.inputValue.go" />' class="buttonMini">
+						        <input id="go" type="submit" title="<fmt:message key='community.forum.tooltip.go' />" value="<fmt:message key='community.forum.inputValue.go' />" class="buttonMini">
 						    </div>
 							
 							${paginationData}
@@ -532,11 +596,11 @@
 							<c:param name="forumId" value="${forum.forumParent.forumId}" />
 						</c:url>
 					
-						<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
-							<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key="community.forum.link.returnTo" /><span>${forum.forumParent.title}</span></a>
+						<c:if test="${not empty forum.forumParent and forum.forumParent.type != 'CATEGORY'}">
+							<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key='community.forum.link.returnTo' /><span>${forum.forumParent.title}</span></a>
 						</c:if>
-						<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
-							<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo"><fmt:message key="community.forum.link.returnToBoardIndex" /></a>
+						<c:if test="${not empty forum.forumParent and forum.forumParent.type == 'CATEGORY'}">
+							<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo"><fmt:message key='community.forum.link.returnToBoardIndex' /></a>
 						</c:if>
             		</c:if>
             		<c:if test="${empty subForumsTopicsPage.list}">
@@ -544,14 +608,14 @@
 							<c:when test="${forum.subType == 'DOCUMENT'}">
 								<div class="rowLast">						            
 									<div class="one">
-				            			<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-				                		<a id="viewTopic"><fmt:message key="community.forum.text.noDiscussion" /></a>
+				            			<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
+				                		<a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 				                		<span>${currentForum.description}</span>
 				            		</div>
-				            		<div class="two"><fmt:message key="community.forum.text.emptyForum" /></div>
+				            		<div class="two"><fmt:message key='community.forum.text.emptyForum' /></div>
 				            		<div class="three">0</div>
 				            		<div class="four">0</div>
-				            		<div class="five"><fmt:message key="community.forum.text.emptyForum" /></div>
+				            		<div class="five"><fmt:message key='community.forum.text.emptyForum' /></div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 			        					<div class="six"></div>
 			        				</security:authorize>
@@ -560,13 +624,13 @@
 			        		<c:otherwise>
 								<div class="rowLast">						            
 									<div class="one">
-						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-						                <a id="viewTopic"><fmt:message key="community.forum.text.noDiscussion" /></a>
+						            	<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
+						                <a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 						                <span>${currentForum.description}</span>
 						            </div>
 						            <div class="two">0</div>
 						            <div class="three">0</div>
-						            <div class="four"><fmt:message key="community.forum.text.emptyForum" /></div>
+						            <div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 						            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					        			<div class="five"></div>
 					        		</security:authorize>
@@ -588,9 +652,9 @@
    					<p><fmt:message key="community.forum.messages.documents" /></p>
     				<div id="topicActions">
         				<div id="searchThisForumFormDiv">
-            				<form id="SearchForumThis" action="<c:url value="/community/AdvancedSearchForumPost.do"/>" method="post">
+            				<form id="SearchForumThis" action="<c:url value='/community/AdvancedSearchForumPost.do'/>" method="post">
                					<input id="searchForumThisText" name="searchForumThisText" type="text" value="Search for a document...">
-               					<input id="searchDocuments" type="submit" title='<fmt:message key="community.forum.tooltip.search" />' value='<fmt:message key="community.forum.inputValue.search" />' class="buttonSmall button_small" disabled="disabled"/>
+               					<input id="searchDocuments" type="submit" title="<fmt:message key='community.forum.tooltip.search' />" value="<fmt:message key='community.forum.inputValue.search' />" class="buttonSmall button_small" disabled="disabled"/>
                					<input type="hidden" name="displayResults" value="Topics"/>
                 				<input type="hidden" name="forumsId" value="${bia:getApplicationProperty('forum.identifier.document')}"/>
                 				<input type="hidden" name="newSearch" value="true"/>
@@ -608,7 +672,7 @@
 				<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 					<c:param name="entryId" value="${forum.document.entryId}"/>
 				</c:url>
-				<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.forum.link.showRecord" /></a>
+				<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord"><fmt:message key='community.forum.link.showRecord' /></a>
             </c:if>
             <c:if test="${forum.subType != 'DOCUMENT'}">
             	<!-- MD: Inserted the button to view the record on bia -->
@@ -617,21 +681,21 @@
 					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 						<c:param name="placeAllId" value="${forum.place.placeAllId}"/>
 					</c:url>
-					<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.forum.link.showRecord" /></a>
+					<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord"><fmt:message key='community.forum.link.showRecord' /></a>
 				</c:if>
 				<c:if test="${forum.person != null}">
 					<p></p>
 					<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 						<c:param name="personId" value="${forum.person.personId}"/>
 					</c:url>
-					<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.forum.link.showRecord" /></a>
+					<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord"><fmt:message key='community.forum.link.showRecord' /></a>
 				</c:if>
 				<c:if test="${forum.volume != null}">
 					<p></p>
 					<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 						<c:param name="summaryId" value="${forum.volume.summaryId}"/>
 					</c:url>
-					<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.forum.link.showRecord" /></a>
+					<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord"><fmt:message key='community.forum.link.showRecord' /></a>
 				</c:if>
             </c:if>
             
@@ -640,31 +704,31 @@
            			<div class="rowFirst">
            				<c:choose>
             				<c:when test="${forum.subType == 'DOCUMENT'}">
-            					<div class="one"><fmt:message key="community.forum.title.discussion" /></div>
-				        		<div class="two"><fmt:message key="community.forum.title.docId" /></div>
-				        		<div class="three"><fmt:message key="community.forum.title.replies" /></div>
-				        		<div class="four"><fmt:message key="community.forum.title.views" /></div>
-				        		<div class="five"><fmt:message key="community.forum.title.lastPost" /></div>
+            					<div class="one"><fmt:message key='community.forum.title.discussion' /></div>
+				        		<div class="two"><fmt:message key='community.forum.title.docId' /></div>
+				        		<div class="three"><fmt:message key='community.forum.title.replies' /></div>
+				        		<div class="four"><fmt:message key='community.forum.title.views' /></div>
+				        		<div class="five"><fmt:message key='community.forum.title.lastPost' /></div>
 				        		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            			<div class="six"><fmt:message key="community.forum.title.delete" /></div>
+			            			<div class="six"><fmt:message key='community.forum.title.delete' /></div>
 			            		</security:authorize>
             				</c:when>
             				<c:when test="${forum.subType == 'COURSE'}">
             					<div class="one">COURSE TOPICS / DISCUSSIONS</div>
 				            	<div class="two">POSTS</div>
-				            	<div class="three"><fmt:message key="community.forum.title.views" /></div>
-				            	<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+				            	<div class="three"><fmt:message key='community.forum.title.views' /></div>
+				            	<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 				            	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            			<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+			            			<div class="five"><fmt:message key='community.forum.title.delete' /></div>
 			            		</security:authorize>
             				</c:when>
             				<c:otherwise>
-            					<div class="one"><fmt:message key="community.forum.title.discussions" /></div>
-				            	<div class="two"><fmt:message key="community.forum.title.replies" /></div>
-				            	<div class="three"><fmt:message key="community.forum.title.views" /></div>
-				            	<div class="four"><fmt:message key="community.forum.title.lastPost" /></div>
+            					<div class="one"><fmt:message key='community.forum.title.discussions' /></div>
+				            	<div class="two"><fmt:message key='community.forum.title.replies' /></div>
+				            	<div class="three"><fmt:message key='community.forum.title.views' /></div>
+				            	<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 				            	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			            			<div class="five"><fmt:message key="community.forum.title.delete" /></div>
+			            			<div class="five"><fmt:message key='community.forum.title.delete' /></div>
 			            		</security:authorize>
             				</c:otherwise>
            				</c:choose>
@@ -684,17 +748,17 @@
 									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
 									<div class="row">
 										<div class="one">
-						            		<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+						            		<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 											<a href="${ShowTopicForumURL}" class="forumHref">
 												${currentTopic.subject}
 												<c:if test="${currentTopic.locked}">
-													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+													<img src="<c:url value='/images/forum/img_locked.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
 												</c:if>
 											</a>
 											<span>
-											<fmt:message key="community.forum.text.createdBy" />&nbsp;
+											<fmt:message key='community.forum.text.createdBy' />&nbsp;
 								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-							                	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+							                	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
 							                </span>
 							            </div>
 							            <div class="two">${currentTopic.forum.description} <span>${currentTopic.forum.title}</span></div>
@@ -702,10 +766,10 @@
 							            <div class="four">${currentTopic.totalViews != null ? currentTopic.totalViews : ''}</div>
 										<c:if test="${not empty currentTopic.lastPost}">
 								            <div class="five">
-								            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
+								            	<fmt:message key='community.forum.text.lastPostBy' />&nbsp;
 												<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-								            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
-								            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
+								            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
+								            	<span class="date"><fmt:formatDate value="${currentTopic.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
 								            </div>
 								        </c:if>
 										<c:if test="${empty currentTopic.lastPost}">
@@ -714,14 +778,14 @@
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 							        		<div class="six">
 							        			<c:if test="${not currentTopic.locked}">
-							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value='/images/forum/button_delete.png'/>"/></a>
 							        			</c:if>
 							        		</div>
 							        	</security:authorize>
 							        </div>
 								</c:when>
 								<c:when test="${forum.subType == 'COURSE'}">
-									<c:url var="DeleteCourseTopicURL" value="/teaching/DeleteCourseFragmentTopic.json">
+									<c:url var="DeleteCourseTopicURL" value="/teaching/DeleteCourseTopic.json">
 										<c:param name="topicId" value="${currentTopic.topicId}" />
 									</c:url>
 									<c:set var="topicType" value="${bia:getValue(topicsMap, currentTopic.topicId)}" />
@@ -754,22 +818,22 @@
 									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
 									<div class="row">
 										<div class="one">
-								            <img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+								            <img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 											<a href="${ShowCourseFragmentURL}" class="courseFragmentHref">
 												${currentTopic.subject}
 												<c:if test="${currentTopic.locked}">
-													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+													<img src="<c:url value='/images/forum/img_locked.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
 												</c:if>
 												<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 													<c:if test="${not empty currentTopic.annotation}">
 														<c:if test="${not currentTopic.annotation.visible}">
-																<img src="<c:url value="/images/forum/img_hidden.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
+																<img src="<c:url value='/images/forum/img_hidden.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
 														</c:if>
 														<c:if test="${currentTopic.annotation.transcribed and empty currentTopic.annotation.exportedTo}">
-															<img src="<c:url value="/images/forum/img_transcribed(ext).png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
+															<img src="<c:url value='/images/forum/img_transcribed(ext).png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
 														</c:if>
 														<c:if test="${not empty currentTopic.annotation.exportedTo}">
-															<img src="<c:url value="/images/forum/img_exported.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
+															<img src="<c:url value='/images/forum/img_exported.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
 														</c:if>
 													</c:if>
 												</security:authorize>
@@ -792,13 +856,13 @@
 							            		 </c:choose>
 							            	</span>
 							            	<span>
-							            		<fmt:message key="community.forum.text.createdBy" />&nbsp;
+							            		<fmt:message key='community.forum.text.createdBy' />&nbsp;
 												<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-							            		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+							            		<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
 							            	</span>
 							            </div>
 							            <div class="two">
-							            	${currentTopic.totalReplies}
+							            	${not empty currentTopic.firstPost ? currentTopic.totalReplies + 1 : 0}
 							            </div>
 							            <div class="three">
 							            	${currentTopic.totalViews != null ? currentTopic.totalViews : ''}
@@ -806,9 +870,9 @@
 										<c:if test="${not empty currentTopic.lastPost}">
 											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
 								            <div class="four">
-								            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
-								            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
-								            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
+								            	<fmt:message key='community.forum.text.lastPostBy' />&nbsp;
+								            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
+								            	<span class="date"><fmt:formatDate value="${currentTopic.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
 								            </div>
 								        </c:if>
 										<c:if test="${empty currentTopic.lastPost}">
@@ -819,7 +883,7 @@
 							        			<c:if test="${not cuurentTopic.locked and (topicType == 'Q' or topicType == 'D')}">
 							        				<!-- Cannot delete course transcription fragment: delete course fragment resources forum instead (if needed) -->
 								        			<a href="${DeleteCourseTopicURL}" class="button_delete">
-								        				<img src="<c:url value="/images/forum/button_delete.png"/>"/>
+								        				<img src="<c:url value='/images/forum/button_delete.png'/>"/>
 								        			</a>
 							        			</c:if>
 							        		</div>
@@ -837,22 +901,22 @@
 									<!-- <div class="${not status.last ? 'row' : 'rowLast'}"> -->
 									<div class="row">
 										<div class="one">
-							            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
+							            	<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
 							                <a href="${ShowTopicForumURL}" class="forumHref">
 							                	${currentTopic.subject}
 							                	<c:if test="${currentTopic.locked}">
-													<img src="<c:url value="/images/forum/img_locked.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
+													<img src="<c:url value='/images/forum/img_locked.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.locked' />"/>
 												</c:if>
 												<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 													<c:if test="${not empty currentTopic.annotation}">
 														<c:if test="${not currentTopic.annotation.visible}">
-																<img src="<c:url value="/images/forum/img_hidden.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
+																<img src="<c:url value='/images/forum/img_hidden.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.hidden' />"/>
 														</c:if>
 														<c:if test="${currentTopic.annotation.transcribed and empty currentTopic.annotation.exportedTo}">
-															<img src="<c:url value="/images/forum/img_transcribed(ext).png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
+															<img src="<c:url value='/images/forum/img_transcribed(ext).png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.transcribed' />"/>
 														</c:if>
 														<c:if test="${not empty currentTopic.annotation.exportedTo}">
-															<img src="<c:url value="/images/forum/img_exported.png"/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
+															<img src="<c:url value='/images/forum/img_exported.png'/>" class="topicStatusIcon" title="<fmt:message key='community.forum.tooltip.exported' />"/>
 														</c:if>
 													</c:if>
 												</security:authorize>
@@ -860,7 +924,7 @@
 							                <span>
 							                	<fmt:message key="community.forum.text.createdBy" />&nbsp;
 								            	<!-- RR: Topic's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
-							                	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
+							                	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.user.account}" id="userName_topicId_${currentTopic.topicId}" class="link">${currentTopic.user.account}</a>
 							                </span>
 							            </div>
 							            <div class="two">${currentTopic.totalReplies - 1}</div>
@@ -868,9 +932,9 @@
 										<c:if test="${not empty currentTopic.lastPost}">
 											<!-- RR: Post's identifier appended to anchor's identifier to avoid duplicate identifiers in DOM -->
 								            <div class="four">
-								            	<fmt:message key="community.forum.text.lastPostBy" />&nbsp;
-								            	<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
-								            	<span class="date">${currentTopic.lastPost.lastUpdate}</span>
+								            	<fmt:message key='community.forum.text.lastPostBy' />&nbsp;
+								            	<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${currentTopic.lastPost.user.account}" id="userName_lastPostId_${currentTopic.lastPost.postId}" class="link">${currentTopic.lastPost.user.account}</a>
+								            	<span class="date"><fmt:formatDate value="${currentTopic.lastPost.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span>
 								            </div>
 								        </c:if>
 										<c:if test="${empty currentTopic.lastPost}">
@@ -879,7 +943,7 @@
 								        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 							        		<div class="five">
 							        			<c:if test="${not currentTopic.locked}">
-							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value="/images/forum/button_delete.png"/>"/></a>
+							        				<a href="${DeleteTopicForumURL}" class="button_delete"><img src="<c:url value='/images/forum/button_delete.png'/>"/></a>
 							        			</c:if>
 							        		</div>
 							        	</security:authorize>
@@ -897,11 +961,11 @@
 					</c:set>
 					
 					<div id="jumpToDiv">
-				    	<fmt:message key="community.forum.text.jumpTo" />
+				    	<fmt:message key='community.forum.text.jumpTo' />
 				    	<select id="selectForum" name="selectForum" class="selectform_long">
 				        	<option value="" selected="selected">Select a Forum</option>
 				        </select>
-				        <input id="go" type="submit" title='<fmt:message key="community.forum.tooltip.go" />' value='<fmt:message key="community.forum.inputValue.go" />' class="buttonMini">
+				        <input id="go" type="submit" title="<fmt:message key='community.forum.tooltip.go' />" value="<fmt:message key='community.forum.inputValue.go' />" class="buttonMini">
 				    </div>
 					
 					${paginationData}
@@ -913,10 +977,10 @@
 				</c:url>
 			
 				<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
-					<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key="community.forum.link.returnTo" /><span>${forum.forumParent.title}</span></a>
+					<a href="${ReturnToForumURL}" class="returnTo"><fmt:message key='community.forum.link.returnTo' /><span>${forum.forumParent.title}</span></a>
 				</c:if>
 				<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
-					<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo"><fmt:message key="community.forum.link.returnToBoardIndex" /></a>
+					<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo"><fmt:message key='community.forum.link.returnToBoardIndex' /></a>
 				</c:if>
             </c:if>
             <c:if test="${empty topicsPage.list}">
@@ -924,14 +988,14 @@
 					<c:when test="${forum.subType == 'DOCUMENT'}">
 						<div class="rowLast">
 							<div class="one">
-				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-				                <a id="viewTopic"><fmt:message key="community.forum.text.noDiscussion" /></a>
+				            	<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
+				                <a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 				                <span>${currentForum.description}</span>
 					        </div>
-					        <div class="two"><fmt:message key="community.forum.text.emptyForum" /></span></div>
+					        <div class="two"><fmt:message key='community.forum.text.emptyForum' /></span></div>
 					        <div class="three">0</div>
 					        <div class="four">0</div>
-							<div class="five"><fmt:message key="community.forum.text.emptyForum" /></div>	
+							<div class="five"><fmt:message key='community.forum.text.emptyForum' /></div>	
 					        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 				        		<div class="six"></div>
 				        	</security:authorize>
@@ -940,13 +1004,13 @@
 					<c:otherwise>					
 						<div class="rowLast">						            
 							<div class="one">
-				            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt='<fmt:message key="community.forum.tooltip.entry" />'>
-				                <a id="viewTopic"><fmt:message key="community.forum.text.noDiscussion" /></a>
+				            	<img src="<c:url value='/images/forum/img_forum.png'/>" alt="<fmt:message key='community.forum.tooltip.entry' />">
+				                <a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 				                <span>${currentForum.description}</span>
 				            </div>
 				            <div class="two">0</div>
 				            <div class="three">0</div>
-				            <div class="four"><fmt:message key="community.forum.text.emptyForum" /></div>
+				            <div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 				        		<div class="five"></div>
 				        	</security:authorize>
@@ -957,7 +1021,7 @@
 		</c:if>
 	</c:if>
 	
-	<div id="copyLink" title='<fmt:message key="community.forum.tooltip.copy" />' style="display:none"> 
+	<div id="copyLink" title="<fmt:message key='community.forum.tooltip.copy' />" style="display:none"> 
 		<input id="linkToCopy" type="text" value="" size="50"/>
 	</div>
 	

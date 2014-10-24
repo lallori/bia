@@ -20,7 +20,7 @@
 	<c:url var="LastCourseTranscriptionPostURL" value="/teaching/getLastPostId.json">
 		<c:param name="courseTopicId" value="${command.topicId}" />
 		<%-- Change the following parameter to true when the topic ordering will be by creation date --%>
-		<c:param name="byCreationDate" value="false" />
+		<c:param name="byCreationDate" value="true" />
 	</c:url>
 	
 	<c:url var="AskAQuestionURL" value="/teaching/askAQuestion.json" />
@@ -99,8 +99,8 @@
 				});
 			}, 20000);
 			
-			$j('#editPostContainer').css('height','10%');
-			$j('#postsContainer').css('height','85%');
+			$j('#editPostContainer').css('height','15%');
+			$j('#postsContainer').css('height','75%');
 			
 			if ($j("#addNewPost").length > 0) {
 				$j("#addNewPost").click(function() {

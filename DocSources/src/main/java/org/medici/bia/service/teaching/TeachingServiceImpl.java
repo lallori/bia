@@ -330,7 +330,7 @@ public class TeachingServiceImpl implements TeachingService {
 			SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
 			String nowdate = date.format(new Date()); 
 			container.setTitle(topicTitle.trim() + " resources");
-//			container.setDescription("Resources of " + topicTitle.trim());
+			// container.setDescription("Resources of " + topicTitle.trim());
 			container.setDescription("Created " + nowdate);
 			// the forum container must not have a document, it is only a topic container
 			// container.setDocument(document);
@@ -344,7 +344,7 @@ public class TeachingServiceImpl implements TeachingService {
 			container.setDateCreated(now);
 			container.setLastUpdate(now);
 			container.setPostsNumber(0);
-			container.setTopicsNumber(1);
+			container.setTopicsNumber(1); // it will contain the collaborative transcription topic
 			container.setSubForumsNumber(0);
 			container.setLogicalDelete(Boolean.FALSE);
 
@@ -352,7 +352,8 @@ public class TeachingServiceImpl implements TeachingService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, container));
 
 			container.setFullPath(container.getFullPath() + container.getForumId() + ".");
-			getForumDAO().recursiveIncreaseSubForumsNumber(course.getForum());
+			// increase the course subforums number
+			increaseSubForumsNumber(course.getForum());
 			
 			ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(container);
 			getForumOptionDAO().persist(forumOption);
@@ -383,8 +384,8 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			getCourseTopicOptionDAO().persist(courseTopicOption);
 			
-			//Increment the topicsNumber in course
-			getForumDAO().recursiveIncreaseTopicsNumber(course.getForum());
+			// increase the number of topics of the course
+			increaseForumTopicsNumber(course.getForum());
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, courseTopic));
 			
@@ -493,11 +494,12 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			forumPost.setPostId(null);
 			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
-			// the help resources course forum is not a course fragment but in this case
-			// it is consider as a course fragment
-			Course course = getCourseDAO().getCourseByCourseFragment(forum.getForumId());
 
 			if (forumPost.getTopic().getTopicId() == 0) {
+				// the help resources course forum is not a course fragment but in this case
+				// it is consider as a course fragment
+				Course course = getCourseDAO().getCourseByCourseFragment(forumPost.getForum().getForumId());
+				
 				//Create the first post of a new topic
 				ForumTopic forumTopic = new ForumTopic(null);
 				forumTopic.setForum(forum);
@@ -529,8 +531,8 @@ public class TeachingServiceImpl implements TeachingService {
 				
 				forumPost.setTopic(forumTopic);
 				
-				// increase the topicsNumber in forum
-				getForumDAO().recursiveIncreaseTopicsNumber(forum);
+				// increase the number of topics of the course
+				increaseForumTopicsNumber(forum);
 				
 				// topic subscription -> to all course people
 				for(UserRole personRole : getCoursePeople(course)) {
@@ -539,6 +541,8 @@ public class TeachingServiceImpl implements TeachingService {
 						getForumTopicWatchDAO().persist(personTopicWatch);
 					}
 				}
+				
+				getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, forumTopic));
 				
 			} else {
 				ForumTopic forumTopic = getForumTopicDAO().find(forumPost.getTopic().getTopicId());
@@ -551,14 +555,19 @@ public class TeachingServiceImpl implements TeachingService {
 			forumPost.setUpdater(user);
 			getForumPostDAO().persist(forumPost);
 			
+			// update topic data
+			forumPost.getTopic().setLastPost(forumPost);
+			if (forumPost.getTopic().getFirstPost() == null) {
+				// it is a new topic
+				forumPost.getTopic().setFirstPost(forumPost);
+			} else {
+				forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() + 1);
+			}
+			forumPost.getTopic().setLastUpdate(operationDate);
+			
 			// update forum data
 			getForumDAO().recursiveIncreasePostsNumber(forum);
 			recursiveSetLastPost(forum, forumPost, operationDate);
-			
-			// update topic data
-			forumPost.getTopic().setLastPost(forumPost);
-			forumPost.getTopic().setLastUpdate(operationDate);
-			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() + 1);
 			
 			// forum post notification
 			ForumPostNotified forumPostNotified = new ForumPostNotified(forumPost.getPostId());
@@ -620,6 +629,8 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			getForumTopicDAO().persist(questionTopic);
 			
+			increaseForumTopicsNumber(container);
+			
 			// question topic option
 			CourseTopicOption topicOption = new CourseTopicOption();
 			topicOption.setCourseTopic(questionTopic);
@@ -646,6 +657,10 @@ public class TeachingServiceImpl implements TeachingService {
 			questionTopic.setFirstPost(firstPost);
 			questionTopic.setLastPost(firstPost);
 			
+			// update forum data
+			getForumDAO().recursiveIncreasePostsNumber(container);
+			recursiveSetLastPost(container, firstPost, now);
+			
 			// topic subscription -> to all course people
 			for(UserRole personRole : getCoursePeople(course)) {
 				if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
@@ -665,7 +680,8 @@ public class TeachingServiceImpl implements TeachingService {
 			user.setLastForumPostDate(now);
 			user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
 			
-			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, questionTopic));
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new lesson discussion topic", Action.CREATE, Category.FORUM_TOPIC, questionTopic));
+			getUserHistoryDAO().persist(new UserHistory(user, "Create new lesson discussion post", Action.CREATE, Category.FORUM_POST, firstPost));
 			
 			return questionTopic;
 		} catch (PersistenceException e) {
@@ -707,7 +723,6 @@ public class TeachingServiceImpl implements TeachingService {
 			Date now = new Date();
 			User user = getCurrentUser();
 			
-			
 			Forum coursesContainer = getForumDAO().getCoursesContainer();
 			
 			if (coursesContainer == null) {
@@ -728,10 +743,9 @@ public class TeachingServiceImpl implements TeachingService {
 			courseForum.setSubType(Forum.SubType.COURSE);
 			courseForum.setPostsNumber(0);
 			courseForum.setTopicsNumber(0);
-			courseForum.setSubForumsNumber(0); // the help resources subforum will be added later
+			courseForum.setSubForumsNumber(1); // it will contain the help resources subforum
 			courseForum.setLogicalDelete(Boolean.FALSE);
 			
-
 			getForumDAO().persist(courseForum);
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new course", Action.CREATE, Category.FORUM, courseForum));
 
@@ -740,7 +754,8 @@ public class TeachingServiceImpl implements TeachingService {
 			ForumOption forumOption = ForumUtils.getForumOptionForCourseForum(courseForum);
 			getForumOptionDAO().persist(forumOption);
 			
-			getForumDAO().recursiveIncreaseSubForumsNumber(coursesContainer);
+			// increase the number of the courses
+			increaseSubForumsNumber(coursesContainer);
 			
 			Course course = new Course();
 			course.setActive(Boolean.TRUE);
@@ -771,7 +786,6 @@ public class TeachingServiceImpl implements TeachingService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, helpResources));
 
 			helpResources.setFullPath(helpResources.getFullPath() + helpResources.getForumId() + ".");
-			getForumDAO().recursiveIncreaseSubForumsNumber(courseForum);
 			
 			ForumOption helpResourcesOption = ForumUtils.getForumOptionForForumTopicContainer(helpResources);
 			getForumOptionDAO().persist(helpResourcesOption);
@@ -794,6 +808,13 @@ public class TeachingServiceImpl implements TeachingService {
 				return false;
 			}
 			course.setActive(false);
+			// adjust 'All courses' subforums number
+			decreaseSubForumsNumber(course.getForum().getForumParent());
+			// adjust the last post of the 'All courses' container
+			if (course.getForum().getForumParent().getLastPost() != null && 
+				course.getForum().getLastPost().equals(course.getForum().getForumParent().getLastPost())) {
+					course.getForum().getForumParent().setLastPost(determineAllCourseLastPost());
+			}
 			return true;
 		} catch (PersistenceException e) {
 			throw new ApplicationThrowable(e);
@@ -805,7 +826,35 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void deleteCourseFragmentTopic(Integer topicId) throws ApplicationThrowable {
+	public void deleteCourseForum(Integer forumId) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			Forum forum = getForumDAO().find(forumId);
+			forum.setLastUpdate(now);
+			forum.setLogicalDelete(Boolean.TRUE);
+			
+			List<Integer> deletedForumIds = getForumDAO().deleteForumsFromAncestorForum(forumId);
+			List<Integer> deletedTopicIds = getForumTopicDAO().deleteForumTopicsFromForums(deletedForumIds);
+			List<Integer> deletedPostIds = getForumPostDAO().deleteAllForumTopicPosts(deletedTopicIds);
+			getForumPostNotifiedDAO().removeAllNotSentForumPostNotifications(deletedPostIds);
+			
+			if (forum.getForumParent() != null) {
+				decreaseSubForumsNumber(forum.getForumParent());
+				getForumDAO().recursiveDecreasePostsNumber(forum.getForumParent(), deletedPostIds.size());
+				ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum.getForumParent());
+				recursiveSetLastPost(forum.getForumParent(), lastPost, now);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteCourseTopic(Integer topicId) throws ApplicationThrowable {
 		try {
 			Date now = new Date();
 			User user = getCurrentUser();
@@ -819,23 +868,22 @@ public class TeachingServiceImpl implements TeachingService {
 			}
 			
 			Forum forum = courseTopic.getForum();
-
-			getForumPostDAO().deleteAllForumTopicPosts(courseTopic.getTopicId());
-			getForumDAO().recursiveDecreasePostsNumber(forum, courseTopic.getTotalReplies());
-			// update only the topics number of the course fragment forum container 
-			forum.setTopicsNumber(forum.getTopicsNumber() - 1);
+			
+			// remove not sent post notification
+			getForumPostNotifiedDAO().removeAllNotSentForumPostNotificationsByTopic(courseTopic.getTopicId());
+			// remove the posts
+			Integer numberOfRemovedPosts = getForumPostDAO().deleteAllForumTopicPosts(courseTopic.getTopicId());
+			getForumDAO().recursiveDecreasePostsNumber(forum, numberOfRemovedPosts);
+			// update only the topics number of the course fragment forum container
+			decreaseForumTopicsNumber(forum);
 			
 			// update forum last post
-			if (forum.getLastPost() != null && forum.getLastPost().getTopic().equals(courseTopic)) {
-				CourseTopicOption option = getCourseTopicOptionDAO().determineExtendedTopicWithLastPost(forum.getForumId());
-				if (option != null) {
-					recursiveSetLastPost(forum, option.getCourseTopic().getLastPost(), now);
-				} else {
-					forum.setLastPost(null);
-				}
-			}
+			ForumPost lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(forum);
+			recursiveSetLastPost(forum, lastForumPost, now);
 			
 			user.setLastActiveForumDate(now);
+			
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete course topic", Action.DELETE, Category.FORUM_TOPIC, courseTopic));
 		} catch (PersistenceException e) {
 			throw new ApplicationThrowable(e);
 		}
@@ -850,12 +898,10 @@ public class TeachingServiceImpl implements TeachingService {
 		
 		ForumPost post;
 		ForumTopic courseTopic;
-		Forum courseForum;
 		
 			try {
 				post = getForumPostDAO().find(postId);
 				courseTopic = post.getTopic();
-				courseForum = post.getForum();
 			} catch (Throwable th) {
 				throw new ApplicationThrowable(th);
 			}
@@ -866,67 +912,27 @@ public class TeachingServiceImpl implements TeachingService {
 		User user = getCurrentUser();
 		
 		try {
-			doDeleteCourseTranscriptionPost(post, now, user);
+			doDeleteCoursePost(post, now, user);
 			
-			ForumPost firstTopicPost = null;
-			ForumPost lastTopicPost = null;
-			ForumPost lastForumPost = null;
 			switch (mode) {
 				case I:
-					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
-						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByLastUpdate(courseTopic.getTopicId());
-					}
-					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
-						lastTopicPost = getForumPostDAO().getLastForumTopicPostByLastUpdate(courseTopic);
-					}
-					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
-						CoursePostExt lastPostOfTopic = getCoursePostExtDAO().getLastPostInTopic(courseTopic.getTopicId(), false);
-						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
-						if (lastPostOfTopic != null && lastPostOfTopic.getPost().getLastUpdate().after(lastForumPost.getDateCreated())) {
-							lastForumPost = lastPostOfTopic.getPost();
-						}
-					}
 					CourseCheckPoint checkPoint = getLastCheckPoint(courseTopic.getTopicId());
 					if (checkPoint != null && checkPoint.getCheckPointPost().getPost().getPostId().equals(postId)) {
-						updateCheckPointToLastTopicPost(checkPoint, false);
+						updateCheckPointToLastTopicPost(checkPoint, true);
 					} else if (checkPoint == null) {
 						// something is bad...we create new check point to fix the course topic status
-						CoursePostExt lastPost = getLastPostOfTopic(courseTopic.getTopicId(), false);
+						CoursePostExt lastPost = getLastPostOfTopic(courseTopic.getTopicId(), true);
 						addCourseCheckPoint(courseTopic.getTopicId(), lastPost, null);
 					}
 					break;
 				case R:
-					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
-						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(courseTopic.getTopicId());
-					}
-					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
-						lastTopicPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
-					}
-					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
-						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
-					}
+					// NOP
 					break;
 				case C:
-					if (courseTopic.getFirstPost() == null || courseTopic.getFirstPost().getPostId().equals(postId)) { 
-						firstTopicPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(courseTopic.getTopicId());
-					}
-					if (courseTopic.getLastPost() == null || courseTopic.getLastPost().getPostId().equals(postId)) {
-						lastTopicPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
-					}
-					if (courseForum.getLastPost() == null || courseForum.getLastPost().getPostId().equals(postId)) {
-						lastForumPost = getForumPostDAO().getLastForumPostByCreationDate(courseForum);
-					}
+					// NOP
 					break;
 			}
-			if (firstTopicPost != null) {
-				courseTopic.setFirstPost(firstTopicPost);
-			}
-			if (lastTopicPost != null) {
-				courseTopic.setLastPost(lastTopicPost);
-			}
-			if (lastForumPost != null) {
-				recursiveSetLastPost(courseForum, lastForumPost, now);
-			}
+			
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -943,30 +949,22 @@ public class TeachingServiceImpl implements TeachingService {
 			User user = getCurrentUser();
 			
 			ForumPost forumPost = getForumPostDAO().find(postId);
-			Forum forum = forumPost.getForum();
-			forumPost.setLastUpdate(now);
-			forumPost.setUpdater(user);
-			forumPost.setLogicalDelete(new Boolean(Boolean.TRUE));
-
-			ForumTopic forumTopic = forumPost.getTopic();
-			ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(forumTopic);
-			forumTopic.setLastPost(lastPost);
-			forumTopic.setTotalReplies(forumTopic.getTotalReplies() - 1);
 			
-			getForumDAO().recursiveDecreasePostsNumber(forum);
+			// delete the post
+			doDeleteCoursePost(forumPost, now, user);
 			
-			recursiveSetLastPost(forum, lastPost, now);
-			
+			// remove post notification if needed
 			ForumPostNotified mailNotification = getForumPostNotifiedDAO().find(postId);
 			if (mailNotification != null && Boolean.FALSE.equals(mailNotification.getMailSended())) {
 				getForumPostNotifiedDAO().remove(mailNotification);
 			}
-
+			
+			// update user data 
 			user.setLastActiveForumDate(now);
 			user.setLastForumPostDate(now);
 			user.setForumNumberOfPost(user.getForumNumberOfPost() - 1);
 			
-			getUserHistoryDAO().persist(new UserHistory(user, "Delete post", Action.DELETE, Category.FORUM_POST, forumPost));
+			getUserHistoryDAO().persist(new UserHistory(user, "Delete course topic post", Action.DELETE, Category.FORUM_POST, forumPost));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -984,6 +982,14 @@ public class TeachingServiceImpl implements TeachingService {
 				return false;
 			}
 			course.setActive(true);
+			// adjust 'All courses' subforums number
+			increaseSubForumsNumber(course.getForum().getForumParent());
+			// adjust the last post of the 'All courses' container
+			if (course.getForum().getForumParent().getLastPost() == null ||
+				(course.getForum().getLastPost() != null && 
+					course.getForum().getLastPost().getDateCreated().after(course.getForum().getForumParent().getLastPost().getDateCreated()))) {
+				course.getForum().getForumParent().setLastPost(course.getForum().getLastPost());
+			}
 			return true;
 		} catch (PersistenceException e) {
 			throw new ApplicationThrowable(e);
@@ -1042,6 +1048,15 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page getCoursePeople(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		// TODO
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getCourseDAO().getCourses(onlyActives, paginationFilter);
@@ -1081,12 +1096,7 @@ public class TeachingServiceImpl implements TeachingService {
 	public ForumTopic getCourseTopicForView(Integer courseTopicId) throws ApplicationThrowable {
 		try {
 			ForumTopic topic = getForumTopicDAO().find(courseTopicId);
-			if (topic.getTotalViews() == null) {
-				topic.setTotalViews(1);
-			} else {
-				topic.setTotalViews(topic.getTotalViews() + 1);
-			}
-			getForumTopicDAO().merge(topic);
+			topic.setTotalViews(topic.getTotalViews() != null && topic.getTotalViews() > 0 ? topic.getTotalViews() + 1 : 1);
 			return topic;
 		} catch(Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1123,7 +1133,7 @@ public class TeachingServiceImpl implements TeachingService {
 				topicsMode.put(topicId, option.getMode());
 				topicIds.remove(topicId);
 			}
-			// Not found topics are considered general discussions
+			// Not found topics are considered as course discussions
 			for(Integer notFoundId : topicIds) {
 				topicsMode.put(notFoundId, CourseTopicMode.D);
 			}
@@ -1141,7 +1151,7 @@ public class TeachingServiceImpl implements TeachingService {
 		try {
 			ForumTopic courseTopic = getForumTopicDAO().find(topicId);
 			if (courseTopic == null) {
-				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Unable to find course topic [" + topicId + "]");
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course topic [" + topicId + "] is missing...");
 			}
 			return courseTopic.getForum().getForumId();
 		} catch (Throwable th) {
@@ -1212,7 +1222,7 @@ public class TeachingServiceImpl implements TeachingService {
 		try {
 			Course course = getCourseDAO().find(courseId);
 			if (course == null) {
-				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR);
+				throw new ApplicationThrowable(ApplicationError.RECORD_NOT_FOUND_ERROR, "Course with id [" + courseId + "] has been not found!");
 			}
 			List<Forum> courseFragmentsContainers = getForumDAO().findSubForumsByDocument(course.getForum().getForumId(), entryId);
 			List<ForumTopic> topics = new ArrayList<ForumTopic>();
@@ -1526,6 +1536,7 @@ public class TeachingServiceImpl implements TeachingService {
 			if (!courseTopic.getLocked().equals(close)) {
 				courseTopic.setLastUpdate(new Date());
 				courseTopic.setLocked(close);
+				getUserHistoryDAO().persist(new UserHistory(getCurrentUser(), (close ? "Close" : "Open") + " course topic", Action.MODIFY, Category.FORUM_TOPIC, courseTopic));
 			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1557,6 +1568,7 @@ public class TeachingServiceImpl implements TeachingService {
 			parentPost.setReplyNumber(parentPost.getReplyNumber() + 1);
 	
 			getForumDAO().recursiveIncreasePostsNumber(forum);
+			recursiveSetLastPost(forum, forumPost, operationDate);
 			
 			// forum post notification
 			ForumPostNotified postNotified = new ForumPostNotified();
@@ -1764,7 +1776,6 @@ public class TeachingServiceImpl implements TeachingService {
 					getAnnotationDAO().persist(annotation);
 					
 					Forum forum = getForumDAO().find(forumContainerId);
-					image = getImageDAO().find(imageId);
 					
 					ForumTopic topicAnnotation = new ForumTopic(null);
 					topicAnnotation.setForum(forum);
@@ -1786,6 +1797,12 @@ public class TeachingServiceImpl implements TeachingService {
 					annotation.setForumTopic(topicAnnotation);
 					returnMap.put(annotation, topicAnnotation.getTopicId());
 					
+					getUserHistoryDAO().persist(new UserHistory(user, "Create annotation topic", Action.CREATE, Category.FORUM_TOPIC, topicAnnotation));
+					
+					// we increase the course fragment resources topics number
+					// we do not have to increase parent forum topics number
+					increaseForumTopicsNumber(forum);
+					
 					// we save first post of annotation topic
 					ForumPost annotationPost = new ForumPost();
 					annotationPost.setForum(forum);
@@ -1803,14 +1820,10 @@ public class TeachingServiceImpl implements TeachingService {
 					
 					topicAnnotation.setFirstPost(annotationPost);
 					topicAnnotation.setLastPost(annotationPost);
-					topicAnnotation.setTotalReplies(1);
 					
-					forum.setLastPost(annotationPost);
-					forum.setLastUpdate(operationDate);
+					getUserHistoryDAO().persist(new UserHistory(user, "Create annotation first post", Action.CREATE, Category.FORUM_POST, annotationPost));
 					
-					// we increase the course fragment resources topics number
-					// we do not have to increase parent forum topics number
-					forum.setTopicsNumber(forum.getTopicsNumber() + 1);
+					recursiveSetLastPost(forum, annotationPost, operationDate);
 					
 					// we increase the number of forum posts number
 					getForumDAO().recursiveIncreasePostsNumber(forum);
@@ -1867,13 +1880,16 @@ public class TeachingServiceImpl implements TeachingService {
 					// RR: It should not be possible to remove an annotation associated to a topic
 					ForumTopic annotationTopic = toRemoveAnnotation.getForumTopic();
 					annotationTopic.setLogicalDelete(Boolean.TRUE);
+					
+					getUserHistoryDAO().persist(new UserHistory(user, "Delete annotation topic", Action.DELETE, Category.FORUM_TOPIC, annotationTopic));
 
-					getForumPostDAO().deleteAllForumTopicPosts(annotationTopic.getTopicId());
+					Integer removedPostsNumber = getForumPostDAO().deleteAllForumTopicPosts(annotationTopic.getTopicId());
 					Forum forum = annotationTopic.getForum();
-					ForumPost lastPost = getForumPostDAO().getLastForumPostByLastUpdate(forum);
+					ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum);
 					recursiveSetLastPost(forum, lastPost, operationDate);
-					getForumDAO().recursiveDecreasePostsNumber(forum, annotationTopic.getTotalReplies());
-					getForumDAO().recursiveDecreaseTopicsNumber(forum);
+					
+					getForumDAO().recursiveDecreasePostsNumber(forum, removedPostsNumber);
+					decreaseForumTopicsNumber(forum);
 				}
 				toRemoveAnnotation.setLastUpdate(operationDate);
 				toRemoveAnnotation.setLogicalDelete(Boolean.TRUE);
@@ -1919,19 +1935,12 @@ public class TeachingServiceImpl implements TeachingService {
 		
 		switch (mode) {
 			case I:
-				postExt.getPost().getTopic().setLastPost(postExt.getPost());
-				// in the incremental transcription every updated post become the last post
-				recursiveSetLastPost(postExt.getPost().getForum(), postExt.getPost(), now);
-				
-				// updates the course checkpoint
+				// updates the course checkpoint only if it is not defined (problems???)
 				CourseCheckPoint checkPoint = getCourseCheckPointDAO().getLastCheckPointByTopicId(postExt.getPost().getTopic().getTopicId());
 				if (checkPoint == null) {
 					checkPoint = new CourseCheckPoint(courseTopicOption, postExt);
 					checkPoint.setCheckPointTime(now);
 					getCourseCheckPointDAO().persist(checkPoint);
-				} else if (checkPoint.getCheckPointPost().getPost().getPostId() != postId){
-					checkPoint.setCheckPointPost(postExt);
-					checkPoint.setCheckPointTime(now);
 				}
 				break;
 			case R:
@@ -1972,6 +1981,33 @@ public class TeachingServiceImpl implements TeachingService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	private void decreaseForumTopicsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		Integer oldTopicsNumber = forum.getTopicsNumber();
+		forum.setTopicsNumber(oldTopicsNumber != null && oldTopicsNumber > 0 ? oldTopicsNumber - 1 : 0);
+	}
+	
+	private void decreaseSubForumsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		Integer oldSubForumsNumber = forum.getSubForumsNumber();
+		forum.setSubForumsNumber(oldSubForumsNumber != null && oldSubForumsNumber > 0 ? oldSubForumsNumber - 1 : 0);
+	}
+	
+	private ForumPost determineAllCourseLastPost() {
+		ForumPost lastPost = null;
+		for(Course current : getCourseDAO().getActiveCourses()) {
+			ForumPost currentLastPost = current.getForum().getLastPost();
+			if (lastPost == null || (currentLastPost != null && currentLastPost.getDateCreated().after(lastPost.getDateCreated()))) {
+				lastPost = currentLastPost;
+			}
+		}
+		return lastPost;
 	}
 	
 	private CoursePostExt doAddCourseTranscriptionPost(
@@ -2019,7 +2055,7 @@ public class TeachingServiceImpl implements TeachingService {
 		
 		if (courseTopic.getTotalReplies() == null || courseTopic.getTotalReplies() <= 0) {
 			courseTopic.setFirstPost(post);
-			courseTopic.setTotalReplies(1);
+			courseTopic.setTotalReplies(0);
 		} else {
 			courseTopic.setTotalReplies(courseTopic.getTotalReplies() + 1);
 		}
@@ -2040,24 +2076,37 @@ public class TeachingServiceImpl implements TeachingService {
 		user.setLastForumPostDate(now);
 		user.setForumNumberOfPost(user.getForumNumberOfPost() + 1);
 		
+		getUserHistoryDAO().persist(new UserHistory(user, "Add course transcription post", Action.CREATE, Category.FORUM_POST, post));
+		
 		return coursePostExt;
 	}
 	
-	private void doDeleteCourseTranscriptionPost(ForumPost post, Date now, User user) throws PersistenceException {
+	/**
+	 * Deletes a post.
+	 * 
+	 * @param post the post to delete
+	 * @param now the operation date
+	 * @param user the user
+	 * @throws PersistenceException
+	 */
+	private void doDeleteCoursePost(ForumPost post, Date now, User user) throws PersistenceException {
 		Forum courseForum = post.getForum();
 		ForumTopic courseTopic = post.getTopic();
 		post.setLogicalDelete(Boolean.TRUE);
 		post.setLastUpdate(now);
 		post.setUpdater(user);
 		
+		getUserHistoryDAO().persist(new UserHistory(user, "Delete course post", Action.DELETE, Category.FORUM_POST, post));
+		
 		// if mails (for subscribed users) are still not sent, the forum post notification is removed
-		ForumPostNotified forumPostNotified = getForumPostNotifiedDAO().getForumPostNotifiedByPost(post.getPostId());
+		ForumPostNotified forumPostNotified = getForumPostNotifiedDAO().find(post.getPostId());
 		if (forumPostNotified != null && Boolean.FALSE.equals(forumPostNotified.getMailSended())) {
 			getForumPostNotifiedDAO().remove(forumPostNotified);
 		}
 		
-		ForumPost lastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
-		courseTopic.setLastPost(lastPost);
+		ForumPost forumLastPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
+		recursiveSetLastPost(courseForum, forumLastPost, now);
+		
 		if (courseTopic.getTotalReplies() != null && courseTopic.getTotalReplies() > 1) {
 			courseTopic.setTotalReplies(courseTopic.getTotalReplies() - 1);
 		} else {
@@ -2065,6 +2114,17 @@ public class TeachingServiceImpl implements TeachingService {
 		}
 		
 		getForumDAO().recursiveDecreasePostsNumber(courseForum);
+		
+		// adjust first and last topic post if needed
+		if (courseTopic.getFirstPost() == null || Boolean.TRUE.equals(courseTopic.getFirstPost().getLogicalDelete())) { 
+			ForumPost firstTopicPost = getForumPostDAO().getFirstForumTopicPostByCreationDate(courseTopic.getTopicId());
+			courseTopic.setFirstPost(firstTopicPost);
+		}
+		if (courseTopic.getLastPost() == null || Boolean.TRUE.equals(courseTopic.getLastPost().getLogicalDelete())) {
+			ForumPost lastTopicPost = getForumPostDAO().getLastForumTopicPostByCreationDate(courseTopic);
+			courseTopic.setLastPost(lastTopicPost);
+		}
+		
 		
 		// Changing the user last forum dates and number of post
 		user.setLastActiveForumDate(now);
@@ -2106,6 +2166,8 @@ public class TeachingServiceImpl implements TeachingService {
 		postExt.setFolioMod(StringUtils.safeTrim(folioMod));
 		postExt.setFolioRV(CoursePostExt.RectoVerso.find(StringUtils.safeTrim(folioRV)));
 		
+		getUserHistoryDAO().persist(new UserHistory(user, "Update course post", Action.MODIFY, Category.FORUM_POST, postExt.getPost()));
+		
 		return postExt;
 	}
 	
@@ -2133,6 +2195,22 @@ public class TeachingServiceImpl implements TeachingService {
 		// FIXME: when CoursePeople table will be managed we will have to retrieve
 		// teachers from that. Now we retrieve roles from UserRole table.
 		return getUserRoleDAO().filterUserRoles(Authority.TEACHERS);
+	}
+	
+	private void increaseForumTopicsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		Integer oldTopicsNumber = forum.getTopicsNumber();
+		forum.setTopicsNumber(oldTopicsNumber != null && oldTopicsNumber >= 0 ? oldTopicsNumber + 1 : 1);
+	}
+	
+	private void increaseSubForumsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		Integer oldSubForumsNumber = forum.getSubForumsNumber();
+		forum.setSubForumsNumber(oldSubForumsNumber != null && oldSubForumsNumber >= 0 ? oldSubForumsNumber + 1 : 1);
 	}
 	
 	private boolean isStudent(User user) {
@@ -2166,10 +2244,19 @@ public class TeachingServiceImpl implements TeachingService {
 			return;
 		}
 		
-		forum.setLastPost(post);
-		forum.setLastUpdate(now);
-		
-		recursiveSetLastPost(forum.getForumParent(), post, now);
+		if (post != null && (forum.getLastPost() == null || Boolean.TRUE.equals(forum.getLastPost().getLogicalDelete()) ||
+				(!post.equals(forum.getLastPost()) && post.getDateCreated().after(forum.getLastPost().getDateCreated())))) {
+			forum.setLastPost(post);
+			forum.setLastUpdate(now);
+			recursiveSetLastPost(forum.getForumParent(), post, now);
+		} else if (post == null) {
+			ForumPost forumLastPost = getForumPostDAO().getLastForumPostByCreationDate(forum);
+			if (forumLastPost == null || !forumLastPost.equals(forum.getLastPost())) {
+				forum.setLastPost(forumLastPost);
+				forum.setLastUpdate(now);
+				recursiveSetLastPost(forum.getForumParent(), forumLastPost, now);
+			}
+		}
 	}
 	
 }

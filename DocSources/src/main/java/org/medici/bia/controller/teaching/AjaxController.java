@@ -215,13 +215,13 @@ public class AjaxController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/teaching/DeleteCourseFragmentTopic.json", method = RequestMethod.POST)
-	public Map<String, Object> deleteCourseFragmentTopic(
+	@RequestMapping(value = "/teaching/DeleteCourseTopic.json", method = RequestMethod.POST)
+	public Map<String, Object> deleteCourseTopic(
 			@RequestParam(value="topicId", required=false) Integer topicId,
 			HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		try{
-			getTeachingService().deleteCourseFragmentTopic(topicId);
+			getTeachingService().deleteCourseTopic(topicId);
 			model.put("operation", "OK");
 			
 			return model;		

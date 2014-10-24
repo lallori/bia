@@ -58,6 +58,34 @@ public interface ForumPostNotifiedDAO extends Dao<Integer, ForumPostNotified> {
 	 * @throws PersistenceException
 	 */
 	ForumPostNotified getForumPostNotifiedByPost(Integer forumPostId) throws PersistenceException;
+	
+	/**
+	 * Removes (phisically) all not sent forum post notifications linked to the provided posts.
+	 * 
+	 * @param postIds the list of post identifiers
+	 * @return the number of removed elements
+	 * @throws PersistenceException
+	 */
+	Integer removeAllNotSentForumPostNotifications(List<Integer> postIds) throws PersistenceException;
+	
+	/**
+	 * Removes (phisically) all not sent forum post notifications linked to the provided forum.
+	 * 
+	 * @param forumId the forum identifier
+	 * @param forumDepth the number of parent forum to consider from the post container
+	 * @return the number of removed elements
+	 * @throws PersistenceException
+	 */
+	Integer removeAllNotSentForumPostNotificationsByForum(Integer forumId, int forumDepth) throws PersistenceException;
+	
+	/**
+	 * Removes (phisically) all not sent forum post notifications linked to the provided topic.
+	 * 
+	 * @param topicId the topic identifier
+	 * @return number of removed elements
+	 * @throws PersistenceException
+	 */
+	Integer removeAllNotSentForumPostNotificationsByTopic(Integer topicId) throws PersistenceException;
 
 	/**
 	 * Removes all bad {@link ForumPostNotified} elements.
@@ -73,5 +101,6 @@ public interface ForumPostNotifiedDAO extends Dao<Integer, ForumPostNotified> {
 	 * @return number of removed elements
 	 * @throws PersistenceException
 	 */
-	Integer removeBadElements()  throws PersistenceException;
+	Integer removeBadElements() throws PersistenceException;
+
 }

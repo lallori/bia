@@ -57,45 +57,43 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	
 	@Override
 	public Long countActiveCourses() throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT count(*) FROM Course WHERE active = 1");
+		Query query = getEntityManager().createQuery("SELECT count(*) FROM Course WHERE active = true AND forum.logicalDelete = false");
 		
 		return (Long)query.getSingleResult();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> getActiveCourses() throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE active = 1");
+		Query query = getEntityManager().createQuery("FROM Course WHERE active = true AND forum.logicalDelete = false");
 		
-		return (List<Course>)query.getResultList();
+		return getResultList(query);
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Course> getActiveCoursesByDocument(Integer docId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ") AND active = 1");
+		Query query = getEntityManager().createQuery("FROM Course WHERE active = true AND forum.logicalDelete = false AND forum.forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
 		query.setParameter("entryId", docId);
 		query.setParameter("subType", SubType.COURSE);
 		query.setParameter("mode", getFilteredModes());
 		
-		return query.getResultList();
+		return getResultList(query);
 	}
 	
 	@Override
 	public Course getCourseByCourseFragment(Integer courseFragmentContainerIdentifier) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId = (SELECT forumParent FROM Forum WHERE forumId = :forumId)");
+		Query query = getEntityManager().createQuery("FROM Course WHERE forum.logicalDelete = false AND forum.forumId = (SELECT forumParent FROM Forum WHERE forumId = :forumId)");
 		query.setParameter("forumId", courseFragmentContainerIdentifier);
 		
-		return (Course)query.getSingleResult();
+		return getFirst(query);
 	}
 	
 	@Override
 	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		Query query = null;
-		String jpql = "FROM Course ";
+		String jpql = "FROM Course WHERE forum.logicalDelete = false";
 		if (Boolean.TRUE.equals(onlyActives)) {
-			jpql += "WHERE active = true";
+			jpql += " AND active = true";
 		}
 		
 		if (paginationFilter.getTotal() == null) {
@@ -121,7 +119,7 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	
 	@Override
 	public List<Course> getCoursesByDocument(Integer docId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
+		Query query = getEntityManager().createQuery("FROM Course WHERE forum.logicalDelete = false AND forum.forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
 		query.setParameter("entryId", docId);
 		query.setParameter("subType", SubType.COURSE);
 		query.setParameter("mode", getFilteredModes());
@@ -131,13 +129,13 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	
 	@Override
 	public Course getLastActiveCourse() throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE active = 1 ORDER BY courseId DESC");
+		Query query = getEntityManager().createQuery("FROM Course WHERE active = true AND forum.logicalDelete = false ORDER BY courseId DESC");
 		return getFirst(query);
 	}
 	
 	@Override
 	public Course getLastActiveCourseByDocument(Integer docId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ") AND active = 1 ORDER BY courseId DESC");
+		Query query = getEntityManager().createQuery("FROM Course WHERE active = true AND forum.logicalDelete = false AND forum.forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ") ORDER BY courseId DESC");
 		query.setParameter("entryId", docId);
 		query.setParameter("subType", SubType.COURSE);
 		query.setParameter("mode", getFilteredModes());
@@ -147,7 +145,7 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	
 	@Override
 	public boolean isDocumentInActiveCourse(Integer docId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ") AND active = 1");
+		Query query = getEntityManager().createQuery("FROM Course WHERE active = true AND forum.logicalDelete = false AND forum.forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
 		query.setParameter("entryId", docId);
 		query.setParameter("subType", SubType.COURSE);
 		query.setParameter("mode", getFilteredModes());
@@ -157,7 +155,7 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 
 	@Override
 	public boolean isDocumentInCourse(Integer docId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Course WHERE forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
+		Query query = getEntityManager().createQuery("FROM Course WHERE forum.logicalDelete = false AND forum.forumId IN (" + getParametrizedCourseSubQuery("entryId", "subType", "mode") + ")");
 		query.setParameter("entryId", docId);
 		query.setParameter("subType", SubType.COURSE);
 		query.setParameter("mode", getFilteredModes());
@@ -174,7 +172,7 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 		String queryString = "SELECT count(forum) FROM Forum AS forum, Course AS course " +
 			"WHERE forum.forumId = :forumId AND " + 
 			"(forum = course.forum OR forum.forumParent = course.forum) AND " +
-			"course.active = true";
+			"course.active = true AND course.forum.logicalDelete = false";
 		Query query = getEntityManager().createQuery(queryString);
 		query.setParameter("forumId", forumId);
 		
@@ -189,7 +187,8 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 		
 		String queryString = "SELECT count(forum) FROM Forum AS forum, Course AS course " +
 			"WHERE forum.forumId = :forumId AND " + 
-			"(forum = course.forum OR forum.forumParent = course.forum)";
+			"(forum = course.forum OR forum.forumParent = course.forum) AND " +
+			"course.forum.logicalDelete = false";
 		Query query = getEntityManager().createQuery(queryString);
 		query.setParameter("forumId", forumId);
 		

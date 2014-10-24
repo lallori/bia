@@ -35,6 +35,7 @@ import javax.persistence.PersistenceException;
 import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
+import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.domain.Forum;
 import org.medici.bia.domain.ForumPost;
 import org.medici.bia.domain.ForumTopic;
@@ -66,12 +67,26 @@ public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 	Integer deleteAllForumPosts(Integer forumId) throws PersistenceException;
 	
 	/**
+	 * Removes (logically) all the post of a topic.<br/>
+	 * NOTE: it does not remove the related post notifications (use 
+	 * {@link ForumPostNotifiedDAO#removeAllNotSentForumPostNotificationsByTopic(Integer)} to do that).
 	 * 
-	 * @param topicId
-	 * @return
+	 * @param topicId the topic identifier
+	 * @return the number of removed posts
 	 * @throws PersistenceException
 	 */
 	Integer deleteAllForumTopicPosts(Integer topicId) throws PersistenceException;
+	
+	/**
+	 * Removes (logically) all the post of the provided topic identifiers.<br/>
+	 * NOTE: it does not remove the related post notifications (use 
+	 * {@link ForumPostNotifiedDAO#removeAllNotSentForumPostNotificationsByTopics(List<Integer>)} to do that).
+	 * 
+	 * @param topicIds the list of topic identifiers
+	 * @return the list of deleted post identifiers
+	 * @throws PersistenceException
+	 */
+	List<Integer> deleteAllForumTopicPosts(List<Integer> topicIds) throws PersistenceException;
 	
 	/**
 	 * 

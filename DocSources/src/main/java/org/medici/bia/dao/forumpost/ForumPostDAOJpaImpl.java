@@ -125,6 +125,28 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Integer> deleteAllForumTopicPosts(List<Integer> topicIds) throws PersistenceException {
+		if (topicIds == null || topicIds.size() == 0) {
+			return new ArrayList<Integer>();
+		}
+		Query query = getEntityManager().createQuery("SELECT postId FROM ForumPost WHERE logicalDelete = false AND topic.topicId IN ( :topicIds )");
+		query.setParameter("topicIds", topicIds);
+		List<Integer> postIds = (List<Integer>) query.getResultList();
+		
+		if (postIds.size() > 0) {
+			query = getEntityManager().createQuery("UPDATE ForumPost SET logicalDelete = true WHERE postId IN ( :postIds )");
+			query.setParameter("postIds", postIds);
+			query.executeUpdate();
+		}
+		
+		return postIds;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Map<Integer, List<Object>> getActiveTopicsInformations(Integer page, Integer numberOfTopicsForPage) throws PersistenceException {
 		String jpql = "SELECT topic.topicId, ROUND(COUNT(postId)/10), lastUpdate FROM ForumPost WHERE logicalDelete = false GROUP BY topic ORDER BY lastUpdate ASC";
 

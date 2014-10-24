@@ -188,12 +188,21 @@ public interface TeachingService {
 	boolean deactivateCourse(Integer courseId) throws ApplicationThrowable;
 	
 	/**
-	 * This method removes the course fragment topic by its identifier.
-	 * It also removes the topic posts and it decreases course fragment forum container topics number.
+	 * This method remove the course forum by its identifier.
+	 * It also removes all the topics and related posts.
 	 * 
-	 * @param topicId the course fragment topic identifier
+	 * @param forumId the forum identifier
+	 * @throws ApplicationThrowable
 	 */
-	void deleteCourseFragmentTopic(Integer topicId) throws ApplicationThrowable;
+	void deleteCourseForum(Integer forumId) throws ApplicationThrowable;
+	
+	/**
+	 * This method removes the course topic by its identifier.
+	 * It also removes the topic posts and it decreases course forum container topics number.
+	 * 
+	 * @param topicId the course topic identifier
+	 */
+	void deleteCourseTopic(Integer topicId) throws ApplicationThrowable;
 	
 	/**
 	 * This method removes logically a course topic post.<br/>
@@ -257,6 +266,16 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	List<Course> getActiveCourses(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * Returns the users (as list of {@link UserRole}) associated to the provided course. 
+	 * 
+	 * @param courseId the course identifier
+	 * @param paginationFilter the pagination filter
+	 * @return the paginated users
+	 * @throws ApplicationThrowable
+	 */
+	Page getCoursePeople(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns paginated courses.

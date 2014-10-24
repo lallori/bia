@@ -164,7 +164,7 @@
 		}
 		
 		$j(document).ready(function() {
-			$j('#postsContainer').css('height','50%');
+			$j('#postsContainer').css('height','45%');
 			$j('#editPostContainer').css('height','45%');
 			var currentPageHref = $j('#postsContainer .paginateActive').first().attr('href');
 			
@@ -241,8 +241,8 @@
 										$j("#errorModal").dialog('open');
 									}
 								});
-								$j('#postsContainer').css('height','85%');
-								$j('#editPostContainer').css('height','10%');
+								$j('#postsContainer').css('height','75%');
+								$j('#editPostContainer').css('height','15%');
 			 				} else {
 			 					$j("#genericWarningMsg").text('This message has not been posted successfully.');
 								$j("#genericWarning").css('display','inherit');
@@ -394,7 +394,8 @@
 			language : "en",
 		
 			// Theme options
-			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect,|,cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,image,|,forecolor,backcolor",
+			theme_advanced_buttons1 : "|,fontsizeselect,|,|,|,bold,italic,underline,strikethrough,|,|,|,forecolor,backcolor,|,|,|,justifyleft,justifycenter,justifyright,justifyfull,|,|,|,bullist,numlist",
+			theme_advanced_buttons2 : "|,undo,redo,|,|,|,outdent,indent,|,|,|,,link,unlink,image,|,|,|,cut,copy,paste,pastetext,pasteword,|,|,|,search,replace",
 			theme_advanced_toolbar_location : "top",
 			theme_advanced_toolbar_align : "left",
 			theme_advanced_statusbar_location : "bottom",

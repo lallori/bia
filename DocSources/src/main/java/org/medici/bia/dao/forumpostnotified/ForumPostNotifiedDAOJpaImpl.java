@@ -96,6 +96,63 @@ public class ForumPostNotifiedDAOJpaImpl extends JpaDao<Integer, ForumPostNotifi
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer removeAllNotSentForumPostNotifications(List<Integer> postIds) throws PersistenceException {
+		if (postIds == null || postIds.size() == 0) {
+			return 0;
+		}
+		
+		Query query = getEntityManager().createQuery("DELETE FROM ForumPostNotified WHERE mailSended = false AND postId IN ( :postIds )");
+		query.setParameter("postIds", postIds);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeAllNotSentForumPostNotificationsByForum(Integer forumId, int forumDepth) throws PersistenceException {
+		String jpql = "DELETE FROM ForumPostNotified AS notified" +
+				" WHERE notified.mailSended = false" +
+				" AND notified.postId IN (" +
+				" SELECT post.postId" +
+				" FROM ForumPost AS post" +
+				" WHERE" +
+				" post.forum.forumId = :forumId";
+		
+		String forumDepthString = "post.forum";
+		for (int i = 1; i < forumDepth; i++) {
+			forumDepthString += ".forumParent";
+			jpql += " OR (" + forumDepthString +" IS NOT NULL AND " + forumDepthString + ".forumId = :forumId)";
+		}
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("forumId", forumId);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer removeAllNotSentForumPostNotificationsByTopic(Integer topicId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("DELETE FROM ForumPostNotified AS notified" +
+					" WHERE notified.mailSended = false" +
+					" AND notified.postId IN (" +
+						" SELECT post.postId" +
+						" FROM ForumPost AS post" +
+						" WHERE post.topic.topicId = :topicId" +
+					")");
+		query.setParameter("topicId", topicId);
+		
+		return query.executeUpdate();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer removeBadElements()  throws PersistenceException {
 		String jpqlFirst = "DELETE FROM ForumPostNotified AS notified "
 				+ "WHERE notified.mailSended = false AND "

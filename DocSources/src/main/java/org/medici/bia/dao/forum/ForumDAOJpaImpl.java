@@ -288,6 +288,25 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Integer> deleteForumsFromAncestorForum(Integer forumAncestorId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT forumId from Forum WHERE logicalDelete = false AND fullPath LIKE '%." + forumAncestorId + ".%'");
+		List<Integer> removedForumIds = (List<Integer>)query.getResultList();
+		
+		if (removedForumIds.size() > 0) {
+			query = getEntityManager().createQuery("UPDATE Forum SET logicalDelete = true WHERE forumId IN ( :forumIds )");
+			query.setParameter("forumIds", removedForumIds);
+			query.executeUpdate();
+		}
+		
+		
+		return removedForumIds;		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Page findCoursesElements(Integer courseForumId, boolean isCourseForum, PaginationFilter paginationFilter) throws PersistenceException {
 		String queryString = "FROM Forum AS courseForum, Course AS course "
 				+ "WHERE " + (isCourseForum ? "courseForum" : "courseForum.forumParent") + " = course.forum AND "

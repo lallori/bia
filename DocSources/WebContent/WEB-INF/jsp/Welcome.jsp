@@ -34,9 +34,18 @@
 		            	</c:if>
 		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
 		            	<br />
+		            	<span style="margin-left:23px;">
+            				<c:choose>
+            					<c:when test="${extendedTopic.courseTopic.totalReplies >= 0}">
+            						(${extendedTopic.courseTopic.totalReplies} <fmt:message key="welcome.replies"/>)
+            					</c:when>
+            					<c:otherwise>
+            						(0 <fmt:message key="welcome.replies"/>)
+            					</c:otherwise>
+            				</c:choose>
+            			</span>
 		            	<c:choose>
-		            		<c:when test="${extendedTopic.courseTopic.totalReplies > 0}">
-		            			<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
+		            		<c:when test="${not empty extendedTopic.courseTopic.lastPost}">
 		            			<span>
 				            		<fmt:message key="welcome.lastPost"/>
 				            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
@@ -44,7 +53,6 @@
 				            	</span>
 		            		</c:when>
 		            		<c:otherwise>
-		            			<span style="margin-left:23px;">(0 <fmt:message key="welcome.replies"/>)</span>
 		            		</c:otherwise>
 		            	</c:choose>
 		        	</div>
@@ -70,9 +78,18 @@
 		            	</c:if>
 		            	<a href="${courseTopicURL}" class="forumHref" target="_blank" title="${extendedTopic.courseTopic.subject}"><bia:textFormatter inputText="${extendedTopic.courseTopic.subject}" size="60"/></a> 
 		            	<br />
+            			<span style="margin-left:23px;">
+            				<c:choose>
+            					<c:when test="${extendedTopic.courseTopic.totalReplies >= 0}">
+            						(${extendedTopic.courseTopic.totalReplies} <fmt:message key="welcome.replies"/>)
+            					</c:when>
+            					<c:otherwise>
+            						(0 <fmt:message key="welcome.replies"/>)
+            					</c:otherwise>
+            				</c:choose>
+            			</span>
 		            	<c:choose>
-		            		<c:when test="${extendedTopic.courseTopic.totalReplies > 0}">
-		            			<span style="margin-left:23px;">(${extendedTopic.courseTopic.totalReplies - 1} <fmt:message key="welcome.replies"/>)</span>
+		            		<c:when test="${not empty extendedTopic.courseTopic.lastPost}">
 		            			<span>
 				            		<fmt:message key="welcome.lastPost"/>
 				            		<a href="${showUserProfileURL}" target="_blank" id="userName_topDiscussionLastPostId_${extendedTopic.courseTopic.lastPost.postId}" class="link">${extendedTopic.courseTopic.lastPost.user.account}</a>
@@ -80,7 +97,6 @@
 				            	</span>
 		            		</c:when>
 		            		<c:otherwise>
-		            			<span style="margin-left:23px;">(0 <fmt:message key="welcome.replies"/>)</span>
 		            		</c:otherwise>
 		            	</c:choose>
 		        	</div>

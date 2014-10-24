@@ -839,7 +839,7 @@ public class CommunityServiceImpl implements CommunityService {
 			user.setLastForumPostDate(operationDate);
 			//getUserDAO().merge(user);
 
-			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, postFromView));
+			getUserHistoryDAO().persist(new UserHistory(user, "Edit post", Action.MODIFY, Category.FORUM_POST, forumPostToUpdate));
 			
 			return forumPostToUpdate;
 		} catch (Throwable th) {

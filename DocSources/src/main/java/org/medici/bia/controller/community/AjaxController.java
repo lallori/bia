@@ -50,6 +50,7 @@ import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserMessage.UserMessageCategory;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.community.CommunityService;
+import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,6 +70,8 @@ public class AjaxController {
 	@Autowired
 	private CommunityService communityService;
 	@Autowired
+	private TeachingService teachingService;
+	@Autowired
 	private UserService userService;
 	
 	/**
@@ -85,6 +88,20 @@ public class AjaxController {
 		this.communityService = communityService;
 	}
 	
+	/**
+	 * @return the teachingService
+	 */
+	public TeachingService getTeachingService() {
+		return teachingService;
+	}
+
+	/**
+	 * @param teachingService the teachingService to set
+	 */
+	public void setTeachingService(TeachingService teachingService) {
+		this.teachingService = teachingService;
+	}
+
 	/**
 	 * @return the userService
 	 */
@@ -135,7 +152,12 @@ public class AjaxController {
 										HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		try{
-			getCommunityService().deleteForum(forumId);
+			boolean isInCourse = getTeachingService().isForumInCourse(forumId);
+			if (isInCourse) {
+				getTeachingService().deleteCourseForum(forumId);
+			} else {
+				getCommunityService().deleteForum(forumId);
+			}
 			model.put("operation", "OK");
 			
 			return new ModelAndView("responseOK", model);		
@@ -152,17 +174,27 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		ForumTopic forumTopic = null;
 		try{
-			getCommunityService().deleteForumPost(postId);
-			forumTopic = getCommunityService().getForumTopic(new ForumTopic(topicId));
-			model.put("topicId", topicId);
-			model.put("postId", postId);
-			model.put("operation", "OK");
-			if (forumTopic != null){
-				model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumTopic));
+			ForumPost postToDelete = getCommunityService().findPost(postId);
+			if (postToDelete != null) {
+				forumTopic = postToDelete.getTopic();
+				boolean isCoursePost = getTeachingService().isForumInCourse(postToDelete.getForum().getForumId());
+				if (!isCoursePost) {
+					getCommunityService().deleteForumPost(postId);
+				} else {
+					getTeachingService().deleteForumPost(postId);
+				}
+				model.put("topicId", topicId);
+				model.put("postId", postId);
+				model.put("operation", "OK");
+				if (forumTopic != null){
+					model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumTopic));
+				}
+				return new ModelAndView("responseOK", model);		
 			}
-			return new ModelAndView("responseOK", model);		
-		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("error", "post with id[" + postId + "] not found!");
 			model.put("operation", "KO");
+			return new ModelAndView("responseKO", model);
+		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
 			return new ModelAndView("responseKO", model);		
 		}
@@ -206,14 +238,15 @@ public class AjaxController {
 		forumPost.setSubject(subject);
 
 		try {
+			boolean isInCourse = getTeachingService().isForumInCourse(forumId);
 			if (postId.equals(0)) {
-				forumPost = getCommunityService().addNewPost(forumPost);
+				forumPost = !isInCourse ? getCommunityService().addNewPost(forumPost) : getTeachingService().addNewPost(forumPost);
 			} else {
 				forumPost = getCommunityService().editPost(forumPost);
 			}
 			model.put("topicId", forumPost.getTopic().getTopicId());
 			model.put("postId", forumPost.getPostId());
-			model.put("topicUrl", HtmlUtils.getShowTopicForumHrefUrl(forumPost.getTopic())); 
+			model.put("topicUrl", !isInCourse ? HtmlUtils.getShowTopicForumHrefUrl(forumPost.getTopic()) : HtmlUtils.getTeachingShowTopicForumHrefUrl(forumPost.getTopic())); 
 			model.put("operation", "OK");
 
 			return new ModelAndView("responseOK", model);		

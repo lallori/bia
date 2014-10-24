@@ -61,6 +61,27 @@ public interface ForumTopicDAO extends Dao<Integer, ForumTopic> {
 	 * @throws PersistenceException
 	 */
 	Integer deleteForumTopicsFromForum(Integer forumId) throws PersistenceException;
+	
+	/**
+	 * Delete all topics directly related to the provided forum identifiers.
+	 *  
+	 * @param forumIds the list of forum identifiers
+	 * @return the list of deleted topic identifiers
+	 * @throws PersistenceException
+	 */
+	List<Integer> deleteForumTopicsFromForums(List<Integer> forumIds) throws PersistenceException;
+	
+	/**
+	 * Deletes all topics related to an forum.<br/>
+	 * The relationship can be direct (the forum contains topics) or not direct (the provided forum is an
+	 * contains subforums with topics at any hierarchy level). 
+	 * 
+	 * 
+	 * @param ancestorForumId the ancestor forum identifier
+	 * @return the list of deleted topic identifiers
+	 * @throws PersistenceException
+	 */
+	List<Integer> deleteForumTopicsFromAncestorForum(Integer ancestorForumId) throws PersistenceException;
 
 	/**
 	 * This method returns the forum linked to an annotation.

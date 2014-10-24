@@ -99,6 +99,43 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 		
 		return query.executeUpdate();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> deleteForumTopicsFromForums(List<Integer> forumIds) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT topicId from ForumTopic WHERE logicalDelete = false AND forum.forumId IN ( :forumIds )");
+		query.setParameter("forumIds", forumIds);
+		List<Integer> topicIds = (List<Integer>) query.getResultList();
+		
+		if (topicIds.size() > 0) {
+			query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE topicId IN ( :topicIds )");
+			query.setParameter("topicIds", topicIds);
+			query.executeUpdate();
+		}
+		
+		return topicIds;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> deleteForumTopicsFromAncestorForum(Integer ancestorForumId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT topicId from ForumTopic WHERE logicalDelete = false AND forum.fullPath LIKE '%." + ancestorForumId + ".%");
+		List<Integer> topicIds = (List<Integer>) query.getResultList();
+		
+		if (topicIds.size() > 0) {
+			query = getEntityManager().createQuery("UPDATE ForumTopic SET logicalDelete = true WHERE topicId IN ( :topicIds )");
+			query.setParameter("topicIds", topicIds);
+			query.executeUpdate();
+		}
+		
+		return topicIds;
+	}
 
 	/**
 	 * {@inheritDoc}

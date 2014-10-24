@@ -59,16 +59,17 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	@Override
 	public CourseTopicOption determineExtendedTopicWithLastPost(Integer forumId) throws PersistenceException {
 		
-		// We consider every last post of course fragment's topics whose course forum container has the provided identifier.
-		// The last update date is considered for the incremental course transcription ('I') topic ; for the other topics the
-		// creation date of the last post is considered.
+		// We consider every last post (by creation date) of course fragment's topics whose course forum container has the provided identifier.
 		String jpql = "FROM CourseTopicOption "
 				+ "WHERE "
 				+ "courseTopic.forum.forumId = :forumId AND "
 				+ "courseTopic.logicalDelete = false AND "
 				+ "courseTopic.lastPost IS NOT NULL "
 				+ "ORDER BY "
-				+ "CASE WHEN mode = 'I' THEN courseTopic.lastPost.lastUpdate ELSE courseTopic.lastPost.dateCreated END DESC";
+				+ "courseTopic.lastPost.dateCreated DESC";
+				// The following clause is to consider the last post by 'lastUpdate' (for incremental course transcription):
+				// This clause had been deleted because we want to consider only the chronological order.
+				// + "CASE WHEN mode = 'I' THEN courseTopic.lastPost.lastUpdate ELSE courseTopic.lastPost.dateCreated END DESC";
 		
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter("forumId", forumId);

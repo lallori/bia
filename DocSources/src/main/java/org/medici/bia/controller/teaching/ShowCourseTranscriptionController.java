@@ -109,7 +109,7 @@ public class ShowCourseTranscriptionController {
 				model.put("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 				model.put("topic", courseTopic);
 				
-				PaginationFilter filter = getPaginationFilter(command, CourseTopicMode.I.equals(transcriptionMode) ? "lastUpdate" : "post.postId", true);
+				PaginationFilter filter = getPaginationFilter(command, "dateCreated", true);
 				Page postsPage = getTeachingService().getPostsFromCourseTopic(courseTopic, filter);
 				model.put("postsPage", postsPage);
 				model.put("openToTheLast", command.getPostPageNumber() == null ? true : false);

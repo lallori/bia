@@ -106,12 +106,23 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	Long countTotalActive() throws PersistenceException;
 
 	/**
+	 * Deletes (logically) all forums from a parent forum (the parent forum is not deleted).<br/>
+	 * It considers only direct relationship (father to son).
 	 * 
-	 * @param forumParentId
-	 * @return
+	 * @param forumParentId the parent forum identifier
+	 * @return the number of forums deleted
 	 * @throws PersistenceException
 	 */
 	Integer deleteForumFromParent(Integer forumParentId) throws PersistenceException;
+	
+	/**
+	 * Deletes (logically) all forums from an ancestor forum (the ancestor forum is also deleted).
+	 * 
+	 * @param forumAncestorId the ancestor forum identifier
+	 * @return the list of deleted forum identifiers
+	 * @throws PersistenceException
+	 */
+	List<Integer> deleteForumsFromAncestorForum(Integer forumAncestorId) throws PersistenceException;
 	
 	/**
 	 * @param courseForumId
