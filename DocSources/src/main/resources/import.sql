@@ -2004,3 +2004,7 @@ ALTER TABLE `tblAnnotations` CHANGE COLUMN `text` `text` LONGTEXT NULL DEFAULT N
 -- make as transcribed and export tool
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('annotation/ShowMakeTranscribedModalWindow', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('annotation/ShowMakeTranscribedModalWindow', 'main', '/WEB-INF/jsp/annotation/ShowMakeTranscribedModal.jsp', 0);
+
+-- user personal notes for teaching module
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowPersonalNotes', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowPersonalNotes', 'main', '/WEB-INF/jsp/teaching/ShowPersonalNotes.jsp', 0);

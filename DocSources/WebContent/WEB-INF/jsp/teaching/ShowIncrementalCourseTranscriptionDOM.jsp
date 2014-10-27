@@ -15,6 +15,8 @@
 		<c:param name="transcriptionMode" value="I" />
 	</c:url>
 	
+	<c:url var="ShowPersonalNotesURL" value="/teaching/ShowPersonalNotes.do" />
+	
 	<c:url var="ShowTeachingManuscriptViewerURL" value="/teaching/ShowManuscriptViewer.do">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="topicId" value="${command.topicId}" />
@@ -28,12 +30,16 @@
 		<div id="postsContainer">
 		</div>
 		
-		<hr />
+		<hr id="postRuler" />
 		
 		<div id="editPostContainer">
 		</div>
 		
+		<div id="personalNotesSection" style="display: none; height: 95%; max-width: 800px; min-width: 300px;">
+		</div>
+		
 	</div>
+	
 	
 	<div id="deletePostModal" title="Delete post" style="display: none;"> 
 		<p>
@@ -62,6 +68,7 @@
 			this.title = 'Course Transcription';
 			$j('#postsContainer').load('${ShowCourseTranscriptionURL}');
 			$j('#editPostContainer').load('${ShowCourseTranscriptionActionsURL}');
+			$j('#personalNotesSection').load('${ShowPersonalNotesURL}');
 			
 			window.setEditMode = function(editMode) {
 				if (typeof editMode !== 'undefined') {
@@ -76,6 +83,20 @@
 						})
 						$j("#clientEditing").val(false);
 					}
+				}
+			}
+			
+			window.showSection = function(section) {
+				if (section === 'userNote') {
+					$j("#postsContainer").hide();
+					$j("#postRuler").hide();
+					$j("#editPostContainer").hide();
+					$j("#personalNotesSection").show();
+				} else {
+					$j("#personalNotesSection").hide();
+					$j("#postsContainer").show();
+					$j("#postRuler").show();
+					$j("#editPostContainer").show();
 				}
 			}
 			

@@ -176,8 +176,12 @@
 
 /* ------------------------------------------------- Edit post container ----------------------------------------- */
 
-#addNewPost {
+#editPostContainer #addNewPost, #editPostContainer #askAQuestion {
 	font-weight: bold;
+}
+
+#editPostContainer a {
+	margin-left: 5px;
 }
 
 #editPostContainer a#button_refresh span {
@@ -223,4 +227,83 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border: 1px solid #DCC0BA;
+}
+
+/* ------------------------------------------------- Your Personal Notes ----------------------------------------- */
+
+#loadingDiv {
+	background-image:url(${contextPath}/images/1024/img_loadingDiv.gif);
+	background-size: 100%, 100%;
+	z-index:10000;
+    opacity:0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40); /* IE */
+	border-radius:4px;
+	-moz-border-radius: 4px;
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+#personalNotesForm {
+	width: 100%;
+	height: 90%;
+	overflow: auto;
+	margin-top: 15px;
+}
+
+#personalNotesForm .personalNotes {
+	width: 95%;
+	max-width: 95%;
+	min-width: 300px;
+	height: 85%;
+	max-height: 85%;
+	min-height: 200px;
+}
+
+#personalNotesForm #personalNotesCommands {
+	width: 100%;
+	text-align: center;
+}
+
+#personalNotesForm #personalNotesCommands #buttons {
+	width: 100%;
+	display: block;
+	margin-top: 10px;
+}
+
+#personalNotesForm #personalNotesCommands #buttons a {
+	margin-left: 5px;
+	display: inline-block;
+}
+
+#personalNotesForm #personalNotesCommands #buttons .buttonDisabled {
+	color: #BBBBBB;
+}
+
+#personalNotesForm #personalNotesCommands .error {
+	color: red;
+}
+
+#personalNotesTitleSection .personalNotesTitle #changedSign {
+	color: #BB0000;
+}
+
+#personalNotesTitleSection .personalNotesLastUpdate {
+	font-size: 14px;
+	font-weight: bold;
+	display: inline-block;
+	margin-left: 30px;
+}
+
+#personalNotesTitleSection .personalNotesLastUpdate .date {
+	color: #cc8585;
+	font-style: italic;
+}
+
+#personalNotesTitleSection .personalNotesTitle {
+	font-size: 20px;
+	font-weight: bold;
+	display: inline-block;
+	margin-left: 10px;
 }

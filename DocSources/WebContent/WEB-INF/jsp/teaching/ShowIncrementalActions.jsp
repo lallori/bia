@@ -34,13 +34,13 @@
 					<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
 				</c:when>
 				<c:otherwise>
-					<a href="#" id="addNewPost" class="buttonLarge button_large"><b>Continue Transcription</b></a>
+					<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
 				</c:otherwise>
 			</c:choose>
 			
 			<a href="#" id="showCurrentTranscription" class="buttonMedium button_Medium">Current Transcription</a>
 			
-			<a href="#" id="askAQuestion" class="buttonLarge button_large"><b>Classroom Discussion</b></a>
+			<a href="#" id="askAQuestion" class="buttonLarge button_large">Classroom Discussion</a>
 			
 			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b>Refresh</b> page</span></a>
 		</c:when>
@@ -48,6 +48,8 @@
 			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Final Transcription</a>
 		</c:otherwise>
 	</c:choose>
+	
+	<a href="#" id="showPersonalNotes" class="buttonLarge button_large">Personal Notes</a>
 	
 	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>  -->
 	
@@ -207,6 +209,11 @@
 					  }
 				  });
 				$j("#askAQuestionStep1Modal").dialog('open');
+				return false;
+			});
+			
+			$j("#showPersonalNotes").click(function() {
+				showSection('userNote'); // from ShowIncrementalCourseTranscriptionDOM.jsp
 				return false;
 			});
 		});

@@ -46,6 +46,7 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -516,6 +517,16 @@ public interface TeachingService {
 	UserAuthority getUserCourseAuthority(String account) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the first personal note associated to the provided account.
+	 * If no account is provided the request current user is considered.
+	 * 
+	 * @param account the user account
+	 * @return the first user personal note, null if none
+	 * @throws ApplicationThrowable
+	 */
+	UserPersonalNotes getUserPersonalNotes(String account) throws ApplicationThrowable;
+	
+	/**
 	 * This method retrieves paginated users with the provided filters.
 	 * 
 	 * @param user user filter (with fullName and userName filters)
@@ -625,6 +636,17 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	Boolean revokeStudentPermission(String account) throws ApplicationThrowable;
+	
+	/**
+	 * This method save the provided user personal note.
+	 * If the personal notes identifier is 0 (zero) a new personal note is created and it is associated to the current user.
+	 * 
+	 * @param personalNotesId the personal notes identifier
+	 * @param personalNotes the personal notes text
+	 * @return the personal note
+	 * @throws ApplicationThrowable
+	 */
+	UserPersonalNotes saveUserPersonalNotes(Integer personalNotesId, String personalNotes) throws ApplicationThrowable;
 	
 	/**
 	 * This method defines the current transcription status for incremental course transcription.

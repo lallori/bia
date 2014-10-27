@@ -59,6 +59,7 @@ import org.medici.bia.dao.image.ImageDAO;
 import org.medici.bia.dao.user.UserDAO;
 import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
+import org.medici.bia.dao.userpersonalnotes.UserPersonalNotesDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
@@ -81,6 +82,7 @@ import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserHistory;
 import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
+import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,6 +135,8 @@ public class TeachingServiceImpl implements TeachingService {
 	private UserHistoryDAO userHistoryDAO;
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private UserPersonalNotesDAO userPersonalNotesDAO;
 	@Autowired
 	private UserRoleDAO userRoleDAO;
 	
@@ -264,6 +268,20 @@ public class TeachingServiceImpl implements TeachingService {
 		this.userDAO = userDAO;
 	}
 	
+	/**
+	 * @return the userPersonalNotesDAO
+	 */
+	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
+		return userPersonalNotesDAO;
+	}
+
+	/**
+	 * @param userPersonalNotesDAO the userPersonalNotesDAO to set
+	 */
+	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
+		this.userPersonalNotesDAO = userPersonalNotesDAO;
+	}
+
 	public UserRoleDAO getUserRoleDAO() {
 		return userRoleDAO;
 	}
@@ -1387,6 +1405,19 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public UserPersonalNotes getUserPersonalNotes(String account) throws ApplicationThrowable {
+		try {
+			User user = account != null ? getUserDAO().findUser(account) : getCurrentUser();
+			return getUserPersonalNotesDAO().getPersonalNotes(user);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page getUsers(User user, Boolean studentRoleSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			Set<Authority> authoritiesToSearch = new HashSet<Authority>();
@@ -1617,6 +1648,34 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(th);
 		}
 		return Boolean.FALSE;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public UserPersonalNotes saveUserPersonalNotes(Integer personalNotesId, String personalNotes) throws ApplicationThrowable {
+		Date now = new Date();
+		try {
+			if (!new Integer(0).equals(personalNotesId)) {
+				UserPersonalNotes personalNote = getUserPersonalNotesDAO().find(personalNotesId);
+				personalNote.setPersonalNotes(personalNotes);
+				personalNote.setLastUpdate(now);
+				
+				return personalNote;
+			}
+			UserPersonalNotes newPersonalNote = new UserPersonalNotes(personalNotes);
+			newPersonalNote.setUser(getCurrentUser());
+			newPersonalNote.setDateCreated(now);
+			newPersonalNote.setLastUpdate(now);
+			
+			getUserPersonalNotesDAO().persist(newPersonalNote);
+			
+			return newPersonalNote;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 	/**
