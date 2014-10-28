@@ -61,24 +61,24 @@
 				<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
 					<c:param name="forumTopicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe button_medium" id="followTopic"><span>Subscribe</span></a>
+				<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe" id="followTopic"><span>Subscribe</span></a>
 			</c:if>
 			<c:if test="${not topic.locked and subscribed}">
 				<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
 					<c:param name="forumTopicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe button_medium" id="followTopic"><span>Unsubscribe</span></a>
+				<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe" id="followTopic"><span>Unsubscribe</span></a>
 			</c:if>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 				<c:if test="${not empty courseTranscriptionURL}">
-					<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To <b>Transcription</b></span></a>
+					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
 				</c:if>
 			</security:authorize>
 		</div>
 		
 		<div id="urlActions">
-			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-			<a href="#" class="buttonMedium button_medium" id="button_link" title="<fmt:message key='community.forum.topic.tooltip.copyLink' />"><span>Copy <b>link</b></span></a>
+			<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+			<a href="#" class="buttonMedium" id="button_link" title="<fmt:message key='community.forum.topic.tooltip.copyLink' />"><span>Copy <b>link</b></span></a>
 		</div>
 		
 		<c:choose>
@@ -165,7 +165,7 @@
 					<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
 					
 					<p>${topic.forum.description}</p>
-					<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+					<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>
 					<div id="prevNextButtons" class="thread">
 				    	<c:if test="${documentExplorer.image.imageOrder == 1}">
 				    		<div id="previousPage">
@@ -221,21 +221,21 @@
 					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 						<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
 					</c:url>
-					<a href="${ShowPlaceURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+					<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord">Show record</a>
 				</c:when>
 				<c:when test="${not empty topic.forum.person}">
 					<p></p>
 					<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 						<c:param name="personId" value="${topic.forum.person.personId}"/>
 					</c:url>
-					<a href="${ShowPersonURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+					<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord">Show record</a>
 				</c:when>
 				<c:when test="${not empty topic.forum.volume}">
 					<p></p>
 					<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 						<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
 					</c:url>
-					<a href="${ShowVolumeURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>
+					<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord">Show record</a>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
@@ -243,6 +243,14 @@
 		</security:authorize>
 	
 		<div id="topicActions">
+		
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+				<c:if test="${not empty courseTranscriptionURL}">
+					<div id="postReply_upperButtons">
+						<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
+					</div>
+				</c:if>
+			</security:authorize>
 		
 			<c:if test="${not topic.locked}">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
@@ -268,7 +276,7 @@
 						</c:otherwise>
 					</c:choose>
 			
-					<a href="${ReplyForumPostURL}" class="buttonMedium button_medium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+					<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
 				</security:authorize>
 			</c:if>
 			
@@ -443,7 +451,7 @@
 			        		<c:if test="${!currentPost.user.portrait}">
 			        			<img class="avatar" src="<c:url value="/images/1024/img_user.png"/>" alt="User Portrait"/>
 			        		</c:if>
-			        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName" class="link">${currentPost.user.account}</a>
+			        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>
 			        	</li>
 			            <li>${maxAuthorities[currentPost.user.account].description}</li>
 			            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
@@ -474,12 +482,12 @@
 		<!-- </div> -->
 		<div id="topicActions2">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
-					<c:if test="${not empty courseTranscriptionURL}">
-						<a href="${courseTranscriptionURL}" class="buttonLarge button_large" id="courseTranscription"><span>Back To <b>Transcription</b></span></a>
-					</c:if>
+				<c:if test="${not empty courseTranscriptionURL}">
+					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
+				</c:if>
 			</security:authorize>
 		</div>
-		<br>
+		<br />
 		<div id="forumPaginate_lower">
 		    <c:set var="paginationData">
 		    	<c:choose>
