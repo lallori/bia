@@ -127,9 +127,10 @@ public class CourseTopicOptionDAOJpaImpl extends JpaDao<Integer, CourseTopicOpti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CourseTopicOption> getMostRecentCourseQuestions(Integer numberOfElements, String account) throws PersistenceException {
+	public List<CourseTopicOption> getMostRecentCourseDiscussions(Integer numberOfElements, String account) throws PersistenceException {
 		List<CourseTopicMode> transcriptionTypes = new ArrayList<CourseTopicMode>();
 		transcriptionTypes.add(CourseTopicMode.Q);
+		transcriptionTypes.add(CourseTopicMode.D);
 		
 		return getMostRecentCourseTopics(numberOfElements, transcriptionTypes, account);
 	}

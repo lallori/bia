@@ -61,7 +61,7 @@
     			<br/>
     			
     			<h5><fmt:message key="welcome.most.teaching.questions"/></h5>
-    			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT COURSE QUESTIONS']}">
+    			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT COURSE DISCUSSIONS']}">
     				<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
 		    			<c:param name="account" value="${extendedTopic.courseTopic.lastPost.user.account}"/>
 		    			<c:param name="completeDOM" value="true"/>

@@ -472,19 +472,19 @@ public interface TeachingService {
 	 * list of course topics found. Statistic names are:
 	 * <ul>
 	 * 	<li><b>MOST RECENT TRANSCRIPTION TOPICS</b></li>
-	 * 	<li><b>MOST RECENT COURSE QUESTIONS</b></li>
-	 * 	<li><b>MOST RECENT COURSE TOPICS</b> (it includes both the transcriptions and the questions topics)</li>
+	 * 	<li><b>MOST RECENT COURSE DISCUSSIONS</b> (it includes both the classroom discussions and the question topics)</li>
+	 * 	<li><b>MOST RECENT COURSE TOPICS</b> (it includes, the transcriptions, the classroom discussions and the questions topics)</li>
 	 * </ul>
 	 * 
 	 * @param numberOfTranscriptions the number of transcription topics to return
-	 * @param numberOfQuestions the number of course questions to return
+	 * @param numberOfCourseDiscussions the number of course discussions to return
 	 * @param numberOfTopics the number of course topics to return
 	 * @param account the user account
 	 * @return a map where the keys are the name of the statistics and values are the list of extended course topics 
 	 * found (as {@link CourseTopicOption}).
 	 * @throws ApplicationThrowable
 	 */
-	Map<String, List<?>> getTeachingForumStatistics(Integer numberOfTranscriptions, Integer numberOfQuestions, Integer numberOfTopics, String account) throws ApplicationThrowable;
+	Map<String, List<?>> getTeachingForumStatistics(Integer numberOfTranscriptions, Integer numberOfCourseDiscussions, Integer numberOfTopics, String account) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns the list of check points associated to the provided topic.

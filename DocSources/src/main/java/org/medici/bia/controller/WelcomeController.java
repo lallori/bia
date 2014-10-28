@@ -59,7 +59,7 @@ public class WelcomeController {
 	
 	// TODO: when it is possible convert these constants to database parameters
 	private static final int MAX_NUMBER_OF_MOST_RECENT_COLLABORATIVE_TRANSCRIPTIONS = 3;
-	private static final int MAX_NUMBER_OF_MOST_RECENT_COURSE_QUESTIONS = 10;
+	private static final int MAX_NUMBER_OF_MOST_RECENT_COURSE_DISCUSSIONS = 10;
 	private static final int MAX_NUMBER_OF_MOST_RECENT_FORUM_DISCUSSIONS = 10;
 	
 	
@@ -133,7 +133,7 @@ public class WelcomeController {
 			
 			if (canAccessTeaching) {
 				Map<String, List<?>> teachingForumStatistics = getTeachingService().
-						getTeachingForumStatistics(MAX_NUMBER_OF_MOST_RECENT_COLLABORATIVE_TRANSCRIPTIONS, MAX_NUMBER_OF_MOST_RECENT_COURSE_QUESTIONS, 10, account);
+						getTeachingForumStatistics(MAX_NUMBER_OF_MOST_RECENT_COLLABORATIVE_TRANSCRIPTIONS, MAX_NUMBER_OF_MOST_RECENT_COURSE_DISCUSSIONS, 10, account);
 				model.put("teachingForumStatistics", teachingForumStatistics);
 			}
 			

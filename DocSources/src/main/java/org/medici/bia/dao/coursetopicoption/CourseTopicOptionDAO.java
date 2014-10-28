@@ -104,15 +104,15 @@ public interface CourseTopicOptionDAO extends Dao<Integer, CourseTopicOption> {
 	List<CourseTopicOption> getMostRecentCollaborativeTranscriptionTopics(Integer numberOfElements, String account) throws PersistenceException;
 	
 	/**
-	 * Returns the last <code>numberOfElements</code> elements of course question topics where users activity has been recorded.
-	 * The available returned extended topics are the only ones where the provided user can access.
+	 * Returns the last <code>numberOfElements</code> elements of course discussion topics (classroom discussions and course questions)
+	 * where users activity has been recorded. The available returned extended topics are the only ones where the provided user can access.
 	 * 
 	 * @param numberOfElements the maximum number of extended topic to return
 	 * @param account the user account
 	 * @return last elements of extended course topics found
 	 * @throws PersistenceException
 	 */
-	List<CourseTopicOption> getMostRecentCourseQuestions(Integer numberOfElements, String account) throws PersistenceException;
+	List<CourseTopicOption> getMostRecentCourseDiscussions(Integer numberOfElements, String account) throws PersistenceException;
 	
 	/**
 	 * Returns the {@link CourseTopicOption} associated to the provided course topic.

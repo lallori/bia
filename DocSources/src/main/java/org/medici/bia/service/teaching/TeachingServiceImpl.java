@@ -1358,7 +1358,7 @@ public class TeachingServiceImpl implements TeachingService {
 		try {
 			returnMap.put("MOST RECENT COURSE TOPICS", getCourseTopicOptionDAO().getMostRecentExtendedCourseTopics(numberOfTopics, account));
 			returnMap.put("MOST RECENT TRANSCRIPTION TOPICS", getCourseTopicOptionDAO().getMostRecentCollaborativeTranscriptionTopics(numberOfTranscriptions, account));
-			returnMap.put("MOST RECENT COURSE QUESTIONS", getCourseTopicOptionDAO().getMostRecentCourseQuestions(numberOfQuestions, account));
+			returnMap.put("MOST RECENT COURSE DISCUSSIONS", getCourseTopicOptionDAO().getMostRecentCourseDiscussions(numberOfQuestions, account));
 			return returnMap;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
