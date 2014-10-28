@@ -607,24 +607,24 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="docbase.editCorrespondentsOrPeopleDocument.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>
 
 <div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
-		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
+		<h1><fmt:message key="docbase.editCorrespondentsOrPeopleDocument.thisNamePlace"/></h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
 	
 <div class="questionPerson" style="display:none; cursor: default"> 
-		<h1>Delete this Person entry?</h1> 
+		<h1><fmt:message key="docbase.editCorrespondentsOrPeopleDocument.deleteThisPersonEntry"/></h1> 
 		<input type="button" class="personYes" value="Yes" /> 
 		<input type="button" class="personNo" value="No" /> 
 </div>
 
 <div class="questionSendRecip" style="display:none; cursor: default">
-	<h1>The sender and recipient are the same. Is this correct?</h1>
+	<h1><fmt:message key="docbase.editCorrespondentsOrPeopleDocument.theSenderAndRecipientSame"/></h1>
 	<input type="button" class="sendRecipYes" value="Yes" />
 	<input type="button" class="sendRecipNo" value="No" />
 </div>

@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr>                                                                                              
-                <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+                <td colspan="3" class="dataTables_empty"><fmt:message key="docbase.showVettingChronologyDocumentModalWindow.loadingData"/></td>                        
             </tr> 
         </tbody>
     </table>

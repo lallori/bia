@@ -16,7 +16,7 @@
 	
 	<div class="yourSearchDiv">
 		<p><fmt:message key="docbase.showTopicsRelatedDocument.documentIndexedWithTopic"/>: <font color="red" style="margin-left:5px">"${topicTitle}" - ${placeName}</font></p>
-		<p>Total records found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
+		<p><fmt:message key="docbase.showTopicsRelatedDocument.totalRecords"/> <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
 	</div>
 	
 	<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key="docbase.showTopicsRelatedDocument.refineSearch"/></a>

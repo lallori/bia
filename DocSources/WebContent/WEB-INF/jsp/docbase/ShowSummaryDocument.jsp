@@ -118,11 +118,11 @@
 					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
 				 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
 						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-				 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4"><fmt:message key="docbase.showSummaryDocument.notEntered"/></span></h4>
 					</c:when>
 					<%-- Sender empty --%>
 					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.showSummaryDocument.from"/>:<span class="h4"><fmt:message key="docbase.showSummaryDocument.notEntered"/></span></h4>
 				 		<h4><fmt:message key="docbase.showSummaryDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
 				 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 					</c:when>

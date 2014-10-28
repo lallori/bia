@@ -146,7 +146,7 @@
 		</script>
 	
 	<div class="question" style="display:none; cursor: default"> 
-		<h1>Delete this Topic entry?</h1> 
+		<h1><fmt:message key="docbase.editTopicsDocument.deleteThisTopic"/></h1> 
 		<input type="button" class="yes" value="Yes" /> 
 		<input type="button" class="no" value="No" /> 
 	</div>

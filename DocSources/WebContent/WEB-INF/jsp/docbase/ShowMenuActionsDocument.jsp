@@ -12,13 +12,13 @@
 	</c:url>
 		
 	<div id="ActionsMenuDiv">
-		<h1>Use the buttons below to perform one of these predefined actions:</h1>
+		<h1><fmt:message key="docbase.showMenuActionsDocument.useButtons"/></h1>
 		
 		<c:if test="${!document.logicalDelete}">
-		<a id="deleteDocBase" href="${DeleteDocumentURL}">Delete this document record</a>
+		<a id="deleteDocBase" href="${DeleteDocumentURL}"><fmt:message key="docbase.showMenuActionsDocument.deleteThisDocument"/></a>
 		</c:if>	
 		<c:if test="${document.logicalDelete}">
-		<a id="undeleteDocBase" href="${UndeleteDocumentURL}">Undelete this document record</a>
+		<a id="undeleteDocBase" href="${UndeleteDocumentURL}"><fmt:message key="docbase.showMenuActionsDocument.undeleteThisDocument"/></a>
 		</c:if>					
 		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>

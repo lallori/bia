@@ -62,29 +62,29 @@
 	</c:url>
 	
 	<div id="modalBox">
-		<h6>VOLUME EXPLORER</h6>
+		<h6><fmt:message key="docbase.showExplorerDocumentModalWindow.volumeExplorer"/></h6>
 		<div id="prevNextButtons">
 		<c:if test="${documentExplorer.total > 0}">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.previousFolio"/></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.previousFolio"/></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.nextFolio"/></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.nextFolio"/></a>
 			</c:if>
 			</div>
 		</c:if>
 		<c:if test="${documentExplorer.image.imageType == 'C'}"> 
 			<div id="transcribe">
-				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document"><fmt:message key="docbase.showExplorerDocumentModalWindow.transcribeDocument"/></a>
 			</div>
 		</c:if>
 		</div>
@@ -94,23 +94,23 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.previousFolio"/></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.previousFolio"/></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.nextFolio"/></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"><fmt:message key="docbase.showExplorerDocumentModalWindow.nextFolio"/></a>
 			</c:if>
 			</div>
 			<c:if test="${documentExplorer.image.imageType == 'C'}"> 
 				<div id="transcribe">
-					<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+					<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document"><fmt:message key="docbase.showExplorerDocumentModalWindow.transcribeDocument"/></a>
 				</div>
 			</c:if>
 		<br />
@@ -123,11 +123,11 @@
 						
 		<div id="rubricarioModalMoveTo">
 			<div id="rubricarioModalCountForm">
-				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
+				<b><fmt:message key="docbase.showExplorerDocumentModalWindow.indexOfNamesCount"/></b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal"><fmt:message key="docbase.showExplorerDocumentModalWindow.moveTo"/> <i><fmt:message key="docbase.showExplorerDocumentModalWindow.indexOfNames"/></i> <fmt:message key="docbase.showExplorerDocumentModalWindow.folio"/></label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
 				<input id="goRModal" class="button_mini" type="submit" value="Go" />
 				<form:hidden path="volNum" />
@@ -153,11 +153,11 @@
 		<div id="folioModalMoveTo">
 
 			<div id="folioModalCountForm"> 
-				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
+				<b><fmt:message key="docbase.showExplorerDocumentModalWindow.folioCount"/></b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal"><fmt:message key="docbase.showExplorerDocumentModalWindow.moveToFolio"/></label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
 				<input class="openmodalbox" id="goModal" class="button_mini" type="submit" value="Go"/>
 				<form:hidden path="volNum" />

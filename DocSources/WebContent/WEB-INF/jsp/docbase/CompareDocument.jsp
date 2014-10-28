@@ -91,11 +91,11 @@
 					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
 				 		<h4><fmt:message key="docbase.compareDocument.from"/>: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
 						<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
-				 		<h4><fmt:message key="docbase.compareDocument.to"/>: <span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.to"/>: <span class="h4"><fmt:message key="docbase.compareDocument.notEntered"/></span></h4>
 					</c:when>
 					<%-- Sender empty --%>
 					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4><fmt:message key="docbase.compareDocument.from"/>:<span class="h4">(Not Entered)</span></h4>
+				 		<h4><fmt:message key="docbase.compareDocument.from"/>:<span class="h4"><fmt:message key="docbase.compareDocument.notEntered"/></span></h4>
 				 		<h4><fmt:message key="docbase.compareDocument.to"/>: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
 				 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 					</c:when>
@@ -123,7 +123,7 @@
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 						</security:authorize>
 						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS, ROLE_COMMUNITY_USERS">
-							<span class="register">To see this Document image you must register</span>
+							<span class="register"><fmt:message key="docbase.compareDocument.toSeeThisDocument"/></span>
 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px" style="opacity:0.3;-moz-opacity: 0.3;filter:alpha(opacity=50);">
 						</security:authorize>
 					</div>
@@ -171,7 +171,7 @@
 	
 		<div id="EditDetailsDocumentDiv" class="background">
 			<div class="title">
-				<h5>DOCUMENT DETAILS </h5>
+				<h5><fmt:message key="docbase.compareDocument.documentDetails"/> </h5>
 			</div>
 			<div class="listDetails">
 				<div class="row">

@@ -237,13 +237,13 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="docbase.editExtractOrSynopsisDocument.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>
 
 <div class="questionDocReference" style="display:none; cursor: default"> 
-		<h1>Delete this Reference to a Document entry?</h1> 
+		<h1><fmt:message key="docbase.editExtractOrSynopsisDocument.deleteThisReference"/></h1> 
 		<input type="button" class="docReferenceYes" value="Yes" /> 
 		<input type="button" class="docReferenceNo" value="No" /> 
 </div>

@@ -44,7 +44,7 @@
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby"><fmt:message key="docbase.showMenuDocument.createdBy"/> ${document.createdBy.firstName} ${document.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
 		<c:if test="${document.entryId != 0}">
-			<div id="id">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
+			<div id="id"><fmt:message key="docbase.showMenuDocument.docId"/> ${document.entryId == 0 ? '' : document.entryId}</div>
 			<input type="hidden" id="currentUrl" value="${ShowDocumentURL}" />
 		</c:if>
 		<security:authorize ifNotGranted="ROLE_GUESTS">

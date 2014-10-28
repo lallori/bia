@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col_l"><form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place</form:label></div>
+					<div class="col_l"><form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error"><fmt:message key="docbase.editTopicDocument.topicPlace"/></form:label></div>
 					<div class="col_l"><form:input id="placeDescriptionAutoCompleter" path="placeDescription" cssClass="input_39c" /></div>
 				</div>
 			</div> 
@@ -176,13 +176,13 @@
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>Discard changes?</h1> 
+		<h1><fmt:message key="docbase.editTopicDocument.discardChangesQuestion"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>
 	
 	<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
-		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
+		<h1><fmt:message key="docbase.editTopicDocument.thisNamePlace"/></h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
 	

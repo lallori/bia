@@ -129,7 +129,7 @@
 	</script>
 
 <div id="questionPerson" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="docbase.editPersonDocument.discardChangesQuestion"/></h1> 
 	<input type="button" id="yesPerson" value="Yes" /> 
 	<input type="button" id="noPerson" value="No" /> 
 </div>

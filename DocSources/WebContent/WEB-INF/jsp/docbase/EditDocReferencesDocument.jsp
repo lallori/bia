@@ -189,7 +189,7 @@
 	</script>
 
 <div id="questionDocReference" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="docbase.editDocReferencesDocument.discardChangesQuestion"/></h1> 
 	<input type="button" id="yesDocReference" value="Yes" /> 
 	<input type="button" id="noDocReference" value="No" /> 
 </div>

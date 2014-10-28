@@ -33,7 +33,7 @@
 				</c:if>
 				<c:if test="${(not empty activeCourses or activeCourse != null ) and not empty courses and command.entryId > 0}">
 					<div class="choiceContentFragment">
-						<a id="createCourseTranscriptionButton" href="#" class="button_extra_large">Create another Course Transcription</a>
+						<a id="createCourseTranscriptionButton" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.createAnotherTranscription"/></a>
 					</div>
 				</c:if>
 			</security:authorize>
@@ -46,7 +46,7 @@
 				-->
 				<c:if test="${not empty courses}">
 					<div class="choiceContentFragment">
-						<a id="showDocumentCourseFragments" href="#" class="button_extra_large">Show Course Transcriptions</a>
+						<a id="showDocumentCourseFragments" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.showCourseTranscriptions"/></a>
 					</div>
 				</c:if>
 			</security:authorize>
@@ -66,14 +66,14 @@
 		</div>
 		
 		<div id="chooseExistentCourseFragment" style="display: none;">
-			<h1>The current document has been linked to the following resources:</h1>
+			<h1><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.theCurrentDocumentsLinked"/></h1>
 			<div class="fixedTable">
 				<div class="head">
 					<table>
 						<thead>
 							<tr>
-								<th class="firstColumn">Course</th>
-								<th class="secondColumn">Transcription</th>
+								<th class="firstColumn"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.course0"/></th>
+								<th class="secondColumn"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.transcription0"/></th>
 								<th class="thirdColumn"></th>
 							</tr>
 						</thead>
@@ -95,7 +95,7 @@
 							<tr>
 								<td class="firstColumn">${currentTopic.courseTopic.forum.forumParent.title}</td>
 								<td class="secondColumn"><a class="action" href="${ShowCourseFragmentURL}" target="_blank">${currentTopic.courseTopic.subject}</a></td>
-								<td class="thirdColumn"><a class="action" href="${ShowFragmentContainerURL}" target="_blank">View Resources</a></td>
+								<td class="thirdColumn"><a class="action" href="${ShowFragmentContainerURL}" target="_blank"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.viewResources"/></a></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -114,13 +114,13 @@
 				<c:choose>
 					<c:when test="${not empty activeCourse}">
 						<div>
-							<span>linked to Course</span>
+							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.linkedToCourse"/></span>
 							<span>${activeCourse.forum.title}</span>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div>
-							<span>linked to Course</span>
+							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.linkedToCourse"/></span>
 							<select id="linkedCourses">
 								<c:forEach items="${activeCourses}" var="course">
 									<option value="${course.courseId}">${course.forum.title}</option>
