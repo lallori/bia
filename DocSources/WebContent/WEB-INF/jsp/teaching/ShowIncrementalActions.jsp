@@ -30,7 +30,7 @@
 	<c:choose>
 		<c:when test="${not closed}">
 			<c:choose>
-				<c:when test="${postsNumber == 0}">
+				<c:when test="${lastPostId eq -1}">
 					<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
 				</c:when>
 				<c:otherwise>
