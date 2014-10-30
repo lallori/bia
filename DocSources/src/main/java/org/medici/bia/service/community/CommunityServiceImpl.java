@@ -506,6 +506,10 @@ public class CommunityServiceImpl implements CommunityService {
 
 			recursiveSetLastPost(forum, forumPost);
 			
+			if (forumPost.getTopic().getFirstPost() == null) {
+				forumPost.getTopic().setFirstPost(getForumPostDAO().getFirstForumTopicPostByCreationDate(forumPost.getTopic().getTopicId()));
+			}
+			
 			forumPost.getTopic().setLastPost(forumPost);
 			forumPost.getTopic().setLastUpdate(operationDate);
 			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
