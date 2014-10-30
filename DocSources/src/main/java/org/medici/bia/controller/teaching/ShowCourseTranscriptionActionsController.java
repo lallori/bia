@@ -83,7 +83,6 @@ public class ShowCourseTranscriptionActionsController {
 			
 			switch (CourseTopicMode.findByName(command.getTranscriptionMode())) {
 			case I:
-				model.put("postsNumber", courseTopic.getTotalReplies() != null ? courseTopic.getTotalReplies() : 0);
 				return new ModelAndView("teaching/ShowIncrementalActions", model);
 			case C:
 				return new ModelAndView("teaching/ShowCheckPointActions", model);

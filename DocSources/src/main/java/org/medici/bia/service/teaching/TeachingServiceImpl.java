@@ -2112,7 +2112,7 @@ public class TeachingServiceImpl implements TeachingService {
 		
 		getCoursePostExtDAO().persist(coursePostExt);
 		
-		if (courseTopic.getTotalReplies() == null || courseTopic.getTotalReplies() <= 0) {
+		if (courseTopic.getFirstPost() == null) {
 			courseTopic.setFirstPost(post);
 			courseTopic.setTotalReplies(0);
 		} else {
