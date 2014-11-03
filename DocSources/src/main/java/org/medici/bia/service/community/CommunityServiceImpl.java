@@ -857,13 +857,13 @@ public class CommunityServiceImpl implements CommunityService {
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void exportAnnotationDiscussion(Annotation annotation, String ipAddress) throws ApplicationThrowable {
-		String generalQuestionForumIdString = ApplicationPropertyManager.getApplicationProperty("forum.identifier.general");
-		Integer generalQuestionForumId = Integer.valueOf(generalQuestionForumIdString);
-		if (annotation.getForumTopic().getForum().equals(generalQuestionForumId)) {
+		String paleographyForumIdString = ApplicationPropertyManager.getApplicationProperty("forum.identifier.paleography");
+		Integer paleographyForumId = Integer.valueOf(paleographyForumIdString);
+		if (annotation.getForumTopic().getForum().equals(paleographyForumId)) {
 			return;
 		}
 		
-		Forum generalQuestionForum = getForumDAO().find(generalQuestionForumId);
+		Forum paleographyForum = getForumDAO().find(paleographyForumId);
 		Date now = new Date();
 		User user = getCurrentUser();
 		
@@ -877,7 +877,7 @@ public class CommunityServiceImpl implements CommunityService {
 			clonedDiscussion.setLastUpdate(now);
 			clonedDiscussion.setUser(user);
 			clonedDiscussion.setIpAddress(ipAddress);
-			clonedDiscussion.setForum(generalQuestionForum);
+			clonedDiscussion.setForum(paleographyForum);
 			clonedDiscussion.setLocked(Boolean.TRUE);
 			clonedDiscussion.setLogicalDelete(Boolean.FALSE);
 			clonedDiscussion.setSubject(annotation.getForumTopic().getSubject());
@@ -927,7 +927,7 @@ public class CommunityServiceImpl implements CommunityService {
 				clonedPost.setLogicalDelete(Boolean.FALSE);
 				clonedPost.setSubject(currentPost.getSubject());
 				clonedPost.setText(currentPost.getText());
-				clonedPost.setForum(generalQuestionForum);
+				clonedPost.setForum(paleographyForum);
 				clonedPost.setTopic(clonedDiscussion);
 				clonedPost.setUser(currentPost.getUser());
 				clonedPost.setIpAddress(currentPost.getIpAddress());
@@ -954,8 +954,8 @@ public class CommunityServiceImpl implements CommunityService {
 			}
 			
 			// increment 'General Questions' forum topics number and posts number
-			generalQuestionForum.setTopicsNumber(generalQuestionForum.getTopicsNumber() + 1);
-			generalQuestionForum.setPostsNumber(generalQuestionForum.getPostsNumber() + topicPosts.size());
+			paleographyForum.setTopicsNumber(paleographyForum.getTopicsNumber() + 1);
+			paleographyForum.setPostsNumber(paleographyForum.getPostsNumber() + topicPosts.size());
 			
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

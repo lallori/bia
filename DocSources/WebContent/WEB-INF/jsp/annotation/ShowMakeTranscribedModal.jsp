@@ -31,9 +31,9 @@
 					<c:if test="${annotation.type eq 'TEACHING'}">
 						<br/>
 						<div style="display: block;">
-							<form:label id="exportCheckLabel" path="export" for="exportCheck">Export the discussion to 'General Questions'</form:label>
+							<form:label id="exportCheckLabel" path="export" for="exportCheck">Export the discussion to the 'Paleography Forum'</form:label>
 							<form:checkbox id="exportCheck" path="export" cssStyle="margin: 0 5px 0 0;" />
-							<a title="Put the check to export this discussion to 'General Question' section. Note that you cannot export this twice (the exported discussion is a snapshot of the current one)!"
+							<a title="Put the check to export this discussion to the 'Paleography' section. Note that you cannot export this twice (the exported discussion is a snapshot of the current one)!"
 								style="float: right; margin-right: 30px; border-radius: 8px; font-size: 12px; padding-left: 5px; padding-right: 4px; font-weight: bold; border: 1px solid #2e83ff; color: #363636; background-color: #ebf3ff; opacity: 0.9;">?</a>
 						</div>
 					</c:if>
@@ -61,7 +61,7 @@
 						</c:when>
 						<c:otherwise>
 							<p style="width: 100%; text-align: center;">
-								This discussion is already exported to 'General Questions' forum.
+								This discussion is already exported to the 'Paleography' forum.
 								<br/>
 								Do you want to untranscribe the highlighted word/abbreviation anyway?
 							</p>
