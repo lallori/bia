@@ -463,7 +463,7 @@
 									async: false,
 									success: function(json) {
 										$j("#openCourseTopicModal").dialog("close");
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
 										} else {
 											alert('Operation error...please retry or contact the admin!');
@@ -503,7 +503,7 @@
 									async: false,
 									success: function(json) {
 										$j("#closeCourseTopicModal").dialog("close");
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											window.location.replace('${baseUrl}' + '&topicId=' + '${topic.topicId}' + '&entryId=' + '${topic.document.entryId}' + '&completeDOM=true');
 										} else {
 											alert('Operation error...please retry or contact the admin!');

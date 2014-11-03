@@ -1054,7 +1054,7 @@
 									url: '${ShowHideAnnotationURL}' + '&show=true',
 									async: false,
 									success: function(json) {
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											$j("#showAnnotationModal").dialog("close");
 											$j("#main").load($j(".paginateActive").attr('href'));
 										} else {
@@ -1094,7 +1094,7 @@
 									url: '${ShowHideAnnotationURL}' + '&show=false',
 									async: false,
 									success: function(json) {
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											$j("#hideAnnotationModal").dialog("close");
 											$j("#main").load($j(".paginateActive").attr('href'));
 										} else {
@@ -1135,7 +1135,7 @@
 									url: '${OpenCloseTopicURL}' + '&close=false',
 									async: false,
 									success: function(json) {
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											$j("#openTopicModal").dialog("close");
 											$j("#main").load($j(".paginateActive").attr('href'));
 										} else {
@@ -1176,7 +1176,7 @@
 									url: '${ExportAnnotationDiscussionURL}',
 									async: false,
 									success: function(json) {
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											$j("#exportAnnotationDiscussionModal").dialog("close");
 											$j("#main").load($j(".paginateActive").attr('href'));
 										} else {
@@ -1217,7 +1217,7 @@
 									url: '${OpenCloseTopicURL}' + '&close=true',
 									async: false,
 									success: function(json) {
-										if (json.operation = 'OK') {
+										if (json.operation == 'OK') {
 											$j("#closeTopicModal").dialog("close");
 											$j("#main").load($j(".paginateActive").attr('href'));
 										} else {
