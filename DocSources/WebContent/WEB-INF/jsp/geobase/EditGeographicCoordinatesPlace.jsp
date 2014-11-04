@@ -23,10 +23,10 @@
 <div id="loadingDiv"></div>
 	<form:form id="EditGeoCoorPlaceForm" method="post" cssClass="edit" action="${EditGeographicCoordinatesPlaceURL}">
 		<fieldset>
-		<legend><b>GEOGRAPHIC COORDINATES</b></legend>
+		<legend><b><fmt:message key="geobase.editGeographicCoordinatesPlace.geographicCoordinates"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label></div>
+				<div class="col_l"><label for="latitudeGeo" id="latitudeGeoLabel"><fmt:message key="geobase.editGeographicCoordinatesPlace.latitude"/></label></div>
 				<div class="col_l">
 					<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="3"/> &#xb0
 		            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="3"/> '
@@ -35,7 +35,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col_l"><label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label></div>
+				<div class="col_l"><label for="longitudeGeo" id="longitudeGeoLabel"><fmt:message key="geobase.editGeographicCoordinatesPlace.longitude"/></label></div>
 				<div class="col_l">
 					<form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="3"/> &#xb0
 		            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="3"/> '
@@ -47,17 +47,17 @@
 		<br />
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><b>Finds Geo Coordinates on:</b></div>
+				<div class="col_l"><b><fmt:message key="geobase.editGeographicCoordinatesPlace.findsGeoCoordinates"/></b></div>
 			</div>
 			<br />
 			<div class="row">
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
-					<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
+					<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn"><fmt:message key="geobase.editGeographicCoordinatesPlace.gettyTgn"/></a>
 				</div>
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
-					<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps button_medium">Google Maps</a>
+					<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps button_medium"><fmt:message key="geobase.editGeographicCoordinatesPlace.googleMaps"/></a>
 				</div>
 			</div>
 		</div>
@@ -144,7 +144,7 @@
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>Discard changes?</h1> 
+		<h1><fmt:message key="geobase.editGeographicCoordinatesPlace.discardChangesQuestion"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>

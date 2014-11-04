@@ -22,15 +22,15 @@
 
 <div class="background" id="EditBirthDeathPlaceDiv">
 	<div class="title">
-		<h5>BIRTH and DEATH PLACE<a class="helpIcon" title="Text">?</a></h5>
+		<h5><fmt:message key="geobase.showBirthAndDeathPlace.birthAndDeath"/><a class="helpIcon" title="Text">?</a></h5>
 	</div>
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Births</a></c:if><c:if test="${birthPlace == 0}">0 Births</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Starts</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if></div>
+			<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} <fmt:message key="geobase.showBirthAndDeathPlace.births"/></a></c:if><c:if test="${birthPlace == 0}"><fmt:message key="geobase.showBirthAndDeathPlace.zeroBirths"/></c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} <fmt:message key="geobase.showBirthAndDeathPlace.activeStarts"/></a></c:if><c:if test="${activeStartPlace == 0}"><fmt:message key="geobase.showBirthAndDeathPlace.zeroActiveStarts"/></c:if></div>
 		</div>
 		<div class="row">
-			<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Deaths</a></c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeEnd" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active Ends</a></c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if></div>
+			<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} <fmt:message key="geobase.showBirthAndDeathPlace.deaths"/></a></c:if><c:if test="${deathPlace == 0}"><fmt:message key="geobase.showBirthAndDeathPlace.zeroDeaths"/></c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeEnd" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} <fmt:message key="geobase.showBirthAndDeathPlace.activeEnds"/></a></c:if><c:if test="${activeEndPlace == 0}"><fmt:message key="geobase.showBirthAndDeathPlace.zeroActiveEnds"/></c:if></div>
 		</div>
 	</div>
 </div>

@@ -8,8 +8,8 @@
 	<c:url var="ShowDeathPeoplePlaceURL" value="/src/geobase/ShowDeathPeoplePlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Death in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
-		<p>Total records found: <span id="deathIn${placeAllId}" class="recordsNum"></span></p>
+		<p><fmt:message key="geobase.showDeathPeoplePlace.deathIn"/> <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p><fmt:message key="geobase.showDeathPeoplePlace.totalRecords"/> <span id="deathIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDeathPeoplePlaceAllId${placeAllId}">

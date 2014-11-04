@@ -23,7 +23,7 @@
 	
 	<form:form id="EditNamesOrNameVariantsPlaceForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>NAME or NAMES VARIANTS</b></legend>
+		<legend><b><fmt:message key="geobase.editNamesOrNameVariantsPlace.nameOr"/></b></legend>
 		<c:forEach items="${placeNames}" var="currentName">
 			<c:url var="EditNameOrNameVariantPlaceURL" value="/de/geobase/EditNameOrNameVariantPlace.do">
 				<c:param name="placeAllId" value="${command.placeAllId}" />
@@ -131,7 +131,7 @@
 	</script>
 	
 	<div class="question" style="display:none; cursor: default"> 
-		<h1>Delete this Variant Place entry?</h1> 
+		<h1><fmt:message key="geobase.editNamesOrNameVariantsPlace.deleteThisVariant"/></h1> 
 		<input type="button" class="yes" value="Yes" /> 
 		<input type="button" class="no" value="No" /> 
 	</div>

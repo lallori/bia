@@ -8,8 +8,8 @@
 	<c:url var="ShowBirthPeoplePlaceURL" value="/src/geobase/ShowBirthPeoplePlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Birth in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
-		<p>Total records found: <span id="birthIn${placeAllId}" class="recordsNum"></span></p>
+		<p><fmt:message key="geobase.showBirthPeoplePlace.birthIn"/> <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p><fmt:message key="geobase.showBirthPeoplePlace.totalRecordsFound"/> <span id="birthIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showBirthPeoplePlaceAllId${placeAllId}">

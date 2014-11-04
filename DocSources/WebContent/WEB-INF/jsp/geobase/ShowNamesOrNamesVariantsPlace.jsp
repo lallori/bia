@@ -13,7 +13,7 @@
 	
 	<div class="background" id="EditNamePlaceDiv">
 		<div class="title">
-			<h5>NAME or NAME VARIANTS<a class="helpIcon" title="<fmt:message key="geobase.showNamesOrNameVariantsPlace.help.name"></fmt:message>">?</a></h5>
+			<h5><fmt:message key="geobase.showNamesOrNamesVariantsPlace.nameOrName"/><a class="helpIcon" title="<fmt:message key="geobase.showNamesOrNameVariantsPlace.help.name"></fmt:message>">?</a></h5>
 			<c:if test="${place.placeAllId > 0}">
 		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a id="EditNamePlace" href="${EditNamesOrNameVariantsPlaceURL}" class="editButton" title="Edit Name or Name Variants"></a><span id="loading"/>
@@ -25,7 +25,7 @@
 			<c:forEach items="${placeNames}" var="currentName">
 				<div class="row">
 					<c:if test="${currentName.prefFlag == 'P'}">
-						<div class="item">Principal</div>
+						<div class="item"><fmt:message key="geobase.showNamesOrNamesVariantsPlace.principal"/></div>
 						<c:if test="${currentName.placeAllId != place.placeAllId}">
 							<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 								<c:param name="placeAllId" value="${currentName.placeAllId}" />
@@ -37,7 +37,7 @@
 						</c:if>
 					</c:if>
 					<c:if test="${currentName.prefFlag == 'V'}">
-						<div class="item">Variant</div>
+						<div class="item"><fmt:message key="geobase.showNamesOrNamesVariantsPlace.variant"/></div>
 						<div class="value">${currentName.placeName}</div>
 					</c:if>					
 				</div>

@@ -6,36 +6,36 @@
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS,ROLE_ONSITE_FELLOWS,ROLE_FELLOWS">
 	<div id="createPlace">
-		<h1>Click the button below to add a new Preferred Place in one of the following categories:</h1>
+		<h1><fmt:message key="geobase.createPlaceMenuModal.clickButtonBelow"/></h1>
 
 		<div id="tgnPlace">
-			<a id="AddNewTgnPlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=TGN"/>">TGN Place Record</a>
-			<p>Record from the Getty Thesaurus of Geographic Names to be added to the Doc Sources system.
+			<a id="AddNewTgnPlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=TGN"/>"><fmt:message key="geobase.createPlaceMenuModal.tgnPlaceRecord"/></a>
+			<p><fmt:message key="geobase.createPlaceMenuModal.recordFromGettyAdded"/>
 			<br/><br/>
-			Consult the Getty website for data to add here.</p>
+			<fmt:message key="geobase.createPlaceMenuModal.consultGettyWebsite"/></p>
 		
 		</div>
 	
 		<div id="mapPlace">
-			<a id="AddNewMapPlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=MAPPLACE"/>">M.A.P. Place Record</a>
-			<p>Place names mentioned in M.A.P. document(s) but not found in the TGN (cities or towns or islands, and not built structures). (Check online the TGN before adding)</p>
+			<a id="AddNewMapPlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=MAPPLACE"/>"><fmt:message key="geobase.createPlaceMenuModal.mapPlaceRecord"/></a>
+			<p><fmt:message key="geobase.createPlaceMenuModal.placeNamesMentionedInMapNotFoundTGN"/></p>
 		</div>
 	
 		<div id="mapSite">
-			<a id="AddNewMapSitePlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=MAPSITE"/>">M.A.P. Site or Subsite</a>
-			<p>Built Structures being tracked by the M.A.P.</p>
+			<a id="AddNewMapSitePlace" class="button_medium" href="<c:url value="/de/geobase/CreatePlace.do?plSource=MAPSITE"/>"><fmt:message key="geobase.createPlaceMenuModal.mapSiteSub"/></a>
+			<p><fmt:message key="geobase.createPlaceMenuModal.builtStructuresBeingTracked"/></p>
 		</div>
 
 		<div id="notes">
-			<p><b>ONLINE TGN SEARCH:</b> <a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank">http://www.getty.edu/research/tools/vocabularies/tgn/</a></p>
-			<p><i>Note: in all cases, Variant Names are added via the Names section in the place file.</i></p>
+			<p><b><fmt:message key="geobase.createPlaceMenuModal.onlineTgnSearch"/></b> <a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank"><fmt:message key="geobase.createPlaceMenuModal.website"/></a></p>
+			<p><i><fmt:message key="geobase.createPlaceMenuModal.noteInAllCases"/></i></p>
 		</div>
 	
 		<div id="CloseButton">
 			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
 		
-		<a id="goBack" href="<c:url value="/de/ShowEntryMenu.do"/>" title="Go Back to Entry Menu">Go back</a>
+		<a id="goBack" href="<c:url value="/de/ShowEntryMenu.do"/>" title="Go Back to Entry Menu"><fmt:message key="geobase.createPlaceMenuModal.goBack"/></a>
 	
 		
 	</div>

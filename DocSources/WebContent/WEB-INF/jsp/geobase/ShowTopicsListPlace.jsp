@@ -10,21 +10,21 @@
 
 <div class="background" id="EditTopicsPlaceDiv">
 	<div class="title">
-		<h5>TOPICS LIST<a class="helpIcon" title="Text">?</a></h5>
+		<h5><fmt:message key="geobase.showTopicsListPlace.topicsList"/><a class="helpIcon" title="Text">?</a></h5>
 	</div>
 	<div class="list">	
 		<div class="row">
 			<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} <fmt:message key="geobase.showTopicsListPlace.documentsOn"/> ${topicsPlace} <fmt:message key="geobase.showTopicsListPlace.topics"/></a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a></div>
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} <fmt:message key="geobase.showTopicsListPlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.showTopicsListPlace.topic"/></a></div>
 			</c:if>
 			<c:if test="${docInTopics == 1 && topicsPlace != 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a></div>
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} <fmt:message key="geobase.showTopicsListPlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.showTopicsListPlace.topics"/></a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
-				<div class="value">0 Documents on 0 Topics</div>
+				<div class="value"><fmt:message key="geobase.showTopicsListPlace.zeroTopics"/></div>
 			</c:if>
 		</div>
 	</div>

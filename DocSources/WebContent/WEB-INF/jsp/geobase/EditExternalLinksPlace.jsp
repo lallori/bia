@@ -21,7 +21,7 @@
 	
 	<form:form id="EditExternalLinksPlaceForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>EXTERNAL LINKS</b></legend>
+		<legend><b><fmt:message key="geobase.editExternalLinksPlace.externalLinks"/></b></legend>
 		<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">
 			<c:url var="EditExternalLink" value="/de/geobase/EditExternalLinkPlace.do">
 				<c:param name="placeAllId" value="${place.placeAllId}" />

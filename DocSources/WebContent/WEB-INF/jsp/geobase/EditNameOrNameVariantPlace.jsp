@@ -17,10 +17,10 @@
 	<fieldset>
 		<legend>
 		<c:if test="${command.currentPlaceAllId == 0}"> 
-				<b>ADD NEW NAME</b>
+				<b><fmt:message key="geobase.editNameOrNameVariantPlace.addName"/></b>
 			</c:if>
 			<c:if test="${command.currentPlaceAllId > 0}">
-				<b>Edit NAME</b>
+				<b><fmt:message key="geobase.editNameOrNameVariantPlace.editName"/></b>
 			</c:if> 
 		</legend>
 		
@@ -28,12 +28,12 @@
 			<div class="row">
 				<div class="col_l">
 					<a class="helpIcon" title="<fmt:message key="geobase.editNameOrNameVariantPlace.help.name"></fmt:message>">?</a>
-					<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
+					<form:label for="namePlace" id="namePlaceLabel" path="plName"><fmt:message key="geobase.editNameOrNameVariantPlace.name"/></form:label>
 				</div>
 				<div class="col_l"><form:input id="namePlace" path="plName" cssClass="input_30c" type="text" /></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label for="nameType" id="nameTypeLabel" path="plType">Place Type</form:label></div>
+				<div class="col_l"><form:label for="nameType" id="nameTypeLabel" path="plType"><fmt:message key="geobase.editNameOrNameVariantPlace.placeType"/></form:label></div>
 				<div class="col_l"><form:input id="nameType" path="plType" cssClass="input_35c_disabled" type="text" disabled="disabled" /></div>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 </security:authorize>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="geobase.editNameOrNameVariantPlace.discardChangesQuestion"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

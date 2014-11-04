@@ -12,7 +12,7 @@
 	
 	<div class="background" id="EditGeoCoorPlaceDiv">
 		<div class="title">
-			<h5>GEOGRAPHIC COORDINATES<a class="helpIcon" title="Text">?</a></h5>
+			<h5><fmt:message key="geobase.showGeographicCoordinatesPlace.geographicsCoordinates"/><a class="helpIcon" title="Text">?</a></h5>
 	 		<c:if test="${place.placeAllId > 0 && place.prefFlag == 'P'}">
 	 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 				<a title="Edit Geographic Coordinates" href="${EditGeographicCoordinatesPlaceURL}" class="editButton" id="EditGeoCoorPlace"></a>
@@ -21,11 +21,11 @@
 		</div>
 		<div class="list">	
 			<div class="row">
-				<div class="item">Latitude</div>
+				<div class="item"><fmt:message key="geobase.showGeographicCoordinatesPlace.latitude"/></div>
 				<div class="value">${place.placeGeographicCoordinates.degreeLatitude}&#xb0 ${place.placeGeographicCoordinates.minuteLatitude}' ${place.placeGeographicCoordinates.secondLatitude}'' ${place.placeGeographicCoordinates.directionLatitude}</div>
 			</div>
 			<div class="row">
-				<div class="item">Longitude</div>
+				<div class="item"><fmt:message key="geobase.showGeographicCoordinatesPlace.longitude"/></div>
 				<div class="value">${place.placeGeographicCoordinates.degreeLongitude}&#xb0 ${place.placeGeographicCoordinates.minuteLongitude}' ${place.placeGeographicCoordinates.secondLongitude}'' ${place.placeGeographicCoordinates.directionLongitude}</div>
 			</div>
 		</div>

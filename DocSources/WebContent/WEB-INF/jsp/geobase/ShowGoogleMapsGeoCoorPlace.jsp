@@ -200,20 +200,20 @@
     </head>
     <body>
     	<div id="description">
-            <h1>Find coordinates by moving around the map</h1>
+            <h1><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.findCoord"/></h1>
             
             <ul>
-                <li>Drag and drop the map to broad location.</li>
-                <li>Zoom in for greater accuracy.</li>
-                <li>Drag and drop the marker to pinpoint the place. The coordinates are refreshed at the end of each move.</li>
+                <li><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.dragAndDrop"/></li>
+                <li><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.zoomIn"/></li>
+                <li><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.dragAndDropMarker"/></li>
             </ul>
             
-            <h1>Find coordinates using the name and/or address of the place</h1>
-            <p>Submit the full location : number, street, city, country. For big cities and famous places, the country is optional. "Bastille Paris" or "Opera Sydney" will do.</p>
+            <h1><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.findCoordinates"/></h1>
+            <p><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.submitTheFull"/></p>
         </div>
         
         <div id="adressDiv">
-            <label id="adressLabel"><b>Address:</b></label>
+            <label id="adressLabel"><b><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.address"/></b></label>
             <input id="address" type="text" class="input_50c"/>
         </div>
         
@@ -224,7 +224,7 @@
             	<div class="listForm">
                        
                          <div class="row">
-                            <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
+                            <div class="col_l"><label for="latLabel" id="latLabel"><b><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.latitude"/></b></label></div>
                             <div class="col_l"><input type="hidden" id="lat" name="lat" value="" class="input_20c"></div>
                             <div class="col_l"><input type="text" id="lat_deg" name="lat" value="" class="input_20c"></div>
                         </div>
@@ -232,7 +232,7 @@
                         <br/>    
            
                         <div class="row">
-                            <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
+                            <div class="col_l"><label for="lngLabel" id="lngLabel"><b><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.longitude"/></b></label></div>
                             <div class="col_l"><input type="hidden" id="lng" name="lng" value="" class="input_20c"></div>
                             <div class="col_l"><input type="text" id="long_deg" name="lng" value="" class="input_20c"></div>
                         </div>
@@ -241,23 +241,23 @@
                 
                 <br/>
                 
-        		<p>Assign coordinates to:</p>
+        		<p><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.assignCoordinates"/></p>
             
                 <div id="geoTitle">
                 	<div id="text">
 	                    <h3>${place.placeName}</h3>
 	                    <h4>${place.placeNameFull}</h4>
 	                    <c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-	            		<h5>TGN Place record</h5>
+	            		<h5><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.tgnPlace"/></h5>
 	        			</c:if>
 	        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-	        			<h5>TGN Place record (updated by MAP)</h5>
+	        			<h5><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.tgnPlaceRecordUpdated"/></h5>
 	        			</c:if>
 	        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-						<h5>MAP Place record</h5>
+						<h5><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.mapPlaceRecord"/></h5>
 						</c:if>
 	        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-						<h5>MAP Site or Subsite record</h5>
+						<h5><fmt:message key="geobase.showGoogleMapsGeoCoorPlace.mapSiteOrSubsite"/></h5>
 						</c:if>
 	                    <h7>${place.plType}</h7>
 	                </div>             

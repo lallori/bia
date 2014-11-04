@@ -37,13 +37,13 @@
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	
-	<a href="${ShowPlaceURL}" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank">More info</a>
+	<a href="${ShowPlaceURL}" id="moreInfoButton" class="button_medium" title="Browse The Medici Archive Project Database" target="_blank"><fmt:message key="geobase.sharePlace.moreInfo"/></a>
 	
 	
 	
 	<ul id="network">
       <div class="fb-like" data-send="false" data-layout="button_count" data-width="500" data-show-faces="false" style="display:inline;"></div>
-	   <div style="display:inline;"><a href="https://twitter.com/share" class="twitter-share-button" data-text=" ">Tweet</a></div>
+	   <div style="display:inline;"><a href="https://twitter.com/share" class="twitter-share-button" data-text=" "><fmt:message key="geobase.sharePlace.tweet"/></a></div>
 	   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	   <div class="g-plusone" data-size="medium" style="display:inline"></div>
 	   <script type="text/javascript">
@@ -61,62 +61,62 @@
         		<h3>${place.placeName}</h3>
 				<h4>${place.parentPlace.placeNameFull}</h4>
 				<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-            	<h5>TGN Place record</h5>
+            	<h5><fmt:message key="geobase.sharePlace.tgnPlace"/></h5>
             	</c:if>
         		<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-        			<h5>TGN Place record (updated by MAP)</h5>
+        			<h5><fmt:message key="geobase.sharePlace.tgnPlaceUpdated"/></h5>
         		</c:if>
         		<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-					<h5>MAP Place record</h5>
+					<h5><fmt:message key="geobase.sharePlace.mapPlaceRecord"/></h5>
 				</c:if>
         		<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-					<h5>MAP Site or Subsite record</h5>
+					<h5><fmt:message key="geobase.sharePlace.mapSite"/></h5>
 				</c:if>
 				<h7>${place.plType}</h7>
 				<c:if test="${place.prefFlag != 'V'}">
 					<div id="linked">
-						<p>Linked to this place entry:</p>
+						<p><fmt:message key="geobase.sharePlace.linkedTo"/></p>
 						<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
-							${docInTopics} Documents on ${topicsPlace} Topics
+							${docInTopics} <fmt:message key="geobase.sharePlace.documentsOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topics"/>
 						</c:if>
 						<c:if test="${topicsPlace == 1}">
-							${docInTopics} Document on ${topicsPlace} Topic
+							${docInTopics} <fmt:message key="geobase.sharePlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topic"/>
 						</c:if>
 						<c:if test="${docInTopics == 1 && topicsPlace != 1}">
-							${docInTopics} Document on ${topicsPlace} Topics
+							${docInTopics} <fmt:message key="geobase.sharePlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topics"/>
 						</c:if>
 						<c:if test="${topicsPlace == 0 || topicsPlace == null}">
-							0 Documents on 0 Topics
+							<fmt:message key="geobase.sharePlace.zeroDocuments"/>
 						</c:if>
 						<hr />
 						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-							${senderPlace} Senders and ${recipientPlace} Recipients
+							${senderPlace} <fmt:message key="geobase.sharePlace.sendersAnd"/> ${recipientPlace} <fmt:message key="geobase.sharePlace.recipients"/>
 						</c:if>
 						<c:if test="${senderPlace == 1 && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-							${senderPlace} Sender and ${recipientPlace} Recipients
+							${senderPlace} <fmt:message key="geobase.sharePlace.senderAnd"/> ${recipientPlace} <fmt:message key="geobase.sharePlace.recipients"/>
 						</c:if>
 						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && recipientPlace == 1}">
-							${senderPlace} Senders and ${recipientPlace} Recipient
+							${senderPlace} <fmt:message key="geobase.sharePlace.sendersAnd"/> ${recipientPlace} <fmt:message key="geobase.sharePlace.recipient"/>
 						</c:if>
 						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-							0 Senders and ${recipientPlace} Recipients
+							<fmt:message key="geobase.sharePlace.zeroSendersAnd"/> ${recipientPlace} <fmt:message key="geobase.sharePlace.recipients"/>
 						</c:if>
 						<c:if test="${(senderPlace == 0 || senderPlace == null) && recipientPlace == 1}">
-							0 Senders and ${recipientPlace} Recipient
+							<fmt:message key="geobase.sharePlace.zeroSendersAnd"/> ${recipientPlace} <fmt:message key="geobase.sharePlace.recipient"/>
 						</c:if>
 						<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1 && (recipientPlace == 0 || recipientPlace == null)}">
-							${senderPlace} Senders and 0 Recipient
+							${senderPlace} <fmt:message key="geobase.sharePlace.sendersAndZero"/>
 						</c:if>
 						<c:if test="${senderPlace == 1 && (recipientPlace == 0 || recipientPlace == null)}">
-							${senderPlace} Sender and 0 Recipient
+							${senderPlace} <fmt:message key="geobase.sharePlace.senderAndZero"/>
 						</c:if>
 						<c:if test="${(senderPlace == 0 || senderPlace == null) && (recipientPlace == 0 || recipientPlace == null)}">
-							0 Sender and 0 Recipient
+							<fmt:message key="geobase.sharePlace.zeroSenderAndZero"/>
 						</c:if>
 						<hr />
-						<c:if test="${birthPlace != 0}">${birthPlace} Births</c:if><c:if test="${birthPlace == 0}">0 Births</c:if> and <c:if test="${activeStartPlace != 0}">${activeStartPlace} Active Starts</c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if>
+						<c:if test="${birthPlace != 0}">${birthPlace} <fmt:message key="geobase.sharePlace.births"/></c:if><c:if test="${birthPlace == 0}"><fmt:message key="geobase.sharePlace.zeroBirths"/></c:if> <fmt:message key="geobase.sharePlace.and"/> <c:if test="${activeStartPlace != 0}">${activeStartPlace} <fmt:message key="geobase.sharePlace.activeStarts"/></c:if><c:if test="${activeStartPlace == 0}"><fmt:message key="geobase.sharePlace.zeroActiveStarts"/></c:if>
 						<br />
-						<c:if test="${deathPlace != 0}">${deathPlace} Deaths</c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if> and <c:if test="${activeEndPlace != 0}">${activeEndPlace} Active Ends</c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if>
+						<c:if test="${deathPlace != 0}">${deathPlace} <fmt:message key="geobase.sharePlace.deaths"/></c:if><c:if test="${deathPlace == 0}"><fmt:message key="geobase.sharePlace.zeroDeaths"/></c:if> <fmt:message key="geobase.sharePlace.and"/> <c:if test="${activeEndPlace != 0}">${activeEndPlace} <fmt:message key="geobase.sharePlace.activeEnds"/></c:if><c:if test="${activeEndPlace == 0}"><fmt:message key="geobase.sharePlace.zeroActiveEnds"/></c:if>
 					</div>	
 				</c:if>						
 				<c:if test="${place.prefFlag == 'V'}">
@@ -126,7 +126,7 @@
 							<c:url var="ShowPrincipalPlaceURL" value="/src/geobase/ShowPlace.do">
 								<c:param name="placeAllId"	value="${currentName.placeAllId}"/>
 							</c:url>
-							<p class="textPrincipalName">'${place.placeName}' is a Variant Name for '${currentName.placeName}'.</p>
+							<p class="textPrincipalName">'${place.placeName}' <fmt:message key="geobase.sharePlace.isAVariant"/> '${currentName.placeName}'.</p>
 <%-- 							<a href="${ShowPrincipalPlaceURL}" class="button_medium" id="buttonPrincipalName">Click here</a> --%>
 <%-- 							<p class="textPrincipalName">to visualize <b>${currentName.placeName}</b> and all the values and fields connected to it.</font></p> --%>
 						</c:if>
@@ -138,41 +138,41 @@
 					<a href="${linkGoogleMaps}" target="_blank" title="Show on Google Maps"><img src="<c:url value="/images/1024/img_googleMap.jpg"/>" alt="Place" class="shadow"></a>
 				</c:if>
 				<c:if test="${linkGoogleMaps == null }">
-					<span>Not attached to Google Maps</span>	
+					<span><fmt:message key="geobase.sharePlace.notAttached"/></span>	
 				</c:if>
 			</div>
 		</div>
 		
 		<div id="EditDetailsPlaceDiv" class="background">
         	<div class="title">
-            	<h5>PLACE DETAILS</h5>
+            	<h5><fmt:message key="geobase.sharePlace.placeDetails"/></h5>
             </div>
 		
 			<div class="listDetails">
 				<div class="row">
-					<div class="item">Place ID</div> 
+					<div class="item"><fmt:message key="geobase.sharePlace.placeID"/></div> 
 					<div class="value">${place.placeAllId}</div> 
 				</div>
 				<div class="row">
-					<div class="item">Place name</div>
+					<div class="item"><fmt:message key="geobase.sharePlace.placeName"/></div>
 					<div class="value">${place.placeName}</div>
 				</div>
 				<c:if test="${place.termAccent != place.placeName}">
 					<div class="row">
-						<div style="color: #6D5C4D;display: table-cell;padding: 3px 0;text-align: left;width: 20%;">(with accents)</div>
+						<div style="color: #6D5C4D;display: table-cell;padding: 3px 0;text-align: left;width: 20%;"><fmt:message key="geobase.sharePlace.withAccents"/></div>
 						<div class="value">${place.termAccent}</div>
 					</div>
 				</c:if>
 				<div class="row">
-					<div class="item">Place type</div>
+					<div class="item"><fmt:message key="geobase.sharePlace.placeType"/></div>
 					<div class="value">${place.plType}</div>
 				</div>
 				<div class="row">
-					<div class="item">Place Parent</div>
+					<div class="item"><fmt:message key="geobase.sharePlace.placeParent"/></div>
 					<div class="value">${place.parentPlace.getPlaceNameFull()}</div>
 				</div>
 				<div class="row">
-					<div class="item">Place Notes</div>
+					<div class="item"><fmt:message key="geobase.sharePlace.placeNotes"/></div>
 					<div class="value">${place.placesMemo}</div>
 				</div>
 			</div>
@@ -183,14 +183,14 @@
 	
 	<div id="EditNamePlaceDiv" class="background">
     	<div class="title">
-        	<h5>NAME or NAME VARIANTS</h5>
+        	<h5><fmt:message key="geobase.sharePlace.nameOr"/></h5>
         </div>
         
         <div class="list">
 			<c:forEach items="${placeNames}" var="currentName">
 				<div class="row">
 					<c:if test="${currentName.prefFlag == 'P'}">
-						<div class="item">Principal</div>
+						<div class="item"><fmt:message key="geobase.sharePlace.principal"/></div>
 						<c:if test="${currentName.placeAllId != place.placeAllId}">
 							<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 								<c:param name="placeAllId" value="${currentName.placeAllId}" />
@@ -202,7 +202,7 @@
 						</c:if>
 					</c:if>
 					<c:if test="${currentName.prefFlag == 'V'}">
-						<div class="item">Variant</div>
+						<div class="item"><fmt:message key="geobase.sharePlace.variant"/></div>
 						<div class="value">${currentName.placeName}</div>
 					</c:if>					
 				</div>
@@ -214,30 +214,30 @@
 	
 	<div id="EditSendRecipPlaceDiv"class="background">
     	<div class="title">
-        	<h5>SENDERS and RECIPIENTS </h5>
+        	<h5><fmt:message key="geobase.sharePlace.sendersAnd"/> </h5>
         </div>
         
         <div class="list">	
 			<div class="row">
 				<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1}">
-					<div class="value">${senderPlace} Senders</div>
+					<div class="value">${senderPlace} <fmt:message key="geobase.sharePlace.senders"/></div>
 				</c:if>
 				<c:if test="${senderPlace == 1 }">
-					<div class="value">${senderPlace} Sender</div>
+					<div class="value">${senderPlace} <fmt:message key="geobase.sharePlace.sender"/></div>
 				</c:if>
 				<c:if test="${senderPlace == 0 || senderPlace == null}">
-					<div class="value">0 Sender</div>
+					<div class="value"><fmt:message key="geobase.sharePlace.zeroSender"/></div>
 				</c:if>
 			</div>
 			<div class="row">
 				<c:if test="${recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-					<div class="value">${recipientPlace} Recipients</div>
+					<div class="value">${recipientPlace} <fmt:message key="geobase.sharePlace.recipients"/></div>
 				</c:if>
 				<c:if test="${recipientPlace == 1}">
-					<div class="value">${recipientPlace} Recipient</div>
+					<div class="value">${recipientPlace} <fmt:message key="geobase.sharePlace.recipient"/></div>
 				</c:if>
 				<c:if test="${recipientPlace == 0 || recipientPlace == null}">
-					<div class="value">0 Recipient</div>
+					<div class="value"><fmt:message key="geobase.sharePlace.zeroRecipient"/></div>
 				</c:if>
 			</div>
 		</div>
@@ -247,22 +247,22 @@
 	
 	<div id="EditTopicsPlaceDiv" class="background">
     	<div class="title">
-        	<h5>TOPICS LIST </h5>
+        	<h5><fmt:message key="geobase.sharePlace.topicsList"/> </h5>
         </div>
         
         <div class="list">	
 			<div class="row">
 			<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
-				<div class="value">${docInTopics} Documents on ${topicsPlace} Topics</div>
+				<div class="value">${docInTopics} <fmt:message key="geobase.sharePlace.documentsOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topics"/></div>
 			</c:if>
 			<c:if test="${topicsPlace == 1}">
-				<div class="value">${docInTopics} Document on ${topicsPlace} Topic</div>
+				<div class="value">${docInTopics} <fmt:message key="geobase.sharePlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topic"/></div>
 			</c:if>
 			<c:if test="${docInTopics == 1 && topicsPlace != 1}">
-				<div class="value">${docInTopics} Document on ${topicsPlace} Topics</div>
+				<div class="value">${docInTopics} <fmt:message key="geobase.sharePlace.documentOn"/> ${topicsPlace} <fmt:message key="geobase.sharePlace.topics"/></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
-				<div class="value">0 Document on 0 Topic</div>
+				<div class="value"><fmt:message key="geobase.sharePlace.zeroDocumentOn"/></div>
 			</c:if>
 			</div>
 		</div>
@@ -272,15 +272,15 @@
 	
 	 <div id="EditBirthDeathPlaceDiv" class="background">
      	<div class="title">
-        	<h5>BIRTH and DEATH PLACE </h5>
+        	<h5><fmt:message key="geobase.sharePlace.birthAndDeathPlace"/> </h5>
         </div>
         
         <div class="list">	
 			<div class="row">
-				<div class="value"><c:if test="${birthPlace != 0}">${birthPlace} Birth</c:if><c:if test="${birthPlace == 0}">0 Birth</c:if>      <c:if test="${activeStartPlace != 0}">${activeStartPlace} Active Start</c:if><c:if test="${activeStartPlace == 0}">0 Active Start</c:if></div>
+				<div class="value"><c:if test="${birthPlace != 0}">${birthPlace} <fmt:message key="geobase.sharePlace.birth"/></c:if><c:if test="${birthPlace == 0}"><fmt:message key="geobase.sharePlace.zeroBirth"/></c:if>      <c:if test="${activeStartPlace != 0}">${activeStartPlace} <fmt:message key="geobase.sharePlace.activeStart"/></c:if><c:if test="${activeStartPlace == 0}"><fmt:message key="geobase.sharePlace.zeroActiveStart"/></c:if></div>
 			</div>
 			<div class="row">
-				<div class="value"><c:if test="${deathPlace != 0}">${deathPlace} Death</c:if><c:if test="${deathPlace == 0}">0 Death</c:if>      <c:if test="${activeEndPlace != 0}">${activeEndPlace} Active End</c:if><c:if test="${activeEndPlace == 0}">0 Active End</c:if></div>
+				<div class="value"><c:if test="${deathPlace != 0}">${deathPlace} <fmt:message key="geobase.sharePlace.death"/></c:if><c:if test="${deathPlace == 0}"><fmt:message key="geobase.sharePlace.zeroDeath"/></c:if>      <c:if test="${activeEndPlace != 0}">${activeEndPlace} <fmt:message key="geobase.sharePlace.activeEnd"/></c:if><c:if test="${activeEndPlace == 0}"><fmt:message key="geobase.sharePlace.zeroActiveEnd"/></c:if></div>
 			</div>
 		</div>
 	</div>
@@ -289,16 +289,16 @@
 	
 	<div id="EditGeoCoorPlaceDiv" class="background">
     	<div class="title">
-        	<h5>GEOGRAPHIC COORDINATES</h5>
+        	<h5><fmt:message key="geobase.sharePlace.geographicCoordinates"/></h5>
         </div>
         
         <div class="list">	
 			<div class="row">
-				<div class="item">Latitude</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.latitude"/></div>
 				<div class="value">${place.placeGeographicCoordinates.degreeLatitude}&#xb0 ${place.placeGeographicCoordinates.minuteLatitude}' ${place.placeGeographicCoordinates.secondLatitude}'' ${place.placeGeographicCoordinates.directionLatitude}</div>
 			</div>
 			<div class="row">
-				<div class="item">Longitude</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.longitude"/></div>
 				<div class="value">${place.placeGeographicCoordinates.degreeLongitude}&#xb0 ${place.placeGeographicCoordinates.minuteLongitude}' ${place.placeGeographicCoordinates.secondLongitude}'' ${place.placeGeographicCoordinates.directionLongitude}</div>
 			</div>
 		</div>
@@ -308,7 +308,7 @@
 	
 	<div id="EditExtLinkPlaceDiv" class="background">
     	<div class="title">
-        	<h5>EXTERNAL LINKS</h5>
+        	<h5><fmt:message key="geobase.sharePlace.externalLinks"/></h5>
         </div>
         
         <div class="list">
@@ -324,32 +324,32 @@
 	
 	 <div id="EditHierarchyPlaceDiv" class="background">
      	<div class="title">
-        	<h5>HIERARCHY</h5>
+        	<h5><fmt:message key="geobase.sharePlace.hierarchy"/></h5>
         </div>
         
         <div class="list">
 			<div class="row">
-				<div class="item">Parent</div> 
+				<div class="item"><fmt:message key="geobase.sharePlace.parent"/></div> 
 				<div class="value">${place.parentPlace.placeAllId}</div> 
 			</div>
 			<div class="row">
-				<div class="item">GParent</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.gparent"/></div>
 				<div class="value">${place.gParent}</div>
 			</div>
 			<div class="row">
-				<div class="item">GGParent</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.ggParent"/></div>
 				<div class="value">${place.ggp}</div>
 			</div>
 			<div class="row">
-				<div class="item">GP2</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.gptwo"/></div>
 				<div class="value">${place.gp2}</div>
 			</div>
 			<div class="row">
-				<div class="item">Parent_TGN_id</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.parentTGN"/></div>
 				<div class="value">${place.plParentTermId}</div>
 			</div>
 			<div class="row">
-				<div class="item">Parent_GEOKEY</div>
+				<div class="item"><fmt:message key="geobase.sharePlace.parentGeo"/></div>
 				<div class="value">${place.plParentSubjectId}</div>
 			</div>
 		</div>

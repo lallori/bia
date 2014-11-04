@@ -12,32 +12,32 @@
 	
 	<div class="background" id="EditHierarchyPlaceDiv">
 		<div class="title">
-			<h5>HIERARCHY</h5>
+			<h5><fmt:message key="geobase.showHierarchyPlace.hierarchy"/></h5>
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item">Parent</div> 
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.parent"/></div> 
 				<div class="value">${place.parentPlace.placeAllId}</div> 
 			</div>
 			<div class="row">
-				<div class="item">GParent</div>
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.gParent"/></div>
 				<div class="value">${place.gParent}</div>
 			</div>
 			<div class="row">
-				<div class="item">GGParent</div>
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.ggParent"/></div>
 				<div class="value">${place.ggp}</div>
 			</div>
 			<div class="row">
-				<div class="item">GP2</div>
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.gpTwo"/></div>
 				<div class="value">${place.gp2}</div>
 			</div>
 			<div class="row">
-				<div class="item">Parent_TGN_id</div>
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.parentTGN"/></div>
 				<div class="value">${place.plParentTermId}</div>
 			</div>
 			<div class="row">
-				<div class="item">Parent_GEOKEY</div>
+				<div class="item"><fmt:message key="geobase.showHierarchyPlace.parentGeo"/></div>
 				<div class="value">${place.plParentSubjectId}</div>
 			</div>
 		</div>

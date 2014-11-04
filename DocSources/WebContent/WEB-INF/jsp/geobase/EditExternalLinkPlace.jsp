@@ -18,24 +18,24 @@
 	<form:form id="EditExternalLinkForm" method="post" cssClass="edit">
 		<fieldset>
 		<c:if test="${command.placeExternalLinksId == 0}">
-			<legend><b>ADD EXTERNAL LINK</b></legend>
+			<legend><b><fmt:message key="geobase.editExternalLinkPlace.addExternalLink"/></b></legend>
 		</c:if>
 		<c:if test="${command.placeExternalLinksId > 0 }">
-			<legend><b>EXTERNAL LINKS</b></legend>
+			<legend><b><fmt:message key="geobase.editExternalLinkPlace.externalLinks"/></b></legend>
 		</c:if>
 		
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
-					<form:label for="name" id="nameLabel" path="description">Name</form:label>
+					<form:label for="name" id="nameLabel" path="description"><fmt:message key="geobase.editExternalLinkPlace.name"/></form:label>
 				</div>
 				<div class="col_l"><form:input id="name" path="description" cssClass="input_30c" type="text" /></div>
 			</div>
 			<div class="row">
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
-					<form:label for="link" id="linkLabel" path="externalLink">Link</form:label>
+					<form:label for="link" id="linkLabel" path="externalLink"><fmt:message key="geobase.editExternalLinkPlace.link"/></form:label>
 				</div>
 				<div class="col_l"><form:input id="link" path="externalLink" class="input_39c" type="text" /></div>
 			</div>
@@ -87,7 +87,7 @@
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>Discard changes?</h1> 
+		<h1><fmt:message key="geobase.editExternalLinkPlace.discardChangesQuestion"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>

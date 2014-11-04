@@ -7,8 +7,8 @@
 	<c:url var="ShowRecipientDocumentsPlaceURL" value="/src/geobase/ShowRecipientDocumentsPlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Recipients To <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
-		<p>Total records found: <span id="recipientTo${placeAllId}" class="recordsNum"></span></p>
+		<p><fmt:message key="geobase.showRecipientDocumentsPlace.recipientsTo"/> <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p><fmt:message key="geobase.showRecipientDocumentsPlace.totalRecordsFound"/> <span id="recipientTo${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPlaceAllId${placeAllId}">

@@ -12,13 +12,13 @@
 	</c:url>
 		
 	<div id="ActionsMenuDiv">
-		<h1>Use the buttons below to perform one of these predefined actions:</h1>
+		<h1><fmt:message key="geobase.showMenuActionsPlace.useTheButtons"/></h1>
 		
 		<c:if test="${!place.logicalDelete}">
-		<a id="deleteGeoBase" href="${DeletePlaceURL}">Delete this place record</a>
+		<a id="deleteGeoBase" href="${DeletePlaceURL}"><fmt:message key="geobase.showMenuActionsPlace.deleteThisPlaceRecord"/></a>
 		</c:if>	
 		<c:if test="${place.logicalDelete}">
-		<a id="undeleteGeoBase" href="${UndeletePlaceURL}">Undelete this place record</a>
+		<a id="undeleteGeoBase" href="${UndeletePlaceURL}"><fmt:message key="geobase.showMenuActionsPlace.undelete"/></a>
 		</c:if>					
 		<input id="close" class="button_small" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>

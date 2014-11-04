@@ -8,8 +8,8 @@
 	<c:url var="ShowActiveStartPeoplePlaceURL" value="/src/geobase/ShowActiveStartPeoplePlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p>Active Start in <font color="red" style="margin-left: 5px">"${placeNameFull}"</font></p>
-		<p>Total records found: <span id="activeStartIn${placeAllId}" class="recordsNum"></span></p>
+		<p><fmt:message key="geobase.showActiveStartPeoplePlace.activeStart"/> <font color="red" style="margin-left: 5px">"${placeNameFull}"</font></p>
+		<p><fmt:message key="geobase.showActiveStartPeoplePlace.totalRecordsFound"/> <span id="activeStartIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showActiveStartPeoplePlaceAllId${placeAllId}">

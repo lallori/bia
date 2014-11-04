@@ -41,14 +41,14 @@
 	
 <c:if test="${place.placeAllId == 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by  ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+		<div id="createdby"><fmt:message key="geobase.showMenuPlace.createdBy"/>  ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 	</div>	
 </c:if>	
 
 <c:if test="${place.placeAllId != 0}">
 	<div id="topBodyLeftMenuDiv">
-		<div id="createdby">Created by ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
-		<div id="id">Place ID ${place.placeAllId}</div>
+		<div id="createdby"><fmt:message key="geobase.showMenuPlace.createdBy"/> ${place.createdBy.firstName} ${place.createdBy.lastName} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
+		<div id="id"><fmt:message key="geobase.showMenuPlace.placeId"/> ${place.placeAllId}</div>
 		<input type="hidden" id="currentUrl" value="${ShowPlaceURL}" />
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
@@ -60,16 +60,16 @@
 		</security:authorize>
 		<c:if test="${place.placeAllId != 0}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
-				<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
+				<a id="vettingHistory" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.vettinghistory"></fmt:message>" href="${ShowVettingChronologyPlaceURL}"><fmt:message key="geobase.showMenuPlace.vettingHistory"/></a>
 			</security:authorize>
 			<span id="commentsOn"></span>
-			<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.discussions"></fmt:message>" href="#">Forum</a>
+			<a id="comments" class="button_bodyleft_medium" title="<fmt:message key="geobase.showMenuPlace.help.discussions"></fmt:message>" href="#"><fmt:message key="geobase.showMenuPlace.forum"/></a>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FELLOWS">
 			<c:if test="${!place.logicalDelete}">
-				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.delete"></fmt:message>" href="${DeletePlaceURL}">Delete</a>
+				<a id="deleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.delete"></fmt:message>" href="${DeletePlaceURL}"><fmt:message key="geobase.showMenuPlace.delete"/></a>
 			</c:if>	
 			<c:if test="${place.logicalDelete}">
-				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.undelete"></fmt:message>" href="${UndeletePlaceURL}">Undelete</a>
+				<a id="undeleteAction" class="button_bodyleft_small" title="<fmt:message key="geobase.showMenuPlace.help.undelete"></fmt:message>" href="${UndeletePlaceURL}"><fmt:message key="geobase.showMenuPlace.undelete"/></a>
 			</c:if>	
 			</security:authorize>
 			<a id="buttonPrint" title="<fmt:message key="geobase.showMenuPlace.help.print"></fmt:message>"  href="${PrintPlaceURL}"></a>
@@ -79,7 +79,7 @@
 			<c:if test="${inMarkedList == 'true'}">
 				<a id="buttonMarkedList" class="removeMarkedList" href="${RemoveMarkedListPlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.alreadymarkedlist"></fmt:message>" style="opacity:0.5;"></a>
 			</c:if>
-			<a id="buttonShareLink" class="button_bodyleft_medium2" href="${SharePlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.sharelink"></fmt:message>">Share/Link</a>
+			<a id="buttonShareLink" class="button_bodyleft_medium2" href="${SharePlaceURL}" title="<fmt:message key="geobase.showMenuPlace.help.sharelink"></fmt:message>"><fmt:message key="geobase.showMenuPlace.shareLink"/></a>
 		</c:if>
 	</div>
 </c:if>	
