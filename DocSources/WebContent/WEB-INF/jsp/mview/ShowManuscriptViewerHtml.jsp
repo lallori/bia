@@ -77,7 +77,7 @@
 				showNavImage: true, // this property hide navigation image
 				showNavButtons: true,
 				winResize: true,
-				zoom: 4,
+				zoom: 2,
 				scale: 0
 			});
 			
