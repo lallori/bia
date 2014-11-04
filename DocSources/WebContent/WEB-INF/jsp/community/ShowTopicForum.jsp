@@ -19,10 +19,6 @@
 	<c:url var="BIAHomeURL" value="/Home.do" />
 	
 	<c:if test="${not empty topic.annotation}">
-		<c:url var="ShowHideAnnotationURL" value="/community/ShowHideAnnotation.json">
-			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
-		</c:url>
-		
 		<c:url var="ShowMakeTranscribedModalURL" value="/annotation/ShowMakeTranscribedModalWindow.do">
 			<c:param name="annotationId" value="${topic.annotation.annotationId}" />
 			<c:param name="transcribed" value="true" />
@@ -51,10 +47,6 @@
 				</security:authorize>
 			</c:otherwise>
 		</c:choose>
-		
-		<c:url var="OpenCloseTopicURL" value="/community/OpenCloseTopic.json">
-			<c:param name="topicId" value="${topic.topicId}" />
-		</c:url>
 		
 		<div id="otherTopicActions">
 			<c:if test="${not topic.locked and not subscribed}">
@@ -93,23 +85,33 @@
 				</c:choose>
 			</c:when>
 			<c:otherwise>
+			
+				<c:url var="OpenCloseTopicURL" value="/community/OpenCloseTopic.json">
+					<c:param name="topicId" value="${topic.topicId}" />
+				</c:url>
+				
 				<c:choose>
 					<c:when test="${topic.locked}">
-						<a id="openTopic" href="#" title="<fmt:message key='community.forum.topic.tooltip.locked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
+						<a id="openTopic" href="${OpenCloseTopicURL}&close=false" title="<fmt:message key='community.forum.topic.tooltip.locked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_locked.png"/>"/></a>
 					</c:when>
 					<c:otherwise>
-						<a id="closeTopic" href="#" title="<fmt:message key='community.forum.topic.tooltip.unlocked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
+						<a id="closeTopic" href="${OpenCloseTopicURL}&close=true" title="<fmt:message key='community.forum.topic.tooltip.unlocked' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_unlocked.png"/>"/></a>
 					</c:otherwise>
 				</c:choose>
 				<c:if test="${not empty topic.annotation}">
+					<c:url var="ShowHideAnnotationURL" value="/community/ShowHideAnnotation.json">
+						<c:param name="annotationId" value="${topic.annotation.annotationId}" />
+					</c:url>
+					
 					<c:choose>
 						<c:when test="${topic.annotation.visible}">
-							<a id="hideAnnotation" href="#" title="<fmt:message key='community.forum.topic.tooltip.visible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
+							<a id="hideAnnotation" href="${ShowHideAnnotationURL}&show=false" title="<fmt:message key='community.forum.topic.tooltip.visible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_showed.png"/>"/></a>
 						</c:when>
 						<c:otherwise>
-							<a id="showAnnotation" href="#" title="<fmt:message key='community.forum.topic.tooltip.unvisible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
+							<a id="showAnnotation" href="${ShowHideAnnotationURL}&show=true" title="<fmt:message key='community.forum.topic.tooltip.unvisible' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_hidden.png"/>"/></a>
 						</c:otherwise>
 					</c:choose>
+					
 					<c:choose>
 						<c:when test="${empty topic.annotation.transcribed or not topic.annotation.transcribed}">
 							<a id="makeTranscribed" href="${ShowMakeTranscribedModalURL}" title="<fmt:message key='community.forum.topic.tooltip.notTranscribed' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/img_notTranscribed.png"/>"/></a>
@@ -122,7 +124,7 @@
 										<c:url var="ExportAnnotationDiscussionURL" value="/community/exportAnnotationDiscussion.json">
 											<c:param name="annotationId" value="${topic.annotation.annotationId}" />
 										</c:url>
-										<a id="exportAnnotationDiscussion" href="#" title="<fmt:message key='community.forum.topic.tooltip.exportToGeneralQuestions' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/button_exportTo.png"/>"/></a>
+										<a id="exportAnnotationDiscussion" href="${ExportAnnotationDiscussionURL}" title="<fmt:message key='community.forum.topic.tooltip.exportToGeneralQuestions' />" class="marginLR_0_10"><img src="<c:url value="/images/forum/button_exportTo.png"/>"/></a>
 									</c:if>
 								</c:when>
 								<c:otherwise>
@@ -131,6 +133,7 @@
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
+					
 					<c:if test="${not empty topic.annotation.exportedTo}">
 						<img src="<c:url value="/images/forum/img_exported.png"/>" title="<fmt:message key='community.forum.topic.tooltip.exported' />" class="marginLR_0_10" />
 					</c:if>
@@ -764,7 +767,7 @@
 				return false;
 			});
 			
-			$j(".subscribe").click(function(){
+			$j(".subscribe").click(function() {
 				$j.ajax({ type:"POST", url:$j(this).attr('href'), async:false, success:function(json) {
 					if(json.subscription){
 						$j("#subscribeModal").dialog({
@@ -789,7 +792,7 @@
 			
 			$j(".unsubscribe").click(function(){
 				$j.ajax({ type:"POST", url:$j(this).attr('href'), async:false, success:function(json) {
-					if(json.subscription){
+					if (json.subscription) {
 						$j("#unsubscribeModal").dialog({
 							  autoOpen : false,
 							  modal: true,
@@ -1038,208 +1041,114 @@
 			}
 			
 			if ($j("#showAnnotation").length > 0) {
+				
+				initDialog('showAnnotationModal', 310, 130, 'showAnnotation');
+				
 				$j("#showAnnotation").die();
 				$j("#showAnnotation").live('click', function() {
-					$j("#showAnnotationModal").dialog({
-						autoOpen : false,
-						modal: true,
-						resizable: false,
-						scrollable: false,
-						width: 310,
-						height: 130, 
-						buttons: {
-							Yes: function() {
-								$j.ajax({ 
-									type:'POST', 
-									url: '${ShowHideAnnotationURL}' + '&show=true',
-									async: false,
-									success: function(json) {
-										if (json.operation == 'OK') {
-											$j("#showAnnotationModal").dialog("close");
-											$j("#main").load($j(".paginateActive").attr('href'));
-										} else {
-											$j("#showAnnotationModal").dialog("close");
-											alert('Operation error...please retry or contact the admin!');
-										}
-									},
-									error: function() {
-										alert('Server error...please retry or contact the admin!');
-									}
-								});
-								return false;
-							},
-							No: function() {
-								$j(this).dialog("close");
-							}
-						}
-					});
 					$j("#showAnnotationModal").dialog('open');
+					return false;
 				});
 			}
 			
 			if ($j("#hideAnnotation").length > 0) {
+				
+				initDialog('hideAnnotationModal', 310, 130, 'hideAnnotation');
+				
 				$j("#hideAnnotation").die();
 				$j("#hideAnnotation").live('click', function() {
-					$j("#hideAnnotationModal").dialog({
-						autoOpen : false,
-						modal: true,
-						resizable: false,
-						scrollable: false,
-						width: 310,
-						height: 130, 
-						buttons: {
-							Yes: function() {
-								$j.ajax({ 
-									type:'POST', 
-									url: '${ShowHideAnnotationURL}' + '&show=false',
-									async: false,
-									success: function(json) {
-										if (json.operation == 'OK') {
-											$j("#hideAnnotationModal").dialog("close");
-											$j("#main").load($j(".paginateActive").attr('href'));
-										} else {
-											alert('Operation error...please retry or contact the admin!');
-											$j("#hideAnnotationModal").dialog("close");
-										}
-										return false;
-									},
-									error: function() {
-										alert('Server error...please retry or contact the admin!');
-									}
-								});
-								return false;
-							},
-							No: function() {
-								$j(this).dialog("close");
-							}
-						}
-					});
 					$j("#hideAnnotationModal").dialog('open');
+					return false;
 				});
 			}
 			
 			if ($j("#openTopic").length > 0) {
+				
+				initDialog('openTopicModal', 310, 130, 'openTopic');
+				
 				$j("#openTopic").die();
 				$j("#openTopic").live('click', function() {
-					$j("#openTopicModal").dialog({
-						autoOpen : false,
-						modal: true,
-						resizable: false,
-						scrollable: false,
-						width: 310,
-						height: 130, 
-						buttons: {
-							Yes: function() {
-								$j.ajax({ 
-									type:'POST', 
-									url: '${OpenCloseTopicURL}' + '&close=false',
-									async: false,
-									success: function(json) {
-										if (json.operation == 'OK') {
-											$j("#openTopicModal").dialog("close");
-											$j("#main").load($j(".paginateActive").attr('href'));
-										} else {
-											alert('Operation error...please retry or contact the admin!');
-											$j("#openTopicModal").dialog("close");
-										}
-										return false;
-									},
-									error: function() {
-										alert('Server error...please retry or contact the admin!');
-									}
-								});
-								return false;
-							},
-							No: function() {
-								$j(this).dialog("close");
-							}
-						}
-					});
 					$j("#openTopicModal").dialog('open');
-				});
-			}
-			
-			if ($j("#exportAnnotationDiscussion").length > 0) {
-				$j("#exportAnnotationDiscussion").die();
-				$j("#exportAnnotationDiscussion").live('click', function() {
-					$j("#exportAnnotationDiscussionModal").dialog({
-						autoOpen : false,
-						modal: true,
-						resizable: false,
-						scrollable: false,
-						width: 310,
-						height: 160, 
-						buttons: {
-							Yes: function() {
-								$j.ajax({ 
-									type:'POST', 
-									url: '${ExportAnnotationDiscussionURL}',
-									async: false,
-									success: function(json) {
-										if (json.operation == 'OK') {
-											$j("#exportAnnotationDiscussionModal").dialog("close");
-											$j("#main").load($j(".paginateActive").attr('href'));
-										} else {
-											alert('Operation error...please retry or contact the admin!');
-											$j("#exportAnnotationDiscussionModal").dialog("close");
-										}
-										return false;
-									},
-									error: function() {
-										alert('Server error...please retry or contact the admin!');
-									}
-								});
-								return false;
-							},
-							No: function() {
-								$j(this).dialog("close");
-							}
-						}
-					});
-					$j("#exportAnnotationDiscussionModal").dialog('open');
+					return false;
 				});
 			}
 			
 			if ($j("#closeTopic").length > 0) {
+				
+				initDialog('closeTopicModal', 310, 130, 'closeTopic');
+				
 				$j("#closeTopic").die();
-				$j("#closeTopic").live('click', function() {
-					$j("#closeTopicModal").dialog({
-						autoOpen : false,
-						modal: true,
-						resizable: false,
-						scrollable: false,
-						width: 310,
-						height: 130, 
-						buttons: {
-							Yes: function() {
-								$j.ajax({ 
-									type:'POST', 
-									url: '${OpenCloseTopicURL}' + '&close=true',
-									async: false,
-									success: function(json) {
-										if (json.operation == 'OK') {
-											$j("#closeTopicModal").dialog("close");
-											$j("#main").load($j(".paginateActive").attr('href'));
-										} else {
-											alert('Operation error...please retry or contact the admin!');
-											$j("#closeTopicModal").dialog("close");
-										}
-										return false;
-									},
-									error: function() {
-										alert('Server error...please retry or contact the admin!');
-									}
-								});
-								return false;
-							},
-							No: function() {
-								$j(this).dialog("close");
-							}
-						}
-					});
+				$j("#closeTopic").click(function() {
 					$j("#closeTopicModal").dialog('open');
+					return false;
 				});
 			}
+			
+			if ($j("#exportAnnotationDiscussion").length > 0) {
+				
+				initDialog('exportAnnotationDiscussionModal', 310, 160, 'exportAnnotationDiscussion');
+				
+				$j("#exportAnnotationDiscussion").die();
+				$j("#exportAnnotationDiscussion").live('click', function() {
+					$j("#exportAnnotationDiscussionModal").dialog('open');
+					return false;
+				});
+			}
+			
+			/**
+			 * This function initializes the dialog window linked to the provided button.
+			 *
+			 * NOTE: It is used for the following buttons
+			 *    1 - showAnnotation
+			 *    2 - hideAnnotation
+			 *    3 - openTopic
+			 *    4 - closeTopic
+			 *    5 - exportAnnotationDiscussion
+			 *
+			 * @param $dialogId the dialog DOM element identifier
+			 * @param $width the dialog width
+			 * @param $height the dialog height
+			 * @param $buttonId the button DOM element identifier
+			 **/
+			function initDialog($dialogId, $width, $height, $buttonId) {
+				//console.log('Initialize dialog ' + $dialogId + '\nwith callbackUrl ' + ($j("#" + $buttonId).attr('href')));
+				$j("#" + $dialogId).dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					scrollable: false,
+					width: $width,
+					height: $height, 
+					buttons: {
+						Yes: function() {
+							$j.ajax({ 
+								type: 'POST', 
+								url: $j("#" + $buttonId).attr('href'),
+								cache: false,
+								async: false,
+								success: function(json) {
+									if (json.operation == 'OK') {
+										$j("#" + $dialogId).dialog("close");
+										$j("#main").load($j(".paginateActive").attr('href'));
+									} else {
+										alert('Operation error...please retry or contact the admin!');
+										$j("#" + $dialogId).dialog("close");
+									}
+									return false;
+								},
+								error: function() {
+									alert('Server error...please retry or contact the admin!');
+								}
+							});
+							$j(this).dialog('destroy');
+							return false;
+						},
+						No: function() {
+							$j(this).dialog("close");
+						}
+					}
+				});
+			};
 			
 			<c:if test="${not empty courseTranscriptionURL}">
 				// RR: This function scrolls the browser to the 'PostReply' button after the
