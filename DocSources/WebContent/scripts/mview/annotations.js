@@ -187,8 +187,8 @@ IIPMooViewer.implement({
 					text = text.substring(0, 29) + '&hellip;';
 				}
 				var title = annotation_array[i].title || 'No title';
-				if (title.length > 15) {
-					title = title.substring(0, 14) + '&hellip;';
+				if (title.length > 25) {
+					title = title.substring(0, 24) + '&hellip;';
 				}
 				annotation.store('tip:title', '<h1>'+title+'</h1>');
 				/*if (annotation_array[i].title) {
