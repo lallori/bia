@@ -852,15 +852,19 @@ public class TeachingServiceImpl implements TeachingService {
 			forum.setLogicalDelete(Boolean.TRUE);
 			
 			List<Integer> deletedForumIds = getForumDAO().deleteForumsFromAncestorForum(forumId);
+			// ancestor forum is also added to the deleted forums list
+			deletedForumIds.add(forumId);
 			List<Integer> deletedTopicIds = getForumTopicDAO().deleteForumTopicsFromForums(deletedForumIds);
 			List<Integer> deletedPostIds = getForumPostDAO().deleteAllForumTopicPosts(deletedTopicIds);
 			getForumPostNotifiedDAO().removeAllNotSentForumPostNotifications(deletedPostIds);
 			
 			if (forum.getForumParent() != null) {
 				decreaseSubForumsNumber(forum.getForumParent());
-				getForumDAO().recursiveDecreasePostsNumber(forum.getForumParent(), deletedPostIds.size());
-				ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum.getForumParent());
-				recursiveSetLastPost(forum.getForumParent(), lastPost, now);
+				if (deletedPostIds.size() > 0) {
+					getForumDAO().recursiveDecreasePostsNumber(forum.getForumParent(), deletedPostIds.size());
+					ForumPost lastPost = getForumPostDAO().getLastForumPostByCreationDate(forum.getForumParent());
+					recursiveSetLastPost(forum.getForumParent(), lastPost, now);
+				}
 			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

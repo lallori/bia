@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.forumtopic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -106,6 +107,10 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> deleteForumTopicsFromForums(List<Integer> forumIds) throws PersistenceException {
+		if (forumIds == null || forumIds.size() == 0) {
+			return new ArrayList<Integer>();
+		}
+		
 		Query query = getEntityManager().createQuery("SELECT topicId from ForumTopic WHERE logicalDelete = false AND forum.forumId IN ( :forumIds )");
 		query.setParameter("forumIds", forumIds);
 		List<Integer> topicIds = (List<Integer>) query.getResultList();
