@@ -21,6 +21,7 @@
 		</tbody>
 	</table>
 	
+	
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
