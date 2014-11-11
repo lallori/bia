@@ -1267,8 +1267,8 @@
 				// set forum or topic identifier in the changeTitleModalForm
 				$j("#changeTitleModalForm #forumId").val(${forum.forumId});
 				// ...and set the beginning title and description
-				$j("#changeTitleModalForm #title").val('${forum.title}');
-				$j("#changeTitleModalForm #description").val('${forum.description}');
+				$j("#changeTitleModalForm #title").val("${forum.title}");
+				$j("#changeTitleModalForm #description").val("${forum.description}");
 				
 				$j("#changeTitleModal").dialog({
 					autoOpen : false,
