@@ -15,7 +15,7 @@
     
     <div id="post">
         <h2>${forumPost.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${forumPost.user.account}</a> &#xbb <span class="date">${forumPost.lastUpdate}</span></p>
+        <p><fmt:message key="community.showPreviewForumPost.by"/> <a href="#" id="userName" class="link">${forumPost.user.account}</a> &#xbb <span class="date">${forumPost.lastUpdate}</span></p>
         <p>${forumPost.text}</p>
     </div>
     <div id="postProfile">
@@ -34,8 +34,8 @@
         		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${forumPost.user.account}" id="userName" class="link">${forumPost.user.account}</a>
         	</li>
             <li><security:authentication property="principal.significantRoleDescription"/></li>
-            <li>Posts: <span>${forumPost.user.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${forumPost.user.forumJoinedDate}</span></li>
+            <li><fmt:message key="community.showPreviewForumPost.posts"/> <span>${forumPost.user.forumNumberOfPost}</span></li>
+            <li><fmt:message key="community.showPreviewForumPost.joined"/> <span>${forumPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>
     <div id="online" class="visible"></div>

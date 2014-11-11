@@ -18,33 +18,33 @@
 	
 	<c:if test="${userMessage.user.account == account}">
 	<div id="message">
-		<h3>Message</h3>
+		<h3><fmt:message key="community.showMessage.showMessage"/></h3>
 		<div class="list">
         	<div class="row">
-            	<div class="item">From</div> 
+            	<div class="item"><fmt:message key="community.showMessage.from"/></div> 
             	<div class="value">${userMessage.sender}</div> 
        		</div>
         	<div class="row">
-            	<div class="item">Subject</div> 
+            	<div class="item"><fmt:message key="community.showMessage.subject"/></div> 
             	<div class="value" id="subject">${userMessage.subject}</div> 
         	</div>
         	<div class="row">
-        	    <div class="item">Message</div> 
+        	    <div class="item"><fmt:message key="community.showMessage.message"/></div> 
         	    <div class="value" id="messageBody">${userMessage.body}</div> 
         	</div>
 		</div>
 	</div>
 	</c:if>
 	
-	<a id="reply" class="buttonSmall button_small" href="${ReplyMessageURL}">Reply</a>
+	<a id="reply" class="buttonSmall button_small" href="${ReplyMessageURL}"><fmt:message key="community.showMessage.reply"/></a>
 
 					
-<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; <fmt:message key="community.showMessage.returnTo"/> <span><fmt:message key="community.showMessage.boardIndex"/></span> <fmt:message key="community.showMessage.forum"/></a>
 
 <div id="approveModal" title="Approve User" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to approve this user?
+		<fmt:message key="community.showMessage.sureApproveUser"/>
 	</p>
 	
 	<input type="hidden" value="" id="approveUrl"/>
@@ -53,14 +53,14 @@
 <div id="notApproved" title="Approve User" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Error: Not approved
+		<fmt:message key="community.showMessage.error"/>
 	</p>
 </div>
 
 <div id="unlockModal" title="Unlock User" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to unlock this user?
+		<fmt:message key="community.showMessage.sureUnlockUser"/>
 	</p>
 	
 	<input type="hidden" value="" id="unlockUrl"/>
@@ -69,7 +69,7 @@
 <div id="notUnlocked" title="Unlock User" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Error: Not unlocked
+		<fmt:message key="community.showMessage.errorUnlocked"/>
 	</p>
 </div>
 

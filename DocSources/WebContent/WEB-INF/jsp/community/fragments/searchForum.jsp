@@ -11,7 +11,7 @@
 					</form>
 				</div>
 
-                <a href="<c:url value="/community/ShowAdvancedSearchForumPost.do"/>" class="buttonMedium button_medium" id="advancedSearchButton">Advanced Search</a>
+                <a href="<c:url value="/community/ShowAdvancedSearchForumPost.do"/>" class="buttonMedium button_medium" id="advancedSearchButton"><fmt:message key="community.fragments.searchForum.advancedSearch"/></a>
 
 
 				<script>

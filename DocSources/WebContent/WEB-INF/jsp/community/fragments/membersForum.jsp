@@ -7,7 +7,7 @@
 
 <div id="membersDiv">
 	<img src="<c:url value="/images/forum/img_members.png"/>" alt="members" />
-	<a href="<c:url value="/community/ShowMembersForum.do"/>?letter=All" id="members">Members</a>
+	<a href="<c:url value="/community/ShowMembersForum.do"/>?letter=All" id="members"><fmt:message key="community.fragments.membersForum.members"/></a>
 </div>
 
 <script type="text/javascript">

@@ -9,8 +9,8 @@
 </c:url>
 
 <div id="statisticsDiv">
-	<h1>STATISTICS</h1>
-	<p>Total posts <span id="totalPosts">${statisticsHashMap['postsNumber']}</span> &#8226; Total topics <span id="totalTopics">${statisticsHashMap['topicsNumber']}</span> &#8226; Total members <span id="totalMembers">${statisticsHashMap['totalMembers']}</span> &#8226; Our newest member <a id="newestMember" class="link" href="${ShowUserProfileURL}">${statisticsHashMap['newestMember']}</a></p>
+	<h1><fmt:message key="community.fragments.statisticsForum.sTatistics"/></h1>
+	<p><fmt:message key="community.fragments.statisticsForum.totalPosts"/> <span id="totalPosts">${statisticsHashMap['postsNumber']}</span> &#8226; <fmt:message key="community.fragments.statisticsForum.totalTopics"/> <span id="totalTopics">${statisticsHashMap['topicsNumber']}</span> &#8226; <fmt:message key="community.fragments.statisticsForum.totalMembers"/> <span id="totalMembers">${statisticsHashMap['totalMembers']}</span> &#8226; <fmt:message key="community.fragments.statisticsForum.ourNewest"/> <a id="newestMember" class="link" href="${ShowUserProfileURL}">${statisticsHashMap['newestMember']}</a></p>
 </div>
 
 <script text="text/javascript">

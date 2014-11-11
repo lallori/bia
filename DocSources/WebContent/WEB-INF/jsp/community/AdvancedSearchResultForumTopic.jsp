@@ -13,8 +13,8 @@
 	</c:url>
 	
 	<div id="searchResults">
-		<h2>SEARCH</h2>
-		<p>Found <span>${searchResultPage.total}</span> match: <span class="search">${yourSearch}</span>
+		<h2><fmt:message key="community.advancedSearchResultForumTopic.sEarch"/></h2>
+		<p><fmt:message key="community.advancedSearchResultForumTopic.found"/> <span>${searchResultPage.total}</span> <fmt:message key="community.advancedSearchResultForumTopic.match"/> <span class="search">${yourSearch}</span>
 
 <%-- <h2>${topic.subject }</h2> --%>
 
@@ -32,12 +32,12 @@
 		<div id="forumTable">
 			<div class="list">
 				<div class="rowFirst">
-					<div class="one">TOPIC</div>
-			        <div class="two">REPLY</div>
-			        <div class="three">VIEWS</div>
-			        <div class="four">LAST POST</div>
+					<div class="one"><fmt:message key="community.advancedSearchResultForumTopic.tOpic"/></div>
+			        <div class="two"><fmt:message key="community.advancedSearchResultForumTopic.rEply"/></div>
+			        <div class="three"><fmt:message key="community.advancedSearchResultForumTopic.vIews"/></div>
+			        <div class="four"><fmt:message key="community.advancedSearchResultForumTopic.lAstPost"/></div>
 			        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-			        	<div class="five">DEL</div>
+			        	<div class="five"><fmt:message key="community.advancedSearchResultForumTopic.dEl"/></div>
 			        </security:authorize>
 				</div>
 				<c:forEach items="${searchResultPage.list}" var="currentTopic" varStatus="status">
@@ -52,12 +52,12 @@
 						<div class="one">
 					       	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
 					        <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
-					        <span>subtitle</span>
+					        <span><fmt:message key="community.advancedSearchResultForumTopic.subtitle"/></span>
 					    </div>
 					    <div class="two">${currentTopic.totalReplies}</div>
 					    <div class="three">-</div>
 						<c:if test="${not empty currentTopic.lastPost}">
-							<div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
+							<div class="four"><fmt:message key="community.advancedSearchResultForumTopic.by"/> <a href="#" id="userName" class="link">${currentTopic.lastPost.user.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						</c:if>
 						<c:if test="${empty currentTopic.lastPost}">
 						    <div class="four"></div>
@@ -94,7 +94,7 @@
  
 </div>
 					
-<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; <fmt:message key="community.advancedSearchResultForumTopic.returnTo"/> <span><fmt:message key="community.advancedSearchResultForumTopic.boardIndex"/></span> <fmt:message key="community.advancedSearchResultForumTopic.forum"/></a>
 
 
 <!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->

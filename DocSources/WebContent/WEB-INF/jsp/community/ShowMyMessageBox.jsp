@@ -12,16 +12,16 @@
 		<div class="list">
         	<c:if test="${command.category == 'INBOX'}">
 	        	<div class="rowFirst">
-	           		<div class="one">FROM</div>
-	            	<div class="two">MESSAGE</div>
-	            	<div class="three">DATE</div>
+	           		<div class="one"><fmt:message key="community.showMyMessageBox.from"/></div>
+	            	<div class="two"><fmt:message key="community.showMyMessageBox.message"/></div>
+	            	<div class="three"><fmt:message key="community.showMyMessageBox.date"/></div>
 	        	</div>
         	</c:if>
         	<c:if test="${command.category == 'OUTBOX'}">
         		<div class="rowFirst">
-        			<div class="one">TO</div>
-        			<div class="two">MESSAGE</div>
-        			<div class="three">DATE</div>
+        			<div class="one"><fmt:message key="community.showMyMessageBox.to"/></div>
+        			<div class="two"><fmt:message key="community.showMyMessageBox.message"/></div>
+        			<div class="three"><fmt:message key="community.showMyMessageBox.date"/></div>
         		</div>
         	</c:if>
 
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	
-	<a href="#" class="deleteMessages buttonSmall">Delete</a>
+	<a href="#" class="deleteMessages buttonSmall"><fmt:message key="community.showMyMessageBox.delete"/></a>
 	<input type="hidden" id="idToErase" value=""/>
 
 <div id="forumPaginate">
@@ -71,7 +71,7 @@
  
 </div>
 					
-<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; <fmt:message key="community.showMyMessageBox.retrunTo"/> <span><fmt:message key="community.showMyMessageBox.boardIndex"/></span> <fmt:message key="community.showMyMessageBox.forum"/></a>
 
 
 	<script type="text/javascript">

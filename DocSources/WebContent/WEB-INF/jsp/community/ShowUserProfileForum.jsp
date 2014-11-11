@@ -47,7 +47,7 @@
 	<div id="online" class="visible"></div> <!-- Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
     
     <div id="profile">
-    	<h3>Profile</h3>
+    	<h3><fmt:message key="community.showUserProfileForum.profile"/></h3>
         <div id="bgImgUserProfile">
 			<div id="imgUserProfile">
 				<c:if test="${userProfile.portrait}">
@@ -64,88 +64,88 @@
         </div>
         <div class="list">
         	<div class="row">
-                <div class="item">Username</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.username"/></div> 
                 <div class="value">${userProfile.firstName} ${userProfile.lastName}</div> 
             </div>
             <div class="row">
-                <div class="item">Rank</div> 
-                <div class="value">User</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.rank"/></div> 
+                <div class="value"><fmt:message key="community.showUserProfileForum.user"/></div> 
             </div>
             <c:if test="${!userProfile.mailHide}">
             <div class="row">
-                <div class="item">Email</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.email"/></div> 
                 <div class="value">${userProfile.mail}</div> 
             </div>
             </c:if>
             <div class="row">
-                <div class="item">Address</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.address"/></div>
                 <div class="value">${userProfile.address}</div>
             </div>
             <div class="row">
-                <div class="item">Country</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.country"/></div>
                 <div class="value">${userProfile.country}</div>
             </div>
             <div class="row">
-                <div class="item">Group</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.group"/></div>
 <%--                 <div class="value"><security:authentication property="principal.significantRoleDescription"/></div> --%>
 				<div class="value">${userGroup}</div>
             </div>
             <div class="row">
-                <div class="item">Title</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.title"/></div> 
                 <div class="value">${userProfile.title}</div>
             </div>
             <div class="row">
-                <div class="item">Organization</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.organization"/></div> 
                 <div class="value">${userProfile.organization}</div>
             </div>
             <div class="row">
-                <div class="item">Location</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.location"/></div> 
                 <div class="value">${userProfile.city}</div>
             </div>
             <div class="row">
-                <div class="item">Interests</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.interests"/></div> 
                 <div class="value">${userProfile.interests}</div>
             </div>
             <div class="row">
-                <div class="item">Resume</div> 
-                <div class="value">no.</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.resume"/></div> 
+                <div class="value"><fmt:message key="community.showUserProfileForum.no"/></div>
             </div>
         </div>
 	</div>
         
     <div id="statistics">
-        <h3>Statistics</h3>
+        <h3><fmt:message key="community.showUserProfileForum.statistics"/></h3>
         <div class="list">
             <div class="row">
-                <div class="item">Joined</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.joined"/></div> 
                 <div class="value">${userProfile.forumJoinedDate}</div> 
             </div>
             <div class="row">
-                <div class="item">Last visited</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.lastVis"/></div>
                 <div class="value">${userProfile.lastLoginDate}</div>
             </div>
             <div class="row">
-                <div class="item">Total posts</div>
-                <div class="value">${userProfile.forumNumberOfPost} | <a href="${ShowUserForumPostURL}" id="userPost">Search user's posts</a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.totalPosts"/></div>
+                <div class="value">${userProfile.forumNumberOfPost} | <a href="${ShowUserForumPostURL}" id="userPost"><fmt:message key="community.showUserProfileForum.searchUsersPosts"/></a><!-- Ti carica nella stessa pagina tutti i post scritti da l'utente --></div>
             </div>
             <div class="row">
-                <div class="item">Most active forum</div>
+                <div class="item"><fmt:message key="community.showUserProfileForum.mostActive"/></div>
                 <div class="value"><a href="${ShowForumURL}" class="activeForum">${mostActiveForum.description}</a></div>
             </div>
             <div class="row">
-                <div class="item">Most active Discussion</div> 
+                <div class="item"><fmt:message key="community.showUserProfileForum.mostActiveDiscussion"/></div> 
                 <div class="value"><a href="${ShowTopicURL}" class="activeTopic">${mostActiveDiscussion.subject}</a></div>
             </div>
         </div>
     </div>
     
     <div id="contact">
-        <h3>Contact</h3>
+        <h3><fmt:message key="community.showUserProfileForum.contact"/></h3>
         <ul>
         	<c:if test="${userProfile.mail != null && userProfile.mail != ''}">
-            	<li><img src="<c:url value="/images/forum/button_email.png"/>" alt="email" /> <a href="mailto:${userProfile.mail}">Send E-mail to <span>${userProfile.firstName} ${userProfile.lastName}</span></a></li>
+            	<li><img src="<c:url value="/images/forum/button_email.png"/>" alt="email" /> <a href="mailto:${userProfile.mail}"><fmt:message key="community.showUserProfileForum.sendEmail"/> <span>${userProfile.firstName} ${userProfile.lastName}</span></a></li>
             </c:if>
-            <li><img src="<c:url value="/images/forum/button_privateMessage.png"/>" alt="private message" /> <a href="${SendMessageURL}" id="sendMessage">Send private message</a></li>
+            <li><img src="<c:url value="/images/forum/button_privateMessage.png"/>" alt="private message" /> <a href="${SendMessageURL}" id="sendMessage"><fmt:message key="community.showUserProfileForum.sendPrivateM"/></a></li>
         </ul>
     </div>
 </div>
@@ -166,7 +166,7 @@
 <div id="deletePostModal" title="Delete post" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to delete this post?
+		<fmt:message key="community.showUserProfileForum.theQuestion"/>
 	</p>
 </div>
 

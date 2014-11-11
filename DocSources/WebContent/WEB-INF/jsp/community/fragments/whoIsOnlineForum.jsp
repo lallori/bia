@@ -7,8 +7,8 @@
 					<c:url var="WhoIsOnlineForumURL" value="/community/WhoIsOnlineForum.json" />
 					
 					<div id="whoIsOnlineDiv">
-						<h1>WHO IS ONLINE</h1>
-						<p>In total there is <span id="userOnline">${whoIsOnlineHashMap['onlineUsers'].size() + whoIsOnlineHashMap['guestUsers'] }</span> user online: <span id="userRegistered">${whoIsOnlineHashMap['onlineUsers'].size()}</span> registered and <span id="userGuest">${whoIsOnlineHashMap['guestUsers'] }</span> guest (based on users active over the past 30 minutes)</p>
+						<h1><fmt:message key="community.fragments.whoIsOnlineForum.wHoIsOnline"/></h1>
+						<p><fmt:message key="community.fragments.whoIsOnlineForum.inTotalThere"/> <span id="userOnline">${whoIsOnlineHashMap['onlineUsers'].size() + whoIsOnlineHashMap['guestUsers'] }</span> <fmt:message key="community.fragments.whoIsOnlineForum.userOnline"/> <span id="userRegistered">${whoIsOnlineHashMap['onlineUsers'].size()}</span> <fmt:message key="community.fragments.whoIsOnlineForum.registeredAnd"/> <span id="userGuest">${whoIsOnlineHashMap['guestUsers'] }</span> <fmt:message key="community.fragments.whoIsOnlineForum.guest"/></p>
 					</div>
 
 					<script type="text/javascript">

@@ -15,25 +15,25 @@
 	<c:url var="ShowAdvancedSearchForumPostURL" value="/community/ShowAdvancedSearchForumPost.do"/>
 	<c:url var="AdvancedSearchForumURL" value="/community/AdvancedSearchForumPost.do"/>
 	
-	<h2>Advanced Search</h2>
+	<h2><fmt:message key="community.showAdvancedSearchForumPost.advancedSearch"/></h2>
 	<form:form id="advancedSearchForm" method="post" action="${AdvancedSearchForumURL}">
 		<div id="searchQueryDiv">
-			<h1>SEARCH QUERY</h1>
-			<p><b>Search for keywords:</b><br />
+			<h1><fmt:message key="community.showAdvancedSearchForumPost.sEarchQuery"/></h1>
+			<p><b><fmt:message key="community.showAdvancedSearchForumPost.searchForKeyboards"/></b><br />
 			<!-- Place + in front of a word which must be found and - in front of a word which must not be found. Put a list of words separated by | into brackets if only one of the words must be found. Use * as a wildcard for partial matches.</p> -->
     	
     		<form:input id="text" name="text" class="input_50c" type="text" value="" path="text"/>
-    		<form:label for="allTerms" id="allTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="allTerms" value="true" path="allTerms" />Search for all terms or use query as entered</form:label>
-        	<form:label for="anyTerms" id="anyTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="anyTerms" value="false" path="allTerms" />Search for any terms</form:label>
-        	<p><b>Search for author:</b><br />
+    		<form:label for="allTerms" id="allTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="allTerms" value="true" path="allTerms" /><fmt:message key="community.showAdvancedSearchForumPost.searchForAllTerms"/></form:label>
+        	<form:label for="anyTerms" id="anyTermsLabel" path="allTerms"><form:radiobutton name="allTerms" id="anyTerms" value="false" path="allTerms" /><fmt:message key="community.showAdvancedSearchForumPost.searchForAnyTerms"/></form:label>
+        	<p><b><fmt:message key="community.showAdvancedSearchForumPost.searchForAuthor"/></b><br />
 			<!-- Use * as a wildcard for partial matches.</p> -->
     		<form:input id="textAuthor" name="textAuthor" class="input_50c" type="text" path="textAuthor"/>
 		
 		
 		
-			<h1>SEARCH OPTIONS</h1>
-			<p><b>Search in forums:</b><br />
-   			Select the forum or forums you wish to search in.</p>
+			<h1><fmt:message key="community.showAdvancedSearchForumPost.sEarchOptions"/></h1>
+			<p><b><fmt:message key="community.showAdvancedSearchForumPost.searchInForums"/></b><br />
+   			<fmt:message key="community.showAdvancedSearchForumPost.selectTheForum"/></p>
    			<div>
    				<select name="forumsId" id="searchForum" multiple="multiple" size="8" title="Search in forums">
    				<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
@@ -47,91 +47,91 @@
    			<div class="listForm"> 
 		        <div class="row">
 		            <div class="item">
-		            	<label for="searchWithin" id="searchWithinLabel">Search within:</label>
+		            	<label for="searchWithin" id="searchWithinLabel"><fmt:message key="community.showAdvancedSearchForumPost.searchWithin"/></label>
 		            </div>
 		            <div class="value">
 		                <ul>
-		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="sw_1" value="SUBJECT_TEXT" /> User post subjects and text</form:label></li>
-		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swMessage" value="TEXT" /> User posts only</form:label></li>
-		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swTopicTitles" value="TITLE" /> Discussion titles only</form:label></li>
-		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swFirstPost" value="FIRST_POST" /> First post of topics only</form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="sw_1" value="SUBJECT_TEXT" /> <fmt:message key="community.showAdvancedSearchForumPost.useerPostSubjects"/></form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swMessage" value="TEXT" /> <fmt:message key="community.showAdvancedSearchForumPost.userPostsOnly"/></form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swTopicTitles" value="TITLE" /> <fmt:message key="community.showAdvancedSearchForumPost.discussionTitlesOnly"/></form:label></li>
+		                    <li><form:label for="searchWithin" path="wordsType"><form:radiobutton name="wordsType" path="wordsType" id="swFirstPost" value="FIRST_POST" /> <fmt:message key="community.showAdvancedSearchForumPost.firstPostOfTopics"/></form:label></li>
 		                </ul>
 		            </div>
 		        </div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <label for="displayResults" id="displayResultsLabel">Display results as:</label>
+		                <label for="displayResults" id="displayResultsLabel"><fmt:message key="community.showAdvancedSearchForumPost.displaysResultsAs"/></label>
 		             </div>
 		             <div class="value">
-		                <form:label for="drPosts" path="displayResults"><form:radiobutton name="displayResults" id="drPosts" value="Posts" path="displayResults" /> Posts</form:label> 
-		                <form:label for="drTopics" path="displayResults"><form:radiobutton name="displayResults" id="drTopics" value="Topics" path="displayResults" /> Discussions</form:label> 
+		                <form:label for="drPosts" path="displayResults"><form:radiobutton name="displayResults" id="drPosts" value="Posts" path="displayResults" /> <fmt:message key="community.showAdvancedSearchForumPost.posts"/></form:label> 
+		                <form:label for="drTopics" path="displayResults"><form:radiobutton name="displayResults" id="drTopics" value="Topics" path="displayResults" /> <fmt:message key="community.showAdvancedSearchForumPost.discussions"/></form:label> 
 		             </div>
 				</div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <form:label for="sortResults" id="sortResultsLabel" path="sortResults">Sort results by:</form:label>	
+		                <form:label for="sortResults" id="sortResultsLabel" path="sortResults"><fmt:message key="community.showAdvancedSearchForumPost.sortResultsBy"/></form:label>	
 		             </div>
 		             <div class="value">
 		                <form:select name="sortResults" id="sortResults" path="sortResults">
-		                    <form:option value="AUTHOR">Author</form:option>
-		                    <form:option value="POST_TIME">Post time</form:option>
-		                    <form:option value="FORUM">Forum</form:option>
-		                    <form:option value="TOPIC_TITLE">Discussion title</form:option>
-		                    <form:option value="POST_SUBJECT">Post subject</form:option>
+		                    <form:option value="AUTHOR"><fmt:message key="community.showAdvancedSearchForumPost.author"/></form:option>
+		                    <form:option value="POST_TIME"><fmt:message key="community.showAdvancedSearchForumPost.postTime"/></form:option>
+		                    <form:option value="FORUM"><fmt:message key="community.showAdvancedSearchForumPost.forum"/></form:option>
+		                    <form:option value="TOPIC_TITLE"><fmt:message key="community.showAdvancedSearchForumPost.discussionTitle"/></form:option>
+		                    <form:option value="POST_SUBJECT"><fmt:message key="community.showAdvancedSearchForumPost.postSubject"/></form:option>
 		                </form:select>
-		                <form:label for="ascending" path="order"><form:radiobutton name="order" id="ascending" value="asc" path="order" /> Ascending</form:label> 
-		                <form:label for="descending" path="order"><form:radiobutton name="order" id="descending" value="desc" path="order" /> Descending</form:label> 
+		                <form:label for="ascending" path="order"><form:radiobutton name="order" id="ascending" value="asc" path="order" /> <fmt:message key="community.showAdvancedSearchForumPost.ascending"/></form:label> 
+		                <form:label for="descending" path="order"><form:radiobutton name="order" id="descending" value="desc" path="order" /> <fmt:message key="community.showAdvancedSearchForumPost.descending"/></form:label> 
 		             </div>
 		        </div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <form:label for="limitResults" id="limitResultsLabel" path="limitResults">Limit results to previous:</form:label>	
+		                <form:label for="limitResults" id="limitResultsLabel" path="limitResults"><fmt:message key="community.showAdvancedSearchForumPost.limitResults"/></form:label>	
 		             </div>
 		             <div class="value">
 		                <form:select name="limitResults" id="limitResults" path="limitResults">
-		                    <form:option value="0">All results</form:option>
-		                    <form:option value="1">1 day</form:option>
-		                    <form:option value="7">7 days</form:option>
-		                    <form:option value="14">2 weeks</form:option>
-		                    <form:option value="30">1 month</form:option>
-		                    <form:option value="90">3 months</form:option>
-		                    <form:option value="180">6 months</form:option>
-		                    <form:option value="365">1 year</form:option>
+		                    <form:option value="0"><fmt:message key="community.showAdvancedSearchForumPost.allResults"/></form:option>
+		                    <form:option value="1"><fmt:message key="community.showAdvancedSearchForumPost.oneDay"/></form:option>
+		                    <form:option value="7"><fmt:message key="community.showAdvancedSearchForumPost.sevenDay"/></form:option>
+		                    <form:option value="14"><fmt:message key="community.showAdvancedSearchForumPost.twoWeeks"/></form:option>
+		                    <form:option value="30"><fmt:message key="community.showAdvancedSearchForumPost.oneMonth"/></form:option>
+		                    <form:option value="90"><fmt:message key="community.showAdvancedSearchForumPost.threeMonths"/></form:option>
+		                    <form:option value="180"><fmt:message key="community.showAdvancedSearchForumPost.sixMonths"/></form:option>
+		                    <form:option value="365"><fmt:message key="community.showAdvancedSearchForumPost.oneYear"/></form:option>
 		                 </form:select>
 		             </div>
 		        </div>
 		        
 		        <div class="row">
 		        	<div class="item">
-		                <form:label for="returnFirst" id="returnFirstLabel" path="returnFirst">Return first:</form:label>	
+		                <form:label for="returnFirst" id="returnFirstLabel" path="returnFirst"><fmt:message key="community.showAdvancedSearchForumPost.returnFirst"/></form:label>	
 		             </div>
 		             <div class="value">
 		                <form:select name="returnFirst" title="Return first" path="returnFirst">
-		                    <form:option value="-1">All available</form:option>
-		                    <form:option value="0">0</form:option>
-		                    <form:option value="25">25</form:option>
-		                    <form:option value="50">50</form:option>
-		                    <form:option value="100">100</form:option>
-		                    <form:option value="200">200</form:option>
-		                    <form:option value="300">300</form:option>
-		                    <form:option value="400">400</form:option>
-		                    <form:option value="500">500</form:option>
-		                    <form:option value="600">600</form:option>
-		                    <form:option value="700">700</form:option>
-		                    <form:option value="800">800</form:option>
-		                    <form:option value="900">900</form:option>
-		                    <form:option value="1000">1000</form:option>
+		                    <form:option value="-1"><fmt:message key="community.showAdvancedSearchForumPost.allAvailable"/></form:option>
+		                    <form:option value="0"><fmt:message key="community.showAdvancedSearchForumPost.zero"/></form:option>
+		                    <form:option value="25"><fmt:message key="community.showAdvancedSearchForumPost.twof"/></form:option>
+		                    <form:option value="50"><fmt:message key="community.showAdvancedSearchForumPost.fif"/></form:option>
+		                    <form:option value="100"><fmt:message key="community.showAdvancedSearchForumPost.hund"/></form:option>
+		                    <form:option value="200"><fmt:message key="community.showAdvancedSearchForumPost.twohund"/></form:option>
+		                    <form:option value="300"><fmt:message key="community.showAdvancedSearchForumPost.threehund"/></form:option>
+		                    <form:option value="400"><fmt:message key="community.showAdvancedSearchForumPost.fourhund"/></form:option>
+		                    <form:option value="500"><fmt:message key="community.showAdvancedSearchForumPost.fivehund"/></form:option>
+		                    <form:option value="600"><fmt:message key="community.showAdvancedSearchForumPost.sixhund"/></form:option>
+		                    <form:option value="700"><fmt:message key="community.showAdvancedSearchForumPost.sevenhund"/></form:option>
+		                    <form:option value="800"><fmt:message key="community.showAdvancedSearchForumPost.eighthund"/></form:option>
+		                    <form:option value="900"><fmt:message key="community.showAdvancedSearchForumPost.ninehund"/></form:option>
+		                    <form:option value="1000"><fmt:message key="community.showAdvancedSearchForumPost.thous"/></form:option>
 		                </form:select>
-		                characters of posts
+		                <fmt:message key="community.showAdvancedSearchForumPost.charactersOfPosts"/>
 		             </div>
 		        </div>
 		     </div>
 			 <div id="buttons">
 				<input type="submit" value="Search" class="buttonSmall button_small" id="submitSearch"> 
-				<a href="${ShowAdvancedSearchForumPostURL}" id="cancel" class="buttonSmall button_small">Reset</a> 
+				<a href="${ShowAdvancedSearchForumPostURL}" id="cancel" class="buttonSmall button_small"><fmt:message key="community.showAdvancedSearchForumPost.reset"/></a> 
 			</div>
 		
 			<div>

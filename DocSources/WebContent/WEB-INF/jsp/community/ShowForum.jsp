@@ -58,7 +58,7 @@
 								<c:choose>
 									<c:when test="${currentCategory.subType == 'COURSE'}">
 										<%-- RR: Courses category --%>
-										COURSES
+										<fmt:message key="community.showForum.cOurses"/>
 									</c:when>
 									<c:otherwise>
 										<fmt:message key='community.forum.title.discussions' />
@@ -277,10 +277,10 @@
 					<a href="${EditForumPostURL}" class="buttonMedium button_medium" id="newTopic">
 						<c:choose>
 							<c:when test="${not empty containsTranscriptionTopic and containsTranscriptionTopic}">
-								Classroom Discussion
+								<fmt:message key="community.showForum.classroomDiscussion"/>
 							</c:when>
 							<c:otherwise>
-								Course Discussion
+								<fmt:message key="community.showForum.courseDiscussion"/>
 							</c:otherwise>
 						</c:choose>
 					</a>
@@ -377,11 +377,11 @@
 					</c:url>
 					
 					<c:if test="${not empty forum.forumParent && forum.forumParent.type != 'CATEGORY'}">
-						<a href="${ReturnToForumURL}" class="returnTo">&larr; Return to <span>${forum.forumParent.title}</span></a>
+						<a href="${ReturnToForumURL}" class="returnTo">&larr; <fmt:message key="community.showForum.returnTo"/> <span>${forum.forumParent.title}</span></a>
 					</c:if>
 					
 					<c:if test="${not empty forum.forumParent && forum.forumParent.type == 'CATEGORY'}">
-						<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo">&larr; Return to <span>Board Index</span></a>
+						<a href="<c:url value='/community/ShowForum.do?forumId=1'/>" class="returnTo">&larr; <fmt:message key="community.showForum.returnTo"/> <span><fmt:message key="community.showForum.boardIndex"/></span></a>
 					</c:if>
 				</c:when>
 				<c:when test="${forum.option.groupBySubForum=='true' && empty subForumsPage.list}">
@@ -402,8 +402,8 @@
 									<a id="viewTopic"><fmt:message key='community.forum.text.noForum' /></a>
 									<span>${currentForum.description}</span>
 								</div>
-								<div class="two">0</div>
-								<div class="three">0</div>
+								<div class="two"><fmt:message key="community.showForum.zero"/></div>
+								<div class="three"><fmt:message key="community.showForum.zero"/></div>
 								<div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 								<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 									<div class="five"></div>
@@ -613,8 +613,8 @@
 				                		<span>${currentForum.description}</span>
 				            		</div>
 				            		<div class="two"><fmt:message key='community.forum.text.emptyForum' /></div>
-				            		<div class="three">0</div>
-				            		<div class="four">0</div>
+				            		<div class="three"><fmt:message key="community.showForum.zero"/></div>
+				            		<div class="four"><fmt:message key="community.showForum.zero"/></div>
 				            		<div class="five"><fmt:message key='community.forum.text.emptyForum' /></div>
 				            		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 			        					<div class="six"></div>
@@ -628,8 +628,8 @@
 						                <a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 						                <span>${currentForum.description}</span>
 						            </div>
-						            <div class="two">0</div>
-						            <div class="three">0</div>
+						            <div class="two"><fmt:message key="community.showForum.zero"/></div>
+						            <div class="three"><fmt:message key="community.showForum.zero"/></div>
 						            <div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 						            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					        			<div class="five"></div>
@@ -714,8 +714,8 @@
 			            		</security:authorize>
             				</c:when>
             				<c:when test="${forum.subType == 'COURSE'}">
-            					<div class="one">COURSE TOPICS / DISCUSSIONS</div>
-				            	<div class="two">POSTS</div>
+            					<div class="one"><fmt:message key="community.showForum.cOurseTopics"/></div>
+				            	<div class="two"><fmt:message key="community.showForum.pOsts"/></div>
 				            	<div class="three"><fmt:message key='community.forum.title.views' /></div>
 				            	<div class="four"><fmt:message key='community.forum.title.lastPost' /></div>
 				            	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
@@ -839,19 +839,19 @@
 												</security:authorize>
 											</a>
 							            	<span>
-							            		Topic Type:&nbsp;
+							            		<fmt:message key="community.showForum.topicType"/>&nbsp;
 							            		 <c:choose>
 							            		 	<c:when test="${topicType == 'Q'}">
-							            		 		Highlighted Question
+							            		 		<fmt:message key="community.showForum.highlightedQuestion"/>
 							            		 	</c:when>
 							            		 	<c:when test="${topicType == 'D' and not empty containsTranscriptionTopic and containsTranscriptionTopic}">
-							            		 		Classroom Discussion
+							            		 		<fmt:message key="community.showForum.classroomDiscussion"/>
 							            		 	</c:when>
 							            		 	<c:when test="${topicType == 'D' and (empty containsTranscriptionTopic or not containsTranscriptionTopic)}">
-							            		 		Course Discussion
+							            		 		<fmt:message key="community.showForum.courseDiscussion"/>
 							            		 	</c:when>
 							            		 	<c:otherwise>
-							            		 		<b>Collaborative Transcription</b>
+							            		 		<b><fmt:message key="community.showForum.collaboartiveTranscription"/></b>
 							            		 	</c:otherwise>
 							            		 </c:choose>
 							            	</span>
@@ -963,7 +963,7 @@
 					<div id="jumpToDiv">
 				    	<fmt:message key='community.forum.text.jumpTo' />
 				    	<select id="selectForum" name="selectForum" class="selectform_long">
-				        	<option value="" selected="selected">Select a Forum</option>
+				        	<option value="" selected="selected"><fmt:message key="community.showForum.selectForum"/></option>
 				        </select>
 				        <input id="go" type="submit" title="<fmt:message key='community.forum.tooltip.go' />" value="<fmt:message key='community.forum.inputValue.go' />" class="buttonMini">
 				    </div>
@@ -993,8 +993,8 @@
 				                <span>${currentForum.description}</span>
 					        </div>
 					        <div class="two"><fmt:message key='community.forum.text.emptyForum' /></span></div>
-					        <div class="three">0</div>
-					        <div class="four">0</div>
+					        <div class="three"><fmt:message key="community.showForum.zero"/></div>
+					        <div class="four"><fmt:message key="community.showForum.zero"/></div>
 							<div class="five"><fmt:message key='community.forum.text.emptyForum' /></div>	
 					        <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 				        		<div class="six"></div>
@@ -1008,8 +1008,8 @@
 				                <a id="viewTopic"><fmt:message key='community.forum.text.noDiscussion' /></a>
 				                <span>${currentForum.description}</span>
 				            </div>
-				            <div class="two">0</div>
-				            <div class="three">0</div>
+				            <div class="two"><fmt:message key="community.showForum.zero"/></div>
+				            <div class="three"><fmt:message key="community.showForum.zero"/></div>
 				            <div class="four"><fmt:message key='community.forum.text.emptyForum' /></div>
 				            <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 				        		<div class="five"></div>
@@ -1370,12 +1370,12 @@
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
 			<fmt:message key="community.forum.messages.changeTitleMessage" />
 			<form id="changeTitleModalForm" method="post">
-				<label for="title">Title</label>
+				<label for="title"><fmt:message key="community.showForum.title"/></label>
 				<input id="title" name="title" type="text" style="width: 98%" value="" />
-				<label for="description">Description</label>
+				<label for="description"><fmt:message key="community.showForum.description"/></label>
 				<input id="description" name="description" type="text" style="width: 98%" value="" />
 				<input id="forumId" name="forumId" type="hidden" value="" />
 			</form>
-			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+			<div id="changeTitleError" style="display: none; color: red;"><fmt:message key="community.showForum.cannotLeave"/></div>
 		</p>
 	</div>

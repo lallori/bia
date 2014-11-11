@@ -13,8 +13,8 @@
 	</c:url>
 	
 	<div id="searchResults">
-		<h2>SEARCH</h2>
-		<p>Found <span>${simpleSearchResultPage.total}</span> match: <span class="search">${yourSearch}</span>
+		<h2><fmt:message key="community.searchResultForumPost.sEarch"/></h2>
+		<p><fmt:message key="community.searchResultForumPost.found"/> <span>${simpleSearchResultPage.total}</span> <fmt:message key="community.searchResultForumPost.match"/> <span class="search">${yourSearch}</span>
 
 <c:forEach items="${simpleSearchResultPage.list}" var="currentPost" varStatus="status">
 	<c:url var="ReportForumPostURL" value="/community/ReportForumPost.do">
@@ -36,15 +36,15 @@
     </div>
     <div id="post">
         <h2>${currentPost.subject} in: ${currentPost.topic.forum.subType} > ${currentPost.topic.forum.title} > ${currentPost.topic.subject}</h2>
-        <p>by <a href="#" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
+        <p><fmt:message key="community.searchResultForumPost.by"/> <a href="#" id="userName" class="link">${currentPost.user.account}</a> &#xbb <span class="date">${currentPost.lastUpdate}</span></p>
         <p class="textPost">${currentPost.text}</p>
     </div>
     <div id="postProfile">
     	<ul>
         	<li><a href="#" id="userName" class="link">${currentPost.user.account}</a></li>
-            <li>Community User</li>
-            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
+            <li><fmt:message key="community.searchResultForumPost.communityUser"/></li>
+            <li><fmt:message key="community.searchResultForumPost.posts"/> <span>${currentPost.user.forumNumberOfPost}</span></li>
+            <li><fmt:message key="community.searchResultForumPost.joined"/> <span>${currentPost.user.forumJoinedDate}</span></li>
         </ul>
     </div>
     <div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
@@ -59,10 +59,10 @@
 	${paginationData}
 	
 	<div id="jumpToDiv">
-    	Jump to:
+    	<fmt:message key="community.searchResultForumPost.jumpTo"/>
         <form id="jumpToForm" action="/src/SimpleSearch.do" method="post">
             <select id="selectForum" name="selectForum" selected""="" class="selectform_long">
-                <option value="" selected="selected">Select a Forum</option>
+                <option value="" selected="selected"><fmt:message key="community.searchResultForumPost.selectFor"/></option>
             </select>
             <input id="go" type="submit" title="go" value="Go" class="buttonMini button_mini">
         </form>
@@ -70,7 +70,7 @@
  
 </div>
 					
-<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; <fmt:message key="community.searchResultForumPost.returnTo"/> <span><fmt:message key="community.searchResultForumPost.boardIndex"/></span> <fmt:message key="community.searchResultForumPost.forum"/></a>
 
 
 <!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->

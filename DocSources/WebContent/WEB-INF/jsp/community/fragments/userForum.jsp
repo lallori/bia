@@ -13,8 +13,8 @@
  				<div id="userDiv">
  					<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS">
 					<img src="<c:url value="/images/forum/img_user.png"/>" alt="User" />
-					<a href="<c:url value="/community/ShowUserProfileForum.do"/>" id="profile">User Profile</a>
-					<a href="<c:url value="/community/ShowMessagesByCategory.do"/>?userMessageCategory=INBOX" id="userMessages">(<span id="messagesCount">0</span> new messages)</a>
+					<a href="<c:url value="/community/ShowUserProfileForum.do"/>" id="profile"><fmt:message key="community.fragments.userForum.userProfile"/></a>
+					<a href="<c:url value="/community/ShowMessagesByCategory.do"/>?userMessageCategory=INBOX" id="userMessages"><fmt:message key="community.fragments.userForum.open"/><span id="messagesCount"><fmt:message key="community.fragments.userForum.zero"/></span> <fmt:message key="community.fragments.userForum.newMessages"/></a>
 					<a href="<c:url value="/community/ShowMyForumPost.do"/>" id="viewYourPosts">View your posts</a>
 					</security:authorize>
 					<input type="hidden" value="" id="prevUrl" />

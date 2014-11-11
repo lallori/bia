@@ -28,7 +28,7 @@
 	
 	<c:choose>
 		<c:when test="${not empty documentExplorerError}">
-			<div id="error" style="color: red;">It was not possible to retrieve the document view</div>
+			<div id="error" style="color: red;"><fmt:message key="community.editForumPost.itWasNotPossible"/></div>
 		</c:when>
 		<c:when test="${not empty documentExplorer}">
 			<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
@@ -51,7 +51,7 @@
 		<div id="postTable">
 			<div id="post">
 				<h2>${postToReply.subject}</h2>
-	            <p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> &#xbb <span class="date">${postToReply.lastUpdate}</span></p>
+	            <p class="by"><fmt:message key="community.editForumPost.by"/> <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a> &#xbb <span class="date">${postToReply.lastUpdate}</span></p>
 	        	<p>${postToReply.text}</p>
 	    	</div>
 	    	<div id="postProfile">
@@ -69,9 +69,9 @@
 	        			</c:if>
 	        			<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${postToReply.user.account}" id="userName" class="link">${postToReply.user.account}</a>
 	        		</li>
-	            	<li>Community User</li>
-	            	<li>Posts: <span>${postToReply.user.forumNumberOfPost}</span></li>
-	            	<li>Joined: <span>${postToReply.user.forumJoinedDate}</span></li>
+	            	<li><fmt:message key="community.editForumPost.communityUser"/></li>
+	            	<li><fmt:message key="community.editForumPost.posts"/> <span>${postToReply.user.forumNumberOfPost}</span></li>
+	            	<li><fmt:message key="community.editForumPost.joined"/> <span>${postToReply.user.forumJoinedDate}</span></li>
 	        	</ul>
 	    	</div>
 	    	<div id="online" class="visible"></div> <!--  Se l'utente è loggato in quel momento inserire la class "visible" a questo div -->
@@ -80,25 +80,25 @@
 
 	<c:choose>
 		<c:when test="${command.topicId == 0}">
-			<h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
+			<h1 style="margin-bottom:20px;"><fmt:message key="community.editForumPost.pOstNew"/></h1>
 		</c:when>
 		<c:otherwise>
-			<h1 style="margin-bottom:20px;">POST REPLY</h1>
+			<h1 style="margin-bottom:20px;"><fmt:message key="community.editForumPost.pOstReply"/></h1>
 		</c:otherwise>
 	</c:choose>
 
 	<form:form id="EditForumPost" method="POST" class="edit" action="${EditForumPostURL}">
 		<div>
-			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Subject</form:label>
+			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error"><fmt:message key="community.editForumPost.subject"/></form:label>
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
 	    <div>
 			<form:textarea id="htmlbox" name="text" path="text" style="width:970px; height:300px"></form:textarea>
 	    </div>
 	    
-	    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
-	    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
-	    <a href="#" id="submit" class="buttonMedium button_medium">Submit</a>
+	    <a href="#" id="preview" class="buttonMedium button_medium"><fmt:message key="community.editForumPost.preview"/></a>
+	    <a href="#" id="discard" class="buttonMedium button_medium"><fmt:message key="community.editForumPost.discard"/></a>
+	    <a href="#" id="submit" class="buttonMedium button_medium"><fmt:message key="community.editForumPost.submit"/></a>
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
 	    <form:hidden path="topicId"/>
@@ -107,36 +107,36 @@
 	</form:form>
 	
 	<div id="postTablePreviewContainer" title="Post" style="display:none; margin-top:45px">
-		<h1>PREVIEW</h1>
+		<h1><fmt:message key="community.editForumPost.pReview"/></h1>
 		<div id="postTablePreview"></div>
-		<a href="#" id="closePreview" class="buttonMedium button_medium">Close Preview</a>
+		<a href="#" id="closePreview" class="buttonMedium button_medium"><fmt:message key="community.editForumPost.closePreview"/></a>
 	</div>
 
 	<div id="messagePosted" title="Post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			This message has been posted successfully.
+			<fmt:message key="community.editForumPost.thisMessagePosted"/>
 		</p>
 	</div>
 
 	<div id="messageNotPosted" title="Post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			This message has not been posted successfully.
+			<fmt:message key="community.editForumPost.theMessageNotPosted"/>
 		</p>
 	</div>
 	
 	<div id="messageNotValid" title="Post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			Write subject and text in this message!
+			<fmt:message key="community.editForumPost.writeSubject"/>
 		</p>
 	</div>
 	
 	<div id="question" title="Discard" style="display:none; cursor: default"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			Discard changes?
+			<fmt:message key="community.editForumPost.discardChanges"/>
 		</p> 
 	</div>
 	

@@ -20,15 +20,15 @@
 		<c:param name="forumId" value="1"/>
 	</c:url>
 	
-	<h2>Messages</h2>
+	<h2><fmt:message key="community.showMessagesByCategory.messages"/></h2>
 	
 	<div id="tabs">
 		<ul>
-			<li><a href="${ShowMyInboxURL}">Inbox</a></li>
-			<li><a href="${ShowMyOutboxURL}">Outbox</a></li>
-			<li><a href="<c:url value="/community/ComposeMessage.do"/>">Compose message</a></li>
+			<li><a href="${ShowMyInboxURL}"><fmt:message key="community.showMessagesByCategory.inbox"/></a></li>
+			<li><a href="${ShowMyOutboxURL}"><fmt:message key="community.showMessagesByCategory.outbox"/></a></li>
+			<li><a href="<c:url value="/community/ComposeMessage.do"/>"><fmt:message key="community.showMessagesByCategory.composeM"/></a></li>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<li><a href="<c:url value="/community/EmailMessage.do"/>">Email message</a></li>
+				<li><a href="<c:url value="/community/EmailMessage.do"/>"><fmt:message key="community.showMessagesByCategory.emailM"/></a></li>
 			</security:authorize>
 		</ul>
 	</div>
@@ -36,7 +36,7 @@
 	<div id="deleteMessagesModal" title="Delete" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-		Are you sure you want to delete this/these message/s?
+		<fmt:message key="community.showMessagesByCategory.sureQuestion"/>
 	</p>
 	</div>  
 

@@ -53,24 +53,24 @@
 				<c:url var="SubscribeForumTopicURL" value="/community/SubscribeForumTopic.json">
 					<c:param name="forumTopicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe" id="followTopic"><span>Subscribe</span></a>
+				<a href="${SubscribeForumTopicURL}" class="buttonMedium subscribe" id="followTopic"><span><fmt:message key="community.showTopicForum.subscribe"/></span></a>
 			</c:if>
 			<c:if test="${not topic.locked and subscribed}">
 				<c:url var="UnsubscribeForumTopicURL" value="/community/UnsubscribeForumTopic.json">
 					<c:param name="forumTopicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe" id="followTopic"><span>Unsubscribe</span></a>
+				<a href="${UnsubscribeForumTopicURL}" class="buttonMedium unsubscribe" id="followTopic"><span><fmt:message key="community.showTopicForum.unsubscribe"/></span></a>
 			</c:if>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 				<c:if test="${not empty courseTranscriptionURL}">
-					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
+					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span><fmt:message key="community.showTopicForum.backTo"/> <b><fmt:message key="community.showTopicForum.transcription"/></b></span></a>
 				</c:if>
 			</security:authorize>
 		</div>
 		
 		<div id="urlActions">
-			<a href="#" class="buttonMedium" id="button_refresh"><span><b>Refresh</b> page</span></a>
-			<a href="#" class="buttonMedium" id="button_link" title="<fmt:message key='community.forum.topic.tooltip.copyLink' />"><span>Copy <b>link</b></span></a>
+			<a href="#" class="buttonMedium" id="button_refresh"><span><b><fmt:message key="community.showTopicForum.refresh"/></b> <fmt:message key="community.showTopicForum.page"/></span></a>
+			<a href="#" class="buttonMedium" id="button_link" title="<fmt:message key='community.forum.topic.tooltip.copyLink' />"><span><fmt:message key="community.showTopicForum.copy"/> <b><fmt:message key="community.showTopicForum.link"/></b></span></a>
 		</div>
 		
 		<c:choose>
@@ -168,7 +168,7 @@
 					<input type="hidden" id="typeManuscript" value="DOCUMENT"/>
 					
 					<p>${topic.forum.description}</p>
-					<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord">Show record</a>
+					<a href="${ShowDocumentURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.showTopicForum.showRecord"/></a>
 					<div id="prevNextButtons" class="thread">
 				    	<c:if test="${documentExplorer.image.imageOrder == 1}">
 				    		<div id="previousPage">
@@ -201,7 +201,7 @@
 					<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 						<c:param name="entryId" value="${topic.forum.document.entryId}"/>
 					</c:url>
-					<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord">Show record</a>		
+					<a href="${ShowDocumentURL}" class="buttonMedium button_medium" id="showRecord"><fmt:message key="community.showTopicForum.showRecord"/></a>		
 				</c:when>
 				<c:when test="${not empty topic.annotation}">
 					<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
@@ -224,21 +224,21 @@
 					<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 						<c:param name="placeAllId" value="${topic.forum.place.placeAllId}"/>
 					</c:url>
-					<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord">Show record</a>
+					<a href="${ShowPlaceURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.showTopicForum.showRecord"/></a>
 				</c:when>
 				<c:when test="${not empty topic.forum.person}">
 					<p></p>
 					<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 						<c:param name="personId" value="${topic.forum.person.personId}"/>
 					</c:url>
-					<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord">Show record</a>
+					<a href="${ShowPersonURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.showTopicForum.showRecord"/></a>
 				</c:when>
 				<c:when test="${not empty topic.forum.volume}">
 					<p></p>
 					<c:url var="ShowVolumeURL" value="/src/volbase/ShowVolume.do">
 						<c:param name="summaryId" value="${topic.forum.volume.summaryId}"/>
 					</c:url>
-					<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord">Show record</a>
+					<a href="${ShowVolumeURL}" class="buttonMedium" id="showRecord"><fmt:message key="community.showTopicForum.showRecord"/></a>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
@@ -250,7 +250,7 @@
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 				<c:if test="${not empty courseTranscriptionURL}">
 					<div id="postReply_upperButtons">
-						<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
+						<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span><fmt:message key="community.showTopicForum.backTo"/> <b><fmt:message key="community.showTopicForum.transcription"/></b></span></a>
 					</div>
 				</c:if>
 			</security:authorize>
@@ -279,7 +279,7 @@
 						</c:otherwise>
 					</c:choose>
 			
-					<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply">Post a <b>reply</b></span></a>
+					<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply"><fmt:message key="community.showTopicForum.postA"/> <b><fmt:message key="community.showTopicForum.reply"/></b></span></a>
 				</security:authorize>
 			</c:if>
 			
@@ -426,12 +426,12 @@
 			        </c:choose>
 			        <c:choose>
 			        	<c:when test="${empty currentPost.updater || currentPost.user.account == currentPost.updater.account}">
-			        		<p class="by">by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
+			        		<p class="by"><fmt:message key="community.showTopicForum.by"/> <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p>
 			        	</c:when>
 			        	<c:otherwise>
 			        		<table class="by">
 			        			<tr>
-			        				<td><p>by <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
+			        				<td><p><fmt:message key="community.showTopicForum.by"/> <a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>&#xbb <span class="date">${currentPost.lastUpdate}</span></p></p></td>
 			        				<td><span class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' ></span></td>
 			        				<td><a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.updater.account}" class="linkUpdater" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${currentPost.postId}">${currentPost.updater.account}</a></td>
 			        			</tr>
@@ -457,8 +457,8 @@
 			        		<a href="<c:url value="/community/ShowUserProfileForum.do"/>?account=${currentPost.user.account}" id="userName_postId_${currentPost.postId}" class="link">${currentPost.user.account}</a>
 			        	</li>
 			            <li>${maxAuthorities[currentPost.user.account].description}</li>
-			            <li>Posts: <span>${currentPost.user.forumNumberOfPost}</span></li>
-			            <li>Joined: <span>${currentPost.user.forumJoinedDate}</span></li>
+			            <li><fmt:message key="community.showTopicForum.posts"/> <span>${currentPost.user.forumNumberOfPost}</span></li>
+			            <li><fmt:message key="community.showTopicForum.joined"/> <span>${currentPost.user.forumJoinedDate}</span></li>
 			        </ul>
 			    </div>
 			    <c:choose>
@@ -486,7 +486,7 @@
 		<div id="topicActions2">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
 				<c:if test="${not empty courseTranscriptionURL}">
-					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span>Back To <b>Transcription</b></span></a>
+					<a href="${courseTranscriptionURL}" class="buttonLarge courseTranscription"><span><fmt:message key="community.showTopicForum.backTo"/> <b><fmt:message key="community.showTopicForum.transcription"/></b></span></a>
 				</c:if>
 			</security:authorize>
 		</div>
@@ -511,9 +511,9 @@
 			
 			<c:if test="${not empty topic}">
 				<div id="jumpToDiv">
-			    	Jump to:
+			    	<fmt:message key="community.showTopicForum.jumpTo"/>
 			        <select id="selectForum" name="selectForum" class="selectform_long">
-			        	<option value="" selected="selected">Select a Forum</option>
+			        	<option value="" selected="selected"><fmt:message key="community.showTopicForum.selectAForum"/></option>
 			        </select>
 			        <input id="go" type="submit" title="go" value="Go" class="buttonMini button_mini">
 			    </div>
@@ -525,7 +525,7 @@
 	
 	</c:if>
 	<c:if test="${not empty isEmpty and (empty topic or empty topic.topicId)}">
-		<p>You have no posts.</p>
+		<p><fmt:message key="community.showTopicForum.youHaveNoPosts"/></p>
 	</c:if>
 					
 
@@ -533,13 +533,13 @@
 	<c:url var="ShowForumOfTopicURL" value="/community/ShowForum.do">
 		<c:param name="forumId" value="${topic.forum.forumId}"></c:param>
 	</c:url>
-	<a href="${ShowForumOfTopicURL}" class="returnTo">&larr; Return to <span>${topic.forum.title}</span> Forum</a>
+	<a href="${ShowForumOfTopicURL}" class="returnTo">&larr; <fmt:message key="community.showTopicForum.returnTo"/> <span>${topic.forum.title}</span> <fmt:message key="community.showTopicForum.forum"/></a>
 	
 	
 	<div id="deletePostModal" title="Delete post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to delete this post?
+			<fmt:message key="community.showTopicForum.theQuestionDelete"/>
 		</p>
 		
 		<input type="hidden" value="" id="deleteUrl"/>
@@ -548,7 +548,7 @@
 	<div id="reportPostModal" title="Report post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to report this post?
+			<fmt:message key="community.showTopicForum.theQuestionReport"/>
 		</p>
 		
 		<input type="hidden" value="" id="reportUrl"/>
@@ -569,14 +569,14 @@
 	<div id="notDeletePost" title="Delete post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Not deleted
+			<fmt:message key="community.showTopicForum.notDeleted"/>
 		</p>
 	</div>
 	
 	<div id="notReportPost" title="Report post" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Not reported
+			<fmt:message key="community.showTopicForum.notReported"/>
 		</p>
 	</div>
 	
@@ -592,7 +592,7 @@
 				<input id="title" name="title" type="text" style="width: 98%" value="" />
 				<input id="topicId" name="topicId" type="hidden" value="" />
 			</form>
-			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+			<div id="changeTitleError" style="display: none; color: red;"><fmt:message key="community.showTopicForum.cannotLeave"/></div>
 		</p>
 	</div>
 	

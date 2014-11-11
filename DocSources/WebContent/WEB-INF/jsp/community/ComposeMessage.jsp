@@ -19,7 +19,7 @@
 	<div class="listMessages">
 		<div class="row">
 			<div class="col_r">
-	        	<form:label path="accountDescription" for="to" id="toLabel">To</form:label>
+	        	<form:label path="accountDescription" for="to" id="toLabel"><fmt:message key="community.composeMessage.to"/></form:label>
 	        </div>
 	        <div class="col_l">
 	        	<form:input path="accountDescription" id="to" name="subject" class="input_25c" type="text" value=""/><!-- Autocompleter members -->
@@ -27,7 +27,7 @@
 	    </div>
 		<div class="row">
 			<div class="col_r">
-	        	<form:label path="subject" for="subject" id="subjectLabel">Subject</form:label>
+	        	<form:label path="subject" for="subject" id="subjectLabel"><fmt:message key="community.composeMessage.subject"/></form:label>
 	        </div>
 	        <div class="col_l">
 	        	<form:input path="subject" id="subject" name="subject" class="input_25c" type="text" value=""/>
@@ -38,7 +38,7 @@
 		<form:textarea id="htmlbox" path="text" style="width:970px; height:300px"></form:textarea>
 	</div>
     <input type="submit" value="Send" class="buttonSmall button_small" id="send">
-    <a href="#" id="preview" class="buttonSmall button_small">Preview</a>
+    <a href="#" id="preview" class="buttonSmall button_small"><fmt:message key="community.composeMessage.preview"/></a>
 	<form:hidden path="account"/>
     <form:hidden path="parentMessageId"/>
 </form:form>
@@ -46,24 +46,24 @@
 <div id="messageSent" title="Sent Message" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-		This message has been sent successfully.
+		<fmt:message key="community.composeMessage.thisMessageSuccessful"/>
 	</p>
 </div>
 
 <div id="messageNotValid" title="Post" style="display:none"> 
 	<p>
 		<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-		Write subject and text in this message!
+		<fmt:message key="community.composeMessage.writeSubject"/>
 	</p>
 </div>
 
 <div id="messagePreview" style="display:none">
-	<h1>PREVIEW</h1>
+	<h1><fmt:message key="community.composeMessage.pReview"/></h1>
     <h2 id="previewSubject"></h2>
     <p id="previewText"></p>
 </div>
 					
-<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; Return to <span>Board Index</span> Forum</a>
+<a href="<c:url value="/community/ShowForum.do?forumId=1"/>" class="returnTo">&larr; <fmt:message key="community.composeMessage.returnTo"/> <span><fmt:message key="community.composeMessage.boardIndex"/></span> <fmt:message key="community.composeMessage.forum"/></a>
 
 
 <!-- <div id="deletePostModal" title="Delete post" style="display:none">  -->
