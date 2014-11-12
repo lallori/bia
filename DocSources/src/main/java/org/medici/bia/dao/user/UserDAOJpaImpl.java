@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -599,6 +600,47 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 	public PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}
+	
+	@SuppressWarnings("serial")
+	@Override
+	public Page getUsersNotInCourse(Integer courseId, List<Authority> filteredAuthorities, PaginationFilter paginationFilter) throws PersistenceException {
+		if (filteredAuthorities == null || filteredAuthorities.size() == 0) {
+			filteredAuthorities = new ArrayList<Authority>() {{add(Authority.STUDENTS); add(Authority.TEACHERS);}};
+		}
+		
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		
+		String jpql = "FROM UserRole AS userRole WHERE"
+			+ " userRole.userAuthority.authority IN (:authorities)"
+			+ " AND userRole.user NOT IN ("
+				+ "SELECT DISTINCT coursePeople.userRole.user FROM CoursePeople AS coursePeople WHERE"
+				+ " coursePeople.course.courseId = :courseId)";
+		
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(userRole.user) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			query.setParameter("courseId", courseId);
+			query.setParameter("authorities", filteredAuthorities);
+
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(PageUtils.calculeTotalPages(paginationFilter.getTotal(), paginationFilter.getElementsForPage()));
+		}
+		
+		query = getEntityManager().createQuery("SELECT userRole.user " + jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		query.setParameter("courseId", courseId);
+		query.setParameter("authorities", filteredAuthorities);
+		
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(page.getElementsForPage());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -768,4 +810,5 @@ public class UserDAOJpaImpl extends JpaDao<String, User> implements UserDAO {
 		Query query = getEntityManager().createQuery("SELECT DISTINCT user.account FROM User user, AccessLog accessLog WHERE user.forumJoinedDate IS NOT NULL AND user.account = accessLog.account AND (accessLog.dateAndTime > '"+ DateUtils.getMYSQLDateTime(dateTime) + "') AND accessLog.action LIKE '%community%'");
 		return query.getResultList();
 	}
+
 }

@@ -4588,6 +4588,40 @@ ul#network a {
     margin-left: 95px; 
 }
 
+#manageCoursePeopleCommands .buttonUp {
+	background:url(${contextPath}/images/1024/button_arrowup.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+} 
+
+#manageCoursePeopleCommands .buttonUpDisabled {
+	background:url(${contextPath}/images/1024/button_arrowupdisabled.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+} 
+
+#manageCoursePeopleCommands .buttonDown {
+	background:url(${contextPath}/images/1024/button_arrowdown.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-left: 5px;
+} 
+
+#manageCoursePeopleCommands .buttonDownDisabled {
+	background:url(${contextPath}/images/1024/button_arrowdowndisabled.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+#manageCoursePeopleCommands #moveAllToCourseStudents, #manageCoursePeopleCommands #moveAllToOtherStudents {
+	margin-left: 20px;
+}
+
 /* ---------------- User Management ------------- */
 
 /* Modal */

@@ -447,6 +447,12 @@ public class UserDAOLdapImpl implements UserDAO {
 	protected ContextMapper getUserRoleContextMapper() {
 		return new UserRoleContextMapper();
 	}
+	
+	@Override
+	public Page getUsersNotInCourse(Integer courseId, List<Authority> filteredAuthorities, PaginationFilter paginationFilter) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}

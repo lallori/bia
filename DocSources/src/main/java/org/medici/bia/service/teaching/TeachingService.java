@@ -46,7 +46,9 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
+import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserPersonalNotes;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -63,6 +65,15 @@ import org.medici.bia.exception.ApplicationThrowable;
 public interface TeachingService {
 	
 	/**
+	 * This method adds all students (user with the student role) to the course.
+	 *  
+	 * @param courseId the course identifier
+	 * @return the number of students added to the course
+	 * @throws ApplicationThrowable
+	 */
+	int addAllStudentsToCourse(Integer courseId) throws ApplicationThrowable;
+	
+	/**
 	 * This method creates a new check point for the provided topic.
 	 * 
 	 * @param topicId the topoic identifier
@@ -72,6 +83,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	CourseCheckPoint addCourseCheckPoint(Integer topicId, CoursePostExt extendedPost, Date date) throws ApplicationThrowable;
+	
+	/**
+	 * This method adds students to the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param accounts the list of accounts to add to the course
+	 * @throws ApplicationThrowable
+	 */
+	void addCourseStudents(Integer courseId, List<String> accounts) throws ApplicationThrowable;
 	
 	/**
 	 * This method creates a new course topic ({@link ForumTopic}) in a new course container ({@link Forum}).<br/>
@@ -364,6 +384,16 @@ public interface TeachingService {
 	Page getCoursesElements(Integer courseForumId, PaginationFilter paginationFilterForum) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns paginated course students.
+	 * 
+	 * @param courseId the course identifier
+	 * @param paginationFilter the pagination filter
+	 * @return paginated course students
+	 * @throws ApplicationThrowable
+	 */
+	Page getCourseStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
 	 * This method returns the session user.
 	 * 
 	 * @return the {@link User}
@@ -445,6 +475,16 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	CourseTopicOption getOptionByCourseTopic(Integer topicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns paginated students that are not associated to the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param paginationFilter the pagination filter
+	 * @return paginated students
+	 * @throws ApplicationThrowable
+	 */
+	Page getOtherStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns a Page of extended posts of the course topic provided.
@@ -620,6 +660,27 @@ public interface TeachingService {
 	void openCloseCourseTopic(Integer courseTopicId, Boolean close) throws ApplicationThrowable;
 	
 	/**
+	 * This method removes all the people associated to a course.<br/>
+	 * NOTE: if no authorities are provided the system consider STUDENTS and TEACHERS only.
+	 * 
+	 * @param courseId the course identifier
+	 * @param filteredAuthorities the authorities to search
+	 * @return the number of removed course people
+	 * @throws ApplicationThrowable
+	 */
+	int removeAllCoursePeople(Integer courseId, List<Authority> filteredAuthorities) throws ApplicationThrowable;
+	
+	/**
+	 * This method removes the course people linked to the provided accounts from the course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param accounts the list of accounts
+	 * @return the number of removed course people
+	 * @throws ApplicationThrowable
+	 */
+	int removeCoursePeople(Integer courseId, List<String> accounts) throws ApplicationThrowable;
+	
+	/**
 	 * This method replies to a post with the provided post (only for discussions).
 	 * 
 	 * @param forumPost the new post
@@ -665,6 +726,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable
 	 */
 	Boolean subscribeCourseTopic(Integer courseTopicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method toggle the 'automatic' course subscription for the provided account.
+	 * 
+	 * @param courseId the course identifier
+	 * @param account the user account
+	 * @throws ApplicationThrowable
+	 */
+	void toggleCourseSubscription(Integer courseId, String account) throws ApplicationThrowable;
 	
 	/**
 	 * This method un-subscribes the session user from the provided course topic.

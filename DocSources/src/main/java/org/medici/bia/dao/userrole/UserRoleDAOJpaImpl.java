@@ -37,8 +37,6 @@ import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserRole;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -56,7 +54,6 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException {
 		for (UserRole userRole : userRoles) {
@@ -68,8 +65,20 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	 * {@inheritDoc}
 	 */
 	@Override
+	public UserRole findUserRole(String account, Authority authority) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM UserRole WHERE user.account=:account AND userAuthority.authority=:authority");
+		query.setParameter("account", account);
+		query.setParameter("authority", authority);
+		
+		return getFirst(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<UserRole> filterUserRoles(Authority authority) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM UserRole WHERE userAuthority.authority = :authority");
+		Query query = getEntityManager().createQuery("FROM UserRole WHERE userAuthority.authority=:authority");
 		query.setParameter("authority", authority);
 		
 		return getResultList(query);
@@ -80,16 +89,33 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	 */
 	@Override
 	public List<UserRole> findUserRoles(String account) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM UserRole WHERE account=:account order by userAuthority.priority asc ");
+		Query query = getEntityManager().createQuery("FROM UserRole WHERE account=:account ORDER BY userAuthority.priority ASC");
 		query.setParameter("account", account);
 
+		return getResultList(query);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UserRole> getUserRolesNotInCourse(Integer courseId, List<Authority> filteredAuthorities) throws PersistenceException {
+		String jpql = "FROM UserRole WHERE"
+				+ " userAuthority.authority IN (:authorities)"
+				+ " AND user NOT IN ("
+					+ "SELECT DISTINCT userRole.user FROM CoursePeople WHERE"
+					+ " course.courseId=:courseId)";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("courseId", courseId);
+		query.setParameter("authorities", filteredAuthorities);
+		
 		return getResultList(query);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Integer removeAllUserRoles(String account) throws PersistenceException {
 		String jpql = "DELETE FROM UserRole WHERE account=:account";
@@ -103,7 +129,6 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 	/**
 	 * {@inheritDoc}
 	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Integer renameAccount(String originalAccount, String newAccount) throws PersistenceException {
 		String jpql = "UPDATE UserRole SET user.account=:newAccount WHERE user.account=:originalAccount";

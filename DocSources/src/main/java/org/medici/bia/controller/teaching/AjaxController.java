@@ -28,6 +28,7 @@
 package org.medici.bia.controller.teaching;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,10 +47,10 @@ import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.CourseCheckPoint;
 import org.medici.bia.domain.CoursePostExt;
-import org.medici.bia.domain.User;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.Image;
+import org.medici.bia.domain.User;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.medici.bia.service.user.UserService;
@@ -564,13 +565,48 @@ public class AjaxController {
 		return model;
 	}
 	
+	
+	@RequestMapping(value = "/teaching/MoveAllOtherStudentsToCourse.json", method = RequestMethod.POST)
+	public Map<String, Object> moveAllStudentsToCourse(
+			@RequestParam(value="courseId", required = true) Integer courseId,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getTeachingService().addAllStudentsToCourse(courseId);
+			model.put("operation", "OK");
+			return model;		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;		
+		}
+	}
+			
+	
+	
+	@RequestMapping(value = "/teaching/MoveStudentsToCourse.json", method = RequestMethod.POST)
+	public Map<String, Object> moveStudentsToCourse(
+			@RequestParam(value="courseId", required = true) Integer courseId,
+			@RequestParam(value="accounts", required = true) String accounts,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			String[] splittedAccounts = org.apache.commons.lang.StringUtils.split(accounts, ",");
+			getTeachingService().addCourseStudents(courseId, Arrays.asList(splittedAccounts));
+			model.put("operation", "OK");
+			return model;		
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+			return model;		
+		}
+	}
+	
 	@RequestMapping(value = "/teaching/OpenCloseCourseTopic.json", method = RequestMethod.POST)
 	public Map<String, Object> openCloseCourseTranscription(
 			@RequestParam(value="courseTopicId", required = true) Integer courseTopicId,
 			@RequestParam(value="close", required = true) Boolean close,
 			HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
-		try{
+		try {
 			getTeachingService().openCloseCourseTopic(courseTopicId, close);
 			model.put("operation", "OK");
 			
@@ -581,6 +617,36 @@ public class AjaxController {
 		}
 	}
 	
+	@RequestMapping(value = "/teaching/RemoveAllCoursePeople.json", method = RequestMethod.POST)
+	public Map<String, Object> removeAllCoursePeople(
+			@RequestParam(value="courseId", required=true) Integer courseId,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			getTeachingService().removeAllCoursePeople(courseId, null);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+			
+	@RequestMapping(value = "/teaching/RemoveCoursePeople.json", method = RequestMethod.POST)
+	public Map<String, Object> removeCoursePeople(
+			@RequestParam(value="courseId", required=true) Integer courseId,
+			@RequestParam(value="accounts", required=false) String accounts,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		try {
+			String[] splittedAccounts = org.apache.commons.lang.StringUtils.split(accounts, ",");
+			getTeachingService().removeCoursePeople(courseId, Arrays.asList(splittedAccounts));
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable applicationThrowable) {
+			model.put("operation", "KO");
+		}
+		return model;
+	}
+			
 	@RequestMapping(value = "/teaching/RevokeStudentPermission.json", method = RequestMethod.POST)
 	public Map<String, Object> revokeStudentPermission(
 			@RequestParam(value="account", required=true) String account,
@@ -688,10 +754,29 @@ public class AjaxController {
 
 			model.put("topicId", courseTopicId);
 			model.put("subscription", subscription);
-		}catch(ApplicationThrowable th){
+		} catch (ApplicationThrowable th) {
 			model.put("error", th.getMessage());
 		}
 
+		return model;
+	}
+	
+	@RequestMapping(value = "/teaching/toggleCourseSubscription.json", method = RequestMethod.POST)
+	public Map<String, Object> toggleCourseSubscription(
+			@RequestParam(value="courseId", required=true) Integer courseId,
+			@RequestParam(value="account", required=true) String account,
+			HttpServletRequest httpServletRequest) {
+		
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			getTeachingService().toggleCourseSubscription(courseId, account);
+			model.put("operation", "OK");
+		} catch (ApplicationThrowable th) {
+			model.put("operation", "KO");
+			model.put("error", th.getMessage());
+		}
+		
 		return model;
 	}
 	

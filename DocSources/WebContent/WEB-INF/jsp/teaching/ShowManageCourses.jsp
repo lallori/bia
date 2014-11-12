@@ -77,8 +77,14 @@
 										<c:url var="DeactivateCourseURL" value="/teaching/deactivateCourse.json">
 											<c:param name="courseId" value="${course.courseId}" />
 										</c:url>
+										<c:url var="ManageCoursePeopleURL" value="/teaching/ShowManageCoursePeople.do">
+											<c:param name="courseId" value="${course.courseId}" />
+										</c:url>
 										<a href="${DeactivateCourseURL}" style="display: inline-block;" class="activeLink">
 											<img title="The course is active: click to deactivate it!" src="<c:url value='/images/1024/img_active.gif'/>" /> 
+										</a>
+										<a href="${ManageCoursePeopleURL}" style="display: inline-block;" class="addUsers">
+											<img title="Manage Course Students" style="margin-left: 5px;" src="<c:url value='/images/1024/button_addUsers.png'/>" />
 										</a>
 									</c:when>
 									<c:otherwise>
@@ -148,7 +154,7 @@
 					cache: false,
 					type: "POST",
 					success: function(json) { 
-    					if (json.operation = "OK") {
+    					if (json.operation == 'OK') {
  							$j("#body_left").load('${ShowManageCoursesWithOrderingURL}');
     					} else {
     						alert("Operation failed...please contact the admin");
@@ -158,6 +164,11 @@
     					alert("Server error...please contact the admin");
     				}
 				});
+				return false;
+			});
+			
+			$j(".addUsers").click(function() {
+				// $j("#body_left").load($j(this).attr('href'));
 				return false;
 			});
 			

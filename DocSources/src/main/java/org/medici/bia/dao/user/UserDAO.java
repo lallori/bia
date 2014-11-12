@@ -151,6 +151,17 @@ public interface UserDAO extends Serializable {
 	 * @return
 	 */
 	User getNewestMember();
+	
+	/**
+	 * Returns paginated {@link User}s not associated to the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param filteredAuthorities the authorities to filter, if none (null or empty) only TEACHERS and STUDENTS are considered
+	 * @param paginationFilter the pagination filter
+	 * @return the paginated users
+	 * @throws PersistenceException
+	 */
+	Page getUsersNotInCourse(Integer courseId, List<Authority> filteredAuthorities, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method updates the input {@link org.medici.bia.domain.User} 

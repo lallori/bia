@@ -46,6 +46,7 @@ import org.medici.bia.common.util.StringUtils;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.course.CourseDAO;
 import org.medici.bia.dao.coursecheckpoint.CourseCheckPointDAO;
+import org.medici.bia.dao.coursepeople.CoursePeopleDAO;
 import org.medici.bia.dao.coursepostext.CoursePostExtDAO;
 import org.medici.bia.dao.coursetopicoption.CourseTopicOptionDAO;
 import org.medici.bia.dao.document.DocumentDAO;
@@ -64,6 +65,7 @@ import org.medici.bia.dao.userrole.UserRoleDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
+import org.medici.bia.domain.CoursePeople;
 import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.CourseTopicOption;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
@@ -109,6 +111,8 @@ public class TeachingServiceImpl implements TeachingService {
 	private CourseCheckPointDAO courseCheckPointDAO;
 	@Autowired
 	private CourseDAO courseDAO;
+	@Autowired
+	private CoursePeopleDAO coursePeopleDAO;
 	@Autowired
 	private CoursePostExtDAO coursePostExtDAO;
 	@Autowired
@@ -162,6 +166,20 @@ public class TeachingServiceImpl implements TeachingService {
 
 	public void setCourseDAO(CourseDAO courseDAO) {
 		this.courseDAO = courseDAO;
+	}
+
+	/**
+	 * @return the coursePeopleDAO
+	 */
+	public CoursePeopleDAO getCoursePeopleDAO() {
+		return coursePeopleDAO;
+	}
+
+	/**
+	 * @param coursePeopleDAO the coursePeopleDAO to set
+	 */
+	public void setCoursePeopleDAO(CoursePeopleDAO coursePeopleDAO) {
+		this.coursePeopleDAO = coursePeopleDAO;
 	}
 
 	public CoursePostExtDAO getCoursePostExtDAO() {
@@ -291,6 +309,42 @@ public class TeachingServiceImpl implements TeachingService {
 	}
 	
 	/* Service API implementations */
+	
+	@SuppressWarnings("serial")
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public int addAllStudentsToCourse(Integer courseId) throws ApplicationThrowable {
+		if (courseId == null) {
+			throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "Cannot add students to null course");
+		}
+		Course course = getCourseDAO().find(courseId);
+		if (course == null) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER, "Cannot retieve course [" + courseId + "]");
+		}
+		
+		Date now = new Date();
+		User user = getCurrentUser();
+		
+		try {
+			List<UserRole> userRoles = getUserRoleDAO().getUserRolesNotInCourse(courseId, new ArrayList<Authority>() {{add(Authority.STUDENTS);}});
+			for(UserRole role : userRoles) {
+				CoursePeople coursePeople = new CoursePeople();
+				coursePeople.setCourse(course);
+				coursePeople.setUserRole(role);
+				coursePeople.setSubscription(Boolean.TRUE);
+				coursePeople.setLastUpdate(now);
+				coursePeople.setLastUpdateBy(user);
+				
+				getCoursePeopleDAO().persist(coursePeople);
+			}
+			return userRoles.size();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -315,6 +369,44 @@ public class TeachingServiceImpl implements TeachingService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public void addCourseStudents(Integer courseId, List<String> accounts) throws ApplicationThrowable {
+		if (courseId == null) {
+			throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "Cannot add students to null course");
+		}
+		Course course = getCourseDAO().find(courseId);
+		if (course == null) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER, "Cannot retieve course [" + courseId + "]");
+		}
+		if (accounts == null || accounts.size() == 0) {
+			return;
+		}
+		
+		Date now = new Date();
+		User user = getCurrentUser();
+		
+		try {
+			for(String account : accounts) {
+				UserRole role = getUserRoleDAO().findUserRole(account, Authority.STUDENTS);
+				
+				CoursePeople coursePeople = new CoursePeople();
+				coursePeople.setCourse(course);
+				coursePeople.setUserRole(role);
+				coursePeople.setSubscription(Boolean.TRUE);
+				coursePeople.setLastUpdate(now);
+				coursePeople.setLastUpdateBy(user);
+				
+				getCoursePeopleDAO().persist(coursePeople);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public ForumTopic addCourseTopic(Integer courseId, Integer documentId, String topicTitle, CourseTopicMode mode, String remoteAddress) throws ApplicationThrowable {
 		Course course = null;
 		Document document = null;
@@ -327,8 +419,8 @@ public class TeachingServiceImpl implements TeachingService {
 			if (document == null) {
 				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "ADD NEW COURSE TOPIC --> document [" + documentId + "] is missing");
 			}
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 		
 		if (StringUtils.isNullableString(topicTitle)) {
@@ -416,8 +508,8 @@ public class TeachingServiceImpl implements TeachingService {
 			}
 			
 			return courseTopic;
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -702,8 +794,8 @@ public class TeachingServiceImpl implements TeachingService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new lesson discussion post", Action.CREATE, Category.FORUM_POST, firstPost));
 			
 			return questionTopic;
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -714,8 +806,8 @@ public class TeachingServiceImpl implements TeachingService {
 	public Long countActiveCourses() throws ApplicationThrowable {
 		try {
 			return getCourseDAO().countActiveCourses();
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -726,8 +818,8 @@ public class TeachingServiceImpl implements TeachingService {
 	public Long countCheckPointPosts(Integer checkPointId) throws ApplicationThrowable {
 		try {
 			return getCoursePostExtDAO().countCheckPointPosts(checkPointId);
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -834,8 +926,8 @@ public class TeachingServiceImpl implements TeachingService {
 					course.getForum().getForumParent().setLastPost(determineAllCourseLastPost());
 			}
 			return true;
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -906,8 +998,8 @@ public class TeachingServiceImpl implements TeachingService {
 			user.setLastActiveForumDate(now);
 			
 			getUserHistoryDAO().persist(new UserHistory(user, "Delete course topic", Action.DELETE, Category.FORUM_TOPIC, courseTopic));
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 		
@@ -1013,8 +1105,8 @@ public class TeachingServiceImpl implements TeachingService {
 				course.getForum().getForumParent().setLastPost(course.getForum().getLastPost());
 			}
 			return true;
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -1025,8 +1117,8 @@ public class TeachingServiceImpl implements TeachingService {
 	public Course findCourse(Integer courseId) throws ApplicationThrowable {
 		try {
 			return getCourseDAO().find(courseId);
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -1037,8 +1129,8 @@ public class TeachingServiceImpl implements TeachingService {
 	public ForumTopic findCourseTopic(Integer topicId) throws ApplicationThrowable {
 		try {
 			return getForumTopicDAO().find(topicId);
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -1215,6 +1307,27 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@SuppressWarnings("serial")
+	public Page getCourseStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			if (courseId == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "Cannot search course students in null course!");
+			}
+			Course course = getCourseDAO().find(courseId);
+			if (course == null) {
+				throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER, "Course [" + courseId + "] not found!");
+			}
+			List<Authority> filteredAuth = new ArrayList<Authority>() {{add(Authority.STUDENTS);}};
+			return getCoursePeopleDAO().getCoursePeople(courseId, filteredAuth, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User getCurrentUser() throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
@@ -1264,8 +1377,8 @@ public class TeachingServiceImpl implements TeachingService {
 	public Course getLastActiveCourse() throws ApplicationThrowable {
 		try {
 			return getCourseDAO().getLastActiveCourse();
-		} catch (PersistenceException e) {
-			throw new ApplicationThrowable(e);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	
@@ -1324,6 +1437,20 @@ public class TeachingServiceImpl implements TeachingService {
 	public CourseTopicOption getOptionByCourseTopic(Integer topicId) throws ApplicationThrowable {
 		try {
 			return getCourseTopicOptionDAO().getOption(topicId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("serial")
+	@Override
+	public Page getOtherStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			List<Authority> filteredAuth = new ArrayList<Authority>() {{add(Authority.STUDENTS);}};
+			return getUserDAO().getUsersNotInCourse(courseId, filteredAuth, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1581,6 +1708,36 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("serial")
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public int removeAllCoursePeople(Integer courseId, List<Authority> filteredAuthorities) throws ApplicationThrowable {
+		try {
+			if (filteredAuthorities == null || filteredAuthorities.size() == 0) {
+				filteredAuthorities = new ArrayList<Authority>() {{add(Authority.STUDENTS); add(Authority.TEACHERS);}};
+			}
+			return getCoursePeopleDAO().removeAllCoursePeople(courseId, filteredAuthorities);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public int removeCoursePeople(Integer courseId, List<String> accounts) throws ApplicationThrowable {
+		try {
+			return getCoursePeopleDAO().removeCoursePeople(courseId, accounts);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable {
@@ -1732,6 +1889,38 @@ public class TeachingServiceImpl implements TeachingService {
 			
 			getForumTopicWatchDAO().persist(forumTopicWatch);
 			return Boolean.TRUE;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void toggleCourseSubscription(Integer courseId, String account) throws ApplicationThrowable {
+		try {
+			if (courseId == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "Cannot retrieve null course!");
+			}
+			if (account == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "Cannot retrieve null user!");
+			}
+			Course course = getCourseDAO().find(courseId);
+			if (course == null) {
+				throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER, "The course [" + courseId + "] is missing");
+			}
+			CoursePeople coursePerson = getCoursePeopleDAO().getCoursePerson(courseId, account);
+			if (coursePerson == null) {
+				throw new ApplicationThrowable(ApplicationError.ILLEGAL_STATUS, 
+						"The account [" + account + "] is not associated to the course [" + courseId + "]. We cannot proceed with the operation");
+			}
+			
+			coursePerson.setSubscription(!coursePerson.getSubscription());
+			coursePerson.setLastUpdate(new Date());
+			coursePerson.setLastUpdateBy(getCurrentUser());
+			
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1959,8 +2148,8 @@ public class TeachingServiceImpl implements TeachingService {
 			}
 			
 			return returnMap;
-		} catch (Throwable throwable){
-			throw new ApplicationThrowable(throwable);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 	}
 	

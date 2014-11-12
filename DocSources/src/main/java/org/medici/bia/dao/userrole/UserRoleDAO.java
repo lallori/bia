@@ -51,6 +51,16 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	void addAllUserRoles(Set<UserRole> userRoles) throws PersistenceException;
 	
 	/**
+	 * Returns the {@link UserRole} filtered by the provided {@link Authority} and user account.
+	 * 
+	 * @param account the user account
+	 * @param authority the user authority to find
+	 * @return the {@link UserRole} found
+	 * @throws PersistenceException
+	 */
+	UserRole findUserRole(String account, Authority authority) throws PersistenceException;
+	
+	/**
 	 * Returns all user roles filtered by the provided {@link Authority}.
 	 * 
 	 * @param authority the authority to filter
@@ -66,6 +76,16 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	 * @throws PersistenceException
 	 */
 	List<UserRole> findUserRoles(String account) throws PersistenceException;
+	
+	/**
+	 * Returns user roles not associated to the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param filteredAuthorities the authorities to search
+	 * @return the list of user roles found
+	 * @throws PersistenceException
+	 */
+	List<UserRole> getUserRolesNotInCourse(Integer courseId, List<Authority> filteredAuthorities) throws PersistenceException;
 	
 	/**
 	 * 
