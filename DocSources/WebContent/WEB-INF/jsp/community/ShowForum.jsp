@@ -851,7 +851,7 @@
 							            		 		<fmt:message key="community.showForum.courseDiscussion"/>
 							            		 	</c:when>
 							            		 	<c:otherwise>
-							            		 		<b><fmt:message key="community.showForum.collaboartiveTranscription"/></b>
+							            		 		<b><fmt:message key="community.showForum.collaborativeTranscription"/></b>
 							            		 	</c:otherwise>
 							            		 </c:choose>
 							            	</span>

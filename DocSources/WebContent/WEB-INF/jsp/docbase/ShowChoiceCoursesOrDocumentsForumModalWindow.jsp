@@ -114,13 +114,13 @@
 				<c:choose>
 					<c:when test="${not empty activeCourse}">
 						<div>
-							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.linkedToCourse"/></span>
+							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModalWindow.linkedToCourse"/></span>
 							<span>${activeCourse.forum.title}</span>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div>
-							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.linkedToCourse"/></span>
+							<span><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModalWindow.linkedToCourse"/></span>
 							<select id="linkedCourses">
 								<c:forEach items="${activeCourses}" var="course">
 									<option value="${course.courseId}">${course.forum.title}</option>

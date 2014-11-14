@@ -16,7 +16,7 @@
 		<p><fmt:message key="peoplebase.showReferringToDocumentsPerson.totalRecordsFound"/> <span id="referringToRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
-	<a id="refineReferringTo${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key="peoplebase.showReferringToDocumentsPerson.refineThisSearch"/></a>
+	<a id="refineReferringTo${personId}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key="peoplebase.showReferringDocumentsPerson.refineThisSearch"/></a>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showReferringToDocumentsPersonId${personId}">
 		<thead>
