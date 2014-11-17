@@ -25,49 +25,49 @@
 	
 	<c:url var="AskAQuestionURL" value="/teaching/askAQuestion.json" />
 	
-	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
+	<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.showIncrementalActions.aVailableActions"/></h6>
 
 	<c:choose>
 		<c:when test="${not closed}">
 			<c:choose>
 				<c:when test="${lastPostId eq -1}">
-					<a href="#" id="addNewPost" class="buttonLarge button_large">Start Transcription</a>
+					<a href="#" id="addNewPost" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.startTranscription"/></a>
 				</c:when>
 				<c:otherwise>
-					<a href="#" id="addNewPost" class="buttonLarge button_large">Continue Transcription</a>
+					<a href="#" id="addNewPost" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.continueT"/></a>
 				</c:otherwise>
 			</c:choose>
 			
-			<a href="#" id="showCurrentTranscription" class="buttonMedium button_Medium">Current Transcription</a>
+			<a href="#" id="showCurrentTranscription" class="buttonMedium button_Medium"><fmt:message key="teaching.showIncrementalActions.currentT"/></a>
 			
-			<a href="#" id="askAQuestion" class="buttonLarge button_large">Classroom Discussion</a>
+			<a href="#" id="askAQuestion" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.classroomDisc"/></a>
 			
-			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b>Refresh</b> page</span></a>
+			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b><fmt:message key="teaching.showIncrementalActions.refresh"/></b> <fmt:message key="teaching.showIncrementalActions.page"/></span></a>
 		</c:when>
 		<c:otherwise>
-			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Final Transcription</a>
+			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.finalTranscription"/></a>
 		</c:otherwise>
 	</c:choose>
 	
-	<a href="#" id="showPersonalNotes" class="buttonLarge button_large">Personal Notes</a>
+	<a href="#" id="showPersonalNotes" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.personalNotes"/></a>
 	
 	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>  -->
 	
 	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to create a post in the Classroom Discussion forum?
+			<fmt:message key="teaching.showIncrementalActions.areCreatePost"/>
 		</p>
 	</div>
 	
 	<div id="askAQuestionStep2Modal" title="Ask a Question" style="display:none"> 
 		<form id="askAQuestionForm">
 			<div>
-				<label id="questionTitleLabel" for="questionTitle" style="display:block;">Type in here your question title</label>
+				<label id="questionTitleLabel" for="questionTitle" style="display:block;"><fmt:message key="teaching.showIncrementalActions.typeTitle"/></label>
 				<input id="questionTitle" type="text" name="questionTitle" style="width: 98%"/>
 			</div>
 			<div>
-				<label id="questionTextLabel" for="questionText" style="display:block;">Type in here your question</label>
+				<label id="questionTextLabel" for="questionText" style="display:block;"><fmt:message key="teaching.showIncrementalActions.typeQuestion"/></label>
 				<input id="questionText" type="text" name="questionText" style="width: 98%"/>
 			</div>
 			<input type="hidden" id="courseTranscriptionTopicId" name="courseTranscriptionTopicId" value="${command.topicId}" />

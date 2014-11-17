@@ -26,14 +26,14 @@
 							<div class="folioDetailsContainer">
 								<c:choose>
 									<c:when test="${extendedPost.getVolumeFragment() != null}">
-										Volume&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
+										<fmt:message key="teaching.showRoundRobinPostPreview.volume"/>&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
 										<c:if test="${extendedPost.getInsertFragment() != null}">
-											-&nbsp;Insert&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
+											-&nbsp;<fmt:message key="teaching.showRoundRobinPostPreview.insert"/>&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
 										</c:if>
-										-&nbsp;Folio&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
+										-&nbsp;<fmt:message key="teaching.showRoundRobinPostPreview.folio"/>&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
 									</c:when>
 									<c:otherwise>
-										No folio details
+										<fmt:message key="teaching.showRoundRobinPostPreview.noFolioDetails"/>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -58,14 +58,14 @@
 					</c:if>
 					<a href="#" id="userName" class="link">${extendedPost.post.user.account}</a>
 				</li>
-				<li>Posts: <span>${extendedPost.post.user.forumNumberOfPost}</span></li>
-				<li>Joined: <span>${extendedPost.post.user.forumJoinedDate}</span></li>
+				<li><fmt:message key="teaching.showRoundRobinPostPreview.posts"/> <span>${extendedPost.post.user.forumNumberOfPost}</span></li>
+				<li><fmt:message key="teaching.showRoundRobinPostPreview.joined"/> <span>${extendedPost.post.user.forumJoinedDate}</span></li>
 			</ul>
 		</div>
 		<div class="online visible"></div>
 	</div>
     
-    <a id="closePreview" href="#" class="buttonMedium button_medium">Close Preview</a>
+    <a id="closePreview" href="#" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinPostPreview.closePreview"/></a>
 
     <script>
     	$j(document).ready(function() {

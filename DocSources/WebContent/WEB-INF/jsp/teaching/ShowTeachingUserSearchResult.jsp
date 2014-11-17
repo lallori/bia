@@ -12,7 +12,7 @@
 	</c:url>
 	
 	<div id="editOrShowDiv">
-        <a id="editOrShow" href="<c:url value="/teaching/ShowTeachingUserSearch.do" />" class="showOrEditCompare button_large">Back to User Search</a>
+        <a id="editOrShow" href="<c:url value="/teaching/ShowTeachingUserSearch.do" />" class="showOrEditCompare button_large"><fmt:message key="teaching.showTeachingUserSearchResult.backToUserSearch"/></a>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">

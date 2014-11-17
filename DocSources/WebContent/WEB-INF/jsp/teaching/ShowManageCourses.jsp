@@ -10,14 +10,14 @@
 	<c:choose>
 		<c:when test="${command.showActives}">
 			<div>
-				<h2 style="display: inline-block; margin-right: 40px;">Active courses</h2>
-				<a class="showButton button_large" href="${ShowManageCoursesURL}?showActives=false">Show All</a>
+				<h2 style="display: inline-block; margin-right: 40px;"><fmt:message key="teaching.showManageCourses.activeCourses"/></h2>
+				<a class="showButton button_large" href="${ShowManageCoursesURL}?showActives=false"><fmt:message key="teaching.showManageCourses.showAll"/></a>
 			</div>
 		</c:when>
 		<c:otherwise>
 			<div>
-				<h2 style="display: inline-block; margin-right: 40px;">All courses</h2>
-				<a class="showButton button_large" href="${ShowManageCoursesURL}?showActives=true">Show Only Active</a>
+				<h2 style="display: inline-block; margin-right: 40px;"><fmt:message key="teaching.showManageCourses.allCourses"/></h2>
+				<a class="showButton button_large" href="${ShowManageCoursesURL}?showActives=true"><fmt:message key="teaching.showManageCourses.showOnlyActive"/></a>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -61,9 +61,9 @@
 			<table style="width: 100%;">
 				<tbody>
 					<tr>
-						<th width="10%" columnid="0" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">#</th>
-						<th width="25%" columnid="1" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Created on</th>
-						<th width="40%" columnid="2" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 2 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Title</th>
+						<th width="10%" columnid="0" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}"><fmt:message key="teaching.showManageCourses.numb"/></th>
+						<th width="25%" columnid="1" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}"><fmt:message key="teaching.showManageCourses.createdOn"/></th>
+						<th width="40%" columnid="2" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 2 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}"><fmt:message key="teaching.showManageCourses.title"/></th>
 						<th width="25%">Actions</th>
 					</tr>
 					<c:forEach items="${coursesPage.list}" var="course">
@@ -103,7 +103,7 @@
 			</table>
 		</c:when>
 		<c:otherwise>
-			No courses found
+			<fmt:message key="teaching.showManageCourses.noCoursesFound"/>
 		</c:otherwise>
 	</c:choose>
 	

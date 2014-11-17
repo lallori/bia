@@ -22,10 +22,10 @@
 			</div>
 			<div class="titleContainer">
 				<h2>${extendedPost.post.subject}</h2>
-				<p>by <a href="#" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="yy-MM-dd HH:mm:ss" /></span></p></td>
+				<p><fmt:message key="teaching.showIncrementalPostPreview.by"/> <a href="#" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="yy-MM-dd HH:mm:ss" /></span></p></td>
 				<c:if test="${extendedPost.post.updater != null && extendedPost.post.user.account != extendedPost.post.updater.account}">
 					<p class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />'>
-						also by
+						<fmt:message key="teaching.showIncrementalPostPreview.alsoBy"/>
 						<a href="#" class="link" title='<fmt:message key="community.forum.topic.editedByAdministrator" />'>${extendedPost.post.updater.account}</a>
 					</p>
 				</c:if>
@@ -33,21 +33,21 @@
 			<div class="volumeContainer">
 				<c:choose>
 					<c:when test="${extendedPost.getVolumeFragment() != null}">
-						Volume&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
+						<fmt:message key="teaching.showIncrementalPostPreview.volume"/>&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
 						<c:if test="${extendedPost.getInsertFragment() != null}">
-							-&nbsp;Insert&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
+							-&nbsp;<fmt:message key="teaching.showIncrementalPostPreview.insert"/>&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
 						</c:if>
-						-&nbsp;Folio&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
+						-&nbsp;<fmt:message key="teaching.showIncrementalPostPreview.folio"/>&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
 					</c:when>
 					<c:otherwise>
-						No folio details
+						<fmt:message key="teaching.showIncrementalPostPreview.noFolio"/>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 		<div class="post">
 			<div class="transcriptionContainer">
-				<div class="transcritpionCaption">Transcription:</div>
+				<div class="transcritpionCaption"><fmt:message key="teaching.showIncrementalPostPreview.transcription"/></div>
 				<c:choose>
 					<c:when test="${not empty extendedPost.transcription}">
 						<div id="transcription_${extendedPost.post.postId}" class="transcription">${extendedPost.transcription}</div>
@@ -63,7 +63,7 @@
 		</div>
 	</div>
     
-    <a id="closePreview" href="#" class="buttonMedium button_medium">Close Preview</a>
+    <a id="closePreview" href="#" class="buttonMedium button_medium"><fmt:message key="teaching.showIncrementalPostPreview.closePreview"/></a>
 
     <script>
     	$j(document).ready(function() {

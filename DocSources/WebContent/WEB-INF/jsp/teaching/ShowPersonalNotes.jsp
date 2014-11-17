@@ -10,14 +10,14 @@
 	<c:url var="SavePersonalNotesURL" value="/teaching/SavePersonalNotes.do" />
 
 	<span id="personalNotesTitleSection">
-		<span class="personalNotesTitle">YOUR PERSONAL NOTES<span id="changedSign" title="changed" style="display: none;">&nbsp;*</span></span>
+		<span class="personalNotesTitle"><fmt:message key="teaching.showPersonalNotes.yOurPersonalNotes"/><span id="changedSign" title="changed" style="display: none;">&nbsp;*</span></span>
 		<span class="personalNotesLastUpdate">
 			<c:choose>
 				<c:when test="${not empty userNoteUpdate}">
-					last save at <span class="date"><fmt:formatDate value="${userNoteUpdate}" pattern="MM/dd/yyyy HH:mm:ss"/></span>
+					<fmt:message key="teaching.showPersonalNotes.lastSaveAt"/> <span class="date"><fmt:formatDate value="${userNoteUpdate}" pattern="MM/dd/yyyy HH:mm:ss"/></span>
 				</c:when>
 				<c:otherwise>
-					[never saved]
+					<fmt:message key="teaching.showPersonalNotes.neverSaved"/>
 				</c:otherwise>
 			</c:choose>
 		</span>
@@ -29,9 +29,9 @@
 		<div id="personalNotesCommands">
 			<div id="errorDiv" class="error" style="display: none;"></div>
 			<div id="buttons">
-				<a id="save" href="#" class="buttonSmall buttonDisabled">Save</a>
-				<a id="restore" href="#" class="buttonSmall buttonDisabled">Restore</a>
-				<a id="back" href="#" class="buttonMedium">Back To The Lesson</a>
+				<a id="save" href="#" class="buttonSmall buttonDisabled"><fmt:message key="teaching.showPersonalNotes.save"/></a>
+				<a id="restore" href="#" class="buttonSmall buttonDisabled"><fmt:message key="teaching.showPersonalNotes.restore"/></a>
+				<a id="back" href="#" class="buttonMedium"><fmt:message key="teaching.showPersonalNotes.backToTheLesson"/></a>
 			</div>
 		</div>
 	</form>

@@ -20,33 +20,33 @@
 	
 	<c:url var="AskAQuestionURL" value="/teaching/askAQuestion.json" />
 	
-	<h6 style="margin-bottom: 10px;">AVAILABLE ACTIONS</h6>
+	<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.showRoundRobinActions.aVailableActions"/></h6>
 
 	<c:if test="${not closed}">
-		<a href="#" id="addNewPost" class="buttonMedium button_medium">Add New Post</a>
+		<a href="#" id="addNewPost" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinActions.addNewPost"/></a>
 	</c:if>
 	
-	<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b>Ask a Question</b></a>
+	<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b><fmt:message key="teaching.showRoundRobinActions.askAQuestion"/></b></a>
 	
-	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b>Refresh</b> page</span></a>
+	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b><fmt:message key="teaching.showRoundRobinActions.refresh"/></b> <fmt:message key="teaching.showRoundRobinActions.page"/></span></a>
 	
-	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>
+	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinActions.lessonResources"/></a>
 	
 	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
 		<p>
 			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to ask a question?
+			<fmt:message key="teaching.showRoundRobinActions.areYouSureAsk"/>
 		</p>
 	</div>
 	
 	<div id="askAQuestionStep2Modal" title="Ask a Question" style="display:none"> 
 		<form id="askAQuestionForm">
 			<div>
-				<label id="questionTitleLabel" for="questionTitle" style="display:block;">Type the title of the question</label>
+				<label id="questionTitleLabel" for="questionTitle" style="display:block;"><fmt:message key="teaching.showRoundRobinActions.typeTheTitle"/></label>
 				<input id="questionTitle" type="text" name="questionTitle" style="width: 98%"/>
 			</div>
 			<div>
-				<label id="questionTextLabel" for="questionText" style="display:block;">Type the question</label>
+				<label id="questionTextLabel" for="questionText" style="display:block;"><fmt:message key="teaching.showRoundRobinActions.typeTheQuestion"/></label>
 				<input id="questionText" type="text" name="questionText" style="width: 98%"/>
 			</div>
 			<input type="hidden" id="courseTranscriptionTopicId" name="courseTranscriptionTopicId" value="${command.topicId}" />

@@ -28,24 +28,24 @@
 	
 	<div id="csSection">
 		<h6>
-			COLLABORATIVE TRANSCRIPTION
-			<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585">[CLOSED]</span></c:if>
+			<fmt:message key="teaching.showIncrementalCourseTranscription.cOllaborative"/>
+			<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585"><fmt:message key="teaching.showIncrementalCourseTranscription.cLosed"/></span></c:if>
 		</h6>
 		<c:if test="${not topic.locked}">
 			<c:if test="${!subscribed}">
 				<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
 					<c:param name="topicId" value="${topic.topicId}"/>
 				</c:url>
-				<a id="subscribe" href="${SubscribeForumTopicURL}" class="buttonMedium button_medium">Subscribe</a>
+				<a id="subscribe" href="${SubscribeForumTopicURL}" class="buttonMedium button_medium"><fmt:message key="teaching.showIncrementalCourseTranscription.subscribe"/></a>
 			</c:if>
 			<c:if test="${subscribed}">
 				<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
 					<c:param name="topicId" value="${topic.topicId}"/>
 				</c:url>
-				<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium">Unsubscribe</a>
+				<a id="unsubscribe" href="${UnsubscribeForumTopicURL}" class="buttonMedium button_medium"><fmt:message key="teaching.showIncrementalCourseTranscription.unsubscribe"/></a>
 			</c:if>
 		</c:if>
-		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>
+		<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium"><fmt:message key="teaching.showIncrementalCourseTranscription.lessonResources"/></a>
 	</div>
 	
 	<div id="topicTitleSection">
@@ -81,7 +81,7 @@
 	
 	<c:if test="${empty postsPage.list}">
 		<span class="paginateActive" style="display: none;" href="${baseUrl}&topicId=${topic.topicId}&entryId=${topic.document.entryId}&completeDOM=false" />
-		<p>There are no posts.</p>
+		<p><fmt:message key="teaching.showIncrementalCourseTranscription.thereAre"/></p>
 	</c:if>
 	
 	<c:if test="${not empty postsPage.list}">
@@ -125,10 +125,10 @@
 					</div>
 					<div class="titleContainer">
 						<h2>${extendedPost.post.subject}</h2>
-						<p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></p></td>
+						<p><fmt:message key="teaching.showIncrementalCourseTranscription.by"/> <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></p></td>
 						<c:if test="${extendedPost.post.updater != null && extendedPost.post.user.account != extendedPost.post.updater.account}">
 							<p class="administratorEdit" title='<fmt:message key="community.forum.topic.editedByAdministrator" />'>
-								also by
+								<fmt:message key="teaching.showIncrementalCourseTranscription.alsoBy"/>
 								<a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.updater.account}&completeDOM=true" target="_blank" class="link" title='<fmt:message key="community.forum.topic.editedByAdministrator" />' id="updaterName_postId_${extendedPost.post.postId}">${extendedPost.post.updater.account}</a>
 							</p>
 						</c:if>
@@ -136,14 +136,14 @@
 					<div class="volumeContainer">
 						<c:choose>
 							<c:when test="${extendedPost.getVolumeFragment() != null}">
-								Volume&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
+								<fmt:message key="teaching.showIncrementalCourseTranscription.volume"/>&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
 								<c:if test="${extendedPost.getInsertFragment() != null}">
-									-&nbsp;Insert&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
+									-&nbsp;<fmt:message key="teaching.showIncrementalCourseTranscription.insert"/>&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
 								</c:if>
-								-&nbsp;Folio&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
+								-&nbsp;<fmt:message key="teaching.showIncrementalCourseTranscription.folio"/>&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
 							</c:when>
 							<c:otherwise>
-								No folio details
+								<fmt:message key="teaching.showIncrementalCourseTranscription.noFolio"/>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -158,7 +158,7 @@
 				</div>
 				<div class="post">
 					<div class="transcriptionContainer">
-						<div class="transcritpionCaption">Transcription:</div>
+						<div class="transcritpionCaption"><fmt:message key="teaching.showIncrementalCourseTranscription.transcription"/></div>
 						<c:choose>
 							<c:when test="${not empty extendedPost.transcription}">
 								<div id="transcription_${extendedPost.post.postId}" class="transcription">${extendedPost.transcription}</div>
@@ -204,21 +204,21 @@
 				<input id="title" name="title" type="text" style="width: 98%" value="" />
 				<input id="topicId" name="topicId" type="hidden" value="" />
 			</form>
-			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+			<div id="changeTitleError" style="display: none; color: red;"><fmt:message key="teaching.showIncrementalCourseTranscription.cannotLeave"/></div>
 		</p>
 	</div>
 	
 	<div id="openCourseTopicModal" title="Open Course Transcription" style="display:none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Do you want to re-open the course transcription?
+			<fmt:message key="teaching.showIncrementalCourseTranscription.reopen"/>
 		</p>
 	</div>
 	
 	<div id="closeCourseTopicModal" title="Close Course Transcription" style="display:none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Do you want to close the course transcription?
+			<fmt:message key="teaching.showIncrementalCourseTranscription.close"/>
 		</p>
 	</div>
 	

@@ -8,15 +8,15 @@
 		
 		<div id="teachingModalDiv">
 			<div id="grantUsersDiv" class="adminModalButtonContainer">
-		        <a id="grantUsers" class="button_large" href="<c:url value="/teaching/ShowTeachingUserSearch.do" />">Grant/Revoke Users</a>
+		        <a id="grantUsers" class="button_large" href="<c:url value="/teaching/ShowTeachingUserSearch.do" />"><fmt:message key="teaching.showTeachingModuleModalWindow.grantRevokeUsers"/></a>
 			</div>
 		    
 			<div id="manageCoursesDiv" class="adminModalButtonContainer">
-		        <a id="manageCourses" class="button_large" href="<c:url value="/teaching/ShowManageCourses.do" />">Manage Courses</a>
+		        <a id="manageCourses" class="button_large" href="<c:url value="/teaching/ShowManageCourses.do" />"><fmt:message key="teaching.showTeachingModuleModalWindow.manageCourses"/></a>
 			</div>
 		    
 			<div id="createCoursesDiv" class="adminModalButtonContainer">
-		        <a id="createCourses" class="button_large" href="<c:url value="/teaching/ShowCreateCourse.do" />">Create Course</a>
+		        <a id="createCourses" class="button_large" href="<c:url value="/teaching/ShowCreateCourse.do" />"><fmt:message key="teaching.showTeachingModuleModalWindow.createCourse"/></a>
 			</div>
 		    
 			<input id="close" class="button_small" type="submit" title="Close Teaching Module window" value="Close"/>

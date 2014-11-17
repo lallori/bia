@@ -7,37 +7,37 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 	<c:url var="ShowUserSearchURL" 	value="/teaching/ShowTeachingUserSearch.do" />
 
-	<h3 class="userSearch">USER SEARCH FOR TEACHING MODULE</h3>
-	<h4 class="userSearchSubTitle">Search user to grant/revoke 'student' permissions</h4>
+	<h3 class="userSearch"><fmt:message key="teaching.showTeachingUserSearch.uSerSearchForTeachingModule"/></h3>
+	<h4 class="userSearchSubTitle"><fmt:message key="teaching.showTeachingUserSearch.searchUserToGrantRevoke"/></h4>
 	
 	<form:form id="userSearchForm" method="post" cssClass="edit" action="${ShowUserSearchURL}">
 		<fieldset>
-			<legend><b>NEW FILTER</b></legend>
+			<legend><b><fmt:message key="teaching.showTeachingUserSearch.nEwFilter"/></b></legend>
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><form:label path="fullName" for="fullName">Full name</form:label></div>
+						<div class="col_l"><form:label path="fullName" for="fullName"><fmt:message key="teaching.showTeachingUserSearch.fullName"/></form:label></div>
 						<div class="col_r"><input id="fullName" name="fullName" class="input_7c" type="text" value="Contains" disabled=""></div>
 						<div class="col_r"><form:input path="fullName" cssClass="input_25c"/></div>	
 					</div>	
 					<div class="row">
-						<div class="col_l"><form:label path="userName" for="userName">User name</form:label></div>
+						<div class="col_l"><form:label path="userName" for="userName"><fmt:message key="teaching.showTeachingUserSearch.userName"/></form:label></div>
 						<div class="col_r"><input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/></div>
 				        <div class="col_r"><form:input path="userName" cssClass="input_25c"/></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><form:label path="role" for="role">User Role</form:label></div>
+						<div class="col_l"><form:label path="role" for="role"><fmt:message key="teaching.showTeachingUserSearch.userRole"/></form:label></div>
 						<div class="col_r"><form:radiobutton path="role" value="All"/></div>
-				        <div class="col_l">All</div>
+				        <div class="col_l"><fmt:message key="teaching.showTeachingUserSearch.all"/></div>
 					</div>
 					<div class="row">
 						<div class="col_l"></div>
 						<div class="col_r"><form:radiobutton path="role" value="Stud"/></div>
-				        <div class="col_l">Only Students</div>
+				        <div class="col_l"><fmt:message key="teaching.showTeachingUserSearch.onlyStudents"/></div>
 					</div>
 					<div class="row">
 						<div class="col_l"></div>
 						<div class="col_r"><form:radiobutton path="role" value="NoStud"/></div>
-				        <div class="col_l">Not Students</div>
+				        <div class="col_l"><fmt:message key="teaching.showTeachingUserSearch.notStudents"/></div>
 					</div>
 				</div>	
 			<input class="search button_small fl" type="submit" value="Search" />

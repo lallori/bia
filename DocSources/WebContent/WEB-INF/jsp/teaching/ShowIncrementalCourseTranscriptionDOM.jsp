@@ -44,7 +44,7 @@
 	<div id="deletePostModal" title="Delete post" style="display: none;"> 
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Are you sure you want to delete this post?
+			<fmt:message key="teaching.showIncrementalCourseTranscriptionDOM.areYouSure"/>
 		</p>
 	</div>
 	

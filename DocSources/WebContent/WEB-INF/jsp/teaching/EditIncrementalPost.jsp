@@ -20,15 +20,15 @@
 	</c:url>
 	
 	<security:authorize ifAnyGranted="ROLE_STUDENTS">
-		<h6 style="margin-bottom: 10px;">EDIT TRANSCRIPTION</h6>
+		<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.editIncrementalPost.eDitTranscription"/></h6>
 	</security:authorize>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
-		<h6 style="margin-bottom: 10px;">EDIT POST</h6>
+		<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.editIncrementalPost.eDitPost"/></h6>
 	</security:authorize>
 
 	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditIncrementalPostURL}" style="max-width: 1000px;">
 		<div id="subjectSection">
-			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Post Subject*</form:label>
+			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error"><fmt:message key="teaching.editIncrementalPost.postSubject"/></form:label>
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
 	    <div id="folioDetailsSection" style="display: block;">
@@ -41,38 +41,38 @@
 		    	<form:input id="folioMod" path="folioMod" cssClass="noStyle" readonly="true"></form:input>
 		    	<form:input id="folioRV" path="folioRV" cssClass="noStyle" readonly="true"></form:input>
 		    </div>
-	    	<span class="folioDetailsTitle">Folio Details </span>
+	    	<span class="folioDetailsTitle"><fmt:message key="teaching.editIncrementalPost.folioDetails"/> </span>
 	    	<span id="volumeFragment" style="display: none;" class="contentFragment">
-	    		Volume
+	    		<fmt:message key="teaching.editIncrementalPost.volume"/>
     			<span id="volume" class="fragmentDetail"></span>
 	    	</span>
 	    	<span id="insertFragment" style="display: none;" class="contentFragment">
-    			Insert
+    			<fmt:message key="teaching.editIncrementalPost.insert"/>
 	    		<span id="insert" class="fragmentDetail"></span>
 	    	</span>
 	    	<span id="folioFragment" style="display: none;" class="contentFragment">
-	    		Folio
+	    		<fmt:message key="teaching.editIncrementalPost.folio"/>
 	    		<span id="folio" class="fragmentDetail"></span>
 	    	</span>
-	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
+	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span><fmt:message key="teaching.editIncrementalPost.update"/></span></a>
 	    </div>
 	    <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 	    	<c:if test="${empty editingStudentPost or editingStudentPost == false}">
 			    <div id="postTextArea">
-			    	<form:label id="htmlboxLabel" for="htmlbox" path="text" cssErrorClass="error">Message Area</form:label>
+			    	<form:label id="htmlboxLabel" for="htmlbox" path="text" cssErrorClass="error"><fmt:message key="teaching.editIncrementalPost.messageArea"/></form:label>
 					<form:textarea id="htmlbox" class="htmlbox" name="text" path="text" title="Edit your message"></form:textarea>
 			    </div>
 		    </c:if>
 	    </security:authorize>
 	    <div id="transcriptionSection">
-	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large">Current Transcription</a>
-	    	<form:label id="textboxLabel" for="textbox" path="transcription" cssErrorClass="error">Transcription Area</form:label>
+	    	<a href="#" id="showCurrentTranscription" class="buttonLarge button_large"><fmt:message key="teaching.editIncrementalPost.currentTranscription"/></a>
+	    	<form:label id="textboxLabel" for="textbox" path="transcription" cssErrorClass="error"><fmt:message key="teaching.editIncrementalPost.transcriptionArea"/></form:label>
 	    	<form:textarea id="textbox" name="transcription" path="transcription" title="Edit your transcription"></form:textarea>
 	    </div>
 	    <div id="editPostFormCommands">
-		    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
-		    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
-		    <a href="#" id="submit" class="buttonMedium button_medium">Submit</a>
+		    <a href="#" id="preview" class="buttonMedium button_medium"><fmt:message key="teaching.editIncrementalPost.preview"/></a>
+		    <a href="#" id="discard" class="buttonMedium button_medium"><fmt:message key="teaching.editIncrementalPost.discard"/></a>
+		    <a href="#" id="submit" class="buttonMedium button_medium"><fmt:message key="teaching.editIncrementalPost.submit"/></a>
 	    </div>
 	    <form:hidden path="topicId"/>
 	    <form:hidden id="formPostId" path="postId"/>
@@ -92,7 +92,7 @@
 	<div id="discardChanges" title="Discard" style="display: none;"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 0 0;"></span>
-			Discard changes!
+			<fmt:message key="teaching.editIncrementalPost.discardChanges"/>
 		</p>
 	</div>
 	

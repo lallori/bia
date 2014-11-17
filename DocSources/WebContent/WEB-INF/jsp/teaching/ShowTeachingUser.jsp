@@ -11,46 +11,46 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 	<div id="EditUserControlDiv" class="background">
 		<div class="title">
-			<h5>USER CONTROL</h5>
+			<h5><fmt:message key="teaching.showTeachingUser.uSerControl"/></h5>
 		</div>
 		
 		<div class="list">
 			<div class="row">
-				<div class="item37">Username</div> 
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.username"/></div> 
 				<div class="value">${user.account}</div> 
 			</div>
 			<div class="row">
-				<div class="item37">First Name</div>
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.firstName"/></div>
 				<div class="value">${user.firstName}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Middle Name</div>
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.middleName"/></div>
 				<div class="value">${user.middleName}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Last Name</div>
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.lastName"/></div>
 				<div class="value">${user.lastName}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Email adress</div> 
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.emailAddress"/></div> 
 				<div class="value">${user.mail}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Teaching Group Policy</div>
+				<div class="item37"><fmt:message key="teaching.showTeachingUser.teachingGroupPolicy"/></div>
 				<c:choose>
 					<c:when test="${empty teachingPolicy}">
 						<c:url var="GrantUserURL" value="/teaching/GrantStudentPermission.json">
 							<c:param name="account" value="${user.account}" />
 						</c:url>
-						<div class="value">No Permission</div>
-						<a id="grantButton" class="button_large" href="${GrantUserURL}" title="Grant student permission">Grant Permission</a>
+						<div class="value"><fmt:message key="teaching.showTeachingUser.noPermission"/></div>
+						<a id="grantButton" class="button_large" href="${GrantUserURL}" title="Grant student permission"><fmt:message key="teaching.showTeachingUser.grantPermission"/></a>
 					</c:when>
 					<c:when test="${teachingPolicy == 'STUDENTS'}">
 						<c:url var="RevokeUserURL" value="/teaching/RevokeStudentPermission.json">
 							<c:param name="account" value="${user.account}" />
 						</c:url>
-						<div class="value">STUDENTS</div>
-						<a id="revokeButton" href="${RevokeUserURL}" title="Revoke student permission">Revoke Permission</a>
+						<div class="value"><fmt:message key="teaching.showTeachingUser.sTudents"/></div>
+						<a id="revokeButton" href="${RevokeUserURL}" title="Revoke student permission"><fmt:message key="teaching.showTeachingUser.revokePermission"/></a>
 					</c:when>
 					<c:otherwise>
 						<div class="value">${teachingPolicy}</div>

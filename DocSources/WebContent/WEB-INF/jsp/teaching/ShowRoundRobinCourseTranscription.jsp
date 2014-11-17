@@ -22,8 +22,8 @@
 	<c:url var="RenameTopicURL" value="/de/community/RenameForumTopic.json" />
 
 	<h6>
-		ROUND ROBIN TRANSCRIPTION
-		<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585">[CLOSED]</span></c:if>
+		<fmt:message key="teaching.showRoundRobinCourseTranscription.rOundRobinTranscription"/>
+		<c:if test="${topic.locked}">&nbsp;<span style="color: #cc8585"><fmt:message key="teaching.showRoundRobinCourseTranscription.closed"/></span></c:if>
 	</h6>
 	
 	<div id="topicTitleSection">
@@ -57,13 +57,13 @@
 				<c:url var="SubscribeForumTopicURL" value="/teaching/SubscribeForumTopic.json">
 					<c:param name="topicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${SubscribeForumTopicURL}" id="subscribe" class="buttonMedium button_medium">Subscribe</a>
+				<a href="${SubscribeForumTopicURL}" id="subscribe" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinCourseTranscription.subscribe"/></a>
 			</c:if>
 			<c:if test="${subscribed}">
 				<c:url var="UnsubscribeForumTopicURL" value="/teaching/UnsubscribeForumTopic.json">
 					<c:param name="topicId" value="${topic.topicId}"/>
 				</c:url>
-				<a href="${UnsubscribeForumTopicURL}" id="unsubscribe" class="buttonMedium button_medium">Unsubscribe</a>
+				<a href="${UnsubscribeForumTopicURL}" id="unsubscribe" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinCourseTranscription.unsubscribe"/></a>
 			</c:if>
 		</c:if>
 	</div>
@@ -72,7 +72,7 @@
 	
 	<c:if test="${empty postsPage.list}">
 		<span class="paginateActive" style="display: none;" href="${baseUrl}&topicId=${topic.topicId}&entryId=${topic.document.entryId}&completeDOM=false" />
-		<p>There are no posts.</p>
+		<p><fmt:message key="teaching.showRoundRobinCourseTranscription.thereAreNoPosts"/></p>
 	</c:if>
 	
 	<c:if test="${not empty postsPage}">
@@ -136,7 +136,7 @@
 					</div>
 					<table class="by" style="width: 100%;">
 						<tr>
-							<td width="40%"><p>by <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></p></td>
+							<td width="40%"><p><fmt:message key="teaching.showRoundRobinCourseTranscription.by"/> <a href="<c:url value='/community/ShowUserProfileForum.do'/>?account=${extendedPost.post.user.account}&completeDOM=true" target="_blank" id="userName_postId_${extendedPost.post.postId}" class="link">${extendedPost.post.user.account}</a>&#xbb <span class="date"><fmt:formatDate value="${extendedPost.post.lastUpdate}" pattern="MM/dd/yyyy HH:mm:ss" /></span></p></td>
 							<td width="20%">
 								<c:choose>
 									<c:when test="${extendedPost.post.updater == null || extendedPost.post.user.account == extendedPost.post.updater.account}">
@@ -151,14 +151,14 @@
 									<div class="folioDetailsContainer">
 										<c:choose>
 											<c:when test="${extendedPost.getVolumeFragment() != null}">
-												Volume&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
+												<fmt:message key="teaching.showRoundRobinCourseTranscription.volume"/>&nbsp;<span class="volumeFragment">${extendedPost.getVolumeFragment()}</span>
 												<c:if test="${extendedPost.getInsertFragment() != null}">
-													-&nbsp;Insert&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
+													-&nbsp;<fmt:message key="teaching.showRoundRobinCourseTranscription.insert"/>&nbsp;<span class="insertFragment">${extendedPost.getInsertFragment()}</span>
 												</c:if>
-												-&nbsp;Folio&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
+												-&nbsp;<fmt:message key="teaching.showRoundRobinCourseTranscription.folio"/>&nbsp;<span class="folioFragment">${extendedPost.getFolioFragment()}</span>
 											</c:when>
 											<c:otherwise>
-												No folio details
+												<fmt:message key="teaching.showRoundRobinCourseTranscription.noFolioDetails"/>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -187,8 +187,8 @@
 						<c:if test="${not empty maxAuthorities[extendedPost.post.user.account]}">
 							<li>${maxAuthorities[extendedPost.post.user.account].description}</li>
 						</c:if>
-						<li>Posts: <span>${extendedPost.post.user.forumNumberOfPost}</span></li>
-						<li>Joined: <span>${extendedPost.post.user.forumJoinedDate}</span></li>
+						<li><fmt:message key="teaching.showRoundRobinCourseTranscription.posts"/> <span>${extendedPost.post.user.forumNumberOfPost}</span></li>
+						<li><fmt:message key="teaching.showRoundRobinCourseTranscription.joined"/> <span>${extendedPost.post.user.forumJoinedDate}</span></li>
 					</ul>
 				</div>
 				<c:choose>
@@ -231,21 +231,21 @@
 				<input id="title" name="title" type="text" style="width: 98%" value="" />
 				<input id="topicId" name="topicId" type="hidden" value="" />
 			</form>
-			<div id="changeTitleError" style="display: none; color: red;">Cannot leave empty title!!!</div>
+			<div id="changeTitleError" style="display: none; color: red;"><fmt:message key="teaching.showRoundRobinCourseTranscription.cannotLeave"/></div>
 		</p>
 	</div>
 	
 	<div id="openCourseTopicModal" title="Open Round-Robin Transcription" style="display:none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Do you want to re-open the round-robin transcription?
+			<fmt:message key="teaching.showRoundRobinCourseTranscription.doYouWantsToReOpen"/>
 		</p>
 	</div>
 	
 	<div id="closeCourseTopicModal" title="Close Round-Robin Transcription" style="display:none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>
-			Do you want to close the round-robin transcription?
+			<fmt:message key="teaching.showRoundRobinCourseTranscription.doYouWantsToClose"/>
 		</p>
 	</div>
 	

@@ -15,11 +15,11 @@
 		<c:param name="transcriptionMode" value="R" />
 	</c:url>
 	
-	<h6 style="margin-bottom: 10px;">EDIT POST</h6>
+	<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.editRoundRobinPost.eDitPost"/></h6>
 
 	<form:form id="EditCourseTopicPost" method="POST" class="edit" action="${EditRoundRobinPostURL}" style="max-width: 1000px;">
 		<div id="subjectSection">
-			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error">Post Subject*</form:label>
+			<form:label id="subjectLabel" for="subject" path="subject" cssErrorClass="error"><fmt:message key="teaching.editRoundRobinPost.postSubject"/></form:label>
 	        <form:input id="subject" path="subject" cssClass="input_25c"></form:input>
 	    </div>
 	    <div id="folioDetailsSection" style="display: block;">
@@ -32,28 +32,28 @@
 		    	<form:input id="folioMod" path="folioMod" cssClass="noStyle" readonly="true"></form:input>
 		    	<form:input id="folioRV" path="folioRV" cssClass="noStyle" readonly="true"></form:input>
 		    </div>
-	    	<span class="folioDetailsTitle">Folio Details</span>
+	    	<span class="folioDetailsTitle"><fmt:message key="teaching.editRoundRobinPost.folioDetails"/></span>
 	    	<span id="volumeFragment" style="display: none;" class="contentFragment">
-	    		Volume
+	    		<fmt:message key="teaching.editRoundRobinPost.volume"/>
     			<span id="volume" class="fragmentDetail"></span>
 	    	</span>
 	    	<span id="insertFragment" style="display: none;" class="contentFragment">
-    			Insert
+    			<fmt:message key="teaching.editRoundRobinPost.insert"/>
 	    		<span id="insert" class="fragmentDetail"></span>
 	    	</span>
 	    	<span id="folioFragment" style="display: none;" class="contentFragment">
-	    		Folio
+	    		<fmt:message key="teaching.editRoundRobinPost.folio"/>
 	    		<span id="folio" class="fragmentDetail"></span>
 	    	</span>
-	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span>Update</span></a>
+	    	<a href="#" id="refreshLocation" class="buttonMedium button_medium"><span><fmt:message key="teaching.editRoundRobinPost.update"/></span></a>
 	    </div>
 	    <div id="postTextArea">
 			<form:textarea id="htmlbox" name="text" path="text" style="width:95%; height:290px; max-width:1000px;"></form:textarea>
 	    </div>
 	    <div id="editPostFormCommands">
-		    <a href="#" id="preview" class="buttonMedium button_medium">Preview</a>
-		    <a href="#" id="discard" class="buttonMedium button_medium">Discard</a>
-		    <a href="#" id="submit" class="buttonMedium button_medium">Submit</a>
+		    <a href="#" id="preview" class="buttonMedium button_medium"><fmt:message key="teaching.editRoundRobinPost.preview"/></a>
+		    <a href="#" id="discard" class="buttonMedium button_medium"><fmt:message key="teaching.editRoundRobinPost.discard"/></a>
+		    <a href="#" id="submit" class="buttonMedium button_medium"><fmt:message key="teaching.editRoundRobinPost.submit"/></a>
 	    </div>
 	    <form:hidden path="topicId"/>
 	    <form:hidden id="formPostId" path="postId"/>
@@ -73,7 +73,7 @@
 	<div id="discardChanges" style="display:none; cursor: default"> 
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 0 0;"></span>
-			Discard changes!
+			<fmt:message key="teaching.editRoundRobinPost.discardChanges"/>
 		</p>
 	</div>
 	
