@@ -39,6 +39,7 @@ import org.medici.bia.common.pagination.Page;
 import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
+import org.medici.bia.domain.Course;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -89,6 +90,10 @@ public class ShowCourseTranscriptionController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try {
+			if (!getTeachingService().canAccess(command.getTopicId(), null)) {
+				return new ModelAndView("403", model);
+			}
+			
 			model.put("editingMode", command.getEditingMode() != null ? command.getEditingMode() : Boolean.FALSE);
 			
 			ForumTopic courseTopic;
@@ -131,6 +136,9 @@ public class ShowCourseTranscriptionController {
 						return new ModelAndView("error/ShowCourseTranscription", model);
 				}
 			}
+			
+			Course course = getTeachingService().getCourseFromCourseTopic(command.getTopicId());
+			model.put("isCoursePerson", getTeachingService().isCurrentUserInCourse(course.getCourseId()));
 			
 			switch (transcriptionMode) {
 				case C:

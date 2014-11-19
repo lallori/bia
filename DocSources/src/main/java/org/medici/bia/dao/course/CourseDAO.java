@@ -79,6 +79,15 @@ public interface CourseDAO extends Dao<Integer, Course> {
 	Course getCourseByCourseFragment(Integer courseFragmentContainerIdentifier) throws PersistenceException;
 	
 	/**
+	 * This method returns the course associated to the provided topic.
+	 * 
+	 * @param courseTopicId the course topic identifier
+	 * @return the course found
+	 * @throws PersistenceException
+	 */
+	Course getCourseByTopic(Integer courseTopicId) throws PersistenceException;
+	
+	/**
 	 * This method returns paginated courses.
 	 * 
 	 * @param onlyActives if true it returns only active course 

@@ -45,21 +45,21 @@
 		<c:param name="courseId" value="${command.courseId}" />
 	</c:url>
 
-	<div id="courseTitle">${courseTitle}</div>
+	<div class="courseTitle">${courseTitle}</div>
 	
 	<div id="courseStudentsSection">
 		<form id="courseStudentsForm" style="display: none;">
-			<input type="hidden" id="courseStudentsFirstRecord" name="courseStudentsFirstRecord" value="${command.courseStudentsFirstRecord}" />
-			<input type="hidden" id="courseStudentsPageNumber" name="courseStudentsPageNumber" value="${command.courseStudentsPageNumber}" />
-			<input type="hidden" id="courseStudentsPageTotal" name="courseStudentsPageTotal" value="${command.courseStudentsPageTotal}" />
-			<input type="hidden" id="courseStudentsForPage" name="courseStudentsForPage" value="${command.courseStudentsForPage}" />
-			<input type="hidden" id="courseStudentsOrderByTableField" name="courseStudentsOrderByTableField" value="${command.courseStudentsOrderByTableField}" />
-			<input type="hidden" id="courseStudentsAscendingOrder" name="courseStudentsAscendingOrder" value="${command.courseStudentsAscendingOrder}" />
+			<input type="hidden" id="courseStudentsFirstRecord" name="firstRecord" value="${command.courseStudentsFirstRecord}" />
+			<input type="hidden" id="courseStudentsPageNumber" name="pageNumber" value="${command.courseStudentsPageNumber}" />
+			<input type="hidden" id="courseStudentsPageTotal" name="pageTotal" value="${command.courseStudentsPageTotal}" />
+			<input type="hidden" id="courseStudentsForPage" name="peopleForPage" value="${command.courseStudentsForPage}" />
+			<input type="hidden" id="courseStudentsOrderByTableField" name="orderByTableField" value="${command.courseStudentsOrderByTableField}" />
+			<input type="hidden" id="courseStudentsAscendingOrder" name="ascendingOrder" value="${command.courseStudentsAscendingOrder}" />
 		</form>
 		
 		<div id="courseStudentsError" style="display: none;">
 			<span style="color: red; display: block;">There was a problem during the &quot;course students table&quot; load.</span>
-			<a href="#" id="retryCourseStudentsButton" class="buttonSmall">Retry</a>
+			<a href="#" id="retryCourseStudentsButton" class="button_small">Retry</a>
 		</div>
 		<div id="courseStudentsTable"></div>
 	</div>
@@ -77,17 +77,17 @@
 	
 	<div id="otherStudentsSection">
 		<form id="otherStudentsForm" style="display: none;">
-			<input type="hidden" id="otherStudentsFirstRecord" name="otherStudentsFirstRecord" value="${command.otherStudentsFirstRecord}" />
-			<input type="hidden" id="otherStudentsPageNumber" name="otherStudentsPageNumber" value="${command.otherStudentsPageNumber}" />
-			<input type="hidden" id="otherStudentsPageTotal" name="otherStudentsPageTotal" value="${command.otherStudentsPageTotal}" />
-			<input type="hidden" id="otherStudentsForPage" name="otherStudentsForPage" value="${command.otherStudentsForPage}" />
-			<input type="hidden" id="otherStudentsOrderByTableField" name="otherStudentsOrderByTableField" value="${command.otherStudentsOrderByTableField}" />
-			<input type="hidden" id="otherStudentsAscendingOrder" name="otherStudentsAscendingOrder" value="${command.otherStudentsAscendingOrder}" />
+			<input type="hidden" id="otherStudentsFirstRecord" name="firstRecord" value="${command.otherStudentsFirstRecord}" />
+			<input type="hidden" id="otherStudentsPageNumber" name="pageNumber" value="${command.otherStudentsPageNumber}" />
+			<input type="hidden" id="otherStudentsPageTotal" name="pageTotal" value="${command.otherStudentsPageTotal}" />
+			<input type="hidden" id="otherStudentsForPage" name="peopleForPage" value="${command.otherStudentsForPage}" />
+			<input type="hidden" id="otherStudentsOrderByTableField" name="orderByTableField" value="${command.otherStudentsOrderByTableField}" />
+			<input type="hidden" id="otherStudentsAscendingOrder" name="ascendingOrder" value="${command.otherStudentsAscendingOrder}" />
 		</form>
 		
 		<div id="otherStudentsError" style="display: none;">
 			<span style="color: red; display: block;">There was a problem during the &quot;other students table&quot; load.</span>
-			<a href="#" id="retryOtherStudentsButton" class="buttonSmall">Retry</a>
+			<a href="#" id="retryOtherStudentsButton" class="button_small">Retry</a>
 		</div>
 		
 		<div id="otherStudentsTable"></div>
@@ -97,8 +97,8 @@
 		$j(document).ready(function() {
 			
 			// append the loading div
-			if ($j("#loadingDiv").length === 0) {
-				$j("#body_left").append("<div id='loadingDiv' style='display: none; width: 100%; height: 100%;'></div>");
+			if ($j(".waitingModal").length === 0) {
+				$j("#body_left").append("<div class='waitingModal' style='display: none;'></div>");
 			}
 			
 			$j("#courseStudentsTable").load('${ShowCourseStudentsURL}', function(responseText, statusText, xhr) {
@@ -155,12 +155,11 @@
 			
 			$j("#moveToOtherStudents").die();
 			$j("#moveToOtherStudents").click(function() {
-				debugger;
 				if ($j(this).hasClass('buttonDownDisabled')) {
 					return false;
 				}
 				
-				$j("#loadingDiv").show();
+				$j(".waitingModal").show();
 				
 				var accounts = "";
 				$j("#courseStudentsTable input.selectStudent:checkbox:checked").each(function() {
@@ -181,12 +180,11 @@
 			
 			$j("#moveToCourseStudents").die();
 			$j("#moveToCourseStudents").click(function() {
-				debugger;
 				if ($j(this).hasClass('buttonUpDisabled')) {
 					return false;
 				}
 				
-				$j("#loadingDiv").show();
+				$j(".waitingModal").show();
 				
 				var accounts = "";
 				$j("#otherStudentsTable input.selectStudent:checkbox:checked").each(function() {
@@ -213,7 +211,7 @@
 					dataType: 'json',
 					type: "POST",
 					success: function(json) { 
-   						$j("#loadingDiv").hide();
+   						$j(".waitingModal").hide();
     					if (json.operation === "OK") {
     						$j("#body_left").load('${ShowManageCoursePeopleURL}');
     					} else {
@@ -221,7 +219,7 @@
     					}
     				},
     				error: function() {
-    					$j("#loadingDiv").hide();
+    					$j(".waitingModal").hide();
     					alert("Server error...please contact the admin");
     				}
 				});

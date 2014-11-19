@@ -168,7 +168,7 @@
 			});
 			
 			$j(".addUsers").click(function() {
-				// $j("#body_left").load($j(this).attr('href'));
+				$j("#body_left").load($j(this).attr('href'));
 				return false;
 			});
 			

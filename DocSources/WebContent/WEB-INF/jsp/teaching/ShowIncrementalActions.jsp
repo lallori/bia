@@ -28,7 +28,7 @@
 	<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.showIncrementalActions.aVailableActions"/></h6>
 
 	<c:choose>
-		<c:when test="${not closed}">
+		<c:when test="${not closed and canPartecipate}">
 			<c:choose>
 				<c:when test="${lastPostId eq -1}">
 					<a href="#" id="addNewPost" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.startTranscription"/></a>
@@ -41,6 +41,11 @@
 			<a href="#" id="showCurrentTranscription" class="buttonMedium button_Medium"><fmt:message key="teaching.showIncrementalActions.currentT"/></a>
 			
 			<a href="#" id="askAQuestion" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.classroomDisc"/></a>
+			
+			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b><fmt:message key="teaching.showIncrementalActions.refresh"/></b> <fmt:message key="teaching.showIncrementalActions.page"/></span></a>
+		</c:when>
+		<c:when test="${not closed and not canPartecipate}">
+			<a href="#" id="showCurrentTranscription" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.currentT"/></a>
 			
 			<a href="#" id="button_refresh" class="buttonMedium button_medium"><span><b><fmt:message key="teaching.showIncrementalActions.refresh"/></b> <fmt:message key="teaching.showIncrementalActions.page"/></span></a>
 		</c:when>

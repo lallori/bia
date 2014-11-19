@@ -34,7 +34,7 @@
 		<!-- RR: This page is also used to show User's posts (in that case 'topic' is empty) -->
 		
 		<c:choose>
-			<c:when test="${empty courseTranscriptionURL}">
+			<c:when test="${not isTeachingTopic}">
 				<!-- RR: not in teaching module section -->
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 					<c:set var="adminOK" value="true" />
@@ -278,8 +278,10 @@
 							</c:url>
 						</c:otherwise>
 					</c:choose>
-			
-					<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply"><fmt:message key="community.showTopicForum.postA"/> <b><fmt:message key="community.showTopicForum.reply"/></b></span></a>
+					
+					<c:if test="${not isTeachingTopic or isCoursePerson}">
+						<a href="${ReplyForumPostURL}" class="buttonMedium" id="postReply"><span class="button_reply"><fmt:message key="community.showTopicForum.postA"/> <b><fmt:message key="community.showTopicForum.reply"/></b></span></a>
+					</c:if>
 				</security:authorize>
 			</c:if>
 			
@@ -299,7 +301,7 @@
 		<div id="forumPaginate_upper">
 		    <c:set var="paginationData">
 				<c:choose>
-		    		<c:when test="${not empty courseTranscriptionURL}">
+		    		<c:when test="${isTeachingTopic}">
 		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do">
 		    				<c:param name="topicId" value="${topic.topicId}" />
 		    				<c:param name="completeDOM" value="false" />
@@ -373,7 +375,7 @@
 			<div id="postTable">
 				<c:if test="${not empty topic}">
 					<div id="topicIcons">
-						<c:if test="${not topic.locked}">
+						<c:if test="${not topic.locked and (not isTeachingTopic or isCoursePerson)}">
 							<c:choose>
 								<c:when test="${currentPost.user.account == account}">
 									<a href="${EditForumPostURL}" class="editPost" title="Edit this post"></a>
@@ -494,7 +496,7 @@
 		<div id="forumPaginate_lower">
 		    <c:set var="paginationData">
 		    	<c:choose>
-		    		<c:when test="${not empty courseTranscriptionURL}">
+		    		<c:when test="${isTeachingTopic}">
 		    			<c:url var="baseUrl" value="/teaching/ShowTopicForum.do">
 		    				<c:param name="topicId" value="${topic.topicId}" />
 		    				<c:param name="completeDOM" value="false" />

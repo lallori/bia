@@ -45,8 +45,8 @@ import javax.persistence.Table;
  * @author Ronny Rinaldi (<a href=mailto:rinaldi.ronny@gmail.com>rinaldi.ronny@gmail.com</a>)
  *
  */
-//@Entity
-//@Table(name = "tblCoursePeople")
+@Entity
+@Table(name = "tblCoursePeople")
 public class CoursePeople {
 	
 	@Id

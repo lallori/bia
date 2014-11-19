@@ -80,6 +80,11 @@ public class ShowTeachingManuscriptViewerController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
+			if (command.getCanPartecipate() == null) {
+				command.setCanPartecipate(getTeachingService().canAccess(command.getTopicId(), null));
+			}
+			model.put("canPartecipate", command.getCanPartecipate());
+			
 			DocumentExplorer documentExplorer = getManuscriptViewerService().getDocumentExplorer(command.getEntryId(), true);
 			model.put("documentExplorer", documentExplorer);
 			ForumTopic topic = getTeachingService().findCourseTopic(command.getTopicId());

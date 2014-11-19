@@ -9,23 +9,17 @@
 		<c:param name="courseId" value="${command.courseId}" />
 	</c:url>
 	
-	<h3>Other Students</h3>
+	<div class="otherStudentsTitle">Other Students</div>
 	
 	<c:choose>
 		<c:when test="${not empty studentsPage.list}">
-			<div id="otherStudentsPaginate" style="text-align: right; width: 100%;">
-				<bia:paginator page="${studentsPage}" url="${ShowOtherStudentsPageURL}"
-	   				thisPageAlias="pageNumber" totalPagesAlias="pageTotal" elementsForPageAlias="peopleForPage"
-	   				buttonClass="paginateButton" activeButtonClass="paginateActive" />
-			</div>
-			
 			<table id="osTable">
 				<tbody>
-					<tr>
-						<th style="width: 20%;">Select</th>
-						<th style="width: 30%;" columnid="0" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">First Name</th>
-						<th style="width: 30%;" columnid="1" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Last Name</th>
-						<th style="width: 20%;" columnid="2" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 2 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Account</th>
+					<tr class="titleRow">
+						<th class="col0" style="cursor: pointer;" title="Click to select/unselect all visible">Select</th>
+						<th columnid="0" class="col1 sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">First Name</th>
+						<th columnid="1" class="col2 sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Last Name</th>
+						<th columnid="2" class="col3 sortableColumn ${command.orderByTableField == 2 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Account</th>
 					</tr>
 					<c:forEach items="${studentsPage.list}" var="student">
 						<tr>
@@ -37,6 +31,12 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<div id="otherStudentsPaginate">
+				<bia:paginator page="${studentsPage}" url="${ShowOtherStudentsPageURL}"
+	   				thisPageAlias="pageNumber" totalPagesAlias="pageTotal" elementsForPageAlias="peopleForPage"
+	   				buttonClass="paginateButton" activeButtonClass="paginateActive" />
+			</div>
 		</c:when>
 		<c:otherwise>
 			There are no other students out of this course.
@@ -53,7 +53,14 @@
 			$j("#otherStudentsPaginate .paginateButton").die();
 			$j("#otherStudentsPaginate .paginateButton").click(function() {
 				if (typeof $j(this).attr('href') !== 'undefined') {
-					$j("#otherStudentsTable").load($j(this).attr('href'), function(responseText, statusText, xhr) {
+					var otherParams = "";
+					if ($j("#otherStudentsOrderByTableField").val() != null || $j("#otherStudentsOrderByTableField").val() != "") {
+						otherParams += "&orderByTableField=" + $j("#otherStudentsOrderByTableField").val();
+					}
+					if ($j("#otherStudentsAscendingOrder").val() != null || $j("#otherStudentsAscendingOrder").val() != "") {
+						otherParams += "&ascendingOrder=" + $j("#otherStudentsAscendingOrder").val();
+					}
+					$j("#otherStudentsTable").load($j(this).attr('href') + otherParams, function(responseText, statusText, xhr) {
 						if (statusText !== 'error') {
 							$j("#moveToCourseStudents").removeClass('buttonUp');
 							$j("#moveToCourseStudents").addClass('buttonUpDisabled');
@@ -85,16 +92,16 @@
 			
 			$j("#osTable .sortableColumn").die();
 			$j("#osTable .sortableColumn").click(function() {
-				$j("#loadingDiv").show();
+				$j(".waitingModal").show();
 				
 				var columnIdx = $j(this).attr('columnid');
 				var columnAscendingOrder = columnIdx === osServerColumnIdx ? (osServerAscending == null ? true : (osServerAscending == true ? false : null)) : true;
-				$j("#otherStudentsOrderByTableField").val(columnIdx);
+				$j("#otherStudentsOrderByTableField").val(columnAscendingOrder != null ? columnIdx : null);
 				$j("#otherStudentsAscendingOrder").val(columnAscendingOrder);
 				
-				var url = '${ShowOtherStudentsPageURL}' + "?" + $j("#otherStudentsForm").serialize();
+				var url = '${ShowOtherStudentsPageURL}' + "&" + $j("#otherStudentsForm").serialize();
 				$j("#otherStudentsTable").load(url, function(responseText, statusText, xhr) {
-					$j("#loadingDiv").hide();
+					$j(".waitingModal").hide();
 					if (statusText === 'error') {
 						alert('Server error...if problem persists please contact the admin!');
 					}
@@ -109,6 +116,24 @@
 					$j("#moveToCourseStudents").removeClass('buttonUpDisabled');
 					$j("#moveToCourseStudents").addClass('buttonUp');
 				} else if (!$j("#moveToCourseStudents").hasClass('buttonUpDisabled')) {
+					$j("#moveToCourseStudents").removeClass('buttonUp');
+					$j("#moveToCourseStudents").addClass('buttonUpDisabled');
+				}
+			});
+			
+			$j("#osTable .titleRow .col0").click(function() {
+				var numRows = $j("#osTable .selectStudent").length;
+				var numSelected = $j("#osTable input.selectStudent:checkbox:checked").length;
+				if (numRows > numSelected) {
+					$j("#osTable .selectStudent").each(function() {
+						$j(this).attr("checked", "checked");
+					});
+					$j("#moveToCourseStudents").removeClass('buttonUpDisabled');
+					$j("#moveToCourseStudents").addClass('buttonUp');
+				} else {
+					$j("#osTable .selectStudent").each(function() {
+						$j(this).removeAttr("checked");
+					});
 					$j("#moveToCourseStudents").removeClass('buttonUp');
 					$j("#moveToCourseStudents").addClass('buttonUpDisabled');
 				}

@@ -112,6 +112,20 @@ public class UserRoleDAOJpaImpl extends JpaDao<Integer, UserRole> implements Use
 		
 		return getResultList(query);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean hasRoleIn(String account, List<Authority> filteredAuthorities) throws PersistenceException {
+		String jpql = "SELECT COUNT(*) FROM UserRole WHERE user.account = :account AND userAuthority.authority IN (:filteredAuthorities)";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("account", account);
+		query.setParameter("filteredAuthorities", filteredAuthorities);
+		
+		return (Long)query.getSingleResult() > 0;
+	}
 
 	/**
 	 * {@inheritDoc}

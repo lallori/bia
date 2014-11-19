@@ -37,6 +37,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
+import org.medici.bia.domain.CoursePeople;
 import org.medici.bia.domain.CoursePostExt;
 import org.medici.bia.domain.CourseTopicOption;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
@@ -48,7 +49,6 @@ import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
 import org.medici.bia.domain.UserAuthority.Authority;
 import org.medici.bia.domain.UserPersonalNotes;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 
 /**
@@ -172,6 +172,8 @@ public interface TeachingService {
 	 */
 	ForumTopic askAQuestion(Integer forumContainerId, Integer courseTranscriptionTopicId, String questionTitle, String questionText, String remoteAddr) throws ApplicationThrowable;
 	
+	boolean canAccess(Integer topicId, String account) throws ApplicationThrowable;
+	
 	/**
 	 * This method counts the active courses.
 	 * 
@@ -289,16 +291,6 @@ public interface TeachingService {
 	List<Course> getActiveCourses(Integer entryId) throws ApplicationThrowable;
 	
 	/**
-	 * Returns the users (as list of {@link UserRole}) associated to the provided course. 
-	 * 
-	 * @param courseId the course identifier
-	 * @param paginationFilter the pagination filter
-	 * @return the paginated users
-	 * @throws ApplicationThrowable
-	 */
-	Page getCoursePeople(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	/**
 	 * This method returns paginated courses.
 	 * 
 	 * @param onlyActives if true it returns only active course 
@@ -316,6 +308,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	CourseCheckPoint getCheckPointByPost(Integer postId) throws ApplicationThrowable;
+	
+	/**
+	 * Returns the {@link Course} of the provided course topic.
+	 * 
+	 * @param courseTopicId the course topic identifier
+	 * @return the {@link Course} found or null if the topic is not in a course.
+	 * @throws ApplicationThrowable
+	 */
+	Course getCourseFromCourseTopic(Integer courseTopicId) throws ApplicationThrowable;
 	
 	/**
 	 * This method searches for an extended course transcription post ({@link CoursePostExt}) whose wrapped post
@@ -348,6 +349,7 @@ public interface TeachingService {
 	
 	/**
 	 * This method tries to determine the {@link CourseTopicMode} of a set of topics.
+	 * 
 	 * @param topics a set of topic identifiers
 	 * @return a map representing the association between topic identifier and {@link CourseTopicMode}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
@@ -597,6 +599,15 @@ public interface TeachingService {
 	Boolean grantStudentPermission(String account) throws ApplicationThrowable;
 	
 	/**
+	 * This method determines if the current user has been associated to the provided course.
+	 * 
+	 * @param courseId the course identifier
+	 * @return true if the current user is associated to the course, is a teacher or an admin, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	boolean isCurrentUserInCourse(Integer courseId) throws ApplicationThrowable;
+	
+	/**
 	 * This method determines if the provided annotation is deletable.
 	 * 
 	 * @param annotation the annotation
@@ -634,11 +645,22 @@ public interface TeachingService {
 	
 	/**
 	 * This method determines if the provided forum is contained in a course.
+	 * 
 	 * @param forumId the forum identifier
 	 * @return true if the forum is contained in a course, false otherwise
 	 * @throws ApplicationThrowable
 	 */
 	boolean isForumInCourse(Integer forumId) throws ApplicationThrowable;
+	
+	/**
+	 * This method determines if the provided account is associated to the course.
+	 * 
+	 * @param courseId the course identifier 
+	 * @param account the user account
+	 * @return true if the user is a {@link CoursePeople} or if he is a teacher, false otherwise
+	 * @throws ApplicationThrowable
+	 */
+	boolean isPersonInCourse(Integer courseId, String account) throws ApplicationThrowable;
 	
 	/**
 	 * This method determines if the current user is subscribed to the provided course transcription topic.

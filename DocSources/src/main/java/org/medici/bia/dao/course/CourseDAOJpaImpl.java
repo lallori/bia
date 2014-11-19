@@ -88,6 +88,20 @@ public class CourseDAOJpaImpl extends JpaDao<Integer, Course> implements CourseD
 	}
 	
 	@Override
+	public Course getCourseByTopic(Integer courseTopicId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Course WHERE forum.logicalDelete = false AND forum.forumId ="
+			+ " (SELECT f.forumParent FROM Forum AS f, ForumTopic AS t WHERE"
+			+ " t.topicId = :topicId"
+			+ " AND t.logicalDelete = false"
+			+ " AND f.forumId = t.forum.forumId"
+			+ " AND f.logicalDelete = false"
+			+ ")");
+		query.setParameter("topicId", courseTopicId);
+		
+		return getFirst(query);
+	}
+	
+	@Override
 	public Page getCourses(Boolean onlyActives, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		Query query = null;

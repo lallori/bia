@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.bia.command.teaching.ShowManageCoursePeopleCommand;
+import org.medici.bia.domain.Course;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.medici.bia.service.teaching.TeachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class ShowManageCoursePeopleController {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		try {
+			Course course = getTeachingService().findCourse(command.getCourseId());
+			model.put("courseTitle", course.getForum().getTitle());
 			return new ModelAndView("teaching/ShowManageCoursePeople", model);
 		} catch (ApplicationThrowable th) {
 			return new ModelAndView("error/ShowManageCoursePeople", model);

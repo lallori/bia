@@ -28,10 +28,13 @@
 package org.medici.bia.service.admin;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -49,6 +52,7 @@ import org.medici.bia.dao.activationuser.ActivationUserDAO;
 import org.medici.bia.dao.annotation.AnnotationDAO;
 import org.medici.bia.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.bia.dao.approvationuser.ApprovationUserDAO;
+import org.medici.bia.dao.coursepeople.CoursePeopleDAO;
 import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpost.ForumPostDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
@@ -71,15 +75,15 @@ import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApplicationProperty;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.EmailMessageUser;
+import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.Month;
-import org.medici.bia.domain.ForumPostNotified;
 import org.medici.bia.domain.User;
 import org.medici.bia.domain.UserAuthority;
-import org.medici.bia.domain.UserMessage;
-import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserMessage;
 import org.medici.bia.domain.UserMessage.RecipientStatus;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,6 +117,8 @@ public class AdminServiceImpl implements AdminService {
 	private ApplicationPropertyDAO applicationPropertyDAO;
 	@Autowired
 	private ApprovationUserDAO approvationUserDAO;
+	@Autowired
+	private CoursePeopleDAO coursePeopleDAO;
 	@Autowired
 	private EmailMessageUserDAO emailMessageUserDAO;
 	@Autowired
@@ -199,6 +205,14 @@ public class AdminServiceImpl implements AdminService {
 
 	public void setApprovationUserDAO(ApprovationUserDAO approvationUserDAO) {
 		this.approvationUserDAO = approvationUserDAO;
+	}
+	
+	public CoursePeopleDAO getCoursePeopleDAO() {
+		return coursePeopleDAO;
+	}
+
+	public void setCoursePeopleDAO(CoursePeopleDAO coursePeopleDAO) {
+		this.coursePeopleDAO = coursePeopleDAO;
 	}
 
 	public EmailMessageUserDAO getEmailMessageUserDAO() {
@@ -571,18 +585,59 @@ public class AdminServiceImpl implements AdminService {
 				userToUpdate.setBadLogin(0);
 			}
 			userToUpdate.setLocked(user.getLocked());
-						
-			getUserRoleDAO().removeAllUserRoles(userToUpdate.getAccount());
-			if (user.getUserRoles() != null) {
+			
+			// user role adjustments
+			
+			// make a copy of the roles from the view
+			Set<UserRole> fromViewRoles = new HashSet<UserRole>();
+			fromViewRoles.addAll(user.getUserRoles());
+			
+			Set<UserRole> invariantRoles = new HashSet<UserRole>();
+			
+			if (userToUpdate.getUserRoles().size() > 0) {
+				Map<Authority, UserRole> roleMap = new HashMap<Authority, UserRole>();
+				for(UserRole role : userToUpdate.getUserRoles()) {
+					roleMap.put(role.getUserAuthority().getAuthority(), role);
+				}
+				
+				for(UserRole fromViewRole : user.getUserRoles()) {
+					Authority auth = fromViewRole.getUserAuthority().getAuthority();
+					if (roleMap.containsKey(auth)) {
+						invariantRoles.add(roleMap.remove(auth));
+						fromViewRoles.remove(fromViewRole);
+					}
+				}
+				
+				if (roleMap.values().size() > 0) {
+					// RR: in the roleMap there are the roles to remove
+					if (roleMap.containsKey(Authority.TEACHERS) || roleMap.containsKey(Authority.STUDENTS)) {
+						// we first remove CoursePeople entries (if exist)
+						if (roleMap.containsKey(Authority.TEACHERS)) {
+							getCoursePeopleDAO().removeCoursePersonByUserRole(roleMap.get(Authority.TEACHERS));
+						}
+						if (roleMap.containsKey(Authority.STUDENTS)) {
+							getCoursePeopleDAO().removeCoursePersonByUserRole(roleMap.get(Authority.STUDENTS));
+						}
+					}
+					
+					// now we remove the not associated user roles
+					for(UserRole toRemoveRole : roleMap.values()) {
+						getUserRoleDAO().remove(toRemoveRole);
+					}
+				}
+			}
+			
+			if (fromViewRoles != null) {
 				//We need before to attach jpa session..
-				for (UserRole userRole : user.getUserRoles()) {
+				for (UserRole userRole : fromViewRoles) {
 					userRole.setUser(userToUpdate);
 					userRole.setUserAuthority(getUserAuthorityDAO().find(userRole.getUserAuthority().getAuthority()));
 				}
-				getUserRoleDAO().addAllUserRoles(user.getUserRoles());
+				getUserRoleDAO().addAllUserRoles(fromViewRoles);
+				invariantRoles.addAll(fromViewRoles);
 			}
 			
-			userToUpdate.setUserRoles(user.getUserRoles());
+			userToUpdate.setUserRoles(invariantRoles);
 
 			getUserDAO().merge(userToUpdate);
 			

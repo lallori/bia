@@ -13,6 +13,7 @@
 	<c:url var="ShowCourseTranscriptionActionsURL" value="/teaching/ShowCourseTranscriptionActions.do">
 		<c:param name="topicId" value="${command.topicId}" />
 		<c:param name="transcriptionMode" value="I" />
+		<c:param name="canPartecipate" value="${isCoursePerson}" />
 	</c:url>
 	
 	<c:url var="ShowPersonalNotesURL" value="/teaching/ShowPersonalNotes.do" />
@@ -21,6 +22,7 @@
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="topicId" value="${command.topicId}" />
 		<c:param name="resourcesForum" value="${resourcesForum}" />
+		<c:param name="canPartecipate" value="${isCoursePerson}" />
 	</c:url>
 
 	<!-- <div class="ui-layout-north"></div>  -->

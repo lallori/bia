@@ -41,6 +41,8 @@ public class ShowTeachingManuscriptViewerCommand {
 	
 	private Integer resourcesForum;
 	
+	private Boolean canPartecipate;
+	
 	public Integer getEntryId() {
 		return entryId;
 	}
@@ -63,6 +65,14 @@ public class ShowTeachingManuscriptViewerCommand {
 
 	public void setResourcesForum(Integer resourcesForum) {
 		this.resourcesForum = resourcesForum;
+	}
+
+	public Boolean getCanPartecipate() {
+		return canPartecipate;
+	}
+
+	public void setCanPartecipate(Boolean canPartecipate) {
+		this.canPartecipate = canPartecipate;
 	}
 
 }

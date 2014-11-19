@@ -93,10 +93,11 @@ public class ShowCoursePeopleController {
 			
 			boolean isCourseStudentServlet = httpServletRequest.getServletPath().equals("/teaching/ShowCourseStudents.do");
 			
-			if (command.getOrderByTableField() != null && command.getAscendingOrder() != null) {
-				for (String sortableField : convertTableField(command.getOrderByTableField(), isCourseStudentServlet)) {
-					paginationFilter.addSortingCriteria(sortableField, command.getAscendingOrder() ? "ASC" : "DESC");
-				}
+			List<String> tableOrderFields = convertTableField(
+					command.getOrderByTableField() != null && command.getAscendingOrder() != null ? command.getOrderByTableField() : 0,
+					isCourseStudentServlet);
+			for (String sortableField : tableOrderFields) {
+				paginationFilter.addSortingCriteria(sortableField, command.getAscendingOrder() == null || command.getAscendingOrder() ? "ASC" : "DESC");
 			}
 			
 			if (isCourseStudentServlet) {

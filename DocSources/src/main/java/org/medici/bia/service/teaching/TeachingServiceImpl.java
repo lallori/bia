@@ -310,7 +310,6 @@ public class TeachingServiceImpl implements TeachingService {
 	
 	/* Service API implementations */
 	
-	@SuppressWarnings("serial")
 	/**
 	 * {@inheritDoc}
 	 */
@@ -329,7 +328,7 @@ public class TeachingServiceImpl implements TeachingService {
 		User user = getCurrentUser();
 		
 		try {
-			List<UserRole> userRoles = getUserRoleDAO().getUserRolesNotInCourse(courseId, new ArrayList<Authority>() {{add(Authority.STUDENTS);}});
+			List<UserRole> userRoles = getUserRoleDAO().getUserRolesNotInCourse(courseId, getCourseAuthorities(true, false, false));
 			for(UserRole role : userRoles) {
 				CoursePeople coursePeople = new CoursePeople();
 				coursePeople.setCourse(course);
@@ -500,9 +499,10 @@ public class TeachingServiceImpl implements TeachingService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, courseTopic));
 			
 			// topic subscription
-			for(UserRole personRole : getCoursePeople(course)) {
-				if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
-					ForumTopicWatch personTopicWatch = new ForumTopicWatch(courseTopic, personRole.getUser());
+			for(CoursePeople coursePeople : getCoursePeople(course)) {
+				if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
+						Boolean.TRUE.equals(coursePeople.getSubscription())) {
+					ForumTopicWatch personTopicWatch = new ForumTopicWatch(courseTopic, coursePeople.getUserRole().getUser());
 					getForumTopicWatchDAO().persist(personTopicWatch);
 				}
 			}
@@ -645,9 +645,10 @@ public class TeachingServiceImpl implements TeachingService {
 				increaseForumTopicsNumber(forum);
 				
 				// topic subscription -> to all course people
-				for(UserRole personRole : getCoursePeople(course)) {
-					if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
-						ForumTopicWatch personTopicWatch = new ForumTopicWatch(forumTopic, personRole.getUser());
+				for(CoursePeople coursePeople : getCoursePeople(course)) {
+					if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
+							Boolean.TRUE.equals(coursePeople.getSubscription())) {
+						ForumTopicWatch personTopicWatch = new ForumTopicWatch(forumTopic, coursePeople.getUserRole().getUser());
 						getForumTopicWatchDAO().persist(personTopicWatch);
 					}
 				}
@@ -772,9 +773,10 @@ public class TeachingServiceImpl implements TeachingService {
 			recursiveSetLastPost(container, firstPost, now);
 			
 			// topic subscription -> to all course people
-			for(UserRole personRole : getCoursePeople(course)) {
-				if (personRole.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
-					ForumTopicWatch personTopicWatch = new ForumTopicWatch(questionTopic, personRole.getUser());
+			for(CoursePeople coursePeople : getCoursePeople(course)) {
+				if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
+						Boolean.TRUE.equals(coursePeople.getSubscription())) {
+					ForumTopicWatch personTopicWatch = new ForumTopicWatch(questionTopic, coursePeople.getUserRole().getUser());
 					getForumTopicWatchDAO().persist(personTopicWatch);
 				}
 			}
@@ -794,6 +796,24 @@ public class TeachingServiceImpl implements TeachingService {
 			getUserHistoryDAO().persist(new UserHistory(user, "Create new lesson discussion post", Action.CREATE, Category.FORUM_POST, firstPost));
 			
 			return questionTopic;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canAccess(Integer topicId, String account) throws ApplicationThrowable {
+		try {
+			if (account == null) {
+				User user = getCurrentUser();
+				if (user != null) {
+					account = user.getAccount();
+				}
+			}
+			return getUserRoleDAO().hasRoleIn(account, getCourseAuthorities(true, true, true));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1157,15 +1177,6 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page getCoursePeople(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		// TODO
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -1186,6 +1197,18 @@ public class TeachingServiceImpl implements TeachingService {
 	public CourseCheckPoint getCheckPointByPost(Integer postId) throws ApplicationThrowable {
 		try {
 			return getCourseCheckPointDAO().getCheckPointByPost(postId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Course getCourseFromCourseTopic(Integer courseTopicId) throws ApplicationThrowable {
+		try {
+			return getCourseDAO().getCourseByTopic(courseTopicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1307,7 +1330,6 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("serial")
 	public Page getCourseStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			if (courseId == null) {
@@ -1317,8 +1339,7 @@ public class TeachingServiceImpl implements TeachingService {
 			if (course == null) {
 				throw new ApplicationThrowable(ApplicationError.MISSING_IDENTIFIER, "Course [" + courseId + "] not found!");
 			}
-			List<Authority> filteredAuth = new ArrayList<Authority>() {{add(Authority.STUDENTS);}};
-			return getCoursePeopleDAO().getCoursePeople(courseId, filteredAuth, paginationFilter);
+			return getCoursePeopleDAO().getCoursePeople(courseId, getCourseAuthorities(true, false, false), paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1330,6 +1351,9 @@ public class TeachingServiceImpl implements TeachingService {
 	@Override
 	public User getCurrentUser() throws ApplicationThrowable {
 		try {
+			if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().getName().equals("java.lang.String")) {
+				return null;
+			}
 			return getUserDAO().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -1445,12 +1469,10 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("serial")
 	@Override
 	public Page getOtherStudents(Integer courseId, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			List<Authority> filteredAuth = new ArrayList<Authority>() {{add(Authority.STUDENTS);}};
-			return getUserDAO().getUsersNotInCourse(courseId, filteredAuth, paginationFilter);
+			return getUserDAO().getUsersNotInCourse(courseId, getCourseAuthorities(true, false, false), paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1608,6 +1630,22 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean isCurrentUserInCourse(Integer courseId) throws ApplicationThrowable {
+		try {
+			User currentUser = getCurrentUser();
+			if (currentUser == null) {
+				return false;
+			}
+			return getCoursePeopleDAO().isCoursePerson(courseId, currentUser.getAccount());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Boolean isDeletableAnnotation(Annotation annotation) throws ApplicationThrowable {
 		if (annotation.getForumTopic() != null) {
 			return getForumPostDAO().countTopicPosts(annotation.getForumTopic().getTopicId()) == 0;
@@ -1667,6 +1705,18 @@ public class TeachingServiceImpl implements TeachingService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean isPersonInCourse(Integer courseId, String account) throws ApplicationThrowable {
+		try {
+			return getCoursePeopleDAO().isCoursePerson(courseId, account);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Boolean isSubscribedToCourseTranscription(Integer topicId) throws ApplicationThrowable {
 		try {
 			ForumTopic courseTopic = getForumTopicDAO().getNotDeletedForumTopic(topicId);
@@ -1708,13 +1758,12 @@ public class TeachingServiceImpl implements TeachingService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("serial")
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public int removeAllCoursePeople(Integer courseId, List<Authority> filteredAuthorities) throws ApplicationThrowable {
 		try {
 			if (filteredAuthorities == null || filteredAuthorities.size() == 0) {
-				filteredAuthorities = new ArrayList<Authority>() {{add(Authority.STUDENTS); add(Authority.TEACHERS);}};
+				filteredAuthorities = getCourseAuthorities(true, true, false);
 			}
 			return getCoursePeopleDAO().removeAllCoursePeople(courseId, filteredAuthorities);
 		} catch (Throwable th) {
@@ -1800,6 +1849,9 @@ public class TeachingServiceImpl implements TeachingService {
 					}
 				}
 				if (studentUserRole != null) {
+					// remove the user role from course people (if exists)
+					getCoursePeopleDAO().removeCoursePersonByUserRole(studentUserRole);
+					// now it is possible to remove the user role
 					user.getUserRoles().remove(studentUserRole);
 					getUserRoleDAO().remove(studentUserRole);
 					return Boolean.TRUE;
@@ -2018,6 +2070,14 @@ public class TeachingServiceImpl implements TeachingService {
 					returnMap.put(annotation, -1);
 				} else {
 					// This is a new annotation
+					Forum forum = getForumDAO().find(forumContainerId);
+					Course course = getCourseDAO().find(forum.getForumParent().getForumId());
+					CoursePeople coursePerson = getCoursePerson(course, user);
+					
+					if (coursePerson == null) {
+						throw new ApplicationThrowable(ApplicationError.ILLEGAL_CALL, "The user [" + user.getAccount() + "] is not allowed to create annotations on course topics!");
+					}
+					
 					annotation.setDateCreated(operationDate);
 					annotation.setLogicalDelete(Boolean.FALSE);
 					annotation.setUser(user);
@@ -2026,8 +2086,6 @@ public class TeachingServiceImpl implements TeachingService {
 					annotation.setVisible(Boolean.TRUE);
 					
 					getAnnotationDAO().persist(annotation);
-					
-					Forum forum = getForumDAO().find(forumContainerId);
 					
 					ForumTopic topicAnnotation = new ForumTopic(null);
 					topicAnnotation.setForum(forum);
@@ -2087,12 +2145,11 @@ public class TeachingServiceImpl implements TeachingService {
 					
 					getCourseTopicOptionDAO().persist(option);
 					
-					Course course = getCourseDAO().find(forum.getForumParent().getForumId());
-					
 					// topic subscription
-					if (isStudent(user)) {
+					if (Authority.STUDENTS.equals(coursePerson.getUserRole().getUserAuthority().getAuthority())) {
 						// a student has created an annotation: subscription for the current student and for teachers only
-						if (user.getForumTopicSubscription().equals(Boolean.TRUE)) {
+						if (Boolean.TRUE.equals(user.getForumTopicSubscription()) &&
+								Boolean.TRUE.equals(coursePerson.getSubscription())) {
 							ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, user);
 							getForumTopicWatchDAO().persist(forumTopicWatch);
 						}
@@ -2105,10 +2162,11 @@ public class TeachingServiceImpl implements TeachingService {
 						}
 					} else {
 						// a teacher or admin has created an annotation: subscription for all the people of the course
-						for(UserRole coursePerson : getCoursePeople(course)) {
-							if (coursePerson.getUser().getForumTopicSubscription().equals(Boolean.TRUE)) {
-								ForumTopicWatch forumTopicWatch = new ForumTopicWatch(topicAnnotation, coursePerson.getUser());
-								getForumTopicWatchDAO().persist(forumTopicWatch);
+						for(CoursePeople coursePeople : getCoursePeople(course)) {
+							if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
+									Boolean.TRUE.equals(coursePeople.getSubscription())) {
+								ForumTopicWatch personTopicWatch = new ForumTopicWatch(topicAnnotation, coursePeople.getUserRole().getUser());
+								getForumTopicWatchDAO().persist(personTopicWatch);
 							}
 						}
 					}
@@ -2423,29 +2481,75 @@ public class TeachingServiceImpl implements TeachingService {
 		return postExt;
 	}
 	
-	private List<UserRole> getCoursePeople(Course course) {
-		// FIXME: when CoursePeople table will be managed we will have to retrieve
-		// course people from that. Now we retrieve roles from UserRole table.
-		List<UserRole> studentsRoles = getUserRoleDAO().filterUserRoles(Authority.STUDENTS);
-		List<UserRole> teachersRoles = getUserRoleDAO().filterUserRoles(Authority.TEACHERS);
-		List<UserRole> roles = new ArrayList<UserRole>();
-		roles.addAll(studentsRoles);
-		roles.addAll(teachersRoles);
+	private List<Authority> getCourseAuthorities(boolean students, boolean teachers, boolean admins) {
+		List<Authority> authorities = new ArrayList<Authority>();
+		if (students) {
+			authorities.add(Authority.STUDENTS);
+		}
+		if (teachers) {
+			authorities.add(Authority.TEACHERS);
+		}
+		if (admins) {
+			authorities.add(Authority.ADMINISTRATORS);
+		}
+		return authorities;
+	}
+	
+	private List<CoursePeople> getCoursePeople(Course course) {
+		// XXX: Students are retrieved from CoursePeople table while Teachers are retrieved by their role.
+		// If Teachers are added to CoursePeople table then this code has to be reviewed.
+		
+		List<CoursePeople> students = getCoursePeopleDAO().getCoursePeople(course.getCourseId(), getCourseAuthorities(true, false, false));
+		List<CoursePeople> teachers = new ArrayList<CoursePeople>();
+		for (UserRole teacherUserRole : getUserRoleDAO().filterUserRoles(Authority.TEACHERS)) {
+			CoursePeople teacher = new CoursePeople();
+			teacher.setUserRole(teacherUserRole);
+			teacher.setSubscription(Boolean.TRUE);
+			teachers.add(teacher);
+		}
+		
+		List<CoursePeople> coursePeople = new ArrayList<CoursePeople>();
+		coursePeople.addAll(students);
+		coursePeople.addAll(teachers);
 		
 		// we suppose if current user is an administrator it cannot also be a teacher.
 		for (UserRole role : getCurrentUser().getUserRoles()) {
 			if (role.getUserAuthority().getAuthority().equals(Authority.ADMINISTRATORS)) {
-				roles.add(role);
+				CoursePeople admin = new CoursePeople();
+				admin.setUserRole(role);
+				admin.setSubscription(Boolean.TRUE);
+				coursePeople.add(admin);
 				break;
 			}
 		}
 		
-		return roles;
+		return coursePeople;
+	}
+	
+	private CoursePeople getCoursePerson(Course course, User user) {
+		CoursePeople person = getCoursePeopleDAO().getCoursePerson(course.getCourseId(), user.getAccount());
+		if (person == null) {
+			// we search in the teachers and admins
+			UserRole r = null;
+			for (UserRole role : user.getUserRoles()) {
+				Authority authority = role.getUserAuthority().getAuthority();
+				if (Authority.TEACHERS.equals(authority) || Authority.ADMINISTRATORS.equals(authority)) {
+					r = role;
+					break;
+				}
+			}
+			if (r != null) {
+				person = new CoursePeople();
+				person.setSubscription(Boolean.TRUE);
+				person.setUserRole(r);
+				person.setCourse(course);
+			}
+		}
+		return person;
 	}
 	
 	private List<UserRole> getCourseTeachers(Course course) {
-		// FIXME: when CoursePeople table will be managed we will have to retrieve
-		// teachers from that. Now we retrieve roles from UserRole table.
+		// XXX: teachers are not stored in the CoursePeople table so we retrieve them by their roles.
 		return getUserRoleDAO().filterUserRoles(Authority.TEACHERS);
 	}
 	
@@ -2463,15 +2567,6 @@ public class TeachingServiceImpl implements TeachingService {
 		}
 		Integer oldSubForumsNumber = forum.getSubForumsNumber();
 		forum.setSubForumsNumber(oldSubForumsNumber != null && oldSubForumsNumber >= 0 ? oldSubForumsNumber + 1 : 1);
-	}
-	
-	private boolean isStudent(User user) {
-		for(UserRole role : user.getUserRoles()) {
-			if (role.getUserAuthority().getAuthority().equals(Authority.STUDENTS)) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	/**

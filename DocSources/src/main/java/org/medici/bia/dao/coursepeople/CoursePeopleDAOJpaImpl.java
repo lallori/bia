@@ -27,6 +27,7 @@
  */
 package org.medici.bia.dao.coursepeople;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -37,6 +38,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.CoursePeople;
+import org.medici.bia.domain.UserRole;
 import org.medici.bia.domain.UserAuthority.Authority;
 import org.springframework.stereotype.Repository;
 
@@ -49,6 +51,21 @@ import org.springframework.stereotype.Repository;
 public class CoursePeopleDAOJpaImpl extends JpaDao<Integer, CoursePeople> implements CoursePeopleDAO {
 
 	private static final long serialVersionUID = 5892985394887550635L;
+	
+	public List<CoursePeople> getCoursePeople(Integer courseId, List<Authority> filteredAuth) throws PersistenceException {
+		String jpql = "FROM CoursePeople WHERE course.courseId = :courseId";
+		if (filteredAuth != null && filteredAuth.size() > 0) {
+			jpql += " AND userRole.userAuthority.authority IN (:authorities)";
+		}
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("courseId", courseId);
+		if (filteredAuth != null && filteredAuth.size() > 0) {
+			query.setParameter("authorities", filteredAuth);
+		}
+		
+		return getResultList(query);
+	}
 
 	@Override
 	public Page getCoursePeople(Integer courseId, List<Authority> filteredAuth, PaginationFilter paginationFilter)  throws PersistenceException {
@@ -101,6 +118,28 @@ public class CoursePeopleDAOJpaImpl extends JpaDao<Integer, CoursePeople> implem
 	}
 	
 	@Override
+	public boolean isCoursePerson(Integer courseId, String account) throws PersistenceException {
+		// FIXME: if teachers will be added to CoursePeople then remove the search query in UserRole
+		List<Authority> auths = new ArrayList<Authority>();
+		auths.add(Authority.TEACHERS);
+		auths.add(Authority.ADMINISTRATORS);
+		
+		String jpql = "SELECT COUNT(user) FROM User AS user WHERE user IN ("
+			+ " SELECT cp.userRole.user FROM CoursePeople AS cp WHERE cp.course.courseId = :courseId AND cp.userRole.user.account = :account"
+			+ " ) OR user IN ("
+			+ " SELECT ur.user FROM UserRole AS ur WHERE ur.user.account = :account AND ur.userAuthority.authority IN ( :auths )"
+			+ " )";
+		
+		Query query = getEntityManager().createQuery(jpql);
+		
+		query.setParameter("courseId", courseId);
+		query.setParameter("account", account);
+		query.setParameter("auths", auths);
+		
+		return (Long)query.getSingleResult() > 0;
+	}
+	
+	@Override
 	public int removeAllCoursePeople(Integer courseId, List<Authority> filteredAuthorities) throws PersistenceException {
 		// RR: the DELETE query cannot reference properties in the where clause, only primary key are possible or entity selection via subqueries
 		String jpql = "DELETE FROM CoursePeople WHERE course.courseId = :courseId AND userRole IN (SELECT role FROM UserRole AS role WHERE userAuthority.authority IN (:authorities))";
@@ -120,6 +159,18 @@ public class CoursePeopleDAOJpaImpl extends JpaDao<Integer, CoursePeople> implem
 		
 		query.setParameter("courseId", courseId);
 		query.setParameter("accounts", accounts);
+		
+		return query.executeUpdate();
+	}
+	
+	@Override
+	public int removeCoursePersonByUserRole(UserRole userRole) throws PersistenceException {
+		if (userRole == null) {
+			return 0;
+		}
+		Query query = getEntityManager().createQuery("DELETE FROM CoursePeople WHERE userRole = :userRole");
+		
+		query.setParameter("userRole", userRole);
 		
 		return query.executeUpdate();
 	}

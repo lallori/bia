@@ -88,6 +88,16 @@ public interface UserRoleDAO extends Dao<Integer, UserRole> {
 	List<UserRole> getUserRolesNotInCourse(Integer courseId, List<Authority> filteredAuthorities) throws PersistenceException;
 	
 	/**
+	 * Determines if a user has {@link UserRole}s with at least one of the provided {@link Authority}.
+	 * 
+	 * @param account the user account
+	 * @param filteredAuthorities the authorities to filter
+	 * @return true if the user has at least one of the provided roles, false otherwise
+	 * @throws PersistenceException
+	 */
+	boolean hasRoleIn(String account, List<Authority> filteredAuthorities) throws PersistenceException;
+	
+	/**
 	 * 
 	 * @param account
 	 * @throws PersistenceException

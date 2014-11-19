@@ -13,29 +13,23 @@
 		<c:param name="courseId" value="${command.courseId}" />
 	</c:url>
 	
-	<h3>Course Students</h3>
+	<div class="courseStudentsTitle">Course Students</div>
 
 	<c:choose>
 		<c:when test="${not empty courseStudents}">
-			<div id="courseStudentsPaginate" style="text-align: right; width: 100%;">
-				<bia:paginator page="${courseStudentsPage}" url="${ShowCourseStudentsPageURL}"
-	   				thisPageAlias="pageNumber" totalPagesAlias="pageTotal" elementsForPageAlias="peopleForPage"
-	   				buttonClass="paginateButton" activeButtonClass="paginateActive" />
-			</div>
-			
-			<table id="csTable" style="width: 100%;" rules="cols">
-				<tr style="height: 45px; border: 1px solid;">
-					<th style="width: 12%;">Select</th>
-					<th style="width: 40%;" columnid="0" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Student</th>
-					<th style="width: 29%;" columnid="1" style="cursor:pointer;" class="sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Account</th>
-					<th style="width: 29%;">Automatic<br/>subscription</th>
+			<table id="csTable">
+				<tr class="titleRow">
+					<th class="col0" style="cursor: pointer;" title="Click to select/unselect all visible">Select</th>
+					<th columnid="0" class="col1 sortableColumn ${command.orderByTableField == 0 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Student</th>
+					<th columnid="1" class="col2 sortableColumn ${command.orderByTableField == 1 ? (command.ascendingOrder ? 'sorting_asc' : 'sorting_desc') : 'sorting'}">Account</th>
+					<th class="col3">Automatic<br/>subscription</th>
 				</tr>
 				<c:forEach items="${courseStudents}" var="student">
 					<tr>
-						<td style="text-align: center;"><input id="select_${student.account}" class="selectStudent" type="checkbox" /></td>
-						<td style="text-align: center;">${student.name}</td>
-						<td style="text-align: center;">${student.account}</td>
-						<td style="text-align: center;">
+						<td><input id="select_${student.account}" class="selectStudent" type="checkbox" /></td>
+						<td>${student.name}</td>
+						<td>${student.account}</td>
+						<td>
 							<c:choose>
 								<c:when test="${student.subscription}">
 									<input id="subscription_${student.account}" class="subscription" type="checkbox" checked="checked" value="${student.subscription}" />
@@ -48,6 +42,12 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<div id="courseStudentsPaginate">
+				<bia:paginator page="${courseStudentsPage}" url="${ShowCourseStudentsPageURL}"
+	   				thisPageAlias="pageNumber" totalPagesAlias="pageTotal" elementsForPageAlias="peopleForPage"
+	   				buttonClass="paginateButton" activeButtonClass="paginateActive" />
+			</div>
 		</c:when>
 		<c:otherwise>
 			There are no students in this course.
@@ -64,7 +64,15 @@
 			$j("#courseStudentsPaginate .paginateButton").die();
 			$j("#courseStudentsPaginate .paginateButton").click(function() {
 				if (typeof $j(this).attr('href') !== 'undefined') {
-					$j("#courseStudentsTable").load($j(this).attr('href'), function(responseText, statusText, xhr) {
+					var otherParams = "";
+					if ($j("#courseStudentsOrderByTableField").val() != null || $j("#courseStudentsOrderByTableField").val() != "") {
+						otherParams += "&orderByTableField=" + $j("#courseStudentsOrderByTableField").val();
+					}
+					if ($j("#courseStudentsAscendingOrder").val() != null || $j("#courseStudentsAscendingOrder").val() != "") {
+						otherParams += "&ascendingOrder=" + $j("#courseStudentsAscendingOrder").val();
+					}
+					
+					$j("#courseStudentsTable").load($j(this).attr('href') + otherParams, function(responseText, statusText, xhr) {
 						var _this = $j(this);
 						if (statusText !== 'error') {
 							// TODO
@@ -96,16 +104,16 @@
 			
 			$j("#csTable .sortableColumn").die();
 			$j("#csTable .sortableColumn").click(function() {
-				$j("#loadingDiv").show();
+				$j(".waitingModal").show();
 				
 				var columnIdx = $j(this).attr('columnid');
-				var columnAscendingOrder = columnIdx === osServerColumnIdx ? (osServerAscending == null ? true : (osServerAscending == true ? false : null)) : true;
-				$j("#courseStudentsOrderByTableField").val(columnIdx);
+				var columnAscendingOrder = columnIdx === csServerColumnIdx ? (csServerAscending == null ? true : (csServerAscending == true ? false : null)) : true;
+				$j("#courseStudentsOrderByTableField").val(columnAscendingOrder != null ? columnIdx : null);
 				$j("#courseStudentsAscendingOrder").val(columnAscendingOrder);
 				
-				var url = '${ShowCourseStudentsPageURL}' + "?" + $j("#courseStudentsForm").serialize();
+				var url = '${ShowCourseStudentsPageURL}' + "&" + $j("#courseStudentsForm").serialize();
 				$j("#courseStudentsTable").load(url, function(responseText, statusText, xhr) {
-					$j("#loadingDiv").hide();
+					$j(".waitingModal").hide();
 					if (statusText === 'error') {
 						alert('Server error...if problem persists please contact the admin!');
 					}
@@ -125,8 +133,8 @@
 				}
 			});
 			
-			$j(".subscription").change(function() {
-				$j("#loadingDiv").show();
+			$j("#csTable .subscription").change(function() {
+				$j(".waitingModal").show();
 				
 				var inputId = $j(this).attr('id');
 				var account = inputId.substring(inputId.indexOf('_') + 1);
@@ -137,20 +145,38 @@
 					async: false,
 					type: "POST",
 					success: function(json) {
-   						$j("#loadingDiv").hide();
+   						$j(".waitingModal").hide();
     					if (json.operation === "KO") {
     						alert("Operation failed...please contact the admin");
     						$j("#courseStudentsTable").load($j("#courseStudentsPaginate .paginateActive").attr('href'));
     					}
     				},
     				error: function() {
-    					$j("#loadingDiv").hide();
+    					$j(".waitingModal").hide();
     					alert("Server error...please contact the admin");
     					$j("#courseStudentsTable").load($j("#courseStudentsPaginate .paginateActive").attr('href'));
     				}
 				});
 				
 				return false;
+			});
+			
+			$j("#csTable .titleRow .col0").click(function() {
+				var numRows = $j("#csTable .selectStudent").length;
+				var numSelected = $j("#csTable input.selectStudent:checkbox:checked").length;
+				if (numRows > numSelected) {
+					$j("#csTable .selectStudent").each(function() {
+						$j(this).attr("checked", "checked");
+					});
+					$j("#moveToOtherStudents").removeClass('buttonDownDisabled');
+					$j("#moveToOtherStudents").addClass('buttonDown');
+				} else {
+					$j("#csTable .selectStudent").each(function() {
+						$j(this).removeAttr("checked");
+					});
+					$j("#moveToOtherStudents").removeClass('buttonDown');
+					$j("#moveToOtherStudents").addClass('buttonDownDisabled');
+				}
 			});
 			
 			// The following lines to update paginator filters of the ShowManageCoursePeople.jsp

@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.medici.bia.command.teaching.CourseTranscriptionActionsCommand;
 import org.medici.bia.common.property.ApplicationPropertyManager;
+import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseTopicOption.CourseTopicMode;
 import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.exception.ApplicationThrowable;
@@ -76,6 +77,12 @@ public class ShowCourseTranscriptionActionsController {
 				return new ModelAndView("error/ShowCourseTranscriptionActions", model);
 			}
 			
+			if (command.getCanPartecipate() == null) {
+				Course course = getTeachingService().getCourseFromCourseTopic(command.getTopicId());
+				command.setCanPartecipate(getTeachingService().isCurrentUserInCourse(course.getCourseId()));
+			}
+			
+			model.put("canPartecipate", command.getCanPartecipate());
 			model.put("resourcesForum", courseTopic.getForum().getForumId());
 			model.put("refreshUrl", getCourseTranscriptionUrl(courseTopic, command.getTranscriptionMode()));
 			model.put("closed", courseTopic.getLocked());

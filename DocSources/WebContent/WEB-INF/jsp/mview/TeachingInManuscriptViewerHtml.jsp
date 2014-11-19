@@ -45,7 +45,7 @@
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			<c:choose>
-				<c:when test="${closed}">
+				<c:when test="${closed or not canPartecipate}">
 					var edit = false;
 				</c:when>
 				<c:otherwise>

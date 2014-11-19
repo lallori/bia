@@ -22,13 +22,20 @@
 	
 	<h6 style="margin-bottom: 10px;"><fmt:message key="teaching.showRoundRobinActions.aVailableActions"/></h6>
 
-	<c:if test="${not closed}">
-		<a href="#" id="addNewPost" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinActions.addNewPost"/></a>
-	</c:if>
-	
-	<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b><fmt:message key="teaching.showRoundRobinActions.askAQuestion"/></b></a>
-	
-	<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b><fmt:message key="teaching.showRoundRobinActions.refresh"/></b> <fmt:message key="teaching.showRoundRobinActions.page"/></span></a>
+	<c:choose>
+		<c:when test="${not closed and canPartecipate}">
+			<a href="#" id="addNewPost" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinActions.addNewPost"/></a>
+			
+			<a href="#" id="askAQuestion" class="buttonMedium button_medium"><b><fmt:message key="teaching.showRoundRobinActions.askAQuestion"/></b></a>
+			
+			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b><fmt:message key="teaching.showRoundRobinActions.refresh"/></b> <fmt:message key="teaching.showRoundRobinActions.page"/></span></a>
+		</c:when>
+		<c:when test="${not closed and not canPartecipate}">
+			<a href="#" class="buttonMedium button_medium" id="button_refresh"><span><b><fmt:message key="teaching.showRoundRobinActions.refresh"/></b> <fmt:message key="teaching.showRoundRobinActions.page"/></span></a>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
 	
 	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium"><fmt:message key="teaching.showRoundRobinActions.lessonResources"/></a>
 	
@@ -101,66 +108,70 @@
 				});
 			}
 			
-			$j("#button_refresh").click(function() {
-				window.location.replace('${refreshUrl}');
-				return false;
-			});
+			if ($j("#button_refresh").length > 0) {
+				$j("#button_refresh").click(function() {
+					window.location.replace('${refreshUrl}');
+					return false;
+				});
+			}
 			
-			$j('#askAQuestion').click(function() {
-				$j("#askAQuestionStep1Modal").dialog({
-					autoOpen : false,
-					modal: true,
-					resizable: false,
-					width: 300,
-					height: 130, 
-					buttons: {
-						Ok: function() {
-							$j(this).dialog("close");
-							$j("#askAQuestionStep2Modal").dialog({
-								autoOpen : false,
-								modal: true,
-								resizable: false,
-								width: 300,
-								height: 180, 
-								buttons: {
-									Ok: function() {
-										$j(this).dialog("close");
-										$j.ajax({
-											type: "POST",
-											url: "${AskAQuestionURL}",
-											data: $j("#askAQuestionForm").serialize(),
-											cache: false,
-											async: false,
-											success: function(json) {
-												if (json.operation === 'OK') {
-													window.location.href = json.redirectURL;
-													return false;
+			if ($j('#askAQuestion').length > 0) {
+				$j('#askAQuestion').click(function() {
+					$j("#askAQuestionStep1Modal").dialog({
+						autoOpen : false,
+						modal: true,
+						resizable: false,
+						width: 300,
+						height: 130, 
+						buttons: {
+							Ok: function() {
+								$j(this).dialog("close");
+								$j("#askAQuestionStep2Modal").dialog({
+									autoOpen : false,
+									modal: true,
+									resizable: false,
+									width: 300,
+									height: 180, 
+									buttons: {
+										Ok: function() {
+											$j(this).dialog("close");
+											$j.ajax({
+												type: "POST",
+												url: "${AskAQuestionURL}",
+												data: $j("#askAQuestionForm").serialize(),
+												cache: false,
+												async: false,
+												success: function(json) {
+													if (json.operation === 'OK') {
+														window.location.href = json.redirectURL;
+														return false;
+													}
+													alert('There was a problem during this operation...please contact the admin!');
+												},
+												error: function(data) {
+													alert('Server error...please contact the admin!');
 												}
-												alert('There was a problem during this operation...please contact the admin!');
-											},
-											error: function(data) {
-												alert('Server error...please contact the admin!');
-											}
-										  });
-										  return false;
-									  },
-									  Cancel: function() {
-										  $j(this).dialog("close");
-										  return false;
+											  });
+											  return false;
+										  },
+										  Cancel: function() {
+											  $j(this).dialog("close");
+											  return false;
+										  }
 									  }
-								  }
-							  });
-							  $j("#askAQuestionStep2Modal").dialog('open');
-							  return false;
-						  },
-						  No: function() {
-							  $j(this).dialog("close");
-							  return false;
+								  });
+								  $j("#askAQuestionStep2Modal").dialog('open');
+								  return false;
+							  },
+							  No: function() {
+								  $j(this).dialog("close");
+								  return false;
+							  }
 						  }
-					  }
-				  });
-				$j("#askAQuestionStep1Modal").dialog('open');
-				return false;
-			});
+					  });
+					$j("#askAQuestionStep1Modal").dialog('open');
+					return false;
+				});
+			}
 		});
 	</script>

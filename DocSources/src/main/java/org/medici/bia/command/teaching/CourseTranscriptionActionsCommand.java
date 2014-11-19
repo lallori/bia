@@ -37,6 +37,8 @@ public class CourseTranscriptionActionsCommand {
 	private Integer topicId;
 	
 	private String transcriptionMode;
+	
+	private Boolean canPartecipate;
 
 	public Integer getTopicId() {
 		return topicId;
@@ -52,6 +54,14 @@ public class CourseTranscriptionActionsCommand {
 
 	public void setTranscriptionMode(String transcriptionMode) {
 		this.transcriptionMode = transcriptionMode;
+	}
+
+	public Boolean getCanPartecipate() {
+		return canPartecipate;
+	}
+
+	public void setCanPartecipate(Boolean canPartecipate) {
+		this.canPartecipate = canPartecipate;
 	}
 
 }

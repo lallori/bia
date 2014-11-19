@@ -139,6 +139,25 @@ span.h7 {
 
 /* --------------------------------------------------------- */ 
 /*
+/* -------------- PAGINATOR BUTTONS ----------------------- */
+
+.paginatorBtn, .paginateActive {
+	background-color: #ead9d6;
+	border: 1px solid #dcc0ba;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 10px;
+	margin: 0 3px;
+	padding: 2px 5px;
+}
+
+
+.paginatorBtn:hover, .paginateActive {
+	background-color: #dcc0ba;
+}
+
+/* --------------------------------------------------------- */ 
+/*
 /* -------------- TOP RECORD MENU -------------------------- */ 
 
 
@@ -4014,6 +4033,129 @@ ul#network a {
     margin-top: 25px;
 }
 
+/* Manage Course People */
+
+.courseTitle {
+	color: #6d5c4d;
+	font-size: 18px;
+	font-style: italic;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px 5px 10px 10px;
+}
+
+.courseStudentsTitle, .otherStudentsTitle {
+	color: #666ea4;
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 15px;
+}
+
+#courseStudentsPaginate, #otherStudentsPaginate {
+	text-align: right;
+	width: 100%;
+	margin-top: 10px;
+	padding-bottom: 5px;
+}
+
+#csTable, #osTable {
+	width: 100%;
+	margin-top: 15px;
+	border: 1px solid #dcc0ba;
+	border-collapse: collapse;
+}
+
+#csTable td, #csTable th, #osTable td, #osTable th {
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+	text-align: center;
+}
+
+#csTable tr[class*="titleRow"] {
+	height: 45px;
+	border: 1px solid #dcc0ba;
+}
+
+#csTable th[class*="col0"] {
+	width: 12%;
+}
+
+#csTable th[class*="col1"] {
+	width: 40%;
+	cursor:pointer;
+}
+
+#csTable th[class*="col2"] {
+	width: 29%;
+	cursor:pointer;
+}
+
+#csTable th[class*="col3"] {
+	width: 29%;
+}
+
+#osTable tr[class*="titleRow"] {
+	height: 30px;
+	border: 1px solid #dcc0ba;
+}
+
+#osTable th[class*="col0"] {
+	width: 12%;
+}
+
+#osTable th[class*="col1"] {
+	width: 30%;
+	cursor:pointer;
+}
+
+#osTable th[class*="col2"] {
+	width: 30%;
+	cursor:pointer;
+}
+
+#osTable th[class*="col3"] {
+	width: 28%;
+	cursor:pointer;
+}
+
+#manageCoursePeopleCommands .buttonUp {
+	background:url(${contextPath}/images/1024/button_arrowup.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+	display: inline-block;
+} 
+
+#manageCoursePeopleCommands .buttonUpDisabled {
+	background:url(${contextPath}/images/1024/button_arrowupdisabled.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+	display: inline-block;
+} 
+
+#manageCoursePeopleCommands .buttonDown {
+	background:url(${contextPath}/images/1024/button_arrowdown.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+} 
+
+#manageCoursePeopleCommands .buttonDownDisabled {
+	background:url(${contextPath}/images/1024/button_arrowdowndisabled.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: 5px;
+}
+
+#manageCoursePeopleCommands #moveAllToCourseStudents, #manageCoursePeopleCommands #moveAllToOtherStudents {
+	margin-left: 20px;
+	display: inline-block;
+}
 
 /* ---------------- User Management ------------- */
 

@@ -36,6 +36,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.CoursePeople;
 import org.medici.bia.domain.UserAuthority.Authority;
+import org.medici.bia.domain.UserRole;
 
 /**
  * Course People Dao.
@@ -44,6 +45,16 @@ import org.medici.bia.domain.UserAuthority.Authority;
  *
  */
 public interface CoursePeopleDAO extends Dao<Integer, CoursePeople> {
+	
+	/**
+	 * Returns all the course people.
+	 * 
+	 * @param courseId the course identifier
+	 * @param filteredAuth the filtered authorities (null if none); possible filtered authorities are STUDENTS or TEACHERS
+	 * @return the course people found
+	 * @throws PersistenceException
+	 */
+	List<CoursePeople> getCoursePeople(Integer courseId, List<Authority> filteredAuth) throws PersistenceException;
 
 	/**
 	 * Returns the paginated course people.
@@ -51,6 +62,7 @@ public interface CoursePeopleDAO extends Dao<Integer, CoursePeople> {
 	 * @param courseId the course identifier
 	 * @param filteredAuth the filtered authorities (null if none); possible filtered authorities are STUDENTS or TEACHERS
 	 * @param paginationFilter the pagination filter
+	 * @return the paginated course people
 	 */
 	Page getCoursePeople(Integer courseId, List<Authority> filteredAuth, PaginationFilter paginationFilter) throws PersistenceException;
 
@@ -62,6 +74,16 @@ public interface CoursePeopleDAO extends Dao<Integer, CoursePeople> {
 	 * @return true if the user is associated to the course, false otherwise
 	 */
 	CoursePeople getCoursePerson(Integer courseId, String account) throws PersistenceException;
+	
+	/**
+	 * Returns true if the provided account is associated to the course.
+	 * 
+	 * @param courseId the course identifier
+	 * @param account the user account
+	 * @return true if the user is a {@link CoursePeople} or if he is a teacher, false otherwise
+	 * @throws PersistenceException
+	 */
+	boolean isCoursePerson(Integer courseId, String account) throws PersistenceException;
 	
 	/**
 	 * Removes all course people with roles correspondent to the provided filteredAuthorities.
@@ -82,5 +104,14 @@ public interface CoursePeopleDAO extends Dao<Integer, CoursePeople> {
 	 * @throws PersistenceException
 	 */
 	int removeCoursePeople(Integer courseId, List<String> accounts) throws PersistenceException;
+
+	/**
+	 * Removes the course person entries (if exist) by the provided user role.
+	 *  
+	 * @param userRole the user role
+	 * @return the number of removed course people entries
+	 * @throws PersistenceException
+	 */
+	int removeCoursePersonByUserRole(UserRole userRole) throws PersistenceException;
 
 }

@@ -44,6 +44,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.util.CourseUtils;
 import org.medici.bia.domain.Annotation;
+import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseTopicOption;
 import org.medici.bia.domain.Document;
 import org.medici.bia.domain.ForumPost;
@@ -184,6 +185,15 @@ public class ShowTopicForumController {
 			ForumTopic forumTopic = getCommunityService().getForumTopicForView(command.getTopicId());
 			model.put("topic", forumTopic);
 			
+			boolean isTeachingTopic = getTeachingService().isForumInCourse(forumTopic.getForum().getForumId());
+			model.put("isTeachingTopic", isTeachingTopic);
+			
+			if ((isTeachingTopic && model.get("account") == null) ||
+					(isTeachingTopic && !(getTeachingService().canAccess(command.getTopicId(), (String)model.get("account"))))) {
+				// anonymous user cannot view the course topic
+				return new ModelAndView("403", model);
+			}
+			
 			model.put("subscribed", getCommunityService().ifTopicSubscribed(forumTopic.getTopicId()));
 			
 			if (forumTopic.getDocument() != null || forumTopic.getForum().getDocument() != null) {
@@ -229,11 +239,14 @@ public class ShowTopicForumController {
 				}
 			}
 			
-			if (httpServletRequest.getServletPath().startsWith("/teaching")) {
+			if (isTeachingTopic) {
 				CourseTopicOption option = getTeachingService().getCourseTranscriptionTopicOption(forumTopic.getForum().getForumId());
 				if (option != null) {
 					model.put("courseTranscriptionURL", CourseUtils.getCourseTranscriptionURL(option));
 				}
+				Course course = getTeachingService().getCourseFromCourseTopic(forumTopic.getTopicId());
+				model.put("isCoursePerson", getTeachingService().isPersonInCourse(course.getCourseId(), user.getAccount()));
+				
 			}
 			
 			Page postsPage = getCommunityService().getForumPostsFromTopic(forumTopic, paginationFilterTopic);
