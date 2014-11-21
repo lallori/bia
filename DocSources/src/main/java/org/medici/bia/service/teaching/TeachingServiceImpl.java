@@ -2071,7 +2071,7 @@ public class TeachingServiceImpl implements TeachingService {
 				} else {
 					// This is a new annotation
 					Forum forum = getForumDAO().find(forumContainerId);
-					Course course = getCourseDAO().find(forum.getForumParent().getForumId());
+					Course course = getCourseDAO().getCourseByCourseFragment(forumContainerId);
 					CoursePeople coursePerson = getCoursePerson(course, user);
 					
 					if (coursePerson == null) {

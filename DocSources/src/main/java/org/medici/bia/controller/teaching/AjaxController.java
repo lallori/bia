@@ -863,6 +863,7 @@ public class AjaxController {
 			model.put("adminPrivileges", isAdminOrTeacher);
 		} catch (ApplicationThrowable applicationThrowable) {
 			model.put("operation", "KO");
+			model.put("error", applicationThrowable.getMessage() != null ? applicationThrowable.toString() : applicationThrowable.getCause().toString());
 			return model;
 		}
 		

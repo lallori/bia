@@ -238,41 +238,52 @@ var IIPMooViewer = new Class({
 					url: this.updateAnnotationsUrl,
 					data: queryParameter,	
 					onSuccess: function(responseJSON, responseText) {
-						console.log('notified annotation change to server.');
-						// RR: update annotations details in the client
-						_this.annotations = new Array();
-						_this.adminPrivileges = responseJSON.adminPrivileges;
-						var data = new Array();  // temporary data array
-						for (i = 0; i < responseJSON.annotations.length; i++) {
-							data[i] = {
-								annotationId: responseJSON.annotations[i].annotationId.toInt(),
-								id: responseJSON.annotations[i].id,
-								x: responseJSON.annotations[i].x.toFloat(), 
-								y: responseJSON.annotations[i].y.toFloat(), 
-								w: responseJSON.annotations[i].w.toFloat(), 
-								h: responseJSON.annotations[i].h.toFloat(),
-								type: responseJSON.annotations[i].type,
-								title: responseJSON.annotations[i].title,
-								text: responseJSON.annotations[i].text,
-								deletable: responseJSON.annotations[i].deletable,
-								updatable: responseJSON.annotations[i].updatable,
-								forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum	
-							};
-							if (typeof responseJSON.annotations[i].color !== 'undefined') {
-								data[i]["color"] = responseJSON.annotations[i].color;
+						if (responseJSON.operation === 'OK') {
+							console.log('notified annotation change to server.');
+							// RR: update annotations details in the client
+							_this.annotations = new Array();
+							_this.adminPrivileges = responseJSON.adminPrivileges;
+							var data = new Array();  // temporary data array
+							for (i = 0; i < responseJSON.annotations.length; i++) {
+								data[i] = {
+										annotationId: responseJSON.annotations[i].annotationId.toInt(),
+										id: responseJSON.annotations[i].id,
+										x: responseJSON.annotations[i].x.toFloat(), 
+										y: responseJSON.annotations[i].y.toFloat(), 
+										w: responseJSON.annotations[i].w.toFloat(), 
+										h: responseJSON.annotations[i].h.toFloat(),
+										type: responseJSON.annotations[i].type,
+										title: responseJSON.annotations[i].title,
+										text: responseJSON.annotations[i].text,
+										deletable: responseJSON.annotations[i].deletable,
+										updatable: responseJSON.annotations[i].updatable,
+										forumTopicURL: responseJSON.annotations[i].forumTopicURL // Link To Forum	
+								};
+								if (typeof responseJSON.annotations[i].color !== 'undefined') {
+									data[i]["color"] = responseJSON.annotations[i].color;
+								}
+								if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
+									data[i]["visibility"] = responseJSON.annotations[i].visibility;
+								}
+								_this.annotations.push(data[i]);
 							}
-							if (typeof responseJSON.annotations[i].visibility !== 'undefined') {
-								data[i]["visibility"] = responseJSON.annotations[i].visibility;
-							}
-							_this.annotations.push(data[i]);
-						}
-						_this.reload();
-						for (i = 0; i < responseJSON.links.length; i++) {
-							/*var popupWindow = window.opener.open(responseJSON.links[i].forum, "_blank", "scrollbars=yes");
+							_this.reload();
+							for (i = 0; i < responseJSON.links.length; i++) {
+								/*var popupWindow = window.opener.open(responseJSON.links[i].forum, "_blank", "scrollbars=yes");
 							popupWindow.focus();
 							window.close(); */
-							window.open(responseJSON.links[i].forum, _this.openAnnotationTopicMode, "scrollbars=yes");
+								window.open(responseJSON.links[i].forum, _this.openAnnotationTopicMode, "scrollbars=yes");
+							}
+						} else {
+							alert("The server failed with the error:\n" + responseJSON.error + "\nPlease contact the admin!");
+							_this.retrieveAnnotations();
+							_this.container.getElement('div.navbuttons').getElement('img.reset').fireEvent('click');
 						}
+					},
+					onFailure: function() {
+						alert("The server call failed.\nPlease contact the admin!");
+						_this.retrieveAnnotations();
+						_this.container.getElement('div.navbuttons').getElement('img.reset').fireEvent('click');
 					}
 				}).send();
 			});
