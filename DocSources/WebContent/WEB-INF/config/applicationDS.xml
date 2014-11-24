@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/BiaDB"/>
+	<jee:jndi-lookup id="dataSource" jndi-name="BiaDataSource"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <description>Bean preposto ad istanziare l'entityManager degli ejb3. Viene usato da tutti i dao.</description>
