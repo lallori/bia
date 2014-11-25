@@ -10,29 +10,29 @@
 
 <div id="IipImagePropertiesDiv" class="background">
 	<div class="title">
-		<h5>IIP IMAGE</h5>
+		<h5><fmt:message key="adm.showIIPImageProperties.iIpImage"/></h5>
 		<a id="EditIipImageProperties" class="editButton" href="${EditIipImagePropertiesURL}" title="IipImage Properties"></a><span id="loading" />
 	</div>
-    <p>IIpImage server reverse proxy properties</p>
+    <p><fmt:message key="adm.showIIPImageProperties.iipImageServerR"/></p>
 	<div class="list">
 		<div class="row">
-			<div class="item">Server fcgi-bin path</div> 
+			<div class="item"><fmt:message key="adm.showIIPImageProperties.serverFcgi"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.fcgi.path')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Server host-name</div> 
+			<div class="item"><fmt:message key="adm.showIIPImageProperties.serverHost"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.host')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Server port</div> 
+			<div class="item"><fmt:message key="adm.showIIPImageProperties.serverPort"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.port')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Server protocol</div> 
+			<div class="item"><fmt:message key="adm.showIIPImageProperties.serverProtocol"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.protocol')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Server version</div> 
+			<div class="item"><fmt:message key="adm.showIIPImageProperties.serverVersion"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('iipimage.reverseproxy.version')}</div> 
 		</div>
 	</div>

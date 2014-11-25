@@ -78,87 +78,87 @@
 									<select id="roleCategorySelect" name="roleCategorySelect" class="selectform_XXXlong">
 						                    <option value="Select a Role Category" selected="selected"><fmt:message key="search.advancedSearchPeople.selectRoleCategory"/></option>
 						                        <optgroup label="ARTISTS and ARTISANS">
-						                        	<option value="ARTISTS and ARTISANS">All Artists and Artisans</option>
-						                        	<option value="Actors/Dancers">Actors/Dancers</option>
-						                        	<option value="Architects/Engineers">Architects/Engineers</option>
-						                        	<option value="Armorers/Weapon Makers">Armorers/Weapon Makers</option>
-						                       		<option value="Cloth Weavers/Embroiderers">Cloth Weavers/Embroiderers</option>
-						                        	<option value="Clothing Makers">Clothing Makers</option>
-						                        	<option value="Gold/Silver Workers">Gold/Silver Workers</option>
-						                        	<option value="Jewelers/Hard Stone Workers">Jewelers/Hard Stone Workers</option>
-						                        	<option value="Musicians/Singers/Instrument Makers">Musicians/Singers/Instrument Makers</option>
-						                        	<option value="Painters">Painters</option>
-						                        	<option value="Printmakers">Printmakers</option>
-						                        	<option value="Sculptors">Sculptors</option>
-						                        	<option value="Tapestry Weavers">Tapestry Weavers</option>
-						                        	<option value="Woodworkers">Woodworkers</option>
-						                        	<option value="Artists and Artisans Other">Artists and Artisans Other</option>
+						                        	<option value="ARTISTS and ARTISANS"><fmt:message key="search.advancedSearchPeople.allAr"/></option>
+						                        	<option value="Actors/Dancers"><fmt:message key="search.advancedSearchPeople.actD"/></option>
+						                        	<option value="Architects/Engineers"><fmt:message key="search.advancedSearchPeople.archite"/></option>
+						                        	<option value="Armorers/Weapon Makers"><fmt:message key="search.advancedSearchPeople.armor"/></option>
+						                       		<option value="Cloth Weavers/Embroiderers"><fmt:message key="search.advancedSearchPeople.clothW"/></option>
+						                        	<option value="Clothing Makers"><fmt:message key="search.advancedSearchPeople.clothing"/></option>
+						                        	<option value="Gold/Silver Workers"><fmt:message key="search.advancedSearchPeople.goldSil"/></option>
+						                        	<option value="Jewelers/Hard Stone Workers"><fmt:message key="search.advancedSearchPeople.jewelers"/></option>
+						                        	<option value="Musicians/Singers/Instrument Makers"><fmt:message key="search.advancedSearchPeople.musicians"/></option>
+						                        	<option value="Painters"><fmt:message key="search.advancedSearchPeople.painters"/></option>
+						                        	<option value="Printmakers"><fmt:message key="search.advancedSearchPeople.printM"/></option>
+						                        	<option value="Sculptors"><fmt:message key="search.advancedSearchPeople.sculp"/></option>
+						                        	<option value="Tapestry Weavers"><fmt:message key="search.advancedSearchPeople.tapest"/></option>
+						                        	<option value="Woodworkers"><fmt:message key="search.advancedSearchPeople.woodwor"/></option>
+						                        	<option value="Artists and Artisans Other"><fmt:message key="search.advancedSearchPeople.artistsAnd"/></option>
 						                        </optgroup>
 						                        <optgroup label="CORPORATE BODIES">
-						                        	<option value="CORPORATE BODIES">All Corporate Bodies</option>
-						                        	<option value="Religious">Religious</option>
-						                        	<option value="Secular">Secular</option>
-						                        	<option value="Corporate Bodies Other">Corporate Bodies Other</option>
+						                        	<option value="CORPORATE BODIES"><fmt:message key="search.advancedSearchPeople.allCorp"/></option>
+						                        	<option value="Religious"><fmt:message key="search.advancedSearchPeople.religi"/></option>
+						                        	<option value="Secular"><fmt:message key="search.advancedSearchPeople.secul"/></option>
+						                        	<option value="Corporate Bodies Other"><fmt:message key="search.advancedSearchPeople.corpor"/></option>
 						                        </optgroup>
 						                        <optgroup label="ECCLESIASTICS">
-						                        	<option value="ECCLESIASTICS">All Ecclesiastics</option>
-						                        	<option value="Beatified/Saints">Beatified/Saints</option>
-						                        	<option value="Bishops/Archbishops">Bishops/Archbishops</option>
-						                        	<option value="Cardinals">Cardinals</option>
-						                        	<option value="Members of Religious Orders">Members of Religious Orders</option>
-						                        	<option value="Popes">Popes</option>
-						                        	<option value="Ecclesiastics Other">Ecclesiastics Other</option>
+						                        	<option value="ECCLESIASTICS"><fmt:message key="search.advancedSearchPeople.allEccl"/></option>
+						                        	<option value="Beatified/Saints"><fmt:message key="search.advancedSearchPeople.beat"/></option>
+						                        	<option value="Bishops/Archbishops"><fmt:message key="search.advancedSearchPeople.bisho"/></option>
+						                        	<option value="Cardinals"><fmt:message key="search.advancedSearchPeople.cardi"/></option>
+						                        	<option value="Members of Religious Orders"><fmt:message key="search.advancedSearchPeople.membersOfR"/></option>
+						                        	<option value="Popes"><fmt:message key="search.advancedSearchPeople.popes"/></option>
+						                        	<option value="Ecclesiastics Other"><fmt:message key="search.advancedSearchPeople.ecclesi"/></option>
 						                        </optgroup>
 						                        <optgroup label="HEADS of STATE">
-						                        	<option value="HEADS of STATE">All Heads of State</option>
-						                        	<option value="Emperors-Empresses/Kings-Queens">Emperors-Empresses/Kings-Queens</option>
-						                        	<option value="Sovereign Dukes-Duchesses/Grand Dukes-Duchesses">Sovereign Dukes-Duchesses/Grand Dukes-Duchesses</option>
-						                        	<option value="Viceroys-Vicereines/Governors">Viceroys-Vicereines/Governors</option>
-						                        	<option value="Heads of State Other">Heads of State Other</option>
+						                        	<option value="HEADS of STATE"><fmt:message key="search.advancedSearchPeople.allHeads"/></option>
+						                        	<option value="Emperors-Empresses/Kings-Queens"><fmt:message key="search.advancedSearchPeople.emper"/></option>
+						                        	<option value="Sovereign Dukes-Duchesses/Grand Dukes-Duchesses"><fmt:message key="search.advancedSearchPeople.sovereign"/></option>
+						                        	<option value="Viceroys-Vicereines/Governors"><fmt:message key="search.advancedSearchPeople.viceroy"/></option>
+						                        	<option value="Heads of State Other"><fmt:message key="search.advancedSearchPeople.headsOf"/></option>
 						                        </optgroup>
 						                        <optgroup label="MILITARY and NAVAL PERSONNEL">
-						                        	<option value="MILITARY and NAVAL PERSONNEL">All Military and Naval Personnel</option>
-						                        	<option value="Captains">Captains</option>
-						                        	<option value="Colonels">Colonels</option>
-						                        	<option value="Generals/Admirals">Generals/Admirals</option>
-						                        	<option value="Lieutenants/Ensigns">Lieutenants/Ensigns</option>
-						                        	<option value="Military and Naval Personnel Other">Military and Naval Personnel Other</option>
+						                        	<option value="MILITARY and NAVAL PERSONNEL"><fmt:message key="search.advancedSearchPeople.allMilit"/></option>
+						                        	<option value="Captains"><fmt:message key="search.advancedSearchPeople.captains"/></option>
+						                        	<option value="Colonels"><fmt:message key="search.advancedSearchPeople.colonels"/></option>
+						                        	<option value="Generals/Admirals"><fmt:message key="search.advancedSearchPeople.generals"/></option>
+						                        	<option value="Lieutenants/Ensigns"><fmt:message key="search.advancedSearchPeople.lieuten"/></option>
+						                        	<option value="Military and Naval Personnel Other"><fmt:message key="search.advancedSearchPeople.military"/></option>
 						                        </optgroup>
 						                        <optgroup label="NOBLES">
-						                        	<option value="NOBLES">All Nobles</option>
-						                        	<option value="Barons-Baronesses">Barons-Baronesses</option>
-						                        	<option value="Counts-Countesses">Counts-Countesses</option>
-						                        	<option value="Dukes-Duchesses/Archdukes-Archduchesses">Dukes-Duchesses/Archdukes-Archduchesses</option>
-						                        	<option value="Marquises-Marchionesses">Marquises-Marchionesses</option>
-						                        	<option value="Members Chivalric Orders">Members Chivalric Orders</option>
-						                        	<option value="Princes-Princesses">Princes-Princesses</option>
-						                        	<option value="Nobles OTHER">Nobles OTHER</option>
+						                        	<option value="NOBLES"><fmt:message key="search.advancedSearchPeople.allNobles"/></option>
+						                        	<option value="Barons-Baronesses"><fmt:message key="search.advancedSearchPeople.baron"/></option>
+						                        	<option value="Counts-Countesses"><fmt:message key="search.advancedSearchPeople.counts"/></option>
+						                        	<option value="Dukes-Duchesses/Archdukes-Archduchesses"><fmt:message key="search.advancedSearchPeople.dukes"/></option>
+						                        	<option value="Marquises-Marchionesses"><fmt:message key="search.advancedSearchPeople.marquises"/></option>
+						                        	<option value="Members Chivalric Orders"><fmt:message key="search.advancedSearchPeople.members"/></option>
+						                        	<option value="Princes-Princesses"><fmt:message key="search.advancedSearchPeople.princes"/></option>
+						                        	<option value="Nobles OTHER"><fmt:message key="search.advancedSearchPeople.nobles"/></option>
 						                        </optgroup>
 						                        <optgroup label="PROFESSIONS">
-						                        	<option value="PROFESSIONS">All Professions</option>
-						                        	<option value="Bankers/Merchants">Bankers/Merchants</option>
-						                        	<option value="Lawyers/Notaries">Lawyers/Notaries</option>
-						                        	<option value="Medical Practitioners">Medical Practitioners</option>
-						                        	<option value="Professions OTHER">Professions OTHER</option>
+						                        	<option value="PROFESSIONS"><fmt:message key="search.advancedSearchPeople.allProf"/></option>
+						                        	<option value="Bankers/Merchants"><fmt:message key="search.advancedSearchPeople.bankers"/></option>
+						                        	<option value="Lawyers/Notaries"><fmt:message key="search.advancedSearchPeople.lawyers"/></option>
+						                        	<option value="Medical Practitioners"><fmt:message key="search.advancedSearchPeople.medical"/></option>
+						                        	<option value="Professions OTHER"><fmt:message key="search.advancedSearchPeople.professions"/></option>
 						                        </optgroup>
 						                        <optgroup label="SCHOLARLY and LITERARY">
-						                        	<option value="SCHOLARLY and LITERARY">All Scholarly and Literary</option>
-						                        	<option value="Poets/Writers">Poets/Writers</option>
-						                        	<option value="Printers/Booksellers">Printers/Booksellers</option>
-						                        	<option value="Scholarly/Learned">Scholarly/Learned</option>
-						                        	<option value="Scholarly and Literary Other">Scholarly and Literary Other</option>
+						                        	<option value="SCHOLARLY and LITERARY"><fmt:message key="search.advancedSearchPeople.allSchol"/></option>
+						                        	<option value="Poets/Writers"><fmt:message key="search.advancedSearchPeople.poets"/></option>
+						                        	<option value="Printers/Booksellers"><fmt:message key="search.advancedSearchPeople.printers"/></option>
+						                        	<option value="Scholarly/Learned"><fmt:message key="search.advancedSearchPeople.schol"/></option>
+						                        	<option value="Scholarly and Literary Other"><fmt:message key="search.advancedSearchPeople.scholarlyOther"/></option>
 						                        </optgroup>
 						                        <optgroup label="STATE and COURT PERSONNEL">
-						                        	<option value="STATE and COURT PERSONNEL">All State and Court Personnel</option>
-						                        	<option value="Civic/Local/Regional Administrators">Civic/Local/Regional Administrators</option>
-						                        	<option value="Courtiers">Courtiers</option>
-						                        	<option value="Diplomats">Diplomats</option>
-						                        	<option value="Judges/Magistrates">Judges/Magistrates</option>
-						                        	<option value="Secretaries/Ministers">Secretaries/Ministers</option>
-						                        	<option value="State and Court Personnel Other">State and Court Personnel Other</option>
+						                        	<option value="STATE and COURT PERSONNEL"><fmt:message key="search.advancedSearchPeople.allState"/></option>
+						                        	<option value="Civic/Local/Regional Administrators"><fmt:message key="search.advancedSearchPeople.civic"/></option>
+						                        	<option value="Courtiers"><fmt:message key="search.advancedSearchPeople.courtiers"/></option>
+						                        	<option value="Diplomats"><fmt:message key="search.advancedSearchPeople.diplomats"/></option>
+						                        	<option value="Judges/Magistrates"><fmt:message key="search.advancedSearchPeople.judges"/></option>
+						                        	<option value="Secretaries/Ministers"><fmt:message key="search.advancedSearchPeople.secretaries"/></option>
+						                        	<option value="State and Court Personnel Other"><fmt:message key="search.advancedSearchPeople.stateAnd"/></option>
 						                        </optgroup>
 						                        <optgroup label="UNASSIGNED">
-						                        	<option value="Unassigned">Unassigned</option>
+						                        	<option value="Unassigned"><fmt:message key="search.advancedSearchPeople.unassigned"/></option>
 						                        </optgroup>
 						            </select>
 				               	</div>

@@ -7,10 +7,10 @@
 	<div id="saveAsDiv">
 		<form:form id="saveAsForm" method="post" cssClass="edit">
 	    	<input type="radio" name="saveType" value="newSearch" checked="">
-	        <label for="saveAs" id="saveAsLabel">Save as</label>
+	        <label for="saveAs" id="saveAsLabel"><fmt:message key="search.saveUserSearchFilterModalWindow.saveAs"/></label>
 			<input id="saveAs" name="saveAs" class="input_24c" type="text" value=""/>
 	        <input type="radio" name="saveType" value="replaceSearch">
-	        <label for="replace" id="replaceLabel">Replace</label>
+	        <label for="replace" id="replaceLabel"><fmt:message key="search.saveUserSearchFilterModalWindow.replace"/></label>
 	        <select id="idSearchFilterToReplace" name="idSearchFilterToReplace" class="selectform_XXlong">
         	<c:forEach var="searchFilter" items="${searchFilters}">
 				<option value="${searchFilter.id}">${searchFilter.filterName}</option>

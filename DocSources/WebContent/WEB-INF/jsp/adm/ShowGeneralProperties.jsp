@@ -10,24 +10,24 @@
 
 <div id="EditGeneralPropertiesDiv" class="background">
 	<div class="title">
-		<h5>GENERAL PROPERTIES</h5>
+		<h5><fmt:message key="adm.showGeneralProperties.gEneralProperties"/></h5>
 		<a id="EditGeneralProperties" class="editButton" href="${EditGeneralPropertiesURL}" title="Edit General Properties"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Website protocol</div> 
+			<div class="item"><fmt:message key="adm.showGeneralProperties.websiteProtocol"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("website.protocl")}</div>
 		</div> 
 		<div class="row">
-			<div class="item">Website domain</div> 
+			<div class="item"><fmt:message key="adm.showGeneralProperties.websiteDomain"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("website.domain")}</div>
 		</div> 
 		<div class="row">
-			<div class="item">Website contextPath</div> 
+			<div class="item"><fmt:message key="adm.showGeneralProperties.websiteContextPath"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("website.contextPath")}</div>
 		</div> 
         <div class="row">
-			<div class="item">Images Path</div> 
+			<div class="item"><fmt:message key="adm.showGeneralProperties.imagesPath"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("iipimage.image.path")}</div>
 		</div>
 	</div>

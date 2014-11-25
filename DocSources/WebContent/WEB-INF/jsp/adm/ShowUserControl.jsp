@@ -14,37 +14,37 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<div id="EditUserControlDiv" class="background">
 	<div class="title">
-		<h5>USER CONTROL</h5>
+		<h5><fmt:message key="adm.showUserControl.uSerControl"/></h5>
 		<a id="EditUserControl" class="editButton" href="${EditUserControlURL}" title="Edit User Control"></a><span id="loading"/>
 	</div>
 	
 	<div class="list">
 		<div class="row">
-			<div class="item37">Username</div> 
+			<div class="item37"><fmt:message key="adm.showUserControl.username"/></div> 
 			<div class="value">${user.account}</div> 
 		</div>
 		<div class="row">
-			<div class="item37">First Name</div>
+			<div class="item37"><fmt:message key="adm.showUserControl.firstName"/></div>
 			<div class="value">${user.firstName}</div>
 		</div>
 		<div class="row">
-			<div class="item37">Middle Name</div>
+			<div class="item37"><fmt:message key="adm.showUserControl.middleName"/></div>
 			<div class="value">${user.middleName}</div>
 		</div>
 		<div class="row">
-			<div class="item37">Last Name</div>
+			<div class="item37"><fmt:message key="adm.showUserControl.lastName"/></div>
             <div class="value">${user.lastName}</div>
 		</div>
         <div class="row">
-			<div class="item37">New Password</div> 
+			<div class="item37"><fmt:message key="adm.showUserControl.newPassword"/></div> 
 			<div class="value"></div>
 		</div>
         <div class="row">
-			<div class="item37">Password expires</div> 
+			<div class="item37"><fmt:message key="adm.showUserControl.passwordExpires"/></div> 
 			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationPasswordDate}" /></div>
 		</div>
 		<div class="row">
-			<div class="item37">Group policies</div>
+			<div class="item37"><fmt:message key="adm.showUserControl.groupPolicies"/></div>
 			<div class="value">&nbsp;</div>
 		</div>
 		<div class="row">
@@ -58,7 +58,7 @@
 		</div>
 <!-- 		<hr> -->
 		<div class="row">
-			<div class="item37">Account Expiration Time</div> 
+			<div class="item37"><fmt:message key="adm.showUserControl.accountExpirationTime"/></div> 
 			<div class="value"><fmt:formatDate pattern="MM/dd/yyyy" value="${user.expirationDate}" /></div>
 		</div>
     </div>   

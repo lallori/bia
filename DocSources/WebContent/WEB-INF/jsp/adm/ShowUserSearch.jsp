@@ -7,19 +7,19 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<c:url var="ShowUserSearchURL" 	value="/admin/ShowUserSearch.do" />
 
-<h3 class="userSearch">USER SEARCH</h3>
+<h3 class="userSearch"><fmt:message key="adm.showUserSearch.uSerSearch"/></h3>
 
 <form:form id="userSearchForm" method="post" cssClass="edit" action="${ShowUserSearchURL}">
 	<fieldset>
-	<legend><b>NEW FILTER</b></legend>
+	<legend><b><fmt:message key="adm.showUserSearch.nEwFilter"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="fullName" for="fullName">Full name</form:label></div>
+				<div class="col_l"><form:label path="fullName" for="fullName"><fmt:message key="adm.showUserSearch.fullName"/></form:label></div>
 				<div class="col_r"><input id="fullName" name="fullName" class="input_7c" type="text" value="Contains" disabled=""></div>
 				<div class="col_r"><form:input path="fullName" cssClass="input_25c"/></div>	
 			</div>	
 			<div class="row">
-					<div class="col_l"><form:label path="userName" for="userName">User name</form:label></div>
+					<div class="col_l"><form:label path="userName" for="userName"><fmt:message key="adm.showUserSearch.userName"/></form:label></div>
 					<div class="col_r"><input id="userName" name="userName" class="input_7c" type="text" value="Contains" disabled/></div>
 			        <div class="col_r"><form:input path="userName" cssClass="input_25c"/></div>
 			</div>

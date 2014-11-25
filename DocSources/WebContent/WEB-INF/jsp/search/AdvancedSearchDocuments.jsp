@@ -193,7 +193,7 @@
 				        </div>
 					</div>
 					
-					<h1 id="topicsSearch"><a>Topics</a></h1>
+					<h1 id="topicsSearch"><a><fmt:message key="search.advancedSearchDocuments.topics"/></a></h1>
 					<div class="documents">
 						<div class="listAdvSearch">
 							<form id="topicSearchForm" method="post" class="edit">
@@ -315,7 +315,7 @@
 								<div class="row">
 									<div class="col_l">
 										<a class="helpIcon" title="<fmt:message key="search.advancedSearchDocuments.help.volumeorfolio.insert"></fmt:message>">?</a>
-										<span>Insert Number</span>
+										<span><fmt:message key="search.advancedSearchDocuments.insertNumber"/></span>
 									</div>
 									<div class="col_l"><input type="text" id="insert" name="insert" class="input_5c"/></div>
 									<div class="col_l"></div>

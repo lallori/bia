@@ -114,8 +114,8 @@
 					               	<div class="col_l">
 					               		<select id="digitized" name="digitized" class="selectform_short">
 					                    	<option value="" selected="selected"></option>
-					                   		<option value="Yes">Yes</option>
-					                    	<option value="No">No</option>
+					                   		<option value="Yes"><fmt:message key="search.advancedSearchVolumes.yes"/></option>
+					                    	<option value="No"><fmt:message key="search.advancedSearchVolumes.no"/></option>
 					                	</select>
 					               	</div>
 					               	<div class="col_r">

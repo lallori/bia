@@ -9,26 +9,26 @@
 <div id="loadingDiv"></div>
 <form:form id="EditIipImagePropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>IIP IMAGE</b></legend>
+		<legend><b><fmt:message key="adm.editIIPImageProperties.iIpImage"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="serverFcgiBinPath" for="serverFcgiBinPath" id="serverPathLabel">Server fcgi-bin path</form:label></div>
+				<div class="col_l"><form:label path="serverFcgiBinPath" for="serverFcgiBinPath" id="serverPathLabel"><fmt:message key="adm.editIIPImageProperties.serverPath"/></form:label></div>
 				<div class="col_r"><form:input path="serverFcgiBinPath" for="serverFcgiBinPath" id="serverPath" cssClass="input_29c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="serverHostName" for="serverHostName" id="serverHostNameLabel">Server host-name</form:label></div>
+				<div class="col_l"><form:label path="serverHostName" for="serverHostName" id="serverHostNameLabel"><fmt:message key="adm.editIIPImageProperties.serverHost"/></form:label></div>
 				<div class="col_r"><form:input path="serverHostName" for="serverHostName" id="serverHostName" cssClass="input_29c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="serverPort" for="serverPort" id="serverPortLabel">Server port</form:label></div>
+				<div class="col_l"><form:label path="serverPort" for="serverPort" id="serverPortLabel"><fmt:message key="adm.editIIPImageProperties.serverPort"/></form:label></div>
 				<div class="col_r"><form:input path="serverPort" for="serverPort" id="serverPort" cssClass="input_29c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="serverProtocol" for="serverProtocol" id="serverProtocolLabel">Server protocol</form:label></div>
+				<div class="col_l"><form:label path="serverProtocol" for="serverProtocol" id="serverProtocolLabel"><fmt:message key="adm.editIIPImageProperties.serverProtocol"/></form:label></div>
 				<div class="col_r"><form:input path="serverProtocol" for="serverProtocol" id="serverProtocol" cssClass="input_29c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="serverVersion" for="serverVersion" id="serverVersionLabel">Server version</form:label></div>
+				<div class="col_l"><form:label path="serverVersion" for="serverVersion" id="serverVersionLabel"><fmt:message key="adm.editIIPImageProperties.serverVersion"/></form:label></div>
 				<div class="col_r"><form:input path="serverVersion" for="serverVersion" id="serverVersion" cssClass="input_29c" type="text" value=""/></div>
 			</div>
 		</div>
@@ -92,7 +92,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editIIPImageProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

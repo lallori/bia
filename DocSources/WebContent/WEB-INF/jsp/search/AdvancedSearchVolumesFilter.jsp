@@ -90,8 +90,8 @@
 					<div class="searchFilterDiv">
 						<span class="categorySearch"><fmt:message key="search.advancedSearchVolumesFilter.volumeDescription.digitized"/>: </span>
 						<span class="wordSearch">
-							<c:if test="${searchFilter.filterData.digitized == true}">Yes</c:if>
-							<c:if test="${searchFilter.filterData.digitized == false}">No</c:if>
+							<c:if test="${searchFilter.filterData.digitized == true}"><fmt:message key="search.advancedSearchVolumesFilter.yes"/></c:if>
+							<c:if test="${searchFilter.filterData.digitized == false}"><fmt:message key="search.advancedSearchVolumesFilter.no"/></c:if>
 						</span>
 						<a class="remove" href="#"><fmt:message key="search.advancedSearchVolumesFilter.remove"/></a>
 						<c:if test="${searchFilter.filterData.digitized.toString() ==  'true'}">

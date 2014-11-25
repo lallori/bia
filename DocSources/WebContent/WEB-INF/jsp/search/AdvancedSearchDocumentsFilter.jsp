@@ -36,7 +36,7 @@
 			<div id="personSearchDiv">
 				<c:forEach items="${searchFilter.filterData.person}" varStatus="iterator">
 					<div class="searchFilterDiv">
-						<span class="categorySearch">Person: </span>
+						<span class="categorySearch"><fmt:message key="search.advancedSearchDocumentsFilter.person"/> </span>
 						<span class="wordSearch">${searchFilter.filterData.person[iterator.index]}</span>
 						<a class="remove" href="#"><fmt:message key="search.advancedSearchDocumentsFilter.remove"/></a>
 						<input type="hidden" value="${searchFilter.filterData.personId[iterator.index]}|${fn2:encode(searchFilter.filterData.person[iterator.index])}" name="person">
@@ -398,7 +398,7 @@
 			
 			<br>
 			<br>
-			<a class="saveButton" href="#">Save</a>
+			<a class="saveButton" href="#"><fmt:message key="search.advancedSearchDocumentsFilter.save"/></a>
 			<input type="submit" title="Search" value="Search" id="advsearch" class="button_small">
 
 			<input type="hidden" name="idSearchFilter" value="${command.idSearchFilter}">

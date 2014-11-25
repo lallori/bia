@@ -10,52 +10,52 @@
 
 <div id="EditEmailSystemPropertiesDiv" class="background">
 	<div class="title">
-		<h5>EMAIL SYSTEM PROPERTIES</h5>
+		<h5><fmt:message key="adm.showEmailProperties.eMailSystemProperties"/></h5>
 		<a id="EditEmailSystemProperties" class="editButton" href="${EditEmailPropertiesURL}"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Smtp Server host</div>
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpHost"/></div>
 			<div class="value60">${fn2:getApplicationProperty('mail.server.host')}</div>
 		</div>
 		<div class="row">
-			<div class="item">Smtp Server Port</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpPort"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.server.port')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Mail Transport Protocol</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.mailTransportProtocol"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.transport.protocol')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Smtp Auth</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpAuth"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.smtp.auth')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Smtp Starttls</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpStarttls"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.smtp.starttls.enable')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Smtp Server Username</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpSUsername"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.server.username')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Smtp Server Password</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.smtpSPassword"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.server.password')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Activation message subject</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.activationMessageSubject"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.activationUser.subject')}</div>
 		</div>
 		<div class="row">
-			<div class="item">Activation message text</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.activationMessageText"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.activationUser.text')}</div>
 		</div>
         <div class="row">
-			<div class="item">Reset user password subject</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.resetUserPasswordSubject"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.resetUserPassword.subject')}</div>
 		</div>
         <div class="row">
-			<div class="item">Reset user password text</div> 
+			<div class="item"><fmt:message key="adm.showEmailProperties.resetUserPasswordText"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('mail.resetUserPassword.text')}</div>
 		</div>
 	</div>

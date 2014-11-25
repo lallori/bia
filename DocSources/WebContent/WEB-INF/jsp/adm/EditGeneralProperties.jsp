@@ -9,22 +9,22 @@
 <div id="loadingDiv"></div>
 <form:form id="generalPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>GENERAL PROPERTIES</b></legend>
+		<legend><b><fmt:message key="adm.editGeneralProperties.gEneralProperties"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label id="websiteProtocolLabel" for="websiteProtocol" path="websiteProtocol">Website protocol</form:label></div>
+				<div class="col_l"><form:label id="websiteProtocolLabel" for="websiteProtocol" path="websiteProtocol"><fmt:message key="adm.editGeneralProperties.websiteProtocol"/></form:label></div>
 				<div class="col_l"><form:input id="websiteProtocol" cssClass="input_24c" type="text" path="websiteProtocol" /></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label id="websiteDomainLabel" for="websiteDomain" path="websiteDomain">Website domain</form:label></div>
+				<div class="col_l"><form:label id="websiteDomainLabel" for="websiteDomain" path="websiteDomain"><fmt:message key="adm.editGeneralProperties.websiteDomain"/></form:label></div>
 				<div class="col_l"><form:input id="websiteDomain" cssClass="input_24c" type="text" path="websiteDomain" /></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label id="websiteContextPathLabel" for="websiteContextPath" path="websiteContextPath">Website Context Path</form:label></div>
+				<div class="col_l"><form:label id="websiteContextPathLabel" for="websiteContextPath" path="websiteContextPath"><fmt:message key="adm.editGeneralProperties.websiteContextPath"/></form:label></div>
 				<div class="col_l"><form:input id="websiteContextPath" cssClass="input_24c" type="text" path="websiteContextPath" /></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label id="imagePathLabel" for="imagesPath" path="imagesPath">Images Path</form:label></div>
+				<div class="col_l"><form:label id="imagePathLabel" for="imagesPath" path="imagesPath"><fmt:message key="adm.editGeneralProperties.imagesPath"/></form:label></div>
 				<div class="col_l"><form:input id="imagePath" cssClass="input_24c" type="text" path="imagesPath" /></div>
 			</div>
 		</div>
@@ -88,7 +88,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editGeneralProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

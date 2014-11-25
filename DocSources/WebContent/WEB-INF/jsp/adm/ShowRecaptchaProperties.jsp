@@ -9,28 +9,28 @@
 <c:url var="EditRecaptchaPropertiesURL" value="/admin/EditRecaptchaProperties.do" />
 <div id="RecaptchaPropertiesDiv" class="background">
 	<div class="title">
-		<h5>RECAPTCHA PROPERTIES</h5>
+		<h5><fmt:message key="adm.showRecaptchaProperties.rEcaptcha"/></h5>
 		<a id="EditRecaptchaProperties" class="editButton" href="${EditRecaptchaPropertiesURL}" title="Recaptcha Properties"></a><span id="loading" />
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Domain name</div> 
+			<div class="item"><fmt:message key="adm.showRecaptchaProperties.domainName"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('recaptcha.domainName')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Private key</div> 
+			<div class="item"><fmt:message key="adm.showRecaptchaProperties.privateKey"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('recaptcha.privateKey')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Public key</div> 
+			<div class="item"><fmt:message key="adm.showRecaptchaProperties.publicKey"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('recaptcha.publicKey')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Server url</div> 
+			<div class="item"><fmt:message key="adm.showRecaptchaProperties.serverUrl"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('recaptcha.server')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Site identifier</div> 
+			<div class="item"><fmt:message key="adm.showRecaptchaProperties.siteIdentifier"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('recaptcha.siteId')}</div> 
 		</div>
 	</div>

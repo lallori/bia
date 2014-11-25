@@ -7,35 +7,35 @@
 		
 <div id="administrationModalDiv">
 	<div id="systemWideDiv" class="adminModalButtonContainer">
-        <a id="systemWide" class="button_large" href="<c:url value="/admin/ShowApplicationProperties.do" />">System-Wide Properties</a>
+        <a id="systemWide" class="button_large" href="<c:url value="/admin/ShowApplicationProperties.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.systemWide"/></a>
 	</div>
     
 	<div id="userManagementDiv" class="adminModalButtonContainer">
-        <a id="userManagement" class="button_large" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
+        <a id="userManagement" class="button_large" href="<c:url value="/admin/ShowUserManagement.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.userManagement"/></a>
 	</div>
     
 	<div id="memoryUsageDiv" class="adminModalButtonContainer">
-        <a id="memoryUsage" class="button_large" href="<c:url value="/admin/ShowMemoryUsage.do" />">Memory Usage</a>
+        <a id="memoryUsage" class="button_large" href="<c:url value="/admin/ShowMemoryUsage.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.memoryUsage"/></a>
 	</div>
 
 	<div id="accessLogDiv" class="adminModalButtonContainer">
-        <a id="accessLog" class="button_large" href="<c:url value="/admin/ShowAccessLogSearch.do" />">Access Log</a>
+        <a id="accessLog" class="button_large" href="<c:url value="/admin/ShowAccessLogSearch.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.accessLog"/></a>
 	</div>
 	
 	<div id="whoIsOnlineDiv" class="adminModalButtonContainer">
-        <a id="whoIsOnline" class="button_large" href="<c:url value="/admin/ShowWhoIsOnline.do" />">Who is Online</a>
+        <a id="whoIsOnline" class="button_large" href="<c:url value="/admin/ShowWhoIsOnline.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.whoIsOnline"/></a>
 	</div>
 	
 	<div id="teachingModuleDiv" class="adminModalButtonContainer">
-        <a id="teachingModule" class="button_large" href="<c:url value="/teaching/ShowTeachingModule.do" />">Teaching Module</a>
+        <a id="teachingModule" class="button_large" href="<c:url value="/teaching/ShowTeachingModule.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.teachingModule"/></a>
 	</div>
 	
 	<div id="openAnnotationCollaborationDiv" class="adminModalButtonContainer">
-        <a id="openAnnotationCollaboration" class="button_large" href="<c:url value="/src/openannotation/annotationsView.do" />">OAC Module</a>
+        <a id="openAnnotationCollaboration" class="button_large" href="<c:url value="/src/openannotation/annotationsView.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.oacModule"/></a>
 	</div>
 	
 	<div id="europeanaManagerDiv" class="adminModalButtonContainer">
-        <a id="europeana" class="button_large" href="<c:url value="/europeana/europeanaView.do" />">Europeana Management</a>
+        <a id="europeana" class="button_large" href="<c:url value="/europeana/europeanaView.do" />"><fmt:message key="adm.showAdministrationModuleModalWindow.europeanaManagement"/></a>
 	</div>
 
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close"/>

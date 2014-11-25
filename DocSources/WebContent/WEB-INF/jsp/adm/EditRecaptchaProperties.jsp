@@ -9,26 +9,26 @@
 <div id="loadingDiv"></div>
 <form:form id="EditRecaptchaPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>RECAPTCHA PROPERTIES</b></legend>
+		<legend><b><fmt:message key="adm.editRecaptchaProperties.rEcaptchaProperties"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="domainName" for="domainName" id="domainNameLabel">Domain Name</form:label></div>
+				<div class="col_l"><form:label path="domainName" for="domainName" id="domainNameLabel"><fmt:message key="adm.editRecaptchaProperties.domainName"/></form:label></div>
 				<div class="col_r"><form:input path="domainName" for="domainName" id="domainName" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="privateKey" for="privateKey" id="privateKeyLabel">Private Key</form:label></div>
+				<div class="col_l"><form:label path="privateKey" for="privateKey" id="privateKeyLabel"><fmt:message key="adm.editRecaptchaProperties.privateKey"/></form:label></div>
 				<div class="col_r"><form:input path="privateKey" for="privateKey" id="privateKey" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="publicKey" for="publicKey" id="publicKeyLabel">Public Key</form:label></div>
+				<div class="col_l"><form:label path="publicKey" for="publicKey" id="publicKeyLabel"><fmt:message key="adm.editRecaptchaProperties.publicKey"/></form:label></div>
 				<div class="col_r"><form:input path="publicKey" for="publicKey" id="publicKey" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="serverUrl" for="serverUrl" id="serverUrlLabel">Server Url</form:label></div>
+				<div class="col_l"><form:label path="serverUrl" for="serverUrl" id="serverUrlLabel"><fmt:message key="adm.editRecaptchaProperties.serverUrl"/></form:label></div>
 				<div class="col_r"><form:input path="serverUrl" for="serverUrl" id="serverUrl" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="siteIdentifier" for="siteIdentifier" id="siteIdentifierLabel">Site Identifier</form:label></div>
+				<div class="col_l"><form:label path="siteIdentifier" for="siteIdentifier" id="siteIdentifierLabel"><fmt:message key="adm.editRecaptchaProperties.siteIdentifier"/></form:label></div>
 				<div class="col_r"><form:input path="siteIdentifier" for="siteIdentifier" id="siteIdentifier" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 		</div>
@@ -92,7 +92,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editRecaptchaProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

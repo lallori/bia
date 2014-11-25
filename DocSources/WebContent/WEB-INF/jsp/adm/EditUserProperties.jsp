@@ -9,24 +9,24 @@
 <div id="loadingDiv"></div>
 <form:form id="EditUserSystemPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>USER SYSTEM PROPERTIES</b></legend>
+		<legend><b><fmt:message key="adm.editUserProperties.uSerSystemProperties"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="expirationUser" for="expirationUser" id="expirationUserLabel">Expiration User, number of months</form:label></div>
+				<div class="col_l"><form:label path="expirationUser" for="expirationUser" id="expirationUserLabel"><fmt:message key="adm.editUserProperties.expUser"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:input type="text" path="expirationUser" for="expirationUser" id="expirationUser" cssClass="input_24c"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="expirationPassword" for="expirationPassword" id="expirationPasswordLabel">Expiration Password, number of months</form:label></div>
+				<div class="col_l"><form:label path="expirationPassword" for="expirationPassword" id="expirationPasswordLabel"><fmt:message key="adm.editUserProperties.expPassword"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:input type="text" path="expirationPassword" for="expirationPassword" id="expirationPassword" cssClass="input_24c"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="maxBadLogin" for="maxBadLogin" id="maxBadLoginLabel">Max Bad Logins</form:label></div>
+				<div class="col_l"><form:label path="maxBadLogin" for="maxBadLogin" id="maxBadLoginLabel"><fmt:message key="adm.editUserProperties.maxBad"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:input type="text" path="maxBadLogin" for="maxBadLogin" id="maxBadLogin" cssClass="input_24c"/></div>
@@ -99,7 +99,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editUserProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

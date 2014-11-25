@@ -10,20 +10,20 @@
 
 <div id="EditUserSystemPropertiesDiv" class="background">
 	<div class="title">
-		<h5>USER SYSTEM PROPERTIES</h5>
+		<h5><fmt:message key="adm.showUserProperties.uSerSystemProperties"/></h5>
 		<a id="EditUserSystemProperties" class="editButton" href="${EditUserPropertiesURL}"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Password expires (months):</div> 
+			<div class="item"><fmt:message key="adm.showUserProperties.passwordE"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("user.expiration.password.months")}</div>
 		</div>
 		<div class="row">
-			<div class="item">User expires (months):</div> 
+			<div class="item"><fmt:message key="adm.showUserProperties.userE"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("user.expiration.user.months")}</div>
 		</div>
         <div class="row">
-			<div class="item">Max Bad Logins</div> 
+			<div class="item"><fmt:message key="adm.showUserProperties.maxBad"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('user.maxBadLogin')}</div>
 		</div>
 	</div>

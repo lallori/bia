@@ -247,19 +247,19 @@
 	</script>
 	
 	<div class="yourSearchDiv">
-		<p>Your search:
+		<p><fmt:message key="search.advancedSearchResult.yourS"/>
 		<c:if test="${yourSearch.length() > 45}">
 			<a id="yourSearch${command.searchUUID}" href="${AdvancedSearchRefineURL}"><bia:textFormatter inputText="${yourSearch}" size="41"/>...</a></p>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
 			<font color="red" style="margin-left:5px">${yourSearch}</font></p>
 		</c:if>
-		<p>Total records found:
+		<p><fmt:message key="search.advancedSearchResult.totalR"/>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
-		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print button_medium" href="#" style="visibility:hidden;">Print Records</a>
+		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key="search.advancedSearchResult.refineT"/></a>
+		<a id="print${command.searchUUID}" class="print button_medium" href="#" style="visibility:hidden;"><fmt:message key="search.advancedSearchResult.printR"/></a>
 		<c:if test="${command.searchType.toString() == 'DOCUMENT'}">
-			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
+			<a href="#" class="button_medium expand" id="expand${command.searchUUID}"><fmt:message key="search.advancedSearchResult.expandResults"/></a>
 		</c:if>
 		
 		<div id="yourSearchDialog${command.searchUUID}" title="Your search" style="display:none"> 
@@ -278,7 +278,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				<td colspan="5" class="dataTables_empty"><fmt:message key="search.advancedSearchResult.loadingD"/></td>
 			</tr>
 		</tbody>
 	</table>

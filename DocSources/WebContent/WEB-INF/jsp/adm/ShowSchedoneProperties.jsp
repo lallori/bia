@@ -10,44 +10,44 @@
 
 <div id="EditSchedonePropertiesDiv" class="background">
 	<div class="title">
-		<h5>SCHEDONE</h5>
+		<h5><fmt:message key="adm.showSchedoneProperties.sChedone"/></h5>
 		<a id="EditSchedoneProperties" class="editButton" href="${EditSchedonePropertiesURL}" title="Edit Schedone Properties"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Istituto</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.instituto"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.istituto')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Fondo</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.fondo"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.fondo')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Legatura</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.legatura"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.legatura')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Supporto</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.supporto"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.supporto')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Digitization Type</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.digitizationType"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.tipoRipresa')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Schema colore immagini</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.schemaColore"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.coloreImmagine')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Nome files</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.nomeFiles"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.nomeFiles')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Responsabile fotoriproduzione</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.responsabileFoto"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.responsabileFotoRiproduzione')}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Operatore</div> 
+			<div class="item"><fmt:message key="adm.showSchedoneProperties.operatore"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('schedone.operatore')}</div> 
 		</div>
 	</div>

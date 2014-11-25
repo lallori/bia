@@ -21,14 +21,14 @@
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 	
 	<div class="yourSearchDiv">
-		<p>Your search:
+		<p><fmt:message key="seach.simpleSearchResult.yourSearch"/>
 		<font color="red" style="margin-left:5px">${yourSearch}</font></p>
-		<p>Total records found:
+		<p><fmt:message key="seach.simpleSearchResult.totalRecords"/>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
-		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}">Refine this search</a>
-		<a id="print${command.searchUUID}" class="print button_medium" href="${AdvancedSearchRefineURL}" style="visibility:hidden;">Print Records</a>
+		<a id="refine${command.searchUUID}" class="refine button_medium" href="${AdvancedSearchRefineURL}"><fmt:message key="seach.simpleSearchResult.refineS"/></a>
+		<a id="print${command.searchUUID}" class="print button_medium" href="${AdvancedSearchRefineURL}" style="visibility:hidden;"><fmt:message key="seach.simpleSearchResult.printRecords"/></a>
 		<c:if test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
-			<a href="#" class="button_medium expand" id="expand${command.searchUUID}">Expand Results</a>
+			<a href="#" class="button_medium expand" id="expand${command.searchUUID}"><fmt:message key="seach.simpleSearchResult.expandResults"/></a>
 		</c:if>
 	</div>
 
@@ -38,7 +38,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				<td colspan="5" class="dataTables_empty"><fmt:message key="seach.simpleSearchResult.loadingData"/></td>
 			</tr>
 		</tbody>
 	</table>

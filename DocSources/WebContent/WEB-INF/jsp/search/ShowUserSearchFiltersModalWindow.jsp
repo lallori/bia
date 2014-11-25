@@ -146,31 +146,31 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="display"  id="savedSearchFiltersForm">
 			<thead>
 				<tr>
-					<th>FILTER NAME</th>
-					<th>RESULTS</th>
-					<th>RECORD TYPES</th>
-					<th>DATE</th>
-					<th>SELECT</th>
+					<th><fmt:message key="search.showUserSearchFiltersModalWindow.fIlterName"/></th>
+					<th><fmt:message key="search.showUserSearchFiltersModalWindow.rEsults"/></th>
+					<th><fmt:message key="search.showUserSearchFiltersModalWindow.rEcordTypes"/></th>
+					<th><fmt:message key="search.showUserSearchFiltersModalWindow.dAte"/></th>
+					<th><fmt:message key="search.showUserSearchFiltersModalWindow.sElect"/></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="4" class="dataTables_empty">Loading data from server</td>
+					<td colspan="4" class="dataTables_empty"><fmt:message key="search.showUserSearchFiltersModalWindow.loadingData"/></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	
 	<div id="savedFiltersButtons">
-		<a id="closeSavedFilters" class="button_small" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
-		<a id="goBackToAdvancedSearch" class="button_small" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}">Go back</a>
-		<a id="removeSelected" href="#">Remove selected</a>
+		<a id="closeSavedFilters" class="button_small" type="submit" title="Close Saved Search Filters window" href="#"><fmt:message key="search.showUserSearchFiltersModalWindow.close"/></a>
+		<a id="goBackToAdvancedSearch" class="button_small" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}"><fmt:message key="search.showUserSearchFiltersModalWindow.goBack"/></a>
+		<a id="removeSelected" href="#"><fmt:message key="search.showUserSearchFiltersModalWindow.removeS"/></a>
 	</div>
 	
 </div>
 
 <div id="questionRemoveFilter" style="display:none; cursor: default"> 
-	<h1>Are you sure?</h1> 
+	<h1><fmt:message key="search.showUserSearchFiltersModalWindow.areYou"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

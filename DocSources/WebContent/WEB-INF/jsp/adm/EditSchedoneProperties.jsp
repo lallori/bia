@@ -9,36 +9,36 @@
 <div id="loadingDiv"></div>
 <form:form id="EditSchedonePropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>SCHEDONE</b></legend>
+		<legend><b><fmt:message key="adm.editSchedoneProperties.sChedone"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="istituto" for="istituto" id="istitutoLabel">Istituto</form:label></div>
+				<div class="col_l"><form:label path="istituto" for="istituto" id="istitutoLabel"><fmt:message key="adm.editSchedoneProperties.instituto"/></form:label></div>
 				<div class="col_r"><form:input path="istituto" for="istituto" id="istituto" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="fondo" for="fondo" id="fondoLabel">Supporto</form:label></div>
+				<div class="col_l"><form:label path="fondo" for="fondo" id="fondoLabel"><fmt:message key="adm.editSchedoneProperties.supporto"/></form:label></div>
 				<div class="col_r"><form:input path="fondo" for="fondo" id="fondo" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="legatura" for="legatura" id="legaturaLabel">Legatura</form:label></div>
+				<div class="col_l"><form:label path="legatura" for="legatura" id="legaturaLabel"><fmt:message key="adm.editSchedoneProperties.legatura"/></form:label></div>
 				<div class="col_r"><form:input path="legatura" for="legatura" id="legatura" cssClass="input_35c" type="text" value=""/></div>
 			</div>
 		</div>
 		
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="tipoRipresa" for="tipoRipresa" id="tipoRipresaLabel">Tipo di ripresa</form:label></div>
+				<div class="col_l"><form:label path="tipoRipresa" for="tipoRipresa" id="tipoRipresaLabel"><fmt:message key="adm.editSchedoneProperties.tipoDiRipresa"/></form:label></div>
 				<div class="col_r"><form:input path="tipoRipresa" for="tipoRipresa" id="tipoRipresa" cssClass="input_23c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="coloreImmagine" for="coloreImmagine" id="coloreImmagineLabel">Colore immagine</form:label></div>
+				<div class="col_l"><form:label path="coloreImmagine" for="coloreImmagine" id="coloreImmagineLabel"><fmt:message key="adm.editSchedoneProperties.coloreImmagine"/></form:label></div>
 				<div class="col_r"><form:input path="coloreImmagine" for="coloreImmagine" id="coloreImmagine" cssClass="input_23c" type="text" value=""/></div>
 			</div>
 		</div>
 		
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="nomeFiles" for="nomeFiles" id="nomeFilesLabel">Nome files</form:label></div>
+				<div class="col_l"><form:label path="nomeFiles" for="nomeFiles" id="nomeFilesLabel"><fmt:message key="adm.editSchedoneProperties.nameFiles"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:textarea path="nomeFiles" for="nomeFiles" id="nomeFiles" cssClass="txtarea"></form:textarea></div>
@@ -47,11 +47,11 @@
 		
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzioneLabel">Responsabile fotoriproduzione</form:label></div>
+				<div class="col_l"><form:label path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzioneLabel"><fmt:message key="adm.editSchedoneProperties.responsabile"/></form:label></div>
 				<div class="col_r"><form:input path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_23c" type="text" value=""/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="operatore" for="operatore" id="operatoreLabel">Operatore</form:label></div>
+				<div class="col_l"><form:label path="operatore" for="operatore" id="operatoreLabel"><fmt:message key="adm.editSchedoneProperties.operatore"/></form:label></div>
 				<div class="col_r"><form:input path="operatore" for="operatore" id="operatore" cssClass="input_23c" type="text" value=""/></div>
 			</div>
 		</div>
@@ -114,7 +114,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editSchedoneProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

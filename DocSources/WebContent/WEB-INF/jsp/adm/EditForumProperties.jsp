@@ -9,31 +9,31 @@
 <div id="loadingDiv"></div>
 <form:form id="EditEmailSystemPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
-		<legend><b>FORUM PROPERTIES</b></legend>
+		<legend><b><fmt:message key="adm.editForumProperties.fOrumProperties"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="idForum" for="activationSubject" id="activationMessageSubjectLabel">Activation message subject</form:label></div>
+				<div class="col_l"><form:label path="idForum" for="activationSubject" id="activationMessageSubjectLabel"><fmt:message key="adm.editForumProperties.activationMessageSubject"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:textarea path="activationSubject" for="activationSubject" id="activationMessageSubject" class="txtarea"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="activationText" for="activationText" id="activationMessageTextLabel">Activation message text</form:label></div>
+				<div class="col_l"><form:label path="activationText" for="activationText" id="activationMessageTextLabel"><fmt:message key="adm.editForumProperties.activationMessageText"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:textarea path="activationText" for="activationText" id="activationMessageText" class="txtarea"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="resetUserPasswordSubject" for="resetUserPasswordSubject" id="resetUserPasswordSubjectLabel">Reset user password subject</form:label></div>
+				<div class="col_l"><form:label path="resetUserPasswordSubject" for="resetUserPasswordSubject" id="resetUserPasswordSubjectLabel"><fmt:message key="adm.editForumProperties.resetUserPasswordSubject"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:textarea path="resetUserPasswordSubject" for="resetUserPasswordSubject" id="resetUserPasswordSubject" class="txtarea"/></div>
 			</div>
 			<br />
 			<div class="row">
-				<div class="col_l"><form:label path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordTextLabel">Reset user password text</form:label></div>
+				<div class="col_l"><form:label path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordTextLabel"><fmt:message key="adm.editForumProperties.resetUserPasswordText"/></form:label></div>
 			</div>
 			<div class="row">
 				<div class="col_l"><form:textarea path="resetUserPasswordText" for="resetUserPasswordText" id="resetUserPasswordText" class="txtarea"/></div>
@@ -99,7 +99,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editForumProperties.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

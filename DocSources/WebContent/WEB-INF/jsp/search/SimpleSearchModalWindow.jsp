@@ -9,7 +9,7 @@
 	</c:url>
 	
 	<div id="basicSearchDiv">
-		<h1>You searched for "<span>${yourSearch}</span>" in ALL categories:</h1>
+		<h1><fmt:message key="search.simpleSearchModalWindow.youSearched"/><span>${yourSearch}</span><fmt:message key="search.simpleSearchModalWindow.inAll"/></h1>
 		
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="basicSearchTable">
         <thead>

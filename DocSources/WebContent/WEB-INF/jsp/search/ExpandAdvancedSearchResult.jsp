@@ -216,7 +216,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="7" class="dataTables_empty">Loading data from server</td>
+				<td colspan="7" class="dataTables_empty"><fmt:message key="search.expandAdvancedSearchResult.loadingData"/></td>
 			</tr>
 		</tbody>
 	</table>

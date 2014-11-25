@@ -16,7 +16,7 @@
 <!-- 	</div> -->
 
 	<div id="editOrShowDiv">
-        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />" class="showOrEditCompare button_large">Back to User Search</a>
+        <a id="editOrShow" href="<c:url value="/admin/ShowUserSearch.do" />" class="showOrEditCompare button_large"><fmt:message key="adm.showUserSearchResult.backToUser"/></a>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">

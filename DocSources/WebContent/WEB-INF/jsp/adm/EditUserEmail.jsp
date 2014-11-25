@@ -14,26 +14,26 @@
 
 	<form:form id="EditUserEmailForm" method="post" cssClass="edit" action="${EditUserEmailURL}">
 		<fieldset>
-			<legend><b>EMAIL CONTROL</b></legend>
+			<legend><b><fmt:message key="adm.editUserEmail.eMailControl"/></b></legend>
 			<div class="listForm">
 		        <div class="row">
-		            <div class="col_l"><form:label for="mail" path="mail">Email address</form:label></div>
+		            <div class="col_l"><form:label for="mail" path="mail"><fmt:message key="adm.editUserEmail.emailAddress"/></form:label></div>
 		            <div class="col_l"><form:input path="mail" cssClass="input_23c"/></div>
 		        </div>
 		        <div class="row">
-		            <div class="col_l"><form:label for="mailHide" path="mailHide">Email display</form:label></div>
+		            <div class="col_l"><form:label for="mailHide" path="mailHide"><fmt:message key="adm.editUserEmail.emailDisplay"/></form:label></div>
 		            <div class="col_l">
 		            	<form:select path="mailHide" items="${mailHide}" cssClass="selectform_Xlong" />
 		            </div>
 		        </div>
 		        <div class="row">
-		            <div class="col_l"><form:label for="reciveNotifEmail" path="receiveNotificationByMail">Receive notification by email</form:label></div>
+		            <div class="col_l"><form:label for="reciveNotifEmail" path="receiveNotificationByMail"><fmt:message key="adm.editUserEmail.receiveNotification"/></form:label></div>
 		            <div class="col_l">
 		            	<form:select path="receiveNotificationByMail" items="${mailNotification}" cssClass="selectform_Mlong" />
 		            </div>
 		        </div>
 		        <div class="row">
-		            <div class="col_l"><form:label for="forumTopicSubscription" path="forumTopicSubscription">Subscribe to Forum Topic</form:label></div>
+		            <div class="col_l"><form:label for="forumTopicSubscription" path="forumTopicSubscription"><fmt:message key="adm.editUserEmail.subscribe"/></form:label></div>
 		            <div class="col_l">
 		            	<form:select path="forumTopicSubscription" items="${forumTopicSubscription}" cssClass="selectform_Mlong" />
 		            </div>
@@ -84,7 +84,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editUserEmail.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

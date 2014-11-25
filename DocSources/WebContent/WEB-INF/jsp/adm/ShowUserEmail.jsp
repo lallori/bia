@@ -12,24 +12,24 @@
 
 	<div id="EditEmailControlDiv" class="background">
 		<div class="title">
-			<h5>EMAIL CONTROL</h5>
+			<h5><fmt:message key="adm.showUserEmail.eMailControl"/></h5>
 			<a id="EditEmailControl" class="editButton" href="${EditUserEmailURL}" title="Edit Email Control"></a><span id="loading"/>
 		</div>
 		<div class="list">
 			<div class="row">
-				<div class="item37">Email adress</div> 
+				<div class="item37"><fmt:message key="adm.showUserEmail.emailAdress"/></div> 
 				<div class="value">${user.mail}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Edit display</div> 
+				<div class="item37"><fmt:message key="adm.showUserEmail.editDisplay"/></div> 
 				<div class="value">${user.mailHide ? 'Hide my email from everyone' : 'Allow others to see my email'}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Receive notification by email</div> 
+				<div class="item37"><fmt:message key="adm.showUserEmail.receiveNotification"/></div> 
 				<div class="value">${user.mailNotification ? 'Activated' : 'Deactivated'}</div>
 			</div>
 			<div class="row">
-				<div class="item37">Subscribe to Forum Topic</div> 
+				<div class="item37"><fmt:message key="adm.showUserEmail.subscribe"/></div> 
 				<div class="value">${user.forumTopicSubscription ? 'Activated' : 'Deactivated'}</div>
 			</div>
 		</div>

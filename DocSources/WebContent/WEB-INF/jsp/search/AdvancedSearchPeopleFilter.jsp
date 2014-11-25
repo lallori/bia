@@ -133,7 +133,7 @@
 			<div id="logicalDeleteSearchDiv">
 			<c:if test="${(searchFilter.filterData.logicalDelete != null)}">
 				<div class="searchFilterDiv">
-					<span class="categorySearch"><fmt:message key="search.advancedSearchPeopleFilter.logicalDelete"/>:</span><span class="wordSearch">Yes</span><a class="remove" href="#"><fmt:message key="search.advancedSearchPeopleFilter.remove"/></a>
+					<span class="categorySearch"><fmt:message key="search.advancedSearchPeopleFilter.logicalDelete"/>:</span><span class="wordSearch"><fmt:message key="search.advancedSearchPeopleFilter.yes"/></span><a class="remove" href="#"><fmt:message key="search.advancedSearchPeopleFilter.remove"/></a>
 					<c:if test="${searchFilter.filterData.logicalDelete.toString() ==  'true'}">
 						<input type="hidden" value="true" name="logicalDelete">
 					</c:if>

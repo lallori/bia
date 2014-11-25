@@ -16,20 +16,20 @@
 
 	<form:form id="EditUserControlForm" method="post" class="edit" action="${EditUserURL}">
 	<fieldset>
-		<legend><b>USER CONTROL</b></legend>
+		<legend><b><fmt:message key="adm.editUserControl.uSerControl"/></b></legend>
 		<div class="listForm">
         	<div class="row">
-            	<div class="col_l"><form:label for="account" path="account">Username</form:label></div>
+            	<div class="col_l"><form:label for="account" path="account"><fmt:message key="adm.editUserControl.username"/></form:label></div>
             	<div class="col_l"><form:input path="account" cssClass="input_14c" /></div>
         	</div>
         <div class="row">
-            <div class="col_l"><form:label for="firstName" path="firstName">First Name</form:label></div>
+            <div class="col_l"><form:label for="firstName" path="firstName"><fmt:message key="adm.editUserControl.firstName"/></form:label></div>
             <div class="col_l"><form:input path="firstName" class="input_14c"/></div>
-            <div class="col_r"><form:label for="middleName" path="middleName">Middle Name</form:label></div>
+            <div class="col_r"><form:label for="middleName" path="middleName"><fmt:message key="adm.editUserControl.middleName"/></form:label></div>
             <div class="col_r"><form:input path="middleName" class="input_14c" /></div>
         </div>
         <div class="row">
-            <div class="col_l"><form:label for="lastName" id="lastNameLabel" path="lastName">Last Name</form:label></div>
+            <div class="col_l"><form:label for="lastName" id="lastNameLabel" path="lastName"><fmt:message key="adm.editUserControl.lastName"/></form:label></div>
             <div class="col_l"><form:input path="lastName" class="input_14c" /></div>
         </div>
     </div>
@@ -38,29 +38,29 @@
     
     <div class="listForm">
         <div class="row">
-            <div class="col_l"><label id="passwordLabel" for="password">New password</label></div>
+            <div class="col_l"><label id="passwordLabel" for="password"><fmt:message key="adm.editUserControl.newPassword"/></label></div>
             <div class="col_l"><input type="password" name="password" id="password" class="input_15c" value=""></div>
         </div>
          <div class="row">
-            <div class="col_l"><label id="confirmPasswordLabel" for="confirmPassword">Confirm password</label></div>
+            <div class="col_l"><label id="confirmPasswordLabel" for="confirmPassword"><fmt:message key="adm.editUserControl.confirmPassword"/></label></div>
             <div class="col_l"><input type="password" name="confirmPassword" id="confirmPassword" class="input_15c" value=""></div>
         </div>
     </div>
-   	<p><b>Password Expires:</b></p>
+   	<p><b><fmt:message key="adm.editUserControl.passwordExpires"/></b></p>
     <div class="listForm">
 		<div class="row">
-            <div class="col_r"><form:label for="yearExpirationPassword" path="yearExpirationPassword" cssErrorClass="error">Year</form:label></div>
+            <div class="col_r"><form:label for="yearExpirationPassword" path="yearExpirationPassword" cssErrorClass="error"><fmt:message key="adm.editUserControl.year"/></form:label></div>
 			<div class="col_l"><form:input path="yearExpirationPassword" cssClass="input_4c" maxlength="4"/></div>
-			<div class="col_r"><form:label for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error">Month</form:label></div>
+			<div class="col_r"><form:label for="monthExpirationPassword" path="monthExpirationPassword" cssErrorClass="error"><fmt:message key="adm.editUserControl.month"/></form:label></div>
 			<div class="col_l"><form:select path="monthExpirationPassword" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-			<div class="col_r"><form:label  for="dayExpirationPassword" path="dayExpirationPassword" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:label  for="dayExpirationPassword" path="dayExpirationPassword" cssErrorClass="error"><fmt:message key="adm.editUserControl.day"/></form:label></div>
 			<div class="col_r"><form:input path="dayExpirationPassword" class="input_2c" maxlength="2"/></div>
         </div>   
      </div>
      <div class="listForm">
 		<div class="row">      
           <div class="col_r">
-            	<label for="forcePswdChange" id="forcePswdChangeLabel">Force Password Change
+            	<label for="forcePswdChange" id="forcePswdChangeLabel"><fmt:message key="adm.editUserControl.forcePasswordChange"/>
                 <input type="checkbox" name="forcePswdChange" class="checkboxPers2"/>
             </div>
         </div>
@@ -70,7 +70,7 @@
     
     <div class="listForm">
         <div class="row">
-            <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel"><b>Group policies:</b></label></div>
+            <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel"><b><fmt:message key="adm.editUserControl.groupPolicies"/></b></label></div>
         </div>
         <br>
         <div class="row">
@@ -89,14 +89,14 @@
    
     <hr />
     
-   	<p><b>Account Expiration Time:</b></p>
+   	<p><b><fmt:message key="adm.editUserControl.accountExpirationTime"/></b></p>
 	<div class="listForm">
         <div class="row">
-			<div class="col_r"><form:label id="yearExpirationUserLabel" for="yearExpirationUser" path="yearExpirationUser" cssErrorClass="error">Year</form:label></div>
+			<div class="col_r"><form:label id="yearExpirationUserLabel" for="yearExpirationUser" path="yearExpirationUser" cssErrorClass="error"><fmt:message key="adm.editUserControl.year"/></form:label></div>
 			<div class="col_l"><form:input id="yearExpirationUser" path="yearExpirationUser" cssClass="input_4c" value="" maxlength="4"/></div>
-			<div class="col_r"><form:label id="monthExpirationUserLabel" for="monthExpirationUser" path="monthExpirationUser" cssErrorClass="error">Month</form:label></div>
+			<div class="col_r"><form:label id="monthExpirationUserLabel" for="monthExpirationUser" path="monthExpirationUser" cssErrorClass="error"><fmt:message key="adm.editUserControl.month"/></form:label></div>
 			<div class="col_l"><form:select id="monthExpirationUser" path="monthExpirationUser" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
-			<div class="col_r"><form:label  id="dayExpirationUserLabel" path="dayExpirationUser" for="dayExpirationUser" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:label  id="dayExpirationUserLabel" path="dayExpirationUser" for="dayExpirationUser" cssErrorClass="error"><fmt:message key="adm.editUserControl.day"/></form:label></div>
 			<div class="col_r"><form:input id="dayExpirationUser" path="dayExpirationUser" class="input_2c" maxlength="2"/></div>
 		</div>
 	</div>
@@ -105,15 +105,15 @@
 	        <ul>
 				<li>
 					<form:checkbox path="active" cssClass="checkboxPers1"/>	
-			        <label for="active" id="activeLabel">Active Account</label>
+			        <label for="active" id="activeLabel"><fmt:message key="adm.editUserControl.activeAccount"/></label>
 		        </li>
       			<li>
 	      			<form:checkbox path="approved" cssClass="checkboxPers1"/>
-	                <label for="approved" id="approvedLabel">Approved Account</label>
+	                <label for="approved" id="approvedLabel"><fmt:message key="adm.editUserControl.approvedAccount"/></label>
 				</li>
 				<li>
 					<form:checkbox path="locked" cssClass="checkboxPers1"/>
-					<label for="locked" id="lockedLabel">Lock account</label>
+					<label for="locked" id="lockedLabel"><fmt:message key="adm.editUserControl.lockAccount"/></label>
 				</li>
 			</ul>
          </div>
@@ -197,7 +197,7 @@
 </script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>Discard changes?</h1> 
+	<h1><fmt:message key="adm.editUserControl.discardChanges"/></h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

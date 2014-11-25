@@ -8,7 +8,7 @@
 	<c:url var="ShowUserSearchResultURL" value="/admin/WhoIsOnline.json">
 	</c:url>
 
-	<a href="#" class="button_medium expand" id="refreshWhoIsOnline" style="float:right;">Refresh</a>
+	<a href="#" class="button_medium expand" id="refreshWhoIsOnline" style="float:right;"><fmt:message key="adm.showWholsOnline.refresh"/></a>
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="whoIsOnlineTable">
 		<thead>
 			<tr></tr>

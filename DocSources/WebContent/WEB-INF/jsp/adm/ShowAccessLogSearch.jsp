@@ -7,29 +7,29 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<c:url var="ShowAccessLogSearchURL" 	value="/admin/ShowAccessLogSearch.do" />
 
-<h3 class="accessLogSearch">Access Log Search</h3>
+<h3 class="accessLogSearch"><fmt:message key="adm.showAccessLogSearch.accessLogSearch"/></h3>
 
 <form:form id="accessLogSearchForm" method="post" cssClass="edit" action="${ShowAccessLogSearchURL}">
 	<fieldset>
-	<legend><b>NEW FILTER</b></legend>
+	<legend><b><fmt:message key="adm.showAccessLogSearch.nEwFilter"/></b></legend>
 		<div class="listForm">
 			<div class="row">
-				<div class="col_l"><form:label path="account" for="account">Account</form:label></div>
+				<div class="col_l"><form:label path="account" for="account"><fmt:message key="adm.showAccessLogSearch.account"/></form:label></div>
 				<div class="col_r"><input id="account" name="account" class="input_7c" type="text" value="Contains" disabled=""></div>
 				<div class="col_r"><form:input path="account" cssClass="input_25c"/></div>	
 			</div>	
 			<div class="row">
-				<div class="col_l"><form:label path="fromDate" for="fromDate" >From Date</form:label></div>
+				<div class="col_l"><form:label path="fromDate" for="fromDate" ><fmt:message key="adm.showAccessLogSearch.fromDate"/></form:label></div>
 				<div class="col_r">&nbsp;</div>
 		        <div class="col_r"><form:input path="fromDate" cssClass="input_25c"/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="toDate" for="toDate">To Date</form:label></div>
+				<div class="col_l"><form:label path="toDate" for="toDate"><fmt:message key="adm.showAccessLogSearch.toDate"/></form:label></div>
 		        <div class="col_r">&nbsp;</div>
 		        <div class="col_r"><form:input path="toDate" cssClass="input_25c"/></div>
 			</div>
 			<div class="row">
-				<div class="col_l"><form:label path="action" for="account">Action</form:label></div>
+				<div class="col_l"><form:label path="action" for="account"><fmt:message key="adm.showAccessLogSearch.action"/></form:label></div>
 				<div class="col_r"><input id="action" name="action" class="input_7c" type="text" value="Contains" disabled=""></div>
 				<div class="col_r"><form:input path="action" cssClass="input_25c"/></div>	
 			</div>

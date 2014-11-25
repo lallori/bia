@@ -10,24 +10,24 @@
 
 <div id="EditForumPropertiesDiv" class="background">
 	<div class="title">
-		<h5>FORUM PROPERTIES</h5>
+		<h5><fmt:message key="adm.showForumProperties.fOrumProperties"/></h5>
 		<a id="EditGeneralProperties" class="editButton" href="${EditGeneralPropertiesURL}" title="Edit General Properties"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Unique identifier for Document forum :</div> 
+			<div class="item"><fmt:message key="adm.showForumProperties.uniqueIdentifierForDocumentForum"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("forum.identifier.document")}</div> 
 		</div>
         <div class="row">
-			<div class="item">Unique identifier for Place forum :</div> 
+			<div class="item"><fmt:message key="adm.showForumProperties.uniqueIdentifierForPlaceForum"/></div> 
 			<div class="value60">${fn2:getApplicationProperty("forum.identifier.place")}</div> 
 		</div>
         <div class="row">
-			<div class="item">Unique identifier for People forum :</div> 
+			<div class="item"><fmt:message key="adm.showForumProperties.uniqueIdentifierForPeopleForum"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('forum.identifier.people')}</div> 
 		</div>
         <div class="row">
-			<div class="item">Unique identifier for Volume forum :</div> 
+			<div class="item"><fmt:message key="adm.showForumProperties.uniqueIdentifierFromVolumeForum"/></div> 
 			<div class="value60">${fn2:getApplicationProperty('forum.identifier.volume')}</div> 
 		</div>
 	</div>
