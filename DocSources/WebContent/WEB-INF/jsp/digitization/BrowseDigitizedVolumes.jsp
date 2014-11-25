@@ -139,7 +139,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				<td colspan="5" class="dataTables_empty"><fmt:message key="digitization.browseDigitizedVolumes.loadingData"/></td>
 			</tr>
 		</tbody>
 	</table>

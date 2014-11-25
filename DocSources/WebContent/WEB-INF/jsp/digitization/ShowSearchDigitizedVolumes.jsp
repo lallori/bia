@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    	<title>Browse or search "Schedoni"</title>
+    	<title><fmt:message key="digitization.showSearchDigitizedVolumes.browse"/></title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="images/favicon_medici.png"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css"/>" />
@@ -35,7 +35,7 @@
 
 <div id="searchWindow">
 	<div id="searchWindow_top">
-       	<h1>BROWSE OR SEARCH "SCHEDONI"</h1>
+       	<h1><fmt:message key="digitization.showSearchDigitizedVolumes.bRowseOrSearch"/></h1>
     </div>
     <div id="browseContent">
     	<div class="listAdvSearch">
@@ -43,15 +43,15 @@
             	<div class="row">
                 	<div class="col_l">
                     	<form:select id="volumeType" name="volumeType" class="selectform_long" path="searchType">
-                        	<option value="Exactly" selected="selected">Exactly</option>
-                            <option value="Between">Between</option>
-                            <option value="All">All</option>
+                        	<option value="Exactly" selected="selected"><fmt:message key="digitization.showSearchDigitizedVolumes.exactly"/></option>
+                            <option value="Between"><fmt:message key="digitization.showSearchDigitizedVolumes.between"/></option>
+                            <option value="All"><fmt:message key="digitization.showSearchDigitizedVolumes.all"/></option>
                         </form:select>
                     </div>
                     <div class="col_l"><form:input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5" path="volNum"/></div>
                     <div class="col_l">
-                    	<form:label for="volLetExt" id="volExtensionLabel" path="volLetExt">Vol. Ext.</form:label>
-                    	<form:label for="volNumBetween" id="betweenSearchLabel" path="volNumBetween" style="display:none">and</form:label>
+                    	<form:label for="volLetExt" id="volExtensionLabel" path="volLetExt"><fmt:message key="digitization.showSearchDigitizedVolumes.volExt"/></form:label>
+                    	<form:label for="volNumBetween" id="betweenSearchLabel" path="volNumBetween" style="display:none"><fmt:message key="digitization.showSearchDigitizedVolumes.and"/></form:label>
                     </div>
                     <div class="col_l">
                     	<form:input id="volExtension" name="volLetExt" class="input_5c" type="text" value="" maxlength="5" path="volLetExt"/>

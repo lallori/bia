@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    	<title>Activate or Deactivate Volumes</title>
+    	<title><fmt:message key="digitization.showSearchActivatedVolumes.activateOrDeactivate"/></title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="images/favicon_medici.png"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css"/>" />
@@ -35,7 +35,7 @@
 
 <div id="searchWindow">
 	<div id="searchWindow_top">
-       	<h1>ACTIVATE OR DEACTIVATE VOLUME</h1>
+       	<h1><fmt:message key="digitization.showSearchActivatedVolumes.aCtivateOrDeactivate"/></h1>
     </div>
     <div id="browseContent">
     	<div class="listAdvSearch">
@@ -43,20 +43,20 @@
             	<div class="row">
                 	<div class="col_l">
                     	<form:select id="volumeType" name="volumeType" class="selectform_long" path="searchType">
-                        	<option value="Exactly" selected="selected">Exactly</option>
-                            <option value="Between">Between</option>
-                            <option value="All">All</option>
+                        	<option value="Exactly" selected="selected"><fmt:message key="digitization.showSearchActivatedVolumes.exactly"/></option>
+                            <option value="Between"><fmt:message key="digitization.showSearchActivatedVolumes.between"/></option>
+                            <option value="All"><fmt:message key="digitization.showSearchActivatedVolumes.all"/></option>
                         </form:select>
                     </div>
                     <div class="col_l"><form:input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5" path="volNum"/></div>
                     <div class="col_l"><form:input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden" path="volNumBetween"/></div>
                   </div>
                   <div class="row">
-                  	<div class="col_r"><form:label for="activated" id="activatedLabel" path="active">Activated</form:label></div>
+                  	<div class="col_r"><form:label for="activated" id="activatedLabel" path="active"><fmt:message key="digitization.showSearchActivatedVolumes.activated"/></form:label></div>
                   	<div class="col_l">
                     	<form:select id="activated" name="activated" class="selectform_short" path="active">
-                        	<option value="Yes" selected="selected">Yes</option>
-                            <option value="No">No</option>
+                        	<option value="Yes" selected="selected"><fmt:message key="digitization.showSearchActivatedVolumes.yes"/></option>
+                            <option value="No"><fmt:message key="digitization.showSearchActivatedVolumes.no"/></option>
                         </form:select></div>
 					<div class="col_r"></div>
                     <div class="col_r"><input type="submit" class="button_small" id="search" value="Search" title="Search this 'Schedone'"></div>

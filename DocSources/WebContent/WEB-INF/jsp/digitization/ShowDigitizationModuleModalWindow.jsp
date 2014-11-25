@@ -9,17 +9,17 @@
 <div id="digitizationModalDiv">
 	<div id="CreateSchedoneDiv">
         <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.createschedoni"></fmt:message>">?</a>
-        <a id="CreateSchedone" class="button_Xlarge" href="<c:url value="/digitization/CreateSchedone.do"/>">Create new "Schedone"</a>
+        <a id="CreateSchedone" class="button_Xlarge" href="<c:url value="/digitization/CreateSchedone.do"/>"><fmt:message key="digitization.showDigitizationModuleModalWindow.createNew"/></a>
 	</div>
     
      <div id="BrowseFilzeDiv">
         <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.searchschedoni"></fmt:message>">?</a>
-        <a id="BrowseFilze" class="button_Xlarge" href="<c:url value="/digitization/ShowSearchDigitizedVolumes.do"/>">Browse or search "Schedoni"</a>
+        <a id="BrowseFilze" class="button_Xlarge" href="<c:url value="/digitization/ShowSearchDigitizedVolumes.do"/>"><fmt:message key="digitization.showDigitizationModuleModalWindow.browse"/></a>
 	</div>
     
     <div id="ActivateFilzaDiv">
         <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.activatedeactivatedigitizedvolume"></fmt:message>">?</a>
-        <a id="ActivateFilza" class="button_Xlarge" href="<c:url value="/digitization/ShowSearchActivatedVolumes.do"/>">Activate or deactivate Digitized Volume</a>
+        <a id="ActivateFilza" class="button_Xlarge" href="<c:url value="/digitization/ShowSearchActivatedVolumes.do"/>"><fmt:message key="digitization.showDigitizationModuleModalWindow.activateDisactivate"/></a>
     </div>
     
 	<input id="close" class="button_small" type="submit" title="Close Digitization Module window" value="Close" style="margin:22px 0 0 145px"/>

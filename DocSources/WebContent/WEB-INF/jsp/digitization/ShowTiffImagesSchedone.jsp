@@ -10,7 +10,7 @@
 
 <div id="EditTiffImagesSchedoneDiv" class="background">
 	<div class="title">
-		<h5>TIFF IMAGES</h5>
+		<h5><fmt:message key="digitization.showTiffImagesSchedone.tIffImages"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${schedone.schedoneId > 0}">
 			<a id="EditTiffImagesSchedone" href="${EditTiffImagesSchedoneURL}" class="editButton" title="Edit Tiff Images"></a><span id="loading"/>
@@ -19,23 +19,23 @@
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Formato</div> 
-			<div class="value60">TIFF</div> 
+			<div class="item"><fmt:message key="digitization.showTiffImagesSchedone.formato"/></div> 
+			<div class="value60"><fmt:message key="digitization.showTiffImagesSchedone.tIff"/></div> 
 		</div>
         <div class="row">
-			<div class="item">Compressione</div> 
+			<div class="item"><fmt:message key="digitization.showTiffImagesSchedone.compressione"/></div> 
 			<div class="value60">${schedone.compressioneTiff}</div> 
 		</div>
         <div class="row">
-			<div class="item">Numero totale immagini</div> 
+			<div class="item"><fmt:message key="digitization.showTiffImagesSchedone.numeroTotale"/></div> 
 			<div class="value60">${schedone.numeroTotaleImmaginiTiff}</div> 
 		</div>
         <div class="row">
-			<div class="item">Dimensione media immagini</div> 
+			<div class="item"><fmt:message key="digitization.showTiffImagesSchedone.dimensioneMedia"/></div> 
 			<div class="value60">${schedone.dimMediaImmaginiTiff} ${schedone.formatoMediaImmaginiTiff}</div> 
 		</div>
         <div class="row">
-			<div class="item">Dimensione totale immagini</div> 
+			<div class="item"><fmt:message key="digitization.showTiffImagesSchedone.dimensioneTotal"/></div> 
 			<div class="value60">${schedone.dimTotaleImmaginiTiff} ${schedone.formatoTotaleImmaginiTiff}</div> 
 		</div>
 	</div>

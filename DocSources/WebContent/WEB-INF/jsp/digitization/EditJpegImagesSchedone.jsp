@@ -17,12 +17,12 @@
 	<div id="loadingDiv"></div>
 	<form:form id="EditJpegImagesForm" action="${EditJpegImagesSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
-	    <legend><b>JPEG IMAGES</b></legend>
+	    <legend><b><fmt:message key="digitization.editJpegImagesSchedone.jPegImages"/></b></legend>
 	    <div class="listForm">
 	        <div class="row">
 	        	<div class="col_l">
 	            	<a class="helpIcon" title="In che formato sono le immagini ad alta risoluzione (default is JPEG)">?</a>
-	            	<label for="formato" id ="formatoLabel" title="Formato">Formato</label>
+	            	<label for="formato" id ="formatoLabel" title="Formato"><fmt:message key="digitization.editJpegImagesSchedone.formato"/></label>
 	            </div>
 	            <div class="col_r">
 					<input id="formato" class="input_4c_disabled" value="JPEG" disabled="disabled"/>
@@ -31,7 +31,7 @@
 	        <div class="row">
 	        	<div class="col_l">
 	            	<a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:1)">?</a>
-	            	<form:label for="compressioneJpeg" path="compressioneJpeg" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
+	            	<form:label for="compressioneJpeg" path="compressioneJpeg" id ="compressioneLabel" cssErrorClass="error" title="Compressione"><fmt:message key="digitization.editJpegImagesSchedone.compressione"/></form:label>
 	            </div>
 	            <div class="col_r">
 					<form:input path="compressioneJpeg" id="compressione" cssClass="input_4c_disabled" />
@@ -45,7 +45,7 @@
 	    	<div class="row"> 
 	        	<div class="col_l">
 	        		<a class="helpIcon" title="Numero esatto di immagini in alta risoluzione prodotte per questa filza (compresi i test)">?</a>
-	        		<form:label for="numeroTotaleImmaginiJpeg" path="numeroTotaleImmaginiJpeg" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
+	        		<form:label for="numeroTotaleImmaginiJpeg" path="numeroTotaleImmaginiJpeg" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini"><fmt:message key="digitization.editJpegImagesSchedone.numeroTotalImmagini"/></form:label>
 	        	</div>
 	        	<div class="col_r">
 					<form:input path="numeroTotaleImmaginiJpeg" id="numeroImmagini" cssClass="input_10c" />
@@ -54,7 +54,7 @@
 			<div class="row">
 	            <div class="col_l">
 	            	<a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
-	           		<form:label for="dimMediaImmaginiJpeg" path="dimMediaImmaginiJpeg" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
+	           		<form:label for="dimMediaImmaginiJpeg" path="dimMediaImmaginiJpeg" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini"><fmt:message key="digitization.editJpegImagesSchedone.dimensioneMediaImmagini"/></form:label>
 	           	</div>
 	           	<div class="col_r">
 					<form:input path="dimMediaImmaginiJpeg" id="dimensioneMediaImmagini" cssClass="input_10c" />
@@ -65,7 +65,7 @@
 	        <div class="row">
 	        	<div class="col_l">
 	            	<a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
-	            	<form:label for="dimTotaleImmaginiJpeg" path="dimTotaleImmaginiJpeg" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
+	            	<form:label for="dimTotaleImmaginiJpeg" path="dimTotaleImmaginiJpeg" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini"><fmt:message key="digitization.editJpegImagesSchedone.dimensioneTotaleImmagini"/></form:label>
 	            </div>
 	            <div class="col_r">
 					<form:input path="dimTotaleImmaginiJpeg" id="dimTotaleImmaginiJpeg" cssClass="input_10c" />
@@ -142,7 +142,7 @@
 	</script>
 
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>discard changes?</h1> 
+		<h1><fmt:message key="digitization.editJpegImagesSchedone.discardChanges"/></h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>

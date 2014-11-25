@@ -10,102 +10,102 @@
 
 <div id="EditDetailsSchedoneDiv" class="background">
 	<div class="title">
-		<h5>SCHEDONE DETAILS</h5>
+		<h5><fmt:message key="digitization.showDetailsSchedone.sChedoneDetails"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<a id="EditDetailsSchedone" href="${EditDetailsSchedoneURL}" class="editButton" title="Edit Schedone details"></a><span id="loading"/>
 		</security:authorize>
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Istituto</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.istituto"/></div> 
 			<div class="value60">${schedone.istituto}</div> 
 		</div>
         <div class="row">
-			<div class="item">Fondo</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.fondo"/></div> 
 			<div class="value60">${schedone.fondo}</div> 
 		</div>
         <div class="row">
-			<div class="item">Serie</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.serie"/></div> 
 			<div class="value60">${schedone.serie}</div> 
 		</div>
 		<div class="row">
-			<div class="item">N. unità</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.nUnita"/></div>
 			<div class="value60">${schedone.numeroUnita} ${schedone.volLetExt}</div>
 		</div>
         <div class="row">
-			<div class="item">Date estreme</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.dateEstreme"/></div> 
 			<div class="value60">${schedone.dataInizioAnno} ${schedone.dataInizioMese} ${schedone.dataInizioGiorno} - ${schedone.dataFineAnno} ${schedone.dataFineMese} ${schedone.dataFineGiorno}</div> 
 		</div>
         <div class="row">
-			<div class="item">Descrizione contenuto</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.descrizioneContenuto"/></div> 
 			<div class="value60">${schedone.descrizioneContenuto}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Content description</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.contentDescription"/></div>
 			<div class="value60">${schedone.descrizioneContenutoEng}</div>
 		</div>
         <div class="row">
-			<div class="item">Legatura</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.legatura"/></div> 
 			<div class="value60">${schedone.legatura}</div> 
 		</div>
         <div class="row">
-			<div class="item">Supporto</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.supporto"/></div> 
 			<div class="value60">${schedone.supporto}</div> 
 		</div>
         <div class="row">
-			<div class="item">Cartulazione</div> 
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.cart"/></div> 
 			<div class="value60">${schedone.cartulazione}</div> 
 		</div>
 		<div class="row">
-			<div class="item">Note alla Cartulazione</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.noteAlla"/></div>
 			<div class="value60">${schedone.noteCartulazione}</div>
 		</div>
 		<div class="row">
-			<div class="item">Numeration Notes</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.numerationNotes"/></div>
 			<div class="value60">${schedone.noteCartulazioneEng}</div>
 		</div>
 		<div class="row">
-			<div class="item">Carte bianche</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.carteBianche"/></div>
 			<div class="value60">${schedone.carteBianche}</div>
 		</div>
 		<div class="row">
-			<div class="item">Carte Mancanti</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.carteMancanti"/></div>
 			<div class="value60">${schedone.carteMancanti}</div>
 		</div>
 		<div class="row">
-			<div class="item">Dimensioni Base</div>
-			<div class="value60">${schedone.dimensioniBase} mm</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.dimensioniBase"/></div>
+			<div class="value60">${schedone.dimensioniBase} <fmt:message key="digitization.showDetailsSchedone.mm"/></div>
 		</div>
 		<div class="row">
-			<div class="item">Dimensioni Altezza</div>
-			<div class="value60">${schedone.dimensioniAltezza} mm</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.dimensioniAltezza"/></div>
+			<div class="value60">${schedone.dimensioniAltezza} <fmt:message key="digitization.showDetailsSchedone.mm"/></div>
 		</div>
 		<div class="row">
-			<div class="item">Digitization Type</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.digitizationType"/></div>
 			<div class="value60">${schedone.tipoRipresa}</div>
 		</div>
 		<div class="row">
-			<div class="item">Schema colore immagini</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.schemaColoreImmagini"/></div>
 			<div class="value60">${schedone.coloreImmagine}</div>
 		</div>
 		<div class="row">
-			<div class="item">Image Resolution</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.imageResolution"/></div>
 			<div class="value60">${schedone.risoluzione}</div>
 		</div>
 		<div class="row">
-			<div class="item">Nome files</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.nomeFiles"/></div>
 			<div class="value60">${schedone.nomeFiles}</div>
 		</div>
 		<div class="row">
-			<div class="item">Responsabile Fotoriproduzione</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.responsabileFoto"/></div>
 			<div class="value60">${schedone.responsabileFotoRiproduzione}</div>
 		</div>
 		<div class="row">
-			<div class="item">Data ripresa</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.dataRipresa"/></div>
 			<div class="value60">${schedone.dataRipresaAnno} ${schedone.dataRipresaMese} ${schedone.dataRipresaGiorno}</div>
 		</div>
 		<div class="row">
-			<div class="item">Operatore</div>
+			<div class="item"><fmt:message key="digitization.showDetailsSchedone.operatore"/></div>
 			<div class="value60">${schedone.operatore}</div>
 		</div>
 	</div>

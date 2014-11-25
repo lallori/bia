@@ -10,7 +10,7 @@
 
 <div id="EditJpegImagesSchedoneDiv" class="background">
 	<div class="title">
-		<h5>JPEG IMAGES</h5>
+		<h5><fmt:message key="digitization.showJpegImagesSchedone.jPegImages"/></h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${schedone.schedoneId > 0}">
 			<a id="EditJpegImagesSchedone" href="${EditJpegImagesSchedoneURL}" class="editButton" title="Edit Jpeg Images"></a><span id="loading"/>
@@ -19,23 +19,23 @@
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Formato</div> 
-			<div class="value60">JPEG</div> 
+			<div class="item"><fmt:message key="digitization.showJpegImagesSchedone.formato"/></div> 
+			<div class="value60"><fmt:message key="digitization.showJpegImagesSchedone.jPeg"/></div> 
 		</div>
         <div class="row">
-			<div class="item">Compressione</div> 
+			<div class="item"><fmt:message key="digitization.showJpegImagesSchedone.compressione"/></div> 
 			<div class="value60">${schedone.compressioneJpeg}</div> 
 		</div>
         <div class="row">
-			<div class="item">Numero totale immagini</div> 
+			<div class="item"><fmt:message key="digitization.showJpegImagesSchedone.numeroTotale"/></div> 
 			<div class="value60">${schedone.numeroTotaleImmaginiJpeg}</div> 
 		</div>
         <div class="row">
-			<div class="item">Dimensione media immagini</div> 
+			<div class="item"><fmt:message key="digitization.showJpegImagesSchedone.dimensioneMedia"/></div> 
 			<div class="value60">${schedone.dimMediaImmaginiJpeg} ${schedone.formatoMediaImmaginiJpeg}</div> 
 		</div>
         <div class="row">
-			<div class="item">Dimensione totale immagini</div> 
+			<div class="item"><fmt:message key="digitization.showJpegImagesSchedone.dimensioneTotal"/></div> 
 			<div class="value60">${schedone.dimTotaleImmaginiJpeg} ${schedone.formatoTotaleImmaginiJpeg}</div> 
 		</div>
 	</div>
