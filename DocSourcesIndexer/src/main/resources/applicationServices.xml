@@ -11,7 +11,10 @@
 
     <context:component-scan base-package="org.medici.bia"/>
 
-    <bean id="adminService" class="org.medici.bia.service.admin.AdminServiceImpl">
+    <bean id="applicationAccessContainer" class="org.medici.bia.common.access.ApplicationAccessContainer" scope="singleton" lazy-init="true">
+	</bean>
+	
+	    <bean id="adminService" class="org.medici.bia.service.admin.AdminServiceImpl">
     	<description>Service that manages every information on admin process (users, properties).</description>
     </bean>
     
@@ -25,6 +28,10 @@
 
     <bean id="docBaseService" class="org.medici.bia.service.docbase.DocBaseServiceImpl">
     	<description>Service that manages documents informations.</description>
+    </bean>
+
+    <bean id="europeanaService" class="org.medici.bia.service.europeana.EuropeanaServiceImpl">
+    	<description>Service that manages europeana tasks.</description>
     </bean>
 
     <bean id="geoBaseService" class="org.medici.bia.service.geobase.GeoBaseServiceImpl">
