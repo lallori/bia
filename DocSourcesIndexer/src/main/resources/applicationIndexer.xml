@@ -12,6 +12,7 @@
 	<import resource="applicationCaptcha.xml"/>
 	<import resource="applicationDS.xml"/>
 	<import resource="applicationMail.xml"/>
+	<import resource="applicationProvider.xml"/>
 	<import resource="applicationSecurity.xml"/>
 	<import resource="applicationServices.xml"/>
 	<import resource="applicationValidators.xml"/>
