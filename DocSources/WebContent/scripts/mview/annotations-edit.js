@@ -488,6 +488,7 @@ IIPMooViewer.implement({
 	 * @param label the label of the radio button
 	 * @param level the radio button level (0 for first)
 	 * @param defaultType the preselected type
+	 * @param show if false it does not show the radio button
 	 * @returns the html radio button
 	 */
 	getHtmlRadio: function(annotation, type, label, level, defaultType, show) {
@@ -499,12 +500,12 @@ IIPMooViewer.implement({
 		if (type === defaultType) {
 			html += ' id="defaultAnnotation"';
 		}
-		if (annotation.type === type || (annotation.type === '' && type === defaultType)) {
-			html += ' checked';
-		}
-		if (show === 'undefined' || show == true) {
+		if (typeof show === 'undefined' || show === true) {
 			html += '>' + label;
 		} else {
+			if (annotation.type === type || (annotation.type === '' && type === defaultType)) {
+				html += ' checked';
+			}
 			html += ' style="display: none;">';
 		}
 		return html;
